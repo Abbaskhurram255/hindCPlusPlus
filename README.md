@@ -9,9 +9,11 @@
 
 ## For Loop
 `hind`<br/>
-`  phere int i barabar 1; i kam_ya_barabar 10; i me_izafa 1 ka or_run`</br>
-`      kahie "Counting... " aage i age_bas;`<br/>
-`  basab`<br/>
+`    phere int i barabar 1; i kam_ya_barabar 10; i me_izafa 1 ka or_run`</br>
+`        agar i wakai_barabar 3 hen skip;`<br/>
+`        //skipping numbers`</br>
+`        kahie "Counting... " aage i age_bas;`<br/>
+`    basab`<br/>
 `C`
 
 ## Pros
