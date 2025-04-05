@@ -2,7 +2,7 @@
 ---
 
 ## Hello World
-`shurwat`<br/>
+`shuru`<br/>
 `    ayesha kahie "hello world";`
     <br/>
 `ant`
