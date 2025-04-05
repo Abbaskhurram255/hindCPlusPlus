@@ -2,16 +2,14 @@
 ---
 
 ## Hello World
-`
-shuru`<br/>
+`shuru`<br/>
 `    ayesha kahie "hello world";`
     <br/>
 `ant
 `
 
 ## For Loop
-`
-hind`<br/>
+`hind`<br/>
 `  phere int i barabar 1; i kam_ya_barabar 10; i me_izafa 1 ka or_run`</br>
 `      kahie "Counting... " aage i age_bas;`<br/>
 `  basab`<br/>
