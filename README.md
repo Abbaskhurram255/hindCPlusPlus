@@ -5,16 +5,14 @@
 `shuru`<br/>
 `    ayesha kahie "hello world";`
     <br/>
-`ant
-`
+`ant`
 
 ## For Loop
 `hind`<br/>
 `  phere int i barabar 1; i kam_ya_barabar 10; i me_izafa 1 ka or_run`</br>
 `      kahie "Counting... " aage i age_bas;`<br/>
 `  basab`<br/>
-`C
-`
+`C`
 
 ## Pros
 * Say goodbye to the junky main function (i.e. `int main(){(...code)}`), just go:
