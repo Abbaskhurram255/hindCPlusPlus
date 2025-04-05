@@ -651,6 +651,12 @@ int heFltjesa(char *str)
     return isFltlike(str);
 }
 // ::Math
+double Pos(double n) {
+    return abs(n);
+}
+double Neg(double n) {
+    return -n;
+}
 int sq(int n)
 {
     return n * n;
@@ -748,6 +754,10 @@ int Int(char *numeric_str)
 {
     return atoi(numeric_str);
 }
+float Flt(char *numeric_str)
+{
+    return atof(numeric_str);
+}
 int randi()
 {
     srand(time(NULL));
@@ -818,6 +828,12 @@ char *randstr(int len)
     result[max + 1] = '\0';
     return slice(result, 0, len);
 }
+int strHas(char *str, char *lookup) {
+    char *p = strstr(str, lookup);
+    if (p) return p-str;
+    return 0;
+}
+#define strincl strHas
 void reverseStr(char s[])
 {
     int i, j;
@@ -1089,13 +1105,13 @@ int copyFile(char *src, char *dest)
     stream_R = fopen(src, "r");
     if (!stream_R || stream_R == NULL)
     {
-        printf("\n[Message from HindC FileReader]:\n❌ Source file ki ger mojoodgi ki soorat, file ko copy/move/rename karna na kaam raha!\n");
+        printf("\n[Message from HindC FileReader]:\n❌ Source file ki ger mojoodgi ki soorat, file ko copy/move karna na kaam raha!\n");
         return 0;
     }
     stream_W = fopen(dest, "w");
     if (!stream_W || stream_W == NULL)
     {
-        printf("\n[Message from HindC FileReader]:\n❌ File ko copy/move/rename karna na kaam raha!\n");
+        printf("\n[Message from HindC FileReader]:\n❌ File ko copy/move karna na kaam raha!\n");
         fclose(stream_R);
         return 0;
     }
@@ -1109,7 +1125,8 @@ int copyFile(char *src, char *dest)
 }
 int renameFile(char *oldName, char *newName)
 {
-    if (copyFile(oldName, newName) && deleteFile(oldName))
+    int renameSuccessful = rename(oldName, newName) == 0;
+    if (renameSuccessful)
     {
         printf("\n[Message from HindC FileReader]:\n ✔️ File renamed successfully\n");
         return 1;
@@ -1119,7 +1136,7 @@ int renameFile(char *oldName, char *newName)
 }
 int moveFile(char *fname, char *dest)
 {
-    if (copyFile(fname, dest) && deleteFile(fname))
+    if (renameFile(fname, dest))
     {
         printf("\n[Message from HindC FileReader]:\n ✔️ File moved successfully\n");
         return 1;
