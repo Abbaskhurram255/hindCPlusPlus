@@ -2,7 +2,7 @@
 ---
 
 ## Hello World
-`shuru`<br/>
+`shurwat`<br/>
 `    ayesha kahie "hello world";`
     <br/>
 `ant`
@@ -19,6 +19,9 @@
 ## Pros
 * Say goodbye to the junky main function (i.e. `int main(){(...code)}`), just go:
   <br/>`on`<br/>`(   ...code)`<br/>`off`
+* Comes with Date functions
+* Comes with File functions
+* and much more
 
 ## Importing the library
 `#include "path/to/lib"`
