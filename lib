@@ -32,6 +32,7 @@ using haal = bool;
 #define ke ""<<
 #define yar <<
 #define or_yar <<
+#define aur <<
 #define aage <<
 #define or_age <<
 #define or_aage <<
@@ -66,6 +67,8 @@ using haal = bool;
 #define he_ab =
 #define exists !!
 #define karo do
+#define ye {
+#define sab }
 #define jabtak while (
 #define tabtak {
 #define then {
@@ -80,6 +83,7 @@ using haal = bool;
 #define phere for (
 #define keejye )
 #define ka )
+#define ko )
 #define or_run {
 #define agar if (
 #define hen )
@@ -87,7 +91,16 @@ using haal = bool;
 #define nahi_to } else
 #define agar_koi_na } else 
 #define me_izafa +=
+#define me_dalo +=
+#define me_dala +=
+#define me_barha +=
+#define me_barhao +=
+#define me_gaya +=
 #define me_ghata -=
+#define me_ghatao -=
+#define se_gaya -=
+#define se_ghata -=
+#define se_ghatao -=
 #define koshish try
 #define rukawat catch (...)
 #define na_kami catch (...)
@@ -104,7 +117,11 @@ using haal = bool;
 #define wakai_barabar ==
 #define nahi_barabar !=
 #define zyada_ya_barabar >=
+#define bara_ya_barabar >=
+#define bare_ya_barabar >=
 #define kam_ya_barabar <=
+#define chota_ya_barabar <=
+#define chote_ya_barabar <=
 #define se_bara <
 #define se_bare <
 #define se_bari <
@@ -114,6 +131,7 @@ using haal = bool;
 #define se )
 #define let auto
 #define fn auto
+#define func auto
 #define farz auto
 #define mano auto
 #define re ;
@@ -128,11 +146,20 @@ using haal = bool;
 #define on int main() {
 #define off }
 #define shuru int main() {
+#define shurwat int main() {
 #define hind int main() {
 #define C }
+#define co int main() {
+#define de }
 #define aye int main() {
 #define sha }
 #define set ;std::cout<<"";
+#define hua ;std::cout<<"";;
+#define hui ;std::cout<<"";;
+#define hue ;std::cout<<"";;
+#define pagli ;std::cout<<"";
+#define baba ;std::cout<<"";
+#define meri_jan ;std::cout<<"";
 #define ayesha ;std::cout<<"";
 
 
@@ -337,6 +364,18 @@ float pucho_f(char *x)
     printf("\n%s\n", x);
     scanf("%f", &y);
     return y;
+}
+int puchoInt(char *x)
+{
+    return pucho_i(x);
+}
+char puchoCh(char *x)
+{
+    return pucho_c(x);
+}
+float puchFlt(char *x)
+{
+    return pucho_f(x);
 }
 #define scan pucho
 #define scanWord puchoWord
@@ -875,7 +914,7 @@ Date new_date()
     size_t ret = strftime(s, sizeof(s), "%c", tm);
     assert(ret);
     strftime(timePartB, sizeof(timePartB), ":%M:%S %p", tm);
-    
+
     char *day = slice(s, 0, 3),
         *month = slice(s, 4, 7),
         *date = slice(s, 8, 10),
@@ -904,7 +943,7 @@ Date new_date()
         strcat(month, "ember");
     else if (strcmp(month, "dec") == 0)
         strcat(month, "ember");
-    
+
     char zz[] = " ";
     char *yearTemp = year;
     nai(date, connect(slice(connect(connect(connect(slice(month, 0, 3), connect(zz, date)), zz), year), 0, 7), year));
@@ -914,7 +953,7 @@ Date new_date()
     localtime_r(&ds, &tmn);
     char timestamp[100];
     strftime(timestamp, sizeof(timestamp), "%Y-%d-%m", &tmn);
-    
+
     bool isWeekend = false;
     int dayAsNumber = 0;
     if (strcmp(day, "sun") == 0) {
@@ -942,7 +981,7 @@ Date new_date()
     }
     if (dayAsNumber % 6 == 0)
         isWeekend = true;
-    
+
     string pd = "am";
     int hours = atoi(slice(s, 11, 13));
     if (hours >= 12)
@@ -952,7 +991,7 @@ Date new_date()
     }
     if (hours == 0)
         hours = 12;
-        
+
     char *period = pd.data();
     string gtg = "";
     if (strcmp(period, "pm") == 0)
@@ -971,13 +1010,13 @@ Date new_date()
         else
             gtg = "Good start of a brand-new day!!";
     }
-    
+
     char *greeting = gtg.data();
-    
+
     char hrs[50];
     itoa(hours, hrs);
     char *curTime = stradd(hrs, timePartB);
-    
+
     Date THIS;
     THIS.hours = hours;
     THIS.mins = atoi(slice(s, 14, 16));
@@ -1230,20 +1269,20 @@ App appMeta(char *name, char *version) {
     printf("\t\t><><><><><><>❤️<><><><><><\n\t\t|        HindC++\n\t\t\t   by\n\t\t\t Khurram Ali\n\t\t>💗🌷<><><><><><><><>🌹💘<\n\t\t   =====================\n\t\t|\\/\t\t\t\\/|\n\n\n\n");
     printf("%s%s v%s\t\t      © Licensed under MIT™\n", strlen(name) > 3 && strlen(name) < 15 ? name : "Sample", strlen(name) < 9 ? " App" : "", strlen(version) && strlen(version) < 9 ? version : "1.0.0");
     string temp1 = "<<";
-	repeat_inline(temp1.data(), 30);
-	br(2);
-	#ifdef CONIO_H
+        repeat_inline(temp1.data(), 30);
+        br(2);
+        #ifdef CONIO_H
         clr(peela);
     #endif
     string temp2 = "Happy %s❤️,\t\t          %s\n\t\t\t\t       ___________________\n",
       temp3 = "  ";
-	printf(temp2.data(), strlen(dt.day) < 8 ? join(dt.day, temp3.data()) : dt.day, dt.stamp);
+        printf(temp2.data(), strlen(dt.day) < 8 ? join(dt.day, temp3.data()) : dt.day, dt.stamp);
     #ifdef CONIO_H
         clr(_def);
     #endif
     string temp4 = "^^";
-	repeat_inline(temp4.data(), 30);
-	br(2);
+        repeat_inline(temp4.data(), 30);
+        br(2);
     return my_app;
 }
 App setMeta(char *name, char *version) {
@@ -1264,7 +1303,7 @@ int main()
     string username = ask("What's your username: ");
     int age = ask_i("How old are you: ");
     int birthyear = age2birthyear(age);
-    
+
     kahen ke "Hey @" aage username aage ", aj " or_aage falaana aage tareekh() aage " he. Oh, to apki pedaish " aage birthyear or_age " ki he?" or_bas;
 }
 */
@@ -1272,7 +1311,7 @@ int main()
 int main() {
     str s = "2 and 2 are equal";
     farz num barabar 2;
-    
+
     agar num wakai_barabar (1+1) hen to
         kahie ke s or_bas;
         or_kahie "duh" akhir_me;
@@ -1281,13 +1320,13 @@ int main() {
     agar_koi_na tab
       kahen ke "dono galat";
     basab
-    
+
 }
 */
 /*
 int main() {
     farz score barabar 40;
-    
+
     haalat score ki
         surat 20 me
             kahie ke "Low on score";
@@ -1299,7 +1338,7 @@ int main() {
             kahie ke "High on score";
             ruko;
     basab
-    
+
     bolie ke "\nYour score: " or_age score or_bas;
 }
 */
@@ -1310,10 +1349,24 @@ int main() {
 }
 */
 /*
-int main() {
-    ayesha kahie "hi" age_bas ji
+co
+    ayesha kahie "hi" aur " love" age_bas ji
     kahie 5 ji
-}
+de
 */
 
-//on, off
+
+/*
+func x() {
+    return 1;
+}
+
+co
+    farz i barabar x() pagli
+    
+    karo ye
+        kahie "Ginti: " aur i aage_bas meri_jan
+        i me_dalo 1 ayesha
+    sab jabtak i chote_ya_barabar 5 hen ri
+de
+*/
