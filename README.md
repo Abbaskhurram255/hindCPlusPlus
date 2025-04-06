@@ -18,6 +18,20 @@ A Hindi to GCC translation engine
 `    basab`<br/>
 `C`
 
+## Do-While
+`func x() {`<br/>
+`    return 1;`<br/>
+`}`<br/>
+<br/>
+`co`<br/>
+`    farz i barabar x() pagli`<br/>
+    <br/>
+`    karo ye`<br/>
+`        kahie "Ginti: " aur i aage_bas meri_jan`<br/>
+`        i me_dalo 1 ayesha`<br/>
+`    sab jabtak i chote_ya_barabar 5 hen re`<br/>
+`de`<br/>
+
 ## Pros
 * Say goodbye to the junky main function (i.e. `int main(){(...code)}`), just go:
   <br/>`on`<br/>`(   ...code)`<br/>`off`
