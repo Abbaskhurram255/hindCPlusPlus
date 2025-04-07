@@ -1247,8 +1247,18 @@ void printArrInt(int arr[], int size) {
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
-  cout << "\n";
+  cout << " ";
 }
+void printArrReversedInt(int arr[], int size) {
+  size -= 1;
+  //bugfix
+  for (; size >= 0; size--) {
+    cout << arr[size] << " ";
+  }
+  cout << " ";
+}
+#define printArrIntReverse printArrReversedInt
+
 //Library GUI
 typedef struct {
     char *name;
@@ -1373,7 +1383,6 @@ de
 /*
 on
     int myInts[] = {1, 3, 5, 7};
-    reverseArr(myInts);
-    printArrInt(myInts, arrlen(myInts));
+    printArrReversedInt(myInts, arrlen(myInts));
 off
 */
