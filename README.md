@@ -14,7 +14,7 @@ A Hindi to GCC translation engine
 `    phere int i barabar 1; i kam_ya_barabar 10; i me_izafa 1 ka or_run`</br>
 `        agar i wakai_barabar 3 hen skip;`<br/>
 `        //skipping numbers`</br>
-`        kahie "Counting... " aage i age_bas;`<br/>
+`        kahie "Counting..." aage i age_bas;`<br/>
 `    basab`<br/>
 `C`
 
@@ -27,7 +27,7 @@ A Hindi to GCC translation engine
 `    farz i barabar x() pagli`<br/>
     <br/>
 `    karo ye`<br/>
-`        kahie "Ginti: " aur i aage_bas meri_jan`<br/>
+`        kahie "Ginti:" aur i aage_bas meri_jan`<br/>
 `        i me_dalo 1 ayesha`<br/>
 `    sab jabtak i chote_ya_barabar 5 hen re`<br/>
 `de`<br/>
