@@ -1305,6 +1305,9 @@ App new_sample_app() {
 App new_custom_app(char *name, char *version) {
     return setMeta(name, version);
 }
+const string _app_name = "hindC++", 
+    _app_version = "1.0.1",
+    _app_vendor = "github.com/abbaskhurram255";
 
 
 /*
