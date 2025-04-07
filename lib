@@ -9,6 +9,7 @@
 #include <time.h>
 #include <assert.h>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 using jumla = char*;
 using lafz = jumla;
@@ -29,22 +30,18 @@ using haal = bool;
 #define or_bolie out
 #define bolen out
 #define or_bolen out
-#define ke ""<<
-#define yar <<
+#define ke "" <<
+#define yar "" <<
 #define or_yar <<
-#define aur <<
-#define aage <<
-#define or_age <<
-#define or_aage <<
-#define end endl
-#define bas end
+#define aur << " " <<
+#define aage << " " <<
+#define or_age << " " <<
+#define or_aage << " " <<
+#define bas endl
 #define or_bas or_age bas
 #define age_bas or_bas
 #define aage_bas or_bas
 #define bas_re or_bas
-#define abe_bas or_bas
-#define bas_na or_bas
-#define chup or_bas
 #define akhir_me or_bas
 #define falaana ""
 #define yes true
@@ -65,6 +62,8 @@ using haal = bool;
 #define ab =
 #define ab_he =
 #define he_ab =
+#define exchange swap
+#define hera_pheri swap
 #define exists !!
 #define karo do
 #define ye {
@@ -919,29 +918,29 @@ Date new_date()
         *month = slice(s, 4, 7),
         *date = slice(s, 8, 10),
         *year = &s[20];
-    if (strcmp(month, "jan") == 0)
+    if (strcasecmp(month, "jan") == 0)
         strcat(month, "uary");
-    else if (strcmp(month, "feb") == 0)
+    else if (strcasecmp(month, "feb") == 0)
         strcat(month, "ruary");
-    else if (strcmp(month, "mar") == 0)
+    else if (strcasecmp(month, "mar") == 0)
         strcat(month, "ch");
-    else if (strcmp(month, "apr") == 0)
+    else if (strcasecmp(month, "apr") == 0)
         strcat(month, "il");
-    else if (strcmp(month, "may") == 0)
+    else if (strcasecmp(month, "may") == 0)
         strcat(month, "");
-    else if (strcmp(month, "jun") == 0)
+    else if (strcasecmp(month, "jun") == 0)
         strcat(month, "e");
-    else if (strcmp(month, "jul") == 0)
+    else if (strcasecmp(month, "jul") == 0)
         strcat(month, "y");
-    else if (strcmp(month, "aug") == 0)
+    else if (strcasecmp(month, "aug") == 0)
         strcat(month, "ust");
-    else if (strcmp(month, "sep") == 0)
+    else if (strcasecmp(month, "sep") == 0)
         strcat(month, "tember");
-    else if (strcmp(month, "oct") == 0)
+    else if (strcasecmp(month, "oct") == 0)
         strcat(month, "ober");
-    else if (strcmp(month, "nov") == 0)
+    else if (strcasecmp(month, "nov") == 0)
         strcat(month, "ember");
-    else if (strcmp(month, "dec") == 0)
+    else if (strcasecmp(month, "dec") == 0)
         strcat(month, "ember");
 
     char zz[] = " ";
@@ -956,23 +955,23 @@ Date new_date()
 
     bool isWeekend = false;
     int dayAsNumber = 0;
-    if (strcmp(day, "sun") == 0) {
+    if (strcasecmp(day, "sun") == 0) {
         strcat(day, "day");
         dayAsNumber = 0;
     }
-    else if (strcmp(day, "mon") == 0) {
+    else if (strcasecmp(day, "mon") == 0) {
         strcat(day, "day");
         dayAsNumber = 1;
-    } else if (strcmp(day, "tue") == 0) {
+    } else if (strcasecmp(day, "tue") == 0) {
         strcat(day, "sday");
         dayAsNumber = 2;
-    } else if (strcmp(day, "wed") == 0) {
+    } else if (strcasecmp(day, "wed") == 0) {
         strcat(day, "nesday");
         dayAsNumber = 3;
-    } else if (strcmp(day, "thu") == 0) {
+    } else if (strcasecmp(day, "thu") == 0) {
         strcat(day, "rsday");
         dayAsNumber = 4;
-    } else if (strcmp(day, "fri") == 0) {
+    } else if (strcasecmp(day, "fri") == 0) {
         strcat(day, "day");
         dayAsNumber = 5;
     } else {
@@ -994,7 +993,7 @@ Date new_date()
 
     char *period = pd.data();
     string gtg = "";
-    if (strcmp(period, "pm") == 0)
+    if (strcasecmp(period, "pm") == 0)
     {
         if (hours >= 9)
             gtg = "Hi, good night, sweet dreams!";
@@ -1204,6 +1203,7 @@ int fileHatao(char *fname, char *content)
 #define arrReplaceIntAt(arr, index, replacement) (arr[index] = replacement)
 #define arrReplaceIntAtLast(arr, index, replacement) (arr[sizeof(arr)/sizeof(arr[0])-index] = replacement)
 #define arrPopStr(str) (strcpy(str[sizeof(str)/sizeof(str[0])-1], ""))
+#define reverseArr(arr) (std::reverse(std::begin(arr), std::end(arr)))
 #define randItem(arr) (arr[randint(sizeof(arr)/sizeof(arr[0]))])
 #define randFrom randItem
 void bubbleSort(int array[], int size) {
@@ -1237,13 +1237,13 @@ void bubbleSortDesc(int array[], int size) {
       ruko;
   basab
 }
-void printArray(char arr[], int size) {
+void printArr(char arr[], int size) {
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
   cout << "\n";
 }
-void printArrayInt(int arr[], int size) {
+void printArrInt(int arr[], int size) {
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
@@ -1369,4 +1369,11 @@ co
         i me_dalo 1 ayesha
     sab jabtak i chote_ya_barabar 5 hen ri
 de
+*/
+/*
+on
+    int myInts[] = {1, 3, 5, 7};
+    reverseArr(myInts);
+    printArrInt(myInts, arrlen(myInts));
+off
 */
