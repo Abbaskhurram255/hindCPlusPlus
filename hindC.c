@@ -1,48 +1,15 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include <cstring>
 #include <stdbool.h>
 #include <ctype.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-#include <iostream>
-#include <algorithm>
-using namespace std;
-using jumla = char*;
-using lafz = jumla;
-using str = lafz;
-using nr = double;
-using dbl = nr;
-using flt = float;
-using ch = char;
-using haal = bool;
-#define in std::cin
-#define save in
-#define out std::cout <<
-#define kahie out
-#define or_kahie out
-#define kahen out
-#define or_kahen out
-#define bolie out
-#define or_bolie out
-#define bolen out
-#define or_bolen out
-#define ke "" <<
-#define yar "" <<
-#define or_yar <<
-#define aur << " " <<
-#define aage << " " <<
-#define or_age << " " <<
-#define or_aage << " " <<
-#define bas endl
-#define or_bas or_age bas
-#define age_bas or_bas
-#define aage_bas or_bas
-#define bas_re or_bas
-#define akhir_me or_bas
+#define string char*
+#define flt float
+#define haal bool
 #define falaana ""
 #define yes true
 #define sach true
@@ -66,8 +33,6 @@ using haal = bool;
 #define hera_pheri swap
 #define exists !!
 #define karo do
-#define ye {
-#define sab }
 #define jabtak while (
 #define tabtak {
 #define then {
@@ -116,6 +81,8 @@ using haal = bool;
 #define wakai_barabar ==
 #define nahi_barabar !=
 #define zyada_ya_barabar >=
+#define kam_ya_barabar <=
+#define zyada_ya_barabar >=
 #define bara_ya_barabar >=
 #define bare_ya_barabar >=
 #define kam_ya_barabar <=
@@ -128,11 +95,6 @@ using haal = bool;
 #define se_chote >
 #define se_choti >
 #define se )
-#define let auto
-#define fn auto
-#define func auto
-#define farz auto
-#define mano auto
 #define re ;
 #define ri ;
 #define love ;
@@ -152,18 +114,25 @@ using haal = bool;
 #define de }
 #define aye int main() {
 #define sha }
-#define set ;std::cout<<"";
-#define hua ;std::cout<<"";;
-#define hui ;std::cout<<"";;
-#define hue ;std::cout<<"";;
-#define pagli ;std::cout<<"";
-#define baba ;std::cout<<"";
-#define meri_jan ;std::cout<<"";
-#define ayesha ;std::cout<<"";
 
 
-
-
+#define set ;printf("");
+#define hui ;printf("");
+#define hua ;printf("");
+#define hue ;printf("");
+#define pagli ;printf("");
+#define baba ;printf("");
+#define meri_jan ;printf("");
+#define ayesha ;printf("");
+#define not !
+#define type(x) _Generic((x), \
+    int: "int", \
+    float: "float", \
+    double: "double", \
+    char: "char", \
+    char*: "string", \
+    default: "unknown")
+#define typeof type
 #if defined __has_include
     #if __has_include (<conio.h>)
         #include <conio.h>
@@ -202,147 +171,162 @@ using haal = bool;
 
 void kaho(const char *args, ...)
 {
-    printf("%s", args);
+    printf(args);
     printf("\n");
 }
 void print(const char *args, ...)
 {
     kaho(args);
 }
-void printf_inline(const char *args, ...)
+void kaho_inline(const char *args, ...)
 {
-    printf("%s", args);
+    printf(args);
 }
-void printf_nobr(const char *args, ...)
+void kaho_nobr(const char *args, ...)
 {
-    printf_inline(args);
+    kaho_inline(args);
 }
-void printf_sameln(const char *args, ...)
+void kaho_sameln(const char *args, ...)
 {
-    printf_inline(args);
+    kaho_inline(args);
 }
 void print_(const char *args, ...)
 {
-    printf_inline(args);
+    kaho_inline(args);
 }
 void print_inline(const char *args, ...)
 {
-    printf_inline(args);
+    kaho_inline(args);
 }
-void printf_i(const int args, ...)
+void kaho_i(const int args, ...)
 {
     printf("%i", args);
     printf("\n");
 }
 void print_i(const int args, ...)
 {
-    printf_i(args);
+    kaho_i(args);
 }
-void printf_i_inline(const int args, ...)
+void kaho_i_inline(const int args, ...)
 {
     printf("%i", args);
 }
-void printf_i_nobr(const int args, ...)
+void kaho_i_nobr(const int args, ...)
 {
-    printf_i_inline(args);
+    kaho_i_inline(args);
 }
-void printf_i_sameln(const int args, ...)
+void kaho_i_sameln(const int args, ...)
 {
-    printf_i_inline(args);
+    kaho_i_inline(args);
 }
 void print_i_inline(const int args, ...)
 {
-    printf_i_inline(args);
+    kaho_i_inline(args);
 }
-void printf_f(const float args, ...)
+void kaho_c(const char args, ...)
+{
+    printf("%c", args);
+    printf("\n");
+}
+void print_c(const char args, ...)
+{
+    kaho_c(args);
+}
+void kaho_c_inline(const char args, ...)
+{
+    printf("%c", args);
+}
+void kaho_c_nobr(const char args, ...)
+{
+    kaho_c_inline(args);
+}
+void kaho_c_sameln(const char args, ...)
+{
+    kaho_c_inline(args);
+}
+void print_c_inline(const char args, ...)
+{
+    kaho_c_inline(args);
+}
+void kaho_f(const float args, ...)
 {
     printf("%.1f", args);
     printf("\n");
 }
 void print_f(const float args, ...)
 {
-    printf_f(args);
+    kaho_f(args);
 }
-void printf_f_inline(const float args, ...)
+void kaho_f_inline(const float args, ...)
 {
     printf("%.1f", args);
 }
-void printf_f_nobr(const float args, ...)
+void kaho_f_nobr(const float args, ...)
 {
-    printf_f_inline(args);
+    kaho_f_inline(args);
 }
-void printf_f_sameln(const float args, ...)
+void kaho_f_sameln(const float args, ...)
 {
-    printf_f_inline(args);
+    kaho_f_inline(args);
 }
 void print_f_inline(const float args, ...)
 {
-    printf_f_inline(args);
+    kaho_f_inline(args);
 }
-void printf_n(const float args, ...)
+void kaho_n(const float args, ...)
 {
-    printf_f(args);
+    kaho_f(args);
 }
 void print_n(const float args, ...)
 {
-    printf_f(args);
+    kaho_f(args);
 }
-void printf_n_inline(const float args, ...)
+void kaho_n_inline(const float args, ...)
 {
-    printf_f_inline(args);
+    kaho_f_inline(args);
 }
 void print_n_inline(const float args, ...)
 {
-    printf_f_inline(args);
+    kaho_f_inline(args);
 }
-void printf_n_nobr(const float args, ...)
+void kaho_n_nobr(const float args, ...)
 {
-    printf_f_inline(args);
+    kaho_f_inline(args);
 }
-void printf_n_sameln(const float args, ...)
+void kaho_n_sameln(const float args, ...)
 {
-    printf_f_inline(args);
+    kaho_f_inline(args);
 }
-void printf_b(const int args, ...)
+void kaho_b(const int args, ...)
 {
     printf("%s", !args ? "false" : "true");
     printf("\n");
 }
 void print_b(const int args, ...)
 {
-    printf_b(args);
+    kaho_b(args);
 }
-void printf_b_inline(const int args, ...)
+void kaho_b_inline(const int args, ...)
 {
     printf("%s", !args ? "false" : "true");
 }
-void printf_b_nobr(const int args, ...)
+void kaho_b_nobr(const int args, ...)
 {
-    printf_b_inline(args);
+    kaho_b_inline(args);
 }
-void printf_b_sameln(const int args, ...)
+void kaho_b_sameln(const int args, ...)
 {
-    printf_b_inline(args);
+    kaho_b_inline(args);
 }
 void print_b_inline(const int args, ...)
 {
-    printf_b_inline(args);
+    kaho_b_inline(args);
 }
-string puchoWord(string x) {
-    std::string returnValue = "";
-    std::cout << x;
-    std::cin >> returnValue;
-    return returnValue;
+void pucho(char *x, char *y)
+{
+    printf("\n%s\n", x);
+    scanf("%s", y);
 }
-string pucho(string x) {
-    std::string returnValue = "";
-    std::cout << x;
-    getline(std::cin, returnValue);
-    return returnValue;
-}
-#define askline pucho
-#define saveline pucho
-#define askWord puchoWord
 int pucho_i(char *x)
 {
     int y = 0;
@@ -364,20 +348,10 @@ float pucho_f(char *x)
     scanf("%f", &y);
     return y;
 }
-int puchoInt(char *x)
+void scan(char *x, char *y)
 {
-    return pucho_i(x);
+    pucho(x, y);
 }
-char puchoCh(char *x)
-{
-    return pucho_c(x);
-}
-float puchFlt(char *x)
-{
-    return pucho_f(x);
-}
-#define scan pucho
-#define scanWord puchoWord
 int scan_i(char *x)
 {
     return pucho_i(x);
@@ -390,8 +364,10 @@ float scan_f(char *x)
 {
     return pucho_f(x);
 }
-#define ask pucho
-#define askWord puchoWord
+void ask(char *x, char *y)
+{
+    pucho(x, y);
+}
 int ask_i(char *x)
 {
     return pucho_i(x);
@@ -404,22 +380,10 @@ float ask_f(char *x)
 {
     return pucho_f(x);
 }
-int askint(char *x)
-{
-    return pucho_i(x);
-}
-char askch(char *x)
-{
-    return pucho_c(x);
-}
-float askflt(char *x)
-{
-    return pucho_f(x);
-}
 void linechoro(int n)
 {
     for (; n; n--)
-        cout << endl;
+        printf("\n");
 }
 void agline()
 {
@@ -442,37 +406,47 @@ void repeat(char *h, int j)
 void repeat_inline(char *h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf_inline(h);
-}
-void repeat_f(float h, int j)
-{
-    for (int i = 0; i < j; i++)
-        printf("%.1f", h);
-}
-void repeat_f_inline(float h, int j)
-{
-    for (int i = 0; i < j; i++)
-        printf_inline("%.1f", h);
+        kaho_inline(h);
 }
 void repeat_i(int h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf("%i", h);
+        kaho("%i", h);
 }
 void repeat_i_inline(int h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf_inline("%i", h);
+        kaho_inline("%i", h);
+}
+void repeat_c(char h, int j)
+{
+    for (int i = 0; i < j; i++)
+        kaho("%c", h);
+}
+void repeat_c_inline(char h, int j)
+{
+    for (int i = 0; i < j; i++)
+        kaho_inline("%c", h);
+}
+void repeat_f(float h, int j)
+{
+    for (int i = 0; i < j; i++)
+        kaho("%.1f", h);
+}
+void repeat_f_inline(float h, int j)
+{
+    for (int i = 0; i < j; i++)
+        kaho_inline("%.1f", h);
 }
 void repeat_b(int h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf("%s", !h ? "false" : "true");
+        kaho("%s", !h ? "false" : "true");
 }
 void repeat_b_inline(int h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf_inline("%s", !h ? "false" : "true");
+        kaho_inline("%s", !h ? "false" : "true");
 }
 void duhrao(char *str, int n_times)
 {
@@ -490,6 +464,14 @@ void duhrao_i_inline(int i, int n_times)
 {
     repeat_i_inline(i, n_times);
 }
+void duhrao_c(char c, int n_times)
+{
+    repeat_c(c, n_times);
+}
+void duhrao_c_inline(char c, int n_times)
+{
+    repeat_c_inline(c, n_times);
+}
 void duhrao_f(float f, int n_times)
 {
     repeat_f(f, n_times);
@@ -506,7 +488,48 @@ void duhrao_b_inline(int boolean, int n_times)
 {
     repeat_b_inline(boolean, n_times);
 }
+
 //STRING METHODS
+char *replace(char *orig, char *rep, char *with)
+{
+    char *result;
+    char *ins;
+    char *tmp;
+    int len_rep;
+    int len_with;
+    int len_front;
+    int count;
+    if (!orig || !rep)
+        return NULL;
+    len_rep = strlen(rep);
+    if (len_rep == 0)
+        return NULL;
+    if (!with)
+        with = "";
+    len_with = strlen(with);
+    ins = orig;
+    for (count = 0; (tmp = strstr(ins, rep)); ++count)
+    {
+        ins = tmp + len_rep;
+    }
+    tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
+    if (!result)
+        return NULL;
+    while (count--)
+    {
+        ins = strstr(orig, rep);
+        len_front = ins - orig;
+        tmp = strncpy(tmp, orig, len_front) + len_front;
+        tmp = strcpy(tmp, with) + len_with;
+        orig += len_front + len_rep;
+    }
+    strcpy(tmp, orig);
+    return result;
+}
+char *badlo(char *org, char *toreplace, char *replacement)
+{
+    return replace(org, toreplace, replacement);
+}
 char *keepFirst(char *str, char *with)
 {
     char *org = str;
@@ -576,11 +599,13 @@ char *sentCase(char *str)
         strcat(result, ".");
     return result;
 }
+
 char *strPop(char *str)
 {
     str[strlen(str) - 1] = '\0';
     return str;
 }
+
 int he(char *x, char *y)
 {
     return strcasecmp(x, y) == 0;
@@ -637,18 +662,18 @@ char *strjoro(char *str1, char *str2)
 {
     return addTo(str1, str2);
 }
+
 //NUMBER METHODS
 int isNumlike(char *str)
 {
-    int checks_passed = 0, all_checks_passed = 0;
+    int checks_passed = 0;
     for (int i = 0; str[i]; i++)
     {
         char c = str[i];
         if (isdigit(c) || c == '.')
             checks_passed += 1;
     }
-    all_checks_passed = checks_passed == strlen(str);
-    return all_checks_passed;
+    return checks_passed == strlen(str);
 }
 int isIntlike(char *str)
 {
@@ -658,9 +683,9 @@ int isIntlike(char *str)
         char c = str[i];
         if (isdigit(c))
             checks_passed += 1;
+        all_checks_passed = checks_passed == strlen(str);
     }
-    all_checks_passed = checks_passed == strlen(str);
-    return all_checks_passed;
+    return all_checks_passed | 0;
 }
 int isFltlike(char *str)
 {
@@ -672,9 +697,9 @@ int isFltlike(char *str)
             n_digits += 1;
         else if (c == '.')
             n_periods += 1;
+        all_checks_passed = n_digits && n_periods;
     }
-    all_checks_passed = n_digits && n_periods;
-    return all_checks_passed;
+    return all_checks_passed || 0;
 }
 int heNumjesa(char *str)
 {
@@ -688,6 +713,7 @@ int heFltjesa(char *str)
 {
     return isFltlike(str);
 }
+
 // ::Math
 double Pos(double n) {
     return fabs(n);
@@ -756,20 +782,20 @@ int isdiv(float of, float n)
     return mod(of, n) == 0;
 }
 #define isdivisor isdiv
-int iseven(int n)
-{
-    return isperfmod(n, 2);
-}
-int isodd(int n)
-{
-    return !isperfmod(n, 2);
-}
 float pct(float n1, float n2)
 {
     if (n1 > n2)
         return (n1 * n2) / 100;
     else
         return (n1 / n2) * 100;
+}
+int iseven(float n)
+{
+    return isperfmod(n, 2);
+}
+int isodd(float n)
+{
+    return !isperfmod(n, 2);
 }
 int isprime(int n)
 {
@@ -810,6 +836,7 @@ float randflt(int max)
 int randInt(int min_num, int max_num)
 {
     int result = 0, low_num = 0, hi_num = 0;
+
     if (min_num < max_num)
     {
         low_num = min_num;
@@ -820,6 +847,7 @@ int randInt(int min_num, int max_num)
         low_num = max_num + 1; // include max_num in output
         hi_num = min_num;
     }
+
     srand(time(NULL));
     result = (rand() % (hi_num - low_num)) + low_num;
     return result;
@@ -827,6 +855,7 @@ int randInt(int min_num, int max_num)
 float randFlt(int min_num, int max_num)
 {
     int result = 0, low_num = 0, hi_num = 0;
+
     if (min_num < max_num)
     {
         low_num = min_num;
@@ -837,6 +866,7 @@ float randFlt(int min_num, int max_num)
         low_num = max_num + 1; // include max_num in output
         hi_num = min_num;
     }
+
     srand(time(NULL));
     result = ((rand() % (hi_num - low_num)) + low_num) * .3;
     return result;
@@ -868,6 +898,7 @@ void reverseStr(char s[])
 {
     int i, j;
     char k;
+
     for (i = 0, j = strlen(s) - 1; i < j; i++, j--)
     {
         k = s[i];
@@ -890,151 +921,157 @@ void itoa(int n, char s[])
     s[i] = '\0';
     reverseStr(s);
 }
+
+
 //DATE METHODS
+char *timegr(char *period, int hh)
+{
+    char *greeting = "";
+    if (he(period, "pm"))
+    {
+        if (hh >= 9)
+            greeting = "Good night!";
+        else if (hh >= 4)
+            greeting = "Good evening.";
+        else
+            greeting = "Good afternoon.";
+    }
+    else
+    {
+        if (hh >= 5)
+            greeting = "Good morning!";
+        else
+            greeting = "Good start of a brand-new day!!";
+    }
+    return greeting;
+}
+
 typedef struct
 {
-    char *period, time[50], *timegreet, date[50], *day, *month, stamp[100];
+    char *time, *timegreet, *period, *day, *date, *month, stamp[100];
     int mins, hours, dayAsNumber, isWeekend, year;
 } Date;
+
 Date new_date()
 {
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
     char s[64];
-    char timePartB[64];
     size_t ret = strftime(s, sizeof(s), "%c", tm);
     assert(ret);
-    strftime(timePartB, sizeof(timePartB), ":%M:%S %p", tm);
+    char *ampm = "am",
+         *day = slice(s, 0, 3),
+         *month = slice(s, 4, 7),
+         *date = slice(s, 8, 10),
+         *year = &s[20],
+         *tim = slice(s, 11, 16);
+    int hh = atoi(slice(tim, 0, 2));
 
-    char *day = slice(s, 0, 3),
-        *month = slice(s, 4, 7),
-        *date = slice(s, 8, 10),
-        *year = &s[20];
-    if (strcasecmp(month, "jan") == 0)
-        strcat(month, "uary");
-    else if (strcasecmp(month, "feb") == 0)
-        strcat(month, "ruary");
-    else if (strcasecmp(month, "mar") == 0)
-        strcat(month, "ch");
-    else if (strcasecmp(month, "apr") == 0)
-        strcat(month, "il");
-    else if (strcasecmp(month, "may") == 0)
-        strcat(month, "");
-    else if (strcasecmp(month, "jun") == 0)
-        strcat(month, "e");
-    else if (strcasecmp(month, "jul") == 0)
-        strcat(month, "y");
-    else if (strcasecmp(month, "aug") == 0)
-        strcat(month, "ust");
-    else if (strcasecmp(month, "sep") == 0)
-        strcat(month, "tember");
-    else if (strcasecmp(month, "oct") == 0)
-        strcat(month, "ober");
-    else if (strcasecmp(month, "nov") == 0)
-        strcat(month, "ember");
-    else if (strcasecmp(month, "dec") == 0)
-        strcat(month, "ember");
+    if (he(month, "jan"))
+        strmilao(month, "uary");
+    else if (he(month, "feb"))
+        strmilao(month, "ruary");
+    else if (he(month, "mar"))
+        strmilao(month, "ch");
+    else if (he(month, "apr"))
+        strmilao(month, "il");
+    else if (he(month, "may"))
+        strmilao(month, "");
+    else if (he(month, "jun"))
+        strmilao(month, "e");
+    else if (he(month, "jul"))
+        strmilao(month, "y");
+    else if (he(month, "aug"))
+        strmilao(month, "ust");
+    else if (he(month, "sep"))
+        strmilao(month, "tember");
+    else if (he(month, "oct"))
+        strmilao(month, "ober");
+    else if (he(month, "nov"))
+        strmilao(month, "ember");
+    else if (he(month, "dec"))
+        strmilao(month, "ember");
 
-    char zz[] = " ";
-    char *yearTemp = year;
-    nai(date, connect(slice(connect(connect(connect(slice(month, 0, 3), connect(zz, date)), zz), year), 0, 7), year));
-    strcat(strcat(strcat(date, " ("), day), ")");
+    if (hh >= 12)
+    {
+        ampm = "pm";
+        hh -= 12;
+    }
+    if (hh == 0)
+        hh = 12;
+
+    char hrs[] = "";
+    itoa(hh, hrs);
+
+    nai(date, connect(connect(connect(connect(month, " "), date), " "), year));
+    join(join(join(date, " ("), day), ")");
     time_t ds = time(NULL);
     struct tm tmn;
     localtime_r(&ds, &tmn);
     char timestamp[100];
     strftime(timestamp, sizeof(timestamp), "%Y-%d-%m", &tmn);
-
+    
     bool isWeekend = false;
     int dayAsNumber = 0;
-    if (strcasecmp(day, "sun") == 0) {
-        strcat(day, "day");
+    if (he(day, "sun")) {
+        strmilao(day, "day");
         dayAsNumber = 0;
     }
-    else if (strcasecmp(day, "mon") == 0) {
-        strcat(day, "day");
+    else if (he(day, "mon")) {
+        strmilao(day, "day");
         dayAsNumber = 1;
-    } else if (strcasecmp(day, "tue") == 0) {
-        strcat(day, "sday");
+    } else if (he(day, "tue")) {
+        strmilao(day, "sday");
         dayAsNumber = 2;
-    } else if (strcasecmp(day, "wed") == 0) {
-        strcat(day, "nesday");
+    } else if (he(day, "wed")) {
+        strmilao(day, "nesday");
         dayAsNumber = 3;
-    } else if (strcasecmp(day, "thu") == 0) {
-        strcat(day, "rsday");
+    } else if (he(day, "thu")) {
+        strmilao(day, "rsday");
         dayAsNumber = 4;
-    } else if (strcasecmp(day, "fri") == 0) {
-        strcat(day, "day");
+    } else if (he(day, "fri")) {
+        strmilao(day, "day");
         dayAsNumber = 5;
     } else {
-        strcat(day, "urday");
+        strmilao(day, "urday");
         dayAsNumber = 6;
     }
+
     if (dayAsNumber % 6 == 0)
         isWeekend = true;
 
-    string pd = "am";
-    int hours = atoi(slice(s, 11, 13));
-    if (hours >= 12)
-    {
-        pd = "pm";
-        hours -= 12;
-    }
-    if (hours == 0)
-        hours = 12;
-
-    char *period = pd.data();
-    string gtg = "";
-    if (strcasecmp(period, "pm") == 0)
-    {
-        if (hours >= 9)
-            gtg = "Hi, good night, sweet dreams!";
-        else if (hours >= 4)
-            gtg = "Good evening.";
-        else
-            gtg = "Good afternoon.";
-    }
-    else
-    {
-        if (hours >= 5)
-            gtg = "Good morning!";
-        else
-            gtg = "Good start of a brand-new day!!";
-    }
-
-    char *greeting = gtg.data();
-
-    char hrs[50];
-    itoa(hours, hrs);
-    char *curTime = stradd(hrs, timePartB);
-
-    Date THIS;
-    THIS.hours = hours;
-    THIS.mins = atoi(slice(s, 14, 16));
-    THIS.timegreet = greeting;
-    strcpy(THIS.time, curTime);
-    THIS.period = period;
-    THIS.day = day;
-    THIS.dayAsNumber = dayAsNumber;
-    THIS.isWeekend = isWeekend;
-    THIS.month = slice(month, 0, 5);
-    THIS.year = atoi(yearTemp);
-    strcpy(THIS.stamp, timestamp);
-    strcat(strcat(THIS.stamp, "-"), slice(day, 0, 3));
-    strcpy(THIS.stamp, upper(THIS.stamp));
-    strcpy(THIS.date, THIS.stamp);
-    return THIS;
+    Date this;
+    this.day = day;
+    this.dayAsNumber = dayAsNumber;
+    this.isWeekend = isWeekend;
+    this.date = date;
+    this.month = slice(month, 0, 5);
+    this.year = atoi(year);
+    this.time = merge(merge(merge(merge(hrs, ":"), slice(s, 14, 16)), " "), ampm);
+    this.time = merge(slice(this.time, 0, strlen(this.time) - 3), ampm);
+    this.hours = atoi(hrs);
+    this.mins = atoi(slice(s, 14, 16));
+    this.period = ampm;
+    this.timegreet = timegr(ampm, atoi(hrs));
+    strcpy(this.stamp, timestamp);
+    merge(merge(merge(merge(this.stamp, "-"), slice(day, 0, 3)), "-"), this.time);
+    strcpy(this.stamp, upper(replace(this.stamp, ":", "-")));
+    return this;
 }
 int isWeekend()
 {
     return new_date().isWeekend;
 }
-char *today() {
+char *today()
+{
     char *ptr = (char *)malloc(strlen(new_date().stamp)+1);
     strcpy(ptr, new_date().stamp);
     return ptr;
 }
-#define tareekh today
+char *tareekh()
+{
+    return today();
+}
 char *din()
 {
     return new_date().day;
@@ -1088,8 +1125,8 @@ char *readFile(char *fname)
     }
     printf("\n[Message from HindC FileReader]:\n❌ File %s ko read karna na kaam raha. Mana ja sakta he, ya to apke pas file ko read karne ki permission nahi, ya to file ger mojood he.\n", fname);
     fclose(fptr);
-    string error = "\0";
-    return error.data();
+    char *error = "\0";
+    return error;
 }
 char *updateFile(char *fname, char *content)
 {
@@ -1109,8 +1146,8 @@ char *appendToFile(char *fname, char *content)
     }
     printf("\n[Message from HindC FileReader]:\n❎ Failed! Shayad apko is directory me files banane ki mukammal ijaazat nahi😔\n");
     fclose(fptr);
-    string error = "\0";
-    return error.data();
+    char *error = "\0";
+    return error;
 }
 int deleteFile(char *fname)
 {
@@ -1135,13 +1172,13 @@ int copyFile(char *src, char *dest)
     stream_R = fopen(src, "r");
     if (!stream_R || stream_R == NULL)
     {
-        printf("\n[Message from HindC FileReader]:\n❌ Source file ki ger mojoodgi ki soorat, file ko copy/move karna na kaam raha!\n");
+        printf("\n[Message from HindC FileReader]:\n❌ Source file ki ger mojoodgi ki soorat, file ko copy/move/rename karna na kaam raha!\n");
         return 0;
     }
     stream_W = fopen(dest, "w");
     if (!stream_W || stream_W == NULL)
     {
-        printf("\n[Message from HindC FileReader]:\n❌ File ko copy/move karna na kaam raha!\n");
+        printf("\n[Message from HindC FileReader]:\n❌ File ko copy/move/rename karna na kaam raha!\n");
         fclose(stream_R);
         return 0;
     }
@@ -1155,8 +1192,7 @@ int copyFile(char *src, char *dest)
 }
 int renameFile(char *oldName, char *newName)
 {
-    int renameSuccessful = rename(oldName, newName) == 0;
-    if (renameSuccessful)
+    if (copyFile(oldName, newName) && deleteFile(oldName))
     {
         printf("\n[Message from HindC FileReader]:\n ✔️ File renamed successfully\n");
         return 1;
@@ -1166,7 +1202,7 @@ int renameFile(char *oldName, char *newName)
 }
 int moveFile(char *fname, char *dest)
 {
-    if (renameFile(fname, dest))
+    if (copyFile(fname, dest) && deleteFile(fname))
     {
         printf("\n[Message from HindC FileReader]:\n ✔️ File moved successfully\n");
         return 1;
@@ -1186,6 +1222,7 @@ int fileHatao(char *fname, char *content)
 {
     return deleteFile(fname);
 }
+
 //ARRAY METHODS
 #define arrSecLast(arr) (arr[sizeof(arr)/sizeof(arr[0])-2])
 #define arrLast(arr) (arr[sizeof(arr)/sizeof(arr[0])-1])
@@ -1229,25 +1266,24 @@ void bubbleSortDesc(int array[], int size) {
       ruko;
   basab
 }
-void printArr(char arr[], int size) {
+void printArr(char *arr[], int size) {
   for (int i = 0; i < size; ++i) {
-    cout << arr[i] << " ";
+    printf("%s\n", arr[i]);
   }
-  cout << "\n";
+  br(1);
 }
 void printArrInt(int arr[], int size) {
   for (int i = 0; i < size; ++i) {
-    cout << arr[i] << " ";
+    printf("%d ", arr[i]);
   }
-  cout << " ";
+  br(1);
 }
 void printArrReversedInt(int arr[], int size) {
   size -= 1;
   //bugfix: we want the size not as a number, but as an index, and indexes always start with 0
   for (; size >= 0; size--) {
-    cout << arr[size] << " ";
+    print_i(arr[size]);
   }
-  cout << " ";
 }
 #define printArrIntReverse printArrReversedInt
 
@@ -1268,116 +1304,77 @@ App appMeta(char *name, char *version) {
     #ifdef CONIO_H
         recognize_colors();
     #endif
-    printf("\t\t><><><><><><>❤️<><><><><><\n\t\t|        HindC++\n\t\t\t   by\n\t\t\t Khurram Ali\n\t\t>💗🌷<><><><><><><><>🌹💘<\n\t\t   =====================\n\t\t|\\/\t\t\t\\/|\n\n\n\n");
-    printf("%s%s v%s\t\t      © Licensed under MIT™\n", strlen(name) > 3 && strlen(name) < 15 ? name : "Sample", strlen(name) < 9 ? " App" : "", strlen(version) && strlen(version) < 9 ? version : "1.0.0");
-    string temp1 = "<<";
-        repeat_inline(temp1.data(), 30);
-        br(2);
-        #ifdef CONIO_H
+    kaho("\t\t><><><><><><>❤️<><><><><><\n\t\t|        HindC\n\t\t\t   by\n\t\t\t Khurram Ali\n\t\t>💗🌷<><><><><><><><>🌹💘<\n\t\t   =====================\n\t\t|\\/\t\t\t\\/|\n\n");
+    kaho("%s%s v%s\t\t      © Licensed under MIT™\n", strlen(name) > 3 && strlen(name) < 15 ? name : "Sample", strlen(name) < 9 ? " App" : "", strlen(version) && strlen(version) < 9 ? version : "1.0.0");
+	repeat_inline("<<", 30);
+	br(2);
+	#ifdef CONIO_H
         clr(peela);
     #endif
-    string temp2 = "Happy %s❤️,\t\t          %s\n\t\t\t\t       ___________________\n",
-      temp3 = "  ";
-        printf(temp2.data(), strlen(dt.day) < 8 ? join(dt.day, temp3.data()) : dt.day, dt.stamp);
+	kaho("Happy %s❤️,\t\t      %s\n\t\t\t\t       ___________________\n", strlen(dt.day) < 8 ? join(dt.day, "  ") : dt.day, dt.stamp);
     #ifdef CONIO_H
         clr(_def);
     #endif
-    string temp4 = "^^";
-        repeat_inline(temp4.data(), 30);
-        br(2);
+	repeat_inline("^^", 30);
+	br(2);
     return my_app;
 }
 App setMeta(char *name, char *version) {
     return appMeta(name, version);
 }
 App new_sample_app() {
-    string temp = "";
-    return setMeta(temp.data(), temp.data());
+    return setMeta("", "");
 }
 App new_custom_app(char *name, char *version) {
     return setMeta(name, version);
 }
-const string _app_name = "hindC++", 
-    _app_version = "1.0.1",
-    _app_vendor = "github.com/abbaskhurram255";
 
 
 /*
 int main()
 {
-    string username = ask("What's your username: ");
-    int age = ask_i("How old are you: ");
-    int birthyear = age2birthyear(age);
-
-    kahen ke "Hey @" aage username aage ", aj " or_aage falaana aage tareekh() aage " he. Oh, to apki pedaish " aage birthyear or_age " ki he?" or_bas;
+    #ifdef CONIO_H
+        recognize_colors();
+    #endif
+    char naam[] = "";
+    pucho("Please enter your name: ", naam);
+    agline();
+    float numA = pucho_f("Pick a number: ");
+    float numB = pucho_f("Pick number two: ");
+    if (he(naam, "Hifazat"))
+        naya(naam, "Sunny");
+    cap(naam);
+    #ifdef CONIO_H
+        clr(hara);
+    #endif
+    kaho("%s,", naam);
+    #ifdef CONIO_H
+        clr(peela);
+    #endif
+    kaho("Sum = %.1f", numA + numB);
+    #ifdef CONIO_H
+        clr(shurwati);
+    #endif
+    kaho("Triangular area of %d, and %d: %d", 10, 60, tria(10, 60));
+    repeat("test", 5);
+    repeat_i(5, 5);
+    kaho_f_inline(pct(400, 800));
+    kaho("%%");
+    kaho_n(randInt(5, 50));
+    return 0;
 }
 */
 /*
-int main() {
-    str s = "2 and 2 are equal";
-    farz num barabar 2;
-
-    agar num wakai_barabar (1+1) hen to
-        kahie ke s or_bas;
-        or_kahie "duh" akhir_me;
-    nahi_to_agar num wakai_barabar (1-1) hen to
-        kahen ke "not quite right, 2 is actually equivalent to 0" or_bas;
-    agar_koi_na tab
-      kahen ke "dono galat";
-    basab
-
+C++-like functionality in C
+int main(){
+    string name = "Ayesha";
+    flt height = 4.9;
+    print("%s is %.1f ft. high", name, height);
 }
 */
-/*
-int main() {
-    farz score barabar 40;
 
-    haalat score ki
-        surat 20 me
-            kahie ke "Low on score";
-            ruko;
-        surat 40 me
-            kahie ke "Moderate score";
-            ruko;
-        surat 70 me
-            kahie ke "High on score";
-            ruko;
-    basab
-
-    bolie ke "\nYour score: " or_age score or_bas;
+int main()
+{
+    char *content = readFile("q2.c");
+    print(content);
 }
-*/
-/*
-    string word = puchoWord("Please enter a word: ") re
-    bolie ke "You entered: " aage word aage_bas na
-    kahie ke salaam;
-}
-*/
-/*
-co
-    ayesha kahie "hi" aur " love" age_bas ji
-    kahie 5 ji
-de
-*/
-
-
-/*
-func x() {
-    return 1;
-}
-
-co
-    farz i barabar x() pagli
-    
-    karo ye
-        kahie "Ginti: " aur i aage_bas meri_jan
-        i me_dalo 1 ayesha
-    sab jabtak i chote_ya_barabar 5 hen ri
-de
-*/
-/*
-on
-    int myInts[] = {1, 3, 5, 7};
-    printArrReversedInt(myInts, arrlen(myInts));
-off
-*/
