@@ -108,6 +108,8 @@
 #define off }
 #define shuru int main() {
 #define shurwat int main() {
+#define khu int main() {
+#define ram }
 #define hind int main() {
 #define C }
 #define co int main() {
@@ -116,6 +118,7 @@
 #define sha }
 
 
+#define khurram ;printf("");
 #define set ;printf("");
 #define hui ;printf("");
 #define hua ;printf("");
@@ -1328,7 +1331,7 @@ App new_sample_app() {
 App new_custom_app(char *name, char *version) {
     return setMeta(name, version);
 }
-
+    
 
 /*
 int main()
@@ -1372,9 +1375,21 @@ int main(){
     print("%s is %.1f ft. high", name, height);
 }
 */
-
+/*
 int main()
 {
     char *content = readFile("q2.c");
     print(content);
 }
+*/
+
+
+/*
+khu
+    char name[] = "";
+    pucho("Please apna naam share keejye? ", name);
+    phere int i barabar 1; i chota_ya_barabar 5; i me_izafa 1 ka or_run
+        khurram kaho("hi %s, I'm counting... %d", name, i);
+    basab
+ram
+*/
