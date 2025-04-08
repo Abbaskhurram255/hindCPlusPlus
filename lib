@@ -140,8 +140,8 @@ using haal = bool;
 #define pyari ;
 #define larki ;
 #define ji ;
-#define object struct
-#define Object struct
+#define object typedef struct
+#define Object typedef struct
 #define on int main() {
 #define off }
 #define shuru int main() {
@@ -690,7 +690,7 @@ int heFltjesa(char *str)
 }
 // ::Math
 double Pos(double n) {
-    return abs(n);
+    return fabs(n);
 }
 double Neg(double n) {
     return -n;
@@ -731,22 +731,13 @@ float quo(float a, float b)
 {
     return a / b;
 }
-float joro(float a, float b)
-{
-    return a + b;
-}
-float nikalo(float a, float b)
-{
-    return a - b;
-}
-float zarb(float a, float b)
-{
-    return a * b;
-}
-float baato(float a, float b)
-{
-    return a / b;
-}
+#define add sum
+#define dalo sum
+#define sub diff
+#define nikalo diff
+#define mul prd
+#define zarb prd
+#define div quo
 int mod(float a, float b)
 {
     if (b > a)
@@ -760,10 +751,11 @@ int isperfmod(float a, float b)
 {
     return mod(a, b) == 0;
 }
-int isdivisor(float of, float n)
+int isdiv(float of, float n)
 {
     return mod(of, n) == 0;
 }
+#define isdivisor isdiv
 int iseven(int n)
 {
     return isperfmod(n, 2);
@@ -1251,7 +1243,7 @@ void printArrInt(int arr[], int size) {
 }
 void printArrReversedInt(int arr[], int size) {
   size -= 1;
-  //bugfix
+  //bugfix: we want the size not as a number, but as an index, and indexes always start with 0
   for (; size >= 0; size--) {
     cout << arr[size] << " ";
   }
