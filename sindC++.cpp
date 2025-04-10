@@ -11,46 +11,44 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-using jumla = char*;
-using lafz = jumla;
+using jumlo = char*;
+using lafz = jumlo;
 using str = lafz;
 using nr = double;
 using dbl = nr;
 using flt = float;
 using ch = char;
 using haal = bool;
+#define in std::cin
+#define save in
 #define out std::cout <<
-#define kahie out
-#define or_kahie out
-#define kahen out
-#define or_kahen out
-#define bolie out
-#define or_bolie out
-#define bolen out
-#define or_bolen out
-#define ke "" <<
+#define chau out
+#define aen_chau out
+#define chao out
+#define aen_chao out
+#define tab "" <<
 #define yar "" <<
-#define or_yar <<
-#define aur << " " <<
-#define aage << " " <<
-#define or_age << " " <<
-#define or_aage << " " <<
+#define aen_yar <<
+#define aen << " " <<
+#define agya << " " <<
+#define aen_agya << " " <<
+#define aen_agyo << " " <<
 #define bas endl
-#define or_bas or_age bas
-#define age_bas or_bas
-#define aage_bas or_bas
-#define bas_re or_bas
-#define akhir_me or_bas
-#define falaana ""
+#define aen_bas aen_agya bas
+#define agya_bas aen_bas
+#define agyo_bas aen_bas
+#define bas_re aen_bas
+#define akhir_me aen_bas
+#define falaano ""
 #define yes true
 #define sach true
-#define han true
+#define ha true
 #define no false
-#define jhoot false
+#define koor false
 #define na false
 #define nahi == false
 #define agar_sach == true
-#define agar_jhoot ""
+#define agar_koor ""
 #define warna ""
 #define bana =
 #define bani =
@@ -554,7 +552,10 @@ char *upper(char *str)
         str[i] = toupper(str[i]);
     return str;
 }
-#define cap upper
+char *cap(char *str)
+{
+    return upper(str);
+}
 char *lower(char *str)
 {
     for (int i = 0; i < strlen(str); i++)
@@ -576,7 +577,7 @@ char *strPop(char *str)
     str[strlen(str) - 1] = '\0';
     return str;
 }
-int strEq(char *x, char *y)
+int he(char *x, char *y)
 {
     return strcasecmp(x, y) == 0;
 }
@@ -584,31 +585,54 @@ char *naya(char *x, char *y)
 {
     return strcpy(x, y);
 }
-#define nai naya
-char *concat(char *str1, char *str2)
+char *nai(char *x, char *y)
+{
+    return strcpy(x, y);
+}
+char *addTo(char *str1, char *str2)
 {
     return strcat(str1, str2);
 }
-#define connect concat
-#define join concat
-#define merge concat
-#define stradd concat
-#define makeone concat
-#define strmilao concat
-#define strjoro concat
-int strAt(char *str, char *lookup) {
-    char *p = strstr(str, lookup);
-    if (p) return p-str;
-    return -1;
+char *addTwo(char *str1, char *str2)
+{
+    return addTo(str1, str2);
 }
-int strHas(char *str, char *lookup) {
-    return strAt(str, lookup) >= 0 && strAt(str, lookup) != -1;
+char *connect(char *str1, char *str2)
+{
+    return addTo(str1, str2);
 }
-#define strIncl strHas
-#define in strHas
-#define match strHas
-#define matches strHas
-
+char *join(char *str1, char *str2)
+{
+    return addTo(str1, str2);
+}
+char *concat(char *str1, char *str2)
+{
+    return addTo(str1, str2);
+}
+char *merge(char *str1, char *str2)
+{
+    return addTo(str1, str2);
+}
+char *stradd(char *str1, char *str2)
+{
+    return addTo(str1, str2);
+}
+char *strplus(char *str1, char *str2)
+{
+    return addTo(str1, str2);
+}
+char *makeone(char *str1, char *str2)
+{
+    return addTo(str1, str2);
+}
+char *strmilao(char *str1, char *str2)
+{
+    return addTo(str1, str2);
+}
+char *strjoro(char *str1, char *str2)
+{
+    return addTo(str1, str2);
+}
 //NUMBER METHODS
 int isNumlike(char *str)
 {
@@ -830,6 +854,12 @@ char *randstr(int len)
     result[max + 1] = '\0';
     return slice(result, 0, len);
 }
+int strHas(char *str, char *lookup) {
+    char *p = strstr(str, lookup);
+    if (p) return p-str;
+    return 0;
+}
+#define strincl strHas
 void reverseStr(char s[])
 {
     int i, j;
