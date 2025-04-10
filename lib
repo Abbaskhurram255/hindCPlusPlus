@@ -19,8 +19,6 @@ using dbl = nr;
 using flt = float;
 using ch = char;
 using haal = bool;
-#define in std::cin
-#define save in
 #define out std::cout <<
 #define kahie out
 #define or_kahie out
@@ -556,10 +554,7 @@ char *upper(char *str)
         str[i] = toupper(str[i]);
     return str;
 }
-char *cap(char *str)
-{
-    return upper(str);
-}
+#define cap upper
 char *lower(char *str)
 {
     for (int i = 0; i < strlen(str); i++)
@@ -581,7 +576,7 @@ char *strPop(char *str)
     str[strlen(str) - 1] = '\0';
     return str;
 }
-int he(char *x, char *y)
+int strEq(char *x, char *y)
 {
     return strcasecmp(x, y) == 0;
 }
@@ -589,54 +584,31 @@ char *naya(char *x, char *y)
 {
     return strcpy(x, y);
 }
-char *nai(char *x, char *y)
-{
-    return strcpy(x, y);
-}
-char *addTo(char *str1, char *str2)
+#define nai naya
+char *concat(char *str1, char *str2)
 {
     return strcat(str1, str2);
 }
-char *addTwo(char *str1, char *str2)
-{
-    return addTo(str1, str2);
+#define connect concat
+#define join concat
+#define merge concat
+#define stradd concat
+#define makeone concat
+#define strmilao concat
+#define strjoro concat
+int strAt(char *str, char *lookup) {
+    char *p = strstr(str, lookup);
+    if (p) return p-str;
+    return -1;
 }
-char *connect(char *str1, char *str2)
-{
-    return addTo(str1, str2);
+int strHas(char *str, char *lookup) {
+    return strAt(str, lookup) >= 0 && strAt(str, lookup) != -1;
 }
-char *join(char *str1, char *str2)
-{
-    return addTo(str1, str2);
-}
-char *concat(char *str1, char *str2)
-{
-    return addTo(str1, str2);
-}
-char *merge(char *str1, char *str2)
-{
-    return addTo(str1, str2);
-}
-char *stradd(char *str1, char *str2)
-{
-    return addTo(str1, str2);
-}
-char *strplus(char *str1, char *str2)
-{
-    return addTo(str1, str2);
-}
-char *makeone(char *str1, char *str2)
-{
-    return addTo(str1, str2);
-}
-char *strmilao(char *str1, char *str2)
-{
-    return addTo(str1, str2);
-}
-char *strjoro(char *str1, char *str2)
-{
-    return addTo(str1, str2);
-}
+#define strIncl strHas
+#define in strHas
+#define match strHas
+#define matches strHas
+
 //NUMBER METHODS
 int isNumlike(char *str)
 {
@@ -858,12 +830,6 @@ char *randstr(int len)
     result[max + 1] = '\0';
     return slice(result, 0, len);
 }
-int strHas(char *str, char *lookup) {
-    char *p = strstr(str, lookup);
-    if (p) return p-str;
-    return 0;
-}
-#define strincl strHas
 void reverseStr(char s[])
 {
     int i, j;
