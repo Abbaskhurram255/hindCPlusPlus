@@ -1216,6 +1216,24 @@ void printArrReversedInt(int arr[], int size) {
   cout << " ";
 }
 #define printArrIntReverse printArrReversedInt
+int strInArr(char *arr[], char *lookupStr, int length)
+{
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupStr) return 1;
+    }
+    return 0;
+}
+int intInArr(int arr[], int lookupInt, int length)
+{
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupInt) return 1;
+    }
+    return 0;
+}
+#define inArrStr strInArr
+#define inArrInt intInArr
 
 //Library GUI
 typedef struct {
@@ -1237,20 +1255,20 @@ App appMeta(char *name, char *version) {
     printf("\t\t><><><><><><>❤️<><><><><><\n\t\t|        HindC++\n\t\t\t   by\n\t\t\t Khurram Ali\n\t\t>💗🌷<><><><><><><><>🌹💘<\n\t\t   =====================\n\t\t|\\/\t\t\t\\/|\n\n\n\n");
     printf("%s%s v%s\t\t      © Licensed under MIT™\n", strlen(name) > 3 && strlen(name) < 15 ? name : "Sample", strlen(name) < 9 ? " App" : "", strlen(version) && strlen(version) < 9 ? version : "1.0.0");
     string temp1 = "<<";
-        repeat_inline(temp1.data(), 30);
-        br(2);
-        #ifdef CONIO_H
+    repeat_inline(temp1.data(), 30);
+    br(2);
+    #ifdef CONIO_H
         clr(peela);
     #endif
     string temp2 = "Happy %s❤️,\t\t          %s\n\t\t\t\t       ___________________\n",
-      temp3 = "  ";
-        printf(temp2.data(), strlen(dt.day) < 8 ? join(dt.day, temp3.data()) : dt.day, dt.stamp);
+         temp3 = "  ";
+     printf(temp2.data(), strlen(dt.day) < 8 ? join(dt.day, temp3.data()) : dt.day, dt.stamp);
     #ifdef CONIO_H
         clr(_def);
     #endif
     string temp4 = "^^";
-        repeat_inline(temp4.data(), 30);
-        br(2);
+    repeat_inline(temp4.data(), 30);
+    br(2);
     return my_app;
 }
 App setMeta(char *name, char *version) {
@@ -1347,3 +1365,13 @@ on
     printArrReversedInt(myInts, arrlen(myInts));
 off
 */
+/*
+co
+    int x[] = {1, 3, 5, 7};
+    kahie "int 5 in integer array \"x\": " aur intInArr(x, 5, arrlen(x)) age_bas;
+    str arr[] = {"hi", "hola", "hallo", "ciao"};
+    kahie "string \"helio\" in stringed array \"arr\":" aur strInArr(arr, "helio", arrlen(arr)) age_bas;
+    kahie "string \"la\" in a string at index 1 from stringed array \"arr\":" aur in(arr[1], "la");
+de
+*/
+
