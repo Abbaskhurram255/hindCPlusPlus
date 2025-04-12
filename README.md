@@ -33,19 +33,69 @@ A Hindi to GCC translation engine
 `de`<br/>
 
 ## Swapping
-`#include "hindC++"`<be/>
+`#include "hindC++"`<br/>
 
-`func stateOf(int a, int b) {`<br/>
-`    kahie "Abhi a barabar he" aage a aage "; b barabar he" aage b age_bas re`<br/>
+`func stateOf(int a, int b){`<br/>
+`    kahie "Abhi A barabar he" aage a aage "; B barabar he" aage b age_bas re`<br/>
 `}`<br/>
 
 `on`<br/>
-`    farz a barabar 2,`<br/>
-`         b barabar 5 ji`<br/>
-`    stateOf(a, b);`<br/>
-`    hera_pheri(a, b) ji`<br/>
-`    stateOf(a, b);`<br/>
+`    farz A barabar 2 sath`<br/>
+`      B barabar 5 re`<br/>
+`    farz aInPast barabar A sath`<br/>
+`      bInPast barabar B re`<br/>
+`    stateOf(A, B);`<br/>
+`    hera_pheri of A, B karie;`<br/>
+`    stateOf(A, B);`<br/>
+`    farz failure = A wakai_barabar aInPast or_sath B wakai_barabar bInPast ji`<br/>
+`    agar failure nahi he to`<br/>
+`        kahie "Exchanging data was successful. int A ab B ke barabar he, or B ab A ke!" re`<br/>
+`    nahi_to`<br/>
+`        kahie "Failure in data exchange, a=aInPast, and b still equals state of bInPast, so nothing changed" re`<br/>
+`    basab`<br/>
 `off`<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+download the library,
+put it in the project folder,
+and import it,
+to enjoy the ride!!
+
+C++ ab Hindi me
+
+*Features*
+  * for loops
+  * while
+  * do-while
+  * hindi-friendly if-else
+  * hindi-friendly switchCase
+  * int, float, or double likhne ki jaga, ab farz x barabar y lilh do, compiler khud hi samajh jaega data type ko
+  * semicolons ki jaga ab words ka istamal: ji, re, ri, baba, meri_jan
+  * ...or bhi hazaaro cheeze, wo bhi hindi syntax me
+
+*Downsides <nuksaanat>*:
+  * Ek hi: library mangane ki zarurat
+
+
+Download link:
+raw.githubusercontent.com/Abbaskhurram255/hindCPlusPlus/refs/heads/main/lib
+
+
+*/
 
 ## Pros
 * Say goodbye to the junky main function (i.e. `int main(){(...code)}`), just go:
