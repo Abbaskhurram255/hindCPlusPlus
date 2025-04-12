@@ -12,6 +12,7 @@
 #include <algorithm>
 using namespace std;
 using jumla = char*;
+using jumlo = jumla;
 using lafz = jumla;
 using str = lafz;
 using nr = double;
@@ -20,6 +21,12 @@ using flt = float;
 using ch = char;
 using haal = bool;
 #define out std::cout <<
+#define farmaiye out
+#define or_farmaiye out
+#define farmao out
+#define or_farmao out
+#define keh out
+#define or_keh out
 #define kahie out
 #define or_kahie out
 #define kahen out
@@ -28,30 +35,52 @@ using haal = bool;
 #define or_bolie out
 #define bolen out
 #define or_bolen out
+#define farmayo out
+#define aen_farmayo out
+#define farmae out
+#define aen_farmae out
+#define chao out
+#define aen_chao out
+#define chau out
+#define aen_chau out
 #define ke "" <<
 #define yar "" <<
-#define or_yar <<
+#define or_yar << " " <<
+#define aen_yar << " " <<
 #define aur << " " <<
+#define aen << " " <<
 #define aage << " " <<
+#define agya << " " <<
 #define or_age << " " <<
+#define aen_agya << " " <<
 #define or_aage << " " <<
+#define aen_agyo << " " <<
 #define bas endl
 #define or_bas or_age bas
 #define age_bas or_bas
 #define aage_bas or_bas
 #define bas_re or_bas
-#define akhir_me or_bas
+#define aen_bas aen_agya bas
+#define agya_bas aen_bas
+#define agyo_bas aen_bas
+#define akhir_me aen_bas
 #define falaana ""
+#define falaano ""
 #define yes true
 #define sach true
 #define han true
+#define hau true
 #define no false
 #define jhoot false
+#define koor false
 #define na false
 #define nahi == false
+#define nahe == false
+#define na_ahe == false
 #define agar_sach == true
 #define agar_jhoot ""
-#define warna ""
+#define agar_koor ""
+#define nata_wari ""
 #define bana =
 #define bani =
 #define bane =
@@ -59,34 +88,75 @@ using haal = bool;
 #define is_now =
 #define ab =
 #define ab_he =
+#define hare =
+#define hare_ahe =
 #define he_ab =
+#define ahe_hare
+#define into =
 #define exchange swap
 #define hera_pheri swap
+#define adla_badli swap
 #define exists !!
+#define mojood !!
+#define sath , 
+#define gad ,
+#define or_sath &&
+#define or_to_or &&
+#define aur_to_aur &&
+#define aen_gad &&
+#define aen_ta_aen &&
+#define gado_gad &&
 #define karo do
+#define kar do
 #define ye {
+#define hee {
 #define sab }
 #define jabtak while (
+#define jesitae while (
+#define jasitore while (
 #define tabtak {
+#define tesitae {
+#define tesitore {
 #define then {
 #define to {
+#define ta {
 #define tab {
+#define tadhen {
 #define abbas }
+#define hare_bas }
 #define basab }
+#define bas_hare }
 #define khatm }
+#define khatam }
 #define ant }
 #define ruko break
 #define skip continue
 #define phere for (
+#define phera for (
+#define karie )
 #define keejye )
+#define kario )
+#define kayo )
+#define kajo )
 #define ka )
 #define ko )
+#define jo )
+#define khe )
+#define of (
 #define or_run {
+#define or_karo {
+#define aen_kar {
 #define agar if (
+#define he )
 #define hen )
+#define ahe )
+#define ahin )
 #define nahi_to_agar } else if (
-#define nahi_to } else
-#define agar_koi_na } else 
+#define nahi_to } else {
+#define nata_agar } else if (
+#define nata } else {
+#define agar_koi_na } else {
+#define agar_sab_galat } else {
 #define me_izafa +=
 #define me_dalo +=
 #define me_dala +=
@@ -98,6 +168,36 @@ using haal = bool;
 #define se_gaya -=
 #define se_ghata -=
 #define se_ghatao -=
+#define me_izafo +=
+#define me_wij +=
+#define me_wadhai +=
+#define me_wadhio +=
+#define me_wadhaiyo +=
+#define me_wayo +=
+#define me_ghatio -=
+#define me_ghato -=
+#define kha_wayo -=
+#define kha_ghatio -=
+#define kha_ghataiyo -=
+#define kha_ghatae -=
+#define ma_wayo -=
+#define ma_ghatio -=
+#define ma_ghataiyo -=
+#define ma_ghatae -=
+#define ma_kad -=
+#define ma_wanyan -=
+#define ma_nikto -=
+#define ma_nikta -=
+#define ma_nikre -=
+#define ma_nikriya -=
+#define ma_nikran -=
+#define kha_nikto -=
+#define kha_nikta -=
+#define kha_nikre -=
+#define kha_nikriya -=
+#define kha_nikran -=
+#define kha_wayo -=
+#define kha_kad -=
 #define koshish try
 #define rukawat catch (...)
 #define na_kami catch (...)
@@ -113,19 +213,44 @@ using haal = bool;
 #define is ==
 #define wakai_barabar ==
 #define nahi_barabar !=
+#define na_barabar !=
 #define zyada_ya_barabar >=
+#define gharo_ya_barabar >=
+#define ghara_ya_barabar >=
 #define bara_ya_barabar >=
+#define wado_ya_barabar >=
 #define bare_ya_barabar >=
+#define wada_ya_barabar >=
 #define kam_ya_barabar <=
+#define ghat_ya_barabar <=
 #define chota_ya_barabar <=
+#define nandho_ya_barabar <=
+#define nandhro_ya_barabar <=
 #define chote_ya_barabar <=
+#define nandha_ya_barabar <=
+#define nandhra_ya_barabar <=
 #define se_bara <
 #define se_bare <
 #define se_bari <
 #define se_chota >
 #define se_chote >
 #define se_choti >
+#define kha_wado <
+#define kha_wada <
+#define kha_wadi <
+#define kha_gharo <
+#define kha_ghara <
+#define kha_ghari <
+#define kha_nandho >
+#define kha_nandhro >
+#define kha_nandha >
+#define kha_nandhra >
+#define kha_nandhi >
+#define kha_nandhri >
 #define se )
+#define kha )
+#define ma )
+#define mau )
 #define let auto
 #define fn auto
 #define func auto
@@ -134,9 +259,7 @@ using haal = bool;
 #define re ;
 #define ri ;
 #define love ;
-#define janu ;
 #define pyari ;
-#define larki ;
 #define ji ;
 #define object typedef struct
 #define Object typedef struct
@@ -145,19 +268,47 @@ using haal = bool;
 #define shuru int main() {
 #define shurwat int main() {
 #define hind int main() {
+#define sind int main() {
 #define C }
 #define co int main() {
 #define de }
 #define aye int main() {
 #define sha }
 #define set ;std::cout<<"";
-#define hua ;std::cout<<"";;
-#define hui ;std::cout<<"";;
-#define hue ;std::cout<<"";;
+#define hua ;std::cout<<"";
+#define hui ;std::cout<<"";
+#define hue ;std::cout<<"";
+#define aap ;std::cout<<"";
+#define tum ;std::cout<<"";
+#define tu ;std::cout<<"";
+#define tussi ;std::cout<<"";
+#define larki ;std::cout<<"";
+#define chori ;std::cout<<"";
+#define behen ;std::cout<<"";
+#define behna ;std::cout<<"";
+#define baji ;std::cout<<"";
+#define didi ;std::cout<<"";
+#define kuri ;std::cout<<"";
+#define kurio ;std::cout<<"";
+#define kurie ;std::cout<<"";
+#define yaara ;std::cout<<"";
+#define tawheen ;std::cout<<"";
+#define tawhan ;std::cout<<"";
+#define adi ;std::cout<<"";
+#define bhen ;std::cout<<"";
+#define penji ;std::cout<<"";
+#define aap ;std::cout<<"";
+#define bhau ;std::cout<<"";
 #define pagli ;std::cout<<"";
+#define ba ;std::cout<<"";
 #define baba ;std::cout<<"";
 #define meri_jan ;std::cout<<"";
 #define ayesha ;std::cout<<"";
+
+
+
+
+
 
 
 
@@ -167,9 +318,11 @@ using haal = bool;
         #include <conio.h>
         int black = BLACK, red = RED, yellow = YELLOW, green = GREEN, blue = BLUE, white = WHITE, cyan = CYAN;
         int kala, kaala, lal, laal, peela, hara, nira, neera, sufed, safed, shurwati, _def, samandari;
+        int kaaro, gaaro, peelo, saao, niro, neero, acho, asmaani;
         void recognize_colors()
         {
-            kala = kaala = black, lal = laal = red, peela = yellow, hara = green, nira = neera = blue, safed = sufed = shurwati = _def = white, samandari = cyan;
+            kala = kaala = black, lal = laal = red, peela = yellow, hara = green, nira = neera = blue, safed = sufed = shurwati = _def = white, samandari = cyan,
+            kaaro = black, gaaro = red, peelo = yellow, saao = green, niro = neero = blue, acho = shurwati = _def = white, asmaani = cyan;
         }
         void clr(int new_color)
         {
@@ -332,12 +485,14 @@ string puchoWord(string x) {
     std::cin >> returnValue;
     return returnValue;
 }
+#define puchWord puchoWord
 string pucho(string x) {
     std::string returnValue = "";
     std::cout << x;
     getline(std::cin, returnValue);
     return returnValue;
 }
+#define puch pucho
 #define askline pucho
 #define saveline pucho
 #define askWord puchoWord
@@ -362,6 +517,9 @@ float pucho_f(char *x)
     scanf("%f", &y);
     return y;
 }
+#define puch_i pucho_i
+#define puch_c pucho_c
+#define puch_f pucho_f
 int puchoInt(char *x)
 {
     return pucho_i(x);
@@ -374,6 +532,9 @@ float puchFlt(char *x)
 {
     return pucho_f(x);
 }
+#define puchInt puchoInt
+#define puchCh puchoCh
+#define puchFlt puchoFlt
 #define scan pucho
 #define scanWord puchoWord
 int scan_i(char *x)
@@ -472,38 +633,23 @@ void repeat_b_inline(int h, int j)
     for (int i = 0; i < j; i++)
         printf_inline("%s", !h ? "false" : "true");
 }
-void duhrao(char *str, int n_times)
-{
-    repeat(str, n_times);
-}
-void duhrao_inline(char *str, int n_times)
-{
-    repeat_inline(str, n_times);
-}
-void duhrao_i(int i, int n_times)
-{
-    repeat_i(i, n_times);
-}
-void duhrao_i_inline(int i, int n_times)
-{
-    repeat_i_inline(i, n_times);
-}
-void duhrao_f(float f, int n_times)
-{
-    repeat_f(f, n_times);
-}
-void duhrao_f_inline(float f, int n_times)
-{
-    repeat_f_inline(f, n_times);
-}
-void duhrao_b(int boolean, int n_times)
-{
-    repeat_b(boolean, n_times);
-}
-void duhrao_b_inline(int boolean, int n_times)
-{
-    repeat_b_inline(boolean, n_times);
-}
+#define duhrao repeat
+#define duhrao_inline repeat_inline
+#define duhrao_i repeat_i
+#define duhrao_i_inline repeat_i_inline
+#define duhrao_f repeat_f
+#define duhrao_f_inline repeat_f_inline
+#define duhrao_b repeat_b
+#define duhrao_b_inline repeat_b_inline
+#define duhrae duhrao
+#define duhrae_inline duhrao_inline
+#define duhrae_i duhrao_i
+#define duhrae_i_inline duhrao_i_inline
+#define duhrae_f duhrao_f
+#define duhrae_f_inline duhrao_f_inline
+#define duhrae_b duhrao_b
+#define duhrae_b_inline duhrao_b_inline
+
 //STRING METHODS
 char *keepFirst(char *str, char *with)
 {
@@ -585,6 +731,7 @@ char *naya(char *x, char *y)
     return strcpy(x, y);
 }
 #define nai naya
+#define nao naya
 char *concat(char *str1, char *str2)
 {
     return strcat(str1, str2);
@@ -595,6 +742,7 @@ char *concat(char *str1, char *str2)
 #define stradd concat
 #define makeone concat
 #define strmilao concat
+#define strmilae concat
 #define strjoro concat
 int strAt(char *str, char *lookup) {
     char *p = strstr(str, lookup);
@@ -648,18 +796,13 @@ int isFltlike(char *str)
     all_checks_passed = n_digits && n_periods;
     return all_checks_passed;
 }
-int heNumjesa(char *str)
-{
-    return isNumlike(str);
-}
-int heIntjesa(char *str)
-{
-    return isIntlike(str);
-}
-int heFltjesa(char *str)
-{
-    return isFltlike(str);
-}
+#define heNumjesa isNumlike
+#define heIntjesa isIntlike
+#define heFltjesa isFltlike
+#define heNumjesi isNumlike
+#define heIntjesi isIntlike
+#define heFltjesi isFltlike
+
 // ::Math
 double Pos(double n) {
     return fabs(n);
@@ -705,8 +848,10 @@ float quo(float a, float b)
 }
 #define add sum
 #define dalo sum
+#define wij sum
 #define sub diff
 #define nikalo diff
+#define kad diff
 #define mul prd
 #define zarb prd
 #define div quo
@@ -723,9 +868,9 @@ int isperfmod(float a, float b)
 {
     return mod(a, b) == 0;
 }
-int isdiv(float of, float n)
+int isdiv(float of_n, float this_n)
 {
-    return mod(of, n) == 0;
+    return mod(of_n, this_n) == 0;
 }
 #define isdivisor isdiv
 int iseven(int n)
@@ -1005,6 +1150,7 @@ char *din()
 {
     return new_date().day;
 }
+#define deeh din
 #define salam new_date().timegreet
 #define salaam salam
 int age2birthyear(int age) {
@@ -1216,6 +1362,24 @@ void printArrReversedInt(int arr[], int size) {
   cout << " ";
 }
 #define printArrIntReverse printArrReversedInt
+int strInArr(char *arr[], char *lookupStr, int length)
+{
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupStr) return 1;
+    }
+    return 0;
+}
+int intInArr(int arr[], int lookupInt, int length)
+{
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupInt) return 1;
+    }
+    return 0;
+}
+#define inArrStr strInArr
+#define inArrInt intInArr
 
 //Library GUI
 typedef struct {
@@ -1237,20 +1401,20 @@ App appMeta(char *name, char *version) {
     printf("\t\t><><><><><><>❤️<><><><><><\n\t\t|        HindC++\n\t\t\t   by\n\t\t\t Khurram Ali\n\t\t>💗🌷<><><><><><><><>🌹💘<\n\t\t   =====================\n\t\t|\\/\t\t\t\\/|\n\n\n\n");
     printf("%s%s v%s\t\t      © Licensed under MIT™\n", strlen(name) > 3 && strlen(name) < 15 ? name : "Sample", strlen(name) < 9 ? " App" : "", strlen(version) && strlen(version) < 9 ? version : "1.0.0");
     string temp1 = "<<";
-        repeat_inline(temp1.data(), 30);
-        br(2);
-        #ifdef CONIO_H
+    repeat_inline(temp1.data(), 30);
+    br(2);
+    #ifdef CONIO_H
         clr(peela);
     #endif
     string temp2 = "Happy %s❤️,\t\t          %s\n\t\t\t\t       ___________________\n",
-      temp3 = "  ";
-        printf(temp2.data(), strlen(dt.day) < 8 ? join(dt.day, temp3.data()) : dt.day, dt.stamp);
+         temp3 = "  ";
+     printf(temp2.data(), strlen(dt.day) < 8 ? join(dt.day, temp3.data()) : dt.day, dt.stamp);
     #ifdef CONIO_H
         clr(_def);
     #endif
     string temp4 = "^^";
-        repeat_inline(temp4.data(), 30);
-        br(2);
+    repeat_inline(temp4.data(), 30);
+    br(2);
     return my_app;
 }
 App setMeta(char *name, char *version) {
@@ -1346,4 +1510,23 @@ on
     int myInts[] = {1, 3, 5, 7};
     printArrReversedInt(myInts, arrlen(myInts));
 off
+*/
+/*
+co
+    int x[] = {1, 3, 5, 7};
+    kahie "int 5 in integer array \"x\": " aur intInArr(x, 5, arrlen(x)) age_bas;
+    str arr[] = {"hi", "hola", "hallo", "ciao"};
+    kahie "string \"helio\" in stringed array \"arr\":" aur strInArr(arr, "helio", arrlen(arr)) age_bas;
+    kahie "string \"la\" in a string at index 1 from stringed array \"arr\":" aur in(arr[1], "la");
+de
+*/
+/*
+on
+    farz n barabar 4 re
+    agar n nandho_ya_barabar 2 ahe ta
+        bhau chau "hakeekat, 4 2 kha nandha ahin" ba
+    nata_agar n wakai_barabar 8/2 ahe ta
+        bhau chau "4 ta asal me, 8 jo addu hundo ahe!" ji
+    bas_hare
+C
 */
