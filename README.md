@@ -57,27 +57,7 @@ A Hindi to GCC translation engine
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-download the library,
-put it in the project folder,
-and import it,
-to enjoy the ride!!
-
-C++ ab Hindi me
-
-*Features*
+## *Pros*
   * for loops
   * while
   * do-while
@@ -86,23 +66,11 @@ C++ ab Hindi me
   * int, float, or double likhne ki jaga, ab farz x barabar y lilh do, compiler khud hi samajh jaega data type ko
   * semicolons ki jaga ab words ka istamal: ji, re, ri, baba, meri_jan
   * ...or bhi hazaaro cheeze, wo bhi hindi syntax me
-
-*Downsides <nuksaanat>*:
-  * Ek hi: library mangane ki zarurat
-
-
-Download link:
-raw.githubusercontent.com/Abbaskhurram255/hindCPlusPlus/refs/heads/main/lib
-
-
-*/
-
-## Pros
-* Say goodbye to the junky main function (i.e. `int main(){(...code)}`), just go:
+  * Say goodbye to the junky main function (i.e. `int main(){(...code)}`), just go:
   <br/>`on`<br/>`(   ...code)`<br/>`off`
-* Comes with Date functions
-* Comes with File functions
-* and much more
+  * Comes with Date functions
+  * Comes with File functions
+  * and much more
 
 ## Try Online
 https://onecompiler.com/cpp/43dxht7ak
