@@ -213,8 +213,8 @@ using haal = bool;
 #define nahi_barabar !=
 #define na_barabar !=
 #define zyada_ya_barabar >=
-#define ghano_ya_barabar >=
-#define ghana_ya_barabar >=
+#define gharo_ya_barabar >=
+#define ghara_ya_barabar >=
 #define bara_ya_barabar >=
 #define wado_ya_barabar >=
 #define bare_ya_barabar >=
@@ -236,9 +236,9 @@ using haal = bool;
 #define kha_wado <
 #define kha_wada <
 #define kha_wadi <
-#define kha_ghano <
-#define kha_ghana <
-#define kha_ghani <
+#define kha_gharo <
+#define kha_ghara <
+#define kha_ghari <
 #define kha_nandho >
 #define kha_nandhro >
 #define kha_nandha >
@@ -1506,4 +1506,8 @@ co
     kahie "string \"la\" in a string at index 1 from stringed array \"arr\":" aur in(arr[1], "la");
 de
 */
-
+/*
+on
+    bhau chau "hi" re
+off
+*/
