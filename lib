@@ -75,6 +75,8 @@ using haal = bool;
 #define koor false
 #define na false
 #define nahi == false
+#define nahe == false
+#define na_ahe == false
 #define agar_sach == true
 #define agar_jhoot ""
 #define agar_koor ""
@@ -121,9 +123,9 @@ using haal = bool;
 #define tab {
 #define tadhen {
 #define abbas }
-#define harebas }
+#define hare_bas }
 #define basab }
-#define bashare }
+#define bas_hare }
 #define khatm }
 #define khatam }
 #define ant }
@@ -283,6 +285,12 @@ using haal = bool;
 #define larki ;std::cout<<"";
 #define chori ;std::cout<<"";
 #define behen ;std::cout<<"";
+#define behna ;std::cout<<"";
+#define baji ;std::cout<<"";
+#define didi ;std::cout<<"";
+#define kuri ;std::cout<<"";
+#define kurio ;std::cout<<"";
+#define kurie ;std::cout<<"";
 #define yaara ;std::cout<<"";
 #define tawheen ;std::cout<<"";
 #define tawhan ;std::cout<<"";
@@ -292,9 +300,15 @@ using haal = bool;
 #define aap ;std::cout<<"";
 #define bhau ;std::cout<<"";
 #define pagli ;std::cout<<"";
+#define ba ;std::cout<<"";
 #define baba ;std::cout<<"";
 #define meri_jan ;std::cout<<"";
 #define ayesha ;std::cout<<"";
+
+
+
+
+
 
 
 
@@ -1508,6 +1522,11 @@ de
 */
 /*
 on
-    bhau chau "hi" re
-off
+    farz n barabar 4 re
+    agar n nandho_ya_barabar 2 ahe ta
+        bhau chau "hakeekat, 4 2 kha nandha ahin" ba
+    nata_agar n wakai_barabar 8/2 ahe ta
+        bhau chau "4 ta asal me, 8 jo addu hundo ahe!" ji
+    bas_hare
+C
 */
