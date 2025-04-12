@@ -60,6 +60,7 @@ using haal = bool;
 #define ab =
 #define ab_he =
 #define he_ab =
+#define into =
 #define exchange swap
 #define hera_pheri swap
 #define exists !!
@@ -82,15 +83,17 @@ using haal = bool;
 #define ruko break
 #define skip continue
 #define phere for (
+#define karie )
 #define keejye )
 #define ka )
 #define ko )
+#define of (
 #define or_run {
 #define agar if (
 #define he )
 #define hen )
 #define nahi_to_agar } else if (
-#define nahi_to } else
+#define nahi_to } else {
 #define agar_koi_na } else 
 #define me_izafa +=
 #define me_dalo +=
@@ -728,9 +731,9 @@ int isperfmod(float a, float b)
 {
     return mod(a, b) == 0;
 }
-int isdiv(float of, float n)
+int isdiv(float of_n, float this_n)
 {
-    return mod(of, n) == 0;
+    return mod(of_n, this_n) == 0;
 }
 #define isdivisor isdiv
 int iseven(int n)
