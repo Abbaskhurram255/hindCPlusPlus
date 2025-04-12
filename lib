@@ -63,6 +63,10 @@ using haal = bool;
 #define exchange swap
 #define hera_pheri swap
 #define exists !!
+#define sath , 
+#define or_sath &&
+#define or_to_or &&
+#define aur_to_aur &&
 #define karo do
 #define ye {
 #define sab }
@@ -83,6 +87,7 @@ using haal = bool;
 #define ko )
 #define or_run {
 #define agar if (
+#define he )
 #define hen )
 #define nahi_to_agar } else if (
 #define nahi_to } else
