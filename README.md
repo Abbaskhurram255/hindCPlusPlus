@@ -32,6 +32,21 @@ A Hindi to GCC translation engine
 `    sab jabtak i chote_ya_barabar 5 hen re`<br/>
 `de`<br/>
 
+## Swapping
+`#include "hindC++"`<be/>
+
+`func stateOf(int a, int b) {`<br/>
+`    kahie "Abhi a barabar he" aage a aage "; b barabar he" aage b age_bas re`<br/>
+`}`<br/>
+
+`on`<br/>
+`    farz a barabar 2,`<br/>
+`         b barabar 5 ji`<br/>
+`    stateOf(a, b);`<br/>
+`    hera_pheri(a, b) ji`<br/>
+`    stateOf(a, b);`<br/>
+`off`<br/>
+
 ## Pros
 * Say goodbye to the junky main function (i.e. `int main(){(...code)}`), just go:
   <br/>`on`<br/>`(   ...code)`<br/>`off`
