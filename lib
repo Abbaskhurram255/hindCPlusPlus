@@ -89,6 +89,7 @@ using haal = bool;
 #define hare =
 #define hare_ahe =
 #define he_ab =
+#define ahe_hare
 #define into =
 #define exchange swap
 #define hera_pheri swap
@@ -146,11 +147,14 @@ using haal = bool;
 #define agar if (
 #define he )
 #define hen )
+#define ahe )
+#define ahin )
 #define nahi_to_agar } else if (
 #define nahi_to } else {
 #define nata_agar } else if (
 #define nata } else {
-#define agar_koi_na } else 
+#define agar_koi_na } else {
+#define agar_sab_galat } else {
 #define me_izafa +=
 #define me_dalo +=
 #define me_dala +=
