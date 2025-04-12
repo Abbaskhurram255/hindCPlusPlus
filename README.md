@@ -63,7 +63,7 @@ A Hindi to GCC translation engine
   * do-while
   * hindi-friendly if-else
   * hindi-friendly switchCase
-  * int, float, or double likhne ki jaga, ab farz x barabar y lilh do, compiler khud hi samajh jaega data type ko
+  * int, float, or double likhne ki jaga, ab farz x barabar y likh do, compiler khud hi samajh jaega data type ko
   * semicolons ki jaga ab words ka istamal: ji, re, ri, baba, meri_jan
   * ...or bhi hazaaro cheeze, wo bhi hindi syntax me
   * Say goodbye to the junky main function (i.e. `int main(){(...code)}`), just go:
