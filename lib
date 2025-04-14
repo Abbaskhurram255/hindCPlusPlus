@@ -66,6 +66,7 @@ using haal = bool;
 #define akhir_me aen_bas
 #define falaana ""
 #define falaano ""
+#define falaani ""
 #define yes true
 #define sach true
 #define han true
@@ -99,13 +100,16 @@ using haal = bool;
 #define exists !!
 #define mojood !!
 #define sath , 
-#define gad ,
+#define gad , 
+#define gaddu , 
 #define or_sath &&
 #define or_to_or &&
 #define aur_to_aur &&
 #define aen_gad &&
 #define aen_ta_aen &&
 #define gado_gad &&
+#define par &&
+#define para &&
 #define karo do
 #define kar do
 #define ye {
@@ -133,6 +137,24 @@ using haal = bool;
 #define skip continue
 #define phere for (
 #define phera for (
+#define jab_tak true&&
+#define har for (
+#define ek auto
+#define each for (auto
+#define har_ek for (auto
+#define harEk for (auto
+#define for_each for (auto
+#define forEach for (auto
+#define from :
+#define jo_hissa :
+#define jeko_hisso :
+#define jeki_hisso :
+#define ka_he ) {
+#define ki_he ) {
+#define jo_ahe ) {
+#define ke_lie ) {
+#define lae ) {
+#define je_lae ) {
 #define karie )
 #define keejye )
 #define kario )
@@ -206,6 +228,7 @@ using haal = bool;
 #define halat switch (
 #define haalat switch (
 #define ki ) {
+#define wari ) {
 #define surat case
 #define basurat case
 #define barabar =
@@ -216,7 +239,9 @@ using haal = bool;
 #define na_barabar !=
 #define zyada_ya_barabar >=
 #define gharo_ya_barabar >=
+#define ghano_ya_barabar >=
 #define ghara_ya_barabar >=
+#define ghana_ya_barabar >=
 #define bara_ya_barabar >=
 #define wado_ya_barabar >=
 #define bare_ya_barabar >=
@@ -239,8 +264,11 @@ using haal = bool;
 #define kha_wada <
 #define kha_wadi <
 #define kha_gharo <
+#define kha_ghano <
 #define kha_ghara <
+#define kha_ghana <
 #define kha_ghari <
+#define kha_ghani <
 #define kha_nandho >
 #define kha_nandhro >
 #define kha_nandha >
@@ -274,6 +302,7 @@ using haal = bool;
 #define de }
 #define aye int main() {
 #define sha }
+#define je ;std::cout<<"";
 #define set ;std::cout<<"";
 #define hua ;std::cout<<"";
 #define hui ;std::cout<<"";
@@ -351,140 +380,95 @@ using haal = bool;
 #define lambai strlen
 #define arrlen(arr) (sizeof(arr) / sizeof(arr[0]))
 
-void kaho(const char *args, ...)
+//C-style prints
+void print(const char *args, ...)
 {
     printf("%s", args);
     printf("\n");
-}
-void print(const char *args, ...)
-{
-    kaho(args);
-}
-void printf_inline(const char *args, ...)
-{
-    printf("%s", args);
-}
-void printf_nobr(const char *args, ...)
-{
-    printf_inline(args);
-}
-void printf_sameln(const char *args, ...)
-{
-    printf_inline(args);
-}
-void print_(const char *args, ...)
-{
-    printf_inline(args);
 }
 void print_inline(const char *args, ...)
 {
-    printf_inline(args);
+    printf("%s", args);
 }
-void printf_i(const int args, ...)
+#define print_nobr print_inline
+#define print_sameln print_inline
+#define printStr print
+#define printStrInline print_inline
+#define kaho print
+#define kaho_inline print_inline
+#define kaho_nobr print_inline
+#define kaho_sameln print_inline
+void print_i(const int args, ...)
 {
     printf("%i", args);
     printf("\n");
-}
-void print_i(const int args, ...)
-{
-    printf_i(args);
-}
-void printf_i_inline(const int args, ...)
-{
-    printf("%i", args);
-}
-void printf_i_nobr(const int args, ...)
-{
-    printf_i_inline(args);
-}
-void printf_i_sameln(const int args, ...)
-{
-    printf_i_inline(args);
 }
 void print_i_inline(const int args, ...)
 {
-    printf_i_inline(args);
+    printf("%i", args);
 }
-void printf_f(const float args, ...)
+#define print_i_nobr print_i_inline
+#define print_i_sameln print_i_inline
+#define printInt print_i
+#define printIntInline print_i_inline
+#define kaho_i print_i
+#define kaho_i_inline print_i_inline
+#define kaho_i_nobr print_i_inline
+#define kaho_i_sameln print_i_inline
+void print_f(const float args, ...)
 {
     printf("%.1f", args);
     printf("\n");
-}
-void print_f(const float args, ...)
-{
-    printf_f(args);
-}
-void printf_f_inline(const float args, ...)
-{
-    printf("%.1f", args);
-}
-void printf_f_nobr(const float args, ...)
-{
-    printf_f_inline(args);
-}
-void printf_f_sameln(const float args, ...)
-{
-    printf_f_inline(args);
 }
 void print_f_inline(const float args, ...)
 {
-    printf_f_inline(args);
+    printf("%.1f", args);
 }
-void printf_n(const float args, ...)
-{
-    printf_f(args);
-}
-void print_n(const float args, ...)
-{
-    printf_f(args);
-}
-void printf_n_inline(const float args, ...)
-{
-    printf_f_inline(args);
-}
-void print_n_inline(const float args, ...)
-{
-    printf_f_inline(args);
-}
-void printf_n_nobr(const float args, ...)
-{
-    printf_f_inline(args);
-}
-void printf_n_sameln(const float args, ...)
-{
-    printf_f_inline(args);
-}
-void printf_b(const int args, ...)
+#define print_f_nobr print_f_inline
+#define print_f_sameln print_f_inline
+#define printFlt print_f
+#define printFltInline print_f_inline
+#define kaho_f print_f
+#define kaho_f_inline print_f_inline
+#define kaho_f_nobr print_f_inline
+#define kaho_f_sameln print_f_inline
+#define print_n print_f
+#define print_n_inline print_f_inline
+#define print_n_nobr print_f_inline
+#define print_n_sameln print_f_inline
+#define printN print_f
+#define printNInline print_f_inline
+#define kaho_n print_f
+#define kaho_n_inline print_f_inline
+#define kaho_n_nobr print_f_inline
+#define kaho_n_sameln print_f_inline
+void print_b(const int args, ...)
 {
     printf("%s", !args ? "false" : "true");
     printf("\n");
 }
-void print_b(const int args, ...)
-{
-    printf_b(args);
-}
-void printf_b_inline(const int args, ...)
+void print_b_inline(const int args, ...)
 {
     printf("%s", !args ? "false" : "true");
 }
-void printf_b_nobr(const int args, ...)
-{
-    printf_b_inline(args);
-}
-void printf_b_sameln(const int args, ...)
-{
-    printf_b_inline(args);
-}
-void print_b_inline(const int args, ...)
-{
-    printf_b_inline(args);
-}
+#define print_b_nobr print_b_inline
+#define print_b_sameln print_b_inline
+#define printBool print_b
+#define printBoolInline print_b_inline
+#define kaho_b print_b
+#define kaho_b_inline print_b_inline
+#define kaho_b_nobr print_b_inline
+#define kaho_b_sameln print_b_inline
+
+//prompts
 string puchoWord(string x) {
     std::string returnValue = "";
     std::cout << x;
     std::cin >> returnValue;
     return returnValue;
 }
+#define puchoLafz puchoWord
+#define puchLafz puchoWord
 #define puchWord puchoWord
 string pucho(string x) {
     std::string returnValue = "";
@@ -601,7 +585,7 @@ void repeat(char *h, int j)
 void repeat_inline(char *h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf_inline(h);
+        print_inline(h);
 }
 void repeat_f(float h, int j)
 {
@@ -611,7 +595,7 @@ void repeat_f(float h, int j)
 void repeat_f_inline(float h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf_inline("%.1f", h);
+        print_inline("%.1f", h);
 }
 void repeat_i(int h, int j)
 {
@@ -621,7 +605,7 @@ void repeat_i(int h, int j)
 void repeat_i_inline(int h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf_inline("%i", h);
+        print_inline("%i", h);
 }
 void repeat_b(int h, int j)
 {
@@ -631,7 +615,7 @@ void repeat_b(int h, int j)
 void repeat_b_inline(int h, int j)
 {
     for (int i = 0; i < j; i++)
-        printf_inline("%s", !h ? "false" : "true");
+        print_inline("%s", !h ? "false" : "true");
 }
 #define duhrao repeat
 #define duhrao_inline repeat_inline
@@ -686,6 +670,49 @@ char *slice(char *str, int start, int end)
 char *trim(char *str, int start, int end)
 {
     return slice(str, start, end);
+}
+char *randstr(int len)
+{
+    int max = 800;
+    srand(time(NULL));
+    const char ALLOWED[] = "abcdefghijklmnopqrstuvwxyz1234567890";
+    char result[max + 1];
+    int i = 0,
+        c = 0,
+        nbAllowed = sizeof(ALLOWED) - 1;
+    for (i = 0; i < max; i++)
+    {
+        c = rand() % nbAllowed;
+        result[i] = ALLOWED[c];
+    }
+    result[max + 1] = '\0';
+    return slice(result, 0, len);
+}
+void reverseStr(char s[])
+{
+    int i, j;
+    char k;
+    for (i = 0, j = strlen(s) - 1; i < j; i++, j--)
+    {
+        k = s[i];
+        s[i] = s[j];
+        s[j] = k;
+    }
+}
+void itoa(int n, char s[])
+{
+    int i, sign;
+    if ((sign = n) < 0)
+        n = -n;
+    i = 0;
+    do
+    {
+        s[i++] = n % 10 + '0';
+    } while ((n /= 10) > 0);
+    if (sign < 0)
+        s[i++] = '-';
+    s[i] = '\0';
+    reverseStr(s);
 }
 void strappend(char *s, char c)
 {
@@ -758,6 +785,73 @@ int strHas(char *str, char *lookup) {
 #define matches strHas
 
 //NUMBER METHODS
+int Int(char *numeric_str)
+{
+    return atoi(numeric_str);
+}
+float Flt(char *numeric_str)
+{
+    return atof(numeric_str);
+}
+int randi()
+{
+    srand(time(NULL));
+    return (rand() + 1) % 100;
+}
+float randf()
+{
+    return randi() * .3;
+}
+int randint(int max)
+{
+    srand(time(NULL));
+    return (rand() + 1) % max;
+}
+float randflt(int max)
+{
+    srand(time(NULL));
+    return ((rand() + 1) % max) * .3;
+}
+int randInt(int min_num, int max_num)
+{
+    int result = 0, low_num = 0, hi_num = 0;
+    if (min_num < max_num)
+    {
+        low_num = min_num;
+        hi_num = max_num + 1; // include max_num in output
+    }
+    else
+    {
+        low_num = max_num + 1; // include max_num in output
+        hi_num = min_num;
+    }
+    srand(time(NULL));
+    result = (rand() % (hi_num - low_num)) + low_num;
+    return result;
+}
+float randFlt(int min_num, int max_num)
+{
+    int result = 0, low_num = 0, hi_num = 0;
+    if (min_num < max_num)
+    {
+        low_num = min_num;
+        hi_num = max_num + 1; // include max_num in output
+    }
+    else
+    {
+        low_num = max_num + 1; // include max_num in output
+        hi_num = min_num;
+    }
+    srand(time(NULL));
+    result = ((rand() % (hi_num - low_num)) + low_num) * .3;
+    return result;;
+}
+int *range(int n) {
+    static int arr[32768] = {};
+    for (int i=0; i<n+1; i++)
+        arr[i] = i+1;
+    return arr;
+}
 int isNumlike(char *str)
 {
     int checks_passed = 0, all_checks_passed = 0;
@@ -848,13 +942,22 @@ float quo(float a, float b)
 }
 #define add sum
 #define dalo sum
+#define joro sum
+#define jor sum
 #define wij sum
+#define dif diff
 #define sub diff
 #define nikalo diff
 #define kad diff
 #define mul prd
 #define zarb prd
 #define div quo
+#define toro quo
+#define wand quo
+#define hissa quo
+#define hisso quo
+#define adha(n) (n/2)
+#define chotha(n) (n/4)
 int mod(float a, float b)
 {
     if (b > a)
@@ -881,6 +984,8 @@ int isodd(int n)
 {
     return !isperfmod(n, 2);
 }
+#define baddi iseven
+#define ikki isodd
 float pct(float n1, float n2)
 {
     if (n1 > n2)
@@ -897,110 +1002,7 @@ int isprime(int n)
     }
     return 1;
 }
-int Int(char *numeric_str)
-{
-    return atoi(numeric_str);
-}
-float Flt(char *numeric_str)
-{
-    return atof(numeric_str);
-}
-int randi()
-{
-    srand(time(NULL));
-    return (rand() + 1) % 100;
-}
-float randf()
-{
-    return randi() * .3;
-}
-int randint(int max)
-{
-    srand(time(NULL));
-    return (rand() + 1) % max;
-}
-float randflt(int max)
-{
-    srand(time(NULL));
-    return ((rand() + 1) % max) * .3;
-}
-int randInt(int min_num, int max_num)
-{
-    int result = 0, low_num = 0, hi_num = 0;
-    if (min_num < max_num)
-    {
-        low_num = min_num;
-        hi_num = max_num + 1; // include max_num in output
-    }
-    else
-    {
-        low_num = max_num + 1; // include max_num in output
-        hi_num = min_num;
-    }
-    srand(time(NULL));
-    result = (rand() % (hi_num - low_num)) + low_num;
-    return result;
-}
-float randFlt(int min_num, int max_num)
-{
-    int result = 0, low_num = 0, hi_num = 0;
-    if (min_num < max_num)
-    {
-        low_num = min_num;
-        hi_num = max_num + 1; // include max_num in output
-    }
-    else
-    {
-        low_num = max_num + 1; // include max_num in output
-        hi_num = min_num;
-    }
-    srand(time(NULL));
-    result = ((rand() % (hi_num - low_num)) + low_num) * .3;
-    return result;
-}
-char *randstr(int len)
-{
-    int max = 800;
-    srand(time(NULL));
-    const char ALLOWED[] = "abcdefghijklmnopqrstuvwxyz1234567890";
-    char result[max + 1];
-    int i = 0,
-        c = 0,
-        nbAllowed = sizeof(ALLOWED) - 1;
-    for (i = 0; i < max; i++)
-    {
-        c = rand() % nbAllowed;
-        result[i] = ALLOWED[c];
-    }
-    result[max + 1] = '\0';
-    return slice(result, 0, len);
-}
-void reverseStr(char s[])
-{
-    int i, j;
-    char k;
-    for (i = 0, j = strlen(s) - 1; i < j; i++, j--)
-    {
-        k = s[i];
-        s[i] = s[j];
-        s[j] = k;
-    }
-}
-void itoa(int n, char s[])
-{
-    int i, sign;
-    if ((sign = n) < 0)
-        n = -n;
-    i = 0;
-    do
-    {
-        s[i++] = n % 10 + '0';
-    } while ((n /= 10) > 0);
-    if (sign < 0)
-        s[i++] = '-';
-    s[i] = '\0';
-    reverseStr(s);
-}
+
 //DATE METHODS
 typedef struct
 {
@@ -1311,9 +1313,9 @@ int fileHatao(char *fname, char *content)
 #define randItem(arr) (arr[randint(sizeof(arr)/sizeof(arr[0]))])
 #define randFrom randItem
 void bubbleSort(int array[], int size) {
-  phere int step barabar 0; step se_bare (size-1); step me_izafa 1 ka tabtak
+  phere int step barabar 0; jab_tak step se_bare (size-1); step me_izafa 1 ka tabtak
     haal swappingKiZarurat barabar na;
-    phere int i barabar 0; i se_bare (size-step-1); i me_izafa 1 ka or_run
+    phere int i barabar 0; jab_tak i se_bare (size-step-1); i me_izafa 1 ka or_run
       agar array[i] se_chote array[i + 1] hen to
         set swappingKiZarurat ab han;
         int temp bana array[i];
@@ -1327,7 +1329,7 @@ void bubbleSort(int array[], int size) {
 }
 #define bubbleSortAsc bubbleSort
 void bubbleSortDesc(int array[], int size) {
-  phere int step barabar 0; step se_bare (size-1); step me_izafa 1 ka tabtak
+  phere int step barabar 0; jab_tak step se_bare (size-1); step me_izafa 1 ka or_run
     haal swappingKiZarurat barabar na;
     phere int i barabar 0; i se_bare (size-step-1); i me_izafa 1 ka or_run
       agar array[i] se_bare array[i + 1] hen to
@@ -1341,7 +1343,7 @@ void bubbleSortDesc(int array[], int size) {
       ruko;
   basab
 }
-void printArr(char arr[], int size) {
+void printArrStr(char arr[], int size) {
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
@@ -1353,9 +1355,18 @@ void printArrInt(int arr[], int size) {
   }
   cout << " ";
 }
+void printArrFlt(float arr[], int size) {
+  for (int i = 0; i < size; ++i) {
+    cout << arr[i] << " ";
+  }
+  cout << " ";
+}
+#define printStrArr printArrStr
+#define printIntArr printArrInt
+#define printFltArr printArrFlt
 void printArrReversedInt(int arr[], int size) {
   size -= 1;
-  //bugfix: we want the size not as a number, but as an index, and indexes always start with 0
+  //bugfix: we need the last element, not the length of the array, as that would get us a null character
   for (; size >= 0; size--) {
     cout << arr[size] << " ";
   }
@@ -1525,8 +1536,22 @@ on
     farz n barabar 4 re
     agar n nandho_ya_barabar 2 ahe ta
         bhau chau "hakeekat, 4 2 kha nandha ahin" ba
-    nata_agar n wakai_barabar 8/2 ahe ta
+    nata_agar n wakai_barabar wand(8, 2) ahe ta
         bhau chau "4 ta asal me, 8 jo addu hundo ahe!" ji
     bas_hare
-C
+off
+*/
+/*
+on
+    int nums[] = {0, 2, 4, 6, 8};
+    har_ek n from nums ke_lie
+        kahie n aur " ";
+    basab
+    br(2);
+    kahie "Questions" age_bas;
+    str questions[] = {"Mike, right?", "How are you?"};
+    har_ek question from questions ke_lie
+        kahie "*" aur question age_bas;
+    basab
+off
 */
