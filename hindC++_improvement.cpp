@@ -9,6 +9,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <cstring>
+#include <regex>
 #include <stdbool.h>
 #include <ctype.h>
 #include <math.h>
@@ -16,6 +17,7 @@
 #include <time.h>
 #include <assert.h>
 #include <iostream>
+#include <sstream>
 #include <algorithm>
 
 //declaring types
@@ -76,6 +78,7 @@ using haal = bool;
 #define agya_bas aen_bas
 #define agyo_bas aen_bas
 #define akhir_me aen_bas
+#define sout(x) ( ((std::stringstream&)(std::stringstream() << x )).str())
 #define falaana ""
 #define falaano ""
 #define falaani ""
@@ -153,6 +156,7 @@ using haal = bool;
 #define jesi_tae true&&
 #define jesi_tore true&&
 #define har for (
+#define ever ;;)
 #define ek auto
 #define each for (auto
 #define har_ek for (auto
@@ -401,13 +405,25 @@ using haal = bool;
 #endif
 
 #define len(str) str.length()
-#define lambai strlen
 #define arrlen(arr) (sizeof(arr) / sizeof(arr[0]))
 
 //C-style prints
+string format(string fmt, ...) 
+{ 
+    va_list ap;
+    va_start(ap, fmt);
+
+    const size_t SIZE = 512;
+    char buffer[SIZE] = { 0 };
+    vsnprintf(buffer, SIZE, fmt.data(), ap);
+
+    va_end(ap);
+
+    return string(buffer);
+}
 void print(string args, ...)
 {
-    printf("%s", args.data());
+    printf("%s", format(args).data());
     printf("\n");
 }
 void print_inline(string args, ...)
@@ -735,6 +751,45 @@ string trim(string str, int start, int end)
 {
     return slice(str, start, end);
 }
+string replace(string str, const string &_this_string, const string &_that_string) {
+    size_t start_pos = str.find(_this_string);
+    str.replace(start_pos, _this_string.length(), _that_string);
+    return str;
+}
+string replaceAll(string str, const string &remove, const string &insert) 
+{
+    string::size_type pos = 0;
+    while ((pos = str.find(remove, pos)) != string::npos)
+    {
+        str.replace(pos, remove.size(), insert);
+        pos++;
+    }
+    return str;
+}
+string replaceMutate(string &str, const string &_this_string, const string &_that_string) {
+    size_t start_pos = str.find(_this_string);
+    str.replace(start_pos, _this_string.length(), _that_string);
+    return str;
+}
+string replaceAllMutate(string &str, const string &remove, const string &insert) 
+{
+    string::size_type pos = 0;
+    while ((pos = str.find(remove, pos)) != string::npos)
+    {
+        str.replace(pos, remove.size(), insert);
+        pos++;
+    }
+    return str;
+}
+
+/*
+on
+    string x = "hi {name} {name}";
+    replaceAllMutate(x, "{name}", "Max");
+    cout << x;
+off
+*/
+
 string randstr()
 {
     int max = 800;
