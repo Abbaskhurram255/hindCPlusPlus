@@ -1163,8 +1163,8 @@ int isprime(int n)
 //DATE METHODS
 typedef struct
 {
-    string period, time, timegreet, date, day, month, stamp;
-    int mins, hours, dayAsIndex, isWeekend, year;
+    string period, time, timegreet, date, day, month, season, stamp;
+    int mins, hours, dayAsIndex, isWeekend, isLeapYear, year;
 } Date;
 Date new_date()
 {
@@ -1180,31 +1180,38 @@ Date new_date()
         month = slice(s, 4, 7),
         date = slice(s, 8, 10),
         year = &s[20];
+    
+    string season;
+    if (str_eq(month, "may") || str_eq(month, "jun") || str_eq(month, "jul") || str_eq(month, "aug")) season = "Summer";
+	else if (str_eq(month, "sep") || str_eq(month, "oct")) season = "Spring";
+	else if (str_eq(month, "nov") || str_eq(month, "dec") || str_eq(month, "jan") || str_eq(month, "feb")) season = "Winter";
+	else season = "Fall";
         
-    if (str_eq(month, "jan"))
+    if (str_eq(month, "jan")) {
         month += "uary";
-    else if (str_eq(month, "feb"))
+    } else if (str_eq(month, "feb")) {
         month += "ruary";
-    else if (str_eq(month, "mar"))
+    } else if (str_eq(month, "mar")) {
         month += "ch";
-    else if (str_eq(month, "apr"))
+    } else if (str_eq(month, "apr")) {
         month += "il";
-    else if (str_eq(month, "may"))
+    } else if (str_eq(month, "may")) {
         month += "";
-    else if (str_eq(month, "jun"))
+    } else if (str_eq(month, "jun")) {
         month += "e";
-    else if (str_eq(month, "jul"))
+    } else if (str_eq(month, "jul")) {
         month += "y";
-    else if (str_eq(month, "aug"))
+    } else if (str_eq(month, "aug")) {
         month += "ust";
-    else if (str_eq(month, "sep"))
+    } else if (str_eq(month, "sep")) {
         month += "tember";
-    else if (str_eq(month, "oct"))
+    } else if (str_eq(month, "oct")) {
         month += "ober";
-    else if (str_eq(month, "nov"))
+    } else if (str_eq(month, "nov")) {
         month += "ember";
-    else if (str_eq(month, "dec"))
+    } else if (str_eq(month, "dec")) {
         month += "ember";
+    }
 
     date = day + ", " + month + " " + date + ", " + year;
     time_t ds = time(NULL);
@@ -1273,6 +1280,8 @@ Date new_date()
     char hrs[] = "";
     itoa(hours, hrs);
     string curTime = strcat(hrs, timePartB);
+    int isLeapYear = Int(year) % 4 == 0;
+
 
     Date THIS;
     THIS.hours = hours;
@@ -1284,6 +1293,8 @@ Date new_date()
     THIS.dayAsIndex = dayAsIndex;
     THIS.isWeekend = isWeekend;
     THIS.month = slice(month, 0, 5);
+    THIS.season = season;
+    THIS.isLeapYear = isLeapYear;
     THIS.year = Int(year);
     THIS.stamp = upper(slice(day, 0, 3) + "-" + timestamp);
     THIS.date = date;
@@ -1291,7 +1302,7 @@ Date new_date()
 }
 void date_log() {
     Date d = new_date();
-    cout << "Hour: " << d.hours << "\nMins: " << d.mins << "\nTimegreet: "  << d.timegreet << "\nTime: " << d.time << "\nPeriod: " << d.period << "\nDay: " << d.day << "\nDay as index: " << d.dayAsIndex << "\nisWeekend: " << d.isWeekend << "\nMonth: " << d.month << "\nYear: " << d.year << "\nStamp: " << d.stamp << "\nDate: " << d.date << endl;
+    cout << "Hour: " << d.hours << "\nMins: " << d.mins << "\nTimegreet: "  << d.timegreet << "\nTime: " << d.time << "\nPeriod: " << d.period << "\nDay: " << d.day << "\nDay as index: " << d.dayAsIndex << "\nisWeekend: " << d.isWeekend << "\nMonth: " << d.month << "\nSeason: " << d.season << "\nIs leap year: " << d.isLeapYear << "\nYear: " << d.year << "\nStamp: " << d.stamp << "\nDate: " << d.date << endl;
 }
 /*
 on
