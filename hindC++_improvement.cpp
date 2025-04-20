@@ -7,8 +7,8 @@
 //importing all the common internal libraries, so you DON'T have to. Next time, you can just import the library, without having the need to do any boilerplate initialization: "#include <iostream>\nusing namespace std;"
 #include <stdio.h>
 #include <stdarg.h>
-#include <string.h>
 #include <cstring>
+#include <string>
 #include <regex>
 #include <stdbool.h>
 #include <ctype.h>
@@ -19,6 +19,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <array>
 
 //declaring types
 using namespace std;
@@ -412,20 +413,24 @@ string format(string fmt, ...)
 { 
     va_list ap;
     va_start(ap, fmt);
-
     const size_t SIZE = 512;
     char buffer[SIZE] = { 0 };
     vsnprintf(buffer, SIZE, fmt.data(), ap);
-
     va_end(ap);
-
-    return string(buffer);
+    string resultAsCppString = buffer;
+    return resultAsCppString;
 }
-void print(string args, ...)
+void print(const string args, ...)
 {
-    printf("%s", format(args).data());
+    printf("%s", args.data());
     printf("\n");
 }
+/*
+on
+    str x = format("hi %s", "love");
+    cout << x;
+off
+*/
 void print_inline(string args, ...)
 {
     printf("%s", args.data());
