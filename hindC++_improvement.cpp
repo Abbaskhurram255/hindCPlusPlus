@@ -3,8 +3,7 @@
     * Hardcoded by GitHub.com/abbaskhurram255
 */
 
-
-//importing all the common internal libraries, so you DON'T have to. Next time, you can just import the library, without having the need to do any boilerplate initialization: "#include <iostream>\nusing namespace std;"
+//importing all the common internal libraries, so you DON'T have to. Next time, you can just import the library, without having the need to do any boilerplate initialization yourself: no more "#include <iostream>\nusing namespace std;"
 #include <stdio.h>
 #include <stdarg.h>
 #include <cstring>
@@ -19,21 +18,41 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <random>
 #include <array>
+#include <vector>
 
 //declaring types
 using namespace std;
 using jumla = std::string;
 using jumlo = jumla;
 using lafz = jumla;
+using String = jumla;
 using str = jumla;
-using nr = double;
-using dbl = nr;
+using dbl = double;
 using flt = float;
 using ch = char;
 using haal = bool;
 
 //initialization
+#define array std::vector
+#define char_array std::string
+#define string_array std::vector<std::string>
+#define integer_array std::vector<int>
+#define float_array std::vector<float>
+#define double_array std::vector<double>
+#define ch_array std::string
+#define str_array std::vector<std::string>
+#define int_array std::vector<int>
+#define flt_array std::vector<float>
+#define dbl_array std::vector<double>
+/*
+int main() {
+    str_array x = {"hi", "love"};
+    int_array y = {1, 3, 5, 7};
+    cout << x[0];
+}
+*/
 #define out std::cout <<
 #define farmaiye out
 #define or_farmaiye out
@@ -159,7 +178,7 @@ using haal = bool;
 #define har for (
 #define ever ;;)
 #define ek auto
-#define each for (auto
+#define each auto
 #define har_ek for (auto
 #define harEk for (auto
 #define for_each for (auto
@@ -405,11 +424,25 @@ using haal = bool;
     #endif
 #endif
 
-#define len(str) str.length()
-#define arrlen(arr) (sizeof(arr) / sizeof(arr[0]))
+//making getting length of a string, and array|vector easier
+#define len(x) x.size()
+#define arrlen len
 
-//C-style prints
+
+//C-style prints, and helpers
 string format(string fmt, ...) 
+{ 
+    va_list ap;
+    va_start(ap, fmt);
+    const size_t SIZE = 512;
+    char buffer[SIZE] = { 0 };
+    vsnprintf(buffer, SIZE, fmt.data(), ap);
+    va_end(ap);
+    string resultAsCppString = buffer;
+    resultAsCppString += "\n";
+    return resultAsCppString;
+}
+string format_inline(string fmt, ...) 
 { 
     va_list ap;
     va_start(ap, fmt);
@@ -420,15 +453,18 @@ string format(string fmt, ...)
     string resultAsCppString = buffer;
     return resultAsCppString;
 }
-void print(const string args, ...)
-{
-    printf("%s", args.data());
-    printf("\n");
-}
+#define f format
+#define f_inl format_inline
+#define print cout <<
 /*
 on
-    str x = format("hi %s", "love");
-    cout << x;
+    kahie sout("hi honey, " << "I heard you just turned 24!") << endl;
+off
+*/
+/*
+on
+    str x = f("hi %s, I heard it's your %dth birthday", "love", 44);
+    print x;
 off
 */
 void print_inline(string args, ...)
@@ -651,12 +687,12 @@ void tb(int n)
 void repeat(string h, int j)
 {
     for (; j; j--)
-        print(h.data());
+        printf("%s\n", h.data());
 }
 void repeat_inline(string h, int j)
 {
     for (; j; j--)
-        print_inline(h.data());
+        printf("%s", h.data());
 }
 void repeat_i(int h, int j)
 {
@@ -691,12 +727,12 @@ void repeat_c_inline(char h, int j)
 void repeat_b(int h, int j)
 {
     for (; j; j--)
-        printf("%s", !h ? "false" : "true");
+        printf("%s\n", !h ? "false" : "true");
 }
 void repeat_b_inline(int h, int j)
 {
     for (; j; j--)
-        print_inline("%s", !h ? "false" : "true");
+        printf("%s", !h ? "false" : "true");
 }
 #define duhrao repeat
 #define duhrao_inline repeat_inline
@@ -716,29 +752,88 @@ void repeat_b_inline(int h, int j)
 #define duhrae_b_inline duhrao_b_inline
 
 //STRING METHODS
-string keepFirst(string str, string with)
+template <typename T> string Str(T to_turn)
 {
-    char *org = str.data();
-    char *result = strtok(str.data(), with.data());
-    strcpy(str.data(), "");
-    strcpy(str.data(), org);
-    string resultAsCppString = result;
-    return resultAsCppString;
+    //helps force turn any type into a string
+    try {
+        ostringstream ost;
+        ost << to_turn;
+        return ost.str();
+    } catch (...) {
+        return "";
+    }
 }
-string keepLast(string str, string with)
-{
-    char *token;
-    token = strtok(str.data(), with.data());
-    char *result = token = strtok(NULL, with.data());
-    string resultAsCppString = result;
-    return resultAsCppString;
+/*
+@params:
+    @to_turn: any
+@returnVal: std::string
+@test:
+on
+    string temp = Str(38);
+    cout << "Today is " + temp + " degree Celsius outside";
+off
+*/
+string_array split(const std::string str, const std::string regex_or_str) {
+
+    std::regex regexz(regex_or_str);
+
+    return {
+        std::sregex_token_iterator(str.begin(), str.end(), regexz, -1),
+
+        std::sregex_token_iterator()
+    };
 }
-string keepAfter(string a, string b)
-{
-    char *result = strstr(a.data(), b.data());
-    string resultAsCppString = result;
+string_array splitIntoWords(string str) {
+    let words = split(str, "[^\\w]+");
+    return words;
+}
+/*
+@params:
+    @@str: string
+        @@regex_or_str|delimiter|token_to_break_with: string|regex
+@returnVal:
+    vector<string> {iterable}
+@test:
+on
+    string sentence = "Love, I bet you remember our first kiss- - under-the-rain";
+    let words = split(sentence, "\\W+");
+    print words[7];
+off
+*/
+fn join(str_array x, string delim) {
+    str result;
+    for (let item from x) {
+        result += delim + Str(item);
+    }
     return result;
 }
+fn join(int_array x, string delim) {
+    str result;
+    for (let item from x) {
+        result += delim + Str(item);
+    }
+    return result;
+}
+fn join(flt_array x, string delim) {
+    str result;
+    for (let item from x) {
+        result += delim + Str(item);
+    }
+    return result;
+}
+fn join(dbl_array x, string delim) {
+    str result;
+    for (let item from x) {
+        result += delim + Str(item);
+    }
+    return result;
+}
+/*
+on
+    int_array x = {1, 3, 5};
+    print join(x);
+off
+*/
 string slice(string str, int start, int end)
 {
     int i;
@@ -756,17 +851,43 @@ string trim(string str, int start, int end)
 {
     return slice(str, start, end);
 }
+string sliceTo(string str, string that_part_of_the_string)
+{
+    string result = strstr(str.data(), that_part_of_the_string.data());
+    return result;
+}
+#define trimUntilMatch sliceTo
+string sliceToAfter(string str, string that_part_of_the_string)
+{
+    string result = sliceTo(str, that_part_of_the_string);
+    result = slice(result, that_part_of_the_string.length(), str.length());
+    return result;
+}
+/*
+@params: 
+    @str|origin: string
+    @that_part_of_the_string: 
+@returnVal:
+    if @that_part_of_the_string exists within @str|origin: new string with the first part torn away
+    else: returns @str|origin back
+@test:
+on
+    str testStr = "hi love, how's it going?";
+    str y = sliceTo(testStr, "how's");
+    print y;
+off
+*/
 string replace(string str, const string &_this_string, const string &_that_string) {
     size_t start_pos = str.find(_this_string);
     str.replace(start_pos, _this_string.length(), _that_string);
     return str;
 }
-string replaceAll(string str, const string &remove, const string &insert) 
+string replaceAll(string str, const string &toRemove, const string &toInsert) 
 {
     string::size_type pos = 0;
-    while ((pos = str.find(remove, pos)) != string::npos)
+    while ((pos = str.find(toRemove, pos)) != string::npos)
     {
-        str.replace(pos, remove.size(), insert);
+        str.replace(pos, toRemove.size(), toInsert);
         pos++;
     }
     return str;
@@ -776,25 +897,42 @@ string replaceMutate(string &str, const string &_this_string, const string &_tha
     str.replace(start_pos, _this_string.length(), _that_string);
     return str;
 }
-string replaceAllMutate(string &str, const string &remove, const string &insert) 
+string replaceAllMutate(string &str, const string &toRemove, const string &toInsert) 
 {
     string::size_type pos = 0;
-    while ((pos = str.find(remove, pos)) != string::npos)
+    while ((pos = str.find(toRemove, pos)) != string::npos)
     {
-        str.replace(pos, remove.size(), insert);
+        str.replace(pos, toRemove.size(), toInsert);
         pos++;
     }
     return str;
 }
-
+#define replaceMutateAll replaceAllMutate
+string reg_replace(string &str, string regex, string replacement) {
+    str = std::regex_replace(str, std::regex(regex), replacement, std::regex_constants::format_first_only);
+    return str;
+}
+string reg_replace_all(string &str, string regex, string replacement) {
+    str = std::regex_replace(str, std::regex(regex), replacement);
+    return str;
+}
+string strRemove(string &str, const string &toRemove) {
+    return replaceMutate(str, toRemove, "");
+}
+string strRemoveAll(string &str, const string &toRemove) {
+    return replaceAllMutate(str, toRemove, "");
+}
 /*
+test:
 on
-    string x = "hi {name} {name}";
-    replaceAllMutate(x, "{name}", "Max");
-    cout << x;
+    string sentence = "Hi {name}, {she} said {girlPronoun} loves you. I was like what'd you see in {name}? And {girlPronoun} goes, \"{name} \'s the best boyfriend I could ever have, as {boyPronoun} loves me to the moon and back.\"";
+    replaceAllMutate(sentence, "{name}", "Max");
+    replaceAllMutate(sentence, "{she}", "Jenny");
+    replaceAllMutate(sentence, "{boyPronoun}", "he");
+    replaceAllMutate(sentence, "{girlPronoun}", "she");
+    print sentence;
 off
 */
-
 string randstr()
 {
     int max = 800;
@@ -847,21 +985,7 @@ string reverseStr(string s)
     return s;
 }
 #define reverse_str reverseStr
-void itoa(int n, char *s)
-{
-    int i, sign;
-    if ((sign = n) < 0)
-        n = -n;
-    i = 0;
-    do
-    {
-        s[i++] = n % 10 + '0';
-    } while ((n /= 10) > 0);
-    if (sign < 0)
-        s[i++] = '-';
-    s[i] = '\0';
-    reverseStr(s);
-}
+#define itoa std::to_string
 string upper(string str)
 {
     for (int i = 0; i < strlen(str.data()); i++)
@@ -881,8 +1005,6 @@ string sentCase(string str)
     string sliced = slice(str, 1, strlen(str.data()));
     char firstChar[96] {c, '\0'};
     string result = firstChar + sliced;
-    if (result[strlen(result.data()) - 1] != '.')
-        result += ".";
     return result;
 }
 #define sent_case sentCase
@@ -910,35 +1032,51 @@ string concat(string str1, string str2)
     string result = str1 + str2;
     return result;
 }
-#define connect concat
-#define join concat
 #define merge concat
-#define stradd concat
-#define makeone concat
 #define strmilao concat
 #define strmilae concat
-#define strjoro concat
+#define ek_bane concat
 int strAt(string str, string lookup) {
     char *p = strstr(str.data(), lookup.data());
     if (p) return p-str.data();
     return -1;
 }
+int strAtInsens(string str, string lookup) {
+    str = lower(str);
+    lookup = lower(lookup);
+    char *p = strstr(str.data(), lookup.data());
+    if (p) return p-str.data();
+    return -1;
+}
 int strHas(string str, string lookup) {
-    return strAt(str, lookup) >= 0 && strAt(str, lookup) != -1;
+    //-1 means not an index in the string
+    return strAt(str, lookup) != -1 || strAt(str, lookup) >= 0;
+}
+int strHasInsens(string str, string lookup) {
+    //-1? Not an index!
+    return strAtInsens(str, lookup) != -1 || strAtInsens(str, lookup) >= 0;
 }
 #define strIndex strAt
+#define strIndexInsens strAtInsens
 #define match strHas
+#define matches strHas
+#define strMatch strHas
+#define strMatchInsens strHasInsens
 #define strIncl strHas
+#define strInclInsens strHasInsens
 #define str_has strHas
 #define str_at strHas
 #define str_index strAt
 #define str_indexOf strAt
+#define str_indexOf_insens strAt
 #define str_index_of strAt
-#define index_of strAt
-#define str_incl strHas
-#define in strHas
 #define indexOf strAt
-#define matches strHas
+#define indexOfInsens strAtInsens
+#define index_of strAt
+#define index_of_insens strAtInsens
+#define insens_index_of
+#define str_incl strHas
+#define in strHasInsens
 
 //NUMBER METHODS
 int Int(string numeric_str)
@@ -1159,6 +1297,13 @@ int isprime(int n)
     }
     return 1;
 }
+#define ctof(c) (round(1.8 * c + 32))
+#define ftoc(f) (round(((f - 32) * 5) / 9))
+/*
+co
+    print ftoc(98);
+de
+*/
 
 //DATE METHODS
 typedef struct
@@ -1277,9 +1422,8 @@ Date new_date()
             gtg = "Good start of a brand-new day!!";
     }
 
-    char hrs[] = "";
-    itoa(hours, hrs);
-    string curTime = strcat(hrs, timePartB);
+    string hrs = std::to_string(hours);
+    string curTime = strcat(hrs.data(), timePartB);
     int isLeapYear = Int(year) % 4 == 0;
 
 
@@ -1476,67 +1620,90 @@ int fileHatao(string fname)
 }
 
 //Arrays
-#define arrSecLast(arr) (arr[sizeof(arr)/sizeof(arr[0])-2])
-#define arrLast(arr) (arr[sizeof(arr)/sizeof(arr[0])-1])
-#define arrNthLast(arr, index) (arr[sizeof(arr)/sizeof(arr[0])-index])
-#define arrReplaceStrAt(arr, index, replacement) (strcpy(arr[index], replacement))
-#define arrReplaceStrAtLast(arr, index, replacement) (strcpy(arr[sizeof(arr)/sizeof(arr[0])-index], replacement))
-#define arrReplaceIntAt(arr, index, replacement) (arr[index] = replacement)
-#define arrReplaceIntAtLast(arr, index, replacement) (arr[sizeof(arr)/sizeof(arr[0])-index] = replacement)
-#define arrPopStr(str) (strcpy(str[sizeof(str)/sizeof(str[0])-1], ""))
-#define reverseArr(arr) (std::reverse(std::begin(arr), std::end(arr)))
-#define randItem(arr) (arr[randint(sizeof(arr)/sizeof(arr[0]))])
+#define push(arr, el) arr.push_back(el)
+#define pushStart(arr, el) arr.insert(arr.begin(), el)
+#define pushAt(arr, i, el) arr.insert(arr.begin() + i, el)
+#define shift(arr) arr.erase(arr.begin())
+#define pop(arr) arr.pop_back()
+#define popAt(arr, i) arr.erase(arr.begin + i)
+#define arrSecLast(arr) (arr[arr.size()-2])
+#define arrLast(arr) (arr[arr.size()-1])
+#define arrNthLast(arr, index) (arr[arr.size()-index])
+#define arrReplaceAtLast(arr, index, replacement) (arr[arr.size()-index] = replacement)
+#define reverseArr(arr) (std::reverse(arr.begin(), arr.end()))
+#define shuffleArr(arr) (std::shuffle(arr.begin(), arr.end(), std::default_random_engine{}))
+#define randItem(arr) (arr[randint(arr.size()-1)])
 #define randFrom randItem
-void bubbleSort(int array[], int size) {
-  phere int step barabar 0; jab_tak step se_bare (size-1); step me_izafa 1 ka tabtak
-    haal swappingKiZarurat barabar na;
-    phere int i barabar 0; jab_tak i se_bare (size-step-1); i me_izafa 1 ka or_run
-      agar array[i] se_chote array[i + 1] hen to
-        set swappingKiZarurat ab han;
-        int temp bana array[i];
-        array[i] bana array[i + 1];
-        array[i + 1] bana temp;
-      basab
-    basab
-    agar swappingKiZarurat nahi hen
-      ruko;
-  basab
+//work for strings as well:
+#define sortAsc(arr) std::sort(arr.begin(), arr.end())
+#define sortDesc(arr) std::sort(arr.rbegin(), arr.rend())
+#define sort sortAsc
+//get min/max
+int minAmongInts(int_array nums) {
+  auto min = nums[0];
+  for (auto n : nums) {
+    if (n < min) min = n;
+  }
+  return min;
 }
-#define bubbleSortAsc bubbleSort
-void bubbleSortDesc(int array[], int size) {
-  phere int step barabar 0; jab_tak step se_bare (size-1); step me_izafa 1 ka or_run
-    haal swappingKiZarurat barabar na;
-    phere int i barabar 0; jab_tak i se_bare (size-step-1); i me_izafa 1 ka or_run
-      agar array[i] se_bare array[i + 1] hen to
-        set swappingKiZarurat ab han;
-        int temp bana array[i];
-        array[i] bana array[i + 1];
-        array[i + 1] bana temp;
-      basab
-    basab
-    agar swappingKiZarurat nahi hen
-      ruko;
-  basab
+flt minAmongFlts(flt_array nums) {
+  auto min = nums[0];
+  for (auto n : nums) {
+    if (n < min) min = n;
+  }
+  return min;
 }
-void printArrStr(string arr[], int size) {
+dbl minAmongDbls(dbl_array nums) {
+  auto min = nums[0];
+  for (auto n : nums) {
+    if (n < min) min = n;
+  }
+  return min;
+}
+int maxAmongInts(int_array nums) {
+  auto max = nums[0];
+  for (auto n : nums) {
+    if (n > max) max = n;
+  }
+  return max;
+}
+flt maxAmongFlts(flt_array nums) {
+  auto max = nums[0];
+  for (auto n : nums) {
+    if (n > max) max = n;
+  }
+  return max;
+}
+dbl maxAmongDbls(dbl_array nums) {
+  auto max = nums[0];
+  for (auto n : nums) {
+    if (n > max) max = n;
+  }
+  return max;
+}
+void printArrStr(string_array arr) {
+  int size = arr.size();
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << "\n";
   }
   br(1);
 }
-void printArrInt(int arr[], int size) {
+void printArrInt(int_array arr) {
+  int size = arr.size();
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
   br(1);
 }
-void printArrFlt(float arr[], int size) {
+void printArrFlt(float_array arr) {
+  int size = arr.size();
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
   br(1);
 }
-void printArrDbl(double arr[], int size) {
+void printArrDbl(double_array arr) {
+  int size = arr.size();
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
@@ -1545,24 +1712,25 @@ void printArrDbl(double arr[], int size) {
 #define printStrArr printArrStr
 #define printIntArr printArrInt
 #define printFltArr printArrFlt
-void printArrReversedInt(int arr[], int size) {
-  size -= 1;
+#define printDblArr printArrDbl
+void printArrReversedInt(int_array arr) {
+  int size = arr.size()-1;
   //bugfix: we need the last element, not the length of the array, as that would get us a null character
   for (; size >= 0; size--) {
     cout << arr[size] << " ";
   }
   br(1);
 }
-void printArrReversedFlt(float arr[], int size) {
-  size -= 1;
+void printArrReversedFlt(flt_array arr) {
+  int size = arr.size()-1;
   //bugfix: we need the last element, not the length of the array, as that would get us a null character
   for (; size >= 0; size--) {
     cout << arr[size] << " ";
   }
   br(1);
 }
-void printArrReversedDbl(double arr[], int size) {
-  size -= 1;
+void printArrReversedDbl(double_array arr) {
+  int size = arr.size()-1;
   //bugfix: we need the last element, not the length of the array, as that would get us a null character
   for (; size >= 0; size--) {
     cout << arr[size] << " ";
@@ -1581,16 +1749,36 @@ void printArrReversedDbl(double arr[], int size) {
 #define printArrDblReversed printArrReversedDbl
 #define printReversedDblArr printArrReversedDbl
 #define reversePrintDblArr printArrReversedDbl
-int strInArr(string arr[], string lookupStr, int length)
+int strInArr(string_array arr, string lookupStr)
 {
+    int length = len(arr);
     for (int i=0; i<length; i++)
     {
         if (arr[i] == lookupStr) return 1;
     }
     return 0;
 }
-int intInArr(int arr[], int lookupInt, int length)
+int intInArr(int_array arr, int lookupInt)
 {
+    int length = len(arr);
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupInt) return 1;
+    }
+    return 0;
+}
+int intInArr(float_array arr, int lookupInt)
+{
+    int length = len(arr);
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupInt) return 1;
+    }
+    return 0;
+}
+int intInArr(double_array arr, int lookupInt)
+{
+    int length = len(arr);
     for (int i=0; i<length; i++)
     {
         if (arr[i] == lookupInt) return 1;
