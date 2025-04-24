@@ -909,10 +909,6 @@ string replaceAllMutate(string &str, const string &toRemove, const string &toIns
 }
 #define replaceMutateAll replaceAllMutate
 string reg_replace(string &str, string regex, string replacement) {
-    str = std::regex_replace(str, std::regex(regex), replacement, std::regex_constants::format_first_only);
-    return str;
-}
-string reg_replace_all(string &str, string regex, string replacement) {
     str = std::regex_replace(str, std::regex(regex), replacement);
     return str;
 }
@@ -933,6 +929,18 @@ on
     print sentence;
 off
 */
+string nformat(int n) {
+    string str = Str(n);
+    if (str.size() == 4) str = reg_replace(str, "\\d(?=\\d{3}$)", "$&,");
+    else if (str.size() == 5) str = reg_replace(str, "\\d(?=\\d{3}$)", "$&,");
+    else if (str.size() == 6) str = reg_replace(str, "\\d(?=\\d{5}$)|\\d(?=\\d{3}$)", "$&,");
+    else if (str.size() == 7) str = reg_replace(str, "\\d(?=\\d{5}$)|\\d(?=\\d{3}$)", "$&,");
+    else str = "";
+    return str;
+}
+on
+    print nformat(8000000);
+off
 string randstr()
 {
     int max = 800;
