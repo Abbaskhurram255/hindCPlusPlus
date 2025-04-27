@@ -73,7 +73,10 @@ A Hindi to GCC translation engine
   * and much more
 
 ## Try Online
-https://onecompiler.com/cpp/43dxht7ak
+
+[Hindi/Urdu Demo](https://onecompiler.com/cpp/43dxht7ak)
+ | 
+[Sindhi Demo](https://onecompiler.com/cpp/43g4b26sf)
 
 ## Importing the library
 `#include "path/to/lib"`
