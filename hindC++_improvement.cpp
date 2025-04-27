@@ -3,8 +3,7 @@
     * Hardcoded by GitHub.com/abbaskhurram255
 */
 
-
-//importing all the common internal libraries, so you DON'T have to. Next time, you can just import the library, without having the need to do any boilerplate initialization: "#include <iostream>\nusing namespace std;"
+//importing all the common internal libraries, so you DON'T have to. Next time, you can just import the library, without having the need to do any boilerplate initialization yourself: no more "#include <iostream>\nusing namespace std;"
 #include <stdio.h>
 #include <stdarg.h>
 #include <cstring>
@@ -19,21 +18,41 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <random>
 #include <array>
+#include <vector>
 
 //declaring types
 using namespace std;
 using jumla = std::string;
 using jumlo = jumla;
 using lafz = jumla;
+using String = jumla;
 using str = jumla;
-using nr = double;
-using dbl = nr;
+using dbl = double;
 using flt = float;
 using ch = char;
 using haal = bool;
 
 //initialization
+#define array std::vector
+#define char_array std::string
+#define string_array std::vector<std::string>
+#define integer_array std::vector<int>
+#define float_array std::vector<float>
+#define double_array std::vector<double>
+#define ch_array std::string
+#define str_array std::vector<std::string>
+#define int_array std::vector<int>
+#define flt_array std::vector<float>
+#define dbl_array std::vector<double>
+/*
+int main() {
+    str_array x = {"hi", "love"};
+    int_array y = {1, 3, 5, 7};
+    cout << x[0];
+}
+*/
 #define out std::cout <<
 #define farmaiye out
 #define or_farmaiye out
@@ -66,14 +85,20 @@ using haal = bool;
 #define aage << " " <<
 #define ke_aage << " " <<
 #define agya << " " <<
+#define je_agya << " " <<
+#define je_agyo << " " <<
 #define or_age << " " <<
 #define aen_agya << " " <<
+#define wari_agya << " " <<
 #define or_aage << " " <<
 #define aen_agyo << " " <<
+#define wari_agyo << " " <<
 #define bas endl
 #define or_bas or_age bas
 #define age_bas or_bas
 #define aage_bas or_bas
+#define aen_agya << " " <<
+#define aen_agyo << " " <<
 #define enough or_bas
 #define bas_re or_bas
 #define aen_bas aen_agya bas
@@ -109,7 +134,7 @@ using haal = bool;
 #define hare =
 #define hare_ahe =
 #define he_ab =
-#define ahe_hare
+#define ahe_hare =
 #define into =
 #define exchange swap
 #define hera_pheri swap
@@ -160,7 +185,7 @@ using haal = bool;
 #define har for (
 #define ever ;;)
 #define ek auto
-#define each for (auto
+#define each auto
 #define har_ek for (auto
 #define harEk for (auto
 #define for_each for (auto
@@ -268,13 +293,16 @@ using haal = bool;
 #define ghano_ya_barabar >=
 #define ghara_ya_barabar >=
 #define ghana_ya_barabar >=
+#define ghani_ya_barabar >=
+#define ghari_ya_barabar >=
 #define bara_ya_barabar >=
 #define wado_ya_barabar >=
 #define bare_ya_barabar >=
 #define wada_ya_barabar >=
-#define kam_ya_barabar <=
+#define wadi_ya_barabar >=
 #define ghat_ya_barabar <=
 #define chota_ya_barabar <=
+#define kam_ya_barabar <=
 #define nandho_ya_barabar <=
 #define nandhro_ya_barabar <=
 #define chote_ya_barabar <=
@@ -311,11 +339,11 @@ using haal = bool;
 #define func auto
 #define farz auto
 #define mano auto
-#define re ;
-#define ri ;
-#define love ;
-#define pyari ;
-#define ji ;
+#define re ;std::cout<<"";
+#define ri ;std::cout<<"";
+#define love ;std::cout<<"";
+#define pyari ;std::cout<<"";;
+#define ji ;std::cout<<"";
 #define object typedef struct
 #define Object typedef struct
 #define extends : public
@@ -323,6 +351,7 @@ using haal = bool;
 #define off }
 #define khu int main() {
 #define ram }
+#define khuram ;std::cout<<"";
 #define shuru int main() {
 #define shurwat int main() {
 #define hind int main() {
@@ -408,11 +437,25 @@ using haal = bool;
     #endif
 #endif
 
-#define len(str) str.length()
-#define arrlen(arr) (sizeof(arr) / sizeof(arr[0]))
+//making getting length of a string, and array|vector easier
+#define len(x) x.size()
+#define arrlen len
 
-//C-style prints
-string format(string fmt, ...) 
+
+//C-style prints, and helpers
+string fmt(string fmt, ...) 
+{ 
+    va_list ap;
+    va_start(ap, fmt);
+    const size_t SIZE = 512;
+    char buffer[SIZE] = { 0 };
+    vsnprintf(buffer, SIZE, fmt.data(), ap);
+    va_end(ap);
+    string resultAsCppString = buffer;
+    resultAsCppString += "\n";
+    return resultAsCppString;
+}
+string fmt_inline(string fmt, ...) 
 { 
     va_list ap;
     va_start(ap, fmt);
@@ -423,15 +466,18 @@ string format(string fmt, ...)
     string resultAsCppString = buffer;
     return resultAsCppString;
 }
-void print(const string args, ...)
-{
-    printf("%s", args.data());
-    printf("\n");
-}
+#define print cout <<
+#define f fmt
+#define f_inl fmt_inline
 /*
 on
-    str x = format("hi %s", "love");
-    cout << x;
+    kahie sout("hi honey, " << "I heard you just turned 24!") << endl;
+off
+*/
+/*
+on
+    str x = f("hi %s, I heard it's your %dth birthday", "love", 44);
+    print x;
 off
 */
 void print_inline(string args, ...)
@@ -537,6 +583,7 @@ string puchoWord(string x) {
 #define puchWord puchoWord
 #define puchuLafz puchoWord
 #define puchuWord puchoWord
+#define askWord puchoWord
 string pucho(string x) {
     std::string returnValue = "";
     std::cout << x;
@@ -544,9 +591,11 @@ string pucho(string x) {
     return returnValue;
 }
 #define puch pucho
+#define puchu pucho
+#define puchuJumlo pucho
+#define pucholine pucho
+#define puchoJumla pucho
 #define askline pucho
-#define saveline pucho
-#define askWord puchoWord
 int pucho_i(string x)
 {
     int y = 0;
@@ -634,6 +683,10 @@ void linechoro(int n)
     for (; n; n--)
         cout << endl;
 }
+#define linechadyo linechoro
+#define linechad linechoro
+#define linegap linechad(
+//^stays as/is, the additional opening parenthesis at the end is used to allow following syntax: linegap x ka|jo re|ji|yaara|;
 void agline()
 {
     linechoro(1);
@@ -654,12 +707,12 @@ void tb(int n)
 void repeat(string h, int j)
 {
     for (; j; j--)
-        print(h.data());
+        printf("%s\n", h.data());
 }
 void repeat_inline(string h, int j)
 {
     for (; j; j--)
-        print_inline(h.data());
+        printf("%s", h.data());
 }
 void repeat_i(int h, int j)
 {
@@ -694,12 +747,12 @@ void repeat_c_inline(char h, int j)
 void repeat_b(int h, int j)
 {
     for (; j; j--)
-        printf("%s", !h ? "false" : "true");
+        printf("%s\n", !h ? "false" : "true");
 }
 void repeat_b_inline(int h, int j)
 {
     for (; j; j--)
-        print_inline("%s", !h ? "false" : "true");
+        printf("%s", !h ? "false" : "true");
 }
 #define duhrao repeat
 #define duhrao_inline repeat_inline
@@ -719,29 +772,91 @@ void repeat_b_inline(int h, int j)
 #define duhrae_b_inline duhrao_b_inline
 
 //STRING METHODS
-string keepFirst(string str, string with)
+template <typename T> string Str(T to_turn)
 {
-    char *org = str.data();
-    char *result = strtok(str.data(), with.data());
-    strcpy(str.data(), "");
-    strcpy(str.data(), org);
-    string resultAsCppString = result;
-    return resultAsCppString;
+    //helps force turn any type into a string
+    try {
+        ostringstream ost;
+        ost << to_turn;
+        return ost.str();
+    } catch (...) {
+        return "";
+    }
 }
-string keepLast(string str, string with)
-{
-    char *token;
-    token = strtok(str.data(), with.data());
-    char *result = token = strtok(NULL, with.data());
-    string resultAsCppString = result;
-    return resultAsCppString;
+/*
+@params:
+    @to_turn: any
+@returnVal: std::string
+@test:
+on
+    string temp = Str(38);
+    cout << "Today is " + temp + " degree Celsius outside";
+off
+*/
+string_array split(const std::string str, const std::string regex_or_str) {
+
+    std::regex regexz(regex_or_str);
+
+    return {
+        std::sregex_token_iterator(str.begin(), str.end(), regexz, -1),
+
+        std::sregex_token_iterator()
+    };
 }
-string keepAfter(string a, string b)
-{
-    char *result = strstr(a.data(), b.data());
-    string resultAsCppString = result;
+string_array splitIntoWords(string str) {
+    let words = split(str, "[^\\w]+");
+    return words;
+}
+#define lafzo_me_toro splitIntoWords
+#define alfazo_me_to splitIntoWords
+#define lafzan_me_bhanyo splitIntoWords
+/*
+@params:
+    @@str: string
+        @@regex_or_str|delimiter|token_to_break_with: string|regex
+@returnVal:
+    vector<string> {iterable}
+@test:
+on
+    string sentence = "Love, I bet you remember our first kiss- - under-the-rain";
+    let words = split(sentence, "\\W+");
+    print words[7];
+off
+*/
+fn join(str_array x, string delim) {
+    str result;
+    for (let item from x) {
+        result += delim + Str(item);
+    }
     return result;
 }
+fn join(int_array x, string delim) {
+    str result;
+    for (let item from x) {
+        result += delim + Str(item);
+    }
+    return result;
+}
+fn join(flt_array x, string delim) {
+    str result;
+    for (let item from x) {
+        result += delim + Str(item);
+    }
+    return result;
+}
+fn join(dbl_array x, string delim) {
+    str result;
+    for (let item from x) {
+        result += delim + Str(item);
+    }
+    return result;
+}
+/*
+on
+    int_array x = {1, 3, 5};
+    print join(x);
+off
+*/
 string slice(string str, int start, int end)
 {
     int i;
@@ -755,21 +870,55 @@ string slice(string str, int start, int end)
     string resultAsCppString = output;
     return resultAsCppString;
 }
-string trim(string str, int start, int end)
+#define trim slice
+string sliceRight(string str, int start, int end)
 {
-    return slice(str, start, end);
+    return slice(str, str.size()-start, str.size());
 }
+#define trimRight sliceRight
+string sliceEnd(string str, int start, int end)
+{
+    return slice(str, str.size()-start, str.size());
+}
+#define trimEnd sliceEnd
+#define trimLast sliceEnd
+string sliceTo(string str, string that_part_of_the_string)
+{
+    string result = strstr(str.data(), that_part_of_the_string.data());
+    return result;
+}
+#define trimUntilMatch sliceTo
+string sliceToAfter(string str, string that_part_of_the_string)
+{
+    string result = sliceTo(str, that_part_of_the_string);
+    result = slice(result, that_part_of_the_string.length(), str.length());
+    return result;
+}
+/*
+@params: 
+    @str|origin: string
+    @that_part_of_the_string: 
+@returnVal:
+    if @that_part_of_the_string exists within @str|origin: new string with the first part torn away
+    else: returns @str|origin back
+@test:
+on
+    str testStr = "hi love, how's it going?";
+    str y = sliceTo(testStr, "how's");
+    print y;
+off
+*/
 string replace(string str, const string &_this_string, const string &_that_string) {
     size_t start_pos = str.find(_this_string);
     str.replace(start_pos, _this_string.length(), _that_string);
     return str;
 }
-string replaceAll(string str, const string &remove, const string &insert) 
+string replaceAll(string str, const string &toRemove, const string &toInsert) 
 {
     string::size_type pos = 0;
-    while ((pos = str.find(remove, pos)) != string::npos)
+    while ((pos = str.find(toRemove, pos)) != string::npos)
     {
-        str.replace(pos, remove.size(), insert);
+        str.replace(pos, toRemove.size(), toInsert);
         pos++;
     }
     return str;
@@ -779,25 +928,238 @@ string replaceMutate(string &str, const string &_this_string, const string &_tha
     str.replace(start_pos, _this_string.length(), _that_string);
     return str;
 }
-string replaceAllMutate(string &str, const string &remove, const string &insert) 
+string replaceAllMutate(string &str, const string &toRemove, const string &toInsert) 
 {
     string::size_type pos = 0;
-    while ((pos = str.find(remove, pos)) != string::npos)
+    while ((pos = str.find(toRemove, pos)) != string::npos)
     {
-        str.replace(pos, remove.size(), insert);
+        str.replace(pos, toRemove.size(), toInsert);
         pos++;
     }
     return str;
 }
-
+#define replaceMutateAll replaceAllMutate
+string reg_replace(string &str, string regex, string replacement) {
+    str = std::regex_replace(str, std::regex(regex), replacement);
+    return str;
+}
+string strRemove(string &str, const string &toRemove) {
+    return replaceMutate(str, toRemove, "");
+}
+string strRemoveAll(string &str, const string &toRemove) {
+    return replaceAllMutate(str, toRemove, "");
+}
 /*
+test:
 on
-    string x = "hi {name} {name}";
-    replaceAllMutate(x, "{name}", "Max");
-    cout << x;
+    string sentence = "Hi {name}, {she} said {girlPronoun} loves you. I was like what'd you see in {name}? And {girlPronoun} goes, \"{name} \'s the best boyfriend I could ever have, as {boyPronoun} loves me to the moon and back.\"";
+    replaceAllMutate(sentence, "{name}", "Max");
+    replaceAllMutate(sentence, "{she}", "Jenny");
+    replaceAllMutate(sentence, "{boyPronoun}", "he");
+    replaceAllMutate(sentence, "{girlPronoun}", "she");
+    print sentence;
 off
 */
-
+/*
+Before we proceed, let's make some Number maps, for each of use
+*/
+/*Pakistani*/
+#define hazar *1e3
+#define lac *1e5
+#define lacs *1e5
+#define lakh lac
+#define lakhs *1e5
+#define crore *1e7
+#define crores crore
+#define arab *1e9
+#define arabs *1e9
+#define zr *1e3
+#define hzr zr
+#define lc *1e5
+#define cr *1e7
+#define ar *1e9
+/*Intl*/
+#define K *1e3
+#define Hk *1e6
+#define M *1e9
+#define million M
+#define B *1e12
+#define billion B
+#define T *1e15
+#define Tr T
+#define trillion T
+#define qd *1e18
+#define quadrillion qd
+#define qt *1e21
+#define quintillion qt
+#define sx *1e24
+#define sextillion sx
+#define spt *1e27
+#define septillion spt
+#define oct *1e30
+#define octillion oct
+#define nn *1e33
+#define nonillion nn
+#define dc *1e36
+#define decillion dc
+string format(long n) {
+    string sign;
+    if (n < 0) {
+        sign = "-";
+        n = abs(n);
+    }
+    string str = Str(n);
+    int zeros = str.size()-1;
+    if (zeros <= 2 || zeros >= 11) return sign + str;
+    switch (zeros) {
+        case 3:
+        case 4:
+            str = reg_replace(str, "\\d(?=\\d{3}$)", "$&,");
+            break;
+        case 5:
+        case 6:
+            str = reg_replace(str, "\\d(?=\\d{5}$)|\\d(?=\\d{3}$)", "$&,");
+            break;
+        case 7:
+        case 8:
+            str = reg_replace(str, "^\\d{1,2}(?=\\d{7,8})|\\d(?=\\d{5}$)|\\d(?=\\d{3}$)", "$&,");
+            break;
+        case 9:
+        case 10:
+            str = reg_replace(str, "^\\d{1,2}(?=\\d{9,10})|\\d(?=\\d{7}$)|\\d(?=\\d{5}$)|\\d(?=\\d{3}$)", "$&,");
+            break;
+    }
+    str = sign + str;
+    return str;
+}
+string formatIntl(long n) {
+    string sign;
+    if (n < 0) {
+        sign = "-";
+        n = abs(n);
+    }
+    string str = Str(n);
+    int zeros = str.size()-1;
+    if (zeros <= 2 || zeros >= 11) return sign + str;
+    switch (zeros) {
+        case 3:
+        case 4:
+            str = reg_replace(str, "\\d(?=\\d{3}$)", "$&,");
+            break;
+        case 5:
+        case 6:
+            str = reg_replace(str, "\\d(?=\\d{6}$)|\\d(?=\\d{3}$)", "$&,");
+            break;
+        case 7:
+        case 8:
+            str = reg_replace(str, "^\\d{1,2}(?=\\d{9,10})|\\d(?=\\d{6}$)|\\d(?=\\d{3}$)", "$&,");
+            break;
+        case 9:
+        case 10:
+            str = reg_replace(str, "^\\d{1,2}(?=\\d{11,13})|\\d(?=\\d{9}$)|\\d(?=\\d{6}$)|\\d(?=\\d{3}$)", "$&,");
+            break;
+    }
+    str = sign + str;
+    return str;
+}
+#define nf format
+func pkr(long n) {
+    string formattedN = format(n);
+    string result = "PKR " + formattedN;
+    return result;
+}
+func usd(long n) {
+    string formattedN = formatIntl(n);
+    string result = "$" + formattedN;
+    return result;
+}
+/*
+on
+    long n = 3040070000;
+    print f("%s\n%s", pkr(n).data(), usd(n).data());
+off
+*/
+func suffix(long n) {
+    let formattedN = format(n);
+    let parts = split(formattedN, ",");
+    let size = parts.size();
+    if (n < 800 || n > 99 arabs) return formattedN;
+    string result;
+    switch (size) {
+        case 1:
+        case 2:
+            result = Str(n/1e3) + "zr";
+            break;
+        case 3:
+            result = Str(n/1e5) +  "lc";
+            break;
+        case 4:
+            result = Str(n/1e7) +  "cr";
+            break;
+        case 5:
+            result = Str(n/1e9) +  "ar";
+            break;
+    }
+    return result;
+}
+func intl(long n) {
+    let formattedN = formatIntl(n);
+    let parts = split(formattedN, ",");
+    let size = parts.size();
+    if (n < 800 || n > 99 billion) return formattedN;
+    string result;
+    switch (size) {
+        case 1:
+        case 2:
+            result = Str(n/1e3) + "k";
+            break;
+        case 3:
+            result = Str(n/1e6) +  "M";
+            break;
+        case 4:
+            result = Str(n/1e9) +  "B";
+            break;
+    }
+    return result;
+}
+/*
+on
+    //print intl(75000000000);
+    //print suffix(85.71 ar - 5ar);
+off
+*/
+func ordinal(long n) {
+    string result = Str(n);
+    string last_two = &result[result.size()-2];
+    char last_char = result[result.size()-1];
+    if (n > 14 && n < 111) {
+        switch (last_char) {
+            case '1': result += "st"; break;
+            case '2': result += "nd"; break;
+            case '3': result += "rd"; break;
+            default: result += "th";
+        }
+    }
+    else {
+       if (last_two == "11" || last_two == "12" || last_two == "13") result += "th";
+       else {
+           switch (last_char) {
+                case '1': result += "st"; break;
+                case '2': result += "nd"; break;
+                case '3': result += "rd"; break;
+                default: result += "th";
+           }
+        }
+    }
+    return result;
+}
+#define th ordinal
+/*
+on
+    for (int i = 0; i<500; i++)
+        print th(i) age_bas;
+off
+*/
 string randstr()
 {
     int max = 800;
@@ -850,21 +1212,7 @@ string reverseStr(string s)
     return s;
 }
 #define reverse_str reverseStr
-void itoa(int n, char *s)
-{
-    int i, sign;
-    if ((sign = n) < 0)
-        n = -n;
-    i = 0;
-    do
-    {
-        s[i++] = n % 10 + '0';
-    } while ((n /= 10) > 0);
-    if (sign < 0)
-        s[i++] = '-';
-    s[i] = '\0';
-    reverseStr(s);
-}
+#define itoa std::to_string
 string upper(string str)
 {
     for (int i = 0; i < strlen(str.data()); i++)
@@ -884,11 +1232,18 @@ string sentCase(string str)
     string sliced = slice(str, 1, strlen(str.data()));
     char firstChar[96] {c, '\0'};
     string result = firstChar + sliced;
-    if (result[strlen(result.data()) - 1] != '.')
-        result += ".";
     return result;
 }
 #define sent_case sentCase
+char nthLastChar(string str, int n) {
+    return str[str.size() - n];
+}
+char secondLastChar(string str) {
+    return nthLastChar(str, 2);
+}
+char lastChar(string str) {
+    return nthLastChar(str, 1);
+}
 string strPop(string str)
 {
     str[strlen(str.data()) - 1] = '\0';
@@ -913,35 +1268,51 @@ string concat(string str1, string str2)
     string result = str1 + str2;
     return result;
 }
-#define connect concat
-#define join concat
 #define merge concat
-#define stradd concat
-#define makeone concat
 #define strmilao concat
 #define strmilae concat
-#define strjoro concat
+#define ek_bane concat
 int strAt(string str, string lookup) {
     char *p = strstr(str.data(), lookup.data());
     if (p) return p-str.data();
     return -1;
 }
+int strAtInsens(string str, string lookup) {
+    str = lower(str);
+    lookup = lower(lookup);
+    char *p = strstr(str.data(), lookup.data());
+    if (p) return p-str.data();
+    return -1;
+}
 int strHas(string str, string lookup) {
-    return strAt(str, lookup) >= 0 && strAt(str, lookup) != -1;
+    //-1 means not an index in the string
+    return strAt(str, lookup) != -1 || strAt(str, lookup) >= 0;
+}
+int strHasInsens(string str, string lookup) {
+    //-1? Not an index!
+    return strAtInsens(str, lookup) != -1 || strAtInsens(str, lookup) >= 0;
 }
 #define strIndex strAt
+#define strIndexInsens strAtInsens
 #define match strHas
+#define matches strHas
+#define strMatch strHas
+#define strMatchInsens strHasInsens
 #define strIncl strHas
+#define strInclInsens strHasInsens
 #define str_has strHas
 #define str_at strHas
 #define str_index strAt
 #define str_indexOf strAt
+#define str_indexOf_insens strAt
 #define str_index_of strAt
-#define index_of strAt
-#define str_incl strHas
-#define in strHas
 #define indexOf strAt
-#define matches strHas
+#define indexOfInsens strAtInsens
+#define index_of strAt
+#define index_of_insens strAtInsens
+#define insens_index_of
+#define str_incl strHas
+#define in strHasInsens
 
 //NUMBER METHODS
 int Int(string numeric_str)
@@ -1162,6 +1533,13 @@ int isprime(int n)
     }
     return 1;
 }
+#define ctof(c) (round(1.8 * c + 32))
+#define ftoc(f) (round(((f - 32) * 5) / 9))
+/*
+co
+    print ftoc(98);
+de
+*/
 
 //DATE METHODS
 typedef struct
@@ -1280,9 +1658,8 @@ Date new_date()
             gtg = "Good start of a brand-new day!!";
     }
 
-    char hrs[] = "";
-    itoa(hours, hrs);
-    string curTime = strcat(hrs, timePartB);
+    string hrs = std::to_string(hours);
+    string curTime = strcat(hrs.data(), timePartB);
     int isLeapYear = Int(year) % 4 == 0;
 
 
@@ -1479,67 +1856,90 @@ int fileHatao(string fname)
 }
 
 //Arrays
-#define arrSecLast(arr) (arr[sizeof(arr)/sizeof(arr[0])-2])
-#define arrLast(arr) (arr[sizeof(arr)/sizeof(arr[0])-1])
-#define arrNthLast(arr, index) (arr[sizeof(arr)/sizeof(arr[0])-index])
-#define arrReplaceStrAt(arr, index, replacement) (strcpy(arr[index], replacement))
-#define arrReplaceStrAtLast(arr, index, replacement) (strcpy(arr[sizeof(arr)/sizeof(arr[0])-index], replacement))
-#define arrReplaceIntAt(arr, index, replacement) (arr[index] = replacement)
-#define arrReplaceIntAtLast(arr, index, replacement) (arr[sizeof(arr)/sizeof(arr[0])-index] = replacement)
-#define arrPopStr(str) (strcpy(str[sizeof(str)/sizeof(str[0])-1], ""))
-#define reverseArr(arr) (std::reverse(std::begin(arr), std::end(arr)))
-#define randItem(arr) (arr[randint(sizeof(arr)/sizeof(arr[0]))])
+#define push(arr, el) arr.push_back(el)
+#define pushStart(arr, el) arr.insert(arr.begin(), el)
+#define pushAt(arr, i, el) arr.insert(arr.begin() + i, el)
+#define shift(arr) arr.erase(arr.begin())
+#define pop(arr) arr.pop_back()
+#define popAt(arr, i) arr.erase(arr.begin + i)
+#define arrSecLast(arr) (arr[arr.size()-2])
+#define arrLast(arr) (arr[arr.size()-1])
+#define arrNthLast(arr, index) (arr[arr.size()-index])
+#define arrReplaceAtLast(arr, index, replacement) (arr[arr.size()-index] = replacement)
+#define reverseArr(arr) (std::reverse(arr.begin(), arr.end()))
+#define shuffleArr(arr) (std::shuffle(arr.begin(), arr.end(), std::default_random_engine{}))
+#define randItem(arr) (arr[randint(arr.size()-1)])
 #define randFrom randItem
-void bubbleSort(int array[], int size) {
-  phere int step barabar 0; jab_tak step se_bare (size-1); step me_izafa 1 ka tabtak
-    haal swappingKiZarurat barabar na;
-    phere int i barabar 0; jab_tak i se_bare (size-step-1); i me_izafa 1 ka or_run
-      agar array[i] se_chote array[i + 1] hen to
-        set swappingKiZarurat ab han;
-        int temp bana array[i];
-        array[i] bana array[i + 1];
-        array[i + 1] bana temp;
-      basab
-    basab
-    agar swappingKiZarurat nahi hen
-      ruko;
-  basab
+//work for strings as well:
+#define sortAsc(arr) std::sort(arr.begin(), arr.end())
+#define sortDesc(arr) std::sort(arr.rbegin(), arr.rend())
+#define sort sortAsc
+//get min/max
+int minAmongInts(int_array nums) {
+  auto min = nums[0];
+  for (auto n : nums) {
+    if (n < min) min = n;
+  }
+  return min;
 }
-#define bubbleSortAsc bubbleSort
-void bubbleSortDesc(int array[], int size) {
-  phere int step barabar 0; jab_tak step se_bare (size-1); step me_izafa 1 ka or_run
-    haal swappingKiZarurat barabar na;
-    phere int i barabar 0; jab_tak i se_bare (size-step-1); i me_izafa 1 ka or_run
-      agar array[i] se_bare array[i + 1] hen to
-        set swappingKiZarurat ab han;
-        int temp bana array[i];
-        array[i] bana array[i + 1];
-        array[i + 1] bana temp;
-      basab
-    basab
-    agar swappingKiZarurat nahi hen
-      ruko;
-  basab
+flt minAmongFlts(flt_array nums) {
+  auto min = nums[0];
+  for (auto n : nums) {
+    if (n < min) min = n;
+  }
+  return min;
 }
-void printArrStr(string arr[], int size) {
+dbl minAmongDbls(dbl_array nums) {
+  auto min = nums[0];
+  for (auto n : nums) {
+    if (n < min) min = n;
+  }
+  return min;
+}
+int maxAmongInts(int_array nums) {
+  auto max = nums[0];
+  for (auto n : nums) {
+    if (n > max) max = n;
+  }
+  return max;
+}
+flt maxAmongFlts(flt_array nums) {
+  auto max = nums[0];
+  for (auto n : nums) {
+    if (n > max) max = n;
+  }
+  return max;
+}
+dbl maxAmongDbls(dbl_array nums) {
+  auto max = nums[0];
+  for (auto n : nums) {
+    if (n > max) max = n;
+  }
+  return max;
+}
+void printArrStr(string_array arr) {
+  int size = arr.size();
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << "\n";
   }
   br(1);
 }
-void printArrInt(int arr[], int size) {
+void printArrInt(int_array arr) {
+  int size = arr.size();
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
   br(1);
 }
-void printArrFlt(float arr[], int size) {
+void printArrFlt(float_array arr) {
+  int size = arr.size();
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
   br(1);
 }
-void printArrDbl(double arr[], int size) {
+void printArrDbl(double_array arr) {
+  int size = arr.size();
   for (int i = 0; i < size; ++i) {
     cout << arr[i] << " ";
   }
@@ -1548,24 +1948,25 @@ void printArrDbl(double arr[], int size) {
 #define printStrArr printArrStr
 #define printIntArr printArrInt
 #define printFltArr printArrFlt
-void printArrReversedInt(int arr[], int size) {
-  size -= 1;
+#define printDblArr printArrDbl
+void printArrReversedInt(int_array arr) {
+  int size = arr.size()-1;
   //bugfix: we need the last element, not the length of the array, as that would get us a null character
   for (; size >= 0; size--) {
     cout << arr[size] << " ";
   }
   br(1);
 }
-void printArrReversedFlt(float arr[], int size) {
-  size -= 1;
+void printArrReversedFlt(flt_array arr) {
+  int size = arr.size()-1;
   //bugfix: we need the last element, not the length of the array, as that would get us a null character
   for (; size >= 0; size--) {
     cout << arr[size] << " ";
   }
   br(1);
 }
-void printArrReversedDbl(double arr[], int size) {
-  size -= 1;
+void printArrReversedDbl(double_array arr) {
+  int size = arr.size()-1;
   //bugfix: we need the last element, not the length of the array, as that would get us a null character
   for (; size >= 0; size--) {
     cout << arr[size] << " ";
@@ -1584,16 +1985,36 @@ void printArrReversedDbl(double arr[], int size) {
 #define printArrDblReversed printArrReversedDbl
 #define printReversedDblArr printArrReversedDbl
 #define reversePrintDblArr printArrReversedDbl
-int strInArr(string arr[], string lookupStr, int length)
+int strInArr(string_array arr, string lookupStr)
 {
+    int length = len(arr);
     for (int i=0; i<length; i++)
     {
         if (arr[i] == lookupStr) return 1;
     }
     return 0;
 }
-int intInArr(int arr[], int lookupInt, int length)
+int intInArr(int_array arr, int lookupInt)
 {
+    int length = len(arr);
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupInt) return 1;
+    }
+    return 0;
+}
+int intInArr(float_array arr, int lookupInt)
+{
+    int length = len(arr);
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupInt) return 1;
+    }
+    return 0;
+}
+int intInArr(double_array arr, int lookupInt)
+{
+    int length = len(arr);
     for (int i=0; i<length; i++)
     {
         if (arr[i] == lookupInt) return 1;
@@ -1647,7 +2068,15 @@ App new_custom_app(string name, string version) {
 const string _app_name = "hindC++", 
     _app_version = "1.0.1",
     _app_vendor = "github.com/abbaskhurram255";
-
+    
+const string_array ctss = {"Abbottabad","Adilpur","Ahmadpur East","Ahmadpur Sial","Akora","Aliabad","Alik Ghund","Alipur","Alizai","Alpurai","Aman Garh","Amirabad","Arifwala","Ashanagro Koto","Athmuqam","Attock City","Awaran","Baddomalhi","Badin","Baffa","Bagarji","Bagh","Bahawalnagar","Bahawalnagar","Bahawalpur","Bakhri Ahmad Khan","Bandhi","Bannu","Barishal","Barkhan","Basirpur","Basti Dosa","Bat Khela","Battagram","Begowala","Bela","Berani","Bhag","Bhakkar","Bhalwal","Bhan","Bhawana","Bhera","Bhimbar","Bhiria","Bhit Shah","Bhopalwala","Bozdar Wada","Bulri","Būrewāla","Chak","Chak Azam Sahu","Chak Five Hundred Seventy-five","Chak Jhumra","Chak One Hundred Twenty Nine Left","Chak Thirty-one -Eleven Left","Chak Two Hundred Forty-nine Thal Development Authority","Chakwal","Chaman","Chamber","Charsadda","Chawinda","Chenab Nagar","Cherat Cantonement","Chhor","Chichawatni","Chilas","Chiniot","Chishtian","Chitral","Choa Saidan Shah","Chowki Jamali","Chuchar-kana Mandi","Chuhar Jamali","Chunian","Dadhar","Dadu","Daggar","Daira Din Panah","Dajal","Dalbandin","Dandot RS","Daromehar","Darya Khan","Darya Khan Marri","Daska Kalan","Dasu","Daud Khel","Daulatpur","Daultala","Daur","Dera Allahyar","Dera Bugti","Dera Ghazi Khan","Dera Ismail Khan","Dera Murad Jamali","Dhanot","Dhaunkal","Dhoro Naro","Digri","Dijkot","Dinan Bashnoian Wala","Dinga","Dipalpur","Diplo","Doaba","Dokri","Duki","Dullewala","Dunga Bunga","Dunyapur","Eidgah","Eminabad","Faisalabad","Faqirwali","Faruka","Fazilpur","Fort Abbas","Gadani","Gakuch","Gambat","Gandava","Garh Maharaja","Garhi Khairo","Garhiyasin","Ghauspur","Ghotki","Gilgit","Gojra","Goth Garelo","Goth Phulji","Goth Radhan","Gujar Khan","Gujranwala","Gujrat","Gulishah Kach","Gwadar","Hadali","Hafizabad","Hala","Hangu","Haripur","Harnai","Harnoli","Harunabad","Hasilpur","Hattian Bala","Haveli Lakha","Havelian","Hazro City","Hingorja","Hujra Shah Muqim","Hyderabad","Islamabad","Islamkot","Jacobabad","Jahanian Shah","Jalalpur Jattan","Jalalpur Pirwala","Jampur","Jamshoro","Jand","Jandiala Sher Khan","Jaranwala","Jati","Jatoi Shimali","Jauharabad","Jhang City","Jhang Sadr","Jhawarian","Jhelum","Jhol","Jiwani","Johi","Jām Sāhib","Kabirwala","Kadhan","Kahna Nau","Kahror Pakka","Kahuta","Kakad Wari Dir Upper","Kalabagh","Kalaswala","Kalat","Kaleke Mandi","Kallar Kahar","Kalur Kot","Kamalia","Kamar Mushani","Kambar","Kamoke","Kamra","Kandhkot","Kandiari","Kandiaro","Kanganpur","Karachi","Karak","Karaundi","Kario Ghanwar","Karor","Kashmor","Kasur","Keshupur","Keti Bandar","Khadan Khak","Khadro","Khairpur","Khairpur Mir’s","Khairpur Nathan Shah","Khairpur Tamewah","Khalabat","Khandowa","Khanewal","Khangah Dogran","Khangarh","Khanpur","Khanpur Mahar","Kharan","Kharian","Khewra","Khurrianwala","Khushāb","Khuzdar","Kohat","Kohlu","Kot Addu","Kot Diji","Kot Ghulam Muhammad","Kot Malik Barkhurdar","Kot Mumin","Kot Radha Kishan","Kot Rajkour","Kot Samaba","Kot Sultan","Kotli","Kotli Loharan","Kotri","Kulachi","Kundian","Kunjah","Kunri","Lachi","Ladhewala Waraich","Lahore","Lakhi","Lakki","Lala Musa","Lalian","Landi Kotal","Larkana","Layyah","Liliani","Lodhran","Loralai","Mach","Madeji","Mailsi","Malakand","Malakwal","Malakwal City","Malir Cantonment","Mamu Kanjan","Mananwala","Mandi Bahauddin","Mangla","Mankera","Mansehra","Mardan","Mastung","Matiari","Matli","Mehar","Mehmand Chak","Mehrabpur","Mian Channun","Mianke Mor","Mianwali","Minchianabad","Mingora","Miran Shah","Miro Khan","Mirpur Bhtoro","Mirpur Khas","Mirpur Mathelo","Mirpur Sakro","Mirwah Gorchani","Mitha Tiwana","Mithi","Moro","Moza Shahwala","Multan","Muridke","Murree","Musa Khel Bazar","Mustafābād","Muzaffargarh","Muzaffarābād","Nabisar","Nankana Sahib","Narang Mandi","Narowal","Nasirabad","Naudero","Naukot","Naushahra Virkan","Naushahro Firoz","Nawabshah","Nazir Town","New Bādāh","New Mirpur","Noorabad","Nowshera","Nowshera Cantonment","Nushki","Okara","Ormara","Pabbi","Pad Idan","Paharpur","Pakpattan","Panjgur","Pano Aqil","Parachinar","Pasni","Pasrur","Pattoki","Peshawar","Phalia","Pind Dadan Khan","Pindi Bhattian","Pindi Gheb","Pir Jo Goth","Pir Mahal","Pishin","Pithoro","Qadirpur Ran","Qila Abdullah","Qila Saifullah","Quetta","Rahim Yar Khan","Raiwind","Raja Jang","Rajanpur","Rajo Khanani","Ranipur","Rasulnagar","Ratodero","Rawala Kot","Rawalpindi","Renala Khurd","Risalpur Cantonment","Rohri","Rojhan","Rustam","Saddiqabad","Sahiwal","Sahiwal","Saidu Sharif","Sakrand","Samaro","Sambrial","Sanghar","Sangla Hill","Sanjwal","Sann","Sarai Alamgir","Sarai Naurang","Sarai Sidhu","Sargodha","Sehwan","Setharja Old","Shabqadar","Shahdad Kot","Shahdadpur","Shahkot","Shahpur","Shahpur Chakar","Shahr Sultan","Shakargarh","Sharqpur Sharif","Shekhupura","Shikarpur","Shingli Bala","Shinpokh","Shorkot","Shujaabad","Sialkot","Sibi","Sillanwali","Sinjhoro","Skardu","Sobhodero","Sodhri","Sohbatpur","Sukheke Mandi","Sukkur","Surab","Surkhpur","Swabi","Sīta Road","Talagang","Talamba","Talhar","Tandlianwala","Tando Adam","Tando Allahyar","Tando Bago","Tando Jam","Tando Mitha Khan","Tando Muhammad Khan","Tangi","Tangwani","Tank","Taunsa","Thal","Tharu Shah","Thatta","Thul","Timargara","Toba Tek Singh","Topi","Turbat","Ubauro","Umarkot","Upper Dir","Usta Muhammad","Uthal","Utmanzai","Vihari","Wana","Warah","Wazirabad","Yazman","Zafarwal","Zahir Pir","Zaida","Zhob","Ziarat"};
+#define randCity() randItem(ctss)
+const string_array wdss = {"Armor","Barrymore","Cabot","Catholicism","Chihuahua","Christianity","Easter","Frenchman","Lowry","Mayer","Orientalism","Pharaoh","Pueblo","Pullman","Rodeo","Saturday","Sister","Snead","Syrah","Tuesday","Woodward","abbey","absence","absorption","abstinence","absurdity","abundance","acceptance","accessibility","accommodation","accomplice","accountability","accounting","accreditation","accuracy","acquiescence","acreage","actress","actuality","adage","adaptation","adherence","adjustment","adoption","adultery","advancement","advert","advertisement","advertising","advice","aesthetics","affinity","aggression","agriculture","aircraft","airtime","allegation","allegiance","allegory","allergy","allies","alligator","allocation","allotment","altercation","ambulance","ammonia","anatomy","anemia","ankle","announcement","annoyance","annuity","anomaly","anthropology","anxiety","apartheid","apologise","apostle","apparatus","appeasement","appellation","appendix","applause","appointment","appraisal","archery","archipelago","architecture","ardor","arrears","arrow","artisan","artistry","ascent","assembly","assignment","association","asthma","atheism","attacker","attraction","attractiveness","auspices","authority","avarice","aversion","aviation","babbling","backlash","baker","ballet","balls","banjo","baron","barrier","barrister","bases","basin","basis","battery","battling","bedtime","beginner","begun","bending","bicycle","billing","bingo","biography","biology","birthplace","blackberry","blather","blossom","boardroom","boasting","bodyguard","boldness","bomber","bondage","bonding","bones","bonus","bookmark","boomer","booty","bounds","bowling","brainstorming","breadth","breaker","brewer","brightness","broccoli","broth","brotherhood","browsing","brunch","brunt","building","bullion","bureaucracy","burglary","buyout","by-election","cabal","cabbage","calamity","campaign","canonization","captaincy","carcass","carrier","cartridge","cassette","catfish","caught","celebrity","cemetery","certainty","certification","charade","chasm","check-in","cheerleader","cheesecake","chemotherapy","chili","china","chivalry","cholera","cilantro","circus","civilisation","civility","clearance","clearing","clerk","climber","closeness","clothing","clutches","coaster","coconut","coding","collaborator","colleague","college","collision","colors","combustion","comedian","comer","commander","commemoration","commenter","commissioner","commune","competition","completeness","complexity","computing","comrade","concur","condominium","conduit","confidant","configuration","confiscation","conflagration","conflict","consist","consistency","consolidation","conspiracy","constable","consul","consultancy","contentment","contents","contractor","conversation","cornerstone","corpus","correlation","councilman","counselor","countdown","countryman","coverage","covering","coyote","cracker","creator","criminality","crocodile","cropping","cross-examination","crossover","crossroads","culprit","cumin","curator","curfew","cursor","custard","cutter","cyclist","cyclone","cylinder","cynicism","daddy","damsel","darkness","dawning","daybreak","dealing","dedication","deduction","defection","deference","deficiency","definition","deflation","degeneration","delegation","delicacy","delirium","deliverance","demeanor","demon","demonstration","denomination","dentist","departure","depletion","depression","designation","despotism","detention","developer","devolution","dexterity","diagnosis","dialect","differentiation","digger","digress","dioxide","diploma","disability","disarmament","discord","discovery","dishonesty","dismissal","disobedience","dispatcher","disservice","distribution","distributor","diver","diversity","docking","dollar","dominance","domination","dominion","donkey","doorstep","doorway","dossier","downside","drafting","drank","drilling","driver","drumming","drunkenness","duchess","ducking","dugout","dumps","dwelling","dynamics","eagerness","earnestness","earnings","eater","editor","effectiveness","electricity","elements","eloquence","emancipation","embodiment","embroidery","emperor","employment","encampment","enclosure","encouragement","endangerment","enlightenment","enthusiasm","environment","environs","envoy","epilepsy","equation","equator","error","espionage","estimation","evacuation","exaggeration","examination","exclamation","expediency","exploitation","extinction","eyewitness","falls","fascism","fastball","feces","feedback","ferocity","fertilization","fetish","finale","firing","fixing","flashing","flask","flora","fluke","folklore","follower","foothold","footing","forefinger","forefront","forgiveness","formality","formation","formula","foyer","fragmentation","framework","fraud","freestyle","frequency","friendliness","fries","frigate","fulfillment","function","functionality","fundraiser","fusion","futility","gallantry","gallery","genesis","genitals","girlfriend","boyfriend","glamor","chemistry","glitter","sparkles","glucose","sugar","sugardaddy","vase","bracelet","bra","neck","kiss","pleasure","google","grandeur","grappling","greens","gridlock","grocer","groundwork","grouping","gunman","gusto","habitation","hacker","hallway","hamburger","hammock","handling","hands","handshake","happiness","hardship","headcount","header","headquarters","heads","headset","hearth","hearts","heath","hegemony","height","hello","helper","helping","helplessness","hierarchy","hoarding","hockey","homeland","homer","honesty","horror","horseman","hostility","housing","humility","hurricane","iceberg","ignition","illness","illustration","illustrator","immunity","immunization","imperialism","imprisonment","inaccuracy","inaction","inactivity","inauguration","indecency","indicator","inevitability","infamy","infiltration","influx","iniquity","innocence","innovation","insanity","inspiration","instruction","instructor","insurer","interact","intercession","intercourse","intermission","interpretation","intersection","interval","intolerance","intruder","invasion","investment","involvement","irrigation","iteration","jenny","jogging","jones","joseph","juggernaut","juncture","jurisprudence","juror","kangaroo","kingdom","knocking","laborer","larceny","laurels","layout","leadership","leasing","legislation","leopard","liberation","licence","lifeblood","lifeline","ligament","lighting","likeness","line-up","lineage","liner","lineup","liquidation","listener","literature","litigation","litre","loathing","locality","lodging","logic","longevity","lookout","lordship","lustre","ma'am","machinery","madness","magnificence","mahogany","mailing","mainframe","maintenance","majority","manga","mango","manifesto","mantra","manufacturer","maple","martin","martyrdom","mathematician","matrix","matron","mayhem","mayor","means","meantime","measurement","mechanics","mediator","medics","melodrama","memory","mentality","metaphysics","method","metre","miner","mirth","misconception","misery","mishap","misunderstanding","mobility","molasses","momentum","monarchy","monument","morale","mortality","motto","mouthful","mouthpiece","mover","movie","mowing","murderer","musician","mutation","mythology","narration","narrator","nationality","negligence","neighborhood","neighbor","nervousness","networking","nexus","nightmare","nobility","nobody","noodle","normalcy","notification","nourishment","novella","nucleus","nuisance","nursery","nutrition","nylon","oasis","obscenity","obscurity","observer","offense","onslaught","operation","opportunity","opposition","oracle","orchestra","organisation","organizer","orientation","originality","ounce","outage","outcome","outdoors","outfield","outing","outpost","outset","overseer","owner","oxygen","pairing","panther","paradox","parliament","parsley","parson","passenger","pasta","patchwork","pathos","patriotism","pendulum","penguin","permission","persona","perusal","pessimism","peter","philosopher","phosphorus","phrasing","physique","piles","plateau","playing","plaza","plethora","plurality","pneumonia","pointer","poker","policeman","polling","poster","posterity","posting","postponement","potassium","pottery","poultry","pounding","pragmatism","precedence","precinct","preoccupation","pretense","priesthood","prisoner","privacy","probation","proceeding","proceedings","processing","processor","progression","projection","prominence","propensity","prophecy","prorogation","prospectus","protein","prototype","providence","provider","provocation","proximity","puberty","publicist","publicity","publisher","pundit","putting","quantity","quart","quilting","quorum","racism","radiance","ralph","rancher","ranger","rapidity","rapport","ratification","rationality","reaction","reader","reassurance","rebirth","receptor","recipe","recognition","recourse","recreation","rector","recurrence","redemption","redistribution","redundancy","refinery","reformer","refrigerator","regularity","regulator","reinforcement","reins","reinstatement","relativism","relaxation","rendition","repayment","repentance","repertoire","repository","republic","reputation","resentment","residency","resignation","restaurant","resurgence","retailer","retention","retirement","reviewer","riches","righteousness","roadblock","robber","rocks","rubbing","runoff","saloon","salvation","sarcasm","saucer","savior","scarcity","scenario","scenery","schism","scholarship","schoolboy","schooner","scissors","scolding","scooter","scouring","scrimmage","scrum","seating","sediment","seduction","seeder","seizure","self-confidence","self-control","self-respect","semicolon","semiconductor","semifinal","senator","sending","serenity","seriousness","servitude","sesame","setup","sewing","sharpness","shaving","shoplifting","shopping","siding","simplicity","simulation","sinking","skate","sloth","slugger","snack","snail","snapshot","snark","soccer","solemnity","solicitation","solitude","somewhere","sophistication","sorcery","souvenir","spaghetti","specification","specimen","specs","spectacle","spectre","speculation","sperm","spoiler","squad","squid","staging","stagnation","staircase","stairway","stamina","standpoint","standstill","stanza","statement","stillness","stimulus","stocks","stole","stoppage","storey","storyteller","stylus","subcommittee","subscription","subsidy","suburb","success","sufferer","supposition","suspension","sweater","sweepstakes","swimmer","syndrome","synopsis","syntax","system","tablespoon","taker","tavern","technology","telephony","template","tempo","tendency","tendon","terrier","terror","terry","theater","theology","therapy","thicket","thoroughfare","threshold","thriller","thunderstorm","ticker","tiger","tights","tossing","touchdown","tourist","tourney","toxicity","tracing","tractor","translation","transmission","transmitter","trauma","traveler","treadmill","trilogy","trout","tuning","twenties","tycoon","tyrant","ultimatum","underdog","underwear","unhappiness","unification","university","uprising","vaccination","validity","vampire","vanguard","variation","vegetation","verification","viability","vicinity","victory","viewpoint","villa","vindication","violation","vista","vocalist","vogue","volcano","voltage","vomiting","vulnerability","waistcoat","waitress","wardrobe","warmth","watchdog","wealth","weariness","whereabouts","whisky","whiteness","widget","width","windfall","wiring","witchcraft","withholding","womanhood","words","workman","laborer","lumberjack","youngster","mobile phone","telephone","Television","information","technology","automobile","picture","movie","document","documentary","compliment","insult","vocalist","pianist","violinist","thirst","hunger","brevity","longevity","sanity","insanity","bikini","panty","breasts","hymen","synthesis","dementia","amnesia","blood sugar","fever","flu","diarrhea","glucose","Latino","Latina","anesthetics","anesthesia","Cannabis","oasis","desert","dessert","hemoglobin","cardiographer","carpenter"};
+#define randWord() randItem(wdss)
+on
+    print randCity() age_bas;
+    print randWord() age_bas;
+off
 
 /*
 int main()
@@ -1777,9 +2206,26 @@ khu
     kahie "Comment:" ke_aage naam aur "agar apki umr" aage umr aage "he, to birthday" aage age2birthyear(umr) aage "ki hogi. " age_bas ji
     
     agar umr zyada_ya_barabar 18 hen to
-        kahie "Yani ap 18 se upar ho." re
+        khuram ji kahie "Yani ap 18 se upar ho." re
     nahi_to
-        kahie "Yani ab bhi chote ho." re
+        khuram ji kahie "Yani ap ab bhi chote/choti ho." re
+    basab
+ram
+*/
+
+/*
+khu
+    chau salaam yaara
+    linegap 2 jo yaara
+    farz naalo barabar puchu("Please enter your name: ") je
+    farz umr barabar puchu_i("Please enter your age:") je
+    
+    chau "Comment:" je_agya naalo aen "agar apki umr" agya umr agya "he, to birthday" aage age2birthyear(umr) aage "ki hogi. " agya_bas re
+    
+    agar umr ghani_ya_barabar 18 ahe ta
+        khuram ba chau "Yani ap 18 se upar ho." re
+    nata
+        khuram ba chau "Yani ap ab bhi chote/choti ho." re
     basab
 ram
 */
