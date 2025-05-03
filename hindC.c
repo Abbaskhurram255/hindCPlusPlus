@@ -1386,10 +1386,10 @@ int main()
 
 /*
 khu
-    char name[] = "";
+    char name[] barabar "";
     pucho("Please apna naam share keejye? ", name);
     phere int i barabar 1; i chota_ya_barabar 5; i me_izafa 1 ka or_run
-        khurram kaho("hi %s, I'm counting... %d", name, i);
+        kaho("hi %s, I'm counting... %d", name, i);
     basab
 ram
 */

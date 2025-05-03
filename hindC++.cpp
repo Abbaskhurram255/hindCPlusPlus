@@ -29,6 +29,8 @@ using jumlo = jumla;
 using lafz = jumla;
 using String = jumla;
 using str = jumla;
+using shrt = short;
+using lng = long;
 using dbl = double;
 using flt = float;
 using ch = char;
@@ -39,21 +41,25 @@ using haal = bool;
 #define char_array std::string
 #define string_array std::vector<std::string>
 #define integer_array std::vector<int>
+#define long_array std::vector<long>
 #define float_array std::vector<float>
 #define double_array std::vector<double>
 #define char_arr std::string
 #define string_arr std::vector<std::string>
 #define integer_arr std::vector<int>
+#define long_arr std::vector<long>
 #define float_arr std::vector<float>
 #define double_arr std::vector<double>
 #define ch_array std::string
 #define str_array std::vector<std::string>
 #define int_array std::vector<int>
+#define lng_array std::vector<long>
 #define flt_array std::vector<float>
 #define dbl_array std::vector<double>
 #define ch_arr std::string
 #define str_arr std::vector<std::string>
 #define int_arr std::vector<int>
+#define lng_arr std::vector<long>
 #define flt_arr std::vector<float>
 #define dbl_arr std::vector<double>
 /*
@@ -815,7 +821,7 @@ string_array split(const std::string str, const std::string regex_or_str) {
     };
 }
 string_array splitIntoWords(string str) {
-    let words = split(str, "[^\\w]+");
+    let words = split(str, "[^\\w']+");
     return words;
 }
 #define lafzo_me_toro splitIntoWords
@@ -1213,15 +1219,15 @@ string randStr(int len)
 }
 string reverseStr(string s)
 {
-    char k;
     for (int i = 0, j = strlen(s.data()) - 1; i < j; i++, j--)
     {
-        k = s.data()[i];
-        s.data()[i] = s.data()[j];
-        s.data()[j] = k;
+        s.data()[i] = s.data()[i] + s.data()[j];
+        s.data()[j] = s.data()[i] - s.data()[j];
+        s.data()[i] = s.data()[i] - s.data()[j];
     }
     return s;
 }
+#define ulta reverseStr
 #define reverse_str reverseStr
 #define itoa std::to_string
 string upper(string str)
@@ -1244,6 +1250,31 @@ string sentCase(string str)
     char firstChar[96] {c, '\0'};
     string result = firstChar + sliced;
     return result;
+}
+string titleCase(string str)
+
+{
+
+	bool checked = false;		
+
+	for (int i=0; i<str.length(); i++)
+
+	{
+
+		if (!checked && (str.at(i)>='a' && str.at(i)<='z'))
+			str.at(i) = str.at(i) + 'A'-'a';
+
+		
+
+		if ((str.at(i)>='a' && str.at(i)<='z') || (str.at(i)>='A' && str.at(i)<='Z') )
+
+			checked = true;
+		else
+			checked = false;
+	}
+
+	return str;
+
 }
 #define sent_case sentCase
 char nthLastChar(string str, int n) {
@@ -1885,8 +1916,31 @@ int fileHatao(string fname)
 #define sortAsc(arr) std::sort(arr.begin(), arr.end())
 #define sortDesc(arr) std::sort(arr.rbegin(), arr.rend())
 #define sort sortAsc
-//get min/max
+//get max/min out of numbers
+func maxBw(double x, double y) {
+    return x>y ? x : y;
+}
+func minBw(double x, double y) {
+    return x<y ? x : y;
+}
+#define max_bw maxBw
+#define min_bw minBw
+/*
+on
+    double a = 5.5,
+      b = -50;
+    print "Max:" aage max_bw(a, b) age_bas;
+    print "Min:" aage min_bw(a, b) age_bas;
+off
+*/
 int minAmongInts(int_array nums) {
+  auto min = nums[0];
+  for (auto n : nums) {
+    if (n < min) min = n;
+  }
+  return min;
+}
+lng minAmongLngs(long_array nums) {
   auto min = nums[0];
   for (auto n : nums) {
     if (n < min) min = n;
@@ -1914,6 +1968,13 @@ int maxAmongInts(int_array nums) {
   }
   return max;
 }
+lng maxAmongLngs(long_array nums) {
+  auto max = nums[0];
+  for (auto n : nums) {
+    if (n > max) max = n;
+  }
+  return max;
+}
 flt maxAmongFlts(flt_array nums) {
   auto max = nums[0];
   for (auto n : nums) {
@@ -1929,65 +1990,107 @@ dbl maxAmongDbls(dbl_array nums) {
   return max;
 }
 void printArrStr(string_array arr) {
-  int size = arr.size();
-  for (int i = 0; i < size; ++i) {
-    cout << arr[i] << "\n";
-  }
-  br(1);
+    int size = arr.size();
+    cout << "{";
+    for (int i = 0; i < size; i++) {
+        cout << "\n\t<" << arr[i] << ">,";
+    }
+    cout << "\n}\n";
 }
 void printArrInt(int_array arr) {
-  int size = arr.size();
-  for (int i = 0; i < size; ++i) {
-    cout << arr[i] << " ";
-  }
-  br(1);
+    int size = arr.size();
+    cout << "{";
+    for (int i = 0; i < size; i++) {
+        cout << "\n\t<" << arr[i] << ">,";
+    }
+    cout << "\n}\n";
+}
+void printArrLng(long_array arr) {
+    int size = arr.size();
+    cout << "{";
+    for (int i = 0; i < size; i++) {
+        cout << "\n\t<" << arr[i] << ">,";
+    }
+    cout << "\n}\n";
 }
 void printArrFlt(float_array arr) {
-  int size = arr.size();
-  for (int i = 0; i < size; ++i) {
-    cout << arr[i] << " ";
-  }
-  br(1);
+    int size = arr.size();
+    cout << "{";
+    for (int i = 0; i < size; i++) {
+        cout << "\n\t<" << arr[i] << ">,";
+    }
+    cout << "\n}\n";
 }
 void printArrDbl(double_array arr) {
-  int size = arr.size();
-  for (int i = 0; i < size; ++i) {
-    cout << arr[i] << " ";
-  }
-  br(1);
+    int size = arr.size();
+    cout << "{";
+    for (int i = 0; i < size; i++) {
+        cout << "\n\t<" << arr[i] << ">,";
+    }
+    cout << "\n}\n";
 }
 #define printStrArr printArrStr
 #define printIntArr printArrInt
+#define printLngArr printArrLng
 #define printFltArr printArrFlt
 #define printDblArr printArrDbl
+void printArrReversedStr(str_array arr) {
+    int size = arr.size()-1;
+    //bugfix: we need the last element, not the length of the array, as that would get us a null character
+    cout << "{";
+    for (; size >= 0; size--) {
+        cout << "\n\t<" << arr[size] << ">,";
+    }
+    cout << "\n}\n";
+}
 void printArrReversedInt(int_array arr) {
-  int size = arr.size()-1;
-  //bugfix: we need the last element, not the length of the array, as that would get us a null character
-  for (; size >= 0; size--) {
-    cout << arr[size] << " ";
-  }
-  br(1);
+    int size = arr.size()-1;
+    //bugfix: we need the last element, not the length of the array, as that would get us a null character
+    cout << "{";
+    for (; size >= 0; size--) {
+        cout << "\n\t<" << arr[size] << ">,";
+    }
+    cout << "\n}\n";
+}
+void printArrReversedLng(lng_array arr) {
+    int size = arr.size()-1;
+    //bugfix: we need the last element, not the length of the array, as that would get us a null character
+    cout << "{";
+    for (; size >= 0; size--) {
+        cout << "\n\t<" << arr[size] << ">,";
+    }
+    cout << "\n}\n";
 }
 void printArrReversedFlt(flt_array arr) {
-  int size = arr.size()-1;
-  //bugfix: we need the last element, not the length of the array, as that would get us a null character
-  for (; size >= 0; size--) {
-    cout << arr[size] << " ";
-  }
-  br(1);
+    int size = arr.size()-1;
+    //bugfix: we need the last element, not the length of the array, as that would get us a null character
+    cout << "{";
+    for (; size >= 0; size--) {
+        cout << "\n\t<" << arr[size] << ">,";
+    }
+    cout << "\n}\n";
 }
 void printArrReversedDbl(double_array arr) {
-  int size = arr.size()-1;
-  //bugfix: we need the last element, not the length of the array, as that would get us a null character
-  for (; size >= 0; size--) {
-    cout << arr[size] << " ";
-  }
-  br(1);
+    int size = arr.size()-1;
+    //bugfix: we need the last element, not the length of the array, as that would get us a null character
+    cout << "{";
+    for (; size >= 0; size--) {
+        cout << "\n\t<" << arr[size] << ">,";
+    }
+    cout << "\n}\n";
 }
+#define printStrArrReversed printArrReversedStr
+#define printArrStrReversed printArrReversedStr
+#define printReversedStrArr printArrReversedStr
+#define reversePrintStrArr printArrReversedStr
 #define printIntArrReversed printArrReversedInt
 #define printArrIntReversed printArrReversedInt
 #define printReversedIntArr printArrReversedInt
 #define reversePrintIntArr printArrReversedInt
+#define printLngArrReversed printArrReversedLng
+#define printArrLngReversed printArrReversedLng
+#define printReversedLngArr printArrReversedLng
+#define reversePrintLngArr printArrReversedLng
 #define printFltArrReversed printArrReversedFlt
 #define printArrFltReversed printArrReversedFlt
 #define printReversedFltArr printArrReversedFlt
@@ -2035,7 +2138,7 @@ int intInArr(double_array arr, int lookupInt)
 #define inArrStr strInArr
 #define inArrInt intInArr
 
-//Library GUI
+//Library's in-console GUI
 object {
     string name;
     string version;
@@ -2175,23 +2278,26 @@ int main() {
 }
 */
 /*
-int main() {
+on
+
     farz score barabar 40;
 
     haalat score ki
-        surat 20 me
+        basurat 20:
             kahie ke "Low on score";
             ruko;
-        surat 40 me
+        basurat 40:
             kahie ke "Moderate score";
             ruko;
-        surat 70 me
+        basurat 70:
             kahie ke "High on score";
             ruko;
     basab
-
-    bolie ke "\nYour score:" or_age score or_bas;
-}
+    
+    br(1);
+    kahie ke "Your score:" or_age score age_bas;
+    
+off
 */
 /*
     string word = puchoWord("Please enter a word: ") re
@@ -2202,7 +2308,6 @@ int main() {
 /*
 co
     ayesha kahie "hi" aur "love" age_bas ji
-    kahie 5 ji
 de
 */
 
@@ -2296,6 +2401,12 @@ khu
         khuram ba chau "Yani ap 18 se upar ho." re
     nata
         khuram ba chau "Yani ap ab bhi chote/choti ho." re
-    basab
+    bas_hare
 ram
+*/
+/*
+on
+    farz naam barabar pucho("Please enter your name: ");
+    print ulta(naam);
+off
 */
