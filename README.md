@@ -82,4 +82,4 @@ A Hindi to GCC translation engine
 `#include "project_root_directory/[hindC++]"`
 
 ## Download the library at:
-https://raw.githubusercontent.com/Abbaskhurram255/hindCPlusPlus/refs/heads/main/hindC++
+https://raw.githubusercontent.com/Abbaskhurram255/hindCPlusPlus/refs/heads/main/hindC++.hpp
