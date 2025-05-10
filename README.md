@@ -79,7 +79,7 @@ A Hindi to GCC translation engine
 [Sindhi Demo](https://onecompiler.com/cpp/43g4b26sf)
 
 ## Importing the library
-`#include "path/to/lib"`
+`#include "project_root_directory/[hindC++]"`
 
 ## Download the library at:
-https://raw.githubusercontent.com/Abbaskhurram255/hindCPlusPlus/refs/heads/main/lib
+https://raw.githubusercontent.com/Abbaskhurram255/hindCPlusPlus/refs/heads/main/hindC++
