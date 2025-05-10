@@ -487,11 +487,14 @@ string fmt_inline(string fmt, ...)
 #define f fmt
 #define f_inl fmt_inline
 /*
+//POV: you hate type conversion
 on
-    kahie sout("hi honey, " << "I heard you just turned 24!") << endl;
+    kahie sout("hi honey, " << "I heard you just turned " << 24 << "!") << endl
 off
+@deprecated
 */
 /*
+//or EVEN BETTER, a template string
 on
     str x = f("hi %s, I heard it's your %dth birthday", "love", 44);
     print x;
@@ -810,7 +813,7 @@ on
     cout << "Today is " + temp + " degree Celsius outside";
 off
 */
-string_array split(const std::string str, const std::string regex_or_str) {
+string_array split(string str, string regex_or_str="") {
 
     std::regex regexz(regex_or_str);
 
@@ -820,13 +823,6 @@ string_array split(const std::string str, const std::string regex_or_str) {
         std::sregex_token_iterator()
     };
 }
-string_array splitIntoWords(string str) {
-    let words = split(str, "[^\\w']+");
-    return words;
-}
-#define lafzo_me_toro splitIntoWords
-#define alfazo_me_to splitIntoWords
-#define lafzan_me_bhanyo splitIntoWords
 /*
 @params:
     @@str: string
@@ -835,35 +831,49 @@ string_array splitIntoWords(string str) {
     vector<string> {iterable}
 @test:
 on
-    string sentence = "Love, I bet you remember our first kiss- - under-the-rain";
-    let words = split(sentence, "\\W+");
-    print words[7];
+    string sentence = "Love, I bet you remember our first kiss under-the-rain";
+    let words = split(str, "[^a-zA-Z'\\-]|\\-(?![a-zA-Z]{2,})");
+    for (int i=0; i<words.size(); i++) print words[i] + "\n";
 off
 */
-fn join(str_array x, string delim) {
-    str result;
-    for (let item from x) {
+string_array splitIntoWords(string str) {
+    let words = split(str, "[^a-zA-Z'\\-]|\\-(?![a-zA-Z]{2,})");
+    return words;
+}
+#define lafzo_me_toro splitIntoWords
+#define alfazo_me_to splitIntoWords
+#define lafzan_me_bhanyo splitIntoWords
+fn join(str_array arr, string delim="") {
+    string result;
+    for (let item from arr) {
         result += delim + Str(item);
     }
     return result;
 }
-fn join(int_array x, string delim) {
-    str result;
-    for (let item from x) {
+fn join(int_array arr, string delim="") {
+    string result;
+    for (let item from arr) {
         result += delim + Str(item);
     }
     return result;
 }
-fn join(flt_array x, string delim) {
-    str result;
-    for (let item from x) {
+fn join(lng_array arr, string delim="") {
+    string result;
+    for (let item from arr) {
         result += delim + Str(item);
     }
     return result;
 }
-fn join(dbl_array x, string delim) {
-    str result;
-    for (let item from x) {
+fn join(flt_array arr, string delim="") {
+    string result;
+    for (let item from arr) {
+        result += delim + Str(item);
+    }
+    return result;
+}
+fn join(dbl_array arr, string delim="") {
+    string result;
+    for (let item from arr) {
         result += delim + Str(item);
     }
     return result;
@@ -887,17 +897,26 @@ string slice(string str, int start, int end)
     string resultAsCppString = output;
     return resultAsCppString;
 }
+string slice(string str, int start=0)
+{
+    return slice(str, start, str.size());
+}
 #define trim slice
 string sliceRight(string str, int start, int end)
+{
+    return slice(str, str.size()-start, str.size()-end);
+}
+string sliceRight(string str, int start=0)
 {
     return slice(str, str.size()-start, str.size());
 }
 #define trimRight sliceRight
-string sliceEnd(string str, int start, int end)
+string sliceEnd(string str, int end)
 {
-    return slice(str, str.size()-start, str.size());
+    return slice(str, 0, str.size()-end);
 }
 #define trimEnd sliceEnd
+#define trimOut sliceEnd
 #define trimLast sliceEnd
 string sliceTo(string str, string that_part_of_the_string)
 {
@@ -914,7 +933,7 @@ string sliceToAfter(string str, string that_part_of_the_string)
 /*
 @params: 
     @str|origin: string
-    @that_part_of_the_string: 
+    @that_part_of_the_string: string
 @returnVal:
     if @that_part_of_the_string exists within @str|origin: new string with the first part torn away
     else: returns @str|origin back
@@ -982,44 +1001,43 @@ Before we proceed, let's make some Number maps, for each of use
 */
 /*Pakistani*/
 #define hazar *1e3
+#define zr *1e3
+#define hzr zr
 #define lac *1e5
 #define lacs *1e5
 #define lakh lac
 #define lakhs *1e5
+#define lc *1e5
 #define crore *1e7
 #define crores crore
+#define cr *1e7
 #define arab *1e9
 #define arabs *1e9
-#define zr *1e3
-#define hzr zr
-#define lc *1e5
-#define cr *1e7
 #define ar *1e9
+
 /*Intl*/
 #define K *1e3
-#define Hk *1e6
-#define M *1e9
-#define million M
-#define Bi *1e12
+#define Mi *1e6
+#define million Mi
+#define Bi *1e9
 #define billion Bi
-#define T *1e15
-#define Tr T
-#define trillion T
-#define qd *1e18
-#define quadrillion qd
-#define qt *1e21
-#define quintillion qt
-#define sx *1e24
-#define sextillion sx
-#define spt *1e27
+#define Tri *1e12
+#define trillion Tri
+#define qdr *1e15
+#define quadrillion qdr
+#define qnt *1e18
+#define quintillion qnt
+#define sxn *1e21
+#define sextillion sxn
+#define spt *1e24
 #define septillion spt
-#define oct *1e30
+#define oct *1e27
 #define octillion oct
-#define nn *1e33
-#define nonillion nn
-#define dc *1e36
-#define decillion dc
-string format(long n) {
+#define nnn *1e30
+#define nonillion nnn
+#define dcn *1e33
+#define decillion dcn
+string f(long n) {
     string sign;
     if (n < 0) {
         sign = "-";
@@ -1046,10 +1064,10 @@ string format(long n) {
             str = reg_replace(str, "^\\d{1,2}(?=\\d{9,10})|\\d(?=\\d{7}$)|\\d(?=\\d{5}$)|\\d(?=\\d{3}$)", "$&,");
             break;
     }
-    str = sign + str;
-    return str;
+    string output = sign + str;
+    return output;
 }
-string formatIntl(long n) {
+string fIntl(long n) {
     string sign;
     if (n < 0) {
         sign = "-";
@@ -1076,17 +1094,16 @@ string formatIntl(long n) {
             str = reg_replace(str, "^\\d{1,2}(?=\\d{11,13})|\\d(?=\\d{9}$)|\\d(?=\\d{6}$)|\\d(?=\\d{3}$)", "$&,");
             break;
     }
-    str = sign + str;
-    return str;
+    string output = sign + str;
+    return output;
 }
-#define nf format
 func pkr(long n) {
-    string formattedN = format(n);
+    string formattedN = f(n);
     string result = "PKR " + formattedN;
     return result;
 }
 func usd(long n) {
-    string formattedN = formatIntl(n);
+    string formattedN = fIntl(n);
     string result = "$" + formattedN;
     return result;
 }
@@ -1097,7 +1114,7 @@ on
 off
 */
 func suffix(long n) {
-    let formattedN = format(n);
+    let formattedN = f(n);
     let parts = split(formattedN, ",");
     let size = parts.size();
     if (n < 800 || n > 99 arabs) return formattedN;
@@ -1120,7 +1137,7 @@ func suffix(long n) {
     return result;
 }
 func intl(long n) {
-    let formattedN = formatIntl(n);
+    let formattedN = fIntl(n);
     let parts = split(formattedN, ",");
     let size = parts.size();
     if (n < 800 || n > 99 billion) return formattedN;
@@ -1141,14 +1158,22 @@ func intl(long n) {
 }
 /*
 on
+    int n1 = 3 lakh,
+      n2 = 2 lakh;
+    print f("%s me se %s gae, bacha %s", suffix(n1).data(), suffix(n2).data(), pkr(3 lakh minus 2 lakh).data());
+off
+*/
+/*
+on
     //print intl(75000000000);
     //print suffix(85.71 ar - 5ar);
 off
 */
 func ordinal(long n) {
     string result = Str(n);
-    string last_two = &result[result.size()-2];
-    char last_char = result[result.size()-1];
+    int size = result.size();
+    string last_two = &result[size-2];
+    char last_char = result[size-1];
     if (n > 14 && n < 111) {
         switch (last_char) {
             case '1': result += "st"; break;
@@ -1197,7 +1222,7 @@ string randstr()
     string resultAsCppString = slice(result, 0, 32);
     return resultAsCppString;
 }
-string randStr(int len)
+string randstr(int len)
 {
     int max = 800;
     srand(time(NULL));
@@ -1221,9 +1246,9 @@ string reverseStr(string s)
 {
     for (int i = 0, j = strlen(s.data()) - 1; i < j; i++, j--)
     {
-        s.data()[i] = s.data()[i] + s.data()[j];
-        s.data()[j] = s.data()[i] - s.data()[j];
-        s.data()[i] = s.data()[i] - s.data()[j];
+        s.data()[i] += s.data()[j],
+        s.data()[j] = s.data()[i] - s.data()[j],
+        s.data()[i] -= s.data()[j];
     }
     return s;
 }
@@ -1252,39 +1277,29 @@ string sentCase(string str)
     return result;
 }
 string titleCase(string str)
-
 {
-
 	bool checked = false;		
-
 	for (int i=0; i<str.length(); i++)
-
 	{
-
 		if (!checked && (str.at(i)>='a' && str.at(i)<='z'))
 			str.at(i) = str.at(i) + 'A'-'a';
-
-		
-
 		if ((str.at(i)>='a' && str.at(i)<='z') || (str.at(i)>='A' && str.at(i)<='Z') )
-
 			checked = true;
 		else
 			checked = false;
 	}
-
 	return str;
-
 }
 #define sent_case sentCase
-char nthLastChar(string str, int n) {
+#define title_case titleCase
+char nthLastCharOf(string str, int n) {
     return str[str.size() - n];
 }
-char secondLastChar(string str) {
-    return nthLastChar(str, 2);
+char secondLastCharOf(string str) {
+    return nthLastCharOf(str, 2);
 }
-char lastChar(string str) {
-    return nthLastChar(str, 1);
+char lastCharOf(string str) {
+    return nthLastCharOf(str, 1);
 }
 string strPop(string str)
 {
@@ -1293,29 +1308,17 @@ string strPop(string str)
     return result;
 }
 #define str_pop strPop
-int strEq(string x, string y)
+bool eq(string x, string y)
 {
     return strcasecmp(x.data(), y.data()) == 0;
 }
-#define str_eq strEq
-string naya(string x, string y)
+bool eq(double x, double y)
 {
-    string resultAsCppString = strcpy(x.data(), y.data());
-    return resultAsCppString;
+    return x == y;
 }
-#define nai naya
-#define nao naya
-string concat(string str1, string str2)
-{
-    string result = str1 + str2;
-    return result;
-}
-#define merge concat
-#define strmilao concat
-#define strmilae concat
-#define ek_bane concat
 int strAt(string str, string lookup) {
     char *p = strstr(str.data(), lookup.data());
+    //@returnVal: $index[int]
     if (p) return p-str.data();
     return -1;
 }
@@ -1323,15 +1326,16 @@ int strAtInsens(string str, string lookup) {
     str = lower(str);
     lookup = lower(lookup);
     char *p = strstr(str.data(), lookup.data());
+    //@returnVal: $index[int]
     if (p) return p-str.data();
     return -1;
 }
-int strHas(string str, string lookup) {
+bool strHas(string str, string lookup) {
     //-1 means not an index in the string
     return strAt(str, lookup) != -1 || strAt(str, lookup) >= 0;
 }
-int strHasInsens(string str, string lookup) {
-    //-1? Not an index!
+bool strHasInsens(string str, string lookup) {
+    //-1? Not an index found in the string!
     return strAtInsens(str, lookup) != -1 || strAtInsens(str, lookup) >= 0;
 }
 #define strIndex strAt
@@ -1369,27 +1373,20 @@ double Pos(double n) {
     return fabs(n);
 }
 double Neg(double n) {
-    return -n;
+    return -Pos(n);
 }
-int randi()
-{
-    srand(time(NULL));
-    return (rand() + 1) % 100;
-}
-float randf()
-{
-    return randi() * .3;
-}
-int randint(int max)
+int randint(int max=999)
 {
     srand(time(NULL));
     return (rand() + 1) % max;
 }
-float randflt(int max)
+float randflt(int max=999)
 {
     srand(time(NULL));
     return ((rand() + 1) % max) * .3;
 }
+#define randi randint
+#define randf randflt
 int randInt(int min_num, int max_num)
 {
     int result = 0, low_num = 0, hi_num = 0;
@@ -1424,13 +1421,21 @@ float randFlt(int min_num, int max_num)
     result = ((rand() % (hi_num - low_num)) + low_num) * .3;
     return result;;
 }
-int *range(int n) {
-    static int arr[32768] = {};
-    for (int i=0; i<n+1; i++)
-        arr[i] = i+1;
+int_array range(int n, bool startWithZero=false) {
+    int_array arr = {};
+    for (int i=0; i<n; i++)
+        arr.push_back(!startWithZero ? i+1 : i);
     return arr;
 }
-int isNumlike(string str)
+/*
+on
+    //if you prefer n based values over the index based, you could either remove the second parameter or set it to false
+    har ek x from range(50, true) ke_lie
+        print x age_bas;
+    basab
+off
+*/
+bool isNumlike(string str)
 {
     int checks_passed = 0, all_checks_passed = 0;
     for (int i = 0; i<str.length(); i++)
@@ -1442,7 +1447,7 @@ int isNumlike(string str)
     all_checks_passed = checks_passed == strlen(str.data());
     return all_checks_passed;
 }
-int isIntlike(string str)
+bool isIntlike(string str)
 {
     int checks_passed = 0, all_checks_passed = 0;
     for (int i = 0; i<str.length(); i++)
@@ -1454,7 +1459,7 @@ int isIntlike(string str)
     all_checks_passed = checks_passed == strlen(str.data());
     return all_checks_passed;
 }
-int isFltlike(string str)
+bool isFltlike(string str)
 {
     int n_digits = 0, n_periods = 0, all_checks_passed = 0;
     for (int i = 0; i<str.length(); i++)
@@ -1496,22 +1501,27 @@ auto tria(double base, double height)
 {
     return area(base, height) / 2;
 }
-auto sum(double a, double b)
+auto sum(double a, double b, double c=0, double d=0, double e=0, double f=0, double g=0, double h=0, double i=0, double j=0)
 {
-    return a + b;
+    return a+b+c+d+e+f+g+h+i+j;
 }
-auto diff(double a, double b)
+auto diff(double a, double b, double c=0, double d=0, double e=0, double f=0, double g=0, double h=0, double i=0, double j=0)
 {
-    return a - b;
+    return a-b-c-d-e-f-g-h-i-j;
 }
 auto prd(double a, double b)
 {
-    return a * b;
+    return a*b;
 }
 auto quo(double a, double b)
 {
-    return a / b;
+    return a/b;
 }
+/*
+on
+    print f(sum(5, 4, 7.11, 4, 2, 6.57, 8, 3, 15, 21));
+off
+*/
 #define add sum
 #define dalo sum
 #define joro sum
@@ -1540,40 +1550,45 @@ int mod(double a, double b)
     }
     return fabs(remainder(a, b));
 }
-int isperfmod(double a, double b)
+bool isperfmod(double a, double b)
 {
     return mod(a, b) == 0;
 }
-int isdiv(float of_n, float this_n)
+bool isdiv(float of_n, float this_n)
 {
     return mod(of_n, this_n) == 0;
 }
 #define isdivisor isdiv
-int iseven(int n)
+bool iseven(int n)
 {
     return isperfmod(n, 2);
 }
-int isodd(int n)
+bool isodd(int n)
 {
     return !isperfmod(n, 2);
 }
 #define baddi iseven
 #define ikki isodd
+bool isprime(int n)
+{
+    for (int i = 2; i <= n / 2; i++)
+    {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+int fibonacci(int n)
+{
+    if (n<2) return n;
+    return fibonacci(n-2) + fibonacci(n-1);
+}
 auto pct(double n1, double n2)
 {
     if (n1 > n2)
         return (n1 * n2) / 100;
     else
         return (n1 / n2) * 100;
-}
-int isprime(int n)
-{
-    for (int i = 2; i <= n / 2; i++)
-    {
-        if (n % i == 0)
-            return 0;
-    }
-    return 1;
 }
 #define ctof(c) (round(1.8 * c + 32))
 #define ftoc(f) (round(((f - 32) * 5) / 9))
@@ -1584,10 +1599,11 @@ de
 */
 
 //DATE METHODS
-typedef struct
+object
 {
     string period, time, timegreet, date, day, month, season, stamp;
-    int mins, hours, dayAsIndex, isWeekend, isLeapYear, year;
+    int mins, hours, dayAsIndex, year;
+    bool isWeekend, isLeapYear;
 } Date;
 Date new_date()
 {
@@ -1605,34 +1621,34 @@ Date new_date()
         year = &s[20];
     
     string season;
-    if (str_eq(month, "may") || str_eq(month, "jun") || str_eq(month, "jul") || str_eq(month, "aug")) season = "Summer";
-	else if (str_eq(month, "sep") || str_eq(month, "oct")) season = "Spring";
-	else if (str_eq(month, "nov") || str_eq(month, "dec") || str_eq(month, "jan") || str_eq(month, "feb")) season = "Winter";
+    if (eq(month, "may") || eq(month, "jun") || eq(month, "jul") || eq(month, "aug")) season = "Summer";
+	else if (eq(month, "sep") || eq(month, "oct")) season = "Spring";
+	else if (eq(month, "nov") || eq(month, "dec") || eq(month, "jan") || eq(month, "feb")) season = "Winter";
 	else season = "Fall";
         
-    if (str_eq(month, "jan")) {
+    if (eq(month, "jan")) {
         month += "uary";
-    } else if (str_eq(month, "feb")) {
+    } else if (eq(month, "feb")) {
         month += "ruary";
-    } else if (str_eq(month, "mar")) {
+    } else if (eq(month, "mar")) {
         month += "ch";
-    } else if (str_eq(month, "apr")) {
+    } else if (eq(month, "apr")) {
         month += "il";
-    } else if (str_eq(month, "may")) {
+    } else if (eq(month, "may")) {
         month += "";
-    } else if (str_eq(month, "jun")) {
+    } else if (eq(month, "jun")) {
         month += "e";
-    } else if (str_eq(month, "jul")) {
+    } else if (eq(month, "jul")) {
         month += "y";
-    } else if (str_eq(month, "aug")) {
+    } else if (eq(month, "aug")) {
         month += "ust";
-    } else if (str_eq(month, "sep")) {
+    } else if (eq(month, "sep")) {
         month += "tember";
-    } else if (str_eq(month, "oct")) {
+    } else if (eq(month, "oct")) {
         month += "ober";
-    } else if (str_eq(month, "nov")) {
+    } else if (eq(month, "nov")) {
         month += "ember";
-    } else if (str_eq(month, "dec")) {
+    } else if (eq(month, "dec")) {
         month += "ember";
     }
 
@@ -1646,23 +1662,23 @@ Date new_date()
 
     bool isWeekend = false;
     int dayAsIndex = 0;
-    if (str_eq(day, "sun")) {
+    if (eq(day, "sun")) {
         day += "day";
         dayAsIndex = 0;
     }
-    else if (str_eq(day, "mon")) {
+    else if (eq(day, "mon")) {
         day += "day";
         dayAsIndex = 1;
-    } else if (str_eq(day, "tue")) {
+    } else if (eq(day, "tue")) {
         day += "sday";
         dayAsIndex = 2;
-    } else if (str_eq(day, "wed")) {
+    } else if (eq(day, "wed")) {
         day += "nesday";
         dayAsIndex = 3;
-    } else if (str_eq(day, "thu")) {
+    } else if (eq(day, "thu")) {
         day += "rsday";
         dayAsIndex = 4;
-    } else if (str_eq(day, "fri")) {
+    } else if (eq(day, "fri")) {
         day += "day";
         dayAsIndex = 5;
     } else {
@@ -1683,7 +1699,7 @@ Date new_date()
         hours = 12;
 
     string gtg = "";
-    if (str_eq(period, "pm"))
+    if (eq(period, "pm"))
     {
         if (hours >= 9)
             gtg = "Hi, good night, sweet dreams!";
@@ -1702,7 +1718,7 @@ Date new_date()
 
     string hrs = std::to_string(hours);
     string curTime = strcat(hrs.data(), timePartB);
-    int isLeapYear = Int(year) % 4 == 0;
+    bool isLeapYear = Int(year) % 4 == 0;
 
 
     Date THIS;
@@ -1731,7 +1747,7 @@ on
     date_log();
 off
 */
-int isWeekend()
+bool isWeekend()
 {
     return new_date().isWeekend;
 }
@@ -1759,7 +1775,7 @@ int birthyear2age(int bday) {
 }
 
 //FILE METHODS
-int createFile(string fname, string content)
+bool createFile(string fname, string content)
 {
     FILE *fptr;
     fptr = fopen(fname.data(), "w");
@@ -1767,13 +1783,13 @@ int createFile(string fname, string content)
     {
         printf("\n[Message from HindC FileReader]:\n✔️ File \"%s\" banai/update ki ja chuki he, apki farmaish pe.\n", fname.data());
         fclose(fptr);
-        return 1;
+        return true;
     }
     printf("\n[Message from HindC FileReader]:\n❌ Shayad apko is directory me files banane ki permission nahi😔\n");
     fclose(fptr);
-    return 0;
+    return false;
 }
-int newFile(string fname, string content)
+bool newFile(string fname, string content)
 {
     return createFile(fname, content);
 }
@@ -1821,23 +1837,23 @@ string appendToFile(string fname, string content)
     string error = "\0";
     return error;
 }
-int deleteFile(string fname)
+bool deleteFile(string fname)
 {
     int successInRemoval = remove(fname.data()) == 0;
     if (successInRemoval)
     {
         printf("\n[Message from HindC FileReader]:\n✔️ File %s ko delete karna kaamyaab raha.\n", fname.data());
-        return 1;
+        return true;
     }
     printf("\n[Message from HindC FileReader]:\n❌ File \"%s\" ko remove karna na kaam raha. Ya apke pas file ko delete karne ki permission nahi, ya file he hi ger mojood.\n", fname.data());
-    return 0;
+    return false;
 }
-int copyFile(string src, string dest)
+bool copyFile(string src, string dest)
 {
-    if (str_eq(src.data(), dest.data()))
+    if (eq(src.data(), dest.data()))
     {
         printf("\n[Message from HindC FileReader]:\n⚠️ Source matches destination, unable to replace the source file with the destination file!\n");
-        return 0;
+        return false;
     }
     int c;
     FILE *stream_R;
@@ -1846,14 +1862,14 @@ int copyFile(string src, string dest)
     if (!stream_R || stream_R == NULL)
     {
         printf("\n[Message from HindC FileReader]:\n❌ Source file ki ger mojoodgi ki soorat, file ko copy/move karna na kaam raha!\n");
-        return 0;
+        return false;
     }
     stream_W = fopen(dest.data(), "w");
     if (!stream_W || stream_W == NULL)
     {
         printf("\n[Message from HindC FileReader]:\n❌ File ko copy/move karna na kaam raha!\n");
         fclose(stream_R);
-        return 0;
+        return false;
     }
     while ((c = fgetc(stream_R)) != EOF)
     {
@@ -1861,38 +1877,38 @@ int copyFile(string src, string dest)
     }
     fclose(stream_R);
     fclose(stream_W);
-    return 1;
+    return true;
 }
-int renameFile(string oldName, string newName)
+bool renameFile(string oldName, string newName)
 {
-    int renameSuccessful = (rename(oldName.data(), newName.data()) == 0);
+    bool renameSuccessful = (rename(oldName.data(), newName.data()) == 0);
     if (renameSuccessful)
     {
         printf("\n[Message from HindC FileReader]:\n ✔️ File renamed successfully\n");
-        return 1;
+        return true;
     }
     printf("\n[Message from HindC FileReader]:\n ❌ File failed to rename!\n");
-    return 0;
+    return false;
 }
-int moveFile(string fname, string dest)
+bool moveFile(string fname, string dest)
 {
     if (renameFile(fname.data(), dest.data()))
     {
         printf("\n[Message from HindC FileReader]:\n ✔️ File moved successfully\n");
-        return 1;
+        return true;
     }
     printf("\n[Message from HindC FileReader]:\n ❌ File failed to move!\n");
-    return 0;
+    return false;
 }
-int fileBanao(string fname, string content)
+bool fileBanao(string fname, string content)
 {
     return newFile(fname, content);
 }
-int naiFile(string fname, string content)
+bool naiFile(string fname, string content)
 {
     return newFile(fname, content);
 }
-int fileHatao(string fname)
+bool fileHatao(string fname)
 {
     return deleteFile(fname);
 }
@@ -1901,30 +1917,57 @@ int fileHatao(string fname)
 #define push(arr, el) arr.push_back(el)
 #define pushStart(arr, el) arr.insert(arr.begin(), el)
 #define pushAt(arr, i, el) arr.insert(arr.begin() + i, el)
+#define pushAtLast(arr, i, el) arr.insert(arr.end() - i, el)
 #define shift(arr) arr.erase(arr.begin())
 #define pop(arr) arr.pop_back()
-#define popAt(arr, i) arr.erase(arr.begin + i)
-#define arrSecLast(arr) (arr[arr.size()-2])
-#define arrLast(arr) (arr[arr.size()-1])
-#define arrNthLast(arr, index) (arr[arr.size()-index])
-#define arrReplaceAtLast(arr, index, replacement) (arr[arr.size()-index] = replacement)
+#define popAt(arr, i) arr.erase(arr.begin() + i)
+#define popAtLastOf(arr, i) arr.erase(arr.end() - i)
+#define secLastOf(arr) (arr[arr.size()-2])
+#define lastOf(arr) (arr[arr.size()-1])
+#define nthLastOf(arr, index) (arr[arr.size()-index])
+#define replaceNthLastOf(arr, index, replacement) (arr[arr.size()-index] = replacement)
 #define reverseArr(arr) (std::reverse(arr.begin(), arr.end()))
 #define shuffleArr(arr) (std::shuffle(arr.begin(), arr.end(), std::default_random_engine{}))
 #define randItem(arr) (arr[randint(arr.size()-1)])
+#define randIt randItem
 #define randFrom randItem
 //work for strings as well:
 #define sortAsc(arr) std::sort(arr.begin(), arr.end())
 #define sortDesc(arr) std::sort(arr.rbegin(), arr.rend())
 #define sort sortAsc
-//get max/min out of numbers
-func maxBw(double x, double y) {
-    return x>y ? x : y;
+//get min/max out of numbers
+func maxAmong(double p, double q) {
+    return p>q ? p : q;
 }
-func minBw(double x, double y) {
-    return x<y ? x : y;
+func maxAmong(double p, double q, double r) {
+    return maxAmong(maxAmong(p, q), r);
 }
-#define max_bw maxBw
-#define min_bw minBw
+func maxAmong(double p, double q, double r, double s) {
+    return maxAmong(maxAmong(p,q,r), s);
+}
+func maxAmong(double p, double q, double r, double s, double t) {
+    return maxAmong(maxAmong(p,q,r,s), t);
+}
+func maxAmong(double p, double q, double r, double s, double t, double u) {
+    return maxAmong(maxAmong(p,q,r,s,t), u);
+}
+func minAmong(double p, double q) {
+    return p<q ? p : q;
+}
+func minAmong(double p, double q, double r) {
+    return minAmong(minAmong(p, q), r);
+}
+func minAmong(double p, double q, double r, double s) {
+    return minAmong(minAmong(p,q,r), s);
+}
+func minAmong(double p, double q, double r, double s, double t) {
+    return minAmong(minAmong(p,q,r,s), t);
+}
+func minAmong(double p, double q, double r, double s, double t, double u) {
+    return minAmong(minAmong(p,q,r,s,t), u);
+}
+#define max_among maxAmong
+#define min_among minAmong
 /*
 on
     double a = 5.5,
@@ -1933,63 +1976,63 @@ on
     print "Min:" aage min_bw(a, b) age_bas;
 off
 */
-int minAmongInts(int_array nums) {
-  auto min = nums[0];
-  for (auto n : nums) {
+int minAmongArr(int_array nums) {
+  int min = nums[0];
+  for (int n : nums) {
     if (n < min) min = n;
   }
   return min;
 }
-lng minAmongLngs(long_array nums) {
-  auto min = nums[0];
-  for (auto n : nums) {
+lng minAmongArr(long_array nums) {
+  lng min = nums[0];
+  for (lng n : nums) {
     if (n < min) min = n;
   }
   return min;
 }
-flt minAmongFlts(flt_array nums) {
-  auto min = nums[0];
-  for (auto n : nums) {
+flt minAmongArr(flt_array nums) {
+  flt min = nums[0];
+  for (flt n : nums) {
     if (n < min) min = n;
   }
   return min;
 }
-dbl minAmongDbls(dbl_array nums) {
-  auto min = nums[0];
-  for (auto n : nums) {
+dbl minAmongArr(dbl_array nums) {
+  dbl min = nums[0];
+  for (dbl n : nums) {
     if (n < min) min = n;
   }
   return min;
 }
-int maxAmongInts(int_array nums) {
-  auto max = nums[0];
-  for (auto n : nums) {
+int maxAmongArr(int_array nums) {
+  int max = nums[0];
+  for (int n : nums) {
     if (n > max) max = n;
   }
   return max;
 }
-lng maxAmongLngs(long_array nums) {
-  auto max = nums[0];
-  for (auto n : nums) {
+lng maxAmongArr(long_array nums) {
+  lng max = nums[0];
+  for (lng n : nums) {
     if (n > max) max = n;
   }
   return max;
 }
-flt maxAmongFlts(flt_array nums) {
-  auto max = nums[0];
-  for (auto n : nums) {
+flt maxAmongArr(flt_array nums) {
+  flt max = nums[0];
+  for (flt n : nums) {
     if (n > max) max = n;
   }
   return max;
 }
-dbl maxAmongDbls(dbl_array nums) {
-  auto max = nums[0];
-  for (auto n : nums) {
+dbl maxAmongArr(dbl_array nums) {
+  dbl max = nums[0];
+  for (dbl n : nums) {
     if (n > max) max = n;
   }
   return max;
 }
-void printArrStr(string_array arr) {
+void printArr(string_array arr) {
     int size = arr.size();
     cout << "{";
     for (int i = 0; i < size; i++) {
@@ -1997,7 +2040,7 @@ void printArrStr(string_array arr) {
     }
     cout << "\n}\n";
 }
-void printArrInt(int_array arr) {
+void printArr(int_array arr) {
     int size = arr.size();
     cout << "{";
     for (int i = 0; i < size; i++) {
@@ -2005,7 +2048,7 @@ void printArrInt(int_array arr) {
     }
     cout << "\n}\n";
 }
-void printArrLng(long_array arr) {
+void printArr(long_array arr) {
     int size = arr.size();
     cout << "{";
     for (int i = 0; i < size; i++) {
@@ -2013,7 +2056,7 @@ void printArrLng(long_array arr) {
     }
     cout << "\n}\n";
 }
-void printArrFlt(float_array arr) {
+void printArr(float_array arr) {
     int size = arr.size();
     cout << "{";
     for (int i = 0; i < size; i++) {
@@ -2021,7 +2064,7 @@ void printArrFlt(float_array arr) {
     }
     cout << "\n}\n";
 }
-void printArrDbl(double_array arr) {
+void printArr(double_array arr) {
     int size = arr.size();
     cout << "{";
     for (int i = 0; i < size; i++) {
@@ -2029,12 +2072,7 @@ void printArrDbl(double_array arr) {
     }
     cout << "\n}\n";
 }
-#define printStrArr printArrStr
-#define printIntArr printArrInt
-#define printLngArr printArrLng
-#define printFltArr printArrFlt
-#define printDblArr printArrDbl
-void printArrReversedStr(str_array arr) {
+void printArrReversed(string_array arr) {
     int size = arr.size()-1;
     //bugfix: we need the last element, not the length of the array, as that would get us a null character
     cout << "{";
@@ -2043,7 +2081,7 @@ void printArrReversedStr(str_array arr) {
     }
     cout << "\n}\n";
 }
-void printArrReversedInt(int_array arr) {
+void printArrReversed(int_array arr) {
     int size = arr.size()-1;
     //bugfix: we need the last element, not the length of the array, as that would get us a null character
     cout << "{";
@@ -2052,7 +2090,7 @@ void printArrReversedInt(int_array arr) {
     }
     cout << "\n}\n";
 }
-void printArrReversedLng(lng_array arr) {
+void printArrReversed(long_array arr) {
     int size = arr.size()-1;
     //bugfix: we need the last element, not the length of the array, as that would get us a null character
     cout << "{";
@@ -2061,7 +2099,7 @@ void printArrReversedLng(lng_array arr) {
     }
     cout << "\n}\n";
 }
-void printArrReversedFlt(flt_array arr) {
+void printArrReversed(float_array arr) {
     int size = arr.size()-1;
     //bugfix: we need the last element, not the length of the array, as that would get us a null character
     cout << "{";
@@ -2070,7 +2108,7 @@ void printArrReversedFlt(flt_array arr) {
     }
     cout << "\n}\n";
 }
-void printArrReversedDbl(double_array arr) {
+void printArrReversed(double_array arr) {
     int size = arr.size()-1;
     //bugfix: we need the last element, not the length of the array, as that would get us a null character
     cout << "{";
@@ -2079,64 +2117,54 @@ void printArrReversedDbl(double_array arr) {
     }
     cout << "\n}\n";
 }
-#define printStrArrReversed printArrReversedStr
-#define printArrStrReversed printArrReversedStr
-#define printReversedStrArr printArrReversedStr
-#define reversePrintStrArr printArrReversedStr
-#define printIntArrReversed printArrReversedInt
-#define printArrIntReversed printArrReversedInt
-#define printReversedIntArr printArrReversedInt
-#define reversePrintIntArr printArrReversedInt
-#define printLngArrReversed printArrReversedLng
-#define printArrLngReversed printArrReversedLng
-#define printReversedLngArr printArrReversedLng
-#define reversePrintLngArr printArrReversedLng
-#define printFltArrReversed printArrReversedFlt
-#define printArrFltReversed printArrReversedFlt
-#define printReversedFltArr printArrReversedFlt
-#define reversePrintFltArr printArrReversedFlt
-#define printDblArrReversed printArrReversedDbl
-#define printArrDblReversed printArrReversedDbl
-#define printReversedDblArr printArrReversedDbl
-#define reversePrintDblArr printArrReversedDbl
-int strInArr(string_array arr, string lookupStr)
+#define printReversedArr printArrReversed
+#define reversePrintArr printArrReversed
+bool inArr(string_array arr, string lookupStr)
+{
+    int size = len(arr);
+    for (int i=0; i<size; i++)
+    {
+        if (arr[i] == lookupStr) return true;
+    }
+    return false;
+}
+bool inArr(int_array arr, int lookupInt)
+{
+    int size = len(arr);
+    for (int i=0; i<size; i++)
+    {
+        if (arr[i] == lookupInt) return true;
+    }
+    return false;
+}
+bool inArr(lng_array arr, int lookupLng)
+{
+    int size = len(arr);
+    for (int i=0; i<size; i++)
+    {
+        if (arr[i] == lookupLng) return true;
+    }
+    return false;
+}
+bool inArr(float_array arr, float lookupFlt)
+{
+    int size = len(arr);
+    for (int i=0; i<size; i++)
+    {
+        if (arr[i] == lookupFlt) return true;
+    }
+    return false;
+}
+bool inArr(double_array arr, double lookupDbl)
 {
     int length = len(arr);
     for (int i=0; i<length; i++)
     {
-        if (arr[i] == lookupStr) return 1;
+        if (arr[i] == lookupDbl) return true;
     }
-    return 0;
+    return false;
 }
-int intInArr(int_array arr, int lookupInt)
-{
-    int length = len(arr);
-    for (int i=0; i<length; i++)
-    {
-        if (arr[i] == lookupInt) return 1;
-    }
-    return 0;
-}
-int intInArr(float_array arr, int lookupInt)
-{
-    int length = len(arr);
-    for (int i=0; i<length; i++)
-    {
-        if (arr[i] == lookupInt) return 1;
-    }
-    return 0;
-}
-int intInArr(double_array arr, int lookupInt)
-{
-    int length = len(arr);
-    for (int i=0; i<length; i++)
-    {
-        if (arr[i] == lookupInt) return 1;
-    }
-    return 0;
-}
-#define inArrStr strInArr
-#define inArrInt intInArr
+
 
 //Library's in-console GUI
 object {
@@ -2406,7 +2434,7 @@ ram
 */
 /*
 on
-    farz naam barabar pucho("Please enter your name: ");
-    print ulta(naam);
+    farz city barabar koiSheher();
+    print "Haseeb" aage city aage "ka rehaishi he";
 off
 */
