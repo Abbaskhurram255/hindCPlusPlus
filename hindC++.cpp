@@ -21,6 +21,7 @@
 #include <random>
 #include <array>
 #include <vector>
+#include <unordered_map>
 
 //declaring types
 using namespace std;
@@ -35,40 +36,48 @@ using dbl = double;
 using flt = float;
 using ch = char;
 using haal = bool;
-
-//initialization
 #define array std::vector
 #define char_array std::string
 #define string_array std::vector<std::string>
+#define boolean_array std::vector<bool>
 #define integer_array std::vector<int>
 #define long_array std::vector<long>
 #define float_array std::vector<float>
 #define double_array std::vector<double>
 #define char_arr std::string
 #define string_arr std::vector<std::string>
+#define boolean_arr std::vector<bool>
 #define integer_arr std::vector<int>
 #define long_arr std::vector<long>
 #define float_arr std::vector<float>
 #define double_arr std::vector<double>
 #define ch_array std::string
 #define str_array std::vector<std::string>
+#define bool_array std::vector<bool>
 #define int_array std::vector<int>
 #define lng_array std::vector<long>
 #define flt_array std::vector<float>
 #define dbl_array std::vector<double>
 #define ch_arr std::string
 #define str_arr std::vector<std::string>
+#define bool_arr std::vector<bool>
 #define int_arr std::vector<int>
 #define lng_arr std::vector<long>
 #define flt_arr std::vector<float>
 #define dbl_arr std::vector<double>
+#define map(x, y) std::unordered_map<x, y>
+#define ke_nam ;std::cout<<"";
 /*
 int main() {
-    str_array x = {"hi", "love"};
-    int_array y = {1, 3, 5, 7};
-    cout << x[0];
+    map(string, int) x ke_nam;
+    x["apples"] = 5,
+    x["mangoes"] = 10;
+  
+    cout << "Number of apples: " << x["apples"] << endl << "Number of mangoes: " << x["mangoes"] << endl;
 }
 */
+
+//utils
 #define out std::cout <<
 #define farmaiye out
 #define or_farmaiye out
@@ -792,6 +801,7 @@ void repeat_b_inline(int h, int j)
 #define duhrae_b_inline duhrao_b_inline
 
 //STRING METHODS
+
 template <typename T> string Str(T to_turn)
 {
     //helps force turn any type into a string
@@ -1316,6 +1326,19 @@ bool eq(double x, double y)
 {
     return x == y;
 }
+bool either(double a, double b) {
+    return a || b;
+}
+bool neither(double a, double b) {
+    return !(a || b);
+}
+bool XOR(bool a, bool b) {
+	return (a || b) && !(a && b);
+}
+#define eitherButNotBoth XOR
+bool implies(bool a, bool b) {
+	return a && !b ? false : true;
+}
 int strAt(string str, string lookup) {
     char *p = strstr(str.data(), lookup.data());
     //@returnVal: $index[int]
@@ -1359,6 +1382,7 @@ bool strHasInsens(string str, string lookup) {
 #define insens_index_of
 #define str_incl strHas
 #define in strHasInsens
+#define entails strHasInsens
 
 //NUMBER METHODS
 int Int(string numeric_str)
@@ -1435,7 +1459,10 @@ on
     basab
 off
 */
-bool isNumlike(string str)
+bool isalpha(char c) {
+    return c >= 65 && c <= 122;
+}
+bool isNumLike(string str)
 {
     int checks_passed = 0, all_checks_passed = 0;
     for (int i = 0; i<str.length(); i++)
@@ -1447,7 +1474,7 @@ bool isNumlike(string str)
     all_checks_passed = checks_passed == strlen(str.data());
     return all_checks_passed;
 }
-bool isIntlike(string str)
+bool isIntLike(string str)
 {
     int checks_passed = 0, all_checks_passed = 0;
     for (int i = 0; i<str.length(); i++)
@@ -1459,7 +1486,7 @@ bool isIntlike(string str)
     all_checks_passed = checks_passed == strlen(str.data());
     return all_checks_passed;
 }
-bool isFltlike(string str)
+bool isFltLike(string str)
 {
     int n_digits = 0, n_periods = 0, all_checks_passed = 0;
     for (int i = 0; i<str.length(); i++)
@@ -1473,12 +1500,12 @@ bool isFltlike(string str)
     all_checks_passed = n_digits && n_periods;
     return all_checks_passed;
 }
-#define heNumjesa isNumlike
-#define heIntjesa isIntlike
-#define heFltjesa isFltlike
-#define heNumjesi isNumlike
-#define heIntjesi isIntlike
-#define heFltjesi isFltlike
+#define heNumjesa isNumLike
+#define heIntjesa isIntLike
+#define heFltjesa isFltLike
+#define heNumjesi isNumLike
+#define heIntjesi isIntLike
+#define heFltjesi isFltLike
 
 // ::Math
 int sq(int n)
@@ -2072,6 +2099,16 @@ void printArr(double_array arr) {
     }
     cout << "\n}\n";
 }
+void printArr(bool_array arr) {
+    int size = arr.size();
+    cout << "{";
+    for (int i = 0; i < size; i++) {
+        cout << "\n\t<" << arr[i] << ">,";
+    }
+    cout << "\n}\n";
+}
+#define printAllOf printArr
+#define printEachOf printArr
 void printArrReversed(string_array arr) {
     int size = arr.size()-1;
     //bugfix: we need the last element, not the length of the array, as that would get us a null character
@@ -2109,6 +2146,15 @@ void printArrReversed(float_array arr) {
     cout << "\n}\n";
 }
 void printArrReversed(double_array arr) {
+    int size = arr.size()-1;
+    //bugfix: we need the last element, not the length of the array, as that would get us a null character
+    cout << "{";
+    for (; size >= 0; size--) {
+        cout << "\n\t<" << arr[size] << ">,";
+    }
+    cout << "\n}\n";
+}
+void printArrReversed(bool_array arr) {
     int size = arr.size()-1;
     //bugfix: we need the last element, not the length of the array, as that would get us a null character
     cout << "{";
@@ -2164,7 +2210,29 @@ bool inArr(double_array arr, double lookupDbl)
     }
     return false;
 }
-
+bool inArr(bool_array arr, bool lookupBool)
+{
+    int length = len(arr);
+    for (int i=0; i<length; i++)
+    {
+        if (arr[i] == lookupBool) return true;
+    }
+    return false;
+}
+/*
+on
+    str x = "hey love";
+    int_arr y = {1, 3, 5};
+    bool test1 = in(x, "love"),
+      test2 = inArr(y, 5),
+      conclusion = either(test1, test2);
+    if (true is conclusion) {
+      print "String [x] contains term \"love\" in it:" aage test1 age_bas;
+      print "Integer_array [y] contains integer value [5] in it:" aage test2 age_bas;
+    }
+    else print "neither of the two is true";
+off
+*/
 
 //Library's in-console GUI
 object {
