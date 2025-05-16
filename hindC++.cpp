@@ -102,7 +102,6 @@ int main() {
 #define chau out
 #define aen_chau out
 #define ke "" <<
-#define yar "" <<
 #define or_yar << " " <<
 #define aen_yar << " " <<
 #define aur << " " <<
@@ -308,6 +307,8 @@ int main() {
 #define wari ) {
 #define surat case
 #define basurat case
+#define ya_surat : case
+#define banakami default
 #define barabar =
 #define me :
 #define is ==
@@ -406,6 +407,7 @@ int main() {
 #define kuri ;std::cout<<"";
 #define kurio ;std::cout<<"";
 #define kurie ;std::cout<<"";
+#define yar ;std::cout<<"";
 #define yara ;std::cout<<"";
 #define yaara ;std::cout<<"";
 #define tawheen ;std::cout<<"";
@@ -1445,6 +1447,14 @@ float randFlt(int min_num, int max_num)
     result = ((rand() % (hi_num - low_num)) + low_num) * .3;
     return result;;
 }
+#define koiInteger randint
+#define kisiInteger randint
+#define koiFloat randflt
+#define kisiFloat randflt
+#define koi_integer randint
+#define kisi_integer randint
+#define koi_float randflt
+#define kisi_float randflt
 int_array range(int n, bool startWithZero=false) {
     int_array arr = {};
     for (int i=0; i<n; i++)
@@ -1500,12 +1510,12 @@ bool isFltLike(string str)
     all_checks_passed = n_digits && n_periods;
     return all_checks_passed;
 }
-#define heNumjesa isNumLike
-#define heIntjesa isIntLike
-#define heFltjesa isFltLike
-#define heNumjesi isNumLike
-#define heIntjesi isIntLike
-#define heFltjesi isFltLike
+#define numJesa isNumLike
+#define intJesa isIntLike
+#define fltJesa isFltLike
+#define numJesi isNumLike
+#define intJesi isIntLike
+#define fltJesi isFltLike
 
 // ::Math
 int sq(int n)
@@ -1549,6 +1559,7 @@ on
     print f(sum(5, 4, 7.11, 4, 2, 6.57, 8, 3, 15, 21));
 off
 */
+#define infinity INFINITY
 #define add sum
 #define dalo sum
 #define joro sum
@@ -1617,11 +1628,13 @@ auto pct(double n1, double n2)
     else
         return (n1 / n2) * 100;
 }
-#define ctof(c) (round(1.8 * c + 32))
-#define ftoc(f) (round(((f - 32) * 5) / 9))
+#define celciusToFarhenheit(c) (round(1.8 * c + 32))
+#define farhenheitToCelcius(f) (round(((f - 32) * 5) / 9))
+#define cToF celciusToFarhenheit
+#define fToC farhenheitToCelcius
 /*
 co
-    print ftoc(98);
+    print fToC(98);
 de
 */
 
@@ -2502,7 +2515,53 @@ ram
 */
 /*
 on
-    farz city barabar koiSheher();
-    print "Haseeb" aage city aage "ka rehaishi he";
+    farz area barabar koiKarachiArea() sath
+      city barabar koiSheher();
+    print "Haseeb" aage city aage "ke rehaishi hen";
+off
+*/
+/*
+on
+    kahie "My Calculator App\n\n";
+    
+    flt result barabar 0;
+    
+    jabtak infinity he tabtak
+        flt numA barabar pucho_f("\n_____________ * ____________ *\nPlease enter number A: ") sath
+            numB barabar pucho_f("Please enter number B: ");
+        ch op barabar pucho_c("Please enter an operator: ");
+    
+        haalat op ki
+            basurat '+':
+                result = add(numA, numB);
+                kahie f("%.1f + %.1f = %.1f\nRestarting...", numA, numB, result);
+                ruko;
+            basurat '-':
+                result = diff(numA, numB);
+                kahie f("%.1f - %.1f = %.1f\nRestarting...", numA, numB, result);
+                ruko;
+            basurat '*' ya_surat '.':
+                result = prd(numA, numB);
+                kahie f("%.1f * %.1f = %.1f\nRestarting...", numA, numB, result);
+                ruko;
+            basurat '/':
+                result = quo(numA, numB);
+                kahie f("%.1f / %.1f = %.1f\nRestarting...", numA, numB, result);
+                ruko;
+            basurat '^':
+                result = pow(numA, numB);
+                kahie f("%.1f ^ %.1f = %.1f\nRestarting...", numA, numB, result);
+                ruko;
+            basurat '%':
+                numA = Pos(numA) sath
+                    numB = Pos(numB);
+                agar numA se_bara numB he adla_badli of numA, numB karie;
+                result = mod(numA, numB);
+                kahie f("%.1f \% %.1f = %.1f\nRestarting...", numA, numB, result);
+                ruko;
+            banakami:
+                kahie "Invalid operator!\nRestarting...\n";
+        basab
+    basab
 off
 */

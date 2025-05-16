@@ -15,7 +15,7 @@ void tb(n) {
 void clr(int c) {
 	textcolor(c);
 }
-int main(int argc, char *argv[])
+int main()
 {
 	br(1);
 	printf("\t\t    *   ---- ---- ----  *");
@@ -33,12 +33,12 @@ int main(int argc, char *argv[])
 	printf("\t\t/  / \\  \\             |    /  ___  ___  ___\n");
 	printf("\t\t| /^ ^\\ |             |\\  /|   |   |__  |__\n");
 	printf("\t\t|/     \\|             | \\/ |  ___  __|  __|\n");
-	printf("\t\t\\       /=🌺\n");
+	printf("\t\t\\       /🌺\n");
 	printf("\t\t \\_____/  ||       \n");
 	printf("\t\t__\\___/   ||      |    |   /\\   |') ___  _\n");
 	printf("\t       /       \\  ||      |\\  /|  /__\\  |/   |  /_\\\n");
-	printf("\t       |       |  []      | \\/ | /    \\ | \\ ___ | |\n");
-	br(4);
+	printf("\t       |       |  [❇️     | \\/ | /    \\ | \\ ___ | |\n\n____________________________________________________________");
+	br(7);
 	printf("\tQuestion 1: %s\n\n", questions[0]);
 	printf("\t\t    a: %s\n\t\t    b: %s\n\t\t    c: %s\n\t\t    d: %s\n\tAnswer: ", choices[0][0], choices[0][1], choices[0][2], choices[0][3]);
 	scanf("%c", &choice);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 		#ifdef CONIO_H
 		    clr(def);
 		#endif
-		br(3);
+		br(4);
 	}
 	else {
 		#ifdef CONIO_H
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 		#ifdef CONIO_H
 		    clr(def);
 		#endif
-		br(3);
+		br(4);
 	}
 	printf("\tQuestion 2: %s\n\n", questions[1]);
 	printf("\t\t    a: %s\tb: %s\n\t\t    c: %s\td: %s\n\tAnswer: ", choices[1][0], choices[1][1], choices[1][2], choices[1][3]);
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 		#ifdef CONIO_H
 		    clr(def);
 		#endif
-		br(3);
+		br(4);
 	}
 	else {
 		#ifdef CONIO_H
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 		#ifdef CONIO_H
 		    clr(def);
 		#endif
-		br(3);
+		br(4);
 	}
 	printf("\tQuestion 3: %s\n", questions[2]);
 	printf("\t\t    a: %s\n\t\t    b: %s\n\t\t    c: %s\n\t\t    d: %s\n\tAnswer: ", choices[2][0], choices[2][1], choices[2][2], choices[2][3]);
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 		#ifdef CONIO_H
 		    clr(def);
 		#endif
-		br(3);
+		br(4);
 	}
 	else {
 		#ifdef CONIO_H
@@ -106,6 +106,6 @@ int main(int argc, char *argv[])
 		#ifdef CONIO_H
 		    clr(def);
 		#endif
-		br(3);
+		br(4);
 	}
 }

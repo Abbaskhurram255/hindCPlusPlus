@@ -42,12 +42,11 @@ int main() {
                     break;
                 }
                 if (!pos.y) {
-                    printf("Bike chalae bager hi turn?\n");
+                    printCards(pos.x, pos.y, score);
                     break;
                 }
                  if (pos.x - 2.5 < -20) {
-                    printf("Bike out of boundary!\n");
-                    printCards(pos.x, pos.y, score);
+                    printf("Dead! Dusri bike se takra gae!\nScore: %d", score);
                     break;
                 }
                 pos.x -= 2.5;
@@ -60,12 +59,11 @@ int main() {
                     break;
                 }
                 if (!pos.y) {
-                    printf("Bike chalae bager hi turn?\n");
+                    printCards(pos.x, pos.y, score);
                     break;
                 }
                  if (pos.x + 2.5 > 20) {
-                    printf("Bike out of boundary!\n");
-                    printCards(pos.x, pos.y, score);
+                    printf("Dead! Dusri bike se takra gae!\nScore: %d", score);
                     break;
                 }
                 pos.x += 2.5;
