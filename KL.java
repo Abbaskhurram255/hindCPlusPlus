@@ -3,6 +3,7 @@ import java.io.*;
 import java.util.concurrent.*;
 import java.security.SecureRandom;
 import java.nio.file.*;
+import java.awt.event.*;
 
 
 class KL {
@@ -303,6 +304,12 @@ class KL {
 			System.out.print(arg);
 		}
 	}
+	public static void print(char... args) {
+		System.out.print("\n");
+		for (char arg : args) {
+			System.out.print(arg);
+		}
+	}
 	public static void print(long... args) {
 		System.out.print("\n");
 		for (long arg : args) {
@@ -483,25 +490,54 @@ class KL {
 	public static void next() {
 		br(1);
 	}
-	public static String Str(char arg) {
+	public static String String(String arg) {
+		//if already a string, return as/is
+		return arg;
+	}
+	public static String String(char arg) {
 		String result = ("" + arg);
 		return result;
+	}
+	public static String String(int arg) {
+		String result = ("" + arg);
+		return result;
+	}
+	public static String String(long arg) {
+		String result = ("" + arg);
+		return result;
+	}
+	public static String String(float arg) {
+		String result = ("" + arg);
+		return result;
+	}
+	public static String String(double arg) {
+		String result = ("" + arg);
+		return result;
+	}
+	public static String String(boolean arg) {
+		String result = ("" + arg);
+		return result;
+	}
+	public static String Str(String arg) {
+		return String(arg);
+	}
+	public static String Str(char arg) {
+		return String(arg);
 	}
 	public static String Str(int arg) {
-		String result = ("" + arg);
-		return result;
+		return String(arg);
 	}
 	public static String Str(long arg) {
-		String result = ("" + arg);
-		return result;
+		return String(arg);
 	}
 	public static String Str(float arg) {
-		String result = ("" + arg);
-		return result;
+		return String(arg);
 	}
 	public static String Str(double arg) {
-		String result = ("" + arg);
-		return result;
+		return String(arg);
+	}
+	public static String Str(boolean arg) {
+		return String(arg);
 	}
 	public static char[] Chars(String str) {
 		char[] result = str.toCharArray();
@@ -556,10 +592,10 @@ class KL {
 			return 0;
 		}
 	}
-	public static int Int(float n) {
+	public static int Int(long n) {
 	    return (int)n;
 	}
-	public static int Int(long n) {
+	public static int Int(float n) {
 	    return (int)n;
 	}
 	public static int Int(double n) {
@@ -696,6 +732,7 @@ class KL {
 		if (n1 < n2) return Math.round(n1 / n2 * 100.0) / 100.0;
 		else return Math.round(n1 * (n2 * .01) * 100.0) / 100.0;
 	}
+	final static double infinity = Double.POSITIVE_INFINITY;
 	public static int round(int n) {
 	    return n;
 	}
@@ -732,17 +769,221 @@ class KL {
 	public static boolean eq(double x, double y) {
 	    return x == y;
 	}
-	public static boolean both(boolean a, boolean b) {
-	    return a && b;
+	public static boolean eq(boolean x, boolean y) {
+	    return x == y;
 	}
-	public static boolean either(boolean a, boolean b) {
-	    return a || b;
+	public static boolean uneq(int x, int y) {
+	    return !eq(x, y);
 	}
-	public static boolean not(boolean a) {
-	    return !a;
+	public static boolean uneq(long x, long y) {
+	    return !eq(x, y);
 	}
-	public static boolean neither(boolean a, boolean b) {
-	    return !(a || b);
+	public static boolean uneq(float x, float y) {
+	    return !eq(x, y);
+	}
+	public static boolean uneq(double x, double y) {
+	    return !eq(x, y);
+	}
+	public static boolean uneq(boolean x, boolean y) {
+	    return !eq(x, y);
+	}
+	public static boolean both(String... strings) {
+	    int count = 0;
+	    for (String s : strings) {
+	        if (is(s)) count += 1;
+	    }
+	    return count == len(strings);
+	}
+	public static boolean both(int... ints) {
+	    int count = 0;
+	    for (int n : ints) {
+	        if (is(n)) count += 1;
+	    }
+	    return count == len(ints);
+	}
+	public static boolean both(long... longs) {
+	    int count = 0;
+	    for (long n : longs) {
+	        if (is(n)) count += 1;
+	    }
+	    return count == len(longs);
+	}
+	public static boolean both(float... floats) {
+	    int count = 0;
+	    for (float n : floats) {
+	        if (is(n)) count += 1;
+	    }
+	    return count == len(floats);
+	}
+	public static boolean both(double... doubles) {
+	    int count = 0;
+	    for (double n : doubles) {
+	        if (is(n)) count += 1;
+	    }
+	    return count == len(doubles);
+	}
+	public static boolean both(boolean... bools) {
+	    int count = 0;
+	    for (boolean bool : bools) {
+	        if (is(bool)) count += 1;
+	    }
+	    return count == len(bools);
+	}
+	public static boolean either(String... strings) {
+	    int count = 0;
+	    for (String s : strings) {
+	        if (is(s)) count += 1;
+	    }
+	    return count > 0;
+	}
+	public static boolean either(int... ints) {
+	    int count = 0;
+	    for (int n : ints) {
+	        if (is(n)) count += 1;
+	    }
+	    return count > 0;
+	}
+	public static boolean either(long... longs) {
+	    int count = 0;
+	    for (long n : longs) {
+	        if (is(n)) count += 1;
+	    }
+	    return count > 0;
+	}
+	public static boolean either(float... floats) {
+	    int count = 0;
+	    for (float n : floats) {
+	        if (is(n)) count += 1;
+	    }
+	    return count > 0;
+	}
+	public static boolean either(double... doubles) {
+	    int count = 0;
+	    for (double n : doubles) {
+	        if (is(n)) count += 1;
+	    }
+	    return count > 0;
+	}
+	public static boolean either(boolean... bools) {
+	    int count = 0;
+	    for (boolean bool : bools) {
+	        if (is(bool)) count += 1;
+	    }
+	    return count > 0;
+	}
+	public static boolean neither(String... strings) {
+	    int count = 0;
+	    for (String s : strings) {
+	        if (not(s)) count += 1;
+	    }
+	    return count == len(strings);
+	}
+	public static boolean neither(int... ints) {
+	    int count = 0;
+	    for (int n : ints) {
+	        if (not(n)) count += 1;
+	    }
+	    return count == len(ints);
+	}
+	public static boolean neither(long... longs) {
+	    int count = 0;
+	    for (long n : longs) {
+	        if (not(n)) count += 1;
+	    }
+	    return count == len(longs);
+	}
+	public static boolean neither(float... floats) {
+	    int count = 0;
+	    for (float n : floats) {
+	        if (not(n)) count += 1;
+	    }
+	    return count == len(floats);
+	}
+	public static boolean neither(double... doubles) {
+	    int count = 0;
+	    for (double n : doubles) {
+	        if (not(n)) count += 1;
+	    }
+	    return count == len(doubles);
+	}
+	public static boolean neither(boolean... bools) {
+	    int count = 0;
+	    for (boolean bool : bools) {
+	        if (not(bool)) count += 1;
+	    }
+	    return count == len(bools);
+	}
+	public static boolean not(String s) {
+	    return isEmpty(s);
+	}
+	public static boolean not(int n) {
+	    return 0==n;
+	}
+	public static boolean not(long n) {
+	    return 0==n;
+	}
+	public static boolean not(float n) {
+	    return 0==n;
+	}
+	public static boolean not(double n) {
+	    return 0==n;
+	}
+	public static boolean not(boolean condition) {
+	    return !condition;
+	}
+	public static boolean not(String[] arr) {
+	    return isEmpty(arr);
+	}
+	public static boolean not(int[] arr) {
+	    return isEmpty(arr);
+	}
+	public static boolean not(long[] arr) {
+	    return isEmpty(arr);
+	}
+	public static boolean not(float[] arr) {
+	    return isEmpty(arr);
+	}
+	public static boolean not(double[] arr) {
+	    return isEmpty(arr);
+	}
+	public static boolean not(boolean[] arr) {
+	    return isEmpty(arr);
+	}
+	public static boolean is(String s) {
+	    return !not(s);
+	}
+	public static boolean is(int n) {
+	    return !not(n);
+	}
+	public static boolean is(long n) {
+	    return !not(n);
+	}
+	public static boolean is(float n) {
+	    return !not(n);
+	}
+	public static boolean is(double n) {
+	    return !not(n);
+	}
+	public static boolean is(boolean condition) {
+	    return !not(condition);
+	}
+	public static boolean is(String[] arr) {
+	    return !not(arr);
+	}
+	public static boolean is(int[] arr) {
+	    return !not(arr);
+	}
+	public static boolean is(long[] arr) {
+	    return !not(arr);
+	}
+	public static boolean is(float[] arr) {
+	    return !not(arr);
+	}
+	public static boolean is(double[] arr) {
+	    return !not(arr);
+	}
+	public static boolean is(boolean[] arr) {
+	    return !not(arr);
 	}
 	public static boolean xor(boolean a, boolean b) {
 	    return a || b && !(a && b);
@@ -774,34 +1015,78 @@ class KL {
 		double number = randInt(start, end) * .3;
 		return number;
 	}
-	public static String randStr() {
-		int len = randInt(8, 32);
-		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-		SecureRandom rnd = new SecureRandom();
-		StringBuilder sb = new StringBuilder(len);
-		for (int i = 0; i < len; i++)
-			sb.append(AB.charAt(rnd.nextInt(AB.length())));
-		return sb.toString();
-	}
 	public static String randStr(int len) {
-		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\\+=";
 		SecureRandom rnd = new SecureRandom();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; i++)
 			sb.append(AB.charAt(rnd.nextInt(AB.length())));
 		return sb.toString();
 	}
-	public static String randIt(String arr[]) {
+	public static String randStr() {
+		return randStr(randInt(8, 32));
+	}
+	public static char randChar(int low, int high) {
+	    if (low < 0) low = 0;
+	    if (high > 127) high = 127;
+	    return (char)randInt(low, high);
+	}
+	public static char randChar() {
+	    return randChar(47, 127);
+	}
+	public static String randItem(String arr[]) {
 		return arr[randInt(arr.length)];
 	}
-	public static int randIt(int arr[]) {
+	public static int randItem(int arr[]) {
 		return arr[randInt(arr.length)];
 	}
-	public static float randIt(float arr[]) {
+	public static long randItem(long arr[]) {
 		return arr[randInt(arr.length)];
 	}
-	public static double randIt(double arr[]) {
-		return arr[randInt(50, 50000) % arr.length];
+	public static float randItem(float arr[]) {
+		return arr[randInt(arr.length)];
+	}
+	public static double randItem(double arr[]) {
+		return arr[randInt(arr.length)];
+	}
+	public static boolean randItem(boolean arr[]) {
+		return arr[randInt(arr.length)];
+	}
+	public static String randFrom(String arr[]) {
+		return randItem(arr);
+	}
+	public static int randFrom(int arr[]) {
+		return randItem(arr);
+	}
+	public static long randFrom(long arr[]) {
+		return randItem(arr);
+	}
+	public static float randFrom(float arr[]) {
+		return randItem(arr);
+	}
+	public static double randFrom(double arr[]) {
+		return randItem(arr);
+	}
+	public static boolean randFrom(boolean arr[]) {
+		return randItem(arr);
+	}
+	public static String any(String arr[]) {
+		return randItem(arr);
+	}
+	public static int any(int arr[]) {
+		return randItem(arr);
+	}
+	public static long any(long arr[]) {
+		return randItem(arr);
+	}
+	public static float any(float arr[]) {
+		return randItem(arr);
+	}
+	public static double any(double arr[]) {
+		return randItem(arr);
+	}
+	public static boolean any(boolean arr[]) {
+		return randItem(arr);
 	}
 	public static String replace(String str, String to_replace, String regex_to_replace_with) {
 		return str.replaceAll(to_replace, regex_to_replace_with);
@@ -1199,9 +1484,17 @@ class KL {
 		s = s.toUpperCase();
 		return s;
 	}
+	public static char upper(char c) {
+		c = Str(c).toUpperCase().charAt(0);
+		return c;
+	}
 	public static String lower(String s) {
 		s = s.toLowerCase();
 		return s;
+	}
+	public static char lower(char c) {
+		c = Str(c).toLowerCase().charAt(0);
+		return c;
 	}
 	public static String sentCase(String input) {
 	    input = (input.toUpperCase().substring(0, 1) + input.toLowerCase().substring(1)).replaceAll("(?<!\\w)i(?!\\w)", "I");
@@ -1260,6 +1553,33 @@ class KL {
 	}
 	public static int len(boolean arr[]) {
 	    return arr.length;
+	}
+	public static boolean isEmpty(String s) {
+	    return 0==len(s);
+	}
+	public static boolean isEmpty(int n) {
+	    return 0==len(n);
+	}
+	public static boolean isEmpty(long n) {
+	    return 0==len(n);
+	}
+	public static boolean isEmpty(String[] arr) {
+	    return 0==len(arr);
+	}
+	public static boolean isEmpty(int[] arr) {
+	    return 0==len(arr);
+	}
+	public static boolean isEmpty(long[] arr) {
+	    return 0==len(arr);
+	}
+	public static boolean isEmpty(float[] arr) {
+	    return 0==len(arr);
+	}
+	public static boolean isEmpty(double[] arr) {
+	    return 0==len(arr);
+	}
+	public static boolean isEmpty(boolean[] arr) {
+	    return 0==len(arr);
 	}
 	
 	//Arrays
@@ -1605,7 +1925,7 @@ class KL {
 		print(collectedChunks);
 		print(randInt());
 
-	    print(randIt(arrayOfTextChunks));
+	    print(randItem(arrayOfTextChunks));
         //print(len(nums));
         printAll(nums);
 	}
@@ -1623,6 +1943,5 @@ class KL {
 	    //print(getSeason());
 	    //print(upper(replace(trim("     Hi there love"), " ", "-")));
 	    //print(endsWith("hello world", "rld"));
-	    
 	}
 }
