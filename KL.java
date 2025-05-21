@@ -3,14 +3,15 @@ import java.io.*;
 import java.util.concurrent.*;
 import java.security.SecureRandom;
 import java.nio.file.*;
-
+import java.util.stream.*;
+import java.text.*;
 
 public class KL {
 	public static class Error extends Exception {
-        Error(String msg) {
-            super(msg);
-        }
-    }
+		Error(String msg) {
+			super(msg);
+		}
+	}
 	public static class Object_S extends HashMap<String, String> {
 		Object_S() {
 			super();
@@ -499,15 +500,15 @@ public class KL {
 	}
 
 	//Date functions
-	public String nthDay(int n) {
+	public static String nthDay(int n) {
 		String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		return days[n];
 	}
-	public String nthMonth(int n) {
+	public static String nthMonth(int n) {
 		String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 		return months[n];
 	}
-	public String formattedDate(Date dt) {
+	public static String formattedDate(Date dt) {
 		int dayOfWeek = dt.getDay(), monthOfYear = dt.getMonth();
 		String day, month;
 		String date = dt.toLocaleString();
@@ -519,36 +520,59 @@ public class KL {
 		date = day + ", " + date;
 		return date;
 	}
-	public String now() {
+	public static String now() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * (3600 * 1000))); //fix 5-hour bug
 		String date = formattedDate(dt);
 		return date;
 	}
-	public String getDate() {
+	public static String now(boolean shortened) {
+		if (!shortened) return now();
+		String parts[] = now().split(", ");
+		parts[0] = slice(parts[0], 0, 3);
+		parts[1] = slice(split(parts[1], " ")[0], 0, 3) + " " + split(parts[1], " ")[1];
+		String time = slice(parts, len(parts) - 1)[0];
+		String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
+		String result = join(x, ", ");
+		return result;
+	}
+	public static String getDate() {
 		String parts[] = now().split(", ");
 		return parts[1] + ", " + parts[2];
 	}
-	public String getDay() {
+	public static String getDay() {
 		return now().split(", ")[0];
 	}
-	public String getMonth() {
+	public static String getMonth() {
 		return now().split(", ")[1].split(" ")[0];
 	}
-	public String getYear() {
+	public static String getYear() {
 		return now().split(", ")[2];
 	}
-	public String getTime() {
+	public static String getTime() {
 		return now().split(", ")[3];
 	}
 	public static String getSeason() {
-		String m = new KL().getMonth().toLowerCase();
-		if (m == "may" || m == "jun" || m == "jul" || m == "aug") return "Summer";
-		else if (m == "sep" || m == "oct") return "Spring";
-		else if (m == "nov" || m == "dec" || m == "jan" || m == "feb") return "Winter";
-		else return "Fall/Autumn";
+		String m = slice(getMonth(), 0, 3).toLowerCase();
+		switch (m) {
+		case "may":
+		case "jun":
+		case "jul":
+		case "aug":
+			return "Summer";
+		case "sep":
+		case "oct":
+			return "Spring";
+		case "nov":
+		case "dec":
+		case "jan":
+		case "feb":
+			return "Winter";
+		default:
+			return "Fall/Autumn";
+		}
 	}
-	public String yesterday() {
+	public static String yesterday() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setTime(dt.getTime() - ((int)36e5 * 24)); //decrement 24 hours or (3.6*10⁶)*24 milliseconds
@@ -557,7 +581,7 @@ public class KL {
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
 		return date;
 	}
-	public String dayBeforeYesterday() {
+	public static String dayBeforeYesterday() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setTime(dt.getTime() - ((int)72e5 * 24)); //decrement 48 hours or (7.2*10⁶)*24 milliseconds
@@ -566,10 +590,10 @@ public class KL {
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
 		return date;
 	}
-	public String twoDaysAgo() {
-		return new KL().dayBeforeYesterday();
+	public static String twoDaysAgo() {
+		return dayBeforeYesterday();
 	}
-	public String tomorrow() {
+	public static String tomorrow() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)(36e2 * 1e3)))); //fix 5-hour bug
 		dt.setTime(dt.getTime() + ((int)36e5 * 24)); //increment 24 hours or (3.6*10⁶)*24 milliseconds
@@ -578,7 +602,7 @@ public class KL {
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
 		return date;
 	}
-	public String dayAfterTomorrow() {
+	public static String dayAfterTomorrow() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setTime(dt.getTime() + ((int)72e5 * 24)); //increment 48 hours or (7.2*10⁶)*24 milliseconds
@@ -587,10 +611,10 @@ public class KL {
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
 		return date;
 	}
-	public String twoDaysLater() {
-		return new KL().dayAfterTomorrow();
+	public static String twoDaysLater() {
+		return dayAfterTomorrow();
 	}
-	public String lastMonth() {
+	public static String lastMonth() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setMonth(dt.getMonth() - 1); //decrement a month
@@ -598,7 +622,7 @@ public class KL {
 		date = date.split(", ")[1].split(" ")[0];
 		return date;
 	}
-	public String lastMonthOf(String date) {
+	public static String lastMonthOf(String date) {
 		Date dt = new Date(date);
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setMonth(dt.getMonth() - 1); //decrement a month
@@ -606,7 +630,7 @@ public class KL {
 		date = date.split(", ")[1].split(" ")[0];
 		return date;
 	}
-	public String nextMonth() {
+	public static String nextMonth() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setMonth(dt.getMonth() + 1); //increment a month
@@ -615,7 +639,7 @@ public class KL {
 		date = date.split(", ")[1].split(" ")[0];
 		return date;
 	}
-	public String nextMonthOf(String date) {
+	public static String nextMonthOf(String date) {
 		Date dt = new Date(date);
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setMonth(dt.getMonth() + 1); //increment a month
@@ -624,7 +648,7 @@ public class KL {
 		date = date.split(", ")[1].split(" ")[0];
 		return date;
 	}
-	public String lastYear() {
+	public static String lastYear() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setYear(dt.getYear() - 1); //decrement a year
@@ -633,7 +657,7 @@ public class KL {
 		date = date.split(", ")[2];
 		return date;
 	}
-	public String lastYearOf(String date) {
+	public static String lastYearOf(String date) {
 		Date dt = new Date(date);
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setYear(dt.getYear() - 1); //decrement a year
@@ -641,7 +665,7 @@ public class KL {
 		date = date.split(", ")[2];
 		return date;
 	}
-	public String nextYear() {
+	public static String nextYear() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setYear(dt.getYear() + 1); //increment a year
@@ -649,7 +673,7 @@ public class KL {
 		date = date.split(", ")[2];
 		return date;
 	}
-	public String nextYear(String date) {
+	public static String nextYear(String date) {
 		Date dt = new Date(date);
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setYear(dt.getYear() + 1); //increment a year
@@ -657,33 +681,33 @@ public class KL {
 		date = date.split(", ")[2];
 		return date;
 	}
-	public String age2bday(int age) {
+	public static String age2bday(int age) {
 		Date dt = new Date();
 		//dt.setTime(dt.getTime()+(5*((int)36e5))); //fix 5-hour bug
 		String bday = "" + ((dt.getYear() + 1900) - age); //adding 1900 helps resolve a bug
 		return bday;
 	}
-	public int bday2age(String date) {
+	public static int bday2age(String date) {
 		Date dt = new Date(date);
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		int age = new Date().getYear() - dt.getYear();
 		return age;
 	}
-	public String date2day(String date) {
+	public static String date2day(String date) {
 		Date dt = new Date(date);
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		date = formattedDate(dt);
 		date = date.split(", ")[0];
 		return date;
 	}
-	public String date2month(String date) {
+	public static String date2month(String date) {
 		Date dt = new Date(date);
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		date = formattedDate(dt);
 		date = date.split(", ")[1].split(" ")[0];
 		return date;
 	}
-	public String timeGreet() {
+	public static String timeGreet() {
 		String greeting;
 		int h = new Date().getHours() + 5; //fix 5-hour bug along the way
 		if (h >= 20) greeting = "Good night";
@@ -693,22 +717,22 @@ public class KL {
 		else greeting = "Good morning";
 		return greeting;
 	}
-	public String lastOfMonth(int m) {
+	public static String lastOfMonth(int m) {
 		Date dt = new Date();
 		KL dt2 = new KL();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug for better accuracy
 		String result = "" + ("" + dt2.nthMonth(m - 1) + " " + new Date(new Date().getYear(), m, 0).getDate());
 		return result;
 	}
-	public boolean isWeekend() {
+	public static boolean isWeekend() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		return dt.getDay() % 6 == 0;
 	}
-	public boolean isLeapYear() {
+	public static boolean isLeapYear() {
 		return (1900 + new Date().getYear()) % 4 == 0;
 	}
-	public int nextLeapYear() {
+	public static int nextLeapYear() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug for better accuracy
 		int i = 0;
@@ -720,66 +744,66 @@ public class KL {
 		int result = (1900 + dt.getYear()); //comes with a bug fix
 		return result;
 	}
-	public String dateBefore(int n) {
+	public static String dateBefore(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setDate(dt.getDate() - Math.abs(n));
-		String date = new KL().formattedDate(dt);
+		String date = formattedDate(dt);
 		String parts[] = date.split(", ");
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
 		return date;
 	}
-	public String dateAfter(int n) {
+	public static String dateAfter(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setDate(dt.getDate() + Math.abs(n));
-		String date = new KL().formattedDate(dt);
+		String date = formattedDate(dt);
 		String parts[] = date.split(", ");
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
 		return date;
 	}
-	public String minsAgo(int n) {
+	public static String minsAgo(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setTime(dt.getTime() - (n * (int)60e3));
-		String time = new KL().formattedDate(dt);
+		String time = formattedDate(dt);
 		time = time.split(", ")[3];
 		return time;
 	}
-	public String minsLater(int n) {
+	public static String minsLater(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setTime(dt.getTime() + (n * (int)60e3));
-		String time = new KL().formattedDate(dt);
+		String time = formattedDate(dt);
 		time = time.split(", ")[3];
 		return time;
 	}
-	public String hoursAgo(int n) {
+	public static String hoursAgo(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //first fix the 5-hour bug
 		dt.setTime(dt.getTime() - (n * (int)36e5));
-		String time = new KL().formattedDate(dt);
+		String time = formattedDate(dt);
 		time = time.split(", ")[3];
 		return time;
 	}
-	public String hoursLater(int n) {
+	public static String hoursLater(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //first fix the 5-hour bug
 		dt.setTime(dt.getTime() + (n * (int)36e5));
-		String time = new KL().formattedDate(dt);
+		String time = formattedDate(dt);
 		time = time.split(", ")[3];
 		return time;
 	}
-	public String nthHour(int n) {
+	public static String nthHour(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
 		dt.setTime(dt.getTime() - (int)36e5 * dt.getHours() + (n * (int)36e5));
-		String time = new KL().formattedDate(dt);
+		String time = formattedDate(dt);
 		time = time.split(", ")[3];
 		return time;
 	}
-	public String date() {
-		return new KL().now();
+	public static String date() {
+		return now();
 	}
 
 
@@ -834,6 +858,11 @@ public class KL {
 			System.out.print(arg);
 		}
 	}
+	public static void println(char... args) {
+		for (char arg : args) {
+			System.out.print(arg);
+		}
+	}
 	public static void println(long... args) {
 		for (long arg : args) {
 			System.out.print(arg);
@@ -854,22 +883,7 @@ public class KL {
 			System.out.print(arg);
 		}
 	}
-	public static void println(char... args) {
-		for (char arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void printb(int... args) {
-		System.out.print("\n");
-		for (int arg : args) {
-			System.out.print(arg == 1 ? "true" : "false");
-		}
-	}
-	public static void printbln(int... args) {
-		for (int arg : args) {
-			System.out.print(arg == 1 ? "true" : "false");
-		}
-	}
+
 	//printing arrays
 	public static void printArr(String arr[]) {
 		print(Arrays.toString(arr));
@@ -1058,12 +1072,20 @@ public class KL {
 		char result = nthLastCharOf(str, 1);
 		return result;
 	}
+	public static String[] str2array(String str) {
+		String arr[] = {str};
+		return arr;
+	}
+	public static String[] split(String str) {
+		String[] returnValue = str.split("");
+		return returnValue;
+	}
 	public static String[] split(String str, String delimiting_str_or_regex) {
 		String[] returnValue = str.split(delimiting_str_or_regex);
 		return returnValue;
 	}
 	public static String[] splitIntoWords(String str) {
-		String[] returnValue = str.split("[^a-zA-Z'\\-]|\\-(?![a-zA-Z]{2,})");
+		String[] returnValue = split(str, "[^a-zA-Z'\\-]|\\-(?![a-zA-Z]{2,})");
 		return returnValue;
 	}
 	public static String join(String[] stringedArray, String with) {
@@ -1122,13 +1144,49 @@ public class KL {
 	public static boolean isPos(int n) {
 		return n > 0;
 	}
+	public static boolean isPos(long n) {
+		return n > 0;
+	}
+	public static boolean isPos(float n) {
+		return n > 0;
+	}
+	public static boolean isPos(double n) {
+		return n > 0;
+	}
 	public static boolean isNeg(int n) {
+		return n < 0;
+	}
+	public static boolean isNeg(long n) {
+		return n < 0;
+	}
+	public static boolean isNeg(float n) {
+		return n < 0;
+	}
+	public static boolean isNeg(double n) {
 		return n < 0;
 	}
 	public static int Pos(int n) {
 		return Math.abs(n);
 	}
+	public static long Pos(long n) {
+		return Math.abs(n);
+	}
+	public static float Pos(float n) {
+		return Math.abs(n);
+	}
+	public static double Pos(double n) {
+		return Math.abs(n);
+	}
 	public static int Neg(int n) {
+		return -Pos(n);
+	}
+	public static long Neg(long n) {
+		return -Pos(n);
+	}
+	public static float Neg(float n) {
+		return -Pos(n);
+	}
+	public static double Neg(double n) {
 		return -Pos(n);
 	}
 	public static double sum(double... ns) {
@@ -1157,8 +1215,14 @@ public class KL {
 	public static double sq(double n) {
 		return n * n;
 	}
+	public static double sqrt(double n) {
+		return Math.sqrt(n);
+	}
 	public static double cb(double n) {
 		return sq(n) * n;
+	}
+	public static double cbrt(double n) {
+		return Math.cbrt(n);
 	}
 	public static double area(double w, double h) {
 		return w * h;
@@ -1169,29 +1233,29 @@ public class KL {
 	public static double tria(double w, double h) {
 		return .5 * rect(w, h);
 	}
-	public static double max(double n1, double n2) {
-		return Math.max(n1, n2);
+	public static int min(int... nums) {
+		IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+		return stat.getMin();
 	}
-	public static double max(double n1, double n2, double n3) {
-		return max(max(n1, n2), n3);
+	public static long min(long... nums) {
+		LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+		return stat.getMin();
 	}
-	public static double max(double n1, double n2, double n3, double n4) {
-		return max(max(n1, n2, n3), n4);
+	public static double min(double... nums) {
+		DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+		return stat.getMin();
 	}
-	public static double max(double n1, double n2, double n3, double n4, double n5) {
-		return max(max(n1, n2, n3, n4), n5);
+	public static int max(int... nums) {
+		IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+		return stat.getMax();
 	}
-	public static double min(double n1, double n2) {
-		return Math.min(n1, n2);
+	public static long max(long... nums) {
+		LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+		return stat.getMax();
 	}
-	public static double min(double n1, double n2, double n3) {
-		return min(min(n1, n2), n3);
-	}
-	public static double min(double n1, double n2, double n3, double n4) {
-		return min(min(n1, n2, n3), n4);
-	}
-	public static double min(double n1, double n2, double n3, double n4, double n5) {
-		return min(min(n1, n2, n3, n4), n5);
+	public static double max(double... nums) {
+		DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+		return stat.getMax();
 	}
 	public static double mod(double n1, double n2) {
 		if (n2 > n1) {
@@ -1205,6 +1269,16 @@ public class KL {
 	public static boolean isperfmod(double n1, double n2) {
 		return mod(n1, n2) == 0;
 	}
+	public static int[] divisorsOf(int n) {
+		int[] arr = new int[n / 2];
+		for (int i = 2; i < n; i++) {
+			if (isperfmod(n, i)) arr[i] = n;
+		}
+		return arr;
+	}
+	public static boolean isDivisorOf(double n1, double n2) {
+		return isperfmod(n1, n2);
+	}
 	public static boolean iseven(double n) {
 		return isperfmod(n, 2);
 	}
@@ -1216,6 +1290,75 @@ public class KL {
 			if (n % i == 0) return 0;
 		}
 		return 1;
+	}
+	public static String ordinal(long n) {
+		String result = Str(n);
+		int size = len(result);
+		char seclast_char = result.charAt(size - 1);
+		char last_char = result.charAt(size - 1);
+		String last_two = Str(seclast_char) + Str(last_char);
+		if (n > 14 && n < 111) {
+			switch (last_char) {
+			case '1':
+				result += "st";
+				break;
+			case '2':
+				result += "nd";
+				break;
+			case '3':
+				result += "rd";
+				break;
+			default:
+				result += "th";
+			}
+		} else {
+			if (eq(last_two, "11") || eq(last_two,  "12") || eq(last_two, "13")) result += "th";
+			else {
+				switch (last_char) {
+				case '1':
+					result += "st";
+					break;
+				case '2':
+					result += "nd";
+					break;
+				case '3':
+					result += "rd";
+					break;
+				default:
+					result += "th";
+				}
+			}
+		}
+		return result;
+	}
+	public static String f(long n) {
+		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("PK").build()).format(n).replaceAll("[^\\d\\.]", "").split("\\.00$")[0];
+	}
+	public static String fArabic(long n) {
+		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
+	}
+	public static String fIntl(long n) {
+		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n);
+	}
+	public static String intl(long n) {
+		String formattedN = fIntl(n);
+		String[] parts = split(formattedN, ",");
+		int size = len(parts);
+		if (n < 800 || n > 99e9) return formattedN;
+		String result = "";
+		switch (size) {
+		case 1:
+		case 2:
+			result = Str(n / 1e3) + "k";
+			break;
+		case 3:
+			result = Str(n / 1e6) +  "M";
+			break;
+		case 4:
+			result = Str(n / 1e9) +  "B";
+			break;
+		}
+		return result;
 	}
 	public static int fibonacci(int n) {
 		if (n < 2) return n;
@@ -1581,6 +1724,15 @@ public class KL {
 	public static boolean any(boolean arr[]) {
 		return randItem(arr);
 	}
+	public static int[] noDuplicates(int[] arr) {
+		return IntStream.of(arr).distinct().toArray();
+	}
+	public static long[] noDuplicates(long[] arr) {
+		return LongStream.of(arr).distinct().toArray();
+	}
+	public static double[] noDuplicates(double[] arr) {
+		return DoubleStream.of(arr).distinct().toArray();
+	}
 	public static String replace(String str, String to_replace, String regex_to_replace_with) {
 		return str.replaceAll(to_replace, regex_to_replace_with);
 	}
@@ -1605,26 +1757,193 @@ public class KL {
 	public static String slice(String str) {
 		return remove(str, "^\\s+|\\s+$");
 	}
+	public static String[] slice(String arr[]) {
+		return arr.clone();
+	}
+	public static int[] slice(int arr[]) {
+		return arr.clone();
+	}
+	public static long[] slice(long arr[]) {
+		return arr.clone();
+	}
+	public static float[] slice(float arr[]) {
+		return arr.clone();
+	}
+	public static double[] slice(double arr[]) {
+		return arr.clone();
+	}
+	public static boolean[] slice(boolean arr[]) {
+		return arr.clone();
+	}
 	public static String slice(String str, int start) {
 		return str.substring(start, str.length());
+	}
+	public static String[] slice(String oldArr[], int start) {
+		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		return newArr;
+	}
+	public static int[] slice(int oldArr[], int start) {
+		int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		return newArr;
+	}
+	public static long[] slice(long oldArr[], int start) {
+		long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		return newArr;
+	}
+	public static float[] slice(float oldArr[], int start) {
+		float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		return newArr;
+	}
+	public static double[] slice(double oldArr[], int start) {
+		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		return newArr;
+	}
+	public static boolean[] slice(boolean oldArr[], int start) {
+		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		return newArr;
 	}
 	public static String slice(String str, int start, int end) {
 		return str.substring(start, end);
 	}
-	public static String sliceEnd(String str, int end) {
-		return str.substring(0, str.length() - end);
+	public static String[] slice(String oldArr[], int start, int end) {
+		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+		return newArr;
+	}
+	public static int[] slice(int oldArr[], int start, int end) {
+		int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+		return newArr;
+	}
+	public static long[] slice(long oldArr[], int start, int end) {
+		long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+		return newArr;
+	}
+	public static float[] slice(float oldArr[], int start, int end) {
+		float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+		return newArr;
+	}
+	public static double[] slice(double oldArr[], int start, int end) {
+		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+		return newArr;
+	}
+	public static boolean[] slice(boolean oldArr[], int start, int end) {
+		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+		return newArr;
+	}
+	public static String sliceEnd(String str, int start) {
+		return slice(str, str.length() - start);
+	}
+	public static String[] sliceEnd(String[] arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static int[] sliceEnd(int[] arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static long[] sliceEnd(long[] arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static float[] sliceEnd(float[] arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static double[] sliceEnd(double[] arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static boolean[] sliceEnd(boolean[] arr, int start) {
+		return slice(arr, len(arr) - start);
 	}
 	public static String trim(String str) {
 		return slice(str);
 	}
+	public static String[] trim(String[] arr) {
+		return slice(arr);
+	}
+	public static int[] trim(int[] arr) {
+		return slice(arr);
+	}
+	public static long[] trim(long[] arr) {
+		return slice(arr);
+	}
+	public static float[] trim(float[] arr) {
+		return slice(arr);
+	}
+	public static double[] trim(double[] arr) {
+		return slice(arr);
+	}
+	public static boolean[] trim(boolean[] arr) {
+		return slice(arr);
+	}
 	public static String trim(String str, int start) {
-		return str.substring(start, str.length());
+		return slice(str, start);
+	}
+	public static String[] trim(String[] arr, int start) {
+		return slice(arr, start);
+	}
+	public static int[] trim(int[] arr, int start) {
+		return slice(arr, start);
+	}
+	public static long[] trim(long[] arr, int start) {
+		return slice(arr, start);
+	}
+	public static float[] trim(float[] arr, int start) {
+		return slice(arr, start);
+	}
+	public static double[] trim(double[] arr, int start) {
+		return slice(arr, start);
+	}
+	public static boolean[] trim(boolean[] arr, int start) {
+		return slice(arr, start);
 	}
 	public static String trim(String str, int start, int end) {
-		return str.substring(start, end);
+		return slice(str, start, end);
 	}
-	public static String trimEnd(String str, int end) {
-		return str.substring(0, str.length() - end);
+	public static String[] trim(String[] arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static int[] trim(int[] arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static long[] trim(long[] arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static float[] trim(float[] arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static double[] trim(double[] arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static boolean[] trim(boolean[] arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static String trimEnd(String str, int start) {
+		return sliceEnd(str, start);
+	}
+	public static String[] trimEnd(String[] arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static int[] trimEnd(int[] arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static long[] trimEnd(long[] arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static float[] trimEnd(float[] arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static double[] trimEnd(double[] arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static boolean[] trimEnd(boolean[] arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static String sliceTo(String str, String thatSpecificPart) {
+		int index = indexOf(str, thatSpecificPart);
+		if (index < 0) return str;
+		return slice(str, index);
+	}
+	public static String sliceToAfter(String str, String thatSpecificPart) {
+		int index = indexOf(str, thatSpecificPart);
+		if (index < 0) return str;
+		String retrievedString = sliceTo(str, thatSpecificPart);
+		return slice(retrievedString, len(thatSpecificPart));
 	}
 	public static boolean startsWith(String strA, String strB) {
 		return strA.startsWith(strB);
@@ -1972,6 +2291,24 @@ public class KL {
 	}
 	public static boolean[] clone(boolean[] arr) {
 		return arr.clone();
+	}
+	public static String[] copyArr(String[] arr) {
+		return clone(arr);
+	}
+	public static int[] copyArr(int[] arr) {
+		return clone(arr);
+	}
+	public static long[] copyArr(long[] arr) {
+		return clone(arr);
+	}
+	public static float[] copyArr(float[] arr) {
+		return clone(arr);
+	}
+	public static double[] copyArr(double[] arr) {
+		return clone(arr);
+	}
+	public static boolean[] copyArr(boolean[] arr) {
+		return clone(arr);
 	}
 	public static String upper(String s) {
 		s = s.toUpperCase();
@@ -2473,6 +2810,22 @@ public class KL {
 			System.out.print(", ");
 		}
 		*/
-		
+		/*
+		int nums[] = {1, 2, 5, 3, 6, 7, 8, 4, 9, 10};
+		int nums_sorted[] = copyArr(nums);
+		sort(nums_sorted);
+		print("Nums: ");
+		printArr(nums);
+		br(1);
+		print("Nums, sorted: ");
+		printArr(nums_sorted);
+		*/
+		/*
+		print(now());
+		print(getSeason());
+		print(getMonth());
+		*/
+		//print(sliceToAfter("This is a lovely evening we shouldn't miss", "lovely "));
+		print(ordinal(11));
 	}
 }
