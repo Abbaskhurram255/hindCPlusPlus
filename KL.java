@@ -5,8 +5,117 @@ import java.security.SecureRandom;
 import java.nio.file.*;
 import java.util.stream.*;
 import java.text.*;
+//GUI
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
 
 public class KL {
+	//GUI
+	public static class GUI extends JFrame {
+		GUI() {
+			super();
+			exitOnClose();
+			resizable();
+			super.setLayout(new BorderLayout());
+		}
+		GUI(String title) {
+			super();
+			super.setTitle(title);
+		}
+		void title(String title) {
+			super.setTitle(title);
+		}
+		void visible() {
+			super.setVisible(true);
+		}
+		void invisible() {
+			super.setVisible(false);
+		}
+		void appear() {
+			visible();
+		}
+		void display() {
+			visible();
+		}
+		void start() {
+			visible();
+		}
+		void disappear() {
+			invisible();
+		}
+		void size(int w, int h) {
+			super.setSize(w, h);
+		}
+		void resizable() {
+			super.setResizable(true);
+		}
+		void notResizable() {
+			super.setResizable(true);
+		}
+		void bg(Color clr) {
+			super.setBackground(clr);
+		}
+		void exitOnClose() {
+			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
+		}
+
+	}
+
+
+	public static class Label extends JLabel {
+		Label() {
+			super.setOpaque(true);
+		}
+		Label(String name) {
+			super.setOpaque(true);
+		}
+		void bg(Color clr) {
+			super.setBackground(clr);
+		}
+		void fg(Color clr) {
+			super.setForeground(clr);
+		}
+		void font(String fontFamily, int fontWidth, int x) {
+			super.setFont(new Font(fontFamily, fontWidth, x));
+		}
+		void alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+		}
+		void aligny(int pos) {
+			super.setVerticalAlignment(pos);
+		}
+		void text(String s) {
+			super.setText(s);
+		}
+	}
+
+	public static class BordLay extends BorderLayout {
+		BordLay() {
+			super();
+		}
+	}
+
+	public static class GridLay extends GridLayout {
+		GridLay(int rows, int columns) {
+			super(rows, columns);
+		}
+		GridLay(int rows, int columns, int hgap, int vgap) {
+			super(rows, columns, hgap, vgap);
+		}
+	}
+
+	public static class Panel extends JPanel {
+		Panel() {
+			super();
+		}
+		void lay(LayoutManager mgr) {
+			super.setLayout(mgr);
+		}
+	}
+
+	//general
 	public static class Error extends Exception {
 		Error(String msg) {
 			super(msg);
@@ -92,6 +201,9 @@ public class KL {
 		void printAll() {
 			printMap();
 		}
+		int length() {
+			return super.size();
+		}
 	}
 	public static class Object_I extends HashMap<String, Integer> {
 		Object_I() {
@@ -172,6 +284,9 @@ public class KL {
 		}
 		void printAll() {
 			printMap();
+		}
+		int length() {
+			return super.size();
 		}
 	}
 	public static class Object_L extends HashMap<String, Long> {
@@ -254,6 +369,9 @@ public class KL {
 		void printAll() {
 			printMap();
 		}
+		int length() {
+			return super.size();
+		}
 	}
 	public static class Object_F extends HashMap<String, Float> {
 		Object_F() {
@@ -334,6 +452,9 @@ public class KL {
 		}
 		void printAll() {
 			printMap();
+		}
+		int length() {
+			return super.size();
 		}
 	}
 	public static class Object_D extends HashMap<String, Double> {
@@ -416,6 +537,9 @@ public class KL {
 		void printAll() {
 			printMap();
 		}
+		int length() {
+			return super.size();
+		}
 	}
 	public static class Object_B extends HashMap<String, Boolean> {
 		Object_B() {
@@ -497,6 +621,47 @@ public class KL {
 		void printAll() {
 			printMap();
 		}
+		int length() {
+			return super.size();
+		}
+	}
+
+	public static class Int_Arr extends ArrayList<Integer> {
+		void push(int x) {
+			super.add(x);
+		}
+		void pop(int x) {
+			super.remove(x);
+		}
+		void has(int x) {
+			super.contains(x);
+		}
+		int index(int i) {
+			return super.get(i);
+		}
+		void length() {
+			super.size();
+		}
+		Object copy() {
+			return super.clone();
+		}
+	}
+
+	public static Int_Arr range(int n) {
+		Int_Arr arr = new Int_Arr();
+		for (int i = 0; i < n; i++) arr.add(i);
+		return arr;
+	}
+	public static void repeat(Runnable fn, int times) {
+	    for (; times>0; times--) new Thread(fn).run();
+	}
+	public static String repeat(String s, int times) {
+	    String org = s;
+	    for (; times>0; times--) s += org;
+	    return s;
+	}
+	public static String repeat(String s) {
+	    return repeat(s, 1);
 	}
 
 	//Date functions
@@ -891,6 +1056,9 @@ public class KL {
 	public static void printArr(int arr[]) {
 		print(Arrays.toString(arr));
 	}
+	public static void printArr(Int_Arr arr) {
+		print(arr.toString());
+	}
 	public static void printArr(long arr[]) {
 		print(Arrays.toString(arr));
 	}
@@ -1269,10 +1437,10 @@ public class KL {
 	public static boolean isperfmod(double n1, double n2) {
 		return mod(n1, n2) == 0;
 	}
-	public static int[] divisorsOf(int n) {
-		int[] arr = new int[n / 2];
+	public static Int_Arr divisorsOf(int n) {
+		Int_Arr arr = new Int_Arr();
 		for (int i = 2; i < n; i++) {
-			if (isperfmod(n, i)) arr[i] = n;
+			if (isperfmod(n, i)) arr.add(i);
 		}
 		return arr;
 	}
@@ -1291,11 +1459,11 @@ public class KL {
 		}
 		return 1;
 	}
-	public static String ordinal(long n) {
+	public static String th(long n) {
 		String result = Str(n);
 		int size = len(result);
-		char seclast_char = result.charAt(size - 1);
-		char last_char = result.charAt(size - 1);
+		char seclast_char = size - 2 >= 0 ? result.charAt(size - 2) : '\0';
+		char last_char = size - 1 >= 0 ? result.charAt(size - 1) : '\0';
 		String last_two = Str(seclast_char) + Str(last_char);
 		if (n > 14 && n < 111) {
 			switch (last_char) {
@@ -1331,17 +1499,60 @@ public class KL {
 		}
 		return result;
 	}
-	public static String f(long n) {
+	public static String fpkr(long n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("PK").build()).format(n).replaceAll("[^\\d\\.]", "").split("\\.00$")[0];
 	}
-	public static String fArabic(long n) {
+	public static String farabic(long n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
 	}
-	public static String fIntl(long n) {
-		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n);
+	public static String fintl(long n) {
+		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\.]", "");
 	}
-	public static String intl(long n) {
-		String formattedN = fIntl(n);
+	public static String f(long n) {
+		return fpkr(n);
+	}
+	public static String pkr(long n) {
+		String formattedN = fpkr(n);
+		String result = "Rs. " + formattedN;
+		return result;
+	}
+	public static String usd(long n) {
+		String formattedN = fintl(n);
+		String result = "US$ " + formattedN;
+		return result;
+	}
+	public static String curr(long n, String locale) {
+		String formattedN = fintl(n);
+		if (startsWith(locale, "pk")) return pkr(n);
+		else if (startsWith(locale, "us")) return usd(n);
+		else if (len(locale) >= 1 && len(locale) < 4) return locale + " " + formattedN;
+		return formattedN;
+	}
+	public static String pksuffix(long n) {
+		String formattedN = fpkr(n);
+		String[] parts = split(formattedN, ",");
+		int size = len(parts);
+		if (n < 800 || n > 99e9) return formattedN;
+		String result = "";
+		switch (size) {
+		case 1:
+		case 2:
+			result = Str(n / 1e3) + "zr";
+			break;
+		case 3:
+			result = Str(n / 1e5) +  "lc";
+			break;
+		case 4:
+			result = Str(n / 1e7) +  "cr";
+			break;
+		case 5:
+			result = Str(n / 1e9) +  "ar";
+			break;
+		}
+		return result;
+	}
+	public static String ussuffix(long n) {
+		String formattedN = fintl(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
 		if (n < 800 || n > 99e9) return formattedN;
@@ -1946,10 +2157,10 @@ public class KL {
 		return slice(retrievedString, len(thatSpecificPart));
 	}
 	public static boolean startsWith(String strA, String strB) {
-		return strA.startsWith(strB);
+		return lower(strA).startsWith(lower(strB));
 	}
 	public static boolean endsWith(String strA, String strB) {
-		return strA.endsWith(strB);
+		return lower(strA).endsWith(lower(strB));
 	}
 	public static boolean endsWith(String[] arr, String lookupStr) {
 		return arr[len(arr) - 1].equals(lookupStr);
@@ -2182,7 +2393,7 @@ public class KL {
 		return indexOf(inStr, ch) >= 0;
 	}
 	public static boolean in(String strA, String strB) {
-		return indexOf(strA, strB) >= 0;
+		return indexOf(lower(strA), lower(strB)) >= 0;
 	}
 	public static boolean in(String[] arr, String str) {
 		return indexOf(arr, str) >= 0;
@@ -2826,6 +3037,11 @@ public class KL {
 		print(getMonth());
 		*/
 		//print(sliceToAfter("This is a lovely evening we shouldn't miss", "lovely "));
-		print(ordinal(11));
+		//for (int i : range(500)) print(ordinal(i));
+		//printArr(divisorsOf(80));
+		//repeat(() -> print("hi"), 5);
+		String s = "hi";
+		s = repeat(s);
+		print(s);
 	}
 }
