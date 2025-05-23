@@ -807,18 +807,61 @@ public class KL {
 			super();
 			for (String s : strings) super.add(s);
 		}
-		void push(String... strings) {
+		void pushAt(int i, String... strings) {
 			for (String s : strings) super.add(s);
 		}
-		void pop(String... strings) {
-			if (super.isEmpty()) return;
-			for (String s : strings) super.remove(s);
+		void push(String... strings) {
+			pushAt(0, strings);
 		}
-		boolean has(String x) {
+		String shift() {
+		    String removed = super.get(0);
+		    super.remove(0);
+		    return removed;
+		}
+		boolean pop(boolean... bools) {
+			if (super.isEmpty()) return false;
+			for (boolean b : bools) {
+			    if (!has(b)) return false;
+			    super.remove(b);
+			}
+			return true;
+			//return bools[0];
+		}
+		boolean pop(int... indexes) {
+			if (super.isEmpty()) return false;
+			for (int i : indexes) {
+				if (i < 0 || i > super.size()) return false;
+				super.remove(i);
+			}
+			return true;
+			//return super.get(indexes[0]);
+		}
+		void popEvery(Predicate<? super Boolean> fn) {
+		    super.removeIf(fn);
+		}
+		void popEach(Predicate<? super Boolean> fn) {
+		    popEvery(fn);
+		}
+		void popIf(Predicate<? super Boolean> fn) {
+		    popEvery(fn);
+		}
+		void map(UnaryOperator<Boolean> fn) {
+		    super.replaceAll(fn);
+		}
+		void unique() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Boolean> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) uniqueSet.add((Boolean) el);
+			super.clear();
+			super.addAll(uniqueSet);
+		}
+		boolean has(boolean x) {
 			return super.contains(x);
 		}
-		String index(int i) {
-			return i < super.size() ? super.get(i) : "";
+		boolean index(int i) {
+			return i >= 0 && i < super.size() ? super.get(i) : false;
 		}
 		void update(int i, String x) {
 			if (!has(x)) super.add(x);
@@ -869,18 +912,61 @@ public class KL {
 			super();
 			for (int n : nums) super.add(n);
 		}
-		void push(int... nums) {
-			for (int n : nums) super.add(n);
+		void pushAt(int i, boolean... bools) {
+			for (boolean b : bools) super.add(b);
 		}
-		void pop(int... nums) {
-			if (super.isEmpty()) return;
-			for (int n : nums) super.remove(n);
+		void push(boolean... bools) {
+			pushAt(0, bools);
 		}
-		boolean has(int x) {
+		int shift() {
+		    int removed = super.get(0);
+		    super.remove(0);
+		    return removed;
+		}
+		boolean pop(boolean... bools) {
+			if (super.isEmpty()) return false;
+			for (boolean b : bools) {
+			    if (!has(b)) return false;
+			    super.remove(b);
+			}
+			return true;
+			//return bools[0];
+		}
+		boolean pop(int... indexes) {
+			if (super.isEmpty()) return false;
+			for (int i : indexes) {
+				if (i < 0 || i > super.size()) return false;
+				super.remove(i);
+			}
+			return true;
+			//return super.get(indexes[0]);
+		}
+		void popEvery(Predicate<? super Boolean> fn) {
+		    super.removeIf(fn);
+		}
+		void popEach(Predicate<? super Boolean> fn) {
+		    popEvery(fn);
+		}
+		void popIf(Predicate<? super Boolean> fn) {
+		    popEvery(fn);
+		}
+		void map(UnaryOperator<Boolean> fn) {
+		    super.replaceAll(fn);
+		}
+		void unique() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Boolean> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) uniqueSet.add((Boolean) el);
+			super.clear();
+			super.addAll(uniqueSet);
+		}
+		boolean has(boolean x) {
 			return super.contains(x);
 		}
-		int index(int i) {
-			return i < super.size() ? super.get(i) : -1;
+		boolean index(int i) {
+			return i >= 0 && i < super.size() ? super.get(i) : false;
 		}
 		void update(int i, int x) {
 			if (!has(x)) super.add(x);
@@ -931,18 +1017,61 @@ public class KL {
 			super();
 			for (long n : nums) super.add(n);
 		}
-		void push(long... nums) {
-			for (long n : nums) super.add(n);
+		void pushAt(int i, boolean... bools) {
+			for (boolean b : bools) super.add(b);
 		}
-		void pop(long... nums) {
-			if (super.isEmpty()) return;
-			for (long n : nums) super.remove(n);
+		void push(boolean... bools) {
+			pushAt(0, bools);
 		}
-		boolean has(long x) {
+		long shift() {
+		    long removed = super.get(0);
+		    super.remove(0);
+		    return removed;
+		}
+		boolean pop(boolean... bools) {
+			if (super.isEmpty()) return false;
+			for (boolean b : bools) {
+			    if (!has(b)) return false;
+			    super.remove(b);
+			}
+			return true;
+			//return bools[0];
+		}
+		boolean pop(int... indexes) {
+			if (super.isEmpty()) return false;
+			for (int i : indexes) {
+				if (i < 0 || i > super.size()) return false;
+				super.remove(i);
+			}
+			return true;
+			//return super.get(indexes[0]);
+		}
+		void popEvery(Predicate<? super Boolean> fn) {
+		    super.removeIf(fn);
+		}
+		void popEach(Predicate<? super Boolean> fn) {
+		    popEvery(fn);
+		}
+		void popIf(Predicate<? super Boolean> fn) {
+		    popEvery(fn);
+		}
+		void map(UnaryOperator<Boolean> fn) {
+		    super.replaceAll(fn);
+		}
+		void unique() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Boolean> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) uniqueSet.add((Boolean) el);
+			super.clear();
+			super.addAll(uniqueSet);
+		}
+		boolean has(boolean x) {
 			return super.contains(x);
 		}
-		long index(int i) {
-			return i < super.size() ? super.get(i) : -1;
+		boolean index(int i) {
+			return i >= 0 && i < super.size() ? super.get(i) : false;
 		}
 		void update(int i, long x) {
 			if (!has(x)) super.add(x);
@@ -993,18 +1122,60 @@ public class KL {
 			super();
 			for (float n : nums) super.add(n);
 		}
-		void push(float... nums) {
-			for (float n : nums) super.add(n);
+		void pushAt(int i, float... floats) {
+			for (float f : floats) super.add(f);
 		}
-		void pop(float... nums) {
-			if (super.isEmpty()) return;
-			for (float n : nums) super.remove(n);
+		void push(float... floats) {
+			pushAt(0, floats);
+		}
+		float shift() {
+		    float removed = super.get(0);
+		    super.remove(0);
+		    return removed;
+		}
+		float pop(float... floats) {
+			if (super.isEmpty()) return 0;
+			for (float f : floats) {
+			    if (!has(f)) return 0;
+			    super.remove(b);
+			}
+			return bools[0];
+		}
+		float pop(int... indexes) {
+			float firstRemoved = super.get(indexes[0]);
+			if (super.isEmpty()) return 0;
+			for (int i : indexes) {
+				if (i < 0 || i > super.size()) return 0;
+				super.remove(i);
+			}
+			return firstRemoved;
+		}
+		void popEvery(Predicate<? super Float> fn) {
+		    super.removeIf(fn);
+		}
+		void popEach(Predicate<? super Float> fn) {
+		    popEvery(fn);
+		}
+		void popIf(Predicate<? super Float> fn) {
+		    popEvery(fn);
+		}
+		void map(UnaryOperator<Float> fn) {
+		    super.replaceAll(fn);
+		}
+		void unique() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Float> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) uniqueSet.add((Float) el);
+			super.clear();
+			super.addAll(uniqueSet);
 		}
 		boolean has(float x) {
 			return super.contains(x);
 		}
 		float index(int i) {
-			return i < super.size() ? super.get(i) : -1;
+			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
 		void update(int i, float x) {
 			if (!has(x)) super.add(x);
@@ -1055,18 +1226,60 @@ public class KL {
 			super();
 			for (double n : nums) super.add(n);
 		}
-		void push(double... nums) {
-			for (double n : nums) super.add(n);
+		void pushAt(int i, double... doubles) {
+			for (double d : doubles) super.add(d);
 		}
-		void pop(double... nums) {
-			if (super.isEmpty()) return;
-			for (double n : nums) super.remove(n);
+		void push(double... doubles) {
+			pushAt(0, doubles);
+		}
+		double shift() {
+		    double removed = super.get(0);
+		    super.remove(0);
+		    return removed;
+		}
+		double pop(double... doubles) {
+			if (super.isEmpty()) return 0;
+			for (double d : doubles) {
+			    if (!has(d)) return 0;
+			    super.remove(d);
+			}
+			return doubles[0];
+		}
+		double pop(int... indexes) {
+			double firstRemoved = super.get(indexes[0]);
+			if (super.isEmpty()) return 0;
+			for (int i : indexes) {
+				if (i < 0 || i > super.size()) return 0;
+				super.remove(i);
+			}
+			return firstRemoved;
+		}
+		void popEvery(Predicate<? super Double> fn) {
+		    super.removeIf(fn);
+		}
+		void popEach(Predicate<? super Double> fn) {
+		    popEvery(fn);
+		}
+		void popIf(Predicate<? super Double> fn) {
+		    popEvery(fn);
+		}
+		void map(UnaryOperator<Double> fn) {
+		    super.replaceAll(fn);
+		}
+		void unique() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Double> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) uniqueSet.add((Double) el);
+			super.clear();
+			super.addAll(uniqueSet);
 		}
 		boolean has(double x) {
 			return super.contains(x);
 		}
 		double index(int i) {
-			return i < super.size() ? super.get(i) : -1;
+			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
 		void update(int i, double x) {
 			if (!has(x)) super.add(x);
@@ -1123,6 +1336,11 @@ public class KL {
 		void push(boolean... bools) {
 			pushAt(0, bools);
 		}
+		boolean shift() {
+		    boolean removed = super.get(0);
+		    super.remove(0);
+		    return removed;
+		}
 		boolean pop(boolean... bools) {
 			if (super.isEmpty()) return false;
 			for (boolean b : bools) {
@@ -1130,7 +1348,6 @@ public class KL {
 			    super.remove(b);
 			}
 			return true;
-			//return bools[0];
 		}
 		boolean pop(int... indexes) {
 			if (super.isEmpty()) return false;
@@ -1139,13 +1356,18 @@ public class KL {
 				super.remove(i);
 			}
 			return true;
-			//return (Boolean)super.toArray()[0];
 		}
 		void popEvery(Predicate<? super Boolean> fn) {
 		    super.removeIf(fn);
 		}
 		void popEach(Predicate<? super Boolean> fn) {
 		    popEvery(fn);
+		}
+		void popIf(Predicate<? super Boolean> fn) {
+		    popEvery(fn);
+		}
+		void map(UnaryOperator<Boolean> fn) {
+		    super.replaceAll(fn);
 		}
 		void unique() {
 			Object obj = super.clone();
@@ -1155,15 +1377,6 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Boolean) el);
 			super.clear();
 			super.addAll(uniqueSet);
-			//return (Bool_Arr)super.clone();
-		}
-		void shuffle() {
-		    Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
-			ArrayList<?> set = new ArrayList<>();
-			for (Object el : set) uniqueSet.add((Boolean) el);
-			Collections.shuffle(uniqueSet);
-			
 		}
 		boolean has(boolean x) {
 			return super.contains(x);
