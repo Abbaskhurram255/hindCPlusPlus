@@ -143,7 +143,7 @@ public class KL {
 			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
 			return this;
 		}
-
+		
 	}
 
 	public static class Label extends JLabel {
@@ -182,6 +182,9 @@ public class KL {
 		Label aligny(int pos) {
 			super.setVerticalAlignment(pos);
 			return this;
+		}
+		String text() {
+			return super.getText();
 		}
 		Label text(String s) {
 			super.setText(s);
@@ -272,6 +275,9 @@ public class KL {
 			super.setVerticalAlignment(pos);
 			return this;
 		}
+		String text() {
+			return super.getText();
+		}
 		Btn text(String s) {
 			super.setText(s);
 			return this;
@@ -288,6 +294,13 @@ public class KL {
 		TxtField(String s, int i) {
 			super(s, i);
 		}
+		String text() {
+			return super.getText();
+		}
+		TxtField text(String s) {
+			super.setText(s);
+			return this;
+		}
 	}
 	public static class PwdField extends JPasswordField {
 		PwdField() {
@@ -298,6 +311,13 @@ public class KL {
 		}
 		PwdField(String s, int i) {
 			super(s, i);
+		}
+		String text() {
+			return new String(super.getPassword());
+		}
+		PwdField text(String s) {
+			super.setText(s);
+			return this;
 		}
 	}
 
