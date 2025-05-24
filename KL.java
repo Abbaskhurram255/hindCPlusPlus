@@ -16,7 +16,6 @@ import javax.swing.border.*;
 public class KL {
 	public static class KMath {
 		public static double Pi = 3.141592653589793,
-							 K = 8.99e9,
 							 C = 2.99792e8,
 							 earthsGravity = 9.80665,
 							 earthsMass = 5.9722e24,
@@ -28,7 +27,30 @@ public class KL {
 
 							 earthsRadius_Unit = "km";
 
+		KMath(double n) {
+			class kg {
+				double toPound() {
+					return n * 2.204;
+				}
+				double toOz() {
+					return n * 3.5274e1;
+				}
+				double toGram() {
+					return n * 1e3;
+				}
+				double toNewton() {
+					return n * 3.5274e1;
+				}
+				double toMegaNewton() {
+					return n * 3.5274e1;
+				}
+				double toGigaNewton() {
+					return n * 3.5274e1;
+				}
+			}
+		}
 	}
+
 
 	//GUI
 	public static class GUI extends JFrame {
@@ -143,7 +165,7 @@ public class KL {
 			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
 			return this;
 		}
-		
+
 	}
 
 	public static class Label extends JLabel {
