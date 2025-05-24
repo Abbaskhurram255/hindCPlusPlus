@@ -12,7 +12,24 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
+
 public class KL {
+	public static class KMath {
+		public static double Pi = 3.141592653589793,
+							 K = 8.99e9,
+							 C = 2.99792e8,
+							 earthsGravity = 9.80665,
+							 earthsMass = 5.9722e24,
+							 earthsRadius = 6.378137e3;
+		public static String C_Unit = "m/s",
+							 K_Unit = "Nm^2/c^2",
+							 earthsGravity_Unit = "m/s^2",
+							 earthsMass_Unit = "km",
+
+							 earthsRadius_Unit = "km";
+
+	}
+
 	//GUI
 	public static class GUI extends JFrame {
 		GUI() {
@@ -23,72 +40,152 @@ public class KL {
 		}
 		GUI(String title) {
 			super();
+			exitOnClose();
+			resizable();
+			title(title);
+			super.setLayout(new BorderLayout());
+		}
+		GUI(String title, int w, int h) {
+			super();
+			exitOnClose();
+			resizable();
+			title(title);
+			size(w, h);
+			super.setLayout(new BorderLayout());
+		}
+		GUI title(String title) {
 			super.setTitle(title);
+			return this;
 		}
-		void title(String title) {
-			super.setTitle(title);
-		}
-		void visible() {
-			super.setVisible(true);
-		}
-		void invisible() {
-			super.setVisible(false);
-		}
-		void appear() {
-			visible();
-		}
-		void display() {
-			visible();
-		}
-		void start() {
-			visible();
-		}
-		void disappear() {
-			invisible();
-		}
-		void size(int w, int h) {
+		GUI size(int w, int h) {
 			super.setSize(w, h);
+			super.setLocationRelativeTo(null);
+			return this;
 		}
-		void resizable() {
+		GUI start() {
+			super.setVisible(true);
+			return this;
+		}
+		GUI start(int w, int h) {
+			size(w, h);
+			super.setVisible(true);
+			return this;
+		}
+		GUI shuru() {
+			start();
+			return this;
+		}
+		GUI shuru(int w, int h) {
+			start(w, h);
+			return this;
+		}
+		GUI appear() {
+			start();
+			return this;
+		}
+		GUI disappear() {
+			super.setVisible(false);
+			return this;
+		}
+		GUI resizable() {
 			super.setResizable(true);
+			return this;
 		}
-		void notResizable() {
-			super.setResizable(true);
+		GUI notResizable() {
+			super.setResizable(false);
+			return this;
 		}
-		void bg(Color clr) {
+		GUI resizableNaHo() {
+			notResizable();
+			return this;
+		}
+		GUI onTop() {
+			super.setAlwaysOnTop(true);
+			return this;
+		}
+		GUI alwaysOnTop() {
+			onTop();
+			return this;
+		}
+		GUI hameshaTopPe() {
+			onTop();
+			return this;
+		}
+		GUI offTop() {
+			super.setAlwaysOnTop(false);
+			return this;
+		}
+		GUI opacity(float o) {
+			super.setOpacity(o);
+			return this;
+		}
+		GUI cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		GUI bg(Color clr) {
 			super.setBackground(clr);
+			return this;
 		}
-		void exitOnClose() {
+		GUI font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		GUI font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		GUI font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		GUI exitOnClose() {
 			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
+			return this;
 		}
 
 	}
 
-
 	public static class Label extends JLabel {
 		Label() {
+			super();
 			super.setOpaque(true);
 		}
 		Label(String name) {
+			super();
 			super.setOpaque(true);
 		}
-		void bg(Color clr) {
+		Label bg(Color clr) {
 			super.setBackground(clr);
+			return this;
 		}
-		void fg(Color clr) {
+		Label fg(Color clr) {
 			super.setForeground(clr);
+			return this;
 		}
-		void font(String fontFamily, int fontWidth, int x) {
-			super.setFont(new Font(fontFamily, fontWidth, x));
+		Label font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
 		}
-		void alignx(int pos) {
+		Label font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		Label font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		Label alignx(int pos) {
 			super.setHorizontalAlignment(pos);
+			return this;
 		}
-		void aligny(int pos) {
+		Label aligny(int pos) {
 			super.setVerticalAlignment(pos);
+			return this;
 		}
-		void text(String s) {
+		Label text(String s) {
 			super.setText(s);
+			return this;
 		}
 	}
 
@@ -111,8 +208,96 @@ public class KL {
 		Panel() {
 			super();
 		}
-		void lay(LayoutManager mgr) {
+		Panel lay(LayoutManager mgr) {
 			super.setLayout(mgr);
+			return this;
+		}
+		Panel bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		Panel fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		Panel font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		Panel font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		Panel font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+	}
+
+	public static class Btn extends JButton {
+		Btn() {
+			super();
+			super.setFocusable(false);
+		}
+		Btn(String text) {
+			super();
+			super.setFocusable(false);
+			super.setText(text);
+		}
+		Btn bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		Btn fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		Btn font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		Btn font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		Btn font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		Btn alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+			return this;
+		}
+		Btn aligny(int pos) {
+			super.setVerticalAlignment(pos);
+			return this;
+		}
+		Btn text(String s) {
+			super.setText(s);
+			return this;
+		}
+	}
+
+	public static class TxtField extends JTextField {
+		TxtField() {
+			super();
+		}
+		TxtField(String s) {
+			super(s);
+		}
+		TxtField(String s, int i) {
+			super(s, i);
+		}
+	}
+	public static class PwdField extends JPasswordField {
+		PwdField() {
+			super();
+		}
+		PwdField(String s) {
+			super(s);
+		}
+		PwdField(String s, int i) {
+			super(s, i);
 		}
 	}
 
@@ -122,33 +307,33 @@ public class KL {
 			super(msg);
 		}
 	}
-	public static class Object_S extends HashMap<String, String> {
-		Object_S() {
+	public static class Obj_S extends HashMap<String, String> {
+		Obj_S() {
 			super();
 		}
-		Object_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
+		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Object_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
+		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Object_S(String k1, String v1, String k2, String v2, String k3, String v3) {
+		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Object_S(String k1, String v1, String k2, String v2) {
+		Obj_S(String k1, String v1, String k2, String v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Object_S(String k1, String v1) {
+		Obj_S(String k1, String v1) {
 			super.put(k1, v1);
 		}
 		String key(String k) {
@@ -206,33 +391,33 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Object_I extends HashMap<String, Integer> {
-		Object_I() {
+	public static class Obj_I extends HashMap<String, Integer> {
+		Obj_I() {
 			super();
 		}
-		Object_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5) {
+		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Object_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4) {
+		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Object_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3) {
+		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Object_I(String k1, Integer v1, String k2, Integer v2) {
+		Obj_I(String k1, Integer v1, String k2, Integer v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Object_I(String k, Integer v) {
+		Obj_I(String k, Integer v) {
 			super.put(k, v);
 		}
 		int key(String k) {
@@ -290,33 +475,33 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Object_L extends HashMap<String, Long> {
-		Object_L() {
+	public static class Obj_L extends HashMap<String, Long> {
+		Obj_L() {
 			super();
 		}
-		Object_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5) {
+		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Object_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4) {
+		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Object_L(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
+		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Object_L(String k1, Long v1, String k2, Long v2) {
+		Obj_L(String k1, Long v1, String k2, Long v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Object_L(String k, Long v) {
+		Obj_L(String k, Long v) {
 			super.put(k, v);
 		}
 		long key(String k) {
@@ -372,33 +557,33 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Object_F extends HashMap<String, Float> {
-		Object_F() {
+	public static class Obj_F extends HashMap<String, Float> {
+		Obj_F() {
 			super();
 		}
-		Object_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5) {
+		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Object_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4) {
+		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Object_F(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
+		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Object_F(String k1, Float v1, String k2, Float v2) {
+		Obj_F(String k1, Float v1, String k2, Float v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Object_F(String k1, Float v1) {
+		Obj_F(String k1, Float v1) {
 			super.put(k1, v1);
 		}
 		float key(String k) {
@@ -454,33 +639,33 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Object_D extends HashMap<String, Double> {
-		Object_D() {
+	public static class Obj_D extends HashMap<String, Double> {
+		Obj_D() {
 			super();
 		}
-		Object_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5) {
+		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Object_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4) {
+		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Object_D(String k1, Double v1, String k2, Double v2, String k3, Double v3) {
+		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Object_D(String k1, Double v1, String k2, Double v2) {
+		Obj_D(String k1, Double v1, String k2, Double v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Object_D(String k, Double v) {
+		Obj_D(String k, Double v) {
 			super.put(k, v);
 		}
 		double key(String k) {
@@ -536,33 +721,33 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Object_B extends HashMap<String, Boolean> {
-		Object_B() {
+	public static class Obj_B extends HashMap<String, Boolean> {
+		Obj_B() {
 			super();
 		}
-		Object_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Object_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4) {
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Object_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3) {
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Object_B(String k1, Boolean v1, String k2, Boolean v2) {
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Object_B(String k, Boolean v) {
+		Obj_B(String k, Boolean v) {
 			super.put(k, v);
 		}
 		boolean key(String k) {
@@ -618,186 +803,6 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Obj_S extends Object_S {
-		Obj_S() {
-			super();
-		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_S(String k1, String v1, String k2, String v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_S(String k, String v) {
-			super.put(k, v);
-		}
-	}
-	public static class Obj_I extends Object_I {
-		Obj_I() {
-			super();
-		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_I(String k, Integer v) {
-			super.put(k, v);
-		}
-	}
-	public static class Obj_L extends Object_L {
-		Obj_L() {
-			super();
-		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_L(String k1, Long v1, String k2, Long v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_L(String k, Long v) {
-			super.put(k, v);
-		}
-	}
-	public static class Obj_F extends Object_F {
-		Obj_F() {
-			super();
-		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_F(String k1, Float v1, String k2, Float v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_F(String k1, Float v1) {
-			super.put(k1, v1);
-		}
-	}
-	public static class Obj_D extends Object_D {
-		Obj_D() {
-			super();
-		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_D(String k1, Double v1, String k2, Double v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_D(String k, Double v) {
-			super.put(k, v);
-		}
-	}
-	public static class Obj_B extends Object_B {
-		Obj_B() {
-			super();
-		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_B(String k, Boolean v) {
-			super.put(k, v);
-		}
-	}
 
 	public static class Str_Arr extends ArrayList<String> {
 		Str_Arr() {
@@ -808,64 +813,68 @@ public class KL {
 			for (String s : strings) super.add(s);
 		}
 		void pushAt(int i, String... strings) {
-			for (String s : strings) super.add(s);
+			if (i < 0 || i > super.size()) return;
+			for (String s : strings) super.add(i, s);
 		}
 		void push(String... strings) {
-			pushAt(0, strings);
+			pushAt(super.size(), strings);
 		}
 		String shift() {
-		    String removed = super.get(0);
-		    super.remove(0);
-		    return removed;
+			String removed = super.get(0);
+			super.remove(0);
+			return removed;
 		}
-		boolean pop(boolean... bools) {
-			if (super.isEmpty()) return false;
-			for (boolean b : bools) {
-			    if (!has(b)) return false;
-			    super.remove(b);
+		String pop(String... strings) {
+			if (super.isEmpty()) return "";
+			for (String s : strings) {
+				if (!has(s)) return "";
+				super.remove(s);
 			}
-			return true;
-			//return bools[0];
+			return strings[0];
 		}
-		boolean pop(int... indexes) {
-			if (super.isEmpty()) return false;
+		String pop(int... indexes) {
+			String firstRemoved = super.get(indexes[0]);
+			if (super.isEmpty()) return "";
 			for (int i : indexes) {
-				if (i < 0 || i > super.size()) return false;
+				if (i < 0 || i > super.size()) return "";
 				super.remove(i);
 			}
-			return true;
-			//return super.get(indexes[0]);
+			return firstRemoved;
 		}
-		void popEvery(Predicate<? super Boolean> fn) {
-		    super.removeIf(fn);
+		void popEvery(Predicate<? super String> fn) {
+			super.removeIf(fn);
 		}
-		void popEach(Predicate<? super Boolean> fn) {
-		    popEvery(fn);
+		void popEach(Predicate<? super String> fn) {
+			popEvery(fn);
 		}
-		void popIf(Predicate<? super Boolean> fn) {
-		    popEvery(fn);
+		void popIf(Predicate<? super String> fn) {
+			popEvery(fn);
 		}
-		void map(UnaryOperator<Boolean> fn) {
-		    super.replaceAll(fn);
+		void map(UnaryOperator<String> fn) {
+			super.replaceAll(fn);
 		}
-		void unique() {
+		Str_Arr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
-			Set<Boolean> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set) uniqueSet.add((Boolean) el);
+			Set<String> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) uniqueSet.add((String) el);
 			super.clear();
 			super.addAll(uniqueSet);
+			return (Str_Arr)uniqueSet;
 		}
-		boolean has(boolean x) {
+		boolean has(String x) {
 			return super.contains(x);
 		}
-		boolean index(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : false;
+		String index(int i) {
+			return i >= 0 && i < super.size() ? super.get(i) : "";
 		}
 		void update(int i, String x) {
 			if (!has(x)) super.add(x);
-			else super.set(i, x);
+			else {
+				if (i < 0 || i > super.size()) return;
+				super.set(i, x);
+			}
 		}
 		void sort() {
 			super.sort(null);
@@ -912,65 +921,61 @@ public class KL {
 			super();
 			for (int n : nums) super.add(n);
 		}
-		void pushAt(int i, boolean... bools) {
-			for (boolean b : bools) super.add(b);
+		void pushAt(int i, int... nums) {
+			if (i < 0 || i > super.size()) return;
+			for (int n : nums) super.add(i, n);
 		}
-		void push(boolean... bools) {
-			pushAt(0, bools);
+		void push(int... nums) {
+			pushAt(super.size(), nums);
 		}
 		int shift() {
-		    int removed = super.get(0);
-		    super.remove(0);
-		    return removed;
+			int removed = super.get(0);
+			super.remove(0);
+			return removed;
 		}
-		boolean pop(boolean... bools) {
-			if (super.isEmpty()) return false;
-			for (boolean b : bools) {
-			    if (!has(b)) return false;
-			    super.remove(b);
-			}
-			return true;
-			//return bools[0];
-		}
-		boolean pop(int... indexes) {
-			if (super.isEmpty()) return false;
+		int pop(int... indexes) {
+			int firstRemoved = super.get(indexes[0]);
+			if (super.isEmpty()) return 0;
 			for (int i : indexes) {
-				if (i < 0 || i > super.size()) return false;
+				if (i < 0 || i > super.size()) return 0;
 				super.remove(i);
 			}
-			return true;
-			//return super.get(indexes[0]);
+			return firstRemoved;
 		}
-		void popEvery(Predicate<? super Boolean> fn) {
-		    super.removeIf(fn);
+		void popEvery(Predicate<? super Integer> fn) {
+			super.removeIf(fn);
 		}
-		void popEach(Predicate<? super Boolean> fn) {
-		    popEvery(fn);
+		void popEach(Predicate<? super Integer> fn) {
+			popEvery(fn);
 		}
-		void popIf(Predicate<? super Boolean> fn) {
-		    popEvery(fn);
+		void popIf(Predicate<? super Integer> fn) {
+			popEvery(fn);
 		}
-		void map(UnaryOperator<Boolean> fn) {
-		    super.replaceAll(fn);
+		void map(UnaryOperator<Integer> fn) {
+			super.replaceAll(fn);
 		}
-		void unique() {
+		Int_Arr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
-			Set<Boolean> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set) uniqueSet.add((Boolean) el);
+			Set<Integer> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) uniqueSet.add((Integer) el);
 			super.clear();
 			super.addAll(uniqueSet);
+			return (Int_Arr)uniqueSet;
 		}
-		boolean has(boolean x) {
+		boolean has(int x) {
 			return super.contains(x);
 		}
-		boolean index(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : false;
+		int index(int i) {
+			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
 		void update(int i, int x) {
 			if (!has(x)) super.add(x);
-			else super.set(i, x);
+			else {
+				if (i < 0 || i > super.size()) return;
+				super.set(i, x);
+			}
 		}
 		void sort() {
 			super.sort(null);
@@ -1017,65 +1022,69 @@ public class KL {
 			super();
 			for (long n : nums) super.add(n);
 		}
-		void pushAt(int i, boolean... bools) {
-			for (boolean b : bools) super.add(b);
+		void pushAt(int i, long... longs) {
+			if (i < 0 || i > super.size()) return;
+			for (long l : longs) super.add(i, l);
 		}
-		void push(boolean... bools) {
-			pushAt(0, bools);
+		void push(long... longs) {
+			pushAt(super.size(), longs);
 		}
 		long shift() {
-		    long removed = super.get(0);
-		    super.remove(0);
-		    return removed;
+			long removed = super.get(0);
+			super.remove(0);
+			return removed;
 		}
-		boolean pop(boolean... bools) {
-			if (super.isEmpty()) return false;
-			for (boolean b : bools) {
-			    if (!has(b)) return false;
-			    super.remove(b);
+		long pop(long... longs) {
+			if (super.isEmpty()) return 0;
+			for (long l : longs) {
+				if (!has(l)) return 0;
+				super.remove(l);
 			}
-			return true;
-			//return bools[0];
+			return longs[0];
 		}
-		boolean pop(int... indexes) {
-			if (super.isEmpty()) return false;
+		long pop(int... indexes) {
+			long firstRemoved = super.get(indexes[0]);
+			if (super.isEmpty()) return 0;
 			for (int i : indexes) {
-				if (i < 0 || i > super.size()) return false;
+				if (i < 0 || i > super.size()) return 0;
 				super.remove(i);
 			}
-			return true;
-			//return super.get(indexes[0]);
+			return firstRemoved;
 		}
-		void popEvery(Predicate<? super Boolean> fn) {
-		    super.removeIf(fn);
+		void popEvery(Predicate<? super Long> fn) {
+			super.removeIf(fn);
 		}
-		void popEach(Predicate<? super Boolean> fn) {
-		    popEvery(fn);
+		void popEach(Predicate<? super Long> fn) {
+			popEvery(fn);
 		}
-		void popIf(Predicate<? super Boolean> fn) {
-		    popEvery(fn);
+		void popIf(Predicate<? super Long> fn) {
+			popEvery(fn);
 		}
-		void map(UnaryOperator<Boolean> fn) {
-		    super.replaceAll(fn);
+		void map(UnaryOperator<Long> fn) {
+			super.replaceAll(fn);
 		}
-		void unique() {
+		Lng_Arr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
-			Set<Boolean> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set) uniqueSet.add((Boolean) el);
+			Set<Long> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) uniqueSet.add((Long) el);
 			super.clear();
 			super.addAll(uniqueSet);
+			return (Lng_Arr)uniqueSet;
 		}
-		boolean has(boolean x) {
+		boolean has(long x) {
 			return super.contains(x);
 		}
-		boolean index(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : false;
+		long index(int i) {
+			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
 		void update(int i, long x) {
 			if (!has(x)) super.add(x);
-			else super.set(i, x);
+			else {
+				if (i < 0 || i > super.size()) return;
+				super.set(i, x);
+			}
 		}
 		void sort() {
 			super.sort(null);
@@ -1123,23 +1132,24 @@ public class KL {
 			for (float n : nums) super.add(n);
 		}
 		void pushAt(int i, float... floats) {
-			for (float f : floats) super.add(f);
+			if (i < 0 || i > super.size()) return;
+			for (float f : floats) super.add(i, f);
 		}
 		void push(float... floats) {
-			pushAt(0, floats);
+			pushAt(super.size(), floats);
 		}
 		float shift() {
-		    float removed = super.get(0);
-		    super.remove(0);
-		    return removed;
+			float removed = super.get(0);
+			super.remove(0);
+			return removed;
 		}
 		float pop(float... floats) {
 			if (super.isEmpty()) return 0;
 			for (float f : floats) {
-			    if (!has(f)) return 0;
-			    super.remove(b);
+				if (!has(f)) return 0;
+				super.remove(f);
 			}
-			return bools[0];
+			return floats[0];
 		}
 		float pop(int... indexes) {
 			float firstRemoved = super.get(indexes[0]);
@@ -1151,18 +1161,18 @@ public class KL {
 			return firstRemoved;
 		}
 		void popEvery(Predicate<? super Float> fn) {
-		    super.removeIf(fn);
+			super.removeIf(fn);
 		}
 		void popEach(Predicate<? super Float> fn) {
-		    popEvery(fn);
+			popEvery(fn);
 		}
 		void popIf(Predicate<? super Float> fn) {
-		    popEvery(fn);
+			popEvery(fn);
 		}
 		void map(UnaryOperator<Float> fn) {
-		    super.replaceAll(fn);
+			super.replaceAll(fn);
 		}
-		void unique() {
+		Flt_Arr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1170,6 +1180,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Float) el);
 			super.clear();
 			super.addAll(uniqueSet);
+			return (Flt_Arr)uniqueSet;
 		}
 		boolean has(float x) {
 			return super.contains(x);
@@ -1179,7 +1190,10 @@ public class KL {
 		}
 		void update(int i, float x) {
 			if (!has(x)) super.add(x);
-			else super.set(i, x);
+			else {
+				if (i < 0 || i > super.size()) return;
+				super.set(i, x);
+			}
 		}
 		void sort() {
 			super.sort(null);
@@ -1222,26 +1236,27 @@ public class KL {
 		Dbl_Arr() {
 			super();
 		}
-		Dbl_Arr(double... nums) {
+		Dbl_Arr(double... doubles) {
 			super();
-			for (double n : nums) super.add(n);
-		}
-		void pushAt(int i, double... doubles) {
 			for (double d : doubles) super.add(d);
 		}
+		void pushAt(int i, double... doubles) {
+			if (i < 0 || i > super.size()) return;
+			for (double d : doubles) super.add(i, d);
+		}
 		void push(double... doubles) {
-			pushAt(0, doubles);
+			pushAt(super.size(), doubles);
 		}
 		double shift() {
-		    double removed = super.get(0);
-		    super.remove(0);
-		    return removed;
+			double removed = super.get(0);
+			super.remove(0);
+			return removed;
 		}
 		double pop(double... doubles) {
 			if (super.isEmpty()) return 0;
 			for (double d : doubles) {
-			    if (!has(d)) return 0;
-			    super.remove(d);
+				if (!has(d)) return 0;
+				super.remove(d);
 			}
 			return doubles[0];
 		}
@@ -1255,18 +1270,18 @@ public class KL {
 			return firstRemoved;
 		}
 		void popEvery(Predicate<? super Double> fn) {
-		    super.removeIf(fn);
+			super.removeIf(fn);
 		}
 		void popEach(Predicate<? super Double> fn) {
-		    popEvery(fn);
+			popEvery(fn);
 		}
 		void popIf(Predicate<? super Double> fn) {
-		    popEvery(fn);
+			popEvery(fn);
 		}
 		void map(UnaryOperator<Double> fn) {
-		    super.replaceAll(fn);
+			super.replaceAll(fn);
 		}
-		void unique() {
+		Dbl_Arr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1274,6 +1289,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Double) el);
 			super.clear();
 			super.addAll(uniqueSet);
+			return (Dbl_Arr)uniqueSet;
 		}
 		boolean has(double x) {
 			return super.contains(x);
@@ -1283,7 +1299,10 @@ public class KL {
 		}
 		void update(int i, double x) {
 			if (!has(x)) super.add(x);
-			else super.set(i, x);
+			else {
+				if (i < 0 || i > super.size()) return;
+				super.set(i, x);
+			}
 		}
 		void sort() {
 			super.sort(null);
@@ -1331,21 +1350,22 @@ public class KL {
 			for (boolean b : bools) super.add(b);
 		}
 		void pushAt(int i, boolean... bools) {
-			for (boolean b : bools) super.add(b);
+			if (i < 0 || i > super.size()) return;
+			for (boolean b : bools) super.add(i, b);
 		}
 		void push(boolean... bools) {
-			pushAt(0, bools);
+			pushAt(super.size(), bools);
 		}
 		boolean shift() {
-		    boolean removed = super.get(0);
-		    super.remove(0);
-		    return removed;
+			boolean removed = super.get(0);
+			super.remove(0);
+			return removed;
 		}
 		boolean pop(boolean... bools) {
 			if (super.isEmpty()) return false;
 			for (boolean b : bools) {
-			    if (!has(b)) return false;
-			    super.remove(b);
+				if (!has(b)) return false;
+				super.remove(b);
 			}
 			return true;
 		}
@@ -1358,18 +1378,18 @@ public class KL {
 			return true;
 		}
 		void popEvery(Predicate<? super Boolean> fn) {
-		    super.removeIf(fn);
+			super.removeIf(fn);
 		}
 		void popEach(Predicate<? super Boolean> fn) {
-		    popEvery(fn);
+			popEvery(fn);
 		}
 		void popIf(Predicate<? super Boolean> fn) {
-		    popEvery(fn);
+			popEvery(fn);
 		}
 		void map(UnaryOperator<Boolean> fn) {
-		    super.replaceAll(fn);
+			super.replaceAll(fn);
 		}
-		void unique() {
+		Bool_Arr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1377,6 +1397,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Boolean) el);
 			super.clear();
 			super.addAll(uniqueSet);
+			return (Bool_Arr)uniqueSet;
 		}
 		boolean has(boolean x) {
 			return super.contains(x);
@@ -1386,7 +1407,10 @@ public class KL {
 		}
 		void update(int i, boolean x) {
 			if (!has(x)) super.add(x);
-			else super.set(i, x);
+			else {
+				if (i < 0 || i > super.size()) return;
+				super.set(i, x);
+			}
 		}
 		void sort() {
 			super.sort(null);
@@ -1423,330 +1447,6 @@ public class KL {
 		}
 		int length() {
 			return super.size();
-		}
-	}
-	public static class Str_Array extends Str_Arr {
-		Str_Array() {
-			super();
-		}
-		Str_Array(String... strings) {
-			super();
-			for (String s : strings) super.add(s);
-		}
-		Str_Array array() {
-			return (Str_Array)(super.toArray())[0];
-		}
-		Str_Array slice(int x, int y) {
-			return (Str_Array)(super.subList(x, y).toArray())[0];
-		}
-		Str_Array copy() {
-			return (Str_Array)super.clone();
-		}
-	}
-	public static class String_Arr extends Str_Arr {
-		String_Arr() {
-			super();
-		}
-		String_Arr(String... strings) {
-			super();
-			for (String s : strings) super.add(s);
-		}
-		String_Arr array() {
-			return (String_Arr)(super.toArray())[0];
-		}
-		String_Arr slice(int x, int y) {
-			return (String_Arr)(super.subList(x, y).toArray())[0];
-		}
-		String_Arr copy() {
-			return (String_Arr)super.clone();
-		}
-	}
-	public static class String_Array extends Str_Arr {
-		String_Array() {
-			super();
-		}
-		String_Array(String... strings) {
-			super();
-			for (String s : strings) super.add(s);
-		}
-		String_Array array() {
-			return (String_Array)(super.toArray())[0];
-		}
-		String_Array slice(int x, int y) {
-			return (String_Array)(super.subList(x, y).toArray())[0];
-		}
-		String_Array copy() {
-			return (String_Array)super.clone();
-		}
-	}
-	public static class Int_Array extends Int_Arr {
-		Int_Array() {
-			super();
-		}
-		Int_Array(int... nums) {
-			super();
-			for (int n : nums) super.add(n);
-		}
-		Int_Array array() {
-			return (Int_Array)(super.toArray())[0];
-		}
-		Int_Array slice(int x, int y) {
-			return (Int_Array)(super.subList(x, y).toArray())[0];
-		}
-		Int_Array copy() {
-			return (Int_Array)super.clone();
-		}
-	}
-	public static class Integer_Arr extends Int_Arr {
-		Integer_Arr() {
-			super();
-		}
-		Integer_Arr(int... nums) {
-			super();
-			for (int n : nums) super.add(n);
-		}
-		Integer_Arr array() {
-			return (Integer_Arr)(super.toArray())[0];
-		}
-		Integer_Arr slice(int x, int y) {
-			return (Integer_Arr)(super.subList(x, y).toArray())[0];
-		}
-		Integer_Arr copy() {
-			return (Integer_Arr)super.clone();
-		}
-	}
-	public static class Integer_Array extends Int_Arr {
-		Integer_Array() {
-			super();
-		}
-		Integer_Array(int... nums) {
-			super();
-			for (int n : nums) super.add(n);
-		}
-		Integer_Array array() {
-			return (Integer_Array)(super.toArray())[0];
-		}
-		Integer_Array slice(int x, int y) {
-			return (Integer_Array)(super.subList(x, y).toArray())[0];
-		}
-		Integer_Array copy() {
-			return (Integer_Array)super.clone();
-		}
-	}
-	public static class Lng_Array extends Lng_Arr {
-		Lng_Array() {
-			super();
-		}
-		Lng_Array(long... nums) {
-			super();
-			for (long n : nums) super.add(n);
-		}
-		Lng_Array array() {
-			return (Lng_Array)(super.toArray())[0];
-		}
-		Lng_Array slice(int x, int y) {
-			return (Lng_Array)(super.subList(x, y).toArray())[0];
-		}
-		Lng_Array copy() {
-			return (Lng_Array)super.clone();
-		}
-	}
-	public static class Long_Arr extends Lng_Arr {
-		Long_Arr() {
-			super();
-		}
-		Long_Arr(long... nums) {
-			super();
-			for (long n : nums) super.add(n);
-		}
-		Long_Arr array() {
-			return (Long_Arr)(super.toArray())[0];
-		}
-		Long_Arr slice(int x, int y) {
-			return (Long_Arr)(super.subList(x, y).toArray())[0];
-		}
-		Long_Arr copy() {
-			return (Long_Arr)super.clone();
-		}
-	}
-	public static class Long_Array extends Lng_Arr {
-		Long_Array() {
-			super();
-		}
-		Long_Array(long... nums) {
-			super();
-			for (long n : nums) super.add(n);
-		}
-		Long_Array array() {
-			return (Long_Array)(super.toArray())[0];
-		}
-		Long_Array slice(int x, int y) {
-			return (Long_Array)(super.subList(x, y).toArray())[0];
-		}
-		Long_Array copy() {
-			return (Long_Array)super.clone();
-		}
-	}
-	public static class Flt_Array extends Flt_Arr {
-		Flt_Array() {
-			super();
-		}
-		Flt_Array(float... nums) {
-			super();
-			for (float n : nums) super.add(n);
-		}
-		Flt_Array array() {
-			return (Flt_Array)(super.toArray())[0];
-		}
-		Flt_Array slice(int x, int y) {
-			return (Flt_Array)(super.subList(x, y).toArray())[0];
-		}
-		Flt_Array copy() {
-			return (Flt_Array)super.clone();
-		}
-	}
-	public static class Float_Arr extends Flt_Arr {
-		Float_Arr() {
-			super();
-		}
-		Float_Arr(float... nums) {
-			super();
-			for (float n : nums) super.add(n);
-		}
-		Float_Arr array() {
-			return (Float_Arr)(super.toArray())[0];
-		}
-		Float_Arr slice(int x, int y) {
-			return (Float_Arr)(super.subList(x, y).toArray())[0];
-		}
-		Float_Arr copy() {
-			return (Float_Arr)super.clone();
-		}
-	}
-	public static class Float_Array extends Flt_Arr {
-		Float_Array() {
-			super();
-		}
-		Float_Array(float... nums) {
-			super();
-			for (float n : nums) super.add(n);
-		}
-		Float_Array array() {
-			return (Float_Array)(super.toArray())[0];
-		}
-		Float_Array slice(int x, int y) {
-			return (Float_Array)(super.subList(x, y).toArray())[0];
-		}
-		Float_Array copy() {
-			return (Float_Array)super.clone();
-		}
-	}
-	public static class Dbl_Array extends Dbl_Arr {
-		Dbl_Array() {
-			super();
-		}
-		Dbl_Array(double... nums) {
-			super();
-			for (double n : nums) super.add(n);
-		}
-		Dbl_Array array() {
-			return (Dbl_Array)(super.toArray())[0];
-		}
-		Dbl_Array slice(int x, int y) {
-			return (Dbl_Array)(super.subList(x, y).toArray())[0];
-		}
-		Dbl_Array copy() {
-			return (Dbl_Array)super.clone();
-		}
-	}
-	public static class Double_Arr extends Dbl_Arr {
-		Double_Arr() {
-			super();
-		}
-		Double_Arr(double... nums) {
-			super();
-			for (double n : nums) super.add(n);
-		}
-		Double_Arr array() {
-			return (Double_Arr)(super.toArray())[0];
-		}
-		Double_Arr slice(int x, int y) {
-			return (Double_Arr)(super.subList(x, y).toArray())[0];
-		}
-		Double_Arr copy() {
-			return (Double_Arr)super.clone();
-		}
-	}
-	public static class Double_Array extends Dbl_Arr {
-		Double_Array() {
-			super();
-		}
-		Double_Array(double... nums) {
-			super();
-			for (double n : nums) super.add(n);
-		}
-		Double_Array array() {
-			return (Double_Array)(super.toArray())[0];
-		}
-		Double_Array slice(int x, int y) {
-			return (Double_Array)(super.subList(x, y).toArray())[0];
-		}
-		Double_Array copy() {
-			return (Double_Array)super.clone();
-		}
-	}
-	public static class Bool_Array extends Bool_Arr {
-		Bool_Array() {
-			super();
-		}
-		Bool_Array(boolean... bools) {
-			super();
-			for (boolean b : bools) super.add(b);
-		}
-		Bool_Array array() {
-			return (Bool_Array)(super.toArray())[0];
-		}
-		Bool_Array slice(int x, int y) {
-			return (Bool_Array)(super.subList(x, y).toArray())[0];
-		}
-		Bool_Array copy() {
-			return (Bool_Array)super.clone();
-		}
-	}
-	public static class Boolean_Arr extends Bool_Arr {
-		Boolean_Arr() {
-			super();
-		}
-		Boolean_Arr(boolean... bools) {
-			super();
-			for (boolean b : bools) super.add(b);
-		}
-		Boolean_Arr array() {
-			return (Boolean_Arr)(super.toArray())[0];
-		}
-		Boolean_Arr slice(int x, int y) {
-			return (Boolean_Arr)(super.subList(x, y).toArray())[0];
-		}
-		Boolean_Arr copy() {
-			return (Boolean_Arr)super.clone();
-		}
-	}
-	public static class Boolean_Array extends Bool_Arr {
-		Boolean_Array() {
-			super();
-		}
-		Boolean_Array(boolean... bools) {
-			super();
-			for (boolean b : bools) super.add(b);
-		}
-		Boolean_Array array() {
-			return (Boolean_Array)(super.toArray())[0];
-		}
-		Boolean_Array slice(int x, int y) {
-			return (Boolean_Array)(super.subList(x, y).toArray())[0];
-		}
-		Boolean_Array copy() {
-			return (Boolean_Array)super.clone();
 		}
 	}
 
@@ -3528,6 +3228,24 @@ public class KL {
 	public static double[] noDuplicates(double[] arr) {
 		return DoubleStream.of(arr).distinct().toArray();
 	}
+	public static Str_Arr noDuplicates(Str_Arr arr) {
+		return arr.unique();
+	}
+	public static Int_Arr noDuplicates(Int_Arr arr) {
+		return arr.unique();
+	}
+	public static Lng_Arr noDuplicates(Lng_Arr arr) {
+		return arr.unique();
+	}
+	public static Flt_Arr noDuplicates(Flt_Arr arr) {
+		return arr.unique();
+	}
+	public static Dbl_Arr noDuplicates(Dbl_Arr arr) {
+		return arr.unique();
+	}
+	public static Bool_Arr noDuplicates(Bool_Arr arr) {
+		return arr.unique();
+	}
 	public static String replace(String str, String to_replace, String regex_to_replace_with) {
 		return str.replaceAll(to_replace, regex_to_replace_with);
 	}
@@ -3603,6 +3321,24 @@ public class KL {
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
 		return newArr;
 	}
+	public static Str_Arr slice(Str_Arr arr, int start) {
+		return arr.slice(start, arr.length());
+	}
+	public static Int_Arr slice(Int_Arr arr, int start) {
+		return arr.slice(start, arr.length());
+	}
+	public static Lng_Arr slice(Lng_Arr arr, int start) {
+		return arr.slice(start, arr.length());
+	}
+	public static Flt_Arr slice(Flt_Arr arr, int start) {
+		return arr.slice(start, arr.length());
+	}
+	public static Dbl_Arr slice(Dbl_Arr arr, int start) {
+		return arr.slice(start, arr.length());
+	}
+	public static Bool_Arr slice(Bool_Arr arr, int start) {
+		return arr.slice(start, arr.length());
+	}
 	public static String slice(String str, int start, int end) {
 		return str.substring(start, end);
 	}
@@ -3629,6 +3365,24 @@ public class KL {
 	public static boolean[] slice(boolean oldArr[], int start, int end) {
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
+	}
+	public static Str_Arr slice(Str_Arr arr, int start, int end) {
+		return arr.slice(start, end);
+	}
+	public static Int_Arr slice(Int_Arr arr, int start, int end) {
+		return arr.slice(start, end);
+	}
+	public static Lng_Arr slice(Lng_Arr arr, int start, int end) {
+		return arr.slice(start, end);
+	}
+	public static Flt_Arr slice(Flt_Arr arr, int start, int end) {
+		return arr.slice(start, end);
+	}
+	public static Dbl_Arr slice(Dbl_Arr arr, int start, int end) {
+		return arr.slice(start, end);
+	}
+	public static Bool_Arr slice(Bool_Arr arr, int start, int end) {
+		return arr.slice(start, end);
 	}
 	public static String sliceEnd(String str, int start) {
 		return slice(str, str.length() - start);
@@ -4662,8 +4416,8 @@ public class KL {
 		//print(upper(replace(trim("     Hi there love"), " ", "-")));
 		//print(endsWith("hello world", "rld"));
 		/*
-		Object_S languages = new Object_S("key", "value", "fruit", "banana", "car", "porsche");
-		Object_D constants = new Object_D("g", 9.8);
+		Obj_S languages = new Obj_S("key", "value", "fruit", "banana", "car", "porsche");
+		Obj_D constants = new Obj_D("g", 9.8);
 		constants.add("pi", 3.15);
 		constants.set("pi", 3.16);
 		constants.update("pi", 3.14);
@@ -4710,6 +4464,6 @@ public class KL {
 		//print(curr(x, "JP¥"));
 		//double x = 80143000000000000000000000000000000.0;
 		///print(ussuffix(x));
-		print(randPhone);
+
 	}
 }
