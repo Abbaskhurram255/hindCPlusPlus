@@ -1901,9 +1901,6 @@ public class KL {
 	public static void printArr(int arr[]) {
 		print(Arrays.toString(arr));
 	}
-	public static void printArr(Int_Arr arr) {
-		print(arr.toString());
-	}
 	public static void printArr(long arr[]) {
 		print(Arrays.toString(arr));
 	}
@@ -1916,41 +1913,95 @@ public class KL {
 	public static void printArr(boolean arr[]) {
 		print(Arrays.toString(arr));
 	}
+	public static void printArr(Str_Arr arr) {
+		print(arr.toString());
+	}
+	public static void printArr(Int_Arr arr) {
+		print(arr.toString());
+	}
+	public static void printArr(Lng_Arr arr) {
+		print(arr.toString());
+	}
+	public static void printArr(Flt_Arr arr) {
+		print(arr.toString());
+	}
+	public static void printArr(Dbl_Arr arr) {
+		print(arr.toString());
+	}
+	public static void printArr(Bool_Arr arr) {
+		print(arr.toString());
+	}
 	public static void printAll(String arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printAll(int arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printAll(long arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printAll(float arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printAll(double arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printAll(boolean arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
+	}
+	public static void printAll(Str_Arr arr) {
+		printArr(arr);
+	}
+	public static void printAll(Int_Arr arr) {
+		printArr(arr);
+	}
+	public static void printAll(Lng_Arr arr) {
+		printArr(arr);
+	}
+	public static void printAll(Flt_Arr arr) {
+		printArr(arr);
+	}
+	public static void printAll(Dbl_Arr arr) {
+		printArr(arr);
+	}
+	public static void printAll(Bool_Arr arr) {
+		printArr(arr);
 	}
 	public static void printEach(String arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printEach(int arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printEach(long arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printEach(float arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printEach(double arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
 	}
 	public static void printEach(boolean arr[]) {
-		print(Arrays.toString(arr));
+		printArr(arr);
+	}
+	public static void printEach(Str_Arr arr) {
+		printArr(arr);
+	}
+	public static void printEach(Int_Arr arr) {
+		printArr(arr);
+	}
+	public static void printEach(Lng_Arr arr) {
+		printArr(arr);
+	}
+	public static void printEach(Flt_Arr arr) {
+		printArr(arr);
+	}
+	public static void printEach(Dbl_Arr arr) {
+		printArr(arr);
+	}
+	public static void printEach(Bool_Arr arr) {
+		printArr(arr);
 	}
 
 	//getting user input
@@ -2036,6 +2087,45 @@ public class KL {
 		String result = ("" + arg);
 		return result;
 	}
+	public static String String(String[] arr) {
+		return arr.toString();
+	}
+	public static String String(int[] arr) {
+		return arr.toString();
+	}
+	public static String String(char[] arr) {
+		return arr.toString();
+	}
+	public static String String(long[] arr) {
+		return arr.toString();
+	}
+	public static String String(float[] arr) {
+		return arr.toString();
+	}
+	public static String String(double[] arr) {
+		return arr.toString();
+	}
+	public static String String(boolean[] arr) {
+		return arr.toString();
+	}
+	public static String String(Str_Arr arr) {
+		return arr.toString();
+	}
+	public static String String(Int_Arr arr) {
+		return arr.toString();
+	}
+	public static String String(Lng_Arr arr) {
+		return arr.toString();
+	}
+	public static String String(Flt_Arr arr) {
+		return arr.toString();
+	}
+	public static String String(Dbl_Arr arr) {
+		return arr.toString();
+	}
+	public static String String(Bool_Arr arr) {
+		return arr.toString();
+	}
 	public static String Str(String arg) {
 		return String(arg);
 	}
@@ -2056,6 +2146,45 @@ public class KL {
 	}
 	public static String Str(boolean arg) {
 		return String(arg);
+	}
+    public static String Str(String[] arr) {
+		return String(arr);
+	}
+	public static String Str(int[] arr) {
+		return String(arr);
+	}
+	public static String Str(char[] arr) {
+		return String(arr);
+	}
+	public static String Str(long[] arr) {
+		return String(arr);
+	}
+	public static String Str(float[] arr) {
+		return String(arr);
+	}
+	public static String Str(double[] arr) {
+		return String(arr);
+	}
+	public static String Str(boolean[] arr) {
+		return String(arr);
+	}
+	public static String Str(Str_Arr arr) {
+		return String(arr);
+	}
+	public static String Str(Int_Arr arr) {
+		return String(arr);
+	}
+	public static String Str(Lng_Arr arr) {
+		return String(arr);
+	}
+	public static String Str(Flt_Arr arr) {
+		return String(arr);
+	}
+	public static String Str(Dbl_Arr arr) {
+		return String(arr);
+	}
+	public static String Str(Bool_Arr arr) {
+		return String(arr);
 	}
 	public static char[] Chars(String str) {
 		char[] result = str.toCharArray();
@@ -2084,10 +2213,6 @@ public class KL {
 	public static char lastCharOf(String str) {
 		char result = nthLastCharOf(str, 1);
 		return result;
-	}
-	public static String[] str2array(String str) {
-		String arr[] = {str};
-		return arr;
 	}
 	public static String[] split(String str) {
 		String[] returnValue = str.split("");
@@ -3122,6 +3247,24 @@ public class KL {
 	public static boolean not(boolean[] arr) {
 		return isEmpty(arr);
 	}
+	public static boolean not(Str_Arr arr) {
+		return isEmpty(arr);
+	}
+	public static boolean not(Int_Arr arr) {
+		return isEmpty(arr);
+	}
+	public static boolean not(Lng_Arr arr) {
+		return isEmpty(arr);
+	}
+	public static boolean not(Flt_Arr arr) {
+		return isEmpty(arr);
+	}
+	public static boolean not(Dbl_Arr arr) {
+		return isEmpty(arr);
+	}
+	public static boolean not(Bool_Arr arr) {
+		return isEmpty(arr);
+	}
 	public static boolean is(String s) {
 		return !not(s);
 	}
@@ -3156,6 +3299,24 @@ public class KL {
 		return !not(arr);
 	}
 	public static boolean is(boolean[] arr) {
+		return !not(arr);
+	}
+	public static boolean is(Str_Arr arr) {
+		return !not(arr);
+	}
+	public static boolean is(Int_Arr arr) {
+		return !not(arr);
+	}
+	public static boolean is(Lng_Arr arr) {
+		return !not(arr);
+	}
+	public static boolean is(Flt_Arr arr) {
+		return !not(arr);
+	}
+	public static boolean is(Dbl_Arr arr) {
+		return !not(arr);
+	}
+	public static boolean is(Bool_Arr arr) {
 		return !not(arr);
 	}
 	public static boolean xor(boolean a, boolean b) {
@@ -3225,6 +3386,24 @@ public class KL {
 	public static boolean randItem(boolean arr[]) {
 		return arr[randInt(arr.length)];
 	}
+	public static String randItem(Str_Arr arr) {
+		return arr.get(randInt(arr.length()));
+	}
+	public static int randItem(Int_Arr arr) {
+		return arr.get(randInt(arr.length()));
+	}
+	public static long randItem(Lng_Arr arr) {
+		return arr.get(randInt(arr.length()));
+	}
+	public static float randItem(Flt_Arr arr) {
+		return arr.get(randInt(arr.length()));
+	}
+	public static double randItem(Dbl_Arr arr) {
+		return arr.get(randInt(arr.length()));
+	}
+	public static boolean randItem(Bool_Arr arr) {
+		return arr.get(randInt(arr.length()));
+	}
 	public static String randFrom(String arr[]) {
 		return randItem(arr);
 	}
@@ -3243,6 +3422,24 @@ public class KL {
 	public static boolean randFrom(boolean arr[]) {
 		return randItem(arr);
 	}
+	public static String randFrom(Str_Arr arr) {
+		return randItem(arr);
+	}
+	public static int randFrom(Int_Arr arr) {
+		return randItem(arr);
+	}
+	public static long randFrom(Lng_Arr arr) {
+		return randItem(arr);
+	}
+	public static float randFrom(Flt_Arr arr) {
+		return randItem(arr);
+	}
+	public static double randFrom(Dbl_Arr arr) {
+		return randItem(arr);
+	}
+	public static boolean randFrom(Bool_Arr arr) {
+		return randItem(arr);
+	}
 	public static String any(String arr[]) {
 		return randItem(arr);
 	}
@@ -3259,6 +3456,24 @@ public class KL {
 		return randItem(arr);
 	}
 	public static boolean any(boolean arr[]) {
+		return randItem(arr);
+	}
+	public static String any(Str_Arr arr) {
+		return randItem(arr);
+	}
+	public static int any(Int_Arr arr) {
+		return randItem(arr);
+	}
+	public static long any(Lng_Arr arr) {
+		return randItem(arr);
+	}
+	public static float any(Flt_Arr arr) {
+		return randItem(arr);
+	}
+	public static double any(Dbl_Arr arr) {
+		return randItem(arr);
+	}
+	public static boolean any(Bool_Arr arr) {
 		return randItem(arr);
 	}
 	public static int[] noDuplicates(int[] arr) {
@@ -3447,6 +3662,24 @@ public class KL {
 	public static boolean[] sliceEnd(boolean[] arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
+	public static Str_Arr sliceEnd(Str_Arr arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static Int_Arr sliceEnd(Int_Arr arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static Lng_Arr sliceEnd(Lng_Arr arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static Flt_Arr sliceEnd(Flt_Arr arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static Dbl_Arr sliceEnd(Dbl_Arr arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
+	public static Bool_Arr sliceEnd(Bool_Arr arr, int start) {
+		return slice(arr, len(arr) - start);
+	}
 	public static String trim(String str) {
 		return slice(str);
 	}
@@ -3466,6 +3699,24 @@ public class KL {
 		return slice(arr);
 	}
 	public static boolean[] trim(boolean[] arr) {
+		return slice(arr);
+	}
+	public static Str_Arr trim(Str_Arr arr) {
+		return slice(arr);
+	}
+	public static Int_Arr trim(Int_Arr arr) {
+		return slice(arr);
+	}
+	public static Lng_Arr trim(Lng_Arr arr) {
+		return slice(arr);
+	}
+	public static Flt_Arr trim(Flt_Arr arr) {
+		return slice(arr);
+	}
+	public static Dbl_Arr trim(Dbl_Arr arr) {
+		return slice(arr);
+	}
+	public static Bool_Arr trim(Bool_Arr arr) {
 		return slice(arr);
 	}
 	public static String trim(String str, int start) {
@@ -3489,6 +3740,24 @@ public class KL {
 	public static boolean[] trim(boolean[] arr, int start) {
 		return slice(arr, start);
 	}
+	public static Str_Arr trim(Str_Arr arr, int start) {
+		return slice(arr, start);
+	}
+	public static Int_Arr trim(Int_Arr arr, int start) {
+		return slice(arr, start);
+	}
+	public static Lng_Arr trim(Lng_Arr arr, int start) {
+		return slice(arr, start);
+	}
+	public static Flt_Arr trim(Flt_Arr arr, int start) {
+		return slice(arr, start);
+	}
+	public static Dbl_Arr trim(Dbl_Arr arr, int start) {
+		return slice(arr, start);
+	}
+	public static Bool_Arr trim(Bool_Arr arr, int start) {
+		return slice(arr, start);
+	}
 	public static String trim(String str, int start, int end) {
 		return slice(str, start, end);
 	}
@@ -3508,6 +3777,24 @@ public class KL {
 		return slice(arr, start, end);
 	}
 	public static boolean[] trim(boolean[] arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static Str_Arr trim(Str_Arr arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static Int_Arr trim(Int_Arr arr, int start,int end) {
+		return slice(arr, start, end);
+	}
+	public static Lng_Arr trim(Lng_Arr arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static Flt_Arr trim(Flt_Arr arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static Dbl_Arr trim(Dbl_Arr arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static Bool_Arr trim(Bool_Arr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
 	public static String trimEnd(String str, int start) {
@@ -3531,9 +3818,27 @@ public class KL {
 	public static boolean[] trimEnd(boolean[] arr, int start) {
 		return sliceEnd(arr, start);
 	}
+	public static Str_Arr trimEnd(Str_Arr arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static Int_Arr trimEnd(Int_Arr arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static Lng_Arr trimEnd(Lng_Arr arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static Flt_Arr trimEnd(Flt_Arr arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static Dbl_Arr trimEnd(Dbl_Arr arr, int start) {
+		return sliceEnd(arr, start);
+	}
+	public static Bool_Arr trimEnd(Bool_Arr arr, int start) {
+		return sliceEnd(arr, start);
+	}
 	public static String sliceTo(String str, String thatSpecificPart) {
 		int index = indexOf(str, thatSpecificPart);
-		if (index < 0) return str;
+		if (index < 0 || index == -1) return str;
 		return slice(str, index);
 	}
 	public static String sliceToAfter(String str, String thatSpecificPart) {
@@ -3868,26 +4173,44 @@ public class KL {
 	public static boolean compare(double[] arrA, double[] arrB) {
 		return match(arrA, arrB);
 	}
-	public static boolean compare(boolean [] arrA, boolean[] arrB) {
+	public static boolean compare(boolean[] arrA, boolean[] arrB) {
 		return match(arrA, arrB);
 	}
 	public static String[] clone(String[] arr) {
-		return arr.clone();
+		return slice(arr);
 	}
 	public static int[] clone(int[] arr) {
-		return arr.clone();
+		return slice(arr);
 	}
 	public static long[] clone(long[] arr) {
-		return arr.clone();
+		return slice(arr);
 	}
 	public static float[] clone(float[] arr) {
-		return arr.clone();
+		return slice(arr);
 	}
 	public static double[] clone(double[] arr) {
-		return arr.clone();
+		return slice(arr);
 	}
 	public static boolean[] clone(boolean[] arr) {
-		return arr.clone();
+		return slice(arr);
+	}
+	public static Str_Arr clone(Str_Arr arr) {
+		return slice(arr);
+	}
+	public static Int_Arr clone(Int_Arr arr) {
+		return slice(arr);
+	}
+	public static Lng_Arr clone(Lng_Arr arr) {
+		return slice(arr);
+	}
+	public static Flt_Arr clone(Flt_Arr arr) {
+		return slice(arr);
+	}
+	public static Dbl_Arr clone(Dbl_Arr arr) {
+		return slice(arr);
+	}
+	public static Bool_Arr clone(Bool_Arr arr) {
+		return slice(arr);
 	}
 	public static String[] copyArr(String[] arr) {
 		return clone(arr);
@@ -3906,6 +4229,36 @@ public class KL {
 	}
 	public static boolean[] copyArr(boolean[] arr) {
 		return clone(arr);
+	}
+	public static Str_Arr copyArr(Str_Arr arr) {
+		return clone(arr);
+	}
+	public static Int_Arr copyArr(Int_Arr arr) {
+		return clone(arr);
+	}
+	public static Lng_Arr copyArr(Lng_Arr arr) {
+		return clone(arr);
+	}
+	public static Flt_Arr copyArr(Flt_Arr arr) {
+		return clone(arr);
+	}
+	public static Dbl_Arr copyArr(Dbl_Arr arr) {
+		return clone(arr);
+	}
+	public static Bool_Arr copyArr(Bool_Arr arr) {
+		return clone(arr);
+	}
+	public static String[] union(String[] arrA, String[] arrB) {
+		return Stream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray(String[]::new);
+	}
+	public static int[] union(int[] arrA, int[] arrB) {
+		return IntStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
+	}
+	public static long[] union(long[] arrA, long[] arrB) {
+		return LongStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
+	}
+	public static double[] union(double[] arrA, double[] arrB) {
+		return DoubleStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
 	}
 	public static String upper(String s) {
 		s = s.toUpperCase();
@@ -4005,6 +4358,24 @@ public class KL {
 	public static int len(boolean arr[]) {
 		return arr.length;
 	}
+	public static int len(Str_Arr arr) {
+		return arr.length();
+	}
+	public static int len(Int_Arr arr) {
+		return arr.length();
+	}
+	public static int len(Lng_Arr arr) {
+		return arr.length();
+	}
+	public static int len(Flt_Arr arr) {
+		return arr.length();
+	}
+	public static int len(Dbl_Arr arr) {
+		return arr.length();
+	}
+	public static int len(Bool_Arr arr) {
+		return arr.length();
+	}
 	public static int size(String str) {
 		return len(str);
 	}
@@ -4030,6 +4401,24 @@ public class KL {
 		return len(arr);
 	}
 	public static int size(boolean arr[]) {
+		return len(arr);
+	}
+	public static int size(Str_Arr arr) {
+		return len(arr);
+	}
+	public static int size(Int_Arr arr) {
+		return len(arr);
+	}
+	public static int size(Lng_Arr arr) {
+		return len(arr);
+	}
+	public static int size(Flt_Arr arr) {
+		return len(arr);
+	}
+	public static int size(Dbl_Arr arr) {
+		return len(arr);
+	}
+	public static int size(Bool_Arr arr) {
 		return len(arr);
 	}
 	public static boolean isEmpty(String s) {
@@ -4058,6 +4447,24 @@ public class KL {
 	}
 	public static boolean isEmpty(boolean[] arr) {
 		return 0 == len(arr);
+	}
+	public static boolean isEmpty(Str_Arr arr) {
+		return 0==len(arr);
+	}
+	public static boolean isEmpty(Int_Arr arr) {
+		return 0==len(arr);
+	}
+	public static boolean isEmpty(Lng_Arr arr) {
+		return 0==len(arr);
+	}
+	public static boolean isEmpty(Flt_Arr arr) {
+		return 0==len(arr);
+	}
+	public static boolean isEmpty(Dbl_Arr arr) {
+		return 0==len(arr);
+	}
+	public static boolean isEmpty(Bool_Arr arr) {
+		return 0==len(arr);
 	}
 
 	//Arrays
@@ -4109,6 +4516,24 @@ public class KL {
 		}
 		return data;
 	}
+	public static void reverse(Str_Arr arr) {
+		arr.reverse();
+	}
+	public static void reverse(Int_Arr arr) {
+		arr.reverse();
+	}
+	public static void reverse(Lng_Arr arr) {
+		arr.reverse();
+	}
+	public static void reverse(Flt_Arr arr) {
+		arr.reverse();
+	}
+	public static void reverse(Dbl_Arr arr) {
+		arr.reverse();
+	}
+	public static void reverse(Bool_Arr arr) {
+		arr.reverse();
+	}
 	public static void sort(String[] arr) {
 		Arrays.sort(arr);
 	}
@@ -4124,7 +4549,25 @@ public class KL {
 	public static void sort(double[] arr) {
 		Arrays.sort(arr);
 	}
-	public static void sortDesc(int arr[]) {
+	public static void sort(Str_Arr arr) {
+		arr.sort();
+	}
+	public static void sort(Int_Arr arr) {
+		arr.sort();
+	}
+	public static void sort(Lng_Arr arr) {
+		arr.sort();
+	}
+	public static void sort(Flt_Arr arr) {
+		arr.sort();
+	}
+	public static void sort(Dbl_Arr arr) {
+		arr.sort();
+	}
+	public static void sort(Bool_Arr arr) {
+		arr.sort();
+	}
+	public static void sortReverse(int arr[]) {
 		int size = arr.length;
 		for (int i : arr) {
 			boolean swappingNeeded = false;
@@ -4139,7 +4582,7 @@ public class KL {
 			if (!swappingNeeded) break;
 		}
 	}
-	public static void sortDesc(long arr[]) {
+	public static void sortReverse(long arr[]) {
 		int size = arr.length;
 		for (long i : arr) {
 			boolean swappingNeeded = false;
@@ -4154,7 +4597,7 @@ public class KL {
 			if (!swappingNeeded) break;
 		}
 	}
-	public static void sortDesc(float arr[]) {
+	public static void sortReverse(float arr[]) {
 		int size = arr.length;
 		for (float i : arr) {
 			boolean swappingNeeded = false;
@@ -4169,7 +4612,7 @@ public class KL {
 			if (!swappingNeeded) break;
 		}
 	}
-	public static void sortDesc(double arr[]) {
+	public static void sortReverse(double arr[]) {
 		int size = arr.length;
 		for (double i : arr) {
 			boolean swappingNeeded = false;
@@ -4183,6 +4626,24 @@ public class KL {
 			}
 			if (!swappingNeeded) break;
 		}
+	}
+	public static void sortReverse(Str_Arr arr) {
+		arr.sortReverse();
+	}
+	public static void sortReverse(Int_Arr arr) {
+		arr.sortReverse();
+	}
+	public static void sortReverse(Lng_Arr arr) {
+		arr.sortReverse();
+	}
+	public static void sortReverse(Flt_Arr arr) {
+		arr.sortReverse();
+	}
+	public static void sortReverse(Dbl_Arr arr) {
+		arr.sortReverse();
+	}
+	public static void sortReverse(Bool_Arr arr) {
+		arr.sortReverse();
 	}
 	public static String shuffle(String str) {
 		char[] chars = str.toCharArray();
