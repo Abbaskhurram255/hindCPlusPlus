@@ -344,7 +344,7 @@ public class KL {
 	}
 
 	//general
-	public static class Error extends Exception {
+	public static class Error extends Throwable {
 		Error(String msg) {
 			super(msg);
 		}
@@ -390,32 +390,36 @@ public class KL {
 		String v(String k) {
 			return super.get(k);
 		}
-		void add(String k, String v) {
-			super.put(k, v);
-		}
-		String delete (String k) {
-			String v = super.get(k);
-			super.remove(k);
-			return v;
-		}
-		void push(String k, String v) {
-			add(k, v);
-		}
-		String pop(String k) {
-			return delete (k);
-		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
 		}
 		boolean hasValue(String v) {
 			return super.containsValue(v);
 		}
-		void set(String k, String v) {
+		Obj_S set(String k, String v) {
 			if (!super.containsKey(k)) super.put(k, v);
 			else super.replace(k, v);
+			return this;
 		}
-		void update(String k, String v) {
+		Obj_S add(String k, String v) {
 			set(k, v);
+			return this;
+		}
+		String delete (String k) {
+			String v = super.get(k);
+			super.remove(k);
+			return v;
+		}
+		Obj_S push(String k, String v) {
+			add(k, v);
+			return this;
+		}
+		String pop(String k) {
+			return delete (k);
+		}
+		Obj_S update(String k, String v) {
+			set(k, v);
+			return this;
 		}
 		Set<String> keys() {
 			return super.keySet();
@@ -474,32 +478,36 @@ public class KL {
 		int v(String k) {
 			return super.get(k);
 		}
-		void add(String k, Integer v) {
-			super.put(k, v);
-		}
-		int delete (String k) {
-			int v = super.get(k);
-			super.remove(k);
-			return v;
-		}
-		void push(String k, int v) {
-			add(k, v);
-		}
-		int pop(String k) {
-			return delete (k);
-		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
 		}
 		boolean hasValue(Integer v) {
 			return super.containsValue(v);
 		}
-		void set(String k, Integer v) {
+		Obj_I set(String k, Integer v) {
 			if (!super.containsKey(k)) super.put(k, v);
 			else super.replace(k, v);
+			return this;
 		}
-		void update(String k, Integer v) {
+		Obj_I add(String k, Integer v) {
 			set(k, v);
+			return this;
+		}
+		int delete (String k) {
+			int v = super.get(k);
+			super.remove(k);
+			return v;
+		}
+		Obj_I push(String k, int v) {
+			add(k, v);
+			return this;
+		}
+		int pop(String k) {
+			return delete (k);
+		}
+		Obj_I update(String k, Integer v) {
+			set(k, v);
+			return this;
 		}
 		Set<String> keys() {
 			return super.keySet();
@@ -558,30 +566,34 @@ public class KL {
 		long v(String k) {
 			return super.get(k);
 		}
-		void add(String k, Long v) {
-			super.put(k, v);
-		}
-		long delete (String k) {
-			return super.remove(k);
-		}
-		void push(String k, long v) {
-			add(k, v);
-		}
-		long pop(String k) {
-			return delete (k);
-		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
 		}
 		boolean hasValue(Long v) {
 			return super.containsValue(v);
 		}
-		void set(String k, Long v) {
+		Obj_L set(String k, Long v) {
 			if (!super.containsKey(k)) super.put(k, v);
 			else super.replace(k, v);
+			return this;
 		}
-		void update(String k, Long v) {
+		Obj_L add(String k, Long v) {
 			set(k, v);
+			return this;
+		}
+		long delete (String k) {
+			return super.remove(k);
+		}
+		Obj_L push(String k, long v) {
+			add(k, v);
+			return this;
+		}
+		long pop(String k) {
+			return delete (k);
+		}
+		Obj_L update(String k, Long v) {
+			set(k, v);
+			return this;
 		}
 		Set<String> keys() {
 			return super.keySet();
@@ -640,30 +652,34 @@ public class KL {
 		float v(String k) {
 			return super.get(k);
 		}
-		void add(String k, Float v) {
-			super.put(k, v);
-		}
-		float delete (String k) {
-			return super.remove(k);
-		}
-		void push(String k, float v) {
-			add(k, v);
-		}
-		float pop(String k) {
-			return delete (k);
-		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
 		}
 		boolean hasValue(Float v) {
 			return super.containsValue(v);
 		}
-		void set(String k, Float v) {
+		Obj_F set(String k, Float v) {
 			if (!super.containsKey(k)) super.put(k, v);
 			else super.replace(k, v);
+			return this;
 		}
-		void update(String k, Float v) {
+		Obj_F add(String k, Float v) {
 			set(k, v);
+			return this;
+		}
+		float delete (String k) {
+			return super.remove(k);
+		}
+		Obj_F push(String k, float v) {
+			add(k, v);
+			return this;
+		}
+		float pop(String k) {
+			return delete (k);
+		}
+		Obj_F update(String k, Float v) {
+			set(k, v);
+			return this;
 		}
 		Set<String> keys() {
 			return super.keySet();
@@ -722,30 +738,34 @@ public class KL {
 		double v(String k) {
 			return super.get(k);
 		}
-		void add(String k, Double v) {
-			super.put(k, v);
-		}
-		double delete (String k) {
-			return super.remove(k);
-		}
-		void push(String k, double v) {
-			add(k, v);
-		}
-		double pop(String k) {
-			return delete (k);
-		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
 		}
 		boolean hasValue(Double v) {
 			return super.containsValue(v);
 		}
-		void set(String k, Double v) {
+		Obj_D set(String k, Double v) {
 			if (!super.containsKey(k)) super.put(k, v);
 			else super.replace(k, v);
+			return this;
 		}
-		void update(String k, Double v) {
+		Obj_D add(String k, Double v) {
 			set(k, v);
+			return this;
+		}
+		double delete (String k) {
+			return super.remove(k);
+		}
+		Obj_D push(String k, double v) {
+			add(k, v);
+			return this;
+		}
+		double pop(String k) {
+			return delete (k);
+		}
+		Obj_D update(String k, Double v) {
+			set(k, v);
+			return this;
 		}
 		Set<String> keys() {
 			return super.keySet();
@@ -804,30 +824,34 @@ public class KL {
 		boolean v(String k) {
 			return super.get(k);
 		}
-		void add(String k, Boolean v) {
-			super.put(k, v);
-		}
-		boolean delete (String k) {
-			return super.remove(k);
-		}
-		void push(String k, Boolean v) {
-			add(k, v);
-		}
-		boolean pop(String k) {
-			return delete (k);
-		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
 		}
 		boolean hasValue(Boolean v) {
 			return super.containsValue(v);
 		}
-		void set(String k, Boolean v) {
+		Obj_B set(String k, Boolean v) {
 			if (!super.containsKey(k)) super.put(k, v);
 			else super.replace(k, v);
+			return this;
 		}
-		void update(String k, Boolean v) {
+		Obj_B add(String k, Boolean v) {
 			set(k, v);
+			return this;
+		}
+		boolean delete (String k) {
+			return super.remove(k);
+		}
+		Obj_B push(String k, Boolean v) {
+			add(k, v);
+			return this;
+		}
+		boolean pop(String k) {
+			return delete (k);
+		}
+		Obj_B update(String k, Boolean v) {
+			set(k, v);
+			return this;
 		}
 		Set<String> keys() {
 			return super.keySet();
@@ -854,12 +878,18 @@ public class KL {
 			super();
 			for (String s : strings) super.add(s);
 		}
-		void pushAt(int i, String... strings) {
-			if (i < 0 || i > super.size()) return;
+		Str_Arr pushAt(int i, String... strings) {
+			if (i < 0 || i > super.size()) return null;
 			for (String s : strings) super.add(i, s);
+			return this;
 		}
-		void push(String... strings) {
+		Str_Arr pushStart(String... strings) {
+			pushAt(0, strings);
+			return this;
+		}
+		Str_Arr push(String... strings) {
 			pushAt(super.size(), strings);
+			return this;
 		}
 		String shift() {
 			String removed = super.get(0);
@@ -883,17 +913,21 @@ public class KL {
 			}
 			return firstRemoved;
 		}
-		void popEvery(Predicate<? super String> fn) {
+		Str_Arr popEvery(Predicate<? super String> fn) {
 			super.removeIf(fn);
+			return this;
 		}
-		void popEach(Predicate<? super String> fn) {
+		Str_Arr popEach(Predicate<? super String> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void popIf(Predicate<? super String> fn) {
+		Str_Arr popIf(Predicate<? super String> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void map(UnaryOperator<String> fn) {
+		Str_Arr map(UnaryOperator<String> fn) {
 			super.replaceAll(fn);
+			return this;
 		}
 		Str_Arr unique() {
 			Object obj = super.clone();
@@ -903,7 +937,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((String) el);
 			super.clear();
 			super.addAll(uniqueSet);
-			return (Str_Arr)uniqueSet;
+			return this;
 		}
 		boolean has(String x) {
 			return super.contains(x);
@@ -911,24 +945,41 @@ public class KL {
 		String index(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : "";
 		}
-		void update(int i, String x) {
+		Str_Arr update(int i, String x) {
 			if (!has(x)) super.add(x);
 			else {
-				if (i < 0 || i > super.size()) return;
+				if (i < 0 || i > super.size()) return null;
 				super.set(i, x);
 			}
+			return this;
 		}
-		void sort() {
+		Str_Arr shuffle() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<String> set2 = new LinkedHashSet<>();
+			for (Object el : set) set2.add((String) el);
+			ArrayList<String> list = new ArrayList<>(set2);
+			Collections.shuffle(list, new Random(System.nanoTime()));
+			super.clear();
+			super.addAll(list);
+			return this;
+		}
+		Str_Arr sort() {
 			super.sort(null);
+			return this;
 		}
-		void sortReverse() {
+		Str_Arr sortReverse() {
 			super.sort(Collections.reverseOrder());
+			return this;
 		}
-		void reverseSort() {
+		Str_Arr reverseSort() {
 			sortReverse();
+			return this;
 		}
-		void reverse() {
+		Str_Arr reverse() {
 			sortReverse();
+			return this;
 		}
 		Str_Arr array() {
 			return (Str_Arr)(super.toArray())[0];
@@ -942,8 +993,9 @@ public class KL {
 		Str_Arr copy() {
 			return (Str_Arr)super.clone();
 		}
-		void each(Consumer<? super String> fn) {
+		Str_Arr each(Consumer<? super String> fn) {
 			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(copy());
@@ -963,38 +1015,47 @@ public class KL {
 			super();
 			for (int n : nums) super.add(n);
 		}
-		void pushAt(int i, int... nums) {
-			if (i < 0 || i > super.size()) return;
+		Int_Arr pushAt(int i, int... nums) {
+			if (i < 0 || i > super.size()) return null;
 			for (int n : nums) super.add(i, n);
+			return this;
 		}
-		void push(int... nums) {
+		Int_Arr pushStart(int... ints) {
+			pushAt(0, ints);
+			return this;
+		}
+		Int_Arr push(int... nums) {
 			pushAt(super.size(), nums);
+			return this;
 		}
 		int shift() {
 			int removed = super.get(0);
 			super.remove(0);
 			return removed;
 		}
-		int pop(int... indexes) {
-			int firstRemoved = super.get(indexes[0]);
+		int pop(int... ints) {
 			if (super.isEmpty()) return 0;
-			for (int i : indexes) {
-				if (i < 0 || i > super.size()) return 0;
+			for (int i : ints) {
+				if (!has(i)) return 0;
 				super.remove(i);
 			}
-			return firstRemoved;
+			return ints[0];
 		}
-		void popEvery(Predicate<? super Integer> fn) {
+		Int_Arr popEvery(Predicate<? super Integer> fn) {
 			super.removeIf(fn);
+			return this;
 		}
-		void popEach(Predicate<? super Integer> fn) {
+		Int_Arr popEach(Predicate<? super Integer> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void popIf(Predicate<? super Integer> fn) {
+		Int_Arr popIf(Predicate<? super Integer> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void map(UnaryOperator<Integer> fn) {
+		Int_Arr map(UnaryOperator<Integer> fn) {
 			super.replaceAll(fn);
+			return this;
 		}
 		Int_Arr unique() {
 			Object obj = super.clone();
@@ -1004,7 +1065,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Integer) el);
 			super.clear();
 			super.addAll(uniqueSet);
-			return (Int_Arr)uniqueSet;
+			return this;
 		}
 		boolean has(int x) {
 			return super.contains(x);
@@ -1012,24 +1073,41 @@ public class KL {
 		int index(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
-		void update(int i, int x) {
+		Int_Arr update(int i, int x) {
 			if (!has(x)) super.add(x);
 			else {
-				if (i < 0 || i > super.size()) return;
+				if (i < 0 || i > super.size()) return null;
 				super.set(i, x);
 			}
+			return this;
 		}
-		void sort() {
+		Int_Arr shuffle() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Integer> set2 = new LinkedHashSet<>();
+			for (Object el : set) set2.add((Integer) el);
+			ArrayList<Integer> list = new ArrayList<>(set2);
+			Collections.shuffle(list, new Random(System.nanoTime()));
+			super.clear();
+			super.addAll(list);
+			return this;
+		}
+		Int_Arr sort() {
 			super.sort(null);
+			return this;
 		}
-		void sortReverse() {
+		Int_Arr sortReverse() {
 			super.sort(Collections.reverseOrder());
+			return this;
 		}
-		void reverseSort() {
+		Int_Arr reverseSort() {
 			sortReverse();
+			return this;
 		}
-		void reverse() {
+		Int_Arr reverse() {
 			sortReverse();
+			return this;
 		}
 		Int_Arr array() {
 			return (Int_Arr)(super.toArray())[0];
@@ -1043,8 +1121,9 @@ public class KL {
 		Int_Arr copy() {
 			return (Int_Arr)super.clone();
 		}
-		void each(Consumer<? super Integer> fn) {
+		Int_Arr each(Consumer<? super Integer> fn) {
 			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(copy());
@@ -1056,20 +1135,26 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Lng_Arr extends ArrayList<Long> {
-		Lng_Arr() {
+	public static class Long_Arr extends ArrayList<Long> {
+		Long_Arr() {
 			super();
 		}
-		Lng_Arr(long... nums) {
+		Long_Arr(long... nums) {
 			super();
 			for (long n : nums) super.add(n);
 		}
-		void pushAt(int i, long... longs) {
-			if (i < 0 || i > super.size()) return;
+		Long_Arr pushAt(int i, long... longs) {
+			if (i < 0 || i > super.size()) return null;
 			for (long l : longs) super.add(i, l);
+			return this;
 		}
-		void push(long... longs) {
+		Long_Arr pushStart(long... longs) {
+			pushAt(0, longs);
+			return this;
+		}
+		Long_Arr push(long... longs) {
 			pushAt(super.size(), longs);
+			return this;
 		}
 		long shift() {
 			long removed = super.get(0);
@@ -1084,28 +1169,23 @@ public class KL {
 			}
 			return longs[0];
 		}
-		long pop(int... indexes) {
-			long firstRemoved = super.get(indexes[0]);
-			if (super.isEmpty()) return 0;
-			for (int i : indexes) {
-				if (i < 0 || i > super.size()) return 0;
-				super.remove(i);
-			}
-			return firstRemoved;
-		}
-		void popEvery(Predicate<? super Long> fn) {
+		Long_Arr popEvery(Predicate<? super Long> fn) {
 			super.removeIf(fn);
+			return this;
 		}
-		void popEach(Predicate<? super Long> fn) {
+		Long_Arr popEach(Predicate<? super Long> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void popIf(Predicate<? super Long> fn) {
+		Long_Arr popIf(Predicate<? super Long> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void map(UnaryOperator<Long> fn) {
+		Long_Arr map(UnaryOperator<Long> fn) {
 			super.replaceAll(fn);
+			return this;
 		}
-		Lng_Arr unique() {
+		Long_Arr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1113,7 +1193,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Long) el);
 			super.clear();
 			super.addAll(uniqueSet);
-			return (Lng_Arr)uniqueSet;
+			return this;
 		}
 		boolean has(long x) {
 			return super.contains(x);
@@ -1121,39 +1201,57 @@ public class KL {
 		long index(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
-		void update(int i, long x) {
+		Long_Arr update(int i, long x) {
 			if (!has(x)) super.add(x);
 			else {
-				if (i < 0 || i > super.size()) return;
+				if (i < 0 || i > super.size()) return null;
 				super.set(i, x);
 			}
+			return this;
 		}
-		void sort() {
+		Long_Arr shuffle() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Long> set2 = new LinkedHashSet<>();
+			for (Object el : set) set2.add((Long) el);
+			ArrayList<Long> list = new ArrayList<>(set2);
+			Collections.shuffle(list, new Random(System.nanoTime()));
+			super.clear();
+			super.addAll(list);
+			return this;
+		}
+		Long_Arr sort() {
 			super.sort(null);
+			return this;
 		}
-		void sortReverse() {
+		Long_Arr sortReverse() {
 			super.sort(Collections.reverseOrder());
+			return this;
 		}
-		void reverseSort() {
+		Long_Arr reverseSort() {
 			sortReverse();
+			return this;
 		}
-		void reverse() {
+		Long_Arr reverse() {
 			sortReverse();
+			return this;
 		}
-		Lng_Arr array() {
-			return (Lng_Arr)(super.toArray())[0];
+		Long_Arr array() {
+			return (Long_Arr)(super.toArray())[0];
 		}
 		String string() {
 			return super.toString();
 		}
-		Lng_Arr slice(int x, int y) {
-			return (Lng_Arr)(super.subList(x, y).toArray())[0];
+		Long_Arr slice(int x, int y) {
+			return (Long_Arr)(super.subList(x, y).toArray())[0];
 		}
-		Lng_Arr copy() {
-			return (Lng_Arr)super.clone();
+		Long_Arr copy() {
+			return (Long_Arr)super.clone();
 		}
-		void each(Consumer<? super Long> fn) {
+		Long_Arr each(Consumer<? super Long> fn) {
 			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(copy());
@@ -1173,12 +1271,18 @@ public class KL {
 			super();
 			for (float n : nums) super.add(n);
 		}
-		void pushAt(int i, float... floats) {
-			if (i < 0 || i > super.size()) return;
+		Flt_Arr pushAt(int i, float... floats) {
+			if (i < 0 || i > super.size()) return null;
 			for (float f : floats) super.add(i, f);
+			return this;
 		}
-		void push(float... floats) {
+		Flt_Arr pushStart(float... floats) {
+			pushAt(0, floats);
+			return this;
+		}
+		Flt_Arr push(float... floats) {
 			pushAt(super.size(), floats);
+			return this;
 		}
 		float shift() {
 			float removed = super.get(0);
@@ -1193,26 +1297,21 @@ public class KL {
 			}
 			return floats[0];
 		}
-		float pop(int... indexes) {
-			float firstRemoved = super.get(indexes[0]);
-			if (super.isEmpty()) return 0;
-			for (int i : indexes) {
-				if (i < 0 || i > super.size()) return 0;
-				super.remove(i);
-			}
-			return firstRemoved;
-		}
-		void popEvery(Predicate<? super Float> fn) {
+		Flt_Arr popEvery(Predicate<? super Float> fn) {
 			super.removeIf(fn);
+			return this;
 		}
-		void popEach(Predicate<? super Float> fn) {
+		Flt_Arr popEach(Predicate<? super Float> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void popIf(Predicate<? super Float> fn) {
+		Flt_Arr popIf(Predicate<? super Float> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void map(UnaryOperator<Float> fn) {
+		Flt_Arr map(UnaryOperator<Float> fn) {
 			super.replaceAll(fn);
+			return this;
 		}
 		Flt_Arr unique() {
 			Object obj = super.clone();
@@ -1222,7 +1321,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Float) el);
 			super.clear();
 			super.addAll(uniqueSet);
-			return (Flt_Arr)uniqueSet;
+			return this;
 		}
 		boolean has(float x) {
 			return super.contains(x);
@@ -1230,24 +1329,41 @@ public class KL {
 		float index(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
-		void update(int i, float x) {
+		Flt_Arr update(int i, float x) {
 			if (!has(x)) super.add(x);
 			else {
-				if (i < 0 || i > super.size()) return;
+				if (i < 0 || i > super.size()) return null;
 				super.set(i, x);
 			}
+			return this;
 		}
-		void sort() {
+		Flt_Arr shuffle() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Float> set2 = new LinkedHashSet<>();
+			for (Object el : set) set2.add((Float) el);
+			ArrayList<Float> list = new ArrayList<>(set2);
+			Collections.shuffle(list, new Random(System.nanoTime()));
+			super.clear();
+			super.addAll(list);
+			return this;
+		}
+		Flt_Arr sort() {
 			super.sort(null);
+			return this;
 		}
-		void sortReverse() {
+		Flt_Arr sortReverse() {
 			super.sort(Collections.reverseOrder());
+			return this;
 		}
-		void reverseSort() {
+		Flt_Arr reverseSort() {
 			sortReverse();
+			return this;
 		}
-		void reverse() {
+		Flt_Arr reverse() {
 			sortReverse();
+			return this;
 		}
 		Flt_Arr array() {
 			return (Flt_Arr)(super.toArray())[0];
@@ -1261,8 +1377,9 @@ public class KL {
 		Flt_Arr copy() {
 			return (Flt_Arr)super.clone();
 		}
-		void each(Consumer<? super Float> fn) {
+		Flt_Arr each(Consumer<? super Float> fn) {
 			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(copy());
@@ -1282,12 +1399,18 @@ public class KL {
 			super();
 			for (double d : doubles) super.add(d);
 		}
-		void pushAt(int i, double... doubles) {
-			if (i < 0 || i > super.size()) return;
+		Dbl_Arr pushAt(int i, double... doubles) {
+			if (i < 0 || i > super.size()) return null;
 			for (double d : doubles) super.add(i, d);
+			return this;
 		}
-		void push(double... doubles) {
+		Dbl_Arr pushStart(double... doubles) {
+			pushAt(0, doubles);
+			return this;
+		}
+		Dbl_Arr push(double... doubles) {
 			pushAt(super.size(), doubles);
+			return this;
 		}
 		double shift() {
 			double removed = super.get(0);
@@ -1302,26 +1425,21 @@ public class KL {
 			}
 			return doubles[0];
 		}
-		double pop(int... indexes) {
-			double firstRemoved = super.get(indexes[0]);
-			if (super.isEmpty()) return 0;
-			for (int i : indexes) {
-				if (i < 0 || i > super.size()) return 0;
-				super.remove(i);
-			}
-			return firstRemoved;
-		}
-		void popEvery(Predicate<? super Double> fn) {
+		Dbl_Arr popEvery(Predicate<? super Double> fn) {
 			super.removeIf(fn);
+			return this;
 		}
-		void popEach(Predicate<? super Double> fn) {
+		Dbl_Arr popEach(Predicate<? super Double> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void popIf(Predicate<? super Double> fn) {
+		Dbl_Arr popIf(Predicate<? super Double> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void map(UnaryOperator<Double> fn) {
+		Dbl_Arr map(UnaryOperator<Double> fn) {
 			super.replaceAll(fn);
+			return this;
 		}
 		Dbl_Arr unique() {
 			Object obj = super.clone();
@@ -1331,7 +1449,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Double) el);
 			super.clear();
 			super.addAll(uniqueSet);
-			return (Dbl_Arr)uniqueSet;
+			return this;
 		}
 		boolean has(double x) {
 			return super.contains(x);
@@ -1339,24 +1457,41 @@ public class KL {
 		double index(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
-		void update(int i, double x) {
+		Dbl_Arr update(int i, double x) {
 			if (!has(x)) super.add(x);
 			else {
-				if (i < 0 || i > super.size()) return;
+				if (i < 0 || i > super.size()) return null;
 				super.set(i, x);
 			}
+			return this;
 		}
-		void sort() {
+		Dbl_Arr shuffle() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Double> set2 = new LinkedHashSet<>();
+			for (Object el : set) set2.add((Double) el);
+			ArrayList<Double> list = new ArrayList<>(set2);
+			Collections.shuffle(list, new Random(System.nanoTime()));
+			super.clear();
+			super.addAll(list);
+			return this;
+		}
+		Dbl_Arr sort() {
 			super.sort(null);
+			return this;
 		}
-		void sortReverse() {
+		Dbl_Arr sortReverse() {
 			super.sort(Collections.reverseOrder());
+			return this;
 		}
-		void reverseSort() {
+		Dbl_Arr reverseSort() {
 			sortReverse();
+			return this;
 		}
-		void reverse() {
+		Dbl_Arr reverse() {
 			sortReverse();
+			return this;
 		}
 		Dbl_Arr array() {
 			return (Dbl_Arr)(super.toArray())[0];
@@ -1370,8 +1505,9 @@ public class KL {
 		Dbl_Arr copy() {
 			return (Dbl_Arr)super.clone();
 		}
-		void each(Consumer<? super Double> fn) {
+		Dbl_Arr each(Consumer<? super Double> fn) {
 			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(copy());
@@ -1391,12 +1527,18 @@ public class KL {
 			super();
 			for (boolean b : bools) super.add(b);
 		}
-		void pushAt(int i, boolean... bools) {
-			if (i < 0 || i > super.size()) return;
+		Bool_Arr pushAt(int i, boolean... bools) {
+			if (i < 0 || i > super.size()) return null;
 			for (boolean b : bools) super.add(i, b);
+			return this;
 		}
-		void push(boolean... bools) {
+		Bool_Arr pushStart(boolean... bools) {
+			pushAt(0, bools);
+			return this;
+		}
+		Bool_Arr push(boolean... bools) {
 			pushAt(super.size(), bools);
+			return this;
 		}
 		boolean shift() {
 			boolean removed = super.get(0);
@@ -1419,17 +1561,21 @@ public class KL {
 			}
 			return true;
 		}
-		void popEvery(Predicate<? super Boolean> fn) {
+		Bool_Arr popEvery(Predicate<? super Boolean> fn) {
 			super.removeIf(fn);
+			return this;
 		}
-		void popEach(Predicate<? super Boolean> fn) {
+		Bool_Arr popEach(Predicate<? super Boolean> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void popIf(Predicate<? super Boolean> fn) {
+		Bool_Arr popIf(Predicate<? super Boolean> fn) {
 			popEvery(fn);
+			return this;
 		}
-		void map(UnaryOperator<Boolean> fn) {
+		Bool_Arr map(UnaryOperator<Boolean> fn) {
 			super.replaceAll(fn);
+			return this;
 		}
 		Bool_Arr unique() {
 			Object obj = super.clone();
@@ -1439,7 +1585,7 @@ public class KL {
 			for (Object el : set) uniqueSet.add((Boolean) el);
 			super.clear();
 			super.addAll(uniqueSet);
-			return (Bool_Arr)uniqueSet;
+			return this;
 		}
 		boolean has(boolean x) {
 			return super.contains(x);
@@ -1447,24 +1593,41 @@ public class KL {
 		boolean index(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : false;
 		}
-		void update(int i, boolean x) {
+		Bool_Arr update(int i, boolean x) {
 			if (!has(x)) super.add(x);
 			else {
-				if (i < 0 || i > super.size()) return;
+				if (i < 0 || i > super.size()) return null;
 				super.set(i, x);
 			}
+			return this;
 		}
-		void sort() {
+		Bool_Arr shuffle() {
+			Object obj = super.clone();
+			Collection<?> collection = (Collection<?>) obj;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Boolean> set2 = new LinkedHashSet<>();
+			for (Object el : set) set2.add((Boolean) el);
+			ArrayList<Boolean> list = new ArrayList<>(set2);
+			Collections.shuffle(list, new Random(System.nanoTime()));
+			super.clear();
+			super.addAll(list);
+			return this;
+		}
+		Bool_Arr sort() {
 			super.sort(null);
+			return this;
 		}
-		void sortReverse() {
+		Bool_Arr sortReverse() {
 			super.sort(Collections.reverseOrder());
+			return this;
 		}
-		void reverseSort() {
+		Bool_Arr reverseSort() {
 			sortReverse();
+			return this;
 		}
-		void reverse() {
+		Bool_Arr reverse() {
 			sortReverse();
+			return this;
 		}
 		Bool_Arr array() {
 			return (Bool_Arr)(super.toArray())[0];
@@ -1478,8 +1641,9 @@ public class KL {
 		Bool_Arr copy() {
 			return (Bool_Arr)super.clone();
 		}
-		void each(Consumer<? super Boolean> fn) {
+		Bool_Arr each(Consumer<? super Boolean> fn) {
 			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(copy());
@@ -1818,80 +1982,16 @@ public class KL {
 
 
 	//utilities
-	public static void print(String... args) {
+	public static <T> void println(T... args) {
+		for (T arg : args) {
+			System.out.print(arg + " ");
+		}
+	}
+	public static <T> void print(T... args) {
+		for (T arg : args) {
+			System.out.print(arg + " ");
+		}
 		System.out.print("\n");
-		String arguments = String.join(" ", args);
-		System.out.print(arguments);
-	}
-	public static void print(int... args) {
-		System.out.print("\n");
-		for (int arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void print(char... args) {
-		System.out.print("\n");
-		for (char arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void print(long... args) {
-		System.out.print("\n");
-		for (long arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void print(float... args) {
-		System.out.print("\n");
-		for (float arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void print(double... args) {
-		System.out.print("\n");
-		for (double arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void print(boolean... args) {
-		System.out.print("\n");
-		for (boolean arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void println(String... args) {
-		String arguments = String.join(" ", args);
-		System.out.print(arguments);
-	}
-	public static void println(int... args) {
-		for (int arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void println(char... args) {
-		for (char arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void println(long... args) {
-		for (long arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void println(float... args) {
-		for (float arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void println(double... args) {
-		for (double arg : args) {
-			System.out.print(arg);
-		}
-	}
-	public static void println(boolean... args) {
-		for (boolean arg : args) {
-			System.out.print(arg);
-		}
 	}
 
 	//printing arrays
@@ -1919,7 +2019,7 @@ public class KL {
 	public static void printArr(Int_Arr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(Lng_Arr arr) {
+	public static void printArr(Long_Arr arr) {
 		print(arr.toString());
 	}
 	public static void printArr(Flt_Arr arr) {
@@ -1955,7 +2055,7 @@ public class KL {
 	public static void printAll(Int_Arr arr) {
 		printArr(arr);
 	}
-	public static void printAll(Lng_Arr arr) {
+	public static void printAll(Long_Arr arr) {
 		printArr(arr);
 	}
 	public static void printAll(Flt_Arr arr) {
@@ -1991,7 +2091,7 @@ public class KL {
 	public static void printEach(Int_Arr arr) {
 		printArr(arr);
 	}
-	public static void printEach(Lng_Arr arr) {
+	public static void printEach(Long_Arr arr) {
 		printArr(arr);
 	}
 	public static void printEach(Flt_Arr arr) {
@@ -2114,7 +2214,7 @@ public class KL {
 	public static String String(Int_Arr arr) {
 		return arr.toString();
 	}
-	public static String String(Lng_Arr arr) {
+	public static String String(Long_Arr arr) {
 		return arr.toString();
 	}
 	public static String String(Flt_Arr arr) {
@@ -2147,7 +2247,7 @@ public class KL {
 	public static String Str(boolean arg) {
 		return String(arg);
 	}
-    public static String Str(String[] arr) {
+	public static String Str(String[] arr) {
 		return String(arr);
 	}
 	public static String Str(int[] arr) {
@@ -2174,7 +2274,7 @@ public class KL {
 	public static String Str(Int_Arr arr) {
 		return String(arr);
 	}
-	public static String Str(Lng_Arr arr) {
+	public static String Str(Long_Arr arr) {
 		return String(arr);
 	}
 	public static String Str(Flt_Arr arr) {
@@ -2665,6 +2765,9 @@ public class KL {
 	}
 	public static String f(double n) {
 		return fpkr(n);
+	}
+	public static <T> String f(String s, T... args) {
+		return String.format(s, args);
 	}
 	public static String pkr(int n) {
 		String formattedN = fpkr(n);
@@ -3253,7 +3356,7 @@ public class KL {
 	public static boolean not(Int_Arr arr) {
 		return isEmpty(arr);
 	}
-	public static boolean not(Lng_Arr arr) {
+	public static boolean not(Long_Arr arr) {
 		return isEmpty(arr);
 	}
 	public static boolean not(Flt_Arr arr) {
@@ -3307,7 +3410,7 @@ public class KL {
 	public static boolean is(Int_Arr arr) {
 		return !not(arr);
 	}
-	public static boolean is(Lng_Arr arr) {
+	public static boolean is(Long_Arr arr) {
 		return !not(arr);
 	}
 	public static boolean is(Flt_Arr arr) {
@@ -3392,7 +3495,7 @@ public class KL {
 	public static int randItem(Int_Arr arr) {
 		return arr.get(randInt(arr.length()));
 	}
-	public static long randItem(Lng_Arr arr) {
+	public static long randItem(Long_Arr arr) {
 		return arr.get(randInt(arr.length()));
 	}
 	public static float randItem(Flt_Arr arr) {
@@ -3428,7 +3531,7 @@ public class KL {
 	public static int randFrom(Int_Arr arr) {
 		return randItem(arr);
 	}
-	public static long randFrom(Lng_Arr arr) {
+	public static long randFrom(Long_Arr arr) {
 		return randItem(arr);
 	}
 	public static float randFrom(Flt_Arr arr) {
@@ -3464,7 +3567,7 @@ public class KL {
 	public static int any(Int_Arr arr) {
 		return randItem(arr);
 	}
-	public static long any(Lng_Arr arr) {
+	public static long any(Long_Arr arr) {
 		return randItem(arr);
 	}
 	public static float any(Flt_Arr arr) {
@@ -3491,7 +3594,7 @@ public class KL {
 	public static Int_Arr noDuplicates(Int_Arr arr) {
 		return arr.unique();
 	}
-	public static Lng_Arr noDuplicates(Lng_Arr arr) {
+	public static Long_Arr noDuplicates(Long_Arr arr) {
 		return arr.unique();
 	}
 	public static Flt_Arr noDuplicates(Flt_Arr arr) {
@@ -3539,7 +3642,7 @@ public class KL {
 	public static Int_Arr slice(Int_Arr arr) {
 		return arr.copy();
 	}
-	public static Lng_Arr slice(Lng_Arr arr) {
+	public static Long_Arr slice(Long_Arr arr) {
 		return arr.copy();
 	}
 	public static Flt_Arr slice(Flt_Arr arr) {
@@ -3584,7 +3687,7 @@ public class KL {
 	public static Int_Arr slice(Int_Arr arr, int start) {
 		return arr.slice(start, arr.length());
 	}
-	public static Lng_Arr slice(Lng_Arr arr, int start) {
+	public static Long_Arr slice(Long_Arr arr, int start) {
 		return arr.slice(start, arr.length());
 	}
 	public static Flt_Arr slice(Flt_Arr arr, int start) {
@@ -3629,7 +3732,7 @@ public class KL {
 	public static Int_Arr slice(Int_Arr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
-	public static Lng_Arr slice(Lng_Arr arr, int start, int end) {
+	public static Long_Arr slice(Long_Arr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
 	public static Flt_Arr slice(Flt_Arr arr, int start, int end) {
@@ -3668,7 +3771,7 @@ public class KL {
 	public static Int_Arr sliceEnd(Int_Arr arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
-	public static Lng_Arr sliceEnd(Lng_Arr arr, int start) {
+	public static Long_Arr sliceEnd(Long_Arr arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
 	public static Flt_Arr sliceEnd(Flt_Arr arr, int start) {
@@ -3707,7 +3810,7 @@ public class KL {
 	public static Int_Arr trim(Int_Arr arr) {
 		return slice(arr);
 	}
-	public static Lng_Arr trim(Lng_Arr arr) {
+	public static Long_Arr trim(Long_Arr arr) {
 		return slice(arr);
 	}
 	public static Flt_Arr trim(Flt_Arr arr) {
@@ -3746,7 +3849,7 @@ public class KL {
 	public static Int_Arr trim(Int_Arr arr, int start) {
 		return slice(arr, start);
 	}
-	public static Lng_Arr trim(Lng_Arr arr, int start) {
+	public static Long_Arr trim(Long_Arr arr, int start) {
 		return slice(arr, start);
 	}
 	public static Flt_Arr trim(Flt_Arr arr, int start) {
@@ -3782,10 +3885,10 @@ public class KL {
 	public static Str_Arr trim(Str_Arr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static Int_Arr trim(Int_Arr arr, int start,int end) {
+	public static Int_Arr trim(Int_Arr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static Lng_Arr trim(Lng_Arr arr, int start, int end) {
+	public static Long_Arr trim(Long_Arr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
 	public static Flt_Arr trim(Flt_Arr arr, int start, int end) {
@@ -3824,7 +3927,7 @@ public class KL {
 	public static Int_Arr trimEnd(Int_Arr arr, int start) {
 		return sliceEnd(arr, start);
 	}
-	public static Lng_Arr trimEnd(Lng_Arr arr, int start) {
+	public static Long_Arr trimEnd(Long_Arr arr, int start) {
 		return sliceEnd(arr, start);
 	}
 	public static Flt_Arr trimEnd(Flt_Arr arr, int start) {
@@ -4200,7 +4303,7 @@ public class KL {
 	public static Int_Arr clone(Int_Arr arr) {
 		return slice(arr);
 	}
-	public static Lng_Arr clone(Lng_Arr arr) {
+	public static Long_Arr clone(Long_Arr arr) {
 		return slice(arr);
 	}
 	public static Flt_Arr clone(Flt_Arr arr) {
@@ -4236,7 +4339,7 @@ public class KL {
 	public static Int_Arr copyArr(Int_Arr arr) {
 		return clone(arr);
 	}
-	public static Lng_Arr copyArr(Lng_Arr arr) {
+	public static Long_Arr copyArr(Long_Arr arr) {
 		return clone(arr);
 	}
 	public static Flt_Arr copyArr(Flt_Arr arr) {
@@ -4364,7 +4467,7 @@ public class KL {
 	public static int len(Int_Arr arr) {
 		return arr.length();
 	}
-	public static int len(Lng_Arr arr) {
+	public static int len(Long_Arr arr) {
 		return arr.length();
 	}
 	public static int len(Flt_Arr arr) {
@@ -4409,7 +4512,7 @@ public class KL {
 	public static int size(Int_Arr arr) {
 		return len(arr);
 	}
-	public static int size(Lng_Arr arr) {
+	public static int size(Long_Arr arr) {
 		return len(arr);
 	}
 	public static int size(Flt_Arr arr) {
@@ -4449,22 +4552,22 @@ public class KL {
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(Str_Arr arr) {
-		return 0==len(arr);
+		return 0 == len(arr);
 	}
 	public static boolean isEmpty(Int_Arr arr) {
-		return 0==len(arr);
+		return 0 == len(arr);
 	}
-	public static boolean isEmpty(Lng_Arr arr) {
-		return 0==len(arr);
+	public static boolean isEmpty(Long_Arr arr) {
+		return 0 == len(arr);
 	}
 	public static boolean isEmpty(Flt_Arr arr) {
-		return 0==len(arr);
+		return 0 == len(arr);
 	}
 	public static boolean isEmpty(Dbl_Arr arr) {
-		return 0==len(arr);
+		return 0 == len(arr);
 	}
 	public static boolean isEmpty(Bool_Arr arr) {
-		return 0==len(arr);
+		return 0 == len(arr);
 	}
 
 	//Arrays
@@ -4522,7 +4625,7 @@ public class KL {
 	public static void reverse(Int_Arr arr) {
 		arr.reverse();
 	}
-	public static void reverse(Lng_Arr arr) {
+	public static void reverse(Long_Arr arr) {
 		arr.reverse();
 	}
 	public static void reverse(Flt_Arr arr) {
@@ -4555,7 +4658,7 @@ public class KL {
 	public static void sort(Int_Arr arr) {
 		arr.sort();
 	}
-	public static void sort(Lng_Arr arr) {
+	public static void sort(Long_Arr arr) {
 		arr.sort();
 	}
 	public static void sort(Flt_Arr arr) {
@@ -4633,7 +4736,7 @@ public class KL {
 	public static void sortReverse(Int_Arr arr) {
 		arr.sortReverse();
 	}
-	public static void sortReverse(Lng_Arr arr) {
+	public static void sortReverse(Long_Arr arr) {
 		arr.sortReverse();
 	}
 	public static void sortReverse(Flt_Arr arr) {
@@ -4962,11 +5065,21 @@ public class KL {
 		//for (int i : range(500)) print(th(i));
 		//printArr(divisorsOf(80));
 		//repeat(() -> print("hi"), 5);
+		//print(f("hi %s, sorry, you're %d minutes late", "Love", 23));  //print(f(75000124));
 		//print(pkr(1001510000000.294));
 		//double x = 8000.5;
 		//print(curr(x, "JP¥"));
 		//double x = 80143000000000000000000000000000000.0;
 		///print(ussuffix(x));
-
+		Int_Arr arr = new Int_Arr(1, 0, -2, 3, 5, 7, 7, 7);
+		//arr.sort().unique();
+		arr.pushStart(9);
+		//arr.shuffle();
+		//arr.map(n -> n*2);
+		//int popped = arr.pop(3);
+		//print("Popped:", popped);
+		//arr.forEach(n -> print(n));
+		printArr(arr);
+        
 	}
 }
