@@ -1125,7 +1125,7 @@ on
     print f("%s\n%s", pkr(n).data(), usd(n).data());
 off
 */
-func suffix(long n) {
+func pksuffix(long n) {
     let formattedN = f(n);
     let parts = split(formattedN, ",");
     let size = parts.size();
@@ -1148,7 +1148,7 @@ func suffix(long n) {
     }
     return result;
 }
-func intl(long n) {
+func ussuffix(long n) {
     let formattedN = fIntl(n);
     let parts = split(formattedN, ",");
     let size = parts.size();
@@ -1592,6 +1592,31 @@ bool isperfmod(double a, double b)
 {
     return mod(a, b) == 0;
 }
+/*
+class int_arr : vector<string> {
+    public:
+        typedef int_ar inherited;
+        void push(int x) {
+            int_arr::push_back(x);
+        }
+        void pop(int x) {
+            int_arr::pop_back(x);
+        }
+        int first() {
+            int_arr::front();
+        }
+        int last() {
+            int_arr::back();
+        }
+};
+*/
+int_arr divisorsOf(int n) {
+    int_arr arr;
+    for (int i=2; i<n; i++) {
+        if (isperfmod(n, i)) arr.push_back(i);
+    }
+    return arr;
+}
 bool isdiv(float of_n, float this_n)
 {
     return mod(of_n, this_n) == 0;
@@ -1619,7 +1644,7 @@ bool isprime(int n)
 int fibonacci(int n)
 {
     if (n<2) return n;
-    return fibonacci(n-2) + fibonacci(n-1);
+    return fibonacci(n-1) + fibonacci(n-2);
 }
 auto pct(double n1, double n2)
 {
