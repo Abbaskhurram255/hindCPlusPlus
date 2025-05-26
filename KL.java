@@ -13,8 +13,9 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 
+
 public class KL {
-	public static class KMath {
+	public static class Kmath {
 		public static double Pi = 3.141592653589793,
 							 C = 2.99792e8,
 							 earthsGravity = 9.80665,
@@ -26,31 +27,26 @@ public class KL {
 							 earthsMass_Unit = "km",
 
 							 earthsRadius_Unit = "km";
-
-		KMath(double n) {
-			class kg {
-				double toPound() {
-					return n * 2.204;
-				}
-				double toOz() {
-					return n * 3.5274e1;
-				}
-				double toGram() {
-					return n * 1e3;
-				}
-				double toNewton() {
-					return n * 3.5274e1;
-				}
-				double toMegaNewton() {
-					return n * 3.5274e1;
-				}
-				double toGigaNewton() {
-					return n * 3.5274e1;
-				}
-			}
-		}
 	}
 
+	public static String encode(String s) {
+		return Base64.getEncoder().encodeToString(s.getBytes());
+	}
+	public static String decode(String s) {
+		return new String(Base64.getDecoder().decode(s));
+	}
+	public static String encodeUrl(String s) {
+		String encoded = s.replace("%", "%25").replace(" ", "%20").replace("!", "%21").replace("#", "%23").replace("$", "%24").replace("&", "%26").replace("'", "%27").replace("(", "%28").replace(")",
+						 "%29").replace("*", "%2A").replace("+", "%2B").replace(",", "%2C").replace("/", "%2F").replace(":", "%3A").replace(";", "%3B").replace("=", "%3D").replace("?", "%3F").replace("@", "%40").replace("[",
+								 "%5B").replace("]", "%5D");
+		return encoded;
+	}
+	public static String decodeUrl(String s) {
+		String decoded = s.replace("%21", "!").replace("%20", " ").replace("%23", "#").replace("%24", "$").replace("%26", "&").replace("%27", "'").replace("%28", "(").replace("%29", ")").replace("%2A",
+						 "*").replace("%2B", "+").replace("%2C", ",").replace("%2F", "/").replace("%3A", ":").replace("%3B", ";").replace("%3D", "=").replace("%3F", "?").replace("%40", "@").replace("%5B", "[").replace("%5D",
+								 "]").replace("%25", "%");
+		return decoded;
+	}
 
 	//GUI
 	public static class GUI extends JFrame {
@@ -870,24 +866,24 @@ public class KL {
 		}
 	}
 
-	public static class Str_Arr extends ArrayList<String> {
-		Str_Arr() {
+	public static class StrArr extends ArrayList<String> {
+		StrArr() {
 			super();
 		}
-		Str_Arr(String... strings) {
+		StrArr(String... strings) {
 			super();
 			for (String s : strings) super.add(s);
 		}
-		Str_Arr pushAt(int i, String... strings) {
+		StrArr pushAt(int i, String... strings) {
 			if (i < 0 || i > super.size()) return null;
 			for (String s : strings) super.add(i, s);
 			return this;
 		}
-		Str_Arr pushStart(String... strings) {
+		StrArr pushStart(String... strings) {
 			pushAt(0, strings);
 			return this;
 		}
-		Str_Arr push(String... strings) {
+		StrArr push(String... strings) {
 			pushAt(super.size(), strings);
 			return this;
 		}
@@ -913,23 +909,23 @@ public class KL {
 			}
 			return firstRemoved;
 		}
-		Str_Arr popEvery(Predicate<? super String> fn) {
+		StrArr popEvery(Predicate<? super String> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		Str_Arr popEach(Predicate<? super String> fn) {
+		StrArr popEach(Predicate<? super String> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Str_Arr popIf(Predicate<? super String> fn) {
+		StrArr popIf(Predicate<? super String> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Str_Arr map(UnaryOperator<String> fn) {
+		StrArr map(UnaryOperator<String> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		Str_Arr unique() {
+		StrArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -942,10 +938,10 @@ public class KL {
 		boolean has(String x) {
 			return super.contains(x);
 		}
-		String index(int i) {
+		String i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : "";
 		}
-		Str_Arr update(int i, String x) {
+		StrArr update(int i, String x) {
 			if (!has(x)) super.add(x);
 			else {
 				if (i < 0 || i > super.size()) return null;
@@ -953,7 +949,7 @@ public class KL {
 			}
 			return this;
 		}
-		Str_Arr shuffle() {
+		StrArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -965,35 +961,68 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		Str_Arr sort() {
+		StrArr sort() {
 			super.sort(null);
 			return this;
 		}
-		Str_Arr sortReverse() {
+		StrArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		Str_Arr reverseSort() {
+		StrArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		Str_Arr reverse() {
+		StrArr reverse() {
 			sortReverse();
 			return this;
 		}
-		Str_Arr array() {
-			return (Str_Arr)(super.toArray())[0];
+		String[] array() {
+			return super.toArray(new String[0]);
+		}
+		ArrayList<String> list() {
+			ArrayList<String> result = new ArrayList<>();
+			StrArr clone = copy();
+			for (int i : idx(clone)) result.add(clone.i(i));
+			return result;
 		}
 		String string() {
 			return super.toString();
 		}
-		Str_Arr slice(int x, int y) {
-			return (Str_Arr)(super.subList(x, y).toArray())[0];
+		StrArr slice(int x, int y) {
+			return (StrArr)(super.subList(x, y).toArray())[0];
 		}
-		Str_Arr copy() {
-			return (Str_Arr)super.clone();
+		StrArr empty() {
+			super.clear();
+			return this;
 		}
-		Str_Arr each(Consumer<? super String> fn) {
+		boolean compare(StrArr arrB) {
+			StrArr arrA = copy();
+			arrA.sort();
+			arrB.sort();
+			return arrA.equals(arrB);
+		}
+		StrArr combine(StrArr arrB) {
+			StrArr arrA = copy();
+			ArrayList<String> combined = new ArrayList<>();
+			combined.addAll(arrA);
+			combined.addAll(arrB);
+			empty();
+			super.addAll(combined);
+			return this;
+		}
+		StrArr union(StrArr arrB) {
+			combine(arrB);
+			return this;
+		}
+		StrArr intersection(StrArr arrB) {
+			super.retainAll(arrB);
+			return this;
+		}
+		StrArr copy() {
+			return (StrArr)super.clone();
+		}
+		StrArr each(Consumer<? super String> fn) {
 			super.forEach(fn);
 			return this;
 		}
@@ -1007,24 +1036,24 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Int_Arr extends ArrayList<Integer> {
-		Int_Arr() {
+	public static class IntArr extends ArrayList<Integer> {
+		IntArr() {
 			super();
 		}
-		Int_Arr(int... nums) {
+		IntArr(int... nums) {
 			super();
 			for (int n : nums) super.add(n);
 		}
-		Int_Arr pushAt(int i, int... nums) {
+		IntArr pushAt(int i, int... nums) {
 			if (i < 0 || i > super.size()) return null;
 			for (int n : nums) super.add(i, n);
 			return this;
 		}
-		Int_Arr pushStart(int... ints) {
+		IntArr pushStart(int... ints) {
 			pushAt(0, ints);
 			return this;
 		}
-		Int_Arr push(int... nums) {
+		IntArr push(int... nums) {
 			pushAt(super.size(), nums);
 			return this;
 		}
@@ -1041,23 +1070,23 @@ public class KL {
 			}
 			return ints[0];
 		}
-		Int_Arr popEvery(Predicate<? super Integer> fn) {
+		IntArr popEvery(Predicate<? super Integer> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		Int_Arr popEach(Predicate<? super Integer> fn) {
+		IntArr popEach(Predicate<? super Integer> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Int_Arr popIf(Predicate<? super Integer> fn) {
+		IntArr popIf(Predicate<? super Integer> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Int_Arr map(UnaryOperator<Integer> fn) {
+		IntArr map(UnaryOperator<Integer> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		Int_Arr unique() {
+		IntArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1070,10 +1099,10 @@ public class KL {
 		boolean has(int x) {
 			return super.contains(x);
 		}
-		int index(int i) {
+		int i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
-		Int_Arr update(int i, int x) {
+		IntArr update(int i, int x) {
 			if (!has(x)) super.add(x);
 			else {
 				if (i < 0 || i > super.size()) return null;
@@ -1081,7 +1110,7 @@ public class KL {
 			}
 			return this;
 		}
-		Int_Arr shuffle() {
+		IntArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1093,35 +1122,73 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		Int_Arr sort() {
+		IntArr sort() {
 			super.sort(null);
 			return this;
 		}
-		Int_Arr sortReverse() {
+		IntArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		Int_Arr reverseSort() {
+		IntArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		Int_Arr reverse() {
+		IntArr reverse() {
 			sortReverse();
 			return this;
 		}
-		Int_Arr array() {
-			return (Int_Arr)(super.toArray())[0];
+		int[] array() {
+			Integer[] partA = super.toArray(new Integer[0]);
+			int[] resultantArr = new int[partA.length];
+			for (int i = 0; i < partA.length; i++) {
+				resultantArr[i] = partA[i];
+			}
+			return resultantArr;
+		}
+		ArrayList<Integer> list() {
+			ArrayList<Integer> result = new ArrayList<>();
+			IntArr clone = copy();
+			for (int i : idx(clone)) result.add(clone.i(i));
+			return result;
 		}
 		String string() {
 			return super.toString();
 		}
-		Int_Arr slice(int x, int y) {
-			return (Int_Arr)(super.subList(x, y).toArray())[0];
+		IntArr slice(int x, int y) {
+			return (IntArr)(super.subList(x, y).toArray())[0];
 		}
-		Int_Arr copy() {
-			return (Int_Arr)super.clone();
+		IntArr empty() {
+			super.clear();
+			return this;
 		}
-		Int_Arr each(Consumer<? super Integer> fn) {
+		boolean compare(IntArr arrB) {
+			IntArr arrA = copy();
+			arrA.sort();
+			arrB.sort();
+			return arrA.equals(arrB);
+		}
+		IntArr combine(IntArr arrB) {
+			IntArr arrA = copy();
+			ArrayList<Integer> combined = new ArrayList<>();
+			combined.addAll(arrA);
+			combined.addAll(arrB);
+			empty();
+			super.addAll(combined);
+			return this;
+		}
+		IntArr union(IntArr arrB) {
+			combine(arrB);
+			return this;
+		}
+		IntArr intersection(IntArr arrB) {
+			super.retainAll(arrB);
+			return this;
+		}
+		IntArr copy() {
+			return (IntArr)super.clone();
+		}
+		IntArr each(Consumer<? super Integer> fn) {
 			super.forEach(fn);
 			return this;
 		}
@@ -1135,24 +1202,24 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Long_Arr extends ArrayList<Long> {
-		Long_Arr() {
+	public static class LongArr extends ArrayList<Long> {
+		LongArr() {
 			super();
 		}
-		Long_Arr(long... nums) {
+		LongArr(long... nums) {
 			super();
 			for (long n : nums) super.add(n);
 		}
-		Long_Arr pushAt(int i, long... longs) {
+		LongArr pushAt(int i, long... longs) {
 			if (i < 0 || i > super.size()) return null;
 			for (long l : longs) super.add(i, l);
 			return this;
 		}
-		Long_Arr pushStart(long... longs) {
+		LongArr pushStart(long... longs) {
 			pushAt(0, longs);
 			return this;
 		}
-		Long_Arr push(long... longs) {
+		LongArr push(long... longs) {
 			pushAt(super.size(), longs);
 			return this;
 		}
@@ -1169,23 +1236,23 @@ public class KL {
 			}
 			return longs[0];
 		}
-		Long_Arr popEvery(Predicate<? super Long> fn) {
+		LongArr popEvery(Predicate<? super Long> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		Long_Arr popEach(Predicate<? super Long> fn) {
+		LongArr popEach(Predicate<? super Long> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Long_Arr popIf(Predicate<? super Long> fn) {
+		LongArr popIf(Predicate<? super Long> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Long_Arr map(UnaryOperator<Long> fn) {
+		LongArr map(UnaryOperator<Long> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		Long_Arr unique() {
+		LongArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1198,10 +1265,10 @@ public class KL {
 		boolean has(long x) {
 			return super.contains(x);
 		}
-		long index(int i) {
+		long i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
-		Long_Arr update(int i, long x) {
+		LongArr update(int i, long x) {
 			if (!has(x)) super.add(x);
 			else {
 				if (i < 0 || i > super.size()) return null;
@@ -1209,7 +1276,7 @@ public class KL {
 			}
 			return this;
 		}
-		Long_Arr shuffle() {
+		LongArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1221,35 +1288,73 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		Long_Arr sort() {
+		LongArr sort() {
 			super.sort(null);
 			return this;
 		}
-		Long_Arr sortReverse() {
+		LongArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		Long_Arr reverseSort() {
+		LongArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		Long_Arr reverse() {
+		LongArr reverse() {
 			sortReverse();
 			return this;
 		}
-		Long_Arr array() {
-			return (Long_Arr)(super.toArray())[0];
+		long[] array() {
+			Long[] partA = super.toArray(new Long[0]);
+			long[] resultantArr = new long[partA.length];
+			for (int i = 0; i < partA.length; i++) {
+				resultantArr[i] = partA[i];
+			}
+			return resultantArr;
+		}
+		ArrayList<Long> list() {
+			ArrayList<Long> result = new ArrayList<>();
+			LongArr clone = copy();
+			for (int i : idx(clone)) result.add(clone.i(i));
+			return result;
 		}
 		String string() {
 			return super.toString();
 		}
-		Long_Arr slice(int x, int y) {
-			return (Long_Arr)(super.subList(x, y).toArray())[0];
+		LongArr slice(int x, int y) {
+			return (LongArr)(super.subList(x, y).toArray())[0];
 		}
-		Long_Arr copy() {
-			return (Long_Arr)super.clone();
+		LongArr empty() {
+			super.clear();
+			return this;
 		}
-		Long_Arr each(Consumer<? super Long> fn) {
+		boolean compare(LongArr arrB) {
+			LongArr arrA = copy();
+			arrA.sort();
+			arrB.sort();
+			return arrA.equals(arrB);
+		}
+		LongArr combine(LongArr arrB) {
+			LongArr arrA = copy();
+			ArrayList<Long> combined = new ArrayList<>();
+			combined.addAll(arrA);
+			combined.addAll(arrB);
+			empty();
+			super.addAll(combined);
+			return this;
+		}
+		LongArr union(LongArr arrB) {
+			combine(arrB);
+			return this;
+		}
+		LongArr intersection(LongArr arrB) {
+			super.retainAll(arrB);
+			return this;
+		}
+		LongArr copy() {
+			return (LongArr)super.clone();
+		}
+		LongArr each(Consumer<? super Long> fn) {
 			super.forEach(fn);
 			return this;
 		}
@@ -1263,24 +1368,24 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Flt_Arr extends ArrayList<Float> {
-		Flt_Arr() {
+	public static class FltArr extends ArrayList<Float> {
+		FltArr() {
 			super();
 		}
-		Flt_Arr(float... nums) {
+		FltArr(float... nums) {
 			super();
 			for (float n : nums) super.add(n);
 		}
-		Flt_Arr pushAt(int i, float... floats) {
+		FltArr pushAt(int i, float... floats) {
 			if (i < 0 || i > super.size()) return null;
 			for (float f : floats) super.add(i, f);
 			return this;
 		}
-		Flt_Arr pushStart(float... floats) {
+		FltArr pushStart(float... floats) {
 			pushAt(0, floats);
 			return this;
 		}
-		Flt_Arr push(float... floats) {
+		FltArr push(float... floats) {
 			pushAt(super.size(), floats);
 			return this;
 		}
@@ -1297,23 +1402,23 @@ public class KL {
 			}
 			return floats[0];
 		}
-		Flt_Arr popEvery(Predicate<? super Float> fn) {
+		FltArr popEvery(Predicate<? super Float> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		Flt_Arr popEach(Predicate<? super Float> fn) {
+		FltArr popEach(Predicate<? super Float> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Flt_Arr popIf(Predicate<? super Float> fn) {
+		FltArr popIf(Predicate<? super Float> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Flt_Arr map(UnaryOperator<Float> fn) {
+		FltArr map(UnaryOperator<Float> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		Flt_Arr unique() {
+		FltArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1326,10 +1431,10 @@ public class KL {
 		boolean has(float x) {
 			return super.contains(x);
 		}
-		float index(int i) {
+		float i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
-		Flt_Arr update(int i, float x) {
+		FltArr update(int i, float x) {
 			if (!has(x)) super.add(x);
 			else {
 				if (i < 0 || i > super.size()) return null;
@@ -1337,7 +1442,7 @@ public class KL {
 			}
 			return this;
 		}
-		Flt_Arr shuffle() {
+		FltArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1349,35 +1454,73 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		Flt_Arr sort() {
+		FltArr sort() {
 			super.sort(null);
 			return this;
 		}
-		Flt_Arr sortReverse() {
+		FltArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		Flt_Arr reverseSort() {
+		FltArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		Flt_Arr reverse() {
+		FltArr reverse() {
 			sortReverse();
 			return this;
 		}
-		Flt_Arr array() {
-			return (Flt_Arr)(super.toArray())[0];
+		float[] array() {
+			Float[] partA = super.toArray(new Float[0]);
+			float[] resultantArr = new float[partA.length];
+			for (int i = 0; i < partA.length; i++) {
+				resultantArr[i] = partA[i];
+			}
+			return resultantArr;
+		}
+		ArrayList<Float> list() {
+			ArrayList<Float> result = new ArrayList<>();
+			FltArr clone = copy();
+			for (int i : idx(clone)) result.add(clone.i(i));
+			return result;
 		}
 		String string() {
 			return super.toString();
 		}
-		Flt_Arr slice(int x, int y) {
-			return (Flt_Arr)(super.subList(x, y).toArray())[0];
+		FltArr slice(int x, int y) {
+			return (FltArr)(super.subList(x, y).toArray())[0];
 		}
-		Flt_Arr copy() {
-			return (Flt_Arr)super.clone();
+		FltArr empty() {
+			super.clear();
+			return this;
 		}
-		Flt_Arr each(Consumer<? super Float> fn) {
+		boolean compare(FltArr arrB) {
+			FltArr arrA = copy();
+			arrA.sort();
+			arrB.sort();
+			return arrA.equals(arrB);
+		}
+		FltArr combine(FltArr arrB) {
+			FltArr arrA = copy();
+			ArrayList<Float> combined = new ArrayList<>();
+			combined.addAll(arrA);
+			combined.addAll(arrB);
+			empty();
+			super.addAll(combined);
+			return this;
+		}
+		FltArr union(FltArr arrB) {
+			combine(arrB);
+			return this;
+		}
+		FltArr intersection(FltArr arrB) {
+			super.retainAll(arrB);
+			return this;
+		}
+		FltArr copy() {
+			return (FltArr)super.clone();
+		}
+		FltArr each(Consumer<? super Float> fn) {
 			super.forEach(fn);
 			return this;
 		}
@@ -1391,24 +1534,24 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Dbl_Arr extends ArrayList<Double> {
-		Dbl_Arr() {
+	public static class DblArr extends ArrayList<Double> {
+		DblArr() {
 			super();
 		}
-		Dbl_Arr(double... doubles) {
+		DblArr(double... doubles) {
 			super();
 			for (double d : doubles) super.add(d);
 		}
-		Dbl_Arr pushAt(int i, double... doubles) {
+		DblArr pushAt(int i, double... doubles) {
 			if (i < 0 || i > super.size()) return null;
 			for (double d : doubles) super.add(i, d);
 			return this;
 		}
-		Dbl_Arr pushStart(double... doubles) {
+		DblArr pushStart(double... doubles) {
 			pushAt(0, doubles);
 			return this;
 		}
-		Dbl_Arr push(double... doubles) {
+		DblArr push(double... doubles) {
 			pushAt(super.size(), doubles);
 			return this;
 		}
@@ -1425,23 +1568,23 @@ public class KL {
 			}
 			return doubles[0];
 		}
-		Dbl_Arr popEvery(Predicate<? super Double> fn) {
+		DblArr popEvery(Predicate<? super Double> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		Dbl_Arr popEach(Predicate<? super Double> fn) {
+		DblArr popEach(Predicate<? super Double> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Dbl_Arr popIf(Predicate<? super Double> fn) {
+		DblArr popIf(Predicate<? super Double> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Dbl_Arr map(UnaryOperator<Double> fn) {
+		DblArr map(UnaryOperator<Double> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		Dbl_Arr unique() {
+		DblArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1454,10 +1597,10 @@ public class KL {
 		boolean has(double x) {
 			return super.contains(x);
 		}
-		double index(int i) {
+		double i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
-		Dbl_Arr update(int i, double x) {
+		DblArr update(int i, double x) {
 			if (!has(x)) super.add(x);
 			else {
 				if (i < 0 || i > super.size()) return null;
@@ -1465,7 +1608,7 @@ public class KL {
 			}
 			return this;
 		}
-		Dbl_Arr shuffle() {
+		DblArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1477,35 +1620,73 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		Dbl_Arr sort() {
+		DblArr sort() {
 			super.sort(null);
 			return this;
 		}
-		Dbl_Arr sortReverse() {
+		DblArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		Dbl_Arr reverseSort() {
+		DblArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		Dbl_Arr reverse() {
+		DblArr reverse() {
 			sortReverse();
 			return this;
 		}
-		Dbl_Arr array() {
-			return (Dbl_Arr)(super.toArray())[0];
+		double[] array() {
+			Double[] partA = super.toArray(new Double[0]);
+			double[] resultantArr = new double[partA.length];
+			for (int i = 0; i < partA.length; i++) {
+				resultantArr[i] = partA[i];
+			}
+			return resultantArr;
+		}
+		ArrayList<Double> list() {
+			ArrayList<Double> result = new ArrayList<>();
+			DblArr clone = copy();
+			for (int i : idx(clone)) result.add(clone.i(i));
+			return result;
 		}
 		String string() {
 			return super.toString();
 		}
-		Dbl_Arr slice(int x, int y) {
-			return (Dbl_Arr)(super.subList(x, y).toArray())[0];
+		DblArr slice(int x, int y) {
+			return (DblArr)(super.subList(x, y).toArray())[0];
 		}
-		Dbl_Arr copy() {
-			return (Dbl_Arr)super.clone();
+		DblArr empty() {
+			super.clear();
+			return this;
 		}
-		Dbl_Arr each(Consumer<? super Double> fn) {
+		boolean compare(DblArr arrB) {
+			DblArr arrA = copy();
+			arrA.sort();
+			arrB.sort();
+			return arrA.equals(arrB);
+		}
+		DblArr combine(DblArr arrB) {
+			DblArr arrA = copy();
+			ArrayList<Double> combined = new ArrayList<>();
+			combined.addAll(arrA);
+			combined.addAll(arrB);
+			empty();
+			super.addAll(combined);
+			return this;
+		}
+		DblArr union(DblArr arrB) {
+			combine(arrB);
+			return this;
+		}
+		DblArr intersection(DblArr arrB) {
+			super.retainAll(arrB);
+			return this;
+		}
+		DblArr copy() {
+			return (DblArr)super.clone();
+		}
+		DblArr each(Consumer<? super Double> fn) {
 			super.forEach(fn);
 			return this;
 		}
@@ -1519,24 +1700,24 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Bool_Arr extends ArrayList<Boolean> {
-		Bool_Arr() {
+	public static class BoolArr extends ArrayList<Boolean> {
+		BoolArr() {
 			super();
 		}
-		Bool_Arr(boolean... bools) {
+		BoolArr(boolean... bools) {
 			super();
 			for (boolean b : bools) super.add(b);
 		}
-		Bool_Arr pushAt(int i, boolean... bools) {
+		BoolArr pushAt(int i, boolean... bools) {
 			if (i < 0 || i > super.size()) return null;
 			for (boolean b : bools) super.add(i, b);
 			return this;
 		}
-		Bool_Arr pushStart(boolean... bools) {
+		BoolArr pushStart(boolean... bools) {
 			pushAt(0, bools);
 			return this;
 		}
-		Bool_Arr push(boolean... bools) {
+		BoolArr push(boolean... bools) {
 			pushAt(super.size(), bools);
 			return this;
 		}
@@ -1561,23 +1742,23 @@ public class KL {
 			}
 			return true;
 		}
-		Bool_Arr popEvery(Predicate<? super Boolean> fn) {
+		BoolArr popEvery(Predicate<? super Boolean> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		Bool_Arr popEach(Predicate<? super Boolean> fn) {
+		BoolArr popEach(Predicate<? super Boolean> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Bool_Arr popIf(Predicate<? super Boolean> fn) {
+		BoolArr popIf(Predicate<? super Boolean> fn) {
 			popEvery(fn);
 			return this;
 		}
-		Bool_Arr map(UnaryOperator<Boolean> fn) {
+		BoolArr map(UnaryOperator<Boolean> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		Bool_Arr unique() {
+		BoolArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1590,10 +1771,10 @@ public class KL {
 		boolean has(boolean x) {
 			return super.contains(x);
 		}
-		boolean index(int i) {
+		boolean i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : false;
 		}
-		Bool_Arr update(int i, boolean x) {
+		BoolArr update(int i, boolean x) {
 			if (!has(x)) super.add(x);
 			else {
 				if (i < 0 || i > super.size()) return null;
@@ -1601,7 +1782,7 @@ public class KL {
 			}
 			return this;
 		}
-		Bool_Arr shuffle() {
+		BoolArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -1613,35 +1794,73 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		Bool_Arr sort() {
+		BoolArr sort() {
 			super.sort(null);
 			return this;
 		}
-		Bool_Arr sortReverse() {
+		BoolArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		Bool_Arr reverseSort() {
+		BoolArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		Bool_Arr reverse() {
+		BoolArr reverse() {
 			sortReverse();
 			return this;
 		}
-		Bool_Arr array() {
-			return (Bool_Arr)(super.toArray())[0];
+		boolean[] array() {
+			Boolean[] partA = super.toArray(new Boolean[0]);
+			boolean[] resultantArr = new boolean[partA.length];
+			for (int i = 0; i < partA.length; i++) {
+				resultantArr[i] = partA[i];
+			}
+			return resultantArr;
+		}
+		ArrayList<Boolean> list() {
+			ArrayList<Boolean> result = new ArrayList<>();
+			BoolArr clone = copy();
+			for (int i : idx(clone)) result.add(clone.i(i));
+			return result;
 		}
 		String string() {
 			return super.toString();
 		}
-		Bool_Arr slice(int x, int y) {
-			return (Bool_Arr)(super.subList(x, y).toArray())[0];
+		BoolArr slice(int x, int y) {
+			return (BoolArr)(super.subList(x, y).toArray())[0];
 		}
-		Bool_Arr copy() {
-			return (Bool_Arr)super.clone();
+		BoolArr empty() {
+			super.clear();
+			return this;
 		}
-		Bool_Arr each(Consumer<? super Boolean> fn) {
+		boolean compare(BoolArr arrB) {
+			BoolArr arrA = copy();
+			arrA.sort();
+			arrB.sort();
+			return arrA.equals(arrB);
+		}
+		BoolArr combine(BoolArr arrB) {
+			BoolArr arrA = copy();
+			ArrayList<Boolean> combined = new ArrayList<>();
+			combined.addAll(arrA);
+			combined.addAll(arrB);
+			empty();
+			super.addAll(combined);
+			return this;
+		}
+		BoolArr union(BoolArr arrB) {
+			combine(arrB);
+			return this;
+		}
+		BoolArr intersection(BoolArr arrB) {
+			super.retainAll(arrB);
+			return this;
+		}
+		BoolArr copy() {
+			return (BoolArr)super.clone();
+		}
+		BoolArr each(Consumer<? super Boolean> fn) {
 			super.forEach(fn);
 			return this;
 		}
@@ -1656,10 +1875,191 @@ public class KL {
 		}
 	}
 
-	public static Int_Arr range(int n) {
-		Int_Arr arr = new Int_Arr();
+	public static IntArr range(int n) {
+		IntArr arr = new IntArr();
 		for (int i = 0; i < n; i++) arr.add(i);
 		return arr;
+	}
+	public static IntArr idx(String[] arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(int[] arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(long[] arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(float[] arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(double[] arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(boolean[] arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(StrArr arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(IntArr arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(LongArr arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(FltArr arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(DblArr arr) {
+		return range(len(arr));
+	}
+	public static IntArr idx(BoolArr arr) {
+		return range(len(arr));
+	}
+	public static void each(String[] iterable, ObjIntConsumer<String> consumer) {
+		int i = 0;
+		for (String item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(StrArr iterable, ObjIntConsumer<String> consumer) {
+		int i = 0;
+		for (String item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(int[] iterable, ObjIntConsumer<Integer> consumer) {
+		int i = 0;
+		for (int item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(IntArr iterable, ObjIntConsumer<Integer> consumer) {
+		int i = 0;
+		for (int item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(long[] iterable, ObjIntConsumer<Long> consumer) {
+		int i = 0;
+		for (long item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(LongArr iterable, ObjIntConsumer<Long> consumer) {
+		int i = 0;
+		for (long item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(float[] iterable, ObjIntConsumer<Float> consumer) {
+		int i = 0;
+		for (float item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(FltArr iterable, ObjIntConsumer<Float> consumer) {
+		int i = 0;
+		for (float item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(double[] iterable, ObjIntConsumer<Double> consumer) {
+		int i = 0;
+		for (double item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(DblArr iterable, ObjIntConsumer<Double> consumer) {
+		int i = 0;
+		for (double item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
+		int i = 0;
+		for (boolean item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void each(BoolArr iterable, ObjIntConsumer<Boolean> consumer) {
+		int i = 0;
+		for (boolean item : iterable) {
+			consumer.accept(item, i);
+			i++;
+		}
+	}
+	public static void forEach(String[] iterable, ObjIntConsumer<String> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(StrArr iterable, ObjIntConsumer<String> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(int[] iterable, ObjIntConsumer<Integer> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(IntArr iterable, ObjIntConsumer<Integer> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(long[] iterable, ObjIntConsumer<Long> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(LongArr iterable, ObjIntConsumer<Long> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(float[] iterable, ObjIntConsumer<Float> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(FltArr iterable, ObjIntConsumer<Float> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(double[] iterable, ObjIntConsumer<Double> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(DblArr iterable, ObjIntConsumer<Double> consumer) {
+		each(iterable, consumer);
+	}
+	public static void forEach(boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
+		each(iterable, consumer);
+	}
+	public static String[] map(String[] arr, Function<String, String> func) {
+        if (arr == null || func == null) {
+            throw new IllegalArgumentException("Array and function cannot be null");
+        }
+        String[] result = new String[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            result[i] = func.apply(arr[i]);
+        }
+        return result;
+    }
+	public static int[] map(int[] array, IntUnaryOperator operator) {
+		return Arrays.stream(array)
+			   .map(operator)
+			   .toArray();
+	}
+	public static long[] map(long[] array, LongUnaryOperator operator) {
+		return Arrays.stream(array)
+			   .map(operator)
+			   .toArray();
+	}
+	public static double[] map(double[] array, DoubleUnaryOperator operator) {
+		return Arrays.stream(array)
+			   .map(operator)
+			   .toArray();
+	}
+	public static void forEach(BoolArr iterable, ObjIntConsumer<Boolean> consumer) {
+		each(iterable, consumer);
 	}
 	public static void repeat(Runnable fn, int times) {
 		for (; times > 0; times--) new Thread(fn).run();
@@ -1982,16 +2382,19 @@ public class KL {
 
 
 	//utilities
-	public static <T> void println(T... args) {
-		for (T arg : args) {
+	public static void println(Object... args) {
+		for (Object arg : args) {
 			System.out.print(arg + " ");
 		}
 	}
-	public static <T> void print(T... args) {
-		for (T arg : args) {
+	public static void print(Object... args) {
+		for (Object arg : args) {
 			System.out.print(arg + " ");
 		}
 		System.out.print("\n");
+	}
+	public static void printf(String str, Object... args) {
+		print(f(str, args));
 	}
 
 	//printing arrays
@@ -2013,22 +2416,22 @@ public class KL {
 	public static void printArr(boolean arr[]) {
 		print(Arrays.toString(arr));
 	}
-	public static void printArr(Str_Arr arr) {
+	public static void printArr(StrArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(Int_Arr arr) {
+	public static void printArr(IntArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(Long_Arr arr) {
+	public static void printArr(LongArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(Flt_Arr arr) {
+	public static void printArr(FltArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(Dbl_Arr arr) {
+	public static void printArr(DblArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(Bool_Arr arr) {
+	public static void printArr(BoolArr arr) {
 		print(arr.toString());
 	}
 	public static void printAll(String arr[]) {
@@ -2049,22 +2452,22 @@ public class KL {
 	public static void printAll(boolean arr[]) {
 		printArr(arr);
 	}
-	public static void printAll(Str_Arr arr) {
+	public static void printAll(StrArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(Int_Arr arr) {
+	public static void printAll(IntArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(Long_Arr arr) {
+	public static void printAll(LongArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(Flt_Arr arr) {
+	public static void printAll(FltArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(Dbl_Arr arr) {
+	public static void printAll(DblArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(Bool_Arr arr) {
+	public static void printAll(BoolArr arr) {
 		printArr(arr);
 	}
 	public static void printEach(String arr[]) {
@@ -2085,78 +2488,81 @@ public class KL {
 	public static void printEach(boolean arr[]) {
 		printArr(arr);
 	}
-	public static void printEach(Str_Arr arr) {
+	public static void printEach(StrArr arr) {
 		printArr(arr);
 	}
-	public static void printEach(Int_Arr arr) {
+	public static void printEach(IntArr arr) {
 		printArr(arr);
 	}
-	public static void printEach(Long_Arr arr) {
+	public static void printEach(LongArr arr) {
 		printArr(arr);
 	}
-	public static void printEach(Flt_Arr arr) {
+	public static void printEach(FltArr arr) {
 		printArr(arr);
 	}
-	public static void printEach(Dbl_Arr arr) {
+	public static void printEach(DblArr arr) {
 		printArr(arr);
 	}
-	public static void printEach(Bool_Arr arr) {
+	public static void printEach(BoolArr arr) {
 		printArr(arr);
 	}
 
 	//getting user input
-	public static String scan(String s) {
+	public static String ask(String s) {
 		print(s);
 		Scanner input = new Scanner(System.in);
 		String x = input.nextLine();
 		return x;
 	}
-	public static int scani(String s) {
+	public static int askI(String s) {
 		print(s);
 		Scanner input = new Scanner(System.in);
 		int x = input.nextInt();
 		return x;
 	}
-	public static long scanl(String s) {
+	public static int askC(String s) {
+		print(s);
+		Scanner input = new Scanner(System.in);
+		char x = input.next().charAt(0);
+		return x;
+	}
+	public static long askL(String s) {
 		print(s);
 		Scanner input = new Scanner(System.in);
 		long x = input.nextLong();
 		return x;
 	}
-	public static float scanf(String s) {
+	public static float askF(String s) {
 		print(s);
 		Scanner input = new Scanner(System.in);
 		float x = input.nextFloat();
 		return x;
 	}
-	public static double scand(String s) {
+	public static double askD(String s) {
 		print(s);
 		Scanner input = new Scanner(System.in);
 		double x = input.nextDouble();
 		return x;
 	}
-	public static String ask(String s) {
-		return scan(s);
+	public static int askInt(String s) {
+		return askI(s);
 	}
-	public static int aski(String s) {
-		return scani(s);
+	public static int askChar(String s) {
+		return askC(s);
 	}
-	public static long askl(String s) {
-		return scanl(s);
+	public static long askLong(String s) {
+		return askL(s);
 	}
-	public static float askf(String s) {
-		return scanf(s);
+	public static float askFloat(String s) {
+		return askF(s);
 	}
-	public static double askd(String s) {
-		return scand(s);
+	public static double askDouble(String s) {
+		return askD(s);
 	}
 	public static void br(int n) {
 		for (; n > 0; n--) print("\n");
 	}
 	public static void br() {
-		br(1);
-	}
-	public static void next() {
 		br(1);
 	}
 	public static String String(String arg) {
@@ -2208,22 +2614,22 @@ public class KL {
 	public static String String(boolean[] arr) {
 		return arr.toString();
 	}
-	public static String String(Str_Arr arr) {
+	public static String String(StrArr arr) {
 		return arr.toString();
 	}
-	public static String String(Int_Arr arr) {
+	public static String String(IntArr arr) {
 		return arr.toString();
 	}
-	public static String String(Long_Arr arr) {
+	public static String String(LongArr arr) {
 		return arr.toString();
 	}
-	public static String String(Flt_Arr arr) {
+	public static String String(FltArr arr) {
 		return arr.toString();
 	}
-	public static String String(Dbl_Arr arr) {
+	public static String String(DblArr arr) {
 		return arr.toString();
 	}
-	public static String String(Bool_Arr arr) {
+	public static String String(BoolArr arr) {
 		return arr.toString();
 	}
 	public static String Str(String arg) {
@@ -2268,22 +2674,22 @@ public class KL {
 	public static String Str(boolean[] arr) {
 		return String(arr);
 	}
-	public static String Str(Str_Arr arr) {
+	public static String Str(StrArr arr) {
 		return String(arr);
 	}
-	public static String Str(Int_Arr arr) {
+	public static String Str(IntArr arr) {
 		return String(arr);
 	}
-	public static String Str(Long_Arr arr) {
+	public static String Str(LongArr arr) {
 		return String(arr);
 	}
-	public static String Str(Flt_Arr arr) {
+	public static String Str(FltArr arr) {
 		return String(arr);
 	}
-	public static String Str(Dbl_Arr arr) {
+	public static String Str(DblArr arr) {
 		return String(arr);
 	}
-	public static String Str(Bool_Arr arr) {
+	public static String Str(BoolArr arr) {
 		return String(arr);
 	}
 	public static char[] Chars(String str) {
@@ -2558,8 +2964,8 @@ public class KL {
 	public static boolean isperfmod(double n1, double n2) {
 		return mod(n1, n2) == 0;
 	}
-	public static Int_Arr divisorsOf(int n) {
-		Int_Arr arr = new Int_Arr();
+	public static IntArr divisorsOf(int n) {
+		IntArr arr = new IntArr();
 		for (int i = 2; i < n; i++) {
 			if (isperfmod(n, i)) arr.add(i);
 		}
@@ -2730,28 +3136,40 @@ public class KL {
 		}
 		return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+", "");
 	}
-	public static String farabic(int n) {
+	public static String far(int n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
 	}
-	public static String farabic(long n) {
+	public static String far(long n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
 	}
-	public static String farabic(float n) {
+	public static String far(float n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
 	}
-	public static String farabic(double n) {
+	public static String far(double n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
 	}
-	public static String fintl(int n) {
+	public static String fur(int n) {
+		return far(n);
+	}
+	public static String fur(long n) {
+		return far(n);
+	}
+	public static String fur(float n) {
+		return far(n);
+	}
+	public static String fur(double n) {
+		return far(n);
+	}
+	public static String fin(int n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
-	public static String fintl(long n) {
+	public static String fin(long n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
-	public static String fintl(float n) {
+	public static String fin(float n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
-	public static String fintl(double n) {
+	public static String fin(double n) {
 		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String f(int n) {
@@ -2790,48 +3208,48 @@ public class KL {
 		return result;
 	}
 	public static String usd(int n) {
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		String result = "US$ " + formattedN;
 		return result;
 	}
 	public static String usd(long n) {
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		String result = "US$ " + formattedN;
 		return result;
 	}
 	public static String usd(float n) {
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		String result = "US$ " + formattedN;
 		return result;
 	}
 	public static String usd(double n) {
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		String result = "US$ " + formattedN;
 		return result;
 	}
 	public static String curr(int n, String locale) {
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		if (startsWith(locale, "pk")) return pkr(n);
 		else if (startsWith(locale, "us")) return usd(n);
 		else if (len(locale) >= 1 && len(locale) < 4) return locale + " " + formattedN;
 		return formattedN;
 	}
 	public static String curr(long n, String locale) {
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		if (startsWith(locale, "pk")) return pkr(n);
 		else if (startsWith(locale, "us")) return usd(n);
 		else if (len(locale) >= 1 && len(locale) < 4) return locale + " " + formattedN;
 		return formattedN;
 	}
 	public static String curr(float n, String locale) {
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		if (startsWith(locale, "pk")) return pkr(n);
 		else if (startsWith(locale, "us")) return usd(n);
 		else if (len(locale) >= 1 && len(locale) < 4) return locale + " " + formattedN;
 		return formattedN;
 	}
 	public static String curr(double n, String locale) {
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		if (startsWith(locale, "pk")) return pkr(n);
 		else if (startsWith(locale, "us")) return usd(n);
 		else if (len(locale) >= 1 && len(locale) < 4) return upper(locale) + " " + formattedN;
@@ -2947,7 +3365,7 @@ public class KL {
 	}
 	public static String ussuffix(int n) {
 		n -= n % 1;
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
 		if (n < 800 || n > 99 * dc) return formattedN;
@@ -2992,7 +3410,7 @@ public class KL {
 	}
 	public static String ussuffix(long n) {
 		n -= n % 1;
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
 		if (n < 800 || n > 99 * dc) return formattedN;
@@ -3037,7 +3455,7 @@ public class KL {
 	}
 	public static String ussuffix(float n) {
 		n -= n % 1;
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
 		if (n < 800 || n > 99 * dc) return formattedN;
@@ -3082,7 +3500,7 @@ public class KL {
 	}
 	public static String ussuffix(double n) {
 		n -= n % 1;
-		String formattedN = fintl(n);
+		String formattedN = fin(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
 		if (n < 800 || n > 99 * dc) return formattedN;
@@ -3127,7 +3545,7 @@ public class KL {
 	}
 	public static int fibonacci(int n) {
 		if (n < 2) return n;
-		return fibonacci(n - 2) + fibonacci(n - 1);
+		return fibonacci(n - 1) + fibonacci(n - 2);
 	}
 	public static double pct(double n1, double n2) {
 		if (n1 < n2) return Math.round(n1 / n2 * 100.0) / 100.0;
@@ -3173,6 +3591,42 @@ public class KL {
 	public static boolean eq(boolean x, boolean y) {
 		return x == y;
 	}
+	public static boolean eq(String[] x, String[] y) {
+		return Arrays.equals(x, y);
+	}
+	public static boolean eq(int[] x, int[] y) {
+		return Arrays.equals(x, y);
+	}
+	public static boolean eq(long[] x, long[] y) {
+		return Arrays.equals(x, y);
+	}
+	public static boolean eq(float[] x, float[] y) {
+		return Arrays.equals(x, y);
+	}
+	public static boolean eq(double[] x, double[] y) {
+		return Arrays.equals(x, y);
+	}
+	public static boolean eq(boolean[] x, boolean[] y) {
+		return Arrays.equals(x, y);
+	}
+	public static boolean eq(StrArr x, StrArr y) {
+		return x.compare(y);
+	}
+	public static boolean eq(IntArr x, IntArr y) {
+		return x.compare(y);
+	}
+	public static boolean eq(LongArr x, LongArr y) {
+		return x.compare(y);
+	}
+	public static boolean eq(FltArr x, FltArr y) {
+		return x.compare(y);
+	}
+	public static boolean eq(DblArr x, DblArr y) {
+		return x.compare(y);
+	}
+	public static boolean eq(BoolArr x, BoolArr y) {
+		return x.compare(y);
+	}
 	public static boolean uneq(int x, int y) {
 		return !eq(x, y);
 	}
@@ -3186,6 +3640,42 @@ public class KL {
 		return !eq(x, y);
 	}
 	public static boolean uneq(boolean x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(String[] x, String[] y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(int[] x, int[] y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(long[] x, long[] y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(float[] x, float[] y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(double[] x, double[] y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(boolean[] x, boolean[] y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(StrArr x, StrArr y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(IntArr x, IntArr y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(LongArr x, LongArr y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(FltArr x, FltArr y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(DblArr x, DblArr y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(BoolArr x, BoolArr y) {
 		return !eq(x, y);
 	}
 	public static boolean both(String... strings) {
@@ -3350,22 +3840,22 @@ public class KL {
 	public static boolean not(boolean[] arr) {
 		return isEmpty(arr);
 	}
-	public static boolean not(Str_Arr arr) {
+	public static boolean not(StrArr arr) {
 		return isEmpty(arr);
 	}
-	public static boolean not(Int_Arr arr) {
+	public static boolean not(IntArr arr) {
 		return isEmpty(arr);
 	}
-	public static boolean not(Long_Arr arr) {
+	public static boolean not(LongArr arr) {
 		return isEmpty(arr);
 	}
-	public static boolean not(Flt_Arr arr) {
+	public static boolean not(FltArr arr) {
 		return isEmpty(arr);
 	}
-	public static boolean not(Dbl_Arr arr) {
+	public static boolean not(DblArr arr) {
 		return isEmpty(arr);
 	}
-	public static boolean not(Bool_Arr arr) {
+	public static boolean not(BoolArr arr) {
 		return isEmpty(arr);
 	}
 	public static boolean is(String s) {
@@ -3404,22 +3894,22 @@ public class KL {
 	public static boolean is(boolean[] arr) {
 		return !not(arr);
 	}
-	public static boolean is(Str_Arr arr) {
+	public static boolean is(StrArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(Int_Arr arr) {
+	public static boolean is(IntArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(Long_Arr arr) {
+	public static boolean is(LongArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(Flt_Arr arr) {
+	public static boolean is(FltArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(Dbl_Arr arr) {
+	public static boolean is(DblArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(Bool_Arr arr) {
+	public static boolean is(BoolArr arr) {
 		return !not(arr);
 	}
 	public static boolean xor(boolean a, boolean b) {
@@ -3471,6 +3961,9 @@ public class KL {
 	public static char randChar() {
 		return randChar(47, 127);
 	}
+	public static String randId() {
+		return UUID.randomUUID().toString();
+	}
 	public static String randItem(String arr[]) {
 		return arr[randInt(arr.length)];
 	}
@@ -3489,22 +3982,22 @@ public class KL {
 	public static boolean randItem(boolean arr[]) {
 		return arr[randInt(arr.length)];
 	}
-	public static String randItem(Str_Arr arr) {
+	public static String randItem(StrArr arr) {
 		return arr.get(randInt(arr.length()));
 	}
-	public static int randItem(Int_Arr arr) {
+	public static int randItem(IntArr arr) {
 		return arr.get(randInt(arr.length()));
 	}
-	public static long randItem(Long_Arr arr) {
+	public static long randItem(LongArr arr) {
 		return arr.get(randInt(arr.length()));
 	}
-	public static float randItem(Flt_Arr arr) {
+	public static float randItem(FltArr arr) {
 		return arr.get(randInt(arr.length()));
 	}
-	public static double randItem(Dbl_Arr arr) {
+	public static double randItem(DblArr arr) {
 		return arr.get(randInt(arr.length()));
 	}
-	public static boolean randItem(Bool_Arr arr) {
+	public static boolean randItem(BoolArr arr) {
 		return arr.get(randInt(arr.length()));
 	}
 	public static String randFrom(String arr[]) {
@@ -3525,22 +4018,22 @@ public class KL {
 	public static boolean randFrom(boolean arr[]) {
 		return randItem(arr);
 	}
-	public static String randFrom(Str_Arr arr) {
+	public static String randFrom(StrArr arr) {
 		return randItem(arr);
 	}
-	public static int randFrom(Int_Arr arr) {
+	public static int randFrom(IntArr arr) {
 		return randItem(arr);
 	}
-	public static long randFrom(Long_Arr arr) {
+	public static long randFrom(LongArr arr) {
 		return randItem(arr);
 	}
-	public static float randFrom(Flt_Arr arr) {
+	public static float randFrom(FltArr arr) {
 		return randItem(arr);
 	}
-	public static double randFrom(Dbl_Arr arr) {
+	public static double randFrom(DblArr arr) {
 		return randItem(arr);
 	}
-	public static boolean randFrom(Bool_Arr arr) {
+	public static boolean randFrom(BoolArr arr) {
 		return randItem(arr);
 	}
 	public static String any(String arr[]) {
@@ -3561,22 +4054,22 @@ public class KL {
 	public static boolean any(boolean arr[]) {
 		return randItem(arr);
 	}
-	public static String any(Str_Arr arr) {
+	public static String any(StrArr arr) {
 		return randItem(arr);
 	}
-	public static int any(Int_Arr arr) {
+	public static int any(IntArr arr) {
 		return randItem(arr);
 	}
-	public static long any(Long_Arr arr) {
+	public static long any(LongArr arr) {
 		return randItem(arr);
 	}
-	public static float any(Flt_Arr arr) {
+	public static float any(FltArr arr) {
 		return randItem(arr);
 	}
-	public static double any(Dbl_Arr arr) {
+	public static double any(DblArr arr) {
 		return randItem(arr);
 	}
-	public static boolean any(Bool_Arr arr) {
+	public static boolean any(BoolArr arr) {
 		return randItem(arr);
 	}
 	public static int[] noDuplicates(int[] arr) {
@@ -3588,22 +4081,22 @@ public class KL {
 	public static double[] noDuplicates(double[] arr) {
 		return DoubleStream.of(arr).distinct().toArray();
 	}
-	public static Str_Arr noDuplicates(Str_Arr arr) {
+	public static StrArr noDuplicates(StrArr arr) {
 		return arr.unique();
 	}
-	public static Int_Arr noDuplicates(Int_Arr arr) {
+	public static IntArr noDuplicates(IntArr arr) {
 		return arr.unique();
 	}
-	public static Long_Arr noDuplicates(Long_Arr arr) {
+	public static LongArr noDuplicates(LongArr arr) {
 		return arr.unique();
 	}
-	public static Flt_Arr noDuplicates(Flt_Arr arr) {
+	public static FltArr noDuplicates(FltArr arr) {
 		return arr.unique();
 	}
-	public static Dbl_Arr noDuplicates(Dbl_Arr arr) {
+	public static DblArr noDuplicates(DblArr arr) {
 		return arr.unique();
 	}
-	public static Bool_Arr noDuplicates(Bool_Arr arr) {
+	public static BoolArr noDuplicates(BoolArr arr) {
 		return arr.unique();
 	}
 	public static String replace(String str, String to_replace, String regex_to_replace_with) {
@@ -3636,22 +4129,22 @@ public class KL {
 	public static boolean[] slice(boolean arr[]) {
 		return arr.clone();
 	}
-	public static Str_Arr slice(Str_Arr arr) {
+	public static StrArr slice(StrArr arr) {
 		return arr.copy();
 	}
-	public static Int_Arr slice(Int_Arr arr) {
+	public static IntArr slice(IntArr arr) {
 		return arr.copy();
 	}
-	public static Long_Arr slice(Long_Arr arr) {
+	public static LongArr slice(LongArr arr) {
 		return arr.copy();
 	}
-	public static Flt_Arr slice(Flt_Arr arr) {
+	public static FltArr slice(FltArr arr) {
 		return arr.copy();
 	}
-	public static Dbl_Arr slice(Dbl_Arr arr) {
+	public static DblArr slice(DblArr arr) {
 		return arr.copy();
 	}
-	public static Bool_Arr slice(Bool_Arr arr) {
+	public static BoolArr slice(BoolArr arr) {
 		return arr.copy();
 	}
 	public static String slice(String str, int start) {
@@ -3681,22 +4174,22 @@ public class KL {
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
 		return newArr;
 	}
-	public static Str_Arr slice(Str_Arr arr, int start) {
+	public static StrArr slice(StrArr arr, int start) {
 		return arr.slice(start, arr.length());
 	}
-	public static Int_Arr slice(Int_Arr arr, int start) {
+	public static IntArr slice(IntArr arr, int start) {
 		return arr.slice(start, arr.length());
 	}
-	public static Long_Arr slice(Long_Arr arr, int start) {
+	public static LongArr slice(LongArr arr, int start) {
 		return arr.slice(start, arr.length());
 	}
-	public static Flt_Arr slice(Flt_Arr arr, int start) {
+	public static FltArr slice(FltArr arr, int start) {
 		return arr.slice(start, arr.length());
 	}
-	public static Dbl_Arr slice(Dbl_Arr arr, int start) {
+	public static DblArr slice(DblArr arr, int start) {
 		return arr.slice(start, arr.length());
 	}
-	public static Bool_Arr slice(Bool_Arr arr, int start) {
+	public static BoolArr slice(BoolArr arr, int start) {
 		return arr.slice(start, arr.length());
 	}
 	public static String slice(String str, int start, int end) {
@@ -3726,22 +4219,22 @@ public class KL {
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
-	public static Str_Arr slice(Str_Arr arr, int start, int end) {
+	public static StrArr slice(StrArr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
-	public static Int_Arr slice(Int_Arr arr, int start, int end) {
+	public static IntArr slice(IntArr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
-	public static Long_Arr slice(Long_Arr arr, int start, int end) {
+	public static LongArr slice(LongArr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
-	public static Flt_Arr slice(Flt_Arr arr, int start, int end) {
+	public static FltArr slice(FltArr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
-	public static Dbl_Arr slice(Dbl_Arr arr, int start, int end) {
+	public static DblArr slice(DblArr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
-	public static Bool_Arr slice(Bool_Arr arr, int start, int end) {
+	public static BoolArr slice(BoolArr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
 	public static String sliceEnd(String str, int start) {
@@ -3765,22 +4258,22 @@ public class KL {
 	public static boolean[] sliceEnd(boolean[] arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
-	public static Str_Arr sliceEnd(Str_Arr arr, int start) {
+	public static StrArr sliceEnd(StrArr arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
-	public static Int_Arr sliceEnd(Int_Arr arr, int start) {
+	public static IntArr sliceEnd(IntArr arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
-	public static Long_Arr sliceEnd(Long_Arr arr, int start) {
+	public static LongArr sliceEnd(LongArr arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
-	public static Flt_Arr sliceEnd(Flt_Arr arr, int start) {
+	public static FltArr sliceEnd(FltArr arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
-	public static Dbl_Arr sliceEnd(Dbl_Arr arr, int start) {
+	public static DblArr sliceEnd(DblArr arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
-	public static Bool_Arr sliceEnd(Bool_Arr arr, int start) {
+	public static BoolArr sliceEnd(BoolArr arr, int start) {
 		return slice(arr, len(arr) - start);
 	}
 	public static String trim(String str) {
@@ -3804,22 +4297,22 @@ public class KL {
 	public static boolean[] trim(boolean[] arr) {
 		return slice(arr);
 	}
-	public static Str_Arr trim(Str_Arr arr) {
+	public static StrArr trim(StrArr arr) {
 		return slice(arr);
 	}
-	public static Int_Arr trim(Int_Arr arr) {
+	public static IntArr trim(IntArr arr) {
 		return slice(arr);
 	}
-	public static Long_Arr trim(Long_Arr arr) {
+	public static LongArr trim(LongArr arr) {
 		return slice(arr);
 	}
-	public static Flt_Arr trim(Flt_Arr arr) {
+	public static FltArr trim(FltArr arr) {
 		return slice(arr);
 	}
-	public static Dbl_Arr trim(Dbl_Arr arr) {
+	public static DblArr trim(DblArr arr) {
 		return slice(arr);
 	}
-	public static Bool_Arr trim(Bool_Arr arr) {
+	public static BoolArr trim(BoolArr arr) {
 		return slice(arr);
 	}
 	public static String trim(String str, int start) {
@@ -3843,22 +4336,22 @@ public class KL {
 	public static boolean[] trim(boolean[] arr, int start) {
 		return slice(arr, start);
 	}
-	public static Str_Arr trim(Str_Arr arr, int start) {
+	public static StrArr trim(StrArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static Int_Arr trim(Int_Arr arr, int start) {
+	public static IntArr trim(IntArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static Long_Arr trim(Long_Arr arr, int start) {
+	public static LongArr trim(LongArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static Flt_Arr trim(Flt_Arr arr, int start) {
+	public static FltArr trim(FltArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static Dbl_Arr trim(Dbl_Arr arr, int start) {
+	public static DblArr trim(DblArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static Bool_Arr trim(Bool_Arr arr, int start) {
+	public static BoolArr trim(BoolArr arr, int start) {
 		return slice(arr, start);
 	}
 	public static String trim(String str, int start, int end) {
@@ -3882,22 +4375,22 @@ public class KL {
 	public static boolean[] trim(boolean[] arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static Str_Arr trim(Str_Arr arr, int start, int end) {
+	public static StrArr trim(StrArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static Int_Arr trim(Int_Arr arr, int start, int end) {
+	public static IntArr trim(IntArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static Long_Arr trim(Long_Arr arr, int start, int end) {
+	public static LongArr trim(LongArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static Flt_Arr trim(Flt_Arr arr, int start, int end) {
+	public static FltArr trim(FltArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static Dbl_Arr trim(Dbl_Arr arr, int start, int end) {
+	public static DblArr trim(DblArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static Bool_Arr trim(Bool_Arr arr, int start, int end) {
+	public static BoolArr trim(BoolArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
 	public static String trimEnd(String str, int start) {
@@ -3921,22 +4414,22 @@ public class KL {
 	public static boolean[] trimEnd(boolean[] arr, int start) {
 		return sliceEnd(arr, start);
 	}
-	public static Str_Arr trimEnd(Str_Arr arr, int start) {
+	public static StrArr trimEnd(StrArr arr, int start) {
 		return sliceEnd(arr, start);
 	}
-	public static Int_Arr trimEnd(Int_Arr arr, int start) {
+	public static IntArr trimEnd(IntArr arr, int start) {
 		return sliceEnd(arr, start);
 	}
-	public static Long_Arr trimEnd(Long_Arr arr, int start) {
+	public static LongArr trimEnd(LongArr arr, int start) {
 		return sliceEnd(arr, start);
 	}
-	public static Flt_Arr trimEnd(Flt_Arr arr, int start) {
+	public static FltArr trimEnd(FltArr arr, int start) {
 		return sliceEnd(arr, start);
 	}
-	public static Dbl_Arr trimEnd(Dbl_Arr arr, int start) {
+	public static DblArr trimEnd(DblArr arr, int start) {
 		return sliceEnd(arr, start);
 	}
-	public static Bool_Arr trimEnd(Bool_Arr arr, int start) {
+	public static BoolArr trimEnd(BoolArr arr, int start) {
 		return sliceEnd(arr, start);
 	}
 	public static String sliceTo(String str, String thatSpecificPart) {
@@ -4297,22 +4790,22 @@ public class KL {
 	public static boolean[] clone(boolean[] arr) {
 		return slice(arr);
 	}
-	public static Str_Arr clone(Str_Arr arr) {
+	public static StrArr clone(StrArr arr) {
 		return slice(arr);
 	}
-	public static Int_Arr clone(Int_Arr arr) {
+	public static IntArr clone(IntArr arr) {
 		return slice(arr);
 	}
-	public static Long_Arr clone(Long_Arr arr) {
+	public static LongArr clone(LongArr arr) {
 		return slice(arr);
 	}
-	public static Flt_Arr clone(Flt_Arr arr) {
+	public static FltArr clone(FltArr arr) {
 		return slice(arr);
 	}
-	public static Dbl_Arr clone(Dbl_Arr arr) {
+	public static DblArr clone(DblArr arr) {
 		return slice(arr);
 	}
-	public static Bool_Arr clone(Bool_Arr arr) {
+	public static BoolArr clone(BoolArr arr) {
 		return slice(arr);
 	}
 	public static String[] copyArr(String[] arr) {
@@ -4333,35 +4826,152 @@ public class KL {
 	public static boolean[] copyArr(boolean[] arr) {
 		return clone(arr);
 	}
-	public static Str_Arr copyArr(Str_Arr arr) {
+	public static StrArr copyArr(StrArr arr) {
 		return clone(arr);
 	}
-	public static Int_Arr copyArr(Int_Arr arr) {
+	public static IntArr copyArr(IntArr arr) {
 		return clone(arr);
 	}
-	public static Long_Arr copyArr(Long_Arr arr) {
+	public static LongArr copyArr(LongArr arr) {
 		return clone(arr);
 	}
-	public static Flt_Arr copyArr(Flt_Arr arr) {
+	public static FltArr copyArr(FltArr arr) {
 		return clone(arr);
 	}
-	public static Dbl_Arr copyArr(Dbl_Arr arr) {
+	public static DblArr copyArr(DblArr arr) {
 		return clone(arr);
 	}
-	public static Bool_Arr copyArr(Bool_Arr arr) {
+	public static BoolArr copyArr(BoolArr arr) {
 		return clone(arr);
 	}
-	public static String[] union(String[] arrA, String[] arrB) {
-		return Stream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray(String[]::new);
+	public static String[] combine(String[] arrA, String[] arrB) {
+		int length1 = arrA.length;
+		int length2 = arrB.length;
+		String[] result = new String[length1 + length2];
+		System.arraycopy(arrA, 0, result, 0, length1);
+		System.arraycopy(arrB, 0, result, length1, length2);
+		return result;
 	}
-	public static int[] union(int[] arrA, int[] arrB) {
+	public static int[] combine(int[] arrA, int[] arrB) {
 		return IntStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
 	}
-	public static long[] union(long[] arrA, long[] arrB) {
+	public static long[] combine(long[] arrA, long[] arrB) {
 		return LongStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
 	}
-	public static double[] union(double[] arrA, double[] arrB) {
+	public static float[] combine(float[] arrA, float[] arrB) {
+		int length1 = arrA.length;
+		int length2 = arrB.length;
+		float[] result = new float[length1 + length2];
+		System.arraycopy(arrA, 0, result, 0, length1);
+		System.arraycopy(arrB, 0, result, length1, length2);
+		return result;
+	}
+	public static double[] combine(double[] arrA, double[] arrB) {
 		return DoubleStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
+	}
+	public static boolean[] combine(boolean[] arrA, boolean[] arrB) {
+		int length1 = arrA.length;
+		int length2 = arrB.length;
+		boolean[] result = new boolean[length1 + length2];
+		System.arraycopy(arrA, 0, result, 0, length1);
+		System.arraycopy(arrB, 0, result, length1, length2);
+		return result;
+	}
+	public static StrArr combine(StrArr arrA, StrArr arrB) {
+		return arrA.combine(arrB);
+	}
+	public static IntArr combine(IntArr arrA, IntArr arrB) {
+		return arrA.combine(arrB);
+	}
+	public static LongArr combine(LongArr arrA, LongArr arrB) {
+		return arrA.combine(arrB);
+	}
+	public static FltArr combine(FltArr arrA, FltArr arrB) {
+		return arrA.combine(arrB);
+	}
+	public static DblArr combine(DblArr arrA, DblArr arrB) {
+		return arrA.combine(arrB);
+	}
+	public static BoolArr combine(BoolArr arrA, BoolArr arrB) {
+		return arrA.combine(arrB);
+	}
+	public static String[] intersection(String[] arrA, String[] arrB) {
+		StrArr result = new StrArr();
+		for (int i : idx(arrA)) {
+			for (int j : idx(arrB)) {
+				if (eq(arrA[i], arrB[j]))
+					result.push(arrA[i]);
+			}
+		}
+		return result.array();
+	}
+	public static int[] intersection(int[] arrA, int[] arrB) {
+		IntArr result = new IntArr();
+		for (int i : idx(arrA)) {
+			for (int j : idx(arrB)) {
+				if (eq(arrA[i], arrB[j]))
+					result.push(arrA[i]);
+			}
+		}
+		return result.array();
+	}
+	public static long[] intersection(long[] arrA, long[] arrB) {
+		LongArr result = new LongArr();
+		for (int i : idx(arrA)) {
+			for (int j : idx(arrB)) {
+				if (eq(arrA[i], arrB[j]))
+					result.push(arrA[i]);
+			}
+		}
+		return result.array();
+	}
+	public static float[] intersection(float[] arrA, float[] arrB) {
+		FltArr result = new FltArr();
+		for (int i : idx(arrA)) {
+			for (int j : idx(arrB)) {
+				if (eq(arrA[i], arrB[j]))
+					result.push(arrA[i]);
+			}
+		}
+		return result.array();
+	}
+	public static double[] intersection(double[] arrA, double[] arrB) {
+		DblArr result = new DblArr();
+		for (int i : idx(arrA)) {
+			for (int j : idx(arrB)) {
+				if (eq(arrA[i], arrB[j]))
+					result.push(arrA[i]);
+			}
+		}
+		return result.array();
+	}
+	public static boolean[] intersection(boolean[] arrA, boolean[] arrB) {
+		BoolArr result = new BoolArr();
+		for (int i : idx(arrA)) {
+			for (int j : idx(arrB)) {
+				if (eq(arrA[i], arrB[j]))
+					result.push(arrA[i]);
+			}
+		}
+		return result.array();
+	}
+	public static StrArr intersection(StrArr arrA, StrArr arrB) {
+		return arrA.intersection(arrB);
+	}
+	public static IntArr intersection(IntArr arrA, IntArr arrB) {
+		return arrA.intersection(arrB);
+	}
+	public static LongArr intersection(LongArr arrA, LongArr arrB) {
+		return arrA.intersection(arrB);
+	}
+	public static FltArr intersection(FltArr arrA, FltArr arrB) {
+		return arrA.intersection(arrB);
+	}
+	public static DblArr intersection(DblArr arrA, DblArr arrB) {
+		return arrA.intersection(arrB);
+	}
+	public static BoolArr intersection(BoolArr arrA, BoolArr arrB) {
+		return arrA.intersection(arrB);
 	}
 	public static String upper(String s) {
 		s = s.toUpperCase();
@@ -4461,22 +5071,22 @@ public class KL {
 	public static int len(boolean arr[]) {
 		return arr.length;
 	}
-	public static int len(Str_Arr arr) {
+	public static int len(StrArr arr) {
 		return arr.length();
 	}
-	public static int len(Int_Arr arr) {
+	public static int len(IntArr arr) {
 		return arr.length();
 	}
-	public static int len(Long_Arr arr) {
+	public static int len(LongArr arr) {
 		return arr.length();
 	}
-	public static int len(Flt_Arr arr) {
+	public static int len(FltArr arr) {
 		return arr.length();
 	}
-	public static int len(Dbl_Arr arr) {
+	public static int len(DblArr arr) {
 		return arr.length();
 	}
-	public static int len(Bool_Arr arr) {
+	public static int len(BoolArr arr) {
 		return arr.length();
 	}
 	public static int size(String str) {
@@ -4506,22 +5116,22 @@ public class KL {
 	public static int size(boolean arr[]) {
 		return len(arr);
 	}
-	public static int size(Str_Arr arr) {
+	public static int size(StrArr arr) {
 		return len(arr);
 	}
-	public static int size(Int_Arr arr) {
+	public static int size(IntArr arr) {
 		return len(arr);
 	}
-	public static int size(Long_Arr arr) {
+	public static int size(LongArr arr) {
 		return len(arr);
 	}
-	public static int size(Flt_Arr arr) {
+	public static int size(FltArr arr) {
 		return len(arr);
 	}
-	public static int size(Dbl_Arr arr) {
+	public static int size(DblArr arr) {
 		return len(arr);
 	}
-	public static int size(Bool_Arr arr) {
+	public static int size(BoolArr arr) {
 		return len(arr);
 	}
 	public static boolean isEmpty(String s) {
@@ -4551,22 +5161,22 @@ public class KL {
 	public static boolean isEmpty(boolean[] arr) {
 		return 0 == len(arr);
 	}
-	public static boolean isEmpty(Str_Arr arr) {
+	public static boolean isEmpty(StrArr arr) {
 		return 0 == len(arr);
 	}
-	public static boolean isEmpty(Int_Arr arr) {
+	public static boolean isEmpty(IntArr arr) {
 		return 0 == len(arr);
 	}
-	public static boolean isEmpty(Long_Arr arr) {
+	public static boolean isEmpty(LongArr arr) {
 		return 0 == len(arr);
 	}
-	public static boolean isEmpty(Flt_Arr arr) {
+	public static boolean isEmpty(FltArr arr) {
 		return 0 == len(arr);
 	}
-	public static boolean isEmpty(Dbl_Arr arr) {
+	public static boolean isEmpty(DblArr arr) {
 		return 0 == len(arr);
 	}
-	public static boolean isEmpty(Bool_Arr arr) {
+	public static boolean isEmpty(BoolArr arr) {
 		return 0 == len(arr);
 	}
 
@@ -4619,22 +5229,22 @@ public class KL {
 		}
 		return data;
 	}
-	public static void reverse(Str_Arr arr) {
+	public static void reverse(StrArr arr) {
 		arr.reverse();
 	}
-	public static void reverse(Int_Arr arr) {
+	public static void reverse(IntArr arr) {
 		arr.reverse();
 	}
-	public static void reverse(Long_Arr arr) {
+	public static void reverse(LongArr arr) {
 		arr.reverse();
 	}
-	public static void reverse(Flt_Arr arr) {
+	public static void reverse(FltArr arr) {
 		arr.reverse();
 	}
-	public static void reverse(Dbl_Arr arr) {
+	public static void reverse(DblArr arr) {
 		arr.reverse();
 	}
-	public static void reverse(Bool_Arr arr) {
+	public static void reverse(BoolArr arr) {
 		arr.reverse();
 	}
 	public static void sort(String[] arr) {
@@ -4652,27 +5262,27 @@ public class KL {
 	public static void sort(double[] arr) {
 		Arrays.sort(arr);
 	}
-	public static void sort(Str_Arr arr) {
+	public static void sort(StrArr arr) {
 		arr.sort();
 	}
-	public static void sort(Int_Arr arr) {
+	public static void sort(IntArr arr) {
 		arr.sort();
 	}
-	public static void sort(Long_Arr arr) {
+	public static void sort(LongArr arr) {
 		arr.sort();
 	}
-	public static void sort(Flt_Arr arr) {
+	public static void sort(FltArr arr) {
 		arr.sort();
 	}
-	public static void sort(Dbl_Arr arr) {
+	public static void sort(DblArr arr) {
 		arr.sort();
 	}
-	public static void sort(Bool_Arr arr) {
+	public static void sort(BoolArr arr) {
 		arr.sort();
 	}
 	public static void sortReverse(int arr[]) {
 		int size = arr.length;
-		for (int i : arr) {
+		for (int i : idx(arr)) {
 			boolean swappingNeeded = false;
 			for (int j = 0; j < size - i - 1; j++) {
 				if (arr[j] < arr[j + 1]) {
@@ -4687,7 +5297,7 @@ public class KL {
 	}
 	public static void sortReverse(long arr[]) {
 		int size = arr.length;
-		for (long i : arr) {
+		for (long i : idx(arr)) {
 			boolean swappingNeeded = false;
 			for (int j = 0; j < size - i - 1; j++) {
 				if (arr[j] < arr[j + 1]) {
@@ -4702,7 +5312,7 @@ public class KL {
 	}
 	public static void sortReverse(float arr[]) {
 		int size = arr.length;
-		for (float i : arr) {
+		for (float i : idx(arr)) {
 			boolean swappingNeeded = false;
 			for (int j = 0; j < size - i - 1; j++) {
 				if (arr[j] < arr[j + 1]) {
@@ -4717,7 +5327,7 @@ public class KL {
 	}
 	public static void sortReverse(double arr[]) {
 		int size = arr.length;
-		for (double i : arr) {
+		for (double i : idx(arr)) {
 			boolean swappingNeeded = false;
 			for (int j = 0; j < size - i - 1; j++) {
 				if (arr[j] < arr[j + 1]) {
@@ -4730,22 +5340,22 @@ public class KL {
 			if (!swappingNeeded) break;
 		}
 	}
-	public static void sortReverse(Str_Arr arr) {
+	public static void sortReverse(StrArr arr) {
 		arr.sortReverse();
 	}
-	public static void sortReverse(Int_Arr arr) {
+	public static void sortReverse(IntArr arr) {
 		arr.sortReverse();
 	}
-	public static void sortReverse(Long_Arr arr) {
+	public static void sortReverse(LongArr arr) {
 		arr.sortReverse();
 	}
-	public static void sortReverse(Flt_Arr arr) {
+	public static void sortReverse(FltArr arr) {
 		arr.sortReverse();
 	}
-	public static void sortReverse(Dbl_Arr arr) {
+	public static void sortReverse(DblArr arr) {
 		arr.sortReverse();
 	}
-	public static void sortReverse(Bool_Arr arr) {
+	public static void sortReverse(BoolArr arr) {
 		arr.sortReverse();
 	}
 	public static String shuffle(String str) {
@@ -4828,7 +5438,9 @@ public class KL {
 								  rgynss = {"Ahmed Raza", "Bilal Tariq", "Usman Siddiqi", "Omar Farooq", "Waleed Kamal", "Talha Iqbal", "Faisal Latif", "Hassan Jameel", "Adnan Bashir", "Kashif Rauf", "Imran Saeed", "Adeel Qureshi", "Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid", "Faizan Khalid", "Hammad Zubair", "Naveed Aslam", "Waqar Mehmood", "Sarmad Sheikh", "Tariq Anwar", "Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain", "Mudassir Younas", "Jawad Hamid", "Ammar Khalil", "Rizwan Waheed", "Hasnain Saleem", "Basit Jamal", "Sheraz Ahmed", "Umer Shahbaz", "Arsalan Hashim", "Raheel Sultan", "Fahad Zaman", "Sajid Irfan", "Owais Rauf", "Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem", "Tauseef Haroon", "Murtaza Shah", "Maaz Asif", "Samiullah Arif", "Nabeel Qamar", "Taimoor Rauf", "Atif Nawaz", "Hashir Siddiqui", "Zubair Imran", "Abrar Hussain", "Farhan Waseem", "Umair Tariq", "Arif Ali", "Shayan Latif", "Irfan Khalid", "Hamza Masood", "Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed", "Mudassir Kamal", "Haris Younas", "Noman Waqar", "Waseem Abbas", "Faizan Rauf", "Mubashir Jamil", "Sohail Shahzad", "Ubaid Latif", "Sikandar Saeed", "Hasham Khalid", "Farrukh Hussain", "Zain Qureshi", "Arslan Abbas", "Muzammil Tariq", "Usama Rasheed", "Adeel Sultan", "Taha Iqbal", "Kamil Arshad", "Danish Rauf", "Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar", "Omer Siddiqi", "Dawood Mushtaq", "Ammar Waheed", "Fasih Shah", "Adnan Khalil", "Imran Waseem", "Waleed Anwar", "Yasir Rauf", "Arham Bashir", "Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain", "Hassan Qamar", "Usman Kamal", "Tariq Yousaf", "Owais Farooq", "Raheel Bashir", "Waqas Khalid", "Faisal Shah", "Bilal Latif", "Zeeshan Abbas", "Faizan Hussain", "Mudassir Farooq", "Kashif Khalid", "Abrar Tariq", "Umair Siddiqi", "Hamza Jameel", "Nabeel Usman", "Khalil Laghari", "Murtaza Waseem", "Sajid Waheed", "Noman Riaz", "Hashir Hussain", "Sheraz Rauf", "Ahmed Tariq", "Atif Bashir", "Omar Siddiqui", "Irfan Khalil", "Raheel Jamil", "Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran", "Waleed Hussain", "Taimoor Abbas", "Mudassir Waheed", "Umer Khalid", "Khurram Anwar", "Junaid Bashir", "Shayan Rauf", "Ahmed Hanif", "Bilal Hussain", "Umair Riaz", "Zubair Khalid", "Adeel Haroon", "Sajid Qamar", "Faizan Latif", "Hammad Saleem", "Shoaib Tariq", "Noman Anwar", "Fahad Hussain", "Hashim Waseem", "Hamza Abbas", "Arsalan Khalid", "Taha Rasheed", "Usama Farooq", "Sarim Bashir", "Khizar Waheed", "Mudassir Khalid", "Waqas Rauf", "Tariq Hussain", "Jawad Siddiqui", "Shehryar Abbas", "Naveed Tariq", "Muzammil Jamil", "Zeeshan Khalid", "Atif Hussain", "Sarmad Waqar", "Shoaib Khalid", "Ahmed Qureshi", "Raheel Abbas", "Hammad Riaz", "Sheraz Bashir", "Danish Khalid", "Adil Waheed", "Hashir Tariq", "Faizan Waseem", "Usman Abbas", "Khurram Latif", "Owais Siddiqui", "Mudassir Hussain", "Tauseef Khalid", "Farrukh Waseem", "Umer Saleem", "Hamza Rauf", "Shoaib Kamran", "Bilal Abbas", "Sajid Tariq", "Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid", "Ahmed Farooq", "Atif Khalid", "Irfan Waseem", "Junaid Tariq", "Umair Saleem", "Arsalan Hussain", "Waleed Abbas", "Adnan Waseem", "Sheraz Khalid", "Mudassir Abbas", "Shoaib Rauf", "Omar Hussain", "Raheel Khalid", "Hammad Waseem", "Waseem Farooq", "Hasham Tariq", "Faisal Khalid", "Kashif Abbas", "Tauseef Abbas", "Hamza Saleem", "Zeeshan Waseem", "Sarmad Hussain", "Bilal Khalid", "Umair Abbas", "Mudassir Riaz", "Adil Khalid", "Ahmed Abbas", "Owais Hussain"},
 								  rglnss = {"Ayesha Waleed", "Fatima Kamal", "Hira Latif", "Sana Farooq", "Mahnoor Tariq", "Faiza Tehseem", "Fozia Mehshar", "Iqra Siddiqui", "Laiba Aslam", "Anum Riaz", "Saba Kiani", "Hafsa Saeed", "Sidra Hashmi", "Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel", "Rida Abbas", "Nimra Waseem", "Huma Tariq", "Samina Khalid", "Zeenat Rauf", "Amna Waheed", "Neelam Hashmi", "Aiman Qamar", "Romaisa Hussain", "Fareeda Asif", "Sania Anwar", "Humaisa Khalil", "Asma Riaz", "Sadia Kamran", "Sehrish Waseem", "Uzma Tariq", "Mehwish Latif", "Hina Abbas", "Areeba Waqar", "Tanzeela Jafar", "Anila Saleem", "Mahira Umer", "Bushra Nadeem", "Zoya Mehmood", "Nida Hashim", "Sumaira Yasir", "Mahnoor Hussain", "Komal Saeed", "Laiba Waseem", "Amina Abbas", "Rida Jameel", "Saeeka Haroon", "Zainab Farooq", "Fatima Hussain", "Hafsa Mehmood", "Minal Khawar", "Yumna Tariq", "Ayeza Barkat", "Asia Farhan", "Kinza Jamal", "Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed", "Hira Khalid", "Amna Riaz", "Iqra Farooq", "Anum Abbas", "Mehwish Iqrar", "Sumaiya Tariq", "Romaisa Khalil", "Faiza Waseem", "Bushra Farooq", "Sadia Abbas", "Hiba Hussain", "Afshan Siddiqui", "Sana Basit", "Areeba Khalid", "Maira Waseem", "Nimra Hussain", "Sehrish Saleem", "Amna Jameel", "Zoya Khalid", "Mehreen Tariq", "Aiman Abbas", "Komal Riaz", "Hira Saleem", "Palwasha Moazzam", "Laiba Nayyar", "Minahal Tahir", "Mehwish Shuja", "Javeria Feroze", "Zara Munawwar", "Fiza Jatoi", "Fatima Riaz", "Zainab Alvi", "Tanzeela Abbas", "Kiran Waseem", "Ayesha Khalid", "Samina Hussain", "Sadia Waseem", "Bisma Majeed", "Areeba Latif", "Sehrish Tariq", "Hafsa Waseem", "Hina Tariq", "Zoya Saleem", "Maham Khalid", "Muneera Rauf", "Bushra Tariq", "Zeenat Hussain", "Areeba Saleem", "Kainat Rizvi", "Sumaiya Hussain", "Sadia Khalid", "Mahnoor Irshad", "Fatima Jameel", "Sakina Hilaj", "Iqra Danyal", "Hina Riaz", "Neha Saleem", "Mehwish Khalid", "Asma Waseem", "Romaisa Tariq", "Laiba Khalid", "Komal Noor", "Bushra Waseem", "Zainab Tariq", "Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad", "Komal Hussain", "Maryam Raza", "Romaisa Haroon", "Mehwish Abbas", "Maham Riaz", "Sumaiya Khalid", "Anila Anjum", "Areeba Hussain"},
 								  areas_in_karachi = {"Askari 1", "Askari 2", "Askari 3", "Askari 4", "Askari 5", "Bahria Town - Precinct 1", "Bahria Town - Precinct 10", "Bahria Town - Precinct 11", "Bahria Town - Precinct 12", "Bahria Town - Precinct 13", "Bahria Town - Precinct 14", "Bahria Town - Precinct 15", "Bahria Town - Precinct 16", "Bahria Town - Precinct 17", "Bahria Town - Precinct 18", "Bahria Town - Precinct 19", "Bahria Town - Precinct 2", "Bahria Town - Precinct 20", "Bahria Town - Precinct 21", "Bahria Town - Precinct 22", "Bahria Town - Precinct 23", "Bahria Town - Precinct 24", "Bahria Town - Precinct 25", "Bahria Town - Precinct 26", "Bahria Town - Precinct 27", "Bahria Town - Precinct 28", "Bahria Town - Precinct 29", "Bahria Town - Precinct 3", "Bahria Town - Precinct 30", "Bahria Town - Precinct 31", "Bahria Town - Precinct 32", "Bahria Town - Precinct 33", "Bahria Town - Precinct 4", "Bahria Town - Precinct 5", "Bahria Town - Precinct 6", "Bahria Town - Precinct 7", "Bahria Town - Precinct 8", "Bahria Town - Precinct 9", "BufferZone - Sector 15 A 1", "BufferZone - Sector 15 A 2", "BufferZone - Sector 15 A 3", "BufferZone - Sector 15 A 4", "BufferZone - Sector 15 A 5", "BufferZone - Sector 15 B", "BufferZone - Sector 16 A", "BufferZone - Sector 16 B", "Cantonment", "Clifton - Block 1", "Clifton - Block 2", "Clifton - Block 3", "Clifton - Block 4", "Clifton - Block 5", "Clifton - Block 6", "Clifton - Block 7", "Clifton - Block 8", "Clifton - Block 9", "Clifton - Kehkashan", "DHA - Phase 1", "DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4", "DHA - Phase 5", "DHA - Phase 6", "DHA - Phase 7", "DHA - Phase 8", "DHA - Phase 9", "F.B Area - Azizabad", "F.B Area - B1 Area", "F.B Area - B Area", "F.B Area - Block 1", "F.B Area - Block 10", "F.B Area - Block 11", "F.B Area - Block 12", "F.B Area - Block 13", "F.B Area - Block 14", "F.B Area - Block 15", "F.B Area - Block 16", "F.B Area - Block 17", "F.B Area - Block 18", "F.B Area - Block 19", "F.B Area - Block 2", "F.B Area - Block 20", "F.B Area - Block 21", "F.B Area - Block 22", "F.B Area - Block 3", "F.B Area - Block 4", "F.B Area - Block 5", "F.B Area - Block 6", "F.C Area - C1 Area", "F.C Area - C Area", "Garden - Garden East", "Garden - Garden West", "Garden - Soldier Bazaar", "Gulistan-e-Johar - Block 1", "Gulistan-e-Johar - Block 10", "Gulistan-e-Johar - Block 11", "Gulistan-e-Johar - Block 12", "Gulistan-e-Johar - Block 13", "Gulistan-e-Johar - Block 14", "Gulistan-e-Johar - Block 15", "Gulistan-e-Johar - Block 16", "Gulistan-e-Johar - Block 17", "Gulistan-e-Johar - Block 18", "Gulistan-e-Johar - Block 19", "Gulistan-e-Johar - Block 2", "Gulistan-e-Johar - Block 20", "Gulistan-e-Johar - Block 3", "Gulistan-e-Johar - Block 4", "Gulistan-e-Johar - Block 5", "Gulistan-e-Johar - Block 6", "Gulistan-e-Johar - Block 7", "Gulistan-e-Johar - Block 8", "Gulistan-e-Johar - Block 9", "Gulshan-e-Hadeed - Data Nagar", "Gulshan-e-Hadeed - EIDU Goth", "Gulshan-e-Hadeed - Gulshan-e-Mauzzam", "Gulshan-e-Hadeed - Gulshan-e-Rehman", "Gulshan-e-Hadeed - Mehran Road", "Gulshan-e-Hadeed - Phase 1", "Gulshan-e-Hadeed - Phase 2", "Gulshan-e-Hadeed - Phase 3", "Gulshan-e-Hadeed - PTCL Satellite Station", "Gulshan-e-Hadeed - Shah Latif Town", "Gulshan-e-Hadeed - Shahnawaz Goth", "Gulshan-e-Hadeed - Shah Town", "Gulshan-e-Hadeed - Steel Town", "Gulshan-e-Hadeed - TCP Godowns", "Gulshan-e-Iqbal - Adamjee Nagar", "Gulshan-e-Iqbal - Block 1", "Gulshan-e-Iqbal - Block 10", "Gulshan-e-Iqbal - Block 11", "Gulshan-e-Iqbal - Block 12", "Gulshan-e-Iqbal - Block 13", "Gulshan-e-Iqbal - Block 14", "Gulshan-e-Iqbal - Block 15", "Gulshan-e-Iqbal - Block 16", "Gulshan-e-Iqbal - Block 17", "Gulshan-e-Iqbal - Block 18", "Gulshan-e-Iqbal - Block 19", "Gulshan-e-Iqbal - Block 2", "Gulshan-e-Iqbal - Block 3", "Gulshan-e-Iqbal - Block 4", "Gulshan-e-Iqbal - Block 5", "Gulshan-e-Iqbal - Block 6", "Gulshan-e-Iqbal - Block 7", "Gulshan-e-Iqbal - Block 8", "Gulshan-e-Iqbal - Block 9", "Gulshan-e-Iqbal - Civic Center", "Gulshan-e-Iqbal - Dhoraji", "Korangi - Abdullah Shah Noorani Pahari Colony", "Korangi - Korangi Industrial Area", "Korangi - Nasir Colony", "Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town", "Korangi - Zia Colony", "Landhi - Alflah Housing Society", "Landhi - Awami Colony", "Landhi - Bagh-e-Korangi", "Landhi - Bakhtawar Goth", "Landhi - Barmi Colony", "Landhi - Bhutto Nagar", "Landhi - Future Colony", "Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth", "Landhi - Labour Colony", "Landhi - Landhi Industrial Area", "Landhi - Muslimabad Colony", "Landhi - Muzaffarabad Colony", "Landhi - Punjab Town", "Landhi - Qasim Town", "Landhi - Sadat Colony", "Landhi - Shah Khalid Colony", "Landhi - Sharafi Goth", "Landhi - Zamanabad", "Liaquatabad - Block 1", "Liaquatabad - Block 10", "Liaquatabad - Block 2", "Liaquatabad - Block 3", "Liaquatabad - Block 4", "Liaquatabad - Block 5", "Liaquatabad - Block 6", "Liaquatabad - Block 7", "Liaquatabad - Block 8", "Liaquatabad - Block 9", "Malir - Malir Halt", "Malir - Malir Cantt", "Nazimabad - Block 1", "Nazimabad - Block 2", "Nazimabad - Block 3", "Nazimabad - Block 4", "Nazimabad - Block 5", "North Karachi - Sector 10", "North Karachi - Sector 11 - A", "North Karachi - Sector 11 - B", "North Karachi - Sector 11 - C 1", "North Karachi - Sector 11 - C 2", "North Karachi - Sector 11 - C 3", "North Karachi - Sector 11 - E", "North Karachi - Sector 11 - H", "North Karachi - Sector 11 - I", "North Karachi - Sector 11 - K", "North Karachi - Sector 11 - L", "North Karachi - Sector 2", "North Karachi - Sector 3", "North Karachi - Sector 4", "North Karachi - Sector 5 - A 1", "North Karachi - Sector 5 - A 2", "North Karachi - Sector 5 - A 3", "North Karachi - Sector 5 - A 4", "North Karachi - Sector 5 - B 1", "North Karachi - Sector 5 - B 2", "North Karachi - Sector 5 - B 3", "North Karachi - Sector 5 - B 4", "North Karachi - Sector 5 - C 1", "North Karachi - Sector 5 - C 2", "North Karachi - Sector 5 - C 3", "North Karachi - Sector 5 - C 4", "North Karachi - Sector 5 - I", "North Karachi - Sector 5 - J", "North Karachi - Sector 5 - K", "North Karachi - Sector 5 - L", "North Karachi - Sector 5 - M", "North Karachi - Sector 6", "North Karachi - Sector 7 - D 1", "North Karachi - Sector 7 - D 2", "North Karachi - Sector 7 - D 3", "North Karachi - Sector 7 - D 4", "North Karachi - Sector 8", "North Karachi - Sector 9", "North Nazimabad - Block A", "North Nazimabad - Block B", "North Nazimabad - Block C", "North Nazimabad - Block D", "North Nazimabad - Block E", "North Nazimabad - Block F", "North Nazimabad - Block G", "North Nazimabad - Block H", "North Nazimabad - Block I", "North Nazimabad - Block J", "North Nazimabad - Block K", "North Nazimabad - Block L", "North Nazimabad - Block M", "North Nazimabad - Block N", "North Nazimabad - Block O", "North Nazimabad - Block P", "North Nazimabad - Block Q", "North Nazimabad - Block R", "North Nazimabad - Block S", "North Nazimabad - Block T", "Old Town - Bhimpora", "Old Town - Bohra Pir", "Old Town - Bombay Bazar", "Old Town - Jodia Bazar", "Old Town - Kagzi Bazar", "Old Town - Kakri Ground", "Old Town - Kamil Gali", "Old Town - Khada Market", "Old Town - Kharadar", "Old Town - Lee Market", "Old Town - Mithadar", "Old Town - Nanwara", "Old Town - Nishter Road", "Old Town - Pan Mandi", "Old Town - Ramswami", "Old Town - Ranchorline", "Orangi Town - Banaras Town", "Orangi Town - Bangla Bazaar", "Orangi Town - Bilal Colony", "Orangi Town - Katti Pahari", "Orangi Town - Moria Goth Orangi", "Orangi Town - Orangi", "Orangi Town - Sector 14 - A", "Orangi Town - Sector 14 - C", "Orangi Town - Thorani Goth", "Baldiya Town", "Baloch Colony", "Civil Line", "FC Area", "Firdous Colony", "Gulshan-e-Maymar", "Hawksbay", "I.I Chundrigar", "Jamshed Road", "K.D.A Officers", "Kemari", "Liyari", "M.A Jinnah Rd", "Manora", "New Karachi", "New Surjani", "PIB Colony", "Pipri Goth", "Rizvia Society", "Saddar", "Scheme 33", "Shabbirabad", "P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2", "P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4", "P.E.C.H.S - Block 5", "P.E.C.H.S - Block 6", "P.E.C.H.S - Khalid Bin Walid", "P.E.C.H.S - Tariq Road", "S.I.T.E - Golimar", "S.I.T.E - S.I.T.E", "Shah Faisal Colony - Aswan Town", "Shah Faisal Colony - Gulshan-e-Asghar", "Shah Faisal Colony - Shah Faisal Colony 1", "Shah Faisal Colony - Shah Faisal Colony 5", "F.B Area - Block 7", "F.B Area - Block 9", "P.E.C.H.S - Block 7", "Aram Bagh", "Bath Island", "University Road", "Bahadurabad", "Shah Faisal Colony - 4", "Banglore Town", "Fowler Lines", "Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal", "Shah Faisal Colony - 3", "Shah Faisal Colony - Green Town", "Darwaish Colony", "Korangi - Sector 31 B", "Firdous Colony", "North Nazimabad - Block W", "K.A.E.C.H.S", "Mehmoodabad", "Korangi - Mehran Town", "Landhi Town - 36 B", "Karachi Memon Society", "Madras Cooperative Housing Society", "Shahrah-e-Faisal", "Korangi - Sector 41 B", "Clifton - Delhi Colony", "Korangi - Sector 32 B", "Dhoraji - Adamjee Nagar", "Bhimpura", "Dhoraji - CP& Berar Society", "Shahra-e-Faisal - Umar Colony", "Model Colony", "Gulshan-e-Shamim", "Clifton - Shah Rasool Colony", "North Karachi - Sector 12 C", "Jail Road - Hyderabad Colony", "Napier Quarter", "Gulzar-e-Hijri", "North Karachi - Sector 12 A", "Shahra-e-Faisal - Jinnah Housing Society", "K.D.A Scheme 1", "Clifton - Punjab Colony", "Korangi - Sector 31 D", "Clifton - Zamzama", "Parsi Colony", "Qayyumabad", "Khokrapar", "Shah Faisal Colony - Muslimabad Malir City", "F.B Area - Block 8", "Nanak Wara", "Mohammad Ali Society", "Manzoor Colony", "Dalmia", "Defence View - Phase 1", "Defence View - Phase 2", "KDA Officers Housing Society", "Karimabad", "Soldier Bazar", "Hussainabad", "Sharfabad Society", "Gharibabad", "Sindhi Muslim Cooperative Housing Society"},
-								  rndcts = {"Your heart is the size of an ocean. Go find yourself in its hidden depths.", "The bay of bengal is hit frequently by cyclones. The months of november and may, in particular, are dangerous in this regard.", "Thinking is the capital, enterprise is the way, hard work is the solution.", "If you can\'t make it good, at least make it look good.", "Heart be brave. If you cannot be brave, just go. Love\'s glory is not a small thing.", "It is bad for a young man to sin; but it is worse for an old man to sin.", "If you are out to describe the truth, leave elegance to the tailor.", "O man you are busy working for the world, and the world is busy trying to turn you out.", "While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.", "These capitalists generally act harmoniously and in concert, to fleece the people.", "I don\'t believe in failure. It is not failure if you enjoyed the process.", "Do not get elated at any victory, for all such victory is subject to the will of god.", "Wear gratitude like a cloak and it will feed every corner of your life.", "If you even dream of beating me you\'d better wake up and apologize.", "I will praise any man that will praise me.", "One of the greatest diseases is to be nobody to anybody.", "I\'m so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.", "People must learn to hate and if they can learn to hate, they can be taught to love.", "Everyone has been made for some particular work, and the desire for that work has been put in every heart.", "The less of the world, the freer you live.", "Respond to every call that excites your spirit.", "The way to get started is to quit talking and begin doing.", "God doesn\'t require us to succeed, he only requires that you try.", "Speak any language, turkish, greek, persian, arabic, but always speak with love.", "Happiness comes towards those which believe in him.", "Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.", "When I am silent, I have thunder hidden inside.", "Technological progress is like an axe in the hands of a pathological criminal.", "No one would choose a friendless existence on condition of having all the other things in the world.", "Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don\'t let yourself believe it will happen to you.", "The end of life is to be like god, and the soul following god will be like him.", "Let us sacrifice our today so that our children can have a better tomorrow.", "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.", "In every religion there is love, yet love has no religion.", "Everything in the universe is within you. Ask all from yourself.", "I\'m not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.", "What do I wear in bed? Why, chanel no. 5, of course.", "A good head and a good heart are always a formidable combination.", "The soul never thinks without a picture.", "In your light I learn how to love. In your beauty, how to make poems. You dance inside my chest where no-one sees you, but sometimes I do, and that sight becomes this art.", "Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.", "If you like your brother and he\'s prospering, you\'ll be pleased for him.", "Success is dependent upon the glands - sweat glands.", "Champions are not generated from the championship. Champion is generated from something they have in them, desires, dreams, and visions.", "No matter what is the environment around you, it is always possible to maintain your brand of integrity.", "Applause waits on success.", "Just as courage imperils life, fear protects it.", "It\'s better to be a lion for a day than a sheep all your life.", "The devil\'s voice is sweet to hear.", "Sometimes the people with the worst past, create the best future.", "Every day, nay every moment, try to do some good deed.", "No matter what people tell you, words and ideas can change the world.", "Champions have to have the skill and the will. But the will must be stronger than the skill.", "Men occasionally stumble over the truth, but most of them pick themselves up and hurry off as if nothing had happened.", "Goodbyes are only for those who love with their eyes. Because for those who love with heart and soul there is no such thing as separation.", "The best revenge is to improve yourself.", "Success is a personal standard, reaching for the highest that is in us, becoming all that we can be.", "When you have really exhausted an experience you always reverence and love it.", "Now you see me, now you don\'t. George thinks he will, but I know he won\'t!", "Elegance does not consist in putting on a new dress.", "It is always consoling to think of suicide: in that way one gets through many a bad night.", "Eating words has never given me indigestion.", "India has to be transformed into a developed nation, a prosperous nation and a healthy nation, with a value system.", "It\'s not bragging if you can back it up.", "I wish people would love everybody else the way they love me. It would be a better world.", "Why do I want my wife to show off her panties when the wind blows? Horses show their behinds, and cows and mules, not humans.", "Words are only painted fire; a look is the fire itself.", "Words, without power, is mere philosophy.", "The cure for pain is in the pain.", "Whatever happens, just keep smiling and lose yourself in love.", "Do the right thing. It will gratify some people and astonish the rest.", "Only the soul knows what love is.", "Earning of livelihood by following some profession is better than living on charity.", "Burdens are the foundations of ease and bitter things the forerunners of pleasure.", "Too many have dispensed with generosity in order to practice charity.", "Even the greatest was once a beginner. Don\'t be afraid to take that first step.", "No great intellectual thing was ever done by great effort.", "To fight against one\'s desires is the greatest of all fights.", "Innovation distinguishes between a leader and a follower.", "We enjoy the process far more than the proceeds.", "When I started counting my blessings, my whole life turned around.", "This being human is a guest house. Every morning a new arrival. Welcome and entertain them all!", "All my life I\'ve looked at words as though I were seeing them for the first time.", "Waiting is painful. Forgetting is painful. But not knowing which to do is the worse kind of suffering.", "Never allow someone to be your priority while allowing yourself to be their option.", "To jaw-jaw is always better than to war-war.", "That\'s the real trouble with the world, too many people grow up", "It is easier to stay out than get out.", "The worst man is the one who sees himself as the best.", "The world breaks everyone, and afterward, some are strong at the broken places.", "Rule no.1: never lose money. Rule no.2: never forget rule no.1.", "Convergence of our views on global trade issues under the wto and our common resolve to combat terrorism provide a valuable base for mutual understanding.", "Whenever you find yourself on the side of the majority, it is time to pause and reflect.", "Whatever is done for love always occurs beyond good and evil.", "Things should be made as simple as possible, but not any simpler.", "Stop acting so small. You are the universe in ecstatic motion.", "All truth is simple... Is that not doubly a lie?", "Money is only a tool. It will take you wherever you wish, but it will not replace you as the driver.", "The fight is won or lost far away from witnesses - behind the lines, in the gym, and out there on the road, long before I dance under those lights.", "He who avoids complaint invites happiness.", "We are the mirror - as well as the face in it.", "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "For 2,500 years, india has never invaded anybody.", "If past history was all there was to the game, the richest people would be librarians.", "Your souls are precious and can only be equal to the price of paradise, therefore sell them only at that price.", "A wise man can learn more from a foolish question than a fool can learn from a wise answer.", "If allah wants for a people ill, he gives them debates and takes away from them actions.", "He who builds a masjid in the way of allah, god will build a house for him in the paradise.", "Love is blind; friendship closes its eyes.", "Don\'t go around saying the world owes you a living. The world owes you nothing. It was here first.", "An alert and learned man will take advice from any event.", "I don\'t count my sit-ups. I only start counting when it starts hurting. When I feel pain, that\'s when I start counting, because that\'s when it really counts.", "The wound is the place where the light enters you.", "Luxury is an obstacle, and so is the fatness of the body.", "Come, come, whoever you are. Wanderer, worshiper, lover of leaving. It doesn\'t matter. Ours is not a caravan of despair. Come, even if you have broken your vows a thousand times. Come, yet again, come, come.", "The golden age is before us, not behind us.", "Fiction is the truth inside the lie.", "Believe you can and you\'re halfway there.", "All the great things are simple, and many can be expressed in a single word: freedom, justice, honor, duty, mercy, hope.", "Allah\'s the arabic term for god. Stand up for god, fight for god, work for god and do the right thing, and go the right way, things will end up in your corner.", "Anger is never without a reason, but seldom with a good one.", "Good actions are a guard against the blows of adversity.", "Use the same measure for selling that you use for purchasing.", "The secret of getting ahead is getting started", "I don\'t know the key to success, but the key to failure is trying to please everybody.", "Real loss is only possible when you love something more than you love yourself.", "This is the first convention of the space age - where a candidate can promise the moon and mean it.", "I don\'t like that man. I must get to know him better.", "To shipbrokers, coal was black gold.", "History, despite its wrenching pain, cannot be unlived, but if faced with courage, need not be lived again.", "Success is not achieved by winning all the time. Real success comes when we rise after we fall. Some mountains are higher than others. Some roads steeper than the next. There are hardships and setbacks but you cannot let them stop you. Even on the steepest road you must not turn back.", "A riot is the language of the unheard.", "The law is reason, free from passion.", "The people who abandon jihad fall a victim to humility and degradation.", "We are all born with a divine fire in us. Our efforts should be to give wings to this fire and fill the world with the glow of its goodness.", "Woman was god\'s second mistake.", "All black americans have slave names. They have white names; names that the slave master has given to them.", "I\'m most proud of my family.", "And you? When will you begin that long journey into yourself?", "How many lessons there are and how little they are taken.", "The best way to make your dreams come true is to wake up.", "What one writer can make in the solitude of one room is something no power can easily destroy.", "If there is something to pardon in everything, there is also something to condemn.", "At home I am a nice guy: but I don\'t want the world to know. Humble people, I\'ve found, don\'t get very far.", "No amount of guilt can change the past and no amount of worrying can change the future.", "Not the ones speaking the same language, but the ones sharing the same feeling understand each other.", "It is better to deserve honors and not have them than to have them and not deserve them.", "Success is a lousy teacher. It seduces smart people into thinking they can\'t lose.", "Cursed is the man who dies, but the evil done by him survives.", "The quality, not the longevity, of one\'s life is what is important.", "Age is whatever you think it is. You are as old as you think you are.", "Derivatives are financial weapons of mass destruction.", "Don\'t you know yet? It is your light that lights the worlds.", "Hold on to your salah, because if you lose that, you will lose everything else.", "I am not this hair. I am not this skin. I am the soul that lives within.", "Be faithful in small things because it is in them that your strength lies.", "He who sleeps without offering the night prayer, may he never enjoy a sound sleep.", "I was influenced a lot by those around me - there was a lot of singing that went on in the cotton fields.", "Greed is permanent slavery.", "Everything that we see is a shadow cast by that which we do not see.", "To the master\'s honor all must turn, each in its track, without a sound, forever tracing newton\'s ground.", "Women are the field that produces our nation. And if you can\'t protect your women, you can\'t protect your nation.", "To give victory to the right, not bloody bullets, but peaceful ballots only, are necessary.", "The ache for home lives in all of us, the safe place where we can go as we are and not be questioned.", "Don\'t be distracted by criticism. Remember ~ the only taste of success some people have is when they take a bite out of you.", "Words are a pretext. It is the inner bond that draws one person to another, not words.", "Where there is no struggle, there is no strength.", "The function of muscle is to pull and not to push, except in the case of the genitals and the tongue.", "Through love, all pain will turn to medicine.", "Do not be embarrassed by your failures, learn from them and start over.", "I know where I\'m going and I know the truth, and I don\'t have to be what you want me to be. I\'m free to be what I want.", "He who prays five times a day is in the protection of god, and he who is protected by god cannot be harmed by anyone.", "I find hope in the darkest of days, and focus in the brightest. I do not judge the universe.", "The wisest among you is he whose sustenance is the fear of allah.", "Because I cannot sleep I make music in the night.", "Strive not to be a success, but rather to be of value.", "If you tell the truth, you don\'t have to remember anything.", "Disneyland will never be completed. It will continue to grow as long as there is imagination left in the world.", "If you have good thoughts they will shine out of your face like sunbeams and you will always look lovely.", "If you wish to be a mine of jewels, open the deep ocean within your heart.", "Let me alone, and go in search of someone else.", "A true friend is one who sees a fault, gives you advice and who defends you in your absence.", "You can tell whether a man is clever by his answers. You can tell whether a man is wise by his questions.", "No one changes the world who isn\'t obsessed.", "The best deed of a great man is to forgive and forget.", "One may sometimes tell a lie, but the grimace that accompanies it tells the truth.", "Do not hate what you do not know, for the greater part of knowledge consists of what you do not know.", "Love begins at home, and it is not how much we do... But how much love we put in that action.", "My religion is very simple. My religion is kindness.", "There are forces in life working for you and against you. One must distinguish the beneficial forces from the malevolent ones and choose correctly between them.", "Beware of little expenses. A small leak will sink a great ship.", "All my life through, the new sights of nature made me rejoice like a child.", "He who indulges in falsehood will find the paths of paradise shut to him.", "Man is descended from a hairy, tailed quadruped, probably arboreal in its habits.", "The minute I heard my first love story, I started looking for you.", "People of the world don\'t look at themselves, and so they blame one another.", "The truth. It is a beautiful and terrible thing, and must therefore be treated with great caution.", "The object of the superior man is truth.", "Live amongst people in such a manner that if you die they weep over you and if you are alive they crave for your company.", "Pride in the case of a rich man is bad, but pride in the case of a poor man is worse.", "Tell me and I forget. Teach me and I remember. Involve me and I learn.", "Why is it that we rejoice at a birth and grieve at a funeral? It is because we are not the person involved.", "If you have a particular faith or religion, that is good. But you can survive without it.", "You don\'t want no pie in the sky when you die, you want something here on the ground while you\'re still around.", "Don\'t be satisfied with stories, how things have gone with others. Unfold your own myth.", "Purify your eyes, and see the pure world. Your life will fill with radiant forms.", "Associating with the wise and the knowledgeable people adds to the prestige of a person.", "There is no darkness but ignorance.", "All great achievements require time.", "One does not leave a convivial party before closing time.", "You are not only responsible for what you say, but also for what you do not say.", "So go ahead. Fall down. The world looks different from the ground.", "When we lose one blessing, another is often most unexpectedly given in its place.", "Intelligence is the wife, imagination is the mistress, memory is the servant.", "It is a matter of shame that in the morning the birds should be awake earlier than you.", "What doesn\'t kill us makes us stronger.", "The weakest man is the one who is able to correct his moral defects, but doesn\'t take action.", "I do not need the idea of god to explain the world I live in.", "The highest person is he who is of most use to humankind.", "Common sense is the collection of prejudices acquired by age eighteen.", "Do not let your difficulties fill you with anxiety, after all it is only in the darkest nights that stars shine more brightly.", "Preserve the sayings of those people who are indifferent to the world. They say only that what allah wishes them to say.", "I hated every minute of training, but I said, \"don\'t quit. Suffer now and live the rest of your life as a champion.\"", "The only way to do news on television is not to be terrified of it.", "It is a mistake to look too far ahead. Only one link of the chain of destiny can be handled at a time.", "I\'ll destroy you. I am the master of disaster.", "I fear the day when the kuffar are proud of their falsehood, and the muslims are shy of their faith.", "Stay in college, get the knowledge. And stay there until you\'re through. If they can make penicillin out of moldy bread, they can sure make something out of you.", "Those who dare to fail miserably can achieve greatly.", "You show your worth by what you seek.", "Acquire knowledge before you become leaders and pride prevents you from learning and you live in ignorance.", "Fear is the main source of superstition, and one of the main sources of cruelty. To conquer fear is the beginning of wisdom.", "If a free society cannot help the many who are poor, it cannot save the few who are rich.", "As he was valiant, I honour him. But as he was ambitious, I slew him.", "Who\'s gonna dare to be great?", "He who keeps his own counsel keeps his affairs in his own hands.", "To whatever extent a person\'s knowledge increases, his attention will be turned more towards his soul.", "If an ignorant person is attracted by the things of the world, that is bad. But if a learned person is thus attracted, it is worse.", "Surely silence can sometimes be the most eloquent reply.", "Once your mind stretches to a new level it never goes back to its original dimension.", "I was saying \"I\'m the greatest\" long before I believed it.", "Our peace shall stand as firm as rocky mountains.", "Only buy something that you\'d be perfectly happy to hold if the market shut down for 10 years.", "Intellectual property has the shelf life of a banana.", "He who understands humanity seeks solitude.", "I was not created to be occupied by eating delicious foods like tied up cattle.", "Time stays long enough for anyone who will use it.", "I feel the same way about disco as I do about herpes.", "Civilization is the limitless multiplication of unnecessary necessities.", "If you hear a voice within you say \'you cannot paint \' then by all means paint, and that voice will be silenced.", "When one has not had a good father, one must create one.", "I\'ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.", "If we cannot now end our differences, at least we can help make the world safe for diversity.", "The cautious seldom err.", "Admiration for a quality or an art can be so strong that it deters us from striving to possess it.", "I myself prefer my new zealand eggs for breakfast.", "To line only for some unknown future is superficial.", "Money is the barometer of a society\'s virtue.", "Convictions are more dangerous foes of truth than lies.", "I have not failed. I\'ve just found 10 000 ways that won\'t work.", "Maybe a thing that you do not like is really in your interest. It is possible that a thing that you may desire may be against your interest.", "People always ask me, \'were you funny as a child?\' well, no, I was an accountant.", "I\'m not an expert on the arms race.", "Sit with those who love allah, for that enlightens the mind.", "You cannot perform in a manner inconsistent with the way you see yourself.", "I say that the most liberating thing about beauty is realizing that you are the beholder.", "Happiness in intelligent people is the rarest thing I know.", "A person who never made a mistake never tried anything new.", "In the big leagues everyone has ability. It always comes down to mind games. Who ever is more mentally strong-wins.", "Don\'t take rest after your first victory because if you fail in second, more lips are waiting to say that your first victory was just luck.", "Stop learning. Start knowing.", "One of the greatest discoveries a man makes, one of his great surprises, is to find he can do what he was afraid he couldn\'t do.", "You are never too old to set another goal or to dream a new dream.", "Keep your eyes on the stars, and your feet on the ground.", "I know of only one duty, and that is to love.", "God helps those who help themselves.", "You are not just the drop in the ocean. You are the mighty ocean in the drop.", "Teaching is a very noble profession that shapes the character, caliber, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.", "A man should never neglect his family for business.", "Isn\'t it strange that I who have written only unpopular books should be such a popular fellow?", "Drag your thoughts away from your troubles... By the ears, by the heels, or any other way you can manage it.", "The greatest discovery of all time is that a person can change his future by merely changing his attitude.", "Whoever listens to slander is himself a slanderer.", "The best way to find out if you can trust somebody is to trust them.", "Take account of your deeds before they are taken account of.", "Faith is taking the first step even when you don\'t see the whole staircase.", "To give thanks in solitude is enough. Thanksgiving has wings and goes where it must go. Your prayer knows much more about it than you do.", "Those who dare to fail miserably can achieve greatly.", "Like your body your mind also gets tired so refresh it by wise sayings.", "God helps those who fear him.", "During civil disturbance adopt such an attitude that people do not attach any importance to you - they neither burden you with complicated affairs, nor try to derive any advantage out of you.", "Whether you think that you can, or that you can\'t, you are usually right.", "O! Let me not be mad, not mad, sweet heaven; keep me in temper; I would not be mad!", "The man with no imagination has no wings.", "Today, india is a nuclear weapons state.", "The public is merely a multiplied \"Me.\"", "If a man could have half of his wishes, he would double his troubles.", "There are no moral phenomena at all, but only a moral interpretation of phenomena.", "To say \"I love you\" one must first be able to say the \"I.\"", "Patience to faith is like the head to the body. The person who has no patience has not faith.", "Nations are born in the hearts of poets, they prosper and die in the hands of politicians.", "Rivers, ponds, lakes and streams - they all have different names, but they all contain water. Just as religions do - they all contain truths.", "The time has come to turn your heart into a temple of fire. Your essence is gold hidden in dust. To reveal its splendor you need to burn in the fire of love.", "Only last week I murdered a rock, injured a stone and hospitalized a brick.", "If you would have a faithful servant, and one that you like, serve yourself.", "If all you can do is crawl, start crawling.", "Extreme hopes are born from extreme misery.", "When a person cannot deceive himself the chances are against his being able to deceive other people.", "I am the greatest. I said that even before I knew I was. Don\'t tell me I can\'t do something. Don\'t tell me it\'s impossible. Don\'t tell me I\'m not the greatest. I\'m the double greatest.", "Geologists have a saying - rocks remember.", "Be silent, only the hand of god can remove the burdens of your heart.", "Peace cannot be kept by force; it can only be achieved by understanding.", "The best way to get a bad law repealed is to enforce it strictly.", "Wherever you are, and whatever you do, be in love.", "Should I kill myself, or have a cup of coffee?", "It is very dangerous to have your self-worth riding on your results as an athlete.", "No part of the education of a politician is more indispensable than the fighting of elections.", "War is never a lasting solution for any problem.", "I never think of the future - it comes soon enough.", "At the end of my life, with just one breath left, if you come, I\'ll sit up and sing.", "Indigestion is charged by god with enforcing morality on the stomach.", "Fear allah, for he alone lives; all other things are liable to perish.", "I once had a thousand desires. But in my one desire to know you, all else melted away.", "God forbid, men should be jealous of knowledge as they are jealous of women.", "I wish they would only take me as I am.", "I have lived on the lip of insanity, wanting to know reasons, knocking on a door. It opens. I\'ve been knocking from the inside.", "Once you replace negative thoughts with positive ones, you\'ll start having positive results.", "What is wanted is not the will to believe, but the will to find out, which is the exact opposite.", "I\'m going to show you how great I am!", "In the depth of winter I finally learned that there was in me an invincible summer.", "He who fears to weep, should learn to be kind to those who weep.", "The criminal is trying to solve his immediate problems.", "It is very easy to defeat someone, but it is very hard to win someone.", "A casual stroll through the lunatic asylum shows that faith does not prove anything.", "Things may come to those who wait, but only the things left by those who hustle.", "No sanction can stand against ignited minds.", "Understanding the knowledge and wisdom of the qur\'an is by far, higher than memorizing.", "Gratitude is the wine for the soul. Go on. Get drunk.", "All of our dreams can come true.", "The days of life pass away like clouds, so do good while you are alive.", "Once the choice is made, do not look back, do not second-guess your decisions.", "Tear off the mask. Your face is glorious.", "How hard, how bitter it is to become a man!", "Conduct, which involves a decision of the ultimate fate of the agent cannot be based on illusions.", "I don\'t know who my grandfather was; I am much more concerned to know what his grandson will be.", "Look for the answer inside your question.", "Adversity makes men, and prosperity makes monsters.", "Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.", "It is better to remain silent and be thought a fool than to open one\'s mouth and remove all doubt.", "He who has never learned to obey cannot be a good commander.", "You cannot create experience. You must undergo it.", "I am grateful for all my victories, but I am especially grateful for my losses, because they only made me work harder.", "No legacy is so rich as honesty.", "The outcome of fear is disappointment and shyness is frustration.", "All my life through, the new sights of nature made me rejoice like a child.", "He who avoids complaint invites happiness.", "Work with integrity and succeed with integrity.", "You were born with potential. You were born with goodness and trust. You were born with ideals and dreams. You were born with greatness. You were born with wings. You are not meant for crawling, so don\'t. You have wings. Learn to use them and fly.", "Move, but don\'t move the way fear makes you move.", "It does not matter how slowly you go as long as you do not stop.", "There is no nobility with bad manners.", "You should not quarrel with your neighbor, for he will remain where he is, but your high handedness will become the talk of the people.", "Never stop fighting until you arrive at your destined place - that is, the unique you. Have an aim in life, continuously acquire knowledge, work hard, and have perseverance to realise the great life.", "I like to see a man proud of the place in which he lives. I like to see a man live so that his place will be proud of him.", "Let me define a leader. He must have vision and passion and not be afraid of any problem. Instead, he should know how to defeat it. Most importantly, he must work with integrity.", "Whatever your heart clings to and confides in, that is really your god.", "Dogs never bite me. Humans do.", "Your successes and happiness are forgiven you only if you generously consent to share them.", "When a person really desires something, all the universe conspires to help that person to realize his dream.", "I didn\'t fail the test, I just found 100 ways to do it wrong.", "One who thinks and reflects develops his foresight and vision.", "When red-haired people are above a certain social grade their hair is auburn.", "I have held many things in my hands, and I have lost them all; but whatever I have placed in god\'s hands, that I still possess.", "Always remember you are braver than you believe, stronger than you seem, smarter than you think and twice as beautiful as you\'d ever imagined. Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "That which you do not wish for yourself, do not impose on others.", "I am the greatest, I said that even before I knew I was.", "There is no labor a person does that is undignified; if they do it right.", "The people themselves, and not their servants, can safely reverse their own deliberate decisions.", "I hated every minute of training, but I said, \'don\'t quit. Suffer now and live the rest of your life as a champion.\'", "We shall draw from the heart of suffering itself the means of inspiration and survival.", "When the solution is simple, god is answering.", "I have a theory that the truth is never told during the nine-to-five hours.", "Democracy is when the indigent, and not the men of property, are the rulers.", "You\'re not going to enjoy every minute of the journey, but the success you\'ll find at the end will make it all worth it.", "It\'s hard to be humble when you\'re as great as I am.", "There is no knowledge and science like pondering and thought; and there is no prosperity and advancement like knowledge and science.", "If we did all the things we are capable of, we would literally astound ourselves.", "Be like a tree and let the dead leaves drop.", "Don\'t find fault, find a remedy.", "A friend cannot be considered a friend until he is tested in three occasions: in timeof need, behind your back, and after your death.", "I\'m too fast. I\'m too smart. I\'m too pretty.", "You cannot create experience. You must undergo it.", "Indignation is a submission of our thoughts, but not of our desires.", "Sir, my concern is not whether god is on our side; my greatest concern is to be on god\'s side, for god is always right.", "At times one remains faithful to a cause only because its opponents do not cease to be insipid.", "I put my heart and my soul into my work, and have lost my mind in the process.", "In a competition of love we\'ll all share in the victory, no matter who comes first.", "Some are born great, some achieve greatness, and some have greatness thrust upon them.", "There is no capital more useful than intellect and wisdom, and there is no indigence more injurious than ignorance and unawareness.", "There is a voice that doesn\'t use words. Listen.", "If a sheep dies on the shore of the euphrates I fear lest allah ask me to account for it on the day of resurrection.", "Do not deceive or be faithless even with your enemy.", "Pondering must turn out to be your cash asset, regardless of whichever ups and downs you occur throughout in the everyday living.", "Building capacity dissolves differences. It irons out inequalities.", "All your anxiety is because of your desire for harmony. Seek disharmony, then you will gain peace.", "As long as you are pure of heart, you speak the truth.", "Most people spend more time and energy going around problems than in trying to solve them.", "If you judge people, you have no time to love them.", "Talent in cheaper than table salt. What separates the talented individual from the successful one is a lot of hard work.", "The world we have created is a product of our thinking.", "When a hundred men stand together, each of them loses his mind and gets another one.", "Fanatics are picturesque, mankind would rather see gestures than listen to reasons.", "Every day is different, and some days are better than others, but no matter how challenging the day, I get up and live it.", "The educated southerner has no use for an \'r\', except at the beginning of a word.", "To love is to act.", "My dream is of a place and a time where america will once again be seen as the last best hope of earth.", "What comes, will go. What is found, will be lost again. But what you are is beyond coming and going and beyond description.", "Dreams are not those which comes while we are sleeping, but dreams are those when u don\'t sleep before fulfilling them.", "To fear love is to fear life, and those who fear life are already three parts dead.", "Expect the best. Prepare for the worst. Capitalize on what comes.", "My soul is my guide, for my soul is of that abode. I will not speak of the earthly. I am of the unknown.", "Many marriages would be better if the husband and the wife clearly understood that they are on the same side.", "Try not to resist the changes that come your way. Instead let life live through you. And do not worry that your life is turning upside down. How do you know that the side you are used to is better than the one to come?", "Religions have different names, and they all contain truth, expressed in different ways forms and times.", "All that I am, or hope to be, I owe to my angel mother.", "Doing as others told me, I was blind. Coming when others called me, I was lost. Then I left everyone, myself as well. Then I found everyone, myself as well.", "Happiness is when what you think, what you say, and what you do are in harmony.", "Nothing will work unless you do.", "My books are like water; those of the great geniuses are wine. (fortunately) everybody drinks water.", "Grief can be the garden of compassion. If you keep your heart open through everything, your pain can become your greatest ally in your life\'s search for love and wisdom.", "To be alone means that you avoid bad company. But to have a true friend is better than being alone.", "I am the greatest.", "Only a man who knows what it is like to be defeated can reach down to the bottom of his soul and come up with the extra ounce of power it takes to win when the match is even.", "Riches without faith are the greatest poverty.", "I\'m the most recognized and loved man that ever lived cuz there weren\'t no satellites when jesus and moses were around, so people far away in the villages didn\'t know about them.", "The lord prefers common-looking people. That is why he makes so many of them.", "Whether you love god or you love a human being, if you love enough you will come into the presence of love itself.", "O allah do not give me in excess lest I may be disobedient.", "Eros will have naked bodies; friendship naked personalities.", "In a democracy, the well-being, individuality and happiness of every citizen is important for the overall prosperity, peace and happiness of the nation.", "The happiest of people is the one under whose care people are happy because of him, and the most miserable of people is the one under whose care people are miserable because of him.", "He who guards his secrets retains control in his own hands.", "Success is not achieved by winning all the time. Real success comes when we rise after we fall.", "Humility is not thinking less of yourself, it\'s thinking of yourself less.", "No amount of worrying can change the future. Go easy on yourself, for the outcome of all affairs is determined by god\'s decree. If something is meant to go elsewhere, it will never come your way, but if it is yours by destiny, from you it cannot flee.", "Fear him, whom you hate.", "The word of god is the medicine of the heart.", "Do you think god gets stoned? I think so... Look at the platypus.", "The good life is one inspired by love and guided by knowledge.", "I believe in christianity as I believe that the sun has risen: not only because I see it, but because by it I see everything else.", "The airplane has had a big impact on my life.", "We make a living by what we get, but we make a life by what we give.", "Indifference and neglect often do much more damage than outright dislike.", "When I am silent, I fall into the place where everything is music.", "A word to the wise ain\'t necessary - it\'s the stupid ones that need the advice.", "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.", "That\'s okay, I\'m still the greatest.", "When I look into the future, it\'s so bright it burns my eyes.", "I\'m gonna whup whoever stole my bike!", "To be a great champion you must believe you are the best. If you\'re not, pretend you are.", "Get up sucker and fight. Get up and fight.", "We shall require a substantially new manner of thinking if mankind is to survive.", "I try to build a full personality for each of our cartoon characters - to make them personalities.", "Without freedom, no art; art lives only on the restraints it imposes on itself, and dies of all others.", "When you\'re right, nobody remembers. When you\'re wrong, nobody forgets.", "We have one life; it soon will be past; what we do for god is all that will last.", "When we practice loving kindness and compassion we are the first ones to profit.", "I never gave up on country music because I knew what I was doing was not that bad.", "Israel, as the jewish state, must disappear from the map.", "The world is a dangerous place to live; not because of the people who are evil, but because of the people who don\'t do anything about it.", "It is not best that we should all think alike; it is a difference of opinion that makes horse races.", "Intense love does not measure, it just gives.", "A penny saved is a penny earned.", "Whatever purifies you is the right path, I will not try to define it.", "Coming together is a beginning; keeping together is progress; working together is success.", "Total commitment is the common denominator among all successful men and women.", "Rest but never quit. Even the sun has a sinking spell each evening. But it always rises the next morning. At sunrise, every soul is born again.", "You can have no dominion greater or less than that over yourself.", "I want you to be concerned about your next door neighbor. Do you know your next door neighbor?", "I shook up the world.", "I learned that every mortal will taste death. But only some will taste life.", "Parkinson\'s is my toughest fight. No, it doesn\'t hurt. It\'s hard to explain. I\'m being tested to see if I\'ll keep praying, to see if I\'ll keep my faith. All great people are tested by god.", "You have been a prisoner of a little pond I am the ocean and its turbulent flood come merge with me leave this world of ignorance.", "Do not share the knowledge with which you have been blessed with everyone in general, as you do with some people in particular; and know that there are some men in whom allah, may he he glorified, has placed hidden secrets, which they are forbidden to reveal.", "Your heart knows the way. Run in that direction.", "The angel is free because of his knowledge, the beast because of his ignorance. Between the two remains the son of man to struggle.", "I like not fair terms and a villain\'s mind.", "Our abode in this world is transitory, our life therein is but a loan, our breaths are numbered and our indolence is manifest.", "All credibility, all good conscience, all evidence of truth come only from the senses.", "Once spirit was god, then it became man, and now it is even becoming mob.", "Wealth tends to create enemies, whereas knowledge tends to warm hearts.", "Be afraid of a dignified man when he is hungry and a wicked man when his belly is full.", "Nothing says holidays, like a cheese log.", "A man wrapped up in himself makes a very small bundle.", "There is a candle in your heart, ready to be kindled. There is a void in your soul, ready to be filled. You feel it, don\'t you?", "I am the literary equivalent of a big mac and fries.", "To forgive an oppressor is oppression upon the oppressed.", "Our death is our wedding with eternity.", "Imagination is more important than knowledge.", "When proven wrong, the wise will correct themselves and the ignorants will just keep arguing.", "Grieving? Don\'t. With time, whatever you\'ve lost might come \'round in some other form.", "The breeze at dawn has secrets to tell you. Don\'t go back to sleep.", "Positive thinking will let you do everything better than negative thinking will.", "Design is not just what it looks like and feels like. Design is how it works.", "Contentment is a wealth that is never exhausted.", "There is nothing outside of yourself, look within. Everything you want is there. You are that."};
+								  rndcts = {"Your heart is the size of an ocean. Go find yourself in its hidden depths.", "The bay of bengal is hit frequently by cyclones. The months of november and may, in particular, are dangerous in this regard.", "Thinking is the capital, enterprise is the way, hard work is the solution.", "If you can\'t make it good, at least make it look good.", "Heart be brave. If you cannot be brave, just go. Love\'s glory is not a small thing.", "It is bad for a young man to sin; but it is worse for an old man to sin.", "If you are out to describe the truth, leave elegance to the tailor.", "O man you are busy working for the world, and the world is busy trying to turn you out.", "While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.", "These capitalists generally act harmoniously and in concert, to fleece the people.", "I don\'t believe in failure. It is not failure if you enjoyed the process.", "Do not get elated at any victory, for all such victory is subject to the will of god.", "Wear gratitude like a cloak and it will feed every corner of your life.", "If you even dream of beating me you\'d better wake up and apologize.", "I will praise any man that will praise me.", "One of the greatest diseases is to be nobody to anybody.", "I\'m so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.", "People must learn to hate and if they can learn to hate, they can be taught to love.", "Everyone has been made for some particular work, and the desire for that work has been put in every heart.", "The less of the world, the freer you live.", "Respond to every call that excites your spirit.", "The way to get started is to quit talking and begin doing.", "God doesn\'t require us to succeed, he only requires that you try.", "Speak any language, turkish, greek, persian, arabic, but always speak with love.", "Happiness comes towards those which believe in him.", "Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.", "When I am silent, I have thunder hidden inside.", "Technological progress is like an axe in the hands of a pathological criminal.", "No one would choose a friendless existence on condition of having all the other things in the world.", "Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don\'t let yourself believe it will happen to you.", "The end of life is to be like god, and the soul following god will be like him.", "Let us sacrifice our today so that our children can have a better tomorrow.", "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.", "In every religion there is love, yet love has no religion.", "Everything in the universe is within you. Ask all from yourself.", "I\'m not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.", "What do I wear in bed? Why, chanel no. 5, of course.", "A good head and a good heart are always a formidable combination.", "The soul never thinks without a picture.", "In your light I learn how to love. In your beauty, how to make poems. You dance inside my chest where no-one sees you, but sometimes I do, and that sight becomes this art.", "Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.", "If you like your brother and he\'s prospering, you\'ll be pleased for him.", "Success is dependent upon the glands - sweat glands.", "Champions are not generated from the championship. Champion is generated from something they have in them, desires, dreams, and visions.", "No matter what is the environment around you, it is always possible to maintain your brand of integrity.", "Applause waits on success.", "Just as courage imperils life, fear protects it.", "It\'s better to be a lion for a day than a sheep all your life.", "The devil\'s voice is sweet to hear.", "Sometimes the people with the worst past, create the best future.", "Every day, nay every moment, try to do some good deed.", "No matter what people tell you, words and ideas can change the world.", "Champions have to have the skill and the will. But the will must be stronger than the skill.", "Men occasionally stumble over the truth, but most of them pick themselves up and hurry off as if nothing had happened.", "Goodbyes are only for those who love with their eyes. Because for those who love with heart and soul there is no such thing as separation.", "The best revenge is to improve yourself.", "Success is a personal standard, reaching for the highest that is in us, becoming all that we can be.", "When you have really exhausted an experience you always reverence and love it.", "Now you see me, now you don\'t. George thinks he will, but I know he won\'t!", "Elegance does not consist in putting on a new dress.", "It is always consoling to think of suicide: in that way one gets through many a bad night.", "Eating words has never given me indigestion.", "India has to be transformed into a developed nation, a prosperous nation and a healthy nation, with a value system.", "It\'s not bragging if you can back it up.", "I wish people would love everybody else the way they love me. It would be a better world.", "Why do I want my wife to show off her panties when the wind blows? Horses show their behinds, and cows and mules, not humans.", "Words are only painted fire; a look is the fire itself.", "Words, without power, is mere philosophy.", "The cure for pain is in the pain.", "Whatever happens, just keep smiling and lose yourself in love.", "Do the right thing. It will gratify some people and astonish the rest.", "Only the soul knows what love is.", "Earning of livelihood by following some profession is better than living on charity.", "Burdens are the foundations of ease and bitter things the forerunners of pleasure.", "Too many have dispensed with generosity in order to practice charity.", "Even the greatest was once a beginner. Don\'t be afraid to take that first step.", "No great intellectual thing was ever done by great effort.", "To fight against one\'s desires is the greatest of all fights.", "Innovation distinguishes between a leader and a follower.", "We enjoy the process far more than the proceeds.", "When I started counting my blessings, my whole life turned around.", "This being human is a guest house. Every morning a new arrival. Welcome and entertain them all!", "All my life I\'ve looked at words as though I were seeing them for the first time.", "Waiting is painful. Forgetting is painful. But not knowing which to do is the worse kind of suffering.", "Never allow someone to be your priority while allowing yourself to be their option.", "To jaw-jaw is always better than to war-war.", "That\'s the real trouble with the world, too many people grow up", "It is easier to stay out than get out.", "The worst man is the one who sees himself as the best.", "The world breaks everyone, and afterward, some are strong at the broken places.", "Rule no.1: never lose money. Rule no.2: never forget rule no.1.", "Convergence of our views on global trade issues under the wto and our common resolve to combat terrorism provide a valuable base for mutual understanding.", "Whenever you find yourself on the side of the majority, it is time to pause and reflect.", "Whatever is done for love always occurs beyond good and evil.", "Things should be made as simple as possible, but not any simpler.", "Stop acting so small. You are the universe in ecstatic motion.", "All truth is simple... Is that not doubly a lie?", "Money is only a tool. It will take you wherever you wish, but it will not replace you as the driver.", "The fight is won or lost far away from witnesses - behind the lines, in the gym, and out there on the road, long before I dance under those lights.", "He who avoids complaint invites happiness.", "We are the mirror - as well as the face in it.", "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "For 2,500 years, india has never invaded anybody.", "If past history was all there was to the game, the richest people would be librarians.", "Your souls are precious and can only be equal to the price of paradise, therefore sell them only at that price.", "A wise man can learn more from a foolish question than a fool can learn from a wise answer.", "If allah wants for a people ill, he gives them debates and takes away from them actions.", "He who builds a masjid in the way of allah, god will build a house for him in the paradise.", "Love is blind; friendship closes its eyes.", "Don\'t go around saying the world owes you a living. The world owes you nothing. It was here first.", "An alert and learned man will take advice from any event.", "I don\'t count my sit-ups. I only start counting when it starts hurting. When I feel pain, that\'s when I start counting, because that\'s when it really counts.", "The wound is the place where the light enters you.", "Luxury is an obstacle, and so is the fatness of the body.", "Come, come, whoever you are. Wanderer, worshiper, lover of leaving. It doesn\'t matter. Ours is not a caravan of despair. Come, even if you have broken your vows a thousand times. Come, yet again, come, come.", "The golden age is before us, not behind us.", "Fiction is the truth inside the lie.", "Believe you can and you\'re halfway there.", "All the great things are simple, and many can be expressed in a single word: freedom, justice, honor, duty, mercy, hope.", "Allah\'s the arabic term for god. Stand up for god, fight for god, work for god and do the right thing, and go the right way, things will end up in your corner.", "Anger is never without a reason, but seldom with a good one.", "Good actions are a guard against the blows of adversity.", "Use the same measure for selling that you use for purchasing.", "The secret of getting ahead is getting started", "I don\'t know the key to success, but the key to failure is trying to please everybody.", "Real loss is only possible when you love something more than you love yourself.", "This is the first convention of the space age - where a candidate can promise the moon and mean it.", "I don\'t like that man. I must get to know him better.", "To shipbrokers, coal was black gold.", "History, despite its wrenching pain, cannot be unlived, but if faced with courage, need not be lived again.", "Success is not achieved by winning all the time. Real success comes when we rise after we fall. Some mountains are higher than others. Some roads steeper than the next. There are hardships and setbacks but you cannot let them stop you. Even on the steepest road you must not turn back.", "A riot is the language of the unheard.", "The law is reason, free from passion.", "The people who abandon jihad fall a victim to humility and degradation.", "We are all born with a divine fire in us. Our efforts should be to give wings to this fire and fill the world with the glow of its goodness.", "Woman was god\'s second mistake.", "All black americans have slave names. They have white names; names that the slave master has given to them.", "I\'m most proud of my family.", "And you? When will you begin that long journey into yourself?", "How many lessons there are and how little they are taken.", "The best way to make your dreams come true is to wake up.", "What one writer can make in the solitude of one room is something no power can easily destroy.", "If there is something to pardon in everything, there is also something to condemn.", "At home I am a nice guy: but I don\'t want the world to know. Humble people, I\'ve found, don\'t get very far.", "No amount of guilt can change the past and no amount of worrying can change the future.", "Not the ones speaking the same language, but the ones sharing the same feeling understand each other.", "It is better to deserve honors and not have them than to have them and not deserve them.", "Success is a lousy teacher. It seduces smart people into thinking they can\'t lose.", "Cursed is the man who dies, but the evil done by him survives.", "The quality, not the longevity, of one\'s life is what is important.", "Age is whatever you think it is. You are as old as you think you are.", "Derivatives are financial weapons of mass destruction.", "Don\'t you know yet? It is your light that lights the worlds.", "Hold on to your salah, because if you lose that, you will lose everything else.", "I am not this hair. I am not this skin. I am the soul that lives within.", "Be faithful in small things because it is in them that your strength lies.", "He who sleeps without offering the night prayer, may he never enjoy a sound sleep.", "I was influenced a lot by those around me - there was a lot of singing that went on in the cotton fields.", "Greed is permanent slavery.", "Everything that we see is a shadow cast by that which we do not see.", "To the master\'s honor all must turn, each in its track, without a sound, forever tracing newton\'s ground.", "Women are the field that produces our nation. And if you can\'t protect your women, you can\'t protect your nation.", "To give victory to the right, not bloody bullets, but peaceful ballots only, are necessary.", "The ache for home lives in all of us, the safe place where we can go as we are and not be questioned.", "Don\'t be distracted by criticism. Remember ~ the only taste of success some people have is when they take a bite out of you.", "Words are a pretext. It is the inner bond that draws one person to another, not words.", "Where there is no struggle, there is no strength.", "The function of muscle is to pull and not to push, except in the case of the genitals and the tongue.", "Through love, all pain will turn to medicine.", "Do not be embarrassed by your failures, learn from them and start over.", "I know where I\'m going and I know the truth, and I don\'t have to be what you want me to be. I\'m free to be what I want.", "He who prays five times a day is in the protection of god, and he who is protected by god cannot be harmed by anyone.", "I find hope in the darkest of days, and focus in the brightest. I do not judge the universe.", "The wisest among you is he whose sustenance is the fear of allah.", "Because I cannot sleep I make music in the night.", "Strive not to be a success, but rather to be of value.", "If you tell the truth, you don\'t have to remember anything.", "Disneyland will never be completed. It will continue to grow as long as there is imagination left in the world.", "If you have good thoughts they will shine out of your face like sunbeams and you will always look lovely.", "If you wish to be a mine of jewels, open the deep ocean within your heart.", "Let me alone, and go in search of someone else.", "A true friend is one who sees a fault, gives you advice and who defends you in your absence.", "You can tell whether a man is clever by his answers. You can tell whether a man is wise by his questions.", "No one changes the world who isn\'t obsessed.", "The best deed of a great man is to forgive and forget.", "One may sometimes tell a lie, but the grimace that accompanies it tells the truth.", "Do not hate what you do not know, for the greater part of knowledge consists of what you do not know.", "Love begins at home, and it is not how much we do... But how much love we put in that action.", "My religion is very simple. My religion is kindness.", "There are forces in life working for you and against you. One must distinguish the beneficial forces from the malevolent ones and choose correctly between them.", "Beware of little expenses. A small leak will sink a great ship.", "All my life through, the new sights of nature made me rejoice like a child.", "He who indulges in falsehood will find the paths of paradise shut to him.", "Man is descended from a hairy, tailed quadruped, probably arboreal in its habits.", "The minute I heard my first love story, I started looking for you.", "People of the world don\'t look at themselves, and so they blame one another.", "The truth. It is a beautiful and terrible thing, and must therefore be treated with great caution.", "The object of the superior man is truth.", "Live amongst people in such a manner that if you die they weep over you and if you are alive they crave for your company.", "Pride in the case of a rich man is bad, but pride in the case of a poor man is worse.", "Tell me and I forget. Teach me and I remember. Involve me and I learn.", "Why is it that we rejoice at a birth and grieve at a funeral? It is because we are not the person involved.", "If you have a particular faith or religion, that is good. But you can survive without it.", "You don\'t want no pie in the sky when you die, you want something here on the ground while you\'re still around.", "Don\'t be satisfied with stories, how things have gone with others. Unfold your own myth.", "Purify your eyes, and see the pure world. Your life will fill with radiant forms.", "Associating with the wise and the knowledgeable people adds to the prestige of a person.", "There is no darkness but ignorance.", "All great achievements require time.", "One does not leave a convivial party before closing time.", "You are not only responsible for what you say, but also for what you do not say.", "So go ahead. Fall down. The world looks different from the ground.", "When we lose one blessing, another is often most unexpectedly given in its place.", "Intelligence is the wife, imagination is the mistress, memory is the servant.", "It is a matter of shame that in the morning the birds should be awake earlier than you.", "What doesn\'t kill us makes us stronger.", "The weakest man is the one who is able to correct his moral defects, but doesn\'t take action.", "I do not need the idea of god to explain the world I live in.", "The highest person is he who is of most use to humankind.", "Common sense is the collection of prejudices acquired by age eighteen.", "Do not let your difficulties fill you with anxiety, after all it is only in the darkest nights that stars shine more brightly.", "Preserve the sayings of those people who are indifferent to the world. They say only that what allah wishes them to say.", "I hated every minute of training, but I said, \"don\'t quit. Suffer now and live the rest of your life as a champion.\"", "The only way to do news on television is not to be terrified of it.", "It is a mistake to look too far ahead. Only one link of the chain of destiny can be handled at a time.", "I\'ll destroy you. I am the master of disaster.", "I fear the day when the kuffar are proud of their falsehood, and the muslims are shy of their faith.", "Stay in college, get the knowledge. And stay there until you\'re through. If they can make penicillin out of moldy bread, they can sure make something out of you.", "Those who dare to fail miserably can achieve greatly.", "You show your worth by what you seek.", "Acquire knowledge before you become leaders and pride prevents you from learning and you live in ignorance.", "Fear is the main source of superstition, and one of the main sources of cruelty. To conquer fear is the beginning of wisdom.", "If a free society cannot help the many who are poor, it cannot save the few who are rich.", "As he was valiant, I honour him. But as he was ambitious, I slew him.", "Who\'s gonna dare to be great?", "He who keeps his own counsel keeps his affairs in his own hands.", "To whatever extent a person\'s knowledge increases, his attention will be turned more towards his soul.", "If an ignorant person is attracted by the things of the world, that is bad. But if a learned person is thus attracted, it is worse.", "Surely silence can sometimes be the most eloquent reply.", "Once your mind stretches to a new level it never goes back to its original dimension.", "I was saying \"I\'m the greatest\" long before I believed it.", "Our peace shall stand as firm as rocky mountains.", "Only buy something that you\'d be perfectly happy to hold if the market shut down for 10 years.", "Intellectual property has the shelf life of a banana.", "He who understands humanity seeks solitude.", "I was not created to be occupied by eating delicious foods like tied up cattle.", "Time stays long enough for anyone who will use it.", "I feel the same way about disco as I do about herpes.", "Civilization is the limitless multiplication of unnecessary necessities.", "If you hear a voice within you say \'you cannot paint \' then by all means paint, and that voice will be silenced.", "When one has not had a good father, one must create one.", "I\'ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.", "If we cannot now end our differences, at least we can help make the world safe for diversity.", "The cautious seldom err.", "Admiration for a quality or an art can be so strong that it deters us from striving to possess it.", "I myself prefer my new zealand eggs for breakfast.", "To line only for some unknown future is superficial.", "Money is the barometer of a society\'s virtue.", "Convictions are more dangerous foes of truth than lies.", "I have not failed. I\'ve just found 10 000 ways that won\'t work.", "Maybe a thing that you do not like is really in your interest. It is possible that a thing that you may desire may be against your interest.", "People always ask me, \'were you funny as a child?\' well, no, I was an accountant.", "I\'m not an expert on the arms race.", "Sit with those who love allah, for that enlightens the mind.", "You cannot perform in a manner inconsistent with the way you see yourself.", "I say that the most liberating thing about beauty is realizing that you are the beholder.", "Happiness in intelligent people is the rarest thing I know.", "A person who never made a mistake never tried anything new.", "In the big leagues everyone has ability. It always comes down to mind games. Who ever is more mentally strong-wins.", "Don\'t take rest after your first victory because if you fail in second, more lips are waiting to say that your first victory was just luck.", "Stop learning. Start knowing.", "One of the greatest discoveries a man makes, one of his great surprises, is to find he can do what he was afraid he couldn\'t do.", "You are never too old to set another goal or to dream a new dream.", "Keep your eyes on the stars, and your feet on the ground.", "I know of only one duty, and that is to love.", "God helps those who help themselves.", "You are not just the drop in the ocean. You are the mighty ocean in the drop.", "Teaching is a very noble profession that shapes the character, caliber, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.", "A man should never neglect his family for business.", "Isn\'t it strange that I who have written only unpopular books should be such a popular fellow?", "Drag your thoughts away from your troubles... By the ears, by the heels, or any other way you can manage it.", "The greatest discovery of all time is that a person can change his future by merely changing his attitude.", "Whoever listens to slander is himself a slanderer.", "The best way to find out if you can trust somebody is to trust them.", "Take account of your deeds before they are taken account of.", "Faith is taking the first step even when you don\'t see the whole staircase.", "To give thanks in solitude is enough. Thanksgiving has wings and goes where it must go. Your prayer knows much more about it than you do.", "Those who dare to fail miserably can achieve greatly.", "Like your body your mind also gets tired so refresh it by wise sayings.", "God helps those who fear him.", "During civil disturbance adopt such an attitude that people do not attach any importance to you - they neither burden you with complicated affairs, nor try to derive any advantage out of you.", "Whether you think that you can, or that you can\'t, you are usually right.", "O! Let me not be mad, not mad, sweet heaven; keep me in temper; I would not be mad!", "The man with no imagination has no wings.", "Today, india is a nuclear weapons state.", "The public is merely a multiplied \"Me.\"", "If a man could have half of his wishes, he would double his troubles.", "There are no moral phenomena at all, but only a moral interpretation of phenomena.", "To say \"I love you\" one must first be able to say the \"I.\"", "Patience to faith is like the head to the body. The person who has no patience has not faith.", "Nations are born in the hearts of poets, they prosper and die in the hands of politicians.", "Rivers, ponds, lakes and streams - they all have different names, but they all contain water. Just as religions do - they all contain truths.", "The time has come to turn your heart into a temple of fire. Your essence is gold hidden in dust. To reveal its splendor you need to burn in the fire of love.", "Only last week I murdered a rock, injured a stone and hospitalized a brick.", "If you would have a faithful servant, and one that you like, serve yourself.", "If all you can do is crawl, start crawling.", "Extreme hopes are born from extreme misery.", "When a person cannot deceive himself the chances are against his being able to deceive other people.", "I am the greatest. I said that even before I knew I was. Don\'t tell me I can\'t do something. Don\'t tell me it\'s impossible. Don\'t tell me I\'m not the greatest. I\'m the double greatest.", "Geologists have a saying - rocks remember.", "Be silent, only the hand of god can remove the burdens of your heart.", "Peace cannot be kept by force; it can only be achieved by understanding.", "The best way to get a bad law repealed is to enforce it strictly.", "Wherever you are, and whatever you do, be in love.", "Should I kill myself, or have a cup of coffee?", "It is very dangerous to have your self-worth riding on your results as an athlete.", "No part of the education of a politician is more indispensable than the fighting of elections.", "War is never a lasting solution for any problem.", "I never think of the future - it comes soon enough.", "At the end of my life, with just one breath left, if you come, I\'ll sit up and sing.", "Indigestion is charged by god with enforcing morality on the stomach.", "Fear allah, for he alone lives; all other things are liable to perish.", "I once had a thousand desires. But in my one desire to know you, all else melted away.", "God forbid, men should be jealous of knowledge as they are jealous of women.", "I wish they would only take me as I am.", "I have lived on the lip of insanity, wanting to know reasons, knocking on a door. It opens. I\'ve been knocking from the inside.", "Once you replace negative thoughts with positive ones, you\'ll start having positive results.", "What is wanted is not the will to believe, but the will to find out, which is the exact opposite.", "I\'m going to show you how great I am!", "In the depth of winter I finally learned that there was in me an invincible summer.", "He who fears to weep, should learn to be kind to those who weep.", "The criminal is trying to solve his immediate problems.", "It is very easy to defeat someone, but it is very hard to win someone.", "A casual stroll through the lunatic asylum shows that faith does not prove anything.", "Things may come to those who wait, but only the things left by those who hustle.", "No sanction can stand against ignited minds.", "Understanding the knowledge and wisdom of the qur\'an is by far, higher than memorizing.", "Gratitude is the wine for the soul. Go on. Get drunk.", "All of our dreams can come true.", "The days of life pass away like clouds, so do good while you are alive.", "Once the choice is made, do not look back, do not second-guess your decisions.", "Tear off the mask. Your face is glorious.", "How hard, how bitter it is to become a man!", "Conduct, which involves a decision of the ultimate fate of the agent cannot be based on illusions.", "I don\'t know who my grandfather was; I am much more concerned to know what his grandson will be.", "Look for the answer inside your question.", "Adversity makes men, and prosperity makes monsters.", "Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.", "It is better to remain silent and be thought a fool than to open one\'s mouth and remove all doubt.", "He who has never learned to obey cannot be a good commander.", "You cannot create experience. You must undergo it.", "I am grateful for all my victories, but I am especially grateful for my losses, because they only made me work harder.", "No legacy is so rich as honesty.", "The outcome of fear is disappointment and shyness is frustration.", "All my life through, the new sights of nature made me rejoice like a child.", "He who avoids complaint invites happiness.", "Work with integrity and succeed with integrity.", "You were born with potential. You were born with goodness and trust. You were born with ideals and dreams. You were born with greatness. You were born with wings. You are not meant for crawling, so don\'t. You have wings. Learn to use them and fly.", "Move, but don\'t move the way fear makes you move.", "It does not matter how slowly you go as long as you do not stop.", "There is no nobility with bad manners.", "You should not quarrel with your neighbor, for he will remain where he is, but your high handedness will become the talk of the people.", "Never stop fighting until you arrive at your destined place - that is, the unique you. Have an aim in life, continuously acquire knowledge, work hard, and have perseverance to realise the great life.", "I like to see a man proud of the place in which he lives. I like to see a man live so that his place will be proud of him.", "Let me define a leader. He must have vision and passion and not be afraid of any problem. Instead, he should know how to defeat it. Most importantly, he must work with integrity.", "Whatever your heart clings to and confides in, that is really your god.", "Dogs never bite me. Humans do.", "Your successes and happiness are forgiven you only if you generously consent to share them.", "When a person really desires something, all the universe conspires to help that person to realize his dream.", "I didn\'t fail the test, I just found 100 ways to do it wrong.", "One who thinks and reflects develops his foresight and vision.", "When red-haired people are above a certain social grade their hair is auburn.", "I have held many things in my hands, and I have lost them all; but whatever I have placed in god\'s hands, that I still possess.", "Always remember you are braver than you believe, stronger than you seem, smarter than you think and twice as beautiful as you\'d ever imagined. Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "That which you do not wish for yourself, do not impose on others.", "I am the greatest, I said that even before I knew I was.", "There is no labor a person does that is undignified; if they do it right.", "The people themselves, and not their servants, can safely reverse their own deliberate decisions.", "I hated every minute of training, but I said, \'don\'t quit. Suffer now and live the rest of your life as a champion.\'", "We shall draw from the heart of suffering itself the means of inspiration and survival.", "When the solution is simple, god is answering.", "I have a theory that the truth is never told during the nine-to-five hours.", "Democracy is when the indigent, and not the men of property, are the rulers.", "You\'re not going to enjoy every minute of the journey, but the success you\'ll find at the end will make it all worth it.", "It\'s hard to be humble when you\'re as great as I am.", "There is no knowledge and science like pondering and thought; and there is no prosperity and advancement like knowledge and science.", "If we did all the things we are capable of, we would literally astound ourselves.", "Be like a tree and let the dead leaves drop.", "Don\'t find fault, find a remedy.", "A friend cannot be considered a friend until he is tested in three occasions: in timeof need, behind your back, and after your death.", "I\'m too fast. I\'m too smart. I\'m too pretty.", "You cannot create experience. You must undergo it.", "Indignation is a submission of our thoughts, but not of our desires.", "Sir, my concern is not whether god is on our side; my greatest concern is to be on god\'s side, for god is always right.", "At times one remains faithful to a cause only because its opponents do not cease to be insipid.", "I put my heart and my soul into my work, and have lost my mind in the process.", "In a competition of love we\'ll all share in the victory, no matter who comes first.", "Some are born great, some achieve greatness, and some have greatness thrust upon them.", "There is no capital more useful than intellect and wisdom, and there is no indigence more injurious than ignorance and unawareness.", "There is a voice that doesn\'t use words. Listen.", "If a sheep dies on the shore of the euphrates I fear lest allah ask me to account for it on the day of resurrection.", "Do not deceive or be faithless even with your enemy.", "Pondering must turn out to be your cash asset, regardless of whichever ups and downs you occur throughout in the everyday living.", "Building capacity dissolves differences. It irons out inequalities.", "All your anxiety is because of your desire for harmony. Seek disharmony, then you will gain peace.", "As long as you are pure of heart, you speak the truth.", "Most people spend more time and energy going around problems than in trying to solve them.", "If you judge people, you have no time to love them.", "Talent in cheaper than table salt. What separates the talented individual from the successful one is a lot of hard work.", "The world we have created is a product of our thinking.", "When a hundred men stand together, each of them loses his mind and gets another one.", "Fanatics are picturesque, mankind would rather see gestures than listen to reasons.", "Every day is different, and some days are better than others, but no matter how challenging the day, I get up and live it.", "The educated southerner has no use for an \'r\', except at the beginning of a word.", "To love is to act.", "My dream is of a place and a time where america will once again be seen as the last best hope of earth.", "What comes, will go. What is found, will be lost again. But what you are is beyond coming and going and beyond description.", "Dreams are not those which comes while we are sleeping, but dreams are those when u don\'t sleep before fulfilling them.", "To fear love is to fear life, and those who fear life are already three parts dead.", "Expect the best. Prepare for the worst. Capitalize on what comes.", "My soul is my guide, for my soul is of that abode. I will not speak of the earthly. I am of the unknown.", "Many marriages would be better if the husband and the wife clearly understood that they are on the same side.", "Try not to resist the changes that come your way. Instead let life live through you. And do not worry that your life is turning upside down. How do you know that the side you are used to is better than the one to come?", "Religions have different names, and they all contain truth, expressed in different ways forms and times.", "All that I am, or hope to be, I owe to my angel mother.", "Doing as others told me, I was blind. Coming when others called me, I was lost. Then I left everyone, myself as well. Then I found everyone, myself as well.", "Happiness is when what you think, what you say, and what you do are in harmony.", "Nothing will work unless you do.", "My books are like water; those of the great geniuses are wine. (fortunately) everybody drinks water.", "Grief can be the garden of compassion. If you keep your heart open through everything, your pain can become your greatest ally in your life\'s search for love and wisdom.", "To be alone means that you avoid bad company. But to have a true friend is better than being alone.", "I am the greatest.", "Only a man who knows what it is like to be defeated can reach down to the bottom of his soul and come up with the extra ounce of power it takes to win when the match is even.", "Riches without faith are the greatest poverty.", "I\'m the most recognized and loved man that ever lived cuz there weren\'t no satellites when jesus and moses were around, so people far away in the villages didn\'t know about them.", "The lord prefers common-looking people. That is why he makes so many of them.", "Whether you love god or you love a human being, if you love enough you will come into the presence of love itself.", "O allah do not give me in excess lest I may be disobedient.", "Eros will have naked bodies; friendship naked personalities.", "In a democracy, the well-being, individuality and happiness of every citizen is important for the overall prosperity, peace and happiness of the nation.", "The happiest of people is the one under whose care people are happy because of him, and the most miserable of people is the one under whose care people are miserable because of him.", "He who guards his secrets retains control in his own hands.", "Success is not achieved by winning all the time. Real success comes when we rise after we fall.", "Humility is not thinking less of yourself, it\'s thinking of yourself less.", "No amount of worrying can change the future. Go easy on yourself, for the outcome of all affairs is determined by god\'s decree. If something is meant to go elsewhere, it will never come your way, but if it is yours by destiny, from you it cannot flee.", "Fear him, whom you hate.", "The word of god is the medicine of the heart.", "Do you think god gets stoned? I think so... Look at the platypus.", "The good life is one inspired by love and guided by knowledge.", "I believe in christianity as I believe that the sun has risen: not only because I see it, but because by it I see everything else.", "The airplane has had a big impact on my life.", "We make a living by what we get, but we make a life by what we give.", "Indifference and neglect often do much more damage than outright dislike.", "When I am silent, I fall into the place where everything is music.", "A word to the wise ain\'t necessary - it\'s the stupid ones that need the advice.", "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.", "That\'s okay, I\'m still the greatest.", "When I look into the future, it\'s so bright it burns my eyes.", "I\'m gonna whup whoever stole my bike!", "To be a great champion you must believe you are the best. If you\'re not, pretend you are.", "Get up sucker and fight. Get up and fight.", "We shall require a substantially new manner of thinking if mankind is to survive.", "I try to build a full personality for each of our cartoon characters - to make them personalities.", "Without freedom, no art; art lives only on the restraints it imposes on itself, and dies of all others.", "When you\'re right, nobody remembers. When you\'re wrong, nobody forgets.", "We have one life; it soon will be past; what we do for god is all that will last.", "When we practice loving kindness and compassion we are the first ones to profit.", "I never gave up on country music because I knew what I was doing was not that bad.", "Israel, as the jewish state, must disappear from the map.", "The world is a dangerous place to live; not because of the people who are evil, but because of the people who don\'t do anything about it.", "It is not best that we should all think alike; it is a difference of opinion that makes horse races.", "Intense love does not measure, it just gives.", "A penny saved is a penny earned.", "Whatever purifies you is the right path, I will not try to define it.", "Coming together is a beginning; keeping together is progress; working together is success.", "Total commitment is the common denominator among all successful men and women.", "Rest but never quit. Even the sun has a sinking spell each evening. But it always rises the next morning. At sunrise, every soul is born again.", "You can have no dominion greater or less than that over yourself.", "I want you to be concerned about your next door neighbor. Do you know your next door neighbor?", "I shook up the world.", "I learned that every mortal will taste death. But only some will taste life.", "Parkinson\'s is my toughest fight. No, it doesn\'t hurt. It\'s hard to explain. I\'m being tested to see if I\'ll keep praying, to see if I\'ll keep my faith. All great people are tested by god.", "You have been a prisoner of a little pond I am the ocean and its turbulent flood come merge with me leave this world of ignorance.", "Do not share the knowledge with which you have been blessed with everyone in general, as you do with some people in particular; and know that there are some men in whom allah, may he he glorified, has placed hidden secrets, which they are forbidden to reveal.", "Your heart knows the way. Run in that direction.", "The angel is free because of his knowledge, the beast because of his ignorance. Between the two remains the son of man to struggle.", "I like not fair terms and a villain\'s mind.", "Our abode in this world is transitory, our life therein is but a loan, our breaths are numbered and our indolence is manifest.", "All credibility, all good conscience, all evidence of truth come only from the senses.", "Once spirit was god, then it became man, and now it is even becoming mob.", "Wealth tends to create enemies, whereas knowledge tends to warm hearts.", "Be afraid of a dignified man when he is hungry and a wicked man when his belly is full.", "Nothing says holidays, like a cheese log.", "A man wrapped up in himself makes a very small bundle.", "There is a candle in your heart, ready to be kindled. There is a void in your soul, ready to be filled. You feel it, don\'t you?", "I am the literary equivalent of a big mac and fries.", "To forgive an oppressor is oppression upon the oppressed.", "Our death is our wedding with eternity.", "Imagination is more important than knowledge.", "When proven wrong, the wise will correct themselves and the ignorants will just keep arguing.", "Grieving? Don\'t. With time, whatever you\'ve lost might come \'round in some other form.", "The breeze at dawn has secrets to tell you. Don\'t go back to sleep.", "Positive thinking will let you do everything better than negative thinking will.", "Design is not just what it looks like and feels like. Design is how it works.", "Contentment is a wealth that is never exhausted.", "There is nothing outside of yourself, look within. Everything you want is there. You are that."},
+								  rkuniss = {"Aga Khan University", "Air War College Institute, Karachi", "Baqai Medical University", "Benazir Bhutto Shaheed University Lyari", "Commecs Institute of Business & Emerging Sciences", "Dadabhoy Institute of Higher Education", "Dawood University of Engineering & Technology", "DHA Suffa University", "DOW University of Health Sciences", "Emaan Institute of Management & Sciences, Karachi", "Greenwich University", "Habib University", "Hamdard University", "ILMA University", "Indus University", "Indus Valley School of Art & Architecture", "Institute of Business Administration", "Institute of Business Management", "Iqra University", "Jinnah Sindh Medical University", "Jinnah University for Women", "Karachi Institute of Economics & Technology", "Karachi Institute of Technology and Entrepreneurship (KITE), Karachi", "Karachi School of Business and Leadership", "KASB Institute of Technology", "Malir University of Science & Technology, Karachi", "Metropolitan University Karachi", "Millennium Institute of Technology and Entrepreneurship, Karachi", "Muhammad Ali Jinnah University", "NED University of Engineering & Technology", "Newport Institute of Communications & Economics", "Pakistan Naval Academy", "Preston Institute of Management, Science & Technology", "Preston University", "Salim Habib University (Former Barret Hodgson University), Karachi", "Shaheed Benazir Bhutto City University", "Shaheed Benazir Bhutto Dewan University", "Shaheed Zulfikar Ali Bhutto Institute of Science & Technology", "Shaheed Zulfiqar Ali Bhutto University of Law", "Sindh Institute of Management & Technology", "Sindh Institute of Medical Sciences", "Sindh Madresatul Islam University", "Sir Syed University of Engineering & Technology", "Sohail University, Karachi", "Textile Institute of Pakistan", "The Nazeer Hussain University", "UIT University, Karachi", "University of Karachi", "Zia-ud-Din University"},
+								  rjbss = {"Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor", "Nurse", "Physician", "Laboratorian", "Psychiatrist/Psychologist", "Dermatologist", "Gynecologist", "Cardiologist", "Surgeon", "Ophthalmologist", "Pediatrician", "Watchman", "Tailor", "Designer", "Photographer", "Model", "Fashion Designer", "Makeup Artist", "Dressmaker", "Content Writer", "Police Officer", "Undercover Police Officer", "Prison Officer/Jailer", "Reporter", "Journalist", "Investigator", "Laborer", "Data Analyst", "Data Scientist", "Saleswo/man", "Tele-saleswo/man", "Developer", "Engineer", "Plumber", "Human Resources Manager", "Legal Counsel", "Judge", "Lawyer", "Travel Guide", "Scientist", "Goldsmith", "Blacksmith", "Lumberjack", "White-hat hacker", "Black-hat hacker", "Caretaker", "Nanny", "Fisher", "Architect", "Software Architect", "Farmer", "Agriculture Engineer", "Software Engineer", "Support Specialist", "Systems Analyst", "Technical Support Engineer", "Web Developer", "Web Designer", "Animator", "Filmmaker", "Actor", "Comedian", "Director", "Vocalist", "Musician", "Bedroom Musician/DJ", "Songwriter", "Screenwriter", "Barber", "Barista/Bartender", "Tattooist", "Electrician", "Vehicle Technician", "Cartoonist", "Cook", "Travel Advisor", "Translator", "Relationship Counselor", "accountant", "actor", "actuary", "adhesive bonding machine tender", "adjudicator", "administrative assistant", "administrative services manager", "adult education teacher", "advertising manager", "advertising sales agent", "aerobics instructor", "aerospace engineer", "aerospace engineering technician", "agent", "agricultural engineer", "agricultural equipment operator", "agricultural grader", "agricultural inspector", "agricultural manager", "agricultural sciences teacher", "agricultural sorter", "agricultural technician", "agricultural worker", "air conditioning installer", "air conditioning mechanic", "air traffic controller", "aircraft cargo handling supervisor", "aircraft mechanic", "aircraft service technician", "airline copilot", "airline pilot", "ambulance dispatcher", "ambulance driver", "amusement machine servicer", "anesthesiologist", "animal breeder", "animal control worker", "animal scientist", "animal trainer", "animator", "answering service operator", "anthropologist", "apparel patternmaker", "apparel worker", "arbitrator", "archeologist", "architect", "architectural drafter", "architectural manager", "archivist", "art director", "art teacher", "artist", "assembler", "astronomer", "athlete", "athletic trainer", "ATM machine repairer", "atmospheric scientist", "attendant", "audio and video equipment technician", "audio-visual and multimedia collections specialist", "audiologist", "auditor", "author", "auto damage insurance appraiser", "automotive and watercraft service attendant", "automotive glass installer", "automotive mechanic", "avionics technician", "back-end developer", "baggage porter", "bailiff", "baker", "barback", "barber", "bartender", "basic education teacher", "behavioral disorder counselor", "bellhop", "bench carpenter", "bicycle repairer", "bill and account collector", "billing and posting clerk", "biochemist", "biological technician", "biomedical engineer", "biophysicist", "blaster", "blending machine operator", "blockmason", "boiler operator", "boilermaker", "bookkeeper", "boring machine tool tender", "brazer", "brickmason", "bridge and lock tender", "broadcast news analyst", "broadcast technician", "brokerage clerk", "budget analyst", "building inspector", "bus mechanic", "butcher", "buyer", "cabinetmaker", "cafeteria attendant", "cafeteria cook", "camera operator", "camera repairer", "cardiovascular technician", "cargo agent", "carpenter", "carpet installer", "cartographer", "cashier", "caster", "ceiling tile installer", "cellular equipment installer", "cement mason", "channeling machine operator", "chauffeur", "checker", "chef", "chemical engineer", "chemical plant operator", "chemist", "chemistry teacher", "chief executive", "child social worker", "childcare worker", "chiropractor", "choreographer", "civil drafter", "civil engineer", "civil engineering technician", "claims adjuster", "claims examiner", "claims investigator", "cleaner", "clinical laboratory technician", "clinical laboratory technologist", "clinical psychologist", "coating worker", "coatroom attendant", "coil finisher", "coil taper", "coil winder", "Coach", "coin machine servicer", "commercial diver", "commercial pilot", "commodities sales agent", "communications equipment operator", "communications teacher", "community association manager", "community service manager", "compensation and benefits manager", "compliance officer", "composer", "computer hardware engineer", "computer network architect", "computer operator", "computer programmer", "computer science teacher", "computer support specialist", "computer systems administrator", "computer systems analyst", "concierge", "conciliator", "concrete finisher", "conservation science teacher", "conservation scientist", "conservation worker", "conservator", "construction inspector", "construction manager", "construction painter", "construction worker", "continuous mining machine operator", "convention planner", "conveyor operator", "cook", "cooling equipment operator", "copy marker", "correctional officer", "correctional treatment specialist", "correspondence clerk", "correspondent", "cosmetologist", "cost estimator", "costume attendant", "counseling psychologist", "counselor", "courier", "court reporter", "craft artist", "crane operator", "credit analyst", "credit checker", "credit counselor", "criminal investigator", "criminal justice teacher", "crossing guard", "curator", "custom sewer", "customer service representative", "cutter", "cutting machine operator", "dancer", "data entry keyer", "database administrator", "decorating worker", "delivery services driver", "demonstrator", "dental assistant", "dental hygienist", "dental laboratory technician", "dentist", "dermatologist", "derrick operator", "designer", "desktop publisher", "detective", "developer", "diagnostic medical sonographer", "die maker", "diesel engine specialist", "dietetic technician", "dietitian", "dinkey operator", "director", "dishwasher", "dispatcher", "DJ", "doctor", "door-to-door sales worker", "drafter", "dragline operator", "drama teacher", "dredge operator", "dressing room attendant", "dressmaker", "drier operator", "drilling machine tool operator", "dry-cleaning worker", "drywall installer", "dyeing machine operator", "earth driller", "economics teacher", "economist", "editor", "education administrator", "electric motor repairer", "electrical electronics drafter", "electrical engineer", "electrical equipment assembler", "electrical installer", "electrical power-line installer", "electrician", "electro-mechanical technician", "elementary school teacher", "elevator installer", "elevator repairer", "embalmer", "emergency management director", "emergency medical technician", "engine assembler", "engineer", "engineering manager", "engineering teacher", "english language teacher", "engraver", "entertainment attendant", "environmental engineer", "environmental science teacher", "environmental scientist", "epidemiologist", "escort", "etcher", "event planner", "excavating operator", "executive administrative assistant", "executive secretary", "exhibit designer", "expediting clerk", "explosives worker", "extraction worker", "fabric mender", "fabric patternmaker", "fabricator", "faller", "family practitioner", "family social worker", "family therapist", "farm advisor", "farm equipment mechanic", "farm labor contractor", "farmer", "farmworker", "fashion designer", "fast food cook", "fence erector", "fiberglass fabricator", "fiberglass laminator", "file clerk", "filling machine operator", "film and video editor", "financial analyst", "financial examiner", "financial manager", "financial services sales agent", "fine artist", "fire alarm system installer", "fire dispatcher", "fire inspector", "fire investigator", "firefighter", "fish and game warden", "fish cutter", "fish trimmer", "fisher", "fitness studies teacher", "fitness trainer", "flight attendant", "floor finisher", "floor layer", "floor sander", "floral designer", "food batchmaker", "food cooking machine operator", "food preparation worker", "food science technician", "food scientist", "food server", "food service manager", "food technologist", "foreign language teacher", "foreign literature teacher", "forensic science technician", "forest fire inspector", "forest fire prevention specialist", "forest worker", "forester", "forestry teacher", "forging machine setter", "foundry coremaker", "freight agent", "freight mover", "front-end developer", "fundraising manager", "funeral attendant", "funeral director", "funeral service manager", "furnace operator", "furnishings worker", "furniture finisher", "gaming booth cashier", "gaming cage worker", "gaming change person", "gaming dealer", "gaming investigator", "gaming manager", "gaming surveillance officer", "garment mender", "garment presser", "gas compressor", "gas plant operator", "gas pumping station operator", "general manager", "general practitioner", "geographer", "geography teacher", "geological engineer", "geological technician", "geoscientist", "glazier", "government program eligibility interviewer", "graduate teaching assistant", "graphic designer", "groundskeeper", "groundskeeping worker", "gynecologist", "hairdresser", "hairstylist", "hand grinding worker", "hand laborer", "hand packager", "hand packer", "hand polishing worker", "hand sewer", "hazardous materials removal worker", "head cook", "health and safety engineer", "health educator", "health information technician", "health services manager", "health specialties teacher", "healthcare social worker", "hearing officer", "heat treating equipment setter", "heating installer", "heating mechanic", "heavy truck driver", "highway maintenance worker", "historian", "history teacher", "hoist and winch operator", "home appliance repairer", "home economics teacher", "home entertainment installer", "home health aide", "home management advisor", "host", "hostess", "hostler", "hotel desk clerk", "housekeeping cleaner", "human resources assistant", "human resources manager", "human service assistant", "hunter", "hydrologist", "illustrator", "industrial designer", "industrial engineer", "industrial engineering technician", "industrial machinery mechanic", "industrial production manager", "industrial truck operator", "industrial-organizational psychologist", "information clerk", "information research scientist", "information security analyst", "information systems manager", "inspector", "instructional coordinator", "instructor", "insulation worker", "insurance claims clerk", "insurance sales agent", "insurance underwriter", "intercity bus driver", "interior designer", "internist", "interpreter", "interviewer", "investigator", "jailer", "janitor", "jeweler", "judge", "judicial law clerk", "kettle operator", "kiln operator", "kindergarten teacher", "laboratory animal caretaker", "landscape architect", "landscaping worker", "lathe setter", "laundry worker", "law enforcement teacher", "law teacher", "lawyer", "layout worker", "leather worker", "legal assistant", "legal secretary", "legislator", "librarian", "library assistant", "library science teacher", "library technician", "licensed practical nurse", "licensed vocational nurse", "life scientist", "lifeguard", "light truck driver", "line installer", "literacy teacher", "literature teacher", "loading machine operator", "loan clerk", "loan interviewer", "loan officer", "lobby attendant", "locker room attendant", "locksmith", "locomotive engineer", "locomotive firer", "lodging manager", "log grader", "logging equipment operator", "logistician", "machine feeder", "machinist", "magistrate judge", "magistrate", "maid", "mail clerk", "mail machine operator", "mail superintendent", "maintenance painter", "maintenance worker", "makeup artist", "management analyst", "manicurist", "manufactured building installer", "mapping technician", "marble setter", "marine engineer", "marine oiler", "market research analyst", "marketing manager", "marketing specialist", "marriage therapist", "massage therapist", "material mover", "materials engineer", "materials scientist", "mathematical science teacher", "mathematical technician", "mathematician", "maxillofacial surgeon", "measurer", "meat cutter", "meat packer", "meat trimmer", "mechanical door repairer", "mechanical drafter", "mechanical engineer", "mechanical engineering technician", "mediator", "medical appliance technician", "medical assistant", "medical equipment preparer", "medical equipment repairer", "medical laboratory technician", "medical laboratory technologist", "medical records technician", "medical scientist", "medical secretary", "medical services manager", "medical transcriptionist", "meeting planner", "mental health counselor", "mental health social worker", "merchandise displayer", "messenger", "metal caster", "metal patternmaker", "metal pickling operator", "metal pourer", "metal worker", "metal-refining furnace operator", "metal-refining furnace tender", "meter reader", "microbiologist", "middle school teacher", "milling machine setter", "millwright", "mine cutting machine operator", "mine shuttle car operator", "mining engineer", "mining safety engineer", "mining safety inspector", "mining service unit operator", "mixing machine setter", "mobile heavy equipment mechanic", "mobile home installer", "model maker", "model", "molder", "mortician", "motel desk clerk", "motion picture projectionist", "motorboat mechanic", "motorboat operator", "motorboat service technician", "motorcycle mechanic", "movers", "multimedia artist", "museum technician", "music director", "music teacher", "musical instrument repairer", "musician", "natural sciences manager", "naval architect", "network systems administrator", "new accounts clerk", "news vendor", "nonfarm animal caretaker", "nuclear engineer", "nuclear medicine technologist", "nuclear power reactor operator", "nuclear technician", "nursing aide", "nursing instructor", "nursing teacher", "nutritionist", "obstetrician", "occupational health and safety specialist", "occupational health and safety technician", "occupational therapist", "occupational therapy aide", "occupational therapy assistant", "offbearer", "office clerk", "office machine operator", "operating engineer", "operations manager", "operations research analyst", "ophthalmic laboratory technician", "optician", "optometrist", "oral surgeon", "order clerk", "order filler", "orderly", "ordnance handling expert", "orthodontist", "orthotist", "outdoor power equipment mechanic", "oven operator", "packaging machine operator", "painter ", "painting worker", "paper goods machine setter", "paperhanger", "paralegal", "paramedic", "parking enforcement worker", "parking lot attendant", "parts salesperson", "paving equipment operator", "payroll clerk", "pediatrician", "pedicurist", "personal care aide", "personal chef", "personal financial advisor", "personal trainer", "pest control worker", "pesticide applicator", "pesticide handler", "pesticide sprayer", "petroleum engineer", "petroleum gauger", "petroleum pump system operator", "petroleum refinery operator", "petroleum technician", "pharmacist", "pharmacy aide", "pharmacy technician", "philosophy teacher", "photogrammetrist", "photographer", "photographic process worker", "photographic processing machine operator", "physical therapist aide", "physical therapist assistant", "physical therapist", "physician assistant", "physician", "physicist", "physics teacher", "pile-driver operator", "pipefitter", "pipelayer", "planing machine operator", "planning clerk", "plant operator", "plant scientist", "plasterer", "plastic patternmaker", "plastic worker", "plumber", "podiatrist", "police dispatcher", "police officer", "policy processing clerk", "political science teacher", "political scientist", "postal service clerk", "postal service mail carrier", "postal service mail processing machine operator", "postal service mail processor", "postal service mail sorter", "postmaster", "postsecondary teacher", "poultry cutter", "poultry trimmer", "power dispatcher", "power distributor", "power plant operator", "power tool repairer", "precious stone worker", "precision instrument repairer", "prepress technician", "preschool teacher", "priest", "print binding worker", "printing press operator", "private detective", "probation officer", "procurement clerk", "producer", "product promoter", "product manager", "production clerk", "production occupation", "proofreader", "property manager", "prosthetist", "prosthodontist", "psychiatric aide", "psychiatric technician", "psychiatrist", "psychologist", "psychology teacher", "public relations manager", "public relations specialist", "pump operator", "purchasing agent", "purchasing manager", "radiation therapist", "radio announcer", "radio equipment installer", "radio operator", "radiologic technician", "radiologic technologist", "rail car repairer", "rail transportation worker", "rail yard engineer", "rail-track laying equipment operator", "railroad brake operator", "railroad conductor", "railroad police", "rancher", "real estate appraiser", "real estate broker", "real estate manager", "real estate sales agent", "receiving clerk", "receptionist", "record clerk", "recreation teacher", "recreation worker", "recreational therapist", "recreational vehicle service technician", "recyclable material collector", "referee", "refractory materials repairer", "refrigeration installer", "refrigeration mechanic", "refuse collector", "regional planner", "registered nurse", "rehabilitation counselor", "reinforcing iron worker", "reinforcing rebar worker", "religion teacher", "religious activities director", "religious worker", "rental clerk", "repair worker", "reporter", "residential advisor", "resort desk clerk", "respiratory therapist", "respiratory therapy technician", "retail buyer", "retail salesperson", "revenue agent", "rigger", "rock splitter", "rolling machine tender", "roof bolter", "roofer", "rotary drill operator", "roustabout", "safe repairer", "sailor", "sales engineer", "sales manager", "sales representative", "sampler", "sawing machine operator", "scaler", "school bus driver", "school psychologist", "school social worker", "scout leader", "sculptor", "secondary education teacher", "secondary school teacher", "secretary", "securities sales agent", "security guard", "security system installer", "segmental paver", "self-enrichment education teacher", "semiconductor processor", "septic tank servicer", "set designer", "sewer pipe cleaner", "sewing machine operator", "shampooer", "shaper", "sheet metal worker", "sheriff's patrol officer", "ship captain", "ship engineer", "ship loader", "shipmate", "shipping clerk", "shoe machine operator", "shoe worker", "short order cook", "signal operator", "signal repairer", "singer", "ski patrol", "skincare specialist", "slaughterer", "slicing machine tender", "slot supervisor", "social science research assistant", "social sciences teacher", "social scientist", "social service assistant", "social service manager", "social work teacher", "social worker", "sociologist", "sociology teacher", "software developer", "software engineer", "soil scientist", "solderer", "sorter", "sound engineering technician", "space scientist", "special education teacher", "speech-language pathologist", "sports book runner", "sports entertainer", "sports performer", "stationary engineer", "statistical assistant", "statistician", "steamfitter", "stock clerk", "stock mover", "stonemason", "street vendor", "streetcar operator", "structural iron worker", "structural metal fabricator", "structural metal fitter", "structural steel worker", "stucco mason", "substance abuse counselor", "substance abuse social worker", "subway operator", "surfacing equipment operator", "surgeon", "surgical technologist", "survey researcher", "surveying technician", "surveyor", "switch operator", "switchboard operator", "tailor", "tamping equipment operator", "tank car loader", "taper", "tax collector", "tax examiner", "tax preparer", "taxi driver", "teacher assistant", "teacher", "team assembler", "technical writer", "telecommunications equipment installer", "telemarketer", "telephone operator", "television announcer", "teller", "terrazzo finisher", "terrazzo worker", "tester", "textile bleaching operator", "textile cutting machine setter", "textile knitting machine setter", "textile presser", "textile worker", "therapist", "ticket agent", "ticket taker", "tile setter", "timekeeping clerk", "timing device assembler", "tire builder", "tire changer", "tire repairer", "title abstractor", "title examiner", "title searcher", "tobacco roasting machine operator", "tool filer", "tool grinder", "tool maker", "tool sharpener", "tour guide", "tower equipment installer", "tower operator", "track switch repairer", "tractor operator", "tractor-trailer truck driver", "traffic clerk", "traffic technician", "training and development manager", "training and development specialist", "transit police", "translator", "transportation equipment painter", "transportation inspector", "transportation security screener", "transportation worker", "trapper", "travel agent", "travel clerk", "travel guide", "tree pruner", "tree trimmer", "trimmer", "truck loader", "truck mechanic", "tuner", "turning machine tool operator", "tutor", "typist", "umpire", "undertaker", "upholsterer", "urban planner", "usher", "UX designer", "valve installer", "vending machine servicer", "veterinarian", "veterinary assistant", "veterinary technician", "vocational counselor", "vocational education teacher", "waiter", "waitress", "watch repairer", "water treatment plant operator", "weaving machine setter", "web developer", "weigher", "welder", "wellhead pumper", "wholesale buyer", "wildlife biologist", "window trimmer", "wood patternmaker", "woodworker", "word processor", "writer", "yardmaster", "zoologist"};
 	public static String randNationality() {
 		return randFrom(ntltss);
 	}
@@ -4844,8 +5456,14 @@ public class KL {
 	public static String randKarachiArea() {
 		return randAreaInKarachi();
 	}
+	public static String randKarachiUniversity() {
+		return randFrom(rkuniss);
+	}
 	public static String randPhone() {
 		return randFrom(rfnss);
+	}
+	public static String randJob() {
+		return randFrom(rjbss);
 	}
 	public static String randGirlName() {
 		return randFrom(rglnss);
@@ -4865,6 +5483,8 @@ public class KL {
 	public static final String randNationality = fakeNationality = fakeNationality(),
 							   randCity = randCity(),
 							   randKarachiArea = randAreaInKarachi = randAreaInKarachi(),
+							   randKarachiUniversity = randKarachiUniversity(),
+							   randJob = randJob(),
 							   randPhone = randPhone(),
 							   randGirlName = randGirlName(),
 							   randGuyName = randGuyName(),
@@ -4986,100 +5606,13 @@ public class KL {
 		return createFolder(folderName);
 	}
 
-	/*
-	public static void main(String[] args) {
-		//createFile("g.txt","hi");
-		deleteFile("g.txt");
-		String name = scan("Please enter your name: ");
-		next();
-		int age = scani("And age? ");
-		next();
-		print("---- * ----");
-		next();
-		print("Name:", name, "\nAge:", Str(age));
-		String arrayOfTextChunks[] = {"hi", "this", "is", "me"};
-		int nums[] = {1, 2, 5, 3, 6, 7, 8, 4, 9, 10};
-		sort(nums);
-		String collectedChunks = join(arrayOfTextChunks, "+");
-		print(collectedChunks);
-		print(randInt());
-
-	    print(randItem(arrayOfTextChunks));
-	    //print(len(nums));
-	    printAll(nums);
-	}
-	*/
 	public static void main
 	(String[] args) {
-		//print(sentCase("hi love, how's it going? i am trying."));
-		//createFolder("g");
 		/*
-		String contents = readFile("Book.java");
-		print(contents);
+		int[] numbers = {1, 2, 3, 4, 5, 6, 7};
+		forEach(numbers, (n, i) -> print(f("%d: %d", i, n)));
 		*/
-		//deleteFolder("g");
-		//print(getSeason());
-		//print(upper(replace(trim("     Hi there love"), " ", "-")));
-		//print(endsWith("hello world", "rld"));
-		/*
-		Obj_S languages = new Obj_S("key", "value", "fruit", "banana", "car", "porsche");
-		Obj_D constants = new Obj_D("g", 9.8);
-		constants.add("pi", 3.15);
-		constants.set("pi", 3.16);
-		constants.update("pi", 3.14);
-		constants.printMap();
-		languages.add("java", "enterprise");
-		languages.add("python", "ml/ai")
-		languages.add("javascript", "frontend");
-		languages.printMap();
-		//iterating through keys
-		System.out.print("\n\nKeys: ");
-		for (String key : languages.keys()) {
-			System.out.print(key);
-			System.out.print(", ");
-		}
-
-		//iterating through values
-		System.out.print("\n\nValues: ");
-		for (var value : languages.values()) {
-			System.out.print(value);
-			System.out.print(", ");
-		}
-		*/
-		/*
-		int nums[] = {1, 2, 5, 3, 6, 7, 8, 4, 9, 10};
-		int nums_sorted[] = copyArr(nums);
-		sort(nums_sorted);
-		print("Nums: ");
-		printArr(nums);
-		br(1);
-		print("Nums, sorted: ");
-		printArr(nums_sorted);
-		*/
-		/*
-		print(now());
-		print(getSeason());
-		print(getMonth());
-		*/
-		//print(sliceToAfter("This is a lovely evening we shouldn't miss", "lovely "));
-		//for (int i : range(500)) print(th(i));
-		//printArr(divisorsOf(80));
-		//repeat(() -> print("hi"), 5);
-		//print(f("hi %s, sorry, you're %d minutes late", "Love", 23));  //print(f(75000124));
-		//print(pkr(1001510000000.294));
-		//double x = 8000.5;
-		//print(curr(x, "JP¥"));
-		//double x = 80143000000000000000000000000000000.0;
-		///print(ussuffix(x));
-		Int_Arr arr = new Int_Arr(1, 0, -2, 3, 5, 7, 7, 7);
-		//arr.sort().unique();
-		arr.pushStart(9);
-		//arr.shuffle();
-		//arr.map(n -> n*2);
-		//int popped = arr.pop(3);
-		//print("Popped:", popped);
-		//arr.forEach(n -> print(n));
-		printArr(arr);
-        
+         
+         
 	}
 }
