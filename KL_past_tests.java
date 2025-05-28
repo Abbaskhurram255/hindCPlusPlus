@@ -125,6 +125,6 @@ forEach(numbers, (n, i) -> print(f("%d: %d", i, n)));
 
 /*
         int[] numbers = {1, 2, 3, 4, 5, 6, 7};
-        numbers = map(numbers, (n) -> n+1);
+        numbers = map(numbers, n -> n+1);
 		print(numbers[0]);
 */
