@@ -1,6816 +1,8916 @@
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.util.function.*;
-import java.util.TreeMap.*;
-import java.util.regex.*;
-import java.io.*;
-import java.security.SecureRandom;
-import java.nio.file.*;
-import java.text.*;
-//GUI
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
-
-
-
-@SuppressWarnings("all")
-public class KL {
-	public static final class Money {
-		private double amnt;
-		private String curr;
-
-		Money() {
-			this.amnt = 0;
-			this.curr = "Rs. ";
-		}
-		Money(double amnt) {
-			this.amnt = isinf(amnt) ? 0 : amnt;
-			this.curr = "Rs. ";
-		}
-		Money(double amnt, String curr) {
-			this.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
-			this.curr = not(this.curr) || len(this.curr) < 1 || len(this.curr) > 4 ? "Rs. " : titleCase(curr);
-		}
-		Money curr(String curr) {
-			this.curr = not(curr) || len(curr) < 1 || len(curr) > 4 ? "Rs. " : titleCase(curr);
-			return this;
-		}
-		Money amount(double newAmnt) {
-			this.amnt = isinf(newAmnt) ? this.amnt : newAmnt;
-			return this;
-		}
-		Money set(double newAmnt) {
-			amount(newAmnt);
-			return this;
-		}
-		Money add(double... nums) {
-			each(nums, (n, i) -> this.amnt += n);
-			return this;
-		}
-		Money give(double... nums) {
-			add(nums);
-			return this;
-		}
-		Money plus(double... nums) {
-			add(nums);
-			return this;
-		}
-		Money deposit(double... nums) {
-			add(nums);
-			return this;
-		}
-		Money minus(double... nums) {
-			each(nums, (n, i) -> this.amnt -= n);
-			return this;
-		}
-		Money take(double... nums) {
-			minus(nums);
-			return this;
-		}
-		Money sub(double... nums) {
-			minus(nums);
-			return this;
-		}
-		Money withdraw(double... nums) {
-			minus(nums);
-			return this;
-		}
-		Money times(double... nums) {
-			each(nums, (n, i) -> this.amnt *= n);
-			return this;
-		}
-		Money mul(double... nums) {
-			times(nums);
-			return this;
-		}
-		Money div(double... nums) {
-			each(nums, (n, i) -> this.amnt /= n);
-			return this;
-		}
-		Money quo(double... nums) {
-			div(nums);
-			return this;
-		}
-		public String suffix(boolean... bools) {
-			boolean forceInternational = bools.length > 0 ? bools[0] : false;
-			this.curr = trim(this.curr) + " ";
-			if (in(this.curr, "pk|rs")) return "Rs. " + (forceInternational ? ussuffix(amnt) : pksuffix(amnt));
-			if (in(this.curr, "us")) return "US$ " + ussuffix(amnt);
-			return this.curr + (forceInternational || (is(this.curr) && !in(this.curr, "pk|rs")) ? ussuffix(amnt) : pksuffix(amnt));
-		}
-		public String urdu() {
-			this.curr = trim(this.curr) + " ";
-			if (in(this.curr, "pk|rs")) return far(amnt) + " روپے" ;
-			return this.curr + far(amnt);
-		}
-		public String arabic() {
-			return urdu();
-		}
-		public String toString() {
-			this.curr = trim(this.curr) + " ";
-			if (not(this.curr) || in(this.curr, "pk|rs")) return pkr(amnt);
-			if (in(this.curr, "us")) return usd(amnt);
-			return this.curr + f(amnt);
-		}
-		public String toString(boolean suffixMode) {
-			return suffixMode ? suffix() : toString();
-		}
-		public String string() {
-			return toString();
-		}
-		public String string(boolean suffixMode) {
-			return toString(suffixMode);
-		}
-	}
-	public static final class Kmath {
-		public static double Pi = 3.141592653589793,
-							 C = 2.99792e8,
-							 earthsGravity = 9.80665,
-							 earthsMass = 5.9722e24,
-							 earthsRadius = 6.378137e3;
-		public static String C_Unit = "m/s",
-							 K_Unit = "Nm^2/c^2",
-							 earthsGravity_Unit = "m/s^2",
-							 earthsMass_Unit = "km",
-
-							 earthsRadius_Unit = "km";
-	}
-
-	public static String encode(String s) {
-		return Base64.getEncoder().encodeToString(s.getBytes());
-	}
-	public static String decode(String s) {
-		return new String(Base64.getDecoder().decode(s));
-	}
-	public static String encodeUrl(String s) {
-		String encoded = s.replace("%", "%25").replace(" ", "%20").replace("!", "%21").replace("#", "%23").replace("$", "%24").replace("&", "%26").replace("'", "%27").replace("(", "%28").replace(")",
-						 "%29").replace("*", "%2A").replace("+", "%2B").replace(",", "%2C").replace("/", "%2F").replace(":", "%3A").replace(";", "%3B").replace("=", "%3D").replace("?", "%3F").replace("@", "%40").replace("[",
-								 "%5B").replace("]", "%5D");
-		return encoded;
-	}
-	public static String decodeUrl(String s) {
-		String decoded = s.replace("%21", "!").replace("%20", " ").replace("%23", "#").replace("%24", "$").replace("%26", "&").replace("%27", "'").replace("%28", "(").replace("%29", ")").replace("%2A",
-						 "*").replace("%2B", "+").replace("%2C", ",").replace("%2F", "/").replace("%3A", ":").replace("%3B", ";").replace("%3D", "=").replace("%3F", "?").replace("%40", "@").replace("%5B", "[").replace("%5D",
-								 "]").replace("%25", "%");
-		return decoded;
-	}
-
-	//GUI
-	public static final class GUI extends JFrame {
-		GUI() {
-			super();
-			exitOnClose();
-			resizable();
-			super.setLayout(new BorderLayout());
-		}
-		GUI(String title) {
-			super();
-			exitOnClose();
-			resizable();
-			title(title);
-			super.setLayout(new BorderLayout());
-		}
-		GUI(String title, int w, int h) {
-			super();
-			exitOnClose();
-			resizable();
-			title(title);
-			size(w, h);
-			super.setLayout(new BorderLayout());
-		}
-		GUI title(String title) {
-			super.setTitle(title);
-			return this;
-		}
-		GUI size(int w, int h) {
-			super.setSize(w, h);
-			super.setLocationRelativeTo(null);
-			return this;
-		}
-		GUI start() {
-			super.setVisible(true);
-			return this;
-		}
-		GUI start(int w, int h) {
-			size(w, h);
-			super.setVisible(true);
-			return this;
-		}
-		GUI shuru() {
-			start();
-			return this;
-		}
-		GUI shuru(int w, int h) {
-			start(w, h);
-			return this;
-		}
-		GUI appear() {
-			start();
-			return this;
-		}
-		GUI disappear() {
-			super.setVisible(false);
-			return this;
-		}
-		GUI resizable() {
-			super.setResizable(true);
-			return this;
-		}
-		GUI notResizable() {
-			super.setResizable(false);
-			return this;
-		}
-		GUI resizableNaHo() {
-			notResizable();
-			return this;
-		}
-		GUI onTop() {
-			super.setAlwaysOnTop(true);
-			return this;
-		}
-		GUI alwaysOnTop() {
-			onTop();
-			return this;
-		}
-		GUI hameshaTopPe() {
-			onTop();
-			return this;
-		}
-		GUI offTop() {
-			super.setAlwaysOnTop(false);
-			return this;
-		}
-		GUI opacity(float o) {
-			super.setOpacity(o);
-			return this;
-		}
-		GUI cursor(int c) {
-			super.setCursor(new Cursor(c));
-			return this;
-		}
-		GUI bg(Color clr) {
-			super.setBackground(clr);
-			return this;
-		}
-		GUI font(String fontFamily, int fontSize) {
-			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
-			return this;
-		}
-		GUI font(String fontFamily, int fontSize, int fontWidth) {
-			super.setFont(new Font(fontFamily, fontWidth, fontSize));
-			return this;
-		}
-		GUI font(Font fnt) {
-			super.setFont(fnt);
-			return this;
-		}
-		GUI exitOnClose() {
-			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
-			return this;
-		}
-
-	}
-
-	public static final class Label extends JLabel {
-		Label() {
-			super();
-			super.setOpaque(true);
-		}
-		Label(String name) {
-			super();
-			super.setOpaque(true);
-		}
-		Label bg(Color clr) {
-			super.setBackground(clr);
-			return this;
-		}
-		Label fg(Color clr) {
-			super.setForeground(clr);
-			return this;
-		}
-		Label font(String fontFamily, int fontSize) {
-			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
-			return this;
-		}
-		Label font(String fontFamily, int fontSize, int fontWidth) {
-			super.setFont(new Font(fontFamily, fontWidth, fontSize));
-			return this;
-		}
-		Label font(Font fnt) {
-			super.setFont(fnt);
-			return this;
-		}
-		Label alignx(int pos) {
-			super.setHorizontalAlignment(pos);
-			return this;
-		}
-		Label aligny(int pos) {
-			super.setVerticalAlignment(pos);
-			return this;
-		}
-		String text() {
-			return super.getText();
-		}
-		Label text(String s) {
-			super.setText(s);
-			return this;
-		}
-	}
-
-	public static final class BordLay extends BorderLayout {
-		BordLay() {
-			super();
-		}
-	}
-
-	public static final class GridLay extends GridLayout {
-		GridLay(int rows, int columns) {
-			super(rows, columns);
-		}
-		GridLay(int rows, int columns, int hgap, int vgap) {
-			super(rows, columns, hgap, vgap);
-		}
-	}
-
-	public static final class Panel extends JPanel {
-		Panel() {
-			super();
-		}
-		Panel lay(LayoutManager mgr) {
-			super.setLayout(mgr);
-			return this;
-		}
-		Panel bg(Color clr) {
-			super.setBackground(clr);
-			return this;
-		}
-		Panel fg(Color clr) {
-			super.setForeground(clr);
-			return this;
-		}
-		Panel font(String fontFamily, int fontSize) {
-			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
-			return this;
-		}
-		Panel font(String fontFamily, int fontSize, int fontWidth) {
-			super.setFont(new Font(fontFamily, fontWidth, fontSize));
-			return this;
-		}
-		Panel font(Font fnt) {
-			super.setFont(fnt);
-			return this;
-		}
-	}
-
-	public static final class Btn extends JButton {
-		Btn() {
-			super();
-			super.setFocusable(false);
-		}
-		Btn(String text) {
-			super();
-			super.setFocusable(false);
-			super.setText(text);
-		}
-		Btn bg(Color clr) {
-			super.setBackground(clr);
-			return this;
-		}
-		Btn fg(Color clr) {
-			super.setForeground(clr);
-			return this;
-		}
-		Btn font(String fontFamily, int fontSize) {
-			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
-			return this;
-		}
-		Btn font(String fontFamily, int fontSize, int fontWidth) {
-			super.setFont(new Font(fontFamily, fontWidth, fontSize));
-			return this;
-		}
-		Btn font(Font fnt) {
-			super.setFont(fnt);
-			return this;
-		}
-		Btn alignx(int pos) {
-			super.setHorizontalAlignment(pos);
-			return this;
-		}
-		Btn aligny(int pos) {
-			super.setVerticalAlignment(pos);
-			return this;
-		}
-		String text() {
-			return super.getText();
-		}
-		Btn text(String s) {
-			super.setText(s);
-			return this;
-		}
-	}
-
-	public static final class TxtField extends JTextField {
-		TxtField() {
-			super();
-		}
-		TxtField(String s) {
-			super(s);
-		}
-		TxtField(String s, int i) {
-			super(s, i);
-		}
-		String text() {
-			return super.getText();
-		}
-		TxtField text(String s) {
-			super.setText(s);
-			return this;
-		}
-	}
-	public static final class PwdField extends JPasswordField {
-		PwdField() {
-			super();
-		}
-		PwdField(String s) {
-			super(s);
-		}
-		PwdField(String s, int i) {
-			super(s, i);
-		}
-		String text() {
-			return new String(super.getPassword());
-		}
-		PwdField text(String s) {
-			super.setText(s);
-			return this;
-		}
-	}
-
-	//general
-	public static final class Error extends Throwable {
-		Error(String msg) {
-			super(msg);
-		}
-	}
-	public static final class Obj_S extends HashMap<String, String> {
-		Obj_S() {
-			super();
-		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_S(String k1, String v1, String k2, String v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_S(String k1, String v1) {
-			super.put(k1, v1);
-		}
-		String key(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		String k(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		String val(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		String v(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		boolean hasKey(String k) {
-			return super.containsKey(k);
-		}
-		boolean hasValue(String v) {
-			return super.containsValue(v);
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		String[] array() {
-			Object[] objArray = super.values().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
-		}
-		String nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : "";
-		}
-		Obj_S set(String k, String v) {
-			if (!super.containsKey(k)) super.put(k, v);
-			else super.replace(k, v);
-			return this;
-		}
-		Obj_S add(String k, String v) {
-			set(k, v);
-			return this;
-		}
-		String delete (String k) {
-			String v = hasKey(k) ? super.get(k) : null;
-			super.remove(k);
-			return v;
-		}
-		Obj_S push(String k, String v) {
-			add(k, v);
-			return this;
-		}
-		String pop(String k) {
-			return delete (k);
-		}
-		Obj_S update(String k, String v) {
-			set(k, v);
-			return this;
-		}
-		Set<String> keys() {
-			return super.keySet();
-		}
-		Set<Map.Entry<String, String>> entries() {
-			return super.entrySet();
-		}
-		void printMap() {
-			System.out.println(super.clone());
-		}
-		void printAll() {
-			printMap();
-		}
-		int length() {
-			return super.size();
-		}
-	}
-	public static final class Obj_I extends HashMap<String, Integer> {
-		Obj_I() {
-			super();
-		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_I(String k, Integer v) {
-			super.put(k, v);
-		}
-		int key(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		int k(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		int val(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		int v(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		boolean hasKey(String k) {
-			return super.containsKey(k);
-		}
-		boolean hasValue(Integer v) {
-			return super.containsValue(v);
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		int[] array() {
-			Object[] objArray = super.values().toArray();
-			int[] resultantArr = new int[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Integer) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
-		}
-		int nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : 0;
-		}
-		Obj_I set(String k, Integer v) {
-			if (!super.containsKey(k)) super.put(k, v);
-			else super.replace(k, v);
-			return this;
-		}
-		Obj_I add(String k, Integer v) {
-			set(k, v);
-			return this;
-		}
-		int delete (String k) {
-			int v = hasKey(k) ? super.get(k) : null;
-			super.remove(k);
-			return v;
-		}
-		Obj_I push(String k, int v) {
-			add(k, v);
-			return this;
-		}
-		int pop(String k) {
-			return delete (k);
-		}
-		Obj_I update(String k, Integer v) {
-			set(k, v);
-			return this;
-		}
-		Set<String> keys() {
-			return super.keySet();
-		}
-		Set<Map.Entry<String, Integer>> entries() {
-			return super.entrySet();
-		}
-		void printMap() {
-			System.out.println(super.clone());
-		}
-		void printAll() {
-			printMap();
-		}
-		int length() {
-			return super.size();
-		}
-	}
-	public static final class Obj_L extends HashMap<String, Long> {
-		Obj_L() {
-			super();
-		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_L(String k1, Long v1, String k2, Long v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_L(String k, Long v) {
-			super.put(k, v);
-		}
-		long key(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		long k(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		long val(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		long v(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		long[] array() {
-			Object[] objArray = super.values().toArray();
-			long[] resultantArr = new long[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Long) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
-		}
-		long nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : 0;
-		}
-		boolean hasKey(String k) {
-			return super.containsKey(k);
-		}
-		boolean hasValue(Long v) {
-			return super.containsValue(v);
-		}
-		Obj_L set(String k, Long v) {
-			if (!super.containsKey(k)) super.put(k, v);
-			else super.replace(k, v);
-			return this;
-		}
-		Obj_L add(String k, Long v) {
-			set(k, v);
-			return this;
-		}
-		long delete (String k) {
-			return super.remove(k);
-		}
-		Obj_L push(String k, long v) {
-			add(k, v);
-			return this;
-		}
-		long pop(String k) {
-			return delete (k);
-		}
-		Obj_L update(String k, Long v) {
-			set(k, v);
-			return this;
-		}
-		Set<String> keys() {
-			return super.keySet();
-		}
-		Set<Map.Entry<String, Long>> entries() {
-			return super.entrySet();
-		}
-		void printMap() {
-			System.out.println(super.clone());
-		}
-		void printAll() {
-			printMap();
-		}
-		int length() {
-			return super.size();
-		}
-	}
-	public static final class Obj_F extends HashMap<String, Float> {
-		Obj_F() {
-			super();
-		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_F(String k1, Float v1, String k2, Float v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_F(String k1, Float v1) {
-			super.put(k1, v1);
-		}
-		float key(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		float k(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		float val(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		float v(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		float[] array() {
-			Object[] objArray = super.values().toArray();
-			float[] resultantArr = new float[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Float) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
-		}
-		float nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : 0;
-		}
-		boolean hasKey(String k) {
-			return super.containsKey(k);
-		}
-		boolean hasValue(Float v) {
-			return super.containsValue(v);
-		}
-		Obj_F set(String k, Float v) {
-			if (!super.containsKey(k)) super.put(k, v);
-			else super.replace(k, v);
-			return this;
-		}
-		Obj_F add(String k, Float v) {
-			set(k, v);
-			return this;
-		}
-		float delete (String k) {
-			return super.remove(k);
-		}
-		Obj_F push(String k, float v) {
-			add(k, v);
-			return this;
-		}
-		float pop(String k) {
-			return delete (k);
-		}
-		Obj_F update(String k, Float v) {
-			set(k, v);
-			return this;
-		}
-		Set<String> keys() {
-			return super.keySet();
-		}
-		Set<Map.Entry<String, Float>> entries() {
-			return super.entrySet();
-		}
-		void printMap() {
-			System.out.println(super.clone());
-		}
-		void printAll() {
-			printMap();
-		}
-		int length() {
-			return super.size();
-		}
-	}
-	public static final class Obj_D extends HashMap<String, Double> {
-		Obj_D() {
-			super();
-		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_D(String k1, Double v1, String k2, Double v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_D(String k, Double v) {
-			super.put(k, v);
-		}
-		double key(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		double k(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		double val(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		double v(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		double[] array() {
-			Object[] objArray = super.values().toArray();
-			double[] resultantArr = new double[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Double) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
-		}
-		double nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : 0;
-		}
-		boolean hasKey(String k) {
-			return super.containsKey(k);
-		}
-		boolean hasValue(Double v) {
-			return super.containsValue(v);
-		}
-		Obj_D set(String k, Double v) {
-			if (!super.containsKey(k)) super.put(k, v);
-			else super.replace(k, v);
-			return this;
-		}
-		Obj_D add(String k, Double v) {
-			set(k, v);
-			return this;
-		}
-		double delete (String k) {
-			return super.remove(k);
-		}
-		Obj_D push(String k, double v) {
-			add(k, v);
-			return this;
-		}
-		double pop(String k) {
-			return delete (k);
-		}
-		Obj_D update(String k, Double v) {
-			set(k, v);
-			return this;
-		}
-		Set<String> keys() {
-			return super.keySet();
-		}
-		Set<Map.Entry<String, Double>> entries() {
-			return super.entrySet();
-		}
-		void printMap() {
-			System.out.println(super.clone());
-		}
-		void printAll() {
-			printMap();
-		}
-		int length() {
-			return super.size();
-		}
-	}
-	public static final class Obj_B extends HashMap<String, Boolean> {
-		Obj_B() {
-			super();
-		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Obj_B(String k, Boolean v) {
-			super.put(k, v);
-		}
-		boolean key(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		boolean k(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		boolean val(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		boolean v(String k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		boolean[] array() {
-			Object[] objArray = super.values().toArray();
-			boolean[] resultantArr = new boolean[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Boolean) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
-		}
-		boolean nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : false;
-		}
-		boolean hasKey(String k) {
-			return super.containsKey(k);
-		}
-		boolean hasValue(Boolean v) {
-			return super.containsValue(v);
-		}
-		Obj_B set(String k, Boolean v) {
-			if (!super.containsKey(k)) super.put(k, v);
-			else super.replace(k, v);
-			return this;
-		}
-		Obj_B add(String k, Boolean v) {
-			set(k, v);
-			return this;
-		}
-		boolean delete (String k) {
-			return super.remove(k);
-		}
-		Obj_B push(String k, Boolean v) {
-			add(k, v);
-			return this;
-		}
-		boolean pop(String k) {
-			return delete (k);
-		}
-		Obj_B update(String k, Boolean v) {
-			set(k, v);
-			return this;
-		}
-		Set<String> keys() {
-			return super.keySet();
-		}
-		Set<Map.Entry<String, Boolean>> entries() {
-			return super.entrySet();
-		}
-		void printMap() {
-			System.out.println(super.clone());
-		}
-		void printAll() {
-			printMap();
-		}
-		int length() {
-			return super.size();
-		}
-	}
-
-	public static class Tree<Key, Value> extends TreeMap<Key, Value> {
-		Tree() {
-			super();
-		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4, Key k5, Value v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree(Key k1, Value v1, Key k2, Value v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree(Key k1, Value v1) {
-			super.put(k1, v1);
-		}
-		Value key(Key k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		Value k(Key k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		Value val(Key k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		Value v(Key k) {
-			return hasKey(k) ? super.get(k) : null;
-		}
-		boolean hasKey(Key k) {
-			return super.containsKey(k);
-		}
-		boolean hasValue(Value v) {
-			return super.containsValue(v);
-		}
-		Tree<Key, Value> set(Key k, Value v) {
-			if (!super.containsKey(k)) super.put(k, v);
-			else super.replace(k, v);
-			return this;
-		}
-		Tree<Key, Value> add(Key k, Value v) {
-			set(k, v);
-			return this;
-		}
-		Value delete (Key k) {
-			Value v = hasKey(k) ? super.get(k) : null;
-			super.remove(k);
-			return v;
-		}
-		Tree<Key, Value> push(Key k, Value v) {
-			add(k, v);
-			return this;
-		}
-		Value pop(Key k) {
-			return delete (k);
-		}
-		Tree<Key, Value> update(Key k, Value v) {
-			set(k, v);
-			return this;
-		}
-		Value first() {
-			Map.Entry<Key, Value> firstEntry = super.firstEntry();
-			Value firstValue = null;
-			if (firstEntry != null) {
-				firstValue = firstEntry.getValue();
-			}
-			return firstValue;
-		}
-		Value last() {
-			Map.Entry<Key, Value> lastEntry = super.lastEntry();
-			Value lastValue = null;
-			if (lastEntry != null) {
-				lastValue = lastEntry.getValue();
-			}
-			return lastValue;
-		}
-		Set<Key> keys() {
-			return super.keySet();
-		}
-		Set<Map.Entry<Key, Value>> entries() {
-			return super.entrySet();
-		}
-		void printMap() {
-			System.out.println(super.clone());
-		}
-		void printAll() {
-			printMap();
-		}
-		int length() {
-			return super.size();
-		}
-	}
-	public static class Tree_S extends Tree<String, Integer> {
-		//public static final long serialVersionUID = 1L;
-		Tree_S() {
-			super();
-		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_S(String k1, int v1, String k2, int v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_S(String k1, int v1) {
-			super.put(k1, v1);
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		int[] array() {
-			Object[] objArray = super.values().toArray();
-			int[] resultantArr = new int[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Integer) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
-		}
-		int nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
-		}
-	}
-	public static class Tree_SL extends Tree<String, Long> {
-		//public static final long serialVersionUID = 1L;
-		Tree_SL() {
-			super();
-		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_SL(String k1, long v1, String k2, long v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_SL(String k1, long v1) {
-			super.put(k1, v1);
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		long[] array() {
-			Object[] objArray = super.values().toArray();
-			long[] resultantArr = new long[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Long) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
-		}
-		long nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
-		}
-	}
-	public static class Tree_SF extends Tree<String, Float> {
-		//public static final long serialVersionUID = 1L;
-		Tree_SF() {
-			super();
-		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_SF(String k1, float v1, String k2, float v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_SF(String k1, float v1) {
-			super.put(k1, v1);
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		float[] array() {
-			Object[] objArray = super.values().toArray();
-			float[] resultantArr = new float[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Float) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
-		}
-		float nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
-		}
-	}
-	public static class Tree_SD extends Tree<String, Double> {
-		//public static final long serialVersionUID = 1L;
-		Tree_SD() {
-			super();
-		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3, double v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_SD(String k1, double v1, String k2, double v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_SD(String k1, double v1) {
-			super.put(k1, v1);
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		double[] array() {
-			Object[] objArray = super.values().toArray();
-			double[] resultantArr = new double[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Double) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
-		}
-		double nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
-		}
-	}
-	public static class Tree_SB extends Tree<String, Boolean> {
-		//public static final long serialVersionUID = 1L;
-		Tree_SB() {
-			super();
-		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_SB(String k1, boolean v1) {
-			super.put(k1, v1);
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		boolean[] array() {
-			Object[] objArray = super.values().toArray();
-			boolean[] resultantArr = new boolean[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Boolean) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
-		}
-		boolean nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : false;
-		}
-	}
-	public static class Tree_I extends Tree<Integer, String> {
-		//public static final long serialVersionUID = 1L;
-		Tree_I() {
-			super();
-		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5, String v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_I(int k1, String v1, int k2, String v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_I(int k1, String v1) {
-			super.put(k1, v1);
-		}
-		int[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			int[] resultantArr = new int[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Integer) objArray[i];
-			}
-			return resultantArr;
-		}
-		String[] array() {
-			Object[] objArray = super.values().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
-		}
-		String nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : "";
-		}
-	}
-	public static class Tree_L extends Tree<Integer, Long> {
-		//public static final long serialVersionUID = 1L;
-		Tree_L() {
-			super();
-		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_L(int k1, long v1, int k2, long v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_L(int k1, long v1) {
-			super.put(k1, v1);
-		}
-		int[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			int[] resultantArr = new int[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Integer) objArray[i];
-			}
-			return resultantArr;
-		}
-		long[] array() {
-			Object[] objArray = super.values().toArray();
-			long[] resultantArr = new long[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Long) objArray[i];
-			}
-			return resultantArr;
-		}
-		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
-		}
-		long nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
-		}
-	}
-	public static class Tree_F extends Tree<Integer, Float> {
-		//public static final long serialVersionUID = 1L;
-		Tree_F() {
-			super();
-		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_F(int k1, float v1, int k2, float v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_F(int k1, float v1) {
-			super.put(k1, v1);
-		}
-		int[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			int[] resultantArr = new int[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Integer) objArray[i];
-			}
-			return resultantArr;
-		}
-		float[] array() {
-			Object[] objArray = super.values().toArray();
-			float[] resultantArr = new float[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Float) objArray[i];
-			}
-			return resultantArr;
-		}
-		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
-		}
-		float nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
-		}
-	}
-	public static class Tree_D extends Tree<Integer, Double> {
-		//public static final long serialVersionUID = 1L;
-		Tree_D() {
-			super();
-		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5, double v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_D(int k1, double v1, int k2, double v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_D(int k1, double v1) {
-			super.put(k1, v1);
-		}
-		int[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			int[] resultantArr = new int[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Integer) objArray[i];
-			}
-			return resultantArr;
-		}
-		double[] array() {
-			Object[] objArray = super.values().toArray();
-			double[] resultantArr = new double[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Double) objArray[i];
-			}
-			return resultantArr;
-		}
-		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
-		}
-		double nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
-		}
-	}
-	public static class Tree_B extends Tree<Integer, Boolean> {
-		//public static final long serialVersionUID = 1L;
-		Tree_B() {
-			super();
-		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5, boolean v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-		}
-		Tree_B(int k1, boolean v1) {
-			super.put(k1, v1);
-		}
-		int[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			int[] resultantArr = new int[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Integer) objArray[i];
-			}
-			return resultantArr;
-		}
-		boolean[] array() {
-			Object[] objArray = super.values().toArray();
-			boolean[] resultantArr = new boolean[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Boolean) objArray[i];
-			}
-			return resultantArr;
-		}
-		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
-		}
-		boolean nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : false;
-		}
-}
-		public static final class StrArr extends ArrayList<String> {
-			StrArr() {
-				super();
-			}
-			StrArr(String... strings) {
-				super();
-				for (String s : strings) super.add(s);
-			}
-			StrArr pushAt(int i, String... strings) {
-				if (i < 0 || i > super.size()) return null;
-				for (String s : strings) super.add(i, s);
-				return this;
-			}
-			StrArr pushStart(String... strings) {
-				pushAt(0, strings);
-				return this;
-			}
-			StrArr push(String... strings) {
-				pushAt(super.size(), strings);
-				return this;
-			}
-			String shift() {
-				String removed = super.get(0);
-				super.remove(0);
-				return removed;
-			}
-			String pop(String... strings) {
-				if (super.isEmpty()) return "";
-				for (String s : strings) {
-					if (!has(s)) return "";
-					super.remove(s);
-				}
-				return strings[0];
-			}
-			String pop(int... indexes) {
-				String firstRemoved = super.get(indexes[0]);
-				if (super.isEmpty()) return "";
-				for (int i : indexes) {
-					if (i < 0 || i > super.size()) return "";
-					super.remove(i);
-				}
-				return firstRemoved;
-			}
-			StrArr popIf(Predicate<? super String> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			StrArr filterOut(Predicate<? super String> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			StrArr keepIf(Predicate<? super String> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			StrArr filter(Predicate<? super String> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			StrArr map(UnaryOperator<String> fn) {
-				super.replaceAll(fn);
-				return this;
-			}
-			StrArr unique() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<String> uniqueSet = new LinkedHashSet<>();
-				for (Object el : set) uniqueSet.add((String) el);
-				super.clear();
-				super.addAll(uniqueSet);
-				return this;
-			}
-			boolean has(String x) {
-				return super.contains(x);
-			}
-			String i(int i) {
-				return i >= 0 && i < super.size() ? super.get(i) : "";
-			}
-			StrArr update(int i, String x) {
-				if (!has(x)) super.add(x);
-				else {
-					if (i < 0 || i > super.size()) return null;
-					super.set(i, x);
-				}
-				return this;
-			}
-			StrArr shuffle() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<String> set2 = new LinkedHashSet<>();
-				for (Object el : set) set2.add((String) el);
-				ArrayList<String> list = new ArrayList<>(set2);
-				Collections.shuffle(list, new Random(System.nanoTime()));
-				super.clear();
-				super.addAll(list);
-				return this;
-			}
-			StrArr sort() {
-				super.sort(null);
-				return this;
-			}
-			StrArr sortReverse() {
-				super.sort(Collections.reverseOrder());
-				return this;
-			}
-			StrArr reverseSort() {
-				sortReverse();
-				return this;
-			}
-			StrArr reverse() {
-				sortReverse();
-				return this;
-			}
-			String[] array() {
-				return super.toArray(new String[0]);
-			}
-			ArrayList<String> list() {
-				ArrayList<String> result = new ArrayList<>();
-				StrArr clone = copy();
-				for (int i : range(clone)) result.add(clone.i(i));
-				return result;
-			}
-			String string() {
-				return super.toString();
-			}
-			StrArr slice(int x, int y) {
-				return (StrArr)(super.subList(x, y).toArray())[0];
-			}
-			StrArr empty() {
-				super.clear();
-				return this;
-			}
-			boolean eq(StrArr arrB) {
-				StrArr arrA = copy();
-				arrA.sort();
-				arrB.sort();
-				return arrA.equals(arrB);
-			}
-			boolean compare(StrArr arrB) {
-				int len = intersection(arrB).length();
-				return len > len / 2;
-			}
-			StrArr combine(StrArr arrB) {
-				StrArr arrA = copy();
-				ArrayList<String> combined = new ArrayList<>();
-				combined.addAll(arrA);
-				combined.addAll(arrB);
-				empty();
-				super.addAll(combined);
-				return this;
-			}
-			StrArr union(StrArr arrB) {
-				combine(arrB);
-				return this;
-			}
-			StrArr intersection(StrArr arrB) {
-				super.retainAll(arrB);
-				return this;
-			}
-			StrArr copy() {
-				return (StrArr)super.clone();
-			}
-			StrArr each(Consumer<? super String> fn) {
-				super.forEach(fn);
-				return this;
-			}
-			void printMap() {
-				System.out.println(copy());
-			}
-			void printAll() {
-				printMap();
-			}
-			int length() {
-				return super.size();
-			}
-		}
-		public static final class IntArr extends ArrayList<Integer> {
-			IntArr() {
-				super();
-			}
-			IntArr(int... nums) {
-				super();
-				for (int n : nums) super.add(n);
-			}
-			IntArr pushAt(int i, int... nums) {
-				if (i < 0 || i > super.size()) return null;
-				for (int n : nums) super.add(i, n);
-				return this;
-			}
-			IntArr pushStart(int... ints) {
-				pushAt(0, ints);
-				return this;
-			}
-			IntArr push(int... nums) {
-				pushAt(super.size(), nums);
-				return this;
-			}
-			int shift() {
-				int removed = super.get(0);
-				super.remove(0);
-				return removed;
-			}
-			int pop(int... ints) {
-				if (super.isEmpty()) return 0;
-				for (int i : ints) {
-					if (!has(i)) return 0;
-					super.remove(i);
-				}
-				return ints[0];
-			}
-			IntArr popIf(Predicate<? super Integer> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			IntArr filterOut(Predicate<? super Integer> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			IntArr keepIf(Predicate<? super Integer> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			IntArr filter(Predicate<? super Integer> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			IntArr map(UnaryOperator<Integer> fn) {
-				super.replaceAll(fn);
-				return this;
-			}
-			IntArr unique() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Integer> uniqueSet = new LinkedHashSet<>();
-				for (Object el : set) uniqueSet.add((Integer) el);
-				super.clear();
-				super.addAll(uniqueSet);
-				return this;
-			}
-			boolean has(int x) {
-				return super.contains(x);
-			}
-			int i(int i) {
-				return i >= 0 && i < super.size() ? super.get(i) : 0;
-			}
-			IntArr update(int i, int x) {
-				if (!has(x)) super.add(x);
-				else {
-					if (i < 0 || i > super.size()) return null;
-					super.set(i, x);
-				}
-				return this;
-			}
-			IntArr shuffle() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Integer> set2 = new LinkedHashSet<>();
-				for (Object el : set) set2.add((Integer) el);
-				ArrayList<Integer> list = new ArrayList<>(set2);
-				Collections.shuffle(list, new Random(System.nanoTime()));
-				super.clear();
-				super.addAll(list);
-				return this;
-			}
-			IntArr sort() {
-				super.sort(null);
-				return this;
-			}
-			IntArr sortReverse() {
-				super.sort(Collections.reverseOrder());
-				return this;
-			}
-			IntArr reverseSort() {
-				sortReverse();
-				return this;
-			}
-			IntArr reverse() {
-				sortReverse();
-				return this;
-			}
-			int[] array() {
-				Integer[] partA = super.toArray(new Integer[0]);
-				int[] resultantArr = new int[partA.length];
-				for (int i = 0; i < partA.length; i++) {
-					resultantArr[i] = partA[i];
-				}
-				return resultantArr;
-			}
-			ArrayList<Integer> list() {
-				ArrayList<Integer> result = new ArrayList<>();
-				IntArr clone = copy();
-				for (int i : range(clone)) result.add(clone.i(i));
-				return result;
-			}
-			String string() {
-				return super.toString();
-			}
-			IntArr slice(int x, int y) {
-				return (IntArr)(super.subList(x, y).toArray())[0];
-			}
-			IntArr empty() {
-				super.clear();
-				return this;
-			}
-			boolean eq(IntArr arrB) {
-				IntArr arrA = copy();
-				arrA.sort();
-				arrB.sort();
-				return arrA.equals(arrB);
-			}
-			boolean compare(IntArr arrB) {
-				int len = intersection(arrB).length();
-				return len > len / 2;
-			}
-			IntArr combine(IntArr arrB) {
-				IntArr arrA = copy();
-				ArrayList<Integer> combined = new ArrayList<>();
-				combined.addAll(arrA);
-				combined.addAll(arrB);
-				empty();
-				super.addAll(combined);
-				return this;
-			}
-			IntArr union(IntArr arrB) {
-				combine(arrB);
-				return this;
-			}
-			IntArr intersection(IntArr arrB) {
-				super.retainAll(arrB);
-				return this;
-			}
-			IntArr copy() {
-				return (IntArr)super.clone();
-			}
-			IntArr each(Consumer<? super Integer> fn) {
-				super.forEach(fn);
-				return this;
-			}
-			void printMap() {
-				System.out.println(copy());
-			}
-			void printAll() {
-				printMap();
-			}
-			int length() {
-				return super.size();
-			}
-		}
-		public static final class LongArr extends ArrayList<Long> {
-			LongArr() {
-				super();
-			}
-			LongArr(long... nums) {
-				super();
-				for (long n : nums) super.add(n);
-			}
-			LongArr pushAt(int i, long... longs) {
-				if (i < 0 || i > super.size()) return null;
-				for (long l : longs) super.add(i, l);
-				return this;
-			}
-			LongArr pushStart(long... longs) {
-				pushAt(0, longs);
-				return this;
-			}
-			LongArr push(long... longs) {
-				pushAt(super.size(), longs);
-				return this;
-			}
-			long shift() {
-				long removed = super.get(0);
-				super.remove(0);
-				return removed;
-			}
-			long pop(long... longs) {
-				if (super.isEmpty()) return 0;
-				for (long l : longs) {
-					if (!has(l)) return 0;
-					super.remove(l);
-				}
-				return longs[0];
-			}
-			LongArr popIf(Predicate<? super Long> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			LongArr filterOut(Predicate<? super Long> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			LongArr keepIf(Predicate<? super Long> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			LongArr filter(Predicate<? super Long> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			LongArr map(UnaryOperator<Long> fn) {
-				super.replaceAll(fn);
-				return this;
-			}
-			LongArr unique() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Long> uniqueSet = new LinkedHashSet<>();
-				for (Object el : set) uniqueSet.add((Long) el);
-				super.clear();
-				super.addAll(uniqueSet);
-				return this;
-			}
-			boolean has(long x) {
-				return super.contains(x);
-			}
-			long i(int i) {
-				return i >= 0 && i < super.size() ? super.get(i) : 0;
-			}
-			LongArr update(int i, long x) {
-				if (!has(x)) super.add(x);
-				else {
-					if (i < 0 || i > super.size()) return null;
-					super.set(i, x);
-				}
-				return this;
-			}
-			LongArr shuffle() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Long> set2 = new LinkedHashSet<>();
-				for (Object el : set) set2.add((Long) el);
-				ArrayList<Long> list = new ArrayList<>(set2);
-				Collections.shuffle(list, new Random(System.nanoTime()));
-				super.clear();
-				super.addAll(list);
-				return this;
-			}
-			LongArr sort() {
-				super.sort(null);
-				return this;
-			}
-			LongArr sortReverse() {
-				super.sort(Collections.reverseOrder());
-				return this;
-			}
-			LongArr reverseSort() {
-				sortReverse();
-				return this;
-			}
-			LongArr reverse() {
-				sortReverse();
-				return this;
-			}
-			long[] array() {
-				Long[] partA = super.toArray(new Long[0]);
-				long[] resultantArr = new long[partA.length];
-				for (int i = 0; i < partA.length; i++) {
-					resultantArr[i] = partA[i];
-				}
-				return resultantArr;
-			}
-			ArrayList<Long> list() {
-				ArrayList<Long> result = new ArrayList<>();
-				LongArr clone = copy();
-				for (int i : range(clone)) result.add(clone.i(i));
-				return result;
-			}
-			String string() {
-				return super.toString();
-			}
-			LongArr slice(int x, int y) {
-				return (LongArr)(super.subList(x, y).toArray())[0];
-			}
-			LongArr empty() {
-				super.clear();
-				return this;
-			}
-			boolean eq(LongArr arrB) {
-				LongArr arrA = copy();
-				arrA.sort();
-				arrB.sort();
-				return arrA.equals(arrB);
-			}
-			boolean compare(LongArr arrB) {
-				int len = intersection(arrB).length();
-				return len > len / 2;
-			}
-			LongArr combine(LongArr arrB) {
-				LongArr arrA = copy();
-				ArrayList<Long> combined = new ArrayList<>();
-				combined.addAll(arrA);
-				combined.addAll(arrB);
-				empty();
-				super.addAll(combined);
-				return this;
-			}
-			LongArr union(LongArr arrB) {
-				combine(arrB);
-				return this;
-			}
-			LongArr intersection(LongArr arrB) {
-				super.retainAll(arrB);
-				return this;
-			}
-			LongArr copy() {
-				return (LongArr)super.clone();
-			}
-			LongArr each(Consumer<? super Long> fn) {
-				super.forEach(fn);
-				return this;
-			}
-			void printMap() {
-				System.out.println(copy());
-			}
-			void printAll() {
-				printMap();
-			}
-			int length() {
-				return super.size();
-			}
-		}
-		public static final class FltArr extends ArrayList<Float> {
-			FltArr() {
-				super();
-			}
-			FltArr(float... nums) {
-				super();
-				for (float n : nums) super.add(n);
-			}
-			FltArr pushAt(int i, float... floats) {
-				if (i < 0 || i > super.size()) return null;
-				for (float f : floats) super.add(i, f);
-				return this;
-			}
-			FltArr pushStart(float... floats) {
-				pushAt(0, floats);
-				return this;
-			}
-			FltArr push(float... floats) {
-				pushAt(super.size(), floats);
-				return this;
-			}
-			float shift() {
-				float removed = super.get(0);
-				super.remove(0);
-				return removed;
-			}
-			float pop(float... floats) {
-				if (super.isEmpty()) return 0;
-				for (float f : floats) {
-					if (!has(f)) return 0;
-					super.remove(f);
-				}
-				return floats[0];
-			}
-			FltArr popIf(Predicate<? super Float> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			FltArr filterOut(Predicate<? super Float> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			FltArr keepIf(Predicate<? super Float> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			FltArr filter(Predicate<? super Float> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			FltArr map(UnaryOperator<Float> fn) {
-				super.replaceAll(fn);
-				return this;
-			}
-			FltArr unique() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Float> uniqueSet = new LinkedHashSet<>();
-				for (Object el : set) uniqueSet.add((Float) el);
-				super.clear();
-				super.addAll(uniqueSet);
-				return this;
-			}
-			boolean has(float x) {
-				return super.contains(x);
-			}
-			float i(int i) {
-				return i >= 0 && i < super.size() ? super.get(i) : 0;
-			}
-			FltArr update(int i, float x) {
-				if (!has(x)) super.add(x);
-				else {
-					if (i < 0 || i > super.size()) return null;
-					super.set(i, x);
-				}
-				return this;
-			}
-			FltArr shuffle() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Float> set2 = new LinkedHashSet<>();
-				for (Object el : set) set2.add((Float) el);
-				ArrayList<Float> list = new ArrayList<>(set2);
-				Collections.shuffle(list, new Random(System.nanoTime()));
-				super.clear();
-				super.addAll(list);
-				return this;
-			}
-			FltArr sort() {
-				super.sort(null);
-				return this;
-			}
-			FltArr sortReverse() {
-				super.sort(Collections.reverseOrder());
-				return this;
-			}
-			FltArr reverseSort() {
-				sortReverse();
-				return this;
-			}
-			FltArr reverse() {
-				sortReverse();
-				return this;
-			}
-			float[] array() {
-				Float[] partA = super.toArray(new Float[0]);
-				float[] resultantArr = new float[partA.length];
-				for (int i = 0; i < partA.length; i++) {
-					resultantArr[i] = partA[i];
-				}
-				return resultantArr;
-			}
-			ArrayList<Float> list() {
-				ArrayList<Float> result = new ArrayList<>();
-				FltArr clone = copy();
-				for (int i : range(clone)) result.add(clone.i(i));
-				return result;
-			}
-			String string() {
-				return super.toString();
-			}
-			FltArr slice(int x, int y) {
-				return (FltArr)(super.subList(x, y).toArray())[0];
-			}
-			FltArr empty() {
-				super.clear();
-				return this;
-			}
-			boolean eq(FltArr arrB) {
-				FltArr arrA = copy();
-				arrA.sort();
-				arrB.sort();
-				return arrA.equals(arrB);
-			}
-			boolean compare(FltArr arrB) {
-				int len = intersection(arrB).length();
-				return len > len / 2;
-			}
-			FltArr combine(FltArr arrB) {
-				FltArr arrA = copy();
-				ArrayList<Float> combined = new ArrayList<>();
-				combined.addAll(arrA);
-				combined.addAll(arrB);
-				empty();
-				super.addAll(combined);
-				return this;
-			}
-			FltArr union(FltArr arrB) {
-				combine(arrB);
-				return this;
-			}
-			FltArr intersection(FltArr arrB) {
-				super.retainAll(arrB);
-				return this;
-			}
-			FltArr copy() {
-				return (FltArr)super.clone();
-			}
-			FltArr each(Consumer<? super Float> fn) {
-				super.forEach(fn);
-				return this;
-			}
-			void printMap() {
-				System.out.println(copy());
-			}
-			void printAll() {
-				printMap();
-			}
-			int length() {
-				return super.size();
-			}
-		}
-		public static final class DblArr extends ArrayList<Double> {
-			DblArr() {
-				super();
-			}
-			DblArr(double... doubles) {
-				super();
-				for (double d : doubles) super.add(d);
-			}
-			DblArr pushAt(int i, double... doubles) {
-				if (i < 0 || i > super.size()) return null;
-				for (double d : doubles) super.add(i, d);
-				return this;
-			}
-			DblArr pushStart(double... doubles) {
-				pushAt(0, doubles);
-				return this;
-			}
-			DblArr push(double... doubles) {
-				pushAt(super.size(), doubles);
-				return this;
-			}
-			double shift() {
-				double removed = super.get(0);
-				super.remove(0);
-				return removed;
-			}
-			double pop(double... doubles) {
-				if (super.isEmpty()) return 0;
-				for (double d : doubles) {
-					if (!has(d)) return 0;
-					super.remove(d);
-				}
-				return doubles[0];
-			}
-			DblArr popIf(Predicate<? super Double> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			DblArr filterOut(Predicate<? super Double> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			DblArr keepIf(Predicate<? super Double> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			DblArr filter(Predicate<? super Double> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			DblArr map(UnaryOperator<Double> fn) {
-				super.replaceAll(fn);
-				return this;
-			}
-			DblArr unique() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Double> uniqueSet = new LinkedHashSet<>();
-				for (Object el : set) uniqueSet.add((Double) el);
-				super.clear();
-				super.addAll(uniqueSet);
-				return this;
-			}
-			boolean has(double x) {
-				return super.contains(x);
-			}
-			double i(int i) {
-				return i >= 0 && i < super.size() ? super.get(i) : 0;
-			}
-			DblArr update(int i, double x) {
-				if (!has(x)) super.add(x);
-				else {
-					if (i < 0 || i > super.size()) return null;
-					super.set(i, x);
-				}
-				return this;
-			}
-			DblArr shuffle() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Double> set2 = new LinkedHashSet<>();
-				for (Object el : set) set2.add((Double) el);
-				ArrayList<Double> list = new ArrayList<>(set2);
-				Collections.shuffle(list, new Random(System.nanoTime()));
-				super.clear();
-				super.addAll(list);
-				return this;
-			}
-			DblArr sort() {
-				super.sort(null);
-				return this;
-			}
-			DblArr sortReverse() {
-				super.sort(Collections.reverseOrder());
-				return this;
-			}
-			DblArr reverseSort() {
-				sortReverse();
-				return this;
-			}
-			DblArr reverse() {
-				sortReverse();
-				return this;
-			}
-			double[] array() {
-				Double[] partA = super.toArray(new Double[0]);
-				double[] resultantArr = new double[partA.length];
-				for (int i = 0; i < partA.length; i++) {
-					resultantArr[i] = partA[i];
-				}
-				return resultantArr;
-			}
-			ArrayList<Double> list() {
-				ArrayList<Double> result = new ArrayList<>();
-				DblArr clone = copy();
-				for (int i : range(clone)) result.add(clone.i(i));
-				return result;
-			}
-			String string() {
-				return super.toString();
-			}
-			DblArr slice(int x, int y) {
-				return (DblArr)(super.subList(x, y).toArray())[0];
-			}
-			DblArr empty() {
-				super.clear();
-				return this;
-			}
-			boolean eq(DblArr arrB) {
-				DblArr arrA = copy();
-				arrA.sort();
-				arrB.sort();
-				return arrA.equals(arrB);
-			}
-			boolean compare(DblArr arrB) {
-				int len = intersection(arrB).length();
-				return len > len / 2;
-			}
-			DblArr combine(DblArr arrB) {
-				DblArr arrA = copy();
-				ArrayList<Double> combined = new ArrayList<>();
-				combined.addAll(arrA);
-				combined.addAll(arrB);
-				empty();
-				super.addAll(combined);
-				return this;
-			}
-			DblArr union(DblArr arrB) {
-				combine(arrB);
-				return this;
-			}
-			DblArr intersection(DblArr arrB) {
-				super.retainAll(arrB);
-				return this;
-			}
-			DblArr copy() {
-				return (DblArr)super.clone();
-			}
-			DblArr each(Consumer<? super Double> fn) {
-				super.forEach(fn);
-				return this;
-			}
-			void printMap() {
-				System.out.println(copy());
-			}
-			void printAll() {
-				printMap();
-			}
-			int length() {
-				return super.size();
-			}
-		}
-		public static final class BoolArr extends ArrayList<Boolean> {
-			BoolArr() {
-				super();
-			}
-			BoolArr(boolean... bools) {
-				super();
-				for (boolean b : bools) super.add(b);
-			}
-			BoolArr pushAt(int i, boolean... bools) {
-				if (i < 0 || i > super.size()) return null;
-				for (boolean b : bools) super.add(i, b);
-				return this;
-			}
-			BoolArr pushStart(boolean... bools) {
-				pushAt(0, bools);
-				return this;
-			}
-			BoolArr push(boolean... bools) {
-				pushAt(super.size(), bools);
-				return this;
-			}
-			boolean shift() {
-				boolean removed = super.get(0);
-				super.remove(0);
-				return removed;
-			}
-			boolean pop(boolean... bools) {
-				if (super.isEmpty()) return false;
-				for (boolean b : bools) {
-					if (!has(b)) return false;
-					super.remove(b);
-				}
-				return true;
-			}
-			boolean pop(int... indexes) {
-				if (super.isEmpty()) return false;
-				for (int i : indexes) {
-					if (i < 0 || i > super.size()) return false;
-					super.remove(i);
-				}
-				return true;
-			}
-			BoolArr popIf(Predicate<? super Boolean> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			BoolArr filterOut(Predicate<? super Boolean> fn) {
-				super.removeIf(fn);
-				return this;
-			}
-			BoolArr keepIf(Predicate<? super Boolean> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			BoolArr filter(Predicate<? super Boolean> fn) {
-				super.removeIf(fn.negate());
-				return this;
-			}
-			BoolArr map(UnaryOperator<Boolean> fn) {
-				super.replaceAll(fn);
-				return this;
-			}
-			BoolArr unique() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Boolean> uniqueSet = new LinkedHashSet<>();
-				for (Object el : set) uniqueSet.add((Boolean) el);
-				super.clear();
-				super.addAll(uniqueSet);
-				return this;
-			}
-			boolean has(boolean x) {
-				return super.contains(x);
-			}
-			boolean i(int i) {
-				return i >= 0 && i < super.size() ? super.get(i) : false;
-			}
-			BoolArr update(int i, boolean x) {
-				if (!has(x)) super.add(x);
-				else {
-					if (i < 0 || i > super.size()) return null;
-					super.set(i, x);
-				}
-				return this;
-			}
-			BoolArr shuffle() {
-				Object obj = super.clone();
-				Collection<?> collection = (Collection<?>) obj;
-				Set<Object> set = new LinkedHashSet<>(collection);
-				Set<Boolean> set2 = new LinkedHashSet<>();
-				for (Object el : set) set2.add((Boolean) el);
-				ArrayList<Boolean> list = new ArrayList<>(set2);
-				Collections.shuffle(list, new Random(System.nanoTime()));
-				super.clear();
-				super.addAll(list);
-				return this;
-			}
-			BoolArr sort() {
-				super.sort(null);
-				return this;
-			}
-			BoolArr sortReverse() {
-				super.sort(Collections.reverseOrder());
-				return this;
-			}
-			BoolArr reverseSort() {
-				sortReverse();
-				return this;
-			}
-			BoolArr reverse() {
-				sortReverse();
-				return this;
-			}
-			boolean[] array() {
-				Boolean[] partA = super.toArray(new Boolean[0]);
-				boolean[] resultantArr = new boolean[partA.length];
-				for (int i = 0; i < partA.length; i++) {
-					resultantArr[i] = partA[i];
-				}
-				return resultantArr;
-			}
-			ArrayList<Boolean> list() {
-				ArrayList<Boolean> result = new ArrayList<>();
-				BoolArr clone = copy();
-				for (int i : range(clone)) result.add(clone.i(i));
-				return result;
-			}
-			String string() {
-				return super.toString();
-			}
-			BoolArr slice(int x, int y) {
-				return (BoolArr)(super.subList(x, y).toArray())[0];
-			}
-			BoolArr empty() {
-				super.clear();
-				return this;
-			}
-			boolean eq(BoolArr arrB) {
-				BoolArr arrA = copy();
-				arrA.sort();
-				arrB.sort();
-				return arrA.equals(arrB);
-			}
-			boolean compare(BoolArr arrB) {
-				int len = intersection(arrB).length();
-				return len > len / 2;
-			}
-			BoolArr combine(BoolArr arrB) {
-				BoolArr arrA = copy();
-				ArrayList<Boolean> combined = new ArrayList<>();
-				combined.addAll(arrA);
-				combined.addAll(arrB);
-				empty();
-				super.addAll(combined);
-				return this;
-			}
-			BoolArr union(BoolArr arrB) {
-				combine(arrB);
-				return this;
-			}
-			BoolArr intersection(BoolArr arrB) {
-				super.retainAll(arrB);
-				return this;
-			}
-			BoolArr copy() {
-				return (BoolArr)super.clone();
-			}
-			BoolArr each(Consumer<? super Boolean> fn) {
-				super.forEach(fn);
-				return this;
-			}
-			void printMap() {
-				System.out.println(copy());
-			}
-			void printAll() {
-				printMap();
-			}
-			int length() {
-				return super.size();
-			}
-		}
-
-		public static IntArr range(int n) {
-			if (isnl(n)) return null;
-			IntArr arr = new IntArr();
-			for (int i = 0; i < n; i++) arr.add(i);
-			return arr;
-		}
-		public static IntArr range(int m, int n) {
-			IntArr arr = new IntArr();
-			if (isnl(m) || isnl(n) || eq(m, n)) return arr;
-			if (m > n) {
-				for (int i = m; i >= n; i--) arr.add(i);
-			} else {
-				for (int i = m; i <= n; i++) arr.add(i);
-			}
-			return arr;
-		}
-		public static IntArr range(int n, boolean reverse) {
-			if (reverse && n > 0) return range(n, 1);
-			return range(n);
-		}
-		public static IntArr range(String[] arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(int[] arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(long[] arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(float[] arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(double[] arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(boolean[] arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(Object[] arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(StrArr arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(IntArr arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(LongArr arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(FltArr arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(DblArr arr) {
-			return range(len(arr));
-		}
-		public static IntArr range(BoolArr arr) {
-			return range(len(arr));
-		}
-		public static IntArr idx(String[] arr) {
-			return range(arr);
-		}
-		public static IntArr idx(int[] arr) {
-			return range(arr);
-		}
-		public static IntArr idx(long[] arr) {
-			return range(arr);
-		}
-		public static IntArr idx(float[] arr) {
-			return range(arr);
-		}
-		public static IntArr idx(double[] arr) {
-			return range(arr);
-		}
-		public static IntArr idx(boolean[] arr) {
-			return range(arr);
-		}
-		public static IntArr idx(Object[] arr) {
-			return range(arr);
-		}
-		public static IntArr idx(StrArr arr) {
-			return range(arr);
-		}
-		public static IntArr idx(IntArr arr) {
-			return range(arr);
-		}
-		public static IntArr idx(LongArr arr) {
-			return range(arr);
-		}
-		public static IntArr idx(FltArr arr) {
-			return range(arr);
-		}
-		public static IntArr idx(DblArr arr) {
-			return range(arr);
-		}
-		public static IntArr idx(BoolArr arr) {
-			return range(arr);
-		}
-		public static void each(String[] iterable, ObjIntConsumer<String> consumer) {
-			int i = 0;
-			for (String item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(StrArr iterable, ObjIntConsumer<String> consumer) {
-			int i = 0;
-			for (String item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(int[] iterable, ObjIntConsumer<Integer> consumer) {
-			int i = 0;
-			for (int item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(IntArr iterable, ObjIntConsumer<Integer> consumer) {
-			int i = 0;
-			for (int item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(long[] iterable, ObjIntConsumer<Long> consumer) {
-			int i = 0;
-			for (long item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(LongArr iterable, ObjIntConsumer<Long> consumer) {
-			int i = 0;
-			for (long item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(float[] iterable, ObjIntConsumer<Float> consumer) {
-			int i = 0;
-			for (float item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(FltArr iterable, ObjIntConsumer<Float> consumer) {
-			int i = 0;
-			for (float item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(double[] iterable, ObjIntConsumer<Double> consumer) {
-			int i = 0;
-			for (double item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(DblArr iterable, ObjIntConsumer<Double> consumer) {
-			int i = 0;
-			for (double item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
-			int i = 0;
-			for (boolean item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(BoolArr iterable, ObjIntConsumer<Boolean> consumer) {
-			int i = 0;
-			for (boolean item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void each(Object[] iterable, ObjIntConsumer<Object> consumer) {
-			int i = 0;
-			for (Object item : iterable) {
-				consumer.accept(item, i);
-				i++;
-			}
-		}
-		public static void forEach(String[] iterable, ObjIntConsumer<String> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(StrArr iterable, ObjIntConsumer<String> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(int[] iterable, ObjIntConsumer<Integer> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(IntArr iterable, ObjIntConsumer<Integer> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(long[] iterable, ObjIntConsumer<Long> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(LongArr iterable, ObjIntConsumer<Long> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(float[] iterable, ObjIntConsumer<Float> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(FltArr iterable, ObjIntConsumer<Float> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(double[] iterable, ObjIntConsumer<Double> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(DblArr iterable, ObjIntConsumer<Double> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(BoolArr iterable, ObjIntConsumer<Boolean> consumer) {
-			each(iterable, consumer);
-		}
-		public static void forEach(Object[] iterable, ObjIntConsumer<Object> consumer) {
-			each(iterable, consumer);
-		}
-		public static String[] map(String[] arr, Function<String, String> func) {
-			if (arr == null || func == null) {
-				throw new IllegalArgumentException("Array and function cannot be null");
-			}
-			String[] result = new String[arr.length];
-			for (int i = 0; i < arr.length; i++) {
-				result[i] = func.apply(arr[i]);
-			}
-			return result;
-		}
-		public static int[] map(int[] array, IntUnaryOperator operator) {
-			return Arrays.stream(array)
-				   .map(operator)
-				   .toArray();
-		}
-		public static long[] map(long[] array, LongUnaryOperator operator) {
-			return Arrays.stream(array)
-				   .map(operator)
-				   .toArray();
-		}
-		public static double[] map(double[] array, DoubleUnaryOperator operator) {
-			return Arrays.stream(array)
-				   .map(operator)
-				   .toArray();
-		}
-		public static <T> T[] popIf(T[] array, Predicate<T> condition) {
-			java.util.List<T> filteredList = Arrays.stream(array)
-											 .filter(condition.negate())
-											 .collect(Collectors.toList());
-			return filteredList.toArray(Arrays.copyOf(array, filteredList.size()));
-		}
-		public static StrArr popIf(StrArr list, Predicate<String> condition) {
-			return list.popIf(condition);
-		}
-		public static IntArr popIf(IntArr list, Predicate<Integer> condition) {
-			return list.popIf(condition);
-		}
-		public static LongArr popIf(LongArr list, Predicate<Long> condition) {
-			return list.popIf(condition);
-		}
-		public static FltArr popIf(FltArr list, Predicate<Float> condition) {
-			return list.popIf(condition);
-		}
-		public static DblArr popIf(DblArr list, Predicate<Double> condition) {
-			return list.popIf(condition);
-		}
-		public static BoolArr popIf(BoolArr list, Predicate<Boolean> condition) {
-			return list.popIf(condition);
-		}
-		public static <T> T[] keepIf(T[] array, Predicate<T> condition) {
-			java.util.List<T> filteredList = Arrays.stream(array)
-											 .filter(condition)
-											 .collect(Collectors.toList());
-			return filteredList.toArray(Arrays.copyOf(array, filteredList.size()));
-		}
-		public static StrArr keepIf(StrArr list, Predicate<String> condition) {
-			return list.keepIf(condition);
-		}
-		public static IntArr keepIf(IntArr list, Predicate<Integer> condition) {
-			return list.keepIf(condition);
-		}
-		public static LongArr keepIf(LongArr list, Predicate<Long> condition) {
-			return list.keepIf(condition);
-		}
-		public static FltArr keepIf(FltArr list, Predicate<Float> condition) {
-			return list.keepIf(condition);
-		}
-		public static DblArr keepIf(DblArr list, Predicate<Double> condition) {
-			return list.keepIf(condition);
-		}
-		public static BoolArr keepIf(BoolArr list, Predicate<Boolean> condition) {
-			return list.keepIf(condition);
-		}
-		public static <T> T[] filterOut(T[] array, Predicate<T> condition) {
-			return popIf(array, condition);
-		}
-		public static StrArr filterOut(StrArr list, Predicate<String> condition) {
-			return popIf(list, condition);
-		}
-		public static IntArr filterOut(IntArr list, Predicate<Integer> condition) {
-			return popIf(list, condition);
-		}
-		public static LongArr filterOut(LongArr list, Predicate<Long> condition) {
-			return popIf(list, condition);
-		}
-		public static FltArr filterOut(FltArr list, Predicate<Float> condition) {
-			return popIf(list, condition);
-		}
-		public static DblArr filterOut(DblArr list, Predicate<Double> condition) {
-			return popIf(list, condition);
-		}
-		public static BoolArr filterOut(BoolArr list, Predicate<Boolean> condition) {
-			return popIf(list, condition);
-		}
-		public static <T> T[] filter(T[] array, Predicate<T> condition) {
-			return keepIf(array, condition);
-		}
-		public static StrArr filter(StrArr list, Predicate<String> condition) {
-			return keepIf(list, condition);
-		}
-		public static IntArr filter(IntArr list, Predicate<Integer> condition) {
-			return keepIf(list, condition);
-		}
-		public static LongArr filter(LongArr list, Predicate<Long> condition) {
-			return keepIf(list, condition);
-		}
-		public static FltArr filter(FltArr list, Predicate<Float> condition) {
-			return keepIf(list, condition);
-		}
-		public static DblArr filter(DblArr list, Predicate<Double> condition) {
-			return keepIf(list, condition);
-		}
-		public static BoolArr filter(BoolArr list, Predicate<Boolean> condition) {
-			return keepIf(list, condition);
-		}
-		public static void repeat(Runnable fn, int times) {
-			for (; times > 0; times--) new Thread(fn).run();
-		}
-		public static String repeat(String s, int times) {
-			String org = s;
-			for (; times > 0; times--) s += org;
-			return s;
-		}
-		public static String repeat(String s) {
-			return repeat(s, 1);
-		}
-
-		//Date functions
-		public static String nthDay(int n) {
-			String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-			return days[n];
-		}
-		public static String nthMonth(int n) {
-			String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-			return months[n];
-		}
-		public static String formattedDate(Date dt) {
-			int dayOfWeek = dt.getDay(), monthOfYear = dt.getMonth();
-			String day, month;
-			String date = dt.toLocaleString();
-			String ampm = date.substring(date.length() - 2);
-			date = date.substring(0, date.length() - 6) + " " + ampm;
-			month = nthMonth(monthOfYear);
-			date = month + " " + date.substring(4);
-			day = nthDay(dayOfWeek);
-			date = day + ", " + date;
-			return date;
-		}
-		public static String now() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * (3600 * 1000))); //fix 5-hour bug
-			String date = formattedDate(dt);
-			return date;
-		}
-		public static String now(boolean shortened) {
-			if (!shortened) return now();
-			String parts[] = now().split(", ");
-			parts[0] = slice(parts[0], 0, 3);
-			parts[1] = slice(split(parts[1], " ")[0], 0, 3) + " " + split(parts[1], " ")[1];
-			String time = slice(parts, len(parts) - 1)[0];
-			String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
-			String result = join(x, ", ");
-			return result;
-		}
-		public static String getDate() {
-			String parts[] = now().split(", ");
-			return parts[1] + ", " + parts[2];
-		}
-		public static String getDay() {
-			return now().split(", ")[0];
-		}
-		public static String getMonth() {
-			return now().split(", ")[1].split(" ")[0];
-		}
-		public static String getYear() {
-			return now().split(", ")[2];
-		}
-		public static String getTime() {
-			return now().split(", ")[3];
-		}
-		public static String getSeason() {
-			String m = slice(getMonth(), 0, 3).toLowerCase();
-			switch (m) {
-			case "may":
-			case "jun":
-			case "jul":
-			case "aug":
-				return "Summer";
-			case "sep":
-			case "oct":
-				return "Spring";
-			case "nov":
-			case "dec":
-			case "jan":
-			case "feb":
-				return "Winter";
-			default:
-				return "Fall/Autumn";
-			}
-		}
-		public static String yesterday() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setTime(dt.getTime() - ((int)36e5 * 24)); //decrement 24 hours or (3.6*10⁶)*24 milliseconds
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
-		}
-		public static String dayBeforeYesterday() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setTime(dt.getTime() - ((int)72e5 * 24)); //decrement 48 hours or (7.2*10⁶)*24 milliseconds
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
-		}
-		public static String twoDaysAgo() {
-			return dayBeforeYesterday();
-		}
-		public static String tomorrow() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)(36e2 * 1e3)))); //fix 5-hour bug
-			dt.setTime(dt.getTime() + ((int)36e5 * 24)); //increment 24 hours or (3.6*10⁶)*24 milliseconds
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
-		}
-		public static String dayAfterTomorrow() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setTime(dt.getTime() + ((int)72e5 * 24)); //increment 48 hours or (7.2*10⁶)*24 milliseconds
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
-		}
-		public static String twoDaysLater() {
-			return dayAfterTomorrow();
-		}
-		public static String lastMonth() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setMonth(dt.getMonth() - 1); //decrement a month
-			String date = formattedDate(dt);
-			date = date.split(", ")[1].split(" ")[0];
-			return date;
-		}
-		public static String lastMonthOf(String date) {
-			Date dt = new Date(date);
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setMonth(dt.getMonth() - 1); //decrement a month
-			date = formattedDate(dt);
-			date = date.split(", ")[1].split(" ")[0];
-			return date;
-		}
-		public static String nextMonth() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setMonth(dt.getMonth() + 1); //increment a month
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = date.split(", ")[1].split(" ")[0];
-			return date;
-		}
-		public static String nextMonthOf(String date) {
-			Date dt = new Date(date);
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setMonth(dt.getMonth() + 1); //increment a month
-			date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = date.split(", ")[1].split(" ")[0];
-			return date;
-		}
-		public static String lastYear() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setYear(dt.getYear() - 1); //decrement a year
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = date.split(", ")[2];
-			return date;
-		}
-		public static String lastYearOf(String date) {
-			Date dt = new Date(date);
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setYear(dt.getYear() - 1); //decrement a year
-			date = formattedDate(dt);
-			date = date.split(", ")[2];
-			return date;
-		}
-		public static String nextYear() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setYear(dt.getYear() + 1); //increment a year
-			String date = formattedDate(dt);
-			date = date.split(", ")[2];
-			return date;
-		}
-		public static String nextYear(String date) {
-			Date dt = new Date(date);
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setYear(dt.getYear() + 1); //increment a year
-			date = formattedDate(dt);
-			date = date.split(", ")[2];
-			return date;
-		}
-		public static String age2bday(int age) {
-			Date dt = new Date();
-			//dt.setTime(dt.getTime()+(5*((int)36e5))); //fix 5-hour bug
-			String bday = "" + ((dt.getYear() + 1900) - age); //adding 1900 helps resolve a bug
-			return bday;
-		}
-		public static int bday2age(String date) {
-			Date dt = new Date(date);
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			int age = new Date().getYear() - dt.getYear();
-			return age;
-		}
-		public static String date2day(String date) {
-			Date dt = new Date(date);
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			date = formattedDate(dt);
-			date = date.split(", ")[0];
-			return date;
-		}
-		public static String date2month(String date) {
-			Date dt = new Date(date);
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			date = formattedDate(dt);
-			date = date.split(", ")[1].split(" ")[0];
-			return date;
-		}
-		public static String timeGreet() {
-			String greeting;
-			int h = new Date().getHours() + 5; //fix 5-hour bug along the way
-			if (h >= 20) greeting = "Good night";
-			else if (h >= 16) greeting = "Good evening";
-			else if (h >= 12) greeting = "Good afternoon";
-			else if (h >= 0 && h <= 4) greeting = "Good new day";
-			else greeting = "Good morning";
-			return greeting;
-		}
-		public static String lastOfMonth(int m) {
-			Date dt = new Date();
-			KL dt2 = new KL();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug for better accuracy
-			String result = "" + ("" + dt2.nthMonth(m - 1) + " " + new Date(new Date().getYear(), m, 0).getDate());
-			return result;
-		}
-		public static boolean isWeekend() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			return dt.getDay() % 6 == 0;
-		}
-		public static boolean isLeapYear() {
-			return (1900 + new Date().getYear()) % 4 == 0;
-		}
-		public static int nextLeapYear() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug for better accuracy
-			int i = 0;
-			if (dt.getYear() % 4 == 0) dt.setYear(dt.getYear() + 1); //ignore current year, if it's leap
-			while (dt.getYear() % 4 != 0) {
-				dt.setYear((dt.getYear()) + i);
-				i++;
-			}
-			int result = (1900 + dt.getYear()); //comes with a bug fix
-			return result;
-		}
-		public static String dateBefore(int n) {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setDate(dt.getDate() - Math.abs(n));
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
-		}
-		public static String dateAfter(int n) {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setDate(dt.getDate() + Math.abs(n));
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
-		}
-		public static String minsAgo(int n) {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setTime(dt.getTime() - (n * (int)60e3));
-			String time = formattedDate(dt);
-			time = time.split(", ")[3];
-			return time;
-		}
-		public static String minsLater(int n) {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setTime(dt.getTime() + (n * (int)60e3));
-			String time = formattedDate(dt);
-			time = time.split(", ")[3];
-			return time;
-		}
-		public static String hoursAgo(int n) {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //first fix the 5-hour bug
-			dt.setTime(dt.getTime() - (n * (int)36e5));
-			String time = formattedDate(dt);
-			time = time.split(", ")[3];
-			return time;
-		}
-		public static String hoursLater(int n) {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //first fix the 5-hour bug
-			dt.setTime(dt.getTime() + (n * (int)36e5));
-			String time = formattedDate(dt);
-			time = time.split(", ")[3];
-			return time;
-		}
-		public static String nthHour(int n) {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int)36e5))); //fix 5-hour bug
-			dt.setTime(dt.getTime() - (int)36e5 * dt.getHours() + (n * (int)36e5));
-			String time = formattedDate(dt);
-			time = time.split(", ")[3];
-			return time;
-		}
-		public static String date() {
-			return now();
-		}
-
-
-		//utilities
-		public static void println(Object... args) {
-			each(args, (arg, i) -> {
-				System.out.print(arg + " ");
-			});
-		}
-		public static void print(Object... args) {
-			//don't change this line
-			println(args);
-			System.out.print("\n");
-		}
-		public static void printf(String str, Object... args) {
-			print(f(str, args));
-		}
-		public static void printf(int n) {
-			print(f(n));
-		}
-		public static void printf(long n) {
-			print(f(n));
-		}
-		public static void printf(float n) {
-			print(f(n));
-		}
-		public static void printf(double n) {
-			print(f(n));
-		}
-
-		//printing arrays
-		public static void printArr(String arr[]) {
-			print(Arrays.toString(arr));
-		}
-		public static void printArr(int arr[]) {
-			print(Arrays.toString(arr));
-		}
-		public static void printArr(long arr[]) {
-			print(Arrays.toString(arr));
-		}
-		public static void printArr(float arr[]) {
-			print(Arrays.toString(arr));
-		}
-		public static void printArr(double arr[]) {
-			print(Arrays.toString(arr));
-		}
-		public static void printArr(boolean arr[]) {
-			print(Arrays.toString(arr));
-		}
-		public static void printArr(Object arr[]) {
-			print(Arrays.toString(arr));
-		}
-		public static void printArr(StrArr arr) {
-			print(arr.toString());
-		}
-		public static void printArr(IntArr arr) {
-			print(arr.toString());
-		}
-		public static void printArr(LongArr arr) {
-			print(arr.toString());
-		}
-		public static void printArr(FltArr arr) {
-			print(arr.toString());
-		}
-		public static void printArr(DblArr arr) {
-			print(arr.toString());
-		}
-		public static void printArr(BoolArr arr) {
-			print(arr.toString());
-		}
-		public static void printAll(String arr[]) {
-			printArr(arr);
-		}
-		public static void printAll(int arr[]) {
-			printArr(arr);
-		}
-		public static void printAll(long arr[]) {
-			printArr(arr);
-		}
-		public static void printAll(float arr[]) {
-			printArr(arr);
-		}
-		public static void printAll(double arr[]) {
-			printArr(arr);
-		}
-		public static void printAll(boolean arr[]) {
-			printArr(arr);
-		}
-		public static void printAll(Object arr[]) {
-			printArr(arr);
-		}
-		public static void printAll(StrArr arr) {
-			printArr(arr);
-		}
-		public static void printAll(IntArr arr) {
-			printArr(arr);
-		}
-		public static void printAll(LongArr arr) {
-			printArr(arr);
-		}
-		public static void printAll(FltArr arr) {
-			printArr(arr);
-		}
-		public static void printAll(DblArr arr) {
-			printArr(arr);
-		}
-		public static void printAll(BoolArr arr) {
-			printArr(arr);
-		}
-		public static void printEach(String arr[]) {
-			printArr(arr);
-		}
-		public static void printEach(int arr[]) {
-			printArr(arr);
-		}
-		public static void printEach(long arr[]) {
-			printArr(arr);
-		}
-		public static void printEach(float arr[]) {
-			printArr(arr);
-		}
-		public static void printEach(double arr[]) {
-			printArr(arr);
-		}
-		public static void printEach(boolean arr[]) {
-			printArr(arr);
-		}
-		public static void printEach(Object arr[]) {
-			printArr(arr);
-		}
-		public static void printEach(StrArr arr) {
-			printArr(arr);
-		}
-		public static void printEach(IntArr arr) {
-			printArr(arr);
-		}
-		public static void printEach(LongArr arr) {
-			printArr(arr);
-		}
-		public static void printEach(FltArr arr) {
-			printArr(arr);
-		}
-		public static void printEach(DblArr arr) {
-			printArr(arr);
-		}
-		public static void printEach(BoolArr arr) {
-			printArr(arr);
-		}
-
-		//getting user input
-		public static String ask(String s) {
-			print(s);
-			Scanner input = new Scanner(System.in);
-			String x = input.nextLine();
-			return x;
-		}
-		public static int askI(String s) {
-			print(s);
-			Scanner input = new Scanner(System.in);
-			int x = input.nextInt();
-			return x;
-		}
-		public static int askC(String s) {
-			print(s);
-			Scanner input = new Scanner(System.in);
-			char x = input.next().charAt(0);
-			return x;
-		}
-		public static long askL(String s) {
-			print(s);
-			Scanner input = new Scanner(System.in);
-			long x = input.nextLong();
-			return x;
-		}
-		public static float askF(String s) {
-			print(s);
-			Scanner input = new Scanner(System.in);
-			float x = input.nextFloat();
-			return x;
-		}
-		public static double askD(String s) {
-			print(s);
-			Scanner input = new Scanner(System.in);
-			double x = input.nextDouble();
-			return x;
-		}
-		public static int askInt(String s) {
-			return askI(s);
-		}
-		public static int askChar(String s) {
-			return askC(s);
-		}
-		public static long askLong(String s) {
-			return askL(s);
-		}
-		public static float askFloat(String s) {
-			return askF(s);
-		}
-		public static double askDouble(String s) {
-			return askD(s);
-		}
-		public static void br(int n) {
-			for (; n > 0; n--) print("\n");
-		}
-		public static void br() {
-			br(1);
-		}
-		public static String String(String arg) {
-			//if already a string, return as/is
-			return arg;
-		}
-		public static String String(char arg) {
-			String result = ("" + arg);
-			return result;
-		}
-		public static String String(int arg) {
-			String result = ("" + arg);
-			return result;
-		}
-		public static String String(long arg) {
-			String result = ("" + arg);
-			return result;
-		}
-		public static String String(float arg) {
-			String result = ("" + arg);
-			return result;
-		}
-		public static String String(double arg) {
-			String result = ("" + arg);
-			return result;
-		}
-		public static String String(boolean arg) {
-			String result = ("" + arg);
-			return result;
-		}
-		public static String String(Object arg) {
-			String result = ("" + arg);
-			return result;
-		}
-		public static String String(String[] arr) {
-			return Arrays.toString(arr);
-		}
-		public static String String(int[] arr) {
-			return Arrays.toString(arr);
-		}
-		public static String String(char[] arr) {
-			return Arrays.toString(arr);
-		}
-		public static String String(long[] arr) {
-			return Arrays.toString(arr);
-		}
-		public static String String(float[] arr) {
-			return Arrays.toString(arr);
-		}
-		public static String String(double[] arr) {
-			return Arrays.toString(arr);
-		}
-		public static String String(boolean[] arr) {
-			return Arrays.toString(arr);
-		}
-		public static String String(Object[] arr) {
-			return Arrays.toString(arr);
-		}
-		public static String String(StrArr arr) {
-			return arr.toString();
-		}
-		public static String String(IntArr arr) {
-			return arr.toString();
-		}
-		public static String String(LongArr arr) {
-			return arr.toString();
-		}
-		public static String String(FltArr arr) {
-			return arr.toString();
-		}
-		public static String String(DblArr arr) {
-			return arr.toString();
-		}
-		public static String String(BoolArr arr) {
-			return arr.toString();
-		}
-		public static String Str(String arg) {
-			return String(arg);
-		}
-		public static String Str(char arg) {
-			return String(arg);
-		}
-		public static String Str(int arg) {
-			return String(arg);
-		}
-		public static String Str(long arg) {
-			return String(arg);
-		}
-		public static String Str(float arg) {
-			return String(arg);
-		}
-		public static String Str(double arg) {
-			return String(arg);
-		}
-		public static String Str(boolean arg) {
-			return String(arg);
-		}
-		public static String Str(Object arg) {
-			String result = ("" + arg);
-			return result;
-		}
-		public static String Str(String[] arr) {
-			return String(arr);
-		}
-		public static String Str(int[] arr) {
-			return String(arr);
-		}
-		public static String Str(char[] arr) {
-			return String(arr);
-		}
-		public static String Str(long[] arr) {
-			return String(arr);
-		}
-		public static String Str(float[] arr) {
-			return String(arr);
-		}
-		public static String Str(double[] arr) {
-			return String(arr);
-		}
-		public static String Str(boolean[] arr) {
-			return String(arr);
-		}
-		public static String Str(Object[] arg) {
-			return String(arg);
-		}
-		public static String Str(StrArr arr) {
-			return String(arr);
-		}
-		public static String Str(IntArr arr) {
-			return String(arr);
-		}
-		public static String Str(LongArr arr) {
-			return String(arr);
-		}
-		public static String Str(FltArr arr) {
-			return String(arr);
-		}
-		public static String Str(DblArr arr) {
-			return String(arr);
-		}
-		public static String Str(BoolArr arr) {
-			return String(arr);
-		}
-		public static char[] Chars(String str) {
-			char[] result = str.toCharArray();
-			return result;
-		}
-		public static char Char(String str) {
-			char result = Chars(str)[0];
-			return result;
-		}
-		public static char Char(String str, int n) {
-			char result = Chars(str)[n];
-			return result;
-		}
-		public static char nthCharOf(String str, int n) {
-			char result = Chars(str)[n];
-			return result;
-		}
-		public static char nthLastCharOf(String str, int n) {
-			char result = nthCharOf(str, len(str) - n);
-			return result;
-		}
-		public static char secondLastCharOf(String str) {
-			char result = nthLastCharOf(str, 2);
-			return result;
-		}
-		public static char lastCharOf(String str) {
-			char result = nthLastCharOf(str, 1);
-			return result;
-		}
-		public static String[] split(String str) {
-			String[] returnValue = str.split("");
-			return returnValue;
-		}
-		public static String[] split(String str, String delimiting_str_or_regex) {
-			String[] returnValue = str.split(delimiting_str_or_regex);
-			return returnValue;
-		}
-		public static String[] splitIntoWords(String str) {
-			String[] returnValue = split(str, "[^a-zA-Z'\\-]|\\-(?![a-zA-Z]{2,})");
-			return returnValue;
-		}
-		public static String join(String[] stringedArray, String with) {
-			String returnValue = String.join(with, stringedArray);
-			return returnValue;
-		}
-		public static boolean eq(String x, String y) {
-			return x.equalsIgnoreCase(y);
-		}
-		public static boolean uneq(String x, String y) {
-			return !eq(x, y);
-		}
-
-
-		//numbers
-		public static int Int(String arg) {
-			try {
-				return Integer.parseInt(arg.replaceAll("(?<=\\d)\\.\\d+", ""));
-			} catch (Exception err) {
-				return 0;
-			}
-		}
-		public static int Int(int n) {
-			return n;
-		}
-		public static int Int(long n) {
-			return (int)n;
-		}
-		public static int Int(float n) {
-			return (int)n;
-		}
-		public static int Int(double n) {
-			return (int)n;
-		}
-		public static float Flt(String arg) {
-			try {
-				return Float.parseFloat(arg.replaceAll("[^\\d\\.]", ""));
-			} catch (Exception err) {
-				return 0;
-			}
-		}
-		public static float Flt(int n) {
-			return (float)n;
-		}
-		public static float Flt(long n) {
-			return (float)n;
-		}
-		public static float Flt(float n) {
-			return n;
-		}
-		public static float Flt(double n) {
-			return (float)n;
-		}
-		public static long Lng(String arg) {
-			return (long)Flt(arg);
-		}
-		public static long Lng(int n) {
-			return (long)n;
-		}
-		public static long Lng(long n) {
-			return n;
-		}
-		public static long Lng(float n) {
-			return (long)n;
-		}
-		public static long Lng(double n) {
-			return (long)n;
-		}
-		public static long Long(String arg) {
-			return Lng(arg);
-		}
-		public static double Dbl(String arg) {
-			return (double)Flt(arg);
-		}
-		public static double Dbl(int arg) {
-			return (double)arg;
-		}
-		public static double Dbl(long arg) {
-			return (double)arg;
-		}
-		public static double Dbl(float arg) {
-			return (double)arg;
-		}
-		public static double Dbl(double arg) {
-			return arg;
-		}
-		public static double Double(String arg) {
-			return (double)Flt(arg);
-		}
-		public static boolean isIntLike(String s) {
-			try {
-				return Integer.parseInt(s) % 1 == 0;
-			} catch (Exception err) {
-				return false;
-			}
-		}
-		public static boolean isFltLike(String s) {
-			try {
-				return Float.parseFloat(s) % 1 != 0;
-			} catch (Exception err) {
-				return false;
-			}
-		}
-		public static boolean isAlpha(char c) {
-			return c >= 65 && c <= 122;
-		}
-		public static boolean isPos(int n) {
-			return n > 0;
-		}
-		public static boolean isPos(long n) {
-			return n > 0;
-		}
-		public static boolean isPos(float n) {
-			return n > 0;
-		}
-		public static boolean isPos(double n) {
-			return n > 0;
-		}
-		public static boolean isNeg(int n) {
-			return n < 0;
-		}
-		public static boolean isNeg(long n) {
-			return n < 0;
-		}
-		public static boolean isNeg(float n) {
-			return n < 0;
-		}
-		public static boolean isNeg(double n) {
-			return n < 0;
-		}
-		public static int Pos(int n) {
-			return Math.abs(n);
-		}
-		public static long Pos(long n) {
-			return Math.abs(n);
-		}
-		public static float Pos(float n) {
-			return Math.abs(n);
-		}
-		public static double Pos(double n) {
-			return Math.abs(n);
-		}
-		public static int Neg(int n) {
-			return -Pos(n);
-		}
-		public static long Neg(long n) {
-			return -Pos(n);
-		}
-		public static float Neg(float n) {
-			return -Pos(n);
-		}
-		public static double Neg(double n) {
-			return -Pos(n);
-		}
-		public static double sum(double... ns) {
-			double acc = 0;
-			for (int next = 0; next < ns.length; next++) acc += ns[next];
-			return acc;
-		}
-		public static double diff(double... ns) {
-			double acc = ns[0];
-			for (int next = 1; next < ns.length; next++) acc -= ns[next];
-			return acc;
-		}
-		public static double prd(double... ns) {
-			double acc = ns[0];
-			for (int next = 1; next < ns.length; next++) acc *= ns[next];
-			return acc;
-		}
-		public static double quo(double... ns) {
-			double acc = ns[0];
-			for (int next = 1; next < ns.length; next++) acc /= ns[next];
-			return acc;
-		}
-		public static double pow(double n, double power) {
-			return Math.pow(n, power);
-		}
-		public static double sq(double n) {
-			return n * n;
-		}
-		public static double sqrt(double n) {
-			return Math.sqrt(n);
-		}
-		public static double cb(double n) {
-			return sq(n) * n;
-		}
-		public static double cbrt(double n) {
-			return Math.cbrt(n);
-		}
-		public static double area(double w, double h) {
-			return w * h;
-		}
-		public static double rect(double w, double h) {
-			return area(w, h);
-		}
-		public static double tria(double w, double h) {
-			return .5 * rect(w, h);
-		}
-		public static int min(int... nums) {
-			IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
-			return stat.getMin();
-		}
-		public static long min(long... nums) {
-			LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
-			return stat.getMin();
-		}
-		public static double min(double... nums) {
-			DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
-			return stat.getMin();
-		}
-		public static int max(int... nums) {
-			IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
-			return stat.getMax();
-		}
-		public static long max(long... nums) {
-			LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
-			return stat.getMax();
-		}
-		public static double max(double... nums) {
-			DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
-			return stat.getMax();
-		}
-		public static double mod(double n1, double n2) {
-			if (n2 > n1) {
-				//swap
-				n1 += n2;
-				n2 = n1 - n2;
-				n1 -= n2;
-			}
-			return Math.abs(n1 % n2);
-		}
-		public static boolean isperfmod(double n1, double n2) {
-			return mod(n1, n2) == 0;
-		}
-		public static IntArr divisorsOf(int n) {
-			IntArr arr = new IntArr();
-			for (int i = 2; i < n; i++) {
-				if (isperfmod(n, i)) arr.add(i);
-			}
-			return arr;
-		}
-		public static boolean isDivisorOf(double n1, double n2) {
-			return isperfmod(n1, n2);
-		}
-		public static boolean iseven(double n) {
-			return isperfmod(n, 2);
-		}
-		public static boolean isodd(double n) {
-			return !isperfmod(n, 2);
-		}
-		public static int isprime(int n) {
-			for (int i = 2; i <= n / 2; i++) {
-				if (n % i == 0) return 0;
-			}
-			return 1;
-		}
-		public static String th(long n) {
-			String result = Str(n);
-			int size = len(result);
-			char seclast_char = size - 2 >= 0 ? result.charAt(size - 2) : '\0';
-			char last_char = size - 1 >= 0 ? result.charAt(size - 1) : '\0';
-			String last_two = Str(seclast_char) + Str(last_char);
-			if (n > 14 && n < 111) {
-				switch (last_char) {
-				case '1':
-					result += "st";
-					break;
-				case '2':
-					result += "nd";
-					break;
-				case '3':
-					result += "rd";
-					break;
-				default:
-					result += "th";
-				}
-			} else {
-				if (eq(last_two, "11") || eq(last_two,  "12") || eq(last_two, "13")) result += "th";
-				else {
-					switch (last_char) {
-					case '1':
-						result += "st";
-						break;
-					case '2':
-						result += "nd";
-						break;
-					case '3':
-						result += "rd";
-						break;
-					default:
-						result += "th";
-					}
-				}
-			}
-			return result;
-		}
-		//let's set up some currency variables
-		public static double zr = 1e3,
-							 lc = 1e5,
-							 cr = 1e7,
-							 ar = 1e9,
-							 kh = 1e11;
-		public static double K = 1e3,
-							 M = 1e6,
-							 B = 1e9,
-							 T = 1e12,
-							 qd = 1e15,
-							 qt = 1e18,
-							 sx = 1e21,
-							 sp = 1e24,
-							 oc = 1e27,
-							 nn = 1e30,
-							 dc = 1e33;
-
-		public static String fpkr(int amount) {
-			double floats = amount % 1;
-			long amountFix = Lng(amount - floats);
-			StringBuilder stringBuilder = new StringBuilder();
-			char[] amountArray = Str(amountFix).toCharArray();
-			int a = 0, b = 0;
-			for (int i = amountArray.length - 1; i >= 0; i--) {
-				if (a < 3) {
-					stringBuilder.append(amountArray[i]);
-					a++;
-				} else if (b < 2) {
-					if (b == 0) {
-						stringBuilder.append(",");
-						stringBuilder.append(amountArray[i]);
-						b++;
-					} else {
-						stringBuilder.append(amountArray[i]);
-						b = 0;
-					}
-				}
-			}
-			return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+", "");
-		}
-		public static String fpkr(long amount) {
-			double floats = amount % 1;
-			long amountFix = Lng(amount - floats);
-			StringBuilder stringBuilder = new StringBuilder();
-			char[] amountArray = Str(amountFix).toCharArray();
-			int a = 0, b = 0;
-			for (int i = amountArray.length - 1; i >= 0; i--) {
-				if (a < 3) {
-					stringBuilder.append(amountArray[i]);
-					a++;
-				} else if (b < 2) {
-					if (b == 0) {
-						stringBuilder.append(",");
-						stringBuilder.append(amountArray[i]);
-						b++;
-					} else {
-						stringBuilder.append(amountArray[i]);
-						b = 0;
-					}
-				}
-			}
-			return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+", "");
-		}
-		public static String fpkr(float amount) {
-			double floats = amount % 1;
-			long amountFix = Lng(amount - floats);
-			StringBuilder stringBuilder = new StringBuilder();
-			char[] amountArray = Str(amountFix).toCharArray();
-			int a = 0, b = 0;
-			for (int i = amountArray.length - 1; i >= 0; i--) {
-				if (a < 3) {
-					stringBuilder.append(amountArray[i]);
-					a++;
-				} else if (b < 2) {
-					if (b == 0) {
-						stringBuilder.append(",");
-						stringBuilder.append(amountArray[i]);
-						b++;
-					} else {
-						stringBuilder.append(amountArray[i]);
-						b = 0;
-					}
-				}
-			}
-			return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+", "");
-		}
-		public static String fpkr(double amount) {
-			double floats = amount % 1;
-			long amountFix = Lng(amount - floats);
-			StringBuilder stringBuilder = new StringBuilder();
-			char[] amountArray = Str(amountFix).toCharArray();
-			int a = 0, b = 0;
-			for (int i = amountArray.length - 1; i >= 0; i--) {
-				if (a < 3) {
-					stringBuilder.append(amountArray[i]);
-					a++;
-				} else if (b < 2) {
-					if (b == 0) {
-						stringBuilder.append(",");
-						stringBuilder.append(amountArray[i]);
-						b++;
-					} else {
-						stringBuilder.append(amountArray[i]);
-						b = 0;
-					}
-				}
-			}
-			return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+", "");
-		}
-		public static String far(int n) {
-			return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
-		}
-		public static String far(long n) {
-			return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
-		}
-		public static String far(float n) {
-			return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
-		}
-		public static String far(double n) {
-			return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("ar").setRegion("AR").build()).format(n).replaceAll("\\w|٫٠٠$", "").substring(1);
-		}
-		public static String fur(int n) {
-			return far(n);
-		}
-		public static String fur(long n) {
-			return far(n);
-		}
-		public static String fur(float n) {
-			return far(n);
-		}
-		public static String fur(double n) {
-			return far(n);
-		}
-		public static String fus(int n) {
-			return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\,\\.]", "");
-		}
-		public static String fus(long n) {
-			return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\,\\.]", "");
-		}
-		public static String fus(float n) {
-			return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\,\\.]", "");
-		}
-		public static String fus(double n) {
-			return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build()).format(n).replaceAll("[^\\d\\,\\.]", "");
-		}
-		public static String f(int n) {
-			return fpkr(n);
-		}
-		public static String f(long n) {
-			return fpkr(n);
-		}
-		public static String f(float n) {
-			return fpkr(n);
-		}
-		public static String f(double n) {
-			return fpkr(n);
-		}
-		public static <T> String f(String s, T... args) {
-			return String.format(s, args);
-		}
-		public static String pkr(int n) {
-			String formattedN = fpkr(n);
-			String result = "Rs. " + formattedN;
-			return result;
-		}
-		public static String pkr(long n) {
-			String formattedN = fpkr(n);
-			String result = "Rs. " + formattedN;
-			return result;
-		}
-		public static String pkr(float n) {
-			String formattedN = fpkr(n);
-			String result = "Rs. " + formattedN;
-			return result;
-		}
-		public static String pkr(double n) {
-			String formattedN = fpkr(n);
-			String result = "Rs. " + formattedN;
-			return result;
-		}
-		public static String usd(int n) {
-			String formattedN = fus(n);
-			String result = "US$ " + formattedN;
-			return result;
-		}
-		public static String usd(long n) {
-			String formattedN = fus(n);
-			String result = "US$ " + formattedN;
-			return result;
-		}
-		public static String usd(float n) {
-			String formattedN = fus(n);
-			String result = "US$ " + formattedN;
-			return result;
-		}
-		public static String usd(double n) {
-			String formattedN = fus(n);
-			String result = "US$ " + formattedN;
-			return result;
-		}
-		public static String curr(int n, String locale) {
-			String formattedN = fus(n);
-			if (startsWith(locale, "pk|rs")) return pkr(n);
-			else if (startsWith(locale, "us")) return usd(n);
-			else if (len(locale) >= 1 && len(locale) <= 4) return trim(titleCase(locale)) + " " + formattedN;
-			return formattedN;
-		}
-		public static String curr(long n, String locale) {
-			String formattedN = fus(n);
-			if (startsWith(locale, "pk|rs")) return pkr(n);
-			else if (startsWith(locale, "us")) return usd(n);
-			else if (len(locale) >= 1 && len(locale) < 4) return trim(titleCase(locale)) + " " + formattedN;
-			return formattedN;
-		}
-		public static String curr(float n, String locale) {
-			String formattedN = fus(n);
-			if (startsWith(locale, "pk|rs")) return pkr(n);
-			else if (startsWith(locale, "us")) return usd(n);
-			else if (len(locale) >= 1 && len(locale) < 4) return trim(titleCase(locale)) + " " + formattedN;
-			return formattedN;
-		}
-		public static String curr(double n, String locale) {
-			String formattedN = fus(n);
-			if (startsWith(locale, "pk|rs")) return pkr(n);
-			else if (startsWith(locale, "us")) return usd(n);
-			else if (len(locale) >= 1 && len(locale) < 4) return trim(titleCase(locale)) + " " + formattedN;
-			return formattedN;
-		}
-		public static String pksuffix(int n) {
-			n -= n % 1;
-			String formattedN = fpkr(n);
-			String[] parts = split(formattedN, ",");
-			int size = len(parts);
-			if (n < 800 || n > 99 * kh) return formattedN;
-			String result = "";
-			switch (size) {
-			case 1:
-			case 2:
-				result = Str(n / zr) + "zr";
-				break;
-			case 3:
-				result = Str(n / lc) +  "lc";
-				break;
-			case 4:
-				result = Str(n / cr) +  "cr";
-				break;
-			case 5:
-				result = Str(n / ar) +  "ar";
-				break;
-			case 6:
-				result = Str(n / kh) +  "kh";
-				break;
-			}
-			return result;
-		}
-		public static String pksuffix(long n) {
-			n -= n % 1;
-			String formattedN = fpkr(n);
-			String[] parts = split(formattedN, ",");
-			int size = len(parts);
-			if (n < 800 || n > 99 * kh) return formattedN;
-			String result = "";
-			switch (size) {
-			case 1:
-			case 2:
-				result = Str(n / zr) + "zr";
-				break;
-			case 3:
-				result = Str(n / lc) +  "lc";
-				break;
-			case 4:
-				result = Str(n / cr) +  "cr";
-				break;
-			case 5:
-				result = Str(n / ar) +  "ar";
-				break;
-			case 6:
-				result = Str(n / kh) +  "kh";
-				break;
-			}
-			return result;
-		}
-		public static String pksuffix(float n) {
-			n -= n % 1;
-			String formattedN = fpkr(n);
-			String[] parts = split(formattedN, ",");
-			int size = len(parts);
-			if (n < 800 || n > 99 * kh) return formattedN;
-			String result = "";
-			switch (size) {
-			case 1:
-			case 2:
-				result = Str(n / zr) + "zr";
-				break;
-			case 3:
-				result = Str(n / lc) +  "lc";
-				break;
-			case 4:
-				result = Str(n / cr) +  "cr";
-				break;
-			case 5:
-				result = Str(n / ar) +  "ar";
-				break;
-			case 6:
-				result = Str(n / kh) +  "kh";
-				break;
-			}
-			return result;
-		}
-		public static String pksuffix(double n) {
-			n -= n % 1;
-			String formattedN = fpkr(n);
-			String[] parts = split(formattedN, ",");
-			int size = len(parts);
-			if (n < 800 || n > 99 * kh) return formattedN;
-			String result = "";
-			switch (size) {
-			case 1:
-			case 2:
-				result = Str(n / zr) + "zr";
-				break;
-			case 3:
-				result = Str(n / lc) +  "lc";
-				break;
-			case 4:
-				result = Str(n / cr) +  "cr";
-				break;
-			case 5:
-				result = Str(n / ar) +  "ar";
-				break;
-			case 6:
-				result = Str(n / kh) +  "kh";
-				break;
-			}
-			return result;
-		}
-		//،
-		public static String ussuffix(int n) {
-			n -= n % 1;
-			String formattedN = fus(n);
-			String[] parts = split(formattedN, ",");
-			int size = len(parts);
-			if (n < 800 || n > 99 * dc) return formattedN;
-			String result = "";
-			switch (size) {
-			case 1:
-			case 2:
-				result = Str(n / K) + "k";
-				break;
-			case 3:
-				result = Str(n / M) +  "M";
-				break;
-			case 4:
-				result = Str(n / B) +  "B";
-				break;
-			case 5:
-				result = Str(n / T) +  "T";
-				break;
-			case 6:
-				result = Str(n / qd) +  "qd";
-				break;
-			case 7:
-				result = Str(n / qt) +  "qt";
-				break;
-			case 8:
-				result = Str(n / sx) +  "sx";
-				break;
-			case 9:
-				result = Str(n / sp) +  "sp";
-				break;
-			case 10:
-				result = Str(n / oc) +  "oc";
-				break;
-			case 11:
-				result = Str(n / nn) +  "nn";
-				break;
-			case 12:
-				result = Str(n / dc) +  "dc";
-				break;
-			}
-			return result;
-		}
-		public static String ussuffix(long n) {
-			n -= n % 1;
-			String formattedN = fus(n);
-			String[] parts = split(formattedN, ",");
-			int size = len(parts);
-			if (n < 800 || n > 99 * dc) return formattedN;
-			String result = "";
-			switch (size) {
-			case 1:
-			case 2:
-				result = Str(n / K) + "k";
-				break;
-			case 3:
-				result = Str(n / M) +  "M";
-				break;
-			case 4:
-				result = Str(n / B) +  "B";
-				break;
-			case 5:
-				result = Str(n / T) +  "T";
-				break;
-			case 6:
-				result = Str(n / qd) +  "qd";
-				break;
-			case 7:
-				result = Str(n / qt) +  "qt";
-				break;
-			case 8:
-				result = Str(n / sx) +  "sx";
-				break;
-			case 9:
-				result = Str(n / sp) +  "sp";
-				break;
-			case 10:
-				result = Str(n / oc) +  "oc";
-				break;
-			case 11:
-				result = Str(n / nn) +  "nn";
-				break;
-			case 12:
-				result = Str(n / dc) +  "dc";
-				break;
-			}
-			return result;
-		}
-		public static String ussuffix(float n) {
-			n -= n % 1;
-			String formattedN = fus(n);
-			String[] parts = split(formattedN, ",");
-			int size = len(parts);
-			if (n < 800 || n > 99 * dc) return formattedN;
-			String result = "";
-			switch (size) {
-			case 1:
-			case 2:
-				result = Str(n / K) + "k";
-				break;
-			case 3:
-				result = Str(n / M) +  "M";
-				break;
-			case 4:
-				result = Str(n / B) +  "B";
-				break;
-			case 5:
-				result = Str(n / T) +  "T";
-				break;
-			case 6:
-				result = Str(n / qd) +  "qd";
-				break;
-			case 7:
-				result = Str(n / qt) +  "qt";
-				break;
-			case 8:
-				result = Str(n / sx) +  "sx";
-				break;
-			case 9:
-				result = Str(n / sp) +  "sp";
-				break;
-			case 10:
-				result = Str(n / oc) +  "oc";
-				break;
-			case 11:
-				result = Str(n / nn) +  "nn";
-				break;
-			case 12:
-				result = Str(n / dc) +  "dc";
-				break;
-			}
-			return result;
-		}
-		public static String ussuffix(double n) {
-			n -= n % 1;
-			String formattedN = fus(n);
-			String[] parts = split(formattedN, ",");
-			int size = len(parts);
-			if (n < 800 || n > 99 * dc) return formattedN;
-			String result = "";
-			switch (size) {
-			case 1:
-			case 2:
-				result = Str(n / K) + "k";
-				break;
-			case 3:
-				result = Str(n / M) +  "M";
-				break;
-			case 4:
-				result = Str(n / B) +  "B";
-				break;
-			case 5:
-				result = Str(n / T) +  "T";
-				break;
-			case 6:
-				result = Str(n / qd) +  "qd";
-				break;
-			case 7:
-				result = Str(n / qt) +  "qt";
-				break;
-			case 8:
-				result = Str(n / sx) +  "sx";
-				break;
-			case 9:
-				result = Str(n / sp) +  "sp";
-				break;
-			case 10:
-				result = Str(n / oc) +  "oc";
-				break;
-			case 11:
-				result = Str(n / nn) +  "nn";
-				break;
-			case 12:
-				result = Str(n / dc) +  "dc";
-				break;
-			}
-			return result;
-		}
-		public static String toRoman(int n) {
-			Tree_I tree = new Tree_I();
-			tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X").add(40, "XL").add(50, "L").add(90, "XC").add(100, "C").add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M");
-			int x = tree.floorKey(n);
-			if (n != x) return tree.get(x) + toRoman(n - x);
-			return tree.get(n);
-		}
-		public static int fibonacci(int n) {
-			if (n < 2) return n;
-			return fibonacci(n - 1) + fibonacci(n - 2);
-		}
-		public static int[] fibonacciSequence(int n) {
-			IntArr result = new IntArr();
-			for (int i : range(n)) result.push(fibonacci(i + 1));
-			return result.array();
-		}
-		public static double pct(double n1, double n2) {
-			if (n1 < n2) return Math.round(n1 / n2 * 100.0) / 100.0;
-			else return Math.round(n1 * (n2 * .01) * 100.0) / 100.0;
-		}
-		final static double infinity = Double.POSITIVE_INFINITY;
-		public static boolean isnl(Object o) {
-			return o == null;
-		}
-		public static boolean isinf(double n) {
-			return n == infinity || n == Double.NEGATIVE_INFINITY || isnl(n);
-		}
-		public static int round(int n) {
-			return n;
-		}
-		public static long round(long n) {
-			return n;
-		}
-		public static int round(float n) {
-			return (int)Math.round(n);
-		}
-		public static int round(double n) {
-			return (int)Math.round(n);
-		}
-		public static double celciusToFarhenheit(double c) {
-			return (double)round(1.8 * c + 32);
-		}
-		public static double farhenheitToCelcius(double f) {
-			return (double)round(((f - 32) * 5) / 9);
-		}
-		public static double cToF(double c) {
-			return celciusToFarhenheit(c);
-		}
-		public static double fToC(double f) {
-			return farhenheitToCelcius(f);
-		}
-		public static boolean eq(int x, int y) {
-			return x == y;
-		}
-		public static boolean eq(long x, long y) {
-			return x == y;
-		}
-		public static boolean eq(float x, float y) {
-			return x == y;
-		}
-		public static boolean eq(double x, double y) {
-			return x == y;
-		}
-		public static boolean eq(boolean x, boolean y) {
-			return x == y;
-		}
-		public static boolean eq(String[] x, String[] y) {
-			return Arrays.equals(x, y);
-		}
-		public static boolean eq(int[] x, int[] y) {
-			return Arrays.equals(x, y);
-		}
-		public static boolean eq(long[] x, long[] y) {
-			return Arrays.equals(x, y);
-		}
-		public static boolean eq(float[] x, float[] y) {
-			return Arrays.equals(x, y);
-		}
-		public static boolean eq(double[] x, double[] y) {
-			return Arrays.equals(x, y);
-		}
-		public static boolean eq(boolean[] x, boolean[] y) {
-			return Arrays.equals(x, y);
-		}
-		public static boolean eq(StrArr x, StrArr y) {
-			return x.eq(y);
-		}
-		public static boolean eq(IntArr x, IntArr y) {
-			return x.eq(y);
-		}
-		public static boolean eq(LongArr x, LongArr y) {
-			return x.eq(y);
-		}
-		public static boolean eq(FltArr x, FltArr y) {
-			return x.eq(y);
-		}
-		public static boolean eq(DblArr x, DblArr y) {
-			return x.eq(y);
-		}
-		public static boolean eq(BoolArr x, BoolArr y) {
-			return x.eq(y);
-		}
-		public static boolean uneq(int x, int y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(long x, long y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(float x, float y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(double x, double y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(boolean x, boolean y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(String[] x, String[] y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(int[] x, int[] y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(long[] x, long[] y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(float[] x, float[] y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(double[] x, double[] y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(boolean[] x, boolean[] y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(StrArr x, StrArr y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(IntArr x, IntArr y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(LongArr x, LongArr y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(FltArr x, FltArr y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(DblArr x, DblArr y) {
-			return !eq(x, y);
-		}
-		public static boolean uneq(BoolArr x, BoolArr y) {
-			return !eq(x, y);
-		}
-		public static boolean both(String... strings) {
-			int count = 0;
-			for (String s : strings) {
-				if (is(s)) count += 1;
-			}
-			return count == len(strings);
-		}
-		public static boolean both(int... ints) {
-			int count = 0;
-			for (int n : ints) {
-				if (is(n)) count += 1;
-			}
-			return count == len(ints);
-		}
-		public static boolean both(long... longs) {
-			int count = 0;
-			for (long n : longs) {
-				if (is(n)) count += 1;
-			}
-			return count == len(longs);
-		}
-		public static boolean both(float... floats) {
-			int count = 0;
-			for (float n : floats) {
-				if (is(n)) count += 1;
-			}
-			return count == len(floats);
-		}
-		public static boolean both(double... doubles) {
-			int count = 0;
-			for (double n : doubles) {
-				if (is(n)) count += 1;
-			}
-			return count == len(doubles);
-		}
-		public static boolean both(boolean... bools) {
-			int count = 0;
-			for (boolean bool : bools) {
-				if (is(bool)) count += 1;
-			}
-			return count == len(bools);
-		}
-		public static boolean either(String... strings) {
-			int count = 0;
-			for (String s : strings) {
-				if (is(s)) count += 1;
-			}
-			return count > 0;
-		}
-		public static boolean either(int... ints) {
-			int count = 0;
-			for (int n : ints) {
-				if (is(n)) count += 1;
-			}
-			return count > 0;
-		}
-		public static boolean either(long... longs) {
-			int count = 0;
-			for (long n : longs) {
-				if (is(n)) count += 1;
-			}
-			return count > 0;
-		}
-		public static boolean either(float... floats) {
-			int count = 0;
-			for (float n : floats) {
-				if (is(n)) count += 1;
-			}
-			return count > 0;
-		}
-		public static boolean either(double... doubles) {
-			int count = 0;
-			for (double n : doubles) {
-				if (is(n)) count += 1;
-			}
-			return count > 0;
-		}
-		public static boolean either(boolean... bools) {
-			int count = 0;
-			for (boolean bool : bools) {
-				if (is(bool)) count += 1;
-			}
-			return count > 0;
-		}
-		public static boolean neither(String... strings) {
-			int count = 0;
-			for (String s : strings) {
-				if (not(s)) count += 1;
-			}
-			return count == len(strings);
-		}
-		public static boolean neither(int... ints) {
-			int count = 0;
-			for (int n : ints) {
-				if (not(n)) count += 1;
-			}
-			return count == len(ints);
-		}
-		public static boolean neither(long... longs) {
-			int count = 0;
-			for (long n : longs) {
-				if (not(n)) count += 1;
-			}
-			return count == len(longs);
-		}
-		public static boolean neither(float... floats) {
-			int count = 0;
-			for (float n : floats) {
-				if (not(n)) count += 1;
-			}
-			return count == len(floats);
-		}
-		public static boolean neither(double... doubles) {
-			int count = 0;
-			for (double n : doubles) {
-				if (not(n)) count += 1;
-			}
-			return count == len(doubles);
-		}
-		public static boolean neither(boolean... bools) {
-			int count = 0;
-			for (boolean bool : bools) {
-				if (not(bool)) count += 1;
-			}
-			return count == len(bools);
-		}
-		public static boolean not(String s) {
-			return isnl(s) || isEmpty(s);
-		}
-		public static boolean not(int n) {
-			return isnl(n) || 0 == n;
-		}
-		public static boolean not(long n) {
-			return isnl(n) || 0 == n;
-		}
-		public static boolean not(float n) {
-			return isnl(n) || 0 == n;
-		}
-		public static boolean not(double n) {
-			return isnl(n) || 0 == n;
-		}
-		public static boolean not(boolean condition) {
-			return isnl(condition) || !condition;
-		}
-		public static boolean not(Object o) {
-			return isnl(o);
-		}
-		public static boolean not(String[] arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(int[] arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(long[] arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(float[] arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(double[] arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(boolean[] arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(Object[] arr) {
-			return isnl(arr);
-		}
-		public static boolean not(StrArr arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(IntArr arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(LongArr arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(FltArr arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(DblArr arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean not(BoolArr arr) {
-			return isnl(arr) || isEmpty(arr);
-		}
-		public static boolean is(String s) {
-			return !not(s);
-		}
-		public static boolean is(int n) {
-			return !not(n);
-		}
-		public static boolean is(long n) {
-			return !not(n);
-		}
-		public static boolean is(float n) {
-			return !not(n);
-		}
-		public static boolean is(double n) {
-			return !not(n);
-		}
-		public static boolean is(boolean condition) {
-			return !not(condition);
-		}
-		public static boolean is(Object o) {
-			return !not(o);
-		}
-		public static boolean is(String[] arr) {
-			return !not(arr);
-		}
-		public static boolean is(int[] arr) {
-			return !not(arr);
-		}
-		public static boolean is(long[] arr) {
-			return !not(arr);
-		}
-		public static boolean is(float[] arr) {
-			return !not(arr);
-		}
-		public static boolean is(double[] arr) {
-			return !not(arr);
-		}
-		public static boolean is(Object[] arr) {
-			return !not(arr);
-		}
-		public static boolean is(boolean[] arr) {
-			return !not(arr);
-		}
-		public static boolean is(StrArr arr) {
-			return !not(arr);
-		}
-		public static boolean is(IntArr arr) {
-			return !not(arr);
-		}
-		public static boolean is(LongArr arr) {
-			return !not(arr);
-		}
-		public static boolean is(FltArr arr) {
-			return !not(arr);
-		}
-		public static boolean is(DblArr arr) {
-			return !not(arr);
-		}
-		public static boolean is(BoolArr arr) {
-			return !not(arr);
-		}
-		public static boolean xor(boolean a, boolean b) {
-			return a || b && !(a && b);
-		}
-		public static boolean implies(boolean a, boolean b) {
-			return a && !b ? false : true;
-		}
-		public static int randInt() {
-			int number = ThreadLocalRandom.current().nextInt(0, 199);
-			return number;
-		}
-		public static int randInt(int end) {
-			int number = ThreadLocalRandom.current().nextInt(0, end);
-			return number;
-		}
-		public static int randInt(int start, int end) {
-			int number = ThreadLocalRandom.current().nextInt(start, end);
-			return number;
-		}
-		public static double randFlt() {
-			double number = randInt() * .3;
-			return number;
-		}
-		public static double randFlt(int end) {
-			double number = randInt(end) * .3;
-			return number;
-		}
-		public static double randFlt(int start, int end) {
-			double number = randInt(start, end) * .3;
-			return number;
-		}
-		public static String randStr(int len) {
-			final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\\+=";
-			SecureRandom rnd = new SecureRandom();
-			StringBuilder sb = new StringBuilder(len);
-			for (int i = 0; i < len; i++)
-				sb.append(AB.charAt(rnd.nextInt(AB.length())));
-			return sb.toString();
-		}
-		public static String randStr() {
-			return randStr(randInt(8, 32));
-		}
-		public static char randChar(int low, int high) {
-			if (low < 0) low = 0;
-			if (high > 127) high = 127;
-			return (char)randInt(low, high);
-		}
-		public static char randChar() {
-			return randChar(47, 127);
-		}
-		public static String randId() {
-			return UUID.randomUUID().toString();
-		}
-		public static String randItem(String arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static int randItem(int arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static long randItem(long arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static float randItem(float arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static double randItem(double arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static boolean randItem(boolean arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static Object randItem(Object arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static String randItem(StrArr arr) {
-			return arr.get(randInt(arr.length()));
-		}
-		public static int randItem(IntArr arr) {
-			return arr.get(randInt(arr.length()));
-		}
-		public static long randItem(LongArr arr) {
-			return arr.get(randInt(arr.length()));
-		}
-		public static float randItem(FltArr arr) {
-			return arr.get(randInt(arr.length()));
-		}
-		public static double randItem(DblArr arr) {
-			return arr.get(randInt(arr.length()));
-		}
-		public static boolean randItem(BoolArr arr) {
-			return arr.get(randInt(arr.length()));
-		}
-		public static String randFrom(String arr[]) {
-			return randItem(arr);
-		}
-		public static int randFrom(int arr[]) {
-			return randItem(arr);
-		}
-		public static long randFrom(long arr[]) {
-			return randItem(arr);
-		}
-		public static float randFrom(float arr[]) {
-			return randItem(arr);
-		}
-		public static double randFrom(double arr[]) {
-			return randItem(arr);
-		}
-		public static boolean randFrom(boolean arr[]) {
-			return randItem(arr);
-		}
-		public static Object randFrom(Object arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static String randFrom(StrArr arr) {
-			return randItem(arr);
-		}
-		public static int randFrom(IntArr arr) {
-			return randItem(arr);
-		}
-		public static long randFrom(LongArr arr) {
-			return randItem(arr);
-		}
-		public static float randFrom(FltArr arr) {
-			return randItem(arr);
-		}
-		public static double randFrom(DblArr arr) {
-			return randItem(arr);
-		}
-		public static boolean randFrom(BoolArr arr) {
-			return randItem(arr);
-		}
-		public static String any(String arr[]) {
-			return randItem(arr);
-		}
-		public static int any(int arr[]) {
-			return randItem(arr);
-		}
-		public static long any(long arr[]) {
-			return randItem(arr);
-		}
-		public static float any(float arr[]) {
-			return randItem(arr);
-		}
-		public static double any(double arr[]) {
-			return randItem(arr);
-		}
-		public static boolean any(boolean arr[]) {
-			return randItem(arr);
-		}
-		public static Object any(Object arr[]) {
-			return arr[randInt(arr.length)];
-		}
-		public static String any(StrArr arr) {
-			return randItem(arr);
-		}
-		public static int any(IntArr arr) {
-			return randItem(arr);
-		}
-		public static long any(LongArr arr) {
-			return randItem(arr);
-		}
-		public static float any(FltArr arr) {
-			return randItem(arr);
-		}
-		public static double any(DblArr arr) {
-			return randItem(arr);
-		}
-		public static boolean any(BoolArr arr) {
-			return randItem(arr);
-		}
-		public static int[] noDuplicates(int[] arr) {
-			return IntStream.of(arr).distinct().toArray();
-		}
-		public static long[] noDuplicates(long[] arr) {
-			return LongStream.of(arr).distinct().toArray();
-		}
-		public static double[] noDuplicates(double[] arr) {
-			return DoubleStream.of(arr).distinct().toArray();
-		}
-		public static StrArr noDuplicates(StrArr arr) {
-			return arr.unique();
-		}
-		public static IntArr noDuplicates(IntArr arr) {
-			return arr.unique();
-		}
-		public static LongArr noDuplicates(LongArr arr) {
-			return arr.unique();
-		}
-		public static FltArr noDuplicates(FltArr arr) {
-			return arr.unique();
-		}
-		public static DblArr noDuplicates(DblArr arr) {
-			return arr.unique();
-		}
-		public static BoolArr noDuplicates(BoolArr arr) {
-			return arr.unique();
-		}
-		public static String replace(String str, String to_replace, String regex_to_replace_with) {
-			return str.replaceAll(to_replace, regex_to_replace_with);
-		}
-		public static String replaceOne(String str, String to_replace, String regex_to_replace_with) {
-			return str.replaceFirst(to_replace, regex_to_replace_with);
-		}
-		public static String remove(String str, String re) {
-			return replace(str, re, "");
-		}
-		public static String slice(String str) {
-			return remove(str, "^\\s+|\\s+$");
-		}
-		public static String[] slice(String arr[]) {
-			return arr.clone();
-		}
-		public static int[] slice(int arr[]) {
-			return arr.clone();
-		}
-		public static long[] slice(long arr[]) {
-			return arr.clone();
-		}
-		public static float[] slice(float arr[]) {
-			return arr.clone();
-		}
-		public static double[] slice(double arr[]) {
-			return arr.clone();
-		}
-		public static boolean[] slice(boolean arr[]) {
-			return arr.clone();
-		}
-		public static StrArr slice(StrArr arr) {
-			return arr.copy();
-		}
-		public static IntArr slice(IntArr arr) {
-			return arr.copy();
-		}
-		public static LongArr slice(LongArr arr) {
-			return arr.copy();
-		}
-		public static FltArr slice(FltArr arr) {
-			return arr.copy();
-		}
-		public static DblArr slice(DblArr arr) {
-			return arr.copy();
-		}
-		public static BoolArr slice(BoolArr arr) {
-			return arr.copy();
-		}
-		public static String slice(String str, int start) {
-			return str.substring(start, str.length());
-		}
-		public static String[] slice(String oldArr[], int start) {
-			String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
-			return newArr;
-		}
-		public static int[] slice(int oldArr[], int start) {
-			int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
-			return newArr;
-		}
-		public static long[] slice(long oldArr[], int start) {
-			long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
-			return newArr;
-		}
-		public static float[] slice(float oldArr[], int start) {
-			float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
-			return newArr;
-		}
-		public static double[] slice(double oldArr[], int start) {
-			double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
-			return newArr;
-		}
-		public static boolean[] slice(boolean oldArr[], int start) {
-			boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
-			return newArr;
-		}
-		public static StrArr slice(StrArr arr, int start) {
-			return arr.slice(start, arr.length());
-		}
-		public static IntArr slice(IntArr arr, int start) {
-			return arr.slice(start, arr.length());
-		}
-		public static LongArr slice(LongArr arr, int start) {
-			return arr.slice(start, arr.length());
-		}
-		public static FltArr slice(FltArr arr, int start) {
-			return arr.slice(start, arr.length());
-		}
-		public static DblArr slice(DblArr arr, int start) {
-			return arr.slice(start, arr.length());
-		}
-		public static BoolArr slice(BoolArr arr, int start) {
-			return arr.slice(start, arr.length());
-		}
-		public static String slice(String str, int start, int end) {
-			return str.substring(start, end);
-		}
-		public static String[] slice(String oldArr[], int start, int end) {
-			String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
-			return newArr;
-		}
-		public static int[] slice(int oldArr[], int start, int end) {
-			int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
-			return newArr;
-		}
-		public static long[] slice(long oldArr[], int start, int end) {
-			long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
-			return newArr;
-		}
-		public static float[] slice(float oldArr[], int start, int end) {
-			float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
-			return newArr;
-		}
-		public static double[] slice(double oldArr[], int start, int end) {
-			double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
-			return newArr;
-		}
-		public static boolean[] slice(boolean oldArr[], int start, int end) {
-			boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
-			return newArr;
-		}
-		public static StrArr slice(StrArr arr, int start, int end) {
-			return arr.slice(start, end);
-		}
-		public static IntArr slice(IntArr arr, int start, int end) {
-			return arr.slice(start, end);
-		}
-		public static LongArr slice(LongArr arr, int start, int end) {
-			return arr.slice(start, end);
-		}
-		public static FltArr slice(FltArr arr, int start, int end) {
-			return arr.slice(start, end);
-		}
-		public static DblArr slice(DblArr arr, int start, int end) {
-			return arr.slice(start, end);
-		}
-		public static BoolArr slice(BoolArr arr, int start, int end) {
-			return arr.slice(start, end);
-		}
-		public static String sliceEnd(String str, int start) {
-			return slice(str, str.length() - start);
-		}
-		public static String[] sliceEnd(String[] arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static int[] sliceEnd(int[] arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static long[] sliceEnd(long[] arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static float[] sliceEnd(float[] arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static double[] sliceEnd(double[] arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static boolean[] sliceEnd(boolean[] arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static StrArr sliceEnd(StrArr arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static IntArr sliceEnd(IntArr arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static LongArr sliceEnd(LongArr arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static FltArr sliceEnd(FltArr arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static DblArr sliceEnd(DblArr arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static BoolArr sliceEnd(BoolArr arr, int start) {
-			return slice(arr, len(arr) - start);
-		}
-		public static String trim(String str) {
-			return slice(str);
-		}
-		public static String[] trim(String[] arr) {
-			return slice(arr);
-		}
-		public static int[] trim(int[] arr) {
-			return slice(arr);
-		}
-		public static long[] trim(long[] arr) {
-			return slice(arr);
-		}
-		public static float[] trim(float[] arr) {
-			return slice(arr);
-		}
-		public static double[] trim(double[] arr) {
-			return slice(arr);
-		}
-		public static boolean[] trim(boolean[] arr) {
-			return slice(arr);
-		}
-		public static StrArr trim(StrArr arr) {
-			return slice(arr);
-		}
-		public static IntArr trim(IntArr arr) {
-			return slice(arr);
-		}
-		public static LongArr trim(LongArr arr) {
-			return slice(arr);
-		}
-		public static FltArr trim(FltArr arr) {
-			return slice(arr);
-		}
-		public static DblArr trim(DblArr arr) {
-			return slice(arr);
-		}
-		public static BoolArr trim(BoolArr arr) {
-			return slice(arr);
-		}
-		public static String trim(String str, int start) {
-			return slice(str, start);
-		}
-		public static String[] trim(String[] arr, int start) {
-			return slice(arr, start);
-		}
-		public static int[] trim(int[] arr, int start) {
-			return slice(arr, start);
-		}
-		public static long[] trim(long[] arr, int start) {
-			return slice(arr, start);
-		}
-		public static float[] trim(float[] arr, int start) {
-			return slice(arr, start);
-		}
-		public static double[] trim(double[] arr, int start) {
-			return slice(arr, start);
-		}
-		public static boolean[] trim(boolean[] arr, int start) {
-			return slice(arr, start);
-		}
-		public static StrArr trim(StrArr arr, int start) {
-			return slice(arr, start);
-		}
-		public static IntArr trim(IntArr arr, int start) {
-			return slice(arr, start);
-		}
-		public static LongArr trim(LongArr arr, int start) {
-			return slice(arr, start);
-		}
-		public static FltArr trim(FltArr arr, int start) {
-			return slice(arr, start);
-		}
-		public static DblArr trim(DblArr arr, int start) {
-			return slice(arr, start);
-		}
-		public static BoolArr trim(BoolArr arr, int start) {
-			return slice(arr, start);
-		}
-		public static String trim(String str, int start, int end) {
-			return slice(str, start, end);
-		}
-		public static String[] trim(String[] arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static int[] trim(int[] arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static long[] trim(long[] arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static float[] trim(float[] arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static double[] trim(double[] arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static boolean[] trim(boolean[] arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static StrArr trim(StrArr arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static IntArr trim(IntArr arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static LongArr trim(LongArr arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static FltArr trim(FltArr arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static DblArr trim(DblArr arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static BoolArr trim(BoolArr arr, int start, int end) {
-			return slice(arr, start, end);
-		}
-		public static String trimEnd(String str, int start) {
-			return sliceEnd(str, start);
-		}
-		public static String[] trimEnd(String[] arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static int[] trimEnd(int[] arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static long[] trimEnd(long[] arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static float[] trimEnd(float[] arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static double[] trimEnd(double[] arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static boolean[] trimEnd(boolean[] arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static StrArr trimEnd(StrArr arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static IntArr trimEnd(IntArr arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static LongArr trimEnd(LongArr arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static FltArr trimEnd(FltArr arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static DblArr trimEnd(DblArr arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static BoolArr trimEnd(BoolArr arr, int start) {
-			return sliceEnd(arr, start);
-		}
-		public static String sliceTo(String str, String thatSpecificPart) {
-			int index = indexOf(str, thatSpecificPart);
-			if (index < 0 || index == -1) return str;
-			return slice(str, index);
-		}
-		public static String sliceToAfter(String str, String thatSpecificPart) {
-			int index = indexOf(str, thatSpecificPart);
-			if (index < 0) return str;
-			String retrievedString = sliceTo(str, thatSpecificPart);
-			return slice(retrievedString, len(thatSpecificPart));
-		}
-		public static boolean startsWith(String str, String re) {
-			Pattern pattern = Pattern.compile("^(" + re + ")", Pattern.CASE_INSENSITIVE);
-			Matcher matcher = pattern.matcher(str);
-			return !!matcher.find();
-		}
-		public static boolean endsWith(String str, String re) {
-			Pattern pattern = Pattern.compile("(" + re + ")$", Pattern.CASE_INSENSITIVE);
-			Matcher matcher = pattern.matcher(str);
-			return !!matcher.find();
-		}
-		public static boolean endsWith(String[] arr, String lookupStr) {
-			return arr[len(arr) - 1].equals(lookupStr);
-		}
-		public static boolean endsWith(int[] arr, int lookupInt) {
-			return arr[len(arr) - 1] == lookupInt;
-		}
-		public static boolean endsWith(long[] arr, long lookupLong) {
-			return arr[len(arr) - 1] == lookupLong;
-		}
-		public static boolean endsWith(float[] arr, float lookupFloat) {
-			return arr[len(arr) - 1] == lookupFloat;
-		}
-		public static boolean endsWith(double[] arr, double lookupDbl) {
-			return arr[len(arr) - 1] == lookupDbl;
-		}
-		public static boolean endsWith(boolean[] arr, boolean lookupBool) {
-			return arr[len(arr) - 1] == lookupBool;
-		}
-		public static String nthLastOf(String str, int n) {
-			return "" + str.toCharArray()[len(str) - n];
-		}
-		public static String nthLastOf(String[] arr, int n) {
-			return arr[len(arr) - n];
-		}
-		public static int nthLastOf(int[] arr, int n) {
-			return arr[len(arr) - n];
-		}
-		public static long nthLastOf(long[] arr, int n) {
-			return arr[len(arr) - n];
-		}
-		public static float nthLastOf(float[] arr, int n) {
-			return arr[len(arr) - n];
-		}
-		public static double nthLastOf(double[] arr, int n) {
-			return arr[len(arr) - n];
-		}
-		public static boolean nthLastOf(boolean[] arr, int n) {
-			return arr[len(arr) - n];
-		}
-		public static String secondLastOf(String str) {
-			return "" + str.toCharArray()[len(str) - 2];
-		}
-		public static String secondLastOf(String[] arr) {
-			return arr[len(arr) - 2];
-		}
-		public static int secondLastOf(int[] arr) {
-			return arr[len(arr) - 2];
-		}
-		public static long secondLastOf(long[] arr) {
-			return arr[len(arr) - 2];
-		}
-		public static float secondLastOf(float[] arr) {
-			return arr[len(arr) - 2];
-		}
-		public static double secondLastOf(double[] arr) {
-			return arr[len(arr) - 2];
-		}
-		public static boolean secondLastOf(boolean[] arr) {
-			return arr[len(arr) - 2];
-		}
-		public static String lastOf(String str) {
-			return "" + str.toCharArray()[len(str) - 1];
-		}
-		public static String lastOf(String[] arr) {
-			return arr[len(arr) - 1];
-		}
-		public static int lastOf(int[] arr) {
-			return arr[len(arr) - 1];
-		}
-		public static long lastOf(long[] arr) {
-			return arr[len(arr) - 1];
-		}
-		public static float lastOf(float[] arr) {
-			return arr[len(arr) - 1];
-		}
-		public static double lastOf(double[] arr) {
-			return arr[len(arr) - 1];
-		}
-		public static boolean lastOf(boolean[] arr) {
-			return arr[len(arr) - 1];
-		}
-		public static int indexOf(String inStr, String lookupStr) {
-			return inStr.indexOf(lookupStr);
-		}
-		public static int indexOf(String inStr, char lookupCh) {
-			for (int i = 0; i < len(inStr); i++) {
-				if (inStr.toCharArray()[i] == lookupCh) return i;
-			}
-			return -1;
-		}
-		public static int lastIndexOf(String inStr, String lookupStr) {
-			return inStr.lastIndexOf(lookupStr);
-		}
-		public static int lastIndexOf(String inStr, char lookupCh) {
-			for (int i = len(inStr) - 1; i >= 0; i--) {
-				if (inStr.toCharArray()[i] == lookupCh) return i;
-			}
-			return -1;
-		}
-		public static int indexOf(String[] inStrArr, String lookupStr) {
-			for (int i = 0; i < len(inStrArr); i++) {
-				if (inStrArr[i].equals(lookupStr)) return i;
-			}
-			return -1;
-		}
-		public static int lastIndexOf(String[] inStrArr, String lookupStr) {
-			for (int i = len(inStrArr) - 1; i >= 0; i--) {
-				if (inStrArr[i].equals(lookupStr)) return i;
-			}
-			return -1;
-		}
-		public static int indexOf(int[] inIntArr, int lookupInt) {
-			for (int i = 0; i < len(inIntArr); i++) {
-				if (inIntArr[i] == lookupInt) return i;
-			}
-			return -1;
-		}
-		public static int lastIndexOf(int[] inIntArr, int lookupInt) {
-			for (int i = len(inIntArr) - 1; i >= 0; i--) {
-				if (inIntArr[i] == lookupInt) return i;
-			}
-			return -1;
-		}
-		public static int indexOf(long[] inLongArr, long lookupLong) {
-			for (int i = 0; i < len(inLongArr); i++) {
-				if (inLongArr[i] == lookupLong) return i;
-			}
-			return -1;
-		}
-		public static int lastIndexOf(long[] inLongArr, long lookupLong) {
-			for (int i = len(inLongArr) - 1; i >= 0; i--) {
-				if (inLongArr[i] == lookupLong) return i;
-			}
-			return -1;
-		}
-		public static int indexOf(float[] inFltArr, float lookupFlt) {
-			for (int i = 0; i < len(inFltArr); i++) {
-				if (inFltArr[i] == lookupFlt) return i;
-			}
-			return -1;
-		}
-		public static int lastIndexOf(float[] inFloatArr, float lookupFloat) {
-			for (int i = len(inFloatArr) - 1; i >= 0; i--) {
-				if (inFloatArr[i] == lookupFloat) return i;
-			}
-			return -1;
-		}
-		public static int indexOf(double[] inDblArr, double lookupDbl) {
-			for (int i = 0; i < len(inDblArr); i++) {
-				if (inDblArr[i] == lookupDbl) return i;
-			}
-			return -1;
-		}
-		public static int lastIndexOf(double[] inDblArr, double lookupDbl) {
-			for (int i = len(inDblArr) - 1; i >= 0; i--) {
-				if (inDblArr[i] == lookupDbl) return i;
-			}
-			return -1;
-		}
-		public static int indexOf(boolean[] inBoolArr, boolean lookupBool) {
-			for (int i = 0; i < len(inBoolArr); i++) {
-				if (inBoolArr[i] == lookupBool) return i;
-			}
-			return -1;
-		}
-		public static int lastIndexOf(boolean[] inBoolArr, boolean lookupBool) {
-			for (int i = len(inBoolArr) - 1; i >= 0; i--) {
-				if (inBoolArr[i] == lookupBool) return i;
-			}
-			return -1;
-		}
-		public static int numberOfOccurrencesIn(String inStr, char lookupCh) {
-			int occurrences = 0;
-			for (int i = 0; i < len(inStr); i++) {
-				if (inStr.toCharArray()[i] == lookupCh) occurrences++;
-			}
-			return occurrences;
-		}
-		public static int numberOfOccurrencesIn(String inStr, String lookupStr) {
-			int occurrences = 0;
-			for (int i = 0; i < len(inStr); i++) {
-				if (inStr.toCharArray()[i] == lookupStr.charAt(0)) occurrences++;
-			}
-			return occurrences;
-		}
-		public static int numberOfOccurrencesIn(String[] inStrArr, String lookupStr) {
-			int occurrences = 0;
-			for (int i = 0; i < len(inStrArr); i++) {
-				if (inStrArr[i].equals(lookupStr)) occurrences++;
-			}
-			return occurrences;
-		}
-		public static int numberOfOccurrencesIn(int[] inIntArr, int lookupInt) {
-			int occurrences = 0;
-			for (int i = 0; i < len(inIntArr); i++) {
-				if (inIntArr[i] == lookupInt) occurrences++;
-			}
-			return occurrences;
-		}
-		public static int numberOfOccurrencesIn(long[] inLongArr, long lookupLong) {
-			int occurrences = 0;
-			for (int i = 0; i < len(inLongArr); i++) {
-				if (inLongArr[i] == lookupLong) occurrences++;
-			}
-			return occurrences;
-		}
-		public static int numberOfOccurrencesIn(float[] inFltArr, float lookupFlt) {
-			int occurrences = 0;
-			for (int i = 0; i < len(inFltArr); i++) {
-				if (inFltArr[i] == lookupFlt) occurrences++;
-			}
-			return occurrences;
-		}
-		public static int numberOfOccurrencesIn(double[] inDblArr, double lookupDbl) {
-			int occurrences = 0;
-			for (int i = 0; i < len(inDblArr); i++) {
-				if (inDblArr[i] == lookupDbl) occurrences++;
-			}
-			return occurrences;
-		}
-		public static int numberOfOccurrencesIn(boolean[] inBoolArr, boolean lookupBool) {
-			int occurrences = 0;
-			for (int i = 0; i < len(inBoolArr); i++) {
-				if (inBoolArr[i] == lookupBool) occurrences++;
-			}
-			return occurrences;
-		}
-		public static boolean in(String inStr, char ch) {
-			return indexOf(inStr, ch) >= 0;
-		}
-		public static boolean in(String strA, String strB) {
-			return indexOf(lower(strA), lower(strB)) >= 0 || match(strA, strB);
-		}
-		public static boolean in(String[] arr, String str) {
-			return indexOf(arr, str) >= 0;
-		}
-		public static boolean in(int[] arr, int n) {
-			return indexOf(arr, n) >= 0;
-		}
-		public static boolean in(long[] arr, long n) {
-			return indexOf(arr, n) >= 0;
-		}
-		public static boolean in(float[] arr, float n) {
-			return indexOf(arr, n) >= 0;
-		}
-		public static boolean in(double[] arr, double n) {
-			return indexOf(arr, n) >= 0;
-		}
-		public static boolean in(boolean[] arr, boolean bool) {
-			return indexOf(arr, bool) >= 0;
-		}
-		public static boolean in(Object[] arr, Object targetValue) {
-			if (arr == null || targetValue == null) {
-				return false;
-			}
-			for (Object element : arr) {
-				if (targetValue.equals(element)) {
-					return true;
-				}
-			}
-			return false;
-		}
-		public static boolean contains(String str, char lookupCh) {
-			return in(str, lookupCh);
-		}
-		public static boolean contains(String str, String lookupStr) {
-			return in(str, lookupStr);
-		}
-		public static boolean contains(String[] arr, String lookupStr) {
-			return in(arr, lookupStr);
-		}
-		public static boolean contains(int[] arr, int lookupInt) {
-			return in(arr, lookupInt);
-		}
-		public static boolean contains(long[] arr, long lookupLong) {
-			return in(arr, lookupLong);
-		}
-		public static boolean contains(float[] arr, float lookupFloat) {
-			return in(arr, lookupFloat);
-		}
-		public static boolean contains(double[] arr, double lookupDbl) {
-			return in(arr, lookupDbl);
-		}
-		public static boolean contains(boolean[] arr, boolean lookupBool) {
-			return in(arr, lookupBool);
-		}
-		public static boolean contains(Object[] arr, Object targetValue) {
-			return in(arr, targetValue);
-		}
-		public static boolean match(String str, String re) {
-			Pattern pattern = Pattern.compile(re, Pattern.CASE_INSENSITIVE);
-			Matcher matcher = pattern.matcher(str);
-			return !!matcher.find();
-		}
-		public static boolean match(String[] arrA, String[] arrB) {
-			return Arrays.compare(arrA, arrB) >= 0;
-			//returns a negative value if true, just like with most functions in C, or C++
-		}
-		public static boolean match(int[] arrA, int[] arrB) {
-			return Arrays.compare(arrA, arrB) >= 0;
-			//returns a negative value if true, just like with most functions in C, or C++
-		}
-		public static boolean match(long[] arrA, long[] arrB) {
-			return Arrays.compare(arrA, arrB) >= 0;
-			//returns a negative value if true, just like with most functions in C, or C++
-		}
-		public static boolean match(float[] arrA, float[] arrB) {
-			return Arrays.compare(arrA, arrB) >= 0;
-			//returns a negative value if true, just like with most functions in C, or C++
-		}
-		public static boolean match(double[] arrA, double[] arrB) {
-			return Arrays.compare(arrA, arrB) >= 0;
-			//returns a negative value if true, just like with most functions in C, or C++
-		}
-		public static boolean match(boolean[] arrA, boolean[] arrB) {
-			return Arrays.compare(arrA, arrB) >= 0;
-			//returns a negative value if true, just like with most functions in C, or C++
-		}
-		public static boolean compare(String strA, String strB) {
-			return match(strA, strB);
-		}
-		public static boolean compare(String[] arrA, String[] arrB) {
-			return match(arrA, arrB);
-		}
-		public static boolean compare(int[] arrA, int[] arrB) {
-			return match(arrA, arrB);
-		}
-		public static boolean compare(long[] arrA, long[] arrB) {
-			return match(arrA, arrB);
-		}
-		public static boolean compare(float[] arrA, float[] arrB) {
-			return match(arrA, arrB);
-		}
-		public static boolean compare(double[] arrA, double[] arrB) {
-			return match(arrA, arrB);
-		}
-		public static boolean compare(boolean[] arrA, boolean[] arrB) {
-			return match(arrA, arrB);
-		}
-		public static String[] clone(String[] arr) {
-			return slice(arr);
-		}
-		public static int[] clone(int[] arr) {
-			return slice(arr);
-		}
-		public static long[] clone(long[] arr) {
-			return slice(arr);
-		}
-		public static float[] clone(float[] arr) {
-			return slice(arr);
-		}
-		public static double[] clone(double[] arr) {
-			return slice(arr);
-		}
-		public static boolean[] clone(boolean[] arr) {
-			return slice(arr);
-		}
-		public static StrArr clone(StrArr arr) {
-			return slice(arr);
-		}
-		public static IntArr clone(IntArr arr) {
-			return slice(arr);
-		}
-		public static LongArr clone(LongArr arr) {
-			return slice(arr);
-		}
-		public static FltArr clone(FltArr arr) {
-			return slice(arr);
-		}
-		public static DblArr clone(DblArr arr) {
-			return slice(arr);
-		}
-		public static BoolArr clone(BoolArr arr) {
-			return slice(arr);
-		}
-		public static String[] copyArr(String[] arr) {
-			return clone(arr);
-		}
-		public static int[] copyArr(int[] arr) {
-			return clone(arr);
-		}
-		public static long[] copyArr(long[] arr) {
-			return clone(arr);
-		}
-		public static float[] copyArr(float[] arr) {
-			return clone(arr);
-		}
-		public static double[] copyArr(double[] arr) {
-			return clone(arr);
-		}
-		public static boolean[] copyArr(boolean[] arr) {
-			return clone(arr);
-		}
-		public static StrArr copyArr(StrArr arr) {
-			return clone(arr);
-		}
-		public static IntArr copyArr(IntArr arr) {
-			return clone(arr);
-		}
-		public static LongArr copyArr(LongArr arr) {
-			return clone(arr);
-		}
-		public static FltArr copyArr(FltArr arr) {
-			return clone(arr);
-		}
-		public static DblArr copyArr(DblArr arr) {
-			return clone(arr);
-		}
-		public static BoolArr copyArr(BoolArr arr) {
-			return clone(arr);
-		}
-		public static String[] combine(String[] arrA, String[] arrB) {
-			int length1 = arrA.length;
-			int length2 = arrB.length;
-			String[] result = new String[length1 + length2];
-			System.arraycopy(arrA, 0, result, 0, length1);
-			System.arraycopy(arrB, 0, result, length1, length2);
-			return result;
-		}
-		public static int[] combine(int[] arrA, int[] arrB) {
-			return IntStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
-		}
-		public static long[] combine(long[] arrA, long[] arrB) {
-			return LongStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
-		}
-		public static float[] combine(float[] arrA, float[] arrB) {
-			int length1 = arrA.length;
-			int length2 = arrB.length;
-			float[] result = new float[length1 + length2];
-			System.arraycopy(arrA, 0, result, 0, length1);
-			System.arraycopy(arrB, 0, result, length1, length2);
-			return result;
-		}
-		public static double[] combine(double[] arrA, double[] arrB) {
-			return DoubleStream.concat(Arrays.stream(arrA), Arrays.stream(arrB)).toArray();
-		}
-		public static boolean[] combine(boolean[] arrA, boolean[] arrB) {
-			int length1 = arrA.length;
-			int length2 = arrB.length;
-			boolean[] result = new boolean[length1 + length2];
-			System.arraycopy(arrA, 0, result, 0, length1);
-			System.arraycopy(arrB, 0, result, length1, length2);
-			return result;
-		}
-		public static StrArr combine(StrArr arrA, StrArr arrB) {
-			return arrA.combine(arrB);
-		}
-		public static IntArr combine(IntArr arrA, IntArr arrB) {
-			return arrA.combine(arrB);
-		}
-		public static LongArr combine(LongArr arrA, LongArr arrB) {
-			return arrA.combine(arrB);
-		}
-		public static FltArr combine(FltArr arrA, FltArr arrB) {
-			return arrA.combine(arrB);
-		}
-		public static DblArr combine(DblArr arrA, DblArr arrB) {
-			return arrA.combine(arrB);
-		}
-		public static BoolArr combine(BoolArr arrA, BoolArr arrB) {
-			return arrA.combine(arrB);
-		}
-		public static String[] intersection(String[] arrA, String[] arrB) {
-			StrArr result = new StrArr();
-			for (int i : range(arrA)) {
-				for (int j : range(arrB)) {
-					if (eq(arrA[i], arrB[j]))
-						result.push(arrA[i]);
-				}
-			}
-			return result.array();
-		}
-		public static int[] intersection(int[] arrA, int[] arrB) {
-			IntArr result = new IntArr();
-			for (int i : range(arrA)) {
-				for (int j : range(arrB)) {
-					if (eq(arrA[i], arrB[j]))
-						result.push(arrA[i]);
-				}
-			}
-			return result.array();
-		}
-		public static long[] intersection(long[] arrA, long[] arrB) {
-			LongArr result = new LongArr();
-			for (int i : range(arrA)) {
-				for (int j : range(arrB)) {
-					if (eq(arrA[i], arrB[j]))
-						result.push(arrA[i]);
-				}
-			}
-			return result.array();
-		}
-		public static float[] intersection(float[] arrA, float[] arrB) {
-			FltArr result = new FltArr();
-			for (int i : range(arrA)) {
-				for (int j : range(arrB)) {
-					if (eq(arrA[i], arrB[j]))
-						result.push(arrA[i]);
-				}
-			}
-			return result.array();
-		}
-		public static double[] intersection(double[] arrA, double[] arrB) {
-			DblArr result = new DblArr();
-			for (int i : range(arrA)) {
-				for (int j : range(arrB)) {
-					if (eq(arrA[i], arrB[j]))
-						result.push(arrA[i]);
-				}
-			}
-			return result.array();
-		}
-		public static boolean[] intersection(boolean[] arrA, boolean[] arrB) {
-			BoolArr result = new BoolArr();
-			for (int i : range(arrA)) {
-				for (int j : range(arrB)) {
-					if (eq(arrA[i], arrB[j]))
-						result.push(arrA[i]);
-				}
-			}
-			return result.array();
-		}
-		public static StrArr intersection(StrArr arrA, StrArr arrB) {
-			return arrA.intersection(arrB);
-		}
-		public static IntArr intersection(IntArr arrA, IntArr arrB) {
-			return arrA.intersection(arrB);
-		}
-		public static LongArr intersection(LongArr arrA, LongArr arrB) {
-			return arrA.intersection(arrB);
-		}
-		public static FltArr intersection(FltArr arrA, FltArr arrB) {
-			return arrA.intersection(arrB);
-		}
-		public static DblArr intersection(DblArr arrA, DblArr arrB) {
-			return arrA.intersection(arrB);
-		}
-		public static BoolArr intersection(BoolArr arrA, BoolArr arrB) {
-			return arrA.intersection(arrB);
-		}
-		public static String upper(String s) {
-			s = s.toUpperCase();
-			return s;
-		}
-		public static char upper(char c) {
-			c = Str(c).toUpperCase().charAt(0);
-			return c;
-		}
-		public static String lower(String s) {
-			s = s.toLowerCase();
-			return s;
-		}
-		public static char lower(char c) {
-			c = Str(c).toLowerCase().charAt(0);
-			return c;
-		}
-		public static boolean inUpper(String s) {
-			return upper(s).equals(s);
-		}
-		public static boolean inUpper(char c) {
-			return upper(c) == c;
-		}
-		public static boolean notInUpper(String s) {
-			return !inUpper(s);
-		}
-		public static boolean notInUpper(char c) {
-			return !inUpper(c);
-		}
-		public static boolean inLower(String s) {
-			return lower(s).equals(s);
-		}
-		public static boolean inLower(char c) {
-			return lower(c) == c;
-		}
-		public static boolean notInLower(String s) {
-			return !inLower(s);
-		}
-		public static boolean notInLower(char c) {
-			return !inLower(c);
-		}
-		public static String sentCase(String input) {
-			input = (input.toUpperCase().substring(0, 1) + input.toLowerCase().substring(1)).replaceAll("(?<!\\w)i(?!\\w)", "I");
-			return input;
-		}
-		public static String titleCase(String input) {
-			StringBuilder titleCased = new StringBuilder(input.length());
-			boolean nextTitleCase = true;
-			for (char c : input.toCharArray()) {
-				if (Character.isSpaceChar(c)) {
-					nextTitleCase = true;
-				} else if (nextTitleCase) {
-					c = Character.toTitleCase(c);
-					nextTitleCase = false;
-				}
-				titleCased.append(c);
-			}
-			return titleCased.toString();
-		}
-		public static String reverse(String str) {
-			return new StringBuilder(str).reverse().toString();
-		}
-		public static int len(String str) {
-			return str.length();
-		}
-		public static int len(int n) {
-			int result = 0;
-			while (n > 0) {
-				n /= 10;
-				result++;
-			}
-			return result;
-		}
-		public static int len(long n) {
-			int result = 0;
-			while (n > 0) {
-				n /= 10;
-				result++;
-			}
-			return result;
-		}
-		public static int len(String arr[]) {
-			return arr.length;
-		}
-		public static int len(int arr[]) {
-			return arr.length;
-		}
-		public static int len(long arr[]) {
-			return arr.length;
-		}
-		public static int len(float arr[]) {
-			return arr.length;
-		}
-		public static int len(double arr[]) {
-			return arr.length;
-		}
-		public static int len(boolean arr[]) {
-			return arr.length;
-		}
-		public static int len(Object arr[]) {
-			return arr.length;
-		}
-		public static int len(StrArr arr) {
-			return arr.length();
-		}
-		public static int len(IntArr arr) {
-			return arr.length();
-		}
-		public static int len(LongArr arr) {
-			return arr.length();
-		}
-		public static int len(FltArr arr) {
-			return arr.length();
-		}
-		public static int len(DblArr arr) {
-			return arr.length();
-		}
-		public static int len(BoolArr arr) {
-			return arr.length();
-		}
-		public static int size(String str) {
-			return len(str);
-		}
-		public static int size(int n) {
-			return len(n);
-		}
-		public static int size(long n) {
-			return len(n);
-		}
-		public static int size(String arr[]) {
-			return len(arr);
-		}
-		public static int size(int arr[]) {
-			return len(arr);
-		}
-		public static int size(long arr[]) {
-			return len(arr);
-		}
-		public static int size(float arr[]) {
-			return len(arr);
-		}
-		public static int size(double arr[]) {
-			return len(arr);
-		}
-		public static int size(boolean arr[]) {
-			return len(arr);
-		}
-		public static int size(StrArr arr) {
-			return len(arr);
-		}
-		public static int size(IntArr arr) {
-			return len(arr);
-		}
-		public static int size(LongArr arr) {
-			return len(arr);
-		}
-		public static int size(FltArr arr) {
-			return len(arr);
-		}
-		public static int size(DblArr arr) {
-			return len(arr);
-		}
-		public static int size(BoolArr arr) {
-			return len(arr);
-		}
-		public static boolean isEmpty(String s) {
-			return 0 == len(s);
-		}
-		public static boolean isEmpty(int n) {
-			return 0 == len(n);
-		}
-		public static boolean isEmpty(long n) {
-			return 0 == len(n);
-		}
-		public static boolean isEmpty(String[] arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(int[] arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(long[] arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(float[] arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(double[] arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(boolean[] arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(StrArr arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(IntArr arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(LongArr arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(FltArr arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(DblArr arr) {
-			return 0 == len(arr);
-		}
-		public static boolean isEmpty(BoolArr arr) {
-			return 0 == len(arr);
-		}
-
-		//Arrays
-		public static String[] reverse(String[] data) {
-			for (int left = 0, right = data.length - 1; left < right; left++, right--) {
-				String temp = data[left];
-				data[left]  = data[right];
-				data[right] = temp;
-			}
-			return data;
-		}
-		public static int[] reverse(int[] data) {
-			for (int left = 0, right = data.length - 1; left < right; left++, right--) {
-				int temp = data[left];
-				data[left]  = data[right];
-				data[right] = temp;
-			}
-			return data;
-		}
-		public static long[] reverse(long[] data) {
-			for (int left = 0, right = data.length - 1; left < right; left++, right--) {
-				long temp = data[left];
-				data[left]  = data[right];
-				data[right] = temp;
-			}
-			return data;
-		}
-		public static float[] reverse(float[] data) {
-			for (int left = 0, right = data.length - 1; left < right; left++, right--) {
-				float temp = data[left];
-				data[left]  = data[right];
-				data[right] = temp;
-			}
-			return data;
-		}
-		public static double[] reverse(double[] data) {
-			for (int left = 0, right = data.length - 1; left < right; left++, right--) {
-				double temp = data[left];
-				data[left]  = data[right];
-				data[right] = temp;
-			}
-			return data;
-		}
-		public static boolean[] reverse(boolean[] data) {
-			for (int left = 0, right = data.length - 1; left < right; left++, right--) {
-				boolean temp = data[left];
-				data[left]  = data[right];
-				data[right] = temp;
-			}
-			return data;
-		}
-		public static void reverse(StrArr arr) {
-			arr.reverse();
-		}
-		public static void reverse(IntArr arr) {
-			arr.reverse();
-		}
-		public static void reverse(LongArr arr) {
-			arr.reverse();
-		}
-		public static void reverse(FltArr arr) {
-			arr.reverse();
-		}
-		public static void reverse(DblArr arr) {
-			arr.reverse();
-		}
-		public static void reverse(BoolArr arr) {
-			arr.reverse();
-		}
-		public static void sort(String[] arr) {
-			Arrays.sort(arr);
-		}
-		public static void sort(int[] arr) {
-			Arrays.sort(arr);
-		}
-		public static void sort(long[] arr) {
-			Arrays.sort(arr);
-		}
-		public static void sort(float[] arr) {
-			Arrays.sort(arr);
-		}
-		public static void sort(double[] arr) {
-			Arrays.sort(arr);
-		}
-		public static void sort(StrArr arr) {
-			arr.sort();
-		}
-		public static void sort(IntArr arr) {
-			arr.sort();
-		}
-		public static void sort(LongArr arr) {
-			arr.sort();
-		}
-		public static void sort(FltArr arr) {
-			arr.sort();
-		}
-		public static void sort(DblArr arr) {
-			arr.sort();
-		}
-		public static void sort(BoolArr arr) {
-			arr.sort();
-		}
-		public static void sortReverse(int arr[]) {
-			int size = arr.length;
-			for (int i : range(arr)) {
-				boolean swappingNeeded = false;
-				for (int j = 0; j < size - i - 1; j++) {
-					if (arr[j] < arr[j + 1]) {
-						swappingNeeded = true;
-						int temp = arr[j];
-						arr[j] = arr[j + 1];
-						arr[j + 1] = temp;
-					}
-				}
-				if (!swappingNeeded) break;
-			}
-		}
-		public static void sortReverse(long arr[]) {
-			int size = arr.length;
-			for (long i : range(arr)) {
-				boolean swappingNeeded = false;
-				for (int j = 0; j < size - i - 1; j++) {
-					if (arr[j] < arr[j + 1]) {
-						swappingNeeded = true;
-						long temp = arr[j];
-						arr[j] = arr[j + 1];
-						arr[j + 1] = temp;
-					}
-				}
-				if (!swappingNeeded) break;
-			}
-		}
-		public static void sortReverse(float arr[]) {
-			int size = arr.length;
-			for (float i : range(arr)) {
-				boolean swappingNeeded = false;
-				for (int j = 0; j < size - i - 1; j++) {
-					if (arr[j] < arr[j + 1]) {
-						swappingNeeded = true;
-						float temp = arr[j];
-						arr[j] = arr[j + 1];
-						arr[j + 1] = temp;
-					}
-				}
-				if (!swappingNeeded) break;
-			}
-		}
-		public static void sortReverse(double arr[]) {
-			int size = arr.length;
-			for (double i : range(arr)) {
-				boolean swappingNeeded = false;
-				for (int j = 0; j < size - i - 1; j++) {
-					if (arr[j] < arr[j + 1]) {
-						swappingNeeded = true;
-						double temp = arr[j];
-						arr[j] = arr[j + 1];
-						arr[j + 1] = temp;
-					}
-				}
-				if (!swappingNeeded) break;
-			}
-		}
-		public static void sortReverse(StrArr arr) {
-			arr.sortReverse();
-		}
-		public static void sortReverse(IntArr arr) {
-			arr.sortReverse();
-		}
-		public static void sortReverse(LongArr arr) {
-			arr.sortReverse();
-		}
-		public static void sortReverse(FltArr arr) {
-			arr.sortReverse();
-		}
-		public static void sortReverse(DblArr arr) {
-			arr.sortReverse();
-		}
-		public static void sortReverse(BoolArr arr) {
-			arr.sortReverse();
-		}
-		public static String shuffle(String str) {
-			char[] chars = str.toCharArray();
-			Random random = new Random();
-			for (int i = chars.length - 1; i > 0; i--) {
-				int j = random.nextInt(i + 1);
-				char temp = chars[i];
-				chars[i] = chars[j];
-				chars[j] = temp;
-			}
-			String result = new String(chars);
-			return result;
-		}
-		public static String[] shuffle(String[] arr) {
-			Random rnd = new Random();
-			for (int i = arr.length - 1; i > 0; i--) {
-				int index = rnd.nextInt(i + 1);
-				String temp = arr[index];
-				arr[index] = arr[i];
-				arr[i] = temp;
-			}
-			return arr;
-		}
-		public static int[] shuffle(int[] arr) {
-			Random rnd = new Random();
-			for (int i = arr.length - 1; i > 0; i--) {
-				int index = rnd.nextInt(i + 1);
-				int temp = arr[index];
-				arr[index] = arr[i];
-				arr[i] = temp;
-			}
-			return arr;
-		}
-		public static long[] shuffle(long[] arr) {
-			Random rnd = new Random();
-			for (int i = arr.length - 1; i > 0; i--) {
-				int index = rnd.nextInt(i + 1);
-				long temp = arr[index];
-				arr[index] = arr[i];
-				arr[i] = temp;
-			}
-			return arr;
-		}
-		public static float[] shuffle(float[] arr) {
-			Random rnd = new Random();
-			for (int i = arr.length - 1; i > 0; i--) {
-				int index = rnd.nextInt(i + 1);
-				float temp = arr[index];
-				arr[index] = arr[i];
-				arr[i] = temp;
-			}
-			return arr;
-		}
-		public static double[] shuffle(double[] arr) {
-			Random rnd = new Random();
-			for (int i = arr.length - 1; i > 0; i--) {
-				int index = rnd.nextInt(i + 1);
-				double temp = arr[index];
-				arr[index] = arr[i];
-				arr[i] = temp;
-			}
-			return arr;
-		}
-		public static boolean[] shuffle(boolean[] arr) {
-			Random rnd = new Random();
-			for (int i = arr.length - 1; i > 0; i--) {
-				int index = rnd.nextInt(i + 1);
-				boolean temp = arr[index];
-				arr[index] = arr[i];
-				arr[i] = temp;
-			}
-			return arr;
-		}
-
-		private static final String[] ctss = {"Abbottabad", "Adilpur", "Ahmadpur East", "Ahmadpur Sial", "Akora", "Aliabad", "Alik Ghund", "Alipur", "Alizai", "Alpurai", "Aman Garh", "Amirabad", "Arifwala", "Ashanagro Koto", "Athmuqam", "Attock City", "Awaran", "Baddomalhi", "Badin", "Baffa", "Bagarji", "Bagh", "Bahawalnagar", "Bahawalnagar", "Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal", "Barkhan", "Basirpur", "Basti Dosa", "Bat Khela", "Battagram", "Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan", "Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala", "Bozdar Wada", "Bulri", "Burewala", "Chak", "Chak Azam Sahu", "Chak Five Hundred Seventy-five", "Chak Jhumra", "Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left", "Chak Two Hundred Forty-nine Thal Development Authority", "Chakwal", "Chaman", "Chamber", "Charsadda", "Chawinda", "Chenab Nagar", "Cherat Cantonement", "Chhor", "Chichawatni", "Chilas", "Chiniot", "Chishtian", "Chitral", "Choa Saidan Shah", "Chowki Jamali", "Chuchar-kana Mandi", "Chuhar Jamali", "Chunian", "Dadhar", "Dadu", "Daggar", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS", "Daromehar", "Darya Khan", "Darya Khan Marri", "Daska Kalan", "Dasu", "Daud Khel", "Daulatpur", "Daultala", "Daur", "Dera Allahyar", "Dera Bugti", "Dera Ghazi Khan", "Dera Ismail Khan", "Dera Murad Jamali", "Dhanot", "Dhaunkal", "Dhoro Naro", "Digri", "Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo", "Doaba", "Dokri", "Duki", "Dullewala", "Dunga Bunga", "Dunyapur", "Eidgah", "Eminabad", "Faisalabad", "Faqirwali", "Faruka", "Fazilpur", "Fort Abbas", "Gadani", "Gakuch", "Gambat", "Gandava", "Garh Maharaja", "Garhi Khairo", "Garhiyasin", "Ghauspur", "Ghotki", "Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan", "Gujar Khan", "Gujranwala", "Gujrat", "Gulishah Kach", "Gwadar", "Hadali", "Hafizabad", "Hala", "Hangu", "Haripur", "Harnai", "Harnoli", "Harunabad", "Hasilpur", "Hattian Bala", "Haveli Lakha", "Havelian", "Hazro City", "Hingorja", "Hujra Shah Muqim", "Hyderabad", "Islamabad", "Islamkot", "Jacobabad", "Jahanian Shah", "Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand", "Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali", "Jauharabad", "Jhang City", "Jhang Sadr", "Jhawarian", "Jhelum", "Jhol", "Jiwani", "Johi", "Jam Sahib", "Kabirwala", "Kadhan", "Kahna Nau", "Kahror Pakka", "Kahuta", "Kakad Wari Dir Upper", "Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar", "Kalur Kot", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke", "Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi", "Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur", "Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur", "Khairpur Mir\'s", "Khairpur Nathan Shah", "Khairpur Tamewah", "Khalabat", "Khandowa", "Khanewal", "Khangah Dogran", "Khangarh", "Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra", "Khurrianwala", "Khushab", "Khuzdar", "Kohat", "Kohlu", "Kot Addu", "Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar", "Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba", "Kot Sultan", "Kotli", "Kotli Loharan", "Kotri", "Kulachi", "Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich", "Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal", "Larkana", "Layyah", "Liliani", "Lodhran", "Loralai", "Mach", "Madeji", "Mailsi", "Malakand", "Malakwal", "Malakwal City", "Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin", "Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Matiari", "Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun", "Mianke Mor", "Mianwali", "Minchianabad", "Mingora", "Miran Shah", "Miro Khan", "Mirpur Bhtoro", "Mirpur Khas", "Mirpur Mathelo", "Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro", "Moza Shahwala", "Multan", "Muridke", "Murree", "Musa Khel Bazar", "Mustafabad", "Muzaffargarh", "Muzaffarabad", "Nabisar", "Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Naudero", "Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah", "Nazir Town", "New Badah", "New Mirpur", "Noorabad", "Nowshera", "Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi", "Pad Idan", "Paharpur", "Pakpattan", "Panjgur", "Pano Aqil", "Parachinar", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia", "Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth", "Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Abdullah", "Qila Saifullah", "Quetta", "Rahim Yar Khan", "Raiwind", "Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar", "Ratodero", "Rawala Kot", "Rawalpindi", "Renala Khurd", "Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Saddiqabad", "Sahiwal", "Sahiwal", "Saidu Sharif", "Sakrand", "Samaro", "Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann", "Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha", "Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur", "Shahkot", "Shahpur", "Shahpur Chakar", "Shahr Sultan", "Shakargarh", "Sharqpur Sharif", "Shekhupura", "Shikarpur", "Shingli Bala", "Shinpokh", "Shorkot", "Shujaabad", "Sialkot", "Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhri", "Sohbatpur", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur", "Swabi", "Sita Road", "Talagang", "Talamba", "Talhar", "Tandlianwala", "Tando Adam", "Tando Allahyar", "Tando Bago", "Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi", "Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta", "Thul", "Timargara", "Toba Tek Singh", "Topi", "Turbat", "Ubauro", "Umarkot", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai", "Vihari", "Wana", "Warah", "Wazirabad", "Yazman", "Zafarwal", "Zahir Pir", "Zaida", "Zhob", "Ziarat"},
-									  wdss = {"Armor", "Barrymore", "Cabot", "Catholicism", "Chihuahua", "Christianity", "Easter", "Frenchman", "Lowry", "Mayor", "Orientalism", "Pharaoh", "Pueblo", "Pullman", "Saturday", "Sister", "Snead", "Syrah", "Tuesday", "Woodward", "abbey", "absence", "absorption", "abstinence", "absurdity", "abundance", "acceptance", "accessibility", "accommodation", "accomplice", "accountability", "accounting", "accreditation", "accuracy", "acquiescence", "acreage", "actress", "actuality", "adage", "adaptation", "adherence", "adjustment", "adoption", "adultery", "advancement", "advert", "advertisement", "advertising", "advice", "aesthetics", "affinity", "aggression", "agriculture", "aircraft", "airtime", "allegation", "allegiance", "allegory", "allergy", "allies", "alligator", "allocation", "allotment", "altercation", "ambulance", "ammonia", "anatomy", "anemia", "ankle", "announcement", "annoyance", "annuity", "anomaly", "anthropology", "anxiety", "apartheid", "apologise", "apostle", "apparatus", "appeasement", "appellation", "appendix", "applause", "appointment", "appraisal", "archery", "archipelago", "architecture", "ardor", "arrears", "arrow", "artisan", "artistry", "ascent", "assembly", "assignment", "association", "asthma", "atheism", "attacker", "attraction", "attractiveness", "auspices", "authority", "avarice", "aversion", "aviation", "babbling", "backlash", "baker", "ballet", "balls", "banjo", "baron", "barrier", "barrister", "bases", "basin", "basis", "battery", "battling", "bedtime", "beginner", "begun", "bending", "bicycle", "billing", "bingo", "biography", "biology", "birthplace", "blackberry", "blather", "blossom", "boardroom", "boasting", "bodyguard", "boldness", "bomber", "bondage", "bonding", "bones", "bonus", "bookmark", "boomer", "booty", "bounds", "bowling", "brainstorming", "breadth", "breaker", "brewer", "brightness", "broccoli", "broth", "brotherhood", "browsing", "brunch", "brunt", "building", "bullion", "bureaucracy", "burglary", "buyout", "by-election", "cabal", "cabbage", "calamity", "campaign", "canonization", "captaincy", "carcass", "carrier", "cartridge", "cassette", "catfish", "caught", "celebrity", "cemetery", "certainty", "certification", "charade", "chasm", "check-in", "cheerleader", "cheesecake", "chemotherapy", "chili", "China", "chivalry", "cholera", "cilantro", "circus", "civilisation", "civility", "clearance", "clearing", "clerk", "climber", "closeness", "clothing", "clutches", "coaster", "coconut", "coding", "collaborator", "colleague", "college", "collision", "colors", "combustion", "comedian", "comer", "commander", "commemoration", "commenter", "commissioner", "commune", "competition", "completeness", "complexity", "computing", "comrade", "concur", "condominium", "conduit", "confidant", "configuration", "confiscation", "conflagration", "conflict", "consist", "consistency", "consolidation", "conspiracy", "constable", "consul", "consultancy", "contentment", "contents", "contractor", "conversation", "cornerstone", "corpus", "correlation", "councilman", "counselor", "countdown", "countryman", "coverage", "covering", "coyote", "cracker", "creator", "criminality", "crocodile", "cropping", "cross-examination", "crossover", "crossroads", "culprit", "cumin", "curator", "curfew", "cursor", "custard", "cutter", "cyclist", "cyclone", "cylinder", "cynicism", "daddy", "damsel", "darkness", "dawning", "daybreak", "dealing", "dedication", "deduction", "defection", "deference", "deficiency", "definition", "deflation", "degeneration", "delegation", "delicacy", "delirium", "deliverance", "demeanor", "demon", "demonstration", "denomination", "dentist", "departure", "depletion", "depression", "designation", "despotism", "detention", "developer", "devolution", "dexterity", "diagnosis", "dialect", "differentiation", "digger", "digress", "dioxide", "diploma", "disability", "disarmament", "discord", "discovery", "dishonesty", "dismissal", "disobedience", "dispatcher", "disservice", "distribution", "distributor", "diver", "diversity", "docking", "dollar", "dominance", "domination", "dominion", "donkey", "doorstep", "doorway", "dossier", "downside", "drafting", "drank", "drilling", "driver", "drumming", "drunkenness", "duchess", "ducking", "dugout", "dumps", "dwelling", "dynamics", "eagerness", "earnestness", "earnings", "eater", "editor", "effectiveness", "electricity", "elements", "eloquence", "emancipation", "embodiment", "embroidery", "emperor", "employment", "encampment", "enclosure", "encouragement", "endangerment", "enlightenment", "enthusiasm", "environment", "environs", "envoy", "epilepsy", "equation", "equator", "error", "espionage", "estimation", "evacuation", "exaggeration", "examination", "exclamation", "expediency", "exploitation", "extinction", "eyewitness", "falls", "fascism", "fastball", "*****", "feedback", "ferocity", "fertilization", "fetish", "finale", "firing", "fixing", "flashing", "flask", "flora", "fluke", "folklore", "follower", "foothold", "footing", "forefinger", "forefront", "forgiveness", "formality", "formation", "formula", "foyer", "fragmentation", "framework", "fraud", "freestyle", "frequency", "friendliness", "fries", "frigate", "fulfillment", "function", "functionality", "fundraiser", "fusion", "futility", "gallantry", "gallery", "genesis", "genitals", "girlfriend", "boyfriend", "glamor", "chemistry", "glitter", "sparkles", "glucose", "sugar", "sugardaddy", "vase", "bracelet", "bra", "neck", "kiss", "pleasure", "google", "grandeur", "grappling", "greens", "gridlock", "grocer", "groundwork", "grouping", "gunman", "gusto", "habitation", "hacker", "hallway", "hamburger", "hammock", "handling", "hands", "handshake", "happiness", "hardship", "headcount", "header", "headquarters", "heads", "headset", "hearth", "hearts", "heath", "hegemony", "height", "hello", "helper", "helping", "helplessness", "hierarchy", "hoarding", "hockey", "homeland", "homer", "honesty", "horror", "horseman", "hostility", "housing", "humility", "hurricane", "iceberg", "ignition", "illness", "illustration", "illustrator", "immunity", "immunization", "imperialism", "imprisonment", "inaccuracy", "inaction", "inactivity", "inauguration", "indecency", "indicator", "inevitability", "infamy", "infiltration", "influx", "iniquity", "innocence", "innovation", "insanity", "inspiration", "instruction", "instructor", "insurer", "interact", "intercession", "intercourse", "intermission", "interpretation", "intersection", "interval", "intolerance", "intruder", "invasion", "investment", "involvement", "irritation", "iteration", "jenny", "jogging", "jones", "joseph", "juggernaut", "juncture", "jurisprudence", "juror", "kangaroo", "kingdom", "knocking", "laborer", "larceny", "laurels", "layout", "leadership", "leasing", "legislation", "leopard", "liberation", "licence", "lifeblood", "lifeline", "ligament", "lighting", "likeness", "line-up", "lineage", "liner", "lineup", "liquidation", "listener", "literature", "litigation", "litre", "loathing", "locality", "lodging", "logic", "longevity", "lookout", "lordship", "lustre", "ma\'am", "machinery", "madness", "magnificence", "mahogany", "mailing", "mainframe", "maintenance", "majority", "manga", "mango", "manifesto", "mantra", "manufacturer", "maple", "martin", "martyrdom", "mathematician", "matrix", "matron", "mayhem", "mayor", "means", "meantime", "measurement", "mechanics", "mediator", "medics", "melodrama", "memory", "mentality", "metaphysics", "method", "meter", "miner", "mirth", "misconception", "misery", "mishap", "misunderstanding", "mobility", "molasses", "momentum", "monarchy", "monument", "morale", "mortality", "motto", "mouthful", "mouthpiece", "mover", "movie", "mowing", "murderer", "musician", "mutation", "mythology", "narration", "narrator", "nationality", "negligence", "neighborhood", "neighbor", "nervousness", "networking", "nexus", "nightmare", "nobility", "nobody", "noodle", "normalcy", "notification", "nourishment", "novella", "nucleus", "nuisance", "nursery", "nutrition", "nylon", "oasis", "obscenity", "obscurity", "observer", "offense", "onslaught", "operation", "opportunity", "opposition", "oracle", "orchestra", "organisation", "organizer", "orientation", "originality", "ounce", "outage", "outcome", "outdoors", "outfield", "outing", "outpost", "outset", "overseer", "owner", "oxygen", "pairing", "panther", "paradox", "parliament", "parsley", "parson", "passenger", "pasta", "patchwork", "pathos", "patriotism", "pendulum", "penguin", "permission", "persona", "perusal", "pessimism", "peter", "philosopher", "phosphorus", "phrasing", "physique", "piles", "plateau", "playing", "plaza", "plethora", "plurality", "pneumonia", "pointer", "poker", "policeman", "polling", "poster", "posterity", "posting", "postponement", "potassium", "pottery", "poultry", "pounding", "pragmatism", "precedence", "precinct", "preoccupation", "pretense", "priesthood", "prisoner", "privacy", "probation", "proceeding", "proceedings", "processing", "processor", "progression", "projection", "prominence", "propensity", "prophecy", "prorogation", "prospectus", "protein", "prototype", "providence", "provider", "provocation", "proximity", "puberty", "publicist", "publicity", "publisher", "pundit", "putting", "quantity", "quart", "quitting", "Chihuahua", "quorum", "racism", "radiance", "ralph", "rancher", "ranger", "rapidity", "rapport", "ratification", "rationality", "reaction", "reader", "reassurance", "rebirth", "receptor", "recipe", "recognition", "recourse", "recreation", "rector", "recurrence", "redemption", "redistribution", "redundancy", "refinery", "reformer", "refrigerator", "regularity", "regulator", "reinforcement", "reins", "reinstatement", "relativism", "relaxation", "rendition", "repayment", "repentance", "repertoire", "repository", "republic", "reputation", "resentment", "residency", "resignation", "restaurant", "resurgence", "retailer", "retention", "retirement", "reviewer", "riches", "righteousness", "roadblock", "robber", "rocks", "rubbing", "runoff", "saloon", "salvation", "sarcasm", "saucer", "savior", "scarcity", "scenario", "scenery", "schism", "scholarship", "schoolboy", "schooner", "scissors", "scolding", "scooter", "scouring", "scrimmage", "scrum", "seating", "sediment", "seduction", "seeder", "seizure", "self-confidence", "self-control", "self-respect", "semicolon", "semiconductor", "semifinal", "senator", "sending", "serenity", "seriousness", "servitude", "sesame", "setup", "sewing", "sharpness", "shoplifting", "shopping", "siding", "sidewalk", "simplicity", "simulation", "sinking", "skate", "sloth", "slugger", "snack", "snail", "snapshot", "snark", "soccer", "solemnity", "solicitation", "solitude", "somewhere", "sophistication", "sorcery", "souvenir", "spaghetti", "specification", "specimen", "specs", "spectacle", "specter", "speculation", "*****", "spoiler", "squad", "squid", "staging", "stagnation", "staircase", "stairway", "stamina", "standpoint", "standstill", "stanza", "statement", "stillness", "stimulus", "stocks", "stole", "stoppage", "story", "storyteller", "stylus", "subcommittee", "subscription", "subsidy", "suburb", "success", "sufferer", "supposition", "suspension", "sweater", "sweepstakes", "swimmer", "syndrome", "synopsis", "syntax", "system", "tablespoon", "taker", "tavern", "technology", "telephony", "template", "tempo", "tendency", "tendon", "terrier", "terror", "terry", "theater", "theology", "therapy", "thicket", "thoroughfare", "threshold", "thriller", "thunderstorm", "ticker", "tiger", "tights", "tossing", "touchdown", "tourist", "tourney", "toxicity", "tracing", "tractor", "translation", "transmission", "transmitter", "trauma", "traveler", "treadmill", "trilogy", "trout", "tuning", "twenties", "tycoon", "tyrant", "ultimatum", "antidote", "underwear", "unhappiness", "unification", "university", "rise", "uprising", "downfall", "vaccination", "validity", "vampire", "vanguard", "variation", "vegetation", "verification", "viability", "vicinity", "victory", "beauty", "viewpoint", "viewport", "villa", "vanilla", "vindication", "violation", "vocalist", "vogue", "volcano", "voltage", "vomiting", "vulnerability", "waistcoat", "waitress", "wardrobe", "warmth", "watchdog", "wealth", "weariness", "whereabouts", "whisky", "whiteness", "widget", "width", "windfall", "wiring", "witchcraft", "withholding", "womanhood", "words", "workman", "laborer", "lumberjack", "youngster", "mobile phone", "telephone", "Television", "information", "technology", "automobile", "picture", "movie", "document", "documentary", "compliment", "insult", "vocalist", "pianist", "violinist", "thirst", "hunger", "brevity", "longevity", "sanity", "insanity", "bikini", "panty", "*****", "hymen", "synthesis", "dementia", "amnesia", "blood sugar", "fever", "flu", "diarrhea", "glucose", "Latino", "Latina", "anesthetics", "anesthesia", "Cannabis", "oasis", "desert", "dessert", "hemoglobin", "cardiographer", "carpenter", "oceanic", "terran", "abroad", "absorbing", "abstract", "academic", "accelerated", "accented", "accountant", "acquainted", "acute", "obtuse", "protective", "possessive", "real", "unreal", "realistic", "unrealistic", "imagined", "delusional", "addicting", "addictive", "adjustable", "admired", "adult", "adverse", "advised", "aerosol", "afraid", "creeped out", "horrified", "horrific", "terrified", "terrific", "devastated", "frustrated", "aggravated", "aggressive", "agreeable", "alienate", "aligned", "all-round", "alleged", "almond", "alright", "altruistic", "ambient", "ambivalent", "amiable", "amino", "amorphous", "amused", "anatomical", "ancestral", "angelic", "angrier", "answerable", "antiquarian", "antiretroviral", "appellate", "applicable", "apportioned", "approachable", "appropriated", "archer", "aroused", "arrested", "assertive", "assigned", "athletic", "atrocious", "attained", "authoritarian", "autobiographical", "avaricious", "avocado", "awake", "awesome", "backstage", "backwoods", "balding", "bandaged", "banded", "banned", "barreled", "battle", "beaten", "begotten", "beguiled", "bellied", "belted", "beneficent", "besieged", "betting", "big-money", "biggest", "biochemical", "bipolar", "blackened", "blame", "blessed", "blindfolded", "bloat", "blocked", "blooded", "blue-collar", "blushing", "boastful", "bolder", "bolstered", "bonnie", "bored", "boundary", "bounded", "bounding", "branched", "brawling", "brazen", "breeding", "bridged", "brimming", "brimstone", "broadest", "broiled", "broker", "bronze", "bruising", "buffy", "bullied", "bungling", "burial", "buttery", "candied", "canonical", "cantankerous", "cardinal", "carefree", "caretaker", "casual", "cathartic", "causal", "chapel", "characterized", "charcoal", "cheeky", "cherished", "chipotle", "chirping", "chivalrous", "circumstantial", "civic", "civil", "civilised", "clanking", "clapping", "claptrap", "classless", "cleansed", "cleric", "cloistered", "codified", "colloquial", "colour", "combat", "combined", "comely", "commissioned", "commonplace", "commuter", "commuting", "comparable", "complementary", "compromising", "conceding", "concentrated", "conceptual", "conditioned", "confederate", "confident", "confidential", "confining", "confuse", "congressional", "consequential", "conservative", "constituent", "contaminated", "contemporaneous", "contraceptive", "convertible", "convex", "cooked", "coronary", "corporatist", "correlated", "corroborated", "cosmic", "cover", "crash", "crypto", "culminate", "cushioned", "dandy", "dashing", "dazzled", "decreased", "decrepit", "dedicated", "defaced", "defective", "defenseless", "deluded", "deodorant", "departed", "depress", "designing", "despairing", "destitute", "detective", "determined", "devastating", "deviant", "devilish", "devoted", "diagonal", "dictated", "didactic", "differentiated", "diffused", "dirtier", "disabling", "disconnected", "discovered", "disdainful", "diseased", "disfigured", "disheartened", "disheveled", "disillusioned", "disparate", "dissident", "doable", "doctrinal", "doing", "dotted", "double-blind", "downbeat", "dozen", "draining", "draught", "dread", "dried", "dropped", "dulled", "duplicate", "eaten", "echoing", "economical", "elaborated", "elastic", "elective", "electoral", "elven", "embryo", "emerald", "emergency", "emissary", "emotional", "employed", "enamel", "encased", "encrusted", "endangered", "engraved", "engrossing", "enlarged", "enlisted", "enlivened", "ensconced", "entangled", "enthralling", "entire", "envious", "eradicated", "eroded", "esoteric", "essential", "evaporated", "ever-present", "evergreen", "everlasting", "exacting", "exasperated", "excess", "exciting", "executable", "existent", "exonerated", "exorbitant", "exponential", "export", "extraordinary", "exultant", "exulting", "facsimile", "fading", "fainter", "faith-based", "fallacious", "faltering", "famous", "fancier", "fast-growing", "fated", "favourable", "fearless", "feathered", "fellow", "fermented", "ferocious", "fiddling", "filling", "firmer", "fitted", "flammable", "flawed", "fledgling", "fleshy", "flexible", "flickering", "floral", "flowering", "flowing", "foggy", "folic", "foolhardy", "foolish", "footy", "forehand", "forked", "formative", "formulaic", "foul-mouthed", "fractional", "fragrant", "fraudulent", "freakish", "freckled", "freelance", "freight", "fresh", "fretted", "frugal", "fulfilling", "fuming", "funded", "funny", "garbled", "gathered", "geologic", "geometric", "gibberish", "gilded", "ginger", "glare", "glaring", "gleaming", "glorified", "glorious", "goalless", "gold-plated", "goody", "grammatical", "grande", "grateful", "gratuitous", "graven", "greener", "grinding", "grizzly", "groaning", "grudging", "guaranteed", "gusty", "half-breed", "hand-held", "handheld", "hands-off", "hard-pressed", "harlot", "healing", "healthier", "healthiest", "heart", "heart-shaped", "heathen", "hedonistic", "heralded", "herbal", "high-density", "high-performance", "high-res", "high-yield", "hissy", "hitless", "holiness", "homesick", "honorable", "hooded", "hopeless", "horrendous", "horrible", "hot-button", "huddled", "human", "humbling", "humid", "humiliating", "hypnotized", "idealistic", "idiosyncratic", "ignited", "illustrated", "illustrative", "imitated", "immense", "immersive", "immigrant", "immoral", "impassive", "impressionable", "improbable", "impulsive", "in-between", "in-flight", "inattentive", "inbound", "inbounds", "incalculable", "incomprehensible", "indefatigable", "indigo", "indiscriminate", "indomitable", "inert", "inflate", "inform", "inheriting", "injured", "injurious", "inking", "inoffensive", "insane", "insensible", "insidious", "insincere", "insistent", "insolent", "insufferable", "intemperate", "interdependent", "interesting", "interfering", "intern", "interpreted", "intersecting", "intolerable", "intolerant", "intuitive", "irresolute", "irritate", "jealous", "jerking", "joining", "joint", "journalistic", "joyful", "keyed", "knowing", "lacklustre", "laden", "lagging", "lamented", "laughable", "layered", "leather", "leathern", "leery", "left-footed", "legible", "leisure", "lessening", "liberating", "life-size", "lifted", "lightest", "limitless", "listening", "literary", "liver", "livid", "lobster", "locked", "long-held", "long-lasting", "long-running", "long-suffering", "loudest", "loveliest", "low-budget", "low-carb", "lowering", "lucid", "luckless", "lusty", "luxurious", "magazine", "maniac", "manmade", "maroon", "mastered", "mated", "material", "materialistic", "meaningful", "measuring", "mediaeval", "medical", "meditated", "medley", "melodic", "memorable", "tasty", "delicious", "inspiring", "motivational", "default", "good", "bad", "neutral", "fine", "okay", "alright", "memorial", "metabolic", "metallic", "metallurgical", "metering", "midair", "midterm", "midway", "mighty", "migrating", "mind-blowing", "mind-boggling", "major", "minor", "visual", "visible", "audible", "mirrored", "misguided", "misshapen", "joyful", "mixed", "twisted", "mitigated", "mixed", "modernized", "molecular", "monarch", "monastic", "morbid", "motley", "motorized", "mounted", "multi-million", "multidisciplinary", "muscled", "muscular", "muted", "mysterious", "mythic", "nail-biting", "natural", "nauseous", "negative", "networked", "neurological", "neutered", "newest", "night", "nitrous", "no-fly", "noncommercial", "nonsense", "north", "nuanced", "occurring", "offensive", "oldest", "oncoming", "one-eyed", "one-year", "onstage", "onward", "opaque", "open-ended", "operating", "opportunist", "opposing", "opt-in", "ordinate", "outdone", "outlaw", "outsized", "overboard", "overheated", "oversize", "overworked", "oyster", "paced", "panting", "paralyzed", "paramount", "parental", "parted", "partisan", "passive", "edible", "eatable", "kissable", "killable", "pastel", "patriot", "peacekeeping", "pedestrian", "peevish", "penal", "penned", "pensive", "perceptual", "perky", "permissible", "pernicious", "perpetuate", "perplexed", "pervasive", "petrochemical", "philosophical", "picturesque", "pillaged", "piped", "piquant", "pitching", "plausible", "pliable", "plumb", "politician", "polygamous", "poorest", "portmanteau", "posed", "positive", "possible", "postpartum", "prank", "pre-emptive", "precocious", "predicted", "premium", "preparatory", "prerequisite", "prescient", "preserved", "presidential", "pressed", "pressurized", "presumed", "prewar", "priced", "pricier", "primal", "primer", "primetime", "printed", "private", "problem", "procedural", "process", "prodigious", "professional", "programmed", "progressive", "prolific", "promising", "promulgated", "pronged", "proportionate", "protracted", "pulled", "pulsed", "purgatory", "quick", "rapid-fire", "raunchy", "razed", "reactive", "readable", "realizing", "recognised", "recovering", "recurrent", "recycled", "redeemable", "reflecting", "regal", "registering", "reliable", "reminiscent", "remorseless", "removable", "renewable", "repeating", "repellent", "reserve", "resigned", "respectful", "rested", "restrict", "resultant", "retaliatory", "retiring", "revelatory", "reverend", "reversing", "revolving", "ridiculous", "right-hand", "ringed", "risque", "robust", "roomful", "rotating", "roused", "rubber", "run-down", "running", "runtime", "rustling", "safest", "salient", "sanctioned", "saute", "saved", "scandalized", "scarlet", "scattering", "sceptical", "scheming", "scoundrel", "scratched", "scratchy", "scrolled", "seated", "second-best", "segregated", "self-taught", "semiautomatic", "senior", "sensed", "sentient", "sexier", "shadowy", "shaken", "shaker", "shameless", "shaped", "shiny", "shipped", "shivering", "shoestring", "short", "short-lived", "signed", "simplest", "simplistic", "sizable", "skeleton", "skinny", "skirting", "skyrocketed", "slamming", "slanting", "slapstick", "sleek", "sleepless", "sleepy", "slender", "slimmer", "smacking", "smokeless", "smothered", "smouldering", "snuff", "socialized", "solid-state", "sometime", "sought", "spanking", "sparing", "spattered", "specialized", "specific", "speedy", "spherical", "spiky", "spineless", "sprung", "squint", "stainless", "standing", "starlight", "startled", "stately", "statewide", "stereoscopic", "sticky", "stimulant", "stinky", "stoked", "stolen", "storied", "strained", "strapping", "strengthened", "stubborn", "stylized", "suave", "subjective", "subjugated", "subordinate", "succeeding", "suffering", "summary", "sunset", "sunshine", "supernatural", "supervisory", "supply-side", "surrogate", "suspended", "suspenseful", "swarthy", "sweating", "sweeping", "swinging", "swooning", "sympathize", "synchronized", "synonymous", "synthetic", "tailed", "tallest", "tangible", "tanked", "tarry", "technical", "tectonic", "telepathic", "tenderest", "territorial", "testimonial", "theistic", "thicker", "threatening", "tight-lipped", "timed", "timely", "timid", "torrent", "totalled", "tougher", "traditional", "transformed", "trapped", "traveled", "traverse", "treated", "trial", "trunk", "trusting", "trying", "twisted", "two-lane", "tyrannical", "unaided", "unassisted", "unassuming", "unattractive", "uncapped", "uncomfortable", "uncontrolled", "uncooked", "uncooperative", "underground", "undersea", "undisturbed", "unearthly", "uneasy", "unequal", "unfazed", "unfinished", "unforeseen", "unforgivable", "unidentified", "unimaginative", "uninspired", "unintended", "uninvited", "universal", "unmasked", "unorthodox", "unparalleled", "unpleasant", "unprincipled", "unread", "unreasonable", "unregulated", "unreliable", "unremitting", "unsafe", "unsanitary", "unsealed", "unsuccessful", "unsupervised", "untimely", "unwary", "unwrapped", "uppity", "upstart", "useless", "utter", "valiant", "valid", "valued", "vanilla", "vaulting", "vaunted", "veering", "vegetative", "vented", "verbal", "verifying", "veritable", "versed", "vinyl", "virgin", "visceral", "visual", "voluptuous", "walk-on", "wanton", "warlike", "washed", "waterproof", "waved", "weakest", "well-bred", "well-chosen", "well-informed", "wet", "wheeled", "whirlwind", "widen", "widening", "willful", "willing", "winnable", "winningest", "wireless", "wistful", "woeful", "wooded", "woodland", "wordless", "workable", "worldly", "worldwide", "worst-case", "worsted", "worthless", "able", "abnormal", "absent-minded", "above average", "adventurous", "affectionate", "agile", "agreeable", "alert", "amazing", "ambitious", "amiable", "amusing", "analytical", "angelic", "apathetic", "apprehensive", "ardent", "artificial", "artistic", "assertive", "attentive", "average", "awesome", "awful", "balanced", "beautiful", "below average", "beneficent", "blue", "blunt", "boisterous", "brave", "bright", "brilliant", "buff", "callous", "candid", "cantankerous", "capable", "careful", "careless", "caustic", "cautious", "charming", "childish", "childlike", "cheerful", "chic", "churlish", "circumspect", "civil", "clean", "clever", "clumsy", "coherent", "cold", "competent", "composed", "conceited", "condescending", "confident", "confused", "conscientious", "considerate", "content", "cool", "cool-headed", "cooperative", "cordial", "courageous", "cowardly", "crabby", "crafty", "cranky", "crass", "critical", "cruel", "curious", "cynical", "dainty", "decisive", "deep", "deferential", "deft", "delicate", "demonic", "dependent", "delightful", "demure", "depressed", "devoted", "dextrous", "diligent", "direct", "dirty", "disagreeable", "discerning", "discreet", "disruptive", "distant", "distraught", "distrustful", "dowdy", "dramatic", "dreary", "drowsy", "drugged", "drunk", "dull", "dutiful", "eager", "earnest", "easy-going", "efficient", "egotistical", "elfin", "emotional", "energetic", "enterprising", "enthusiastic", "evasive", "even-tempered", "exacting", "excellent", "excitable", "experienced", "fabulous", "fastidious", "ferocious", "fervent", "fiery", "flabby", "flaky", "flashy", "frank", "friendly", "funny", "fussy", "generous", "gentle", "gloomy", "glutinous", "good", "grave", "great", "groggy", "grouchy", "guarded", "hateful", "hearty", "helpful", "hesitant", "hot-headed", "hypercritical", "hysterical", "idiotic", "idle", "illogical", "imaginative", "immature", "immodest", "impatient", "imperturbable", "impetuous", "impractical", "impressionable", "impressive", "impulsive", "inactive", "incisive", "incompetent", "inconsiderate", "inconsistent", "independent", "indiscreet", "indolent", "indefatigable", "industrious", "inexperienced", "insensitive", "inspiring", "intelligent", "interesting", "intolerant", "inventive", "irascible", "irritable", "irritating", "jocular", "jovial", "joyous", "judgmental", "keen", "kind", "lame", "lazy", "lean", "leery", "lethargic", "level-headed", "listless", "lithe", "lively", "local", "logical", "long-winded", "lovable", "love-lorn", "lovely", "maternal", "mature", "mean", "meddlesome", "mercurial", "methodical", "meticulous", "mild", "miserable", "modest", "moronic", "morose", "motivated", "musical", "naive", "nasty", "natural", "naughty", "negative", "nervous", "noisy", "normal", "nosy", "numb", "obliging", "obnoxious", "old-fashioned", "one-sided", "orderly", "ostentatious", "outgoing", "outspoken", "passionate", "passive", "paternal", "paternalistic", "patient", "peaceful", "peevish", "pensive", "persevering", "persnickety", "petulant", "picky", "plain", "plain-speaking", "playful", "pleasant", "plucky", "polite", "popular", "positive", "powerful", "practical", "prejudiced", "pretty", "proficient", "proud", "provocative", "prudent", "punctual", "quarrelsome", "querulous", "quick", "quick-tempered", "quiet", "realistic", "reassuring", "reclusive", "reliable", "reluctant", "resentful", "reserved", "resigned", "resourceful", "respected", "respectful", "responsible", "restless", "revered", "ridiculous", "sad", "sassy", "saucy", "sedate", "self-assured", "selfish", "sensible", "sensitive", "sentimental", "serene", "serious", "sharp", "short-tempered", "shrewd", "shy", "silly", "sincere", "sleepy", "slight", "sloppy", "slothful", "slovenly", "slow", "smart", "snazzy", "sneering", "snobby", "somber", "sober", "sophisticated", "soulful", "soulless", "sour", "spirited", "spiteful", "stable", "staid", "steady", "stern", "stoic", "striking", "strong", "stupid", "sturdy", "subtle", "sullen", "sulky", "supercilious", "superficial", "surly", "suspicious", "sweet", "tactful", "tactless", "talented", "testy", "thinking", "thoughtful", "thoughtless", "timid", "tired", "tolerant", "touchy", "tranquil", "ugly", "unaffected", "unbalanced", "uncertain", "uncooperative", "undependable", "unemotional", "unfriendly", "unguarded", "unhelpful", "unimaginative", "unmotivated", "unpleasant", "unpopular", "unreliable", "unsophisticated", "unstable", "unsure", "unthinking", "unwilling", "venal", "versatile", "vigilant", "warm", "warmhearted", "wary", "watchful", "weak", "well-behaved", "well-developed", "well-intentioned", "well-respected", "well-rounded", "willing", "wonderful", "volcanic", "vulnerable", "zealous", "abandoned", "absent minded", "abused", "accepted", "accomplished", "accusatory", "accused", "admired", "adored", "adrift", "affectionate", "afraid", "aggravated", "aggressive", "agitated", "alarmed", "alert", "alienated", "alive", "alluring", "alone", "aloof", "amazed", "ambushed", "amused", "angry", "annoyed", "antagonistic", "anxious", "apathetic", "apologetic", "appalled", "appreciated", "appreciative", "apprehensive", "aroused", "ashamed", "astonished", "attacked", "attractive", "awake", "aware", "awe", "awed", "awestruck", "awkward", "bad", "baffled", "barren", "bashful", "beaten", "belittled", "benevolent", "berated", "betrayed", "bewildered", "bitchy", "bitter", "bittersweet", "blah", "blamed", "blank", "blissful", "blue", "bold", "bored", "bothered", "bouncy", "brave", "broken", "brooding", "bummed", "burdened", "burned-out", "callous", "calm", "capable", "carefree", "careless", "caring", "caustic", "cautious", "censored", "centered", "certain", "challenged", "charmed", "cheated", "cheerful", "cherished", "childish", "chipper", "choleric", "clean", "clear", "clever", "close", "closed", "clueless", "clumsy", "cold", "comfortable", "committed", "compassionate", "competent", "competitive", "complacent", "complete", "concerned", "condemned", "condescension", "confident", "confining", "confused", "considerate", "contemplative", "contempt", "contemptuous", "content", "controlled", "conventional", "convicted", "cornered", "courageous", "cowardly", "cranky", "crappy", "crazy", "critical", "cross", "crushed", "curious", "cynical", "daring", "dark", "dashed", "dazed", "dead", "deceived", "dedicated", "defeated", "defenseless", "defensive", "defiant", "degraded", "dejected", "delicate", "delighted", "demoralized", "dependent", "depressed", "deprived", "derisive", "deserted", "desired", "desolate", "despair", "desperate", "destroyed", "detached", "determined", "devastated", "devious", "devoted", "didactic", "different", "difficult", "dignified", "dirty", "disappointed", "disbelieving", "discarded", "disconnected", "discontent", "discontented", "discouraged", "disdainful", "disgraced", "disgusted", "disheartened", "dishonest", "disillusioned", "dismal", "dismayed", "disobedient", "disorganized", "disposable", "distant", "distracted", "distressed", "disturbed", "ditzy", "dorky", "doubtful", "down", "drained", "dreamy", "dreary", "dropped", "drunk", "dull", "dumb", "eager", "earnest", "ecstatic", "edgy", "effective", "elated", "embarassed", "embarrassed", "empathetic", "empowered", "empty", "enchanted", "encouraged", "energetic", "energized", "enlightened", "enraged", "enriched", "entertained", "enthralled", "enthusiastic", "envious", "erudite", "evasive", "evil", "exasperated", "excited", "excluded", "exhausted", "exhilarated", "expectant", "exploited", "exposed", "exuberant", "faithful", "fake", "fanciful", "fantastic", "fatalistic", "fatigued", "fearful", "fearless", "feisty", "fine", "flirty", "flustered", "foolish", "foreboding", "forgiven", "forgiving", "forgotten", "forthright", "fortunate", "framed", "frantic", "free", "friendly", "frightened", "frisky", "frustrated", "fulfilled", "full", "funny", "furious", "futile", "geeky", "generous", "gentle", "giddy", "giggly", "giving", "glad", "gloomy", "glorious", "good", "grateful", "great", "grieving", "groggy", "grouchy", "grumpy", "guarded", "guilty", "gullible", "handicapped", "happy", "harmonious", "hateful", "haughty", "haunted", "haunting", "healthy", "heard", "heartbroken", "heavy-hearted", "helpful", "helpless", "hesitant", "high", "honored", "hopeful", "hopeless", "horrible", "horrified", "hospitable", "hostile", "hot", "humble", "humiliated", "hungry", "hurt", "hyper", "hysterical", "idealistic", "idiotic", "idyllic", "ignorant", "ignored", "imaginative", "immune", "impatient", "impelled", "imperfect", "impertinent", "important", "impressed", "impulsive", "inadequate", "inattentive", "incensed", "inclusive", "incompetent", "incomplete", "incredulous", "indebted", "indecisive", "independent", "indescribable", "indifferent", "indignant", "industrious", "inept", "inferior", "inflated", "informed", "infuriated", "inhibited", "innocent", "innovative", "inquisitive", "insane", "insecure", "insensitive", "insidious", "insignificant", "insulted", "intense", "interested", "interrogated", "interrupted", "intimate", "intimidated", "intrigued", "invigorated", "invisible", "involved", "irate", "irked", "irrational", "irresponsible", "irritated", "isolated", "jaded", "jealous", "jinxed", "jolly", "jovial", "joyful", "joyous", "jubilant", "judged", "judgmental", "jumpy", "just", "justified", "kidded", "kind", "knowledgeable", "late", "lazy", "leery", "left", "let", "lethargic", "liable", "liberated", "liberating", "lifeless", "light-hearted", "liked", "listened", "listless", "logical", "lonely", "loose", "lost", "lousy", "lovable", "loved", "loving", "lucky", "lyrical", "mad", "malicious", "manipulated", "matter", "fact", "mean", "meditative", "melancholic", "melancholy", "mellow", "merciless", "merry", "mischievous", "miserable", "misinterpreted", "mistreated", "misunderstood", "mixed", "mocked", "mocking", "modest", "molested", "moody", "morose", "motivated", "mournful", "moved", "mystified", "naive", "nasty", "naughty", "nauseated", "needed", "needy", "negative", "neglected", "nerdy", "nervous", "neurotic", "nightmarish", "nonchalant", "nostalgic", "not", "specified", "noticed", "numb", "obeyed", "objective", "obligated", "obvious", "odd", "offended", "okay", "old", "open", "oppressed", "optimistic", "ornery", "control", "outraged", "overcome", "overjoyed", "overloaded", "overwhelmed", "overworked", "owned", "painful", "pampered", "panicky", "paralyzed", "passionate", "passive", "patient", "patronizing", "peaceful", "peeved", "pensive", "perky", "perplexed", "persecuted", "pessimistic", "pestered", "petrified", "petty", "phony", "pious", "pissed", "off", "playful", "pleased", "poor", "positive", "possessive", "powerful", "powerless", "practical", "predatory", "pressured", "private", "productive", "protected", "protective", "proud", "provoked", "prudish", "punished", "pushy", "puzzled", "questioned", "quiet", "quixotic", "quizzical", "rambunctious", "realistic", "reassured", "rebellious", "reborn", "receptive", "reckless", "recognized", "reconciled", "recumbent", "reflective", "refreshed", "regretful", "rejected", "rejuvenated", "relaxed", "released", "relieved", "reluctant", "reminiscent", "remorse", "renewed", "replaced", "replenished", "repressed", "rescued", "resentful", "reserved", "resistant", "resourceful", "respected", "responsible", "restless", "restricted", "revengeful", "reverent", "revitalized", "ribald", "rich", "ridicule", "ridiculous", "right", "rigid", "robbed", "romantic", "rotten", "rushed", "sabotaged", "sad", "safe", "sarcastic", "sardonic", "sassy", "satiated", "satiric", "satisfied", "saved", "scared", "scolded", "scorned", "secure", "seductive", "selfish", "self-assured", "self-centered", "self-confident", "self-conscious", "self-destructive", "self-reliant", "sensitive", "sentimental", "serene", "serious", "*****", "shaken", "shamed", "sheepish", "shocked", "shunned", "shy", "sick", "silenced", "silly", "sincere", "sinful", "skeptical", "skillful", "slandered", "sleepy", "sluggish", "small", "smart", "smothered", "solemn", "somber", "soothed", "sorry", "special", "spiteful", "splendid", "spunky", "squashed", "stifled", "stimulated", "stingy", "strained", "stressed", "stretched", "strong", "stubborn", "stumped", "stunned", "stupid", "submissive", "successful", "suffocated", "suicidal", "sullen", "sunk", "super", "superior", "supported", "sure", "surly", "surprised", "suspenseful", "suspicious", "sympathetic", "tacky", "tactful", "talented", "talkative", "tame", "tarnished", "tasteful", "tearful", "teased", "tenacious", "tender", "tense", "tepid", "terrible", "terrific", "terrified", "terrifying", "tested", "testy", "thankful", "thoughtful", "threatened", "threatening", "thrifty", "thrilled", "tired", "tormented", "torn", "tortured", "touched", "tough", "tragic", "tranquil", "transformed", "trapped", "treasured", "trembly", "tremendous", "tricked", "troubled", "trusted", "trustful", "ugly", "unaccepted", "unappreciated", "unbalanced", "unburdened", "uncanny", "uncomfortable", "unconcerned", "uneven", "unfit", "unfriendly", "united", "unjust", "unknown", "unneeded", "unpleasant", "unreal", "unruly", "unwise", "up", "uplifted", "used", "useless", "vacant", "vague", "vain", "valid", "valued", "vengeful", "vexed", "vicious", "victimized", "victorious", "violated", "violent", "vivacious", "vivid", "void", "wacky", "warlike", "warm", "warmhearted", "warned", "wary", "wasted", "weak", "wealthy", "weary", "weird", "welcoming", "whimsical", "whole", "wild", "willful", "wishful", "witty", "worldly", "worried", "worse", "worthy", "wounded", "wrong", "yearning", "yellow", "yielding", "young", "youthful", "zany", "zealous"},
-									  ntltss = {"Afghan", "Egyptian", "Alantic", "Albanian", "Algerian", "Virgin Islander", "American Samoan", "Andorran", "Angolan", "Anguillan", "Antarctic", "Antiguan and Barbudan", "Equatorial Guinean", "Argentine; Argentinian", "Armenian", "Aruban", "Azerbaijani", "Ethiopian", "Australian", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Belarusian", "Belgian", "Belizean", "Beninese", "Bermudian", "Bhutanese", "Bolivian", "Bosnian", "Botswanan", "of Bouvet Island", "Brazilian", "of the British Indian Ocean Territory", "British Virgin Islander", "Bruneian", "Bulgarian", "Burkinabe", "Burundian", "Cape Verdean", "Chilean", "Chinese", "of Clipperton Island", "Cook Islander", "Costa Rican", "Ivorian", "Curacaoan", "Danish", "German", "Dominican", "Djiboutian", "Ecuadorian", "Salvadorian; Salvadoran", "Eritrean", "Estonian", "Falklander", "Faroese", "Fijian", "Finnish", "French", "of the French Southern and Antarctic Lands", "Guianese", "Polynesian", "Gabonese", "Gambian", "Georgian", "Ghanaian", "Gibraltarian", "Grenadian", "Greek", "Greenlandic", "Guadeloupean", "Guamanian", "Guatemalan", "Guernsey", "Guinean", "Bissau-Guinean", "Guyanese", "Haitian", "of the Heard Island and McDonald Islands", "of the Holy See/of the Vatican", "Honduran", "Hong Kong Chinese", "Indian", "Indonesian", "Manx", "Iraqi", "Iranian", "Irish", "Icelandic", "Israeli", "Italian", "Jamaican", "Japanese", "Yemeni", "Jersey", "Jordanian", "Caymanian", "Cambodian", "Cameroonian", "Canadian", "Kazakh", "Qatari", "Kenyan", "Kyrgyz", "Kiribatian", "of the Cocos (Keeling) Islands", "Colombian", "Comorian", "Congolese", "Croatian", "Cuban", "Kuwaiti", "Lao; Laotian", "Mesotho", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiners", "Lithuanian", "Luxembourgish", "Macanese", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Moroccan", "Marshallese", "Martinican", "Mauritanian", "Mauritian", "Mahoran", "Mexican", "Micronesian", "Moldovan", "Monegasque", "Mongolian", "Montenegrin", "Montserratian", "Mozambican", "Burmese", "Namibian", "Nauruan", "Nepalese", "New Caledonian", "New Zealander", "Nicaraguan", "Dutch", "Nigerien", "Nigerian", "Niuean", "North Korean", "Marian Islander", "Norfolk Islander", "Norwegian", "Omani", "Austrian", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Filipino", "Pitcairner", "Polish", "Portuguese", "Puerto Rican", "Reunionese", "Rwandan; Rwandese", "Romanian", "Russian", "Solomon Islander", "Zambian", "Samoan", "Sammarinese", "Sao Tomean", "Saudi Arabian", "Swedish", "Swiss", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Zimbabwean", "Singaporean", "Slovak", "Slovenian", "Somali; Somalian", "Spanish", "Sri Lankan", "Saint Barthelemian", "of Saint Helena, Ascension and Tristan da Cunha", "of Saint Kitts and Nevis", "Saint Lucian", "of Saint Martin", "of Sint Maarten", "of Saint Pierre and Miquelon", "Vincentian; of Saint Vincent and the Grenadines", "South African", "Sudanese", "of South Georgia and the South Sandwich Islands", "South Korean", "South Sudanese", "Surinamese", "of Svalbard, of Jan Mayen", "Swazi", "Syrian", "Tajik", "Taiwanese", "Tanzanian", "Thai", "East Timorese", "Togolese", "Tokelauan", "Tongan", "of Trinidad and Tobago", "Chadian", "Czech", "Tunisian", "Turkish", "Turkmen", "of the Turks and Caicos Islands", "Tuvaluan", "Ugandan", "Ukrainian", "Hungarian", "Uruguayan", "Uzbek", "Vanuatuan", "Venezuelan", "Emirian", "American; The United States of America", "British", "Vietnamese", "of the Wallis and Futuna Islands", "of Christmas Island", "Sahrawi", "Central African", "Cypriot"},
-									  rfnss = {"+92 (337) 705 2471", "+92 (304) 856 3453", "+92 (334) 462 6112", "+92 (318) 133 8724", "+92 (305) 578 5856", "+92 (310) 462 5351", "+92 (312) 731 7316", "+92 (333) 853 8132", "+92 (325) 818 0176", "+92 (307) 531 4378", "+92 (308) 231 0403", "+92 (324) 113 2465", "+92 (308) 350 1245", "+92 (304) 778 1655", "+92 (308) 212 6486", "+92 (337) 003 6218", "+92 (318) 388 5662", "+92 (311) 032 8777", "+92 (317) 457 2031", "+92 (303) 475 4653", "+92 (313) 246 8410", "+92 (308) 215 2441", "+92 (305) 205 3250", "+92 (314) 763 2228", "+92 (323) 267 3234", "+92 (320) 005 8284", "+92 (312) 486 1408", "+92 (313) 556 6782", "+92 (312) 188 8504", "+92 (321) 517 0564", "+92 (300) 215 0018", "+92 (331) 066 8182", "+92 (305) 621 8357", "+92 (312) 303 6683", "+92 (330) 315 6554", "+92 (318) 702 7462", "+92 (307) 083 6477", "+92 (333) 585 3443", "+92 (315) 547 0136", "+92 (327) 660 2848", "+92 (330) 144 4028", "+92 (323) 276 4840", "+92 (327) 738 8321", "+92 (305) 812 7050", "+92 (324) 620 5556", "+92 (310) 681 7606", "+92 (336) 286 8600", "+92 (333) 241 8207", "+92 (322) 527 1520", "+92 (303) 510 4857", "+92 (337) 650 1744", "+92 (321) 331 4144", "+92 (301) 515 4836", "+92 (332) 460 3760", "+92 (333) 168 2174", "+92 (304) 272 1350", "+92 (320) 375 3538", "+92 (336) 516 5606", "+92 (330) 088 7340", "+92 (317) 523 7275", "+92 (314) 128 3831", "+92 (326) 825 7157", "+92 (302) 115 2032", "+92 (336) 362 6505", "+92 (313) 627 6536", "+92 (302) 832 5304", "+92 (300) 131 4753", "+92 (311) 588 0281", "+92 (337) 412 0180", "+92 (321) 601 7236", "+92 (306) 075 0548", "+92 (336) 744 6742", "+92 (335) 684 5677", "+92 (323) 753 4302", "+92 (322) 864 6866", "+92 (301) 077 0316", "+92 (320) 080 7036", "+92 (327) 613 3783", "+92 (334) 138 2771", "+92 (330) 343 8104", "+92 (325) 201 0684", "+92 (337) 775 7221", "+92 (311) 857 5310", "+92 (322) 615 5255", "+92 (310) 731 2176", "+92 (323) 412 7433", "+92 (323) 180 3238", "+92 (318) 704 5111", "+92 (321) 485 2814", "+92 (334) 611 2074", "+92 (314) 343 0881", "+92 (300) 537 3177", "+92 (310) 187 8100", "+92 (320) 878 2262", "+92 (324) 785 1028", "+92 (313) 070 1354", "+92 (318) 204 0637", "+92 (328) 877 2626", "+92 (318) 018 4006", "+92 (306) 104 1463", "+92 (313) 862 3726", "+92 (318) 388 7683", "+92 (330) 738 5730", "+92 (316) 166 6803", "+92 (313) 271 3641", "+92 (307) 718 8285", "+92 (306) 256 2360", "+92 (321) 104 8067", "+92 (300) 884 5048", "+92 (307) 085 3035", "+92 (335) 446 3531", "+92 (322) 647 3410", "+92 (328) 760 2861", "+92 (327) 772 6701", "+92 (300) 211 6834", "+92 (333) 515 7716", "+92 (314) 534 3700", "+92 (330) 078 1205", "+92 (304) 316 1564", "+92 (338) 782 0723", "+92 (318) 250 1765", "+92 (300) 125 7551", "+92 (330) 715 6381", "+92 (306) 366 6305", "+92 (330) 548 0703", "+92 (324) 818 1781", "+92 (334) 057 4635", "+92 (327) 646 3800", "+92 (337) 112 4745", "+92 (334) 312 5800", "+92 (332) 323 4057", "+92 (323) 141 4625", "+92 (321) 725 5403", "+92 (306) 316 7326", "+92 (326) 857 5082", "+92 (311) 733 5287", "+92 (310) 288 5856", "+92 (318) 744 6625", "+92 (302) 038 3437", "+92 (300) 543 5048", "+92 (311) 524 0182", "+92 (310) 517 5147", "+92 (336) 677 5164", "+92 (333) 544 3314", "+92 (301) 158 0516", "+92 (320) 663 3225", "+92 (324) 267 5737", "+92 (334) 134 1455", "+92 (315) 612 3858", "+92 (317) 457 4026", "+92 (310) 135 2187", "+92 (312) 026 5570", "+92 (305) 642 0803", "+92 (318) 188 8582", "+92 (312) 247 0835", "+92 (322) 565 2507", "+92 (322) 604 7714", "+92 (308) 777 5758", "+92 (334) 408 6214", "+92 (303) 463 8153", "+92 (326) 681 5836", "+92 (337) 751 8272", "+92 (301) 361 7477", "+92 (313) 360 1062", "+92 (302) 147 0657", "+92 (310) 071 1840", "+92 (305) 862 3122", "+92 (330) 021 0070", "+92 (302) 746 8830", "+92 (337) 872 0571", "+92 (312) 421 4418", "+92 (326) 767 1476", "+92 (338) 868 0422", "+92 (304) 742 2570", "+92 (322) 603 5815", "+92 (336) 134 4630", "+92 (332) 213 3405", "+92 (328) 770 5337", "+92 (334) 377 0753", "+92 (332) 536 0507", "+92 (333) 577 3367", "+92 (314) 873 0856", "+92 (313) 223 7860", "+92 (333) 858 4750", "+92 (313) 014 7425", "+92 (336) 510 7005", "+92 (306) 682 0351", "+92 (311) 462 1763", "+92 (331) 013 6165", "+92 (305) 633 2143", "+92 (303) 481 7545", "+92 (300) 640 4238", "+92 (307) 154 7560", "+92 (305) 231 6152", "+92 (327) 820 1002", "+92 (300) 384 2010", "+92 (302) 882 2088", "+92 (314) 621 3515", "+92 (305) 243 8763", "+92 (327) 326 3071", "+92 (333) 105 7024", "+92 (332) 544 1170", "+92 (322) 830 3481", "+92 (310) 368 7228", "+92 (312) 034 5444", "+92 (324) 387 8832", "+92 (311) 658 7085", "+92 (333) 471 6534", "+92 (318) 511 2514", "+92 (306) 478 6607", "+92 (324) 702 4308", "+92 (336) 360 1744", "+92 (312) 513 8375", "+92 (334) 686 7874", "+92 (306) 627 6338", "+92 (332) 460 7558", "+92 (316) 817 8703", "+92 (300) 601 1281", "+92 (336) 617 8334", "+92 (335) 780 7855", "+92 (304) 482 7718", "+92 (336) 768 6462", "+92 (311) 105 6765", "+92 (321) 106 0335", "+92 (336) 527 7517", "+92 (317) 505 6640", "+92 (312) 666 2872", "+92 (310) 408 1200", "+92 (310) 146 4768", "+92 (308) 267 4746", "+92 (325) 507 4071", "+92 (327) 543 6632", "+92 (334) 167 4164", "+92 (301) 788 8214", "+92 (337) 445 8301", "+92 (322) 363 8213", "+92 (313) 307 8076", "+92 (302) 147 4655", "+92 (308) 733 2787", "+92 (323) 603 8653", "+92 (326) 063 5886", "+92 (303) 214 8782", "+92 (306) 135 6700", "+92 (331) 764 0407", "+92 (338) 245 1083", "+92 (327) 387 7425", "+92 (334) 518 1635", "+92 (336) 844 1154", "+92 (331) 607 8080", "+92 (317) 847 4253", "+92 (304) 034 4855", "+92 (311) 676 5521", "+92 (328) 162 1822", "+92 (316) 780 8086", "+92 (303) 513 8441", "+92 (324) 777 0074", "+92 (336) 162 6318", "+92 (323) 282 2211", "+92 (325) 712 2150", "+92 (313) 082 2570", "+92 (308) 406 7281", "+92 (333) 735 6170", "+92 (314) 502 5084", "+92 (337) 485 0163", "+92 (325) 380 8500", "+92 (315) 674 0704", "+92 (326) 808 7182", "+92 (338) 760 7774", "+92 (305) 307 2061", "+92 (336) 535 3642", "+92 (302) 727 4036", "+92 (300) 338 0680", "+92 (306) 074 0122", "+92 (325) 560 7146", "+92 (321) 532 6483", "+92 (318) 742 5523", "+92 (322) 160 5367", "+92 (331) 218 5540", "+92 (307) 263 0607", "+92 (328) 740 7545", "+92 (334) 081 0154", "+92 (323) 740 6273", "+92 (306) 168 2305", "+92 (338) 747 0835", "+92 (323) 066 8320", "+92 (338) 438 3555", "+92 (300) 346 0563", "+92 (320) 634 7562", "+92 (330) 316 1011", "+92 (300) 351 7074", "+92 (313) 758 8350", "+92 (313) 727 2310", "+92 (331) 371 0261", "+92 (305) 370 5643", "+92 (314) 475 8816", "+92 (311) 281 3765", "+92 (325) 662 4084", "+92 (310) 033 4327", "+92 (313) 530 7815", "+92 (327) 380 8188", "+92 (308) 070 8470", "+92 (323) 418 6367", "+92 (317) 233 5022", "+92 (301) 516 1310", "+92 (327) 836 1122", "+92 (326) 888 3055", "+92 (317) 648 1424", "+92 (332) 563 1855", "+92 (300) 453 1100", "+92 (336) 810 8634", "+92 (320) 055 6327", "+92 (314) 586 4743", "+92 (301) 106 3066", "+92 (308) 578 0821", "+92 (322) 047 4055", "+92 (310) 354 2234", "+92 (323) 771 8476", "+92 (312) 012 0767", "+92 (320) 455 4883", "+92 (322) 073 0140", "+92 (300) 677 1541", "+92 (330) 210 6046", "+92 (314) 722 4560", "+92 (331) 784 2382", "+92 (303) 273 8846", "+92 (331) 024 2853", "+92 (330) 454 8617", "+92 (317) 757 1833", "+92 (308) 334 3602", "+92 (316) 705 0848", "+92 (327) 174 5515", "+92 (308) 561 1524", "+92 (317) 165 3512", "+92 (334) 458 5500", "+92 (307) 264 5644", "+92 (313) 735 4003", "+92 (300) 554 0808", "+92 (327) 801 3402", "+92 (308) 857 7614", "+92 (304) 041 1408", "+92 (323) 772 7663", "+92 (337) 543 3248", "+92 (335) 017 2204", "+92 (313) 574 0726", "+92 (328) 572 5058", "+92 (311) 426 2002", "+92 (325) 006 8227", "+92 (307) 180 3504", "+92 (301) 370 2756", "+92 (300) 536 2556", "+92 (336) 562 4745", "+92 (335) 456 8361", "+92 (327) 356 5473", "+92 (305) 766 2753", "+92 (336) 010 0246", "+92 (311) 626 7526", "+92 (302) 860 4252", "+92 (322) 084 0662", "+92 (304) 101 0800", "+92 (316) 146 2018", "+92 (320) 235 7701", "+92 (338) 414 8473", "+92 (312) 441 2302", "+92 (306) 424 1504", "+92 (313) 652 7648", "+92 (314) 551 6166", "+92 (302) 804 5450", "+92 (334) 382 6883", "+92 (304) 448 6162", "+92 (331) 813 1683", "+92 (316) 562 4504", "+92 (303) 536 6031", "+92 (338) 772 3065", "+92 (331) 280 5101", "+92 (335) 220 0570", "+92 (317) 402 3502", "+92 (321) 752 0763", "+92 (330) 617 7136", "+92 (302) 083 2232", "+92 (300) 307 4675", "+92 (301) 401 8434", "+92 (303) 265 0173", "+92 (323) 752 2184", "+92 (302) 751 5347", "+92 (320) 764 1510", "+92 (314) 717 2422", "+92 (303) 631 6215", "+92 (334) 583 5180", "+92 (322) 725 4143", "+92 (320) 860 6378", "+92 (323) 756 6850", "+92 (302) 028 7823", "+92 (303) 868 0017", "+92 (316) 316 5303", "+92 (303) 088 8025", "+92 (307) 587 5757", "+92 (301) 256 3062", "+92 (316) 111 1886", "+92 (338) 146 8025", "+92 (312) 847 2754", "+92 (325) 456 0504", "+92 (333) 041 6237", "+92 (315) 411 8384", "+92 (314) 772 4233", "+92 (338) 307 1476", "+92 (300) 781 3662", "+92 (324) 150 3080", "+92 (311) 136 5282", "+92 (326) 672 2210", "+92 (323) 076 1370", "+92 (305) 210 4504", "+92 (323) 834 8236", "+92 (302) 425 4403", "+92 (318) 336 1325", "+92 (335) 340 1847", "+92 (316) 165 7848", "+92 (303) 121 8036", "+92 (322) 014 0663", "+92 (303) 178 6580", "+92 (315) 604 1032", "+92 (318) 777 7127", "+92 (303) 801 0731", "+92 (324) 874 4252", "+92 (323) 772 5020", "+92 (324) 123 5511", "+92 (324) 361 3683", "+92 (303) 001 5461", "+92 (304) 682 8504", "+92 (332) 562 5224", "+92 (304) 262 8807", "+92 (305) 314 8151", "+92 (331) 254 1780", "+92 (307) 577 5812", "+92 (301) 008 5052", "+92 (337) 183 3788", "+92 (330) 357 2760", "+92 (315) 167 5753", "+92 (322) 267 3232", "+92 (313) 075 3123", "+92 (338) 477 0012", "+92 (317) 130 5726", "+92 (326) 281 4226", "+92 (333) 568 8062", "+92 (317) 422 1660", "+92 (301) 720 8626", "+92 (302) 410 5526", "+92 (326) 844 4805", "+92 (301) 723 3603", "+92 (328) 830 4776", "+92 (305) 488 1204", "+92 (332) 407 0326", "+92 (301) 747 4714", "+92 (333) 112 8873", "+92 (308) 464 8353", "+92 (322) 377 1834", "+92 (323) 112 7256", "+92 (302) 057 2273", "+92 (328) 111 4086", "+92 (314) 754 5812", "+92 (337) 065 0672", "+92 (327) 304 5525", "+92 (331) 706 7060", "+92 (326) 842 0557", "+92 (318) 757 5610", "+92 (322) 262 7500", "+92 (308) 487 4450", "+92 (310) 325 5215", "+92 (315) 273 2531", "+92 (328) 525 4201", "+92 (301) 268 2380", "+92 (303) 255 6243", "+92 (318) 176 6448", "+92 (300) 530 5801", "+92 (318) 774 2284", "+92 (317) 240 7745", "+92 (303) 676 6783", "+92 (330) 717 1205", "+92 (336) 737 4067", "+92 (322) 524 6531", "+92 (303) 405 3577", "+92 (322) 758 4304", "+92 (305) 837 4377", "+92 (323) 655 6411", "+92 (312) 658 0070", "+92 (324) 535 2735", "+92 (334) 527 6220", "+92 (302) 445 5428", "+92 (317) 086 7076", "+92 (316) 341 8151", "+92 (317) 112 5715", "+92 (314) 740 6752", "+92 (304) 155 0421", "+92 (306) 061 8135", "+92 (324) 760 5853", "+92 (326) 385 2458", "+92 (338) 644 4116", "+92 (312) 467 0330", "+92 (332) 164 8136", "+92 (332) 338 6288", "+92 (305) 176 7874", "+92 (337) 135 0287", "+92 (327) 837 2660", "+92 (334) 634 6377", "+92 (334) 863 5246", "+92 (315) 478 0036", "+92 (302) 148 0766", "+92 (330) 642 7017", "+92 (333) 756 1563", "+92 (304) 270 5240", "+92 (327) 345 3262", "+92 (315) 165 5068", "+92 (312) 675 3868", "+92 (328) 868 7680", "+92 (304) 473 8118", "+92 (318) 415 3416", "+92 (311) 881 5740", "+92 (313) 302 7407", "+92 (307) 738 4570", "+92 (311) 541 8247", "+92 (300) 644 0706", "+92 (334) 708 5770", "+92 (301) 442 4742", "+92 (313) 753 5365", "+92 (315) 651 4668", "+92 (316) 616 6408", "+92 (334) 112 6355", "+92 (324) 422 7760", "+92 (336) 786 4805", "+92 (338) 860 4180", "+92 (317) 404 1136", "+92 (333) 506 7452", "+92 (331) 885 5308", "+92 (327) 883 1783", "+92 (306) 331 1388", "+92 (301) 421 3682", "+92 (318) 025 1434", "+92 (333) 122 3674", "+92 (314) 657 6471", "+92 (306) 180 2386", "+92 (315) 572 5133", "+92 (311) 620 3644", "+92 (318) 451 6657", "+92 (327) 868 4180", "+92 (327) 315 1422", "+92 (325) 655 6065", "+92 (312) 653 7064", "+92 (324) 168 2330", "+92 (325) 233 0561", "+92 (330) 726 8615", "+92 (316) 076 2140", "+92 (325) 782 5605", "+92 (332) 652 6485", "+92 (322) 807 1788", "+92 (305) 656 1200", "+92 (317) 514 6875", "+92 (313) 577 4641", "+92 (325) 802 4317", "+92 (323) 530 4064", "+92 (316) 265 6040", "+92 (331) 882 5661", "+92 (312) 652 6383", "+92 (307) 804 3032", "+92 (334) 753 7100", "+92 (317) 787 6787", "+92 (312) 567 6467", "+92 (300) 210 0430", "+92 (325) 313 2488", "+92 (311) 284 7758", "+92 (325) 440 7610", "+92 (336) 136 3610", "+92 (302) 021 3846", "+92 (310) 878 6343", "+92 (331) 727 3114", "+92 (306) 350 5763", "+92 (316) 622 0084", "+92 (322) 743 7554", "+92 (307) 757 3552", "+92 (325) 104 4534", "+92 (306) 747 0562", "+92 (330) 741 7754", "+92 (321) 513 6244", "+92 (304) 678 1280", "+92 (308) 018 3212", "+92 (311) 238 3186", "+92 (318) 450 4783", "+92 (302) 362 2165", "+92 (323) 576 3067", "+92 (328) 006 8543", "+92 (318) 306 5310", "+92 (326) 533 7647", "+92 (330) 845 8535", "+92 (325) 217 0370", "+92 (336) 746 1107", "+92 (312) 624 5734", "+92 (306) 286 0504", "+92 (301) 063 5608", "+92 (325) 641 3545", "+92 (311) 785 5360", "+92 (331) 808 5821", "+92 (331) 257 3212", "+92 (320) 871 1021", "+92 (313) 054 6555", "+92 (327) 133 2437", "+92 (336) 210 8837", "+92 (301) 062 0603", "+92 (308) 673 3162", "+92 (327) 547 5486", "+92 (317) 571 8081", "+92 (303) 517 0081", "+92 (326) 065 5272", "+92 (335) 261 7380", "+92 (335) 346 1654", "+92 (328) 571 1571", "+92 (300) 125 7047", "+92 (320) 712 7327", "+92 (332) 564 7345", "+92 (322) 256 1152", "+92 (320) 830 7246", "+92 (300) 806 2421", "+92 (301) 434 7814", "+92 (314) 076 8230", "+92 (325) 168 2023", "+92 (336) 466 6411", "+92 (335) 470 7667", "+92 (334) 447 2776", "+92 (302) 708 3706", "+92 (302) 852 5785", "+92 (336) 522 8808", "+92 (314) 180 7243", "+92 (308) 470 5136", "+92 (333) 084 8324", "+92 (330) 437 0843", "+92 (328) 810 1775", "+92 (313) 708 1215", "+92 (317) 756 8871", "+92 (317) 232 8002", "+92 (306) 024 7223", "+92 (338) 241 8280", "+92 (323) 870 0517", "+92 (336) 064 0476", "+92 (318) 616 5257", "+92 (301) 043 1286", "+92 (332) 178 6454", "+92 (318) 322 5100", "+92 (318) 184 4084", "+92 (334) 768 8286", "+92 (312) 626 6142", "+92 (333) 326 6448", "+92 (318) 521 5065", "+92 (322) 381 5162", "+92 (327) 056 2443", "+92 (316) 384 0387", "+92 (331) 157 8358", "+92 (333) 751 6550", "+92 (305) 563 3313", "+92 (324) 220 1570", "+92 (321) 057 0564", "+92 (302) 853 8342", "+92 (325) 002 4156", "+92 (322) 274 6885", "+92 (308) 574 2308", "+92 (303) 782 2721", "+92 (313) 267 8741", "+92 (327) 877 4073", "+92 (321) 831 3254", "+92 (318) 037 4838", "+92 (317) 254 0628", "+92 (331) 344 1636", "+92 (332) 273 5453", "+92 (318) 161 8138", "+92 (338) 315 8803", "+92 (330) 378 8120", "+92 (327) 125 6506", "+92 (338) 631 4447", "+92 (310) 504 1341", "+92 (337) 303 1074", "+92 (303) 416 3713", "+92 (322) 821 7811", "+92 (331) 872 3252", "+92 (318) 604 6676", "+92 (316) 383 1662", "+92 (317) 485 6302", "+92 (313) 715 3725", "+92 (336) 035 3047", "+92 (310) 101 4524", "+92 (305) 463 8322", "+92 (305) 366 1783", "+92 (325) 388 5600", "+92 (325) 746 6638", "+92 (322) 833 8176", "+92 (305) 356 3327", "+92 (311) 560 5884", "+92 (338) 171 4428", "+92 (305) 340 2644", "+92 (324) 147 0156", "+92 (333) 420 5426", "+92 (318) 165 2608", "+92 (326) 184 5407", "+92 (316) 111 8046", "+92 (314) 624 7880", "+92 (313) 084 7725", "+92 (328) 063 2444", "+92 (334) 618 7113", "+92 (337) 276 0888", "+92 (327) 528 8026", "+92 (312) 310 0130", "+92 (317) 721 0874", "+92 (308) 847 1172", "+92 (300) 428 8126", "+92 (302) 077 3722", "+92 (314) 325 2543", "+92 (313) 506 1302", "+92 (305) 122 3737", "+92 (302) 752 6357", "+92 (324) 022 6028", "+92 (338) 222 7078", "+92 (320) 213 7517", "+92 (331) 213 8817", "+92 (310) 068 5358", "+92 (338) 620 5566", "+92 (335) 626 8240", "+92 (315) 652 1817", "+92 (332) 846 6577", "+92 (335) 885 7711", "+92 (317) 887 6852", "+92 (306) 000 3508", "+92 (302) 874 1686", "+92 (314) 762 2085", "+92 (337) 844 7485", "+92 (330) 777 1026", "+92 (336) 716 4556", "+92 (301) 108 6281", "+92 (335) 254 1552", "+92 (311) 054 3172", "+92 (333) 552 0287", "+92 (303) 186 8664", "+92 (325) 041 6053", "+92 (301) 514 7068", "+92 (336) 823 2382", "+92 (307) 353 0800", "+92 (333) 704 3385", "+92 (310) 437 4860", "+92 (321) 585 5306", "+92 (317) 407 7052", "+92 (314) 302 1804", "+92 (323) 408 8585", "+92 (335) 354 4567", "+92 (301) 376 5687", "+92 (326) 467 4706", "+92 (301) 821 2724", "+92 (304) 034 4315", "+92 (335) 716 3762", "+92 (308) 133 5733", "+92 (337) 284 0511", "+92 (324) 341 2386", "+92 (328) 235 4226", "+92 (316) 126 8582", "+92 (302) 242 2400", "+92 (318) 340 6838", "+92 (322) 256 2733", "+92 (335) 374 3860", "+92 (334) 715 5133", "+92 (306) 317 2016", "+92 (320) 828 8337", "+92 (328) 534 2567", "+92 (326) 617 6452", "+92 (314) 720 4233", "+92 (317) 023 4610", "+92 (314) 713 7561", "+92 (328) 222 1817", "+92 (335) 283 2364", "+92 (332) 363 6001", "+92 (326) 540 1332", "+92 (316) 624 0821", "+92 (336) 052 4752", "+92 (310) 514 6312", "+92 (323) 112 3030", "+92 (300) 263 2664", "+92 (328) 037 1480", "+92 (317) 538 0664", "+92 (336) 631 3570", "+92 (303) 410 4255", "+92 (332) 450 1286", "+92 (310) 537 6050", "+92 (300) 200 1104", "+92 (336) 175 6245", "+92 (301) 852 4125", "+92 (334) 276 6570", "+92 (337) 673 8378", "+92 (306) 041 1858", "+92 (325) 443 2745", "+92 (310) 277 2755", "+92 (330) 161 2625", "+92 (320) 364 2646", "+92 (337) 048 3076", "+92 (311) 565 0688", "+92 (303) 445 1032", "+92 (327) 263 6168", "+92 (324) 784 1040", "+92 (320) 572 0418", "+92 (333) 482 1875", "+92 (338) 544 5218", "+92 (306) 618 5530", "+92 (320) 000 2431", "+92 (328) 346 4248", "+92 (332) 241 7422", "+92 (305) 440 0012", "+92 (324) 451 2733", "+92 (318) 255 4867", "+92 (302) 738 4437", "+92 (332) 427 0108", "+92 (321) 300 0483", "+92 (302) 680 1783", "+92 (313) 533 7440", "+92 (333) 605 7573", "+92 (322) 606 4167", "+92 (334) 818 6024", "+92 (333) 053 6064", "+92 (333) 245 4261", "+92 (300) 423 7811", "+92 (321) 128 1720", "+92 (328) 265 3640", "+92 (337) 888 3112", "+92 (326) 761 5407", "+92 (320) 155 7256", "+92 (320) 404 0628", "+92 (333) 180 1576", "+92 (318) 046 1405", "+92 (335) 167 6683", "+92 (317) 007 1388", "+92 (337) 540 5800", "+92 (333) 043 8586", "+92 (322) 788 8264", "+92 (308) 307 2054", "+92 (315) 011 7121", "+92 (333) 822 8314", "+92 (337) 660 5386", "+92 (332) 535 5188", "+92 (333) 328 5115", "+92 (337) 228 5066", "+92 (323) 412 4062", "+92 (314) 134 6276", "+92 (327) 507 2674", "+92 (307) 271 8722", "+92 (325) 348 0843", "+92 (325) 380 8821", "+92 (335) 070 7356", "+92 (330) 416 5243", "+92 (334) 022 5371", "+92 (324) 703 3150", "+92 (310) 430 7387", "+92 (336) 308 8663", "+92 (311) 116 3886", "+92 (338) 572 2043", "+92 (326) 715 5632", "+92 (316) 287 4021", "+92 (314) 304 1511", "+92 (333) 150 1405", "+92 (318) 774 6731", "+92 (322) 810 2760", "+92 (304) 038 5777", "+92 (312) 210 7703", "+92 (321) 074 6620", "+92 (316) 381 0633", "+92 (314) 258 1186", "+92 (338) 100 7238", "+92 (320) 556 5551", "+92 (316) 306 2785", "+92 (332) 221 1403", "+92 (324) 626 2883", "+92 (316) 246 2304", "+92 (332) 648 0665", "+92 (332) 243 1842", "+92 (308) 486 6277", "+92 (315) 238 6624", "+92 (315) 357 2316", "+92 (305) 775 7086", "+92 (327) 373 1063", "+92 (328) 247 3277", "+92 (318) 154 2306", "+92 (325) 018 0763", "+92 (336) 606 1040", "+92 (326) 403 0727", "+92 (315) 250 5275", "+92 (308) 066 1265", "+92 (333) 568 1424", "+92 (300) 786 2857", "+92 (323) 435 1550", "+92 (333) 727 8435", "+92 (310) 881 5112", "+92 (307) 882 5312", "+92 (302) 445 8778", "+92 (311) 800 0008", "+92 (317) 640 7531", "+92 (333) 237 6177", "+92 (318) 464 0016", "+92 (305) 006 1547", "+92 (322) 875 7103", "+92 (301) 556 0062", "+92 (336) 871 6340", "+92 (322) 065 3615", "+92 (316) 823 7423", "+92 (318) 444 7450", "+92 (303) 666 6444", "+92 (336) 070 6183", "+92 (320) 016 2208", "+92 (322) 622 0766", "+92 (333) 537 5127", "+92 (330) 377 4220", "+92 (313) 405 2686", "+92 (323) 406 6056", "+92 (300) 037 8734", "+92 (305) 848 4165", "+92 (321) 704 8336", "+92 (303) 182 0734", "+92 (316) 225 5822", "+92 (307) 046 6381", "+92 (337) 788 2286", "+92 (338) 042 2458", "+92 (336) 778 4674", "+92 (306) 203 7522", "+92 (315) 370 0243", "+92 (300) 038 1033", "+92 (322) 083 3875", "+92 (316) 148 6546", "+92 (300) 668 2808", "+92 (323) 430 2560", "+92 (320) 414 7440", "+92 (300) 800 6458", "+92 (314) 470 1187", "+92 (325) 327 8826", "+92 (327) 547 4614", "+92 (337) 774 7418", "+92 (314) 011 6573", "+92 (306) 580 1362", "+92 (337) 131 8866", "+92 (312) 276 3010", "+92 (328) 753 2824", "+92 (305) 273 1681", "+92 (338) 886 4573", "+92 (314) 136 2268", "+92 (323) 380 3355", "+92 (314) 824 8845", "+92 (334) 431 2253", "+92 (307) 156 7677", "+92 (333) 117 0783", "+92 (331) 013 5573", "+92 (300) 870 5171", "+92 (338) 028 5733", "+92 (335) 118 7133", "+92 (312) 463 5666", "+92 (331) 440 6131", "+92 (316) 487 3805", "+92 (326) 624 0734", "+92 (314) 863 7845", "+92 (316) 181 2687", "+92 (301) 835 2063", "+92 (331) 882 5684", "+92 (333) 110 8655", "+92 (305) 583 0513", "+92 (301) 864 0378", "+92 (307) 834 2234", "+92 (302) 288 0455", "+92 (316) 843 1038", "+92 (304) 765 1721", "+92 (321) 547 6215", "+92 (312) 507 5302", "+92 (338) 832 2811", "+92 (314) 575 4485", "+92 (314) 045 7821", "+92 (313) 330 7751", "+92 (313) 458 1023", "+92 (312) 237 1866", "+92 (328) 158 5722", "+92 (301) 663 6682", "+92 (313) 044 2852", "+92 (331) 108 2005", "+92 (331) 230 4222", "+92 (323) 437 2121", "+92 (324) 727 5827", "+92 (303) 356 2517", "+92 (333) 284 0116", "+92 (300) 821 0324", "+92 (310) 552 0533", "+92 (334) 616 7264", "+92 (325) 056 4214", "+92 (334) 353 3453", "+92 (338) 185 7472", "+92 (327) 830 4315", "+92 (325) 183 3332", "+92 (301) 802 7623", "+92 (333) 257 3838", "+92 (317) 502 8321", "+92 (300) 226 5635", "+92 (308) 535 3013", "+92 (313) 472 6065", "+92 (307) 016 1843", "+92 (301) 661 1410", "+92 (331) 543 0253", "+92 (328) 284 0678"},
-									  rgynss = {"Ahmed Raza", "Bilal Tariq", "Usman Siddiqi", "Omar Farooq", "Waleed Kamal", "Talha Iqbal", "Faisal Latif", "Hassan Jameel", "Adnan Bashir", "Kashif Rauf", "Imran Saeed", "Adeel Qureshi", "Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid", "Faizan Khalid", "Hammad Zubair", "Naveed Aslam", "Waqar Mehmood", "Sarmad Sheikh", "Tariq Anwar", "Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain", "Mudassir Younas", "Jawad Hamid", "Ammar Khalil", "Rizwan Waheed", "Hasnain Saleem", "Basit Jamal", "Sheraz Ahmed", "Umer Shahbaz", "Arsalan Hashim", "Raheel Sultan", "Fahad Zaman", "Sajid Irfan", "Owais Rauf", "Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem", "Tauseef Haroon", "Murtaza Shah", "Maaz Asif", "Samiullah Arif", "Nabeel Qamar", "Taimoor Rauf", "Atif Nawaz", "Hashir Siddiqui", "Zubair Imran", "Abrar Hussain", "Farhan Waseem", "Umair Tariq", "Arif Ali", "Shayan Latif", "Irfan Khalid", "Hamza Masood", "Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed", "Mudassir Kamal", "Haris Younas", "Noman Waqar", "Waseem Abbas", "Faizan Rauf", "Mubashir Jamil", "Sohail Shahzad", "Ubaid Latif", "Sikandar Saeed", "Hasham Khalid", "Farrukh Hussain", "Zain Qureshi", "Arslan Abbas", "Muzammil Tariq", "Usama Rasheed", "Adeel Sultan", "Taha Iqbal", "Kamil Arshad", "Danish Rauf", "Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar", "Omer Siddiqi", "Dawood Mushtaq", "Ammar Waheed", "Fasih Shah", "Adnan Khalil", "Imran Waseem", "Waleed Anwar", "Yasir Rauf", "Arham Bashir", "Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain", "Hassan Qamar", "Usman Kamal", "Tariq Yousaf", "Owais Farooq", "Raheel Bashir", "Waqas Khalid", "Faisal Shah", "Bilal Latif", "Zeeshan Abbas", "Faizan Hussain", "Mudassir Farooq", "Kashif Khalid", "Abrar Tariq", "Umair Siddiqi", "Hamza Jameel", "Nabeel Usman", "Khalil Laghari", "Murtaza Waseem", "Sajid Waheed", "Noman Riaz", "Hashir Hussain", "Sheraz Rauf", "Ahmed Tariq", "Atif Bashir", "Omar Siddiqui", "Irfan Khalil", "Raheel Jamil", "Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran", "Waleed Hussain", "Taimoor Abbas", "Mudassir Waheed", "Umer Khalid", "Khurram Anwar", "Junaid Bashir", "Shayan Rauf", "Ahmed Hanif", "Bilal Hussain", "Umair Riaz", "Zubair Khalid", "Adeel Haroon", "Sajid Qamar", "Faizan Latif", "Hammad Saleem", "Shoaib Tariq", "Noman Anwar", "Fahad Hussain", "Hashim Waseem", "Hamza Abbas", "Arsalan Khalid", "Taha Rasheed", "Usama Farooq", "Sarim Bashir", "Khizar Waheed", "Mudassir Khalid", "Waqas Rauf", "Tariq Hussain", "Jawad Siddiqui", "Shehryar Abbas", "Naveed Tariq", "Muzammil Jamil", "Zeeshan Khalid", "Atif Hussain", "Sarmad Waqar", "Shoaib Khalid", "Ahmed Qureshi", "Raheel Abbas", "Hammad Riaz", "Sheraz Bashir", "Danish Khalid", "Adil Waheed", "Hashir Tariq", "Faizan Waseem", "Usman Abbas", "Khurram Latif", "Owais Siddiqui", "Mudassir Hussain", "Tauseef Khalid", "Farrukh Waseem", "Umer Saleem", "Hamza Rauf", "Shoaib Kamran", "Bilal Abbas", "Sajid Tariq", "Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid", "Ahmed Farooq", "Atif Khalid", "Irfan Waseem", "Junaid Tariq", "Umair Saleem", "Arsalan Hussain", "Waleed Abbas", "Adnan Waseem", "Sheraz Khalid", "Mudassir Abbas", "Shoaib Rauf", "Omar Hussain", "Raheel Khalid", "Hammad Waseem", "Waseem Farooq", "Hasham Tariq", "Faisal Khalid", "Kashif Abbas", "Tauseef Abbas", "Hamza Saleem", "Zeeshan Waseem", "Sarmad Hussain", "Bilal Khalid", "Umair Abbas", "Mudassir Riaz", "Adil Khalid", "Ahmed Abbas", "Owais Hussain"},
-									  rglnss = {"Ayesha Waleed", "Fatima Kamal", "Hira Latif", "Sana Farooq", "Mahnoor Tariq", "Faiza Tehseem", "Fozia Mehshar", "Iqra Siddiqui", "Laiba Aslam", "Anum Riaz", "Saba Kiani", "Hafsa Saeed", "Sidra Hashmi", "Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel", "Rida Abbas", "Nimra Waseem", "Huma Tariq", "Samina Khalid", "Zeenat Rauf", "Amna Waheed", "Neelam Hashmi", "Aiman Qamar", "Romaisa Hussain", "Fareeda Asif", "Sania Anwar", "Humaisa Khalil", "Asma Riaz", "Sadia Kamran", "Sehrish Waseem", "Uzma Tariq", "Mehwish Latif", "Hina Abbas", "Areeba Waqar", "Tanzeela Jafar", "Anila Saleem", "Mahira Umer", "Bushra Nadeem", "Zoya Mehmood", "Nida Hashim", "Sumaira Yasir", "Mahnoor Hussain", "Komal Saeed", "Laiba Waseem", "Amina Abbas", "Rida Jameel", "Saeeka Haroon", "Zainab Farooq", "Fatima Hussain", "Hafsa Mehmood", "Minal Khawar", "Yumna Tariq", "Ayeza Barkat", "Asia Farhan", "Kinza Jamal", "Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed", "Hira Khalid", "Amna Riaz", "Iqra Farooq", "Anum Abbas", "Mehwish Iqrar", "Sumaiya Tariq", "Romaisa Khalil", "Faiza Waseem", "Bushra Farooq", "Sadia Abbas", "Hiba Hussain", "Afshan Siddiqui", "Sana Basit", "Areeba Khalid", "Maira Waseem", "Nimra Hussain", "Sehrish Saleem", "Amna Jameel", "Zoya Khalid", "Mehreen Tariq", "Aiman Abbas", "Komal Riaz", "Hira Saleem", "Palwasha Moazzam", "Laiba Nayyar", "Minahal Tahir", "Mehwish Shuja", "Javeria Feroze", "Zara Munawwar", "Fiza Jatoi", "Fatima Riaz", "Zainab Alvi", "Tanzeela Abbas", "Kiran Waseem", "Ayesha Khalid", "Samina Hussain", "Sadia Waseem", "Bisma Majeed", "Areeba Latif", "Sehrish Tariq", "Hafsa Waseem", "Hina Tariq", "Zoya Saleem", "Maham Khalid", "Muneera Rauf", "Bushra Tariq", "Zeenat Hussain", "Areeba Saleem", "Kainat Rizvi", "Sumaiya Hussain", "Sadia Khalid", "Mahnoor Irshad", "Fatima Jameel", "Sakina Hilaj", "Iqra Danyal", "Hina Riaz", "Neha Saleem", "Mehwish Khalid", "Asma Waseem", "Romaisa Tariq", "Laiba Khalid", "Komal Noor", "Bushra Waseem", "Zainab Tariq", "Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad", "Komal Hussain", "Maryam Raza", "Romaisa Haroon", "Mehwish Abbas", "Maham Riaz", "Sumaiya Khalid", "Anila Anjum", "Areeba Hussain"},
-									  areas_in_karachi = {"Askari 1", "Askari 2", "Askari 3", "Askari 4", "Askari 5", "Bahria Town - Precinct 1", "Bahria Town - Precinct 10", "Bahria Town - Precinct 11", "Bahria Town - Precinct 12", "Bahria Town - Precinct 13", "Bahria Town - Precinct 14", "Bahria Town - Precinct 15", "Bahria Town - Precinct 16", "Bahria Town - Precinct 17", "Bahria Town - Precinct 18", "Bahria Town - Precinct 19", "Bahria Town - Precinct 2", "Bahria Town - Precinct 20", "Bahria Town - Precinct 21", "Bahria Town - Precinct 22", "Bahria Town - Precinct 23", "Bahria Town - Precinct 24", "Bahria Town - Precinct 25", "Bahria Town - Precinct 26", "Bahria Town - Precinct 27", "Bahria Town - Precinct 28", "Bahria Town - Precinct 29", "Bahria Town - Precinct 3", "Bahria Town - Precinct 30", "Bahria Town - Precinct 31", "Bahria Town - Precinct 32", "Bahria Town - Precinct 33", "Bahria Town - Precinct 4", "Bahria Town - Precinct 5", "Bahria Town - Precinct 6", "Bahria Town - Precinct 7", "Bahria Town - Precinct 8", "Bahria Town - Precinct 9", "BufferZone - Sector 15 A 1", "BufferZone - Sector 15 A 2", "BufferZone - Sector 15 A 3", "BufferZone - Sector 15 A 4", "BufferZone - Sector 15 A 5", "BufferZone - Sector 15 B", "BufferZone - Sector 16 A", "BufferZone - Sector 16 B", "Cantonment", "Clifton - Block 1", "Clifton - Block 2", "Clifton - Block 3", "Clifton - Block 4", "Clifton - Block 5", "Clifton - Block 6", "Clifton - Block 7", "Clifton - Block 8", "Clifton - Block 9", "Clifton - Kehkashan", "DHA - Phase 1", "DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4", "DHA - Phase 5", "DHA - Phase 6", "DHA - Phase 7", "DHA - Phase 8", "DHA - Phase 9", "F.B Area - Azizabad", "F.B Area - B1 Area", "F.B Area - B Area", "F.B Area - Block 1", "F.B Area - Block 10", "F.B Area - Block 11", "F.B Area - Block 12", "F.B Area - Block 13", "F.B Area - Block 14", "F.B Area - Block 15", "F.B Area - Block 16", "F.B Area - Block 17", "F.B Area - Block 18", "F.B Area - Block 19", "F.B Area - Block 2", "F.B Area - Block 20", "F.B Area - Block 21", "F.B Area - Block 22", "F.B Area - Block 3", "F.B Area - Block 4", "F.B Area - Block 5", "F.B Area - Block 6", "F.C Area - C1 Area", "F.C Area - C Area", "Garden - Garden East", "Garden - Garden West", "Garden - Soldier Bazaar", "Gulistan-e-Johar - Block 1", "Gulistan-e-Johar - Block 10", "Gulistan-e-Johar - Block 11", "Gulistan-e-Johar - Block 12", "Gulistan-e-Johar - Block 13", "Gulistan-e-Johar - Block 14", "Gulistan-e-Johar - Block 15", "Gulistan-e-Johar - Block 16", "Gulistan-e-Johar - Block 17", "Gulistan-e-Johar - Block 18", "Gulistan-e-Johar - Block 19", "Gulistan-e-Johar - Block 2", "Gulistan-e-Johar - Block 20", "Gulistan-e-Johar - Block 3", "Gulistan-e-Johar - Block 4", "Gulistan-e-Johar - Block 5", "Gulistan-e-Johar - Block 6", "Gulistan-e-Johar - Block 7", "Gulistan-e-Johar - Block 8", "Gulistan-e-Johar - Block 9", "Gulshan-e-Hadeed - Data Nagar", "Gulshan-e-Hadeed - EIDU Goth", "Gulshan-e-Hadeed - Gulshan-e-Mauzzam", "Gulshan-e-Hadeed - Gulshan-e-Rehman", "Gulshan-e-Hadeed - Mehran Road", "Gulshan-e-Hadeed - Phase 1", "Gulshan-e-Hadeed - Phase 2", "Gulshan-e-Hadeed - Phase 3", "Gulshan-e-Hadeed - PTCL Satellite Station", "Gulshan-e-Hadeed - Shah Latif Town", "Gulshan-e-Hadeed - Shahnawaz Goth", "Gulshan-e-Hadeed - Shah Town", "Gulshan-e-Hadeed - Steel Town", "Gulshan-e-Hadeed - TCP Godowns", "Gulshan-e-Iqbal - Adamjee Nagar", "Gulshan-e-Iqbal - Block 1", "Gulshan-e-Iqbal - Block 10", "Gulshan-e-Iqbal - Block 11", "Gulshan-e-Iqbal - Block 12", "Gulshan-e-Iqbal - Block 13", "Gulshan-e-Iqbal - Block 14", "Gulshan-e-Iqbal - Block 15", "Gulshan-e-Iqbal - Block 16", "Gulshan-e-Iqbal - Block 17", "Gulshan-e-Iqbal - Block 18", "Gulshan-e-Iqbal - Block 19", "Gulshan-e-Iqbal - Block 2", "Gulshan-e-Iqbal - Block 3", "Gulshan-e-Iqbal - Block 4", "Gulshan-e-Iqbal - Block 5", "Gulshan-e-Iqbal - Block 6", "Gulshan-e-Iqbal - Block 7", "Gulshan-e-Iqbal - Block 8", "Gulshan-e-Iqbal - Block 9", "Gulshan-e-Iqbal - Civic Center", "Gulshan-e-Iqbal - Dhoraji", "Korangi - Abdullah Shah Noorani Pahari Colony", "Korangi - Korangi Industrial Area", "Korangi - Nasir Colony", "Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town", "Korangi - Zia Colony", "Landhi - Alflah Housing Society", "Landhi - Awami Colony", "Landhi - Bagh-e-Korangi", "Landhi - Bakhtawar Goth", "Landhi - Barmi Colony", "Landhi - Bhutto Nagar", "Landhi - Future Colony", "Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth", "Landhi - Labour Colony", "Landhi - Landhi Industrial Area", "Landhi - Muslimabad Colony", "Landhi - Muzaffarabad Colony", "Landhi - Punjab Town", "Landhi - Qasim Town", "Landhi - Sadat Colony", "Landhi - Shah Khalid Colony", "Landhi - Sharafi Goth", "Landhi - Zamanabad", "Liaquatabad - Block 1", "Liaquatabad - Block 10", "Liaquatabad - Block 2", "Liaquatabad - Block 3", "Liaquatabad - Block 4", "Liaquatabad - Block 5", "Liaquatabad - Block 6", "Liaquatabad - Block 7", "Liaquatabad - Block 8", "Liaquatabad - Block 9", "Malir - Malir Halt", "Malir - Malir Cantt", "Nazimabad - Block 1", "Nazimabad - Block 2", "Nazimabad - Block 3", "Nazimabad - Block 4", "Nazimabad - Block 5", "North Karachi - Sector 10", "North Karachi - Sector 11 - A", "North Karachi - Sector 11 - B", "North Karachi - Sector 11 - C 1", "North Karachi - Sector 11 - C 2", "North Karachi - Sector 11 - C 3", "North Karachi - Sector 11 - E", "North Karachi - Sector 11 - H", "North Karachi - Sector 11 - I", "North Karachi - Sector 11 - K", "North Karachi - Sector 11 - L", "North Karachi - Sector 2", "North Karachi - Sector 3", "North Karachi - Sector 4", "North Karachi - Sector 5 - A 1", "North Karachi - Sector 5 - A 2", "North Karachi - Sector 5 - A 3", "North Karachi - Sector 5 - A 4", "North Karachi - Sector 5 - B 1", "North Karachi - Sector 5 - B 2", "North Karachi - Sector 5 - B 3", "North Karachi - Sector 5 - B 4", "North Karachi - Sector 5 - C 1", "North Karachi - Sector 5 - C 2", "North Karachi - Sector 5 - C 3", "North Karachi - Sector 5 - C 4", "North Karachi - Sector 5 - I", "North Karachi - Sector 5 - J", "North Karachi - Sector 5 - K", "North Karachi - Sector 5 - L", "North Karachi - Sector 5 - M", "North Karachi - Sector 6", "North Karachi - Sector 7 - D 1", "North Karachi - Sector 7 - D 2", "North Karachi - Sector 7 - D 3", "North Karachi - Sector 7 - D 4", "North Karachi - Sector 8", "North Karachi - Sector 9", "North Nazimabad - Block A", "North Nazimabad - Block B", "North Nazimabad - Block C", "North Nazimabad - Block D", "North Nazimabad - Block E", "North Nazimabad - Block F", "North Nazimabad - Block G", "North Nazimabad - Block H", "North Nazimabad - Block I", "North Nazimabad - Block J", "North Nazimabad - Block K", "North Nazimabad - Block L", "North Nazimabad - Block M", "North Nazimabad - Block N", "North Nazimabad - Block O", "North Nazimabad - Block P", "North Nazimabad - Block Q", "North Nazimabad - Block R", "North Nazimabad - Block S", "North Nazimabad - Block T", "Old Town - Bhimpora", "Old Town - Bohra Pir", "Old Town - Bombay Bazar", "Old Town - Jodia Bazar", "Old Town - Kagzi Bazar", "Old Town - Kakri Ground", "Old Town - Kamil Gali", "Old Town - Khada Market", "Old Town - Kharadar", "Old Town - Lee Market", "Old Town - Mithadar", "Old Town - Nanwara", "Old Town - Nishter Road", "Old Town - Pan Mandi", "Old Town - Ramswami", "Old Town - Ranchorline", "Orangi Town - Banaras Town", "Orangi Town - Bangla Bazaar", "Orangi Town - Bilal Colony", "Orangi Town - Katti Pahari", "Orangi Town - Moria Goth Orangi", "Orangi Town - Orangi", "Orangi Town - Sector 14 - A", "Orangi Town - Sector 14 - C", "Orangi Town - Thorani Goth", "Baldiya Town", "Baloch Colony", "Civil Line", "FC Area", "Firdous Colony", "Gulshan-e-Maymar", "Hawksbay", "I.I Chundrigar", "Jamshed Road", "K.D.A Officers", "Kemari", "Liyari", "M.A Jinnah Rd", "Manora", "New Karachi", "New Surjani", "PIB Colony", "Pipri Goth", "Rizvia Society", "Saddar", "Scheme 33", "Shabbirabad", "P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2", "P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4", "P.E.C.H.S - Block 5", "P.E.C.H.S - Block 6", "P.E.C.H.S - Khalid Bin Walid", "P.E.C.H.S - Tariq Road", "S.I.T.E - Golimar", "S.I.T.E - S.I.T.E", "Shah Faisal Colony - Aswan Town", "Shah Faisal Colony - Gulshan-e-Asghar", "Shah Faisal Colony - Shah Faisal Colony 1", "Shah Faisal Colony - Shah Faisal Colony 5", "F.B Area - Block 7", "F.B Area - Block 9", "P.E.C.H.S - Block 7", "Aram Bagh", "Bath Island", "University Road", "Bahadurabad", "Shah Faisal Colony - 4", "Banglore Town", "Fowler Lines", "Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal", "Shah Faisal Colony - 3", "Shah Faisal Colony - Green Town", "Darwaish Colony", "Korangi - Sector 31 B", "Firdous Colony", "North Nazimabad - Block W", "K.A.E.C.H.S", "Mehmoodabad", "Korangi - Mehran Town", "Landhi Town - 36 B", "Karachi Memon Society", "Madras Cooperative Housing Society", "Shahrah-e-Faisal", "Korangi - Sector 41 B", "Clifton - Delhi Colony", "Korangi - Sector 32 B", "Dhoraji - Adamjee Nagar", "Bhimpura", "Dhoraji - CP& Berar Society", "Shahra-e-Faisal - Umar Colony", "Model Colony", "Gulshan-e-Shamim", "Clifton - Shah Rasool Colony", "North Karachi - Sector 12 C", "Jail Road - Hyderabad Colony", "Napier Quarter", "Gulzar-e-Hijri", "North Karachi - Sector 12 A", "Shahra-e-Faisal - Jinnah Housing Society", "K.D.A Scheme 1", "Clifton - Punjab Colony", "Korangi - Sector 31 D", "Clifton - Zamzama", "Parsi Colony", "Qayyumabad", "Khokrapar", "Shah Faisal Colony - Muslimabad Malir City", "F.B Area - Block 8", "Nanak Wara", "Mohammad Ali Society", "Manzoor Colony", "Dalmia", "Defence View - Phase 1", "Defence View - Phase 2", "KDA Officers Housing Society", "Karimabad", "Soldier Bazar", "Hussainabad", "Sharfabad Society", "Gharibabad", "Sindhi Muslim Cooperative Housing Society"},
-									  rndcts = {"Your heart is the size of an ocean. Go find yourself in its hidden depths.", "The bay of bengal is hit frequently by cyclones. The months of november and may, in particular, are dangerous in this regard.", "Thinking is the capital, enterprise is the way, hard work is the solution.", "If you can\'t make it good, at least make it look good.", "Heart be brave. If you cannot be brave, just go. Love\'s glory is not a small thing.", "It is bad for a young man to sin; but it is worse for an old man to sin.", "If you are out to describe the truth, leave elegance to the tailor.", "O man you are busy working for the world, and the world is busy trying to turn you out.", "While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.", "These capitalists generally act harmoniously and in concert, to fleece the people.", "I don\'t believe in failure. It is not failure if you enjoyed the process.", "Do not get elated at any victory, for all such victory is subject to the will of god.", "Wear gratitude like a cloak and it will feed every corner of your life.", "If you even dream of beating me you\'d better wake up and apologize.", "I will praise any man that will praise me.", "One of the greatest diseases is to be nobody to anybody.", "I\'m so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.", "People must learn to hate and if they can learn to hate, they can be taught to love.", "Everyone has been made for some particular work, and the desire for that work has been put in every heart.", "The less of the world, the freer you live.", "Respond to every call that excites your spirit.", "The way to get started is to quit talking and begin doing.", "God doesn\'t require us to succeed, he only requires that you try.", "Speak any language, turkish, greek, persian, arabic, but always speak with love.", "Happiness comes towards those which believe in him.", "Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.", "When I am silent, I have thunder hidden inside.", "Technological progress is like an axe in the hands of a pathological criminal.", "No one would choose a friendless existence on condition of having all the other things in the world.", "Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don\'t let yourself believe it will happen to you.", "The end of life is to be like god, and the soul following god will be like him.", "Let us sacrifice our today so that our children can have a better tomorrow.", "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.", "In every religion there is love, yet love has no religion.", "Everything in the universe is within you. Ask all from yourself.", "I\'m not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.", "What do I wear in bed? Why, chanel no. 5, of course.", "A good head and a good heart are always a formidable combination.", "The soul never thinks without a picture.", "In your light I learn how to love. In your beauty, how to make poems. You dance inside my chest where no-one sees you, but sometimes I do, and that sight becomes this art.", "Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.", "If you like your brother and he\'s prospering, you\'ll be pleased for him.", "Success is dependent upon the glands - sweat glands.", "Champions are not generated from the championship. Champion is generated from something they have in them, desires, dreams, and visions.", "No matter what is the environment around you, it is always possible to maintain your brand of integrity.", "Applause waits on success.", "Just as courage imperils life, fear protects it.", "It\'s better to be a lion for a day than a sheep all your life.", "The devil\'s voice is sweet to hear.", "Sometimes the people with the worst past, create the best future.", "Every day, nay every moment, try to do some good deed.", "No matter what people tell you, words and ideas can change the world.", "Champions have to have the skill and the will. But the will must be stronger than the skill.", "Men occasionally stumble over the truth, but most of them pick themselves up and hurry off as if nothing had happened.", "Goodbyes are only for those who love with their eyes. Because for those who love with heart and soul there is no such thing as separation.", "The best revenge is to improve yourself.", "Success is a personal standard, reaching for the highest that is in us, becoming all that we can be.", "When you have really exhausted an experience you always reverence and love it.", "Now you see me, now you don\'t. George thinks he will, but I know he won\'t!", "Elegance does not consist in putting on a new dress.", "It is always consoling to think of suicide: in that way one gets through many a bad night.", "Eating words has never given me indigestion.", "India has to be transformed into a developed nation, a prosperous nation and a healthy nation, with a value system.", "It\'s not bragging if you can back it up.", "I wish people would love everybody else the way they love me. It would be a better world.", "Why do I want my wife to show off her panties when the wind blows? Horses show their behinds, and cows and mules, not humans.", "Words are only painted fire; a look is the fire itself.", "Words, without power, is mere philosophy.", "The cure for pain is in the pain.", "Whatever happens, just keep smiling and lose yourself in love.", "Do the right thing. It will gratify some people and astonish the rest.", "Only the soul knows what love is.", "Earning of livelihood by following some profession is better than living on charity.", "Burdens are the foundations of ease and bitter things the forerunners of pleasure.", "Too many have dispensed with generosity in order to practice charity.", "Even the greatest was once a beginner. Don\'t be afraid to take that first step.", "No great intellectual thing was ever done by great effort.", "To fight against one\'s desires is the greatest of all fights.", "Innovation distinguishes between a leader and a follower.", "We enjoy the process far more than the proceeds.", "When I started counting my blessings, my whole life turned around.", "This being human is a guest house. Every morning a new arrival. Welcome and entertain them all!", "All my life I\'ve looked at words as though I were seeing them for the first time.", "Waiting is painful. Forgetting is painful. But not knowing which to do is the worse kind of suffering.", "Never allow someone to be your priority while allowing yourself to be their option.", "To jaw-jaw is always better than to war-war.", "That\'s the real trouble with the world, too many people grow up", "It is easier to stay out than get out.", "The worst man is the one who sees himself as the best.", "The world breaks everyone, and afterward, some are strong at the broken places.", "Rule no.1: never lose money. Rule no.2: never forget rule no.1.", "Convergence of our views on global trade issues under the wto and our common resolve to combat terrorism provide a valuable base for mutual understanding.", "Whenever you find yourself on the side of the majority, it is time to pause and reflect.", "Whatever is done for love always occurs beyond good and evil.", "Things should be made as simple as possible, but not any simpler.", "Stop acting so small. You are the universe in ecstatic motion.", "All truth is simple... Is that not doubly a lie?", "Money is only a tool. It will take you wherever you wish, but it will not replace you as the driver.", "The fight is won or lost far away from witnesses - behind the lines, in the gym, and out there on the road, long before I dance under those lights.", "He who avoids complaint invites happiness.", "We are the mirror - as well as the face in it.", "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "For 2,500 years, india has never invaded anybody.", "If past history was all there was to the game, the richest people would be librarians.", "Your souls are precious and can only be equal to the price of paradise, therefore sell them only at that price.", "A wise man can learn more from a foolish question than a fool can learn from a wise answer.", "If allah wants for a people ill, he gives them debates and takes away from them actions.", "He who builds a masjid in the way of allah, god will build a house for him in the paradise.", "Love is blind; friendship closes its eyes.", "Don\'t go around saying the world owes you a living. The world owes you nothing. It was here first.", "An alert and learned man will take advice from any event.", "I don\'t count my sit-ups. I only start counting when it starts hurting. When I feel pain, that\'s when I start counting, because that\'s when it really counts.", "The wound is the place where the light enters you.", "Luxury is an obstacle, and so is the fatness of the body.", "Come, come, whoever you are. Wanderer, worshiper, lover of leaving. It doesn\'t matter. Ours is not a caravan of despair. Come, even if you have broken your vows a thousand times. Come, yet again, come, come.", "The golden age is before us, not behind us.", "Fiction is the truth inside the lie.", "Believe you can and you\'re halfway there.", "All the great things are simple, and many can be expressed in a single word: freedom, justice, honor, duty, mercy, hope.", "Allah\'s the arabic term for god. Stand up for god, fight for god, work for god and do the right thing, and go the right way, things will end up in your corner.", "Anger is never without a reason, but seldom with a good one.", "Good actions are a guard against the blows of adversity.", "Use the same measure for selling that you use for purchasing.", "The secret of getting ahead is getting started", "I don\'t know the key to success, but the key to failure is trying to please everybody.", "Real loss is only possible when you love something more than you love yourself.", "This is the first convention of the space age - where a candidate can promise the moon and mean it.", "I don\'t like that man. I must get to know him better.", "To shipbrokers, coal was black gold.", "History, despite its wrenching pain, cannot be unlived, but if faced with courage, need not be lived again.", "Success is not achieved by winning all the time. Real success comes when we rise after we fall. Some mountains are higher than others. Some roads steeper than the next. There are hardships and setbacks but you cannot let them stop you. Even on the steepest road you must not turn back.", "A riot is the language of the unheard.", "The law is reason, free from passion.", "The people who abandon jihad fall a victim to humility and degradation.", "We are all born with a divine fire in us. Our efforts should be to give wings to this fire and fill the world with the glow of its goodness.", "Woman was god\'s second mistake.", "All black americans have slave names. They have white names; names that the slave master has given to them.", "I\'m most proud of my family.", "And you? When will you begin that long journey into yourself?", "How many lessons there are and how little they are taken.", "The best way to make your dreams come true is to wake up.", "What one writer can make in the solitude of one room is something no power can easily destroy.", "If there is something to pardon in everything, there is also something to condemn.", "At home I am a nice guy: but I don\'t want the world to know. Humble people, I\'ve found, don\'t get very far.", "No amount of guilt can change the past and no amount of worrying can change the future.", "Not the ones speaking the same language, but the ones sharing the same feeling understand each other.", "It is better to deserve honors and not have them than to have them and not deserve them.", "Success is a lousy teacher. It seduces smart people into thinking they can\'t lose.", "Cursed is the man who dies, but the evil done by him survives.", "The quality, not the longevity, of one\'s life is what is important.", "Age is whatever you think it is. You are as old as you think you are.", "Derivatives are financial weapons of mass destruction.", "Don\'t you know yet? It is your light that lights the worlds.", "Hold on to your salah, because if you lose that, you will lose everything else.", "I am not this hair. I am not this skin. I am the soul that lives within.", "Be faithful in small things because it is in them that your strength lies.", "He who sleeps without offering the night prayer, may he never enjoy a sound sleep.", "I was influenced a lot by those around me - there was a lot of singing that went on in the cotton fields.", "Greed is permanent slavery.", "Everything that we see is a shadow cast by that which we do not see.", "To the master\'s honor all must turn, each in its track, without a sound, forever tracing newton\'s ground.", "Women are the field that produces our nation. And if you can\'t protect your women, you can\'t protect your nation.", "To give victory to the right, not bloody bullets, but peaceful ballots only, are necessary.", "The ache for home lives in all of us, the safe place where we can go as we are and not be questioned.", "Don\'t be distracted by criticism. Remember ~ the only taste of success some people have is when they take a bite out of you.", "Words are a pretext. It is the inner bond that draws one person to another, not words.", "Where there is no struggle, there is no strength.", "The function of muscle is to pull and not to push, except in the case of the genitals and the tongue.", "Through love, all pain will turn to medicine.", "Do not be embarrassed by your failures, learn from them and start over.", "I know where I\'m going and I know the truth, and I don\'t have to be what you want me to be. I\'m free to be what I want.", "He who prays five times a day is in the protection of god, and he who is protected by god cannot be harmed by anyone.", "I find hope in the darkest of days, and focus in the brightest. I do not judge the universe.", "The wisest among you is he whose sustenance is the fear of allah.", "Because I cannot sleep I make music in the night.", "Strive not to be a success, but rather to be of value.", "If you tell the truth, you don\'t have to remember anything.", "Disneyland will never be completed. It will continue to grow as long as there is imagination left in the world.", "If you have good thoughts they will shine out of your face like sunbeams and you will always look lovely.", "If you wish to be a mine of jewels, open the deep ocean within your heart.", "Let me alone, and go in search of someone else.", "A true friend is one who sees a fault, gives you advice and who defends you in your absence.", "You can tell whether a man is clever by his answers. You can tell whether a man is wise by his questions.", "No one changes the world who isn\'t obsessed.", "The best deed of a great man is to forgive and forget.", "One may sometimes tell a lie, but the grimace that accompanies it tells the truth.", "Do not hate what you do not know, for the greater part of knowledge consists of what you do not know.", "Love begins at home, and it is not how much we do... But how much love we put in that action.", "My religion is very simple. My religion is kindness.", "There are forces in life working for you and against you. One must distinguish the beneficial forces from the malevolent ones and choose correctly between them.", "Beware of little expenses. A small leak will sink a great ship.", "All my life through, the new sights of nature made me rejoice like a child.", "He who indulges in falsehood will find the paths of paradise shut to him.", "Man is descended from a hairy, tailed quadruped, probably arboreal in its habits.", "The minute I heard my first love story, I started looking for you.", "People of the world don\'t look at themselves, and so they blame one another.", "The truth. It is a beautiful and terrible thing, and must therefore be treated with great caution.", "The object of the superior man is truth.", "Live amongst people in such a manner that if you die they weep over you and if you are alive they crave for your company.", "Pride in the case of a rich man is bad, but pride in the case of a poor man is worse.", "Tell me and I forget. Teach me and I remember. Involve me and I learn.", "Why is it that we rejoice at a birth and grieve at a funeral? It is because we are not the person involved.", "If you have a particular faith or religion, that is good. But you can survive without it.", "You don\'t want no pie in the sky when you die, you want something here on the ground while you\'re still around.", "Don\'t be satisfied with stories, how things have gone with others. Unfold your own myth.", "Purify your eyes, and see the pure world. Your life will fill with radiant forms.", "Associating with the wise and the knowledgeable people adds to the prestige of a person.", "There is no darkness but ignorance.", "All great achievements require time.", "One does not leave a convivial party before closing time.", "You are not only responsible for what you say, but also for what you do not say.", "So go ahead. Fall down. The world looks different from the ground.", "When we lose one blessing, another is often most unexpectedly given in its place.", "Intelligence is the wife, imagination is the mistress, memory is the servant.", "It is a matter of shame that in the morning the birds should be awake earlier than you.", "What doesn\'t kill us makes us stronger.", "The weakest man is the one who is able to correct his moral defects, but doesn\'t take action.", "I do not need the idea of god to explain the world I live in.", "The highest person is he who is of most use to humankind.", "Common sense is the collection of prejudices acquired by age eighteen.", "Do not let your difficulties fill you with anxiety, after all it is only in the darkest nights that stars shine more brightly.", "Preserve the sayings of those people who are indifferent to the world. They say only that what allah wishes them to say.", "I hated every minute of training, but I said, \"don\'t quit. Suffer now and live the rest of your life as a champion.\"", "The only way to do news on television is not to be terrified of it.", "It is a mistake to look too far ahead. Only one link of the chain of destiny can be handled at a time.", "I\'ll destroy you. I am the master of disaster.", "I fear the day when the kuffar are proud of their falsehood, and the muslims are shy of their faith.", "Stay in college, get the knowledge. And stay there until you\'re through. If they can make penicillin out of moldy bread, they can sure make something out of you.", "Those who dare to fail miserably can achieve greatly.", "You show your worth by what you seek.", "Acquire knowledge before you become leaders and pride prevents you from learning and you live in ignorance.", "Fear is the main source of superstition, and one of the main sources of cruelty. To conquer fear is the beginning of wisdom.", "If a free society cannot help the many who are poor, it cannot save the few who are rich.", "As he was valiant, I honour him. But as he was ambitious, I slew him.", "Who\'s gonna dare to be great?", "He who keeps his own counsel keeps his affairs in his own hands.", "To whatever extent a person\'s knowledge increases, his attention will be turned more towards his soul.", "If an ignorant person is attracted by the things of the world, that is bad. But if a learned person is thus attracted, it is worse.", "Surely silence can sometimes be the most eloquent reply.", "Once your mind stretches to a new level it never goes back to its original dimension.", "I was saying \"I\'m the greatest\" long before I believed it.", "Our peace shall stand as firm as rocky mountains.", "Only buy something that you\'d be perfectly happy to hold if the market shut down for 10 years.", "Intellectual property has the shelf life of a banana.", "He who understands humanity seeks solitude.", "I was not created to be occupied by eating delicious foods like tied up cattle.", "Time stays long enough for anyone who will use it.", "I feel the same way about disco as I do about herpes.", "Civilization is the limitless multiplication of unnecessary necessities.", "If you hear a voice within you say \'you cannot paint \' then by all means paint, and that voice will be silenced.", "When one has not had a good father, one must create one.", "I\'ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.", "If we cannot now end our differences, at least we can help make the world safe for diversity.", "The cautious seldom err.", "Admiration for a quality or an art can be so strong that it deters us from striving to possess it.", "I myself prefer my new zealand eggs for breakfast.", "To line only for some unknown future is superficial.", "Money is the barometer of a society\'s virtue.", "Convictions are more dangerous foes of truth than lies.", "I have not failed. I\'ve just found 10 000 ways that won\'t work.", "Maybe a thing that you do not like is really in your interest. It is possible that a thing that you may desire may be against your interest.", "People always ask me, \'were you funny as a child?\' well, no, I was an accountant.", "I\'m not an expert on the arms race.", "Sit with those who love allah, for that enlightens the mind.", "You cannot perform in a manner inconsistent with the way you see yourself.", "I say that the most liberating thing about beauty is realizing that you are the beholder.", "Happiness in intelligent people is the rarest thing I know.", "A person who never made a mistake never tried anything new.", "In the big leagues everyone has ability. It always comes down to mind games. Who ever is more mentally strong-wins.", "Don\'t take rest after your first victory because if you fail in second, more lips are waiting to say that your first victory was just luck.", "Stop learning. Start knowing.", "One of the greatest discoveries a man makes, one of his great surprises, is to find he can do what he was afraid he couldn\'t do.", "You are never too old to set another goal or to dream a new dream.", "Keep your eyes on the stars, and your feet on the ground.", "I know of only one duty, and that is to love.", "God helps those who help themselves.", "You are not just the drop in the ocean. You are the mighty ocean in the drop.", "Teaching is a very noble profession that shapes the character, caliber, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.", "A man should never neglect his family for business.", "Isn\'t it strange that I who have written only unpopular books should be such a popular fellow?", "Drag your thoughts away from your troubles... By the ears, by the heels, or any other way you can manage it.", "The greatest discovery of all time is that a person can change his future by merely changing his attitude.", "Whoever listens to slander is himself a slanderer.", "The best way to find out if you can trust somebody is to trust them.", "Take account of your deeds before they are taken account of.", "Faith is taking the first step even when you don\'t see the whole staircase.", "To give thanks in solitude is enough. Thanksgiving has wings and goes where it must go. Your prayer knows much more about it than you do.", "Those who dare to fail miserably can achieve greatly.", "Like your body your mind also gets tired so refresh it by wise sayings.", "God helps those who fear him.", "During civil disturbance adopt such an attitude that people do not attach any importance to you - they neither burden you with complicated affairs, nor try to derive any advantage out of you.", "Whether you think that you can, or that you can\'t, you are usually right.", "O! Let me not be mad, not mad, sweet heaven; keep me in temper; I would not be mad!", "The man with no imagination has no wings.", "Today, india is a nuclear weapons state.", "The public is merely a multiplied \"Me.\"", "If a man could have half of his wishes, he would double his troubles.", "There are no moral phenomena at all, but only a moral interpretation of phenomena.", "To say \"I love you\" one must first be able to say the \"I.\"", "Patience to faith is like the head to the body. The person who has no patience has not faith.", "Nations are born in the hearts of poets, they prosper and die in the hands of politicians.", "Rivers, ponds, lakes and streams - they all have different names, but they all contain water. Just as religions do - they all contain truths.", "The time has come to turn your heart into a temple of fire. Your essence is gold hidden in dust. To reveal its splendor you need to burn in the fire of love.", "Only last week I murdered a rock, injured a stone and hospitalized a brick.", "If you would have a faithful servant, and one that you like, serve yourself.", "If all you can do is crawl, start crawling.", "Extreme hopes are born from extreme misery.", "When a person cannot deceive himself the chances are against his being able to deceive other people.", "I am the greatest. I said that even before I knew I was. Don\'t tell me I can\'t do something. Don\'t tell me it\'s impossible. Don\'t tell me I\'m not the greatest. I\'m the double greatest.", "Geologists have a saying - rocks remember.", "Be silent, only the hand of god can remove the burdens of your heart.", "Peace cannot be kept by force; it can only be achieved by understanding.", "The best way to get a bad law repealed is to enforce it strictly.", "Wherever you are, and whatever you do, be in love.", "Should I kill myself, or have a cup of coffee?", "It is very dangerous to have your self-worth riding on your results as an athlete.", "No part of the education of a politician is more indispensable than the fighting of elections.", "War is never a lasting solution for any problem.", "I never think of the future - it comes soon enough.", "At the end of my life, with just one breath left, if you come, I\'ll sit up and sing.", "Indigestion is charged by god with enforcing morality on the stomach.", "Fear allah, for he alone lives; all other things are liable to perish.", "I once had a thousand desires. But in my one desire to know you, all else melted away.", "God forbid, men should be jealous of knowledge as they are jealous of women.", "I wish they would only take me as I am.", "I have lived on the lip of insanity, wanting to know reasons, knocking on a door. It opens. I\'ve been knocking from the inside.", "Once you replace negative thoughts with positive ones, you\'ll start having positive results.", "What is wanted is not the will to believe, but the will to find out, which is the exact opposite.", "I\'m going to show you how great I am!", "In the depth of winter I finally learned that there was in me an invincible summer.", "He who fears to weep, should learn to be kind to those who weep.", "The criminal is trying to solve his immediate problems.", "It is very easy to defeat someone, but it is very hard to win someone.", "A casual stroll through the lunatic asylum shows that faith does not prove anything.", "Things may come to those who wait, but only the things left by those who hustle.", "No sanction can stand against ignited minds.", "Understanding the knowledge and wisdom of the qur\'an is by far, higher than memorizing.", "Gratitude is the wine for the soul. Go on. Get drunk.", "All of our dreams can come true.", "The days of life pass away like clouds, so do good while you are alive.", "Once the choice is made, do not look back, do not second-guess your decisions.", "Tear off the mask. Your face is glorious.", "How hard, how bitter it is to become a man!", "Conduct, which involves a decision of the ultimate fate of the agent cannot be based on illusions.", "I don\'t know who my grandfather was; I am much more concerned to know what his grandson will be.", "Look for the answer inside your question.", "Adversity makes men, and prosperity makes monsters.", "Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.", "It is better to remain silent and be thought a fool than to open one\'s mouth and remove all doubt.", "He who has never learned to obey cannot be a good commander.", "You cannot create experience. You must undergo it.", "I am grateful for all my victories, but I am especially grateful for my losses, because they only made me work harder.", "No legacy is so rich as honesty.", "The outcome of fear is disappointment and shyness is frustration.", "All my life through, the new sights of nature made me rejoice like a child.", "He who avoids complaint invites happiness.", "Work with integrity and succeed with integrity.", "You were born with potential. You were born with goodness and trust. You were born with ideals and dreams. You were born with greatness. You were born with wings. You are not meant for crawling, so don\'t. You have wings. Learn to use them and fly.", "Move, but don\'t move the way fear makes you move.", "It does not matter how slowly you go as long as you do not stop.", "There is no nobility with bad manners.", "You should not quarrel with your neighbor, for he will remain where he is, but your high handedness will become the talk of the people.", "Never stop fighting until you arrive at your destined place - that is, the unique you. Have an aim in life, continuously acquire knowledge, work hard, and have perseverance to realise the great life.", "I like to see a man proud of the place in which he lives. I like to see a man live so that his place will be proud of him.", "Let me define a leader. He must have vision and passion and not be afraid of any problem. Instead, he should know how to defeat it. Most importantly, he must work with integrity.", "Whatever your heart clings to and confides in, that is really your god.", "Dogs never bite me. Humans do.", "Your successes and happiness are forgiven you only if you generously consent to share them.", "When a person really desires something, all the universe conspires to help that person to realize his dream.", "I didn\'t fail the test, I just found 100 ways to do it wrong.", "One who thinks and reflects develops his foresight and vision.", "When red-haired people are above a certain social grade their hair is auburn.", "I have held many things in my hands, and I have lost them all; but whatever I have placed in god\'s hands, that I still possess.", "Always remember you are braver than you believe, stronger than you seem, smarter than you think and twice as beautiful as you\'d ever imagined. Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "That which you do not wish for yourself, do not impose on others.", "I am the greatest, I said that even before I knew I was.", "There is no labor a person does that is undignified; if they do it right.", "The people themselves, and not their servants, can safely reverse their own deliberate decisions.", "I hated every minute of training, but I said, \'don\'t quit. Suffer now and live the rest of your life as a champion.\'", "We shall draw from the heart of suffering itself the means of inspiration and survival.", "When the solution is simple, god is answering.", "I have a theory that the truth is never told during the nine-to-five hours.", "Democracy is when the indigent, and not the men of property, are the rulers.", "You\'re not going to enjoy every minute of the journey, but the success you\'ll find at the end will make it all worth it.", "It\'s hard to be humble when you\'re as great as I am.", "There is no knowledge and science like pondering and thought; and there is no prosperity and advancement like knowledge and science.", "If we did all the things we are capable of, we would literally astound ourselves.", "Be like a tree and let the dead leaves drop.", "Don\'t find fault, find a remedy.", "A friend cannot be considered a friend until he is tested in three occasions: in timeof need, behind your back, and after your death.", "I\'m too fast. I\'m too smart. I\'m too pretty.", "You cannot create experience. You must undergo it.", "Indignation is a submission of our thoughts, but not of our desires.", "Sir, my concern is not whether god is on our side; my greatest concern is to be on god\'s side, for god is always right.", "At times one remains faithful to a cause only because its opponents do not cease to be insipid.", "I put my heart and my soul into my work, and have lost my mind in the process.", "In a competition of love we\'ll all share in the victory, no matter who comes first.", "Some are born great, some achieve greatness, and some have greatness thrust upon them.", "There is no capital more useful than intellect and wisdom, and there is no indigence more injurious than ignorance and unawareness.", "There is a voice that doesn\'t use words. Listen.", "If a sheep dies on the shore of the euphrates I fear lest allah ask me to account for it on the day of resurrection.", "Do not deceive or be faithless even with your enemy.", "Pondering must turn out to be your cash asset, regardless of whichever ups and downs you occur throughout in the everyday living.", "Building capacity dissolves differences. It irons out inequalities.", "All your anxiety is because of your desire for harmony. Seek disharmony, then you will gain peace.", "As long as you are pure of heart, you speak the truth.", "Most people spend more time and energy going around problems than in trying to solve them.", "If you judge people, you have no time to love them.", "Talent in cheaper than table salt. What separates the talented individual from the successful one is a lot of hard work.", "The world we have created is a product of our thinking.", "When a hundred men stand together, each of them loses his mind and gets another one.", "Fanatics are picturesque, mankind would rather see gestures than listen to reasons.", "Every day is different, and some days are better than others, but no matter how challenging the day, I get up and live it.", "The educated southerner has no use for an \'r\', except at the beginning of a word.", "To love is to act.", "My dream is of a place and a time where america will once again be seen as the last best hope of earth.", "What comes, will go. What is found, will be lost again. But what you are is beyond coming and going and beyond description.", "Dreams are not those which comes while we are sleeping, but dreams are those when u don\'t sleep before fulfilling them.", "To fear love is to fear life, and those who fear life are already three parts dead.", "Expect the best. Prepare for the worst. Capitalize on what comes.", "My soul is my guide, for my soul is of that abode. I will not speak of the earthly. I am of the unknown.", "Many marriages would be better if the husband and the wife clearly understood that they are on the same side.", "Try not to resist the changes that come your way. Instead let life live through you. And do not worry that your life is turning upside down. How do you know that the side you are used to is better than the one to come?", "Religions have different names, and they all contain truth, expressed in different ways forms and times.", "All that I am, or hope to be, I owe to my angel mother.", "Doing as others told me, I was blind. Coming when others called me, I was lost. Then I left everyone, myself as well. Then I found everyone, myself as well.", "Happiness is when what you think, what you say, and what you do are in harmony.", "Nothing will work unless you do.", "My books are like water; those of the great geniuses are wine. (fortunately) everybody drinks water.", "Grief can be the garden of compassion. If you keep your heart open through everything, your pain can become your greatest ally in your life\'s search for love and wisdom.", "To be alone means that you avoid bad company. But to have a true friend is better than being alone.", "I am the greatest.", "Only a man who knows what it is like to be defeated can reach down to the bottom of his soul and come up with the extra ounce of power it takes to win when the match is even.", "Riches without faith are the greatest poverty.", "I\'m the most recognized and loved man that ever lived cuz there weren\'t no satellites when jesus and moses were around, so people far away in the villages didn\'t know about them.", "The lord prefers common-looking people. That is why he makes so many of them.", "Whether you love god or you love a human being, if you love enough you will come into the presence of love itself.", "O allah do not give me in excess lest I may be disobedient.", "Eros will have naked bodies; friendship naked personalities.", "In a democracy, the well-being, individuality and happiness of every citizen is important for the overall prosperity, peace and happiness of the nation.", "The happiest of people is the one under whose care people are happy because of him, and the most miserable of people is the one under whose care people are miserable because of him.", "He who guards his secrets retains control in his own hands.", "Success is not achieved by winning all the time. Real success comes when we rise after we fall.", "Humility is not thinking less of yourself, it\'s thinking of yourself less.", "No amount of worrying can change the future. Go easy on yourself, for the outcome of all affairs is determined by god\'s decree. If something is meant to go elsewhere, it will never come your way, but if it is yours by destiny, from you it cannot flee.", "Fear him, whom you hate.", "The word of god is the medicine of the heart.", "Do you think god gets stoned? I think so... Look at the platypus.", "The good life is one inspired by love and guided by knowledge.", "I believe in christianity as I believe that the sun has risen: not only because I see it, but because by it I see everything else.", "The airplane has had a big impact on my life.", "We make a living by what we get, but we make a life by what we give.", "Indifference and neglect often do much more damage than outright dislike.", "When I am silent, I fall into the place where everything is music.", "A word to the wise ain\'t necessary - it\'s the stupid ones that need the advice.", "Always consider your intellect to be lacking; otherwise too much faith in it surely leads to error.", "That\'s okay, I\'m still the greatest.", "When I look into the future, it\'s so bright it burns my eyes.", "I\'m gonna whup whoever stole my bike!", "To be a great champion you must believe you are the best. If you\'re not, pretend you are.", "Get up sucker and fight. Get up and fight.", "We shall require a substantially new manner of thinking if mankind is to survive.", "I try to build a full personality for each of our cartoon characters - to make them personalities.", "Without freedom, no art; art lives only on the restraints it imposes on itself, and dies of all others.", "When you\'re right, nobody remembers. When you\'re wrong, nobody forgets.", "We have one life; it soon will be past; what we do for god is all that will last.", "When we practice loving kindness and compassion we are the first ones to profit.", "I never gave up on country music because I knew what I was doing was not that bad.", "Israel, as the jewish state, must disappear from the map.", "The world is a dangerous place to live; not because of the people who are evil, but because of the people who don\'t do anything about it.", "It is not best that we should all think alike; it is a difference of opinion that makes horse races.", "Intense love does not measure, it just gives.", "A penny saved is a penny earned.", "Whatever purifies you is the right path, I will not try to define it.", "Coming together is a beginning; keeping together is progress; working together is success.", "Total commitment is the common denominator among all successful men and women.", "Rest but never quit. Even the sun has a sinking spell each evening. But it always rises the next morning. At sunrise, every soul is born again.", "You can have no dominion greater or less than that over yourself.", "I want you to be concerned about your next door neighbor. Do you know your next door neighbor?", "I shook up the world.", "I learned that every mortal will taste death. But only some will taste life.", "Parkinson\'s is my toughest fight. No, it doesn\'t hurt. It\'s hard to explain. I\'m being tested to see if I\'ll keep praying, to see if I\'ll keep my faith. All great people are tested by god.", "You have been a prisoner of a little pond I am the ocean and its turbulent flood come merge with me leave this world of ignorance.", "Do not share the knowledge with which you have been blessed with everyone in general, as you do with some people in particular; and know that there are some men in whom allah, may he he glorified, has placed hidden secrets, which they are forbidden to reveal.", "Your heart knows the way. Run in that direction.", "The angel is free because of his knowledge, the beast because of his ignorance. Between the two remains the son of man to struggle.", "I like not fair terms and a villain\'s mind.", "Our abode in this world is transitory, our life therein is but a loan, our breaths are numbered and our indolence is manifest.", "All credibility, all good conscience, all evidence of truth come only from the senses.", "Once spirit was god, then it became man, and now it is even becoming mob.", "Wealth tends to create enemies, whereas knowledge tends to warm hearts.", "Be afraid of a dignified man when he is hungry and a wicked man when his belly is full.", "Nothing says holidays, like a cheese log.", "A man wrapped up in himself makes a very small bundle.", "There is a candle in your heart, ready to be kindled. There is a void in your soul, ready to be filled. You feel it, don\'t you?", "I am the literary equivalent of a big mac and fries.", "To forgive an oppressor is oppression upon the oppressed.", "Our death is our wedding with eternity.", "Imagination is more important than knowledge.", "When proven wrong, the wise will correct themselves and the ignorants will just keep arguing.", "Grieving? Don\'t. With time, whatever you\'ve lost might come \'round in some other form.", "The breeze at dawn has secrets to tell you. Don\'t go back to sleep.", "Positive thinking will let you do everything better than negative thinking will.", "Design is not just what it looks like and feels like. Design is how it works.", "Contentment is a wealth that is never exhausted.", "There is nothing outside of yourself, look within. Everything you want is there. You are that."},
-									  rkuniss = {"Aga Khan University", "Air War College Institute, Karachi", "Baqai Medical University", "Benazir Bhutto Shaheed University Lyari", "Commecs Institute of Business & Emerging Sciences", "Dadabhoy Institute of Higher Education", "Dawood University of Engineering & Technology", "DHA Suffa University", "DOW University of Health Sciences", "Emaan Institute of Management & Sciences, Karachi", "Greenwich University", "Habib University", "Hamdard University", "ILMA University", "Indus University", "Indus Valley School of Art & Architecture", "Institute of Business Administration", "Institute of Business Management", "Iqra University", "Jinnah Sindh Medical University", "Jinnah University for Women", "Karachi Institute of Economics & Technology", "Karachi Institute of Technology and Entrepreneurship (KITE), Karachi", "Karachi School of Business and Leadership", "KASB Institute of Technology", "Malir University of Science & Technology, Karachi", "Metropolitan University Karachi", "Millennium Institute of Technology and Entrepreneurship, Karachi", "Muhammad Ali Jinnah University", "NED University of Engineering & Technology", "Newport Institute of Communications & Economics", "Pakistan Naval Academy", "Preston Institute of Management, Science & Technology", "Preston University", "Salim Habib University (Former Barret Hodgson University), Karachi", "Shaheed Benazir Bhutto City University", "Shaheed Benazir Bhutto Dewan University", "Shaheed Zulfikar Ali Bhutto Institute of Science & Technology", "Shaheed Zulfiqar Ali Bhutto University of Law", "Sindh Institute of Management & Technology", "Sindh Institute of Medical Sciences", "Sindh Madresatul Islam University", "Sir Syed University of Engineering & Technology", "Sohail University, Karachi", "Textile Institute of Pakistan", "The Nazeer Hussain University", "UIT University, Karachi", "University of Karachi", "Zia-ud-Din University"},
-									  rjbss = {"Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor", "Nurse", "Physician", "Laboratorian", "Psychiatrist/Psychologist", "Dermatologist", "Gynecologist", "Cardiologist", "Surgeon", "Ophthalmologist", "Pediatrician", "Watchman", "Tailor", "Designer", "Photographer", "Model", "Fashion Designer", "Makeup Artist", "Dressmaker", "Content Writer", "Police Officer", "Undercover Police Officer", "Prison Officer/Jailer", "Reporter", "Journalist", "Investigator", "Laborer", "Data Analyst", "Data Scientist", "Saleswo/man", "Tele-saleswo/man", "Developer", "Engineer", "Plumber", "Human Resources Manager", "Legal Counsel", "Judge", "Lawyer", "Travel Guide", "Scientist", "Goldsmith", "Blacksmith", "Lumberjack", "White-hat hacker", "Black-hat hacker", "Caretaker", "Nanny", "Fisher", "Architect", "Software Architect", "Farmer", "Agriculture Engineer", "Software Engineer", "Support Specialist", "Systems Analyst", "Technical Support Engineer", "Web Developer", "Web Designer", "Animator", "Filmmaker", "Actor", "Comedian", "Director", "Vocalist", "Musician", "Bedroom Musician/DJ", "Songwriter", "Screenwriter", "Barber", "Barista/Bartender", "Tattooist", "Electrician", "Vehicle Technician", "Cartoonist", "Cook", "Travel Advisor", "Translator", "Relationship Counselor", "accountant", "actor", "actuary", "adhesive bonding machine tender", "adjudicator", "administrative assistant", "administrative services manager", "adult education teacher", "advertising manager", "advertising sales agent", "aerobics instructor", "aerospace engineer", "aerospace engineering technician", "agent", "agricultural engineer", "agricultural equipment operator", "agricultural grader", "agricultural inspector", "agricultural manager", "agricultural sciences teacher", "agricultural sorter", "agricultural technician", "agricultural worker", "air conditioning installer", "air conditioning mechanic", "air traffic controller", "aircraft cargo handling supervisor", "aircraft mechanic", "aircraft service technician", "airline copilot", "airline pilot", "ambulance dispatcher", "ambulance driver", "amusement machine servicer", "anesthesiologist", "animal breeder", "animal control worker", "animal scientist", "animal trainer", "animator", "answering service operator", "anthropologist", "apparel patternmaker", "apparel worker", "arbitrator", "archeologist", "architect", "architectural drafter", "architectural manager", "archivist", "art director", "art teacher", "artist", "assembler", "astronomer", "athlete", "athletic trainer", "ATM machine repairer", "atmospheric scientist", "attendant", "audio and video equipment technician", "audio-visual and multimedia collections specialist", "audiologist", "auditor", "author", "auto damage insurance appraiser", "automotive and watercraft service attendant", "automotive glass installer", "automotive mechanic", "avionics technician", "back-end developer", "baggage porter", "bailiff", "baker", "barback", "barber", "bartender", "basic education teacher", "behavioral disorder counselor", "bellhop", "bench carpenter", "bicycle repairer", "bill and account collector", "billing and posting clerk", "biochemist", "biological technician", "biomedical engineer", "biophysicist", "blaster", "blending machine operator", "blockmason", "boiler operator", "boilermaker", "bookkeeper", "boring machine tool tender", "brazer", "brickmason", "bridge and lock tender", "broadcast news analyst", "broadcast technician", "brokerage clerk", "budget analyst", "building inspector", "bus mechanic", "butcher", "buyer", "cabinetmaker", "cafeteria attendant", "cafeteria cook", "camera operator", "camera repairer", "cardiovascular technician", "cargo agent", "carpenter", "carpet installer", "cartographer", "cashier", "caster", "ceiling tile installer", "cellular equipment installer", "cement mason", "channeling machine operator", "chauffeur", "checker", "chef", "chemical engineer", "chemical plant operator", "chemist", "chemistry teacher", "chief executive", "child social worker", "childcare worker", "chiropractor", "choreographer", "civil drafter", "civil engineer", "civil engineering technician", "claims adjuster", "claims examiner", "claims investigator", "cleaner", "clinical laboratory technician", "clinical laboratory technologist", "clinical psychologist", "coating worker", "coatroom attendant", "coil finisher", "coil taper", "coil winder", "Coach", "coin machine servicer", "commercial diver", "commercial pilot", "commodities sales agent", "communications equipment operator", "communications teacher", "community association manager", "community service manager", "compensation and benefits manager", "compliance officer", "composer", "computer hardware engineer", "computer network architect", "computer operator", "computer programmer", "computer science teacher", "computer support specialist", "computer systems administrator", "computer systems analyst", "concierge", "conciliator", "concrete finisher", "conservation science teacher", "conservation scientist", "conservation worker", "conservator", "construction inspector", "construction manager", "construction painter", "construction worker", "continuous mining machine operator", "convention planner", "conveyor operator", "cook", "cooling equipment operator", "copy marker", "correctional officer", "correctional treatment specialist", "correspondence clerk", "correspondent", "cosmetologist", "cost estimator", "costume attendant", "counseling psychologist", "counselor", "courier", "court reporter", "craft artist", "crane operator", "credit analyst", "credit checker", "credit counselor", "criminal investigator", "criminal justice teacher", "crossing guard", "curator", "custom sewer", "customer service representative", "cutter", "cutting machine operator", "dancer", "data entry keyer", "database administrator", "decorating worker", "delivery services driver", "demonstrator", "dental assistant", "dental hygienist", "dental laboratory technician", "dentist", "dermatologist", "derrick operator", "designer", "desktop publisher", "detective", "developer", "diagnostic medical sonographer", "die maker", "diesel engine specialist", "dietetic technician", "dietitian", "dinkey operator", "director", "dishwasher", "dispatcher", "DJ", "doctor", "door-to-door sales worker", "drafter", "dragline operator", "drama teacher", "dredge operator", "dressing room attendant", "dressmaker", "drier operator", "drilling machine tool operator", "dry-cleaning worker", "drywall installer", "dyeing machine operator", "earth driller", "economics teacher", "economist", "editor", "education administrator", "electric motor repairer", "electrical electronics drafter", "electrical engineer", "electrical equipment assembler", "electrical installer", "electrical power-line installer", "electrician", "electro-mechanical technician", "elementary school teacher", "elevator installer", "elevator repairer", "embalmer", "emergency management director", "emergency medical technician", "engine assembler", "engineer", "engineering manager", "engineering teacher", "english language teacher", "engraver", "entertainment attendant", "environmental engineer", "environmental science teacher", "environmental scientist", "epidemiologist", "escort", "etcher", "event planner", "excavating operator", "executive administrative assistant", "executive secretary", "exhibit designer", "expediting clerk", "explosives worker", "extraction worker", "fabric mender", "fabric patternmaker", "fabricator", "faller", "family practitioner", "family social worker", "family therapist", "farm advisor", "farm equipment mechanic", "farm labor contractor", "farmer", "farmworker", "fashion designer", "fast food cook", "fence erector", "fiberglass fabricator", "fiberglass laminator", "file clerk", "filling machine operator", "film and video editor", "financial analyst", "financial examiner", "financial manager", "financial services sales agent", "fine artist", "fire alarm system installer", "fire dispatcher", "fire inspector", "fire investigator", "firefighter", "fish and game warden", "fish cutter", "fish trimmer", "fisher", "fitness studies teacher", "fitness trainer", "flight attendant", "floor finisher", "floor layer", "floor sander", "floral designer", "food batchmaker", "food cooking machine operator", "food preparation worker", "food science technician", "food scientist", "food server", "food service manager", "food technologist", "foreign language teacher", "foreign literature teacher", "forensic science technician", "forest fire inspector", "forest fire prevention specialist", "forest worker", "forester", "forestry teacher", "forging machine setter", "foundry coremaker", "freight agent", "freight mover", "front-end developer", "fundraising manager", "funeral attendant", "funeral director", "funeral service manager", "furnace operator", "furnishings worker", "furniture finisher", "gaming booth cashier", "gaming cage worker", "gaming change person", "gaming dealer", "gaming investigator", "gaming manager", "gaming surveillance officer", "garment mender", "garment presser", "gas compressor", "gas plant operator", "gas pumping station operator", "general manager", "general practitioner", "geographer", "geography teacher", "geological engineer", "geological technician", "geoscientist", "glazier", "government program eligibility interviewer", "graduate teaching assistant", "graphic designer", "groundskeeper", "groundskeeping worker", "gynecologist", "hairdresser", "hairstylist", "hand grinding worker", "hand laborer", "hand packager", "hand packer", "hand polishing worker", "hand sewer", "hazardous materials removal worker", "head cook", "health and safety engineer", "health educator", "health information technician", "health services manager", "health specialties teacher", "healthcare social worker", "hearing officer", "heat treating equipment setter", "heating installer", "heating mechanic", "heavy truck driver", "highway maintenance worker", "historian", "history teacher", "hoist and winch operator", "home appliance repairer", "home economics teacher", "home entertainment installer", "home health aide", "home management advisor", "host", "hostess", "hostler", "hotel desk clerk", "housekeeping cleaner", "human resources assistant", "human resources manager", "human service assistant", "hunter", "hydrologist", "illustrator", "industrial designer", "industrial engineer", "industrial engineering technician", "industrial machinery mechanic", "industrial production manager", "industrial truck operator", "industrial-organizational psychologist", "information clerk", "information research scientist", "information security analyst", "information systems manager", "inspector", "instructional coordinator", "instructor", "insulation worker", "insurance claims clerk", "insurance sales agent", "insurance underwriter", "intercity bus driver", "interior designer", "internist", "interpreter", "interviewer", "investigator", "jailer", "janitor", "jeweler", "judge", "judicial law clerk", "kettle operator", "kiln operator", "kindergarten teacher", "laboratory animal caretaker", "landscape architect", "landscaping worker", "lathe setter", "laundry worker", "law enforcement teacher", "law teacher", "lawyer", "layout worker", "leather worker", "legal assistant", "legal secretary", "legislator", "librarian", "library assistant", "library science teacher", "library technician", "licensed practical nurse", "licensed vocational nurse", "life scientist", "lifeguard", "light truck driver", "line installer", "literacy teacher", "literature teacher", "loading machine operator", "loan clerk", "loan interviewer", "loan officer", "lobby attendant", "locker room attendant", "locksmith", "locomotive engineer", "locomotive firer", "lodging manager", "log grader", "logging equipment operator", "logistician", "machine feeder", "machinist", "magistrate judge", "magistrate", "maid", "mail clerk", "mail machine operator", "mail superintendent", "maintenance painter", "maintenance worker", "makeup artist", "management analyst", "manicurist", "manufactured building installer", "mapping technician", "marble setter", "marine engineer", "marine oiler", "market research analyst", "marketing manager", "marketing specialist", "marriage therapist", "massage therapist", "material mover", "materials engineer", "materials scientist", "mathematical science teacher", "mathematical technician", "mathematician", "maxillofacial surgeon", "measurer", "meat cutter", "meat packer", "meat trimmer", "mechanical door repairer", "mechanical drafter", "mechanical engineer", "mechanical engineering technician", "mediator", "medical appliance technician", "medical assistant", "medical equipment preparer", "medical equipment repairer", "medical laboratory technician", "medical laboratory technologist", "medical records technician", "medical scientist", "medical secretary", "medical services manager", "medical transcriptionist", "meeting planner", "mental health counselor", "mental health social worker", "merchandise displayer", "messenger", "metal caster", "metal patternmaker", "metal pickling operator", "metal pourer", "metal worker", "metal-refining furnace operator", "metal-refining furnace tender", "meter reader", "microbiologist", "middle school teacher", "milling machine setter", "millwright", "mine cutting machine operator", "mine shuttle car operator", "mining engineer", "mining safety engineer", "mining safety inspector", "mining service unit operator", "mixing machine setter", "mobile heavy equipment mechanic", "mobile home installer", "model maker", "model", "molder", "mortician", "motel desk clerk", "motion picture projectionist", "motorboat mechanic", "motorboat operator", "motorboat service technician", "motorcycle mechanic", "movers", "multimedia artist", "museum technician", "music director", "music teacher", "musical instrument repairer", "musician", "natural sciences manager", "naval architect", "network systems administrator", "new accounts clerk", "news vendor", "nonfarm animal caretaker", "nuclear engineer", "nuclear medicine technologist", "nuclear power reactor operator", "nuclear technician", "nursing aide", "nursing instructor", "nursing teacher", "nutritionist", "obstetrician", "occupational health and safety specialist", "occupational health and safety technician", "occupational therapist", "occupational therapy aide", "occupational therapy assistant", "offbearer", "office clerk", "office machine operator", "operating engineer", "operations manager", "operations research analyst", "ophthalmic laboratory technician", "optician", "optometrist", "oral surgeon", "order clerk", "order filler", "orderly", "ordnance handling expert", "orthodontist", "orthotist", "outdoor power equipment mechanic", "oven operator", "packaging machine operator", "painter ", "painting worker", "paper goods machine setter", "paperhanger", "paralegal", "paramedic", "parking enforcement worker", "parking lot attendant", "parts salesperson", "paving equipment operator", "payroll clerk", "pediatrician", "pedicurist", "personal care aide", "personal chef", "personal financial advisor", "personal trainer", "pest control worker", "pesticide applicator", "pesticide handler", "pesticide sprayer", "petroleum engineer", "petroleum gauger", "petroleum pump system operator", "petroleum refinery operator", "petroleum technician", "pharmacist", "pharmacy aide", "pharmacy technician", "philosophy teacher", "photogrammetrist", "photographer", "photographic process worker", "photographic processing machine operator", "physical therapist aide", "physical therapist assistant", "physical therapist", "physician assistant", "physician", "physicist", "physics teacher", "pile-driver operator", "pipefitter", "pipelayer", "planing machine operator", "planning clerk", "plant operator", "plant scientist", "plasterer", "plastic patternmaker", "plastic worker", "plumber", "podiatrist", "police dispatcher", "police officer", "policy processing clerk", "political science teacher", "political scientist", "postal service clerk", "postal service mail carrier", "postal service mail processing machine operator", "postal service mail processor", "postal service mail sorter", "postmaster", "postsecondary teacher", "poultry cutter", "poultry trimmer", "power dispatcher", "power distributor", "power plant operator", "power tool repairer", "precious stone worker", "precision instrument repairer", "prepress technician", "preschool teacher", "priest", "print binding worker", "printing press operator", "private detective", "probation officer", "procurement clerk", "producer", "product promoter", "product manager", "production clerk", "production occupation", "proofreader", "property manager", "prosthetist", "prosthodontist", "psychiatric aide", "psychiatric technician", "psychiatrist", "psychologist", "psychology teacher", "public relations manager", "public relations specialist", "pump operator", "purchasing agent", "purchasing manager", "radiation therapist", "radio announcer", "radio equipment installer", "radio operator", "radiologic technician", "radiologic technologist", "rail car repairer", "rail transportation worker", "rail yard engineer", "rail-track laying equipment operator", "railroad brake operator", "railroad conductor", "railroad police", "rancher", "real estate appraiser", "real estate broker", "real estate manager", "real estate sales agent", "receiving clerk", "receptionist", "record clerk", "recreation teacher", "recreation worker", "recreational therapist", "recreational vehicle service technician", "recyclable material collector", "referee", "refractory materials repairer", "refrigeration installer", "refrigeration mechanic", "refuse collector", "regional planner", "registered nurse", "rehabilitation counselor", "reinforcing iron worker", "reinforcing rebar worker", "religion teacher", "religious activities director", "religious worker", "rental clerk", "repair worker", "reporter", "residential advisor", "resort desk clerk", "respiratory therapist", "respiratory therapy technician", "retail buyer", "retail salesperson", "revenue agent", "rigger", "rock splitter", "rolling machine tender", "roof bolter", "roofer", "rotary drill operator", "roustabout", "safe repairer", "sailor", "sales engineer", "sales manager", "sales representative", "sampler", "sawing machine operator", "scaler", "school bus driver", "school psychologist", "school social worker", "scout leader", "sculptor", "secondary education teacher", "secondary school teacher", "secretary", "securities sales agent", "security guard", "security system installer", "segmental paver", "self-enrichment education teacher", "semiconductor processor", "septic tank servicer", "set designer", "sewer pipe cleaner", "sewing machine operator", "shampooer", "shaper", "sheet metal worker", "sheriff's patrol officer", "ship captain", "ship engineer", "ship loader", "shipmate", "shipping clerk", "shoe machine operator", "shoe worker", "short order cook", "signal operator", "signal repairer", "singer", "ski patrol", "skincare specialist", "slaughterer", "slicing machine tender", "slot supervisor", "social science research assistant", "social sciences teacher", "social scientist", "social service assistant", "social service manager", "social work teacher", "social worker", "sociologist", "sociology teacher", "software developer", "software engineer", "soil scientist", "solderer", "sorter", "sound engineering technician", "space scientist", "special education teacher", "speech-language pathologist", "sports book runner", "sports entertainer", "sports performer", "stationary engineer", "statistical assistant", "statistician", "steamfitter", "stock clerk", "stock mover", "stonemason", "street vendor", "streetcar operator", "structural iron worker", "structural metal fabricator", "structural metal fitter", "structural steel worker", "stucco mason", "substance abuse counselor", "substance abuse social worker", "subway operator", "surfacing equipment operator", "surgeon", "surgical technologist", "survey researcher", "surveying technician", "surveyor", "switch operator", "switchboard operator", "tailor", "tamping equipment operator", "tank car loader", "taper", "tax collector", "tax examiner", "tax preparer", "taxi driver", "teacher assistant", "teacher", "team assembler", "technical writer", "telecommunications equipment installer", "telemarketer", "telephone operator", "television announcer", "teller", "terrazzo finisher", "terrazzo worker", "tester", "textile bleaching operator", "textile cutting machine setter", "textile knitting machine setter", "textile presser", "textile worker", "therapist", "ticket agent", "ticket taker", "tile setter", "timekeeping clerk", "timing device assembler", "tire builder", "tire changer", "tire repairer", "title abstractor", "title examiner", "title searcher", "tobacco roasting machine operator", "tool filer", "tool grinder", "tool maker", "tool sharpener", "tour guide", "tower equipment installer", "tower operator", "track switch repairer", "tractor operator", "tractor-trailer truck driver", "traffic clerk", "traffic technician", "training and development manager", "training and development specialist", "transit police", "translator", "transportation equipment painter", "transportation inspector", "transportation security screener", "transportation worker", "trapper", "travel agent", "travel clerk", "travel guide", "tree pruner", "tree trimmer", "trimmer", "truck loader", "truck mechanic", "tuner", "turning machine tool operator", "tutor", "typist", "umpire", "undertaker", "upholsterer", "urban planner", "usher", "UX designer", "valve installer", "vending machine servicer", "veterinarian", "veterinary assistant", "veterinary technician", "vocational counselor", "vocational education teacher", "waiter", "waitress", "watch repairer", "water treatment plant operator", "weaving machine setter", "web developer", "weigher", "welder", "wellhead pumper", "wholesale buyer", "wildlife biologist", "window trimmer", "wood patternmaker", "woodworker", "word processor", "writer", "yardmaster", "zoologist"};
-		public static String randNationality() {
-			return randFrom(ntltss);
-		}
-		public static String fakeNationality() {
-			return randNationality();
-		}
-		public static String randCity() {
-			return randFrom(ctss);
-		}
-		public static String randAreaInKarachi() {
-			return randFrom(areas_in_karachi);
-		}
-		public static String randKarachiArea() {
-			return randAreaInKarachi();
-		}
-		public static String randKarachiUniversity() {
-			return randFrom(rkuniss);
-		}
-		public static String randPhone() {
-			return randFrom(rfnss);
-		}
-		public static String randJob() {
-			return randFrom(rjbss);
-		}
-		public static String randGirlName() {
-			return randFrom(rglnss);
-		}
-		public static String randGuyName() {
-			return randFrom(rgynss);
-		}
-		public static String randWord() {
-			return randFrom(wdss);
-		}
-		public static String randSentence() {
-			return randFrom(rndcts);
-		}
-		static String fakeNationality = "",
-					  randAreaInKarachi = "";
-
-		public static final String randNationality = fakeNationality = fakeNationality(),
-								   randCity = randCity(),
-								   randKarachiArea = randAreaInKarachi = randAreaInKarachi(),
-								   randKarachiUniversity = randKarachiUniversity(),
-								   randJob = randJob(),
-								   randPhone = randPhone(),
-								   randGirlName = randGirlName(),
-								   randGuyName = randGuyName(),
-								   randWord = randWord(),
-								   randSentence = randSentence();
-
-
-		//Files
-		public static boolean createFile(String fname) {
-			try {
-				File myFile = new File(fname);
-				if (myFile.createNewFile()) {
-					System.out.println("\n[KL FileReader]: File \"" + myFile.getName() + "\" created successfully");
-					return true;
-				} else {
-					print("\n[KL FileReader]: File either already exists, or you do not have enough permissions to create a new file in this directory.\n");
-				}
-			} catch (IOException e) {
-				print("\n[KL FileReader]: Something went wrong.\n");
-				e.printStackTrace();
-			}
-			return false;
-		}
-		public static boolean createFile(String fname, String content) {
-			try {
-				File myFile = new File(fname);
-				FileWriter fr = new FileWriter(fname);
-				fr.write(content);
-				print("\n[KL FileReader]: File \"" + myFile.getName() + "\" created successfully");
-				fr.close();
-				return true;
-			} catch (IOException e) {
-				print("\n[KL FileReader]: Something went wrong. File creation failed.\n");
-				e.printStackTrace();
-			}
-			return false;
-		}
-		public static boolean newFile(String fname) {
-			return createFile(fname);
-		}
-		public static boolean newFile(String fname, String content) {
-			return createFile(fname, content);
-		}
-		public static boolean deleteFile(String fname) {
-			File myFile = new File(fname);
-			String msgOnSuccess = "\n[KL FileReader]: File \"" + myFile.getPath() + "\" deleted successfully.\n",
-				   msgOnFailure = "\n[KL FileReader]: Task failed, no such file/folder!\n";
-			if (!myFile.exists()) {
-				print(msgOnFailure);
-				return false;
-			}
-			if (myFile.isDirectory()) {
-				for (File c : myFile.listFiles()) deleteFile(c.toString());
-			}
-			myFile.delete();
-			print(msgOnSuccess);
-			return true;
-		}
-		public static boolean removeFile(String fname) {
-			return deleteFile(fname);
-		}
-		public static boolean deleteFolder(String fname) {
-			return deleteFile(fname);
-		}
-		public static boolean removeFolder(String fname) {
-			return deleteFile(fname);
-		}
-		public static boolean renameFile(String fname, String destinationString) {
-			try {
-				File myFile = new File(fname);
-				File destinationFile = new File(destinationString);
-				if (myFile.renameTo(destinationFile)) {
-					print("\n[KL FileReader]: File " + myFile.getName() + " was successfully moved/renamed to " + destinationFile.getPath());
-					return true;
-				} else {
-					print("\n[KL FileReader]: You do not have enough permissions to move/rename this file.\n");
-					IOException e = new IOException();
-					throw e;
-				}
-			} catch (IOException e) {
-				print("\n[KL FileReader]: Something went wrong.\n");
-				e.printStackTrace();
-			}
-			return false;
-		}
-		public static boolean moveFile(String from, String to) {
-			return renameFile(from, to);
-		}
-		public static String readFile(String fname) {
-			String data = "";
-			try {
-				File myObj = new File(fname);
-				Scanner myReader = new Scanner(myObj);
-				while (myReader.hasNextLine())
-					data += myReader.nextLine();
-				myReader.close();
-			} catch (FileNotFoundException e) {
-				print("\n[KL FileReader]: Something went wrong.\n");
-				e.printStackTrace();
-			}
-			return data;
-		}
-		public static boolean copyFile(String from, String to) {
-			File fileToCopy = new File(from);
-			File destination = new File(to);
-			try {
-				Files.copy(fileToCopy.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
-				return true;
-			} catch (IOException e) {
-				System.out.println("\n[KL FileReader]: Failed to copy!\n");
-			}
-			return false;
-		}
-		public static boolean createFolder(String folderName) {
-			File fileFolder = new File(folderName);
-			return fileFolder.mkdirs();
-		}
-		public static boolean newFolder(String folderName) {
-			return createFolder(folderName);
-		}
-
-		public static void main
-		(String[] args) {
-			/*
-			int[] numbers = {1, 2, 3, 4, 5, 6, 7};
-			forEach(numbers, (n, i) -> print(f("%d: %d", i, n)));
-			*/
-
-			Money m = new Money(5400);
-			m.curr("PK").add(8 * zr, 3 * ar).sub(5.4 * K).add(1 * kh);
-			print(m.string());
-			print(m.string(true));
-			print(m.suffix());
-			print(m.suffix(true));
-			print(m.urdu());
-
-			Tree_I tree = new Tree_I(6, "six", 1, "one", 2, "two", 3, "three", 4, "four");
-			tree.add(5, "five").add(7, "seven");
-			tree.printMap();
-			print(tree.firstKey(), ":", tree.first());
-			print(tree.nthKey(11), ":", tree.get(2));
-			print(tree.nthKey(2), ":", tree.nthValue(2));
-			int[] keys = tree.keyArray();
-			printArr(keys);
-			String[] values = tree.array();
-			printArr(values);
-
-			for (int i : range(5, true)) print(fur(i));
-		}
-
-	}
+// GUI
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.nio.file.*;
+import java.security.SecureRandom;
+import java.text.*;
+import java.util.*;
+import java.util.TreeMap.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import javax.swing.*;
+import javax.swing.border.*;
+
+@SuppressWarnings("all")
+public class KL {
+    public static final class Money {
+        private double amnt;
+        private String curr;
+
+        Money() {
+            this.amnt = 0;
+            this.curr = "Rs. ";
+        }
+        Money(double amnt) {
+            this.amnt = isinf(amnt) ? 0 : amnt;
+            this.curr = "Rs. ";
+        }
+        Money(double amnt, String curr) {
+            this.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
+            this.curr =
+                not(this.curr) || len(this.curr) < 1 || len(this.curr) > 4
+                ? "Rs. "
+                : titleCase(curr);
+        }
+        Money curr(String curr) {
+            this.curr = not(curr) || len(curr) < 1 || len(curr) > 4
+                ? "Rs. "
+                : titleCase(curr);
+            return this;
+        }
+        Money amount(double newAmnt) {
+            this.amnt = isinf(newAmnt) ? this.amnt : newAmnt;
+            return this;
+        }
+        Money set(double newAmnt) {
+            amount(newAmnt);
+            return this;
+        }
+        Money add(double... nums) {
+            each(nums, (n, i) -> this.amnt += n);
+            return this;
+        }
+        Money give(double... nums) {
+            add(nums);
+            return this;
+        }
+        Money plus(double... nums) {
+            add(nums);
+            return this;
+        }
+        Money deposit(double... nums) {
+            add(nums);
+            return this;
+        }
+        Money minus(double... nums) {
+            each(nums, (n, i) -> this.amnt -= n);
+            return this;
+        }
+        Money take(double... nums) {
+            minus(nums);
+            return this;
+        }
+        Money sub(double... nums) {
+            minus(nums);
+            return this;
+        }
+        Money withdraw(double... nums) {
+            minus(nums);
+            return this;
+        }
+        Money times(double... nums) {
+            each(nums, (n, i) -> this.amnt *= n);
+            return this;
+        }
+        Money mul(double... nums) {
+            times(nums);
+            return this;
+        }
+        Money div(double... nums) {
+            each(nums, (n, i) -> this.amnt /= n);
+            return this;
+        }
+        Money quo(double... nums) {
+            div(nums);
+            return this;
+        }
+        public String suffix(boolean... bools) {
+            boolean forceInternational = bools.length > 0 ? bools[0] : false;
+            this.curr = trim(this.curr) + " ";
+            if (in(this.curr, "pk|rs"))
+                return "Rs. "
+                    + (forceInternational ? ussuffix(amnt) : pksuffix(amnt));
+            if (in(this.curr, "us"))
+                return "US$ " + ussuffix(amnt);
+            return this.curr
+                + (forceInternational
+                            || (is(this.curr) && !in(this.curr, "pk|rs"))
+                        ? ussuffix(amnt)
+                        : pksuffix(amnt));
+        }
+        public String urdu() {
+            this.curr = trim(this.curr) + " ";
+            if (in(this.curr, "pk|rs"))
+                return far(amnt) + " روپے";
+            return this.curr + far(amnt);
+        }
+        public String arabic() {
+            return urdu();
+        }
+        public String toString() {
+            this.curr = trim(this.curr) + " ";
+            if (not(this.curr) || in(this.curr, "pk|rs"))
+                return pkr(amnt);
+            if (in(this.curr, "us"))
+                return usd(amnt);
+            return this.curr + f(amnt);
+        }
+        public String toString(boolean suffixMode) {
+            return suffixMode ? suffix() : toString();
+        }
+        public String string() {
+            return toString();
+        }
+        public String string(boolean suffixMode) {
+            return toString(suffixMode);
+        }
+    }
+    public static final class Kmath {
+        public static double Pi = 3.141592653589793, C = 2.99792e8,
+                             earthsGravity = 9.80665, earthsMass = 5.9722e24,
+                             earthsRadius = 6.378137e3;
+        public static String C_Unit = "m/s", K_Unit = "Nm^2/c^2",
+                             earthsGravity_Unit = "m/s^2",
+                             earthsMass_Unit = "km",
+
+                             earthsRadius_Unit = "km";
+    }
+
+    public static String encode(String s) {
+        return Base64.getEncoder().encodeToString(s.getBytes());
+    }
+    public static String decode(String s) {
+        return new String(Base64.getDecoder().decode(s));
+    }
+    public static String encodeUrl(String s) {
+        String encoded = s.replace("%", "%25")
+                             .replace(" ", "%20")
+                             .replace("!", "%21")
+                             .replace("#", "%23")
+                             .replace("$", "%24")
+                             .replace("&", "%26")
+                             .replace("'", "%27")
+                             .replace("(", "%28")
+                             .replace(")", "%29")
+                             .replace("*", "%2A")
+                             .replace("+", "%2B")
+                             .replace(",", "%2C")
+                             .replace("/", "%2F")
+                             .replace(":", "%3A")
+                             .replace(";", "%3B")
+                             .replace("=", "%3D")
+                             .replace("?", "%3F")
+                             .replace("@", "%40")
+                             .replace("[", "%5B")
+                             .replace("]", "%5D");
+        return encoded;
+    }
+    public static String decodeUrl(String s) {
+        String decoded = s.replace("%21", "!")
+                             .replace("%20", " ")
+                             .replace("%23", "#")
+                             .replace("%24", "$")
+                             .replace("%26", "&")
+                             .replace("%27", "'")
+                             .replace("%28", "(")
+                             .replace("%29", ")")
+                             .replace("%2A", "*")
+                             .replace("%2B", "+")
+                             .replace("%2C", ",")
+                             .replace("%2F", "/")
+                             .replace("%3A", ":")
+                             .replace("%3B", ";")
+                             .replace("%3D", "=")
+                             .replace("%3F", "?")
+                             .replace("%40", "@")
+                             .replace("%5B", "[")
+                             .replace("%5D", "]")
+                             .replace("%25", "%");
+        return decoded;
+    }
+
+    // GUI
+    public static final class GUI extends JFrame {
+        GUI() {
+            super();
+            exitOnClose();
+            resizable();
+            super.setLayout(new BorderLayout());
+        }
+        GUI(String title) {
+            super();
+            exitOnClose();
+            resizable();
+            title(title);
+            super.setLayout(new BorderLayout());
+        }
+        GUI(String title, int w, int h) {
+            super();
+            exitOnClose();
+            resizable();
+            title(title);
+            size(w, h);
+            super.setLayout(new BorderLayout());
+        }
+        GUI title(String title) {
+            super.setTitle(title);
+            return this;
+        }
+        GUI size(int w, int h) {
+            super.setSize(w, h);
+            super.setLocationRelativeTo(null);
+            return this;
+        }
+        GUI start() {
+            super.setVisible(true);
+            return this;
+        }
+        GUI start(int w, int h) {
+            size(w, h);
+            super.setVisible(true);
+            return this;
+        }
+        GUI shuru() {
+            start();
+            return this;
+        }
+        GUI shuru(int w, int h) {
+            start(w, h);
+            return this;
+        }
+        GUI appear() {
+            start();
+            return this;
+        }
+        GUI disappear() {
+            super.setVisible(false);
+            return this;
+        }
+        GUI resizable() {
+            super.setResizable(true);
+            return this;
+        }
+        GUI notResizable() {
+            super.setResizable(false);
+            return this;
+        }
+        GUI resizableNaHo() {
+            notResizable();
+            return this;
+        }
+        GUI onTop() {
+            super.setAlwaysOnTop(true);
+            return this;
+        }
+        GUI alwaysOnTop() {
+            onTop();
+            return this;
+        }
+        GUI hameshaTopPe() {
+            onTop();
+            return this;
+        }
+        GUI offTop() {
+            super.setAlwaysOnTop(false);
+            return this;
+        }
+        GUI opacity(float o) {
+            super.setOpacity(o);
+            return this;
+        }
+        GUI cursor(int c) {
+            super.setCursor(new Cursor(c));
+            return this;
+        }
+        GUI bg(Color clr) {
+            super.setBackground(clr);
+            return this;
+        }
+        GUI font(String fontFamily, int fontSize) {
+            super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+            return this;
+        }
+        GUI font(String fontFamily, int fontSize, int fontWidth) {
+            super.setFont(new Font(fontFamily, fontWidth, fontSize));
+            return this;
+        }
+        GUI font(Font fnt) {
+            super.setFont(fnt);
+            return this;
+        }
+        GUI exitOnClose() {
+            super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
+            return this;
+        }
+    }
+
+    public static final class Label extends JLabel {
+        Label() {
+            super();
+            super.setOpaque(true);
+        }
+        Label(String name) {
+            super();
+            super.setOpaque(true);
+        }
+        Label bg(Color clr) {
+            super.setBackground(clr);
+            return this;
+        }
+        Label fg(Color clr) {
+            super.setForeground(clr);
+            return this;
+        }
+        Label font(String fontFamily, int fontSize) {
+            super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+            return this;
+        }
+        Label font(String fontFamily, int fontSize, int fontWidth) {
+            super.setFont(new Font(fontFamily, fontWidth, fontSize));
+            return this;
+        }
+        Label font(Font fnt) {
+            super.setFont(fnt);
+            return this;
+        }
+        Label alignx(int pos) {
+            super.setHorizontalAlignment(pos);
+            return this;
+        }
+        Label aligny(int pos) {
+            super.setVerticalAlignment(pos);
+            return this;
+        }
+        String text() {
+            return super.getText();
+        }
+        Label text(String s) {
+            super.setText(s);
+            return this;
+        }
+    }
+
+    public static final class BordLay extends BorderLayout {
+        BordLay() {
+            super();
+        }
+    }
+
+    public static final class GridLay extends GridLayout {
+        GridLay(int rows, int columns) {
+            super(rows, columns);
+        }
+        GridLay(int rows, int columns, int hgap, int vgap) {
+            super(rows, columns, hgap, vgap);
+        }
+    }
+
+    public static final class Panel extends JPanel {
+        Panel() {
+            super();
+        }
+        Panel lay(LayoutManager mgr) {
+            super.setLayout(mgr);
+            return this;
+        }
+        Panel bg(Color clr) {
+            super.setBackground(clr);
+            return this;
+        }
+        Panel fg(Color clr) {
+            super.setForeground(clr);
+            return this;
+        }
+        Panel font(String fontFamily, int fontSize) {
+            super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+            return this;
+        }
+        Panel font(String fontFamily, int fontSize, int fontWidth) {
+            super.setFont(new Font(fontFamily, fontWidth, fontSize));
+            return this;
+        }
+        Panel font(Font fnt) {
+            super.setFont(fnt);
+            return this;
+        }
+    }
+
+    public static final class Btn extends JButton {
+        Btn() {
+            super();
+            super.setFocusable(false);
+        }
+        Btn(String text) {
+            super();
+            super.setFocusable(false);
+            super.setText(text);
+        }
+        Btn bg(Color clr) {
+            super.setBackground(clr);
+            return this;
+        }
+        Btn fg(Color clr) {
+            super.setForeground(clr);
+            return this;
+        }
+        Btn font(String fontFamily, int fontSize) {
+            super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+            return this;
+        }
+        Btn font(String fontFamily, int fontSize, int fontWidth) {
+            super.setFont(new Font(fontFamily, fontWidth, fontSize));
+            return this;
+        }
+        Btn font(Font fnt) {
+            super.setFont(fnt);
+            return this;
+        }
+        Btn alignx(int pos) {
+            super.setHorizontalAlignment(pos);
+            return this;
+        }
+        Btn aligny(int pos) {
+            super.setVerticalAlignment(pos);
+            return this;
+        }
+        String text() {
+            return super.getText();
+        }
+        Btn text(String s) {
+            super.setText(s);
+            return this;
+        }
+    }
+
+    public static final class TxtField extends JTextField {
+        TxtField() {
+            super();
+        }
+        TxtField(String s) {
+            super(s);
+        }
+        TxtField(String s, int i) {
+            super(s, i);
+        }
+        String text() {
+            return super.getText();
+        }
+        TxtField text(String s) {
+            super.setText(s);
+            return this;
+        }
+    }
+    public static final class PwdField extends JPasswordField {
+        PwdField() {
+            super();
+        }
+        PwdField(String s) {
+            super(s);
+        }
+        PwdField(String s, int i) {
+            super(s, i);
+        }
+        String text() {
+            return new String(super.getPassword());
+        }
+        PwdField text(String s) {
+            super.setText(s);
+            return this;
+        }
+    }
+
+    // general
+    public static final class Error extends Throwable {
+        Error(String msg) {
+            super(msg);
+        }
+    }
+    public static final class Obj_S extends HashMap<String, String> {
+        Obj_S() {
+            super();
+        }
+        Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+            String k4, String v4, String k5, String v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+            String k4, String v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Obj_S(
+            String k1, String v1, String k2, String v2, String k3, String v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Obj_S(String k1, String v1, String k2, String v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Obj_S(String k1, String v1) {
+            super.put(k1, v1);
+        }
+        String key(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        String k(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        String val(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        String v(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        boolean hasKey(String k) {
+            return super.containsKey(k);
+        }
+        boolean hasValue(String v) {
+            return super.containsValue(v);
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        String[] array() {
+            Object[] objArray = super.values().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < length() ? keyArray()[n] : "";
+        }
+        String nthValue(int n) {
+            return n >= 0 && n < length() ? array()[n] : "";
+        }
+        Obj_S set(String k, String v) {
+            if (!super.containsKey(k))
+                super.put(k, v);
+            else
+                super.replace(k, v);
+            return this;
+        }
+        Obj_S add(String k, String v) {
+            set(k, v);
+            return this;
+        }
+        String delete(String k) {
+            String v = hasKey(k) ? super.get(k) : null;
+            super.remove(k);
+            return v;
+        }
+        Obj_S push(String k, String v) {
+            add(k, v);
+            return this;
+        }
+        String pop(String k) {
+            return delete(k);
+        }
+        Obj_S update(String k, String v) {
+            set(k, v);
+            return this;
+        }
+        Set<String> keys() {
+            return super.keySet();
+        }
+        Set<Map.Entry<String, String>> entries() {
+            return super.entrySet();
+        }
+        void printMap() {
+            System.out.println(super.clone());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class Obj_I extends HashMap<String, Integer> {
+        Obj_I() {
+            super();
+        }
+        Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+            Integer v3, String k4, Integer v4, String k5, Integer v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+            Integer v3, String k4, Integer v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+            Integer v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Obj_I(String k1, Integer v1, String k2, Integer v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Obj_I(String k, Integer v) {
+            super.put(k, v);
+        }
+        int key(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        int k(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        int val(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        int v(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        boolean hasKey(String k) {
+            return super.containsKey(k);
+        }
+        boolean hasValue(Integer v) {
+            return super.containsValue(v);
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        int[] array() {
+            Object[] objArray = super.values().toArray();
+            int[] resultantArr = new int[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Integer) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < length() ? keyArray()[n] : "";
+        }
+        int nthValue(int n) {
+            return n >= 0 && n < length() ? array()[n] : 0;
+        }
+        Obj_I set(String k, Integer v) {
+            if (!super.containsKey(k))
+                super.put(k, v);
+            else
+                super.replace(k, v);
+            return this;
+        }
+        Obj_I add(String k, Integer v) {
+            set(k, v);
+            return this;
+        }
+        int delete(String k) {
+            int v = hasKey(k) ? super.get(k) : null;
+            super.remove(k);
+            return v;
+        }
+        Obj_I push(String k, int v) {
+            add(k, v);
+            return this;
+        }
+        int pop(String k) {
+            return delete(k);
+        }
+        Obj_I update(String k, Integer v) {
+            set(k, v);
+            return this;
+        }
+        Set<String> keys() {
+            return super.keySet();
+        }
+        Set<Map.Entry<String, Integer>> entries() {
+            return super.entrySet();
+        }
+        void printMap() {
+            System.out.println(super.clone());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class Obj_L extends HashMap<String, Long> {
+        Obj_L() {
+            super();
+        }
+        Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+            String k4, Long v4, String k5, Long v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+            String k4, Long v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Obj_L(String k1, Long v1, String k2, Long v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Obj_L(String k, Long v) {
+            super.put(k, v);
+        }
+        long key(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        long k(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        long val(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        long v(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        long[] array() {
+            Object[] objArray = super.values().toArray();
+            long[] resultantArr = new long[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Long) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < length() ? keyArray()[n] : "";
+        }
+        long nthValue(int n) {
+            return n >= 0 && n < length() ? array()[n] : 0;
+        }
+        boolean hasKey(String k) {
+            return super.containsKey(k);
+        }
+        boolean hasValue(Long v) {
+            return super.containsValue(v);
+        }
+        Obj_L set(String k, Long v) {
+            if (!super.containsKey(k))
+                super.put(k, v);
+            else
+                super.replace(k, v);
+            return this;
+        }
+        Obj_L add(String k, Long v) {
+            set(k, v);
+            return this;
+        }
+        long delete(String k) {
+            return super.remove(k);
+        }
+        Obj_L push(String k, long v) {
+            add(k, v);
+            return this;
+        }
+        long pop(String k) {
+            return delete(k);
+        }
+        Obj_L update(String k, Long v) {
+            set(k, v);
+            return this;
+        }
+        Set<String> keys() {
+            return super.keySet();
+        }
+        Set<Map.Entry<String, Long>> entries() {
+            return super.entrySet();
+        }
+        void printMap() {
+            System.out.println(super.clone());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class Obj_F extends HashMap<String, Float> {
+        Obj_F() {
+            super();
+        }
+        Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+            String k4, Float v4, String k5, Float v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+            String k4, Float v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Obj_F(String k1, Float v1, String k2, Float v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Obj_F(String k1, Float v1) {
+            super.put(k1, v1);
+        }
+        float key(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        float k(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        float val(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        float v(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        float[] array() {
+            Object[] objArray = super.values().toArray();
+            float[] resultantArr = new float[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Float) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < length() ? keyArray()[n] : "";
+        }
+        float nthValue(int n) {
+            return n >= 0 && n < length() ? array()[n] : 0;
+        }
+        boolean hasKey(String k) {
+            return super.containsKey(k);
+        }
+        boolean hasValue(Float v) {
+            return super.containsValue(v);
+        }
+        Obj_F set(String k, Float v) {
+            if (!super.containsKey(k))
+                super.put(k, v);
+            else
+                super.replace(k, v);
+            return this;
+        }
+        Obj_F add(String k, Float v) {
+            set(k, v);
+            return this;
+        }
+        float delete(String k) {
+            return super.remove(k);
+        }
+        Obj_F push(String k, float v) {
+            add(k, v);
+            return this;
+        }
+        float pop(String k) {
+            return delete(k);
+        }
+        Obj_F update(String k, Float v) {
+            set(k, v);
+            return this;
+        }
+        Set<String> keys() {
+            return super.keySet();
+        }
+        Set<Map.Entry<String, Float>> entries() {
+            return super.entrySet();
+        }
+        void printMap() {
+            System.out.println(super.clone());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class Obj_D extends HashMap<String, Double> {
+        Obj_D() {
+            super();
+        }
+        Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+            String k4, Double v4, String k5, Double v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+            String k4, Double v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Obj_D(
+            String k1, Double v1, String k2, Double v2, String k3, Double v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Obj_D(String k1, Double v1, String k2, Double v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Obj_D(String k, Double v) {
+            super.put(k, v);
+        }
+        double key(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        double k(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        double val(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        double v(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        double[] array() {
+            Object[] objArray = super.values().toArray();
+            double[] resultantArr = new double[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Double) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < length() ? keyArray()[n] : "";
+        }
+        double nthValue(int n) {
+            return n >= 0 && n < length() ? array()[n] : 0;
+        }
+        boolean hasKey(String k) {
+            return super.containsKey(k);
+        }
+        boolean hasValue(Double v) {
+            return super.containsValue(v);
+        }
+        Obj_D set(String k, Double v) {
+            if (!super.containsKey(k))
+                super.put(k, v);
+            else
+                super.replace(k, v);
+            return this;
+        }
+        Obj_D add(String k, Double v) {
+            set(k, v);
+            return this;
+        }
+        double delete(String k) {
+            return super.remove(k);
+        }
+        Obj_D push(String k, double v) {
+            add(k, v);
+            return this;
+        }
+        double pop(String k) {
+            return delete(k);
+        }
+        Obj_D update(String k, Double v) {
+            set(k, v);
+            return this;
+        }
+        Set<String> keys() {
+            return super.keySet();
+        }
+        Set<Map.Entry<String, Double>> entries() {
+            return super.entrySet();
+        }
+        void printMap() {
+            System.out.println(super.clone());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class Obj_B extends HashMap<String, Boolean> {
+        Obj_B() {
+            super();
+        }
+        Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+            Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+            Boolean v3, String k4, Boolean v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+            Boolean v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Obj_B(String k1, Boolean v1, String k2, Boolean v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Obj_B(String k, Boolean v) {
+            super.put(k, v);
+        }
+        boolean key(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        boolean k(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        boolean val(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        boolean v(String k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        boolean[] array() {
+            Object[] objArray = super.values().toArray();
+            boolean[] resultantArr = new boolean[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Boolean) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < length() ? keyArray()[n] : "";
+        }
+        boolean nthValue(int n) {
+            return n >= 0 && n < length() ? array()[n] : false;
+        }
+        boolean hasKey(String k) {
+            return super.containsKey(k);
+        }
+        boolean hasValue(Boolean v) {
+            return super.containsValue(v);
+        }
+        Obj_B set(String k, Boolean v) {
+            if (!super.containsKey(k))
+                super.put(k, v);
+            else
+                super.replace(k, v);
+            return this;
+        }
+        Obj_B add(String k, Boolean v) {
+            set(k, v);
+            return this;
+        }
+        boolean delete(String k) {
+            return super.remove(k);
+        }
+        Obj_B push(String k, Boolean v) {
+            add(k, v);
+            return this;
+        }
+        boolean pop(String k) {
+            return delete(k);
+        }
+        Obj_B update(String k, Boolean v) {
+            set(k, v);
+            return this;
+        }
+        Set<String> keys() {
+            return super.keySet();
+        }
+        Set<Map.Entry<String, Boolean>> entries() {
+            return super.entrySet();
+        }
+        void printMap() {
+            System.out.println(super.clone());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+
+    public static class Tree<Key, Value> extends TreeMap<Key, Value> {
+        Tree() {
+            super();
+        }
+        Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+            Value v4, Key k5, Value v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+            Value v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree(Key k1, Value v1, Key k2, Value v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree(Key k1, Value v1) {
+            super.put(k1, v1);
+        }
+        Value key(Key k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        Value k(Key k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        Value val(Key k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        Value v(Key k) {
+            return hasKey(k) ? super.get(k) : null;
+        }
+        boolean hasKey(Key k) {
+            return super.containsKey(k);
+        }
+        boolean hasValue(Value v) {
+            return super.containsValue(v);
+        }
+        Tree<Key, Value> set(Key k, Value v) {
+            if (!super.containsKey(k))
+                super.put(k, v);
+            else
+                super.replace(k, v);
+            return this;
+        }
+        Tree<Key, Value> add(Key k, Value v) {
+            set(k, v);
+            return this;
+        }
+        Value delete(Key k) {
+            Value v = hasKey(k) ? super.get(k) : null;
+            super.remove(k);
+            return v;
+        }
+        Tree<Key, Value> push(Key k, Value v) {
+            add(k, v);
+            return this;
+        }
+        Value pop(Key k) {
+            return delete(k);
+        }
+        Tree<Key, Value> update(Key k, Value v) {
+            set(k, v);
+            return this;
+        }
+        Value first() {
+            Map.Entry<Key, Value> firstEntry = super.firstEntry();
+            Value firstValue = null;
+            if (firstEntry != null) {
+                firstValue = firstEntry.getValue();
+            }
+            return firstValue;
+        }
+        Value last() {
+            Map.Entry<Key, Value> lastEntry = super.lastEntry();
+            Value lastValue = null;
+            if (lastEntry != null) {
+                lastValue = lastEntry.getValue();
+            }
+            return lastValue;
+        }
+        Set<Key> keys() {
+            return super.keySet();
+        }
+        Set<Map.Entry<Key, Value>> entries() {
+            return super.entrySet();
+        }
+        void printMap() {
+            System.out.println(super.clone());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static class Tree_S extends Tree<String, Integer> {
+        // public static final long serialVersionUID = 1L;
+        Tree_S() {
+            super();
+        }
+        Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+            String k4, int v4, String k5, int v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+            String k4, int v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_S(String k1, int v1, String k2, int v2, String k3, int v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_S(String k1, int v1, String k2, int v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_S(String k1, int v1) {
+            super.put(k1, v1);
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        int[] array() {
+            Object[] objArray = super.values().toArray();
+            int[] resultantArr = new int[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Integer) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : "";
+        }
+        int nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : 0;
+        }
+    }
+    public static class Tree_SL extends Tree<String, Long> {
+        // public static final long serialVersionUID = 1L;
+        Tree_SL() {
+            super();
+        }
+        Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+            String k4, long v4, String k5, long v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+            String k4, long v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_SL(String k1, long v1, String k2, long v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_SL(String k1, long v1) {
+            super.put(k1, v1);
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        long[] array() {
+            Object[] objArray = super.values().toArray();
+            long[] resultantArr = new long[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Long) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : "";
+        }
+        long nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : 0;
+        }
+    }
+    public static class Tree_SF extends Tree<String, Float> {
+        // public static final long serialVersionUID = 1L;
+        Tree_SF() {
+            super();
+        }
+        Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+            String k4, float v4, String k5, float v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+            String k4, float v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_SF(String k1, float v1, String k2, float v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_SF(String k1, float v1) {
+            super.put(k1, v1);
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        float[] array() {
+            Object[] objArray = super.values().toArray();
+            float[] resultantArr = new float[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Float) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : "";
+        }
+        float nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : 0;
+        }
+    }
+    public static class Tree_SD extends Tree<String, Double> {
+        // public static final long serialVersionUID = 1L;
+        Tree_SD() {
+            super();
+        }
+        Tree_SD(String k1, double v1, String k2, double v2, String k3,
+            double v3, String k4, double v4, String k5, double v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_SD(String k1, double v1, String k2, double v2, String k3,
+            double v3, String k4, double v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_SD(
+            String k1, double v1, String k2, double v2, String k3, double v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_SD(String k1, double v1, String k2, double v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_SD(String k1, double v1) {
+            super.put(k1, v1);
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        double[] array() {
+            Object[] objArray = super.values().toArray();
+            double[] resultantArr = new double[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Double) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : "";
+        }
+        double nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : 0;
+        }
+    }
+    public static class Tree_SB extends Tree<String, Boolean> {
+        // public static final long serialVersionUID = 1L;
+        Tree_SB() {
+            super();
+        }
+        Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+            boolean v3, String k4, boolean v4, String k5, boolean v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+            boolean v3, String k4, boolean v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+            boolean v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_SB(String k1, boolean v1, String k2, boolean v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_SB(String k1, boolean v1) {
+            super.put(k1, v1);
+        }
+        String[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        boolean[] array() {
+            Object[] objArray = super.values().toArray();
+            boolean[] resultantArr = new boolean[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Boolean) objArray[i];
+            }
+            return resultantArr;
+        }
+        String nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : "";
+        }
+        boolean nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : false;
+        }
+    }
+    public static class Tree_I extends Tree<Integer, String> {
+        // public static final long serialVersionUID = 1L;
+        Tree_I() {
+            super();
+        }
+        Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+            String v4, int k5, String v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+            String v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_I(int k1, String v1, int k2, String v2, int k3, String v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_I(int k1, String v1, int k2, String v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_I(int k1, String v1) {
+            super.put(k1, v1);
+        }
+        int[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            int[] resultantArr = new int[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Integer) objArray[i];
+            }
+            return resultantArr;
+        }
+        String[] array() {
+            Object[] objArray = super.values().toArray();
+            String[] resultantArr = new String[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (String) objArray[i];
+            }
+            return resultantArr;
+        }
+        int nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+        }
+        String nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : "";
+        }
+    }
+    public static class Tree_L extends Tree<Integer, Long> {
+        // public static final long serialVersionUID = 1L;
+        Tree_L() {
+            super();
+        }
+        Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+            long v4, int k5, long v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+            long v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_L(int k1, long v1, int k2, long v2, int k3, long v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_L(int k1, long v1, int k2, long v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_L(int k1, long v1) {
+            super.put(k1, v1);
+        }
+        int[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            int[] resultantArr = new int[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Integer) objArray[i];
+            }
+            return resultantArr;
+        }
+        long[] array() {
+            Object[] objArray = super.values().toArray();
+            long[] resultantArr = new long[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Long) objArray[i];
+            }
+            return resultantArr;
+        }
+        int nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+        }
+        long nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : 0;
+        }
+    }
+    public static class Tree_F extends Tree<Integer, Float> {
+        // public static final long serialVersionUID = 1L;
+        Tree_F() {
+            super();
+        }
+        Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+            float v4, int k5, float v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+            float v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_F(int k1, float v1, int k2, float v2, int k3, float v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_F(int k1, float v1, int k2, float v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_F(int k1, float v1) {
+            super.put(k1, v1);
+        }
+        int[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            int[] resultantArr = new int[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Integer) objArray[i];
+            }
+            return resultantArr;
+        }
+        float[] array() {
+            Object[] objArray = super.values().toArray();
+            float[] resultantArr = new float[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Float) objArray[i];
+            }
+            return resultantArr;
+        }
+        int nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+        }
+        float nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : 0;
+        }
+    }
+    public static class Tree_D extends Tree<Integer, Double> {
+        // public static final long serialVersionUID = 1L;
+        Tree_D() {
+            super();
+        }
+        Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+            double v4, int k5, double v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+            double v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_D(int k1, double v1, int k2, double v2, int k3, double v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_D(int k1, double v1, int k2, double v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_D(int k1, double v1) {
+            super.put(k1, v1);
+        }
+        int[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            int[] resultantArr = new int[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Integer) objArray[i];
+            }
+            return resultantArr;
+        }
+        double[] array() {
+            Object[] objArray = super.values().toArray();
+            double[] resultantArr = new double[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Double) objArray[i];
+            }
+            return resultantArr;
+        }
+        int nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+        }
+        double nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : 0;
+        }
+    }
+    public static class Tree_B extends Tree<Integer, Boolean> {
+        // public static final long serialVersionUID = 1L;
+        Tree_B() {
+            super();
+        }
+        Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+            int k4, boolean v4, int k5, boolean v5) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+            super.put(k5, v5);
+        }
+        Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+            int k4, boolean v4) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+            super.put(k4, v4);
+        }
+        Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+            super.put(k3, v3);
+        }
+        Tree_B(int k1, boolean v1, int k2, boolean v2) {
+            super.put(k1, v1);
+            super.put(k2, v2);
+        }
+        Tree_B(int k1, boolean v1) {
+            super.put(k1, v1);
+        }
+        int[] keyArray() {
+            Object[] objArray = super.keySet().toArray();
+            int[] resultantArr = new int[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Integer) objArray[i];
+            }
+            return resultantArr;
+        }
+        boolean[] array() {
+            Object[] objArray = super.values().toArray();
+            boolean[] resultantArr = new boolean[objArray.length];
+            for (int i = 0; i < objArray.length; i++) {
+                resultantArr[i] = (Boolean) objArray[i];
+            }
+            return resultantArr;
+        }
+        int nthKey(int n) {
+            return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+        }
+        boolean nthValue(int n) {
+            return n >= 0 && n < super.length() ? array()[n] : false;
+        }
+    }
+    public static final class StrArr extends ArrayList<String> {
+        StrArr() {
+            super();
+        }
+        StrArr(String... strings) {
+            super();
+            for (String s : strings) super.add(s);
+        }
+        StrArr pushAt(int i, String... strings) {
+            if (i < 0 || i > super.size())
+                return null;
+            for (String s : strings) super.add(i, s);
+            return this;
+        }
+        StrArr pushStart(String... strings) {
+            pushAt(0, strings);
+            return this;
+        }
+        StrArr push(String... strings) {
+            pushAt(super.size(), strings);
+            return this;
+        }
+        String shift() {
+            String removed = super.get(0);
+            super.remove(0);
+            return removed;
+        }
+        String pop(String... strings) {
+            if (super.isEmpty())
+                return "";
+            for (String s : strings) {
+                if (!has(s))
+                    return "";
+                super.remove(s);
+            }
+            return strings[0];
+        }
+        String pop(int... indexes) {
+            String firstRemoved = super.get(indexes[0]);
+            if (super.isEmpty())
+                return "";
+            for (int i : indexes) {
+                if (i < 0 || i > super.size())
+                    return "";
+                super.remove(i);
+            }
+            return firstRemoved;
+        }
+        StrArr popIf(Predicate<? super String> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        StrArr filterOut(Predicate<? super String> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        StrArr keepIf(Predicate<? super String> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        StrArr filter(Predicate<? super String> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        StrArr map(UnaryOperator<String> fn) {
+            super.replaceAll(fn);
+            return this;
+        }
+        StrArr unique() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<String> uniqueSet = new LinkedHashSet<>();
+            for (Object el : set) uniqueSet.add((String) el);
+            super.clear();
+            super.addAll(uniqueSet);
+            return this;
+        }
+        boolean has(String x) {
+            return super.contains(x);
+        }
+        String i(int i) {
+            return i >= 0 && i < super.size() ? super.get(i) : "";
+        }
+        StrArr update(int i, String x) {
+            if (!has(x))
+                super.add(x);
+            else {
+                if (i < 0 || i > super.size())
+                    return null;
+                super.set(i, x);
+            }
+            return this;
+        }
+        StrArr shuffle() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<String> set2 = new LinkedHashSet<>();
+            for (Object el : set) set2.add((String) el);
+            ArrayList<String> list = new ArrayList<>(set2);
+            Collections.shuffle(list, new Random(System.nanoTime()));
+            super.clear();
+            super.addAll(list);
+            return this;
+        }
+        StrArr sort() {
+            super.sort(null);
+            return this;
+        }
+        StrArr sortReverse() {
+            super.sort(Collections.reverseOrder());
+            return this;
+        }
+        StrArr reverseSort() {
+            sortReverse();
+            return this;
+        }
+        StrArr reverse() {
+            sortReverse();
+            return this;
+        }
+        String[] array() {
+            return super.toArray(new String[0]);
+        }
+        ArrayList<String> list() {
+            ArrayList<String> result = new ArrayList<>();
+            StrArr clone = copy();
+            for (int i : range(clone)) result.add(clone.i(i));
+            return result;
+        }
+        String string() {
+            return super.toString();
+        }
+        StrArr slice(int x, int y) {
+            return (StrArr) (super.subList(x, y).toArray())[0];
+        }
+        StrArr empty() {
+            super.clear();
+            return this;
+        }
+        boolean eq(StrArr arrB) {
+            StrArr arrA = copy();
+            arrA.sort();
+            arrB.sort();
+            return arrA.equals(arrB);
+        }
+        boolean compare(StrArr arrB) {
+            int len = intersection(arrB).length();
+            return len > len / 2;
+        }
+        StrArr combine(StrArr arrB) {
+            StrArr arrA = copy();
+            ArrayList<String> combined = new ArrayList<>();
+            combined.addAll(arrA);
+            combined.addAll(arrB);
+            empty();
+            super.addAll(combined);
+            return this;
+        }
+        StrArr union(StrArr arrB) {
+            combine(arrB);
+            return this;
+        }
+        StrArr intersection(StrArr arrB) {
+            super.retainAll(arrB);
+            return this;
+        }
+        StrArr copy() {
+            return (StrArr) super.clone();
+        }
+        StrArr each(Consumer<? super String> fn) {
+            super.forEach(fn);
+            return this;
+        }
+        void printMap() {
+            System.out.println(copy());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class IntArr extends ArrayList<Integer> {
+        IntArr() {
+            super();
+        }
+        IntArr(int... nums) {
+            super();
+            for (int n : nums) super.add(n);
+        }
+        IntArr pushAt(int i, int... nums) {
+            if (i < 0 || i > super.size())
+                return null;
+            for (int n : nums) super.add(i, n);
+            return this;
+        }
+        IntArr pushStart(int... ints) {
+            pushAt(0, ints);
+            return this;
+        }
+        IntArr push(int... nums) {
+            pushAt(super.size(), nums);
+            return this;
+        }
+        int shift() {
+            int removed = super.get(0);
+            super.remove(0);
+            return removed;
+        }
+        int pop(int... ints) {
+            if (super.isEmpty())
+                return 0;
+            for (int i : ints) {
+                if (!has(i))
+                    return 0;
+                super.remove(i);
+            }
+            return ints[0];
+        }
+        IntArr popIf(Predicate<? super Integer> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        IntArr filterOut(Predicate<? super Integer> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        IntArr keepIf(Predicate<? super Integer> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        IntArr filter(Predicate<? super Integer> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        IntArr map(UnaryOperator<Integer> fn) {
+            super.replaceAll(fn);
+            return this;
+        }
+        IntArr unique() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Integer> uniqueSet = new LinkedHashSet<>();
+            for (Object el : set) uniqueSet.add((Integer) el);
+            super.clear();
+            super.addAll(uniqueSet);
+            return this;
+        }
+        boolean has(int x) {
+            return super.contains(x);
+        }
+        int i(int i) {
+            return i >= 0 && i < super.size() ? super.get(i) : 0;
+        }
+        IntArr update(int i, int x) {
+            if (!has(x))
+                super.add(x);
+            else {
+                if (i < 0 || i > super.size())
+                    return null;
+                super.set(i, x);
+            }
+            return this;
+        }
+        IntArr shuffle() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Integer> set2 = new LinkedHashSet<>();
+            for (Object el : set) set2.add((Integer) el);
+            ArrayList<Integer> list = new ArrayList<>(set2);
+            Collections.shuffle(list, new Random(System.nanoTime()));
+            super.clear();
+            super.addAll(list);
+            return this;
+        }
+        IntArr sort() {
+            super.sort(null);
+            return this;
+        }
+        IntArr sortReverse() {
+            super.sort(Collections.reverseOrder());
+            return this;
+        }
+        IntArr reverseSort() {
+            sortReverse();
+            return this;
+        }
+        IntArr reverse() {
+            sortReverse();
+            return this;
+        }
+        int[] array() {
+            Integer[] partA = super.toArray(new Integer[0]);
+            int[] resultantArr = new int[partA.length];
+            for (int i = 0; i < partA.length; i++) {
+                resultantArr[i] = partA[i];
+            }
+            return resultantArr;
+        }
+        ArrayList<Integer> list() {
+            ArrayList<Integer> result = new ArrayList<>();
+            IntArr clone = copy();
+            for (int i : range(clone)) result.add(clone.i(i));
+            return result;
+        }
+        String string() {
+            return super.toString();
+        }
+        IntArr slice(int x, int y) {
+            return (IntArr) (super.subList(x, y).toArray())[0];
+        }
+        IntArr empty() {
+            super.clear();
+            return this;
+        }
+        boolean eq(IntArr arrB) {
+            IntArr arrA = copy();
+            arrA.sort();
+            arrB.sort();
+            return arrA.equals(arrB);
+        }
+        boolean compare(IntArr arrB) {
+            int len = intersection(arrB).length();
+            return len > len / 2;
+        }
+        IntArr combine(IntArr arrB) {
+            IntArr arrA = copy();
+            ArrayList<Integer> combined = new ArrayList<>();
+            combined.addAll(arrA);
+            combined.addAll(arrB);
+            empty();
+            super.addAll(combined);
+            return this;
+        }
+        IntArr union(IntArr arrB) {
+            combine(arrB);
+            return this;
+        }
+        IntArr intersection(IntArr arrB) {
+            super.retainAll(arrB);
+            return this;
+        }
+        IntArr copy() {
+            return (IntArr) super.clone();
+        }
+        IntArr each(Consumer<? super Integer> fn) {
+            super.forEach(fn);
+            return this;
+        }
+        void printMap() {
+            System.out.println(copy());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class LongArr extends ArrayList<Long> {
+        LongArr() {
+            super();
+        }
+        LongArr(long... nums) {
+            super();
+            for (long n : nums) super.add(n);
+        }
+        LongArr pushAt(int i, long... longs) {
+            if (i < 0 || i > super.size())
+                return null;
+            for (long l : longs) super.add(i, l);
+            return this;
+        }
+        LongArr pushStart(long... longs) {
+            pushAt(0, longs);
+            return this;
+        }
+        LongArr push(long... longs) {
+            pushAt(super.size(), longs);
+            return this;
+        }
+        long shift() {
+            long removed = super.get(0);
+            super.remove(0);
+            return removed;
+        }
+        long pop(long... longs) {
+            if (super.isEmpty())
+                return 0;
+            for (long l : longs) {
+                if (!has(l))
+                    return 0;
+                super.remove(l);
+            }
+            return longs[0];
+        }
+        LongArr popIf(Predicate<? super Long> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        LongArr filterOut(Predicate<? super Long> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        LongArr keepIf(Predicate<? super Long> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        LongArr filter(Predicate<? super Long> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        LongArr map(UnaryOperator<Long> fn) {
+            super.replaceAll(fn);
+            return this;
+        }
+        LongArr unique() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Long> uniqueSet = new LinkedHashSet<>();
+            for (Object el : set) uniqueSet.add((Long) el);
+            super.clear();
+            super.addAll(uniqueSet);
+            return this;
+        }
+        boolean has(long x) {
+            return super.contains(x);
+        }
+        long i(int i) {
+            return i >= 0 && i < super.size() ? super.get(i) : 0;
+        }
+        LongArr update(int i, long x) {
+            if (!has(x))
+                super.add(x);
+            else {
+                if (i < 0 || i > super.size())
+                    return null;
+                super.set(i, x);
+            }
+            return this;
+        }
+        LongArr shuffle() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Long> set2 = new LinkedHashSet<>();
+            for (Object el : set) set2.add((Long) el);
+            ArrayList<Long> list = new ArrayList<>(set2);
+            Collections.shuffle(list, new Random(System.nanoTime()));
+            super.clear();
+            super.addAll(list);
+            return this;
+        }
+        LongArr sort() {
+            super.sort(null);
+            return this;
+        }
+        LongArr sortReverse() {
+            super.sort(Collections.reverseOrder());
+            return this;
+        }
+        LongArr reverseSort() {
+            sortReverse();
+            return this;
+        }
+        LongArr reverse() {
+            sortReverse();
+            return this;
+        }
+        long[] array() {
+            Long[] partA = super.toArray(new Long[0]);
+            long[] resultantArr = new long[partA.length];
+            for (int i = 0; i < partA.length; i++) {
+                resultantArr[i] = partA[i];
+            }
+            return resultantArr;
+        }
+        ArrayList<Long> list() {
+            ArrayList<Long> result = new ArrayList<>();
+            LongArr clone = copy();
+            for (int i : range(clone)) result.add(clone.i(i));
+            return result;
+        }
+        String string() {
+            return super.toString();
+        }
+        LongArr slice(int x, int y) {
+            return (LongArr) (super.subList(x, y).toArray())[0];
+        }
+        LongArr empty() {
+            super.clear();
+            return this;
+        }
+        boolean eq(LongArr arrB) {
+            LongArr arrA = copy();
+            arrA.sort();
+            arrB.sort();
+            return arrA.equals(arrB);
+        }
+        boolean compare(LongArr arrB) {
+            int len = intersection(arrB).length();
+            return len > len / 2;
+        }
+        LongArr combine(LongArr arrB) {
+            LongArr arrA = copy();
+            ArrayList<Long> combined = new ArrayList<>();
+            combined.addAll(arrA);
+            combined.addAll(arrB);
+            empty();
+            super.addAll(combined);
+            return this;
+        }
+        LongArr union(LongArr arrB) {
+            combine(arrB);
+            return this;
+        }
+        LongArr intersection(LongArr arrB) {
+            super.retainAll(arrB);
+            return this;
+        }
+        LongArr copy() {
+            return (LongArr) super.clone();
+        }
+        LongArr each(Consumer<? super Long> fn) {
+            super.forEach(fn);
+            return this;
+        }
+        void printMap() {
+            System.out.println(copy());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class FltArr extends ArrayList<Float> {
+        FltArr() {
+            super();
+        }
+        FltArr(float... nums) {
+            super();
+            for (float n : nums) super.add(n);
+        }
+        FltArr pushAt(int i, float... floats) {
+            if (i < 0 || i > super.size())
+                return null;
+            for (float f : floats) super.add(i, f);
+            return this;
+        }
+        FltArr pushStart(float... floats) {
+            pushAt(0, floats);
+            return this;
+        }
+        FltArr push(float... floats) {
+            pushAt(super.size(), floats);
+            return this;
+        }
+        float shift() {
+            float removed = super.get(0);
+            super.remove(0);
+            return removed;
+        }
+        float pop(float... floats) {
+            if (super.isEmpty())
+                return 0;
+            for (float f : floats) {
+                if (!has(f))
+                    return 0;
+                super.remove(f);
+            }
+            return floats[0];
+        }
+        FltArr popIf(Predicate<? super Float> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        FltArr filterOut(Predicate<? super Float> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        FltArr keepIf(Predicate<? super Float> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        FltArr filter(Predicate<? super Float> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        FltArr map(UnaryOperator<Float> fn) {
+            super.replaceAll(fn);
+            return this;
+        }
+        FltArr unique() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Float> uniqueSet = new LinkedHashSet<>();
+            for (Object el : set) uniqueSet.add((Float) el);
+            super.clear();
+            super.addAll(uniqueSet);
+            return this;
+        }
+        boolean has(float x) {
+            return super.contains(x);
+        }
+        float i(int i) {
+            return i >= 0 && i < super.size() ? super.get(i) : 0;
+        }
+        FltArr update(int i, float x) {
+            if (!has(x))
+                super.add(x);
+            else {
+                if (i < 0 || i > super.size())
+                    return null;
+                super.set(i, x);
+            }
+            return this;
+        }
+        FltArr shuffle() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Float> set2 = new LinkedHashSet<>();
+            for (Object el : set) set2.add((Float) el);
+            ArrayList<Float> list = new ArrayList<>(set2);
+            Collections.shuffle(list, new Random(System.nanoTime()));
+            super.clear();
+            super.addAll(list);
+            return this;
+        }
+        FltArr sort() {
+            super.sort(null);
+            return this;
+        }
+        FltArr sortReverse() {
+            super.sort(Collections.reverseOrder());
+            return this;
+        }
+        FltArr reverseSort() {
+            sortReverse();
+            return this;
+        }
+        FltArr reverse() {
+            sortReverse();
+            return this;
+        }
+        float[] array() {
+            Float[] partA = super.toArray(new Float[0]);
+            float[] resultantArr = new float[partA.length];
+            for (int i = 0; i < partA.length; i++) {
+                resultantArr[i] = partA[i];
+            }
+            return resultantArr;
+        }
+        ArrayList<Float> list() {
+            ArrayList<Float> result = new ArrayList<>();
+            FltArr clone = copy();
+            for (int i : range(clone)) result.add(clone.i(i));
+            return result;
+        }
+        String string() {
+            return super.toString();
+        }
+        FltArr slice(int x, int y) {
+            return (FltArr) (super.subList(x, y).toArray())[0];
+        }
+        FltArr empty() {
+            super.clear();
+            return this;
+        }
+        boolean eq(FltArr arrB) {
+            FltArr arrA = copy();
+            arrA.sort();
+            arrB.sort();
+            return arrA.equals(arrB);
+        }
+        boolean compare(FltArr arrB) {
+            int len = intersection(arrB).length();
+            return len > len / 2;
+        }
+        FltArr combine(FltArr arrB) {
+            FltArr arrA = copy();
+            ArrayList<Float> combined = new ArrayList<>();
+            combined.addAll(arrA);
+            combined.addAll(arrB);
+            empty();
+            super.addAll(combined);
+            return this;
+        }
+        FltArr union(FltArr arrB) {
+            combine(arrB);
+            return this;
+        }
+        FltArr intersection(FltArr arrB) {
+            super.retainAll(arrB);
+            return this;
+        }
+        FltArr copy() {
+            return (FltArr) super.clone();
+        }
+        FltArr each(Consumer<? super Float> fn) {
+            super.forEach(fn);
+            return this;
+        }
+        void printMap() {
+            System.out.println(copy());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class DblArr extends ArrayList<Double> {
+        DblArr() {
+            super();
+        }
+        DblArr(double... doubles) {
+            super();
+            for (double d : doubles) super.add(d);
+        }
+        DblArr pushAt(int i, double... doubles) {
+            if (i < 0 || i > super.size())
+                return null;
+            for (double d : doubles) super.add(i, d);
+            return this;
+        }
+        DblArr pushStart(double... doubles) {
+            pushAt(0, doubles);
+            return this;
+        }
+        DblArr push(double... doubles) {
+            pushAt(super.size(), doubles);
+            return this;
+        }
+        double shift() {
+            double removed = super.get(0);
+            super.remove(0);
+            return removed;
+        }
+        double pop(double... doubles) {
+            if (super.isEmpty())
+                return 0;
+            for (double d : doubles) {
+                if (!has(d))
+                    return 0;
+                super.remove(d);
+            }
+            return doubles[0];
+        }
+        DblArr popIf(Predicate<? super Double> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        DblArr filterOut(Predicate<? super Double> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        DblArr keepIf(Predicate<? super Double> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        DblArr filter(Predicate<? super Double> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        DblArr map(UnaryOperator<Double> fn) {
+            super.replaceAll(fn);
+            return this;
+        }
+        DblArr unique() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Double> uniqueSet = new LinkedHashSet<>();
+            for (Object el : set) uniqueSet.add((Double) el);
+            super.clear();
+            super.addAll(uniqueSet);
+            return this;
+        }
+        boolean has(double x) {
+            return super.contains(x);
+        }
+        double i(int i) {
+            return i >= 0 && i < super.size() ? super.get(i) : 0;
+        }
+        DblArr update(int i, double x) {
+            if (!has(x))
+                super.add(x);
+            else {
+                if (i < 0 || i > super.size())
+                    return null;
+                super.set(i, x);
+            }
+            return this;
+        }
+        DblArr shuffle() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Double> set2 = new LinkedHashSet<>();
+            for (Object el : set) set2.add((Double) el);
+            ArrayList<Double> list = new ArrayList<>(set2);
+            Collections.shuffle(list, new Random(System.nanoTime()));
+            super.clear();
+            super.addAll(list);
+            return this;
+        }
+        DblArr sort() {
+            super.sort(null);
+            return this;
+        }
+        DblArr sortReverse() {
+            super.sort(Collections.reverseOrder());
+            return this;
+        }
+        DblArr reverseSort() {
+            sortReverse();
+            return this;
+        }
+        DblArr reverse() {
+            sortReverse();
+            return this;
+        }
+        double[] array() {
+            Double[] partA = super.toArray(new Double[0]);
+            double[] resultantArr = new double[partA.length];
+            for (int i = 0; i < partA.length; i++) {
+                resultantArr[i] = partA[i];
+            }
+            return resultantArr;
+        }
+        ArrayList<Double> list() {
+            ArrayList<Double> result = new ArrayList<>();
+            DblArr clone = copy();
+            for (int i : range(clone)) result.add(clone.i(i));
+            return result;
+        }
+        String string() {
+            return super.toString();
+        }
+        DblArr slice(int x, int y) {
+            return (DblArr) (super.subList(x, y).toArray())[0];
+        }
+        DblArr empty() {
+            super.clear();
+            return this;
+        }
+        boolean eq(DblArr arrB) {
+            DblArr arrA = copy();
+            arrA.sort();
+            arrB.sort();
+            return arrA.equals(arrB);
+        }
+        boolean compare(DblArr arrB) {
+            int len = intersection(arrB).length();
+            return len > len / 2;
+        }
+        DblArr combine(DblArr arrB) {
+            DblArr arrA = copy();
+            ArrayList<Double> combined = new ArrayList<>();
+            combined.addAll(arrA);
+            combined.addAll(arrB);
+            empty();
+            super.addAll(combined);
+            return this;
+        }
+        DblArr union(DblArr arrB) {
+            combine(arrB);
+            return this;
+        }
+        DblArr intersection(DblArr arrB) {
+            super.retainAll(arrB);
+            return this;
+        }
+        DblArr copy() {
+            return (DblArr) super.clone();
+        }
+        DblArr each(Consumer<? super Double> fn) {
+            super.forEach(fn);
+            return this;
+        }
+        void printMap() {
+            System.out.println(copy());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+    public static final class BoolArr extends ArrayList<Boolean> {
+        BoolArr() {
+            super();
+        }
+        BoolArr(boolean... bools) {
+            super();
+            for (boolean b : bools) super.add(b);
+        }
+        BoolArr pushAt(int i, boolean... bools) {
+            if (i < 0 || i > super.size())
+                return null;
+            for (boolean b : bools) super.add(i, b);
+            return this;
+        }
+        BoolArr pushStart(boolean... bools) {
+            pushAt(0, bools);
+            return this;
+        }
+        BoolArr push(boolean... bools) {
+            pushAt(super.size(), bools);
+            return this;
+        }
+        boolean shift() {
+            boolean removed = super.get(0);
+            super.remove(0);
+            return removed;
+        }
+        boolean pop(boolean... bools) {
+            if (super.isEmpty())
+                return false;
+            for (boolean b : bools) {
+                if (!has(b))
+                    return false;
+                super.remove(b);
+            }
+            return true;
+        }
+        boolean pop(int... indexes) {
+            if (super.isEmpty())
+                return false;
+            for (int i : indexes) {
+                if (i < 0 || i > super.size())
+                    return false;
+                super.remove(i);
+            }
+            return true;
+        }
+        BoolArr popIf(Predicate<? super Boolean> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        BoolArr filterOut(Predicate<? super Boolean> fn) {
+            super.removeIf(fn);
+            return this;
+        }
+        BoolArr keepIf(Predicate<? super Boolean> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        BoolArr filter(Predicate<? super Boolean> fn) {
+            super.removeIf(fn.negate());
+            return this;
+        }
+        BoolArr map(UnaryOperator<Boolean> fn) {
+            super.replaceAll(fn);
+            return this;
+        }
+        BoolArr unique() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Boolean> uniqueSet = new LinkedHashSet<>();
+            for (Object el : set) uniqueSet.add((Boolean) el);
+            super.clear();
+            super.addAll(uniqueSet);
+            return this;
+        }
+        boolean has(boolean x) {
+            return super.contains(x);
+        }
+        boolean i(int i) {
+            return i >= 0 && i < super.size() ? super.get(i) : false;
+        }
+        BoolArr update(int i, boolean x) {
+            if (!has(x))
+                super.add(x);
+            else {
+                if (i < 0 || i > super.size())
+                    return null;
+                super.set(i, x);
+            }
+            return this;
+        }
+        BoolArr shuffle() {
+            Object obj = super.clone();
+            Collection<?> collection = (Collection<?>) obj;
+            Set<Object> set = new LinkedHashSet<>(collection);
+            Set<Boolean> set2 = new LinkedHashSet<>();
+            for (Object el : set) set2.add((Boolean) el);
+            ArrayList<Boolean> list = new ArrayList<>(set2);
+            Collections.shuffle(list, new Random(System.nanoTime()));
+            super.clear();
+            super.addAll(list);
+            return this;
+        }
+        BoolArr sort() {
+            super.sort(null);
+            return this;
+        }
+        BoolArr sortReverse() {
+            super.sort(Collections.reverseOrder());
+            return this;
+        }
+        BoolArr reverseSort() {
+            sortReverse();
+            return this;
+        }
+        BoolArr reverse() {
+            sortReverse();
+            return this;
+        }
+        boolean[] array() {
+            Boolean[] partA = super.toArray(new Boolean[0]);
+            boolean[] resultantArr = new boolean[partA.length];
+            for (int i = 0; i < partA.length; i++) {
+                resultantArr[i] = partA[i];
+            }
+            return resultantArr;
+        }
+        ArrayList<Boolean> list() {
+            ArrayList<Boolean> result = new ArrayList<>();
+            BoolArr clone = copy();
+            for (int i : range(clone)) result.add(clone.i(i));
+            return result;
+        }
+        String string() {
+            return super.toString();
+        }
+        BoolArr slice(int x, int y) {
+            return (BoolArr) (super.subList(x, y).toArray())[0];
+        }
+        BoolArr empty() {
+            super.clear();
+            return this;
+        }
+        boolean eq(BoolArr arrB) {
+            BoolArr arrA = copy();
+            arrA.sort();
+            arrB.sort();
+            return arrA.equals(arrB);
+        }
+        boolean compare(BoolArr arrB) {
+            int len = intersection(arrB).length();
+            return len > len / 2;
+        }
+        BoolArr combine(BoolArr arrB) {
+            BoolArr arrA = copy();
+            ArrayList<Boolean> combined = new ArrayList<>();
+            combined.addAll(arrA);
+            combined.addAll(arrB);
+            empty();
+            super.addAll(combined);
+            return this;
+        }
+        BoolArr union(BoolArr arrB) {
+            combine(arrB);
+            return this;
+        }
+        BoolArr intersection(BoolArr arrB) {
+            super.retainAll(arrB);
+            return this;
+        }
+        BoolArr copy() {
+            return (BoolArr) super.clone();
+        }
+        BoolArr each(Consumer<? super Boolean> fn) {
+            super.forEach(fn);
+            return this;
+        }
+        void printMap() {
+            System.out.println(copy());
+        }
+        void printAll() {
+            printMap();
+        }
+        int length() {
+            return super.size();
+        }
+    }
+
+    public static IntArr range(int n) {
+        if (isnl(n))
+            return null;
+        IntArr arr = new IntArr();
+        for (int i = 0; i < n; i++) arr.add(i);
+        return arr;
+    }
+    public static IntArr range(int m, int n) {
+        IntArr arr = new IntArr();
+        if (isnl(m) || isnl(n) || eq(m, n))
+            return arr;
+        if (m > n) {
+            for (int i = m; i >= n; i--) arr.add(i);
+        } else {
+            for (int i = m; i <= n; i++) arr.add(i);
+        }
+        return arr;
+    }
+    public static IntArr range(int n, boolean reverse) {
+        if (reverse && n > 0)
+            return range(n, 1);
+        return range(n);
+    }
+    public static IntArr range(String[] arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(int[] arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(long[] arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(float[] arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(double[] arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(boolean[] arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(Object[] arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(StrArr arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(IntArr arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(LongArr arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(FltArr arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(DblArr arr) {
+        return range(len(arr));
+    }
+    public static IntArr range(BoolArr arr) {
+        return range(len(arr));
+    }
+    public static IntArr idx(String[] arr) {
+        return range(arr);
+    }
+    public static IntArr idx(int[] arr) {
+        return range(arr);
+    }
+    public static IntArr idx(long[] arr) {
+        return range(arr);
+    }
+    public static IntArr idx(float[] arr) {
+        return range(arr);
+    }
+    public static IntArr idx(double[] arr) {
+        return range(arr);
+    }
+    public static IntArr idx(boolean[] arr) {
+        return range(arr);
+    }
+    public static IntArr idx(Object[] arr) {
+        return range(arr);
+    }
+    public static IntArr idx(StrArr arr) {
+        return range(arr);
+    }
+    public static IntArr idx(IntArr arr) {
+        return range(arr);
+    }
+    public static IntArr idx(LongArr arr) {
+        return range(arr);
+    }
+    public static IntArr idx(FltArr arr) {
+        return range(arr);
+    }
+    public static IntArr idx(DblArr arr) {
+        return range(arr);
+    }
+    public static IntArr idx(BoolArr arr) {
+        return range(arr);
+    }
+    public static void each(
+        String[] iterable, ObjIntConsumer<String> consumer) {
+        int i = 0;
+        for (String item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(StrArr iterable, ObjIntConsumer<String> consumer) {
+        int i = 0;
+        for (String item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(int[] iterable, ObjIntConsumer<Integer> consumer) {
+        int i = 0;
+        for (int item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(IntArr iterable, ObjIntConsumer<Integer> consumer) {
+        int i = 0;
+        for (int item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(long[] iterable, ObjIntConsumer<Long> consumer) {
+        int i = 0;
+        for (long item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(LongArr iterable, ObjIntConsumer<Long> consumer) {
+        int i = 0;
+        for (long item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(float[] iterable, ObjIntConsumer<Float> consumer) {
+        int i = 0;
+        for (float item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(FltArr iterable, ObjIntConsumer<Float> consumer) {
+        int i = 0;
+        for (float item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(
+        double[] iterable, ObjIntConsumer<Double> consumer) {
+        int i = 0;
+        for (double item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(DblArr iterable, ObjIntConsumer<Double> consumer) {
+        int i = 0;
+        for (double item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(
+        boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
+        int i = 0;
+        for (boolean item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(
+        BoolArr iterable, ObjIntConsumer<Boolean> consumer) {
+        int i = 0;
+        for (boolean item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void each(
+        Object[] iterable, ObjIntConsumer<Object> consumer) {
+        int i = 0;
+        for (Object item : iterable) {
+            consumer.accept(item, i);
+            i++;
+        }
+    }
+    public static void forEach(
+        String[] iterable, ObjIntConsumer<String> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        StrArr iterable, ObjIntConsumer<String> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        int[] iterable, ObjIntConsumer<Integer> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        IntArr iterable, ObjIntConsumer<Integer> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(long[] iterable, ObjIntConsumer<Long> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        LongArr iterable, ObjIntConsumer<Long> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        float[] iterable, ObjIntConsumer<Float> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        FltArr iterable, ObjIntConsumer<Float> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        double[] iterable, ObjIntConsumer<Double> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        DblArr iterable, ObjIntConsumer<Double> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        BoolArr iterable, ObjIntConsumer<Boolean> consumer) {
+        each(iterable, consumer);
+    }
+    public static void forEach(
+        Object[] iterable, ObjIntConsumer<Object> consumer) {
+        each(iterable, consumer);
+    }
+    public static String[] map(String[] arr, Function<String, String> func) {
+        if (arr == null || func == null) {
+            throw new IllegalArgumentException(
+                "Array and function cannot be null");
+        }
+        String[] result = new String[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            result[i] = func.apply(arr[i]);
+        }
+        return result;
+    }
+    public static int[] map(int[] array, IntUnaryOperator operator) {
+        return Arrays.stream(array).map(operator).toArray();
+    }
+    public static long[] map(long[] array, LongUnaryOperator operator) {
+        return Arrays.stream(array).map(operator).toArray();
+    }
+    public static double[] map(double[] array, DoubleUnaryOperator operator) {
+        return Arrays.stream(array).map(operator).toArray();
+    }
+    public static <T> T[] popIf(T[] array, Predicate<T> condition) {
+        java.util.List<T> filteredList = Arrays.stream(array)
+                                             .filter(condition.negate())
+                                             .collect(Collectors.toList());
+        return filteredList.toArray(Arrays.copyOf(array, filteredList.size()));
+    }
+    public static StrArr popIf(StrArr list, Predicate<String> condition) {
+        return list.popIf(condition);
+    }
+    public static IntArr popIf(IntArr list, Predicate<Integer> condition) {
+        return list.popIf(condition);
+    }
+    public static LongArr popIf(LongArr list, Predicate<Long> condition) {
+        return list.popIf(condition);
+    }
+    public static FltArr popIf(FltArr list, Predicate<Float> condition) {
+        return list.popIf(condition);
+    }
+    public static DblArr popIf(DblArr list, Predicate<Double> condition) {
+        return list.popIf(condition);
+    }
+    public static BoolArr popIf(BoolArr list, Predicate<Boolean> condition) {
+        return list.popIf(condition);
+    }
+    public static <T> T[] keepIf(T[] array, Predicate<T> condition) {
+        java.util.List<T> filteredList =
+            Arrays.stream(array).filter(condition).collect(Collectors.toList());
+        return filteredList.toArray(Arrays.copyOf(array, filteredList.size()));
+    }
+    public static StrArr keepIf(StrArr list, Predicate<String> condition) {
+        return list.keepIf(condition);
+    }
+    public static IntArr keepIf(IntArr list, Predicate<Integer> condition) {
+        return list.keepIf(condition);
+    }
+    public static LongArr keepIf(LongArr list, Predicate<Long> condition) {
+        return list.keepIf(condition);
+    }
+    public static FltArr keepIf(FltArr list, Predicate<Float> condition) {
+        return list.keepIf(condition);
+    }
+    public static DblArr keepIf(DblArr list, Predicate<Double> condition) {
+        return list.keepIf(condition);
+    }
+    public static BoolArr keepIf(BoolArr list, Predicate<Boolean> condition) {
+        return list.keepIf(condition);
+    }
+    public static <T> T[] filterOut(T[] array, Predicate<T> condition) {
+        return popIf(array, condition);
+    }
+    public static StrArr filterOut(StrArr list, Predicate<String> condition) {
+        return popIf(list, condition);
+    }
+    public static IntArr filterOut(IntArr list, Predicate<Integer> condition) {
+        return popIf(list, condition);
+    }
+    public static LongArr filterOut(LongArr list, Predicate<Long> condition) {
+        return popIf(list, condition);
+    }
+    public static FltArr filterOut(FltArr list, Predicate<Float> condition) {
+        return popIf(list, condition);
+    }
+    public static DblArr filterOut(DblArr list, Predicate<Double> condition) {
+        return popIf(list, condition);
+    }
+    public static BoolArr filterOut(
+        BoolArr list, Predicate<Boolean> condition) {
+        return popIf(list, condition);
+    }
+    public static <T> T[] filter(T[] array, Predicate<T> condition) {
+        return keepIf(array, condition);
+    }
+    public static StrArr filter(StrArr list, Predicate<String> condition) {
+        return keepIf(list, condition);
+    }
+    public static IntArr filter(IntArr list, Predicate<Integer> condition) {
+        return keepIf(list, condition);
+    }
+    public static LongArr filter(LongArr list, Predicate<Long> condition) {
+        return keepIf(list, condition);
+    }
+    public static FltArr filter(FltArr list, Predicate<Float> condition) {
+        return keepIf(list, condition);
+    }
+    public static DblArr filter(DblArr list, Predicate<Double> condition) {
+        return keepIf(list, condition);
+    }
+    public static BoolArr filter(BoolArr list, Predicate<Boolean> condition) {
+        return keepIf(list, condition);
+    }
+    public static void repeat(Runnable fn, int times) {
+        for (; times > 0; times--) new Thread(fn).run();
+    }
+    public static String repeat(String s, int times) {
+        String org = s;
+        for (; times > 0; times--) s += org;
+        return s;
+    }
+    public static String repeat(String s) {
+        return repeat(s, 1);
+    }
+
+    // Date functions
+    public static String nthDay(int n) {
+        String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+            "Friday", "Saturday"};
+        return days[n];
+    }
+    public static String nthMonth(int n) {
+        String months[] = {"January", "February", "March", "April", "May",
+            "June", "July", "August", "September", "October", "November",
+            "December"};
+        return months[n];
+    }
+    public static String formattedDate(Date dt) {
+        int dayOfWeek = dt.getDay(), monthOfYear = dt.getMonth();
+        String day, month;
+        String date = dt.toLocaleString();
+        String ampm = date.substring(date.length() - 2);
+        date = date.substring(0, date.length() - 6) + " " + ampm;
+        month = nthMonth(monthOfYear);
+        date = month + " " + date.substring(4);
+        day = nthDay(dayOfWeek);
+        date = day + ", " + date;
+        return date;
+    }
+    public static String now() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * (3600 * 1000))); // fix 5-hour bug
+        String date = formattedDate(dt);
+        return date;
+    }
+    public static String now(boolean shortened) {
+        if (!shortened)
+            return now();
+        String parts[] = now().split(", ");
+        parts[0] = slice(parts[0], 0, 3);
+        parts[1] = slice(split(parts[1], " ")[0], 0, 3) + " "
+            + split(parts[1], " ")[1];
+        String time = slice(parts, len(parts) - 1)[0];
+        String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
+        String result = join(x, ", ");
+        return result;
+    }
+    public static String getDate() {
+        String parts[] = now().split(", ");
+        return parts[1] + ", " + parts[2];
+    }
+    public static String getDay() {
+        return now().split(", ")[0];
+    }
+    public static String getMonth() {
+        return now().split(", ")[1].split(" ")[0];
+    }
+    public static String getYear() {
+        return now().split(", ")[2];
+    }
+    public static String getTime() {
+        return now().split(", ")[3];
+    }
+    public static String getSeason() {
+        String m = slice(getMonth(), 0, 3).toLowerCase();
+        switch (m) {
+            case "may":
+            case "jun":
+            case "jul":
+            case "aug":
+                return "Summer";
+            case "sep":
+            case "oct":
+                return "Spring";
+            case "nov":
+            case "dec":
+            case "jan":
+            case "feb":
+                return "Winter";
+            default:
+                return "Fall/Autumn";
+        }
+    }
+    public static String yesterday() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setTime(dt.getTime()
+            - ((int) 36e5
+                * 24)); // decrement 24 hours or (3.6*10⁶)*24 milliseconds
+        String date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = parts[0] + ", " + parts[1] + ", " + parts[2];
+        return date;
+    }
+    public static String dayBeforeYesterday() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setTime(dt.getTime()
+            - ((int) 72e5
+                * 24)); // decrement 48 hours or (7.2*10⁶)*24 milliseconds
+        String date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = parts[0] + ", " + parts[1] + ", " + parts[2];
+        return date;
+    }
+    public static String twoDaysAgo() {
+        return dayBeforeYesterday();
+    }
+    public static String tomorrow() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) (36e2 * 1e3)))); // fix 5-hour bug
+        dt.setTime(dt.getTime()
+            + ((int) 36e5
+                * 24)); // increment 24 hours or (3.6*10⁶)*24 milliseconds
+        String date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = parts[0] + ", " + parts[1] + ", " + parts[2];
+        return date;
+    }
+    public static String dayAfterTomorrow() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setTime(dt.getTime()
+            + ((int) 72e5
+                * 24)); // increment 48 hours or (7.2*10⁶)*24 milliseconds
+        String date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = parts[0] + ", " + parts[1] + ", " + parts[2];
+        return date;
+    }
+    public static String twoDaysLater() {
+        return dayAfterTomorrow();
+    }
+    public static String lastMonth() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setMonth(dt.getMonth() - 1); // decrement a month
+        String date = formattedDate(dt);
+        date = date.split(", ")[1].split(" ")[0];
+        return date;
+    }
+    public static String lastMonthOf(String date) {
+        Date dt = new Date(date);
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setMonth(dt.getMonth() - 1); // decrement a month
+        date = formattedDate(dt);
+        date = date.split(", ")[1].split(" ")[0];
+        return date;
+    }
+    public static String nextMonth() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setMonth(dt.getMonth() + 1); // increment a month
+        String date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = date.split(", ")[1].split(" ")[0];
+        return date;
+    }
+    public static String nextMonthOf(String date) {
+        Date dt = new Date(date);
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setMonth(dt.getMonth() + 1); // increment a month
+        date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = date.split(", ")[1].split(" ")[0];
+        return date;
+    }
+    public static String lastYear() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setYear(dt.getYear() - 1); // decrement a year
+        String date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = date.split(", ")[2];
+        return date;
+    }
+    public static String lastYearOf(String date) {
+        Date dt = new Date(date);
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setYear(dt.getYear() - 1); // decrement a year
+        date = formattedDate(dt);
+        date = date.split(", ")[2];
+        return date;
+    }
+    public static String nextYear() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setYear(dt.getYear() + 1); // increment a year
+        String date = formattedDate(dt);
+        date = date.split(", ")[2];
+        return date;
+    }
+    public static String nextYear(String date) {
+        Date dt = new Date(date);
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setYear(dt.getYear() + 1); // increment a year
+        date = formattedDate(dt);
+        date = date.split(", ")[2];
+        return date;
+    }
+    public static String age2bday(int age) {
+        Date dt = new Date();
+        // dt.setTime(dt.getTime()+(5*((int)36e5))); //fix 5-hour bug
+        String bday = ""
+            + ((dt.getYear() + 1900) - age); // adding 1900 helps resolve a bug
+        return bday;
+    }
+    public static int bday2age(String date) {
+        Date dt = new Date(date);
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        int age = new Date().getYear() - dt.getYear();
+        return age;
+    }
+    public static String date2day(String date) {
+        Date dt = new Date(date);
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        date = formattedDate(dt);
+        date = date.split(", ")[0];
+        return date;
+    }
+    public static String date2month(String date) {
+        Date dt = new Date(date);
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        date = formattedDate(dt);
+        date = date.split(", ")[1].split(" ")[0];
+        return date;
+    }
+    public static String timeGreet() {
+        String greeting;
+        int h = new Date().getHours() + 5; // fix 5-hour bug along the way
+        if (h >= 20)
+            greeting = "Good night";
+        else if (h >= 16)
+            greeting = "Good evening";
+        else if (h >= 12)
+            greeting = "Good afternoon";
+        else if (h >= 0 && h <= 4)
+            greeting = "Good new day";
+        else
+            greeting = "Good morning";
+        return greeting;
+    }
+    public static String lastOfMonth(int m) {
+        Date dt = new Date();
+        KL dt2 = new KL();
+        dt.setTime(dt.getTime()
+            + (5 * ((int) 36e5))); // fix 5-hour bug for better accuracy
+        String result = ""
+            + ("" + dt2.nthMonth(m - 1) + " "
+                + new Date(new Date().getYear(), m, 0).getDate());
+        return result;
+    }
+    public static boolean isWeekend() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        return dt.getDay() % 6 == 0;
+    }
+    public static boolean isLeapYear() {
+        return (1900 + new Date().getYear()) % 4 == 0;
+    }
+    public static int nextLeapYear() {
+        Date dt = new Date();
+        dt.setTime(dt.getTime()
+            + (5 * ((int) 36e5))); // fix 5-hour bug for better accuracy
+        int i = 0;
+        if (dt.getYear() % 4 == 0)
+            dt.setYear(dt.getYear() + 1); // ignore current year, if it's leap
+        while (dt.getYear() % 4 != 0) {
+            dt.setYear((dt.getYear()) + i);
+            i++;
+        }
+        int result = (1900 + dt.getYear()); // comes with a bug fix
+        return result;
+    }
+    public static String dateBefore(int n) {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setDate(dt.getDate() - Math.abs(n));
+        String date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = parts[0] + ", " + parts[1] + ", " + parts[2];
+        return date;
+    }
+    public static String dateAfter(int n) {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setDate(dt.getDate() + Math.abs(n));
+        String date = formattedDate(dt);
+        String parts[] = date.split(", ");
+        date = parts[0] + ", " + parts[1] + ", " + parts[2];
+        return date;
+    }
+    public static String minsAgo(int n) {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setTime(dt.getTime() - (n * (int) 60e3));
+        String time = formattedDate(dt);
+        time = time.split(", ")[3];
+        return time;
+    }
+    public static String minsLater(int n) {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setTime(dt.getTime() + (n * (int) 60e3));
+        String time = formattedDate(dt);
+        time = time.split(", ")[3];
+        return time;
+    }
+    public static String hoursAgo(int n) {
+        Date dt = new Date();
+        dt.setTime(
+            dt.getTime() + (5 * ((int) 36e5))); // first fix the 5-hour bug
+        dt.setTime(dt.getTime() - (n * (int) 36e5));
+        String time = formattedDate(dt);
+        time = time.split(", ")[3];
+        return time;
+    }
+    public static String hoursLater(int n) {
+        Date dt = new Date();
+        dt.setTime(
+            dt.getTime() + (5 * ((int) 36e5))); // first fix the 5-hour bug
+        dt.setTime(dt.getTime() + (n * (int) 36e5));
+        String time = formattedDate(dt);
+        time = time.split(", ")[3];
+        return time;
+    }
+    public static String nthHour(int n) {
+        Date dt = new Date();
+        dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+        dt.setTime(
+            dt.getTime() - (int) 36e5 * dt.getHours() + (n * (int) 36e5));
+        String time = formattedDate(dt);
+        time = time.split(", ")[3];
+        return time;
+    }
+    public static String date() {
+        return now();
+    }
+
+    // utilities
+    public static void println(Object... args) {
+        each(args, (arg, i) -> { System.out.print(arg + " "); });
+    }
+    public static void print(Object... args) {
+        // don't change this line
+        println(args);
+        System.out.print("\n");
+    }
+    public static void printf(String str, Object... args) {
+        print(f(str, args));
+    }
+    public static void printf(int n) {
+        print(f(n));
+    }
+    public static void printf(long n) {
+        print(f(n));
+    }
+    public static void printf(float n) {
+        print(f(n));
+    }
+    public static void printf(double n) {
+        print(f(n));
+    }
+
+    // printing arrays
+    public static void printArr(String arr[]) {
+        print("[");
+        for (String arg : arr) print("\t\"" + arg + "\", ");
+        print("]");
+    }
+    public static void printArr(int arr[]) {
+        print(Arrays.toString(arr));
+    }
+    public static void printArr(long arr[]) {
+        print(Arrays.toString(arr));
+    }
+    public static void printArr(float arr[]) {
+        print(Arrays.toString(arr));
+    }
+    public static void printArr(double arr[]) {
+        print(Arrays.toString(arr));
+    }
+    public static void printArr(boolean arr[]) {
+        print(Arrays.toString(arr));
+    }
+    public static void printArr(Object arr[]) {
+        print(Arrays.toString(arr));
+    }
+    public static void printArr(StrArr arr) {
+        print(arr.toString());
+    }
+    public static void printArr(IntArr arr) {
+        print(arr.toString());
+    }
+    public static void printArr(LongArr arr) {
+        print(arr.toString());
+    }
+    public static void printArr(FltArr arr) {
+        print(arr.toString());
+    }
+    public static void printArr(DblArr arr) {
+        print(arr.toString());
+    }
+    public static void printArr(BoolArr arr) {
+        print(arr.toString());
+    }
+    public static void printAll(String arr[]) {
+        printArr(arr);
+    }
+    public static void printAll(int arr[]) {
+        printArr(arr);
+    }
+    public static void printAll(long arr[]) {
+        printArr(arr);
+    }
+    public static void printAll(float arr[]) {
+        printArr(arr);
+    }
+    public static void printAll(double arr[]) {
+        printArr(arr);
+    }
+    public static void printAll(boolean arr[]) {
+        printArr(arr);
+    }
+    public static void printAll(Object arr[]) {
+        printArr(arr);
+    }
+    public static void printAll(StrArr arr) {
+        printArr(arr);
+    }
+    public static void printAll(IntArr arr) {
+        printArr(arr);
+    }
+    public static void printAll(LongArr arr) {
+        printArr(arr);
+    }
+    public static void printAll(FltArr arr) {
+        printArr(arr);
+    }
+    public static void printAll(DblArr arr) {
+        printArr(arr);
+    }
+    public static void printAll(BoolArr arr) {
+        printArr(arr);
+    }
+    public static void printEach(String arr[]) {
+        printArr(arr);
+    }
+    public static void printEach(int arr[]) {
+        printArr(arr);
+    }
+    public static void printEach(long arr[]) {
+        printArr(arr);
+    }
+    public static void printEach(float arr[]) {
+        printArr(arr);
+    }
+    public static void printEach(double arr[]) {
+        printArr(arr);
+    }
+    public static void printEach(boolean arr[]) {
+        printArr(arr);
+    }
+    public static void printEach(Object arr[]) {
+        printArr(arr);
+    }
+    public static void printEach(StrArr arr) {
+        printArr(arr);
+    }
+    public static void printEach(IntArr arr) {
+        printArr(arr);
+    }
+    public static void printEach(LongArr arr) {
+        printArr(arr);
+    }
+    public static void printEach(FltArr arr) {
+        printArr(arr);
+    }
+    public static void printEach(DblArr arr) {
+        printArr(arr);
+    }
+    public static void printEach(BoolArr arr) {
+        printArr(arr);
+    }
+
+    // getting user input
+    public static String ask(String s) {
+        print(s);
+        Scanner input = new Scanner(System.in);
+        String x = input.nextLine();
+        return x;
+    }
+    public static int askI(String s) {
+        print(s);
+        Scanner input = new Scanner(System.in);
+        int x = input.nextInt();
+        return x;
+    }
+    public static int askC(String s) {
+        print(s);
+        Scanner input = new Scanner(System.in);
+        char x = input.next().charAt(0);
+        return x;
+    }
+    public static long askL(String s) {
+        print(s);
+        Scanner input = new Scanner(System.in);
+        long x = input.nextLong();
+        return x;
+    }
+    public static float askF(String s) {
+        print(s);
+        Scanner input = new Scanner(System.in);
+        float x = input.nextFloat();
+        return x;
+    }
+    public static double askD(String s) {
+        print(s);
+        Scanner input = new Scanner(System.in);
+        double x = input.nextDouble();
+        return x;
+    }
+    public static int askInt(String s) {
+        return askI(s);
+    }
+    public static int askChar(String s) {
+        return askC(s);
+    }
+    public static long askLong(String s) {
+        return askL(s);
+    }
+    public static float askFloat(String s) {
+        return askF(s);
+    }
+    public static double askDouble(String s) {
+        return askD(s);
+    }
+    public static void br(int n) {
+        for (; n > 0; n--) print("\n");
+    }
+    public static void br() {
+        br(1);
+    }
+    public static String String(String arg) {
+        // if already a string, return as/is
+        return arg;
+    }
+    public static String String(char arg) {
+        String result = ("" + arg);
+        return result;
+    }
+    public static String String(int arg) {
+        String result = ("" + arg);
+        return result;
+    }
+    public static String String(long arg) {
+        String result = ("" + arg);
+        return result;
+    }
+    public static String String(float arg) {
+        String result = ("" + arg);
+        return result;
+    }
+    public static String String(double arg) {
+        String result = ("" + arg);
+        return result;
+    }
+    public static String String(boolean arg) {
+        String result = ("" + arg);
+        return result;
+    }
+    public static String String(Object arg) {
+        String result = ("" + arg);
+        return result;
+    }
+    public static String String(String[] arr) {
+        return Arrays.toString(arr);
+    }
+    public static String String(int[] arr) {
+        return Arrays.toString(arr);
+    }
+    public static String String(char[] arr) {
+        return Arrays.toString(arr);
+    }
+    public static String String(long[] arr) {
+        return Arrays.toString(arr);
+    }
+    public static String String(float[] arr) {
+        return Arrays.toString(arr);
+    }
+    public static String String(double[] arr) {
+        return Arrays.toString(arr);
+    }
+    public static String String(boolean[] arr) {
+        return Arrays.toString(arr);
+    }
+    public static String String(Object[] arr) {
+        return Arrays.toString(arr);
+    }
+    public static String String(StrArr arr) {
+        return arr.toString();
+    }
+    public static String String(IntArr arr) {
+        return arr.toString();
+    }
+    public static String String(LongArr arr) {
+        return arr.toString();
+    }
+    public static String String(FltArr arr) {
+        return arr.toString();
+    }
+    public static String String(DblArr arr) {
+        return arr.toString();
+    }
+    public static String String(BoolArr arr) {
+        return arr.toString();
+    }
+    public static String Str(String arg) {
+        return String(arg);
+    }
+    public static String Str(char arg) {
+        return String(arg);
+    }
+    public static String Str(int arg) {
+        return String(arg);
+    }
+    public static String Str(long arg) {
+        return String(arg);
+    }
+    public static String Str(float arg) {
+        return String(arg);
+    }
+    public static String Str(double arg) {
+        return String(arg);
+    }
+    public static String Str(boolean arg) {
+        return String(arg);
+    }
+    public static String Str(Object arg) {
+        String result = ("" + arg);
+        return result;
+    }
+    public static String Str(String[] arr) {
+        return String(arr);
+    }
+    public static String Str(int[] arr) {
+        return String(arr);
+    }
+    public static String Str(char[] arr) {
+        return String(arr);
+    }
+    public static String Str(long[] arr) {
+        return String(arr);
+    }
+    public static String Str(float[] arr) {
+        return String(arr);
+    }
+    public static String Str(double[] arr) {
+        return String(arr);
+    }
+    public static String Str(boolean[] arr) {
+        return String(arr);
+    }
+    public static String Str(Object[] arg) {
+        return String(arg);
+    }
+    public static String Str(StrArr arr) {
+        return String(arr);
+    }
+    public static String Str(IntArr arr) {
+        return String(arr);
+    }
+    public static String Str(LongArr arr) {
+        return String(arr);
+    }
+    public static String Str(FltArr arr) {
+        return String(arr);
+    }
+    public static String Str(DblArr arr) {
+        return String(arr);
+    }
+    public static String Str(BoolArr arr) {
+        return String(arr);
+    }
+    public static char[] Chars(String str) {
+        char[] result = str.toCharArray();
+        return result;
+    }
+    public static char Char(String str) {
+        char result = Chars(str)[0];
+        return result;
+    }
+    public static char Char(String str, int n) {
+        char result = Chars(str)[n];
+        return result;
+    }
+    public static char nthCharOf(String str, int n) {
+        char result = Chars(str)[n];
+        return result;
+    }
+    public static char nthLastCharOf(String str, int n) {
+        char result = nthCharOf(str, len(str) - n);
+        return result;
+    }
+    public static char secondLastCharOf(String str) {
+        char result = nthLastCharOf(str, 2);
+        return result;
+    }
+    public static char lastCharOf(String str) {
+        char result = nthLastCharOf(str, 1);
+        return result;
+    }
+    public static String[] split(String str) {
+        String[] returnValue = str.split("");
+        return returnValue;
+    }
+    public static String[] split(String str, String delimiting_str_or_regex) {
+        String[] returnValue = str.split(delimiting_str_or_regex);
+        return returnValue;
+    }
+    public static String[] splitIntoWords(String str) {
+        String[] returnValue = split(str, "[^a-zA-Z'\\-]|\\-(?![a-zA-Z]{2,})");
+        return returnValue;
+    }
+    public static String join(String[] stringedArray, String with) {
+        String returnValue = String.join(with, stringedArray);
+        return returnValue;
+    }
+    public static boolean eq(String x, String y) {
+        return x.equalsIgnoreCase(y);
+    }
+    public static boolean uneq(String x, String y) {
+        return !eq(x, y);
+    }
+
+    // numbers
+    public static int Int(String arg) {
+        try {
+            return Integer.parseInt(arg.replaceAll("(?<=\\d)\\.\\d+", ""));
+        } catch (Exception err) {
+            return 0;
+        }
+    }
+    public static int Int(int n) {
+        return n;
+    }
+    public static int Int(long n) {
+        return (int) n;
+    }
+    public static int Int(float n) {
+        return (int) n;
+    }
+    public static int Int(double n) {
+        return (int) n;
+    }
+    public static float Flt(String arg) {
+        try {
+            return Float.parseFloat(arg.replaceAll("[^\\d\\.]", ""));
+        } catch (Exception err) {
+            return 0;
+        }
+    }
+    public static float Flt(int n) {
+        return (float) n;
+    }
+    public static float Flt(long n) {
+        return (float) n;
+    }
+    public static float Flt(float n) {
+        return n;
+    }
+    public static float Flt(double n) {
+        return (float) n;
+    }
+    public static long Lng(String arg) {
+        return (long) Flt(arg);
+    }
+    public static long Lng(int n) {
+        return (long) n;
+    }
+    public static long Lng(long n) {
+        return n;
+    }
+    public static long Lng(float n) {
+        return (long) n;
+    }
+    public static long Lng(double n) {
+        return (long) n;
+    }
+    public static long Long(String arg) {
+        return Lng(arg);
+    }
+    public static double Dbl(String arg) {
+        return (double) Flt(arg);
+    }
+    public static double Dbl(int arg) {
+        return (double) arg;
+    }
+    public static double Dbl(long arg) {
+        return (double) arg;
+    }
+    public static double Dbl(float arg) {
+        return (double) arg;
+    }
+    public static double Dbl(double arg) {
+        return arg;
+    }
+    public static double Double(String arg) {
+        return (double) Flt(arg);
+    }
+    public static boolean isIntLike(String s) {
+        try {
+            return Integer.parseInt(s) % 1 == 0;
+        } catch (Exception err) {
+            return false;
+        }
+    }
+    public static boolean isFltLike(String s) {
+        try {
+            return Float.parseFloat(s) % 1 != 0;
+        } catch (Exception err) {
+            return false;
+        }
+    }
+    public static boolean isAlpha(char c) {
+        return c >= 65 && c <= 122;
+    }
+    public static boolean isPos(int n) {
+        return n > 0;
+    }
+    public static boolean isPos(long n) {
+        return n > 0;
+    }
+    public static boolean isPos(float n) {
+        return n > 0;
+    }
+    public static boolean isPos(double n) {
+        return n > 0;
+    }
+    public static boolean isNeg(int n) {
+        return n < 0;
+    }
+    public static boolean isNeg(long n) {
+        return n < 0;
+    }
+    public static boolean isNeg(float n) {
+        return n < 0;
+    }
+    public static boolean isNeg(double n) {
+        return n < 0;
+    }
+    public static int Pos(int n) {
+        return Math.abs(n);
+    }
+    public static long Pos(long n) {
+        return Math.abs(n);
+    }
+    public static float Pos(float n) {
+        return Math.abs(n);
+    }
+    public static double Pos(double n) {
+        return Math.abs(n);
+    }
+    public static int Neg(int n) {
+        return -Pos(n);
+    }
+    public static long Neg(long n) {
+        return -Pos(n);
+    }
+    public static float Neg(float n) {
+        return -Pos(n);
+    }
+    public static double Neg(double n) {
+        return -Pos(n);
+    }
+    public static double sum(double... ns) {
+        double acc = 0;
+        for (int next = 0; next < ns.length; next++) acc += ns[next];
+        return acc;
+    }
+    public static double diff(double... ns) {
+        double acc = ns[0];
+        for (int next = 1; next < ns.length; next++) acc -= ns[next];
+        return acc;
+    }
+    public static double prd(double... ns) {
+        double acc = ns[0];
+        for (int next = 1; next < ns.length; next++) acc *= ns[next];
+        return acc;
+    }
+    public static double quo(double... ns) {
+        double acc = ns[0];
+        for (int next = 1; next < ns.length; next++) acc /= ns[next];
+        return acc;
+    }
+    public static double pow(double n, double power) {
+        return Math.pow(n, power);
+    }
+    public static double sq(double n) {
+        return n * n;
+    }
+    public static double sqrt(double n) {
+        return Math.sqrt(n);
+    }
+    public static double cb(double n) {
+        return sq(n) * n;
+    }
+    public static double cbrt(double n) {
+        return Math.cbrt(n);
+    }
+    public static double area(double w, double h) {
+        return w * h;
+    }
+    public static double rect(double w, double h) {
+        return area(w, h);
+    }
+    public static double tria(double w, double h) {
+        return .5 * rect(w, h);
+    }
+    public static int min(int... nums) {
+        IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+        return stat.getMin();
+    }
+    public static long min(long... nums) {
+        LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+        return stat.getMin();
+    }
+    public static double min(double... nums) {
+        DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+        return stat.getMin();
+    }
+    public static int max(int... nums) {
+        IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+        return stat.getMax();
+    }
+    public static long max(long... nums) {
+        LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+        return stat.getMax();
+    }
+    public static double max(double... nums) {
+        DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
+        return stat.getMax();
+    }
+    public static double mod(double n1, double n2) {
+        if (n2 > n1) {
+            // swap
+            n1 += n2;
+            n2 = n1 - n2;
+            n1 -= n2;
+        }
+        return Math.abs(n1 % n2);
+    }
+    public static boolean isperfmod(double n1, double n2) {
+        return mod(n1, n2) == 0;
+    }
+    public static IntArr divisorsOf(int n) {
+        IntArr arr = new IntArr();
+        for (int i = 2; i < n; i++) {
+            if (isperfmod(n, i))
+                arr.add(i);
+        }
+        return arr;
+    }
+    public static boolean isDivisorOf(double n1, double n2) {
+        return isperfmod(n1, n2);
+    }
+    public static boolean iseven(double n) {
+        return isperfmod(n, 2);
+    }
+    public static boolean isodd(double n) {
+        return !isperfmod(n, 2);
+    }
+    public static int isprime(int n) {
+        for (int i = 2; i <= n / 2; i++) {
+            if (n % i == 0)
+                return 0;
+        }
+        return 1;
+    }
+    public static String th(long n) {
+        String result = Str(n);
+        int size = len(result);
+        char seclast_char = size - 2 >= 0 ? result.charAt(size - 2) : '\0';
+        char last_char = size - 1 >= 0 ? result.charAt(size - 1) : '\0';
+        String last_two = Str(seclast_char) + Str(last_char);
+        if (n > 14 && n < 111) {
+            switch (last_char) {
+                case '1':
+                    result += "st";
+                    break;
+                case '2':
+                    result += "nd";
+                    break;
+                case '3':
+                    result += "rd";
+                    break;
+                default:
+                    result += "th";
+            }
+        } else {
+            if (eq(last_two, "11") || eq(last_two, "12") || eq(last_two, "13"))
+                result += "th";
+            else {
+                switch (last_char) {
+                    case '1':
+                        result += "st";
+                        break;
+                    case '2':
+                        result += "nd";
+                        break;
+                    case '3':
+                        result += "rd";
+                        break;
+                    default:
+                        result += "th";
+                }
+            }
+        }
+        return result;
+    }
+    // let's set up some currency variables
+    public static double zr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9, kh = 1e11;
+    public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
+                         qt = 1e18, sx = 1e21, sp = 1e24, oc = 1e27, nn = 1e30,
+                         dc = 1e33;
+
+    public static String fpkr(int amount) {
+        double floats = amount % 1;
+        long amountFix = Lng(amount - floats);
+        StringBuilder stringBuilder = new StringBuilder();
+        char[] amountArray = Str(amountFix).toCharArray();
+        int a = 0, b = 0;
+        for (int i = amountArray.length - 1; i >= 0; i--) {
+            if (a < 3) {
+                stringBuilder.append(amountArray[i]);
+                a++;
+            } else if (b < 2) {
+                if (b == 0) {
+                    stringBuilder.append(",");
+                    stringBuilder.append(amountArray[i]);
+                    b++;
+                } else {
+                    stringBuilder.append(amountArray[i]);
+                    b = 0;
+                }
+            }
+        }
+        return replace(stringBuilder.reverse().toString() + "."
+                + sliceToAfter(Str(floats), "."),
+            "(?<=\\.\\d{2})\\d+", "");
+    }
+    public static String fpkr(long amount) {
+        double floats = amount % 1;
+        long amountFix = Lng(amount - floats);
+        StringBuilder stringBuilder = new StringBuilder();
+        char[] amountArray = Str(amountFix).toCharArray();
+        int a = 0, b = 0;
+        for (int i = amountArray.length - 1; i >= 0; i--) {
+            if (a < 3) {
+                stringBuilder.append(amountArray[i]);
+                a++;
+            } else if (b < 2) {
+                if (b == 0) {
+                    stringBuilder.append(",");
+                    stringBuilder.append(amountArray[i]);
+                    b++;
+                } else {
+                    stringBuilder.append(amountArray[i]);
+                    b = 0;
+                }
+            }
+        }
+        return replace(stringBuilder.reverse().toString() + "."
+                + sliceToAfter(Str(floats), "."),
+            "(?<=\\.\\d{2})\\d+", "");
+    }
+    public static String fpkr(float amount) {
+        double floats = amount % 1;
+        long amountFix = Lng(amount - floats);
+        StringBuilder stringBuilder = new StringBuilder();
+        char[] amountArray = Str(amountFix).toCharArray();
+        int a = 0, b = 0;
+        for (int i = amountArray.length - 1; i >= 0; i--) {
+            if (a < 3) {
+                stringBuilder.append(amountArray[i]);
+                a++;
+            } else if (b < 2) {
+                if (b == 0) {
+                    stringBuilder.append(",");
+                    stringBuilder.append(amountArray[i]);
+                    b++;
+                } else {
+                    stringBuilder.append(amountArray[i]);
+                    b = 0;
+                }
+            }
+        }
+        return replace(stringBuilder.reverse().toString() + "."
+                + sliceToAfter(Str(floats), "."),
+            "(?<=\\.\\d{2})\\d+", "");
+    }
+    public static String fpkr(double amount) {
+        double floats = amount % 1;
+        long amountFix = Lng(amount - floats);
+        StringBuilder stringBuilder = new StringBuilder();
+        char[] amountArray = Str(amountFix).toCharArray();
+        int a = 0, b = 0;
+        for (int i = amountArray.length - 1; i >= 0; i--) {
+            if (a < 3) {
+                stringBuilder.append(amountArray[i]);
+                a++;
+            } else if (b < 2) {
+                if (b == 0) {
+                    stringBuilder.append(",");
+                    stringBuilder.append(amountArray[i]);
+                    b++;
+                } else {
+                    stringBuilder.append(amountArray[i]);
+                    b = 0;
+                }
+            }
+        }
+        return replace(stringBuilder.reverse().toString() + "."
+                + sliceToAfter(Str(floats), "."),
+            "(?<=\\.\\d{2})\\d+", "");
+    }
+    public static String far(int n) {
+        return NumberFormat
+            .getCurrencyInstance(
+                new Locale.Builder().setLanguage("ar").setRegion("AR").build())
+            .format(n)
+            .replaceAll("\\w|٫٠٠$", "")
+            .substring(1);
+    }
+    public static String far(long n) {
+        return NumberFormat
+            .getCurrencyInstance(
+                new Locale.Builder().setLanguage("ar").setRegion("AR").build())
+            .format(n)
+            .replaceAll("\\w|٫٠٠$", "")
+            .substring(1);
+    }
+    public static String far(float n) {
+        return NumberFormat
+            .getCurrencyInstance(
+                new Locale.Builder().setLanguage("ar").setRegion("AR").build())
+            .format(n)
+            .replaceAll("\\w|٫٠٠$", "")
+            .substring(1);
+    }
+    public static String far(double n) {
+        return NumberFormat
+            .getCurrencyInstance(
+                new Locale.Builder().setLanguage("ar").setRegion("AR").build())
+            .format(n)
+            .replaceAll("\\w|٫٠٠$", "")
+            .substring(1);
+    }
+    public static String fur(int n) {
+        return far(n);
+    }
+    public static String fur(long n) {
+        return far(n);
+    }
+    public static String fur(float n) {
+        return far(n);
+    }
+    public static String fur(double n) {
+        return far(n);
+    }
+    public static String fus(int n) {
+        return NumberFormat
+            .getCurrencyInstance(
+                new Locale.Builder().setLanguage("en").setRegion("US").build())
+            .format(n)
+            .replaceAll("[^\\d\\,\\.]", "");
+    }
+    public static String fus(long n) {
+        return NumberFormat
+            .getCurrencyInstance(
+                new Locale.Builder().setLanguage("en").setRegion("US").build())
+            .format(n)
+            .replaceAll("[^\\d\\,\\.]", "");
+    }
+    public static String fus(float n) {
+        return NumberFormat
+            .getCurrencyInstance(
+                new Locale.Builder().setLanguage("en").setRegion("US").build())
+            .format(n)
+            .replaceAll("[^\\d\\,\\.]", "");
+    }
+    public static String fus(double n) {
+        return NumberFormat
+            .getCurrencyInstance(
+                new Locale.Builder().setLanguage("en").setRegion("US").build())
+            .format(n)
+            .replaceAll("[^\\d\\,\\.]", "");
+    }
+    public static String f(int n) {
+        return fpkr(n);
+    }
+    public static String f(long n) {
+        return fpkr(n);
+    }
+    public static String f(float n) {
+        return fpkr(n);
+    }
+    public static String f(double n) {
+        return fpkr(n);
+    }
+    public static <T> String f(String s, T... args) {
+        return String.format(s, args);
+    }
+    public static String pkr(int n) {
+        String formattedN = fpkr(n);
+        String result = "Rs. " + formattedN;
+        return result;
+    }
+    public static String pkr(long n) {
+        String formattedN = fpkr(n);
+        String result = "Rs. " + formattedN;
+        return result;
+    }
+    public static String pkr(float n) {
+        String formattedN = fpkr(n);
+        String result = "Rs. " + formattedN;
+        return result;
+    }
+    public static String pkr(double n) {
+        String formattedN = fpkr(n);
+        String result = "Rs. " + formattedN;
+        return result;
+    }
+    public static String usd(int n) {
+        String formattedN = fus(n);
+        String result = "US$ " + formattedN;
+        return result;
+    }
+    public static String usd(long n) {
+        String formattedN = fus(n);
+        String result = "US$ " + formattedN;
+        return result;
+    }
+    public static String usd(float n) {
+        String formattedN = fus(n);
+        String result = "US$ " + formattedN;
+        return result;
+    }
+    public static String usd(double n) {
+        String formattedN = fus(n);
+        String result = "US$ " + formattedN;
+        return result;
+    }
+    public static String curr(int n, String locale) {
+        String formattedN = fus(n);
+        if (startsWith(locale, "pk|rs"))
+            return pkr(n);
+        else if (startsWith(locale, "us"))
+            return usd(n);
+        else if (len(locale) >= 1 && len(locale) <= 4)
+            return trim(titleCase(locale)) + " " + formattedN;
+        return formattedN;
+    }
+    public static String curr(long n, String locale) {
+        String formattedN = fus(n);
+        if (startsWith(locale, "pk|rs"))
+            return pkr(n);
+        else if (startsWith(locale, "us"))
+            return usd(n);
+        else if (len(locale) >= 1 && len(locale) < 4)
+            return trim(titleCase(locale)) + " " + formattedN;
+        return formattedN;
+    }
+    public static String curr(float n, String locale) {
+        String formattedN = fus(n);
+        if (startsWith(locale, "pk|rs"))
+            return pkr(n);
+        else if (startsWith(locale, "us"))
+            return usd(n);
+        else if (len(locale) >= 1 && len(locale) < 4)
+            return trim(titleCase(locale)) + " " + formattedN;
+        return formattedN;
+    }
+    public static String curr(double n, String locale) {
+        String formattedN = fus(n);
+        if (startsWith(locale, "pk|rs"))
+            return pkr(n);
+        else if (startsWith(locale, "us"))
+            return usd(n);
+        else if (len(locale) >= 1 && len(locale) < 4)
+            return trim(titleCase(locale)) + " " + formattedN;
+        return formattedN;
+    }
+    public static String pksuffix(int n) {
+        n -= n % 1;
+        String formattedN = fpkr(n);
+        String[] parts = split(formattedN, ",");
+        int size = len(parts);
+        if (n < 800 || n > 99 * kh)
+            return formattedN;
+        String result = "";
+        switch (size) {
+            case 1:
+            case 2:
+                result = Str(n / zr) + "zr";
+                break;
+            case 3:
+                result = Str(n / lc) + "lc";
+                break;
+            case 4:
+                result = Str(n / cr) + "cr";
+                break;
+            case 5:
+                result = Str(n / ar) + "ar";
+                break;
+            case 6:
+                result = Str(n / kh) + "kh";
+                break;
+        }
+        return result;
+    }
+    public static String pksuffix(long n) {
+        n -= n % 1;
+        String formattedN = fpkr(n);
+        String[] parts = split(formattedN, ",");
+        int size = len(parts);
+        if (n < 800 || n > 99 * kh)
+            return formattedN;
+        String result = "";
+        switch (size) {
+            case 1:
+            case 2:
+                result = Str(n / zr) + "zr";
+                break;
+            case 3:
+                result = Str(n / lc) + "lc";
+                break;
+            case 4:
+                result = Str(n / cr) + "cr";
+                break;
+            case 5:
+                result = Str(n / ar) + "ar";
+                break;
+            case 6:
+                result = Str(n / kh) + "kh";
+                break;
+        }
+        return result;
+    }
+    public static String pksuffix(float n) {
+        n -= n % 1;
+        String formattedN = fpkr(n);
+        String[] parts = split(formattedN, ",");
+        int size = len(parts);
+        if (n < 800 || n > 99 * kh)
+            return formattedN;
+        String result = "";
+        switch (size) {
+            case 1:
+            case 2:
+                result = Str(n / zr) + "zr";
+                break;
+            case 3:
+                result = Str(n / lc) + "lc";
+                break;
+            case 4:
+                result = Str(n / cr) + "cr";
+                break;
+            case 5:
+                result = Str(n / ar) + "ar";
+                break;
+            case 6:
+                result = Str(n / kh) + "kh";
+                break;
+        }
+        return result;
+    }
+    public static String pksuffix(double n) {
+        n -= n % 1;
+        String formattedN = fpkr(n);
+        String[] parts = split(formattedN, ",");
+        int size = len(parts);
+        if (n < 800 || n > 99 * kh)
+            return formattedN;
+        String result = "";
+        switch (size) {
+            case 1:
+            case 2:
+                result = Str(n / zr) + "zr";
+                break;
+            case 3:
+                result = Str(n / lc) + "lc";
+                break;
+            case 4:
+                result = Str(n / cr) + "cr";
+                break;
+            case 5:
+                result = Str(n / ar) + "ar";
+                break;
+            case 6:
+                result = Str(n / kh) + "kh";
+                break;
+        }
+        return result;
+    }
+    // ،
+    public static String ussuffix(int n) {
+        n -= n % 1;
+        String formattedN = fus(n);
+        String[] parts = split(formattedN, ",");
+        int size = len(parts);
+        if (n < 800 || n > 99 * dc)
+            return formattedN;
+        String result = "";
+        switch (size) {
+            case 1:
+            case 2:
+                result = Str(n / K) + "k";
+                break;
+            case 3:
+                result = Str(n / M) + "M";
+                break;
+            case 4:
+                result = Str(n / B) + "B";
+                break;
+            case 5:
+                result = Str(n / T) + "T";
+                break;
+            case 6:
+                result = Str(n / qd) + "qd";
+                break;
+            case 7:
+                result = Str(n / qt) + "qt";
+                break;
+            case 8:
+                result = Str(n / sx) + "sx";
+                break;
+            case 9:
+                result = Str(n / sp) + "sp";
+                break;
+            case 10:
+                result = Str(n / oc) + "oc";
+                break;
+            case 11:
+                result = Str(n / nn) + "nn";
+                break;
+            case 12:
+                result = Str(n / dc) + "dc";
+                break;
+        }
+        return result;
+    }
+    public static String ussuffix(long n) {
+        n -= n % 1;
+        String formattedN = fus(n);
+        String[] parts = split(formattedN, ",");
+        int size = len(parts);
+        if (n < 800 || n > 99 * dc)
+            return formattedN;
+        String result = "";
+        switch (size) {
+            case 1:
+            case 2:
+                result = Str(n / K) + "k";
+                break;
+            case 3:
+                result = Str(n / M) + "M";
+                break;
+            case 4:
+                result = Str(n / B) + "B";
+                break;
+            case 5:
+                result = Str(n / T) + "T";
+                break;
+            case 6:
+                result = Str(n / qd) + "qd";
+                break;
+            case 7:
+                result = Str(n / qt) + "qt";
+                break;
+            case 8:
+                result = Str(n / sx) + "sx";
+                break;
+            case 9:
+                result = Str(n / sp) + "sp";
+                break;
+            case 10:
+                result = Str(n / oc) + "oc";
+                break;
+            case 11:
+                result = Str(n / nn) + "nn";
+                break;
+            case 12:
+                result = Str(n / dc) + "dc";
+                break;
+        }
+        return result;
+    }
+    public static String ussuffix(float n) {
+        n -= n % 1;
+        String formattedN = fus(n);
+        String[] parts = split(formattedN, ",");
+        int size = len(parts);
+        if (n < 800 || n > 99 * dc)
+            return formattedN;
+        String result = "";
+        switch (size) {
+            case 1:
+            case 2:
+                result = Str(n / K) + "k";
+                break;
+            case 3:
+                result = Str(n / M) + "M";
+                break;
+            case 4:
+                result = Str(n / B) + "B";
+                break;
+            case 5:
+                result = Str(n / T) + "T";
+                break;
+            case 6:
+                result = Str(n / qd) + "qd";
+                break;
+            case 7:
+                result = Str(n / qt) + "qt";
+                break;
+            case 8:
+                result = Str(n / sx) + "sx";
+                break;
+            case 9:
+                result = Str(n / sp) + "sp";
+                break;
+            case 10:
+                result = Str(n / oc) + "oc";
+                break;
+            case 11:
+                result = Str(n / nn) + "nn";
+                break;
+            case 12:
+                result = Str(n / dc) + "dc";
+                break;
+        }
+        return result;
+    }
+    public static String ussuffix(double n) {
+        n -= n % 1;
+        String formattedN = fus(n);
+        String[] parts = split(formattedN, ",");
+        int size = len(parts);
+        if (n < 800 || n > 99 * dc)
+            return formattedN;
+        String result = "";
+        switch (size) {
+            case 1:
+            case 2:
+                result = Str(n / K) + "k";
+                break;
+            case 3:
+                result = Str(n / M) + "M";
+                break;
+            case 4:
+                result = Str(n / B) + "B";
+                break;
+            case 5:
+                result = Str(n / T) + "T";
+                break;
+            case 6:
+                result = Str(n / qd) + "qd";
+                break;
+            case 7:
+                result = Str(n / qt) + "qt";
+                break;
+            case 8:
+                result = Str(n / sx) + "sx";
+                break;
+            case 9:
+                result = Str(n / sp) + "sp";
+                break;
+            case 10:
+                result = Str(n / oc) + "oc";
+                break;
+            case 11:
+                result = Str(n / nn) + "nn";
+                break;
+            case 12:
+                result = Str(n / dc) + "dc";
+                break;
+        }
+        return result;
+    }
+    public static String toRoman(int n) {
+        Tree_I tree = new Tree_I();
+        tree.add(1, "I")
+            .add(4, "IV")
+            .add(5, "V")
+            .add(9, "IX")
+            .add(10, "X")
+            .add(40, "XL")
+            .add(50, "L")
+            .add(90, "XC")
+            .add(100, "C")
+            .add(400, "CD")
+            .add(500, "D")
+            .add(900, "CM")
+            .add(1000, "M");
+        int x = tree.floorKey(n);
+        if (n != x)
+            return tree.get(x) + toRoman(n - x);
+        return tree.get(n);
+    }
+    public static int fibonacci(int n) {
+        if (n < 2)
+            return n;
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+    public static int[] fibonacciSequence(int n) {
+        IntArr result = new IntArr();
+        for (int i : range(n)) result.push(fibonacci(i + 1));
+        return result.array();
+    }
+    public static double pct(double n1, double n2) {
+        if (n1 < n2)
+            return Math.round(n1 / n2 * 100.0) / 100.0;
+        else
+            return Math.round(n1 * (n2 * .01) * 100.0) / 100.0;
+    }
+    final static double infinity = Double.POSITIVE_INFINITY;
+    public static boolean isnl(Object o) {
+        return o == null;
+    }
+    public static boolean isinf(double n) {
+        return n == infinity || n == Double.NEGATIVE_INFINITY || isnl(n);
+    }
+    public static int round(int n) {
+        return n;
+    }
+    public static long round(long n) {
+        return n;
+    }
+    public static int round(float n) {
+        return (int) Math.round(n);
+    }
+    public static int round(double n) {
+        return (int) Math.round(n);
+    }
+    public static double celciusToFarhenheit(double c) {
+        return (double) round(1.8 * c + 32);
+    }
+    public static double farhenheitToCelcius(double f) {
+        return (double) round(((f - 32) * 5) / 9);
+    }
+    public static double cToF(double c) {
+        return celciusToFarhenheit(c);
+    }
+    public static double fToC(double f) {
+        return farhenheitToCelcius(f);
+    }
+    public static boolean eq(int x, int y) {
+        return x == y;
+    }
+    public static boolean eq(long x, long y) {
+        return x == y;
+    }
+    public static boolean eq(float x, float y) {
+        return x == y;
+    }
+    public static boolean eq(double x, double y) {
+        return x == y;
+    }
+    public static boolean eq(boolean x, boolean y) {
+        return x == y;
+    }
+    public static boolean eq(String[] x, String[] y) {
+        return Arrays.equals(x, y);
+    }
+    public static boolean eq(int[] x, int[] y) {
+        return Arrays.equals(x, y);
+    }
+    public static boolean eq(long[] x, long[] y) {
+        return Arrays.equals(x, y);
+    }
+    public static boolean eq(float[] x, float[] y) {
+        return Arrays.equals(x, y);
+    }
+    public static boolean eq(double[] x, double[] y) {
+        return Arrays.equals(x, y);
+    }
+    public static boolean eq(boolean[] x, boolean[] y) {
+        return Arrays.equals(x, y);
+    }
+    public static boolean eq(StrArr x, StrArr y) {
+        return x.eq(y);
+    }
+    public static boolean eq(IntArr x, IntArr y) {
+        return x.eq(y);
+    }
+    public static boolean eq(LongArr x, LongArr y) {
+        return x.eq(y);
+    }
+    public static boolean eq(FltArr x, FltArr y) {
+        return x.eq(y);
+    }
+    public static boolean eq(DblArr x, DblArr y) {
+        return x.eq(y);
+    }
+    public static boolean eq(BoolArr x, BoolArr y) {
+        return x.eq(y);
+    }
+    public static boolean uneq(int x, int y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(long x, long y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(float x, float y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(double x, double y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(boolean x, boolean y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(String[] x, String[] y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(int[] x, int[] y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(long[] x, long[] y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(float[] x, float[] y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(double[] x, double[] y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(boolean[] x, boolean[] y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(StrArr x, StrArr y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(IntArr x, IntArr y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(LongArr x, LongArr y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(FltArr x, FltArr y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(DblArr x, DblArr y) {
+        return !eq(x, y);
+    }
+    public static boolean uneq(BoolArr x, BoolArr y) {
+        return !eq(x, y);
+    }
+    public static boolean both(String... strings) {
+        int count = 0;
+        for (String s : strings) {
+            if (is(s))
+                count += 1;
+        }
+        return count == len(strings);
+    }
+    public static boolean both(int... ints) {
+        int count = 0;
+        for (int n : ints) {
+            if (is(n))
+                count += 1;
+        }
+        return count == len(ints);
+    }
+    public static boolean both(long... longs) {
+        int count = 0;
+        for (long n : longs) {
+            if (is(n))
+                count += 1;
+        }
+        return count == len(longs);
+    }
+    public static boolean both(float... floats) {
+        int count = 0;
+        for (float n : floats) {
+            if (is(n))
+                count += 1;
+        }
+        return count == len(floats);
+    }
+    public static boolean both(double... doubles) {
+        int count = 0;
+        for (double n : doubles) {
+            if (is(n))
+                count += 1;
+        }
+        return count == len(doubles);
+    }
+    public static boolean both(boolean... bools) {
+        int count = 0;
+        for (boolean bool : bools) {
+            if (is(bool))
+                count += 1;
+        }
+        return count == len(bools);
+    }
+    public static boolean either(String... strings) {
+        int count = 0;
+        for (String s : strings) {
+            if (is(s))
+                count += 1;
+        }
+        return count > 0;
+    }
+    public static boolean either(int... ints) {
+        int count = 0;
+        for (int n : ints) {
+            if (is(n))
+                count += 1;
+        }
+        return count > 0;
+    }
+    public static boolean either(long... longs) {
+        int count = 0;
+        for (long n : longs) {
+            if (is(n))
+                count += 1;
+        }
+        return count > 0;
+    }
+    public static boolean either(float... floats) {
+        int count = 0;
+        for (float n : floats) {
+            if (is(n))
+                count += 1;
+        }
+        return count > 0;
+    }
+    public static boolean either(double... doubles) {
+        int count = 0;
+        for (double n : doubles) {
+            if (is(n))
+                count += 1;
+        }
+        return count > 0;
+    }
+    public static boolean either(boolean... bools) {
+        int count = 0;
+        for (boolean bool : bools) {
+            if (is(bool))
+                count += 1;
+        }
+        return count > 0;
+    }
+    public static boolean neither(String... strings) {
+        int count = 0;
+        for (String s : strings) {
+            if (not(s))
+                count += 1;
+        }
+        return count == len(strings);
+    }
+    public static boolean neither(int... ints) {
+        int count = 0;
+        for (int n : ints) {
+            if (not(n))
+                count += 1;
+        }
+        return count == len(ints);
+    }
+    public static boolean neither(long... longs) {
+        int count = 0;
+        for (long n : longs) {
+            if (not(n))
+                count += 1;
+        }
+        return count == len(longs);
+    }
+    public static boolean neither(float... floats) {
+        int count = 0;
+        for (float n : floats) {
+            if (not(n))
+                count += 1;
+        }
+        return count == len(floats);
+    }
+    public static boolean neither(double... doubles) {
+        int count = 0;
+        for (double n : doubles) {
+            if (not(n))
+                count += 1;
+        }
+        return count == len(doubles);
+    }
+    public static boolean neither(boolean... bools) {
+        int count = 0;
+        for (boolean bool : bools) {
+            if (not(bool))
+                count += 1;
+        }
+        return count == len(bools);
+    }
+    public static boolean not(String s) {
+        return isnl(s) || isEmpty(s);
+    }
+    public static boolean not(int n) {
+        return isnl(n) || 0 == n;
+    }
+    public static boolean not(long n) {
+        return isnl(n) || 0 == n;
+    }
+    public static boolean not(float n) {
+        return isnl(n) || 0 == n;
+    }
+    public static boolean not(double n) {
+        return isnl(n) || 0 == n;
+    }
+    public static boolean not(boolean condition) {
+        return isnl(condition) || !condition;
+    }
+    public static boolean not(Object o) {
+        return isnl(o);
+    }
+    public static boolean not(String[] arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(int[] arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(long[] arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(float[] arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(double[] arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(boolean[] arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(Object[] arr) {
+        return isnl(arr);
+    }
+    public static boolean not(StrArr arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(IntArr arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(LongArr arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(FltArr arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(DblArr arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean not(BoolArr arr) {
+        return isnl(arr) || isEmpty(arr);
+    }
+    public static boolean is(String s) {
+        return !not(s);
+    }
+    public static boolean is(int n) {
+        return !not(n);
+    }
+    public static boolean is(long n) {
+        return !not(n);
+    }
+    public static boolean is(float n) {
+        return !not(n);
+    }
+    public static boolean is(double n) {
+        return !not(n);
+    }
+    public static boolean is(boolean condition) {
+        return !not(condition);
+    }
+    public static boolean is(Object o) {
+        return !not(o);
+    }
+    public static boolean is(String[] arr) {
+        return !not(arr);
+    }
+    public static boolean is(int[] arr) {
+        return !not(arr);
+    }
+    public static boolean is(long[] arr) {
+        return !not(arr);
+    }
+    public static boolean is(float[] arr) {
+        return !not(arr);
+    }
+    public static boolean is(double[] arr) {
+        return !not(arr);
+    }
+    public static boolean is(Object[] arr) {
+        return !not(arr);
+    }
+    public static boolean is(boolean[] arr) {
+        return !not(arr);
+    }
+    public static boolean is(StrArr arr) {
+        return !not(arr);
+    }
+    public static boolean is(IntArr arr) {
+        return !not(arr);
+    }
+    public static boolean is(LongArr arr) {
+        return !not(arr);
+    }
+    public static boolean is(FltArr arr) {
+        return !not(arr);
+    }
+    public static boolean is(DblArr arr) {
+        return !not(arr);
+    }
+    public static boolean is(BoolArr arr) {
+        return !not(arr);
+    }
+    public static boolean xor(boolean a, boolean b) {
+        return a || b && !(a && b);
+    }
+    public static boolean implies(boolean a, boolean b) {
+        return a && !b ? false : true;
+    }
+    public static int randInt() {
+        int number = ThreadLocalRandom.current().nextInt(0, 199);
+        return number;
+    }
+    public static int randInt(int end) {
+        int number = ThreadLocalRandom.current().nextInt(0, end);
+        return number;
+    }
+    public static int randInt(int start, int end) {
+        int number = ThreadLocalRandom.current().nextInt(start, end);
+        return number;
+    }
+    public static double randFlt() {
+        double number = randInt() * .3;
+        return number;
+    }
+    public static double randFlt(int end) {
+        double number = randInt(end) * .3;
+        return number;
+    }
+    public static double randFlt(int start, int end) {
+        double number = randInt(start, end) * .3;
+        return number;
+    }
+    public static String randStr(int len) {
+        final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop"
+                          + "qrstuvwxyz\\+=";
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        return sb.toString();
+    }
+    public static String randStr() {
+        return randStr(randInt(8, 32));
+    }
+    public static char randChar(int low, int high) {
+        if (low < 0)
+            low = 0;
+        if (high > 127)
+            high = 127;
+        return (char) randInt(low, high);
+    }
+    public static char randChar() {
+        return randChar(47, 127);
+    }
+    public static String randId() {
+        return UUID.randomUUID().toString();
+    }
+    public static String randItem(String arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static int randItem(int arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static long randItem(long arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static float randItem(float arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static double randItem(double arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static boolean randItem(boolean arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static Object randItem(Object arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static String randItem(StrArr arr) {
+        return arr.get(randInt(arr.length()));
+    }
+    public static int randItem(IntArr arr) {
+        return arr.get(randInt(arr.length()));
+    }
+    public static long randItem(LongArr arr) {
+        return arr.get(randInt(arr.length()));
+    }
+    public static float randItem(FltArr arr) {
+        return arr.get(randInt(arr.length()));
+    }
+    public static double randItem(DblArr arr) {
+        return arr.get(randInt(arr.length()));
+    }
+    public static boolean randItem(BoolArr arr) {
+        return arr.get(randInt(arr.length()));
+    }
+    public static String randFrom(String arr[]) {
+        return randItem(arr);
+    }
+    public static int randFrom(int arr[]) {
+        return randItem(arr);
+    }
+    public static long randFrom(long arr[]) {
+        return randItem(arr);
+    }
+    public static float randFrom(float arr[]) {
+        return randItem(arr);
+    }
+    public static double randFrom(double arr[]) {
+        return randItem(arr);
+    }
+    public static boolean randFrom(boolean arr[]) {
+        return randItem(arr);
+    }
+    public static Object randFrom(Object arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static String randFrom(StrArr arr) {
+        return randItem(arr);
+    }
+    public static int randFrom(IntArr arr) {
+        return randItem(arr);
+    }
+    public static long randFrom(LongArr arr) {
+        return randItem(arr);
+    }
+    public static float randFrom(FltArr arr) {
+        return randItem(arr);
+    }
+    public static double randFrom(DblArr arr) {
+        return randItem(arr);
+    }
+    public static boolean randFrom(BoolArr arr) {
+        return randItem(arr);
+    }
+    public static String any(String arr[]) {
+        return randItem(arr);
+    }
+    public static int any(int arr[]) {
+        return randItem(arr);
+    }
+    public static long any(long arr[]) {
+        return randItem(arr);
+    }
+    public static float any(float arr[]) {
+        return randItem(arr);
+    }
+    public static double any(double arr[]) {
+        return randItem(arr);
+    }
+    public static boolean any(boolean arr[]) {
+        return randItem(arr);
+    }
+    public static Object any(Object arr[]) {
+        return arr[randInt(arr.length)];
+    }
+    public static String any(StrArr arr) {
+        return randItem(arr);
+    }
+    public static int any(IntArr arr) {
+        return randItem(arr);
+    }
+    public static long any(LongArr arr) {
+        return randItem(arr);
+    }
+    public static float any(FltArr arr) {
+        return randItem(arr);
+    }
+    public static double any(DblArr arr) {
+        return randItem(arr);
+    }
+    public static boolean any(BoolArr arr) {
+        return randItem(arr);
+    }
+    public static int[] noDuplicates(int[] arr) {
+        return IntStream.of(arr).distinct().toArray();
+    }
+    public static long[] noDuplicates(long[] arr) {
+        return LongStream.of(arr).distinct().toArray();
+    }
+    public static double[] noDuplicates(double[] arr) {
+        return DoubleStream.of(arr).distinct().toArray();
+    }
+    public static StrArr noDuplicates(StrArr arr) {
+        return arr.unique();
+    }
+    public static IntArr noDuplicates(IntArr arr) {
+        return arr.unique();
+    }
+    public static LongArr noDuplicates(LongArr arr) {
+        return arr.unique();
+    }
+    public static FltArr noDuplicates(FltArr arr) {
+        return arr.unique();
+    }
+    public static DblArr noDuplicates(DblArr arr) {
+        return arr.unique();
+    }
+    public static BoolArr noDuplicates(BoolArr arr) {
+        return arr.unique();
+    }
+    public static String replace(
+        String str, String to_replace, String regex_to_replace_with) {
+        return str.replaceAll(to_replace, regex_to_replace_with);
+    }
+    public static String replaceOne(
+        String str, String to_replace, String regex_to_replace_with) {
+        return str.replaceFirst(to_replace, regex_to_replace_with);
+    }
+    public static String remove(String str, String re) {
+        return replace(str, re, "");
+    }
+    public static String slice(String str) {
+        return remove(str, "^\\s+|\\s+$");
+    }
+    public static String[] slice(String arr[]) {
+        return arr.clone();
+    }
+    public static int[] slice(int arr[]) {
+        return arr.clone();
+    }
+    public static long[] slice(long arr[]) {
+        return arr.clone();
+    }
+    public static float[] slice(float arr[]) {
+        return arr.clone();
+    }
+    public static double[] slice(double arr[]) {
+        return arr.clone();
+    }
+    public static boolean[] slice(boolean arr[]) {
+        return arr.clone();
+    }
+    public static StrArr slice(StrArr arr) {
+        return arr.copy();
+    }
+    public static IntArr slice(IntArr arr) {
+        return arr.copy();
+    }
+    public static LongArr slice(LongArr arr) {
+        return arr.copy();
+    }
+    public static FltArr slice(FltArr arr) {
+        return arr.copy();
+    }
+    public static DblArr slice(DblArr arr) {
+        return arr.copy();
+    }
+    public static BoolArr slice(BoolArr arr) {
+        return arr.copy();
+    }
+    public static String slice(String str, int start) {
+        return str.substring(start, str.length());
+    }
+    public static String[] slice(String oldArr[], int start) {
+        String newArr[] =
+            Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+        return newArr;
+    }
+    public static int[] slice(int oldArr[], int start) {
+        int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+        return newArr;
+    }
+    public static long[] slice(long oldArr[], int start) {
+        long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+        return newArr;
+    }
+    public static float[] slice(float oldArr[], int start) {
+        float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+        return newArr;
+    }
+    public static double[] slice(double oldArr[], int start) {
+        double newArr[] =
+            Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+        return newArr;
+    }
+    public static boolean[] slice(boolean oldArr[], int start) {
+        boolean newArr[] =
+            Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+        return newArr;
+    }
+    public static StrArr slice(StrArr arr, int start) {
+        return arr.slice(start, arr.length());
+    }
+    public static IntArr slice(IntArr arr, int start) {
+        return arr.slice(start, arr.length());
+    }
+    public static LongArr slice(LongArr arr, int start) {
+        return arr.slice(start, arr.length());
+    }
+    public static FltArr slice(FltArr arr, int start) {
+        return arr.slice(start, arr.length());
+    }
+    public static DblArr slice(DblArr arr, int start) {
+        return arr.slice(start, arr.length());
+    }
+    public static BoolArr slice(BoolArr arr, int start) {
+        return arr.slice(start, arr.length());
+    }
+    public static String slice(String str, int start, int end) {
+        return str.substring(start, end);
+    }
+    public static String[] slice(String oldArr[], int start, int end) {
+        String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+        return newArr;
+    }
+    public static int[] slice(int oldArr[], int start, int end) {
+        int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+        return newArr;
+    }
+    public static long[] slice(long oldArr[], int start, int end) {
+        long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+        return newArr;
+    }
+    public static float[] slice(float oldArr[], int start, int end) {
+        float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+        return newArr;
+    }
+    public static double[] slice(double oldArr[], int start, int end) {
+        double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+        return newArr;
+    }
+    public static boolean[] slice(boolean oldArr[], int start, int end) {
+        boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+        return newArr;
+    }
+    public static StrArr slice(StrArr arr, int start, int end) {
+        return arr.slice(start, end);
+    }
+    public static IntArr slice(IntArr arr, int start, int end) {
+        return arr.slice(start, end);
+    }
+    public static LongArr slice(LongArr arr, int start, int end) {
+        return arr.slice(start, end);
+    }
+    public static FltArr slice(FltArr arr, int start, int end) {
+        return arr.slice(start, end);
+    }
+    public static DblArr slice(DblArr arr, int start, int end) {
+        return arr.slice(start, end);
+    }
+    public static BoolArr slice(BoolArr arr, int start, int end) {
+        return arr.slice(start, end);
+    }
+    public static String sliceEnd(String str, int start) {
+        return slice(str, str.length() - start);
+    }
+    public static String[] sliceEnd(String[] arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static int[] sliceEnd(int[] arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static long[] sliceEnd(long[] arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static float[] sliceEnd(float[] arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static double[] sliceEnd(double[] arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static boolean[] sliceEnd(boolean[] arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static StrArr sliceEnd(StrArr arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static IntArr sliceEnd(IntArr arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static LongArr sliceEnd(LongArr arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static FltArr sliceEnd(FltArr arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static DblArr sliceEnd(DblArr arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static BoolArr sliceEnd(BoolArr arr, int start) {
+        return slice(arr, len(arr) - start);
+    }
+    public static String trim(String str) {
+        return slice(str);
+    }
+    public static String[] trim(String[] arr) {
+        return slice(arr);
+    }
+    public static int[] trim(int[] arr) {
+        return slice(arr);
+    }
+    public static long[] trim(long[] arr) {
+        return slice(arr);
+    }
+    public static float[] trim(float[] arr) {
+        return slice(arr);
+    }
+    public static double[] trim(double[] arr) {
+        return slice(arr);
+    }
+    public static boolean[] trim(boolean[] arr) {
+        return slice(arr);
+    }
+    public static StrArr trim(StrArr arr) {
+        return slice(arr);
+    }
+    public static IntArr trim(IntArr arr) {
+        return slice(arr);
+    }
+    public static LongArr trim(LongArr arr) {
+        return slice(arr);
+    }
+    public static FltArr trim(FltArr arr) {
+        return slice(arr);
+    }
+    public static DblArr trim(DblArr arr) {
+        return slice(arr);
+    }
+    public static BoolArr trim(BoolArr arr) {
+        return slice(arr);
+    }
+    public static String trim(String str, int start) {
+        return slice(str, start);
+    }
+    public static String[] trim(String[] arr, int start) {
+        return slice(arr, start);
+    }
+    public static int[] trim(int[] arr, int start) {
+        return slice(arr, start);
+    }
+    public static long[] trim(long[] arr, int start) {
+        return slice(arr, start);
+    }
+    public static float[] trim(float[] arr, int start) {
+        return slice(arr, start);
+    }
+    public static double[] trim(double[] arr, int start) {
+        return slice(arr, start);
+    }
+    public static boolean[] trim(boolean[] arr, int start) {
+        return slice(arr, start);
+    }
+    public static StrArr trim(StrArr arr, int start) {
+        return slice(arr, start);
+    }
+    public static IntArr trim(IntArr arr, int start) {
+        return slice(arr, start);
+    }
+    public static LongArr trim(LongArr arr, int start) {
+        return slice(arr, start);
+    }
+    public static FltArr trim(FltArr arr, int start) {
+        return slice(arr, start);
+    }
+    public static DblArr trim(DblArr arr, int start) {
+        return slice(arr, start);
+    }
+    public static BoolArr trim(BoolArr arr, int start) {
+        return slice(arr, start);
+    }
+    public static String trim(String str, int start, int end) {
+        return slice(str, start, end);
+    }
+    public static String[] trim(String[] arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static int[] trim(int[] arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static long[] trim(long[] arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static float[] trim(float[] arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static double[] trim(double[] arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static boolean[] trim(boolean[] arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static StrArr trim(StrArr arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static IntArr trim(IntArr arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static LongArr trim(LongArr arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static FltArr trim(FltArr arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static DblArr trim(DblArr arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static BoolArr trim(BoolArr arr, int start, int end) {
+        return slice(arr, start, end);
+    }
+    public static String trimEnd(String str, int start) {
+        return sliceEnd(str, start);
+    }
+    public static String[] trimEnd(String[] arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static int[] trimEnd(int[] arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static long[] trimEnd(long[] arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static float[] trimEnd(float[] arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static double[] trimEnd(double[] arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static boolean[] trimEnd(boolean[] arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static StrArr trimEnd(StrArr arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static IntArr trimEnd(IntArr arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static LongArr trimEnd(LongArr arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static FltArr trimEnd(FltArr arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static DblArr trimEnd(DblArr arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static BoolArr trimEnd(BoolArr arr, int start) {
+        return sliceEnd(arr, start);
+    }
+    public static String sliceTo(String str, String thatSpecificPart) {
+        int index = indexOf(str, thatSpecificPart);
+        if (index < 0 || index == -1)
+            return str;
+        return slice(str, index);
+    }
+    public static String sliceToAfter(String str, String thatSpecificPart) {
+        int index = indexOf(str, thatSpecificPart);
+        if (index < 0)
+            return str;
+        String retrievedString = sliceTo(str, thatSpecificPart);
+        return slice(retrievedString, len(thatSpecificPart));
+    }
+    public static boolean startsWith(String str, String re) {
+        Pattern pattern =
+            Pattern.compile("^(" + re + ")", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(str);
+        return !!matcher.find();
+    }
+    public static boolean endsWith(String str, String re) {
+        Pattern pattern =
+            Pattern.compile("(" + re + ")$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(str);
+        return !!matcher.find();
+    }
+    public static boolean endsWith(String[] arr, String lookupStr) {
+        return arr[len(arr) - 1].equals(lookupStr);
+    }
+    public static boolean endsWith(int[] arr, int lookupInt) {
+        return arr[len(arr) - 1] == lookupInt;
+    }
+    public static boolean endsWith(long[] arr, long lookupLong) {
+        return arr[len(arr) - 1] == lookupLong;
+    }
+    public static boolean endsWith(float[] arr, float lookupFloat) {
+        return arr[len(arr) - 1] == lookupFloat;
+    }
+    public static boolean endsWith(double[] arr, double lookupDbl) {
+        return arr[len(arr) - 1] == lookupDbl;
+    }
+    public static boolean endsWith(boolean[] arr, boolean lookupBool) {
+        return arr[len(arr) - 1] == lookupBool;
+    }
+    public static String nthLastOf(String str, int n) {
+        return "" + str.toCharArray()[len(str) - n];
+    }
+    public static String nthLastOf(String[] arr, int n) {
+        return arr[len(arr) - n];
+    }
+    public static int nthLastOf(int[] arr, int n) {
+        return arr[len(arr) - n];
+    }
+    public static long nthLastOf(long[] arr, int n) {
+        return arr[len(arr) - n];
+    }
+    public static float nthLastOf(float[] arr, int n) {
+        return arr[len(arr) - n];
+    }
+    public static double nthLastOf(double[] arr, int n) {
+        return arr[len(arr) - n];
+    }
+    public static boolean nthLastOf(boolean[] arr, int n) {
+        return arr[len(arr) - n];
+    }
+    public static String secondLastOf(String str) {
+        return "" + str.toCharArray()[len(str) - 2];
+    }
+    public static String secondLastOf(String[] arr) {
+        return arr[len(arr) - 2];
+    }
+    public static int secondLastOf(int[] arr) {
+        return arr[len(arr) - 2];
+    }
+    public static long secondLastOf(long[] arr) {
+        return arr[len(arr) - 2];
+    }
+    public static float secondLastOf(float[] arr) {
+        return arr[len(arr) - 2];
+    }
+    public static double secondLastOf(double[] arr) {
+        return arr[len(arr) - 2];
+    }
+    public static boolean secondLastOf(boolean[] arr) {
+        return arr[len(arr) - 2];
+    }
+    public static String lastOf(String str) {
+        return "" + str.toCharArray()[len(str) - 1];
+    }
+    public static String lastOf(String[] arr) {
+        return arr[len(arr) - 1];
+    }
+    public static int lastOf(int[] arr) {
+        return arr[len(arr) - 1];
+    }
+    public static long lastOf(long[] arr) {
+        return arr[len(arr) - 1];
+    }
+    public static float lastOf(float[] arr) {
+        return arr[len(arr) - 1];
+    }
+    public static double lastOf(double[] arr) {
+        return arr[len(arr) - 1];
+    }
+    public static boolean lastOf(boolean[] arr) {
+        return arr[len(arr) - 1];
+    }
+    public static int indexOf(String inStr, String lookupStr) {
+        return inStr.indexOf(lookupStr);
+    }
+    public static int indexOf(String inStr, char lookupCh) {
+        for (int i = 0; i < len(inStr); i++) {
+            if (inStr.toCharArray()[i] == lookupCh)
+                return i;
+        }
+        return -1;
+    }
+    public static int lastIndexOf(String inStr, String lookupStr) {
+        return inStr.lastIndexOf(lookupStr);
+    }
+    public static int lastIndexOf(String inStr, char lookupCh) {
+        for (int i = len(inStr) - 1; i >= 0; i--) {
+            if (inStr.toCharArray()[i] == lookupCh)
+                return i;
+        }
+        return -1;
+    }
+    public static int indexOf(String[] inStrArr, String lookupStr) {
+        for (int i = 0; i < len(inStrArr); i++) {
+            if (inStrArr[i].equals(lookupStr))
+                return i;
+        }
+        return -1;
+    }
+    public static int lastIndexOf(String[] inStrArr, String lookupStr) {
+        for (int i = len(inStrArr) - 1; i >= 0; i--) {
+            if (inStrArr[i].equals(lookupStr))
+                return i;
+        }
+        return -1;
+    }
+    public static int indexOf(int[] inIntArr, int lookupInt) {
+        for (int i = 0; i < len(inIntArr); i++) {
+            if (inIntArr[i] == lookupInt)
+                return i;
+        }
+        return -1;
+    }
+    public static int lastIndexOf(int[] inIntArr, int lookupInt) {
+        for (int i = len(inIntArr) - 1; i >= 0; i--) {
+            if (inIntArr[i] == lookupInt)
+                return i;
+        }
+        return -1;
+    }
+    public static int indexOf(long[] inLongArr, long lookupLong) {
+        for (int i = 0; i < len(inLongArr); i++) {
+            if (inLongArr[i] == lookupLong)
+                return i;
+        }
+        return -1;
+    }
+    public static int lastIndexOf(long[] inLongArr, long lookupLong) {
+        for (int i = len(inLongArr) - 1; i >= 0; i--) {
+            if (inLongArr[i] == lookupLong)
+                return i;
+        }
+        return -1;
+    }
+    public static int indexOf(float[] inFltArr, float lookupFlt) {
+        for (int i = 0; i < len(inFltArr); i++) {
+            if (inFltArr[i] == lookupFlt)
+                return i;
+        }
+        return -1;
+    }
+    public static int lastIndexOf(float[] inFloatArr, float lookupFloat) {
+        for (int i = len(inFloatArr) - 1; i >= 0; i--) {
+            if (inFloatArr[i] == lookupFloat)
+                return i;
+        }
+        return -1;
+    }
+    public static int indexOf(double[] inDblArr, double lookupDbl) {
+        for (int i = 0; i < len(inDblArr); i++) {
+            if (inDblArr[i] == lookupDbl)
+                return i;
+        }
+        return -1;
+    }
+    public static int lastIndexOf(double[] inDblArr, double lookupDbl) {
+        for (int i = len(inDblArr) - 1; i >= 0; i--) {
+            if (inDblArr[i] == lookupDbl)
+                return i;
+        }
+        return -1;
+    }
+    public static int indexOf(boolean[] inBoolArr, boolean lookupBool) {
+        for (int i = 0; i < len(inBoolArr); i++) {
+            if (inBoolArr[i] == lookupBool)
+                return i;
+        }
+        return -1;
+    }
+    public static int lastIndexOf(boolean[] inBoolArr, boolean lookupBool) {
+        for (int i = len(inBoolArr) - 1; i >= 0; i--) {
+            if (inBoolArr[i] == lookupBool)
+                return i;
+        }
+        return -1;
+    }
+    public static int numberOfOccurrencesIn(String inStr, char lookupCh) {
+        int occurrences = 0;
+        for (int i = 0; i < len(inStr); i++) {
+            if (inStr.toCharArray()[i] == lookupCh)
+                occurrences++;
+        }
+        return occurrences;
+    }
+    public static int numberOfOccurrencesIn(String inStr, String lookupStr) {
+        int occurrences = 0;
+        for (int i = 0; i < len(inStr); i++) {
+            if (inStr.toCharArray()[i] == lookupStr.charAt(0))
+                occurrences++;
+        }
+        return occurrences;
+    }
+    public static int numberOfOccurrencesIn(
+        String[] inStrArr, String lookupStr) {
+        int occurrences = 0;
+        for (int i = 0; i < len(inStrArr); i++) {
+            if (inStrArr[i].equals(lookupStr))
+                occurrences++;
+        }
+        return occurrences;
+    }
+    public static int numberOfOccurrencesIn(int[] inIntArr, int lookupInt) {
+        int occurrences = 0;
+        for (int i = 0; i < len(inIntArr); i++) {
+            if (inIntArr[i] == lookupInt)
+                occurrences++;
+        }
+        return occurrences;
+    }
+    public static int numberOfOccurrencesIn(long[] inLongArr, long lookupLong) {
+        int occurrences = 0;
+        for (int i = 0; i < len(inLongArr); i++) {
+            if (inLongArr[i] == lookupLong)
+                occurrences++;
+        }
+        return occurrences;
+    }
+    public static int numberOfOccurrencesIn(float[] inFltArr, float lookupFlt) {
+        int occurrences = 0;
+        for (int i = 0; i < len(inFltArr); i++) {
+            if (inFltArr[i] == lookupFlt)
+                occurrences++;
+        }
+        return occurrences;
+    }
+    public static int numberOfOccurrencesIn(
+        double[] inDblArr, double lookupDbl) {
+        int occurrences = 0;
+        for (int i = 0; i < len(inDblArr); i++) {
+            if (inDblArr[i] == lookupDbl)
+                occurrences++;
+        }
+        return occurrences;
+    }
+    public static int numberOfOccurrencesIn(
+        boolean[] inBoolArr, boolean lookupBool) {
+        int occurrences = 0;
+        for (int i = 0; i < len(inBoolArr); i++) {
+            if (inBoolArr[i] == lookupBool)
+                occurrences++;
+        }
+        return occurrences;
+    }
+    public static boolean in(String inStr, char ch) {
+        return indexOf(inStr, ch) >= 0;
+    }
+    public static boolean in(String strA, String strB) {
+        return indexOf(lower(strA), lower(strB)) >= 0 || match(strA, strB);
+    }
+    public static boolean in(String[] arr, String str) {
+        return indexOf(arr, str) >= 0;
+    }
+    public static boolean in(int[] arr, int n) {
+        return indexOf(arr, n) >= 0;
+    }
+    public static boolean in(long[] arr, long n) {
+        return indexOf(arr, n) >= 0;
+    }
+    public static boolean in(float[] arr, float n) {
+        return indexOf(arr, n) >= 0;
+    }
+    public static boolean in(double[] arr, double n) {
+        return indexOf(arr, n) >= 0;
+    }
+    public static boolean in(boolean[] arr, boolean bool) {
+        return indexOf(arr, bool) >= 0;
+    }
+    public static boolean in(Object[] arr, Object targetValue) {
+        if (arr == null || targetValue == null) {
+            return false;
+        }
+        for (Object element : arr) {
+            if (targetValue.equals(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean contains(String str, char lookupCh) {
+        return in(str, lookupCh);
+    }
+    public static boolean contains(String str, String lookupStr) {
+        return in(str, lookupStr);
+    }
+    public static boolean contains(String[] arr, String lookupStr) {
+        return in(arr, lookupStr);
+    }
+    public static boolean contains(int[] arr, int lookupInt) {
+        return in(arr, lookupInt);
+    }
+    public static boolean contains(long[] arr, long lookupLong) {
+        return in(arr, lookupLong);
+    }
+    public static boolean contains(float[] arr, float lookupFloat) {
+        return in(arr, lookupFloat);
+    }
+    public static boolean contains(double[] arr, double lookupDbl) {
+        return in(arr, lookupDbl);
+    }
+    public static boolean contains(boolean[] arr, boolean lookupBool) {
+        return in(arr, lookupBool);
+    }
+    public static boolean contains(Object[] arr, Object targetValue) {
+        return in(arr, targetValue);
+    }
+    public static boolean match(String str, String re) {
+        Pattern pattern = Pattern.compile(re, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(str);
+        return !!matcher.find();
+    }
+    public static boolean match(String[] arrA, String[] arrB) {
+        return Arrays.compare(arrA, arrB) >= 0;
+        // returns a negative value if true, just like with most functions in C,
+        // or C++
+    }
+    public static boolean match(int[] arrA, int[] arrB) {
+        return Arrays.compare(arrA, arrB) >= 0;
+        // returns a negative value if true, just like with most functions in C,
+        // or C++
+    }
+    public static boolean match(long[] arrA, long[] arrB) {
+        return Arrays.compare(arrA, arrB) >= 0;
+        // returns a negative value if true, just like with most functions in C,
+        // or C++
+    }
+    public static boolean match(float[] arrA, float[] arrB) {
+        return Arrays.compare(arrA, arrB) >= 0;
+        // returns a negative value if true, just like with most functions in C,
+        // or C++
+    }
+    public static boolean match(double[] arrA, double[] arrB) {
+        return Arrays.compare(arrA, arrB) >= 0;
+        // returns a negative value if true, just like with most functions in C,
+        // or C++
+    }
+    public static boolean match(boolean[] arrA, boolean[] arrB) {
+        return Arrays.compare(arrA, arrB) >= 0;
+        // returns a negative value if true, just like with most functions in C,
+        // or C++
+    }
+    public static boolean compare(String strA, String strB) {
+        return match(strA, strB);
+    }
+    public static boolean compare(String[] arrA, String[] arrB) {
+        return match(arrA, arrB);
+    }
+    public static boolean compare(int[] arrA, int[] arrB) {
+        return match(arrA, arrB);
+    }
+    public static boolean compare(long[] arrA, long[] arrB) {
+        return match(arrA, arrB);
+    }
+    public static boolean compare(float[] arrA, float[] arrB) {
+        return match(arrA, arrB);
+    }
+    public static boolean compare(double[] arrA, double[] arrB) {
+        return match(arrA, arrB);
+    }
+    public static boolean compare(boolean[] arrA, boolean[] arrB) {
+        return match(arrA, arrB);
+    }
+    public static String[] clone(String[] arr) {
+        return slice(arr);
+    }
+    public static int[] clone(int[] arr) {
+        return slice(arr);
+    }
+    public static long[] clone(long[] arr) {
+        return slice(arr);
+    }
+    public static float[] clone(float[] arr) {
+        return slice(arr);
+    }
+    public static double[] clone(double[] arr) {
+        return slice(arr);
+    }
+    public static boolean[] clone(boolean[] arr) {
+        return slice(arr);
+    }
+    public static StrArr clone(StrArr arr) {
+        return slice(arr);
+    }
+    public static IntArr clone(IntArr arr) {
+        return slice(arr);
+    }
+    public static LongArr clone(LongArr arr) {
+        return slice(arr);
+    }
+    public static FltArr clone(FltArr arr) {
+        return slice(arr);
+    }
+    public static DblArr clone(DblArr arr) {
+        return slice(arr);
+    }
+    public static BoolArr clone(BoolArr arr) {
+        return slice(arr);
+    }
+    public static String[] copyArr(String[] arr) {
+        return clone(arr);
+    }
+    public static int[] copyArr(int[] arr) {
+        return clone(arr);
+    }
+    public static long[] copyArr(long[] arr) {
+        return clone(arr);
+    }
+    public static float[] copyArr(float[] arr) {
+        return clone(arr);
+    }
+    public static double[] copyArr(double[] arr) {
+        return clone(arr);
+    }
+    public static boolean[] copyArr(boolean[] arr) {
+        return clone(arr);
+    }
+    public static StrArr copyArr(StrArr arr) {
+        return clone(arr);
+    }
+    public static IntArr copyArr(IntArr arr) {
+        return clone(arr);
+    }
+    public static LongArr copyArr(LongArr arr) {
+        return clone(arr);
+    }
+    public static FltArr copyArr(FltArr arr) {
+        return clone(arr);
+    }
+    public static DblArr copyArr(DblArr arr) {
+        return clone(arr);
+    }
+    public static BoolArr copyArr(BoolArr arr) {
+        return clone(arr);
+    }
+    public static String[] combine(String[] arrA, String[] arrB) {
+        int length1 = arrA.length;
+        int length2 = arrB.length;
+        String[] result = new String[length1 + length2];
+        System.arraycopy(arrA, 0, result, 0, length1);
+        System.arraycopy(arrB, 0, result, length1, length2);
+        return result;
+    }
+    public static int[] combine(int[] arrA, int[] arrB) {
+        return IntStream.concat(Arrays.stream(arrA), Arrays.stream(arrB))
+            .toArray();
+    }
+    public static long[] combine(long[] arrA, long[] arrB) {
+        return LongStream.concat(Arrays.stream(arrA), Arrays.stream(arrB))
+            .toArray();
+    }
+    public static float[] combine(float[] arrA, float[] arrB) {
+        int length1 = arrA.length;
+        int length2 = arrB.length;
+        float[] result = new float[length1 + length2];
+        System.arraycopy(arrA, 0, result, 0, length1);
+        System.arraycopy(arrB, 0, result, length1, length2);
+        return result;
+    }
+    public static double[] combine(double[] arrA, double[] arrB) {
+        return DoubleStream.concat(Arrays.stream(arrA), Arrays.stream(arrB))
+            .toArray();
+    }
+    public static boolean[] combine(boolean[] arrA, boolean[] arrB) {
+        int length1 = arrA.length;
+        int length2 = arrB.length;
+        boolean[] result = new boolean[length1 + length2];
+        System.arraycopy(arrA, 0, result, 0, length1);
+        System.arraycopy(arrB, 0, result, length1, length2);
+        return result;
+    }
+    public static StrArr combine(StrArr arrA, StrArr arrB) {
+        return arrA.combine(arrB);
+    }
+    public static IntArr combine(IntArr arrA, IntArr arrB) {
+        return arrA.combine(arrB);
+    }
+    public static LongArr combine(LongArr arrA, LongArr arrB) {
+        return arrA.combine(arrB);
+    }
+    public static FltArr combine(FltArr arrA, FltArr arrB) {
+        return arrA.combine(arrB);
+    }
+    public static DblArr combine(DblArr arrA, DblArr arrB) {
+        return arrA.combine(arrB);
+    }
+    public static BoolArr combine(BoolArr arrA, BoolArr arrB) {
+        return arrA.combine(arrB);
+    }
+    public static String[] intersection(String[] arrA, String[] arrB) {
+        StrArr result = new StrArr();
+        for (int i : range(arrA)) {
+            for (int j : range(arrB)) {
+                if (eq(arrA[i], arrB[j]))
+                    result.push(arrA[i]);
+            }
+        }
+        return result.array();
+    }
+    public static int[] intersection(int[] arrA, int[] arrB) {
+        IntArr result = new IntArr();
+        for (int i : range(arrA)) {
+            for (int j : range(arrB)) {
+                if (eq(arrA[i], arrB[j]))
+                    result.push(arrA[i]);
+            }
+        }
+        return result.array();
+    }
+    public static long[] intersection(long[] arrA, long[] arrB) {
+        LongArr result = new LongArr();
+        for (int i : range(arrA)) {
+            for (int j : range(arrB)) {
+                if (eq(arrA[i], arrB[j]))
+                    result.push(arrA[i]);
+            }
+        }
+        return result.array();
+    }
+    public static float[] intersection(float[] arrA, float[] arrB) {
+        FltArr result = new FltArr();
+        for (int i : range(arrA)) {
+            for (int j : range(arrB)) {
+                if (eq(arrA[i], arrB[j]))
+                    result.push(arrA[i]);
+            }
+        }
+        return result.array();
+    }
+    public static double[] intersection(double[] arrA, double[] arrB) {
+        DblArr result = new DblArr();
+        for (int i : range(arrA)) {
+            for (int j : range(arrB)) {
+                if (eq(arrA[i], arrB[j]))
+                    result.push(arrA[i]);
+            }
+        }
+        return result.array();
+    }
+    public static boolean[] intersection(boolean[] arrA, boolean[] arrB) {
+        BoolArr result = new BoolArr();
+        for (int i : range(arrA)) {
+            for (int j : range(arrB)) {
+                if (eq(arrA[i], arrB[j]))
+                    result.push(arrA[i]);
+            }
+        }
+        return result.array();
+    }
+    public static StrArr intersection(StrArr arrA, StrArr arrB) {
+        return arrA.intersection(arrB);
+    }
+    public static IntArr intersection(IntArr arrA, IntArr arrB) {
+        return arrA.intersection(arrB);
+    }
+    public static LongArr intersection(LongArr arrA, LongArr arrB) {
+        return arrA.intersection(arrB);
+    }
+    public static FltArr intersection(FltArr arrA, FltArr arrB) {
+        return arrA.intersection(arrB);
+    }
+    public static DblArr intersection(DblArr arrA, DblArr arrB) {
+        return arrA.intersection(arrB);
+    }
+    public static BoolArr intersection(BoolArr arrA, BoolArr arrB) {
+        return arrA.intersection(arrB);
+    }
+    public static String upper(String s) {
+        s = s.toUpperCase();
+        return s;
+    }
+    public static char upper(char c) {
+        c = Str(c).toUpperCase().charAt(0);
+        return c;
+    }
+    public static String lower(String s) {
+        s = s.toLowerCase();
+        return s;
+    }
+    public static char lower(char c) {
+        c = Str(c).toLowerCase().charAt(0);
+        return c;
+    }
+    public static boolean inUpper(String s) {
+        return upper(s).equals(s);
+    }
+    public static boolean inUpper(char c) {
+        return upper(c) == c;
+    }
+    public static boolean notInUpper(String s) {
+        return !inUpper(s);
+    }
+    public static boolean notInUpper(char c) {
+        return !inUpper(c);
+    }
+    public static boolean inLower(String s) {
+        return lower(s).equals(s);
+    }
+    public static boolean inLower(char c) {
+        return lower(c) == c;
+    }
+    public static boolean notInLower(String s) {
+        return !inLower(s);
+    }
+    public static boolean notInLower(char c) {
+        return !inLower(c);
+    }
+    public static String sentCase(String input) {
+        input = (input.toUpperCase().substring(0, 1)
+            + input.toLowerCase().substring(1))
+                    .replaceAll("(?<!\\w)i(?!\\w)", "I");
+        return input;
+    }
+    public static String titleCase(String input) {
+        StringBuilder titleCased = new StringBuilder(input.length());
+        boolean nextTitleCase = true;
+        for (char c : input.toCharArray()) {
+            if (Character.isSpaceChar(c)) {
+                nextTitleCase = true;
+            } else if (nextTitleCase) {
+                c = Character.toTitleCase(c);
+                nextTitleCase = false;
+            }
+            titleCased.append(c);
+        }
+        return titleCased.toString();
+    }
+    public static String reverse(String str) {
+        return new StringBuilder(str).reverse().toString();
+    }
+    public static int len(String str) {
+        return str.length();
+    }
+    public static int len(int n) {
+        int result = 0;
+        while (n > 0) {
+            n /= 10;
+            result++;
+        }
+        return result;
+    }
+    public static int len(long n) {
+        int result = 0;
+        while (n > 0) {
+            n /= 10;
+            result++;
+        }
+        return result;
+    }
+    public static int len(String arr[]) {
+        return arr.length;
+    }
+    public static int len(int arr[]) {
+        return arr.length;
+    }
+    public static int len(long arr[]) {
+        return arr.length;
+    }
+    public static int len(float arr[]) {
+        return arr.length;
+    }
+    public static int len(double arr[]) {
+        return arr.length;
+    }
+    public static int len(boolean arr[]) {
+        return arr.length;
+    }
+    public static int len(Object arr[]) {
+        return arr.length;
+    }
+    public static int len(StrArr arr) {
+        return arr.length();
+    }
+    public static int len(IntArr arr) {
+        return arr.length();
+    }
+    public static int len(LongArr arr) {
+        return arr.length();
+    }
+    public static int len(FltArr arr) {
+        return arr.length();
+    }
+    public static int len(DblArr arr) {
+        return arr.length();
+    }
+    public static int len(BoolArr arr) {
+        return arr.length();
+    }
+    public static int size(String str) {
+        return len(str);
+    }
+    public static int size(int n) {
+        return len(n);
+    }
+    public static int size(long n) {
+        return len(n);
+    }
+    public static int size(String arr[]) {
+        return len(arr);
+    }
+    public static int size(int arr[]) {
+        return len(arr);
+    }
+    public static int size(long arr[]) {
+        return len(arr);
+    }
+    public static int size(float arr[]) {
+        return len(arr);
+    }
+    public static int size(double arr[]) {
+        return len(arr);
+    }
+    public static int size(boolean arr[]) {
+        return len(arr);
+    }
+    public static int size(StrArr arr) {
+        return len(arr);
+    }
+    public static int size(IntArr arr) {
+        return len(arr);
+    }
+    public static int size(LongArr arr) {
+        return len(arr);
+    }
+    public static int size(FltArr arr) {
+        return len(arr);
+    }
+    public static int size(DblArr arr) {
+        return len(arr);
+    }
+    public static int size(BoolArr arr) {
+        return len(arr);
+    }
+    public static boolean isEmpty(String s) {
+        return 0 == len(s);
+    }
+    public static boolean isEmpty(int n) {
+        return 0 == len(n);
+    }
+    public static boolean isEmpty(long n) {
+        return 0 == len(n);
+    }
+    public static boolean isEmpty(String[] arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(int[] arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(long[] arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(float[] arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(double[] arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(boolean[] arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(StrArr arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(IntArr arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(LongArr arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(FltArr arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(DblArr arr) {
+        return 0 == len(arr);
+    }
+    public static boolean isEmpty(BoolArr arr) {
+        return 0 == len(arr);
+    }
+
+    // Arrays
+    public static String[] reverse(String[] data) {
+        for (int left = 0, right = data.length - 1; left < right;
+             left++, right--) {
+            String temp = data[left];
+            data[left] = data[right];
+            data[right] = temp;
+        }
+        return data;
+    }
+    public static int[] reverse(int[] data) {
+        for (int left = 0, right = data.length - 1; left < right;
+             left++, right--) {
+            int temp = data[left];
+            data[left] = data[right];
+            data[right] = temp;
+        }
+        return data;
+    }
+    public static long[] reverse(long[] data) {
+        for (int left = 0, right = data.length - 1; left < right;
+             left++, right--) {
+            long temp = data[left];
+            data[left] = data[right];
+            data[right] = temp;
+        }
+        return data;
+    }
+    public static float[] reverse(float[] data) {
+        for (int left = 0, right = data.length - 1; left < right;
+             left++, right--) {
+            float temp = data[left];
+            data[left] = data[right];
+            data[right] = temp;
+        }
+        return data;
+    }
+    public static double[] reverse(double[] data) {
+        for (int left = 0, right = data.length - 1; left < right;
+             left++, right--) {
+            double temp = data[left];
+            data[left] = data[right];
+            data[right] = temp;
+        }
+        return data;
+    }
+    public static boolean[] reverse(boolean[] data) {
+        for (int left = 0, right = data.length - 1; left < right;
+             left++, right--) {
+            boolean temp = data[left];
+            data[left] = data[right];
+            data[right] = temp;
+        }
+        return data;
+    }
+    public static void reverse(StrArr arr) {
+        arr.reverse();
+    }
+    public static void reverse(IntArr arr) {
+        arr.reverse();
+    }
+    public static void reverse(LongArr arr) {
+        arr.reverse();
+    }
+    public static void reverse(FltArr arr) {
+        arr.reverse();
+    }
+    public static void reverse(DblArr arr) {
+        arr.reverse();
+    }
+    public static void reverse(BoolArr arr) {
+        arr.reverse();
+    }
+    public static void sort(String[] arr) {
+        Arrays.sort(arr);
+    }
+    public static void sort(int[] arr) {
+        Arrays.sort(arr);
+    }
+    public static void sort(long[] arr) {
+        Arrays.sort(arr);
+    }
+    public static void sort(float[] arr) {
+        Arrays.sort(arr);
+    }
+    public static void sort(double[] arr) {
+        Arrays.sort(arr);
+    }
+    public static void sort(StrArr arr) {
+        arr.sort();
+    }
+    public static void sort(IntArr arr) {
+        arr.sort();
+    }
+    public static void sort(LongArr arr) {
+        arr.sort();
+    }
+    public static void sort(FltArr arr) {
+        arr.sort();
+    }
+    public static void sort(DblArr arr) {
+        arr.sort();
+    }
+    public static void sort(BoolArr arr) {
+        arr.sort();
+    }
+    public static void sortReverse(int arr[]) {
+        int size = arr.length;
+        for (int i : range(arr)) {
+            boolean swappingNeeded = false;
+            for (int j = 0; j < size - i - 1; j++) {
+                if (arr[j] < arr[j + 1]) {
+                    swappingNeeded = true;
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+            if (!swappingNeeded)
+                break;
+        }
+    }
+    public static void sortReverse(long arr[]) {
+        int size = arr.length;
+        for (long i : range(arr)) {
+            boolean swappingNeeded = false;
+            for (int j = 0; j < size - i - 1; j++) {
+                if (arr[j] < arr[j + 1]) {
+                    swappingNeeded = true;
+                    long temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+            if (!swappingNeeded)
+                break;
+        }
+    }
+    public static void sortReverse(float arr[]) {
+        int size = arr.length;
+        for (float i : range(arr)) {
+            boolean swappingNeeded = false;
+            for (int j = 0; j < size - i - 1; j++) {
+                if (arr[j] < arr[j + 1]) {
+                    swappingNeeded = true;
+                    float temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+            if (!swappingNeeded)
+                break;
+        }
+    }
+    public static void sortReverse(double arr[]) {
+        int size = arr.length;
+        for (double i : range(arr)) {
+            boolean swappingNeeded = false;
+            for (int j = 0; j < size - i - 1; j++) {
+                if (arr[j] < arr[j + 1]) {
+                    swappingNeeded = true;
+                    double temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+            if (!swappingNeeded)
+                break;
+        }
+    }
+    public static void sortReverse(StrArr arr) {
+        arr.sortReverse();
+    }
+    public static void sortReverse(IntArr arr) {
+        arr.sortReverse();
+    }
+    public static void sortReverse(LongArr arr) {
+        arr.sortReverse();
+    }
+    public static void sortReverse(FltArr arr) {
+        arr.sortReverse();
+    }
+    public static void sortReverse(DblArr arr) {
+        arr.sortReverse();
+    }
+    public static void sortReverse(BoolArr arr) {
+        arr.sortReverse();
+    }
+    public static String shuffle(String str) {
+        char[] chars = str.toCharArray();
+        Random random = new Random();
+        for (int i = chars.length - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            char temp = chars[i];
+            chars[i] = chars[j];
+            chars[j] = temp;
+        }
+        String result = new String(chars);
+        return result;
+    }
+    public static String[] shuffle(String[] arr) {
+        Random rnd = new Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            String temp = arr[index];
+            arr[index] = arr[i];
+            arr[i] = temp;
+        }
+        return arr;
+    }
+    public static int[] shuffle(int[] arr) {
+        Random rnd = new Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            int temp = arr[index];
+            arr[index] = arr[i];
+            arr[i] = temp;
+        }
+        return arr;
+    }
+    public static long[] shuffle(long[] arr) {
+        Random rnd = new Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            long temp = arr[index];
+            arr[index] = arr[i];
+            arr[i] = temp;
+        }
+        return arr;
+    }
+    public static float[] shuffle(float[] arr) {
+        Random rnd = new Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            float temp = arr[index];
+            arr[index] = arr[i];
+            arr[i] = temp;
+        }
+        return arr;
+    }
+    public static double[] shuffle(double[] arr) {
+        Random rnd = new Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            double temp = arr[index];
+            arr[index] = arr[i];
+            arr[i] = temp;
+        }
+        return arr;
+    }
+    public static boolean[] shuffle(boolean[] arr) {
+        Random rnd = new Random();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            boolean temp = arr[index];
+            arr[index] = arr[i];
+            arr[i] = temp;
+        }
+        return arr;
+    }
+
+    private static String[]
+        ctss = {"Abbottabad", "Adilpur", "Ahmadpur East", "Ahmadpur Sial",
+            "Akora", "Aliabad", "Alik Ghund", "Alipur", "Alizai", "Alpurai",
+            "Aman Garh", "Amirabad", "Arifwala", "Ashanagro Koto", "Athmuqam",
+            "Attock City", "Awaran", "Baddomalhi", "Badin", "Baffa", "Bagarji",
+            "Bagh", "Bahawalnagar", "Bahawalnagar", "Bahawalpur",
+            "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal", "Barkhan",
+            "Basirpur", "Basti Dosa", "Bat Khela", "Battagram", "Begowala",
+            "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan", "Bhawana",
+            "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala",
+            "Bozdar Wada", "Bulri", "Burewala", "Chak", "Chak Azam Sahu",
+            "Chak Five Hundred Seventy-five", "Chak Jhumra",
+            "Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left",
+            "Chak Two Hundred Forty-nine Thal Development Authority", "Chakwal",
+            "Chaman", "Chamber", "Charsadda", "Chawinda", "Chenab Nagar",
+            "Cherat Cantonement", "Chhor", "Chichawatni", "Chilas", "Chiniot",
+            "Chishtian", "Chitral", "Choa Saidan Shah", "Chowki Jamali",
+            "Chuchar-kana Mandi", "Chuhar Jamali", "Chunian", "Dadhar", "Dadu",
+            "Daggar", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS",
+            "Daromehar", "Darya Khan", "Darya Khan Marri", "Daska Kalan",
+            "Dasu", "Daud Khel", "Daulatpur", "Daultala", "Daur",
+            "Dera XXXXXyar", "Dera Bugti", "Dera Ghazi Khan",
+            "Dera Ismail Khan", "Dera Murad Jamali", "Dhanot", "Dhaunkal",
+            "Dhoro Naro", "Digri", "Dijkot", "Dinan Bashnoian Wala", "Dinga",
+            "Dipalpur", "Diplo", "Doaba", "Dokri", "Duki", "Dullewala",
+            "Dunga Bunga", "Dunyapur", "Eidgah", "Eminabad", "Faisalabad",
+            "Faqirwali", "Faruka", "Fazilpur", "Fort Abbas", "Gadani", "Gakuch",
+            "Gambat", "Gandava", "Garh Maharaja", "Garhi Khairo", "Garhiyasin",
+            "Ghauspur", "Ghotki", "Gilgit", "Gojra", "Goth Garelo",
+            "Goth Phulji", "Goth Radhan", "Gujar Khan", "Gujranwala", "Gujrat",
+            "Gulishah Kach", "Gwadar", "Hadali", "Hafizabad", "Hala", "Hangu",
+            "Haripur", "Harnai", "Harnoli", "Harunabad", "Hasilpur",
+            "Hattian Bala", "Haveli Lakha", "Havelian", "Hazro City",
+            "Hingorja", "Hujra Shah Muqim", "Hyderabad", "Islamabad",
+            "Islamkot", "Jacobabad", "Jahanian Shah", "Jalalpur Jattan",
+            "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand",
+            "Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali",
+            "Jauharabad", "Jhang City", "Jhang Sadr", "Jhawarian", "Jhelum",
+            "Jhol", "Jiwani", "Johi", "Jam Sahib", "Kabirwala", "Kadhan",
+            "Kahna Nau", "Kahror Pakka", "Kahuta", "Kakad Wari Dir Upper",
+            "Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar",
+            "Kalur Kot", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke",
+            "Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi",
+            "Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur",
+            "Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur",
+            "Khairpur Mir\'s", "Khairpur Nathan Shah", "Khairpur Tamewah",
+            "Khalabat", "Khandowa", "Khanewal", "Khangah Dogran", "Khangarh",
+            "Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra",
+            "Khurrianwala", "Khushab", "Khuzdar", "Kohat", "Kohlu", "Kot Addu",
+            "Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar",
+            "Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba",
+            "Kot Sultan", "Kotli", "Kotli Loharan", "Kotri", "Kulachi",
+            "Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich",
+            "Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal",
+            "Larkana", "Layyah", "Liliani", "Lodhran", "Loralai", "Mach",
+            "Madeji", "Mailsi", "Malakand", "Malakwal", "Malakwal City",
+            "Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin",
+            "Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Matiari",
+            "Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun",
+            "Mianke Mor", "Mianwali", "Minchianabad", "Mingora", "Miran Shah",
+            "Miro Khan", "Mirpur Bhtoro", "Mirpur Khas", "Mirpur Mathelo",
+            "Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro",
+            "Moza Shahwala", "Multan", "Muridke", "Murree", "Musa Khel Bazar",
+            "Mustafabad", "Muzaffargarh", "Muzaffarabad", "Nabisar",
+            "Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Naudero",
+            "Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah",
+            "Nazir Town", "New Badah", "New Mirpur", "Noorabad", "Nowshera",
+            "Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi",
+            "Pad Idan", "Paharpur", "Pakpattan", "Panjgur", "Pano Aqil",
+            "Parachinar", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia",
+            "Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth",
+            "Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Abdullah",
+            "Qila Saifullah", "Quetta", "Rahim Yar Khan", "Raiwind",
+            "Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar",
+            "Ratodero", "Rawala Kot", "Rawalpindi", "Renala Khurd",
+            "Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Saddiqabad",
+            "Sahiwal", "Sahiwal", "Saidu Sharif", "Sakrand", "Samaro",
+            "Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann",
+            "Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha",
+            "Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur",
+            "Shahkot", "Shahpur", "Shahpur Chakar", "Shahr Sultan",
+            "Shakargarh", "Sharqpur Sharif", "Shekhupura", "Shikarpur",
+            "Shingli Bala", "Shinpokh", "Shorkot", "Shujaabad", "Sialkot",
+            "Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhri",
+            "Sohbatpur", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur",
+            "Swabi", "Sita Road", "Talagang", "Talamba", "Talhar",
+            "Tandlianwala", "Tando Adam", "Tando XXXXXyar", "Tando Bago",
+            "Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi",
+            "Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta",
+            "Thul", "Timargara", "Toba Tek Singh", "Topi", "Turbat", "Ubauro",
+            "Umarkot", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai",
+            "Vihari", "Wana", "Warah", "Wazirabad", "Yazman", "Zafarwal",
+            "Zahir Pir", "Zaida", "Zhob", "Ziarat"},
+        wdss = {"Armor", "Barrymore", "Cabot", "Catholicism", "Chihuahua",
+            "Christianity", "Easter", "Frenchman", "Lowry", "Mayor",
+            "Orientalism", "Pharaoh", "Pueblo", "Pullman", "Saturday", "Sister",
+            "Snead", "Syrah", "Tuesday", "Woodward", "abbey", "absence",
+            "absorption", "abstinence", "absurdity", "abundance", "acceptance",
+            "accessibility", "accommodation", "accomplice", "accountability",
+            "accounting", "accreditation", "accuracy", "acquiescence",
+            "acreage", "actress", "actuality", "adage", "adaptation",
+            "adherence", "adjustment", "adoption", "adultery", "advancement",
+            "advert", "advertisement", "advertising", "advice", "aesthetics",
+            "affinity", "aggression", "agriculture", "aircraft", "airtime",
+            "allegation", "allegiance", "allegory", "allergy", "allies",
+            "alligator", "allocation", "allotment", "altercation", "ambulance",
+            "ammonia", "anatomy", "anemia", "ankle", "announcement",
+            "annoyance", "annuity", "anomaly", "anthropology", "anxiety",
+            "apartheid", "apologise", "apostle", "apparatus", "appeasement",
+            "appellation", "appendix", "applause", "appointment", "appraisal",
+            "archery", "archipelago", "architecture", "ardor", "arrears",
+            "arrow", "artisan", "artistry", "ascent", "assembly", "assignment",
+            "association", "asthma", "atheism", "attacker", "attraction",
+            "attractiveness", "auspices", "authority", "avarice", "aversion",
+            "aviation", "babbling", "backlash", "baker", "ballet", "balls",
+            "banjo", "baron", "barrier", "barrister", "bases", "basin", "basis",
+            "battery", "battling", "bedtime", "beginner", "begun", "bending",
+            "bicycle", "billing", "bingo", "biography", "biology", "birthplace",
+            "blackberry", "blather", "blossom", "boardroom", "boasting",
+            "bodyguard", "boldness", "bomber", "bondage", "bonding", "bones",
+            "bonus", "bookmark", "boomer", "booty", "bounds", "bowling",
+            "brainstorming", "breadth", "breaker", "brewer", "brightness",
+            "broccoli", "broth", "brotherhood", "browsing", "brunch", "brunt",
+            "building", "bullion", "bureaucracy", "burglary", "buyout",
+            "by-election", "cabal", "cabbage", "calamity", "campaign",
+            "canonization", "captaincy", "carcass", "carrier", "cartridge",
+            "cassette", "catfish", "caught", "celebrity", "cemetery",
+            "certainty", "certification", "charade", "chasm", "check-in",
+            "cheerleader", "cheesecake", "chemotherapy", "chili", "China",
+            "chivalry", "cholera", "cilantro", "circus", "civilisation",
+            "civility", "clearance", "clearing", "clerk", "climber",
+            "closeness", "clothing", "clutches", "coaster", "coconut", "coding",
+            "collaborator", "colleague", "college", "collision", "colors",
+            "combustion", "comedian", "comer", "commander", "commemoration",
+            "commenter", "commissioner", "commune", "competition",
+            "completeness", "complexity", "computing", "comrade", "concur",
+            "condominium", "conduit", "confidant", "configuration",
+            "confiscation", "conflagration", "conflict", "consist",
+            "consistency", "consolidation", "conspiracy", "constable", "consul",
+            "consultancy", "contentment", "contents", "contractor",
+            "conversation", "cornerstone", "corpus", "correlation",
+            "councilman", "counselor", "countdown", "countryman", "coverage",
+            "covering", "coyote", "cracker", "creator", "criminality",
+            "crocodile", "cropping", "cross-examination", "crossover",
+            "crossroads", "culprit", "cumin", "curator", "curfew", "cursor",
+            "custard", "cutter", "cyclist", "cyclone", "cylinder", "cynicism",
+            "daddy", "damsel", "darkness", "dawning", "daybreak", "dealing",
+            "dedication", "deduction", "defection", "deference", "deficiency",
+            "definition", "deflation", "degeneration", "delegation", "delicacy",
+            "delirium", "deliverance", "demeanor", "demon", "demonstration",
+            "denomination", "dentist", "departure", "depletion", "depression",
+            "designation", "despotism", "detention", "developer", "devolution",
+            "dexterity", "diagnosis", "dialect", "differentiation", "digger",
+            "digress", "dioxide", "diploma", "disability", "disarmament",
+            "discord", "discovery", "dishonesty", "dismissal", "disobedience",
+            "dispatcher", "disservice", "distribution", "distributor", "diver",
+            "diversity", "docking", "dollar", "dominance", "domination",
+            "dominion", "donkey", "doorstep", "doorway", "dossier", "downside",
+            "drafting", "drank", "drilling", "driver", "drumming",
+            "drunkenness", "duchess", "ducking", "dugout", "dumps", "dwelling",
+            "dynamics", "eagerness", "earnestness", "earnings", "eater",
+            "editor", "effectiveness", "electricity", "elements", "eloquence",
+            "emancipation", "embodiment", "embroidery", "emperor", "employment",
+            "encampment", "enclosure", "encouragement", "endangerment",
+            "enlightenment", "enthusiasm", "environment", "environs", "envoy",
+            "epilepsy", "equation", "equator", "error", "espionage",
+            "estimation", "evacuation", "exaggeration", "examination",
+            "exclamation", "expediency", "exploitation", "extinction",
+            "eyewitness", "falls", "fascism", "fastball", "*****", "feedback",
+            "ferocity", "fertilization", "fetish", "finale", "firing", "fixing",
+            "flashing", "flask", "flora", "fluke", "folklore", "follower",
+            "foothold", "footing", "forefinger", "forefront", "forgiveness",
+            "formality", "formation", "formula", "foyer", "fragmentation",
+            "framework", "fraud", "freestyle", "frequency", "friendliness",
+            "fries", "frigate", "fulfillment", "function", "functionality",
+            "fundraiser", "fusion", "futility", "gallantry", "gallery",
+            "genesis", "genitals", "girlfriend", "boyfriend", "glamor",
+            "chemistry", "glitter", "sparkles", "glucose", "sugar",
+            "sugardaddy", "vase", "bracelet", "bra", "neck", "kiss", "pleasure",
+            "google", "grandeur", "grappling", "greens", "gridlock", "grocer",
+            "groundwork", "grouping", "gunman", "gusto", "habitation", "hacker",
+            "hallway", "hamburger", "hammock", "handling", "hands", "handshake",
+            "happiness", "hardship", "headcount", "header", "headquarters",
+            "heads", "headset", "hearth", "hearts", "heath", "hegemony",
+            "height", "hello", "helper", "helping", "helplessness", "hierarchy",
+            "hoarding", "hockey", "homeland", "homer", "honesty", "horror",
+            "horseman", "hostility", "housing", "humility", "hurricane",
+            "iceberg", "ignition", "illness", "illustration", "illustrator",
+            "immunity", "immunization", "imperialism", "imprisonment",
+            "inaccuracy", "inaction", "inactivity", "inauguration", "indecency",
+            "indicator", "inevitability", "infamy", "infiltration", "influx",
+            "iniquity", "innocence", "innovation", "insanity", "inspiration",
+            "instruction", "instructor", "insurer", "interact", "intercession",
+            "intercourse", "intermission", "interpretation", "intersection",
+            "interval", "intolerance", "intruder", "invasion", "investment",
+            "involvement", "irritation", "iteration", "jenny", "jogging",
+            "jones", "joseph", "juggernaut", "juncture", "jurisprudence",
+            "juror", "kangaroo", "kingdom", "knocking", "laborer", "larceny",
+            "laurels", "layout", "leadership", "leasing", "legislation",
+            "leopard", "liberation", "licence", "lifeblood", "lifeline",
+            "ligament", "lighting", "likeness", "line-up", "lineage", "liner",
+            "lineup", "liquidation", "listener", "literature", "litigation",
+            "litre", "loathing", "locality", "lodging", "logic", "longevity",
+            "lookout", "lordship", "lustre", "ma\'am", "machinery", "madness",
+            "magnificence", "mahogany", "mailing", "mainframe", "maintenance",
+            "majority", "manga", "mango", "manifesto", "mantra", "manufacturer",
+            "maple", "martin", "martyrdom", "mathematician", "matrix", "matron",
+            "mayhem", "mayor", "means", "meantime", "measurement", "mechanics",
+            "mediator", "medics", "melodrama", "memory", "mentality",
+            "metaphysics", "method", "meter", "miner", "mirth", "misconception",
+            "misery", "mishap", "misunderstanding", "mobility", "molasses",
+            "momentum", "monarchy", "monument", "morale", "mortality", "motto",
+            "mouthful", "mouthpiece", "mover", "movie", "mowing", "murderer",
+            "musician", "mutation", "mythology", "narration", "narrator",
+            "nationality", "negligence", "neighborhood", "neighbor",
+            "nervousness", "networking", "nexus", "nightmare", "nobility",
+            "nobody", "noodle", "normalcy", "notification", "nourishment",
+            "novella", "nucleus", "nuisance", "nursery", "nutrition", "nylon",
+            "oasis", "obscenity", "obscurity", "observer", "offense",
+            "onslaught", "operation", "opportunity", "opposition", "oracle",
+            "orchestra", "organisation", "organizer", "orientation",
+            "originality", "ounce", "outage", "outcome", "outdoors", "outfield",
+            "outing", "outpost", "outset", "overseer", "owner", "oxygen",
+            "pairing", "panther", "paradox", "parliament", "parsley", "parson",
+            "passenger", "pasta", "patchwork", "pathos", "patriotism",
+            "pendulum", "penguin", "permission", "persona", "perusal",
+            "pessimism", "peter", "philosopher", "phosphorus", "phrasing",
+            "physique", "piles", "plateau", "playing", "plaza", "plethora",
+            "plurality", "pneumonia", "pointer", "poker", "policeman",
+            "polling", "poster", "posterity", "posting", "postponement",
+            "potassium", "pottery", "poultry", "pounding", "pragmatism",
+            "precedence", "precinct", "preoccupation", "pretense", "priesthood",
+            "prisoner", "privacy", "probation", "proceeding", "proceedings",
+            "processing", "processor", "progression", "projection",
+            "prominence", "propensity", "prophecy", "prorogation", "prospectus",
+            "protein", "prototype", "providence", "provider", "provocation",
+            "proximity", "puberty", "publicist", "publicity", "publisher",
+            "pundit", "putting", "quantity", "quart", "quitting", "Chihuahua",
+            "quorum", "racism", "radiance", "ralph", "rancher", "ranger",
+            "rapidity", "rapport", "ratification", "rationality", "reaction",
+            "reader", "reassurance", "rebirth", "receptor", "recipe",
+            "recognition", "recourse", "recreation", "rector", "recurrence",
+            "redemption", "redistribution", "redundancy", "refinery",
+            "reformer", "refrigerator", "regularity", "regulator",
+            "reinforcement", "reins", "reinstatement", "relativism",
+            "relaxation", "rendition", "repayment", "repentance", "repertoire",
+            "repository", "republic", "reputation", "resentment", "residency",
+            "resignation", "restaurant", "resurgence", "retailer", "retention",
+            "retirement", "reviewer", "riches", "righteousness", "roadblock",
+            "robber", "rocks", "rubbing", "runoff", "saloon", "salvation",
+            "sarcasm", "saucer", "savior", "scarcity", "scenario", "scenery",
+            "schism", "scholarship", "schoolboy", "schooner", "scissors",
+            "scolding", "scooter", "scouring", "scrimmage", "scrum", "seating",
+            "sediment", "seduction", "seeder", "seizure", "self-confidence",
+            "self-control", "self-respect", "semicolon", "semiconductor",
+            "semifinal", "senator", "sending", "serenity", "seriousness",
+            "servitude", "sesame", "setup", "sewing", "sharpness",
+            "shoplifting", "shopping", "siding", "sidewalk", "simplicity",
+            "simulation", "sinking", "skate", "sloth", "slugger", "snack",
+            "snail", "snapshot", "snark", "soccer", "solemnity", "solicitation",
+            "solitude", "somewhere", "sophistication", "sorcery", "souvenir",
+            "spaghetti", "specification", "specimen", "specs", "spectacle",
+            "specter", "speculation", "*****", "spoiler", "squad", "squid",
+            "staging", "stagnation", "staircase", "stairway", "stamina",
+            "standpoint", "standstill", "stanza", "statement", "stillness",
+            "stimulus", "stocks", "stole", "stoppage", "story", "storyteller",
+            "stylus", "subcommittee", "subscription", "subsidy", "suburb",
+            "success", "sufferer", "supposition", "suspension", "sweater",
+            "sweepstakes", "swimmer", "syndrome", "synopsis", "syntax",
+            "system", "tablespoon", "taker", "tavern", "technology",
+            "telephony", "template", "tempo", "tendency", "tendon", "terrier",
+            "terror", "terry", "theater", "theology", "therapy", "thicket",
+            "thoroughfare", "threshold", "thriller", "thunderstorm", "ticker",
+            "tiger", "tights", "tossing", "touchdown", "tourist", "tourney",
+            "toxicity", "tracing", "tractor", "translation", "transmission",
+            "transmitter", "trauma", "traveler", "treadmill", "trilogy",
+            "trout", "tuning", "twenties", "tycoon", "tyrant", "ultimatum",
+            "antidote", "underwear", "unhappiness", "unification", "university",
+            "rise", "uprising", "downfall", "vaccination", "validity",
+            "vampire", "vanguard", "variation", "vegetation", "verification",
+            "viability", "vicinity", "victory", "beauty", "viewpoint",
+            "viewport", "villa", "vanilla", "vindication", "violation",
+            "vocalist", "vogue", "volcano", "voltage", "vomiting",
+            "vulnerability", "waistcoat", "waitress", "wardrobe", "warmth",
+            "watchdog", "wealth", "weariness", "whereabouts", "whisky",
+            "whiteness", "widget", "width", "windfall", "wiring", "witchcraft",
+            "withholding", "womanhood", "words", "workman", "laborer",
+            "lumberjack", "youngster", "mobile phone", "telephone",
+            "Television", "information", "technology", "automobile", "picture",
+            "movie", "document", "documentary", "compliment", "insult",
+            "vocalist", "pianist", "violinist", "thirst", "hunger", "brevity",
+            "longevity", "sanity", "insanity", "bikini", "panty", "*****",
+            "hymen", "synthesis", "dementia", "amnesia", "blood sugar", "fever",
+            "flu", "diarrhea", "glucose", "Latino", "Latina", "anesthetics",
+            "anesthesia", "Cannabis", "oasis", "desert", "dessert",
+            "hemoglobin", "cardiographer", "carpenter", "oceanic", "terran",
+            "abroad", "absorbing", "abstract", "academic", "accelerated",
+            "accented", "accountant", "acquainted", "acute", "obtuse",
+            "protective", "possessive", "real", "unreal", "realistic",
+            "unrealistic", "imagined", "delusional", "addicting", "addictive",
+            "adjustable", "admired", "adult", "adverse", "advised", "aerosol",
+            "afraid", "creeped out", "horrified", "horrific", "terrified",
+            "terrific", "devastated", "frustrated", "aggravated", "aggressive",
+            "agreeable", "alienate", "aligned", "all-round", "alleged",
+            "almond", "alright", "altruistic", "ambient", "ambivalent",
+            "amiable", "amino", "amorphous", "amused", "anatomical",
+            "ancestral", "angelic", "angrier", "answerable", "antiquarian",
+            "antiretroviral", "appellate", "applicable", "apportioned",
+            "approachable", "appropriated", "archer", "aroused", "arrested",
+            "assertive", "assigned", "athletic", "atrocious", "attained",
+            "authoritarian", "autobiographical", "avaricious", "avocado",
+            "awake", "awesome", "backstage", "backwoods", "balding", "bandaged",
+            "banded", "banned", "barreled", "battle", "beaten", "begotten",
+            "beguiled", "bellied", "belted", "beneficent", "besieged",
+            "betting", "big-money", "biggest", "biochemical", "bipolar",
+            "blackened", "blame", "blessed", "blindfolded", "bloat", "blocked",
+            "blooded", "blue-collar", "blushing", "boastful", "bolder",
+            "bolstered", "bonnie", "bored", "boundary", "bounded", "bounding",
+            "branched", "brawling", "brazen", "breeding", "bridged", "brimming",
+            "brimstone", "broadest", "broiled", "broker", "bronze", "bruising",
+            "buffy", "bullied", "bungling", "burial", "buttery", "candied",
+            "canonical", "cantankerous", "cardinal", "carefree", "caretaker",
+            "casual", "cathartic", "causal", "chapel", "characterized",
+            "charcoal", "cheeky", "cherished", "chipotle", "chirping",
+            "chivalrous", "circumstantial", "civic", "civil", "civilised",
+            "clanking", "clapping", "claptrap", "classless", "cleansed",
+            "cleric", "cloistered", "codified", "colloquial", "colour",
+            "combat", "combined", "comely", "commissioned", "commonplace",
+            "commuter", "commuting", "comparable", "complementary",
+            "compromising", "conceding", "concentrated", "conceptual",
+            "conditioned", "confederate", "confident", "confidential",
+            "confining", "confuse", "congressional", "consequential",
+            "conservative", "constituent", "contaminated", "contemporaneous",
+            "contraceptive", "convertible", "convex", "cooked", "coronary",
+            "corporatist", "correlated", "corroborated", "cosmic", "cover",
+            "crash", "crypto", "culminate", "cushioned", "dandy", "dashing",
+            "dazzled", "decreased", "decrepit", "dedicated", "defaced",
+            "defective", "defenseless", "deluded", "deodorant", "departed",
+            "depress", "designing", "despairing", "destitute", "detective",
+            "determined", "devastating", "deviant", "devilish", "devoted",
+            "diagonal", "dictated", "didactic", "differentiated", "diffused",
+            "dirtier", "disabling", "disconnected", "discovered", "disdainful",
+            "diseased", "disfigured", "disheartened", "disheveled",
+            "disillusioned", "disparate", "dissident", "doable", "doctrinal",
+            "doing", "dotted", "double-blind", "downbeat", "dozen", "draining",
+            "draught", "dread", "dried", "dropped", "dulled", "duplicate",
+            "eaten", "echoing", "economical", "elaborated", "elastic",
+            "elective", "electoral", "elven", "embryo", "emerald", "emergency",
+            "emissary", "emotional", "employed", "enamel", "encased",
+            "encrusted", "endangered", "engraved", "engrossing", "enlarged",
+            "enlisted", "enlivened", "ensconced", "entangled", "enthralling",
+            "entire", "envious", "eradicated", "eroded", "esoteric",
+            "essential", "evaporated", "ever-present", "evergreen",
+            "everlasting", "exacting", "exasperated", "excess", "exciting",
+            "executable", "existent", "exonerated", "exorbitant", "exponential",
+            "export", "extraordinary", "exultant", "exulting", "facsimile",
+            "fading", "fainter", "XXXXX-based", "fallacious", "faltering",
+            "famous", "fancier", "fast-growing", "fated", "favourable",
+            "fearless", "feathered", "fellow", "fermented", "ferocious",
+            "fiddling", "filling", "firmer", "fitted", "flammable", "flawed",
+            "fledgling", "fleshy", "flexible", "flickering", "floral",
+            "flowering", "flowing", "foggy", "folic", "foolhardy", "foolish",
+            "footy", "forehand", "forked", "formative", "formulaic",
+            "foul-mouthed", "fractional", "fragrant", "fraudulent", "freakish",
+            "freckled", "freelance", "freight", "fresh", "fretted", "frugal",
+            "fulfilling", "fuming", "funded", "funny", "garbled", "gathered",
+            "geologic", "geometric", "gibberish", "gilded", "ginger", "glare",
+            "glaring", "gleaming", "glorified", "glorious", "goalless",
+            "gold-plated", "goody", "grammatical", "grande", "grateful",
+            "gratuitous", "graven", "greener", "grinding", "grizzly",
+            "groaning", "grudging", "guaranteed", "gusty", "half-breed",
+            "hand-held", "handheld", "hands-off", "hard-pressed", "harlot",
+            "healing", "healthier", "healthiest", "heart", "heart-shaped",
+            "heathen", "hedonistic", "heralded", "herbal", "high-density",
+            "high-performance", "high-res", "high-yield", "hissy", "hitless",
+            "holiness", "homesick", "honorable", "hooded", "hopeless",
+            "horrendous", "horrible", "hot-button", "huddled", "human",
+            "humbling", "humid", "humiliating", "hypnotized", "idealistic",
+            "idiosyncratic", "ignited", "illustrated", "illustrative",
+            "imitated", "immense", "immersive", "immigrant", "immoral",
+            "impassive", "impressionable", "improbable", "impulsive",
+            "in-between", "in-flight", "inattentive", "inbound", "inbounds",
+            "incalculable", "incomprehensible", "indefatigable", "indigo",
+            "indiscriminate", "indomitable", "inert", "inflate", "inform",
+            "inheriting", "injured", "injurious", "inking", "inoffensive",
+            "insane", "insensible", "insidious", "insincere", "insistent",
+            "insolent", "insufferable", "intemperate", "interdependent",
+            "interesting", "interfering", "intern", "interpreted",
+            "intersecting", "intolerable", "intolerant", "intuitive",
+            "irresolute", "irritate", "jealous", "jerking", "joining", "joint",
+            "journalistic", "joyful", "keyed", "knowing", "lacklustre", "laden",
+            "lagging", "lamented", "laughable", "layered", "leather",
+            "leathern", "leery", "left-footed", "legible", "leisure",
+            "lessening", "liberating", "life-size", "lifted", "lightest",
+            "limitless", "listening", "literary", "liver", "livid", "lobster",
+            "locked", "long-held", "long-lasting", "long-running",
+            "long-suffering", "loudest", "loveliest", "low-budget", "low-carb",
+            "lowering", "lucid", "luckless", "lusty", "luxurious", "magazine",
+            "maniac", "manmade", "maroon", "mastered", "mated", "material",
+            "materialistic", "meaningful", "measuring", "mediaeval", "medical",
+            "meditated", "medley", "melodic", "memorable", "tasty", "delicious",
+            "inspiring", "motivational", "default", "good", "bad", "neutral",
+            "fine", "okay", "alright", "memorial", "metabolic", "metallic",
+            "metallurgical", "metering", "midair", "midterm", "midway",
+            "mighty", "migrating", "mind-blowing", "mind-boggling", "major",
+            "minor", "visual", "visible", "audible", "mirrored", "misguided",
+            "misshapen", "joyful", "mixed", "twisted", "mitigated", "mixed",
+            "modernized", "molecular", "monarch", "monastic", "morbid",
+            "motley", "motorized", "mounted", "multi-million",
+            "multidisciplinary", "muscled", "muscular", "muted", "mysterious",
+            "mythic", "nail-biting", "natural", "nauseous", "negative",
+            "networked", "neurological", "neutered", "newest", "night",
+            "nitrous", "no-fly", "noncommercial", "nonsense", "north",
+            "nuanced", "occurring", "offensive", "oldest", "oncoming",
+            "one-eyed", "one-year", "onstage", "onward", "opaque", "open-ended",
+            "operating", "opportunist", "opposing", "opt-in", "ordinate",
+            "outdone", "outlaw", "outsized", "overboard", "overheated",
+            "oversize", "overworked", "oyster", "paced", "panting", "paralyzed",
+            "paramount", "parental", "parted", "partisan", "passive", "edible",
+            "eatable", "kissable", "killable", "pastel", "patriot",
+            "peacekeeping", "pedestrian", "peevish", "penal", "penned",
+            "pensive", "perceptual", "perky", "permissible", "pernicious",
+            "perpetuate", "perplexed", "pervasive", "petrochemical",
+            "philosophical", "picturesque", "pillaged", "piped", "piquant",
+            "pitching", "plausible", "pliable", "plumb", "politician",
+            "polygamous", "poorest", "portmanteau", "posed", "positive",
+            "possible", "postpartum", "prank", "pre-emptive", "precocious",
+            "predicted", "premium", "preparatory", "prerequisite", "prescient",
+            "preserved", "presidential", "pressed", "pressurized", "presumed",
+            "prewar", "priced", "pricier", "primal", "primer", "primetime",
+            "printed", "private", "problem", "procedural", "process",
+            "prodigious", "professional", "programmed", "progressive",
+            "prolific", "promising", "promulgated", "pronged", "proportionate",
+            "protracted", "pulled", "pulsed", "purgatory", "quick",
+            "rapid-fire", "raunchy", "razed", "reactive", "readable",
+            "realizing", "recognised", "recovering", "recurrent", "recycled",
+            "redeemable", "reflecting", "regal", "registering", "reliable",
+            "reminiscent", "remorseless", "removable", "renewable", "repeating",
+            "repellent", "reserve", "resigned", "respectful", "rested",
+            "restrict", "resultant", "retaliatory", "retiring", "revelatory",
+            "reverend", "reversing", "revolving", "ridiculous", "right-hand",
+            "ringed", "risque", "robust", "roomful", "rotating", "roused",
+            "rubber", "run-down", "running", "runtime", "rustling", "safest",
+            "salient", "sanctioned", "saute", "saved", "scandalized", "scarlet",
+            "scattering", "sceptical", "scheming", "scoundrel", "scratched",
+            "scratchy", "scrolled", "seated", "second-best", "segregated",
+            "self-taught", "semiautomatic", "senior", "sensed", "sentient",
+            "sexier", "shadowy", "shaken", "shaker", "shameless", "shaped",
+            "shiny", "shipped", "shivering", "shoestring", "short",
+            "short-lived", "signed", "simplest", "simplistic", "sizable",
+            "skeleton", "skinny", "skirting", "skyrocketed", "slamming",
+            "slanting", "slapstick", "sleek", "sleepless", "sleepy", "slender",
+            "slimmer", "smacking", "smokeless", "smothered", "smouldering",
+            "snuff", "socialized", "solid-state", "sometime", "sought",
+            "spanking", "sparing", "spattered", "specialized", "specific",
+            "speedy", "spherical", "spiky", "spineless", "sprung", "squint",
+            "stainless", "standing", "starlight", "startled", "stately",
+            "statewide", "stereoscopic", "sticky", "stimulant", "stinky",
+            "stoked", "stolen", "storied", "strained", "strapping",
+            "strengthened", "stubborn", "stylized", "suave", "subjective",
+            "subjugated", "subordinate", "succeeding", "suffering", "summary",
+            "sunset", "sunshine", "supernatural", "supervisory", "supply-side",
+            "surrogate", "suspended", "suspenseful", "swarthy", "sweating",
+            "sweeping", "swinging", "swooning", "sympathize", "synchronized",
+            "synonymous", "synthetic", "tailed", "tallest", "tangible",
+            "tanked", "tarry", "technical", "tectonic", "telepathic",
+            "tenderest", "territorial", "testimonial", "theistic", "thicker",
+            "threatening", "tight-lipped", "timed", "timely", "timid",
+            "torrent", "totalled", "tougher", "traditional", "transformed",
+            "trapped", "traveled", "traverse", "treated", "trial", "trunk",
+            "trusting", "trying", "twisted", "two-lane", "tyrannical",
+            "unaided", "unassisted", "unassuming", "unattractive", "uncapped",
+            "uncomfortable", "uncontrolled", "uncooked", "uncooperative",
+            "underground", "undersea", "undisturbed", "unearthly", "uneasy",
+            "unequal", "unfazed", "unfinished", "unforeseen", "unforgivable",
+            "unidentified", "unimaginative", "uninspired", "unintended",
+            "uninvited", "universal", "unmasked", "unorthodox", "unparalleled",
+            "unpleasant", "unprincipled", "unread", "unreasonable",
+            "unregulated", "unreliable", "unremitting", "unsafe", "unsanitary",
+            "unsealed", "unsuccessful", "unsupervised", "untimely", "unwary",
+            "unwrapped", "uppity", "upstart", "useless", "utter", "valiant",
+            "valid", "valued", "vanilla", "vaulting", "vaunted", "veering",
+            "vegetative", "vented", "verbal", "verifying", "veritable",
+            "versed", "vinyl", "virgin", "visceral", "visual", "voluptuous",
+            "walk-on", "wanton", "warlike", "washed", "waterproof", "waved",
+            "weakest", "well-bred", "well-chosen", "well-informed", "wet",
+            "wheeled", "whirlwind", "widen", "widening", "willful", "willing",
+            "winnable", "winningest", "wireless", "wistful", "woeful", "wooded",
+            "woodland", "wordless", "workable", "worldly", "worldwide",
+            "worst-case", "worsted", "worthless", "able", "abnormal",
+            "absent-minded", "above average", "adventurous", "affectionate",
+            "agile", "agreeable", "alert", "amazing", "ambitious", "amiable",
+            "amusing", "analytical", "angelic", "apathetic", "apprehensive",
+            "ardent", "artificial", "artistic", "assertive", "attentive",
+            "average", "awesome", "awful", "balanced", "beautiful",
+            "below average", "beneficent", "blue", "blunt", "boisterous",
+            "brave", "bright", "brilliant", "buff", "callous", "candid",
+            "cantankerous", "capable", "careful", "careless", "caustic",
+            "cautious", "charming", "childish", "childlike", "cheerful", "chic",
+            "churlish", "circumspect", "civil", "clean", "clever", "clumsy",
+            "coherent", "cold", "competent", "composed", "conceited",
+            "condescending", "confident", "confused", "conscientious",
+            "considerate", "content", "cool", "cool-headed", "cooperative",
+            "cordial", "courageous", "cowardly", "crabby", "crafty", "cranky",
+            "crass", "critical", "cruel", "curious", "cynical", "dainty",
+            "decisive", "deep", "deferential", "deft", "delicate", "demonic",
+            "dependent", "delightful", "demure", "depressed", "devoted",
+            "dextrous", "diligent", "direct", "dirty", "disagreeable",
+            "discerning", "discreet", "disruptive", "distant", "distraught",
+            "distrustful", "dowdy", "dramatic", "dreary", "drowsy", "drugged",
+            "drunk", "dull", "dutiful", "eager", "earnest", "easy-going",
+            "efficient", "egotistical", "elfin", "emotional", "energetic",
+            "enterprising", "enthusiastic", "evasive", "even-tempered",
+            "exacting", "excellent", "excitable", "experienced", "fabulous",
+            "fastidious", "ferocious", "fervent", "fiery", "flabby", "flaky",
+            "flashy", "frank", "friendly", "funny", "fussy", "generous",
+            "gentle", "gloomy", "glutinous", "good", "grave", "great", "groggy",
+            "grouchy", "guarded", "hateful", "hearty", "helpful", "hesitant",
+            "hot-headed", "hypercritical", "hysterical", "idiotic", "idle",
+            "illogical", "imaginative", "immature", "immodest", "impatient",
+            "imperturbable", "impetuous", "impractical", "impressionable",
+            "impressive", "impulsive", "inactive", "incisive", "incompetent",
+            "inconsiderate", "inconsistent", "independent", "indiscreet",
+            "indolent", "indefatigable", "industrious", "inexperienced",
+            "insensitive", "inspiring", "intelligent", "interesting",
+            "intolerant", "inventive", "irascible", "irritable", "irritating",
+            "jocular", "jovial", "joyous", "judgmental", "keen", "kind", "lame",
+            "lazy", "lean", "leery", "lethargic", "level-headed", "listless",
+            "lithe", "lively", "local", "logical", "long-winded", "lovable",
+            "love-lorn", "lovely", "maternal", "mature", "mean", "meddlesome",
+            "mercurial", "methodical", "meticulous", "mild", "miserable",
+            "modest", "moronic", "morose", "motivated", "musical", "naive",
+            "nasty", "natural", "naughty", "negative", "nervous", "noisy",
+            "normal", "nosy", "numb", "obliging", "obnoxious", "old-fashioned",
+            "one-sided", "orderly", "ostentatious", "outgoing", "outspoken",
+            "passionate", "passive", "paternal", "paternalistic", "patient",
+            "peaceful", "peevish", "pensive", "persevering", "persnickety",
+            "petulant", "picky", "plain", "plain-speaking", "playful",
+            "pleasant", "plucky", "polite", "popular", "positive", "powerful",
+            "practical", "prejudiced", "pretty", "proficient", "proud",
+            "provocative", "prudent", "punctual", "quarrelsome", "querulous",
+            "quick", "quick-tempered", "quiet", "realistic", "reassuring",
+            "reclusive", "reliable", "reluctant", "resentful", "reserved",
+            "resigned", "resourceful", "respected", "respectful", "responsible",
+            "restless", "revered", "ridiculous", "sad", "sassy", "saucy",
+            "sedate", "self-assured", "selfish", "sensible", "sensitive",
+            "sentimental", "serene", "serious", "sharp", "short-tempered",
+            "shrewd", "shy", "silly", "sincere", "sleepy", "slight", "sloppy",
+            "slothful", "slovenly", "slow", "smart", "snazzy", "sneering",
+            "snobby", "somber", "sober", "sophisticated", "soulful", "soulless",
+            "sour", "spirited", "spiteful", "stable", "staid", "steady",
+            "stern", "stoic", "striking", "strong", "stupid", "sturdy",
+            "subtle", "sullen", "sulky", "supercilious", "superficial", "surly",
+            "suspicious", "sweet", "tactful", "tactless", "talented", "testy",
+            "thinking", "thoughtful", "thoughtless", "timid", "tired",
+            "tolerant", "touchy", "tranquil", "ugly", "unaffected",
+            "unbalanced", "uncertain", "uncooperative", "undependable",
+            "unemotional", "unfriendly", "unguarded", "unhelpful",
+            "unimaginative", "unmotivated", "unpleasant", "unpopular",
+            "unreliable", "unsophisticated", "unstable", "unsure", "unthinking",
+            "unwilling", "venal", "versatile", "vigilant", "warm",
+            "warmhearted", "wary", "watchful", "weak", "well-behaved",
+            "well-developed", "well-intentioned", "well-respected",
+            "well-rounded", "willing", "wonderful", "volcanic", "vulnerable",
+            "zealous", "abandoned", "absent minded", "abused", "accepted",
+            "accomplished", "accusatory", "accused", "admired", "adored",
+            "adrift", "affectionate", "afraid", "aggravated", "aggressive",
+            "agitated", "alarmed", "alert", "alienated", "alive", "alluring",
+            "alone", "aloof", "amazed", "ambushed", "amused", "angry",
+            "annoyed", "antagonistic", "anxious", "apathetic", "apologetic",
+            "appalled", "appreciated", "appreciative", "apprehensive",
+            "aroused", "ashamed", "astonished", "attacked", "attractive",
+            "awake", "aware", "awe", "awed", "awestruck", "awkward", "bad",
+            "baffled", "barren", "bashful", "beaten", "belittled", "benevolent",
+            "berated", "betrayed", "bewildered", "bitchy", "bitter",
+            "bittersweet", "blah", "blamed", "blank", "blissful", "blue",
+            "bold", "bored", "bothered", "bouncy", "brave", "broken",
+            "brooding", "bummed", "burdened", "burned-out", "callous", "calm",
+            "capable", "carefree", "careless", "caring", "caustic", "cautious",
+            "censored", "centered", "certain", "challenged", "charmed",
+            "cheated", "cheerful", "cherished", "childish", "chipper",
+            "choleric", "clean", "clear", "clever", "close", "closed",
+            "clueless", "clumsy", "cold", "comfortable", "committed",
+            "compassionate", "competent", "competitive", "complacent",
+            "complete", "concerned", "condemned", "condescension", "confident",
+            "confining", "confused", "considerate", "contemplative", "contempt",
+            "contemptuous", "content", "controlled", "conventional",
+            "convicted", "cornered", "courageous", "cowardly", "cranky",
+            "crappy", "crazy", "critical", "cross", "crushed", "curious",
+            "cynical", "daring", "dark", "dashed", "dazed", "dead", "deceived",
+            "dedicated", "defeated", "defenseless", "defensive", "defiant",
+            "degraded", "dejected", "delicate", "delighted", "demoralized",
+            "dependent", "depressed", "deprived", "derisive", "deserted",
+            "desired", "desolate", "despair", "desperate", "destroyed",
+            "detached", "determined", "devastated", "devious", "devoted",
+            "didactic", "different", "difficult", "dignified", "dirty",
+            "disappointed", "disbelieving", "discarded", "disconnected",
+            "discontent", "discontented", "discouraged", "disdainful",
+            "disgraced", "disgusted", "disheartened", "dishonest",
+            "disillusioned", "dismal", "dismayed", "disobedient",
+            "disorganized", "disposable", "distant", "distracted", "distressed",
+            "disturbed", "ditzy", "dorky", "doubtful", "down", "drained",
+            "dreamy", "dreary", "dropped", "drunk", "dull", "dumb", "eager",
+            "earnest", "ecstatic", "edgy", "effective", "elated", "embarassed",
+            "embarrassed", "empathetic", "empowered", "empty", "enchanted",
+            "encouraged", "energetic", "energized", "enlightened", "enraged",
+            "enriched", "entertained", "enthralled", "enthusiastic", "envious",
+            "erudite", "evasive", "evil", "exasperated", "excited", "excluded",
+            "exhausted", "exhilarated", "expectant", "exploited", "exposed",
+            "exuberant", "XXXXXful", "fake", "fanciful", "fantastic",
+            "fatalistic", "fatigued", "fearful", "fearless", "feisty", "fine",
+            "flirty", "flustered", "foolish", "foreboding", "forgiven",
+            "forgiving", "forgotten", "forthright", "fortunate", "framed",
+            "frantic", "free", "friendly", "frightened", "frisky", "frustrated",
+            "fulfilled", "full", "funny", "furious", "futile", "geeky",
+            "generous", "gentle", "giddy", "giggly", "giving", "glad", "gloomy",
+            "glorious", "good", "grateful", "great", "grieving", "groggy",
+            "grouchy", "grumpy", "guarded", "guilty", "gullible", "handicapped",
+            "happy", "harmonious", "hateful", "haughty", "haunted", "haunting",
+            "healthy", "heard", "heartbroken", "heavy-hearted", "helpful",
+            "helpless", "hesitant", "high", "honored", "hopeful", "hopeless",
+            "horrible", "horrified", "hospitable", "hostile", "hot", "humble",
+            "humiliated", "hungry", "hurt", "hyper", "hysterical", "idealistic",
+            "idiotic", "idyllic", "ignorant", "ignored", "imaginative",
+            "immune", "impatient", "impelled", "imperfect", "impertinent",
+            "important", "impressed", "impulsive", "inadequate", "inattentive",
+            "incensed", "inclusive", "incompetent", "incomplete", "incredulous",
+            "indebted", "indecisive", "independent", "indescribable",
+            "indifferent", "indignant", "industrious", "inept", "inferior",
+            "inflated", "informed", "infuriated", "inhibited", "innocent",
+            "innovative", "inquisitive", "insane", "insecure", "insensitive",
+            "insidious", "insignificant", "insulted", "intense", "interested",
+            "interrogated", "interrupted", "intimate", "intimidated",
+            "intrigued", "invigorated", "invisible", "involved", "irate",
+            "irked", "irrational", "irresponsible", "irritated", "isolated",
+            "jaded", "jealous", "jinxed", "jolly", "jovial", "joyful", "joyous",
+            "jubilant", "judged", "judgmental", "jumpy", "just", "justified",
+            "kidded", "kind", "knowledgeable", "late", "lazy", "leery", "left",
+            "let", "lethargic", "liable", "liberated", "liberating", "lifeless",
+            "light-hearted", "liked", "listened", "listless", "logical",
+            "lonely", "loose", "lost", "lousy", "lovable", "loved", "loving",
+            "lucky", "lyrical", "mad", "malicious", "manipulated", "matter",
+            "fact", "mean", "meditative", "melancholic", "melancholy", "mellow",
+            "merciless", "merry", "mischievous", "miserable", "misinterpreted",
+            "mistreated", "misunderstood", "mixed", "mocked", "mocking",
+            "modest", "molested", "moody", "morose", "motivated", "mournful",
+            "moved", "mystified", "naive", "nasty", "naughty", "nauseated",
+            "needed", "needy", "negative", "neglected", "nerdy", "nervous",
+            "neurotic", "nightmarish", "nonchalant", "nostalgic", "not",
+            "specified", "noticed", "numb", "obeyed", "objective", "obligated",
+            "obvious", "odd", "offended", "okay", "old", "open", "oppressed",
+            "optimistic", "ornery", "control", "outraged", "overcome",
+            "overjoyed", "overloaded", "overwhelmed", "overworked", "owned",
+            "painful", "pampered", "panicky", "paralyzed", "passionate",
+            "passive", "patient", "patronizing", "peaceful", "peeved",
+            "pensive", "perky", "perplexed", "persecuted", "pessimistic",
+            "pestered", "petrified", "petty", "phony", "pious", "pissed", "off",
+            "playful", "pleased", "poor", "positive", "possessive", "powerful",
+            "powerless", "practical", "predatory", "pressured", "private",
+            "productive", "protected", "protective", "proud", "provoked",
+            "prudish", "punished", "pushy", "puzzled", "questioned", "quiet",
+            "quixotic", "quizzical", "rambunctious", "realistic", "reassured",
+            "rebellious", "reborn", "receptive", "reckless", "recognized",
+            "reconciled", "recumbent", "reflective", "refreshed", "regretful",
+            "rejected", "rejuvenated", "relaxed", "released", "relieved",
+            "reluctant", "reminiscent", "remorse", "renewed", "replaced",
+            "replenished", "repressed", "rescued", "resentful", "reserved",
+            "resistant", "resourceful", "respected", "responsible", "restless",
+            "restricted", "revengeful", "reverent", "revitalized", "ribald",
+            "rich", "ridicule", "ridiculous", "right", "rigid", "robbed",
+            "romantic", "rotten", "rushed", "sabotaged", "sad", "safe",
+            "sarcastic", "sardonic", "sassy", "satiated", "satiric",
+            "satisfied", "saved", "scared", "scolded", "scorned", "secure",
+            "seductive", "selfish", "self-assured", "self-centered",
+            "self-confident", "self-conscious", "self-destructive",
+            "self-reliant", "sensitive", "sentimental", "serene", "serious",
+            "*****", "shaken", "shamed", "sheepish", "shocked", "shunned",
+            "shy", "sick", "silenced", "silly", "sincere", "sinful",
+            "skeptical", "skillful", "slandered", "sleepy", "sluggish", "small",
+            "smart", "smothered", "solemn", "somber", "soothed", "sorry",
+            "special", "spiteful", "splendid", "spunky", "squashed", "stifled",
+            "stimulated", "stingy", "strained", "stressed", "stretched",
+            "strong", "stubborn", "stumped", "stunned", "stupid", "submissive",
+            "successful", "suffocated", "suicidal", "sullen", "sunk", "super",
+            "superior", "supported", "sure", "surly", "surprised",
+            "suspenseful", "suspicious", "sympathetic", "tacky", "tactful",
+            "talented", "talkative", "tame", "tarnished", "tasteful", "tearful",
+            "teased", "tenacious", "tender", "tense", "tepid", "terrible",
+            "terrific", "terrified", "terrifying", "tested", "testy",
+            "thankful", "thoughtful", "threatened", "threatening", "thrifty",
+            "thrilled", "tired", "tormented", "torn", "tortured", "touched",
+            "tough", "tragic", "tranquil", "transformed", "trapped",
+            "treasured", "trembly", "tremendous", "tricked", "troubled",
+            "trusted", "trustful", "ugly", "unaccepted", "unappreciated",
+            "unbalanced", "unburdened", "uncanny", "uncomfortable",
+            "unconcerned", "uneven", "unfit", "unfriendly", "united", "unjust",
+            "unknown", "unneeded", "unpleasant", "unreal", "unruly", "unwise",
+            "up", "uplifted", "used", "useless", "vacant", "vague", "vain",
+            "valid", "valued", "vengeful", "vexed", "vicious", "victimized",
+            "victorious", "violated", "violent", "vivacious", "vivid", "void",
+            "wacky", "warlike", "warm", "warmhearted", "warned", "wary",
+            "wasted", "weak", "wealthy", "weary", "weird", "welcoming",
+            "whimsical", "whole", "wild", "willful", "wishful", "witty",
+            "worldly", "worried", "worse", "worthy", "wounded", "wrong",
+            "yearning", "yellow", "yielding", "young", "youthful", "zany",
+            "zealous"},
+        ntltss = {"Afghan", "Egyptian", "Alantic", "Albanian", "Algerian",
+            "Virgin Islander", "American Samoan", "Andorran", "Angolan",
+            "Anguillan", "Antarctic", "Antiguan and Barbudan",
+            "Equatorial Guinean", "Argentine; Argentinian", "Armenian",
+            "Aruban", "Azerbaijani", "Ethiopian", "Australian", "Bahamian",
+            "Bahraini", "Bangladeshi", "Barbadian", "Belarusian", "Belgian",
+            "Belizean", "Beninese", "Bermudian", "Bhutanese", "Bolivian",
+            "Bosnian", "Botswanan", "of Bouvet Island", "Brazilian",
+            "of the British Indian Ocean Territory", "British Virgin Islander",
+            "Bruneian", "Bulgarian", "Burkinabe", "Burundian", "Cape Verdean",
+            "Chilean", "Chinese", "of Clipperton Island", "Cook Islander",
+            "Costa Rican", "Ivorian", "Curacaoan", "Danish", "German",
+            "Dominican", "Djiboutian", "Ecuadorian", "Salvadorian; Salvadoran",
+            "Eritrean", "Estonian", "Falklander", "Faroese", "Fijian",
+            "Finnish", "French", "of the French Southern and Antarctic Lands",
+            "Guianese", "Polynesian", "Gabonese", "Gambian", "Georgian",
+            "Ghanaian", "Gibraltarian", "Grenadian", "Greek", "Greenlandic",
+            "Guadeloupean", "Guamanian", "Guatemalan", "Guernsey", "Guinean",
+            "Bissau-Guinean", "Guyanese", "Haitian",
+            "of the Heard Island and McDonald Islands",
+            "of the Holy See/of the Vatican", "Honduran", "Hong Kong Chinese",
+            "Indian", "Indonesian", "Manx", "Iraqi", "Iranian", "Irish",
+            "Icelandic", "Israeli", "Italian", "Jamaican", "Japanese", "Yemeni",
+            "Jersey", "Jordanian", "Caymanian", "Cambodian", "Cameroonian",
+            "Canadian", "Kazakh", "Qatari", "Kenyan", "Kyrgyz", "Kiribatian",
+            "of the Cocos (Keeling) Islands", "Colombian", "Comorian",
+            "Congolese", "Croatian", "Cuban", "Kuwaiti", "Lao; Laotian",
+            "Mesotho", "Latvian", "Lebanese", "Liberian", "Libyan",
+            "Liechtensteiners", "Lithuanian", "Luxembourgish", "Macanese",
+            "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian",
+            "Maltese", "Moroccan", "Marshallese", "Martinican", "Mauritanian",
+            "Mauritian", "Mahoran", "Mexican", "Micronesian", "Moldovan",
+            "Monegasque", "Mongolian", "Montenegrin", "Montserratian",
+            "Mozambican", "Burmese", "Namibian", "Nauruan", "Nepalese",
+            "New Caledonian", "New Zealander", "Nicaraguan", "Dutch",
+            "Nigerien", "Nigerian", "Niuean", "North Korean", "Marian Islander",
+            "Norfolk Islander", "Norwegian", "Omani", "Austrian", "Pakistani",
+            "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan",
+            "Peruvian", "Filipino", "Pitcairner", "Polish", "Portuguese",
+            "Puerto Rican", "Reunionese", "Rwandan; Rwandese", "Romanian",
+            "Russian", "Solomon Islander", "Zambian", "Samoan", "Sammarinese",
+            "Sao Tomean", "Saudi Arabian", "Swedish", "Swiss", "Senegalese",
+            "Serbian", "Seychellois", "Sierra Leonean", "Zimbabwean",
+            "Singaporean", "Slovak", "Slovenian", "Somali; Somalian", "Spanish",
+            "Sri Lankan", "Saint Barthelemian",
+            "of Saint Helena, Ascension and Tristan da Cunha",
+            "of Saint Kitts and Nevis", "Saint Lucian", "of Saint Martin",
+            "of Sint Maarten", "of Saint Pierre and Miquelon",
+            "Vincentian; of Saint Vincent and the Grenadines", "South African",
+            "Sudanese", "of South Georgia and the South Sandwich Islands",
+            "South Korean", "South Sudanese", "Surinamese",
+            "of Svalbard, of Jan Mayen", "Swazi", "Syrian", "Tajik",
+            "Taiwanese", "Tanzanian", "Thai", "East Timorese", "Togolese",
+            "Tokelauan", "Tongan", "of Trinidad and Tobago", "Chadian", "Czech",
+            "Tunisian", "Turkish", "Turkmen", "of the Turks and Caicos Islands",
+            "Tuvaluan", "Ugandan", "Ukrainian", "Hungarian", "Uruguayan",
+            "Uzbek", "Vanuatuan", "Venezuelan", "Emirian",
+            "American; The United States of America", "British", "Vietnamese",
+            "of the Wallis and Futuna Islands", "of Christmas Island",
+            "Sahrawi", "Central African", "Cypriot"},
+        rfnss = {"+92 (337) 705 2471", "+92 (304) 856 3453",
+            "+92 (334) 462 6112", "+92 (318) 133 8724", "+92 (305) 578 5856",
+            "+92 (310) 462 5351", "+92 (312) 731 7316", "+92 (333) 853 8132",
+            "+92 (325) 818 0176", "+92 (307) 531 4378", "+92 (308) 231 0403",
+            "+92 (324) 113 2465", "+92 (308) 350 1245", "+92 (304) 778 1655",
+            "+92 (308) 212 6486", "+92 (337) 003 6218", "+92 (318) 388 5662",
+            "+92 (311) 032 8777", "+92 (317) 457 2031", "+92 (303) 475 4653",
+            "+92 (313) 246 8410", "+92 (308) 215 2441", "+92 (305) 205 3250",
+            "+92 (314) 763 2228", "+92 (323) 267 3234", "+92 (320) 005 8284",
+            "+92 (312) 486 1408", "+92 (313) 556 6782", "+92 (312) 188 8504",
+            "+92 (321) 517 0564", "+92 (300) 215 0018", "+92 (331) 066 8182",
+            "+92 (305) 621 8357", "+92 (312) 303 6683", "+92 (330) 315 6554",
+            "+92 (318) 702 7462", "+92 (307) 083 6477", "+92 (333) 585 3443",
+            "+92 (315) 547 0136", "+92 (327) 660 2848", "+92 (330) 144 4028",
+            "+92 (323) 276 4840", "+92 (327) 738 8321", "+92 (305) 812 7050",
+            "+92 (324) 620 5556", "+92 (310) 681 7606", "+92 (336) 286 8600",
+            "+92 (333) 241 8207", "+92 (322) 527 1520", "+92 (303) 510 4857",
+            "+92 (337) 650 1744", "+92 (321) 331 4144", "+92 (301) 515 4836",
+            "+92 (332) 460 3760", "+92 (333) 168 2174", "+92 (304) 272 1350",
+            "+92 (320) 375 3538", "+92 (336) 516 5606", "+92 (330) 088 7340",
+            "+92 (317) 523 7275", "+92 (314) 128 3831", "+92 (326) 825 7157",
+            "+92 (302) 115 2032", "+92 (336) 362 6505", "+92 (313) 627 6536",
+            "+92 (302) 832 5304", "+92 (300) 131 4753", "+92 (311) 588 0281",
+            "+92 (337) 412 0180", "+92 (321) 601 7236", "+92 (306) 075 0548",
+            "+92 (336) 744 6742", "+92 (335) 684 5677", "+92 (323) 753 4302",
+            "+92 (322) 864 6866", "+92 (301) 077 0316", "+92 (320) 080 7036",
+            "+92 (327) 613 3783", "+92 (334) 138 2771", "+92 (330) 343 8104",
+            "+92 (325) 201 0684", "+92 (337) 775 7221", "+92 (311) 857 5310",
+            "+92 (322) 615 5255", "+92 (310) 731 2176", "+92 (323) 412 7433",
+            "+92 (323) 180 3238", "+92 (318) 704 5111", "+92 (321) 485 2814",
+            "+92 (334) 611 2074", "+92 (314) 343 0881", "+92 (300) 537 3177",
+            "+92 (310) 187 8100", "+92 (320) 878 2262", "+92 (324) 785 1028",
+            "+92 (313) 070 1354", "+92 (318) 204 0637", "+92 (328) 877 2626",
+            "+92 (318) 018 4006", "+92 (306) 104 1463", "+92 (313) 862 3726",
+            "+92 (318) 388 7683", "+92 (330) 738 5730", "+92 (316) 166 6803",
+            "+92 (313) 271 3641", "+92 (307) 718 8285", "+92 (306) 256 2360",
+            "+92 (321) 104 8067", "+92 (300) 884 5048", "+92 (307) 085 3035",
+            "+92 (335) 446 3531", "+92 (322) 647 3410", "+92 (328) 760 2861",
+            "+92 (327) 772 6701", "+92 (300) 211 6834", "+92 (333) 515 7716",
+            "+92 (314) 534 3700", "+92 (330) 078 1205", "+92 (304) 316 1564",
+            "+92 (338) 782 0723", "+92 (318) 250 1765", "+92 (300) 125 7551",
+            "+92 (330) 715 6381", "+92 (306) 366 6305", "+92 (330) 548 0703",
+            "+92 (324) 818 1781", "+92 (334) 057 4635", "+92 (327) 646 3800",
+            "+92 (337) 112 4745", "+92 (334) 312 5800", "+92 (332) 323 4057",
+            "+92 (323) 141 4625", "+92 (321) 725 5403", "+92 (306) 316 7326",
+            "+92 (326) 857 5082", "+92 (311) 733 5287", "+92 (310) 288 5856",
+            "+92 (318) 744 6625", "+92 (302) 038 3437", "+92 (300) 543 5048",
+            "+92 (311) 524 0182", "+92 (310) 517 5147", "+92 (336) 677 5164",
+            "+92 (333) 544 3314", "+92 (301) 158 0516", "+92 (320) 663 3225",
+            "+92 (324) 267 5737", "+92 (334) 134 1455", "+92 (315) 612 3858",
+            "+92 (317) 457 4026", "+92 (310) 135 2187", "+92 (312) 026 5570",
+            "+92 (305) 642 0803", "+92 (318) 188 8582", "+92 (312) 247 0835",
+            "+92 (322) 565 2507", "+92 (322) 604 7714", "+92 (308) 777 5758",
+            "+92 (334) 408 6214", "+92 (303) 463 8153", "+92 (326) 681 5836",
+            "+92 (337) 751 8272", "+92 (301) 361 7477", "+92 (313) 360 1062",
+            "+92 (302) 147 0657", "+92 (310) 071 1840", "+92 (305) 862 3122",
+            "+92 (330) 021 0070", "+92 (302) 746 8830", "+92 (337) 872 0571",
+            "+92 (312) 421 4418", "+92 (326) 767 1476", "+92 (338) 868 0422",
+            "+92 (304) 742 2570", "+92 (322) 603 5815", "+92 (336) 134 4630",
+            "+92 (332) 213 3405", "+92 (328) 770 5337", "+92 (334) 377 0753",
+            "+92 (332) 536 0507", "+92 (333) 577 3367", "+92 (314) 873 0856",
+            "+92 (313) 223 7860", "+92 (333) 858 4750", "+92 (313) 014 7425",
+            "+92 (336) 510 7005", "+92 (306) 682 0351", "+92 (311) 462 1763",
+            "+92 (331) 013 6165", "+92 (305) 633 2143", "+92 (303) 481 7545",
+            "+92 (300) 640 4238", "+92 (307) 154 7560", "+92 (305) 231 6152",
+            "+92 (327) 820 1002", "+92 (300) 384 2010", "+92 (302) 882 2088",
+            "+92 (314) 621 3515", "+92 (305) 243 8763", "+92 (327) 326 3071",
+            "+92 (333) 105 7024", "+92 (332) 544 1170", "+92 (322) 830 3481",
+            "+92 (310) 368 7228", "+92 (312) 034 5444", "+92 (324) 387 8832",
+            "+92 (311) 658 7085", "+92 (333) 471 6534", "+92 (318) 511 2514",
+            "+92 (306) 478 6607", "+92 (324) 702 4308", "+92 (336) 360 1744",
+            "+92 (312) 513 8375", "+92 (334) 686 7874", "+92 (306) 627 6338",
+            "+92 (332) 460 7558", "+92 (316) 817 8703", "+92 (300) 601 1281",
+            "+92 (336) 617 8334", "+92 (335) 780 7855", "+92 (304) 482 7718",
+            "+92 (336) 768 6462", "+92 (311) 105 6765", "+92 (321) 106 0335",
+            "+92 (336) 527 7517", "+92 (317) 505 6640", "+92 (312) 666 2872",
+            "+92 (310) 408 1200", "+92 (310) 146 4768", "+92 (308) 267 4746",
+            "+92 (325) 507 4071", "+92 (327) 543 6632", "+92 (334) 167 4164",
+            "+92 (301) 788 8214", "+92 (337) 445 8301", "+92 (322) 363 8213",
+            "+92 (313) 307 8076", "+92 (302) 147 4655", "+92 (308) 733 2787",
+            "+92 (323) 603 8653", "+92 (326) 063 5886", "+92 (303) 214 8782",
+            "+92 (306) 135 6700", "+92 (331) 764 0407", "+92 (338) 245 1083",
+            "+92 (327) 387 7425", "+92 (334) 518 1635", "+92 (336) 844 1154",
+            "+92 (331) 607 8080", "+92 (317) 847 4253", "+92 (304) 034 4855",
+            "+92 (311) 676 5521", "+92 (328) 162 1822", "+92 (316) 780 8086",
+            "+92 (303) 513 8441", "+92 (324) 777 0074", "+92 (336) 162 6318",
+            "+92 (323) 282 2211", "+92 (325) 712 2150", "+92 (313) 082 2570",
+            "+92 (308) 406 7281", "+92 (333) 735 6170", "+92 (314) 502 5084",
+            "+92 (337) 485 0163", "+92 (325) 380 8500", "+92 (315) 674 0704",
+            "+92 (326) 808 7182", "+92 (338) 760 7774", "+92 (305) 307 2061",
+            "+92 (336) 535 3642", "+92 (302) 727 4036", "+92 (300) 338 0680",
+            "+92 (306) 074 0122", "+92 (325) 560 7146", "+92 (321) 532 6483",
+            "+92 (318) 742 5523", "+92 (322) 160 5367", "+92 (331) 218 5540",
+            "+92 (307) 263 0607", "+92 (328) 740 7545", "+92 (334) 081 0154",
+            "+92 (323) 740 6273", "+92 (306) 168 2305", "+92 (338) 747 0835",
+            "+92 (323) 066 8320", "+92 (338) 438 3555", "+92 (300) 346 0563",
+            "+92 (320) 634 7562", "+92 (330) 316 1011", "+92 (300) 351 7074",
+            "+92 (313) 758 8350", "+92 (313) 727 2310", "+92 (331) 371 0261",
+            "+92 (305) 370 5643", "+92 (314) 475 8816", "+92 (311) 281 3765",
+            "+92 (325) 662 4084", "+92 (310) 033 4327", "+92 (313) 530 7815",
+            "+92 (327) 380 8188", "+92 (308) 070 8470", "+92 (323) 418 6367",
+            "+92 (317) 233 5022", "+92 (301) 516 1310", "+92 (327) 836 1122",
+            "+92 (326) 888 3055", "+92 (317) 648 1424", "+92 (332) 563 1855",
+            "+92 (300) 453 1100", "+92 (336) 810 8634", "+92 (320) 055 6327",
+            "+92 (314) 586 4743", "+92 (301) 106 3066", "+92 (308) 578 0821",
+            "+92 (322) 047 4055", "+92 (310) 354 2234", "+92 (323) 771 8476",
+            "+92 (312) 012 0767", "+92 (320) 455 4883", "+92 (322) 073 0140",
+            "+92 (300) 677 1541", "+92 (330) 210 6046", "+92 (314) 722 4560",
+            "+92 (331) 784 2382", "+92 (303) 273 8846", "+92 (331) 024 2853",
+            "+92 (330) 454 8617", "+92 (317) 757 1833", "+92 (308) 334 3602",
+            "+92 (316) 705 0848", "+92 (327) 174 5515", "+92 (308) 561 1524",
+            "+92 (317) 165 3512", "+92 (334) 458 5500", "+92 (307) 264 5644",
+            "+92 (313) 735 4003", "+92 (300) 554 0808", "+92 (327) 801 3402",
+            "+92 (308) 857 7614", "+92 (304) 041 1408", "+92 (323) 772 7663",
+            "+92 (337) 543 3248", "+92 (335) 017 2204", "+92 (313) 574 0726",
+            "+92 (328) 572 5058", "+92 (311) 426 2002", "+92 (325) 006 8227",
+            "+92 (307) 180 3504", "+92 (301) 370 2756", "+92 (300) 536 2556",
+            "+92 (336) 562 4745", "+92 (335) 456 8361", "+92 (327) 356 5473",
+            "+92 (305) 766 2753", "+92 (336) 010 0246", "+92 (311) 626 7526",
+            "+92 (302) 860 4252", "+92 (322) 084 0662", "+92 (304) 101 0800",
+            "+92 (316) 146 2018", "+92 (320) 235 7701", "+92 (338) 414 8473",
+            "+92 (312) 441 2302", "+92 (306) 424 1504", "+92 (313) 652 7648",
+            "+92 (314) 551 6166", "+92 (302) 804 5450", "+92 (334) 382 6883",
+            "+92 (304) 448 6162", "+92 (331) 813 1683", "+92 (316) 562 4504",
+            "+92 (303) 536 6031", "+92 (338) 772 3065", "+92 (331) 280 5101",
+            "+92 (335) 220 0570", "+92 (317) 402 3502", "+92 (321) 752 0763",
+            "+92 (330) 617 7136", "+92 (302) 083 2232", "+92 (300) 307 4675",
+            "+92 (301) 401 8434", "+92 (303) 265 0173", "+92 (323) 752 2184",
+            "+92 (302) 751 5347", "+92 (320) 764 1510", "+92 (314) 717 2422",
+            "+92 (303) 631 6215", "+92 (334) 583 5180", "+92 (322) 725 4143",
+            "+92 (320) 860 6378", "+92 (323) 756 6850", "+92 (302) 028 7823",
+            "+92 (303) 868 0017", "+92 (316) 316 5303", "+92 (303) 088 8025",
+            "+92 (307) 587 5757", "+92 (301) 256 3062", "+92 (316) 111 1886",
+            "+92 (338) 146 8025", "+92 (312) 847 2754", "+92 (325) 456 0504",
+            "+92 (333) 041 6237", "+92 (315) 411 8384", "+92 (314) 772 4233",
+            "+92 (338) 307 1476", "+92 (300) 781 3662", "+92 (324) 150 3080",
+            "+92 (311) 136 5282", "+92 (326) 672 2210", "+92 (323) 076 1370",
+            "+92 (305) 210 4504", "+92 (323) 834 8236", "+92 (302) 425 4403",
+            "+92 (318) 336 1325", "+92 (335) 340 1847", "+92 (316) 165 7848",
+            "+92 (303) 121 8036", "+92 (322) 014 0663", "+92 (303) 178 6580",
+            "+92 (315) 604 1032", "+92 (318) 777 7127", "+92 (303) 801 0731",
+            "+92 (324) 874 4252", "+92 (323) 772 5020", "+92 (324) 123 5511",
+            "+92 (324) 361 3683", "+92 (303) 001 5461", "+92 (304) 682 8504",
+            "+92 (332) 562 5224", "+92 (304) 262 8807", "+92 (305) 314 8151",
+            "+92 (331) 254 1780", "+92 (307) 577 5812", "+92 (301) 008 5052",
+            "+92 (337) 183 3788", "+92 (330) 357 2760", "+92 (315) 167 5753",
+            "+92 (322) 267 3232", "+92 (313) 075 3123", "+92 (338) 477 0012",
+            "+92 (317) 130 5726", "+92 (326) 281 4226", "+92 (333) 568 8062",
+            "+92 (317) 422 1660", "+92 (301) 720 8626", "+92 (302) 410 5526",
+            "+92 (326) 844 4805", "+92 (301) 723 3603", "+92 (328) 830 4776",
+            "+92 (305) 488 1204", "+92 (332) 407 0326", "+92 (301) 747 4714",
+            "+92 (333) 112 8873", "+92 (308) 464 8353", "+92 (322) 377 1834",
+            "+92 (323) 112 7256", "+92 (302) 057 2273", "+92 (328) 111 4086",
+            "+92 (314) 754 5812", "+92 (337) 065 0672", "+92 (327) 304 5525",
+            "+92 (331) 706 7060", "+92 (326) 842 0557", "+92 (318) 757 5610",
+            "+92 (322) 262 7500", "+92 (308) 487 4450", "+92 (310) 325 5215",
+            "+92 (315) 273 2531", "+92 (328) 525 4201", "+92 (301) 268 2380",
+            "+92 (303) 255 6243", "+92 (318) 176 6448", "+92 (300) 530 5801",
+            "+92 (318) 774 2284", "+92 (317) 240 7745", "+92 (303) 676 6783",
+            "+92 (330) 717 1205", "+92 (336) 737 4067", "+92 (322) 524 6531",
+            "+92 (303) 405 3577", "+92 (322) 758 4304", "+92 (305) 837 4377",
+            "+92 (323) 655 6411", "+92 (312) 658 0070", "+92 (324) 535 2735",
+            "+92 (334) 527 6220", "+92 (302) 445 5428", "+92 (317) 086 7076",
+            "+92 (316) 341 8151", "+92 (317) 112 5715", "+92 (314) 740 6752",
+            "+92 (304) 155 0421", "+92 (306) 061 8135", "+92 (324) 760 5853",
+            "+92 (326) 385 2458", "+92 (338) 644 4116", "+92 (312) 467 0330",
+            "+92 (332) 164 8136", "+92 (332) 338 6288", "+92 (305) 176 7874",
+            "+92 (337) 135 0287", "+92 (327) 837 2660", "+92 (334) 634 6377",
+            "+92 (334) 863 5246", "+92 (315) 478 0036", "+92 (302) 148 0766",
+            "+92 (330) 642 7017", "+92 (333) 756 1563", "+92 (304) 270 5240",
+            "+92 (327) 345 3262", "+92 (315) 165 5068", "+92 (312) 675 3868",
+            "+92 (328) 868 7680", "+92 (304) 473 8118", "+92 (318) 415 3416",
+            "+92 (311) 881 5740", "+92 (313) 302 7407", "+92 (307) 738 4570",
+            "+92 (311) 541 8247", "+92 (300) 644 0706", "+92 (334) 708 5770",
+            "+92 (301) 442 4742", "+92 (313) 753 5365", "+92 (315) 651 4668",
+            "+92 (316) 616 6408", "+92 (334) 112 6355", "+92 (324) 422 7760",
+            "+92 (336) 786 4805", "+92 (338) 860 4180", "+92 (317) 404 1136",
+            "+92 (333) 506 7452", "+92 (331) 885 5308", "+92 (327) 883 1783",
+            "+92 (306) 331 1388", "+92 (301) 421 3682", "+92 (318) 025 1434",
+            "+92 (333) 122 3674", "+92 (314) 657 6471", "+92 (306) 180 2386",
+            "+92 (315) 572 5133", "+92 (311) 620 3644", "+92 (318) 451 6657",
+            "+92 (327) 868 4180", "+92 (327) 315 1422", "+92 (325) 655 6065",
+            "+92 (312) 653 7064", "+92 (324) 168 2330", "+92 (325) 233 0561",
+            "+92 (330) 726 8615", "+92 (316) 076 2140", "+92 (325) 782 5605",
+            "+92 (332) 652 6485", "+92 (322) 807 1788", "+92 (305) 656 1200",
+            "+92 (317) 514 6875", "+92 (313) 577 4641", "+92 (325) 802 4317",
+            "+92 (323) 530 4064", "+92 (316) 265 6040", "+92 (331) 882 5661",
+            "+92 (312) 652 6383", "+92 (307) 804 3032", "+92 (334) 753 7100",
+            "+92 (317) 787 6787", "+92 (312) 567 6467", "+92 (300) 210 0430",
+            "+92 (325) 313 2488", "+92 (311) 284 7758", "+92 (325) 440 7610",
+            "+92 (336) 136 3610", "+92 (302) 021 3846", "+92 (310) 878 6343",
+            "+92 (331) 727 3114", "+92 (306) 350 5763", "+92 (316) 622 0084",
+            "+92 (322) 743 7554", "+92 (307) 757 3552", "+92 (325) 104 4534",
+            "+92 (306) 747 0562", "+92 (330) 741 7754", "+92 (321) 513 6244",
+            "+92 (304) 678 1280", "+92 (308) 018 3212", "+92 (311) 238 3186",
+            "+92 (318) 450 4783", "+92 (302) 362 2165", "+92 (323) 576 3067",
+            "+92 (328) 006 8543", "+92 (318) 306 5310", "+92 (326) 533 7647",
+            "+92 (330) 845 8535", "+92 (325) 217 0370", "+92 (336) 746 1107",
+            "+92 (312) 624 5734", "+92 (306) 286 0504", "+92 (301) 063 5608",
+            "+92 (325) 641 3545", "+92 (311) 785 5360", "+92 (331) 808 5821",
+            "+92 (331) 257 3212", "+92 (320) 871 1021", "+92 (313) 054 6555",
+            "+92 (327) 133 2437", "+92 (336) 210 8837", "+92 (301) 062 0603",
+            "+92 (308) 673 3162", "+92 (327) 547 5486", "+92 (317) 571 8081",
+            "+92 (303) 517 0081", "+92 (326) 065 5272", "+92 (335) 261 7380",
+            "+92 (335) 346 1654", "+92 (328) 571 1571", "+92 (300) 125 7047",
+            "+92 (320) 712 7327", "+92 (332) 564 7345", "+92 (322) 256 1152",
+            "+92 (320) 830 7246", "+92 (300) 806 2421", "+92 (301) 434 7814",
+            "+92 (314) 076 8230", "+92 (325) 168 2023", "+92 (336) 466 6411",
+            "+92 (335) 470 7667", "+92 (334) 447 2776", "+92 (302) 708 3706",
+            "+92 (302) 852 5785", "+92 (336) 522 8808", "+92 (314) 180 7243",
+            "+92 (308) 470 5136", "+92 (333) 084 8324", "+92 (330) 437 0843",
+            "+92 (328) 810 1775", "+92 (313) 708 1215", "+92 (317) 756 8871",
+            "+92 (317) 232 8002", "+92 (306) 024 7223", "+92 (338) 241 8280",
+            "+92 (323) 870 0517", "+92 (336) 064 0476", "+92 (318) 616 5257",
+            "+92 (301) 043 1286", "+92 (332) 178 6454", "+92 (318) 322 5100",
+            "+92 (318) 184 4084", "+92 (334) 768 8286", "+92 (312) 626 6142",
+            "+92 (333) 326 6448", "+92 (318) 521 5065", "+92 (322) 381 5162",
+            "+92 (327) 056 2443", "+92 (316) 384 0387", "+92 (331) 157 8358",
+            "+92 (333) 751 6550", "+92 (305) 563 3313", "+92 (324) 220 1570",
+            "+92 (321) 057 0564", "+92 (302) 853 8342", "+92 (325) 002 4156",
+            "+92 (322) 274 6885", "+92 (308) 574 2308", "+92 (303) 782 2721",
+            "+92 (313) 267 8741", "+92 (327) 877 4073", "+92 (321) 831 3254",
+            "+92 (318) 037 4838", "+92 (317) 254 0628", "+92 (331) 344 1636",
+            "+92 (332) 273 5453", "+92 (318) 161 8138", "+92 (338) 315 8803",
+            "+92 (330) 378 8120", "+92 (327) 125 6506", "+92 (338) 631 4447",
+            "+92 (310) 504 1341", "+92 (337) 303 1074", "+92 (303) 416 3713",
+            "+92 (322) 821 7811", "+92 (331) 872 3252", "+92 (318) 604 6676",
+            "+92 (316) 383 1662", "+92 (317) 485 6302", "+92 (313) 715 3725",
+            "+92 (336) 035 3047", "+92 (310) 101 4524", "+92 (305) 463 8322",
+            "+92 (305) 366 1783", "+92 (325) 388 5600", "+92 (325) 746 6638",
+            "+92 (322) 833 8176", "+92 (305) 356 3327", "+92 (311) 560 5884",
+            "+92 (338) 171 4428", "+92 (305) 340 2644", "+92 (324) 147 0156",
+            "+92 (333) 420 5426", "+92 (318) 165 2608", "+92 (326) 184 5407",
+            "+92 (316) 111 8046", "+92 (314) 624 7880", "+92 (313) 084 7725",
+            "+92 (328) 063 2444", "+92 (334) 618 7113", "+92 (337) 276 0888",
+            "+92 (327) 528 8026", "+92 (312) 310 0130", "+92 (317) 721 0874",
+            "+92 (308) 847 1172", "+92 (300) 428 8126", "+92 (302) 077 3722",
+            "+92 (314) 325 2543", "+92 (313) 506 1302", "+92 (305) 122 3737",
+            "+92 (302) 752 6357", "+92 (324) 022 6028", "+92 (338) 222 7078",
+            "+92 (320) 213 7517", "+92 (331) 213 8817", "+92 (310) 068 5358",
+            "+92 (338) 620 5566", "+92 (335) 626 8240", "+92 (315) 652 1817",
+            "+92 (332) 846 6577", "+92 (335) 885 7711", "+92 (317) 887 6852",
+            "+92 (306) 000 3508", "+92 (302) 874 1686", "+92 (314) 762 2085",
+            "+92 (337) 844 7485", "+92 (330) 777 1026", "+92 (336) 716 4556",
+            "+92 (301) 108 6281", "+92 (335) 254 1552", "+92 (311) 054 3172",
+            "+92 (333) 552 0287", "+92 (303) 186 8664", "+92 (325) 041 6053",
+            "+92 (301) 514 7068", "+92 (336) 823 2382", "+92 (307) 353 0800",
+            "+92 (333) 704 3385", "+92 (310) 437 4860", "+92 (321) 585 5306",
+            "+92 (317) 407 7052", "+92 (314) 302 1804", "+92 (323) 408 8585",
+            "+92 (335) 354 4567", "+92 (301) 376 5687", "+92 (326) 467 4706",
+            "+92 (301) 821 2724", "+92 (304) 034 4315", "+92 (335) 716 3762",
+            "+92 (308) 133 5733", "+92 (337) 284 0511", "+92 (324) 341 2386",
+            "+92 (328) 235 4226", "+92 (316) 126 8582", "+92 (302) 242 2400",
+            "+92 (318) 340 6838", "+92 (322) 256 2733", "+92 (335) 374 3860",
+            "+92 (334) 715 5133", "+92 (306) 317 2016", "+92 (320) 828 8337",
+            "+92 (328) 534 2567", "+92 (326) 617 6452", "+92 (314) 720 4233",
+            "+92 (317) 023 4610", "+92 (314) 713 7561", "+92 (328) 222 1817",
+            "+92 (335) 283 2364", "+92 (332) 363 6001", "+92 (326) 540 1332",
+            "+92 (316) 624 0821", "+92 (336) 052 4752", "+92 (310) 514 6312",
+            "+92 (323) 112 3030", "+92 (300) 263 2664", "+92 (328) 037 1480",
+            "+92 (317) 538 0664", "+92 (336) 631 3570", "+92 (303) 410 4255",
+            "+92 (332) 450 1286", "+92 (310) 537 6050", "+92 (300) 200 1104",
+            "+92 (336) 175 6245", "+92 (301) 852 4125", "+92 (334) 276 6570",
+            "+92 (337) 673 8378", "+92 (306) 041 1858", "+92 (325) 443 2745",
+            "+92 (310) 277 2755", "+92 (330) 161 2625", "+92 (320) 364 2646",
+            "+92 (337) 048 3076", "+92 (311) 565 0688", "+92 (303) 445 1032",
+            "+92 (327) 263 6168", "+92 (324) 784 1040", "+92 (320) 572 0418",
+            "+92 (333) 482 1875", "+92 (338) 544 5218", "+92 (306) 618 5530",
+            "+92 (320) 000 2431", "+92 (328) 346 4248", "+92 (332) 241 7422",
+            "+92 (305) 440 0012", "+92 (324) 451 2733", "+92 (318) 255 4867",
+            "+92 (302) 738 4437", "+92 (332) 427 0108", "+92 (321) 300 0483",
+            "+92 (302) 680 1783", "+92 (313) 533 7440", "+92 (333) 605 7573",
+            "+92 (322) 606 4167", "+92 (334) 818 6024", "+92 (333) 053 6064",
+            "+92 (333) 245 4261", "+92 (300) 423 7811", "+92 (321) 128 1720",
+            "+92 (328) 265 3640", "+92 (337) 888 3112", "+92 (326) 761 5407",
+            "+92 (320) 155 7256", "+92 (320) 404 0628", "+92 (333) 180 1576",
+            "+92 (318) 046 1405", "+92 (335) 167 6683", "+92 (317) 007 1388",
+            "+92 (337) 540 5800", "+92 (333) 043 8586", "+92 (322) 788 8264",
+            "+92 (308) 307 2054", "+92 (315) 011 7121", "+92 (333) 822 8314",
+            "+92 (337) 660 5386", "+92 (332) 535 5188", "+92 (333) 328 5115",
+            "+92 (337) 228 5066", "+92 (323) 412 4062", "+92 (314) 134 6276",
+            "+92 (327) 507 2674", "+92 (307) 271 8722", "+92 (325) 348 0843",
+            "+92 (325) 380 8821", "+92 (335) 070 7356", "+92 (330) 416 5243",
+            "+92 (334) 022 5371", "+92 (324) 703 3150", "+92 (310) 430 7387",
+            "+92 (336) 308 8663", "+92 (311) 116 3886", "+92 (338) 572 2043",
+            "+92 (326) 715 5632", "+92 (316) 287 4021", "+92 (314) 304 1511",
+            "+92 (333) 150 1405", "+92 (318) 774 6731", "+92 (322) 810 2760",
+            "+92 (304) 038 5777", "+92 (312) 210 7703", "+92 (321) 074 6620",
+            "+92 (316) 381 0633", "+92 (314) 258 1186", "+92 (338) 100 7238",
+            "+92 (320) 556 5551", "+92 (316) 306 2785", "+92 (332) 221 1403",
+            "+92 (324) 626 2883", "+92 (316) 246 2304", "+92 (332) 648 0665",
+            "+92 (332) 243 1842", "+92 (308) 486 6277", "+92 (315) 238 6624",
+            "+92 (315) 357 2316", "+92 (305) 775 7086", "+92 (327) 373 1063",
+            "+92 (328) 247 3277", "+92 (318) 154 2306", "+92 (325) 018 0763",
+            "+92 (336) 606 1040", "+92 (326) 403 0727", "+92 (315) 250 5275",
+            "+92 (308) 066 1265", "+92 (333) 568 1424", "+92 (300) 786 2857",
+            "+92 (323) 435 1550", "+92 (333) 727 8435", "+92 (310) 881 5112",
+            "+92 (307) 882 5312", "+92 (302) 445 8778", "+92 (311) 800 0008",
+            "+92 (317) 640 7531", "+92 (333) 237 6177", "+92 (318) 464 0016",
+            "+92 (305) 006 1547", "+92 (322) 875 7103", "+92 (301) 556 0062",
+            "+92 (336) 871 6340", "+92 (322) 065 3615", "+92 (316) 823 7423",
+            "+92 (318) 444 7450", "+92 (303) 666 6444", "+92 (336) 070 6183",
+            "+92 (320) 016 2208", "+92 (322) 622 0766", "+92 (333) 537 5127",
+            "+92 (330) 377 4220", "+92 (313) 405 2686", "+92 (323) 406 6056",
+            "+92 (300) 037 8734", "+92 (305) 848 4165", "+92 (321) 704 8336",
+            "+92 (303) 182 0734", "+92 (316) 225 5822", "+92 (307) 046 6381",
+            "+92 (337) 788 2286", "+92 (338) 042 2458", "+92 (336) 778 4674",
+            "+92 (306) 203 7522", "+92 (315) 370 0243", "+92 (300) 038 1033",
+            "+92 (322) 083 3875", "+92 (316) 148 6546", "+92 (300) 668 2808",
+            "+92 (323) 430 2560", "+92 (320) 414 7440", "+92 (300) 800 6458",
+            "+92 (314) 470 1187", "+92 (325) 327 8826", "+92 (327) 547 4614",
+            "+92 (337) 774 7418", "+92 (314) 011 6573", "+92 (306) 580 1362",
+            "+92 (337) 131 8866", "+92 (312) 276 3010", "+92 (328) 753 2824",
+            "+92 (305) 273 1681", "+92 (338) 886 4573", "+92 (314) 136 2268",
+            "+92 (323) 380 3355", "+92 (314) 824 8845", "+92 (334) 431 2253",
+            "+92 (307) 156 7677", "+92 (333) 117 0783", "+92 (331) 013 5573",
+            "+92 (300) 870 5171", "+92 (338) 028 5733", "+92 (335) 118 7133",
+            "+92 (312) 463 5666", "+92 (331) 440 6131", "+92 (316) 487 3805",
+            "+92 (326) 624 0734", "+92 (314) 863 7845", "+92 (316) 181 2687",
+            "+92 (301) 835 2063", "+92 (331) 882 5684", "+92 (333) 110 8655",
+            "+92 (305) 583 0513", "+92 (301) 864 0378", "+92 (307) 834 2234",
+            "+92 (302) 288 0455", "+92 (316) 843 1038", "+92 (304) 765 1721",
+            "+92 (321) 547 6215", "+92 (312) 507 5302", "+92 (338) 832 2811",
+            "+92 (314) 575 4485", "+92 (314) 045 7821", "+92 (313) 330 7751",
+            "+92 (313) 458 1023", "+92 (312) 237 1866", "+92 (328) 158 5722",
+            "+92 (301) 663 6682", "+92 (313) 044 2852", "+92 (331) 108 2005",
+            "+92 (331) 230 4222", "+92 (323) 437 2121", "+92 (324) 727 5827",
+            "+92 (303) 356 2517", "+92 (333) 284 0116", "+92 (300) 821 0324",
+            "+92 (310) 552 0533", "+92 (334) 616 7264", "+92 (325) 056 4214",
+            "+92 (334) 353 3453", "+92 (338) 185 7472", "+92 (327) 830 4315",
+            "+92 (325) 183 3332", "+92 (301) 802 7623", "+92 (333) 257 3838",
+            "+92 (317) 502 8321", "+92 (300) 226 5635", "+92 (308) 535 3013",
+            "+92 (313) 472 6065", "+92 (307) 016 1843", "+92 (301) 661 1410",
+            "+92 (331) 543 0253", "+92 (328) 284 0678"},
+        rgynss = {"Ahmed Raza", "Bilal Tariq", "Usman Siddiqi", "Omar Farooq",
+            "Waleed Kamal", "Talha Iqbal", "Faisal Latif", "Hassan Jameel",
+            "Adnan Bashir", "Kashif Rauf", "Imran Saeed", "Adeel Qureshi",
+            "Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid", "Faizan Khalid",
+            "Hammad Zubair", "Naveed Aslam", "Waqar Mehmood", "Sarmad Sheikh",
+            "Tariq Anwar", "Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain",
+            "Mudassir Younas", "Jawad Hamid", "Ammar Khalil", "Rizwan Waheed",
+            "Hasnain Saleem", "Basit Jamal", "Sheraz Ahmed", "Umer Shahbaz",
+            "Arsalan Hashim", "Raheel Sultan", "Fahad Zaman", "Sajid Irfan",
+            "Owais Rauf", "Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem",
+            "Tauseef Haroon", "Murtaza Shah", "Maaz Asif", "Samiullah Arif",
+            "Nabeel Qamar", "Taimoor Rauf", "Atif Nawaz", "Hashir Siddiqui",
+            "Zubair Imran", "Abrar Hussain", "Farhan Waseem", "Umair Tariq",
+            "Arif Ali", "Shayan Latif", "Irfan Khalid", "Hamza Masood",
+            "Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed",
+            "Mudassir Kamal", "Haris Younas", "Noman Waqar", "Waseem Abbas",
+            "Faizan Rauf", "Mubashir Jamil", "Sohail Shahzad", "Ubaid Latif",
+            "Sikandar Saeed", "Hasham Khalid", "Farrukh Hussain",
+            "Zain Qureshi", "Arslan Abbas", "Muzammil Tariq", "Usama Rasheed",
+            "Adeel Sultan", "Taha Iqbal", "Kamil Arshad", "Danish Rauf",
+            "Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar", "Omer Siddiqi",
+            "Dawood Mushtaq", "Ammar Waheed", "Fasih Shah", "Adnan Khalil",
+            "Imran Waseem", "Waleed Anwar", "Yasir Rauf", "Arham Bashir",
+            "Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain",
+            "Hassan Qamar", "Usman Kamal", "Tariq Yousaf", "Owais Farooq",
+            "Raheel Bashir", "Waqas Khalid", "Faisal Shah", "Bilal Latif",
+            "Zeeshan Abbas", "Faizan Hussain", "Mudassir Farooq",
+            "Kashif Khalid", "Abrar Tariq", "Umair Siddiqi", "Hamza Jameel",
+            "Nabeel Usman", "Khalil Laghari", "Murtaza Waseem", "Sajid Waheed",
+            "Noman Riaz", "Hashir Hussain", "Sheraz Rauf", "Ahmed Tariq",
+            "Atif Bashir", "Omar Siddiqui", "Irfan Khalil", "Raheel Jamil",
+            "Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran", "Waleed Hussain",
+            "Taimoor Abbas", "Mudassir Waheed", "Umer Khalid", "Khurram Anwar",
+            "Junaid Bashir", "Shayan Rauf", "Ahmed Hanif", "Bilal Hussain",
+            "Umair Riaz", "Zubair Khalid", "Adeel Haroon", "Sajid Qamar",
+            "Faizan Latif", "Hammad Saleem", "Shoaib Tariq", "Noman Anwar",
+            "Fahad Hussain", "Hashim Waseem", "Hamza Abbas", "Arsalan Khalid",
+            "Taha Rasheed", "Usama Farooq", "Sarim Bashir", "Khizar Waheed",
+            "Mudassir Khalid", "Waqas Rauf", "Tariq Hussain", "Jawad Siddiqui",
+            "Shehryar Abbas", "Naveed Tariq", "Muzammil Jamil",
+            "Zeeshan Khalid", "Atif Hussain", "Sarmad Waqar", "Shoaib Khalid",
+            "Ahmed Qureshi", "Raheel Abbas", "Hammad Riaz", "Sheraz Bashir",
+            "Danish Khalid", "Adil Waheed", "Hashir Tariq", "Faizan Waseem",
+            "Usman Abbas", "Khurram Latif", "Owais Siddiqui",
+            "Mudassir Hussain", "Tauseef Khalid", "Farrukh Waseem",
+            "Umer Saleem", "Hamza Rauf", "Shoaib Kamran", "Bilal Abbas",
+            "Sajid Tariq", "Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid",
+            "Ahmed Farooq", "Atif Khalid", "Irfan Waseem", "Junaid Tariq",
+            "Umair Saleem", "Arsalan Hussain", "Waleed Abbas", "Adnan Waseem",
+            "Sheraz Khalid", "Mudassir Abbas", "Shoaib Rauf", "Omar Hussain",
+            "Raheel Khalid", "Hammad Waseem", "Waseem Farooq", "Hasham Tariq",
+            "Faisal Khalid", "Kashif Abbas", "Tauseef Abbas", "Hamza Saleem",
+            "Zeeshan Waseem", "Sarmad Hussain", "Bilal Khalid", "Umair Abbas",
+            "Mudassir Riaz", "Adil Khalid", "Ahmed Abbas", "Owais Hussain"},
+        rglnss = {"Ayesha Waleed", "Fatima Kamal", "Hira Latif", "Sana Farooq",
+            "Mahnoor Tariq", "Faiza Tehseem", "Fozia Mehshar", "Iqra Siddiqui",
+            "Laiba Aslam", "Anum Riaz", "Saba Kiani", "Hafsa Saeed",
+            "Sidra Hashmi", "Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel",
+            "Rida Abbas", "Nimra Waseem", "Huma Tariq", "Samina Khalid",
+            "Zeenat Rauf", "Amna Waheed", "Neelam Hashmi", "Aiman Qamar",
+            "Romaisa Hussain", "Fareeda Asif", "Sania Anwar", "Humaisa Khalil",
+            "Asma Riaz", "Sadia Kamran", "Sehrish Waseem", "Uzma Tariq",
+            "Mehwish Latif", "Hina Abbas", "Areeba Waqar", "Tanzeela Jafar",
+            "Anila Saleem", "Mahira Umer", "Bushra Nadeem", "Zoya Mehmood",
+            "Nida Hashim", "Sumaira Yasir", "Mahnoor Hussain", "Komal Saeed",
+            "Laiba Waseem", "Amina Abbas", "Rida Jameel", "Saeeka Haroon",
+            "Zainab Farooq", "Fatima Hussain", "Hafsa Mehmood", "Minal Khawar",
+            "Yumna Tariq", "Ayeza Barkat", "Asia Farhan", "Kinza Jamal",
+            "Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed", "Hira Khalid",
+            "Amna Riaz", "Iqra Farooq", "Anum Abbas", "Mehwish Iqrar",
+            "Sumaiya Tariq", "Romaisa Khalil", "Faiza Waseem", "Bushra Farooq",
+            "Sadia Abbas", "Hiba Hussain", "Afshan Siddiqui", "Sana Basit",
+            "Areeba Khalid", "Maira Waseem", "Nimra Hussain", "Sehrish Saleem",
+            "Amna Jameel", "Zoya Khalid", "Mehreen Tariq", "Aiman Abbas",
+            "Komal Riaz", "Hira Saleem", "Palwasha Moazzam", "Laiba Nayyar",
+            "Minahal Tahir", "Mehwish Shuja", "Javeria Feroze", "Zara Munawwar",
+            "Fiza Jatoi", "Fatima Riaz", "Zainab Alvi", "Tanzeela Abbas",
+            "Kiran Waseem", "Ayesha Khalid", "Samina Hussain", "Sadia Waseem",
+            "Bisma Majeed", "Areeba Latif", "Sehrish Tariq", "Hafsa Waseem",
+            "Hina Tariq", "Zoya Saleem", "Maham Khalid", "Muneera Rauf",
+            "Bushra Tariq", "Zeenat Hussain", "Areeba Saleem", "Kainat Rizvi",
+            "Sumaiya Hussain", "Sadia Khalid", "Mahnoor Irshad",
+            "Fatima Jameel", "Sakina Hilaj", "Iqra Danyal", "Hina Riaz",
+            "Neha Saleem", "Mehwish Khalid", "Asma Waseem", "Romaisa Tariq",
+            "Laiba Khalid", "Komal Noor", "Bushra Waseem", "Zainab Tariq",
+            "Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad", "Komal Hussain",
+            "Maryam Raza", "Romaisa Haroon", "Mehwish Abbas", "Maham Riaz",
+            "Sumaiya Khalid", "Anila Anjum", "Areeba Hussain"},
+        areas_in_karachi = {"Askari 1", "Askari 2", "Askari 3", "Askari 4",
+            "Askari 5", "Bahria Town - Precinct 1", "Bahria Town - Precinct 10",
+            "Bahria Town - Precinct 11", "Bahria Town - Precinct 12",
+            "Bahria Town - Precinct 13", "Bahria Town - Precinct 14",
+            "Bahria Town - Precinct 15", "Bahria Town - Precinct 16",
+            "Bahria Town - Precinct 17", "Bahria Town - Precinct 18",
+            "Bahria Town - Precinct 19", "Bahria Town - Precinct 2",
+            "Bahria Town - Precinct 20", "Bahria Town - Precinct 21",
+            "Bahria Town - Precinct 22", "Bahria Town - Precinct 23",
+            "Bahria Town - Precinct 24", "Bahria Town - Precinct 25",
+            "Bahria Town - Precinct 26", "Bahria Town - Precinct 27",
+            "Bahria Town - Precinct 28", "Bahria Town - Precinct 29",
+            "Bahria Town - Precinct 3", "Bahria Town - Precinct 30",
+            "Bahria Town - Precinct 31", "Bahria Town - Precinct 32",
+            "Bahria Town - Precinct 33", "Bahria Town - Precinct 4",
+            "Bahria Town - Precinct 5", "Bahria Town - Precinct 6",
+            "Bahria Town - Precinct 7", "Bahria Town - Precinct 8",
+            "Bahria Town - Precinct 9", "BufferZone - Sector 15 A 1",
+            "BufferZone - Sector 15 A 2", "BufferZone - Sector 15 A 3",
+            "BufferZone - Sector 15 A 4", "BufferZone - Sector 15 A 5",
+            "BufferZone - Sector 15 B", "BufferZone - Sector 16 A",
+            "BufferZone - Sector 16 B", "Cantonment", "Clifton - Block 1",
+            "Clifton - Block 2", "Clifton - Block 3", "Clifton - Block 4",
+            "Clifton - Block 5", "Clifton - Block 6", "Clifton - Block 7",
+            "Clifton - Block 8", "Clifton - Block 9", "Clifton - Kehkashan",
+            "DHA - Phase 1", "DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4",
+            "DHA - Phase 5", "DHA - Phase 6", "DHA - Phase 7", "DHA - Phase 8",
+            "DHA - Phase 9", "F.B Area - Azizabad", "F.B Area - B1 Area",
+            "F.B Area - B Area", "F.B Area - Block 1", "F.B Area - Block 10",
+            "F.B Area - Block 11", "F.B Area - Block 12", "F.B Area - Block 13",
+            "F.B Area - Block 14", "F.B Area - Block 15", "F.B Area - Block 16",
+            "F.B Area - Block 17", "F.B Area - Block 18", "F.B Area - Block 19",
+            "F.B Area - Block 2", "F.B Area - Block 20", "F.B Area - Block 21",
+            "F.B Area - Block 22", "F.B Area - Block 3", "F.B Area - Block 4",
+            "F.B Area - Block 5", "F.B Area - Block 6", "F.C Area - C1 Area",
+            "F.C Area - C Area", "Garden - Garden East", "Garden - Garden West",
+            "Garden - Soldier Bazaar", "Gulistan-e-Johar - Block 1",
+            "Gulistan-e-Johar - Block 10", "Gulistan-e-Johar - Block 11",
+            "Gulistan-e-Johar - Block 12", "Gulistan-e-Johar - Block 13",
+            "Gulistan-e-Johar - Block 14", "Gulistan-e-Johar - Block 15",
+            "Gulistan-e-Johar - Block 16", "Gulistan-e-Johar - Block 17",
+            "Gulistan-e-Johar - Block 18", "Gulistan-e-Johar - Block 19",
+            "Gulistan-e-Johar - Block 2", "Gulistan-e-Johar - Block 20",
+            "Gulistan-e-Johar - Block 3", "Gulistan-e-Johar - Block 4",
+            "Gulistan-e-Johar - Block 5", "Gulistan-e-Johar - Block 6",
+            "Gulistan-e-Johar - Block 7", "Gulistan-e-Johar - Block 8",
+            "Gulistan-e-Johar - Block 9", "Gulshan-e-Hadeed - Data Nagar",
+            "Gulshan-e-Hadeed - EIDU Goth",
+            "Gulshan-e-Hadeed - Gulshan-e-Mauzzam",
+            "Gulshan-e-Hadeed - Gulshan-e-Rehman",
+            "Gulshan-e-Hadeed - Mehran Road", "Gulshan-e-Hadeed - Phase 1",
+            "Gulshan-e-Hadeed - Phase 2", "Gulshan-e-Hadeed - Phase 3",
+            "Gulshan-e-Hadeed - PTCL Satellite Station",
+            "Gulshan-e-Hadeed - Shah Latif Town",
+            "Gulshan-e-Hadeed - Shahnawaz Goth", "Gulshan-e-Hadeed - Shah Town",
+            "Gulshan-e-Hadeed - Steel Town", "Gulshan-e-Hadeed - TCP XXXXXowns",
+            "Gulshan-e-Iqbal - Adamjee Nagar", "Gulshan-e-Iqbal - Block 1",
+            "Gulshan-e-Iqbal - Block 10", "Gulshan-e-Iqbal - Block 11",
+            "Gulshan-e-Iqbal - Block 12", "Gulshan-e-Iqbal - Block 13",
+            "Gulshan-e-Iqbal - Block 14", "Gulshan-e-Iqbal - Block 15",
+            "Gulshan-e-Iqbal - Block 16", "Gulshan-e-Iqbal - Block 17",
+            "Gulshan-e-Iqbal - Block 18", "Gulshan-e-Iqbal - Block 19",
+            "Gulshan-e-Iqbal - Block 2", "Gulshan-e-Iqbal - Block 3",
+            "Gulshan-e-Iqbal - Block 4", "Gulshan-e-Iqbal - Block 5",
+            "Gulshan-e-Iqbal - Block 6", "Gulshan-e-Iqbal - Block 7",
+            "Gulshan-e-Iqbal - Block 8", "Gulshan-e-Iqbal - Block 9",
+            "Gulshan-e-Iqbal - Civic Center", "Gulshan-e-Iqbal - Dhoraji",
+            "Korangi - Abdullah Shah Noorani Pahari Colony",
+            "Korangi - Korangi Industrial Area", "Korangi - Nasir Colony",
+            "Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town",
+            "Korangi - Zia Colony", "Landhi - Alflah Housing Society",
+            "Landhi - Awami Colony", "Landhi - Bagh-e-Korangi",
+            "Landhi - Bakhtawar Goth", "Landhi - Barmi Colony",
+            "Landhi - Bhutto Nagar", "Landhi - Future Colony",
+            "Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth",
+            "Landhi - Labour Colony", "Landhi - Landhi Industrial Area",
+            "Landhi - Muslimabad Colony", "Landhi - Muzaffarabad Colony",
+            "Landhi - Punjab Town", "Landhi - Qasim Town",
+            "Landhi - Sadat Colony", "Landhi - Shah Khalid Colony",
+            "Landhi - Sharafi Goth", "Landhi - Zamanabad",
+            "Liaquatabad - Block 1", "Liaquatabad - Block 10",
+            "Liaquatabad - Block 2", "Liaquatabad - Block 3",
+            "Liaquatabad - Block 4", "Liaquatabad - Block 5",
+            "Liaquatabad - Block 6", "Liaquatabad - Block 7",
+            "Liaquatabad - Block 8", "Liaquatabad - Block 9",
+            "Malir - Malir Halt", "Malir - Malir Cantt", "Nazimabad - Block 1",
+            "Nazimabad - Block 2", "Nazimabad - Block 3", "Nazimabad - Block 4",
+            "Nazimabad - Block 5", "North Karachi - Sector 10",
+            "North Karachi - Sector 11 - A", "North Karachi - Sector 11 - B",
+            "North Karachi - Sector 11 - C 1",
+            "North Karachi - Sector 11 - C 2",
+            "North Karachi - Sector 11 - C 3", "North Karachi - Sector 11 - E",
+            "North Karachi - Sector 11 - H", "North Karachi - Sector 11 - I",
+            "North Karachi - Sector 11 - K", "North Karachi - Sector 11 - L",
+            "North Karachi - Sector 2", "North Karachi - Sector 3",
+            "North Karachi - Sector 4", "North Karachi - Sector 5 - A 1",
+            "North Karachi - Sector 5 - A 2", "North Karachi - Sector 5 - A 3",
+            "North Karachi - Sector 5 - A 4", "North Karachi - Sector 5 - B 1",
+            "North Karachi - Sector 5 - B 2", "North Karachi - Sector 5 - B 3",
+            "North Karachi - Sector 5 - B 4", "North Karachi - Sector 5 - C 1",
+            "North Karachi - Sector 5 - C 2", "North Karachi - Sector 5 - C 3",
+            "North Karachi - Sector 5 - C 4", "North Karachi - Sector 5 - I",
+            "North Karachi - Sector 5 - J", "North Karachi - Sector 5 - K",
+            "North Karachi - Sector 5 - L", "North Karachi - Sector 5 - M",
+            "North Karachi - Sector 6", "North Karachi - Sector 7 - D 1",
+            "North Karachi - Sector 7 - D 2", "North Karachi - Sector 7 - D 3",
+            "North Karachi - Sector 7 - D 4", "North Karachi - Sector 8",
+            "North Karachi - Sector 9", "North Nazimabad - Block A",
+            "North Nazimabad - Block B", "North Nazimabad - Block C",
+            "North Nazimabad - Block D", "North Nazimabad - Block E",
+            "North Nazimabad - Block F", "North Nazimabad - Block G",
+            "North Nazimabad - Block H", "North Nazimabad - Block I",
+            "North Nazimabad - Block J", "North Nazimabad - Block K",
+            "North Nazimabad - Block L", "North Nazimabad - Block M",
+            "North Nazimabad - Block N", "North Nazimabad - Block O",
+            "North Nazimabad - Block P", "North Nazimabad - Block Q",
+            "North Nazimabad - Block R", "North Nazimabad - Block S",
+            "North Nazimabad - Block T", "Old Town - Bhimpora",
+            "Old Town - Bohra Pir", "Old Town - Bombay Bazar",
+            "Old Town - Jodia Bazar", "Old Town - Kagzi Bazar",
+            "Old Town - Kakri Ground", "Old Town - Kamil Gali",
+            "Old Town - Khada Market", "Old Town - Kharadar",
+            "Old Town - Lee Market", "Old Town - Mithadar",
+            "Old Town - Nanwara", "Old Town - Nishter Road",
+            "Old Town - Pan Mandi", "Old Town - Ramswami",
+            "Old Town - Ranchorline", "Orangi Town - Banaras Town",
+            "Orangi Town - Bangla Bazaar", "Orangi Town - Bilal Colony",
+            "Orangi Town - Katti Pahari", "Orangi Town - Moria Goth Orangi",
+            "Orangi Town - Orangi", "Orangi Town - Sector 14 - A",
+            "Orangi Town - Sector 14 - C", "Orangi Town - Thorani Goth",
+            "Baldiya Town", "Baloch Colony", "Civil Line", "FC Area",
+            "Firdous Colony", "Gulshan-e-Maymar", "Hawksbay", "I.I Chundrigar",
+            "Jamshed Road", "K.D.A Officers", "Kemari", "Liyari",
+            "M.A Jinnah Rd", "Manora", "New Karachi", "New Surjani",
+            "PIB Colony", "Pipri Goth", "Rizvia Society", "Saddar", "Scheme 33",
+            "Shabbirabad", "P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2",
+            "P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4", "P.E.C.H.S - Block 5",
+            "P.E.C.H.S - Block 6", "P.E.C.H.S - Khalid Bin Walid",
+            "P.E.C.H.S - Tariq Road", "S.I.T.E - Golimar", "S.I.T.E - S.I.T.E",
+            "Shah Faisal Colony - Aswan Town",
+            "Shah Faisal Colony - Gulshan-e-Asghar",
+            "Shah Faisal Colony - Shah Faisal Colony 1",
+            "Shah Faisal Colony - Shah Faisal Colony 5", "F.B Area - Block 7",
+            "F.B Area - Block 9", "P.E.C.H.S - Block 7", "Aram Bagh",
+            "Bath Island", "University Road", "Bahadurabad",
+            "Shah Faisal Colony - 4", "Banglore Town", "Fowler Lines",
+            "Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal",
+            "Shah Faisal Colony - 3", "Shah Faisal Colony - Green Town",
+            "Darwaish Colony", "Korangi - Sector 31 B", "Firdous Colony",
+            "North Nazimabad - Block W", "K.A.E.C.H.S", "Mehmoodabad",
+            "Korangi - Mehran Town", "Landhi Town - 36 B",
+            "Karachi Memon Society", "Madras Cooperative Housing Society",
+            "Shahrah-e-Faisal", "Korangi - Sector 41 B",
+            "Clifton - Delhi Colony", "Korangi - Sector 32 B",
+            "Dhoraji - Adamjee Nagar", "Bhimpura",
+            "Dhoraji - CP& Berar Society", "Shahra-e-Faisal - Umar Colony",
+            "Model Colony", "Gulshan-e-Shamim", "Clifton - Shah Rasool Colony",
+            "North Karachi - Sector 12 C", "Jail Road - Hyderabad Colony",
+            "Napier Quarter", "Gulzar-e-Hijri", "North Karachi - Sector 12 A",
+            "Shahra-e-Faisal - Jinnah Housing Society", "K.D.A Scheme 1",
+            "Clifton - Punjab Colony", "Korangi - Sector 31 D",
+            "Clifton - Zamzama", "Parsi Colony", "Qayyumabad", "Khokrapar",
+            "Shah Faisal Colony - Muslimabad Malir City", "F.B Area - Block 8",
+            "Nanak Wara", "Mohammad Ali Society", "Manzoor Colony", "Dalmia",
+            "Defence View - Phase 1", "Defence View - Phase 2",
+            "KDA Officers Housing Society", "Karimabad", "Soldier Bazar",
+            "Hussainabad", "Sharfabad Society", "Gharibabad",
+            "Sindhi Muslim Cooperative Housing Society"},
+        rndcts = {"Your heart is the size of an ocean. Go find yourself in its hidden depths.","Thinking is the capital, enterprise is the way, hard work is the solution.","If you can't make it good, at least make it look good.","Heart be brave. If you cannot be brave, just go. Love's glory is not a small thing.","It is bad for a young man to sin; but it is worse for an old man to sin.","If you are out to describe the truth, leave elegance to the tailor.","O man you are busy working for the world, and the world is busy trying to turn you out.","While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.","These capitalists generally act harmoniously and in concert, to fleece the people.","I don't believe in failure. It is not failure if you enjoyed the process.","Wear gratitude like a cloak and it will feed every corner of your life.","If you even dream of beating me you'd better wake up and apologize.","I will praise any man that will praise me.","One of the greatest diseases is to be nobody to anybody.","I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.","People must learn to hate and if they can learn to hate, they can be taught to love.","Everyone has been made for some particular work, and the desire for that work has been put in every heart.","The less of the world, the freer you live.","Respond to every call that excites your spirit.","The way to get started is to quit talking and begin doing.","Speak any language, turkish, greek, persian, arabic, but always speak with love.","Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.","When I am silent, I have thunder hidden inside.","Technological progress is like an axe in the hands of a pathological criminal.","No one would choose a friendless existence on condition of having all the other things in the world.","Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don't let yourself believe it will happen to you.","Let us sacrifice our today so that our children can have a better tomorrow.","Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.","Everything in the universe is within you. Ask all from yourself.","I'm not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.","What do I wear in bed? Why, chanel no. 5, of course.","A good head and a good heart are always a formidable combination.","The soul never thinks without a picture.","Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.","Success is dependent upon the glands - sweat glands.","Champions are not generated from the championship. Champion is generated from something they have in them, desires, dreams, and visions.","No matter what is the environment around you, it is always possible to maintain your brand of integrity.","Applause waits on success.","Just as courage imperils life, fear protects it.","It's better to be a lion for a day than a sheep all your life.","The devil's voice is sweet to hear.","Sometimes the people with the worst past, create the best future.","Every day, nay every moment, try to do some good deed.","No matter what people tell you, words and ideas can change the world.","Champions have to have the skill and the will. But the will must be stronger than the skill.","Men occasionally stumble over the truth, but most of them pick themselves up and hurry off as if nothing had happened.","Goodbyes are only for those who love with their eyes. Because for those who love with heart and soul there is no such thing as separation.","The best revenge is to improve yourself.","Success is a personal standard, reaching for the highest that is in us, becoming all that we can be.","When you have really exhausted an experience you always reverence and love it.","Now you see me, now you don't. George thinks he will, but I know he won't!","Elegance does not consist in putting on a new dress.","It is always consoling to think of suicide: in that way one gets through many a bad night.","Eating words has never given me indigestion.","It's not bragging if you can back it up.","I wish people would love everybody else the way they love me. It would be a better world.","Why do I want my wife to show off her panties when the wind blows? Horses show their behinds, and cows and mules, not humans.","Words are only painted fire; a look is the fire itself.","Words, without power, is mere philosophy.","The cure for pain is in the pain.","Whatever happens, just keep smiling and lose yourself in love.","Do the right thing. It will gratify some people and astonish the rest.","Only the soul knows what love is.","Earning of livelihood by following some profession is better than living on charity.","Burdens are the foundations of ease and bitter things the forerunners of pleasure.","Too many have dispensed with generosity in order to practice charity.","Even the greatest was once a beginner. Don't be afraid to take that first step.","No great intellectual thing was ever done by great effort.","To fight against one's desires is the greatest of all fights.","Innovation distinguishes between a leader and a follower.","We enjoy the process far more than the proceeds.","When I started counting my blessings, my whole life turned around.","All my life I've looked at words as though I were seeing them for the first time.","Waiting is painful. Forgetting is painful. But not knowing which to do is the worse kind of suffering.","Never allow someone to be your priority while allowing yourself to be their option.","To jaw-jaw is always better than to war-war.","That's the real trouble with the world, too many people grow up","It is easier to stay out than get out.","The world breaks everyone, and afterward, some are strong at the broken places.","Rule no.1: never lose money. Rule no.2: never forget rule no.1.","Convergence of our views on global trade issues under the wto and our common resolve to combat terrorism provide a valuable base for mutual understanding.","Whenever you find yourself on the side of the majority, it is time to pause and reflect.","Whatever is done for love always occurs beyond good and evil.","Things should be made as simple as possible, but not any simpler.","Stop acting so small. You are the universe in ecstatic motion.","All truth is simple... Is that not doubly a lie?","Money is only a tool. It will take you wherever you wish, but it will not replace you as the driver.","The fight is won or lost far away from witnesses - behind the lines, in the gym, and out there on the road, long before I dance under those lights.","He who avoids complaint invites happiness.","We are the mirror - as well as the face in it.","Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.","Your souls are precious and can only be equal to the price of paradise, therefore sell them only at that price.","A wise man can learn more from a foolish question than a fool can learn from a wise answer.","Love is blind; friendship closes its eyes.","Don't go around saying the world owes you a living. The world owes you nothing. It was here first.","An alert and learned man will take advice from any event.","I don't count my sit-ups. I only start counting when it starts hurting. When I feel pain, that's when I start counting, because that's when it really counts.","The wound is the place where the light enters you.","Luxury is an obstacle, and so is the fatness of the body.","Come, come, whoever you are. Wanderer, worshiper, lover of leaving. It doesn't matter. Ours is not a caravan of despair. Come, even if you have broken your vows a thousand times. Come, yet again, come, come.","The golden age is before us, not behind us.","Fiction is the truth inside the lie.","Believe you can and you're halfway there.","All the great things are simple, and many can be expressed in a single word: freedom, justice, honor, duty, mercy, hope.","Anger is never without a reason, but seldom with a good one.","Good actions are a guard against the blows of adversity.","Use the same measure for selling that you use for purchasing.","The secret of getting ahead is getting started","I don't know the key to success, but the key to failure is trying to please everybody.","Real loss is only possible when you love something more than you love yourself.","To shipbrokers, coal was black gold.","Success is not achieved by winning all the time. Real success comes when we rise after we fall. Some mountains are higher than others. Some roads steeper than the next. There are hardships and setbacks but you cannot let them stop you. Even on the steepest road you must not turn back.","A riot is the language of the unheard.","The law is reason, free from passion.","The people who abandon jihad fall a victim to humility and degradation.","All black americans have slave names. They have white names; names that the slave master has given to them.","I'm most proud of my family.","And you? When will you begin that long journey into yourself?","How many lessons there are and how little they are taken.","The best way to make your dreams come true is to wake up.","What one writer can make in the solitude of one room is something no power can easily destroy.","If there is something to pardon in everything, there is also something to condemn.","At home I am a nice guy: but I don't want the world to know. Humble people, I've found, don't get very far.","No amount of guilt can change the past and no amount of worrying can change the future.","Not the ones speaking the same language, but the ones sharing the same feeling understand each other.","It is better to deserve honors and not have them than to have them and not deserve them.","Success is a lousy teacher. It seduces smart people into thinking they can't lose.","The quality, not the longevity, of one's life is what is important.","Age is whatever you think it is. You are as old as you think you are.","Derivatives are financial weapons of mass destruction.","Don't you know yet? It is your light that lights the worlds.","Hold on to your salah, because if you lose that, you will lose everything else.","I was influenced a lot by those around me - there was a lot of singing that went on in the cotton fields.","Greed is permanent slavery.","Everything that we see is a shadow cast by that which we do not see.","To the master's honor all must turn, each in its track, without a sound, forever tracing newton's ground.","Women are the field that produces our nation. And if you can't protect your women, you can't protect your nation.","To give victory to the right, not bloody bullets, but peaceful ballots only, are necessary.","The ache for home lives in all of us, the safe place where we can go as we are and not be questioned.","Don't be distracted by criticism. Remember ~ the only taste of success some people have is when they take a bite out of you.","Words are a pretext. It is the inner bond that draws one person to another, not words.","Where there is no struggle, there is no strength.","The function of muscle is to pull and not to push, except in the case of the genitals and the tongue.","Through love, all pain will turn to medicine.","Do not be embarrassed by your failures, learn from them and start over.","I know where I'm going and I know the truth, and I don't have to be what you want me to be. I'm free to be what I want.","I find hope in the darkest of days, and focus in the brightest. I do not judge the universe.","Because I cannot sleep I make music in the night.","Strive not to be a success, but rather to be of value.","If you tell the truth, you don't have to remember anything.","Disneyland will never be completed. It will continue to grow as long as there is imagination left in the world.","If you have good thoughts they will shine out of your face like sunbeams and you will always look lovely.","If you wish to be a mine of jewels, open the deep ocean within your heart.","Let me alone, and go in search of someone else.","A true friend is one who sees a fault, gives you advice and who defends you in your absence.","No one changes the world who isn't obsessed.","The best deed of a great man is to forgive and forget.","One may sometimes tell a lie, but the grimace that accompanies it tells the truth.","Do not hate what you do not know, for the greater part of knowledge consists of what you do not know.","Love begins at home, and it is not how much we do... But how much love we put in that action.","There are forces in life working for you and against you. One must distinguish the beneficial forces from the malevolent ones and choose correctly between them.","Beware of little expenses. A small leak will sink a great ship.","All my life through, the new sights of nature made me rejoice like a child.","Man is descended from a hairy, tailed quadruped, probably arboreal in its habits.","The minute I heard my first love story, I started looking for you.","People of the world don't look at themselves, and so they blame one another.","The truth. It is a beautiful and terrible thing, and must therefore be treated with great caution.","The object of the superior man is truth.","Live amongst people in such a manner that if you die they weep over you and if you are alive they crave for your company.","Pride in the case of a rich man is bad, but pride in the case of a poor man is worse.","Tell me and I forget. Teach me and I remember. Involve me and I learn.","Why is it that we rejoice at a birth and grieve at a funeral? It is because we are not the person involved.","You don't want no pie in the sky when you die, you want something here on the ground while you're still around.","Don't be satisfied with stories, how things have gone with others. Unfold your own myth.","Purify your eyes, and see the pure world. Your life will fill with radiant forms.","Associating with the wise and the knowledgeable people adds to the prestige of a person.","There is no darkness but ignorance.","All great achievements require time.","One does not leave a convivial party before closing time.","You are not only responsible for what you say, but also for what you do not say.","So go ahead. Fall down. The world looks different from the ground.","When we lose one blessing, another is often most unexpectedly given in its place.","Intelligence is the wife, imagination is the mistress, memory is the servant.","It is a matter of shame that in the morning the birds should be awake earlier than you.","What doesn't kill us makes us stronger.","The highest person is he who is of most use to humankind.","Common sense is the collection of prejudices acquired by age eighteen.","Do not let your difficulties fill you with anxiety, after all it is only in the darkest nights that stars shine more brightly.","I hated every minute of training, but I said, \"don't quit. Suffer now and live the rest of your life as a champion.\"","The only way to do news on television is not to be terrified of it.","It is a mistake to look too far ahead. Only one link of the chain of destiny can be handled at a time.","I'll destroy you. I am the master of disaster.","Stay in college, get the knowledge. And stay there until you're through. If they can make penicillin out of moldy bread, they can sure make something out of you.","Those who dare to fail miserably can achieve greatly.","You show your worth by what you seek.","Acquire knowledge before you become leaders and pride prevents you from learning and you live in ignorance.","Fear is the main source of superstition, and one of the main sources of cruelty. To conquer fear is the beginning of wisdom.","If a free society cannot help the many who are poor, it cannot save the few who are rich.","Who's gonna dare to be great?","If an ignorant person is attracted by the things of the world, that is bad. But if a learned person is thus attracted, it is worse.","Surely silence can sometimes be the most eloquent reply.","Once your mind stretches to a new level it never goes back to its original dimension.","I was darn greatest long before I believed it.","Our peace shall stand as firm as rocky mountains.","Only buy something that you'd be perfectly happy to hold if the market shut down for 10 years.","Intellectual property has the shelf life of a banana.","He who understands humanity seeks solitude.","I was not created to be occupied by eating delicious foods like tied up cattle.","Time stays long enough for anyone who will use it.","I feel the same way about disco as I do about herpes.","Civilization is the limitless multiplication of unnecessary necessities.","If you hear a voice within you say 'you cannot paint ' then by all means paint, and that voice will be silenced.","When one has not had a good father, one must create one.","I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.","If we cannot now end our differences, at least we can help make the world safe for diversity.","The cautious seldom err.","Admiration for a quality or an art can be so strong that it deters us from striving to possess it.","I myself prefer my new zealand eggs for breakfast.","To line only for some unknown future is superficial.","Money is the barometer of a society's virtue.","Convictions are more dangerous foes of truth than lies.","I have not failed. I've just found 10 000 ways that won't work.","Maybe a thing that you do not like is really in your interest. It is possible that a thing that you may desire may be against your interest.","People always ask me, 'were you funny as a child?' well, no, I was an accountant.","I'm not an expert on the arms race.","You cannot perform in a manner inconsistent with the way you see yourself.","I say that the most liberating thing about beauty is realizing that you are the beholder.","Happiness in intelligent people is the rarest thing I know.","A person who never made a mistake never tried anything new.","In the big leagues everyone has ability. It always comes down to mind games. Who ever is more mentally strong-wins.","Don't take rest after your first victory because if you fail in second, more lips are waiting to say that your first victory was just luck.","Stop learning. Start knowing.","You are never too old to set another goal or to dream a new dream.","Keep your eyes on the stars, and your feet on the ground.","I know of only one duty, and that is to love.","You are not just the drop in the ocean. You are the mighty ocean in the drop.","Teaching is a very noble profession that shapes the character, caliber, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.","Isn't it strange that I who have written only unpopular books should be such a popular fellow?","Drag your thoughts away from your troubles... By the ears, by the heels, or any other way you can manage it.","The best way to find out if you can trust somebody is to trust them.","Take account of your deeds before they are taken account of.","Those who dare to fail miserably can achieve greatly.","Like your body your mind also gets tired so refresh it by wise sayings.","During civil disturbance adopt such an attitude that people do not attach any importance to you - they neither burden you with complicated affairs, nor try to derive any advantage out of you.","Whether you think that you can, or that you can't, you are usually right.","O! Let me not be mad, not mad, sweet heaven; keep me in temper; I would not be mad!","The man with no imagination has no wings.","The public is merely a multiplied \"Me.\"","There are no moral phenomena at all, but only a moral interpretation of phenomena.","To say \"I love you\" one must first be able to say the \"I.\"","Nations are born in the hearts of poets, they prosper and die in the hands of politicians.","The time has come to turn your heart into a temple of fire. Your essence is gold hidden in dust. To reveal its splendor you need to burn in the fire of love.","Only last week I murdered a rock, injured a stone and hospitalized a brick.","If all you can do is crawl, start crawling.","Extreme hopes are born from extreme misery.","I am the greatest. I said that even before I knew I was. Don't tell me I can't do something. Don't tell me it's impossible. Don't tell me I'm not the greatest. I'm the double greatest.","Geologists have a saying - rocks remember.","Peace cannot be kept by force; it can only be achieved by understanding.","The best way to get a bad law repealed is to enforce it strictly.","Wherever you are, and whatever you do, be in love.","Should I kill myself, or have a cup of coffee?","It is very dangerous to have your self-worth riding on your results as an athlete.","No part of the education of a politician is more indispensable than the fighting of elections.","War is never a lasting solution for any problem.","I never think of the future - it comes soon enough.","At the end of my life, with just one breath left, if you come, I'll sit up and sing.","I once had a thousand desires. But in my one desire to know you, all else melted away.","I wish they would only take me as I am.","I have lived on the lip of insanity, wanting to know reasons, knocking on a door. It opens. I've been knocking from the inside.","Once you replace negative thoughts with positive ones, you'll start having positive results.","What is wanted is not the will to believe, but the will to find out, which is the exact opposite.","I'm going to show you how great I am!","In the depth of winter I finally learned that there was in me an invincible summer.","He who fears to weep, should learn to be kind to those who weep.","It is very easy to defeat someone, but it is very hard to win someone.","Things may come to those who wait, but only the things left by those who hustle.","No sanction can stand against ignited minds.","Understanding the knowledge and wisdom of the qur'an is by far, higher than memorizing.","Gratitude is the wine for the soul. Go on. Get drunk.","All of our dreams can come true.","The days of life pass away like clouds, so do good while you are alive.","Once the choice is made, do not look back, do not second-guess your decisions.","Tear off the mask. Your face is glorious.","How hard, how bitter it is to become a man!","Conduct, which involves a decision of the ultimate fate of the agent cannot be based on illusions.","Look for the answer inside your question.","Adversity makes men, and prosperity makes monsters.","Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.","It is better to remain silent and be thought a fool than to open one's mouth and remove all doubt.","He who has never learned to obey cannot be a good commander.","You cannot create experience. You must undergo it.","I am grateful for all my victories, but I am especially grateful for my losses, because they only made me work harder.","No legacy is so rich as honesty.","The outcome of fear is disappointment and shyness is frustration.","All my life through, the new sights of nature made me rejoice like a child.","He who avoids complaint invites happiness.","Work with integrity and succeed with integrity.","You were born with potential. You were born with goodness and trust. You were born with ideals and dreams. You were born with greatness. You were born with wings. You are not meant for crawling, so don't. You have wings. Learn to use them and fly.","Move, but don't move the way fear makes you move.","It does not matter how slowly you go as long as you do not stop.","There is no nobility with bad manners.","You should not quarrel with your neighbor, for he will remain where he is, but your high handedness will become the talk of the people.","Never stop fighting until you arrive at your destined place - that is, the unique you. Have an aim in life, continuously acquire knowledge, work hard, and have perseverance to realise the great life.","Let me define a leader. He must have vision and passion and not be afraid of any problem. Instead, he should know how to defeat it. Most importantly, he must work with integrity.","Dogs never bite me. Humans do.","Your successes and happiness are forgiven you only if you generously consent to share them.","I didn't fail the test, I just found 100 ways to do it wrong.","When red-haired people are above a certain social grade their hair is auburn.","Always remember you are braver than you believe, stronger than you seem, smarter than you think and twice as beautiful as you'd ever imagined. Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.","That which you do not wish for yourself, do not impose on others.","I am the greatest, I said that even before I knew I was.","There is no labor a person does that is undignified; if they do it right.","The people themselves, and not their servants, can safely reverse their own deliberate decisions.","I hated every minute of training, but I said, 'don't quit. Suffer now and live the rest of your life as a champion.'","We shall draw from the heart of suffering itself the means of inspiration and survival.","I have a theory that the truth is never told during the nine-to-five hours.","Democracy is when the indigent, and not the men of property, are the rulers.","You're not going to enjoy every minute of the journey, but the success you'll find at the end will make it all worth it.","It's hard to be humble when you're as great as I am.","There is no knowledge and science like pondering and thought; and there is no prosperity and advancement like knowledge and science.","If we did all the things we are capable of, we would literally astound ourselves.","Be like a tree and let the dead leaves drop.","Don't find fault, find a remedy.","A friend cannot be considered a friend until he is tested in three occasions: in timeof need, behind your back, and after your death.","I'm too fast. I'm too smart. I'm too pretty.","You cannot create experience. You must undergo it.","Indignation is a submission of our thoughts, but not of our desires.","I put my heart and my soul into my work, and have lost my mind in the process.","In a competition of love we'll all share in the victory, no matter who comes first.","Some are born great, some achieve greatness, and some have greatness thrust upon them.","There is no capital more useful than intellect and wisdom, and there is no indigence more injurious than ignorance and unawareness.","There is a voice that doesn't use words. Listen.","Pondering must turn out to be your cash asset, regardless of whichever ups and downs you occur throughout in the everyday living.","Building capacity dissolves differences. It irons out inequalities.","All your anxiety is because of your desire for harmony. Seek disharmony, then you will gain peace.","As long as you are pure of heart, you speak the truth.","Most people spend more time and energy going around problems than in trying to solve them.","If you judge people, you have no time to love them.","Talent in cheaper than table salt. What separates the talented individual from the successful one is a lot of hard work.","The world we have created is a product of our thinking.","Fanatics are picturesque, mankind would rather see gestures than listen to reasons.","Every day is different, and some days are better than others, but no matter how challenging the day, I get up and live it.","The educated southerner has no use for an 'r', except at the beginning of a word.","To love is to act.","My dream is of a place and a time where america will once again be seen as the last best hope of earth.","What comes, will go. What is found, will be lost again. But what you are is beyond coming and going and beyond description.","Dreams are not those which comes while we are sleeping, but dreams are those when u don't sleep before fulfilling them.","To fear love is to fear life, and those who fear life are already three parts dead.","Expect the best. Prepare for the worst. Capitalize on what comes.","My soul is my guide, for my soul is of that abode. I will not speak of the earthly. I am of the unknown.","Many marriages would be better if the husband and the wife clearly understood that they are on the same side.","Try not to resist the changes that come your way. Instead let life live through you. And do not worry that your life is turning upside down. How do you know that the side you are used to is better than the one to come?","All that I am, or hope to be, I owe to my angel mother.","Doing as others told me, I was blind. Coming when others called me, I was lost. Then I left everyone, myself as well. Then I found everyone, myself as well.","Happiness is when what you think, what you say, and what you do are in harmony.","Nothing will work unless you do.","My books are like water; those of the great geniuses are wine. (fortunately) everybody drinks water.","Grief can be the garden of compassion. If you keep your heart open through everything, your pain can become your greatest ally in your life's search for love and wisdom.","To be alone means that you avoid bad company. But to have a true friend is better than being alone.","I am the greatest.","I'm the most recognized and loved man that ever lived cuz there weren't no satellites when jesus and moses were around, so people far away in the villages didn't know about them.","The lord prefers common-looking people. That is why he makes so many of them.","Eros will have naked bodies; friendship naked personalities.","In a democracy, the well-being, individuality and happiness of every citizen is important for the overall prosperity, peace and happiness of the nation.","Success is not achieved by winning all the time. Real success comes when we rise after we fall.","Humility is not thinking less of yourself, it's thinking of yourself less.","The good life is one inspired by love and guided by knowledge.","I believe in christianity as I believe that the sun has risen: not only because I see it, but because by it I see everything else.","The airplane has had a big impact on my life.","We make a living by what we get, but we make a life by what we give.","Indifference and neglect often do much more damage than outright dislike.","When I am silent, I fall into the place where everything is music.","A word to the wise ain't necessary - it's the stupid ones that need the advice.","That's okay, I'm still the greatest.","When I look into the future, it's so bright it burns my eyes.","I'm gonna whup whoever stole my bike!","To be a great champion you must believe you are the best. If you're not, pretend you are.","Get up sucker and fight. Get up and fight.","We shall require a substantially new manner of thinking if mankind is to survive.","I try to build a full personality for each of our cartoon characters - to make them personalities.","Without freedom, no art; art lives only on the restraints it imposes on itself, and dies of all others.","When you're right, nobody remembers. When you're wrong, nobody forgets.","When we practice loving kindness and compassion we are the first ones to profit.","I never gave up on country music because I knew what I was doing was not that bad.","Israel, as the jewish state, must disappear from the map.","The world is a dangerous place to live; not because of the people who are evil, but because of the people who don't do anything about it.","It is not best that we should all think alike; it is a difference of opinion that makes horse races.","Intense love does not measure, it just gives.","A penny saved is a penny earned.","Whatever purifies you is the right path, I will not try to define it.","Coming together is a beginning; keeping together is progress; working together is success.","Total commitment is the common denominator among all successful men and women.","Rest but never quit. Even the sun has a sinking spell each evening. But it always rises the next morning. At sunrise, every soul is born again.","You can have no dominion greater or less than that over yourself.","I want you to be concerned about your next door neighbor. Do you know your next door neighbor?","I shook up the world.","I learned that every mortal will taste death. But only some will taste life.","Your heart knows the way. Run in that direction.","I like not fair terms and a villain's mind.","All credibility, all good conscience, all evidence of truth come only from the senses.","Wealth tends to create enemies, whereas knowledge tends to warm hearts.","Nothing says holidays, like a cheese log.","There is a candle in your heart, ready to be kindled. There is a void in your soul, ready to be filled. You feel it, don't you?","I am the literary equivalent of a big mac and fries.","To forgive an oppressor is oppression upon the oppressed.","Our death is our wedding with eternity.","Imagination is more important than knowledge.","When proven wrong, the wise will correct themselves and the ignorants will just keep arguing.","Grieving? Don't. With time, whatever you've lost might come 'round in some other form.","The breeze at dawn has secrets to tell you. Don't go back to sleep.","Positive thinking will let you do everything better than negative thinking will.","Design is not just what it looks like and feels like. Design is how it works.","Contentment is a wealth that is never exhausted.","There is nothing outside of yourself, look within. Everything you want is there. You are that."},
+        rkuniss = {"Aga Khan University", "Air War College Institute, Karachi",
+            "Baqai Medical University",
+            "Benazir Bhutto Shaheed University Lyari",
+            "Commecs Institute of Business & Emerging Sciences",
+            "Dadabhoy Institute of Higher Education",
+            "Dawood University of Engineering & Technology",
+            "DHA Suffa University", "DOW University of Health Sciences",
+            "Emaan Institute of Management & Sciences, Karachi",
+            "Greenwich University", "Habib University", "Hamdard University",
+            "ILMA University", "Indus University",
+            "Indus Valley School of Art & Architecture",
+            "Institute of Business Administration",
+            "Institute of Business Management", "Iqra University",
+            "Jinnah Sindh Medical University", "Jinnah University for Women",
+            "Karachi Institute of Economics & Technology",
+            "Karachi Institute of Technology and Entrepreneurship (KITE), "
+            + "Karachi",
+            "Karachi School of Business and Leadership",
+            "KASB Institute of Technology",
+            "Malir University of Science & Technology, Karachi",
+            "Metropolitan University Karachi",
+            "Millennium Institute of Technology and Entrepreneurship, Karachi",
+            "Muhammad Ali Jinnah University",
+            "NED University of Engineering & Technology",
+            "Newport Institute of Communications & Economics",
+            "Pakistan Naval Academy",
+            "Preston Institute of Management, Science & Technology",
+            "Preston University",
+            "Salim Habib University (Former Barret Hodgson University), "
+            + "Karachi",
+            "Shaheed Benazir Bhutto City University",
+            "Shaheed Benazir Bhutto Dewan University",
+            "Shaheed Zulfikar Ali Bhutto Institute of Science & Technology",
+            "Shaheed Zulfiqar Ali Bhutto University of Law",
+            "Sindh Institute of Management & Technology",
+            "Sindh Institute of Medical Sciences",
+            "Sindh Madresatul Islam University",
+            "Sir Syed University of Engineering & Technology",
+            "Sohail University, Karachi", "Textile Institute of Pakistan",
+            "The Nazeer Hussain University", "UIT University, Karachi",
+            "University of Karachi", "Zia-ud-Din University"},
+        rjbss = {"Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor",
+            "Nurse", "Physician", "Laboratorian", "Psychiatrist/Psychologist",
+            "Dermatologist", "Gynecologist", "Cardiologist", "Surgeon",
+            "Ophthalmologist", "Pediatrician", "Watchman", "Tailor", "Designer",
+            "Photographer", "Model", "Fashion Designer", "Makeup Artist",
+            "Dressmaker", "Content Writer", "Police Officer",
+            "Undercover Police Officer", "Prison Officer/Jailer", "Reporter",
+            "Journalist", "Investigator", "Laborer", "Data Analyst",
+            "Data Scientist", "Saleswo/man", "Tele-saleswo/man", "Developer",
+            "Engineer", "Plumber", "Human Resources Manager", "Legal Counsel",
+            "Judge", "Lawyer", "Travel Guide", "Scientist", "Goldsmith",
+            "Blacksmith", "Lumberjack", "White-hat hacker", "Black-hat hacker",
+            "Caretaker", "Nanny", "Fisher", "Architect", "Software Architect",
+            "Farmer", "Agriculture Engineer", "Software Engineer",
+            "Support Specialist", "Systems Analyst",
+            "Technical Support Engineer", "Web Developer", "Web Designer",
+            "Animator", "Filmmaker", "Actor", "Comedian", "Director",
+            "Vocalist", "Musician", "Bedroom Musician/DJ", "Songwriter",
+            "Screenwriter", "Barber", "Barista/Bartender", "Tattooist",
+            "Electrician", "Vehicle Technician", "Cartoonist", "Cook",
+            "Travel Advisor", "Translator", "Relationship Counselor",
+            "accountant", "actor", "actuary", "adhesive bonding machine tender",
+            "adjudicator", "administrative assistant",
+            "administrative services manager", "adult education teacher",
+            "advertising manager", "advertising sales agent",
+            "aerobics instructor", "aerospace engineer",
+            "aerospace engineering technician", "agent",
+            "agricultural engineer", "agricultural equipment operator",
+            "agricultural grader", "agricultural inspector",
+            "agricultural manager", "agricultural sciences teacher",
+            "agricultural sorter", "agricultural technician",
+            "agricultural worker", "air conditioning installer",
+            "air conditioning mechanic", "air traffic controller",
+            "aircraft cargo handling supervisor", "aircraft mechanic",
+            "aircraft service technician", "airline copilot", "airline pilot",
+            "ambulance dispatcher", "ambulance driver",
+            "amusement machine servicer", "anesthesiologist", "animal breeder",
+            "animal control worker", "animal scientist", "animal trainer",
+            "animator", "answering service operator", "anthropologist",
+            "apparel patternmaker", "apparel worker", "arbitrator",
+            "archeologist", "architect", "architectural drafter",
+            "architectural manager", "archivist", "art director", "art teacher",
+            "artist", "assembler", "astronomer", "athlete", "athletic trainer",
+            "ATM machine repairer", "atmospheric scientist", "attendant",
+            "audio and video equipment technician",
+            "audio-visual and multimedia collections specialist", "audiologist",
+            "auditor", "author", "auto damage insurance appraiser",
+            "automotive and watercraft service attendant",
+            "automotive glass installer", "automotive mechanic",
+            "avionics technician", "back-end developer", "baggage porter",
+            "bailiff", "baker", "barback", "barber", "bartender",
+            "basic education teacher", "behavioral disorder counselor",
+            "bellhop", "bench carpenter", "bicycle repairer",
+            "bill and account collector", "billing and posting clerk",
+            "biochemist", "biological technician", "biomedical engineer",
+            "biophysicist", "blaster", "blending machine operator",
+            "blockmason", "boiler operator", "boilermaker", "bookkeeper",
+            "boring machine tool tender", "brazer", "brickmason",
+            "bridge and lock tender", "broadcast news analyst",
+            "broadcast technician", "brokerage clerk", "budget analyst",
+            "building inspector", "bus mechanic", "butcher", "buyer",
+            "cabinetmaker", "cafeteria attendant", "cafeteria cook",
+            "camera operator", "camera repairer", "cardiovascular technician",
+            "cargo agent", "carpenter", "carpet installer", "cartographer",
+            "cashier", "caster", "ceiling tile installer",
+            "cellular equipment installer", "cement mason",
+            "channeling machine operator", "chauffeur", "checker", "chef",
+            "chemical engineer", "chemical plant operator", "chemist",
+            "chemistry teacher", "chief executive", "child social worker",
+            "childcare worker", "chiropractor", "choreographer",
+            "civil drafter", "civil engineer", "civil engineering technician",
+            "claims adjuster", "claims examiner", "claims investigator",
+            "cleaner", "clinical laboratory technician",
+            "clinical laboratory technologist", "clinical psychologist",
+            "coating worker", "coatroom attendant", "coil finisher",
+            "coil taper", "coil winder", "Coach", "coin machine servicer",
+            "commercial diver", "commercial pilot", "commodities sales agent",
+            "communications equipment operator", "communications teacher",
+            "community association manager", "community service manager",
+            "compensation and benefits manager", "compliance officer",
+            "composer", "computer hardware engineer",
+            "computer network architect", "computer operator",
+            "computer programmer", "computer science teacher",
+            "computer support specialist", "computer systems administrator",
+            "computer systems analyst", "concierge", "conciliator",
+            "concrete finisher", "conservation science teacher",
+            "conservation scientist", "conservation worker", "conservator",
+            "construction inspector", "construction manager",
+            "construction painter", "construction worker",
+            "continuous mining machine operator", "convention planner",
+            "conveyor operator", "cook", "cooling equipment operator",
+            "copy marker", "correctional officer",
+            "correctional treatment specialist", "correspondence clerk",
+            "correspondent", "cosmetologist", "cost estimator",
+            "costume attendant", "counseling psychologist", "counselor",
+            "courier", "court reporter", "craft artist", "crane operator",
+            "credit analyst", "credit checker", "credit counselor",
+            "criminal investigator", "criminal justice teacher",
+            "crossing guard", "curator", "custom sewer",
+            "customer service representative", "cutter",
+            "cutting machine operator", "dancer", "data entry keyer",
+            "database administrator", "decorating worker",
+            "delivery services driver", "demonstrator", "dental assistant",
+            "dental hygienist", "dental laboratory technician", "dentist",
+            "dermatologist", "derrick operator", "designer",
+            "desktop publisher", "detective", "developer",
+            "diagnostic medical sonographer", "die maker",
+            "diesel engine specialist", "dietetic technician", "dietitian",
+            "dinkey operator", "director", "dishwasher", "dispatcher", "DJ",
+            "doctor", "door-to-door sales worker", "drafter",
+            "dragline operator", "drama teacher", "dredge operator",
+            "dressing room attendant", "dressmaker", "drier operator",
+            "drilling machine tool operator", "dry-cleaning worker",
+            "drywall installer", "dyeing machine operator", "earth driller",
+            "economics teacher", "economist", "editor",
+            "education administrator", "electric motor repairer",
+            "electrical electronics drafter", "electrical engineer",
+            "electrical equipment assembler", "electrical installer",
+            "electrical power-line installer", "electrician",
+            "electro-mechanical technician", "elementary school teacher",
+            "elevator installer", "elevator repairer", "embalmer",
+            "emergency management director", "emergency medical technician",
+            "engine assembler", "engineer", "engineering manager",
+            "engineering teacher", "english language teacher", "engraver",
+            "entertainment attendant", "environmental engineer",
+            "environmental science teacher", "environmental scientist",
+            "epidemiologist", "escort", "etcher", "event planner",
+            "excavating operator", "executive administrative assistant",
+            "executive secretary", "exhibit designer", "expediting clerk",
+            "explosives worker", "extraction worker", "fabric mender",
+            "fabric patternmaker", "fabricator", "faller",
+            "family practitioner", "family social worker", "family therapist",
+            "farm advisor", "farm equipment mechanic", "farm labor contractor",
+            "farmer", "farmworker", "fashion designer", "fast food cook",
+            "fence erector", "fiberglass fabricator", "fiberglass laminator",
+            "file clerk", "filling machine operator", "film and video editor",
+            "financial analyst", "financial examiner", "financial manager",
+            "financial services sales agent", "fine artist",
+            "fire alarm system installer", "fire dispatcher", "fire inspector",
+            "fire investigator", "firefighter", "fish and game warden",
+            "fish cutter", "fish trimmer", "fisher", "fitness studies teacher",
+            "fitness trainer", "flight attendant", "floor finisher",
+            "floor layer", "floor sander", "floral designer", "food batchmaker",
+            "food cooking machine operator", "food preparation worker",
+            "food science technician", "food scientist", "food server",
+            "food service manager", "food technologist",
+            "foreign language teacher", "foreign literature teacher",
+            "forensic science technician", "forest fire inspector",
+            "forest fire prevention specialist", "forest worker", "forester",
+            "forestry teacher", "forging machine setter", "foundry coremaker",
+            "freight agent", "freight mover", "front-end developer",
+            "fundraising manager", "funeral attendant", "funeral director",
+            "funeral service manager", "furnace operator", "furnishings worker",
+            "furniture finisher", "gaming booth cashier", "gaming cage worker",
+            "gaming change person", "gaming dealer", "gaming investigator",
+            "gaming manager", "gaming surveillance officer", "garment mender",
+            "garment presser", "gas compressor", "gas plant operator",
+            "gas pumping station operator", "general manager",
+            "general practitioner", "geographer", "geography teacher",
+            "geological engineer", "geological technician", "geoscientist",
+            "glazier", "government program eligibility interviewer",
+            "graduate teaching assistant", "graphic designer", "groundskeeper",
+            "groundskeeping worker", "gynecologist", "hairdresser",
+            "hairstylist", "hand grinding worker", "hand laborer",
+            "hand packager", "hand packer", "hand polishing worker",
+            "hand sewer", "hazardous materials removal worker", "head cook",
+            "health and safety engineer", "health educator",
+            "health information technician", "health services manager",
+            "health specialties teacher", "healthcare social worker",
+            "hearing officer", "heat treating equipment setter",
+            "heating installer", "heating mechanic", "heavy truck driver",
+            "highway maintenance worker", "historian", "history teacher",
+            "hoist and winch operator", "home appliance repairer",
+            "home economics teacher", "home entertainment installer",
+            "home health aide", "home management advisor", "host", "hostess",
+            "hostler", "hotel desk clerk", "housekeeping cleaner",
+            "human resources assistant", "human resources manager",
+            "human service assistant", "hunter", "hydrologist", "illustrator",
+            "industrial designer", "industrial engineer",
+            "industrial engineering technician",
+            "industrial machinery mechanic", "industrial production manager",
+            "industrial truck operator",
+            "industrial-organizational psychologist", "information clerk",
+            "information research scientist", "information security analyst",
+            "information systems manager", "inspector",
+            "instructional coordinator", "instructor", "insulation worker",
+            "insurance claims clerk", "insurance sales agent",
+            "insurance underwriter", "intercity bus driver",
+            "interior designer", "internist", "interpreter", "interviewer",
+            "investigator", "jailer", "janitor", "jeweler", "judge",
+            "judicial law clerk", "kettle operator", "kiln operator",
+            "kindergarten teacher", "laboratory animal caretaker",
+            "landscape architect", "landscaping worker", "lathe setter",
+            "laundry worker", "law enforcement teacher", "law teacher",
+            "lawyer", "layout worker", "leather worker", "legal assistant",
+            "legal secretary", "legislator", "librarian", "library assistant",
+            "library science teacher", "library technician",
+            "licensed practical nurse", "licensed vocational nurse",
+            "life scientist", "lifeguard", "light truck driver",
+            "line installer", "literacy teacher", "literature teacher",
+            "loading machine operator", "loan clerk", "loan interviewer",
+            "loan officer", "lobby attendant", "locker room attendant",
+            "locksmith", "locomotive engineer", "locomotive firer",
+            "lodging manager", "log grader", "logging equipment operator",
+            "logistician", "machine feeder", "machinist", "magistrate judge",
+            "magistrate", "maid", "mail clerk", "mail machine operator",
+            "mail superintendent", "maintenance painter", "maintenance worker",
+            "makeup artist", "management analyst", "manicurist",
+            "manufactured building installer", "mapping technician",
+            "marble setter", "marine engineer", "marine oiler",
+            "market research analyst", "marketing manager",
+            "marketing specialist", "marriage therapist", "massage therapist",
+            "material mover", "materials engineer", "materials scientist",
+            "mathematical science teacher", "mathematical technician",
+            "mathematician", "maxillofacial surgeon", "measurer", "meat cutter",
+            "meat packer", "meat trimmer", "mechanical door repairer",
+            "mechanical drafter", "mechanical engineer",
+            "mechanical engineering technician", "mediator",
+            "medical appliance technician", "medical assistant",
+            "medical equipment preparer", "medical equipment repairer",
+            "medical laboratory technician", "medical laboratory technologist",
+            "medical records technician", "medical scientist",
+            "medical secretary", "medical services manager",
+            "medical transcriptionist", "meeting planner",
+            "mental health counselor", "mental health social worker",
+            "merchandise displayer", "messenger", "metal caster",
+            "metal patternmaker", "metal pickling operator", "metal pourer",
+            "metal worker", "metal-refining furnace operator",
+            "metal-refining furnace tender", "meter reader", "microbiologist",
+            "middle school teacher", "milling machine setter", "millwright",
+            "mine cutting machine operator", "mine shuttle car operator",
+            "mining engineer", "mining safety engineer",
+            "mining safety inspector", "mining service unit operator",
+            "mixing machine setter", "mobile heavy equipment mechanic",
+            "mobile home installer", "model maker", "model", "molder",
+            "mortician", "motel desk clerk", "motion picture projectionist",
+            "motorboat mechanic", "motorboat operator",
+            "motorboat service technician", "motorcycle mechanic", "movers",
+            "multimedia artist", "museum technician", "music director",
+            "music teacher", "musical instrument repairer", "musician",
+            "natural sciences manager", "naval architect",
+            "network systems administrator", "new accounts clerk",
+            "news vendor", "nonfarm animal caretaker", "nuclear engineer",
+            "nuclear medicine technologist", "nuclear power reactor operator",
+            "nuclear technician", "nursing aide", "nursing instructor",
+            "nursing teacher", "nutritionist", "obstetrician",
+            "occupational health and safety specialist",
+            "occupational health and safety technician",
+            "occupational therapist", "occupational therapy aide",
+            "occupational therapy assistant", "offbearer", "office clerk",
+            "office machine operator", "operating engineer",
+            "operations manager", "operations research analyst",
+            "ophthalmic laboratory technician", "optician", "optometrist",
+            "oral surgeon", "order clerk", "order filler", "orderly",
+            "ordnance handling expert", "orthodontist", "orthotist",
+            "outdoor power equipment mechanic", "oven operator",
+            "packaging machine operator", "painter ", "painting worker",
+            "paper goods machine setter", "paperhanger", "paralegal",
+            "paramedic", "parking enforcement worker", "parking lot attendant",
+            "parts salesperson", "paving equipment operator", "payroll clerk",
+            "pediatrician", "pedicurist", "personal care aide", "personal chef",
+            "personal financial advisor", "personal trainer",
+            "pest control worker", "pesticide applicator", "pesticide handler",
+            "pesticide sXXXXXer", "petroleum engineer", "petroleum gauger",
+            "petroleum pump system operator", "petroleum refinery operator",
+            "petroleum technician", "pharmacist", "pharmacy aide",
+            "pharmacy technician", "philosophy teacher", "photogrammetrist",
+            "photographer", "photographic process worker",
+            "photographic processing machine operator",
+            "physical therapist aide", "physical therapist assistant",
+            "physical therapist", "physician assistant", "physician",
+            "physicist", "physics teacher", "pile-driver operator",
+            "pipefitter", "pipelayer", "planing machine operator",
+            "planning clerk", "plant operator", "plant scientist", "plasterer",
+            "plastic patternmaker", "plastic worker", "plumber", "podiatrist",
+            "police dispatcher", "police officer", "policy processing clerk",
+            "political science teacher", "political scientist",
+            "postal service clerk", "postal service mail carrier",
+            "postal service mail processing machine operator",
+            "postal service mail processor", "postal service mail sorter",
+            "postmaster", "postsecondary teacher", "poultry cutter",
+            "poultry trimmer", "power dispatcher", "power distributor",
+            "power plant operator", "power tool repairer",
+            "precious stone worker", "precision instrument repairer",
+            "prepress technician", "preschool teacher", "priest",
+            "print binding worker", "printing press operator",
+            "private detective", "probation officer", "procurement clerk",
+            "producer", "product promoter", "product manager",
+            "production clerk", "production occupation", "proofreader",
+            "property manager", "prosthetist", "prosthodontist",
+            "psychiatric aide", "psychiatric technician", "psychiatrist",
+            "psychologist", "psychology teacher", "public relations manager",
+            "public relations specialist", "pump operator", "purchasing agent",
+            "purchasing manager", "radiation therapist", "radio announcer",
+            "radio equipment installer", "radio operator",
+            "radiologic technician", "radiologic technologist",
+            "rail car repairer", "rail transportation worker",
+            "rail yard engineer", "rail-track laying equipment operator",
+            "railroad brake operator", "railroad conductor", "railroad police",
+            "rancher", "real estate appraiser", "real estate broker",
+            "real estate manager", "real estate sales agent", "receiving clerk",
+            "receptionist", "record clerk", "recreation teacher",
+            "recreation worker", "recreational therapist",
+            "recreational vehicle service technician",
+            "recyclable material collector", "referee",
+            "refractory materials repairer", "refrigeration installer",
+            "refrigeration mechanic", "refuse collector", "regional planner",
+            "registered nurse", "rehabilitation counselor",
+            "reinforcing iron worker", "reinforcing rebar worker",
+            "XXXXX teacher", "XXXXX activities director",
+            "XXXXX worker", "rental clerk", "repair worker", "reporter",
+            "residential advisor", "resort desk clerk", "respiratory therapist",
+            "respiratory therapy technician", "retail buyer",
+            "retail salesperson", "revenue agent", "rigger", "rock splitter",
+            "rolling machine tender", "roof bolter", "roofer",
+            "rotary drill operator", "roustabout", "safe repairer", "sailor",
+            "sales engineer", "sales manager", "sales representative",
+            "sampler", "sawing machine operator", "scaler", "school bus driver",
+            "school psychologist", "school social worker", "scout leader",
+            "sculptor", "secondary education teacher",
+            "secondary school teacher", "secretary", "securities sales agent",
+            "security guard", "security system installer", "segmental paver",
+            "self-enrichment education teacher", "semiconductor processor",
+            "septic tank servicer", "set designer", "sewer pipe cleaner",
+            "sewing machine operator", "shampooer", "shaper",
+            "sheet metal worker", "sheriff's patrol officer", "ship captain",
+            "ship engineer", "ship loader", "shipmate", "shipping clerk",
+            "shoe machine operator", "shoe worker", "short order cook",
+            "signal operator", "signal repairer", "singer", "ski patrol",
+            "skincare specialist", "slaughterer", "slicing machine tender",
+            "slot supervisor", "social science research assistant",
+            "social sciences teacher", "social scientist",
+            "social service assistant", "social service manager",
+            "social work teacher", "social worker", "sociologist",
+            "sociology teacher", "software developer", "software engineer",
+            "soil scientist", "solderer", "sorter",
+            "sound engineering technician", "space scientist",
+            "special education teacher", "speech-language pathologist",
+            "sports book runner", "sports entertainer", "sports performer",
+            "stationary engineer", "statistical assistant", "statistician",
+            "steamfitter", "stock clerk", "stock mover", "stonemason",
+            "street vendor", "streetcar operator", "structural iron worker",
+            "structural metal fabricator", "structural metal fitter",
+            "structural steel worker", "stucco mason",
+            "substance abuse counselor", "substance abuse social worker",
+            "subway operator", "surfacing equipment operator", "surgeon",
+            "surgical technologist", "survey researcher",
+            "surveying technician", "surveyor", "switch operator",
+            "switchboard operator", "tailor", "tamping equipment operator",
+            "tank car loader", "taper", "tax collector", "tax examiner",
+            "tax preparer", "taxi driver", "teacher assistant", "teacher",
+            "team assembler", "technical writer",
+            "telecommunications equipment installer", "telemarketer",
+            "telephone operator", "television announcer", "teller",
+            "terrazzo finisher", "terrazzo worker", "tester",
+            "textile bleaching operator", "textile cutting machine setter",
+            "textile knitting machine setter", "textile presser",
+            "textile worker", "therapist", "ticket agent", "ticket taker",
+            "tile setter", "timekeeping clerk", "timing device assembler",
+            "tire builder", "tire changer", "tire repairer", "title abstractor",
+            "title examiner", "title searcher",
+            "tobacco roasting machine operator", "tool filer", "tool grinder",
+            "tool maker", "tool sharpener", "tour guide",
+            "tower equipment installer", "tower operator",
+            "track switch repairer", "tractor operator",
+            "tractor-trailer truck driver", "traffic clerk",
+            "traffic technician", "training and development manager",
+            "training and development specialist", "transit police",
+            "translator", "transportation equipment painter",
+            "transportation inspector", "transportation security screener",
+            "transportation worker", "trapper", "travel agent", "travel clerk",
+            "travel guide", "tree pruner", "tree trimmer", "trimmer",
+            "truck loader", "truck mechanic", "tuner",
+            "turning machine tool operator", "tutor", "typist", "umpire",
+            "undertaker", "upholsterer", "urban planner", "usher",
+            "UX designer", "valve installer", "vending machine servicer",
+            "veterinarian", "veterinary assistant", "veterinary technician",
+            "vocational counselor", "vocational education teacher", "waiter",
+            "waitress", "watch repairer", "water treatment plant operator",
+            "weaving machine setter", "web developer", "weigher", "welder",
+            "wellhead pumper", "wholesale buyer", "wildlife biologist",
+            "window trimmer", "wood patternmaker", "woodworker",
+            "word processor", "writer", "yardmaster", "zoologist"};
+    public static String randNationality() {
+        return randFrom(ntltss);
+    }
+    public static String fakeNationality() {
+        return randNationality();
+    }
+    public static String randCity() {
+        return randFrom(ctss);
+    }
+    public static String randAreaInKarachi() {
+        return randFrom(areas_in_karachi);
+    }
+    public static String randKarachiArea() {
+        return randAreaInKarachi();
+    }
+    public static String randKarachiUniversity() {
+        return randFrom(rkuniss);
+    }
+    public static String randPhone() {
+        return randFrom(rfnss);
+    }
+    public static String randJob() {
+        return randFrom(rjbss);
+    }
+    public static String randGirlName() {
+        return randFrom(rglnss);
+    }
+    public static String randGuyName() {
+        return randFrom(rgynss);
+    }
+    public static String randWord() {
+        return randFrom(wdss);
+    }
+    public static String randSentence() {
+        return randFrom(rndcts);
+    }
+    static String fakeNationality = "", randAreaInKarachi = "";
+
+    public static final String randNationality = fakeNationality =
+                                   fakeNationality(),
+                               randCity = randCity(),
+                               randKarachiArea = randAreaInKarachi =
+                                   randAreaInKarachi(),
+                               randKarachiUniversity = randKarachiUniversity(),
+                               randJob = randJob(), randPhone = randPhone(),
+                               randGirlName = randGirlName(),
+                               randGuyName = randGuyName(),
+                               randWord = randWord(),
+                               randSentence = randSentence();
+
+    // Files
+    public static boolean createFile(String fname) {
+        try {
+            File myFile = new File(fname);
+            if (myFile.createNewFile()) {
+                System.out.println("\n[KL FileReader]: File \""
+                    + myFile.getName() + "\" created successfully");
+                return true;
+            } else {
+                print("\n[KL FileReader]: File either already exists, or you "
+                      + "do not have enough permissions to create a new file "
+                      + "in this directory.\n");
+            }
+        } catch (IOException e) {
+            print("\n[KL FileReader]: Something went wrong.\n");
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public static boolean createFile(String fname, String content) {
+        try {
+            File myFile = new File(fname);
+            FileWriter fr = new FileWriter(fname);
+            fr.write(content);
+            print("\n[KL FileReader]: File \"" + myFile.getName()
+                + "\" created successfully");
+            fr.close();
+            return true;
+        } catch (IOException e) {
+            print("\n[KL FileReader]: Something went wrong. File creation "
+                  + "failed.\n");
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public static boolean newFile(String fname) {
+        return createFile(fname);
+    }
+    public static boolean newFile(String fname, String content) {
+        return createFile(fname, content);
+    }
+    public static boolean deleteFile(String fname) {
+        File myFile = new File(fname);
+        String msgOnSuccess = "\n[KL FileReader]: File \"" + myFile.getPath()
+            + "\" deleted successfully.\n",
+               msgOnFailure =
+                   "\n[KL FileReader]: Task failed, no such file/folder!\n";
+        if (!myFile.exists()) {
+            print(msgOnFailure);
+            return false;
+        }
+        if (myFile.isDirectory()) {
+            for (File c : myFile.listFiles()) deleteFile(c.toString());
+        }
+        myFile.delete();
+        print(msgOnSuccess);
+        return true;
+    }
+    public static boolean removeFile(String fname) {
+        return deleteFile(fname);
+    }
+    public static boolean deleteFolder(String fname) {
+        return deleteFile(fname);
+    }
+    public static boolean removeFolder(String fname) {
+        return deleteFile(fname);
+    }
+    public static boolean renameFile(String fname, String destinationString) {
+        try {
+            File myFile = new File(fname);
+            File destinationFile = new File(destinationString);
+            if (myFile.renameTo(destinationFile)) {
+                print("\n[KL FileReader]: File " + myFile.getName()
+                    + " was successfully moved/renamed to "
+                    + destinationFile.getPath());
+                return true;
+            } else {
+                print("\n[KL FileReader]: You do not have enough permissions "
+                      + "to move/rename this file.\n");
+                IOException e = new IOException();
+                throw e;
+            }
+        } catch (IOException e) {
+            print("\n[KL FileReader]: Something went wrong.\n");
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public static boolean moveFile(String from, String to) {
+        return renameFile(from, to);
+    }
+    public static String readFile(String fname) {
+        String data = "";
+        try {
+            File myObj = new File(fname);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) data += myReader.nextLine();
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            print("\n[KL FileReader]: Something went wrong.\n");
+            e.printStackTrace();
+        }
+        return data;
+    }
+    public static boolean copyFile(String from, String to) {
+        File fileToCopy = new File(from);
+        File destination = new File(to);
+        try {
+            Files.copy(fileToCopy.toPath(), destination.toPath(),
+                StandardCopyOption.REPLACE_EXISTING);
+            return true;
+        } catch (IOException e) {
+            System.out.println("\n[KL FileReader]: Failed to copy!\n");
+        }
+        return false;
+    }
+    public static boolean createFolder(String folderName) {
+        File fileFolder = new File(folderName);
+        return fileFolder.mkdirs();
+    }
+    public static boolean newFolder(String folderName) {
+        return createFolder(folderName);
+    }
+
+    public static void main(String[] args) {
+        /*
+        int[] numbers = {1, 2, 3, 4, 5, 6, 7};
+        forEach(numbers, (n, i) -> print(f("%d: %d", i, n)));
+        */
+
+        Money m = new Money(5400);
+        m.curr("PK").add(8 * zr, 3 * ar).sub(5.4 * K).add(1 * kh);
+        print(m.string());
+        print(m.string(true));
+        print(m.suffix());
+        print(m.suffix(true));
+        print(m.urdu());
+
+        Tree_I tree =
+            new Tree_I(6, "six", 1, "one", 2, "two", 3, "three", 4, "four");
+        tree.add(5, "five").add(7, "seven");
+        tree.printMap();
+        print(tree.firstKey(), ":", tree.first());
+        print(tree.nthKey(11), ":", tree.get(2));
+        print(tree.nthKey(2), ":", tree.nthValue(2));
+        int[] keys = tree.keyArray();
+        printArr(keys);
+        String[] values = tree.array();
+        printArr(values);
+        //tested, worked
+        rndcts = filterOut(rndcts, match -> in(match, "XXXXX|XXXXX|Hi(m|s)"));
+        printArr(rndcts);
+
+        for (int i : range(5, true)) print(fur(i));
+    }
+}
