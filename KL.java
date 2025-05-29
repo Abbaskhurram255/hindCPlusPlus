@@ -1,6 +1,3 @@
-// GUI
-import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 import java.security.SecureRandom;
@@ -11,6 +8,9 @@ import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
+// GUI
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -8907,10 +8907,8 @@ public class KL {
         printArr(keys);
         String[] values = tree.array();
         printArr(values);
-        //tested, worked
-        rndcts = filterOut(rndcts, match -> in(match, "XXXXX|XXXXX|Hi(m|s)"));
-        printArr(rndcts);
-
-        for (int i : range(5, true)) print(fur(i));
+        
+        
+       
     }
 }
