@@ -128,3 +128,27 @@ forEach(numbers, (n, i) -> print(f("%d: %d", i, n)));
         numbers = map(numbers, n -> n+1);
 		print(numbers[0]);
 */
+/*
+Money m = new Money(5*cr);
+        m.curr("PK").add(8 * zr, 5 * zr).add(1 * zr).add(1 * lc);
+        print(m.balance());
+        print(m.balance(true));
+        print(m.suffix(true));
+*/
+
+/*
+        Tree_I tree =
+            new Tree_I(6, "six", 1, "one", 2, "two", 3, "three", 4, "four");
+        tree.add(5, "five").add(7, "seven");
+        tree.printMap();
+        print(tree.firstKey(), ":", tree.first());
+        print(tree.nthKey(1), ":", tree.get(2));
+        print(tree.nthKey(2), ":", tree.nthValue(2));
+        int[] keys = tree.keyArray();
+        printArr(keys);
+        String[] values = tree.array();
+        printArr(values);
+*/
+
+//tested, worked
+//rndcts = filterOut(rndcts, match -> in(match, "XXXXX|XXXXX|Hi(m|s)"));

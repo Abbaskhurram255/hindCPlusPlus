@@ -742,6 +742,18 @@ public class KL {
 		String nthlast(int n) {
 			return nthLastValue(n);
 		}
+		String first() {
+			return nth(0);
+		}
+		String second() {
+			return nth(1);
+		}
+		String seclast() {
+			return nthlast(2);
+		}
+		String last() {
+			return nthlast(1);
+		}
 		Obj_S set(String k, String v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
@@ -877,6 +889,18 @@ public class KL {
 		int nthlast(int n) {
 			return nthLastValue(n);
 		}
+		int first() {
+			return nth(0);
+		}
+		int second() {
+			return nth(1);
+		}
+		int seclast() {
+			return nthlast(2);
+		}
+		int last() {
+			return nthlast(1);
+		}
 		Obj_I set(String k, Integer v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
@@ -1004,6 +1028,18 @@ public class KL {
 		}
 		long nthlast(int n) {
 			return nthLastValue(n);
+		}
+		long first() {
+			return nth(0);
+		}
+		long second() {
+			return nth(1);
+		}
+		long seclast() {
+			return nthlast(2);
+		}
+		long last() {
+			return nthlast(1);
 		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
@@ -1136,6 +1172,18 @@ public class KL {
 		}
 		float nthlast(int n) {
 			return nthLastValue(n);
+		}
+		float first() {
+			return nth(0);
+		}
+		float second() {
+			return nth(1);
+		}
+		float seclast() {
+			return nthlast(2);
+		}
+		float last() {
+			return nthlast(1);
 		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
@@ -1270,6 +1318,18 @@ public class KL {
 		double nthlast(int n) {
 			return nthLastValue(n);
 		}
+		double first() {
+			return nth(0);
+		}
+		double second() {
+			return nth(1);
+		}
+		double seclast() {
+			return nthlast(2);
+		}
+		double last() {
+			return nthlast(1);
+		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
 		}
@@ -1402,6 +1462,18 @@ public class KL {
 		}
 		boolean nthlast(int n) {
 			return nthLastValue(n);
+		}
+		boolean first() {
+			return nth(0);
+		}
+		boolean second() {
+			return nth(1);
+		}
+		boolean seclast() {
+			return nthlast(2);
+		}
+		boolean last() {
+			return nthlast(1);
 		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
@@ -2403,6 +2475,31 @@ public class KL {
 		String i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : "";
 		}
+		String lasti(int n) {
+			return n > 0 && n <= super.size() ? super.get(super.size() - n) : "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound exception
+		}
+		String ilast(int n) {
+			return lasti(n);
+		}
+		String nth(int n) {
+			return i(n);
+		}
+		String nthlast(int n) {
+			return lasti(n);
+		}
+		String first() {
+			return nth(0);
+		}
+		String second() {
+			return nth(1);
+		}
+		String seclast() {
+			return nthlast(2);
+		}
+		String last() {
+			return nthlast(1);
+		}
 		StrArr update(int i, String x) {
 			if (!has(x))
 				super.add(x);
@@ -2576,6 +2673,31 @@ public class KL {
 		}
 		int i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
+		}
+		int lasti(int n) {
+			return n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound exception
+		}
+		int ilast(int n) {
+			return lasti(n);
+		}
+		int nth(int n) {
+			return i(n);
+		}
+		int nthlast(int n) {
+			return lasti(n);
+		}
+		int first() {
+			return nth(0);
+		}
+		int second() {
+			return nth(1);
+		}
+		int seclast() {
+			return nthlast(2);
+		}
+		int last() {
+			return nthlast(1);
 		}
 		IntArr update(int i, int x) {
 			if (!has(x))
@@ -2756,6 +2878,31 @@ public class KL {
 		long i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
+		long lasti(int n) {
+			return n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound exception
+		}
+		long ilast(int n) {
+			return lasti(n);
+		}
+		long nth(int n) {
+			return i(n);
+		}
+		long nthlast(int n) {
+			return lasti(n);
+		}
+		long first() {
+			return nth(0);
+		}
+		long second() {
+			return nth(1);
+		}
+		long seclast() {
+			return nthlast(2);
+		}
+		long last() {
+			return nthlast(1);
+		}
 		LongArr update(int i, long x) {
 			if (!has(x))
 				super.add(x);
@@ -2935,6 +3082,31 @@ public class KL {
 		float i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
+		float lasti(int n) {
+			return n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound exception
+		}
+		float ilast(int n) {
+			return lasti(n);
+		}
+		float nth(int n) {
+			return i(n);
+		}
+		float nthlast(int n) {
+			return lasti(n);
+		}
+		float first() {
+			return nth(0);
+		}
+		float second() {
+			return nth(1);
+		}
+		float seclast() {
+			return nthlast(2);
+		}
+		float last() {
+			return nthlast(1);
+		}
 		FltArr update(int i, float x) {
 			if (!has(x))
 				super.add(x);
@@ -3113,6 +3285,31 @@ public class KL {
 		}
 		double i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : 0;
+		}
+		double lasti(int n) {
+			return n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound exception
+		}
+		double ilast(int n) {
+			return lasti(n);
+		}
+		double nth(int n) {
+			return i(n);
+		}
+		double nthlast(int n) {
+			return lasti(n);
+		}
+		double first() {
+			return nth(0);
+		}
+		double second() {
+			return nth(1);
+		}
+		double seclast() {
+			return nthlast(2);
+		}
+		double last() {
+			return nthlast(1);
 		}
 		DblArr update(int i, double x) {
 			if (!has(x))
@@ -3302,6 +3499,31 @@ public class KL {
 		}
 		boolean i(int i) {
 			return i >= 0 && i < super.size() ? super.get(i) : false;
+		}
+		boolean lasti(int n) {
+			return n > 0 && n <= super.size() ? super.get(super.size() - n) : false;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound exception
+		}
+		boolean ilast(int n) {
+			return lasti(n);
+		}
+		boolean nth(int n) {
+			return i(n);
+		}
+		boolean nthlast(int n) {
+			return lasti(n);
+		}
+		boolean first() {
+			return nth(0);
+		}
+		boolean second() {
+			return nth(1);
+		}
+		boolean seclast() {
+			return nthlast(2);
+		}
+		boolean last() {
+			return nthlast(1);
 		}
 		BoolArr update(int i, boolean x) {
 			if (!has(x))
