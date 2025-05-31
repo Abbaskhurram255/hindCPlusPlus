@@ -6630,88 +6630,235 @@ public class KL {
 		return !!matcher.find();
 	}
 	public static boolean endsWith(String[] arr, String lookupStr) {
+		if (not(len(arr))) return false;
 		return arr[len(arr) - 1].equals(lookupStr);
 	}
 	public static boolean endsWith(int[] arr, int lookupInt) {
+		if (not(len(arr))) return false;
 		return arr[len(arr) - 1] == lookupInt;
 	}
 	public static boolean endsWith(long[] arr, long lookupLong) {
+		if (not(len(arr))) return false;
 		return arr[len(arr) - 1] == lookupLong;
 	}
 	public static boolean endsWith(float[] arr, float lookupFloat) {
+		if (not(len(arr))) return false;
 		return arr[len(arr) - 1] == lookupFloat;
 	}
 	public static boolean endsWith(double[] arr, double lookupDbl) {
+		if (not(len(arr))) return false;
 		return arr[len(arr) - 1] == lookupDbl;
 	}
 	public static boolean endsWith(boolean[] arr, boolean lookupBool) {
+		if (not(len(arr))) return false;
 		return arr[len(arr) - 1] == lookupBool;
 	}
 	public static boolean endsWith(StrArr arr, String lookupStr) {
-		return arr.i(len(arr) - 1) == lookupStr;
+		if (not(len(arr))) return false;
+		return arr.last() == lookupStr;
+	}
+	public static boolean endsWith(IntArr arr, int lookupInt) {
+		if (not(len(arr))) return false;
+		return arr.last() == lookupInt;
+	}
+	public static boolean endsWith(LongArr arr, long lookupLong) {
+		if (not(len(arr))) return false;
+		return arr.last() == lookupLong;
+	}
+	public static boolean endsWith(FltArr arr, float lookupFlt) {
+		if (not(len(arr))) return false;
+		return arr.last() == lookupFlt;
+	}
+	public static boolean endsWith(DblArr arr, double lookupDbl) {
+		if (not(len(arr))) return false;
+		return arr.last() == lookupDbl;
+	}
+	public static boolean endsWith(BoolArr arr, boolean lookupBool) {
+		if (not(len(arr))) return false;
+		return arr.last() == lookupBool;
+	}
+	public static String nth(StrArr arr, int n) {
+		return n >= 0 && n < len(arr) ? arr.i(n) : "";
+	}
+	public static int nth(IntArr arr, int n) {
+		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
+	}
+	public static long nth(LongArr arr, int n) {
+		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
+	}
+	public static float nth(FltArr arr, int n) {
+		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
+	}
+	public static double nth(DblArr arr, int n) {
+		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
+	}
+	public static boolean nth(BoolArr arr, int n) {
+		return n >= 0 && n < len(arr) ? arr.i(n) : false;
+	}
+	public static String firstOf(StrArr arr) {
+		if (not(len(arr))) return "";
+		return arr.first();
+	}
+	public static String secondOf(StrArr arr) {
+		if (not(len(arr))) return "";
+		return arr.second();
+	}
+	public static int firstOf(IntArr arr) {
+		if (not(len(arr))) return 0;
+		return arr.first();
+	}
+	public static int secondOf(IntArr arr) {
+		if (not(len(arr))) return 0;
+		return arr.second();
+	}
+	public static float firstOf(LongArr arr) {
+		if (not(len(arr))) return 0;
+		return arr.first();
+	}
+	public static float secondOf(LongArr arr) {
+		if (not(len(arr))) return 0;
+		return arr.second();
+	}
+	public static float firstOf(FltArr arr) {
+		if (not(len(arr))) return 0;
+		return arr.first();
+	}
+	public static float secondOf(FltArr arr) {
+		if (not(len(arr))) return 0;
+		return arr.second();
+	}
+	public static double firstOf(DblArr arr) {
+		if (not(len(arr))) return 0;
+		return arr.first();
+	}
+	public static double secondOf(DblArr arr) {
+		if (not(len(arr))) return 0;
+		return arr.second();
+	}
+	public static boolean firstOf(BoolArr arr) {
+		if (not(len(arr))) return false;
+		return arr.first();
+	}
+	public static boolean secondOf(BoolArr arr) {
+		if (not(len(arr))) return false;
+		return arr.second();
 	}
 	public static String nthLastOf(String str, int n) {
-		return "" + str.toCharArray()[len(str) - n];
+		return n > 0 && n <= len(str) ? ("" + str.toCharArray()[len(str) - n]) : "";
 	}
 	public static String nthLastOf(String[] arr, int n) {
-		return arr[len(arr) - n];
+		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : "";
 	}
 	public static int nthLastOf(int[] arr, int n) {
-		return arr[len(arr) - n];
+		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
 	}
 	public static long nthLastOf(long[] arr, int n) {
-		return arr[len(arr) - n];
+		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
 	}
 	public static float nthLastOf(float[] arr, int n) {
-		return arr[len(arr) - n];
+		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
 	}
 	public static double nthLastOf(double[] arr, int n) {
-		return arr[len(arr) - n];
+		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
 	}
 	public static boolean nthLastOf(boolean[] arr, int n) {
-		return arr[len(arr) - n];
+		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : false;
+	}
+	public static String nthLastOf(StrArr arr, int n) {
+		return n > 0 && n <= len(arr) ? arr.lasti(n) : "";
+	}
+	public static int nthLastOf(IntArr arr, int n) {
+		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
+	}
+	public static long nthLastOf(LongArr arr, int n) {
+		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
+	}
+	public static float nthLastOf(FltArr arr, int n) {
+		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
+	}
+	public static double nthLastOf(DblArr arr, int n) {
+		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
+	}
+	public static boolean nthLastOf(BoolArr arr, int n) {
+		return n > 0 && n <= len(arr) ? arr.lasti(n) : false;
 	}
 	public static String secondLastOf(String str) {
-		return "" + str.toCharArray()[len(str) - 2];
+		return len(str) - 2 >= 0 ? ("" + str.toCharArray()[len(str) - 2]) : "";
 	}
 	public static String secondLastOf(String[] arr) {
-		return arr[len(arr) - 2];
+		return len(arr) - 2 >= 0 ? arr[len(arr) - 2] : "";
 	}
 	public static int secondLastOf(int[] arr) {
-		return arr[len(arr) - 2];
+		return len(arr) - 2 >= 0 ? arr[len(arr) - 2] : 0;
 	}
 	public static long secondLastOf(long[] arr) {
-		return arr[len(arr) - 2];
+		return len(arr) - 2 >= 0 ? arr[len(arr) - 2] : 0;
 	}
 	public static float secondLastOf(float[] arr) {
-		return arr[len(arr) - 2];
+		return len(arr) - 2 >= 0 ? arr[len(arr) - 2] : 0;
 	}
 	public static double secondLastOf(double[] arr) {
-		return arr[len(arr) - 2];
+		return len(arr) - 2 >= 0 ? arr[len(arr) - 2] : 0;
 	}
 	public static boolean secondLastOf(boolean[] arr) {
-		return arr[len(arr) - 2];
+		return len(arr) - 2 >= 0 ? arr[len(arr) - 2] : false;
 	}
 	public static String lastOf(String str) {
-		return "" + str.toCharArray()[len(str) - 1];
+		return len(str) - 1 >= 0 ? ("" + str.toCharArray()[len(str) - 1]) : "";
 	}
 	public static String lastOf(String[] arr) {
-		return arr[len(arr) - 1];
+		return len(arr) - 1 >= 0 ? arr[len(arr) - 1] : "";
 	}
 	public static int lastOf(int[] arr) {
-		return arr[len(arr) - 1];
+		return len(arr) - 1 >= 0 ? arr[len(arr) - 1] : 0;
 	}
 	public static long lastOf(long[] arr) {
-		return arr[len(arr) - 1];
+		return len(arr) - 1 >= 0 ? arr[len(arr) - 1] : 0;
 	}
 	public static float lastOf(float[] arr) {
-		return arr[len(arr) - 1];
+		return len(arr) - 1 >= 0 ? arr[len(arr) - 1] : 0;
 	}
 	public static double lastOf(double[] arr) {
-		return arr[len(arr) - 1];
+		return len(arr) - 1 >= 0 ? arr[len(arr) - 1] : 0;
 	}
 	public static boolean lastOf(boolean[] arr) {
-		return arr[len(arr) - 1];
+		return len(arr) - 1 >= 0 ? arr[len(arr) - 1] : false;
+	}
+	public static String secondLastOf(StrArr arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : "";
+	}
+	public static String lastOf(StrArr arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : "";
+	}
+	public static int secondLastOf(IntArr arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static int lastOf(IntArr arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static float secondLastOf(LongArr arr) {
+		return len(arr) - 2 >= 0 ?  arr.seclast() : 0;
+	}
+	public static float lastOf(LongArr arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static float secondLastOf(FltArr arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static float lastOf(FltArr arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static double secondLastOf(DblArr arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static double lastOf(DblArr arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static boolean secondLastOf(BoolArr arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : false;
+	}
+	public static boolean lastOf(BoolArr arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
 	public static int indexOf(String inStr, String lookupStr) {
 		return inStr.indexOf(lookupStr);
@@ -6816,6 +6963,42 @@ public class KL {
 				return i;
 		}
 		return -1;
+	}
+	public static int indexOf(StrArr arr, String s) {
+		return arr.indexOf(s);
+	}
+	public static int lastIndexOf(StrArr arr, String s) {
+		return arr.lastIndexOf(s);
+	}
+	public static int indexOf(IntArr arr, int n) {
+		return arr.indexOf(n);
+	}
+	public static int lastIndexOf(IntArr arr, int n) {
+		return arr.lastIndexOf(n);
+	}
+	public static int indexOf(LongArr arr, long n) {
+		return arr.indexOf(n);
+	}
+	public static int lastIndexOf(LongArr arr, long n) {
+		return arr.lastIndexOf(n);
+	}
+	public static int indexOf(FltArr arr, float n) {
+		return arr.indexOf(n);
+	}
+	public static int lastIndexOf(FltArr arr, float n) {
+		return arr.lastIndexOf(n);
+	}
+	public static int indexOf(DblArr arr, double n) {
+		return arr.indexOf(n);
+	}
+	public static int lastIndexOf(DblArr arr, double n) {
+		return arr.lastIndexOf(n);
+	}
+	public static int indexOf(BoolArr arr, boolean b) {
+		return arr.indexOf(b);
+	}
+	public static int lastIndexOf(BoolArr arr, boolean b) {
+		return arr.lastIndexOf(b);
 	}
 	public static int numberOfOccurrencesIn(String inStr, char lookupCh) {
 		int occurrences = 0;
@@ -7420,22 +7603,22 @@ public class KL {
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(StrArr arr) {
-		return 0 == len(arr);
+		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(IntArr arr) {
-		return 0 == len(arr);
+		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(LongArr arr) {
-		return 0 == len(arr);
+		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(FltArr arr) {
-		return 0 == len(arr);
+		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(DblArr arr) {
-		return 0 == len(arr);
+		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(BoolArr arr) {
-		return 0 == len(arr);
+		return 0 == len(arr) || arr.isEmpty();
 	}
 	// Arrays
 	public static <T> T[] reverse(T[] arr) {
