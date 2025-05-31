@@ -2535,7 +2535,10 @@ public class KL {
 			return this;
 		}
 		StrArr reverse() {
-			sortReverse();
+			java.util.List newList = list();
+			Collections.reverse(newList);
+			empty();
+			super.addAll(newList);
 			return this;
 		}
 		String[] array() {
@@ -2734,7 +2737,10 @@ public class KL {
 			return this;
 		}
 		IntArr reverse() {
-			sortReverse();
+			java.util.List newList = list();
+			Collections.reverse(newList);
+			empty();
+			super.addAll(newList);
 			return this;
 		}
 		int[] array() {
@@ -2938,7 +2944,10 @@ public class KL {
 			return this;
 		}
 		LongArr reverse() {
-			sortReverse();
+			java.util.List newList = list();
+			Collections.reverse(newList);
+			empty();
+			super.addAll(newList);
 			return this;
 		}
 		long[] array() {
@@ -3142,7 +3151,10 @@ public class KL {
 			return this;
 		}
 		FltArr reverse() {
-			sortReverse();
+			java.util.List newList = list();
+			Collections.reverse(newList);
+			empty();
+			super.addAll(newList);
 			return this;
 		}
 		float[] array() {
@@ -3346,7 +3358,10 @@ public class KL {
 			return this;
 		}
 		DblArr reverse() {
-			sortReverse();
+			java.util.List newList = list();
+			Collections.reverse(newList);
+			empty();
+			super.addAll(newList);
 			return this;
 		}
 		double[] array() {
@@ -3560,7 +3575,10 @@ public class KL {
 			return this;
 		}
 		BoolArr reverse() {
-			sortReverse();
+			java.util.List newList = list();
+			Collections.reverse(newList);
+			empty();
+			super.addAll(newList);
 			return this;
 		}
 		boolean[] array() {
@@ -4800,7 +4818,7 @@ public class KL {
 		return Lng(arg);
 	}
 	public static double Dbl(String arg) {
-		return (double) Flt(arg);
+		return Double.parseDouble(arg.replaceAll("[^\\d\\.]", ""));
 	}
 	public static double Dbl(int arg) {
 		return (double) arg;
@@ -4815,7 +4833,7 @@ public class KL {
 		return arg;
 	}
 	public static double Double(String arg) {
-		return (double) Flt(arg);
+		return Dbl(arg);
 	}
 	public static boolean isIntLike(String s) {
 		try {
@@ -4827,6 +4845,13 @@ public class KL {
 	public static boolean isFltLike(String s) {
 		try {
 			return Float.parseFloat(s) % 1 != 0;
+		} catch (Exception err) {
+			return false;
+		}
+	}
+	public static boolean isDblLike(String s) {
+		try {
+			return Double.parseDouble(s) % 1 != 0;
 		} catch (Exception err) {
 			return false;
 		}
@@ -4989,27 +5014,27 @@ public class KL {
 		}
 		return Math.abs(n1 % n2);
 	}
-	public static boolean isperfmod(double n1, double n2) {
+	public static boolean isPerfectMod(double n1, double n2) {
 		return mod(n1, n2) == 0;
 	}
 	public static int[] divisorsOf(int n) {
 		IntArr result = new IntArr();
 		for (int i = 2; i < n; i++) {
-			if (isperfmod(n, i))
+			if (isPerfectMod(n, i))
 				result.add(i);
 		}
 		return result.array();
 	}
 	public static boolean isDivisorOf(double n1, double n2) {
-		return isperfmod(n1, n2);
+		return isPerfectMod(n1, n2);
 	}
-	public static boolean iseven(double n) {
-		return isperfmod(n, 2);
+	public static boolean isEven(double n) {
+		return isPerfectMod(n, 2);
 	}
-	public static boolean isodd(double n) {
-		return !isperfmod(n, 2);
+	public static boolean isOdd(double n) {
+		return !isPerfectMod(n, 2);
 	}
-	public static int isprime(int n) {
+	public static int isPrime(int n) {
 		for (int i = 2; i <= n / 2; i++) {
 			if (n % i == 0)
 				return 0;
@@ -5075,7 +5100,7 @@ public class KL {
 			} else if (b < 2) {
 				if (b == 0) {
 					stringBuilder.append(",");
-					stringBuilder.append(amountArray[i]);
+                    stringBuilder.append(amountArray[i]);
 					b++;
 				} else {
 					stringBuilder.append(amountArray[i]);
@@ -5611,18 +5636,30 @@ public class KL {
 		for (int i : range(n)) result.push(fibonacci(i + 1));
 		return result.array();
 	}
-	public static double pct(double n1, double n2) {
+	public static double percentify(double n1, double n2) {
 		if (n1 < n2)
 			return Math.round(n1 / n2 * 100.0) / 100.0;
 		else
 			return Math.round(n1 * (n2 * .01) * 100.0) / 100.0;
 	}
 	final static double infinity = Double.POSITIVE_INFINITY;
-	public static boolean isnl(Object o) {
+	public static boolean isNull(Object o) {
 		return o == null;
 	}
+	public static boolean isInfinity(double n) {
+		return n == infinity || n == Double.NEGATIVE_INFINITY || isNull(n);
+	}
+	public static boolean isNl(Object o) {
+		return isNull(o);
+	}
+	public static boolean isInf(double n) {
+		return isInfinity(n);
+	}
+	public static boolean isnl(Object o) {
+		return isNull(o);
+	}
 	public static boolean isinf(double n) {
-		return n == infinity || n == Double.NEGATIVE_INFINITY || isnl(n);
+		return isInfinity(n);
 	}
 	public static int round(int n) {
 		return n;
@@ -5908,7 +5945,7 @@ public class KL {
 			if (not(obj))
 				count += 1;
 		}
-		return count > 0;
+		return count == len(objs);
 	}
 	public static boolean not(String s) {
 		return isnl(s) || isEmpty(s);
@@ -7401,192 +7438,92 @@ public class KL {
 		return 0 == len(arr);
 	}
 	// Arrays
-	public static String[] reverse(String[] data) {
-		for (int left = 0, right = data.length - 1; left < right;
-				left++, right--) {
-			String temp = data[left];
-			data[left] = data[right];
-			data[right] = temp;
-		}
-		return data;
+	public static <T> T[] reverse(T[] arr) {
+		Collections.reverse(Arrays.asList(arr));
+		return arr;
 	}
-	public static int[] reverse(int[] data) {
-		for (int left = 0, right = data.length - 1; left < right;
-				left++, right--) {
-			int temp = data[left];
-			data[left] = data[right];
-			data[right] = temp;
-		}
-		return data;
+	public static StrArr reverse(StrArr arr) {
+		return arr.reverse();
 	}
-	public static long[] reverse(long[] data) {
-		for (int left = 0, right = data.length - 1; left < right;
-				left++, right--) {
-			long temp = data[left];
-			data[left] = data[right];
-			data[right] = temp;
-		}
-		return data;
+	public static IntArr reverse(IntArr arr) {
+		return arr.reverse();
 	}
-	public static float[] reverse(float[] data) {
-		for (int left = 0, right = data.length - 1; left < right;
-				left++, right--) {
-			float temp = data[left];
-			data[left] = data[right];
-			data[right] = temp;
-		}
-		return data;
+	public static LongArr reverse(LongArr arr) {
+		return arr.reverse();
 	}
-	public static double[] reverse(double[] data) {
-		for (int left = 0, right = data.length - 1; left < right;
-				left++, right--) {
-			double temp = data[left];
-			data[left] = data[right];
-			data[right] = temp;
-		}
-		return data;
+	public static FltArr reverse(FltArr arr) {
+		return arr.reverse();
 	}
-	public static boolean[] reverse(boolean[] data) {
-		for (int left = 0, right = data.length - 1; left < right;
-				left++, right--) {
-			boolean temp = data[left];
-			data[left] = data[right];
-			data[right] = temp;
-		}
-		return data;
+	public static DblArr reverse(DblArr arr) {
+		return arr.reverse();
 	}
-	public static void reverse(StrArr arr) {
-		arr.reverse();
+	public static BoolArr reverse(BoolArr arr) {
+		return arr.reverse();
 	}
-	public static void reverse(IntArr arr) {
-		arr.reverse();
-	}
-	public static void reverse(LongArr arr) {
-		arr.reverse();
-	}
-	public static void reverse(FltArr arr) {
-		arr.reverse();
-	}
-	public static void reverse(DblArr arr) {
-		arr.reverse();
-	}
-	public static void reverse(BoolArr arr) {
-		arr.reverse();
-	}
-	public static void sort(String[] arr) {
+	public static <T> T[] sort(T[] arr) {
 		Arrays.sort(arr);
+		return arr;
 	}
-	public static void sort(int[] arr) {
-		Arrays.sort(arr);
+	public static StrArr sort(StrArr arr) {
+		return arr.sort();
 	}
-	public static void sort(long[] arr) {
-		Arrays.sort(arr);
+	public static IntArr sort(IntArr arr) {
+		return arr.sort();
 	}
-	public static void sort(float[] arr) {
-		Arrays.sort(arr);
+	public static LongArr sort(LongArr arr) {
+		return arr.sort();
 	}
-	public static void sort(double[] arr) {
-		Arrays.sort(arr);
+	public static FltArr sort(FltArr arr) {
+		return arr.sort();
 	}
-	public static void sort(StrArr arr) {
-		arr.sort();
+	public static DblArr sort(DblArr arr) {
+		return arr.sort();
 	}
-	public static void sort(IntArr arr) {
-		arr.sort();
+	public static BoolArr sort(BoolArr arr) {
+		return arr.sort();
 	}
-	public static void sort(LongArr arr) {
-		arr.sort();
+	public static <T> T[] sortReverse(T[] arr) {
+		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
+		return arr;
 	}
-	public static void sort(FltArr arr) {
-		arr.sort();
+	public static StrArr sortReverse(StrArr arr) {
+		return arr.sortReverse();
 	}
-	public static void sort(DblArr arr) {
-		arr.sort();
+	public static IntArr sortReverse(IntArr arr) {
+		return arr.sortReverse();
 	}
-	public static void sort(BoolArr arr) {
-		arr.sort();
+	public static LongArr sortReverse(LongArr arr) {
+		return arr.sortReverse();
 	}
-	public static void sortReverse(int arr[]) {
-		int size = arr.length;
-		for (int i : range(arr)) {
-			boolean swappingNeeded = false;
-			for (int j = 0; j < size - i - 1; j++) {
-				if (arr[j] < arr[j + 1]) {
-					swappingNeeded = true;
-					int temp = arr[j];
-					arr[j] = arr[j + 1];
-					arr[j + 1] = temp;
-				}
-			}
-			if (!swappingNeeded)
-				break;
-		}
+	public static FltArr sortReverse(FltArr arr) {
+		return arr.sortReverse();
 	}
-	public static void sortReverse(long arr[]) {
-		int size = arr.length;
-		for (long i : range(arr)) {
-			boolean swappingNeeded = false;
-			for (int j = 0; j < size - i - 1; j++) {
-				if (arr[j] < arr[j + 1]) {
-					swappingNeeded = true;
-					long temp = arr[j];
-					arr[j] = arr[j + 1];
-					arr[j + 1] = temp;
-				}
-			}
-			if (!swappingNeeded)
-				break;
-		}
+	public static DblArr sortReverse(DblArr arr) {
+		return arr.sortReverse();
 	}
-	public static void sortReverse(float arr[]) {
-		int size = arr.length;
-		for (float i : range(arr)) {
-			boolean swappingNeeded = false;
-			for (int j = 0; j < size - i - 1; j++) {
-				if (arr[j] < arr[j + 1]) {
-					swappingNeeded = true;
-					float temp = arr[j];
-					arr[j] = arr[j + 1];
-					arr[j + 1] = temp;
-				}
-			}
-			if (!swappingNeeded)
-				break;
-		}
+	public static BoolArr sortReverse(BoolArr arr) {
+		return arr.sortReverse();
 	}
-	public static void sortReverse(double arr[]) {
-		int size = arr.length;
-		for (double i : range(arr)) {
-			boolean swappingNeeded = false;
-			for (int j = 0; j < size - i - 1; j++) {
-				if (arr[j] < arr[j + 1]) {
-					swappingNeeded = true;
-					double temp = arr[j];
-					arr[j] = arr[j + 1];
-					arr[j + 1] = temp;
-				}
-			}
-			if (!swappingNeeded)
-				break;
-		}
+	public static <T> T[] reverseSort(T[] arr) {
+		return sortReverse(arr);
 	}
-	public static void sortReverse(StrArr arr) {
-		arr.sortReverse();
+	public static StrArr reverseSort(StrArr arr) {
+		return sortReverse(arr);
 	}
-	public static void sortReverse(IntArr arr) {
-		arr.sortReverse();
+	public static IntArr reverseSort(IntArr arr) {
+		return sortReverse(arr);
 	}
-	public static void sortReverse(LongArr arr) {
-		arr.sortReverse();
+	public static LongArr reverseSort(LongArr arr) {
+		return sortReverse(arr);
 	}
-	public static void sortReverse(FltArr arr) {
-		arr.sortReverse();
+	public static FltArr reverseSort(FltArr arr) {
+		return sortReverse(arr);
 	}
-	public static void sortReverse(DblArr arr) {
-		arr.sortReverse();
+	public static DblArr reverseSort(DblArr arr) {
+		return sortReverse(arr);
 	}
-	public static void sortReverse(BoolArr arr) {
-		arr.sortReverse();
+	public static BoolArr reverseSort(BoolArr arr) {
+		return sortReverse(arr);
 	}
 	public static String shuffle(String str) {
 		char[] chars = str.toCharArray();
@@ -7600,65 +7537,33 @@ public class KL {
 		String result = new String(chars);
 		return result;
 	}
-	public static String[] shuffle(String[] arr) {
+	public static <T> T[] shuffle(T[] arr) {
 		Random rnd = new Random();
 		for (int i = arr.length - 1; i > 0; i--) {
 			int index = rnd.nextInt(i + 1);
-			String temp = arr[index];
+			T temp = arr[index];
 			arr[index] = arr[i];
 			arr[i] = temp;
 		}
 		return arr;
 	}
-	public static int[] shuffle(int[] arr) {
-		Random rnd = new Random();
-		for (int i = arr.length - 1; i > 0; i--) {
-			int index = rnd.nextInt(i + 1);
-			int temp = arr[index];
-			arr[index] = arr[i];
-			arr[i] = temp;
-		}
-		return arr;
+	public static StrArr shuffle(StrArr arr) {
+		return arr.shuffle();
 	}
-	public static long[] shuffle(long[] arr) {
-		Random rnd = new Random();
-		for (int i = arr.length - 1; i > 0; i--) {
-			int index = rnd.nextInt(i + 1);
-			long temp = arr[index];
-			arr[index] = arr[i];
-			arr[i] = temp;
-		}
-		return arr;
+	public static IntArr shuffle(IntArr arr) {
+		return arr.shuffle();
 	}
-	public static float[] shuffle(float[] arr) {
-		Random rnd = new Random();
-		for (int i = arr.length - 1; i > 0; i--) {
-			int index = rnd.nextInt(i + 1);
-			float temp = arr[index];
-			arr[index] = arr[i];
-			arr[i] = temp;
-		}
-		return arr;
+	public static LongArr shuffle(LongArr arr) {
+		return arr.shuffle();
 	}
-	public static double[] shuffle(double[] arr) {
-		Random rnd = new Random();
-		for (int i = arr.length - 1; i > 0; i--) {
-			int index = rnd.nextInt(i + 1);
-			double temp = arr[index];
-			arr[index] = arr[i];
-			arr[i] = temp;
-		}
-		return arr;
+	public static FltArr shuffle(FltArr arr) {
+		return arr.shuffle();
 	}
-	public static boolean[] shuffle(boolean[] arr) {
-		Random rnd = new Random();
-		for (int i = arr.length - 1; i > 0; i--) {
-			int index = rnd.nextInt(i + 1);
-			boolean temp = arr[index];
-			arr[index] = arr[i];
-			arr[i] = temp;
-		}
-		return arr;
+	public static DblArr shuffle(DblArr arr) {
+		return arr.shuffle();
+	}
+	public static BoolArr shuffle(BoolArr arr) {
+		return arr.shuffle();
 	}
 	private static String[]
 	ctss = {"Abbottabad", "Adilpur", "Ahmadpur East", "Ahmadpur Sial",
@@ -8547,6 +8452,7 @@ public class KL {
 	}
 
 	public static void main(String[] args) {
-    	
+    	StrArr arr = new StrArr("zoo", "hi", "beetles", "zer");
+    	printArr(arr.reverse());
 	}
 }
