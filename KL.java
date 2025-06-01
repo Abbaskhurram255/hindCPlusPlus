@@ -203,8 +203,23 @@ public class KL {
 						 .replace("%25", "%");
 		return decoded;
 	}
+	public static class os {
+		public static String name = System.getProperty("os.name").toLowerCase().split(" ")[0],
+							 version = System.getProperty("os.version").toLowerCase(),
+							 arch = System.getProperty("os.arch").toLowerCase(),
+							 workDirectory = System.getProperty("user.dir").toLowerCase(),
+							 separator = System.getProperty("file.separator");
+		public static boolean is(String s) {
+			return in(name, s);
+		}
+		public static class user {
+			public static String name = System.getProperty("user.name"),
+								 language = System.getProperty("user.language").toLowerCase(),
+								 homeDirectory = System.getProperty("user.home");
+		}
+	}
 	// GUI
-	public static final class GUI extends JFrame {
+	public static class GUI extends JFrame implements MouseListener, KeyListener {
 		private static final long serialVersionUID = 1L;
 		GUI() {
 			super();
@@ -313,16 +328,158 @@ public class KL {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
+		GUI font(String fontFamily, int fontSize, boolean bold, boolean italic) {
+			super.setFont(new Font(fontFamily,
+								   bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
+			return this;
+		}
+		GUI font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		GUI font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
+								   : bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			return this;
+		}
 		GUI font(Font fnt) {
 			super.setFont(fnt);
 			return this;
+		}
+		double mouseX() {
+			return MouseInfo.getPointerInfo().getLocation().getX();
+		}
+		double mouseY() {
+			return MouseInfo.getPointerInfo().getLocation().getY();
 		}
 		GUI exitOnClose() {
 			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
 			return this;
 		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			KL.printf("Mouse clicked at {X: %d, Y: %d}", e.getX(), e.getY());
+			// e.getClickCount();
+			if (e.getButton() == MouseEvent.BUTTON1) {
+				// left clicked
+			} else if (e.getButton() == MouseEvent.BUTTON2) {
+				// mid clicked
+			} else if (e.getButton() == MouseEvent.BUTTON3) {
+				// right clicked
+			}
+			// TODO
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+			KL.printf("Mouse pressed at {X: %d, Y: %d}", e.getX(), e.getY());
+			// e.getClickCount();
+			if (e.getButton() == MouseEvent.BUTTON1) {
+				// left clicked
+			} else if (e.getButton() == MouseEvent.BUTTON2) {
+				// mid clicked
+			} else if (e.getButton() == MouseEvent.BUTTON3) {
+				// right clicked
+			}
+			// TODO
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			KL.printf("Mouse released at {X: %d, Y: %d}", e.getX(), e.getY());
+			// e.getClickCount();
+			if (e.getButton() == MouseEvent.BUTTON1) {
+				// left clicked
+			} else if (e.getButton() == MouseEvent.BUTTON2) {
+				// mid clicked
+			} else if (e.getButton() == MouseEvent.BUTTON3) {
+				// right clicked
+			}
+			// TODO
+		}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			KL.printf("Mouse entered at {X: %d, Y: %d}", e.getX(), e.getY());
+             // TODO
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			KL.print("Mouse exited");
+			// TODO
+		}
+		@Override
+		public void keyTyped(KeyEvent e) {
+			KL.print(e.getKeyChar());
+			// TODO
+		}
+		@Override
+		public void keyPressed(KeyEvent e) {
+			KL.print(e.getKeyChar());
+			// TODO
+		}
+		@Override
+		public void keyReleased(KeyEvent e) {
+			KL.print(e.getKeyChar());
+			// TODO
+		}
+		GUI listenKey(String k, Runnable action) {
+			super.addKeyListener(new KeyListener() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+				}
+				@Override
+				public void keyReleased(KeyEvent e) {
+				}
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if (k == Str(e.getKeyChar())) {
+						new Thread(action).run();
+					}
+				}
+			});
+			return this;
+		}
+		GUI listenMouse(String evt, Runnable action) {
+			super.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int button = -1;
+					if (KL.eq(evt, "click") || KL.eq(evt, "clickl"))
+						button = MouseEvent.BUTTON1;
+					else if (KL.eq(evt, "clickr"))
+						button = MouseEvent.BUTTON3;
+					else if (KL.eq(evt, "clickm") || KL.eq(evt, "clickw"))
+						button = MouseEvent.BUTTON2;
+					if (e.getButton() == button) {
+						new Thread(action).run();
+					}
+				}
+				@Override
+				public void mousePressed(MouseEvent e) {
+					mouseClicked(e);
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (KL.eq(evt, "release")) {
+						new Thread(action).run();
+					}
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (KL.eq(evt, "enter")) {
+						new Thread(action).run();
+					}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (KL.eq(evt, "leave")) {
+						new Thread(action).run();
+					}
+				}
+			});
+			return this;
+		}
 	}
-	public static final class Label extends JLabel {
+	public static class Label extends JLabel {
 		private static final long serialVersionUID = 1L;
 		Label() {
 			super();
@@ -356,6 +513,21 @@ public class KL {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
+		Label font(String fontFamily, int fontSize, boolean bold, boolean italic) {
+			super.setFont(new Font(fontFamily,
+								   bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
+			return this;
+		}
+		Label font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		Label font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
+								   : bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			return this;
+		}
 		Label font(Font fnt) {
 			super.setFont(fnt);
 			return this;
@@ -376,7 +548,7 @@ public class KL {
 			return this;
 		}
 	}
-	public static final class BordLay extends BorderLayout {
+	public static class BordLay extends BorderLayout {
 		private static final long serialVersionUID = 1L;
 		BordLay() {
 			super();
@@ -385,7 +557,7 @@ public class KL {
 			super(hgap, vgap);
 		}
 	}
-	public static final class GridLay extends GridLayout {
+	public static class GridLay extends GridLayout {
 		private static final long serialVersionUID = 1L;
 		GridLay(int rows, int columns) {
 			super(rows, columns);
@@ -394,7 +566,7 @@ public class KL {
 			super(rows, columns, hgap, vgap);
 		}
 	}
-	public static final class Panel extends JPanel {
+	public static class Panel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		Panel() {
 			super();
@@ -444,6 +616,21 @@ public class KL {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
+		Panel font(String fontFamily, int fontSize, boolean bold, boolean italic) {
+			super.setFont(new Font(fontFamily,
+								   bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
+			return this;
+		}
+		Panel font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		Panel font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
+								   : bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			return this;
+		}
 		Panel font(Font fnt) {
 			super.setFont(fnt);
 			return this;
@@ -453,7 +640,7 @@ public class KL {
 			return this;
 		}
 	}
-	public static final class Btn extends JButton {
+	public static class Btn extends JButton {
 		private static final long serialVersionUID = 1L;
 		Btn() {
 			super();
@@ -483,7 +670,7 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		// Btn trigger()
+// Btn trigger()
 		Btn bg(Color clr) {
 			super.setBackground(clr);
 			return this;
@@ -506,6 +693,21 @@ public class KL {
 		}
 		Btn font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		Btn font(String fontFamily, int fontSize, boolean bold, boolean italic) {
+			super.setFont(new Font(fontFamily,
+								   bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
+			return this;
+		}
+		Btn font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		Btn font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
+								   : bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
 			return this;
 		}
 		Btn font(Font fnt) {
@@ -532,7 +734,7 @@ public class KL {
 			return this;
 		}
 	}
-	public static final class TxtField extends JTextField {
+	public static class TxtField extends JTextField {
 		private static final long serialVersionUID = 1L;
 		TxtField() {
 			super();
@@ -575,7 +777,7 @@ public class KL {
 			return this;
 		}
 	}
-	public static final class PwdField extends JPasswordField {
+	public static class PwdField extends JPasswordField {
 		private static final long serialVersionUID = 1L;
 		PwdField() {
 			super();
@@ -618,7 +820,7 @@ public class KL {
 			return this;
 		}
 	}
-	public static final class clr extends Color {
+	public static class clr extends Color {
 		private static final long serialVersionUID = 1L;
 		clr(int clr) {
 			super(clr);
@@ -632,17 +834,16 @@ public class KL {
 		clr(float r, float g, float b, float a) {
 			super(r, g, b, a);
 			/*
-			 * @params all in the floating range: 0 to 1
-			 */
+			* @params all in the floating range: 0 to 1
+			*/
 		}
 		clr(int r, int g, int b, int a) {
 			super(r, g, b, a);
 			/*
-			 * @params all in the integer range: 0 to 255
-			 */
+			* @params all in the integer range: 0 to 255
+			*/
 		}
 	}
-
 
 	// general
 	public static final class Error extends Throwable {
@@ -3649,6 +3850,16 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static void setTimeout(Runnable fn, int delay) {
+		new Thread(() -> {
+			try {
+				Thread.sleep(delay < 1000 ? delay * 1000 : delay);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			SwingUtilities.invokeLater(fn);
+		}).start();
+	}
 	public static IntArr range(int n) {
 		if (isnl(n))
 			return null;
@@ -4780,6 +4991,9 @@ public class KL {
 	public static int Int(double n) {
 		return (int) n;
 	}
+	public static int Int(boolean b) {
+		return b == true ? 1 : 0;
+	}
 	public static float Flt(String arg) {
 		try {
 			return Float.parseFloat(arg.replaceAll("[^\\d\\.]", ""));
@@ -4799,23 +5013,26 @@ public class KL {
 	public static float Flt(double n) {
 		return (float) n;
 	}
-	public static long Lng(String arg) {
-		return (long) Flt(arg);
-	}
-	public static long Lng(int n) {
-		return (long) n;
-	}
-	public static long Lng(long n) {
-		return n;
-	}
-	public static long Lng(float n) {
-		return (long) n;
-	}
-	public static long Lng(double n) {
-		return (long) n;
+	public static float Flt(boolean b) {
+		return b == true ? 1 : 0;
 	}
 	public static long Long(String arg) {
-		return Lng(arg);
+		return (long) Flt(arg);
+	}
+	public static long Long(int n) {
+		return (long) n;
+	}
+	public static long Long(long n) {
+		return n;
+	}
+	public static long Long(float n) {
+		return (long) n;
+	}
+	public static long Long(double n) {
+		return (long) n;
+	}
+	public static long Long(boolean b) {
+		return b == true ? 1 : 0;
 	}
 	public static double Dbl(String arg) {
 		return Double.parseDouble(arg.replaceAll("[^\\d\\.]", ""));
@@ -4832,7 +5049,25 @@ public class KL {
 	public static double Dbl(double arg) {
 		return arg;
 	}
+	public static double Dbl(boolean b) {
+		return b == true ? 1 : 0;
+	}
 	public static double Double(String arg) {
+		return Dbl(arg);
+	}
+	public static double Double(int arg) {
+		return Dbl(arg);
+	}
+	public static double Double(long arg) {
+		return Dbl(arg);
+	}
+	public static double Double(float arg) {
+		return Dbl(arg);
+	}
+	public static double Double(double arg) {
+		return arg;
+	}
+	public static double Double(boolean arg) {
 		return Dbl(arg);
 	}
 	public static boolean isIntLike(String s) {
@@ -5089,7 +5324,7 @@ public class KL {
 						 dc = 1e33;
 	public static String fpkr(int amount) {
 		double floats = amount % 1;
-		long amountFix = Lng(amount - floats);
+		long amountFix = Long(amount - floats);
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
 		int a = 0, b = 0;
@@ -5100,7 +5335,7 @@ public class KL {
 			} else if (b < 2) {
 				if (b == 0) {
 					stringBuilder.append(",");
-                    stringBuilder.append(amountArray[i]);
+					stringBuilder.append(amountArray[i]);
 					b++;
 				} else {
 					stringBuilder.append(amountArray[i]);
@@ -5114,7 +5349,7 @@ public class KL {
 	}
 	public static String fpkr(long amount) {
 		double floats = amount % 1;
-		long amountFix = Lng(amount - floats);
+		long amountFix = Long(amount - floats);
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
 		int a = 0, b = 0;
@@ -5139,7 +5374,7 @@ public class KL {
 	}
 	public static String fpkr(float amount) {
 		double floats = amount % 1;
-		long amountFix = Lng(amount - floats);
+		long amountFix = Long(amount - floats);
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
 		int a = 0, b = 0;
@@ -5164,7 +5399,7 @@ public class KL {
 	}
 	public static String fpkr(double amount) {
 		double floats = amount % 1;
-		long amountFix = Lng(amount - floats);
+		long amountFix = Long(amount - floats);
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
 		int a = 0, b = 0;
@@ -8292,49 +8527,49 @@ public class KL {
 						"Hussainabad", "Sharfabad Society", "Gharibabad",
 						"Sindhi Muslim Cooperative Housing Society"
 					   },
-	rndcts = {"Your heart is the size of an ocean. Go find yourself in its hidden depths.","Thinking is the capital, enterprise is the way, hard work is the solution.","If you can't make it good, at least make it look good.","Heart be brave. If you cannot be brave, just go. Love's glory is not a small thing.","If you are out to describe the truth, leave elegance to the tailor.","O man you are busy working for the world, and the world is busy trying to turn you out.","While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.","These capitalists generally act harmoniously and in concert, to fleece the people.","I don't believe in failure. It is not failure if you enjoyed the process.","Wear gratitude like a cloak and it will feed every corner of your life.","If you even dream of beating me you'd better wake up and apologize.","I will praise any man that will praise me.","One of the greatest diseases is to be nobody to anybody.","I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.","People must learn to hate and if they can learn to hate, they can be taught to love.","Everyone has been made for some particular work, and the desire for that work has been put in every heart.","The less of the world, the freer you live.","Respond to every call that excites your spirit.","The way to get started is to quit talking and begin doing.","Speak any language, turkish, greek, persian, arabic, but always speak with love.","Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.","When I am silent, I have thunder hidden inside.","Technological progress is like an axe in the hands of a pathological criminal.","No one would choose a friendless existence on condition of having all the other things in the world.","Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don't let yourself believe it will happen to you.","Let us sacrifice our today so that our children can have a better tomorrow.","Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.","Everything in the universe is within you. Ask all from yourself.","I'm not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.","A good head and a good heart are always a formidable combination.","The soul never thinks without a picture.","Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.","Success is dependent upon the glands - sweat glands."},
-			 rkuniss = {"Aga Khan University", "Air War College Institute, Karachi",
-		"Baqai Medical University",
-		"Benazir Bhutto Shaheed University Lyari",
-		"Commecs Institute of Business & Emerging Sciences",
-		"Dadabhoy Institute of Higher Education",
-		"Dawood University of Engineering & Technology",
-		"DHA Suffa University", "DOW University of Health Sciences",
-		"Emaan Institute of Management & Sciences, Karachi",
-		"Greenwich University", "Habib University", "Hamdard University",
-		"ILMA University", "Indus University",
-		"Indus Valley School of Art & Architecture",
-		"Institute of Business Administration",
-		"Institute of Business Management", "Iqra University",
-		"Jinnah Sindh Medical University", "Jinnah University for Women",
-		"Karachi Institute of Economics & Technology",
-		"Karachi Institute of Technology and Entrepreneurship (KITE), "
-		+ "Karachi",
-		"Karachi School of Business and Leadership",
-		"KASB Institute of Technology",
-		"Malir University of Science & Technology, Karachi",
-		"Metropolitan University Karachi",
-		"Millennium Institute of Technology and Entrepreneurship, Karachi",
-		"Muhammad Ali Jinnah University",
-		"NED University of Engineering & Technology",
-		"Newport Institute of Communications & Economics",
-		"Pakistan Naval Academy",
-		"Preston Institute of Management, Science & Technology",
-		"Preston University",
-		"Salim Habib University (Former Barret Hodgson University), "
-		+ "Karachi",
-		"Shaheed Benazir Bhutto City University",
-		"Shaheed Benazir Bhutto Dewan University",
-		"Shaheed Zulfikar Ali Bhutto Institute of Science & Technology",
-		"Shaheed Zulfiqar Ali Bhutto University of Law",
-		"Sindh Institute of Management & Technology",
-		"Sindh Institute of Medical Sciences",
-		"Sindh Madresatul Islam University",
-		"Sir Syed University of Engineering & Technology",
-		"Sohail University, Karachi", "Textile Institute of Pakistan",
-		"The Nazeer Hussain University", "UIT University, Karachi",
-		"University of Karachi", "Zia-ud-Din University"
-	},
+	rndcts = {"Your heart is the size of an ocean. Go find yourself in its hidden depths.", "Thinking is the capital, enterprise is the way, hard work is the solution.", "If you can't make it good, at least make it look good.", "Heart be brave. If you cannot be brave, just go. Love's glory is not a small thing.", "If you are out to describe the truth, leave elegance to the tailor.", "O man you are busy working for the world, and the world is busy trying to turn you out.", "While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.", "These capitalists generally act harmoniously and in concert, to fleece the people.", "I don't believe in failure. It is not failure if you enjoyed the process.", "Wear gratitude like a cloak and it will feed every corner of your life.", "If you even dream of beating me you'd better wake up and apologize.", "I will praise any man that will praise me.", "One of the greatest diseases is to be nobody to anybody.", "I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.", "People must learn to hate and if they can learn to hate, they can be taught to love.", "Everyone has been made for some particular work, and the desire for that work has been put in every heart.", "The less of the world, the freer you live.", "Respond to every call that excites your spirit.", "The way to get started is to quit talking and begin doing.", "Speak any language, turkish, greek, persian, arabic, but always speak with love.", "Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.", "When I am silent, I have thunder hidden inside.", "Technological progress is like an axe in the hands of a pathological criminal.", "No one would choose a friendless existence on condition of having all the other things in the world.", "Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don't let yourself believe it will happen to you.", "Let us sacrifice our today so that our children can have a better tomorrow.", "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.", "Everything in the universe is within you. Ask all from yourself.", "I'm not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.", "A good head and a good heart are always a formidable combination.", "The soul never thinks without a picture.", "Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.", "Success is dependent upon the glands - sweat glands."},
+	rkuniss = {"Aga Khan University", "Air War College Institute, Karachi",
+			   "Baqai Medical University",
+			   "Benazir Bhutto Shaheed University Lyari",
+			   "Commecs Institute of Business & Emerging Sciences",
+			   "Dadabhoy Institute of Higher Education",
+			   "Dawood University of Engineering & Technology",
+			   "DHA Suffa University", "DOW University of Health Sciences",
+			   "Emaan Institute of Management & Sciences, Karachi",
+			   "Greenwich University", "Habib University", "Hamdard University",
+			   "ILMA University", "Indus University",
+			   "Indus Valley School of Art & Architecture",
+			   "Institute of Business Administration",
+			   "Institute of Business Management", "Iqra University",
+			   "Jinnah Sindh Medical University", "Jinnah University for Women",
+			   "Karachi Institute of Economics & Technology",
+			   "Karachi Institute of Technology and Entrepreneurship (KITE), "
+			   + "Karachi",
+			   "Karachi School of Business and Leadership",
+			   "KASB Institute of Technology",
+			   "Malir University of Science & Technology, Karachi",
+			   "Metropolitan University Karachi",
+			   "Millennium Institute of Technology and Entrepreneurship, Karachi",
+			   "Muhammad Ali Jinnah University",
+			   "NED University of Engineering & Technology",
+			   "Newport Institute of Communications & Economics",
+			   "Pakistan Naval Academy",
+			   "Preston Institute of Management, Science & Technology",
+			   "Preston University",
+			   "Salim Habib University (Former Barret Hodgson University), "
+			   + "Karachi",
+			   "Shaheed Benazir Bhutto City University",
+			   "Shaheed Benazir Bhutto Dewan University",
+			   "Shaheed Zulfikar Ali Bhutto Institute of Science & Technology",
+			   "Shaheed Zulfiqar Ali Bhutto University of Law",
+			   "Sindh Institute of Management & Technology",
+			   "Sindh Institute of Medical Sciences",
+			   "Sindh Madresatul Islam University",
+			   "Sir Syed University of Engineering & Technology",
+			   "Sohail University, Karachi", "Textile Institute of Pakistan",
+			   "The Nazeer Hussain University", "UIT University, Karachi",
+			   "University of Karachi", "Zia-ud-Din University"
+			  },
 	rjbss = {"Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor",
 			 "Nurse", "Physician", "Laboratorian", "Psychiatrist/Psychologist",
 			 "Dermatologist", "Gynecologist", "Cardiologist", "Surgeon",
@@ -8635,7 +8870,7 @@ public class KL {
 	}
 
 	public static void main(String[] args) {
-    	StrArr arr = new StrArr("zoo", "hi", "beetles", "zer");
-    	printArr(arr.reverse());
+		StrArr arr = new StrArr("zoo", "hi", "beetles", "zer");
+		setTimeout(() -> printArr(arr.reverse()), 5);
 	}
 }
