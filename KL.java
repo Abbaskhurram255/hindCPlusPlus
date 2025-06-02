@@ -15,7 +15,6 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.text.*;
 
-
 @SuppressWarnings("all")
 public class KL {
 	public static final class Money {
@@ -203,6 +202,10 @@ public class KL {
 						 .replace("%25", "%");
 		return decoded;
 	}
+	public String getPath(String to) {
+		if (not(to)) return "";
+		return getClass().getResource(to).toString();
+	}
 	public static class os {
 		public static String name = System.getProperty("os.name").toLowerCase().split(" ")[0],
 							 version = System.getProperty("os.version").toLowerCase(),
@@ -219,7 +222,7 @@ public class KL {
 		}
 	}
 	// GUI
-	public static class GUI extends JFrame implements MouseListener, KeyListener {
+	public static class GUI extends JFrame {
 		private static final long serialVersionUID = 1L;
 		GUI() {
 			super();
@@ -357,125 +360,176 @@ public class KL {
 			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
 			return this;
 		}
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			KL.printf("Mouse clicked at {X: %d, Y: %d}", e.getX(), e.getY());
-			// e.getClickCount();
-			if (e.getButton() == MouseEvent.BUTTON1) {
-				// left clicked
-			} else if (e.getButton() == MouseEvent.BUTTON2) {
-				// mid clicked
-			} else if (e.getButton() == MouseEvent.BUTTON3) {
-				// right clicked
-			}
-			// TODO
-		}
-		@Override
-		public void mousePressed(MouseEvent e) {
-			KL.printf("Mouse pressed at {X: %d, Y: %d}", e.getX(), e.getY());
-			// e.getClickCount();
-			if (e.getButton() == MouseEvent.BUTTON1) {
-				// left clicked
-			} else if (e.getButton() == MouseEvent.BUTTON2) {
-				// mid clicked
-			} else if (e.getButton() == MouseEvent.BUTTON3) {
-				// right clicked
-			}
-			// TODO
-		}
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			KL.printf("Mouse released at {X: %d, Y: %d}", e.getX(), e.getY());
-			// e.getClickCount();
-			if (e.getButton() == MouseEvent.BUTTON1) {
-				// left clicked
-			} else if (e.getButton() == MouseEvent.BUTTON2) {
-				// mid clicked
-			} else if (e.getButton() == MouseEvent.BUTTON3) {
-				// right clicked
-			}
-			// TODO
-		}
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			KL.printf("Mouse entered at {X: %d, Y: %d}", e.getX(), e.getY());
-             // TODO
-		}
-		@Override
-		public void mouseExited(MouseEvent e) {
-			KL.print("Mouse exited");
-			// TODO
-		}
-		@Override
-		public void keyTyped(KeyEvent e) {
-			KL.print(e.getKeyChar());
-			// TODO
-		}
-		@Override
-		public void keyPressed(KeyEvent e) {
-			KL.print(e.getKeyChar());
-			// TODO
-		}
-		@Override
-		public void keyReleased(KeyEvent e) {
-			KL.print(e.getKeyChar());
-			// TODO
-		}
-		GUI listenKey(String k, Runnable action) {
-			super.addKeyListener(new KeyListener() {
-				@Override
-				public void keyPressed(KeyEvent e) {
+		GUI on(String k, Runnable action) {
+			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
+				String[] keys = k.split("[|]");
+				for (var key : keys) {
+					on(key, action);
 				}
-				@Override
-				public void keyReleased(KeyEvent e) {
-				}
-				@Override
-				public void keyTyped(KeyEvent e) {
-					if (k == Str(e.getKeyChar())) {
-						new Thread(action).run();
+			}
+			if (KL.is(k) && KL.is(action)) {
+				super.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						char keyCharCaptured = e.getKeyChar();
+						int keyCodeCaptured = e.getKeyCode();
+						String keyCaptured = "" + keyCharCaptured;
+						switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP:
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN:
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT:
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT:
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL:
+							keyCaptured = "ctrl";
+							break;
+						}
+						if (KL.eq(k, keyCaptured)) {
+							new Thread(action).run();
+							;
+						}
 					}
-				}
-			});
+					@Override
+					public void keyReleased(KeyEvent e) {
+					}
+					@Override
+					public void keyTyped(KeyEvent e) {
+					}
+				});
+				super.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int button = -1;
+						if (KL.eq(k, "click") || KL.eq(k, "clickl") || KL.eq(k, "lclick"))
+							button = MouseEvent.BUTTON1;
+						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw") || KL.eq(k, "mclick") || KL.eq(k, "wclick"))
+							button = MouseEvent.BUTTON2;
+						else if (KL.eq(k, "clickr") || KL.eq(k, "rclick"))
+							button = MouseEvent.BUTTON3;
+						if (e.getButton() == button) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (KL.eq(k, "release")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (KL.eq(k, "enter")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (KL.eq(k, "leave")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseMotionListener(new MouseMotionListener() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						if (KL.eq(k, "drag")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						if (KL.eq(k, "move")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseWheelListener(new MouseWheelListener() {
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						if (KL.eq(k, "wheel")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addWindowListener(new WindowListener() {
+					@Override
+					public void windowOpened(WindowEvent e) {
+						if (KL.eq(k, "launch")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void windowClosing(WindowEvent e) {
+						if (KL.in(k, "exit|close")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void windowClosed(WindowEvent e) {
+					}
+					@Override
+					public void windowIconified(WindowEvent e) {
+						if (KL.startsWith(k, "min")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+					}
+					@Override
+					public void windowActivated(WindowEvent e) {
+						if (KL.startsWith(k, "focus")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						if (KL.startsWith(k, "defocus")) {
+							new Thread(action).run();
+						}
+					}
+				});
+			}
 			return this;
 		}
-		GUI listenMouse(String evt, Runnable action) {
-			super.addMouseListener(new MouseListener() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					int button = -1;
-					if (KL.eq(evt, "click") || KL.eq(evt, "clickl"))
-						button = MouseEvent.BUTTON1;
-					else if (KL.eq(evt, "clickr"))
-						button = MouseEvent.BUTTON3;
-					else if (KL.eq(evt, "clickm") || KL.eq(evt, "clickw"))
-						button = MouseEvent.BUTTON2;
-					if (e.getButton() == button) {
-						new Thread(action).run();
-					}
-				}
-				@Override
-				public void mousePressed(MouseEvent e) {
-					mouseClicked(e);
-				}
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					if (KL.eq(evt, "release")) {
-						new Thread(action).run();
-					}
-				}
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					if (KL.eq(evt, "enter")) {
-						new Thread(action).run();
-					}
-				}
-				@Override
-				public void mouseExited(MouseEvent e) {
-					if (KL.eq(evt, "leave")) {
-						new Thread(action).run();
-					}
-				}
-			});
+		GUI state(String newState) {
+			switch (newState) {
+			case "min":
+				super.setExtendedState(super.ICONIFIED);
+				break;
+			case "max":
+				super.setExtendedState(super.MAXIMIZED_BOTH);
+				break;
+			case "none":
+			case "regular":
+			case "normal":
+				super.setExtendedState(super.NORMAL);
+				break;
+			}
+			return this;
+		}
+		String state() {
+			int x = super.getExtendedState();
+			String state = x == super.NORMAL ? "normal"
+						   : x == super.ICONIFIED ? "minimized" : x == super.MAXIMIZED_BOTH ? "maximized" : "unknown";
+			return state;
+		}
+		GUI min() {
+			state("min");
+			return this;
+		}
+		GUI max() {
+			state("max");
 			return this;
 		}
 	}
@@ -503,6 +557,10 @@ public class KL {
 		}
 		Label setFg(Color clr) {
 			fg(clr);
+			return this;
+		}
+		Label cursor(int c) {
+			super.setCursor(new Cursor(c));
 			return this;
 		}
 		Label font(String fontFamily, int fontSize) {
@@ -545,6 +603,110 @@ public class KL {
 		}
 		Label text(String s) {
 			super.setText(s);
+			return this;
+		}
+		Label on(String k, Runnable action) {
+			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
+				String[] keys = k.split("[|]");
+				for (var key : keys) {
+					on(key, action);
+				}
+			}
+			if (KL.is(k) && KL.is(action)) {
+				super.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						char keyCharCaptured = e.getKeyChar();
+						int keyCodeCaptured = e.getKeyCode();
+						String keyCaptured = "" + keyCharCaptured;
+						switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP:
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN:
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT:
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT:
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL:
+							keyCaptured = "ctrl";
+							break;
+						}
+						if (KL.eq(k, keyCaptured)) {
+							new Thread(action).run();
+							;
+						}
+					}
+					@Override
+					public void keyReleased(KeyEvent e) {
+					}
+					@Override
+					public void keyTyped(KeyEvent e) {
+					}
+				});
+				super.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int button = -1;
+						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+							button = MouseEvent.BUTTON1;
+						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+							button = MouseEvent.BUTTON2;
+						else if (KL.eq(k, "clickr"))
+							button = MouseEvent.BUTTON3;
+						if (e.getButton() == button) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (KL.eq(k, "release")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (KL.eq(k, "enter")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (KL.eq(k, "leave")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseMotionListener(new MouseMotionListener() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						if (KL.eq(k, "drag")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						if (KL.eq(k, "move")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseWheelListener(new MouseWheelListener() {
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						if (KL.eq(k, "wheel")) {
+							new Thread(action).run();
+						}
+					}
+				});
+			}
 			return this;
 		}
 	}
@@ -608,6 +770,10 @@ public class KL {
 			fg(clr);
 			return this;
 		}
+		Panel cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
 		Panel font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
@@ -637,6 +803,110 @@ public class KL {
 		}
 		Panel border(LineBorder brdr) {
 			super.setBorder(brdr);
+			return this;
+		}
+		Panel on(String k, Runnable action) {
+			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
+				String[] keys = k.split("[|]");
+				for (var key : keys) {
+					on(key, action);
+				}
+			}
+			if (KL.is(k) && KL.is(action)) {
+				super.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						char keyCharCaptured = e.getKeyChar();
+						int keyCodeCaptured = e.getKeyCode();
+						String keyCaptured = "" + keyCharCaptured;
+						switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP:
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN:
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT:
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT:
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL:
+							keyCaptured = "ctrl";
+							break;
+						}
+						if (KL.eq(k, keyCaptured)) {
+							new Thread(action).run();
+							;
+						}
+					}
+					@Override
+					public void keyReleased(KeyEvent e) {
+					}
+					@Override
+					public void keyTyped(KeyEvent e) {
+					}
+				});
+				super.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int button = -1;
+						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+							button = MouseEvent.BUTTON1;
+						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+							button = MouseEvent.BUTTON2;
+						else if (KL.eq(k, "clickr"))
+							button = MouseEvent.BUTTON3;
+						if (e.getButton() == button) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (KL.eq(k, "release")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (KL.eq(k, "enter")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (KL.eq(k, "leave")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseMotionListener(new MouseMotionListener() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						if (KL.eq(k, "drag")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						if (KL.eq(k, "move")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseWheelListener(new MouseWheelListener() {
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						if (KL.eq(k, "wheel")) {
+							new Thread(action).run();
+						}
+					}
+				});
+			}
 			return this;
 		}
 	}
@@ -670,7 +940,7 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-// Btn trigger()
+		// Btn trigger()
 		Btn bg(Color clr) {
 			super.setBackground(clr);
 			return this;
@@ -685,6 +955,10 @@ public class KL {
 		}
 		Btn setFg(Color clr) {
 			fg(clr);
+			return this;
+		}
+		Btn cursor(int c) {
+			super.setCursor(new Cursor(c));
 			return this;
 		}
 		Btn font(String fontFamily, int fontSize) {
@@ -733,6 +1007,110 @@ public class KL {
 			super.setText(s);
 			return this;
 		}
+		Btn on(String k, Runnable action) {
+			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
+				String[] keys = k.split("[|]");
+				for (var key : keys) {
+					on(key, action);
+				}
+			}
+			if (KL.is(k) && KL.is(action)) {
+				super.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						char keyCharCaptured = e.getKeyChar();
+						int keyCodeCaptured = e.getKeyCode();
+						String keyCaptured = "" + keyCharCaptured;
+						switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP:
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN:
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT:
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT:
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL:
+							keyCaptured = "ctrl";
+							break;
+						}
+						if (KL.eq(k, keyCaptured)) {
+							new Thread(action).run();
+							;
+						}
+					}
+					@Override
+					public void keyReleased(KeyEvent e) {
+					}
+					@Override
+					public void keyTyped(KeyEvent e) {
+					}
+				});
+				super.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int button = -1;
+						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+							button = MouseEvent.BUTTON1;
+						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+							button = MouseEvent.BUTTON2;
+						else if (KL.eq(k, "clickr"))
+							button = MouseEvent.BUTTON3;
+						if (e.getButton() == button) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (KL.eq(k, "release")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (KL.eq(k, "enter")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (KL.eq(k, "leave")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseMotionListener(new MouseMotionListener() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						if (KL.eq(k, "drag")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						if (KL.eq(k, "move")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseWheelListener(new MouseWheelListener() {
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						if (KL.eq(k, "wheel")) {
+							new Thread(action).run();
+						}
+					}
+				});
+			}
+			return this;
+		}
 	}
 	public static class TxtField extends JTextField {
 		private static final long serialVersionUID = 1L;
@@ -774,6 +1152,104 @@ public class KL {
 		}
 		TxtField value(String s) {
 			text(s);
+			return this;
+		}
+		TxtField on(String k, Runnable action) {
+			if (KL.is(k) && KL.is(action)) {
+				super.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						char keyCharCaptured = e.getKeyChar();
+						int keyCodeCaptured = e.getKeyCode();
+						String keyCaptured = "" + keyCharCaptured;
+						switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP:
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN:
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT:
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT:
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL:
+							keyCaptured = "ctrl";
+							break;
+						}
+						if (KL.eq(k, keyCaptured)) {
+							new Thread(action).run();
+							;
+						}
+					}
+					@Override
+					public void keyReleased(KeyEvent e) {
+					}
+					@Override
+					public void keyTyped(KeyEvent e) {
+					}
+				});
+				super.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int button = -1;
+						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+							button = MouseEvent.BUTTON1;
+						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+							button = MouseEvent.BUTTON2;
+						else if (KL.eq(k, "clickr"))
+							button = MouseEvent.BUTTON3;
+						if (e.getButton() == button) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (KL.eq(k, "release")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (KL.eq(k, "enter")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (KL.eq(k, "leave")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseMotionListener(new MouseMotionListener() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						if (KL.eq(k, "drag")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						if (KL.eq(k, "move")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseWheelListener(new MouseWheelListener() {
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						if (KL.eq(k, "wheel")) {
+							new Thread(action).run();
+						}
+					}
+				});
+			}
 			return this;
 		}
 	}
@@ -819,6 +1295,118 @@ public class KL {
 			text(s);
 			return this;
 		}
+		PwdField on(String k, Runnable action) {
+			if (KL.is(k) && KL.is(action)) {
+				super.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						char keyCharCaptured = e.getKeyChar();
+						int keyCodeCaptured = e.getKeyCode();
+						String keyCaptured = "" + keyCharCaptured;
+						switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP:
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN:
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT:
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT:
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL:
+							keyCaptured = "ctrl";
+							break;
+						}
+						if (KL.eq(k, keyCaptured)) {
+							new Thread(action).run();
+							;
+						}
+					}
+					@Override
+					public void keyReleased(KeyEvent e) {
+					}
+					@Override
+					public void keyTyped(KeyEvent e) {
+					}
+				});
+				super.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int button = -1;
+						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+							button = MouseEvent.BUTTON1;
+						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+							button = MouseEvent.BUTTON2;
+						else if (KL.eq(k, "clickr"))
+							button = MouseEvent.BUTTON3;
+						if (e.getButton() == button) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (KL.eq(k, "release")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (KL.eq(k, "enter")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (KL.eq(k, "leave")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseMotionListener(new MouseMotionListener() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						if (KL.eq(k, "drag")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						if (KL.eq(k, "move")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseWheelListener(new MouseWheelListener() {
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						if (KL.eq(k, "wheel")) {
+							new Thread(action).run();
+						}
+					}
+				});
+			}
+			return this;
+		}
+	}
+	public static class Icon extends ImageIcon {
+		Icon(byte[] imageData) {
+			super(imageData);
+		}
+		Icon(Image image) {
+			super(image);
+		}
+		Icon(String filename) {
+			super(filename);
+		}
+		Icon(java.net.URL urlObject) {
+			super(urlObject);
+		}
 	}
 	public static class clr extends Color {
 		private static final long serialVersionUID = 1L;
@@ -834,17 +1422,16 @@ public class KL {
 		clr(float r, float g, float b, float a) {
 			super(r, g, b, a);
 			/*
-			* @params all in the floating range: 0 to 1
-			*/
+			 * @params all in the floating range: 0 to 1
+			 */
 		}
 		clr(int r, int g, int b, int a) {
 			super(r, g, b, a);
 			/*
-			* @params all in the integer range: 0 to 255
-			*/
+			 * @params all in the integer range: 0 to 255
+			 */
 		}
 	}
-
 	// general
 	public static final class Error extends Throwable {
 		Error(String msg) {
@@ -3883,6 +4470,12 @@ public class KL {
 			return range(n, 1);
 		return range(n);
 	}
+	public static IntArr range(String arr) {
+		return range(len(arr));
+	}
+	public static IntArr range(char[] arr) {
+		return range(len(arr));
+	}
 	public static IntArr range(String[] arr) {
 		return range(len(arr));
 	}
@@ -3921,6 +4514,12 @@ public class KL {
 	}
 	public static IntArr range(BoolArr arr) {
 		return range(len(arr));
+	}
+	public static IntArr idx(String arr) {
+		return range(arr);
+	}
+	public static IntArr idx(char[] arr) {
+		return range(arr);
 	}
 	public static IntArr idx(String[] arr) {
 		return range(arr);
@@ -5920,6 +6519,9 @@ public class KL {
 	public static double fToC(double f) {
 		return farhenheitToCelcius(f);
 	}
+	public static boolean eq(char x, char y) {
+		return x == y;
+	}
 	public static boolean eq(int x, int y) {
 		return x == y;
 	}
@@ -5970,6 +6572,9 @@ public class KL {
 	}
 	public static boolean eq(BoolArr x, BoolArr y) {
 		return x.eq(y);
+	}
+	public static boolean uneq(char x, char y) {
+		return !eq(x, y);
 	}
 	public static boolean uneq(int x, int y) {
 		return !eq(x, y);
@@ -7723,6 +8328,9 @@ public class KL {
 		}
 		return result;
 	}
+	public static int len(char[] arr) {
+		return Str(arr).length();
+	}
 	public static int len(String arr[]) {
 		return arr.length;
 	}
@@ -8857,7 +9465,7 @@ public class KL {
 					   StandardCopyOption.REPLACE_EXISTING);
 			return true;
 		} catch (IOException e) {
-			System.out.println("\n[KL FileReader]: Failed to copy!\n");
+			System.out.println("\n[KL FileReader]: File Failed to copy!\n");
 		}
 		return false;
 	}
@@ -8868,9 +9476,7 @@ public class KL {
 	public static boolean newFolder(String folderName) {
 		return createFolder(folderName);
 	}
-
 	public static void main(String[] args) {
-		StrArr arr = new StrArr("zoo", "hi", "beetles", "zer");
-		setTimeout(() -> printArr(arr.reverse()), 5);
+	    
 	}
 }
