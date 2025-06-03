@@ -5676,6 +5676,96 @@ public class KL {
 	public static String Str(Tree_B t) {
 		return String(t);
 	}
+	public static String[] Arr(String... items) {
+        int length = items.length;
+	    String[] arr = new String[length];
+	    for (int i = 0; i < length; i++) arr[i] = items[i];
+	    return arr;
+    }
+    public static int[] Arr(int... items) {
+        int length = items.length;
+	    int[] arr = new int[length];
+	    for (int i = 0; i < length; i++) arr[i] = items[i];
+	    return arr;
+    }
+    public static long[] Arr(long... items) {
+        int length = items.length;
+	    long[] arr = new long[length];
+	    for (int i = 0; i < length; i++) arr[i] = items[i];
+	    return arr;
+    }
+    public static float[] Arr(float... items) {
+        int length = items.length;
+	    float[] arr = new float[length];
+	    for (int i = 0; i < length; i++) arr[i] = items[i];
+	    return arr;
+    }
+    public static double[] Arr(double... items) {
+        int length = items.length;
+	    double[] arr = new double[length];
+	    for (int i = 0; i < length; i++) arr[i] = items[i];
+	    return arr;
+    }
+    public static boolean[] Arr(boolean... items) {
+        int length = items.length;
+	    boolean[] arr = new boolean[length];
+	    for (int i = 0; i < length; i++) arr[i] = items[i];
+	    return arr;
+    }
+    public static Object[] Arr(Object... items) {
+        int length = items.length;
+	    Object[] arr = new Object[length];
+	    for (int i = 0; i < length; i++) arr[i] = items[i];
+	    return arr;
+    }
+public static String[] Arr(Obj_S o) {
+		return o.array();
+	}
+	public static int[] Arr(Obj_I o) {
+		return o.array();
+	}
+	public static long[] Arr(Obj_L o) {
+		return o.array();
+	}
+	public static float[] Arr(Obj_F o) {
+		return o.array();
+	}
+	public static double[] Arr(Obj_D o) {
+		return o.array();
+	}
+	public static boolean[] Arr(Obj_B o) {
+		return o.array();
+	}
+	public static int[] Arr(Tree_S t) {
+		return t.array();
+	}
+	public static String[] Arr(Tree_I t) {
+		return t.array();
+	}
+	public static long[] Arr(Tree_SL t) {
+		return t.array();
+	}
+	public static long[] Arr(Tree_L t) {
+		return t.array();
+	}
+	public static float[] Arr(Tree_SF t) {
+		return t.array();
+	}
+	public static float[] Arr(Tree_F t) {
+		return t.array();
+	}
+	public static double[] Arr(Tree_SD t) {
+		return t.array();
+	}
+	public static double[] Arr(Tree_D t) {
+		return t.array();
+	}
+	public static boolean[] Arr(Tree_SB t) {
+		return t.array();
+	}
+	public static boolean[] Arr(Tree_B t) {
+		return t.array();
+	}
 	public static char[] Chars(String str) {
 		char[] result = str.toCharArray();
 		return result;
@@ -7530,6 +7620,36 @@ public class KL {
 	public static boolean randItem(Obj_B arr) {
 		return arr.i(randInt(arr.length()));
 	}
+	public static int randItem(Tree_S t) {
+		return t.i(randInt(t.length()));
+	}
+	public static String randItem(Tree_I t) {
+		return t.i(randInt(t.length()));
+	}
+	public static long randItem(Tree_SL t) {
+		return t.i(randInt(t.length()));
+	}
+	public static long randItem(Tree_L t) {
+		return t.i(randInt(t.length()));
+	}
+	public static float randItem(Tree_SF t) {
+		return t.i(randInt(t.length()));
+	}
+	public static float randItem(Tree_F t) {
+		return t.i(randInt(t.length()));
+	}
+	public static double randItem(Tree_SD t) {
+		return t.i(randInt(t.length()));
+	}
+	public static double randItem(Tree_D t) {
+		return t.i(randInt(t.length()));
+	}
+	public static boolean randItem(Tree_SB t) {
+		return t.i(randInt(t.length()));
+	}
+	public static boolean randItem(Tree_B t) {
+		return t.i(randInt(t.length()));
+	}
 	public static String randFrom(String arr[]) {
 		return randItem(arr);
 	}
@@ -7569,6 +7689,36 @@ public class KL {
 	public static boolean randFrom(BoolArr arr) {
 		return randItem(arr);
 	}
+	public static int randFrom(Tree_S t) {
+		return randItem(t);
+	}
+	public static String randFrom(Tree_I t) {
+		return randItem(t);
+	}
+	public static long randFrom(Tree_SL t) {
+		return randItem(t);
+	}
+	public static long randFrom(Tree_L t) {
+		return randItem(t);
+	}
+	public static float randFrom(Tree_SF t) {
+		return randItem(t);
+	}
+	public static float randFrom(Tree_F t) {
+		return randItem(t);
+	}
+	public static double randFrom(Tree_SD t) {
+		return randItem(t);
+	}
+	public static double randFrom(Tree_D t) {
+		return randItem(t);
+	}
+	public static boolean randFrom(Tree_SB t) {
+		return randItem(t);
+	}
+	public static boolean randFrom(Tree_B t) {
+		return randItem(t);
+	}
 	public static String anyOf(String arr[]) {
 		return randItem(arr);
 	}
@@ -7607,6 +7757,36 @@ public class KL {
 	}
 	public static boolean anyOf(BoolArr arr) {
 		return randItem(arr);
+	}
+	public static int anyOf(Tree_S t) {
+		return randItem(t);
+	}
+	public static String anyOf(Tree_I t) {
+		return randItem(t);
+	}
+	public static long anyOf(Tree_SL t) {
+		return randItem(t);
+	}
+	public static long anyOf(Tree_L t) {
+		return randItem(t);
+	}
+	public static float anyOf(Tree_SF t) {
+		return randItem(t);
+	}
+	public static float anyOf(Tree_F t) {
+		return randItem(t);
+	}
+	public static double anyOf(Tree_SD t) {
+		return randItem(t);
+	}
+	public static double anyOf(Tree_D t) {
+		return randItem(t);
+	}
+	public static boolean anyOf(Tree_SB t) {
+		return randItem(t);
+	}
+	public static boolean anyOf(Tree_B t) {
+		return randItem(t);
 	}
 	public static int[] noDuplicates(int[] arr) {
 		return IntStream.of(arr).distinct().toArray();
