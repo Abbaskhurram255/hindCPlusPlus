@@ -932,15 +932,14 @@ public class KL {
 			super(text, i);
 			super.setFocusable(false);
 		}
-		Btn addEventListener(ActionListener listener) {
+		Btn click(ActionListener listener) {
 			super.addActionListener(listener);
 			return this;
 		}
-		Btn removeEventListener(ActionListener listener) {
+		Btn offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		// Btn trigger()
 		Btn bg(Color clr) {
 			super.setBackground(clr);
 			return this;
@@ -1007,108 +1006,9 @@ public class KL {
 			super.setText(s);
 			return this;
 		}
-		Btn on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
-				String[] keys = k.split("[|]");
-				for (var key : keys) {
-					on(key, action);
-				}
-			}
-			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyListener() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						char keyCharCaptured = e.getKeyChar();
-						int keyCodeCaptured = e.getKeyCode();
-						String keyCaptured = "" + keyCharCaptured;
-						switch (keyCodeCaptured) {
-						case KeyEvent.VK_UP:
-							keyCaptured = "up";
-							break;
-						case KeyEvent.VK_DOWN:
-							keyCaptured = "down";
-							break;
-						case KeyEvent.VK_LEFT:
-							keyCaptured = "left";
-							break;
-						case KeyEvent.VK_RIGHT:
-							keyCaptured = "right";
-							break;
-						case KeyEvent.VK_CONTROL:
-							keyCaptured = "ctrl";
-							break;
-						}
-						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();
-							;
-						}
-					}
-					@Override
-					public void keyReleased(KeyEvent e) {
-					}
-					@Override
-					public void keyTyped(KeyEvent e) {
-					}
-				});
-				super.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-					}
-					@Override
-					public void mousePressed(MouseEvent e) {
-						int button = -1;
-						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
-							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
-							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "clickr"))
-							button = MouseEvent.BUTTON3;
-						if (e.getButton() == button) {
-							new Thread(action).run();
-						}
-					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "release")) {
-							new Thread(action).run();
-						}
-					}
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "enter")) {
-							new Thread(action).run();
-						}
-					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "leave")) {
-							new Thread(action).run();
-						}
-					}
-				});
-				super.addMouseMotionListener(new MouseMotionListener() {
-					@Override
-					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "drag")) {
-							new Thread(action).run();
-						}
-					}
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "move")) {
-							new Thread(action).run();
-						}
-					}
-				});
-				super.addMouseWheelListener(new MouseWheelListener() {
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "wheel")) {
-							new Thread(action).run();
-						}
-					}
-				});
-			}
+		Btn on(String evt, ActionListener action) {
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) 
+				click(action);
 			return this;
 		}
 	}
@@ -4447,6 +4347,35 @@ public class KL {
 			SwingUtilities.invokeLater(fn);
 		}).start();
 	}
+	public static void delay(Runnable fn, int delay) {
+		setTimeout(fn, delay);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5) {
+		if (is(cond1)) new Thread(sol1).run();
+		else if (is(cond2)) new Thread(sol2).run();
+		else if (is(cond3)) new Thread(sol3).run();
+		else if (is(cond4)) new Thread(sol4).run();
+		else if (is(cond5)) new Thread(sol5).run();
+		return;
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4) {
+		if (is(cond1)) new Thread(sol1).run();
+		else if (is(cond2)) new Thread(sol2).run();
+		else if (is(cond3)) new Thread(sol3).run();
+		else if (is(cond4)) new Thread(sol4).run();
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3) {
+		if (is(cond1)) new Thread(sol1).run();
+		else if (is(cond2)) new Thread(sol2).run();
+		else if (is(cond3)) new Thread(sol3).run();
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2) {
+		if (is(cond1)) new Thread(sol1).run();
+		else if (is(cond2)) new Thread(sol2).run();
+	}
+	public static void sw(boolean cond1, Runnable sol1) {
+		if (is(cond1)) new Thread(sol1).run();
+	}
 	public static IntArr range(int n) {
 		if (isnl(n))
 			return null;
@@ -5230,6 +5159,54 @@ public class KL {
 	public static void printArr(BoolArr arr) {
 		print(arr.toString());
 	}
+	public static void printArr(Obj_S o) {
+		print(o.toString());
+	}
+	public static void printArr(Obj_I o) {
+		print(o.toString());
+	}
+	public static void printArr(Obj_L o) {
+		print(o.toString());
+	}
+	public static void printArr(Obj_F o) {
+		print(o.toString());
+	}
+	public static void printArr(Obj_D o) {
+		print(o.toString());
+	}
+	public static void printArr(Obj_B o) {
+		print(o.toString());
+	}
+	public static void printArr(Tree_S t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_I t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_SL t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_L t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_SF t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_F t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_SD t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_D t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_SB t) {
+		print(t.toString());
+	}
+	public static void printArr(Tree_B t) {
+		print(t.toString());
+	}
 	public static void printAll(String arr[]) {
 		printArr(arr);
 	}
@@ -5269,6 +5246,54 @@ public class KL {
 	public static void printAll(BoolArr arr) {
 		printArr(arr);
 	}
+	public static void printAll(Obj_S o) {
+		printArr(o);
+	}
+	public static void printAll(Obj_I o) {
+		printArr(o);
+	}
+	public static void printAll(Obj_L o) {
+		printArr(o);
+	}
+	public static void printAll(Obj_F o) {
+		printArr(o);
+	}
+	public static void printAll(Obj_D o) {
+		printArr(o);
+	}
+	public static void printAll(Obj_B o) {
+		printArr(o);
+	}
+	public static void printAll(Tree_S t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_I t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_SL t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_L t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_SF t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_F t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_SD t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_D t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_SB t) {
+		printArr(t);
+	}
+	public static void printAll(Tree_B t) {
+		printArr(t);
+	}
 	public static void printEach(String arr[]) {
 		printArr(arr);
 	}
@@ -5307,6 +5332,54 @@ public class KL {
 	}
 	public static void printEach(BoolArr arr) {
 		printArr(arr);
+	}
+	public static void printEach(Obj_S o) {
+		printArr(o);
+	}
+	public static void printEach(Obj_I o) {
+		printArr(o);
+	}
+	public static void printEach(Obj_L o) {
+		printArr(o);
+	}
+	public static void printEach(Obj_F o) {
+		printArr(o);
+	}
+	public static void printEach(Obj_D o) {
+		printArr(o);
+	}
+	public static void printEach(Obj_B o) {
+		printArr(o);
+	}
+	public static void printEach(Tree_S t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_I t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_SL t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_L t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_SF t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_F t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_SD t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_D t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_SB t) {
+		printArr(t);
+	}
+	public static void printEach(Tree_B t) {
+		printArr(t);
 	}
 	// getting user input
 	public static String ask(String s) {
@@ -5440,6 +5513,54 @@ public class KL {
 	public static String String(BoolArr arr) {
 		return arr.toString();
 	}
+	public static String String(Obj_S o) {
+		return o.toString();
+	}
+	public static String String(Obj_I o) {
+		return o.toString();
+	}
+	public static String String(Obj_L o) {
+		return o.toString();
+	}
+	public static String String(Obj_F o) {
+		return o.toString();
+	}
+	public static String String(Obj_D o) {
+		return o.toString();
+	}
+	public static String String(Obj_B o) {
+		return o.toString();
+	}
+	public static String String(Tree_S t) {
+		return t.toString();
+	}
+	public static String String(Tree_I t) {
+		return t.toString();
+	}
+	public static String String(Tree_SL t) {
+		return t.toString();
+	}
+	public static String String(Tree_L t) {
+		return t.toString();
+	}
+	public static String String(Tree_SF t) {
+		return t.toString();
+	}
+	public static String String(Tree_F t) {
+		return t.toString();
+	}
+	public static String String(Tree_SD t) {
+		return t.toString();
+	}
+	public static String String(Tree_D t) {
+		return t.toString();
+	}
+	public static String String(Tree_SB t) {
+		return t.toString();
+	}
+	public static String String(Tree_B t) {
+		return t.toString();
+	}
 	public static String Str(String arg) {
 		return String(arg);
 	}
@@ -5489,7 +5610,7 @@ public class KL {
 	public static String Str(Object[] arg) {
 		return String(arg);
 	}
-	public static String Str(StrArr arr) {
+		public static String Str(StrArr arr) {
 		return String(arr);
 	}
 	public static String Str(IntArr arr) {
@@ -5507,6 +5628,54 @@ public class KL {
 	public static String Str(BoolArr arr) {
 		return String(arr);
 	}
+	public static String Str(Obj_S o) {
+		return String(o);
+	}
+	public static String Str(Obj_I o) {
+		return String(o);
+	}
+	public static String Str(Obj_L o) {
+		return String(o);
+	}
+	public static String Str(Obj_F o) {
+		return String(o);
+	}
+	public static String Str(Obj_D o) {
+		return String(o);
+	}
+	public static String Str(Obj_B o) {
+		return String(o);
+	}
+	public static String Str(Tree_S t) {
+		return String(t);
+	}
+	public static String Str(Tree_I t) {
+		return String(t);
+	}
+	public static String Str(Tree_SL t) {
+		return String(t);
+	}
+	public static String Str(Tree_L t) {
+		return String(t);
+	}
+	public static String Str(Tree_SF t) {
+		return String(t);
+	}
+	public static String Str(Tree_F t) {
+		return String(t);
+	}
+	public static String Str(Tree_SD t) {
+		return String(t);
+	}
+	public static String Str(Tree_D t) {
+		return String(t);
+	}
+	public static String Str(Tree_SB t) {
+		return String(t);
+	}
+	public static String Str(Tree_B t) {
+		return String(t);
+	}
 	public static char[] Chars(String str) {
 		char[] result = str.toCharArray();
 		return result;
@@ -5520,10 +5689,13 @@ public class KL {
 		return result;
 	}
 	public static char nthCharOf(String str, int n) {
+		if (n < 0 || n > len(str)) return '\0';
 		char result = Chars(str)[n];
 		return result;
 	}
 	public static char nthLastCharOf(String str, int n) {
+		if (n <= 0 || n > len(str)) return '\0';
+		//tested, no edits please; in the case of reverse indexes, this IS the way the "if" condition is meant to be, i.e. the '=' sign stays
 		char result = nthCharOf(str, len(str) - n);
 		return result;
 	}
@@ -5669,6 +5841,9 @@ public class KL {
 	public static double Double(boolean arg) {
 		return Dbl(arg);
 	}
+	public static <T> java.util.List<T> List(T[] arg) {
+		return Arrays.asList(arg);
+	}
 	public static boolean isIntLike(String s) {
 		try {
 			return Integer.parseInt(s) % 1 == 0;
@@ -5741,9 +5916,59 @@ public class KL {
 	public static double Neg(double n) {
 		return -Pos(n);
 	}
+	public static int sum(int... ns) {
+		int acc = 0;
+		for (int next = 0; next < ns.length; next++) acc += ns[next];
+		return acc;
+	}
+	public static long sum(long... ns) {
+		long acc = 0;
+		for (int next = 0; next < ns.length; next++) acc += ns[next];
+		return acc;
+	}
+	public static float sum(float... ns) {
+		float acc = 0;
+		for (int next = 0; next < ns.length; next++) acc += ns[next];
+		return acc;
+	}
 	public static double sum(double... ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length; next++) acc += ns[next];
+		return acc;
+	}
+	public static int sum(IntArr ns) {
+		int acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static long sum(LongArr ns) {
+		long acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static float sum(FltArr ns) {
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static double sum(DblArr ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static int diff(int... ns) {
+		int acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc -= ns[next];
+		return acc;
+	}
+	public static long diff(long... ns) {
+		long acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc -= ns[next];
+		return acc;
+	}
+	public static float diff(float... ns) {
+		float acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc -= ns[next];
 		return acc;
 	}
 	public static double diff(double... ns) {
@@ -5751,9 +5976,79 @@ public class KL {
 		for (int next = 1; next < ns.length; next++) acc -= ns[next];
 		return acc;
 	}
+	public static int diff(IntArr ns) {
+		int acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static long diff(LongArr ns) {
+		long acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static float diff(FltArr ns) {
+		float acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static double diff(DblArr ns) {
+		double acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static int prd(int... ns) {
+		int acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc *= ns[next];
+		return acc;
+	}
+	public static long prd(long... ns) {
+		long acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc *= ns[next];
+		return acc;
+	}
+	public static float prd(float... ns) {
+		float acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc *= ns[next];
+		return acc;
+	}
 	public static double prd(double... ns) {
 		double acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc *= ns[next];
+		return acc;
+	}
+	public static int prd(IntArr ns) {
+		int acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static long prd(LongArr ns) {
+		long acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static float prd(FltArr ns) {
+		float acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static double prd(DblArr ns) {
+		double acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static int quo(int... ns) {
+		int acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc /= ns[next];
+		return acc;
+	}
+	public static long quo(long... ns) {
+		long acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc /= ns[next];
+		return acc;
+	}
+	public static float quo(float... ns) {
+		float acc = ns[0];
+		for (int next = 1; next < ns.length; next++) acc /= ns[next];
 		return acc;
 	}
 	public static double quo(double... ns) {
@@ -5761,8 +6056,37 @@ public class KL {
 		for (int next = 1; next < ns.length; next++) acc /= ns[next];
 		return acc;
 	}
-	public static double pow(double n, double power) {
-		return Math.pow(n, power);
+	public static int quo(IntArr ns) {
+		int acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static long quo(LongArr ns) {
+		long acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static float quo(FltArr ns) {
+		float acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quo(DblArr ns) {
+		double acc = ns.i(0);
+		for (int next = 1; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static int pow(int n, int power) {
+		return (int)Math.pow(n, power);
+	}
+	public static int sq(int n) {
+		return n * n;
+	}
+	public static long sq(long n) {
+		return n * n;
+	}
+	public static float sq(float n) {
+		return n * n;
 	}
 	public static double sq(double n) {
 		return n * n;
@@ -5770,20 +6094,44 @@ public class KL {
 	public static double sqrt(double n) {
 		return Math.sqrt(n);
 	}
+	public static int cb(int n) {
+		return sq(n) * n;
+	}
+	public static long cb(long n) {
+		return sq(n) * n;
+	}
+	public static float cb(float n) {
+		return sq(n) * n;
+	}
 	public static double cb(double n) {
 		return sq(n) * n;
 	}
 	public static double cbrt(double n) {
 		return Math.cbrt(n);
 	}
+	public static int area(int w, int h) {
+		return w * h;
+	}
+	public static long area(long w, long h) {
+		return w * h;
+	}
+	public static float area(float w, float h) {
+		return w * h;
+	}
 	public static double area(double w, double h) {
 		return w * h;
 	}
-	public static double rect(double w, double h) {
-		return area(w, h);
+	public static int tria(int w, int h) {
+		return (int)(.5 * area(w, h));
+	}
+	public static long tria(long w, long h) {
+		return (long)(.5 * area(w, h));
+	}
+	public static float tria(float w, float h) {
+		return (float)(.5 * area(w, h));
 	}
 	public static double tria(double w, double h) {
-		return .5 * rect(w, h);
+		return .5 * area(w, h);
 	}
 	public static int min(int... nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
@@ -5859,21 +6207,49 @@ public class KL {
 		}
 		return result.array();
 	}
+	public static long[] divisorsOf(long n) {
+		LongArr result = new LongArr();
+		for (long i = 2; i < n; i++) {
+			if (isPerfectMod(n, i))
+				result.add(i);
+		}
+		return result.array();
+	}
+	public static double[] divisorsOf(double n) {
+		DblArr result = new DblArr();
+		for (double i = 2; i < n; i++) {
+			if (isPerfectMod(n, i))
+				result.add(i);
+		}
+		return result.array();
+	}
+	public static boolean isDivisorOf(int n1, int n2) {
+		return isPerfectMod(n1, n2);
+	}
+	public static boolean isDivisorOf(long n1, long n2) {
+		return isPerfectMod(n1, n2);
+	}
 	public static boolean isDivisorOf(double n1, double n2) {
 		return isPerfectMod(n1, n2);
 	}
-	public static boolean isEven(double n) {
+	public static boolean isEven(int n) {
 		return isPerfectMod(n, 2);
 	}
-	public static boolean isOdd(double n) {
+	public static boolean isEven(long n) {
+		return isPerfectMod(n, 2);
+	}
+	public static boolean isOdd(int n) {
 		return !isPerfectMod(n, 2);
 	}
-	public static int isPrime(int n) {
+	public static boolean isOdd(long n) {
+		return !isPerfectMod(n, 2);
+	}
+	public static boolean isPrime(double n) {
 		for (int i = 2; i <= n / 2; i++) {
 			if (n % i == 0)
-				return 0;
+				return false;
 		}
-		return 1;
+		return true;
 	}
 	public static String th(long n) {
 		String result = Str(n);
@@ -6454,7 +6830,10 @@ public class KL {
 		.add(400, "CD")
 		.add(500, "D")
 		.add(900, "CM")
-		.add(1000, "M");
+		.add(1000, "M")
+		.add(4000, "M_V")
+		.add(9000,  "I_X")
+		.add(10000, "_X");
 		int x = tree.floorKey(n);
 		if (n != x)
 			return tree.get(x) + toRoman(n - x);
@@ -6731,6 +7110,27 @@ public class KL {
 		}
 		return count > 0;
 	}
+	public static boolean any(String... strings) {
+		return either(strings);
+	}
+	public static boolean any(int... ints) {
+		return either(ints);
+	}
+	public static boolean any(long... longs) {
+		return either(longs);
+	}
+	public static boolean any(float... floats) {
+		return either(floats);
+	}
+	public static boolean any(double... doubles) {
+		return either(doubles);
+	}
+	public static boolean any(boolean... bools) {
+		return either(bools);
+	}
+	public static boolean any(Object... objs) {
+		return either(objs);
+	}
 	public static boolean neither(String... strings) {
 		int count = 0;
 		for (String s : strings) {
@@ -6790,6 +7190,9 @@ public class KL {
 	public static boolean not(String s) {
 		return isnl(s) || isEmpty(s);
 	}
+	public static boolean not(char c) {
+		return isnl(c);
+	}
 	public static boolean not(int n) {
 		return isnl(n) || 0 == n;
 	}
@@ -6847,6 +7250,57 @@ public class KL {
 	public static boolean not(BoolArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
+	public static boolean not(Obj_S o) {
+		return isnl(o) || isEmpty(o);
+	}
+	public static boolean not(Obj_I o) {
+		return isnl(o) || isEmpty(o);
+	}
+	public static boolean not(Obj_L o) {
+		return isnl(o) || isEmpty(o);
+	}
+	public static boolean not(Obj_F o) {
+		return isnl(o) || isEmpty(o);
+	}
+	public static boolean not(Obj_D o) {
+		return isnl(o) || isEmpty(o);
+	}
+	public static boolean not(Obj_B o) {
+		return isnl(o) || isEmpty(o);
+	}
+	public static boolean not(Tree_S t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_I t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_SL t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_L t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_SF t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_F t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_SD t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_D t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_SB t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean not(Tree_B t) {
+		return isnl(t) || isEmpty(t);
+	}
+	public static boolean is(char c) {
+		return !not(c);
+	}
 	public static boolean is(String s) {
 		return !not(s);
 	}
@@ -6883,10 +7337,10 @@ public class KL {
 	public static boolean is(double[] arr) {
 		return !not(arr);
 	}
-	public static boolean is(Object[] arr) {
+	public static boolean is(boolean[] arr) {
 		return !not(arr);
 	}
-	public static boolean is(boolean[] arr) {
+	public static boolean is(Object[] arr) {
 		return !not(arr);
 	}
 	public static boolean is(StrArr arr) {
@@ -6906,6 +7360,54 @@ public class KL {
 	}
 	public static boolean is(BoolArr arr) {
 		return !not(arr);
+	}
+	public static boolean is(Obj_S o) {
+		return !not(o);
+	}
+	public static boolean is(Obj_I o) {
+		return !not(o);
+	}
+	public static boolean is(Obj_L o) {
+		return !not(o);
+	}
+	public static boolean is(Obj_F o) {
+		return !not(o);
+	}
+	public static boolean is(Obj_D o) {
+		return !not(o);
+	}
+	public static boolean is(Obj_B o) {
+		return !not(o);
+	}
+	public static boolean is(Tree_S t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_I t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_SL t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_L t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_SF t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_F t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_SD t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_D t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_SB t) {
+		return !not(t);
+	}
+	public static boolean is(Tree_B t) {
+		return !not(t);
 	}
 	public static boolean xor(boolean a, boolean b) {
 		return a || b && !(a && b);
@@ -6936,6 +7438,15 @@ public class KL {
 	public static double randFlt(int start, int end) {
 		double number = randInt(start, end) * .3;
 		return number;
+	}
+	public static double randDbl() {
+		return randFlt();
+	}
+	public static double randDbl(int end) {
+		return randFlt(end);
+	}
+	public static double randDbl(int start, int end) {
+		 return randFlt(start, end);
 	}
 	public static String randStr(int len) {
 		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop"
@@ -6984,22 +7495,40 @@ public class KL {
 		return arr[randInt(arr.length)];
 	}
 	public static String randItem(StrArr arr) {
-		return arr.get(randInt(arr.length()));
+		return arr.i(randInt(arr.length()));
 	}
 	public static int randItem(IntArr arr) {
-		return arr.get(randInt(arr.length()));
+		return arr.i(randInt(arr.length()));
 	}
 	public static long randItem(LongArr arr) {
-		return arr.get(randInt(arr.length()));
+		return arr.i(randInt(arr.length()));
 	}
 	public static float randItem(FltArr arr) {
-		return arr.get(randInt(arr.length()));
+		return arr.i(randInt(arr.length()));
 	}
 	public static double randItem(DblArr arr) {
-		return arr.get(randInt(arr.length()));
+		return arr.i(randInt(arr.length()));
 	}
 	public static boolean randItem(BoolArr arr) {
-		return arr.get(randInt(arr.length()));
+		return arr.i(randInt(arr.length()));
+	}
+	public static String randItem(Obj_S arr) {
+		return arr.i(randInt(arr.length()));
+	}
+	public static int randItem(Obj_I arr) {
+		return arr.i(randInt(arr.length()));
+	}
+	public static long randItem(Obj_L arr) {
+		return arr.i(randInt(arr.length()));
+	}
+	public static float randItem(Obj_F arr) {
+		return arr.i(randInt(arr.length()));
+	}
+	public static double randItem(Obj_D arr) {
+		return arr.i(randInt(arr.length()));
+	}
+	public static boolean randItem(Obj_B arr) {
+		return arr.i(randInt(arr.length()));
 	}
 	public static String randFrom(String arr[]) {
 		return randItem(arr);
@@ -7020,7 +7549,7 @@ public class KL {
 		return randItem(arr);
 	}
 	public static Object randFrom(Object arr[]) {
-		return arr[randInt(arr.length)];
+		return randItem(arr);
 	}
 	public static String randFrom(StrArr arr) {
 		return randItem(arr);
@@ -7040,43 +7569,43 @@ public class KL {
 	public static boolean randFrom(BoolArr arr) {
 		return randItem(arr);
 	}
-	public static String any(String arr[]) {
+	public static String anyOf(String arr[]) {
 		return randItem(arr);
 	}
-	public static int any(int arr[]) {
+	public static int anyOf(int arr[]) {
 		return randItem(arr);
 	}
-	public static long any(long arr[]) {
+	public static long anyOf(long arr[]) {
 		return randItem(arr);
 	}
-	public static float any(float arr[]) {
+	public static float anyOf(float arr[]) {
 		return randItem(arr);
 	}
-	public static double any(double arr[]) {
+	public static double anyOf(double arr[]) {
 		return randItem(arr);
 	}
-	public static boolean any(boolean arr[]) {
+	public static boolean anyOf(boolean arr[]) {
 		return randItem(arr);
 	}
-	public static Object any(Object arr[]) {
+	public static Object anyOf(Object arr[]) {
 		return arr[randInt(arr.length)];
 	}
-	public static String any(StrArr arr) {
+	public static String anyOf(StrArr arr) {
 		return randItem(arr);
 	}
-	public static int any(IntArr arr) {
+	public static int anyOf(IntArr arr) {
 		return randItem(arr);
 	}
-	public static long any(LongArr arr) {
+	public static long anyOf(LongArr arr) {
 		return randItem(arr);
 	}
-	public static float any(FltArr arr) {
+	public static float anyOf(FltArr arr) {
 		return randItem(arr);
 	}
-	public static double any(DblArr arr) {
+	public static double anyOf(DblArr arr) {
 		return randItem(arr);
 	}
-	public static boolean any(BoolArr arr) {
+	public static boolean anyOf(BoolArr arr) {
 		return randItem(arr);
 	}
 	public static int[] noDuplicates(int[] arr) {
@@ -8370,6 +8899,54 @@ public class KL {
 	public static int len(BoolArr arr) {
 		return arr.length();
 	}
+	public static int len(Obj_S o) {
+		return o.length();
+	}
+	public static int len(Obj_I o) {
+		return o.length();
+	}
+	public static int len(Obj_L o) {
+		return o.length();
+	}
+	public static int len(Obj_F o) {
+		return o.length();
+	}
+	public static int len(Obj_D o) {
+		return o.length();
+	}
+	public static int len(Obj_B o) {
+		return o.length();
+	}
+	public static int len(Tree_S t) {
+		return t.length();
+	}
+	public static int len(Tree_I t) {
+		return t.length();
+	}
+	public static int len(Tree_SL t) {
+		return t.length();
+	}
+	public static int len(Tree_L t) {
+		return t.length();
+	}
+	public static int len(Tree_SF t) {
+		return t.length();
+	}
+	public static int len(Tree_F t) {
+		return t.length();
+	}
+	public static int len(Tree_SD t) {
+		return t.length();
+	}
+	public static int len(Tree_D t) {
+		return t.length();
+	}
+	public static int len(Tree_SB t) {
+		return t.length();
+	}
+	public static int len(Tree_B t) {
+		return t.length();
+	}
 	public static int size(String str) {
 		return len(str);
 	}
@@ -8414,6 +8991,54 @@ public class KL {
 	}
 	public static int size(BoolArr arr) {
 		return len(arr);
+	}
+	public static int size(Obj_S o) {
+		return len(o);
+	}
+	public static int size(Obj_I o) {
+		return len(o);
+	}
+	public static int size(Obj_L o) {
+		return len(o);
+	}
+	public static int size(Obj_F o) {
+		return len(o);
+	}
+	public static int size(Obj_D o) {
+		return len(o);
+	}
+	public static int size(Obj_B o) {
+		return len(o);
+	}
+	public static int size(Tree_S t) {
+		return len(t);
+	}
+	public static int size(Tree_I t) {
+		return len(t);
+	}
+	public static int size(Tree_SL t) {
+		return len(t);
+	}
+	public static int size(Tree_L t) {
+		return len(t);
+	}
+	public static int size(Tree_SF t) {
+		return len(t);
+	}
+	public static int size(Tree_F t) {
+		return len(t);
+	}
+	public static int size(Tree_SD t) {
+		return len(t);
+	}
+	public static int size(Tree_D t) {
+		return len(t);
+	}
+	public static int size(Tree_SB t) {
+		return len(t);
+	}
+	public static int size(Tree_B t) {
+		return len(t);
 	}
 	public static boolean isEmpty(String s) {
 		return 0 == len(s);
@@ -8462,6 +9087,54 @@ public class KL {
 	}
 	public static boolean isEmpty(BoolArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
+	}
+	public static boolean isEmpty(Obj_S o) {
+		return 0 == len(o) || o.isEmpty();
+	}
+	public static boolean isEmpty(Obj_I o) {
+		return 0 == len(o) || o.isEmpty();
+	}
+	public static boolean isEmpty(Obj_L o) {
+		return 0 == len(o) || o.isEmpty();
+	}
+	public static boolean isEmpty(Obj_F o) {
+		return 0 == len(o) || o.isEmpty();
+	}
+	public static boolean isEmpty(Obj_D o) {
+		return 0 == len(o) || o.isEmpty();
+	}
+	public static boolean isEmpty(Obj_B o) {
+		return 0 == len(o) || o.isEmpty();
+	}
+	public static boolean isEmpty(Tree_S t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_I t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_SL t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_L t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_SF t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_F t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_SD t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_D t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_SB t) {
+		return 0 == len(t) || t.isEmpty();
+	}
+	public static boolean isEmpty(Tree_B t) {
+		return 0 == len(t) || t.isEmpty();
 	}
 	// Arrays
 	public static <T> T[] reverse(T[] arr) {
@@ -9477,6 +10150,7 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
-	    
+	    int n = 5;
+	    sw(n > 5, () -> print("greater than 5"), n==5, () -> print("equals 5"), n<5, () -> print("smaller than 5"));
 	}
 }
