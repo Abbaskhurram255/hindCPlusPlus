@@ -8,6 +8,7 @@ import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
+import java.net.*;
 //GUI
 import java.awt.*;
 import java.awt.event.*;
@@ -202,24 +203,67 @@ public class KL {
 						 .replace("%25", "%");
 		return decoded;
 	}
+	public static Obj_S fetch(String url) {
+		Obj_S map = new Obj_S();
+		try {
+			URL urlString = new URL(url);
+			HttpURLConnection connection = (HttpURLConnection) urlString.openConnection();
+			connection.setRequestMethod("GET");
+			int statusCode = connection.getResponseCode();
+			if (statusCode == HttpURLConnection.HTTP_OK) {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				String line;
+				StringBuilder respBuilder = new StringBuilder();
+				while ((line = reader.readLine()) != null) {
+					respBuilder.append(line);
+				}
+				reader.close();
+				String jsonString = respBuilder.toString();
+				jsonString = jsonString.trim();
+				if (jsonString.startsWith("{") && jsonString.endsWith("}"))
+					jsonString = jsonString.substring(1, jsonString.length() - 1);
+				String[] keyValuePairs = jsonString.split(",");
+				for (String pair : keyValuePairs) {
+					String[] parts = pair.split(":", 2);
+					if (parts.length == 2) {
+						String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]", "");
+						String value = parts[1].trim().replaceAll("[\"\\{\\}\\]]", "");
+						map.put(key, value);
+					}
+				}
+				map.add("response", "200").add("status", "ok").add("error", "no");
+				return map;
+			} else {
+				map.add("response", Str(statusCode)).add("status", "notok").add("error", "yes");
+				printf("[KLFetch.Status.NotOK]:\nMessage: GET request failed with status code ", statusCode);
+			}
+			connection.disconnect();
+		} catch (IOException e) {
+			map.add("response", "404").add("status", "notok").add("error", "yes");
+			print("[KLFetch.Status.Offline]:\nMessage: Failed to fetch. It appears, you might be offline.");
+		}
+		return map;
+	}
 	public String getPath(String to) {
 		if (not(to)) return "";
 		return getClass().getResource(to).toString();
 	}
+	public static String fileSeparator = System.getProperty("file.separator"),
+	    workDirectory = System.getProperty("user.dir").toLowerCase();
 	public static class os {
 		public static String name = System.getProperty("os.name").toLowerCase().split(" ")[0],
 							 version = System.getProperty("os.version").toLowerCase(),
-							 arch = System.getProperty("os.arch").toLowerCase(),
-							 workDirectory = System.getProperty("user.dir").toLowerCase(),
-							 separator = System.getProperty("file.separator");
+							 arch = System.getProperty("os.arch").toLowerCase();
+							 
 		public static boolean is(String s) {
 			return in(name, s);
 		}
-		public static class user {
-			public static String name = System.getProperty("user.name"),
+	}
+	public static class user {
+		public static String name = System.getProperty("user.name"),
 								 language = System.getProperty("user.language").toLowerCase(),
-								 homeDirectory = System.getProperty("user.home");
-		}
+								 homeDirectory = System.getProperty("user.home"),
+								 workDirectory = KL.workDirectory;
 	}
 	// GUI
 	public static class GUI extends JFrame {
@@ -3088,44 +3132,44 @@ public class KL {
 			for (String s : strings) super.add(s);
 		}
 		StrArr pushAt(int i, String... strings) {
-			if (i < 0 || i > super.size())
-				return null;
-			for (String s : strings) super.add(i, s);
+			if (i >= 0 && i < super.size() && 0!=len(strings)) {
+			    for (String s : strings) super.add(i, s);
+			}
 			return this;
 		}
 		StrArr pushStart(String... strings) {
-			pushAt(0, strings);
+			if (0!=len(strings)) pushAt(0, strings);
 			return this;
 		}
 		StrArr push(String... strings) {
-			pushAt(super.size(), strings);
+			if (0!=len(strings))
+			    pushAt(super.size(), strings);
 			return this;
 		}
 		String shift() {
+			if (super.isEmpty()) return "";
 			String removed = super.get(0);
 			super.remove(0);
 			return removed;
+		}
+		String pop(int... indexes) {
+			if (super.isEmpty())
+				return "";
+			for (int i : indexes) {
+				if (i >= 0 && i < length()) {
+					super.remove(i);
+					return super.get(i);
+				}
+			}
+			return "";
 		}
 		String pop(String... strings) {
 			if (super.isEmpty())
 				return "";
 			for (String s : strings) {
-				if (!has(s))
-					return "";
-				super.remove(s);
+				if (has(s)) super.remove(String.valueOf(s));
 			}
 			return strings[0];
-		}
-		String pop(int... indexes) {
-			String firstRemoved = super.get(indexes[0]);
-			if (super.isEmpty())
-				return "";
-			for (int i : indexes) {
-				if (i < 0 || i > super.size())
-					return "";
-				super.remove(i);
-			}
-			return firstRemoved;
 		}
 		StrArr popIf(Predicate<? super String> fn) {
 			super.removeIf(fn);
@@ -3275,6 +3319,10 @@ public class KL {
 			super.retainAll(arrB);
 			return this;
 		}
+		StrArr negativeIntersection(StrArr arrB) {
+			super.removeAll(arrB);
+			return this;
+		}
 		StrArr copy() {
 			return (StrArr) super.clone();
 		}
@@ -3300,21 +3348,23 @@ public class KL {
 			super();
 			for (int n : nums) super.add(n);
 		}
-		IntArr pushAt(int i, int... nums) {
-			if (i < 0 || i > super.size())
-				return null;
-			for (int n : nums) super.add(i, n);
+		IntArr pushAt(int i, int... ints) {
+			if (i >= 0 && i < super.size() && 0!=len(ints)) {
+			    for (int n : ints) super.add(i, n);
+			}
 			return this;
 		}
 		IntArr pushStart(int... ints) {
-			pushAt(0, ints);
+			if (0!=len(ints)) pushAt(0, ints);
 			return this;
 		}
-		IntArr push(int... nums) {
-			pushAt(super.size(), nums);
+		IntArr push(int... ints) {
+			if (0!=len(ints))
+			    pushAt(super.size(), ints);
 			return this;
 		}
 		int shift() {
+			if (super.isEmpty()) return 0;
 			int removed = super.get(0);
 			super.remove(0);
 			return removed;
@@ -3322,10 +3372,8 @@ public class KL {
 		int pop(int... ints) {
 			if (super.isEmpty())
 				return 0;
-			for (int i : ints) {
-				if (!has(i))
-					return 0;
-				super.remove(i);
+			for (int n : ints) {
+				if (has(n)) super.remove(Integer.valueOf(n));
 			}
 			return ints[0];
 		}
@@ -3482,6 +3530,10 @@ public class KL {
 			super.retainAll(arrB);
 			return this;
 		}
+		IntArr negativeIntersection(IntArr arrB) {
+			super.removeAll(arrB);
+			return this;
+		}
 		IntArr copy() {
 			return (IntArr) super.clone();
 		}
@@ -3508,31 +3560,42 @@ public class KL {
 			for (long n : nums) super.add(n);
 		}
 		LongArr pushAt(int i, long... longs) {
-			if (i < 0 || i > super.size())
-				return null;
-			for (long l : longs) super.add(i, l);
+			if (i >= 0 && i < super.size() && 0!=len(longs)) {
+			    for (long l : longs) super.add(i, l);
+			}
 			return this;
 		}
 		LongArr pushStart(long... longs) {
-			pushAt(0, longs);
+			if (0!=len(longs)) pushAt(0, longs);
 			return this;
 		}
 		LongArr push(long... longs) {
-			pushAt(super.size(), longs);
+			if (0!=len(longs))
+			    pushAt(super.size(), longs);
 			return this;
 		}
 		long shift() {
+			if (super.isEmpty()) return 0;
 			long removed = super.get(0);
 			super.remove(0);
 			return removed;
+		}
+		long pop(int... indexes) {
+			if (super.isEmpty())
+				return 0;
+			for (int i : indexes) {
+				if (i >= 0 && i < length()) {
+					super.remove(i);
+					return super.get(i);
+				}
+			}
+			return 0;
 		}
 		long pop(long... longs) {
 			if (super.isEmpty())
 				return 0;
 			for (long l : longs) {
-				if (!has(l))
-					return 0;
-				super.remove(l);
+				if (has(l)) super.remove(Long.valueOf(l));
 			}
 			return longs[0];
 		}
@@ -3689,6 +3752,10 @@ public class KL {
 			super.retainAll(arrB);
 			return this;
 		}
+		LongArr negativeIntersection(LongArr arrB) {
+			super.removeAll(arrB);
+			return this;
+		}
 		LongArr copy() {
 			return (LongArr) super.clone();
 		}
@@ -3715,31 +3782,42 @@ public class KL {
 			for (float n : nums) super.add(n);
 		}
 		FltArr pushAt(int i, float... floats) {
-			if (i < 0 || i > super.size())
-				return null;
-			for (float f : floats) super.add(i, f);
+			if (i >= 0 && i < super.size() && 0!=len(floats)) {
+			    for (float f : floats) super.add(i, f);
+			}
 			return this;
 		}
 		FltArr pushStart(float... floats) {
-			pushAt(0, floats);
+			if (0!=len(floats)) pushAt(0, floats);
 			return this;
 		}
 		FltArr push(float... floats) {
-			pushAt(super.size(), floats);
+			if (0!=len(floats))
+			    pushAt(super.size(), floats);
 			return this;
 		}
 		float shift() {
+			if (super.isEmpty()) return 0;
 			float removed = super.get(0);
 			super.remove(0);
 			return removed;
+		}
+		float pop(int... indexes) {
+			if (super.isEmpty())
+				return 0;
+			for (int i : indexes) {
+				if (i >= 0 && i < length()) {
+					super.remove(i);
+					return super.get(i);
+				}
+			}
+			return 0;
 		}
 		float pop(float... floats) {
 			if (super.isEmpty())
 				return 0;
 			for (float f : floats) {
-				if (!has(f))
-					return 0;
-				super.remove(f);
+				if (has(f)) super.remove(Float.valueOf(f));
 			}
 			return floats[0];
 		}
@@ -3896,6 +3974,10 @@ public class KL {
 			super.retainAll(arrB);
 			return this;
 		}
+		FltArr negativeIntersection(FltArr arrB) {
+			super.removeAll(arrB);
+			return this;
+		}
 		FltArr copy() {
 			return (FltArr) super.clone();
 		}
@@ -3922,31 +4004,42 @@ public class KL {
 			for (double d : doubles) super.add(d);
 		}
 		DblArr pushAt(int i, double... doubles) {
-			if (i < 0 || i > super.size())
-				return null;
-			for (double d : doubles) super.add(i, d);
+			if (i >= 0 && i < super.size() && 0!=len(doubles)) {
+			    for (double d : doubles) super.add(i, d);
+			}
 			return this;
 		}
 		DblArr pushStart(double... doubles) {
-			pushAt(0, doubles);
+			if (0!=len(doubles)) pushAt(0, doubles);
 			return this;
 		}
 		DblArr push(double... doubles) {
-			pushAt(super.size(), doubles);
+			if (0!=len(doubles))
+			    pushAt(super.size(), doubles);
 			return this;
 		}
 		double shift() {
+			if (super.isEmpty()) return 0;
 			double removed = super.get(0);
 			super.remove(0);
 			return removed;
+		}
+		double pop(int... indexes) {
+			if (super.isEmpty())
+				return 0;
+			for (int i : indexes) {
+				if (i >= 0 && i < length()) {
+					super.remove(i);
+					return super.get(i);
+				}
+			}
+			return 0;
 		}
 		double pop(double... doubles) {
 			if (super.isEmpty())
 				return 0;
 			for (double d : doubles) {
-				if (!has(d))
-					return 0;
-				super.remove(d);
+				if (has(d)) super.remove(Double.valueOf(d));
 			}
 			return doubles[0];
 		}
@@ -4103,6 +4196,10 @@ public class KL {
 			super.retainAll(arrB);
 			return this;
 		}
+		DblArr negativeIntersection(DblArr arrB) {
+			super.removeAll(arrB);
+			return this;
+		}
 		DblArr copy() {
 			return (DblArr) super.clone();
 		}
@@ -4129,43 +4226,44 @@ public class KL {
 			for (boolean b : bools) super.add(b);
 		}
 		BoolArr pushAt(int i, boolean... bools) {
-			if (i < 0 || i > super.size())
+			if (i < 0 || i > super.size() || 0==len(bools))
 				return null;
 			for (boolean b : bools) super.add(i, b);
 			return this;
 		}
 		BoolArr pushStart(boolean... bools) {
-			pushAt(0, bools);
+			if (0!=len(bools)) pushAt(0, bools);
 			return this;
 		}
 		BoolArr push(boolean... bools) {
-			pushAt(super.size(), bools);
+			if (0!=len(bools))
+			    pushAt(super.size(), bools);
 			return this;
 		}
 		boolean shift() {
+			if (super.isEmpty()) return false;
 			boolean removed = super.get(0);
 			super.remove(0);
 			return removed;
-		}
-		boolean pop(boolean... bools) {
-			if (super.isEmpty())
-				return false;
-			for (boolean b : bools) {
-				if (!has(b))
-					return false;
-				super.remove(b);
-			}
-			return true;
 		}
 		boolean pop(int... indexes) {
 			if (super.isEmpty())
 				return false;
 			for (int i : indexes) {
-				if (i < 0 || i > super.size())
-					return false;
-				super.remove(i);
+				if (i >= 0 && i < length()) {
+					super.remove(i);
+					return super.get(i);
+				}
 			}
-			return true;
+			return false;
+		}
+		boolean pop(boolean... bools) {
+			if (super.isEmpty())
+				return false;
+			for (boolean b : bools) {
+				if (has(b)) super.remove(Boolean.valueOf(b));
+			}
+			return bools[0];
 		}
 		BoolArr popIf(Predicate<? super Boolean> fn) {
 			super.removeIf(fn);
@@ -4320,6 +4418,10 @@ public class KL {
 			super.retainAll(arrB);
 			return this;
 		}
+		BoolArr negativeIntersection(BoolArr arrB) {
+			super.removeAll(arrB);
+			return this;
+		}
 		BoolArr copy() {
 			return (BoolArr) super.clone();
 		}
@@ -4350,6 +4452,433 @@ public class KL {
 	public static void delay(Runnable fn, int delay) {
 		setTimeout(fn, delay);
 	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		if (src instanceof Number) {
+			if (cond1 instanceof String) {
+				if (!in(Str(cond1), "(?<=[<>=])\\-?\\d")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware = Dbl(String(cond1).replaceAll("[^\\-\\d]", ""));
+				cond1 = String(cond1).replaceAll("[^<>=]", "");
+				if (eq(cond1, ">")) {
+					if (Dbl(Str(src)) > middleware) {
+						if (!isNull(sol1)) new Thread(sol1).run();
+						return true;
+					}
+				}
+				else if (eq(cond1, ">=")) {
+					if (Dbl(Str(src)) >= middleware) {
+						if (!isNull(sol1)) new Thread(sol1).run();
+						return true;
+					}
+				}
+				else if (eq(cond1, "<")) {
+					if (Dbl(Str(src)) < middleware) {
+						if (!isNull(sol1)) new Thread(sol1).run();
+						return true;
+					}
+				}
+				else if (eq(cond1, "<=")) {
+					if (Dbl(Str(src)) <= middleware) {
+						if (!isNull(sol1)) new Thread(sol1).run();
+						return true;
+					}
+				}
+				else if (eq(cond1, "==")) {
+					if (Dbl(Str(src)) == middleware) {
+						if (!isNull(sol1)) new Thread(sol1).run();
+						return true;
+					}
+				}
+			} else if (cond1 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond1)))) {
+					if (!isNull(sol1)) new Thread(sol1).run();
+					return true;
+				}
+			} else if (isNull(cond1)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond2 instanceof String) {
+				if (!in(Str(cond2), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware2 = Dbl(String(cond2).replaceAll("[^\\-\\d]", ""));
+				cond2 = String(cond2).replaceAll("[^<>=else]", "");
+				if (eq(cond2, ">")) {
+					if (Dbl(Str(src)) > middleware2) {
+						if (!isNull(sol2)) new Thread(sol2).run();
+						return true;
+					}
+				}
+				else if (eq(cond2, ">=")) {
+					if (Dbl(Str(src)) >= middleware2) {
+						if (!isNull(sol2)) new Thread(sol2).run();
+						return true;
+					}
+				}
+				else if (eq(cond2, "<")) {
+					if (Dbl(Str(src)) < middleware2) {
+						if (!isNull(sol2)) new Thread(sol2).run();
+						return true;
+					}
+				}
+				else if (eq(cond2, "<=")) {
+					if (Dbl(Str(src)) <= middleware2) {
+						if (!isNull(sol2)) new Thread(sol2).run();
+						return true;
+					}
+				}
+				else if (eq(cond2, "==")) {
+					if (Dbl(Str(src)) == middleware2) {
+						if (!isNull(sol2)) new Thread(sol2).run();
+						return true;
+					}
+				}
+				else if (eq(cond2, "else")) {
+					if (!isNull(sol2)) new Thread(sol2).run();
+					return false;
+				}
+			} else if (cond2 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond2)))) {
+					if (!isNull(sol2)) new Thread(sol2).run();
+					return true;
+				}
+			} else if (isNull(cond2)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond3 instanceof String) {
+				if (!in(Str(cond3), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware3 = Dbl(String(cond3).replaceAll("[^\\-\\d]", ""));
+				cond3 = String(cond3).replaceAll("[^<>=else]", "");
+				if (eq(cond3, ">")) {
+					if (Dbl(Str(src)) > middleware3) {
+						if (!isNull(sol3)) new Thread(sol3).run();
+						return true;
+					}
+				}
+				else if (eq(cond3, ">=")) {
+					if (Dbl(Str(src)) >= middleware3) {
+						if (!isNull(sol3)) new Thread(sol3).run();
+						return true;
+					}
+				}
+				else if (eq(cond3, "<")) {
+					if (Dbl(Str(src)) < middleware3) {
+						if (!isNull(sol3)) new Thread(sol3).run();
+						return true;
+					}
+				}
+				else if (eq(cond3, "<=")) {
+					if (Dbl(Str(src)) <= middleware3) {
+						if (!isNull(sol3)) new Thread(sol3).run();
+						return true;
+					}
+				}
+				else if (eq(cond3, "==")) {
+					if (Dbl(Str(src)) == middleware3) {
+						if (!isNull(sol3)) new Thread(sol3).run();
+						return true;
+					}
+				}
+				else if (eq(cond3, "else")) {
+					if (!isNull(sol3)) new Thread(sol3).run();
+					return false;
+				}
+			} else if (cond3 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond3)))) {
+					if (!isNull(sol3)) new Thread(sol3).run();
+					return true;
+				}
+			} else if (isNull(cond3)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond4 instanceof String) {
+				if (!in(Str(cond4), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware4 = Dbl(String(cond4).replaceAll("[^\\-\\d]", ""));
+				cond4 = String(cond4).replaceAll("[^<>=else]", "");
+				if (eq(cond4, ">")) {
+					if (Dbl(Str(src)) > middleware4) {
+						if (!isNull(sol4)) new Thread(sol4).run();
+						return true;
+					}
+				}
+				else if (eq(cond4, ">=")) {
+					if (Dbl(Str(src)) >= middleware4) {
+						if (!isNull(sol4)) new Thread(sol4).run();
+						return true;
+					}
+				}
+				else if (eq(cond4, "<")) {
+					if (Dbl(Str(src)) < middleware4) {
+						if (!isNull(sol4)) new Thread(sol4).run();
+						return true;
+					}
+				}
+				else if (eq(cond4, "<=")) {
+					if (Dbl(Str(src)) <= middleware4) {
+						if (!isNull(sol4)) new Thread(sol4).run();
+						return true;
+					}
+				}
+				else if (eq(cond4, "==")) {
+					if (Dbl(Str(src)) == middleware4) {
+						if (!isNull(sol4)) new Thread(sol4).run();
+						return true;
+					}
+				}
+				else if (eq(cond4, "else")) {
+					if (!isNull(sol4)) new Thread(sol4).run();
+					return false;
+				}
+			} else if (cond4 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond4)))) {
+					if (!isNull(sol4)) new Thread(sol4).run();
+					return true;
+				}
+			} else if (isNull(cond4)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond5 instanceof String) {
+				if (!in(Str(cond5), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware5 = Dbl(String(cond5).replaceAll("[^\\-\\d]", ""));
+				cond5 = String(cond5).replaceAll("[^<>=else]", "");
+				if (eq(cond5, ">")) {
+					if (Dbl(Str(src)) > middleware5) {
+						if (!isNull(sol5)) new Thread(sol5).run();
+						return true;
+					}
+				}
+				else if (eq(cond5, ">=")) {
+					if (Dbl(Str(src)) >= middleware5) {
+						if (!isNull(sol5)) new Thread(sol5).run();
+						return true;
+					}
+				}
+				else if (eq(cond5, "<")) {
+					if (Dbl(Str(src)) < middleware5) {
+						if (!isNull(sol5)) new Thread(sol5).run();
+						return true;
+					}
+				}
+				else if (eq(cond5, "<=")) {
+					if (Dbl(Str(src)) <= middleware5) {
+						if (!isNull(sol5)) new Thread(sol5).run();
+						return true;
+					}
+				}
+				else if (eq(cond5, "==")) {
+					if (Dbl(Str(src)) == middleware5) {
+						if (!isNull(sol5)) new Thread(sol5).run();
+						return true;
+					}
+				}
+				else if (eq(cond5, "else")) {
+					if (!isNull(sol5)) new Thread(sol5).run();
+					return false;
+				}
+			} else if (cond5 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond5)))) {
+					if (!isNull(sol5)) new Thread(sol5).run();
+					return true;
+				}
+			} else if (isNull(cond5)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+		} else if (src instanceof String) {
+			if (cond1 instanceof String) {
+				if (eq((String)src, (String)cond1)) {
+					if (!isNull(sol1)) new Thread(sol1).run();
+					return true;
+				}
+			} else if (isNull(cond1)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond2 instanceof String) {
+				if (eq((String)src, (String)cond2)) {
+					if (!isNull(sol2)) new Thread(sol2).run();
+					return true;
+				}
+				else if (eq((String)cond2, "else")) {
+					if (!isNull(sol2)) new Thread(sol2).run();
+					return false;
+				}
+			} else if (isNull(cond2)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond3 instanceof String) {
+				if (eq((String)src, (String)cond3)) {
+					if (!isNull(sol3)) new Thread(sol3).run();
+					return true;
+				}
+				else if (eq((String)cond3, "else")) {
+					if (!isNull(sol3)) new Thread(sol3).run();
+					return false;
+				}
+			} else if (isNull(cond3)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond4 instanceof String) {
+				if (eq((String)src, (String)cond4)) {
+					if (!isNull(sol4)) new Thread(sol4).run();
+					return true;
+				}
+				else if (eq((String)cond4, "else")) {
+					if (!isNull(sol4)) new Thread(sol4).run();
+					return false;
+				}
+			} else if (isNull(cond4)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond5 instanceof String) {
+				if (eq((String)src, (String)cond5)) {
+					if (!isNull(sol5)) new Thread(sol5).run();
+					return true;
+				}
+				else if (eq((String)cond5, "else")) {
+					if (!isNull(sol5)) new Thread(sol5).run();
+					return false;
+				}
+			} else if (isNull(cond5)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+		} else if (src instanceof Boolean) {
+			if (cond1 instanceof Boolean) {
+				if (eq((boolean)src, (boolean)cond1)) {
+					if (!isNull(sol1)) new Thread(sol1).run();
+					return true;
+				}
+			} else if (isNull(cond1)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond2 instanceof Boolean) {
+				if (eq((boolean)src, (boolean)cond2)) {
+					if (!isNull(sol2)) new Thread(sol2).run();
+					return true;
+				}
+			} else if (cond2 instanceof String) {
+				cond2 = Str(cond2).replaceAll("[^else]", "");
+				if (eq(cond2, "else")) {
+					if (!isNull(sol2)) new Thread(sol2).run();
+					return false;
+				}
+			} else if (isNull(cond2)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond3 instanceof Boolean) {
+				if (eq((boolean)src, (boolean)cond3)) {
+					if (!isNull(sol3)) new Thread(sol3).run();
+					return true;
+				}
+			} else if (cond3 instanceof String) {
+				cond3 = Str(cond3).replaceAll("[^else]", "");
+				if (eq(cond3, "else")) {
+					if (!isNull(sol3)) new Thread(sol3).run();
+					return false;
+				}
+			} else if (isNull(cond3)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond4 instanceof Boolean) {
+				if (eq((boolean)src, (boolean)cond4)) {
+					if (!isNull(sol4)) new Thread(sol4).run();
+					return true;
+				}
+			} else if (cond4 instanceof String) {
+				cond4 = Str(cond4).replaceAll("[^else]", "");
+				if (eq(cond4, "else")) {
+					if (!isNull(sol4)) new Thread(sol4).run();
+					return false;
+				}
+			} else if (isNull(cond4)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond5 instanceof Boolean) {
+				if (eq((boolean)src, (boolean)cond5)) {
+					if (!isNull(sol5)) new Thread(sol5).run();
+					return true;
+				}
+			} else if (cond5 instanceof String) {
+				cond5 = Str(cond5).replaceAll("[^else]", "");
+				if (eq(cond5, "else")) {
+					if (!isNull(sol5)) new Thread(sol5).run();
+					return false;
+				}
+			} else if (isNull(cond5)) {
+				//NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+		} else {
+			print("[KL.LogicalError.UnlikelyTypesSeen]\nThe source can only either be a string, number, or boolean.");
+		}
+		return false;
+	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null, null);
+	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null, null);
+	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2) {
+		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null, null);
+	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1) {
+		return sw(src, cond1, sol1, null, null, null, null, null, null, null, null);
+	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5) {
 		if (is(cond1)) new Thread(sol1).run();
 		else if (is(cond2)) new Thread(sol2).run();
@@ -4376,11 +4905,21 @@ public class KL {
 	public static void sw(boolean cond1, Runnable sol1) {
 		if (is(cond1)) new Thread(sol1).run();
 	}
+	public static final boolean Yes = true,
+	    No = !Yes;
+	public static String Else = "else";
 	public static IntArr range(int n) {
 		if (isnl(n))
 			return null;
 		IntArr arr = new IntArr();
 		for (int i = 0; i < n; i++) arr.add(i);
+		return arr;
+	}
+	public static DblArr range(double n) {
+		if (isnl(n))
+			return null;
+		DblArr arr = new DblArr();
+		for (double i = 0; i < n; i+=.1) arr.add(i);
 		return arr;
 	}
 	public static IntArr range(int m, int n) {
@@ -4394,7 +4933,23 @@ public class KL {
 		}
 		return arr;
 	}
+	public static DblArr range(double m, double n) {
+		DblArr arr = new DblArr();
+		if (isnl(m) || isnl(n) || eq(m, n))
+			return arr;
+		if (m > n) {
+			for (double i = m; i >= n; i-=.1) arr.add(i);
+		} else {
+			for (double i = m; i <= n; i+=.1) arr.add(i);
+		}
+		return arr;
+	}
 	public static IntArr range(int n, boolean reverse) {
+		if (reverse && n > 0)
+			return range(n, 1);
+		return range(n);
+	}
+	public static DblArr range(double n, boolean reverse) {
 		if (reverse && n > 0)
 			return range(n, 1);
 		return range(n);
@@ -4636,10 +5191,21 @@ public class KL {
 		Object[] iterable, ObjIntConsumer<Object> consumer) {
 		each(iterable, consumer);
 	}
+	public static void repeat(Runnable fn, int times) {
+		for (; times > 0; times--) new Thread(fn).run();
+	}
+	public static String repeat(String s, int times) {
+		String org = s;
+		for (; times > 0; times--) s += org;
+		return s;
+	}
+	public static String repeat(String s) {
+		return repeat(s, 1);
+	}
 	public static String[] map(String[] arr, Function<String, String> func) {
 		if (arr == null || func == null) {
-			throw new IllegalArgumentException(
-				"Array and function cannot be null");
+			print("Neither the array, nor the function can be null");
+			return null;
 		}
 		String[] result = new String[arr.length];
 		for (int i = 0; i < arr.length; i++) {
@@ -4656,12 +5222,23 @@ public class KL {
 	public static double[] map(double[] array, DoubleUnaryOperator operator) {
 		return Arrays.stream(array).map(operator).toArray();
 	}
-	public static <T> T[] popIf(T[] array, Predicate<T> condition) {
-		java.util.List<T> filteredList = Arrays
-										 .stream(array)
-										 .filter(condition.negate())
-										 .collect(Collectors.toList());
-		return filteredList.toArray(Arrays.copyOf(array, filteredList.size()));
+	public static String[] popIf(String[] array, Predicate<String> condition) {
+		return new StrArr(array).popIf(condition).array();
+	}
+	public static int[] popIf(int[] array, Predicate<Integer> condition) {
+		return new IntArr(array).popIf(condition).array();
+	}
+	public static long[] popIf(long[] array, Predicate<Long> condition) {
+		return new LongArr(array).popIf(condition).array();
+	}
+	public static float[] popIf(float[] array, Predicate<Float> condition) {
+		return new FltArr(array).popIf(condition).array();
+	}
+	public static double[] popIf(double[] array, Predicate<Double> condition) {
+		return new DblArr(array).popIf(condition).array();
+	}
+	public static boolean[] popIf(boolean[] array, Predicate<Boolean> condition) {
+		return new BoolArr(array).popIf(condition).array();
 	}
 	public static StrArr popIf(StrArr list, Predicate<String> condition) {
 		return list.popIf(condition);
@@ -4681,10 +5258,23 @@ public class KL {
 	public static BoolArr popIf(BoolArr list, Predicate<Boolean> condition) {
 		return list.popIf(condition);
 	}
-	public static <T> T[] keepIf(T[] array, Predicate<T> condition) {
-		java.util.List<T> filteredList =
-			Arrays.stream(array).filter(condition).collect(Collectors.toList());
-		return filteredList.toArray(Arrays.copyOf(array, filteredList.size()));
+	public static String[] keepIf(String[] array, Predicate<String> condition) {
+		return new StrArr(array).keepIf(condition).array();
+	}
+	public static int[] keepIf(int[] array, Predicate<Integer> condition) {
+		return new IntArr(array).keepIf(condition).array();
+	}
+	public static long[] keepIf(long[] array, Predicate<Long> condition) {
+		return new LongArr(array).keepIf(condition).array();
+	}
+	public static float[] keepIf(float[] array, Predicate<Float> condition) {
+		return new FltArr(array).keepIf(condition).array();
+	}
+	public static double[] keepIf(double[] array, Predicate<Double> condition) {
+		return new DblArr(array).keepIf(condition).array();
+	}
+	public static boolean[] keepIf(boolean[] array, Predicate<Boolean> condition) {
+		return new BoolArr(array).keepIf(condition).array();
 	}
 	public static StrArr keepIf(StrArr list, Predicate<String> condition) {
 		return list.keepIf(condition);
@@ -4704,7 +5294,22 @@ public class KL {
 	public static BoolArr keepIf(BoolArr list, Predicate<Boolean> condition) {
 		return list.keepIf(condition);
 	}
-	public static <T> T[] filterOut(T[] array, Predicate<T> condition) {
+	public static String[] filterOut(String[] array, Predicate<String> condition) {
+		return popIf(array, condition);
+	}
+	public static int[] filterOut(int[] array, Predicate<Integer> condition) {
+		return popIf(array, condition);
+	}
+	public static long[] filterOut(long[] array, Predicate<Long> condition) {
+		return popIf(array, condition);
+	}
+	public static float[] filterOut(float[] array, Predicate<Float> condition) {
+		return popIf(array, condition);
+	}
+	public static double[] filterOut(double[] array, Predicate<Double> condition) {
+		return popIf(array, condition);
+	}
+	public static boolean[] filterOut(boolean[] array, Predicate<Boolean> condition) {
 		return popIf(array, condition);
 	}
 	public static StrArr filterOut(StrArr list, Predicate<String> condition) {
@@ -4726,7 +5331,22 @@ public class KL {
 		BoolArr list, Predicate<Boolean> condition) {
 		return popIf(list, condition);
 	}
-	public static <T> T[] filter(T[] array, Predicate<T> condition) {
+	public static String[] filter(String[] array, Predicate<String> condition) {
+		return keepIf(array, condition);
+	}
+	public static int[] filter(int[] array, Predicate<Integer> condition) {
+		return keepIf(array, condition);
+	}
+	public static long[] filter(long[] array, Predicate<Long> condition) {
+		return keepIf(array, condition);
+	}
+	public static float[] filter(float[] array, Predicate<Float> condition) {
+		return keepIf(array, condition);
+	}
+	public static double[] filter(double[] array, Predicate<Double> condition) {
+		return keepIf(array, condition);
+	}
+	public static boolean[] filter(boolean[] array, Predicate<Boolean> condition) {
 		return keepIf(array, condition);
 	}
 	public static StrArr filter(StrArr list, Predicate<String> condition) {
@@ -4747,17 +5367,80 @@ public class KL {
 	public static BoolArr filter(BoolArr list, Predicate<Boolean> condition) {
 		return keepIf(list, condition);
 	}
-	public static void repeat(Runnable fn, int times) {
-		for (; times > 0; times--) new Thread(fn).run();
+	public static String[] onlyPop(String[] array, Predicate<String> condition) {
+		return popIf(array, condition);
 	}
-	public static String repeat(String s, int times) {
-		String org = s;
-		for (; times > 0; times--) s += org;
-		return s;
+	public static int[] onlyPop(int[] array, Predicate<Integer> condition) {
+		return popIf(array, condition);
 	}
-	public static String repeat(String s) {
-		return repeat(s, 1);
+	public static long[] onlyPop(long[] array, Predicate<Long> condition) {
+		return popIf(array, condition);
 	}
+	public static float[] onlyPop(float[] array, Predicate<Float> condition) {
+		return popIf(array, condition);
+	}
+	public static double[] onlyPop(double[] array, Predicate<Double> condition) {
+		return popIf(array, condition);
+	}
+	public static boolean[] onlyPop(boolean[] array, Predicate<Boolean> condition) {
+		return popIf(array, condition);
+	}
+	public static StrArr onlyPop(StrArr list, Predicate<String> condition) {
+		return popIf(list, condition);
+	}
+	public static IntArr onlyPop(IntArr list, Predicate<Integer> condition) {
+		return popIf(list, condition);
+	}
+	public static LongArr onlyPop(LongArr list, Predicate<Long> condition) {
+		return popIf(list, condition);
+	}
+	public static FltArr onlyPop(FltArr list, Predicate<Float> condition) {
+		return popIf(list, condition);
+	}
+	public static DblArr onlyPop(DblArr list, Predicate<Double> condition) {
+		return popIf(list, condition);
+	}
+	public static BoolArr onlyPop(
+		BoolArr list, Predicate<Boolean> condition) {
+		return popIf(list, condition);
+	}
+	public static String[] onlyKeep(String[] array, Predicate<String> condition) {
+		return keepIf(array, condition);
+	}
+	public static int[] onlyKeep(int[] array, Predicate<Integer> condition) {
+		return keepIf(array, condition);
+	}
+	public static long[] onlyKeep(long[] array, Predicate<Long> condition) {
+		return keepIf(array, condition);
+	}
+	public static float[] onlyKeep(float[] array, Predicate<Float> condition) {
+		return keepIf(array, condition);
+	}
+	public static double[] onlyKeep(double[] array, Predicate<Double> condition) {
+		return keepIf(array, condition);
+	}
+	public static boolean[] onlyKeep(boolean[] array, Predicate<Boolean> condition) {
+		return keepIf(array, condition);
+	}
+	public static StrArr onlyKeep(StrArr list, Predicate<String> condition) {
+		return keepIf(list, condition);
+	}
+	public static IntArr onlyKeep(IntArr list, Predicate<Integer> condition) {
+		return keepIf(list, condition);
+	}
+	public static LongArr onlyKeep(LongArr list, Predicate<Long> condition) {
+		return keepIf(list, condition);
+	}
+	public static FltArr onlyKeep(FltArr list, Predicate<Float> condition) {
+		return keepIf(list, condition);
+	}
+	public static DblArr onlyKeep(DblArr list, Predicate<Double> condition) {
+		return keepIf(list, condition);
+	}
+	public static BoolArr onlyKeep(BoolArr list, Predicate<Boolean> condition) {
+		return keepIf(list, condition);
+	}
+	
 	// Date functions
 	public static String nthDay(int n) {
 		String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
@@ -5718,7 +6401,7 @@ public class KL {
 	    for (int i = 0; i < length; i++) arr[i] = items[i];
 	    return arr;
     }
-public static String[] Arr(Obj_S o) {
+    public static String[] Arr(Obj_S o) {
 		return o.array();
 	}
 	public static int[] Arr(Obj_I o) {
@@ -5857,7 +6540,7 @@ public static String[] Arr(Obj_S o) {
 	}
 	public static float Flt(String arg) {
 		try {
-			return Float.parseFloat(arg.replaceAll("[^\\d\\.]", ""));
+			return Float.parseFloat(arg.replaceAll("[^\\-\\d\\.]", ""));
 		} catch (Exception err) {
 			return 0;
 		}
@@ -5896,7 +6579,11 @@ public static String[] Arr(Obj_S o) {
 		return b == true ? 1 : 0;
 	}
 	public static double Dbl(String arg) {
-		return Double.parseDouble(arg.replaceAll("[^\\d\\.]", ""));
+		try {
+			return Double.parseDouble(arg.replaceAll("[^\\-\\d\\.]", ""));
+		} catch (Exception err) {
+			return 0;
+		}
 	}
 	public static double Dbl(int arg) {
 		return (double) arg;
@@ -5931,7 +6618,29 @@ public static String[] Arr(Obj_S o) {
 	public static double Double(boolean arg) {
 		return Dbl(arg);
 	}
-	public static <T> java.util.List<T> List(T[] arg) {
+	public static <T> java.util.List<T> List(T args) {
+		return Arrays.asList(args);
+	}
+	public static <T> java.util.List<T> List(T... args) {
+		return Arrays.asList(args);
+	}
+	//may or MAY NOT work, as working with generic types can be unpredictable, as learned from the mistakes in the past. So, here are some backup plans:
+	public static java.util.List<String> List(String... arg) {
+		return Arrays.asList(arg);
+	}
+	public static java.util.List<Integer> List(Integer... arg) {
+		return Arrays.asList(arg);
+	}
+	public static java.util.List<Long> List(Long... arg) {
+		return Arrays.asList(arg);
+	}
+	public static java.util.List<Float> List(Float... arg) {
+		return Arrays.asList(arg);
+	}
+	public static java.util.List<Double> List(Double... arg) {
+		return Arrays.asList(arg);
+	}
+	public static java.util.List<Boolean> List(Boolean... arg) {
 		return Arrays.asList(arg);
 	}
 	public static boolean isIntLike(String s) {
@@ -7006,6 +7715,9 @@ public static String[] Arr(Obj_S o) {
 	public static boolean eq(boolean x, boolean y) {
 		return x == y;
 	}
+	public static boolean eq(Object x, Object y) {
+		return x.equals(y);
+	}
 	public static boolean eq(String[] x, String[] y) {
 		return Arrays.equals(x, y);
 	}
@@ -7022,6 +7734,9 @@ public static String[] Arr(Obj_S o) {
 		return Arrays.equals(x, y);
 	}
 	public static boolean eq(boolean[] x, boolean[] y) {
+		return Arrays.equals(x, y);
+	}
+	public static boolean eq(Object[] x, Object[] y) {
 		return Arrays.equals(x, y);
 	}
 	public static boolean eq(StrArr x, StrArr y) {
@@ -7042,6 +7757,36 @@ public static String[] Arr(Obj_S o) {
 	public static boolean eq(BoolArr x, BoolArr y) {
 		return x.eq(y);
 	}
+	public static boolean eq(Tree_S x, Tree_S y) {
+		return x.equals(y);
+	}
+	public static boolean eq(Tree_I x, Tree_I y) {
+		return x.equals(y);
+	}
+	public static boolean eq(Tree_SL x, Tree_SL y) {
+		return x.equals(y);
+	}
+	public static boolean eq(Tree_L x, Tree_L y) {
+		return x.equals(y);
+	}
+	public static boolean eq(Tree_SF x, Tree_SF y) {
+		return x.equals(y);
+	}
+	public static boolean eq(Tree_F x, Tree_F y) {
+		return x.equals(y);
+	}
+    public static boolean eq(Tree_SD x, Tree_SD y) {
+		return x.equals(y);
+	}
+	public static boolean eq(Tree_D x, Tree_D y) {
+		return x.equals(y);
+	}
+	public static boolean eq(Tree_SB x, Tree_SB y) {
+		return x.equals(y);
+	}
+	public static boolean eq(Tree_B x, Tree_B y) {
+		return x.equals(y);
+	}
 	public static boolean uneq(char x, char y) {
 		return !eq(x, y);
 	}
@@ -7058,6 +7803,9 @@ public static String[] Arr(Obj_S o) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(boolean x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Object x, Object y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(String[] x, String[] y) {
@@ -7078,6 +7826,9 @@ public static String[] Arr(Obj_S o) {
 	public static boolean uneq(boolean[] x, boolean[] y) {
 		return !eq(x, y);
 	}
+	public static boolean uneq(Object[] x, Object[] y) {
+		return !eq(x, y);
+	}
 	public static boolean uneq(StrArr x, StrArr y) {
 		return !eq(x, y);
 	}
@@ -7094,6 +7845,36 @@ public static String[] Arr(Obj_S o) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(BoolArr x, BoolArr y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_S x, Tree_S y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_I x, Tree_I y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_SL x, Tree_SL y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_L x, Tree_L y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_SF x, Tree_SF y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_F x, Tree_F y) {
+		return !eq(x, y);
+	}
+    public static boolean uneq(Tree_SD x, Tree_SD y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_D x, Tree_D y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_SB x, Tree_SB y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(Tree_B x, Tree_B y) {
 		return !eq(x, y);
 	}
 	public static boolean both(String... strings) {
@@ -8683,11 +9464,16 @@ public static String[] Arr(Obj_S o) {
 				|| re.equals("?")) {
 			re = "\\" + re;
 		}
+		if (in(re, "%\\w")) {
+			re = re.replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]").replaceAll("%s", "[A-Za-z][\\\\w]+").replaceAll("%d", "\\\\d+");
+			//modification precaution: it has been tested, and hence learned, the double-escaping remains AS-IS
+		}
 		// escape tricky characters, if they're the only content: helps avoid
 		// false positives as a "." or a "*" alone, can match just anything;.
 		// Needless to say, these quantifiers, along with a "+" and an
 		// optionality quantifier, i.e. a "?" quantifier, might also cause
 		// memory heap to exceed
+		// plus, handling both, standard and custom, format specifiers
 		boolean strict = false;
 		if (is(bools)) {
 			strict = bools[0] == true;
@@ -8696,6 +9482,31 @@ public static String[] Arr(Obj_S o) {
 			Pattern.compile(re, strict ? 0 : Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(str);
 		return !!matcher.find();
+	}
+	public static String findMatch(String str, String re, boolean... bools) {
+		if (re.equals(".") || re.equals("*") || re.equals("+")
+				|| re.equals("?")) {
+			re = "\\" + re;
+		}
+		if (in(re, "%\\w")) {
+			re = re.replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]").replaceAll("%s", "[A-Za-z][\\\\w]+").replaceAll("%d", "\\\\d+");
+			//modification precaution: it has been tested, and hence learned, the double-escaping remains AS-IS
+		}
+		// escape tricky characters, if they're the only content: helps avoid
+		// false positives as a "." or a "*" alone, can match just anything;.
+		// Needless to say, these quantifiers, along with a "+" and an
+		// optionality quantifier, i.e. a "?" quantifier, might also cause
+		// memory heap to exceed
+		// plus, handling both, standard and custom, format specifiers
+		boolean strict = false;
+		if (is(bools)) {
+			strict = bools[0] == true;
+		}
+		Pattern pattern =
+			Pattern.compile("(" + re + ")", strict ? 0 : Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(str);
+		if (!matcher.find()) return "";
+		return matcher.group();
 	}
 	public static boolean match(String[] arrA, String[] arrB) {
 		return Arrays.compare(arrA, arrB) >= 0;
@@ -8954,6 +9765,246 @@ public static String[] Arr(Obj_S o) {
 	}
 	public static BoolArr intersection(BoolArr arrA, BoolArr arrB) {
 		return arrA.intersection(arrB);
+	}
+	public static String[] keepIfMatch(String[] arrA, String... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static int[] keepIfMatch(int[] arrA, int... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static long[] keepIfMatch(long[] arrA, long... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static float[] keepIfMatch(float[] arrA, float... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static double[] keepIfMatch(double[] arrA, double... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static boolean[] keepIfMatch(boolean[] arrA, boolean... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static StrArr keepIfMatch(StrArr arrA, StrArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static IntArr keepIfMatch(IntArr arrA, IntArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static LongArr keepIfMatch(LongArr arrA, LongArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static FltArr keepIfMatch(FltArr arrA, FltArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static DblArr keepIfMatch(DblArr arrA, DblArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static BoolArr keepIfMatch(BoolArr arrA, BoolArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static String[] onlyKeep(String[] arrA, String... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static int[] onlyKeep(int[] arrA, int... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static long[] onlyKeep(long[] arrA, long... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static float[] onlyKeep(float[] arrA, float... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static double[] onlyKeep(double[] arrA, double... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static boolean[] onlyKeep(boolean[] arrA, boolean... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static StrArr onlyKeep(StrArr arrA, StrArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static IntArr onlyKeep(IntArr arrA, IntArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static LongArr onlyKeep(LongArr arrA, LongArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static FltArr onlyKeep(FltArr arrA, FltArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static DblArr onlyKeep(DblArr arrA, DblArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static BoolArr onlyKeep(BoolArr arrA, BoolArr arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static String[] negativeIntersection(String[] arrA, String... arrB) {
+		StrArr result = new StrArr(arrA);
+		for (int i : range(arrB)) {
+			if (in(arrA, arrB[i])) result.pop(arrB[i]);
+		}
+		return result.array();
+	}
+	public static int[] negativeIntersection(int[] arrA, int... arrB) {
+		IntArr result = new IntArr(arrA);
+		for (int i : range(arrB)) {
+			if (in(arrA, arrB[i])) result.pop(arrB[i]);
+		}
+		return result.array();
+	}
+	public static long[] negativeIntersection(long[] arrA, long... arrB) {
+		LongArr result = new LongArr(arrA);
+		for (int i : range(arrB)) {
+			if (in(arrA, arrB[i])) result.pop(arrB[i]);
+		}
+		return result.array();
+	}
+	public static float[] negativeIntersection(float[] arrA, float... arrB) {
+		FltArr result = new FltArr(arrA);
+		for (int i : range(arrB)) {
+			if (in(arrA, arrB[i])) result.pop(arrB[i]);
+		}
+		return result.array();
+	}
+	public static double[] negativeIntersection(double[] arrA, double... arrB) {
+		DblArr result = new DblArr(arrA);
+		for (int i : range(arrB)) {
+			if (in(arrA, arrB[i])) result.pop(arrB[i]);
+		}
+		return result.array();
+	}
+	public static boolean[] negativeIntersection(boolean[] arrA, boolean... arrB) {
+		BoolArr result = new BoolArr(arrA);
+		for (int i : range(arrB)) {
+			if (in(arrA, arrB[i])) result.pop(arrB[i]);
+		}
+		return result.array();
+	}
+	public static StrArr negativeIntersection(StrArr arrA, StrArr arrB) {
+		return arrA.negativeIntersection(arrB);
+	}
+	public static IntArr negativeIntersection(IntArr arrA, IntArr arrB) {
+		return arrA.negativeIntersection(arrB);
+	}
+	public static LongArr negativeIntersection(LongArr arrA, LongArr arrB) {
+		return arrA.negativeIntersection(arrB);
+	}
+	public static FltArr negativeIntersection(FltArr arrA, FltArr arrB) {
+		return arrA.negativeIntersection(arrB);
+	}
+	public static DblArr negativeIntersection(DblArr arrA, DblArr arrB) {
+		return arrA.negativeIntersection(arrB);
+	}
+	public static BoolArr negativeIntersection(BoolArr arrA, BoolArr arrB) {
+		return arrA.negativeIntersection(arrB);
+	}
+	public static String[] popIfMatch(String[] arrA, String... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static int[] popIfMatch(int[] arrA, int... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static long[] popIfMatch(long[] arrA, long... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static float[] popIfMatch(float[] arrA, float... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static double[] popIfMatch(double[] arrA, double... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static boolean[] popIfMatch(boolean[] arrA, boolean... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static StrArr popIfMatch(StrArr arrA, StrArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static IntArr popIfMatch(IntArr arrA, IntArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static LongArr popIfMatch(LongArr arrA, LongArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static FltArr popIfMatch(FltArr arrA, FltArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static DblArr popIfMatch(DblArr arrA, DblArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static BoolArr popIfMatch(BoolArr arrA, BoolArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static String[] popAll(String[] arrA, String... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static int[] popAll(int[] arrA, int... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static long[] popAll(long[] arrA, long... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static float[] popAll(float[] arrA, float... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static double[] popAll(double[] arrA, double... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static boolean[] popAll(boolean[] arrA, boolean... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static StrArr popAll(StrArr arrA, StrArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static IntArr popAll(IntArr arrA, IntArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static LongArr popAll(LongArr arrA, LongArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static FltArr popAll(FltArr arrA, FltArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static DblArr popAll(DblArr arrA, DblArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static BoolArr popAll(BoolArr arrA, BoolArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static String[] onlyPop(String[] arrA, String... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static int[] onlyPop(int[] arrA, int... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static long[] onlyPop(long[] arrA, long... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static float[] onlyPop(float[] arrA, float... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static double[] onlyPop(double[] arrA, double... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static boolean[] onlyPop(boolean[] arrA, boolean... arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static StrArr onlyPop(StrArr arrA, StrArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static IntArr onlyPop(IntArr arrA, IntArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static LongArr onlyPop(LongArr arrA, LongArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static FltArr onlyPop(FltArr arrA, FltArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static DblArr onlyPop(DblArr arrA, DblArr arrB) {
+		return negativeIntersection(arrA, arrB);
+	}
+	public static BoolArr onlyPop(BoolArr arrA, BoolArr arrB) {
+		return negativeIntersection(arrA, arrB);
 	}
 	public static String upper(String s) {
 		s = s.toUpperCase();
@@ -9317,7 +10368,57 @@ public static String[] Arr(Obj_S o) {
 		return 0 == len(t) || t.isEmpty();
 	}
 	// Arrays
-	public static <T> T[] reverse(T[] arr) {
+	public static int[] intArrToIntArr(Integer[] inputArr) {
+		int length = inputArr.length;
+		int resultingArr[] = new int[length];
+		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static long[] longArrToLongArr(Long[] inputArr) {
+		int length = inputArr.length;
+		long resultingArr[] = new long[length];
+		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static float[] floatArrToFloatArr(Float[] inputArr) {
+		int length = inputArr.length;
+		float resultingArr[] = new float[length];
+		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static double[] doubleArrToDoubleArr(Double[] inputArr) {
+		int length = inputArr.length;
+		double resultingArr[] = new double[length];
+		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static boolean[] booleanArrToBooleanArr(Boolean[] inputArr) {
+		int length = inputArr.length;
+		boolean resultingArr[] = new boolean[length];
+		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static String[] reverse(String[] arr) {
+		Collections.reverse(Arrays.asList(arr));
+		return arr;
+	}
+	public static int[] reverse(int[] arr) {
+		Collections.reverse(Arrays.asList(arr));
+		return arr;
+	}
+	public static long[] reverse(long[] arr) {
+		Collections.reverse(Arrays.asList(arr));
+		return arr;
+	}
+	public static float[] reverse(float[] arr) {
+		Collections.reverse(Arrays.asList(arr));
+		return arr;
+	}
+	public static double[] reverse(double[] arr) {
+		Collections.reverse(Arrays.asList(arr));
+		return arr;
+	}
+	public static boolean[] reverse(boolean[] arr) {
 		Collections.reverse(Arrays.asList(arr));
 		return arr;
 	}
@@ -9339,7 +10440,23 @@ public static String[] Arr(Obj_S o) {
 	public static BoolArr reverse(BoolArr arr) {
 		return arr.reverse();
 	}
-	public static <T> T[] sort(T[] arr) {
+	public static String[] sort(String[] arr) {
+		Arrays.sort(arr);
+		return arr;
+	}
+	public static int[] sort(int[] arr) {
+		Arrays.sort(arr);
+		return arr;
+	}
+	public static long[] sort(long[] arr) {
+		Arrays.sort(arr);
+		return arr;
+	}
+	public static float[] sort(float[] arr) {
+		Arrays.sort(arr);
+		return arr;
+	}
+	public static double[] sort(double[] arr) {
 		Arrays.sort(arr);
 		return arr;
 	}
@@ -9361,7 +10478,27 @@ public static String[] Arr(Obj_S o) {
 	public static BoolArr sort(BoolArr arr) {
 		return arr.sort();
 	}
-	public static <T> T[] sortReverse(T[] arr) {
+	public static String[] sortReverse(String[] arr) {
+		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
+		return arr;
+	}
+	public static int[] sortReverse(int[] arr) {
+		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
+		return arr;
+	}
+	public static long[] sortReverse(long[] arr) {
+		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
+		return arr;
+	}
+	public static float[] sortReverse(float[] arr) {
+		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
+		return arr;
+	}
+	public static double[] sortReverse(double[] arr) {
+		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
+		return arr;
+	}
+	public static boolean[] sortReverse(boolean[] arr) {
 		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
 		return arr;
 	}
@@ -9383,7 +10520,22 @@ public static String[] Arr(Obj_S o) {
 	public static BoolArr sortReverse(BoolArr arr) {
 		return arr.sortReverse();
 	}
-	public static <T> T[] reverseSort(T[] arr) {
+	public static String[] reverseSort(String[] arr) {
+		return sortReverse(arr);
+	}
+	public static int[] reverseSort(int[] arr) {
+		return sortReverse(arr);
+	}
+	public static long[] reverseSort(long[] arr) {
+		return sortReverse(arr);
+	}
+	public static float[] reverseSort(float[] arr) {
+		return sortReverse(arr);
+	}
+	public static double[] reverseSort(double[] arr) {
+		return sortReverse(arr);
+	}
+	public static boolean[] reverseSort(boolean[] arr) {
 		return sortReverse(arr);
 	}
 	public static StrArr reverseSort(StrArr arr) {
@@ -9416,11 +10568,61 @@ public static String[] Arr(Obj_S o) {
 		String result = new String(chars);
 		return result;
 	}
-	public static <T> T[] shuffle(T[] arr) {
+	public static String[] shuffle(String[] arr) {
 		Random rnd = new Random();
 		for (int i = arr.length - 1; i > 0; i--) {
 			int index = rnd.nextInt(i + 1);
-			T temp = arr[index];
+			String temp = arr[index];
+			arr[index] = arr[i];
+			arr[i] = temp;
+		}
+		return arr;
+	}
+	public static int[] shuffle(int[] arr) {
+		Random rnd = new Random();
+		for (int i = arr.length - 1; i > 0; i--) {
+			int index = rnd.nextInt(i + 1);
+			int temp = arr[index];
+			arr[index] = arr[i];
+			arr[i] = temp;
+		}
+		return arr;
+	}
+	public static long[] shuffle(long[] arr) {
+		Random rnd = new Random();
+		for (int i = arr.length - 1; i > 0; i--) {
+			int index = rnd.nextInt(i + 1);
+			long temp = arr[index];
+			arr[index] = arr[i];
+			arr[i] = temp;
+		}
+		return arr;
+	}
+	public static float[] shuffle(float[] arr) {
+		Random rnd = new Random();
+		for (int i = arr.length - 1; i > 0; i--) {
+			int index = rnd.nextInt(i + 1);
+			float temp = arr[index];
+			arr[index] = arr[i];
+			arr[i] = temp;
+		}
+		return arr;
+	}
+	public static double[] shuffle(double[] arr) {
+		Random rnd = new Random();
+		for (int i = arr.length - 1; i > 0; i--) {
+			int index = rnd.nextInt(i + 1);
+			double temp = arr[index];
+			arr[index] = arr[i];
+			arr[i] = temp;
+		}
+		return arr;
+	}
+	public static boolean[] shuffle(boolean[] arr) {
+		Random rnd = new Random();
+		for (int i = arr.length - 1; i > 0; i--) {
+			int index = rnd.nextInt(i + 1);
+			boolean temp = arr[index];
 			arr[index] = arr[i];
 			arr[i] = temp;
 		}
@@ -10330,7 +11532,13 @@ public static String[] Arr(Obj_S o) {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
-	    int n = 5;
-	    sw(n > 5, () -> print("greater than 5"), n==5, () -> print("equals 5"), n<5, () -> print("smaller than 5"));
+	    
+	    int[] nums = range(1, 10).array();
+	    int[] evens = onlyKeep(nums, n -> n % 2 == 0),
+	        odds = onlyPop(nums, evens);
+	    print("Evens: ");
+	    printArr(evens);
+	    print("Odds: ");
+	    printArr(odds);
 	}
 }
