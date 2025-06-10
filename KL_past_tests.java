@@ -151,4 +151,37 @@ Money m = new Money(5*cr);
 */
 
 //tested, worked
-//rndcts = filterOut(rndcts, match -> in(match, "XXXXX|XXXXX|Hi(m|s)"));
+//rndcts = filterOut(rndcts, match -> in(match, "Hi(m|s)"));
+
+
+//StrArr arr = new StrArr("zoo", "hi", "beetles", "zer");
+//setTimeout(() -> printArr(arr.reverse()), 5);
+//print(fetch("https://randusers-api.vercel.app"));
+/*
+	    int n = 2;
+	    String str = "hello";
+	    boolean lightsOn = !true;
+	    sw(n, ">5", () -> print("greater than 5"), 5, () -> print("equals 5"), Else, () -> print("all tof the guesses are incorrect"));
+	    sw(str, "hey", () -> print("equals hey"), "woohoo", () -> print("equals woohoo"), Else, () -> print("bad guess, equals something else"));
+	    sw(lightsOn, Yes, () -> print("the lights are on"), No, () -> print("the lights are off"));
+*/
+/*
+        print(findMatch("'hi there love, am I late?', I ask, to which she replies, 'at least 15 mins late, you moron'", "%s %s %d %s %s"));
+*/
+
+/*
+        int[] nums = range(1, 10).array();
+	    int[] evens = onlyKeep(nums, n -> n % 2 == 0),
+	        odds = onlyPop(nums, evens);
+	    print("Evens: ");
+	    printArr(evens);
+	    print("Odds: ");
+	    printArr(odds);
+*/
+
+/*
+	    Object[] arr = {3, 3.14, 3.14f, true, "", 4L, 'c'};
+	    each(arr, (obj, i) -> {
+	    	print(cat("#", i+1, "."), "Is a", type(obj), ":", type(obj, Bool));
+	    });
+*/

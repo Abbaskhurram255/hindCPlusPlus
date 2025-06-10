@@ -1,6 +1,9 @@
 import java.io.*;
 import java.nio.file.*;
-import java.security.SecureRandom;
+import java.nio.charset.*;
+import java.security.*;
+import javax.crypto.*;
+import javax.crypto.spec.*;
 import java.text.*;
 import java.util.*;
 import java.util.TreeMap.*;
@@ -94,7 +97,7 @@ public class KL {
 			each(nums, (n, i) -> this.amnt /= n);
 			return this;
 		}
-		Money quo(double... nums) {
+		Money quotient(double... nums) {
 			div(nums);
 			return this;
 		}
@@ -203,6 +206,31 @@ public class KL {
 						 .replace("%25", "%");
 		return decoded;
 	}
+	public static String encrypt(String data, String key) {
+	    final String algo = "AES";
+        try {
+        SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), algo);
+        Cipher cipher = Cipher.getInstance(algo);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(encryptedBytes);
+        } catch (Exception err) {
+            return data;
+        }
+    }
+    public static String decrypt(String encryptedData, String key) {
+        final String algo = "AES";
+        try {
+        SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), algo);
+        Cipher cipher = Cipher.getInstance(algo);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
+        return new String(decryptedBytes, StandardCharsets.UTF_8);
+        } catch (Exception err) {
+            print("[KL.EncrypTool.BadArguments]:\nFailed to decrypt the message.");
+            return "";
+        }
+    }
 	public static Obj_S fetch(String url) {
 		Obj_S map = new Obj_S();
 		try {
@@ -235,7 +263,7 @@ public class KL {
 				return map;
 			} else {
 				map.add("response", Str(statusCode)).add("status", "notok").add("error", "yes");
-				printf("[KLFetch.Status.NotOK]:\nMessage: GET request failed with status code ", statusCode);
+				print("[KLFetch.Status.NotOK]:\nMessage: GET request failed with status code", statusCode);
 			}
 			connection.disconnect();
 		} catch (IOException e) {
@@ -249,21 +277,21 @@ public class KL {
 		return getClass().getResource(to).toString();
 	}
 	public static String fileSeparator = System.getProperty("file.separator"),
-	    workDirectory = System.getProperty("user.dir").toLowerCase();
+						 workDirectory = System.getProperty("user.dir").toLowerCase();
 	public static class os {
 		public static String name = System.getProperty("os.name").toLowerCase().split(" ")[0],
 							 version = System.getProperty("os.version").toLowerCase(),
 							 arch = System.getProperty("os.arch").toLowerCase();
-							 
+
 		public static boolean is(String s) {
 			return in(name, s);
 		}
 	}
 	public static class user {
 		public static String name = System.getProperty("user.name"),
-								 language = System.getProperty("user.language").toLowerCase(),
-								 homeDirectory = System.getProperty("user.home"),
-								 workDirectory = KL.workDirectory;
+							 language = System.getProperty("user.language").toLowerCase(),
+							 homeDirectory = System.getProperty("user.home"),
+							 workDirectory = KL.workDirectory;
 	}
 	// GUI
 	public static class GUI extends JFrame {
@@ -293,9 +321,17 @@ public class KL {
 			super.setTitle(title);
 			return this;
 		}
+		GUI kaTitle(String title) {
+			title(title);
+			return this;
+		}
 		GUI size(int w, int h) {
 			super.setSize(w, h);
 			super.setLocationRelativeTo(null);
+			return this;
+		}
+		GUI kiSize(int w, int h) {
+			size(w, h);
 			return this;
 		}
 		GUI start() {
@@ -335,28 +371,47 @@ public class KL {
 			notResizable();
 			return this;
 		}
-		GUI onTop() {
-			super.setAlwaysOnTop(true);
-			return this;
-		}
-		GUI alwaysOnTop() {
-			onTop();
-			return this;
-		}
-		GUI hameshaTopPe() {
-			onTop();
-			return this;
-		}
-		GUI offTop() {
-			super.setAlwaysOnTop(false);
-			return this;
-		}
-		GUI opacity(float o) {
-			super.setOpacity(o);
+		GUI onTop(boolean b) {
+		super.setAlwaysOnTop(b);
+		return this;
+	}
+	GUI onTop() {
+		onTop(true);
+		return this;
+	}
+	GUI offTop() {
+		onTop(false);
+		return this;
+	}
+	GUI alwaysOnTop(boolean b) {
+		onTop(b);
+		return this;
+	}
+	GUI alwaysOnTop() {
+		onTop();
+		return this;
+	}
+	GUI hameshaTopPe(boolean b) {
+		onTop(b);
+		return this;
+	}
+	GUI hameshaTopPe() {
+		onTop();
+		return this;
+	}
+		GUI opacity(double o) {
+			if (o <= 100) {
+				if (o >= 0 && o <= 1) super.setOpacity((float)o);
+				else if (o > 1) super.setOpacity((float)o / 100);
+			}
 			return this;
 		}
 		GUI cursor(int c) {
 			super.setCursor(new Cursor(c));
+			return this;
+		}
+		GUI cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
 			return this;
 		}
 		GUI bg(Color clr) {
@@ -576,6 +631,114 @@ public class KL {
 			state("max");
 			return this;
 		}
+		GUI message(String message) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.INFORMATION_MESSAGE);
+		return this;
+	}
+	GUI message(String title, String message) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+		return this;
+	}
+	GUI message(String title, String message, String iconAddress) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, new Icon(iconAddress));
+		return this;
+	}
+	GUI message(String title, String message, Icon ico) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, ico);
+		return this;
+	}
+	GUI error(String message) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+		return this;
+	}
+	GUI error(String title, String message) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+		return this;
+	}
+	GUI error(String title, String message, String iconAddress) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE, new Icon(iconAddress));
+		return this;
+	}
+	GUI error(String title, String message, Icon ico) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE, ico);
+		return this;
+	}
+	GUI warn(String message) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, "Warning", JOptionPane.WARNING_MESSAGE);
+		return this;
+	}
+	GUI warn(String title, String message) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
+		return this;
+	}
+	GUI warn(String title, String message, String iconAddress) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE, new Icon(iconAddress));
+		return this;
+	}
+	GUI warn(String title, String message, Icon ico) {
+		offTop();
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE, ico);
+		return this;
+	}
+	boolean confirm(String message) {
+		offTop();
+		return (JOptionPane.showConfirmDialog(null, message, "Confirmation", JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE) == 0);
+	}
+	boolean confirm(String title, String message) {
+		offTop();
+		return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE) == 0);
+	}
+	boolean confirm(String title, String message, String iconAddress) {
+		offTop();
+		return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE, new Icon(iconAddress)) == 0);
+	}
+	boolean confirm(String title, String message, Icon ico) {
+		offTop();
+		return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE, ico) == 0);
+	}
+	boolean confirmCancellable(String message) {
+		offTop();
+		return (JOptionPane.showConfirmDialog(null, message, "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE) == 0);
+	}
+	boolean confirmCancellable(String title, String message) {
+		offTop();
+		return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE) == 0);
+	}
+	boolean confirmCancellable(String title, String message, String iconAddress) {
+		offTop();
+		return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, new Icon(iconAddress)) == 0);
+	}
+	boolean confirmCancellable(String title, String message, Icon ico) {
+		offTop();
+		return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, ico) == 0);
+	}
+	String ask(String message) {
+		offTop();
+		return JOptionPane.showInputDialog(null, message, "Input", JOptionPane.QUESTION_MESSAGE);
+	}
+	String ask(String title, String message) {
+		offTop();
+		return JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
+	}
 	}
 	public static class Label extends JLabel {
 		private static final long serialVersionUID = 1L;
@@ -605,6 +768,10 @@ public class KL {
 		}
 		Label cursor(int c) {
 			super.setCursor(new Cursor(c));
+			return this;
+		}
+		Label cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
 			return this;
 		}
 		Label font(String fontFamily, int fontSize) {
@@ -765,11 +932,26 @@ public class KL {
 	}
 	public static class GridLay extends GridLayout {
 		private static final long serialVersionUID = 1L;
+		GridLay() {
+			super();
+		}
 		GridLay(int rows, int columns) {
 			super(rows, columns);
 		}
 		GridLay(int rows, int columns, int hgap, int vgap) {
 			super(rows, columns, hgap, vgap);
+		}
+	}
+	class FlowLay extends FlowLayout {
+		private static final long serialVersionUID = 1L;
+		FlowLay() {
+			super();
+		}
+		FlowLay(int align) {
+			super(align);
+		}
+		FlowLay(int align, int hgap, int vgap) {
+			super(align, hgap, vgap);
 		}
 	}
 	public static class Panel extends JPanel {
@@ -816,6 +998,10 @@ public class KL {
 		}
 		Panel cursor(int c) {
 			super.setCursor(new Cursor(c));
+			return this;
+		}
+		Panel cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
 			return this;
 		}
 		Panel font(String fontFamily, int fontSize) {
@@ -1004,6 +1190,10 @@ public class KL {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
+		Btn cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
 		Btn font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
@@ -1051,7 +1241,7 @@ public class KL {
 			return this;
 		}
 		Btn on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) 
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
 				click(action);
 			return this;
 		}
@@ -1072,6 +1262,14 @@ public class KL {
 		}
 		TxtField(Document doc, String text, int columns) {
 			super(doc, text, columns);
+		}
+		TxtField cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		TxtField cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
 		}
 		TxtField border(LineBorder brdr) {
 			super.setBorder(brdr);
@@ -1214,6 +1412,14 @@ public class KL {
 		PwdField(Document doc, String text, int columns) {
 			super(doc, text, columns);
 		}
+		PwdField cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		PwdField cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
 		PwdField border(LineBorder brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -1339,6 +1545,9 @@ public class KL {
 		}
 	}
 	public static class Icon extends ImageIcon {
+		Icon() {
+			super();
+		}
 		Icon(byte[] imageData) {
 			super(imageData);
 		}
@@ -1376,15 +1585,117 @@ public class KL {
 			 */
 		}
 	}
-	// general
-	public static final class Error extends Throwable {
-		Error(String msg) {
-			super(msg);
-		}
+	//some global font variables for the ease of access, only handy if you extend the library class with your own
+	int BOLD, PLAIN, ITALIC, BOLDITALIC,
+		Bold = BOLD = Font.BOLD,
+		Plain = PLAIN = Font.PLAIN,
+		Italic = ITALIC = Font.ITALIC,
+		BoldItalic = BOLDITALIC = Bold | Italic;
+	//some other syntax candies
+	public static GUI nayaGUI() {
+		return new GUI();
 	}
+	public static GUI nayaGUI(String t) {
+		return new GUI(t);
+	}
+	public static GUI nayaGUI(String t, int w, int h) {
+		return new GUI(t, w, h);
+	}
+	public static GUI GUI() {
+		return new GUI();
+	}
+	public static GUI GUI(String t) {
+		return new GUI(t);
+	}
+	public static GUI GUI(String t, int w, int h) {
+		return new GUI(t, w, h);
+	}
+	public static Btn nayaBtn() {
+		return new Btn();
+	}
+	public static Btn nayaBtn(String txt) {
+		return new Btn(txt);
+	}
+	public static Btn nayaBtn(Action a) {
+		return new Btn(a);
+	}
+	public static Btn nayaBtn(Icon i) {
+		return new Btn(i);
+	}
+	public static Btn nayaBtn(String text, Icon i) {
+		return new Btn(text, i);
+	}
+	public static Btn Btn() {
+		return new Btn();
+	}
+	public static Btn Btn(String txt) {
+		return new Btn(txt);
+	}
+	public static Btn Btn(Action a) {
+		return new Btn(a);
+	}
+	public static Btn Btn(Icon i) {
+		return new Btn(i);
+	}
+	public static Btn Btn(String text, Icon i) {
+		return new Btn(text, i);
+	}
+	// general
 	public static final class Obj_S extends HashMap<String, String> {
 		Obj_S() {
 			super();
+		}
+		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9,
+			  String v9, String k10, String v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9,
+			  String v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
 			  String k4, String v4, String k5, String v5) {
@@ -1533,6 +1844,58 @@ public class KL {
 		Obj_I() {
 			super();
 		}
+		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5, String k6, Integer v6, String k7, Integer v7, String k8, Integer v8, String k9,
+			  Integer v9, String k10, Integer v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5, String k6, Integer v6, String k7, Integer v7, String k8, Integer v8, String k9,
+			  Integer v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5, String k6, Integer v6, String k7, Integer v7, String k8, Integer v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5, String k6, Integer v6, String k7, Integer v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5, Integer v5, String k6, Integer v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3, String k4, Integer v4, String k5, Integer v5) {
 			super.put(k1, v1);
@@ -1680,6 +2043,57 @@ public class KL {
 		Obj_L() {
 			super();
 		}
+		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5, String k6, Long v6, String k7, Long v7, String k8, Long v8, String k9, Long v9, String k10,
+			  Long v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5, String k6, Long v6, String k7, Long v7, String k8, Long v8, String k9, Long v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5, String k6, Long v6, String k7, Long v7, String k8, Long v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5, String k6, Long v6, String k7, Long v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5, String k6, Long v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 			  String k4, Long v4, String k5, Long v5) {
 			super.put(k1, v1);
@@ -1823,6 +2237,57 @@ public class KL {
 	public static final class Obj_F extends HashMap<String, Float> {
 		Obj_F() {
 			super();
+		}
+		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5, String k6, Float v6, String k7, Float v7, String k8, Float v8, String k9, Float v9,
+			  String k10, Float v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5, String k6, Float v6, String k7, Float v7, String k8, Float v8, String k9, Float v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5, String k6, Float v6, String k7, Float v7, String k8, Float v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5, String k6, Float v6, String k7, Float v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5, String k6, Float v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
 		}
 		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 			  String k4, Float v4, String k5, Float v5) {
@@ -1968,6 +2433,58 @@ public class KL {
 		Obj_D() {
 			super();
 		}
+		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5, String k6, Double v6, String k7, Double v7, String k8, Double v8, String k9,
+			  Double v9, String k10, Double v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5, String k6, Double v6, String k7, Double v7, String k8, Double v8, String k9,
+			  Double v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5, String k6, Double v6, String k7, Double v7, String k8, Double v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5, String k6, Double v6, String k7, Double v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5, String k6, Double v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 			  String k4, Double v4, String k5, Double v5) {
 			super.put(k1, v1);
@@ -2112,6 +2629,58 @@ public class KL {
 	public static final class Obj_B extends HashMap<String, Boolean> {
 		Obj_B() {
 			super();
+		}
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5, String k6, Boolean v6, String k7, Boolean v7, String k8, Boolean v8, String k9,
+			  Boolean v9, String k10, Boolean v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5, String k6, Boolean v6, String k7, Boolean v7, String k8, Boolean v8, String k9,
+			  Boolean v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5, String k6, Boolean v6, String k7, Boolean v7, String k8, Boolean v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5, String k6, Boolean v6, String k7, Boolean v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5, Boolean v5, String k6, Boolean v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
@@ -2259,6 +2828,61 @@ public class KL {
 			super();
 		}
 		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+			 Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7, Key k8, Value v8, Key k9, Value v9, Key k10, Value v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+			 Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7, Key k8, Value v8, Key k9, Value v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+			 Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7, Key k8, Value v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+			 Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+			 Value v4, Key k5, Value v5, Key k6, Value v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
+		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
 			 Value v4, Key k5, Value v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2367,6 +2991,56 @@ public class KL {
 		Tree_S() {
 			super();
 		}
+		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
 			   String k4, int v4, String k5, int v5) {
 			super.put(k1, v1);
@@ -2393,6 +3067,9 @@ public class KL {
 		}
 		Tree_S(String k1, int v1) {
 			super.put(k1, v1);
+		}
+		Tree_S copy() {
+			return (Tree_S) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -2442,6 +3119,57 @@ public class KL {
 		Tree_SL() {
 			super();
 		}
+		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9, String k10,
+				long v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5) {
 			super.put(k1, v1);
@@ -2468,6 +3196,9 @@ public class KL {
 		}
 		Tree_SL(String k1, long v1) {
 			super.put(k1, v1);
+		}
+		Tree_SL copy() {
+			return (Tree_SL) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -2518,6 +3249,57 @@ public class KL {
 		Tree_SF() {
 			super();
 		}
+		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9,
+				String k10, float v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5) {
 			super.put(k1, v1);
@@ -2544,6 +3326,9 @@ public class KL {
 		}
 		Tree_SF(String k1, float v1) {
 			super.put(k1, v1);
+		}
+		Tree_SF copy() {
+			return (Tree_SF) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -2594,6 +3379,58 @@ public class KL {
 		Tree_SD() {
 			super();
 		}
+		Tree_SD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9,
+				double v9, String k10, double v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Tree_SD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9,
+				double v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Tree_SD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Tree_SD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Tree_SD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Tree_SD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5) {
 			super.put(k1, v1);
@@ -2621,6 +3458,9 @@ public class KL {
 		}
 		Tree_SD(String k1, double v1) {
 			super.put(k1, v1);
+		}
+		Tree_SD copy() {
+			return (Tree_SD) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -2671,6 +3511,58 @@ public class KL {
 		Tree_SB() {
 			super();
 		}
+		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
+				String k9, boolean v9, String k10, boolean v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
+				String k9, boolean v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5) {
 			super.put(k1, v1);
@@ -2698,6 +3590,9 @@ public class KL {
 		}
 		Tree_SB(String k1, boolean v1) {
 			super.put(k1, v1);
+		}
+		Tree_SB copy() {
+			return (Tree_SB) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -2775,6 +3670,9 @@ public class KL {
 		Tree_I(int k1, String v1) {
 			super.put(k1, v1);
 		}
+		Tree_I copy() {
+			return (Tree_I) super.clone();
+		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
 			int[] resultantArr = new int[objArray.length];
@@ -2824,6 +3722,56 @@ public class KL {
 		Tree_L() {
 			super();
 		}
+		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7, int k8, long v8, int k9, long v9, int k10, long v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7, int k8, long v8, int k9, long v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7, int k8, long v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 			   long v4, int k5, long v5) {
 			super.put(k1, v1);
@@ -2850,6 +3798,9 @@ public class KL {
 		}
 		Tree_L(int k1, long v1) {
 			super.put(k1, v1);
+		}
+		Tree_L copy() {
+			return (Tree_L) super.clone();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -2927,6 +3878,9 @@ public class KL {
 		Tree_F(int k1, float v1) {
 			super.put(k1, v1);
 		}
+		Tree_F copy() {
+			return (Tree_F) super.clone();
+		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
 			int[] resultantArr = new int[objArray.length];
@@ -3002,6 +3956,9 @@ public class KL {
 		}
 		Tree_D(int k1, double v1) {
 			super.put(k1, v1);
+		}
+		Tree_D copy() {
+			return (Tree_D) super.clone();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3079,6 +4036,9 @@ public class KL {
 		Tree_B(int k1, boolean v1) {
 			super.put(k1, v1);
 		}
+		Tree_B copy() {
+			return (Tree_B) super.clone();
+		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
 			int[] resultantArr = new int[objArray.length];
@@ -3132,18 +4092,18 @@ public class KL {
 			for (String s : strings) super.add(s);
 		}
 		StrArr pushAt(int i, String... strings) {
-			if (i >= 0 && i < super.size() && 0!=len(strings)) {
-			    for (String s : strings) super.add(i, s);
+			if (i >= 0 && i < super.size() && 0 != len(strings)) {
+				for (String s : strings) super.add(i, s);
 			}
 			return this;
 		}
 		StrArr pushStart(String... strings) {
-			if (0!=len(strings)) pushAt(0, strings);
+			if (0 != len(strings)) pushAt(0, strings);
 			return this;
 		}
 		StrArr push(String... strings) {
-			if (0!=len(strings))
-			    pushAt(super.size(), strings);
+			if (0 != len(strings))
+				pushAt(super.size(), strings);
 			return this;
 		}
 		String shift() {
@@ -3349,18 +4309,18 @@ public class KL {
 			for (int n : nums) super.add(n);
 		}
 		IntArr pushAt(int i, int... ints) {
-			if (i >= 0 && i < super.size() && 0!=len(ints)) {
-			    for (int n : ints) super.add(i, n);
+			if (i >= 0 && i < super.size() && 0 != len(ints)) {
+				for (int n : ints) super.add(i, n);
 			}
 			return this;
 		}
 		IntArr pushStart(int... ints) {
-			if (0!=len(ints)) pushAt(0, ints);
+			if (0 != len(ints)) pushAt(0, ints);
 			return this;
 		}
 		IntArr push(int... ints) {
-			if (0!=len(ints))
-			    pushAt(super.size(), ints);
+			if (0 != len(ints))
+				pushAt(super.size(), ints);
 			return this;
 		}
 		int shift() {
@@ -3560,18 +4520,18 @@ public class KL {
 			for (long n : nums) super.add(n);
 		}
 		LongArr pushAt(int i, long... longs) {
-			if (i >= 0 && i < super.size() && 0!=len(longs)) {
-			    for (long l : longs) super.add(i, l);
+			if (i >= 0 && i < super.size() && 0 != len(longs)) {
+				for (long l : longs) super.add(i, l);
 			}
 			return this;
 		}
 		LongArr pushStart(long... longs) {
-			if (0!=len(longs)) pushAt(0, longs);
+			if (0 != len(longs)) pushAt(0, longs);
 			return this;
 		}
 		LongArr push(long... longs) {
-			if (0!=len(longs))
-			    pushAt(super.size(), longs);
+			if (0 != len(longs))
+				pushAt(super.size(), longs);
 			return this;
 		}
 		long shift() {
@@ -3782,18 +4742,18 @@ public class KL {
 			for (float n : nums) super.add(n);
 		}
 		FltArr pushAt(int i, float... floats) {
-			if (i >= 0 && i < super.size() && 0!=len(floats)) {
-			    for (float f : floats) super.add(i, f);
+			if (i >= 0 && i < super.size() && 0 != len(floats)) {
+				for (float f : floats) super.add(i, f);
 			}
 			return this;
 		}
 		FltArr pushStart(float... floats) {
-			if (0!=len(floats)) pushAt(0, floats);
+			if (0 != len(floats)) pushAt(0, floats);
 			return this;
 		}
 		FltArr push(float... floats) {
-			if (0!=len(floats))
-			    pushAt(super.size(), floats);
+			if (0 != len(floats))
+				pushAt(super.size(), floats);
 			return this;
 		}
 		float shift() {
@@ -4004,18 +4964,18 @@ public class KL {
 			for (double d : doubles) super.add(d);
 		}
 		DblArr pushAt(int i, double... doubles) {
-			if (i >= 0 && i < super.size() && 0!=len(doubles)) {
-			    for (double d : doubles) super.add(i, d);
+			if (i >= 0 && i < super.size() && 0 != len(doubles)) {
+				for (double d : doubles) super.add(i, d);
 			}
 			return this;
 		}
 		DblArr pushStart(double... doubles) {
-			if (0!=len(doubles)) pushAt(0, doubles);
+			if (0 != len(doubles)) pushAt(0, doubles);
 			return this;
 		}
 		DblArr push(double... doubles) {
-			if (0!=len(doubles))
-			    pushAt(super.size(), doubles);
+			if (0 != len(doubles))
+				pushAt(super.size(), doubles);
 			return this;
 		}
 		double shift() {
@@ -4226,18 +5186,18 @@ public class KL {
 			for (boolean b : bools) super.add(b);
 		}
 		BoolArr pushAt(int i, boolean... bools) {
-			if (i < 0 || i > super.size() || 0==len(bools))
+			if (i < 0 || i > super.size() || 0 == len(bools))
 				return null;
 			for (boolean b : bools) super.add(i, b);
 			return this;
 		}
 		BoolArr pushStart(boolean... bools) {
-			if (0!=len(bools)) pushAt(0, bools);
+			if (0 != len(bools)) pushAt(0, bools);
 			return this;
 		}
 		BoolArr push(boolean... bools) {
-			if (0!=len(bools))
-			    pushAt(super.size(), bools);
+			if (0 != len(bools))
+				pushAt(super.size(), bools);
 			return this;
 		}
 		boolean shift() {
@@ -4439,12 +5399,17 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static boolean runTask(Runnable fn) {
+		if (not(fn)) return false;
+		new Thread(fn).run();
+		return true;
+	}
 	public static void setTimeout(Runnable fn, int delay) {
 		new Thread(() -> {
 			try {
 				Thread.sleep(delay < 1000 ? delay * 1000 : delay);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				print("The timeout was interrupted by a background task.");
 			}
 			SwingUtilities.invokeLater(fn);
 		}).start();
@@ -4452,40 +5417,37 @@ public class KL {
 	public static void delay(Runnable fn, int delay) {
 		setTimeout(fn, delay);
 	}
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+							 Runnable sol6, Object cond7, Runnable sol7, Object cond8, Runnable sol8, Object cond9, Runnable sol9, Object cond10, Runnable sol10) {
 		if (src instanceof Number) {
 			if (cond1 instanceof String) {
 				if (!in(Str(cond1), "(?<=[<>=])\\-?\\d")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware = Dbl(String(cond1).replaceAll("[^\\-\\d]", ""));
+				double middleware = Dbl(String(cond1).replaceAll("[^\\-\\d\\.]", ""));
 				cond1 = String(cond1).replaceAll("[^<>=]", "");
 				if (eq(cond1, ">")) {
 					if (Dbl(Str(src)) > middleware) {
 						if (!isNull(sol1)) new Thread(sol1).run();
 						return true;
 					}
-				}
-				else if (eq(cond1, ">=")) {
+				} else if (eq(cond1, ">=")) {
 					if (Dbl(Str(src)) >= middleware) {
 						if (!isNull(sol1)) new Thread(sol1).run();
 						return true;
 					}
-				}
-				else if (eq(cond1, "<")) {
+				} else if (eq(cond1, "<")) {
 					if (Dbl(Str(src)) < middleware) {
 						if (!isNull(sol1)) new Thread(sol1).run();
 						return true;
 					}
-				}
-				else if (eq(cond1, "<=")) {
+				} else if (eq(cond1, "<=")) {
 					if (Dbl(Str(src)) <= middleware) {
 						if (!isNull(sol1)) new Thread(sol1).run();
 						return true;
 					}
-				}
-				else if (eq(cond1, "==")) {
+				} else if (eq(cond1, "==")) {
 					if (Dbl(Str(src)) == middleware) {
 						if (!isNull(sol1)) new Thread(sol1).run();
 						return true;
@@ -4507,39 +5469,34 @@ public class KL {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware2 = Dbl(String(cond2).replaceAll("[^\\-\\d]", ""));
+				double middleware2 = Dbl(String(cond2).replaceAll("[^\\-\\d\\.]", ""));
 				cond2 = String(cond2).replaceAll("[^<>=else]", "");
 				if (eq(cond2, ">")) {
 					if (Dbl(Str(src)) > middleware2) {
 						if (!isNull(sol2)) new Thread(sol2).run();
 						return true;
 					}
-				}
-				else if (eq(cond2, ">=")) {
+				} else if (eq(cond2, ">=")) {
 					if (Dbl(Str(src)) >= middleware2) {
 						if (!isNull(sol2)) new Thread(sol2).run();
 						return true;
 					}
-				}
-				else if (eq(cond2, "<")) {
+				} else if (eq(cond2, "<")) {
 					if (Dbl(Str(src)) < middleware2) {
 						if (!isNull(sol2)) new Thread(sol2).run();
 						return true;
 					}
-				}
-				else if (eq(cond2, "<=")) {
+				} else if (eq(cond2, "<=")) {
 					if (Dbl(Str(src)) <= middleware2) {
 						if (!isNull(sol2)) new Thread(sol2).run();
 						return true;
 					}
-				}
-				else if (eq(cond2, "==")) {
+				} else if (eq(cond2, "==")) {
 					if (Dbl(Str(src)) == middleware2) {
 						if (!isNull(sol2)) new Thread(sol2).run();
 						return true;
 					}
-				}
-				else if (eq(cond2, "else")) {
+				} else if (eq(cond2, "else")) {
 					if (!isNull(sol2)) new Thread(sol2).run();
 					return false;
 				}
@@ -4559,39 +5516,34 @@ public class KL {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware3 = Dbl(String(cond3).replaceAll("[^\\-\\d]", ""));
+				double middleware3 = Dbl(String(cond3).replaceAll("[^\\-\\d\\.]", ""));
 				cond3 = String(cond3).replaceAll("[^<>=else]", "");
 				if (eq(cond3, ">")) {
 					if (Dbl(Str(src)) > middleware3) {
 						if (!isNull(sol3)) new Thread(sol3).run();
 						return true;
 					}
-				}
-				else if (eq(cond3, ">=")) {
+				} else if (eq(cond3, ">=")) {
 					if (Dbl(Str(src)) >= middleware3) {
 						if (!isNull(sol3)) new Thread(sol3).run();
 						return true;
 					}
-				}
-				else if (eq(cond3, "<")) {
+				} else if (eq(cond3, "<")) {
 					if (Dbl(Str(src)) < middleware3) {
 						if (!isNull(sol3)) new Thread(sol3).run();
 						return true;
 					}
-				}
-				else if (eq(cond3, "<=")) {
+				} else if (eq(cond3, "<=")) {
 					if (Dbl(Str(src)) <= middleware3) {
 						if (!isNull(sol3)) new Thread(sol3).run();
 						return true;
 					}
-				}
-				else if (eq(cond3, "==")) {
+				} else if (eq(cond3, "==")) {
 					if (Dbl(Str(src)) == middleware3) {
 						if (!isNull(sol3)) new Thread(sol3).run();
 						return true;
 					}
-				}
-				else if (eq(cond3, "else")) {
+				} else if (eq(cond3, "else")) {
 					if (!isNull(sol3)) new Thread(sol3).run();
 					return false;
 				}
@@ -4611,39 +5563,34 @@ public class KL {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware4 = Dbl(String(cond4).replaceAll("[^\\-\\d]", ""));
+				double middleware4 = Dbl(String(cond4).replaceAll("[^\\-\\d\\.]", ""));
 				cond4 = String(cond4).replaceAll("[^<>=else]", "");
 				if (eq(cond4, ">")) {
 					if (Dbl(Str(src)) > middleware4) {
 						if (!isNull(sol4)) new Thread(sol4).run();
 						return true;
 					}
-				}
-				else if (eq(cond4, ">=")) {
+				} else if (eq(cond4, ">=")) {
 					if (Dbl(Str(src)) >= middleware4) {
 						if (!isNull(sol4)) new Thread(sol4).run();
 						return true;
 					}
-				}
-				else if (eq(cond4, "<")) {
+				} else if (eq(cond4, "<")) {
 					if (Dbl(Str(src)) < middleware4) {
 						if (!isNull(sol4)) new Thread(sol4).run();
 						return true;
 					}
-				}
-				else if (eq(cond4, "<=")) {
+				} else if (eq(cond4, "<=")) {
 					if (Dbl(Str(src)) <= middleware4) {
 						if (!isNull(sol4)) new Thread(sol4).run();
 						return true;
 					}
-				}
-				else if (eq(cond4, "==")) {
+				} else if (eq(cond4, "==")) {
 					if (Dbl(Str(src)) == middleware4) {
 						if (!isNull(sol4)) new Thread(sol4).run();
 						return true;
 					}
-				}
-				else if (eq(cond4, "else")) {
+				} else if (eq(cond4, "else")) {
 					if (!isNull(sol4)) new Thread(sol4).run();
 					return false;
 				}
@@ -4663,39 +5610,34 @@ public class KL {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware5 = Dbl(String(cond5).replaceAll("[^\\-\\d]", ""));
+				double middleware5 = Dbl(String(cond5).replaceAll("[^\\-\\d\\.]", ""));
 				cond5 = String(cond5).replaceAll("[^<>=else]", "");
 				if (eq(cond5, ">")) {
 					if (Dbl(Str(src)) > middleware5) {
 						if (!isNull(sol5)) new Thread(sol5).run();
 						return true;
 					}
-				}
-				else if (eq(cond5, ">=")) {
+				} else if (eq(cond5, ">=")) {
 					if (Dbl(Str(src)) >= middleware5) {
 						if (!isNull(sol5)) new Thread(sol5).run();
 						return true;
 					}
-				}
-				else if (eq(cond5, "<")) {
+				} else if (eq(cond5, "<")) {
 					if (Dbl(Str(src)) < middleware5) {
 						if (!isNull(sol5)) new Thread(sol5).run();
 						return true;
 					}
-				}
-				else if (eq(cond5, "<=")) {
+				} else if (eq(cond5, "<=")) {
 					if (Dbl(Str(src)) <= middleware5) {
 						if (!isNull(sol5)) new Thread(sol5).run();
 						return true;
 					}
-				}
-				else if (eq(cond5, "==")) {
+				} else if (eq(cond5, "==")) {
 					if (Dbl(Str(src)) == middleware5) {
 						if (!isNull(sol5)) new Thread(sol5).run();
 						return true;
 					}
-				}
-				else if (eq(cond5, "else")) {
+				} else if (eq(cond5, "else")) {
 					if (!isNull(sol5)) new Thread(sol5).run();
 					return false;
 				}
@@ -4726,8 +5668,7 @@ public class KL {
 				if (eq((String)src, (String)cond2)) {
 					if (!isNull(sol2)) new Thread(sol2).run();
 					return true;
-				}
-				else if (eq((String)cond2, "else")) {
+				} else if (eq((String)cond2, "else")) {
 					if (!isNull(sol2)) new Thread(sol2).run();
 					return false;
 				}
@@ -4741,8 +5682,7 @@ public class KL {
 				if (eq((String)src, (String)cond3)) {
 					if (!isNull(sol3)) new Thread(sol3).run();
 					return true;
-				}
-				else if (eq((String)cond3, "else")) {
+				} else if (eq((String)cond3, "else")) {
 					if (!isNull(sol3)) new Thread(sol3).run();
 					return false;
 				}
@@ -4756,8 +5696,7 @@ public class KL {
 				if (eq((String)src, (String)cond4)) {
 					if (!isNull(sol4)) new Thread(sol4).run();
 					return true;
-				}
-				else if (eq((String)cond4, "else")) {
+				} else if (eq((String)cond4, "else")) {
 					if (!isNull(sol4)) new Thread(sol4).run();
 					return false;
 				}
@@ -4771,8 +5710,7 @@ public class KL {
 				if (eq((String)src, (String)cond5)) {
 					if (!isNull(sol5)) new Thread(sol5).run();
 					return true;
-				}
-				else if (eq((String)cond5, "else")) {
+				} else if (eq((String)cond5, "else")) {
 					if (!isNull(sol5)) new Thread(sol5).run();
 					return false;
 				}
@@ -4863,185 +5801,238 @@ public class KL {
 				return false;
 			}
 		} else {
-			print("[KL.LogicalError.UnlikelyTypesSeen]\nThe source can only either be a string, number, or boolean.");
+			print("[KL.LogicalError.UnlikelyTypesSeen]\nThe source can either only be a string, number, or boolean.");
 		}
 		return false;
 	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+							 Runnable sol6, Object cond7, Runnable sol7, Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, null, null);
+	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+							 Runnable sol6, Object cond7, Runnable sol7, Object cond8, Runnable sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, null, null, null, null);
+	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+							 Runnable sol6, Object cond7, Runnable sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, null, null, null, null, null, null);
+	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+							 Runnable sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, null, null, null, null, null, null, null, null);
+	}
+	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, null, null, null, null, null, null, null, null, null, null);
+	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3, Object cond4, Runnable sol4) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null, null);
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null, null);
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2) {
-		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null, null);
+		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1) {
-		return sw(src, cond1, sol1, null, null, null, null, null, null, null, null);
+		return sw(src, cond1, sol1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5) {
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6, boolean cond7, Runnable sol7, boolean cond8, Runnable sol8, boolean cond9, Runnable sol9, boolean cond10, Runnable sol10) {
 		if (is(cond1)) new Thread(sol1).run();
 		else if (is(cond2)) new Thread(sol2).run();
 		else if (is(cond3)) new Thread(sol3).run();
 		else if (is(cond4)) new Thread(sol4).run();
 		else if (is(cond5)) new Thread(sol5).run();
+		else if (is(cond6)) new Thread(sol6).run();
+		else if (is(cond7)) new Thread(sol7).run();
+		else if (is(cond8)) new Thread(sol8).run();
+		else if (is(cond9)) new Thread(sol9).run();
+		else if (is(cond10)) new Thread(sol10).run();
 		return;
 	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6, boolean cond7, Runnable sol7, boolean cond8, Runnable sol8, boolean cond9, Runnable sol9) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, false, null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6, boolean cond7, Runnable sol7, boolean cond8, Runnable sol8) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, false, null, false, null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6, boolean cond7, Runnable sol7) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, false, null, false, null, false, null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, false, null, false, null, false, null, false, null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4, boolean cond5, Runnable sol5) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, false, null, false, null, false, null, false, null, false, null);
+	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3, boolean cond4, Runnable sol4) {
-		if (is(cond1)) new Thread(sol1).run();
-		else if (is(cond2)) new Thread(sol2).run();
-		else if (is(cond3)) new Thread(sol3).run();
-		else if (is(cond4)) new Thread(sol4).run();
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, false, null, false, null, false, null, false, null, false, null, false, null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3) {
-		if (is(cond1)) new Thread(sol1).run();
-		else if (is(cond2)) new Thread(sol2).run();
-		else if (is(cond3)) new Thread(sol3).run();
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, false, null, false, null, false, null, false, null, false, null, false, null, false, null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2) {
-		if (is(cond1)) new Thread(sol1).run();
-		else if (is(cond2)) new Thread(sol2).run();
+		sw(cond1, sol1, cond2, sol2, false, null, false, null, false, null, false, null, false, null, false, null, false, null, false, null);
 	}
 	public static void sw(boolean cond1, Runnable sol1) {
-		if (is(cond1)) new Thread(sol1).run();
+		sw(cond1, sol1, false, null, false, null, false, null, false, null, false, null, false, null, false, null, false, null, false, null);
 	}
 	public static final boolean Yes = true,
-	    No = !Yes;
+								No = !Yes;
 	public static String Else = "else";
-	public static IntArr range(int n) {
-		if (isnl(n))
-			return null;
+	public static int[] range(int n) {
 		IntArr arr = new IntArr();
+		if (isnl(n))
+			return arr.array();
 		for (int i = 0; i < n; i++) arr.add(i);
-		return arr;
+		return arr.array();
 	}
-	public static DblArr range(double n) {
+	public static double[] range(double n) {
 		if (isnl(n))
 			return null;
 		DblArr arr = new DblArr();
-		for (double i = 0; i < n; i+=.1) arr.add(i);
-		return arr;
+		if (isnl(n))
+			return arr.array();
+		for (double i = 0; i < n; i += .1) arr.add(i);
+		return arr.array();
 	}
-	public static IntArr range(int m, int n) {
+	public static int[] range(int m, int n) {
 		IntArr arr = new IntArr();
 		if (isnl(m) || isnl(n) || eq(m, n))
-			return arr;
+			return arr.array();
 		if (m > n) {
 			for (int i = m; i >= n; i--) arr.add(i);
 		} else {
 			for (int i = m; i <= n; i++) arr.add(i);
 		}
-		return arr;
+		return arr.array();
 	}
-	public static DblArr range(double m, double n) {
+	public static String[] range(String m, String n) {
+		StrArr arr = new StrArr();
+		if (not(m) || not(n) || eq(m, n) || !eq(m, "[A-Za-z]") || !eq(n, "[A-Za-z]"))
+			return arr.array();
+		int charCodeOfM = (int) m.charAt(0),
+			charCodeOfN = (int) n.charAt(0);
+		if (charCodeOfM > charCodeOfN) {
+			for (int i = charCodeOfM; i >= charCodeOfN; i--) arr.add(Str((char)i));
+		} else {
+			for (int i = charCodeOfM; i <= charCodeOfN; i++) arr.add(Str((char)i));
+		}
+		return arr.array();
+	}
+	public static double[] range(double m, double n) {
 		DblArr arr = new DblArr();
 		if (isnl(m) || isnl(n) || eq(m, n))
-			return arr;
+			return arr.array();
 		if (m > n) {
-			for (double i = m; i >= n; i-=.1) arr.add(i);
+			for (double i = m; i >= n; i -= .1) arr.add(i);
 		} else {
-			for (double i = m; i <= n; i+=.1) arr.add(i);
+			for (double i = m; i <= n; i += .1) arr.add(i);
 		}
-		return arr;
+		return arr.array();
 	}
-	public static IntArr range(int n, boolean reverse) {
+	public static int[] range(int n, boolean reverse) {
 		if (reverse && n > 0)
 			return range(n, 1);
 		return range(n);
 	}
-	public static DblArr range(double n, boolean reverse) {
+	public static double[] range(double n, boolean reverse) {
 		if (reverse && n > 0)
 			return range(n, 1);
 		return range(n);
 	}
-	public static IntArr range(String arr) {
+	public static int[] range(String str) {
+		return range(len(str));
+	}
+	public static int[] range(char[] arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(char[] arr) {
+	public static int[] range(String[] arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(String[] arr) {
+	public static int[] range(int[] arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(int[] arr) {
+	public static int[] range(long[] arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(long[] arr) {
+	public static int[] range(float[] arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(float[] arr) {
+	public static int[] range(double[] arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(double[] arr) {
+	public static int[] range(boolean[] arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(boolean[] arr) {
+	public static int[] range(Object[] arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(Object[] arr) {
+	public static int[] range(StrArr arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(StrArr arr) {
+	public static int[] range(IntArr arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(IntArr arr) {
+	public static int[] range(LongArr arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(LongArr arr) {
+	public static int[] range(FltArr arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(FltArr arr) {
+	public static int[] range(DblArr arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(DblArr arr) {
+	public static int[] range(BoolArr arr) {
 		return range(len(arr));
 	}
-	public static IntArr range(BoolArr arr) {
-		return range(len(arr));
+	public static int[] idx(String str) {
+		return range(str);
 	}
-	public static IntArr idx(String arr) {
+	public static int[] idx(char[] arr) {
 		return range(arr);
 	}
-	public static IntArr idx(char[] arr) {
+	public static int[] idx(String[] arr) {
 		return range(arr);
 	}
-	public static IntArr idx(String[] arr) {
+	public static int[] idx(int[] arr) {
 		return range(arr);
 	}
-	public static IntArr idx(int[] arr) {
+	public static int[] idx(long[] arr) {
 		return range(arr);
 	}
-	public static IntArr idx(long[] arr) {
+	public static int[] idx(float[] arr) {
 		return range(arr);
 	}
-	public static IntArr idx(float[] arr) {
+	public static int[] idx(double[] arr) {
 		return range(arr);
 	}
-	public static IntArr idx(double[] arr) {
+	public static int[] idx(boolean[] arr) {
 		return range(arr);
 	}
-	public static IntArr idx(boolean[] arr) {
+	public static int[] idx(Object[] arr) {
 		return range(arr);
 	}
-	public static IntArr idx(Object[] arr) {
+	public static int[] idx(StrArr arr) {
 		return range(arr);
 	}
-	public static IntArr idx(StrArr arr) {
+	public static int[] idx(IntArr arr) {
 		return range(arr);
 	}
-	public static IntArr idx(IntArr arr) {
+	public static int[] idx(LongArr arr) {
 		return range(arr);
 	}
-	public static IntArr idx(LongArr arr) {
+	public static int[] idx(FltArr arr) {
 		return range(arr);
 	}
-	public static IntArr idx(FltArr arr) {
+	public static int[] idx(DblArr arr) {
 		return range(arr);
 	}
-	public static IntArr idx(DblArr arr) {
-		return range(arr);
-	}
-	public static IntArr idx(BoolArr arr) {
+	public static int[] idx(BoolArr arr) {
 		return range(arr);
 	}
 	public static void each(
@@ -5440,7 +6431,7 @@ public class KL {
 	public static BoolArr onlyKeep(BoolArr list, Predicate<Boolean> condition) {
 		return keepIf(list, condition);
 	}
-	
+
 	// Date functions
 	public static String nthDay(int n) {
 		String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
@@ -6293,7 +7284,7 @@ public class KL {
 	public static String Str(Object[] arg) {
 		return String(arg);
 	}
-		public static String Str(StrArr arr) {
+	public static String Str(StrArr arr) {
 		return String(arr);
 	}
 	public static String Str(IntArr arr) {
@@ -6359,49 +7350,57 @@ public class KL {
 	public static String Str(Tree_B t) {
 		return String(t);
 	}
+	public static String concat(Object... args) {
+		String result = "";
+		for (var arg : args) result += ("" + arg);
+		return result;
+	}
+	public static String cat(Object... args) {
+		return concat(args);
+	}
 	public static String[] Arr(String... items) {
-        int length = items.length;
-	    String[] arr = new String[length];
-	    for (int i = 0; i < length; i++) arr[i] = items[i];
-	    return arr;
-    }
-    public static int[] Arr(int... items) {
-        int length = items.length;
-	    int[] arr = new int[length];
-	    for (int i = 0; i < length; i++) arr[i] = items[i];
-	    return arr;
-    }
-    public static long[] Arr(long... items) {
-        int length = items.length;
-	    long[] arr = new long[length];
-	    for (int i = 0; i < length; i++) arr[i] = items[i];
-	    return arr;
-    }
-    public static float[] Arr(float... items) {
-        int length = items.length;
-	    float[] arr = new float[length];
-	    for (int i = 0; i < length; i++) arr[i] = items[i];
-	    return arr;
-    }
-    public static double[] Arr(double... items) {
-        int length = items.length;
-	    double[] arr = new double[length];
-	    for (int i = 0; i < length; i++) arr[i] = items[i];
-	    return arr;
-    }
-    public static boolean[] Arr(boolean... items) {
-        int length = items.length;
-	    boolean[] arr = new boolean[length];
-	    for (int i = 0; i < length; i++) arr[i] = items[i];
-	    return arr;
-    }
-    public static Object[] Arr(Object... items) {
-        int length = items.length;
-	    Object[] arr = new Object[length];
-	    for (int i = 0; i < length; i++) arr[i] = items[i];
-	    return arr;
-    }
-    public static String[] Arr(Obj_S o) {
+		int length = items.length;
+		String[] arr = new String[length];
+		for (int i = 0; i < length; i++) arr[i] = items[i];
+		return arr;
+	}
+	public static int[] Arr(int... items) {
+		int length = items.length;
+		int[] arr = new int[length];
+		for (int i = 0; i < length; i++) arr[i] = items[i];
+		return arr;
+	}
+	public static long[] Arr(long... items) {
+		int length = items.length;
+		long[] arr = new long[length];
+		for (int i = 0; i < length; i++) arr[i] = items[i];
+		return arr;
+	}
+	public static float[] Arr(float... items) {
+		int length = items.length;
+		float[] arr = new float[length];
+		for (int i = 0; i < length; i++) arr[i] = items[i];
+		return arr;
+	}
+	public static double[] Arr(double... items) {
+		int length = items.length;
+		double[] arr = new double[length];
+		for (int i = 0; i < length; i++) arr[i] = items[i];
+		return arr;
+	}
+	public static boolean[] Arr(boolean... items) {
+		int length = items.length;
+		boolean[] arr = new boolean[length];
+		for (int i = 0; i < length; i++) arr[i] = items[i];
+		return arr;
+	}
+	public static Object[] Arr(Object... items) {
+		int length = items.length;
+		Object[] arr = new Object[length];
+		for (int i = 0; i < length; i++) arr[i] = items[i];
+		return arr;
+	}
+	public static String[] Arr(Obj_S o) {
 		return o.array();
 	}
 	public static int[] Arr(Obj_I o) {
@@ -6457,12 +7456,17 @@ public class KL {
 		char result = Chars(str)[0];
 		return result;
 	}
+	public static char Char(int n) {
+		char result = (char) n;
+		if (!isAlpha(result)) return '\0';
+		return result;
+	}
 	public static char Char(String str, int n) {
 		char result = Chars(str)[n];
 		return result;
 	}
 	public static char nthCharOf(String str, int n) {
-		if (n < 0 || n > len(str)) return '\0';
+		if (n < 0 || n >= len(str)) return '\0';
 		char result = Chars(str)[n];
 		return result;
 	}
@@ -6496,18 +7500,90 @@ public class KL {
 		String returnValue = String.join(with, stringedArray);
 		return returnValue;
 	}
+	public static String join(int[] intArray, String with) {
+		String[] midProcessedArray = new String[intArray.length];
+		for (int i : range(intArray)) midProcessedArray[i] = "" + intArray[i];
+		String returnValue = String.join(with, midProcessedArray);
+		return returnValue;
+	}
+	public static String join(long[] arr, String with) {
+		String[] midProcessedArray = new String[arr.length];
+		for (int i : range(arr)) midProcessedArray[i] = "" + arr[i];
+		String returnValue = String.join(with, midProcessedArray);
+		return returnValue;
+	}
+	public static String join(float[] arr, String with) {
+		String[] midProcessedArray = new String[arr.length];
+		for (int i : range(arr)) midProcessedArray[i] = "" + arr[i];
+		String returnValue = String.join(with, midProcessedArray);
+		return returnValue;
+	}
+	public static String join(double[] arr, String with) {
+		String[] midProcessedArray = new String[arr.length];
+		for (int i : range(arr)) midProcessedArray[i] = "" + arr[i];
+		String returnValue = String.join(with, midProcessedArray);
+		return returnValue;
+	}
+	public static String join(boolean[] arr, String with) {
+		String[] midProcessedArray = new String[arr.length];
+		for (int i : range(arr)) midProcessedArray[i] = "" + arr[i];
+		String returnValue = String.join(with, midProcessedArray);
+		return returnValue;
+	}
+	public static String join(String[] array) {
+		String halfProcessed = join(array, ", ");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		//helps return a string in the American format of joining: a, b, and c for three items
+		returnValue = sentCase(returnValue);
+		return returnValue;
+	}
+	public static String join(int[] array) {
+		String halfProcessed = join(array, ", ");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		//helps return a string in the American format of joining: a, b, and c for three items
+		returnValue = sentCase(returnValue);
+		return returnValue;
+	}
+	public static String join(long[] array) {
+		String halfProcessed = join(array, ", ");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		//helps return a string in the American format of joining: a, b, and c for three items
+		returnValue = sentCase(returnValue);
+		return returnValue;
+	}
+	public static String join(float[] array) {
+		String halfProcessed = join(array, ", ");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		//helps return a string in the American format of joining: a, b, and c for three items
+		returnValue = sentCase(returnValue);
+		return returnValue;
+	}
+	public static String join(double[] array) {
+		String halfProcessed = join(array, ", ");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		//helps return a string in the American format of joining: a, b, and c for three items
+		returnValue = sentCase(returnValue);
+		return returnValue;
+	}
+	public static String join(boolean[] array) {
+		String halfProcessed = join(array, ", ");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		//helps return a string in the American format of joining: a, b, and c for three items
+		returnValue = sentCase(returnValue);
+		return returnValue;
+	}
 	public static String join(StrArr stringedArray, String with) {
 		String returnValue = String.join(with, stringedArray.array());
 		return returnValue;
 	}
 	public static boolean eq(String x, String y) {
-		return x.equalsIgnoreCase(y) && match(x, "^(" + y + ")$");
+		return match(x, "^(" + y + ")$");
 	}
 	public static boolean eq(String x, String y, boolean strict) {
 		if (!strict)
 			return eq(x, y);
 		else
-			return x.equals(y) && match(x, "^(" + y + ")$", true);
+			return x.equals(y) || match(x, "^(" + y + ")$", true);
 	}
 	public static boolean uneq(String x, String y) {
 		return !eq(x, y);
@@ -6715,17 +7791,32 @@ public class KL {
 	public static double Neg(double n) {
 		return -Pos(n);
 	}
-	public static int sum(int... ns) {
+	public static boolean Neg(boolean b) {
+		return not(b);
+	}
+	public static int reverse(int n) {
+		return n > 0 ? Neg(n) : Pos(n);
+	}
+	public static long reverse(long n) {
+		return n > 0 ? Neg(n) : Pos(n);
+	}
+	public static float reverse(float n) {
+		return n > 0 ? Neg(n) : Pos(n);
+	}
+	public static double reverse(double n) {
+		return n > 0 ? Neg(n) : Pos(n);
+	}
+	public static double sum(int... ns) {
 		int acc = 0;
 		for (int next = 0; next < ns.length; next++) acc += ns[next];
 		return acc;
 	}
-	public static long sum(long... ns) {
+	public static double sum(long... ns) {
 		long acc = 0;
 		for (int next = 0; next < ns.length; next++) acc += ns[next];
 		return acc;
 	}
-	public static float sum(float... ns) {
+	public static double sum(float... ns) {
 		float acc = 0;
 		for (int next = 0; next < ns.length; next++) acc += ns[next];
 		return acc;
@@ -6735,17 +7826,17 @@ public class KL {
 		for (int next = 0; next < ns.length; next++) acc += ns[next];
 		return acc;
 	}
-	public static int sum(IntArr ns) {
+	public static double sum(IntArr ns) {
 		int acc = 0;
 		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
 		return acc;
 	}
-	public static long sum(LongArr ns) {
+	public static double sum(LongArr ns) {
 		long acc = 0;
 		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
 		return acc;
 	}
-	public static float sum(FltArr ns) {
+	public static double sum(FltArr ns) {
 		float acc = 0;
 		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
 		return acc;
@@ -6755,137 +7846,268 @@ public class KL {
 		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
 		return acc;
 	}
-	public static int diff(int... ns) {
+	public static double sum(Tree_S ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static double sum(Tree_SL ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static double sum(Tree_L ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static double sum(Tree_SF ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static double sum(Tree_F ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static double sum(Tree_SD ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static double sum(Tree_D ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc += ns.array()[next];
+		return acc;
+	}
+	public static double difference(int... ns) {
 		int acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc -= ns[next];
 		return acc;
 	}
-	public static long diff(long... ns) {
+	public static double difference(long... ns) {
 		long acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc -= ns[next];
 		return acc;
 	}
-	public static float diff(float... ns) {
+	public static double difference(float... ns) {
 		float acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc -= ns[next];
 		return acc;
 	}
-	public static double diff(double... ns) {
+	public static double difference(double... ns) {
 		double acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc -= ns[next];
 		return acc;
 	}
-	public static int diff(IntArr ns) {
+	public static double difference(IntArr ns) {
 		int acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc -= ns.array()[next];
 		return acc;
 	}
-	public static long diff(LongArr ns) {
+	public static double difference(LongArr ns) {
 		long acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc -= ns.array()[next];
 		return acc;
 	}
-	public static float diff(FltArr ns) {
+	public static double difference(FltArr ns) {
 		float acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc -= ns.array()[next];
 		return acc;
 	}
-	public static double diff(DblArr ns) {
+	public static double difference(DblArr ns) {
 		double acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc -= ns.array()[next];
 		return acc;
 	}
-	public static int prd(int... ns) {
+	public static double difference(Tree_S ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static double difference(Tree_SL ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static double difference(Tree_L ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static double difference(Tree_SF ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static double difference(Tree_F ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static double difference(Tree_SD ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static double difference(Tree_D ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc -= ns.array()[next];
+		return acc;
+	}
+	public static double product(int... ns) {
 		int acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc *= ns[next];
 		return acc;
 	}
-	public static long prd(long... ns) {
+	public static double product(long... ns) {
 		long acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc *= ns[next];
 		return acc;
 	}
-	public static float prd(float... ns) {
+	public static double product(float... ns) {
 		float acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc *= ns[next];
 		return acc;
 	}
-	public static double prd(double... ns) {
+	public static double product(double... ns) {
 		double acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc *= ns[next];
 		return acc;
 	}
-	public static int prd(IntArr ns) {
+	public static double product(IntArr ns) {
 		int acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc *= ns.array()[next];
 		return acc;
 	}
-	public static long prd(LongArr ns) {
+	public static double product(LongArr ns) {
 		long acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc *= ns.array()[next];
 		return acc;
 	}
-	public static float prd(FltArr ns) {
+	public static double product(FltArr ns) {
 		float acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc *= ns.array()[next];
 		return acc;
 	}
-	public static double prd(DblArr ns) {
+	public static double product(DblArr ns) {
 		double acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc *= ns.array()[next];
 		return acc;
 	}
-	public static int quo(int... ns) {
+	public static double product(Tree_S ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static double product(Tree_SL ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static double product(Tree_L ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static double product(Tree_SF ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static double product(Tree_F ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static double product(Tree_SD ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static double product(Tree_D ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc *= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(int... ns) {
 		int acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc /= ns[next];
 		return acc;
 	}
-	public static long quo(long... ns) {
+	public static double quotient(long... ns) {
 		long acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc /= ns[next];
 		return acc;
 	}
-	public static float quo(float... ns) {
+	public static double quotient(float... ns) {
 		float acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc /= ns[next];
 		return acc;
 	}
-	public static double quo(double... ns) {
+	public static double quotient(double... ns) {
 		double acc = ns[0];
 		for (int next = 1; next < ns.length; next++) acc /= ns[next];
 		return acc;
 	}
-	public static int quo(IntArr ns) {
+	public static double quotient(IntArr ns) {
 		int acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc /= ns.array()[next];
 		return acc;
 	}
-	public static long quo(LongArr ns) {
+	public static double quotient(LongArr ns) {
 		long acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc /= ns.array()[next];
 		return acc;
 	}
-	public static float quo(FltArr ns) {
+	public static double quotient(FltArr ns) {
 		float acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quo(DblArr ns) {
+	public static double quotient(DblArr ns) {
 		double acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(Tree_S ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(Tree_SL ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(Tree_L ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(Tree_SF ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(Tree_F ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(Tree_SD ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(Tree_D ns) {
+		double acc = 0;
+		for (int next = 0; next < ns.length(); next++) acc /= ns.array()[next];
 		return acc;
 	}
 	public static int pow(int n, int power) {
 		return (int)Math.pow(n, power);
-	}
-	public static int sq(int n) {
-		return n * n;
-	}
-	public static long sq(long n) {
-		return n * n;
-	}
-	public static float sq(float n) {
-		return n * n;
 	}
 	public static double sq(double n) {
 		return n * n;
@@ -6893,41 +8115,14 @@ public class KL {
 	public static double sqrt(double n) {
 		return Math.sqrt(n);
 	}
-	public static int cb(int n) {
-		return sq(n) * n;
-	}
-	public static long cb(long n) {
-		return sq(n) * n;
-	}
-	public static float cb(float n) {
-		return sq(n) * n;
-	}
 	public static double cb(double n) {
 		return sq(n) * n;
 	}
 	public static double cbrt(double n) {
 		return Math.cbrt(n);
 	}
-	public static int area(int w, int h) {
-		return w * h;
-	}
-	public static long area(long w, long h) {
-		return w * h;
-	}
-	public static float area(float w, float h) {
-		return w * h;
-	}
 	public static double area(double w, double h) {
 		return w * h;
-	}
-	public static int tria(int w, int h) {
-		return (int)(.5 * area(w, h));
-	}
-	public static long tria(long w, long h) {
-		return (long)(.5 * area(w, h));
-	}
-	public static float tria(float w, float h) {
-		return (float)(.5 * area(w, h));
 	}
 	public static double tria(double w, double h) {
 		return .5 * area(w, h);
@@ -6959,6 +8154,31 @@ public class KL {
 			Arrays.stream(nums.array()).summaryStatistics();
 		return stat.getMin();
 	}
+	public static int min(Tree_S nums) {
+		IntSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMin();
+	}
+	public static long min(Tree_SL nums) {
+		LongSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMin();
+	}
+	public static long min(Tree_L nums) {
+		LongSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMin();
+	}
+	public static double min(Tree_SD nums) {
+		DoubleSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMin();
+	}
+	public static double min(Tree_D nums) {
+		DoubleSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMin();
+	}
 	public static int max(int... nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMax();
@@ -6982,6 +8202,31 @@ public class KL {
 		return stat.getMax();
 	}
 	public static double max(DblArr nums) {
+		DoubleSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMax();
+	}
+	public static int max(Tree_S nums) {
+		IntSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMax();
+	}
+	public static long max(Tree_SL nums) {
+		LongSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMax();
+	}
+	public static long max(Tree_L nums) {
+		LongSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMax();
+	}
+	public static double max(Tree_SD nums) {
+		DoubleSummaryStatistics stat =
+			Arrays.stream(nums.array()).summaryStatistics();
+		return stat.getMax();
+	}
+	public static double max(Tree_D nums) {
 		DoubleSummaryStatistics stat =
 			Arrays.stream(nums.array()).summaryStatistics();
 		return stat.getMax();
@@ -7658,6 +8903,13 @@ public class KL {
 	public static boolean isNull(Object o) {
 		return o == null;
 	}
+	public static boolean isNull(Object... objs) {
+		int count = 0;
+		for (Object o : objs) {
+			if (o == null) count++;
+		}
+		return count > 0;
+	}
 	public static boolean isInfinity(double n) {
 		return n == infinity || n == Double.NEGATIVE_INFINITY || isNull(n);
 	}
@@ -7775,7 +9027,7 @@ public class KL {
 	public static boolean eq(Tree_F x, Tree_F y) {
 		return x.equals(y);
 	}
-    public static boolean eq(Tree_SD x, Tree_SD y) {
+	public static boolean eq(Tree_SD x, Tree_SD y) {
 		return x.equals(y);
 	}
 	public static boolean eq(Tree_D x, Tree_D y) {
@@ -7865,7 +9117,7 @@ public class KL {
 	public static boolean uneq(Tree_F x, Tree_F y) {
 		return !eq(x, y);
 	}
-    public static boolean uneq(Tree_SD x, Tree_SD y) {
+	public static boolean uneq(Tree_SD x, Tree_SD y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(Tree_D x, Tree_D y) {
@@ -8317,7 +9569,7 @@ public class KL {
 		return randFlt(end);
 	}
 	public static double randDbl(int start, int end) {
-		 return randFlt(start, end);
+		return randFlt(start, end);
 	}
 	public static String randStr(int len) {
 		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop"
@@ -8500,6 +9752,24 @@ public class KL {
 	public static boolean randFrom(Tree_B t) {
 		return randItem(t);
 	}
+	public static String randFrom(Obj_S o) {
+		return randItem(o);
+	}
+	public static int randFrom(Obj_I o) {
+		return randItem(o);
+	}
+	public static long randFrom(Obj_L o) {
+		return randItem(o);
+	}
+	public static float randFrom(Obj_F o) {
+		return randItem(o);
+	}
+	public static double randFrom(Obj_D o) {
+		return randItem(o);
+	}
+	public static boolean randFrom(Obj_B o) {
+		return randItem(o);
+	}
 	public static String anyOf(String arr[]) {
 		return randItem(arr);
 	}
@@ -8568,6 +9838,24 @@ public class KL {
 	}
 	public static boolean anyOf(Tree_B t) {
 		return randItem(t);
+	}
+	public static String anyOf(Obj_S o) {
+		return randItem(o);
+	}
+	public static int anyOf(Obj_I o) {
+		return randItem(o);
+	}
+	public static long anyOf(Obj_L o) {
+		return randItem(o);
+	}
+	public static float anyOf(Obj_F o) {
+		return randItem(o);
+	}
+	public static double anyOf(Obj_D o) {
+		return randItem(o);
+	}
+	public static boolean anyOf(Obj_B o) {
+		return randItem(o);
 	}
 	public static int[] noDuplicates(int[] arr) {
 		return IntStream.of(arr).distinct().toArray();
@@ -8647,7 +9935,8 @@ public class KL {
 		return arr.copy();
 	}
 	public static String slice(String str, int start) {
-		return str.substring(start, str.length());
+		if (start < 0 || start >= len(str)) return str;
+		return str.substring(start, len(str));
 	}
 	public static String[] slice(String oldArr[], int start) {
 		String newArr[] =
@@ -8695,6 +9984,8 @@ public class KL {
 		return arr.slice(start, arr.length());
 	}
 	public static String slice(String str, int start, int end) {
+		if (start < 0 || start >= len(str) || end <= 0 || end >= len(str)) return str;
+
 		return str.substring(start, end);
 	}
 	public static String[] slice(String oldArr[], int start, int end) {
@@ -9006,6 +10297,22 @@ public class KL {
 	public static boolean endsWith(BoolArr arr, boolean lookupBool) {
 		if (not(len(arr))) return false;
 		return arr.last() == lookupBool;
+	}
+	public static boolean endsWith(Tree_S tree, int lookupInt) {
+		if (not(len(tree))) return false;
+		return tree.last() == lookupInt;
+	}
+	public static boolean endsWith(Tree_I tree, String lookupStr) {
+		if (not(len(tree))) return false;
+		return tree.last() == lookupStr;
+	}
+	public static boolean endsWith(Tree_SL tree, long lookupLong) {
+		if (not(len(tree))) return false;
+		return tree.last() == lookupLong;
+	}
+	public static boolean endsWith(Tree_L tree, long lookupLong) {
+		if (not(len(tree))) return false;
+		return tree.last() == lookupLong;
 	}
 	public static String nth(StrArr arr, int n) {
 		return n >= 0 && n < len(arr) ? arr.i(n) : "";
@@ -9595,6 +10902,9 @@ public class KL {
 	public static BoolArr clone(BoolArr arr) {
 		return slice(arr);
 	}
+	public static Tree_S clone(Tree_S arr) {
+		return arr.copy();
+	}
 	public static String[] copyArr(String[] arr) {
 		return clone(arr);
 	}
@@ -10048,29 +11358,30 @@ public class KL {
 	}
 	public static String sentCase(String input) {
 		input = (input.toUpperCase().substring(0, 1)
-				 + input.toLowerCase().substring(1))
+				+ (!in(input, "[A-Z]{2,}") ? input.toLowerCase() : input).substring(1))
 				.replaceAll("(?<!\\w)i(?!\\w)", "I");
 		return input;
 	}
 	public static String titleCase(String input) {
-		StringBuilder titleCased = new StringBuilder(input.length());
+		String[] parts = input.split("");
+		String result = "";
 		boolean nextTitleCase = true;
-		for (char c : input.toCharArray()) {
-			if (Character.isSpaceChar(c)) {
+		for (String c : parts) {
+			if (eq(c, " ")) {
 				nextTitleCase = true;
 			} else if (nextTitleCase) {
-				c = Character.toTitleCase(c);
+				c = upper(c);
 				nextTitleCase = false;
 			}
-			titleCased.append(c);
+			result += "" + c;
 		}
-		return titleCased.toString();
+		return result;
 	}
 	public static String reverse(String str) {
 		return new StringBuilder(str).reverse().toString();
 	}
 	public static int len(String str) {
-		return str.length();
+		return str.trim().length();
 	}
 	public static int len(int n) {
 		int result = 0;
@@ -10274,12 +11585,6 @@ public class KL {
 	public static boolean isEmpty(String s) {
 		return 0 == len(s);
 	}
-	public static boolean isEmpty(int n) {
-		return 0 == len(n);
-	}
-	public static boolean isEmpty(long n) {
-		return 0 == len(n);
-	}
 	public static boolean isEmpty(String[] arr) {
 		return 0 == len(arr);
 	}
@@ -10368,34 +11673,53 @@ public class KL {
 		return 0 == len(t) || t.isEmpty();
 	}
 	// Arrays
+	public static String type(Object o) {
+		if (isNull(o)) return "null";
+		String middleware = o.getClass().toString();
+		if (!in(middleware, "\\.")) return "unidentified";
+		String result = middleware.split("\\.")[2].toLowerCase();
+		return result;
+	}
+	public static boolean type(Object obj, String guessedType) {
+		if (not(obj) || not(guessedType)) return false;
+		return startsWith(type(obj), guessedType);
+	}
+	//let's set up some "type"-helpers for the function
+	public static String Str = "string",
+						 Int = "integer",
+						 Char = "character",
+						 Long = "long",
+						 Flt = "float",
+						 Dbl = "double",
+						 Bool = "boolean";
 	public static int[] intArrToIntArr(Integer[] inputArr) {
 		int length = inputArr.length;
 		int resultingArr[] = new int[length];
-		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		for (int i = 0; i < length; i++) resultingArr[i] = inputArr[i];
 		return resultingArr;
 	}
 	public static long[] longArrToLongArr(Long[] inputArr) {
 		int length = inputArr.length;
 		long resultingArr[] = new long[length];
-		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		for (int i = 0; i < length; i++) resultingArr[i] = inputArr[i];
 		return resultingArr;
 	}
 	public static float[] floatArrToFloatArr(Float[] inputArr) {
 		int length = inputArr.length;
 		float resultingArr[] = new float[length];
-		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		for (int i = 0; i < length; i++) resultingArr[i] = inputArr[i];
 		return resultingArr;
 	}
 	public static double[] doubleArrToDoubleArr(Double[] inputArr) {
 		int length = inputArr.length;
 		double resultingArr[] = new double[length];
-		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		for (int i = 0; i < length; i++) resultingArr[i] = inputArr[i];
 		return resultingArr;
 	}
 	public static boolean[] booleanArrToBooleanArr(Boolean[] inputArr) {
 		int length = inputArr.length;
 		boolean resultingArr[] = new boolean[length];
-		for (int i = 0; i<length; i++) resultingArr[i] = inputArr[i];
+		for (int i = 0; i < length; i++) resultingArr[i] = inputArr[i];
 		return resultingArr;
 	}
 	public static String[] reverse(String[] arr) {
@@ -11532,13 +12856,9 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
-	    
-	    int[] nums = range(1, 10).array();
-	    int[] evens = onlyKeep(nums, n -> n % 2 == 0),
-	        odds = onlyPop(nums, evens);
-	    print("Evens: ");
-	    printArr(evens);
-	    print("Odds: ");
-	    printArr(odds);
+		sw(8.4, ">9", () -> print("uh...?"), "==8.47", () -> print("yeah"), ">16", () -> print("still a no?"), "==12", () -> print("ugh"), ">51", () -> print("no?"), ">92", () -> print("I dunno"), "<3", () -> print("could it be that?"), ">8", () -> print("you got me"), Else, () -> print("neither"));
+		//WORK IN PROGRESS
+		int[] nums = {1, 3, 5};
+		print(join(nums, "+"));
 	}
 }
