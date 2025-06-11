@@ -3249,88 +3249,43 @@ public class KL {
 				String k4, int v4, String k5, int v5, String k6, int v6,
 				String k7, int v7, String k8, int v8, String k9, int v9,
 				String k10, int v10) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
-			super.put(k10, v10);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6,
 				String k7, int v7, String k8, int v8, String k9, int v9) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6,
 				String k7, int v7, String k8, int v8) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6,
 				String k7, int v7) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_S(String k1, int v1, String k2, int v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_S(String k1, int v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_S copy() {
 			return (Tree_S) super.clone();
@@ -3388,88 +3343,43 @@ public class KL {
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8, String k9, long v9,
 				String k10, long v10) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
-			super.put(k10, v10);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8, String k9, long v9) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_SL(String k1, long v1, String k2, long v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_SL(String k1, long v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_SL copy() {
 			return (Tree_SL) super.clone();
@@ -3528,88 +3438,43 @@ public class KL {
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8, String k9, float v9,
 				String k10, float v10) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
-			super.put(k10, v10);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8, String k9, float v9) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_SF(String k1, float v1, String k2, float v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_SF(String k1, float v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_SF copy() {
 			return (Tree_SF) super.clone();
@@ -3668,92 +3533,47 @@ public class KL {
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6, String k7, double v7, String k8,
 				double v8, String k9, double v9, String k10, double v10) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
-			super.put(k10, v10);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_SD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6, String k7, double v7, String k8,
 				double v8, String k9, double v9) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_SD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6, String k7, double v7, String k8,
 				double v8) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_SD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6, String k7, double v7) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_SD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_SD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_SD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_SD(String k1, double v1, String k2, double v2, String k3,
 				double v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_SD(String k1, double v1, String k2, double v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_SD(String k1, double v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_SD copy() {
 			return (Tree_SD) super.clone();
@@ -3812,92 +3632,47 @@ public class KL {
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8, String k9, boolean v9, String k10, boolean v10) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
-			super.put(k10, v10);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8, String k9, boolean v9) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_SB(String k1, boolean v1, String k2, boolean v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_SB(String k1, boolean v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_SB copy() {
 			return (Tree_SB) super.clone();
@@ -3953,31 +3728,41 @@ public class KL {
 			super();
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10, String v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		}
+		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		}
+		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		}
+		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6, int k7, String v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4, int k5, String v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_I(int k1, String v1, int k2, String v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_I(int k1, String v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_I copy() {
 			return (Tree_I) super.clone();
@@ -4035,87 +3820,42 @@ public class KL {
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 				int k8, long v8, int k9, long v9, int k10, long v10) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
-			super.put(k10, v10);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 				int k8, long v8, int k9, long v9) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
-			super.put(k9, v9);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 				int k8, long v8) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
-			super.put(k8, v8);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
-			super.put(k7, v7);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
-			super.put(k6, v6);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_L(int k1, long v1, int k2, long v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_L(int k1, long v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_L copy() {
 			return (Tree_L) super.clone();
@@ -4171,31 +3911,44 @@ public class KL {
 			super();
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+				int k8, float v8, int k9, float v9, int k10, float v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		}
+		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+				int k8, float v8, int k9, float v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		}
+		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+				int k8, float v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		}
+		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6, int k7, float v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4, int k5, float v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_F(int k1, float v1, int k2, float v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_F(int k1, float v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_F copy() {
 			return (Tree_F) super.clone();
@@ -4251,31 +4004,44 @@ public class KL {
 			super();
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+				int k8, double v8, int k9, double v9, int k10, double v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		}
+		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+				int k8, double v8, int k9, double v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		}
+		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+				int k8, double v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		}
+		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6, int k7, double v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4, int k5, double v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_D(int k1, double v1, int k2, double v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_D(int k1, double v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_D copy() {
 			return (Tree_D) super.clone();
@@ -4330,32 +4096,45 @@ public class KL {
 		Tree_B() {
 			super();
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
-				int k4, boolean v4, int k5, boolean v5) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
-			super.put(k5, v5);
+		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+				boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+				int k8, boolean v8, int k9, boolean v9, int k10, boolean v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
-				int k4, boolean v4) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
-			super.put(k4, v4);
+		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+				boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+				int k8, boolean v8, int k9, boolean v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		}
+		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+				boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+				int k8, boolean v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		}
+		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+				boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+				boolean v4, int k5, boolean v5, int k6, boolean v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+				boolean v4, int k5, boolean v5) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		}
+		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+				boolean v4) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
-			super.put(k1, v1);
-			super.put(k2, v2);
-			super.put(k3, v3);
+			super(k1, v1, k2, v2, k3, v3);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2) {
-			super.put(k1, v1);
-			super.put(k2, v2);
+			super(k1, v1, k2, v2);
 		}
 		Tree_B(int k1, boolean v1) {
-			super.put(k1, v1);
+			super(k1, v1);
 		}
 		Tree_B copy() {
 			return (Tree_B) super.clone();
@@ -4635,6 +4414,12 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static StrArr strArr(String... strings) {
+		return new StrArr(strings);
+	}
+	public static StrArr StrArr(String... strings) {
+		return new StrArr(strings);
+	}
 	public static final class IntArr extends ArrayList<Integer> {
 		IntArr() {
 			super();
@@ -4856,6 +4641,12 @@ public class KL {
 		int length() {
 			return super.size();
 		}
+	}
+	public static IntArr intArr(int... ints) {
+		return new IntArr(ints);
+	}
+	public static IntArr IntArr(int... ints) {
+		return new IntArr(ints);
 	}
 	public static final class LongArr extends ArrayList<Long> {
 		LongArr() {
@@ -5090,6 +4881,12 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static LongArr longArr(long... longs) {
+		return new LongArr(longs);
+	}
+	public static LongArr LongArr(long... longs) {
+		return new LongArr(longs);
+	}
 	public static final class FltArr extends ArrayList<Float> {
 		FltArr() {
 			super();
@@ -5323,6 +5120,12 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static FltArr fltArr(float... floats) {
+		return new FltArr(floats);
+	}
+	public static FltArr FltArr(float... floats) {
+		return new FltArr(floats);
+	}
 	public static final class DblArr extends ArrayList<Double> {
 		DblArr() {
 			super();
@@ -5555,6 +5358,12 @@ public class KL {
 		int length() {
 			return super.size();
 		}
+	}
+	public static DblArr dblArr(double...doubles) {
+		return new DblArr(doubles);
+	}
+	public static DblArr DblArr(double...doubles) {
+		return new DblArr(doubles);
 	}
 	public static final class BoolArr extends ArrayList<Boolean> {
 		BoolArr() {
@@ -5790,6 +5599,12 @@ public class KL {
 		int length() {
 			return super.size();
 		}
+	}
+	public static BoolArr boolArr(boolean...bools) {
+		return new BoolArr(bools);
+	}
+	public static BoolArr BoolArr(boolean...bools) {
+		return new BoolArr(bools);
 	}
 	public static boolean runTask(Runnable fn) {
 		if (not(fn))
