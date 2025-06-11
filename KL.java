@@ -985,7 +985,7 @@ public class KL {
 			super(rows, columns, hgap, vgap);
 		}
 	}
-	class FlowLay extends FlowLayout {
+	public static class FlowLay extends FlowLayout {
 		private static final long serialVersionUID = 1L;
 		FlowLay() {
 			super();
@@ -1210,6 +1210,11 @@ public class KL {
 		Btn(String text, Icon i) {
 			super(text, i);
 			super.setFocusable(false);
+		}
+		Btn(String text, ActionListener listener) {
+			super(text);
+			super.setFocusable(false);
+			click(listener);
 		}
 		Btn click(ActionListener listener) {
 			super.addActionListener(listener);
@@ -1646,14 +1651,131 @@ public class KL {
 			Plain = PLAIN = Font.PLAIN, Italic = ITALIC = Font.ITALIC,
 			BoldItalic = BOLDITALIC = Bold | Italic;
 	// some other syntax candies
-	public static Pesa Pesa() {
+	public static Pesa pesa() {
 		return new Pesa();
 	}
-	public static Pesa Pesa(double amnt) {
+	public static Pesa pesa(double amnt) {
 		return new Pesa(amnt);
 	}
-	public static Pesa Pesa(double amnt, String curr) {
+	public static Pesa pesa(double amnt, String curr) {
 		return new Pesa(amnt, curr);
+	}
+	public static BordLay bordlay() {
+		return new BordLay();
+	}
+	public static BordLay bordlay(int hgap, int vgap) {
+		return new BordLay(hgap, vgap);
+	}
+	public static GridLay gridlay() {
+		return new GridLay();
+	}
+	public static GridLay gridlay(int rows, int columns) {
+		return new GridLay(rows, columns);
+	}
+	public static GridLay gridlay(int rows, int columns, int hgap, int vgap) {
+		return new GridLay(rows, columns, hgap, vgap);
+	}
+	public static FlowLay flowlay() {
+		return new FlowLay();
+	}
+	public static FlowLay flowlay(int align) {
+		return new FlowLay(align);
+	}
+	public static FlowLay flowlay(int align, int hgap, int vgap) {
+		return new FlowLay(align, hgap, vgap);
+	}
+	public static Panel panel() {
+		return new Panel();
+	}
+	public static Panel panel(LayoutManager layout) {
+		return new Panel(layout);
+	}
+	public static Panel panel(boolean isDoubleBuffered) {
+		return new Panel(isDoubleBuffered);
+	}
+	public static Panel panel(LayoutManager layout, boolean isDoubleBuffered) {
+		return new Panel(layout, isDoubleBuffered);
+	}
+	public static Label label() {
+		return new Label();
+	}
+	public static Label label(String text) {
+		return new Label(text);
+	}
+	public static TxtField txtField() {
+		return new TxtField();
+	}
+	public static TxtField txtField(String text) {
+		return new TxtField(text);
+	}
+	public static TxtField txtField(int columns) {
+		return new TxtField(columns);
+	}
+	public static TxtField txtField(String text, int columns) {
+		return new TxtField(text, columns);
+	}
+	public static TxtField txtField(Document doc, String text, int columns) {
+		return new TxtField(doc, text, columns);
+	}
+	public static PwdField pwdField() {
+		return new PwdField();
+	}
+	public static PwdField pwdField(String text) {
+		return new PwdField(text);
+	}
+	public static PwdField pwdField(int columns) {
+		return new PwdField(columns);
+	}
+	public static PwdField pwdField(String text, int columns) {
+		return new PwdField(text, columns);
+	}
+	public static PwdField pwdField(Document doc, String text, int columns) {
+		return new PwdField(doc, text, columns);
+	}
+	public static Icon icon() {
+		return new Icon();
+	}
+	public static Icon icon(byte[] imageData) {
+		return new Icon(imageData);
+	}
+	public static Icon icon(Image image) {
+		return new Icon(image);
+	}
+	public static Icon icon(String filename) {
+		return new Icon(filename);
+	}
+	public static Icon icon(java.net.URL urlObject) {
+		return new Icon(urlObject);
+	}
+	public static clr clr(int clr) {
+		return new clr(clr);
+	}
+	public static clr clr(int r, int g, int b) {
+		return new clr(r, g, b);
+	}
+	public static clr clr(float r, float g, float b) {
+		return new clr(r, g, b);
+	}
+	public static clr clr(float r, float g, float b, float a) {
+		return new clr(r, g, b, a);
+		/*
+		 * @params all in the floating range: 0 to 1
+		 */
+	}
+	public static clr clr(int r, int g, int b, int a) {
+		return new clr(r, g, b, a);
+		/*
+		 * @params all in the integer range: 0 to 255
+		 */
+	}
+	public static GUI gui() {
+		return new GUI();
+	}
+	public static GUI gui(String t) {
+		return new GUI(t);
+	}
+	public static GUI gui(String t, int w, int h) {
+		return new GUI(t, w, h);
 	}
 	public static GUI nayaGUI() {
 		return new GUI();
@@ -1664,20 +1786,32 @@ public class KL {
 	public static GUI nayaGUI(String t, int w, int h) {
 		return new GUI(t, w, h);
 	}
-	public static GUI GUI() {
-		return new GUI();
+	public static Btn btn() {
+		return new Btn();
 	}
-	public static GUI GUI(String t) {
-		return new GUI(t);
+	public static Btn btn(String txt) {
+		return new Btn(txt);
 	}
-	public static GUI GUI(String t, int w, int h) {
-		return new GUI(t, w, h);
+	public static Btn btn(String txt, ActionListener actionOnClick) {
+		return new Btn(txt, actionOnClick);
+	}
+	public static Btn btn(Action a) {
+		return new Btn(a);
+	}
+	public static Btn btn(Icon i) {
+		return new Btn(i);
+	}
+	public static Btn btn(String text, Icon i) {
+		return new Btn(text, i);
 	}
 	public static Btn nayaBtn() {
 		return new Btn();
 	}
 	public static Btn nayaBtn(String txt) {
 		return new Btn(txt);
+	}
+	public static Btn nayaBtn(String txt, ActionListener actionOnClick) {
+		return new Btn(txt, actionOnClick);
 	}
 	public static Btn nayaBtn(Action a) {
 		return new Btn(a);
@@ -1688,20 +1822,13 @@ public class KL {
 	public static Btn nayaBtn(String text, Icon i) {
 		return new Btn(text, i);
 	}
-	public static Btn Btn() {
-		return new Btn();
-	}
-	public static Btn Btn(String txt) {
-		return new Btn(txt);
-	}
-	public static Btn Btn(Action a) {
-		return new Btn(a);
-	}
-	public static Btn Btn(Icon i) {
-		return new Btn(i);
-	}
-	public static Btn Btn(String text, Icon i) {
-		return new Btn(text, i);
+	public static URL url(String address) {
+		try {
+			return URI.create(address).toURL();
+		} catch (IllegalArgumentException | MalformedURLException e) {
+			print("[KL.Exception.MalformedURL]\nBad URL!");
+		}
+		return null;
 	}
 	// general
 	public static final class Obj_S extends HashMap<String, String> {
@@ -5961,6 +6088,281 @@ public class KL {
 				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 				return false;
 			}
+			if (cond6 instanceof String) {
+				if (!in(Str(cond6), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware6 = Dbl(
+						String(cond6).replaceAll("[^\\-\\d\\.]", ""));
+				cond6 = String(cond6).replaceAll("[^<>=else]", "");
+				if (eq(cond6, ">")) {
+					if (Dbl(Str(src)) > middleware6) {
+						if (!isNull(sol6))
+							new Thread(sol6).run();
+						return true;
+					}
+				} else if (eq(cond6, ">=")) {
+					if (Dbl(Str(src)) >= middleware6) {
+						if (!isNull(sol6))
+							new Thread(sol6).run();
+						return true;
+					}
+				} else if (eq(cond6, "<")) {
+					if (Dbl(Str(src)) < middleware6) {
+						if (!isNull(sol6))
+							new Thread(sol6).run();
+						return true;
+					}
+				} else if (eq(cond6, "<=")) {
+					if (Dbl(Str(src)) <= middleware6) {
+						if (!isNull(sol6))
+							new Thread(sol6).run();
+						return true;
+					}
+				} else if (eq(cond6, "==")) {
+					if (Dbl(Str(src)) == middleware6) {
+						if (!isNull(sol6))
+							new Thread(sol6).run();
+						return true;
+					}
+				} else if (eq(cond6, "else")) {
+					if (!isNull(sol6))
+						new Thread(sol6).run();
+					return false;
+				}
+			} else if (cond6 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond6)))) {
+					if (!isNull(sol6))
+						new Thread(sol6).run();
+					return true;
+				}
+			} else if (isNull(cond6)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond7 instanceof String) {
+				if (!in(Str(cond7), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware7 = Dbl(
+						String(cond7).replaceAll("[^\\-\\d\\.]", ""));
+				cond7 = String(cond7).replaceAll("[^<>=else]", "");
+				if (eq(cond7, ">")) {
+					if (Dbl(Str(src)) > middleware7) {
+						if (!isNull(sol7))
+							new Thread(sol7).run();
+						return true;
+					}
+				} else if (eq(cond7, ">=")) {
+					if (Dbl(Str(src)) >= middleware7) {
+						if (!isNull(sol7))
+							new Thread(sol7).run();
+						return true;
+					}
+				} else if (eq(cond7, "<")) {
+					if (Dbl(Str(src)) < middleware7) {
+						if (!isNull(sol7))
+							new Thread(sol7).run();
+						return true;
+					}
+				} else if (eq(cond7, "<=")) {
+					if (Dbl(Str(src)) <= middleware7) {
+						if (!isNull(sol7))
+							new Thread(sol7).run();
+						return true;
+					}
+				} else if (eq(cond7, "==")) {
+					if (Dbl(Str(src)) == middleware7) {
+						if (!isNull(sol7))
+							new Thread(sol7).run();
+						return true;
+					}
+				} else if (eq(cond7, "else")) {
+					if (!isNull(sol7))
+						new Thread(sol7).run();
+					return false;
+				}
+			} else if (cond7 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond7)))) {
+					if (!isNull(sol7))
+						new Thread(sol7).run();
+					return true;
+				}
+			} else if (isNull(cond7)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond8 instanceof String) {
+				if (!in(Str(cond8), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware8 = Dbl(
+						String(cond8).replaceAll("[^\\-\\d\\.]", ""));
+				cond8 = String(cond8).replaceAll("[^<>=else]", "");
+				if (eq(cond8, ">")) {
+					if (Dbl(Str(src)) > middleware8) {
+						if (!isNull(sol8))
+							new Thread(sol8).run();
+						return true;
+					}
+				} else if (eq(cond8, ">=")) {
+					if (Dbl(Str(src)) >= middleware8) {
+						if (!isNull(sol8))
+							new Thread(sol8).run();
+						return true;
+					}
+				} else if (eq(cond8, "<")) {
+					if (Dbl(Str(src)) < middleware8) {
+						if (!isNull(sol8))
+							new Thread(sol8).run();
+						return true;
+					}
+				} else if (eq(cond8, "<=")) {
+					if (Dbl(Str(src)) <= middleware8) {
+						if (!isNull(sol8))
+							new Thread(sol8).run();
+						return true;
+					}
+				} else if (eq(cond8, "==")) {
+					if (Dbl(Str(src)) == middleware8) {
+						if (!isNull(sol8))
+							new Thread(sol8).run();
+						return true;
+					}
+				} else if (eq(cond8, "else")) {
+					if (!isNull(sol8))
+						new Thread(sol8).run();
+					return false;
+				}
+			} else if (cond8 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond8)))) {
+					if (!isNull(sol8))
+						new Thread(sol8).run();
+					return true;
+				}
+			} else if (isNull(cond8)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond9 instanceof String) {
+				if (!in(Str(cond9), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware9 = Dbl(
+						String(cond9).replaceAll("[^\\-\\d\\.]", ""));
+				cond9 = String(cond9).replaceAll("[^<>=else]", "");
+				if (eq(cond9, ">")) {
+					if (Dbl(Str(src)) > middleware9) {
+						if (!isNull(sol9))
+							new Thread(sol9).run();
+						return true;
+					}
+				} else if (eq(cond9, ">=")) {
+					if (Dbl(Str(src)) >= middleware9) {
+						if (!isNull(sol9))
+							new Thread(sol9).run();
+						return true;
+					}
+				} else if (eq(cond9, "<")) {
+					if (Dbl(Str(src)) < middleware9) {
+						if (!isNull(sol9))
+							new Thread(sol9).run();
+						return true;
+					}
+				} else if (eq(cond9, "<=")) {
+					if (Dbl(Str(src)) <= middleware9) {
+						if (!isNull(sol9))
+							new Thread(sol9).run();
+						return true;
+					}
+				} else if (eq(cond9, "==")) {
+					if (Dbl(Str(src)) == middleware9) {
+						if (!isNull(sol9))
+							new Thread(sol9).run();
+						return true;
+					}
+				} else if (eq(cond9, "else")) {
+					if (!isNull(sol9))
+						new Thread(sol9).run();
+					return false;
+				}
+			} else if (cond9 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond9)))) {
+					if (!isNull(sol9))
+						new Thread(sol9).run();
+					return true;
+				}
+			} else if (isNull(cond9)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond10 instanceof String) {
+				if (!in(Str(cond10), "(?<=[<>=])\\-?\\d|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return false;
+				}
+				double middleware10 = Dbl(
+						String(cond10).replaceAll("[^\\-\\d\\.]", ""));
+				cond10 = String(cond10).replaceAll("[^<>=else]", "");
+				if (eq(cond10, ">")) {
+					if (Dbl(Str(src)) > middleware10) {
+						if (!isNull(sol10))
+							new Thread(sol10).run();
+						return true;
+					}
+				} else if (eq(cond10, ">=")) {
+					if (Dbl(Str(src)) >= middleware10) {
+						if (!isNull(sol10))
+							new Thread(sol10).run();
+						return true;
+					}
+				} else if (eq(cond10, "<")) {
+					if (Dbl(Str(src)) < middleware10) {
+						if (!isNull(sol10))
+							new Thread(sol10).run();
+						return true;
+					}
+				} else if (eq(cond10, "<=")) {
+					if (Dbl(Str(src)) <= middleware10) {
+						if (!isNull(sol10))
+							new Thread(sol10).run();
+						return true;
+					}
+				} else if (eq(cond10, "==")) {
+					if (Dbl(Str(src)) == middleware10) {
+						if (!isNull(sol10))
+							new Thread(sol10).run();
+						return true;
+					}
+				} else if (eq(cond10, "else")) {
+					if (!isNull(sol10))
+						new Thread(sol10).run();
+					return false;
+				}
+			} else if (cond10 instanceof Number) {
+				if (eq(Dbl(Str(src)), Dbl(Str(cond10)))) {
+					if (!isNull(sol10))
+						new Thread(sol10).run();
+					return true;
+				}
+			} else if (isNull(cond10)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
 		} else if (src instanceof String) {
 			if (cond1 instanceof String) {
 				if (eq((String) src, (String) cond1)) {
@@ -6033,6 +6435,86 @@ public class KL {
 					return false;
 				}
 			} else if (isNull(cond5)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond6 instanceof String) {
+				if (eq((String) src, (String) cond6)) {
+					if (!isNull(sol6))
+						new Thread(sol6).run();
+					return true;
+				} else if (eq((String) cond6, "else")) {
+					if (!isNull(sol6))
+						new Thread(sol6).run();
+					return false;
+				}
+			} else if (isNull(cond6)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond7 instanceof String) {
+				if (eq((String) src, (String) cond7)) {
+					if (!isNull(sol7))
+						new Thread(sol7).run();
+					return true;
+				} else if (eq((String) cond7, "else")) {
+					if (!isNull(sol7))
+						new Thread(sol7).run();
+					return false;
+				}
+			} else if (isNull(cond7)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond8 instanceof String) {
+				if (eq((String) src, (String) cond8)) {
+					if (!isNull(sol8))
+						new Thread(sol8).run();
+					return true;
+				} else if (eq((String) cond8, "else")) {
+					if (!isNull(sol8))
+						new Thread(sol8).run();
+					return false;
+				}
+			} else if (isNull(cond8)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond9 instanceof String) {
+				if (eq((String) src, (String) cond9)) {
+					if (!isNull(sol9))
+						new Thread(sol9).run();
+					return true;
+				} else if (eq((String) cond9, "else")) {
+					if (!isNull(sol9))
+						new Thread(sol9).run();
+					return false;
+				}
+			} else if (isNull(cond9)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond10 instanceof String) {
+				if (eq((String) src, (String) cond10)) {
+					if (!isNull(sol10))
+						new Thread(sol10).run();
+					return true;
+				} else if (eq((String) cond10, "else")) {
+					if (!isNull(sol10))
+						new Thread(sol10).run();
+					return false;
+				}
+			} else if (isNull(cond10)) {
 				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
 			} else {
 				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
@@ -6122,6 +6604,101 @@ public class KL {
 					return false;
 				}
 			} else if (isNull(cond5)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond6 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond6)) {
+					if (!isNull(sol6))
+						new Thread(sol6).run();
+					return true;
+				}
+			} else if (cond6 instanceof String) {
+				cond6 = Str(cond6).replaceAll("[^else]", "");
+				if (eq(cond6, "else")) {
+					if (!isNull(sol6))
+						new Thread(sol6).run();
+					return false;
+				}
+			} else if (isNull(cond6)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond7 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond7)) {
+					if (!isNull(sol7))
+						new Thread(sol7).run();
+					return true;
+				}
+			} else if (cond7 instanceof String) {
+				cond7 = Str(cond7).replaceAll("[^else]", "");
+				if (eq(cond7, "else")) {
+					if (!isNull(sol7))
+						new Thread(sol7).run();
+					return false;
+				}
+			} else if (isNull(cond7)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond8 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond8)) {
+					if (!isNull(sol8))
+						new Thread(sol8).run();
+					return true;
+				}
+			} else if (cond8 instanceof String) {
+				cond8 = Str(cond8).replaceAll("[^else]", "");
+				if (eq(cond8, "else")) {
+					if (!isNull(sol8))
+						new Thread(sol8).run();
+					return false;
+				}
+			} else if (isNull(cond8)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond9 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond9)) {
+					if (!isNull(sol9))
+						new Thread(sol9).run();
+					return true;
+				}
+			} else if (cond9 instanceof String) {
+				cond9 = Str(cond9).replaceAll("[^else]", "");
+				if (eq(cond9, "else")) {
+					if (!isNull(sol9))
+						new Thread(sol9).run();
+					return false;
+				}
+			} else if (isNull(cond9)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return false;
+			}
+			if (cond10 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond10)) {
+					if (!isNull(sol10))
+						new Thread(sol10).run();
+					return true;
+				}
+			} else if (cond10 instanceof String) {
+				cond10 = Str(cond10).replaceAll("[^else]", "");
+				if (eq(cond10, "else")) {
+					if (!isNull(sol10))
+						new Thread(sol10).run();
+					return false;
+				}
+			} else if (isNull(cond10)) {
 				// NEEDED TO HANDLE NULL CASES: do nothing in this scenario
 			} else {
 				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
@@ -11368,6 +11945,103 @@ public class KL {
 		if (!matcher.find())
 			return "";
 		return matcher.group();
+	}
+	public static String[] findMatches(String str, String re,
+			boolean... bools) {
+		if (re.equals(".") || re.equals("*") || re.equals("+")
+				|| re.equals("?")) {
+			re = "\\" + re;
+		}
+		if (in(re, "%\\w")) {
+			re = re.replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
+					.replaceAll("%s", "[A-Za-z][\\\\w]+")
+					.replaceAll("%d", "\\\\d+");
+			// modification precaution: it has been tested, and hence learned,
+			// the
+			// double-escaping remains AS-IS
+		}
+		// escape tricky characters, if they're the only content: helps avoid
+		// false positives as a "." or a "*" alone, can match just anything;.
+		// Needless to say, these quantifiers, along with a "+" and an
+		// optionality quantifier, i.e. a "?" quantifier, might also cause
+		// memory heap to exceed
+		// plus, handling both, standard and custom, format specifiers
+		boolean strict = false;
+		if (is(bools)) {
+			strict = bools[0] == true;
+		}
+		Pattern pattern = Pattern.compile("(" + re + ")",
+				strict ? 0 : Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(str);
+		StrArr arr = new StrArr();
+		if (!matcher.find())
+			return new String[]{};
+		while (matcher.find())
+			arr.push(matcher.group());
+		return arr.array();
+	}
+	public static int[] intsOf(String s) {
+		IntArr arr = new IntArr();
+		String[] matches = findMatches(s, "(?<!\\.)\\d+(?!\\.)");
+		for (int i : range(matches))
+			arr.push(Int(matches[i]));
+		return arr.array();
+	}
+	public static int[] intsOf(Object... objs) {
+		IntArr resultantArr = new IntArr();
+		for (Object obj : objs) {
+			if (obj instanceof Integer)
+				resultantArr.push((int) obj);
+		}
+		return resultantArr.array();
+	}
+	public static float[] fltsOf(String s) {
+		FltArr arr = new FltArr();
+		String[] matches = findMatches(s, "(\\d+)?\\.\\d+");
+		for (int i : range(matches))
+			arr.push(Flt(matches[i]));
+		return arr.array();
+	}
+	public static float[] fltsOf(Object... objs) {
+		FltArr resultantArr = new FltArr();
+		for (Object obj : objs) {
+			if (obj instanceof Float)
+				resultantArr.push((float) obj);
+		}
+		return resultantArr.array();
+	}
+	public static double[] dblsOf(String s) {
+		DblArr arr = new DblArr();
+		String[] matches = findMatches(s, "(\\d+)?\\.\\d+");
+		for (int i : range(matches))
+			arr.push(Dbl(matches[i]));
+		return arr.array();
+	}
+	public static double[] dblsOf(Object... objs) {
+		DblArr resultantArr = new DblArr();
+		for (Object obj : objs) {
+			if (obj instanceof Double)
+				resultantArr.push((double) obj);
+		}
+		return resultantArr.array();
+	}
+	public static boolean intsIn(String s) {
+		return intsOf(s).length > 0;
+	}
+	public static boolean intsIn(Object... objs) {
+		return intsOf(objs).length > 0;
+	}
+	public static boolean fltsIn(String s) {
+		return fltsOf(s).length > 0;
+	}
+	public static boolean fltsIn(Object... objs) {
+		return fltsOf(objs).length > 0;
+	}
+	public static boolean dblsIn(String s) {
+		return dblsOf(s).length > 0;
+	}
+	public static boolean dblsIn(Object... objs) {
+		return dblsOf(objs).length > 0;
 	}
 	public static boolean match(String[] arrA, String[] arrB) {
 		return Arrays.compare(arrA, arrB) >= 0;
