@@ -5631,48 +5631,54 @@ public class KL {
 			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
 			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
 			Object cond10, Runnable sol10) {
-		if (src instanceof Number) {
+		if (src instanceof Number || src instanceof Character) {
+			double srcDbl = src instanceof Character ? (char)src : Dbl(Str(src));
 			if (cond1 instanceof String) {
 				if (!in(Str(cond1), "(?<=[<>=])\\-?\\d")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware = Dbl(
-						String(cond1).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware = Dbl(Str(cond1).replaceAll("[^\\-\\d\\.]", ""));
 				cond1 = String(cond1).replaceAll("[^<>=]", "");
 				if (eq(cond1, ">")) {
-					if (Dbl(Str(src)) > middleware) {
+					if (srcDbl > middleware) {
 						if (!isNull(sol1))
 							new Thread(sol1).run();
 						return true;
 					}
 				} else if (eq(cond1, ">=")) {
-					if (Dbl(Str(src)) >= middleware) {
+					if (srcDbl >= middleware) {
 						if (!isNull(sol1))
 							new Thread(sol1).run();
 						return true;
 					}
 				} else if (eq(cond1, "<")) {
-					if (Dbl(Str(src)) < middleware) {
+					if (srcDbl < middleware) {
 						if (!isNull(sol1))
 							new Thread(sol1).run();
 						return true;
 					}
 				} else if (eq(cond1, "<=")) {
-					if (Dbl(Str(src)) <= middleware) {
+					if (srcDbl <= middleware) {
 						if (!isNull(sol1))
 							new Thread(sol1).run();
 						return true;
 					}
 				} else if (eq(cond1, "==")) {
-					if (Dbl(Str(src)) == middleware) {
+					if (srcDbl == middleware) {
 						if (!isNull(sol1))
 							new Thread(sol1).run();
 						return true;
 					}
 				}
 			} else if (cond1 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond1)))) {
+				if (eq(srcDbl, Dbl(Str(cond1)))) {
+					if (!isNull(sol1))
+						new Thread(sol1).run();
+					return true;
+				}
+			} else if (cond1 instanceof Character) {
+				if (eq((char)src, (char)cond1)) {
 					if (!isNull(sol1))
 						new Thread(sol1).run();
 					return true;
@@ -5692,31 +5698,31 @@ public class KL {
 						String(cond2).replaceAll("[^\\-\\d\\.]", ""));
 				cond2 = String(cond2).replaceAll("[^<>=else]", "");
 				if (eq(cond2, ">")) {
-					if (Dbl(Str(src)) > middleware2) {
+					if (srcDbl > middleware2) {
 						if (!isNull(sol2))
 							new Thread(sol2).run();
 						return true;
 					}
 				} else if (eq(cond2, ">=")) {
-					if (Dbl(Str(src)) >= middleware2) {
+					if (srcDbl >= middleware2) {
 						if (!isNull(sol2))
 							new Thread(sol2).run();
 						return true;
 					}
 				} else if (eq(cond2, "<")) {
-					if (Dbl(Str(src)) < middleware2) {
+					if (srcDbl < middleware2) {
 						if (!isNull(sol2))
 							new Thread(sol2).run();
 						return true;
 					}
 				} else if (eq(cond2, "<=")) {
-					if (Dbl(Str(src)) <= middleware2) {
+					if (srcDbl <= middleware2) {
 						if (!isNull(sol2))
 							new Thread(sol2).run();
 						return true;
 					}
 				} else if (eq(cond2, "==")) {
-					if (Dbl(Str(src)) == middleware2) {
+					if (srcDbl == middleware2) {
 						if (!isNull(sol2))
 							new Thread(sol2).run();
 						return true;
@@ -5727,7 +5733,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond2 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond2)))) {
+				if (eq(srcDbl, Dbl(Str(cond2)))) {
+					if (!isNull(sol2))
+						new Thread(sol2).run();
+					return true;
+				}
+			} else if (cond2 instanceof Character) {
+				if (eq((char)src, (char)cond2)) {
 					if (!isNull(sol2))
 						new Thread(sol2).run();
 					return true;
@@ -5747,31 +5759,31 @@ public class KL {
 						String(cond3).replaceAll("[^\\-\\d\\.]", ""));
 				cond3 = String(cond3).replaceAll("[^<>=else]", "");
 				if (eq(cond3, ">")) {
-					if (Dbl(Str(src)) > middleware3) {
+					if (srcDbl > middleware3) {
 						if (!isNull(sol3))
 							new Thread(sol3).run();
 						return true;
 					}
 				} else if (eq(cond3, ">=")) {
-					if (Dbl(Str(src)) >= middleware3) {
+					if (srcDbl >= middleware3) {
 						if (!isNull(sol3))
 							new Thread(sol3).run();
 						return true;
 					}
 				} else if (eq(cond3, "<")) {
-					if (Dbl(Str(src)) < middleware3) {
+					if (srcDbl < middleware3) {
 						if (!isNull(sol3))
 							new Thread(sol3).run();
 						return true;
 					}
 				} else if (eq(cond3, "<=")) {
-					if (Dbl(Str(src)) <= middleware3) {
+					if (srcDbl <= middleware3) {
 						if (!isNull(sol3))
 							new Thread(sol3).run();
 						return true;
 					}
 				} else if (eq(cond3, "==")) {
-					if (Dbl(Str(src)) == middleware3) {
+					if (srcDbl == middleware3) {
 						if (!isNull(sol3))
 							new Thread(sol3).run();
 						return true;
@@ -5782,7 +5794,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond3 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond3)))) {
+				if (eq(srcDbl, Dbl(Str(cond3)))) {
+					if (!isNull(sol3))
+						new Thread(sol3).run();
+					return true;
+				}
+			} else if (cond3 instanceof Character) {
+				if (eq((char)src, (char)cond3)) {
 					if (!isNull(sol3))
 						new Thread(sol3).run();
 					return true;
@@ -5802,31 +5820,31 @@ public class KL {
 						String(cond4).replaceAll("[^\\-\\d\\.]", ""));
 				cond4 = String(cond4).replaceAll("[^<>=else]", "");
 				if (eq(cond4, ">")) {
-					if (Dbl(Str(src)) > middleware4) {
+					if (srcDbl > middleware4) {
 						if (!isNull(sol4))
 							new Thread(sol4).run();
 						return true;
 					}
 				} else if (eq(cond4, ">=")) {
-					if (Dbl(Str(src)) >= middleware4) {
+					if (srcDbl >= middleware4) {
 						if (!isNull(sol4))
 							new Thread(sol4).run();
 						return true;
 					}
 				} else if (eq(cond4, "<")) {
-					if (Dbl(Str(src)) < middleware4) {
+					if (srcDbl < middleware4) {
 						if (!isNull(sol4))
 							new Thread(sol4).run();
 						return true;
 					}
 				} else if (eq(cond4, "<=")) {
-					if (Dbl(Str(src)) <= middleware4) {
+					if (srcDbl <= middleware4) {
 						if (!isNull(sol4))
 							new Thread(sol4).run();
 						return true;
 					}
 				} else if (eq(cond4, "==")) {
-					if (Dbl(Str(src)) == middleware4) {
+					if (srcDbl == middleware4) {
 						if (!isNull(sol4))
 							new Thread(sol4).run();
 						return true;
@@ -5837,7 +5855,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond4 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond4)))) {
+				if (eq(srcDbl, Dbl(Str(cond4)))) {
+					if (!isNull(sol4))
+						new Thread(sol4).run();
+					return true;
+				}
+			} else if (cond4 instanceof Character) {
+				if (eq((char)src, (char)cond4)) {
 					if (!isNull(sol4))
 						new Thread(sol4).run();
 					return true;
@@ -5857,31 +5881,31 @@ public class KL {
 						String(cond5).replaceAll("[^\\-\\d\\.]", ""));
 				cond5 = String(cond5).replaceAll("[^<>=else]", "");
 				if (eq(cond5, ">")) {
-					if (Dbl(Str(src)) > middleware5) {
+					if (srcDbl > middleware5) {
 						if (!isNull(sol5))
 							new Thread(sol5).run();
 						return true;
 					}
 				} else if (eq(cond5, ">=")) {
-					if (Dbl(Str(src)) >= middleware5) {
+					if (srcDbl >= middleware5) {
 						if (!isNull(sol5))
 							new Thread(sol5).run();
 						return true;
 					}
 				} else if (eq(cond5, "<")) {
-					if (Dbl(Str(src)) < middleware5) {
+					if (srcDbl < middleware5) {
 						if (!isNull(sol5))
 							new Thread(sol5).run();
 						return true;
 					}
 				} else if (eq(cond5, "<=")) {
-					if (Dbl(Str(src)) <= middleware5) {
+					if (srcDbl <= middleware5) {
 						if (!isNull(sol5))
 							new Thread(sol5).run();
 						return true;
 					}
 				} else if (eq(cond5, "==")) {
-					if (Dbl(Str(src)) == middleware5) {
+					if (srcDbl == middleware5) {
 						if (!isNull(sol5))
 							new Thread(sol5).run();
 						return true;
@@ -5892,7 +5916,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond5 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond5)))) {
+				if (eq(srcDbl, Dbl(Str(cond5)))) {
+					if (!isNull(sol5))
+						new Thread(sol5).run();
+					return true;
+				}
+			} else if (cond5 instanceof Character) {
+				if (eq((char)src, (char)cond5)) {
 					if (!isNull(sol5))
 						new Thread(sol5).run();
 					return true;
@@ -5912,31 +5942,31 @@ public class KL {
 						String(cond6).replaceAll("[^\\-\\d\\.]", ""));
 				cond6 = String(cond6).replaceAll("[^<>=else]", "");
 				if (eq(cond6, ">")) {
-					if (Dbl(Str(src)) > middleware6) {
+					if (srcDbl > middleware6) {
 						if (!isNull(sol6))
 							new Thread(sol6).run();
 						return true;
 					}
 				} else if (eq(cond6, ">=")) {
-					if (Dbl(Str(src)) >= middleware6) {
+					if (srcDbl >= middleware6) {
 						if (!isNull(sol6))
 							new Thread(sol6).run();
 						return true;
 					}
 				} else if (eq(cond6, "<")) {
-					if (Dbl(Str(src)) < middleware6) {
+					if (srcDbl < middleware6) {
 						if (!isNull(sol6))
 							new Thread(sol6).run();
 						return true;
 					}
 				} else if (eq(cond6, "<=")) {
-					if (Dbl(Str(src)) <= middleware6) {
+					if (srcDbl <= middleware6) {
 						if (!isNull(sol6))
 							new Thread(sol6).run();
 						return true;
 					}
 				} else if (eq(cond6, "==")) {
-					if (Dbl(Str(src)) == middleware6) {
+					if (srcDbl == middleware6) {
 						if (!isNull(sol6))
 							new Thread(sol6).run();
 						return true;
@@ -5947,7 +5977,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond6 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond6)))) {
+				if (eq(srcDbl, Dbl(Str(cond6)))) {
+					if (!isNull(sol6))
+						new Thread(sol6).run();
+					return true;
+				}
+			} else if (cond6 instanceof Character) {
+				if (eq((char)src, (char)cond6)) {
 					if (!isNull(sol6))
 						new Thread(sol6).run();
 					return true;
@@ -5967,31 +6003,31 @@ public class KL {
 						String(cond7).replaceAll("[^\\-\\d\\.]", ""));
 				cond7 = String(cond7).replaceAll("[^<>=else]", "");
 				if (eq(cond7, ">")) {
-					if (Dbl(Str(src)) > middleware7) {
+					if (srcDbl > middleware7) {
 						if (!isNull(sol7))
 							new Thread(sol7).run();
 						return true;
 					}
 				} else if (eq(cond7, ">=")) {
-					if (Dbl(Str(src)) >= middleware7) {
+					if (srcDbl >= middleware7) {
 						if (!isNull(sol7))
 							new Thread(sol7).run();
 						return true;
 					}
 				} else if (eq(cond7, "<")) {
-					if (Dbl(Str(src)) < middleware7) {
+					if (srcDbl < middleware7) {
 						if (!isNull(sol7))
 							new Thread(sol7).run();
 						return true;
 					}
 				} else if (eq(cond7, "<=")) {
-					if (Dbl(Str(src)) <= middleware7) {
+					if (srcDbl <= middleware7) {
 						if (!isNull(sol7))
 							new Thread(sol7).run();
 						return true;
 					}
 				} else if (eq(cond7, "==")) {
-					if (Dbl(Str(src)) == middleware7) {
+					if (srcDbl == middleware7) {
 						if (!isNull(sol7))
 							new Thread(sol7).run();
 						return true;
@@ -6002,7 +6038,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond7 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond7)))) {
+				if (eq(srcDbl, Dbl(Str(cond7)))) {
+					if (!isNull(sol7))
+						new Thread(sol7).run();
+					return true;
+				}
+			} else if (cond7 instanceof Character) {
+				if (eq((char)src, (char)cond7)) {
 					if (!isNull(sol7))
 						new Thread(sol7).run();
 					return true;
@@ -6022,31 +6064,31 @@ public class KL {
 						String(cond8).replaceAll("[^\\-\\d\\.]", ""));
 				cond8 = String(cond8).replaceAll("[^<>=else]", "");
 				if (eq(cond8, ">")) {
-					if (Dbl(Str(src)) > middleware8) {
+					if (srcDbl > middleware8) {
 						if (!isNull(sol8))
 							new Thread(sol8).run();
 						return true;
 					}
 				} else if (eq(cond8, ">=")) {
-					if (Dbl(Str(src)) >= middleware8) {
+					if (srcDbl >= middleware8) {
 						if (!isNull(sol8))
 							new Thread(sol8).run();
 						return true;
 					}
 				} else if (eq(cond8, "<")) {
-					if (Dbl(Str(src)) < middleware8) {
+					if (srcDbl < middleware8) {
 						if (!isNull(sol8))
 							new Thread(sol8).run();
 						return true;
 					}
 				} else if (eq(cond8, "<=")) {
-					if (Dbl(Str(src)) <= middleware8) {
+					if (srcDbl <= middleware8) {
 						if (!isNull(sol8))
 							new Thread(sol8).run();
 						return true;
 					}
 				} else if (eq(cond8, "==")) {
-					if (Dbl(Str(src)) == middleware8) {
+					if (srcDbl == middleware8) {
 						if (!isNull(sol8))
 							new Thread(sol8).run();
 						return true;
@@ -6057,7 +6099,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond8 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond8)))) {
+				if (eq(srcDbl, Dbl(Str(cond8)))) {
+					if (!isNull(sol8))
+						new Thread(sol8).run();
+					return true;
+				}
+			} else if (cond8 instanceof Character) {
+				if (eq((char)src, (char)cond8)) {
 					if (!isNull(sol8))
 						new Thread(sol8).run();
 					return true;
@@ -6077,31 +6125,31 @@ public class KL {
 						String(cond9).replaceAll("[^\\-\\d\\.]", ""));
 				cond9 = String(cond9).replaceAll("[^<>=else]", "");
 				if (eq(cond9, ">")) {
-					if (Dbl(Str(src)) > middleware9) {
+					if (srcDbl > middleware9) {
 						if (!isNull(sol9))
 							new Thread(sol9).run();
 						return true;
 					}
 				} else if (eq(cond9, ">=")) {
-					if (Dbl(Str(src)) >= middleware9) {
+					if (srcDbl >= middleware9) {
 						if (!isNull(sol9))
 							new Thread(sol9).run();
 						return true;
 					}
 				} else if (eq(cond9, "<")) {
-					if (Dbl(Str(src)) < middleware9) {
+					if (srcDbl < middleware9) {
 						if (!isNull(sol9))
 							new Thread(sol9).run();
 						return true;
 					}
 				} else if (eq(cond9, "<=")) {
-					if (Dbl(Str(src)) <= middleware9) {
+					if (srcDbl <= middleware9) {
 						if (!isNull(sol9))
 							new Thread(sol9).run();
 						return true;
 					}
 				} else if (eq(cond9, "==")) {
-					if (Dbl(Str(src)) == middleware9) {
+					if (srcDbl == middleware9) {
 						if (!isNull(sol9))
 							new Thread(sol9).run();
 						return true;
@@ -6112,7 +6160,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond9 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond9)))) {
+				if (eq(srcDbl, Dbl(Str(cond9)))) {
+					if (!isNull(sol9))
+						new Thread(sol9).run();
+					return true;
+				}
+			} else if (cond9 instanceof Character) {
+				if (eq((char)src, (char)cond9)) {
 					if (!isNull(sol9))
 						new Thread(sol9).run();
 					return true;
@@ -6132,31 +6186,31 @@ public class KL {
 						String(cond10).replaceAll("[^\\-\\d\\.]", ""));
 				cond10 = String(cond10).replaceAll("[^<>=else]", "");
 				if (eq(cond10, ">")) {
-					if (Dbl(Str(src)) > middleware10) {
+					if (srcDbl > middleware10) {
 						if (!isNull(sol10))
 							new Thread(sol10).run();
 						return true;
 					}
 				} else if (eq(cond10, ">=")) {
-					if (Dbl(Str(src)) >= middleware10) {
+					if (srcDbl >= middleware10) {
 						if (!isNull(sol10))
 							new Thread(sol10).run();
 						return true;
 					}
 				} else if (eq(cond10, "<")) {
-					if (Dbl(Str(src)) < middleware10) {
+					if (srcDbl < middleware10) {
 						if (!isNull(sol10))
 							new Thread(sol10).run();
 						return true;
 					}
 				} else if (eq(cond10, "<=")) {
-					if (Dbl(Str(src)) <= middleware10) {
+					if (srcDbl <= middleware10) {
 						if (!isNull(sol10))
 							new Thread(sol10).run();
 						return true;
 					}
 				} else if (eq(cond10, "==")) {
-					if (Dbl(Str(src)) == middleware10) {
+					if (srcDbl == middleware10) {
 						if (!isNull(sol10))
 							new Thread(sol10).run();
 						return true;
@@ -6167,7 +6221,13 @@ public class KL {
 					return false;
 				}
 			} else if (cond10 instanceof Number) {
-				if (eq(Dbl(Str(src)), Dbl(Str(cond10)))) {
+				if (eq(srcDbl, Dbl(Str(cond10)))) {
+					if (!isNull(sol10))
+						new Thread(sol10).run();
+					return true;
+				}
+			} else if (cond10 instanceof Character) {
+				if (eq((char)src, (char)cond10)) {
 					if (!isNull(sol10))
 						new Thread(sol10).run();
 					return true;
@@ -14052,13 +14112,15 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
-		sw(8.4, ">9", () -> print("uh...?"), "==8.47", () -> print("yeah"),
+		/*sw(8.4, ">9", () -> print("uh...?"), "==8.47", () -> print("yeah"),
 				">16", () -> print("still a no?"), "==12", () -> print("ugh"),
 				">51", () -> print("no?"), ">92", () -> print("I dunno"), "<3",
 				() -> print("could it be that?"), ">8",
 				() -> print("you got me"), Else, () -> print("neither"));
 		// WORK IN PROGRESS
 		int[] nums = {1, 3, 5};
-		print(join(nums, "+"));
+		*/
+		sw('f', ">105", () -> print("possibly?"), 102, () -> print("quite a match"), Else, () -> print("it does NOT match"));
+		//print(join(nums, "+"));
 	}
 }
