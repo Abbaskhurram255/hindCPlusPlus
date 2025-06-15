@@ -34,12 +34,12 @@ public class KL {
 		Money(double amnt, String curr) {
 			this.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
 			this.curr = not(this.curr) || len(this.curr) < 1
-					|| len(this.curr) > 4 ? "Rs. " : titleCase(curr);
+						|| len(this.curr) > 4 ? "Rs. " : titleCase(curr);
 		}
 		Money curr(String curr) {
 			this.curr = not(curr) || len(curr) < 1 || len(curr) > 4
-					? "Rs. "
-					: titleCase(curr);
+						? "Rs. "
+						: titleCase(curr);
 			return this;
 		}
 		Money amount(double newAmnt) {
@@ -103,14 +103,14 @@ public class KL {
 			this.curr = trim(this.curr) + " ";
 			if (in(this.curr, "pk|rs"))
 				return "Rs. " + (forceInternational
-						? ussuffix(amnt)
-						: pksuffix(amnt));
+								 ? ussuffix(amnt)
+								 : pksuffix(amnt));
 			if (in(this.curr, "us"))
 				return "US$ " + ussuffix(amnt);
 			return this.curr + (forceInternational
-					|| (is(this.curr) && !in(this.curr, "pk|rs"))
-							? ussuffix(amnt)
-							: pksuffix(amnt));
+								|| (is(this.curr) && !in(this.curr, "pk|rs"))
+								? ussuffix(amnt)
+								: pksuffix(amnt));
 		}
 		public String toString() {
 			this.curr = trim(this.curr) + " ";
@@ -141,6 +141,12 @@ public class KL {
 		public String bal(boolean suffixMode) {
 			return toString(suffixMode);
 		}
+		public String total() {
+			return toString();
+		}
+		public String total(boolean suffixMode) {
+			return toString(suffixMode);
+		}
 	}
 	public static final class Pesa extends Money {
 		Pesa() {
@@ -154,16 +160,16 @@ public class KL {
 		Pesa(double amnt, String curr) {
 			super.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
 			super.curr = not(super.curr) || len(super.curr) < 1
-					|| len(super.curr) > 4 ? "Rs. " : titleCase(curr);
+						 || len(super.curr) > 4 ? "Rs. " : titleCase(curr);
 		}
 	}
 	public static final class Kmath {
 		public static double Pi = 3.141592653589793, C = 2.99792e8,
-				earthsGravity = 9.80665, earthsMass = 5.9722e24,
-				earthsRadius = 6.378137e3;
+							 earthsGravity = 9.80665, earthsMass = 5.9722e24,
+							 earthsRadius = 6.378137e3;
 		public static String C_Unit = "m/s", K_Unit = "Nm^2/c^2",
-				earthsGravity_Unit = "m/s^2", earthsMass_Unit = "km",
-				earthsRadius_Unit = "km";
+							 earthsGravity_Unit = "m/s^2", earthsMass_Unit = "km",
+							 earthsRadius_Unit = "km";
 	}
 	public static String encode(String s) {
 		return Base64.getEncoder().encodeToString(s.getBytes());
@@ -173,33 +179,33 @@ public class KL {
 	}
 	public static String encodeUrl(String s) {
 		String encoded = s.replace("%", "%25").replace(" ", "%20")
-				.replace("!", "%21").replace("#", "%23").replace("$", "%24")
-				.replace("&", "%26").replace("'", "%27").replace("(", "%28")
-				.replace(")", "%29").replace("*", "%2A").replace("+", "%2B")
-				.replace(",", "%2C").replace("/", "%2F").replace(":", "%3A")
-				.replace(";", "%3B").replace("=", "%3D").replace("?", "%3F")
-				.replace("@", "%40").replace("[", "%5B").replace("]", "%5D");
+						 .replace("!", "%21").replace("#", "%23").replace("$", "%24")
+						 .replace("&", "%26").replace("'", "%27").replace("(", "%28")
+						 .replace(")", "%29").replace("*", "%2A").replace("+", "%2B")
+						 .replace(",", "%2C").replace("/", "%2F").replace(":", "%3A")
+						 .replace(";", "%3B").replace("=", "%3D").replace("?", "%3F")
+						 .replace("@", "%40").replace("[", "%5B").replace("]", "%5D");
 		return encoded;
 	}
 	public static String decodeUrl(String s) {
 		String decoded = s.replace("%21", "!").replace("%20", " ")
-				.replace("%23", "#").replace("%24", "$").replace("%26", "&")
-				.replace("%27", "'").replace("%28", "(").replace("%29", ")")
-				.replace("%2A", "*").replace("%2B", "+").replace("%2C", ",")
-				.replace("%2F", "/").replace("%3A", ":").replace("%3B", ";")
-				.replace("%3D", "=").replace("%3F", "?").replace("%40", "@")
-				.replace("%5B", "[").replace("%5D", "]").replace("%25", "%");
+						 .replace("%23", "#").replace("%24", "$").replace("%26", "&")
+						 .replace("%27", "'").replace("%28", "(").replace("%29", ")")
+						 .replace("%2A", "*").replace("%2B", "+").replace("%2C", ",")
+						 .replace("%2F", "/").replace("%3A", ":").replace("%3B", ";")
+						 .replace("%3D", "=").replace("%3F", "?").replace("%40", "@")
+						 .replace("%5B", "[").replace("%5D", "]").replace("%25", "%");
 		return decoded;
 	}
 	public static String encrypt(String data, String key) {
 		final String algo = "AES";
 		try {
 			SecretKeySpec secretKey = new SecretKeySpec(
-					key.getBytes(StandardCharsets.UTF_8), algo);
+				key.getBytes(StandardCharsets.UTF_8), algo);
 			Cipher cipher = Cipher.getInstance(algo);
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			byte[] encryptedBytes = cipher
-					.doFinal(data.getBytes(StandardCharsets.UTF_8));
+									.doFinal(data.getBytes(StandardCharsets.UTF_8));
 			return Base64.getEncoder().encodeToString(encryptedBytes);
 		} catch (Exception err) {
 			return data;
@@ -209,11 +215,11 @@ public class KL {
 		final String algo = "AES";
 		try {
 			SecretKeySpec secretKey = new SecretKeySpec(
-					key.getBytes(StandardCharsets.UTF_8), algo);
+				key.getBytes(StandardCharsets.UTF_8), algo);
 			Cipher cipher = Cipher.getInstance(algo);
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			byte[] decryptedBytes = cipher
-					.doFinal(Base64.getDecoder().decode(encryptedData));
+									.doFinal(Base64.getDecoder().decode(encryptedData));
 			return new String(decryptedBytes, StandardCharsets.UTF_8);
 		} catch (Exception err) {
 			print("[KL.EncrypTool.BadArguments]:\nFailed to decrypt the message.");
@@ -225,12 +231,12 @@ public class KL {
 		try {
 			URL urlString = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
-					.openConnection();
+										   .openConnection();
 			connection.setRequestMethod("GET");
 			int statusCode = connection.getResponseCode();
 			if (statusCode == HttpURLConnection.HTTP_OK) {
 				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(connection.getInputStream()));
+					new InputStreamReader(connection.getInputStream()));
 				String line;
 				StringBuilder respBuilder = new StringBuilder();
 				while ((line = reader.readLine()) != null) {
@@ -241,15 +247,15 @@ public class KL {
 				jsonString = jsonString.trim();
 				if (jsonString.startsWith("{") && jsonString.endsWith("}"))
 					jsonString = jsonString.substring(1,
-							jsonString.length() - 1);
+													  jsonString.length() - 1);
 				String[] keyValuePairs = jsonString.split(",");
 				for (String pair : keyValuePairs) {
 					String[] parts = pair.split(":", 2);
 					if (parts.length == 2) {
 						String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]",
-								"");
+																"");
 						String value = parts[1].trim()
-								.replaceAll("[\"\\{\\}\\]]", "");
+									   .replaceAll("[\"\\{\\}\\]]", "");
 						map.put(key, value);
 					}
 				}
@@ -258,9 +264,9 @@ public class KL {
 				return map;
 			} else {
 				map.add("response", Str(statusCode)).add("status", "notok")
-						.add("error", "yes");
+				.add("error", "yes");
 				print("[KLFetch.Status.NotOK]:\nMessage: GET request failed with status code",
-						statusCode);
+					  statusCode);
 			}
 			connection.disconnect();
 		} catch (IOException e) {
@@ -276,21 +282,21 @@ public class KL {
 		return getClass().getResource(to).toString();
 	}
 	public static String fileSeparator = System.getProperty("file.separator"),
-			workDirectory = System.getProperty("user.dir").toLowerCase();
+						 workDirectory = System.getProperty("user.dir").toLowerCase();
 	public static class os {
 		public static String name = System.getProperty("os.name").toLowerCase()
-				.split(" ")[0],
-				version = System.getProperty("os.version").toLowerCase(),
-				arch = System.getProperty("os.arch").toLowerCase();
+									.split(" ")[0],
+									version = System.getProperty("os.version").toLowerCase(),
+									arch = System.getProperty("os.arch").toLowerCase();
 		public static boolean is(String s) {
 			return in(name, s);
 		}
 	}
 	public static class user {
 		public static String name = System.getProperty("user.name"),
-				language = System.getProperty("user.language").toLowerCase(),
-				homeDirectory = System.getProperty("user.home"),
-				workDirectory = KL.workDirectory;
+							 language = System.getProperty("user.language").toLowerCase(),
+							 homeDirectory = System.getProperty("user.home"),
+							 workDirectory = KL.workDirectory;
 	}
 	// GUI
 	public static class GUI extends JFrame {
@@ -334,11 +340,13 @@ public class KL {
 			return this;
 		}
 		GUI start() {
+			super.pack();
 			super.setVisible(true);
 			return this;
 		}
 		GUI start(int w, int h) {
 			size(w, h);
+			super.pack();
 			super.setVisible(true);
 			return this;
 		}
@@ -432,11 +440,11 @@ public class KL {
 			return this;
 		}
 		GUI font(String fontFamily, int fontSize, boolean bold,
-				boolean italic) {
+				 boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
-					? Font.BOLD | Font.ITALIC
-					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
-					fontSize));
+								   ? Font.BOLD | Font.ITALIC
+								   : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
 			return this;
 		}
 		GUI font(String fontFamily, int fontSize, boolean bold) {
@@ -445,12 +453,12 @@ public class KL {
 		}
 		GUI font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
-					bold == 1 && italic == 1
-							? Font.BOLD | Font.ITALIC
-							: bold == 1
-									? Font.BOLD
-									: italic == 1 ? Font.ITALIC : Font.PLAIN,
-					fontSize));
+								   bold == 1 && italic == 1
+								   ? Font.BOLD | Font.ITALIC
+								   : bold == 1
+								   ? Font.BOLD
+								   : italic == 1 ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
 			return this;
 		}
 		GUI font(Font fnt) {
@@ -482,21 +490,21 @@ public class KL {
 						int keyCodeCaptured = e.getKeyCode();
 						String keyCaptured = "" + keyCharCaptured;
 						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 						}
 						if (KL.eq(k, keyCaptured)) {
 							new Thread(action).run();;
@@ -520,7 +528,7 @@ public class KL {
 								|| KL.eq(k, "lclick"))
 							button = MouseEvent.BUTTON1;
 						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw")
-								|| KL.eq(k, "mclick") || KL.eq(k, "wclick"))
+								 || KL.eq(k, "mclick") || KL.eq(k, "wclick"))
 							button = MouseEvent.BUTTON2;
 						else if (KL.eq(k, "clickr") || KL.eq(k, "rclick"))
 							button = MouseEvent.BUTTON3;
@@ -612,29 +620,29 @@ public class KL {
 		}
 		GUI state(String newState) {
 			switch (newState) {
-				case "min" :
-					super.setExtendedState(super.ICONIFIED);
-					break;
-				case "max" :
-					super.setExtendedState(super.MAXIMIZED_BOTH);
-					break;
-				case "none" :
-				case "regular" :
-				case "normal" :
-					super.setExtendedState(super.NORMAL);
-					break;
+			case "min" :
+				super.setExtendedState(super.ICONIFIED);
+				break;
+			case "max" :
+				super.setExtendedState(super.MAXIMIZED_BOTH);
+				break;
+			case "none" :
+			case "regular" :
+			case "normal" :
+				super.setExtendedState(super.NORMAL);
+				break;
 			}
 			return this;
 		}
 		String state() {
 			int x = super.getExtendedState();
 			String state = x == super.NORMAL
-					? "normal"
-					: x == super.ICONIFIED
-							? "minimized"
-							: x == super.MAXIMIZED_BOTH
-									? "maximized"
-									: "unknown";
+						   ? "normal"
+						   : x == super.ICONIFIED
+						   ? "minimized"
+						   : x == super.MAXIMIZED_BOTH
+						   ? "maximized"
+						   : "unknown";
 			return state;
 		}
 		GUI min() {
@@ -648,133 +656,133 @@ public class KL {
 		GUI message(String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, "Message",
-					JOptionPane.INFORMATION_MESSAGE);
+										  JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 		GUI message(String title, String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.INFORMATION_MESSAGE);
+										  JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 		GUI message(String title, String message, String iconAddress) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.INFORMATION_MESSAGE, new Icon(iconAddress));
+										  JOptionPane.INFORMATION_MESSAGE, new Icon(iconAddress));
 			return this;
 		}
 		GUI message(String title, String message, Icon ico) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.INFORMATION_MESSAGE, ico);
+										  JOptionPane.INFORMATION_MESSAGE, ico);
 			return this;
 		}
 		GUI error(String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, "Error",
-					JOptionPane.ERROR_MESSAGE);
+										  JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 		GUI error(String title, String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.ERROR_MESSAGE);
+										  JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 		GUI error(String title, String message, String iconAddress) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.ERROR_MESSAGE, new Icon(iconAddress));
+										  JOptionPane.ERROR_MESSAGE, new Icon(iconAddress));
 			return this;
 		}
 		GUI error(String title, String message, Icon ico) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.ERROR_MESSAGE, ico);
+										  JOptionPane.ERROR_MESSAGE, ico);
 			return this;
 		}
 		GUI warn(String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, "Warning",
-					JOptionPane.WARNING_MESSAGE);
+										  JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 		GUI warn(String title, String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.WARNING_MESSAGE);
+										  JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 		GUI warn(String title, String message, String iconAddress) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.WARNING_MESSAGE, new Icon(iconAddress));
+										  JOptionPane.WARNING_MESSAGE, new Icon(iconAddress));
 			return this;
 		}
 		GUI warn(String title, String message, Icon ico) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.WARNING_MESSAGE, ico);
+										  JOptionPane.WARNING_MESSAGE, ico);
 			return this;
 		}
 		boolean confirm(String message) {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE) == 0);
+												  JOptionPane.YES_NO_OPTION,
+												  JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirm(String title, String message) {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE) == 0);
+												  JOptionPane.YES_NO_OPTION,
+												  JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirm(String title, String message, String iconAddress) {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-					new Icon(iconAddress)) == 0);
+												  JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+												  new Icon(iconAddress)) == 0);
 		}
 		boolean confirm(String title, String message, Icon ico) {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-					ico) == 0);
+												  JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+												  ico) == 0);
 		}
 		boolean confirmCancellable(String message) {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
-					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE) == 0);
+												  JOptionPane.YES_NO_CANCEL_OPTION,
+												  JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirmCancellable(String title, String message) {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
-					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE) == 0);
+												  JOptionPane.YES_NO_CANCEL_OPTION,
+												  JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirmCancellable(String title, String message,
-				String iconAddress) {
+								   String iconAddress) {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
-					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE, new Icon(iconAddress)) == 0);
+												  JOptionPane.YES_NO_CANCEL_OPTION,
+												  JOptionPane.QUESTION_MESSAGE, new Icon(iconAddress)) == 0);
 		}
 		boolean confirmCancellable(String title, String message, Icon ico) {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
-					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE, ico) == 0);
+												  JOptionPane.YES_NO_CANCEL_OPTION,
+												  JOptionPane.QUESTION_MESSAGE, ico) == 0);
 		}
 		String ask(String message) {
 			offTop();
 			return JOptionPane.showInputDialog(null, message, "Input",
-					JOptionPane.QUESTION_MESSAGE);
+											   JOptionPane.QUESTION_MESSAGE);
 		}
 		String ask(String title, String message) {
 			offTop();
 			return JOptionPane.showInputDialog(null, message, title,
-					JOptionPane.QUESTION_MESSAGE);
+											   JOptionPane.QUESTION_MESSAGE);
 		}
 	}
 	public static class Label extends JLabel {
@@ -820,11 +828,11 @@ public class KL {
 			return this;
 		}
 		Label font(String fontFamily, int fontSize, boolean bold,
-				boolean italic) {
+				   boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
-					? Font.BOLD | Font.ITALIC
-					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
-					fontSize));
+								   ? Font.BOLD | Font.ITALIC
+								   : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
 			return this;
 		}
 		Label font(String fontFamily, int fontSize, boolean bold) {
@@ -833,12 +841,12 @@ public class KL {
 		}
 		Label font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
-					bold == 1 && italic == 1
-							? Font.BOLD | Font.ITALIC
-							: bold == 1
-									? Font.BOLD
-									: italic == 1 ? Font.ITALIC : Font.PLAIN,
-					fontSize));
+								   bold == 1 && italic == 1
+								   ? Font.BOLD | Font.ITALIC
+								   : bold == 1
+								   ? Font.BOLD
+								   : italic == 1 ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
 			return this;
 		}
 		Label font(Font fnt) {
@@ -875,21 +883,21 @@ public class KL {
 						int keyCodeCaptured = e.getKeyCode();
 						String keyCaptured = "" + keyCharCaptured;
 						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 						}
 						if (KL.eq(k, keyCaptured)) {
 							new Thread(action).run();;
@@ -985,6 +993,18 @@ public class KL {
 			super(rows, columns, hgap, vgap);
 		}
 	}
+	public static class GridBagLay extends GridBagLayout {
+		private static final long serialVersionUID = 1L;
+		GridBagLay() {
+			super();
+		}
+	}
+	public static class GridBagSettings extends GridBagConstraints {
+		private static final long serialVersionUID = 1L;
+		GridBagSettings() {
+			super();
+		}
+	}
 	public static class FlowLay extends FlowLayout {
 		private static final long serialVersionUID = 1L;
 		FlowLay() {
@@ -995,6 +1015,21 @@ public class KL {
 		}
 		FlowLay(int align, int hgap, int vgap) {
 			super(align, hgap, vgap);
+		}
+	}
+	public static class CardLay extends CardLayout {
+		private static final long serialVersionUID = 1L;
+		CardLay() {
+			super();
+		}
+		CardLay(int hgap, int vgap) {
+			super(hgap, vgap);
+		}
+	}
+	public static class BoxLay extends BoxLayout {
+		private static final long serialVersionUID = 1L;
+		BoxLay(Container target, int axis) {
+			super(target, axis);
 		}
 	}
 	public static class Panel extends JPanel {
@@ -1056,11 +1091,11 @@ public class KL {
 			return this;
 		}
 		Panel font(String fontFamily, int fontSize, boolean bold,
-				boolean italic) {
+				   boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
-					? Font.BOLD | Font.ITALIC
-					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
-					fontSize));
+								   ? Font.BOLD | Font.ITALIC
+								   : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
 			return this;
 		}
 		Panel font(String fontFamily, int fontSize, boolean bold) {
@@ -1069,12 +1104,12 @@ public class KL {
 		}
 		Panel font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
-					bold == 1 && italic == 1
-							? Font.BOLD | Font.ITALIC
-							: bold == 1
-									? Font.BOLD
-									: italic == 1 ? Font.ITALIC : Font.PLAIN,
-					fontSize));
+								   bold == 1 && italic == 1
+								   ? Font.BOLD | Font.ITALIC
+								   : bold == 1
+								   ? Font.BOLD
+								   : italic == 1 ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
 			return this;
 		}
 		Panel font(Font fnt) {
@@ -1100,21 +1135,21 @@ public class KL {
 						int keyCodeCaptured = e.getKeyCode();
 						String keyCaptured = "" + keyCharCaptured;
 						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 						}
 						if (KL.eq(k, keyCaptured)) {
 							new Thread(action).run();;
@@ -1216,6 +1251,11 @@ public class KL {
 			super.setFocusable(false);
 			click(listener);
 		}
+		Btn(String text, ActionListener listener, Color bg, Color fg) {
+			this(text, listener);
+			bg(bg);
+			fg(fg);
+		}
 		Btn click(ActionListener listener) {
 			super.addActionListener(listener);
 			return this;
@@ -1257,11 +1297,11 @@ public class KL {
 			return this;
 		}
 		Btn font(String fontFamily, int fontSize, boolean bold,
-				boolean italic) {
+				 boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
-					? Font.BOLD | Font.ITALIC
-					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
-					fontSize));
+								   ? Font.BOLD | Font.ITALIC
+								   : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
 			return this;
 		}
 		Btn font(String fontFamily, int fontSize, boolean bold) {
@@ -1270,12 +1310,12 @@ public class KL {
 		}
 		Btn font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
-					bold == 1 && italic == 1
-							? Font.BOLD | Font.ITALIC
-							: bold == 1
-									? Font.BOLD
-									: italic == 1 ? Font.ITALIC : Font.PLAIN,
-					fontSize));
+								   bold == 1 && italic == 1
+								   ? Font.BOLD | Font.ITALIC
+								   : bold == 1
+								   ? Font.BOLD
+								   : italic == 1 ? Font.ITALIC : Font.PLAIN,
+								   fontSize));
 			return this;
 		}
 		Btn font(Font fnt) {
@@ -1366,21 +1406,21 @@ public class KL {
 						int keyCodeCaptured = e.getKeyCode();
 						String keyCaptured = "" + keyCharCaptured;
 						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 						}
 						if (KL.eq(k, keyCaptured)) {
 							new Thread(action).run();;
@@ -1514,21 +1554,21 @@ public class KL {
 						int keyCodeCaptured = e.getKeyCode();
 						String keyCaptured = "" + keyCharCaptured;
 						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 						}
 						if (KL.eq(k, keyCaptured)) {
 							new Thread(action).run();;
@@ -1643,13 +1683,59 @@ public class KL {
 			 * @params all in the integer range: 0 to 255
 			 */
 		}
+		clr(String hexStringWithAlpha, boolean hasApha) {
+		super(from(hexStringWithAlpha), hasApha);
+			/*
+			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff
+			 */
+		}
+		clr(String hexStringWithAlpha) {
+		super(from(hexStringWithAlpha), false);
+			/*
+			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff
+			 */
+		}
+		public static int from(String hex) {
+		    hex = hex.replaceAll("^(0x|#)", "");
+		    if (!eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5 || len(hex) == 7) return 0;
+		    int len = len(hex);
+            int r, g, b, a = 255;
+            if (len == 8) {
+                a = Int(slice(hex, 6, 8), 16);
+                r = Int(slice(hex, 0, 2), 16);
+                g = Int(slice(hex, 2, 4), 16);
+                b = Int(slice(hex, 4, 6), 16);
+                return a << 24 | r << 16 | g << 8 | b;
+                //the order stays as-is
+            }
+            else if (len == 6) {
+                r = Int(slice(hex, 0, 2), 16);
+                g = Int(slice(hex, 2, 4), 16);
+                b = Int(slice(hex, 4, 6), 16);
+                return r << 16 | g << 8 | b;
+                //the order stays as-is
+            }
+            else if (len == 4) {
+                a = Int(slice(hex, 3, 4), 16) * 17;
+                r = Int(slice(hex, 0, 1), 16) * 17;
+                g = Int(slice(hex, 1, 2), 16) * 17;
+                b = Int(slice(hex, 2, 3), 16) * 17;
+                return a << 24 | r << 16 | g << 8 | b;
+                //the order stays as-is
+            }
+            r = Int(slice(hex, 0, 1), 16) * 17;
+            g = Int(slice(hex, 1, 2), 16) * 17;
+            b = Int(slice(hex, 2, 3), 16) * 17;
+            return r << 16 | g << 8 | b;
+            //the order stays as-is
+		}
 	}
 	// some global font variables for the ease of access, only handy if you
 	// extend
 	// the library class with your own
 	int BOLD, PLAIN, ITALIC, BOLDITALIC, Bold = BOLD = Font.BOLD,
-			Plain = PLAIN = Font.PLAIN, Italic = ITALIC = Font.ITALIC,
-			BoldItalic = BOLDITALIC = Bold | Italic;
+										 Plain = PLAIN = Font.PLAIN, Italic = ITALIC = Font.ITALIC,
+										 BoldItalic = BOLDITALIC = Bold | Italic;
 	// some other syntax candies
 	public static Pesa pesa() {
 		return new Pesa();
@@ -1675,6 +1761,12 @@ public class KL {
 	public static GridLay gridlay(int rows, int columns, int hgap, int vgap) {
 		return new GridLay(rows, columns, hgap, vgap);
 	}
+	public static GridBagLay gridbaglay() {
+			return new GridBagLay();
+	}
+	public static GridBagSettings gridbagsettings() {
+			return new GridBagSettings();
+	}
 	public static FlowLay flowlay() {
 		return new FlowLay();
 	}
@@ -1683,6 +1775,15 @@ public class KL {
 	}
 	public static FlowLay flowlay(int align, int hgap, int vgap) {
 		return new FlowLay(align, hgap, vgap);
+	}
+	public static CardLay cardlay() {
+			return new CardLay();
+	}
+	public static CardLay cardlay(int hgap, int vgap) {
+			return new CardLay(hgap, vgap);
+	}
+	public static BoxLay boxlay(Container target, int axis) {
+			return new BoxLay(target, axis);
 	}
 	public static Panel panel() {
 		return new Panel();
@@ -1768,6 +1869,15 @@ public class KL {
 		 * @params all in the integer range: 0 to 255
 		 */
 	}
+	public static clr clr(String hexString) {
+		hexString = hexString.replaceAll("^(0x|#)", "");
+		int len = len(hexString);
+		if (len == 8 || len == 4) return new clr(hexString, true);
+		return new clr(hexString, false);
+		/*
+		 * @params all in the hex range: (0x|#)?000 thru (0x|#)?ffffffff
+		 */
+	}
 	public static GUI gui() {
 		return new GUI();
 	}
@@ -1836,9 +1946,9 @@ public class KL {
 			super();
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
-				String k4, String v4, String k5, String v5, String k6,
-				String v6, String k7, String v7, String k8, String v8,
-				String k9, String v9, String k10, String v10) {
+			  String k4, String v4, String k5, String v5, String k6,
+			  String v6, String k7, String v7, String k8, String v8,
+			  String k9, String v9, String k10, String v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -1851,9 +1961,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
-				String k4, String v4, String k5, String v5, String k6,
-				String v6, String k7, String v7, String k8, String v8,
-				String k9, String v9) {
+			  String k4, String v4, String k5, String v5, String k6,
+			  String v6, String k7, String v7, String k8, String v8,
+			  String k9, String v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -1865,8 +1975,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
-				String k4, String v4, String k5, String v5, String k6,
-				String v6, String k7, String v7, String k8, String v8) {
+			  String k4, String v4, String k5, String v5, String k6,
+			  String v6, String k7, String v7, String k8, String v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -1877,8 +1987,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
-				String k4, String v4, String k5, String v5, String k6,
-				String v6, String k7, String v7) {
+			  String k4, String v4, String k5, String v5, String k6,
+			  String v6, String k7, String v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -1888,8 +1998,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
-				String k4, String v4, String k5, String v5, String k6,
-				String v6) {
+			  String k4, String v4, String k5, String v5, String k6,
+			  String v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -1898,7 +2008,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
-				String k4, String v4, String k5, String v5) {
+			  String k4, String v4, String k5, String v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -1906,14 +2016,14 @@ public class KL {
 			super.put(k5, v5);
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
-				String k4, String v4) {
+			  String k4, String v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 		Obj_S(String k1, String v1, String k2, String v2, String k3,
-				String v3) {
+			  String v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2008,7 +2118,7 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		String delete(String k) {
+		String delete (String k) {
 			String v = hasKey(k) ? super.get(k) : null;
 			super.remove(k);
 			return v;
@@ -2018,7 +2128,7 @@ public class KL {
 			return this;
 		}
 		String pop(String k) {
-			return delete(k);
+			return delete (k);
 		}
 		Obj_S update(String k, String v) {
 			set(k, v);
@@ -2045,9 +2155,9 @@ public class KL {
 			super();
 		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6, String k7, Integer v7, String k8,
-				Integer v8, String k9, Integer v9, String k10, Integer v10) {
+			  Integer v3, String k4, Integer v4, String k5, Integer v5,
+			  String k6, Integer v6, String k7, Integer v7, String k8,
+			  Integer v8, String k9, Integer v9, String k10, Integer v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2060,9 +2170,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6, String k7, Integer v7, String k8,
-				Integer v8, String k9, Integer v9) {
+			  Integer v3, String k4, Integer v4, String k5, Integer v5,
+			  String k6, Integer v6, String k7, Integer v7, String k8,
+			  Integer v8, String k9, Integer v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2074,9 +2184,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6, String k7, Integer v7, String k8,
-				Integer v8) {
+			  Integer v3, String k4, Integer v4, String k5, Integer v5,
+			  String k6, Integer v6, String k7, Integer v7, String k8,
+			  Integer v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2087,8 +2197,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6, String k7, Integer v7) {
+			  Integer v3, String k4, Integer v4, String k5, Integer v5,
+			  String k6, Integer v6, String k7, Integer v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2098,8 +2208,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6) {
+			  Integer v3, String k4, Integer v4, String k5, Integer v5,
+			  String k6, Integer v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2108,7 +2218,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5) {
+			  Integer v3, String k4, Integer v4, String k5, Integer v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2116,14 +2226,14 @@ public class KL {
 			super.put(k5, v5);
 		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4) {
+			  Integer v3, String k4, Integer v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3) {
+			  Integer v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2218,7 +2328,7 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		int delete(String k) {
+		int delete (String k) {
 			int v = hasKey(k) ? super.get(k) : null;
 			super.remove(k);
 			return v;
@@ -2228,7 +2338,7 @@ public class KL {
 			return this;
 		}
 		int pop(String k) {
-			return delete(k);
+			return delete (k);
 		}
 		Obj_I update(String k, Integer v) {
 			set(k, v);
@@ -2255,9 +2365,9 @@ public class KL {
 			super();
 		}
 		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-				String k4, Long v4, String k5, Long v5, String k6, Long v6,
-				String k7, Long v7, String k8, Long v8, String k9, Long v9,
-				String k10, Long v10) {
+			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
+			  String k7, Long v7, String k8, Long v8, String k9, Long v9,
+			  String k10, Long v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2270,8 +2380,8 @@ public class KL {
 			super.put(k10, v10);
 		}
 		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-				String k4, Long v4, String k5, Long v5, String k6, Long v6,
-				String k7, Long v7, String k8, Long v8, String k9, Long v9) {
+			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
+			  String k7, Long v7, String k8, Long v8, String k9, Long v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2283,8 +2393,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-				String k4, Long v4, String k5, Long v5, String k6, Long v6,
-				String k7, Long v7, String k8, Long v8) {
+			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
+			  String k7, Long v7, String k8, Long v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2295,8 +2405,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-				String k4, Long v4, String k5, Long v5, String k6, Long v6,
-				String k7, Long v7) {
+			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
+			  String k7, Long v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2306,7 +2416,7 @@ public class KL {
 			super.put(k7, v7);
 		}
 		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-				String k4, Long v4, String k5, Long v5, String k6, Long v6) {
+			  String k4, Long v4, String k5, Long v5, String k6, Long v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2315,7 +2425,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-				String k4, Long v4, String k5, Long v5) {
+			  String k4, Long v4, String k5, Long v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2323,7 +2433,7 @@ public class KL {
 			super.put(k5, v5);
 		}
 		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-				String k4, Long v4) {
+			  String k4, Long v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2424,7 +2534,7 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		long delete(String k) {
+		long delete (String k) {
 			return super.remove(k);
 		}
 		Obj_L push(String k, long v) {
@@ -2432,7 +2542,7 @@ public class KL {
 			return this;
 		}
 		long pop(String k) {
-			return delete(k);
+			return delete (k);
 		}
 		Obj_L update(String k, Long v) {
 			set(k, v);
@@ -2459,9 +2569,9 @@ public class KL {
 			super();
 		}
 		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-				String k4, Float v4, String k5, Float v5, String k6, Float v6,
-				String k7, Float v7, String k8, Float v8, String k9, Float v9,
-				String k10, Float v10) {
+			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
+			  String k7, Float v7, String k8, Float v8, String k9, Float v9,
+			  String k10, Float v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2474,8 +2584,8 @@ public class KL {
 			super.put(k10, v10);
 		}
 		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-				String k4, Float v4, String k5, Float v5, String k6, Float v6,
-				String k7, Float v7, String k8, Float v8, String k9, Float v9) {
+			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
+			  String k7, Float v7, String k8, Float v8, String k9, Float v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2487,8 +2597,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-				String k4, Float v4, String k5, Float v5, String k6, Float v6,
-				String k7, Float v7, String k8, Float v8) {
+			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
+			  String k7, Float v7, String k8, Float v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2499,8 +2609,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-				String k4, Float v4, String k5, Float v5, String k6, Float v6,
-				String k7, Float v7) {
+			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
+			  String k7, Float v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2510,7 +2620,7 @@ public class KL {
 			super.put(k7, v7);
 		}
 		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-				String k4, Float v4, String k5, Float v5, String k6, Float v6) {
+			  String k4, Float v4, String k5, Float v5, String k6, Float v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2519,7 +2629,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-				String k4, Float v4, String k5, Float v5) {
+			  String k4, Float v4, String k5, Float v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2527,7 +2637,7 @@ public class KL {
 			super.put(k5, v5);
 		}
 		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-				String k4, Float v4) {
+			  String k4, Float v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2628,7 +2738,7 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		float delete(String k) {
+		float delete (String k) {
 			return super.remove(k);
 		}
 		Obj_F push(String k, float v) {
@@ -2636,7 +2746,7 @@ public class KL {
 			return this;
 		}
 		float pop(String k) {
-			return delete(k);
+			return delete (k);
 		}
 		Obj_F update(String k, Float v) {
 			set(k, v);
@@ -2663,9 +2773,9 @@ public class KL {
 			super();
 		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-				String k4, Double v4, String k5, Double v5, String k6,
-				Double v6, String k7, Double v7, String k8, Double v8,
-				String k9, Double v9, String k10, Double v10) {
+			  String k4, Double v4, String k5, Double v5, String k6,
+			  Double v6, String k7, Double v7, String k8, Double v8,
+			  String k9, Double v9, String k10, Double v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2678,9 +2788,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-				String k4, Double v4, String k5, Double v5, String k6,
-				Double v6, String k7, Double v7, String k8, Double v8,
-				String k9, Double v9) {
+			  String k4, Double v4, String k5, Double v5, String k6,
+			  Double v6, String k7, Double v7, String k8, Double v8,
+			  String k9, Double v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2692,8 +2802,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-				String k4, Double v4, String k5, Double v5, String k6,
-				Double v6, String k7, Double v7, String k8, Double v8) {
+			  String k4, Double v4, String k5, Double v5, String k6,
+			  Double v6, String k7, Double v7, String k8, Double v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2704,8 +2814,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-				String k4, Double v4, String k5, Double v5, String k6,
-				Double v6, String k7, Double v7) {
+			  String k4, Double v4, String k5, Double v5, String k6,
+			  Double v6, String k7, Double v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2715,8 +2825,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-				String k4, Double v4, String k5, Double v5, String k6,
-				Double v6) {
+			  String k4, Double v4, String k5, Double v5, String k6,
+			  Double v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2725,7 +2835,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-				String k4, Double v4, String k5, Double v5) {
+			  String k4, Double v4, String k5, Double v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2733,14 +2843,14 @@ public class KL {
 			super.put(k5, v5);
 		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-				String k4, Double v4) {
+			  String k4, Double v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 		Obj_D(String k1, Double v1, String k2, Double v2, String k3,
-				Double v3) {
+			  Double v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2835,7 +2945,7 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		double delete(String k) {
+		double delete (String k) {
 			return super.remove(k);
 		}
 		Obj_D push(String k, double v) {
@@ -2843,7 +2953,7 @@ public class KL {
 			return this;
 		}
 		double pop(String k) {
-			return delete(k);
+			return delete (k);
 		}
 		Obj_D update(String k, Double v) {
 			set(k, v);
@@ -2870,9 +2980,9 @@ public class KL {
 			super();
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6, String k7, Boolean v7, String k8,
-				Boolean v8, String k9, Boolean v9, String k10, Boolean v10) {
+			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			  String k6, Boolean v6, String k7, Boolean v7, String k8,
+			  Boolean v8, String k9, Boolean v9, String k10, Boolean v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2885,9 +2995,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6, String k7, Boolean v7, String k8,
-				Boolean v8, String k9, Boolean v9) {
+			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			  String k6, Boolean v6, String k7, Boolean v7, String k8,
+			  Boolean v8, String k9, Boolean v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2899,9 +3009,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6, String k7, Boolean v7, String k8,
-				Boolean v8) {
+			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			  String k6, Boolean v6, String k7, Boolean v7, String k8,
+			  Boolean v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2912,8 +3022,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6, String k7, Boolean v7) {
+			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			  String k6, Boolean v6, String k7, Boolean v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2923,8 +3033,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6) {
+			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			  String k6, Boolean v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2933,7 +3043,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
+			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2941,14 +3051,14 @@ public class KL {
 			super.put(k5, v5);
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4) {
+			  Boolean v3, String k4, Boolean v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3) {
+			  Boolean v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3043,7 +3153,7 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		boolean delete(String k) {
+		boolean delete (String k) {
 			return super.remove(k);
 		}
 		Obj_B push(String k, Boolean v) {
@@ -3051,7 +3161,7 @@ public class KL {
 			return this;
 		}
 		boolean pop(String k) {
-			return delete(k);
+			return delete (k);
 		}
 		Obj_B update(String k, Boolean v) {
 			set(k, v);
@@ -3078,8 +3188,8 @@ public class KL {
 			super();
 		}
 		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
-				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
-				Key k8, Value v8, Key k9, Value v9, Key k10, Value v10) {
+			 Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
+			 Key k8, Value v8, Key k9, Value v9, Key k10, Value v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3092,8 +3202,8 @@ public class KL {
 			super.put(k10, v10);
 		}
 		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
-				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
-				Key k8, Value v8, Key k9, Value v9) {
+			 Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
+			 Key k8, Value v8, Key k9, Value v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3105,8 +3215,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
-				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
-				Key k8, Value v8) {
+			 Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
+			 Key k8, Value v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3117,8 +3227,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
-				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7,
-				Value v7) {
+			 Value v4, Key k5, Value v5, Key k6, Value v6, Key k7,
+			 Value v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3128,7 +3238,7 @@ public class KL {
 			super.put(k7, v7);
 		}
 		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
-				Value v4, Key k5, Value v5, Key k6, Value v6) {
+			 Value v4, Key k5, Value v5, Key k6, Value v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3137,7 +3247,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
-				Value v4, Key k5, Value v5) {
+			 Value v4, Key k5, Value v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3145,7 +3255,7 @@ public class KL {
 			super.put(k5, v5);
 		}
 		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
-				Value v4) {
+			 Value v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3192,7 +3302,7 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		Value delete(Key k) {
+		Value delete (Key k) {
 			Value v = hasKey(k) ? super.get(k) : null;
 			super.remove(k);
 			return v;
@@ -3202,7 +3312,7 @@ public class KL {
 			return this;
 		}
 		Value pop(Key k) {
-			return delete(k);
+			return delete (k);
 		}
 		Tree<Key, Value> update(Key k, Value v) {
 			set(k, v);
@@ -3246,36 +3356,36 @@ public class KL {
 			super();
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6,
-				String k7, int v7, String k8, int v8, String k9, int v9,
-				String k10, int v10) {
+			   String k4, int v4, String k5, int v5, String k6, int v6,
+			   String k7, int v7, String k8, int v8, String k9, int v9,
+			   String k10, int v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6,
-				String k7, int v7, String k8, int v8, String k9, int v9) {
+			   String k4, int v4, String k5, int v5, String k6, int v6,
+			   String k7, int v7, String k8, int v8, String k9, int v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6,
-				String k7, int v7, String k8, int v8) {
+			   String k4, int v4, String k5, int v5, String k6, int v6,
+			   String k7, int v7, String k8, int v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6,
-				String k7, int v7) {
+			   String k4, int v4, String k5, int v5, String k6, int v6,
+			   String k7, int v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6) {
+			   String k4, int v4, String k5, int v5, String k6, int v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5) {
+			   String k4, int v4, String k5, int v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4) {
+			   String k4, int v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3) {
@@ -3314,8 +3424,8 @@ public class KL {
 		}
 		int nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
+				   ? array()[super.length() - n]
+				   : 0;
 			// bugfixed
 		}
 		int i(int n) {
@@ -3408,8 +3518,8 @@ public class KL {
 		}
 		long nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
+				   ? array()[super.length() - n]
+				   : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -3503,8 +3613,8 @@ public class KL {
 		}
 		float nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
+				   ? array()[super.length() - n]
+				   : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -3602,8 +3712,8 @@ public class KL {
 		}
 		double nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
+				   ? array()[super.length() - n]
+				   : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -3701,8 +3811,8 @@ public class KL {
 		}
 		boolean nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: false;
+				   ? array()[super.length() - n]
+				   : false;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -3728,31 +3838,31 @@ public class KL {
 			super();
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-				String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10, String v10) {
+			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10, String v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-				String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
+			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-				String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8) {
+			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-				String v4, int k5, String v5, int k6, String v6, int k7, String v7) {
+			   String v4, int k5, String v5, int k6, String v6, int k7, String v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-				String v4, int k5, String v5, int k6, String v6) {
+			   String v4, int k5, String v5, int k6, String v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-				String v4, int k5, String v5) {
+			   String v4, int k5, String v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-				String v4) {
+			   String v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3) {
@@ -3791,8 +3901,8 @@ public class KL {
 		}
 		String nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: "";
+				   ? array()[super.length() - n]
+				   : "";
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -3818,34 +3928,34 @@ public class KL {
 			super();
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
-				int k8, long v8, int k9, long v9, int k10, long v10) {
+			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			   int k8, long v8, int k9, long v9, int k10, long v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
-				int k8, long v8, int k9, long v9) {
+			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			   int k8, long v8, int k9, long v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
-				int k8, long v8) {
+			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			   int k8, long v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-				long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
+			   long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-				long v4, int k5, long v5, int k6, long v6) {
+			   long v4, int k5, long v5, int k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-				long v4, int k5, long v5) {
+			   long v4, int k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-				long v4) {
+			   long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3) {
@@ -3884,8 +3994,8 @@ public class KL {
 		}
 		long nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
+				   ? array()[super.length() - n]
+				   : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -3911,34 +4021,34 @@ public class KL {
 			super();
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
-				int k8, float v8, int k9, float v9, int k10, float v10) {
+			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+			   int k8, float v8, int k9, float v9, int k10, float v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
-				int k8, float v8, int k9, float v9) {
+			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+			   int k8, float v8, int k9, float v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
-				int k8, float v8) {
+			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+			   int k8, float v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-				float v4, int k5, float v5, int k6, float v6, int k7, float v7) {
+			   float v4, int k5, float v5, int k6, float v6, int k7, float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-				float v4, int k5, float v5, int k6, float v6) {
+			   float v4, int k5, float v5, int k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-				float v4, int k5, float v5) {
+			   float v4, int k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-				float v4) {
+			   float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3) {
@@ -3977,8 +4087,8 @@ public class KL {
 		}
 		float nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
+				   ? array()[super.length() - n]
+				   : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -4004,34 +4114,34 @@ public class KL {
 			super();
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-				double v4, int k5, double v5, int k6, double v6, int k7, double v7,
-				int k8, double v8, int k9, double v9, int k10, double v10) {
+			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+			   int k8, double v8, int k9, double v9, int k10, double v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-				double v4, int k5, double v5, int k6, double v6, int k7, double v7,
-				int k8, double v8, int k9, double v9) {
+			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+			   int k8, double v8, int k9, double v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-				double v4, int k5, double v5, int k6, double v6, int k7, double v7,
-				int k8, double v8) {
+			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+			   int k8, double v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-				double v4, int k5, double v5, int k6, double v6, int k7, double v7) {
+			   double v4, int k5, double v5, int k6, double v6, int k7, double v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-				double v4, int k5, double v5, int k6, double v6) {
+			   double v4, int k5, double v5, int k6, double v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-				double v4, int k5, double v5) {
+			   double v4, int k5, double v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-				double v4) {
+			   double v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3) {
@@ -4070,8 +4180,8 @@ public class KL {
 		}
 		double nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
+				   ? array()[super.length() - n]
+				   : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -4097,34 +4207,34 @@ public class KL {
 			super();
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-				boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
-				int k8, boolean v8, int k9, boolean v9, int k10, boolean v10) {
+			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+			   int k8, boolean v8, int k9, boolean v9, int k10, boolean v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-				boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
-				int k8, boolean v8, int k9, boolean v9) {
+			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+			   int k8, boolean v8, int k9, boolean v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-				boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
-				int k8, boolean v8) {
+			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+			   int k8, boolean v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-				boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7) {
+			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-				boolean v4, int k5, boolean v5, int k6, boolean v6) {
+			   boolean v4, int k5, boolean v5, int k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-				boolean v4, int k5, boolean v5) {
+			   boolean v4, int k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-				boolean v4) {
+			   boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
@@ -4163,8 +4273,8 @@ public class KL {
 		}
 		boolean nthLastValue(int n) {
 			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: false;
+				   ? array()[super.length() - n]
+				   : false;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -4194,7 +4304,7 @@ public class KL {
 				super.add(s);
 		}
 		StrArr pushAt(int i, String... strings) {
-			if (i >= 0 && i < super.size() && 0 != len(strings)) {
+			if (i >= 0 && i <= super.size() && 0 != len(strings)) {
 				for (String s : strings)
 					super.add(i, s);
 			}
@@ -4276,8 +4386,8 @@ public class KL {
 		}
 		String lasti(int n) {
 			return n > 0 && n <= super.size()
-					? super.get(super.size() - n)
-					: "";
+				   ? super.get(super.size() - n)
+				   : "";
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -4360,7 +4470,7 @@ public class KL {
 		StrArr slice(int x, int y) {
 			if (x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (StrArr) (super.subList(x, y).toArray())[0];
+			return (StrArr)(super.subList(x, y).toArray())[0];
 		}
 		StrArr empty() {
 			super.clear();
@@ -4430,7 +4540,7 @@ public class KL {
 				super.add(n);
 		}
 		IntArr pushAt(int i, int... ints) {
-			if (i >= 0 && i < super.size() && 0 != len(ints)) {
+			if (i >= 0 && i <= super.size() && 0 != len(ints)) {
 				for (int n : ints)
 					super.add(i, n);
 			}
@@ -4588,7 +4698,7 @@ public class KL {
 		IntArr slice(int x, int y) {
 			if (x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (IntArr) (super.subList(x, y).toArray())[0];
+			return (IntArr)(super.subList(x, y).toArray())[0];
 		}
 		IntArr empty() {
 			super.clear();
@@ -4658,7 +4768,7 @@ public class KL {
 				super.add(n);
 		}
 		LongArr pushAt(int i, long... longs) {
-			if (i >= 0 && i < super.size() && 0 != len(longs)) {
+			if (i >= 0 && i <= super.size() && 0 != len(longs)) {
 				for (long l : longs)
 					super.add(i, l);
 			}
@@ -4827,7 +4937,7 @@ public class KL {
 		LongArr slice(int x, int y) {
 			if (x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (LongArr) (super.subList(x, y).toArray())[0];
+			return (LongArr)(super.subList(x, y).toArray())[0];
 		}
 		LongArr empty() {
 			super.clear();
@@ -4897,7 +5007,7 @@ public class KL {
 				super.add(n);
 		}
 		FltArr pushAt(int i, float... floats) {
-			if (i >= 0 && i < super.size() && 0 != len(floats)) {
+			if (i >= 0 && i <= super.size() && 0 != len(floats)) {
 				for (float f : floats)
 					super.add(i, f);
 			}
@@ -5066,7 +5176,7 @@ public class KL {
 		FltArr slice(int x, int y) {
 			if (x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (FltArr) (super.subList(x, y).toArray())[0];
+			return (FltArr)(super.subList(x, y).toArray())[0];
 		}
 		FltArr empty() {
 			super.clear();
@@ -5136,7 +5246,7 @@ public class KL {
 				super.add(d);
 		}
 		DblArr pushAt(int i, double... doubles) {
-			if (i >= 0 && i < super.size() && 0 != len(doubles)) {
+			if (i >= 0 && i <= super.size() && 0 != len(doubles)) {
 				for (double d : doubles)
 					super.add(i, d);
 			}
@@ -5305,7 +5415,7 @@ public class KL {
 		DblArr slice(int x, int y) {
 			if (x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (DblArr) (super.subList(x, y).toArray())[0];
+			return (DblArr)(super.subList(x, y).toArray())[0];
 		}
 		DblArr empty() {
 			super.clear();
@@ -5375,10 +5485,10 @@ public class KL {
 				super.add(b);
 		}
 		BoolArr pushAt(int i, boolean... bools) {
-			if (i < 0 || i > super.size() || 0 == len(bools))
-				return null;
-			for (boolean b : bools)
-				super.add(i, b);
+			if (i >= 0 && i <= super.size() && 0 != len(bools)) {
+				for (boolean b : bools)
+					super.add(i, b);
+			}
 			return this;
 		}
 		BoolArr pushStart(boolean... bools) {
@@ -5457,8 +5567,8 @@ public class KL {
 		}
 		boolean lasti(int n) {
 			return n > 0 && n <= super.size()
-					? super.get(super.size() - n)
-					: false;
+				   ? super.get(super.size() - n)
+				   : false;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -5546,7 +5656,7 @@ public class KL {
 		BoolArr slice(int x, int y) {
 			if (x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (BoolArr) (super.subList(x, y).toArray())[0];
+			return (BoolArr)(super.subList(x, y).toArray())[0];
 		}
 		BoolArr empty() {
 			super.clear();
@@ -5626,11 +5736,11 @@ public class KL {
 		setTimeout(fn, delay);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
-			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
-			Object cond10, Runnable sol10) {
+							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+							 Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+							 Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+							 Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+							 Object cond10, Runnable sol10) {
 		if (src instanceof Number || src instanceof Character) {
 			double srcDbl = src instanceof Character ? (char)src : Dbl(Str(src));
 			if (cond1 instanceof String) {
@@ -5695,7 +5805,7 @@ public class KL {
 					return false;
 				}
 				double middleware2 = Dbl(
-						String(cond2).replaceAll("[^\\-\\d\\.]", ""));
+										 String(cond2).replaceAll("[^\\-\\d\\.]", ""));
 				cond2 = String(cond2).replaceAll("[^<>=else]", "");
 				if (eq(cond2, ">")) {
 					if (srcDbl > middleware2) {
@@ -5756,7 +5866,7 @@ public class KL {
 					return false;
 				}
 				double middleware3 = Dbl(
-						String(cond3).replaceAll("[^\\-\\d\\.]", ""));
+										 String(cond3).replaceAll("[^\\-\\d\\.]", ""));
 				cond3 = String(cond3).replaceAll("[^<>=else]", "");
 				if (eq(cond3, ">")) {
 					if (srcDbl > middleware3) {
@@ -5817,7 +5927,7 @@ public class KL {
 					return false;
 				}
 				double middleware4 = Dbl(
-						String(cond4).replaceAll("[^\\-\\d\\.]", ""));
+										 String(cond4).replaceAll("[^\\-\\d\\.]", ""));
 				cond4 = String(cond4).replaceAll("[^<>=else]", "");
 				if (eq(cond4, ">")) {
 					if (srcDbl > middleware4) {
@@ -5878,7 +5988,7 @@ public class KL {
 					return false;
 				}
 				double middleware5 = Dbl(
-						String(cond5).replaceAll("[^\\-\\d\\.]", ""));
+										 String(cond5).replaceAll("[^\\-\\d\\.]", ""));
 				cond5 = String(cond5).replaceAll("[^<>=else]", "");
 				if (eq(cond5, ">")) {
 					if (srcDbl > middleware5) {
@@ -5939,7 +6049,7 @@ public class KL {
 					return false;
 				}
 				double middleware6 = Dbl(
-						String(cond6).replaceAll("[^\\-\\d\\.]", ""));
+										 String(cond6).replaceAll("[^\\-\\d\\.]", ""));
 				cond6 = String(cond6).replaceAll("[^<>=else]", "");
 				if (eq(cond6, ">")) {
 					if (srcDbl > middleware6) {
@@ -6000,7 +6110,7 @@ public class KL {
 					return false;
 				}
 				double middleware7 = Dbl(
-						String(cond7).replaceAll("[^\\-\\d\\.]", ""));
+										 String(cond7).replaceAll("[^\\-\\d\\.]", ""));
 				cond7 = String(cond7).replaceAll("[^<>=else]", "");
 				if (eq(cond7, ">")) {
 					if (srcDbl > middleware7) {
@@ -6061,7 +6171,7 @@ public class KL {
 					return false;
 				}
 				double middleware8 = Dbl(
-						String(cond8).replaceAll("[^\\-\\d\\.]", ""));
+										 String(cond8).replaceAll("[^\\-\\d\\.]", ""));
 				cond8 = String(cond8).replaceAll("[^<>=else]", "");
 				if (eq(cond8, ">")) {
 					if (srcDbl > middleware8) {
@@ -6122,7 +6232,7 @@ public class KL {
 					return false;
 				}
 				double middleware9 = Dbl(
-						String(cond9).replaceAll("[^\\-\\d\\.]", ""));
+										 String(cond9).replaceAll("[^\\-\\d\\.]", ""));
 				cond9 = String(cond9).replaceAll("[^<>=else]", "");
 				if (eq(cond9, ">")) {
 					if (srcDbl > middleware9) {
@@ -6183,7 +6293,7 @@ public class KL {
 					return false;
 				}
 				double middleware10 = Dbl(
-						String(cond10).replaceAll("[^\\-\\d\\.]", ""));
+										  String(cond10).replaceAll("[^\\-\\d\\.]", ""));
 				cond10 = String(cond10).replaceAll("[^<>=else]", "");
 				if (eq(cond10, ">")) {
 					if (srcDbl > middleware10) {
@@ -6585,76 +6695,76 @@ public class KL {
 		return false;
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
-			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+							 Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+							 Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+							 Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
-				null, null);
+				  cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				  null, null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
-			Object cond8, Runnable sol8) {
+							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+							 Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+							 Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+							 Object cond8, Runnable sol8) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, null, null,
-				null, null);
+				  cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, null, null,
+				  null, null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+							 Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+							 Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-				cond5, sol5, cond6, sol6, cond7, sol7, null, null, null, null,
-				null, null);
+				  cond5, sol5, cond6, sol6, cond7, sol7, null, null, null, null,
+				  null, null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-			Object cond6, Runnable sol6) {
+							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+							 Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+							 Object cond6, Runnable sol6) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-				cond5, sol5, cond6, sol6, null, null, null, null, null, null,
-				null, null);
+				  cond5, sol5, cond6, sol6, null, null, null, null, null, null,
+				  null, null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+							 Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-				cond5, sol5, null, null, null, null, null, null, null, null,
-				null, null);
+				  cond5, sol5, null, null, null, null, null, null, null, null,
+				  null, null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-			Object cond4, Runnable sol4) {
+							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+							 Object cond4, Runnable sol4) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null);
+				  null, null, null, null, null, null, null, null, null, null,
+				  null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+							 Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null);
+				  null, null, null, null, null, null, null, null, null, null,
+				  null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
-			Object cond2, Runnable sol2) {
+							 Object cond2, Runnable sol2) {
 		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null);
+				  null, null, null, null, null, null, null, null, null, null,
+				  null);
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1) {
 		return sw(src, cond1, sol1, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null);
+				  null, null, null, null, null, null, null, null, null, null,
+				  null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
-			Runnable sol10) {
+						  Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+						  Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+						  Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
+						  Runnable sol10) {
 		if (is(cond1))
 			new Thread(sol1).run();
 		else if (is(cond2))
@@ -6678,85 +6788,83 @@ public class KL {
 		return;
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8, boolean cond9, Runnable sol9) {
+						  Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+						  Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+						  Runnable sol8, boolean cond9, Runnable sol9) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, false,
-				null);
+		   cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, false,
+		   null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8) {
+						  Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+						  Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+						  Runnable sol8) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				cond6, sol6, cond7, sol7, cond8, sol8, false, null, false,
-				null);
+		   cond6, sol6, cond7, sol7, cond8, sol8, false, null, false,
+		   null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7) {
+						  Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+						  Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6, boolean cond7, Runnable sol7) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				cond6, sol6, cond7, sol7, false, null, false, null, false,
-				null);
+		   cond6, sol6, cond7, sol7, false, null, false, null, false,
+		   null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6) {
+						  Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+						  Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+						  Runnable sol6) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				cond6, sol6, false, null, false, null, false, null, false,
-				null);
+		   cond6, sol6, false, null, false, null, false, null, false,
+		   null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5) {
+						  Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+						  Runnable sol4, boolean cond5, Runnable sol5) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				false, null, false, null, false, null, false, null, false,
-				null);
+		   false, null, false, null, false, null, false, null, false,
+		   null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4) {
+						  Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+						  Runnable sol4) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, false, null,
-				false, null, false, null, false, null, false, null, false,
-				null);
+		   false, null, false, null, false, null, false, null, false,
+		   null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3) {
+						  Runnable sol2, boolean cond3, Runnable sol3) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, false, null, false, null,
-				false, null, false, null, false, null, false, null, false,
-				null);
+		   false, null, false, null, false, null, false, null, false,
+		   null);
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2) {
+						  Runnable sol2) {
 		sw(cond1, sol1, cond2, sol2, false, null, false, null, false, null,
-				false, null, false, null, false, null, false, null, false,
-				null);
+		   false, null, false, null, false, null, false, null, false,
+		   null);
 	}
 	public static void sw(boolean cond1, Runnable sol1) {
 		sw(cond1, sol1, false, null, false, null, false, null, false, null,
-				false, null, false, null, false, null, false, null, false,
-				null);
+		   false, null, false, null, false, null, false, null, false,
+		   null);
 	}
 	public static final boolean Yes = true, No = !Yes;
 	public static String Else = "else";
 	public static int[] range(int n) {
 		IntArr arr = new IntArr();
-		if (isnl(n))
+		if (not(n) || n < 1)
 			return arr.array();
 		for (int i = 0; i < n; i++)
 			arr.add(i);
 		return arr.array();
 	}
 	public static double[] range(double n) {
-		if (isnl(n))
-			return null;
 		DblArr arr = new DblArr();
-		if (isnl(n))
+		if (not(n) || n < 1.1)
 			return arr.array();
 		for (double i = 0; i < n; i += .1)
 			arr.add(i);
@@ -6764,7 +6872,7 @@ public class KL {
 	}
 	public static int[] range(int m, int n) {
 		IntArr arr = new IntArr();
-		if (isnl(m) || isnl(n) || eq(m, n))
+		if (not(m) || not(n) || eq(m, n))
 			return arr.array();
 		if (m > n) {
 			for (int i = m; i >= n; i--)
@@ -6790,28 +6898,57 @@ public class KL {
 		}
 		return arr.array();
 	}
+	public static char[] range(char m, char n) {
+		return join(range(Str(m), Str(n)), "").toCharArray();
+	}
 	public static double[] range(double m, double n) {
 		DblArr arr = new DblArr();
-		if (isnl(m) || isnl(n) || eq(m, n))
+		if (not(m) || not(n) || eq(m, n))
 			return arr.array();
 		if (m > n) {
 			for (double i = m; i >= n; i -= .1)
-				arr.add(i);
+				arr.add(Dbl(setPrecision(i)));
 		} else {
 			for (double i = m; i <= n; i += .1)
-				arr.add(i);
+				arr.add(Dbl(setPrecision(i)));
 		}
 		return arr.array();
 	}
 	public static int[] range(int n, boolean reverse) {
-		if (reverse && n > 0)
+		if (not(n) || isNeg(n)) return new int[]{};
+		if (reverse)
 			return range(n, 1);
 		return range(n);
 	}
+	public static int[] range(int m, int n, boolean reverse) {
+		if (not(m) || not(n) || eq(m, n)) return new int[]{};
+		if (reverse)
+			return range(n, m);
+		return range(m, n);
+	}
 	public static double[] range(double n, boolean reverse) {
-		if (reverse && n > 0)
+		if (not(n) || isNeg(n)) return new double[]{};
+		if (reverse)
 			return range(n, 1);
 		return range(n);
+	}
+	public static double[] range(double m, double n, boolean reverse) {
+		if (not(m) || not(n) || eq(m, n)) return new double[]{};
+		if (reverse)
+			return range(n, m);
+		return range(m, n);
+	}
+	public static String[] range(String m, String n, boolean reverse) {
+		if (not(m) || not(n) || eq(m, n)) return new String[]{};
+		if (reverse)
+			return range(n, m);
+		return range(m, n);
+	}
+	public static char[] range(char m, char n, boolean reverse) {
+		if (not(m) || not(n) || eq(m, n)) return new char[]{};
+		if (reverse)
+			return range(n, m);
+		return range(m, n);
 	}
 	public static int[] range(String str) {
 		return range(len(str));
@@ -6904,7 +7041,7 @@ public class KL {
 		return range(arr);
 	}
 	public static void each(String[] iterable,
-			ObjIntConsumer<String> consumer) {
+							ObjIntConsumer<String> consumer) {
 		int i = 0;
 		for (String item : iterable) {
 			consumer.accept(item, i);
@@ -6961,7 +7098,7 @@ public class KL {
 		}
 	}
 	public static void each(double[] iterable,
-			ObjIntConsumer<Double> consumer) {
+							ObjIntConsumer<Double> consumer) {
 		int i = 0;
 		for (double item : iterable) {
 			consumer.accept(item, i);
@@ -6976,7 +7113,7 @@ public class KL {
 		}
 	}
 	public static void each(boolean[] iterable,
-			ObjIntConsumer<Boolean> consumer) {
+							ObjIntConsumer<Boolean> consumer) {
 		int i = 0;
 		for (boolean item : iterable) {
 			consumer.accept(item, i);
@@ -6984,7 +7121,7 @@ public class KL {
 		}
 	}
 	public static void each(BoolArr iterable,
-			ObjIntConsumer<Boolean> consumer) {
+							ObjIntConsumer<Boolean> consumer) {
 		int i = 0;
 		for (boolean item : iterable) {
 			consumer.accept(item, i);
@@ -6992,7 +7129,7 @@ public class KL {
 		}
 	}
 	public static void each(Object[] iterable,
-			ObjIntConsumer<Object> consumer) {
+							ObjIntConsumer<Object> consumer) {
 		int i = 0;
 		for (Object item : iterable) {
 			consumer.accept(item, i);
@@ -7000,54 +7137,54 @@ public class KL {
 		}
 	}
 	public static void forEach(String[] iterable,
-			ObjIntConsumer<String> consumer) {
+							   ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(StrArr iterable,
-			ObjIntConsumer<String> consumer) {
+							   ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(int[] iterable,
-			ObjIntConsumer<Integer> consumer) {
+							   ObjIntConsumer<Integer> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(IntArr iterable,
-			ObjIntConsumer<Integer> consumer) {
+							   ObjIntConsumer<Integer> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(long[] iterable, ObjIntConsumer<Long> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(LongArr iterable,
-			ObjIntConsumer<Long> consumer) {
+							   ObjIntConsumer<Long> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(float[] iterable,
-			ObjIntConsumer<Float> consumer) {
+							   ObjIntConsumer<Float> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(FltArr iterable,
-			ObjIntConsumer<Float> consumer) {
+							   ObjIntConsumer<Float> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(double[] iterable,
-			ObjIntConsumer<Double> consumer) {
+							   ObjIntConsumer<Double> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(DblArr iterable,
-			ObjIntConsumer<Double> consumer) {
+							   ObjIntConsumer<Double> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(boolean[] iterable,
-			ObjIntConsumer<Boolean> consumer) {
+							   ObjIntConsumer<Boolean> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(BoolArr iterable,
-			ObjIntConsumer<Boolean> consumer) {
+							   ObjIntConsumer<Boolean> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(Object[] iterable,
-			ObjIntConsumer<Object> consumer) {
+							   ObjIntConsumer<Object> consumer) {
 		each(iterable, consumer);
 	}
 	public static void repeat(Runnable fn, int times) {
@@ -7055,6 +7192,7 @@ public class KL {
 			new Thread(fn).run();
 	}
 	public static String repeat(String s, int times) {
+		if (not(s) || not(times) || isNeg(times)) return s;
 		String org = s;
 		for (; times > 0; times--)
 			s += org;
@@ -7099,7 +7237,7 @@ public class KL {
 		return new DblArr(array).popIf(condition).array();
 	}
 	public static boolean[] popIf(boolean[] array,
-			Predicate<Boolean> condition) {
+								  Predicate<Boolean> condition) {
 		return new BoolArr(array).popIf(condition).array();
 	}
 	public static StrArr popIf(StrArr list, Predicate<String> condition) {
@@ -7136,7 +7274,7 @@ public class KL {
 		return new DblArr(array).keepIf(condition).array();
 	}
 	public static boolean[] keepIf(boolean[] array,
-			Predicate<Boolean> condition) {
+								   Predicate<Boolean> condition) {
 		return new BoolArr(array).keepIf(condition).array();
 	}
 	public static StrArr keepIf(StrArr list, Predicate<String> condition) {
@@ -7158,7 +7296,7 @@ public class KL {
 		return list.keepIf(condition);
 	}
 	public static String[] filterOut(String[] array,
-			Predicate<String> condition) {
+									 Predicate<String> condition) {
 		return popIf(array, condition);
 	}
 	public static int[] filterOut(int[] array, Predicate<Integer> condition) {
@@ -7171,11 +7309,11 @@ public class KL {
 		return popIf(array, condition);
 	}
 	public static double[] filterOut(double[] array,
-			Predicate<Double> condition) {
+									 Predicate<Double> condition) {
 		return popIf(array, condition);
 	}
 	public static boolean[] filterOut(boolean[] array,
-			Predicate<Boolean> condition) {
+									  Predicate<Boolean> condition) {
 		return popIf(array, condition);
 	}
 	public static StrArr filterOut(StrArr list, Predicate<String> condition) {
@@ -7194,7 +7332,7 @@ public class KL {
 		return popIf(list, condition);
 	}
 	public static BoolArr filterOut(BoolArr list,
-			Predicate<Boolean> condition) {
+									Predicate<Boolean> condition) {
 		return popIf(list, condition);
 	}
 	public static String[] filter(String[] array, Predicate<String> condition) {
@@ -7213,7 +7351,7 @@ public class KL {
 		return keepIf(array, condition);
 	}
 	public static boolean[] filter(boolean[] array,
-			Predicate<Boolean> condition) {
+								   Predicate<Boolean> condition) {
 		return keepIf(array, condition);
 	}
 	public static StrArr filter(StrArr list, Predicate<String> condition) {
@@ -7235,7 +7373,7 @@ public class KL {
 		return keepIf(list, condition);
 	}
 	public static String[] onlyPop(String[] array,
-			Predicate<String> condition) {
+								   Predicate<String> condition) {
 		return popIf(array, condition);
 	}
 	public static int[] onlyPop(int[] array, Predicate<Integer> condition) {
@@ -7248,11 +7386,11 @@ public class KL {
 		return popIf(array, condition);
 	}
 	public static double[] onlyPop(double[] array,
-			Predicate<Double> condition) {
+								   Predicate<Double> condition) {
 		return popIf(array, condition);
 	}
 	public static boolean[] onlyPop(boolean[] array,
-			Predicate<Boolean> condition) {
+									Predicate<Boolean> condition) {
 		return popIf(array, condition);
 	}
 	public static StrArr onlyPop(StrArr list, Predicate<String> condition) {
@@ -7274,7 +7412,7 @@ public class KL {
 		return popIf(list, condition);
 	}
 	public static String[] onlyKeep(String[] array,
-			Predicate<String> condition) {
+									Predicate<String> condition) {
 		return keepIf(array, condition);
 	}
 	public static int[] onlyKeep(int[] array, Predicate<Integer> condition) {
@@ -7287,11 +7425,11 @@ public class KL {
 		return keepIf(array, condition);
 	}
 	public static double[] onlyKeep(double[] array,
-			Predicate<Double> condition) {
+									Predicate<Double> condition) {
 		return keepIf(array, condition);
 	}
 	public static boolean[] onlyKeep(boolean[] array,
-			Predicate<Boolean> condition) {
+									 Predicate<Boolean> condition) {
 		return keepIf(array, condition);
 	}
 	public static StrArr onlyKeep(StrArr list, Predicate<String> condition) {
@@ -7315,13 +7453,15 @@ public class KL {
 	// Date functions
 	public static String nthDay(int n) {
 		String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-				"Friday", "Saturday"};
+						 "Friday", "Saturday"
+						};
 		return days[n];
 	}
 	public static String nthMonth(int n) {
 		String months[] = {"January", "February", "March", "April", "May",
-				"June", "July", "August", "September", "October", "November",
-				"December"};
+						   "June", "July", "August", "September", "October", "November",
+						   "December"
+						  };
 		return months[n];
 	}
 	public static String formattedDate(Date dt) {
@@ -7348,7 +7488,7 @@ public class KL {
 		String parts[] = now().split(", ");
 		parts[0] = slice(parts[0], 0, 3);
 		parts[1] = slice(split(parts[1], " ")[0], 0, 3) + " "
-				+ split(parts[1], " ")[1];
+				   + split(parts[1], " ")[1];
 		String time = slice(parts, len(parts) - 1)[0];
 		String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
 		String result = join(x, ", ");
@@ -7373,29 +7513,29 @@ public class KL {
 	public static String getSeason() {
 		String m = slice(getMonth(), 0, 3).toLowerCase();
 		switch (m) {
-			case "may" :
-			case "jun" :
-			case "jul" :
-			case "aug" :
-				return "Summer";
-			case "sep" :
-			case "oct" :
-				return "Spring";
-			case "nov" :
-			case "dec" :
-			case "jan" :
-			case "feb" :
-				return "Winter";
-			default :
-				return "Fall/Autumn";
+		case "may" :
+		case "jun" :
+		case "jul" :
+		case "aug" :
+			return "Summer";
+		case "sep" :
+		case "oct" :
+			return "Spring";
+		case "nov" :
+		case "dec" :
+		case "jan" :
+		case "feb" :
+			return "Winter";
+		default :
+			return "Fall/Autumn";
 		}
 	}
 	public static String yesterday() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
 		dt.setTime(dt.getTime() - ((int) 36e5 * 24)); // decrement 24 hours or
-														// (3.6*10⁶)*24
-														// milliseconds
+		// (3.6*10⁶)*24
+		// milliseconds
 		String date = formattedDate(dt);
 		String parts[] = date.split(", ");
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
@@ -7405,8 +7545,8 @@ public class KL {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
 		dt.setTime(dt.getTime() - ((int) 72e5 * 24)); // decrement 48 hours or
-														// (7.2*10⁶)*24
-														// milliseconds
+		// (7.2*10⁶)*24
+		// milliseconds
 		String date = formattedDate(dt);
 		String parts[] = date.split(", ");
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
@@ -7417,10 +7557,10 @@ public class KL {
 	}
 	public static String tomorrow() {
 		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) (36e2 * 1e3)))); // fix 5-hour bug
+		dt.setTime(dt.getTime() + (5 * ((int)(36e2 * 1e3))));  // fix 5-hour bug
 		dt.setTime(dt.getTime() + ((int) 36e5 * 24)); // increment 24 hours or
-														// (3.6*10⁶)*24
-														// milliseconds
+		// (3.6*10⁶)*24
+		// milliseconds
 		String date = formattedDate(dt);
 		String parts[] = date.split(", ");
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
@@ -7430,8 +7570,8 @@ public class KL {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
 		dt.setTime(dt.getTime() + ((int) 72e5 * 24)); // increment 48 hours or
-														// (7.2*10⁶)*24
-														// milliseconds
+		// (7.2*10⁶)*24
+		// milliseconds
 		String date = formattedDate(dt);
 		String parts[] = date.split(", ");
 		date = parts[0] + ", " + parts[1] + ", " + parts[2];
@@ -7511,7 +7651,7 @@ public class KL {
 		Date dt = new Date();
 		// dt.setTime(dt.getTime()+(5*((int)36e5))); //fix 5-hour bug
 		String bday = "" + ((dt.getYear() + 1900) - age); // adding 1900 helps
-															// resolve a bug
+		// resolve a bug
 		return bday;
 	}
 	public static int bday2age(String date) {
@@ -7553,9 +7693,9 @@ public class KL {
 		Date dt = new Date();
 		KL dt2 = new KL();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug for
-														// better accuracy
+		// better accuracy
 		String result = "" + ("" + dt2.nthMonth(m - 1) + " "
-				+ new Date(new Date().getYear(), m, 0).getDate());
+							  + new Date(new Date().getYear(), m, 0).getDate());
 		return result;
 	}
 	public static boolean isWeekend() {
@@ -7569,7 +7709,7 @@ public class KL {
 	public static int nextLeapYear() {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug for
-														// better accuracy
+		// better accuracy
 		int i = 0;
 		if (dt.getYear() % 4 == 0)
 			dt.setYear(dt.getYear() + 1); // ignore current year, if it's leap
@@ -7617,7 +7757,7 @@ public class KL {
 	public static String hoursAgo(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // first fix the 5-hour
-														// bug
+		// bug
 		dt.setTime(dt.getTime() - (n * (int) 36e5));
 		String time = formattedDate(dt);
 		time = time.split(", ")[3];
@@ -7626,7 +7766,7 @@ public class KL {
 	public static String hoursLater(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // first fix the 5-hour
-														// bug
+		// bug
 		dt.setTime(dt.getTime() + (n * (int) 36e5));
 		String time = formattedDate(dt);
 		time = time.split(", ")[3];
@@ -7636,7 +7776,7 @@ public class KL {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
 		dt.setTime(
-				dt.getTime() - (int) 36e5 * dt.getHours() + (n * (int) 36e5));
+			dt.getTime() - (int) 36e5 * dt.getHours() + (n * (int) 36e5));
 		String time = formattedDate(dt);
 		time = time.split(", ")[3];
 		return time;
@@ -7647,6 +7787,8 @@ public class KL {
 	// utilities
 	public static void println(Object... args) {
 		each(args, (arg, i) -> {
+			if (arg instanceof Character) arg = "'" + arg + "'";
+			if (arg instanceof Double) arg = setPrecision((double)arg);
 			System.out.print(arg + " ");
 		});
 	}
@@ -7671,28 +7813,34 @@ public class KL {
 		print(f(n));
 	}
 	// printing arrays
-	public static void printArr(String arr[]) {
+	public static void printArr(char[] arr) {
+		print("[");
+		for (char arg : arr)
+			print("\t'" + arg + "', ");
+		print("]");
+	}
+	public static void printArr(String[] arr) {
 		print("[");
 		for (String arg : arr)
 			print("\t\"" + arg + "\", ");
 		print("]");
 	}
-	public static void printArr(int arr[]) {
+	public static void printArr(int[] arr) {
 		print(Arrays.toString(arr));
 	}
-	public static void printArr(long arr[]) {
+	public static void printArr(long[] arr) {
 		print(Arrays.toString(arr));
 	}
-	public static void printArr(float arr[]) {
+	public static void printArr(float[] arr) {
 		print(Arrays.toString(arr));
 	}
-	public static void printArr(double arr[]) {
+	public static void printArr(double[] arr) {
 		print(Arrays.toString(arr));
 	}
-	public static void printArr(boolean arr[]) {
+	public static void printArr(boolean[] arr) {
 		print(Arrays.toString(arr));
 	}
-	public static void printArr(Object arr[]) {
+	public static void printArr(Object[] arr) {
 		print(Arrays.toString(arr));
 	}
 	public static void printArr(StrArr arr) {
@@ -8432,7 +8580,7 @@ public class KL {
 	public static String join(String[] array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-				"$1and$1");
+									 "$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -8442,7 +8590,7 @@ public class KL {
 	public static String join(int[] array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-				"$1and$1");
+									 "$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -8452,7 +8600,7 @@ public class KL {
 	public static String join(long[] array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-				"$1and$1");
+									 "$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -8462,7 +8610,7 @@ public class KL {
 	public static String join(float[] array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-				"$1and$1");
+									 "$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -8472,7 +8620,7 @@ public class KL {
 	public static String join(double[] array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-				"$1and$1");
+									 "$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -8482,7 +8630,7 @@ public class KL {
 	public static String join(boolean[] array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-				"$1and$1");
+									 "$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -8494,13 +8642,16 @@ public class KL {
 		return returnValue;
 	}
 	public static boolean eq(String x, String y) {
+		y = y.replaceAll("^\\^|\\$$", "");
 		return match(x, "^(" + y + ")$");
 	}
 	public static boolean eq(String x, String y, boolean strict) {
 		if (!strict)
 			return eq(x, y);
-		else
+		else {
+			y = y.replaceAll("^\\^|\\$$", "");
 			return x.equals(y) || match(x, "^(" + y + ")$", true);
+		}
 	}
 	public static boolean uneq(String x, String y) {
 		return !eq(x, y);
@@ -8509,12 +8660,15 @@ public class KL {
 		return !eq(x, y, strict);
 	}
 	// numbers
-	public static int Int(String arg) {
+	public static int Int(String arg, int base) {
 		try {
-			return Integer.parseInt(arg.replaceAll("(?<=\\d)\\.\\d+", ""));
+			return Integer.parseInt(arg.replaceAll("(?<=\\d)\\.\\d+", ""), base);
 		} catch (Exception err) {
 			return 0;
 		}
+	}
+	public static int Int(String arg) {
+	    return Int(arg, 10);
 	}
 	public static int Int(int n) {
 		return n;
@@ -8610,6 +8764,14 @@ public class KL {
 	}
 	public static double Double(boolean arg) {
 		return Dbl(arg);
+	}
+	public static double setPrecision(double n, int decimalPlaces) {
+		if (not(n) || not(decimalPlaces) || isNeg(decimalPlaces)) return n;
+		DecimalFormat formatter = new DecimalFormat("#." + repeat("0", decimalPlaces));
+		return Dbl(formatter.format(n));
+	}
+	public static double setPrecision(double n) {
+		return setPrecision(n, 2);
 	}
 	public static <T> java.util.List<T> List(T args) {
 		return Arrays.asList(args);
@@ -9120,42 +9282,42 @@ public class KL {
 	}
 	public static int min(IntArr nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(LongArr nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									 .summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(DblArr nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									   .summaryStatistics();
 		return stat.getMin();
 	}
 	public static int min(Tree_S nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(Tree_SL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									 .summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(Tree_L nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									 .summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(Tree_SD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									   .summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(Tree_D nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									   .summaryStatistics();
 		return stat.getMin();
 	}
 	public static int max(int... nums) {
@@ -9172,42 +9334,42 @@ public class KL {
 	}
 	public static int max(IntArr nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(LongArr nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									 .summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(DblArr nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									   .summaryStatistics();
 		return stat.getMax();
 	}
 	public static int max(Tree_S nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(Tree_SL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									 .summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(Tree_L nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									 .summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(Tree_SD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									   .summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(Tree_D nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
+									   .summaryStatistics();
 		return stat.getMax();
 	}
 	public static double mod(double n1, double n2) {
@@ -9282,6 +9444,23 @@ public class KL {
 		String last_two = Str(seclast_char) + Str(last_char);
 		if (n > 14 && n < 111) {
 			switch (last_char) {
+			case '1' :
+				result += "st";
+				break;
+			case '2' :
+				result += "nd";
+				break;
+			case '3' :
+				result += "rd";
+				break;
+			default :
+				result += "th";
+			}
+		} else {
+			if (eq(last_two, "11") || eq(last_two, "12") || eq(last_two, "13"))
+				result += "th";
+			else {
+				switch (last_char) {
 				case '1' :
 					result += "st";
 					break;
@@ -9293,23 +9472,6 @@ public class KL {
 					break;
 				default :
 					result += "th";
-			}
-		} else {
-			if (eq(last_two, "11") || eq(last_two, "12") || eq(last_two, "13"))
-				result += "th";
-			else {
-				switch (last_char) {
-					case '1' :
-						result += "st";
-						break;
-					case '2' :
-						result += "nd";
-						break;
-					case '3' :
-						result += "rd";
-						break;
-					default :
-						result += "th";
 				}
 			}
 		}
@@ -9318,7 +9480,7 @@ public class KL {
 	// let's set up some currency variables
 	public static double zr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9, kh = 1e11;
 	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
-			qt = 1e18, sx = 1e21, sp = 1e24, oc = 1e27, nn = 1e30, dc = 1e33;
+						 qt = 1e18, sx = 1e21, sp = 1e24, oc = 1e27, nn = 1e30, dc = 1e33;
 	public static String fpkr(int amount) {
 		double floats = amount % 1;
 		long amountFix = Long(amount - floats);
@@ -9341,9 +9503,9 @@ public class KL {
 			}
 		}
 		return replace(
-				stringBuilder.reverse().toString() + "."
-						+ sliceToAfter(Str(floats), "."),
-				"(?<=\\.\\d{2})\\d+", "");
+				   stringBuilder.reverse().toString() + "."
+				   + sliceToAfter(Str(floats), "."),
+				   "(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(long amount) {
 		double floats = amount % 1;
@@ -9367,9 +9529,9 @@ public class KL {
 			}
 		}
 		return replace(
-				stringBuilder.reverse().toString() + "."
-						+ sliceToAfter(Str(floats), "."),
-				"(?<=\\.\\d{2})\\d+", "");
+				   stringBuilder.reverse().toString() + "."
+				   + sliceToAfter(Str(floats), "."),
+				   "(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(float amount) {
 		double floats = amount % 1;
@@ -9393,9 +9555,9 @@ public class KL {
 			}
 		}
 		return replace(
-				stringBuilder.reverse().toString() + "."
-						+ sliceToAfter(Str(floats), "."),
-				"(?<=\\.\\d{2})\\d+", "");
+				   stringBuilder.reverse().toString() + "."
+				   + sliceToAfter(Str(floats), "."),
+				   "(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(double amount) {
 		double floats = amount % 1;
@@ -9419,33 +9581,33 @@ public class KL {
 			}
 		}
 		return replace(
-				stringBuilder.reverse().toString() + "."
-						+ sliceToAfter(Str(floats), "."),
-				"(?<=\\.\\d{2})\\d+", "");
+				   stringBuilder.reverse().toString() + "."
+				   + sliceToAfter(Str(floats), "."),
+				   "(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fus(int n) {
 		return NumberFormat
-				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
-						.setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "");
+			   .getCurrencyInstance(new Locale.Builder().setLanguage("en")
+									.setRegion("US").build())
+			   .format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(long n) {
 		return NumberFormat
-				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
-						.setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "");
+			   .getCurrencyInstance(new Locale.Builder().setLanguage("en")
+									.setRegion("US").build())
+			   .format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(float n) {
 		return NumberFormat
-				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
-						.setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "");
+			   .getCurrencyInstance(new Locale.Builder().setLanguage("en")
+									.setRegion("US").build())
+			   .format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(double n) {
 		return NumberFormat
-				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
-						.setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "");
+			   .getCurrencyInstance(new Locale.Builder().setLanguage("en")
+									.setRegion("US").build())
+			   .format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String f(int n) {
 		return fpkr(n);
@@ -9460,6 +9622,8 @@ public class KL {
 		return fpkr(n);
 	}
 	public static <T> String f(String s, T... args) {
+		if (not(s) || args.length == 0) return s;
+		s = s.replaceAll("%f", "%.2f");
 		return String.format(s, args);
 	}
 	public static String pkr(int n) {
@@ -9551,22 +9715,22 @@ public class KL {
 			return formattedN;
 		String result = "";
 		switch (size) {
-			case 1 :
-			case 2 :
-				result = Str(n / zr) + "zr";
-				break;
-			case 3 :
-				result = Str(n / lc) + "lc";
-				break;
-			case 4 :
-				result = Str(n / cr) + "cr";
-				break;
-			case 5 :
-				result = Str(n / ar) + "ar";
-				break;
-			case 6 :
-				result = Str(n / kh) + "kh";
-				break;
+		case 1 :
+		case 2 :
+			result = Str(n / zr) + "zr";
+			break;
+		case 3 :
+			result = Str(n / lc) + "lc";
+			break;
+		case 4 :
+			result = Str(n / cr) + "cr";
+			break;
+		case 5 :
+			result = Str(n / ar) + "ar";
+			break;
+		case 6 :
+			result = Str(n / kh) + "kh";
+			break;
 		}
 		return result;
 	}
@@ -9579,22 +9743,22 @@ public class KL {
 			return formattedN;
 		String result = "";
 		switch (size) {
-			case 1 :
-			case 2 :
-				result = Str(n / zr) + "zr";
-				break;
-			case 3 :
-				result = Str(n / lc) + "lc";
-				break;
-			case 4 :
-				result = Str(n / cr) + "cr";
-				break;
-			case 5 :
-				result = Str(n / ar) + "ar";
-				break;
-			case 6 :
-				result = Str(n / kh) + "kh";
-				break;
+		case 1 :
+		case 2 :
+			result = Str(n / zr) + "zr";
+			break;
+		case 3 :
+			result = Str(n / lc) + "lc";
+			break;
+		case 4 :
+			result = Str(n / cr) + "cr";
+			break;
+		case 5 :
+			result = Str(n / ar) + "ar";
+			break;
+		case 6 :
+			result = Str(n / kh) + "kh";
+			break;
 		}
 		return result;
 	}
@@ -9607,22 +9771,22 @@ public class KL {
 			return formattedN;
 		String result = "";
 		switch (size) {
-			case 1 :
-			case 2 :
-				result = Str(n / zr) + "zr";
-				break;
-			case 3 :
-				result = Str(n / lc) + "lc";
-				break;
-			case 4 :
-				result = Str(n / cr) + "cr";
-				break;
-			case 5 :
-				result = Str(n / ar) + "ar";
-				break;
-			case 6 :
-				result = Str(n / kh) + "kh";
-				break;
+		case 1 :
+		case 2 :
+			result = Str(n / zr) + "zr";
+			break;
+		case 3 :
+			result = Str(n / lc) + "lc";
+			break;
+		case 4 :
+			result = Str(n / cr) + "cr";
+			break;
+		case 5 :
+			result = Str(n / ar) + "ar";
+			break;
+		case 6 :
+			result = Str(n / kh) + "kh";
+			break;
 		}
 		return result;
 	}
@@ -9635,22 +9799,22 @@ public class KL {
 			return formattedN;
 		String result = "";
 		switch (size) {
-			case 1 :
-			case 2 :
-				result = Str(n / zr) + "zr";
-				break;
-			case 3 :
-				result = Str(n / lc) + "lc";
-				break;
-			case 4 :
-				result = Str(n / cr) + "cr";
-				break;
-			case 5 :
-				result = Str(n / ar) + "ar";
-				break;
-			case 6 :
-				result = Str(n / kh) + "kh";
-				break;
+		case 1 :
+		case 2 :
+			result = Str(n / zr) + "zr";
+			break;
+		case 3 :
+			result = Str(n / lc) + "lc";
+			break;
+		case 4 :
+			result = Str(n / cr) + "cr";
+			break;
+		case 5 :
+			result = Str(n / ar) + "ar";
+			break;
+		case 6 :
+			result = Str(n / kh) + "kh";
+			break;
 		}
 		return result;
 	}
@@ -9663,40 +9827,40 @@ public class KL {
 			return formattedN;
 		String result = "";
 		switch (size) {
-			case 1 :
-			case 2 :
-				result = Str(n / K) + "k";
-				break;
-			case 3 :
-				result = Str(n / M) + "M";
-				break;
-			case 4 :
-				result = Str(n / B) + "B";
-				break;
-			case 5 :
-				result = Str(n / T) + "T";
-				break;
-			case 6 :
-				result = Str(n / qd) + "qd";
-				break;
-			case 7 :
-				result = Str(n / qt) + "qt";
-				break;
-			case 8 :
-				result = Str(n / sx) + "sx";
-				break;
-			case 9 :
-				result = Str(n / sp) + "sp";
-				break;
-			case 10 :
-				result = Str(n / oc) + "oc";
-				break;
-			case 11 :
-				result = Str(n / nn) + "nn";
-				break;
-			case 12 :
-				result = Str(n / dc) + "dc";
-				break;
+		case 1 :
+		case 2 :
+			result = Str(n / K) + "k";
+			break;
+		case 3 :
+			result = Str(n / M) + "M";
+			break;
+		case 4 :
+			result = Str(n / B) + "B";
+			break;
+		case 5 :
+			result = Str(n / T) + "T";
+			break;
+		case 6 :
+			result = Str(n / qd) + "qd";
+			break;
+		case 7 :
+			result = Str(n / qt) + "qt";
+			break;
+		case 8 :
+			result = Str(n / sx) + "sx";
+			break;
+		case 9 :
+			result = Str(n / sp) + "sp";
+			break;
+		case 10 :
+			result = Str(n / oc) + "oc";
+			break;
+		case 11 :
+			result = Str(n / nn) + "nn";
+			break;
+		case 12 :
+			result = Str(n / dc) + "dc";
+			break;
 		}
 		return result;
 	}
@@ -9709,40 +9873,40 @@ public class KL {
 			return formattedN;
 		String result = "";
 		switch (size) {
-			case 1 :
-			case 2 :
-				result = Str(n / K) + "k";
-				break;
-			case 3 :
-				result = Str(n / M) + "M";
-				break;
-			case 4 :
-				result = Str(n / B) + "B";
-				break;
-			case 5 :
-				result = Str(n / T) + "T";
-				break;
-			case 6 :
-				result = Str(n / qd) + "qd";
-				break;
-			case 7 :
-				result = Str(n / qt) + "qt";
-				break;
-			case 8 :
-				result = Str(n / sx) + "sx";
-				break;
-			case 9 :
-				result = Str(n / sp) + "sp";
-				break;
-			case 10 :
-				result = Str(n / oc) + "oc";
-				break;
-			case 11 :
-				result = Str(n / nn) + "nn";
-				break;
-			case 12 :
-				result = Str(n / dc) + "dc";
-				break;
+		case 1 :
+		case 2 :
+			result = Str(n / K) + "k";
+			break;
+		case 3 :
+			result = Str(n / M) + "M";
+			break;
+		case 4 :
+			result = Str(n / B) + "B";
+			break;
+		case 5 :
+			result = Str(n / T) + "T";
+			break;
+		case 6 :
+			result = Str(n / qd) + "qd";
+			break;
+		case 7 :
+			result = Str(n / qt) + "qt";
+			break;
+		case 8 :
+			result = Str(n / sx) + "sx";
+			break;
+		case 9 :
+			result = Str(n / sp) + "sp";
+			break;
+		case 10 :
+			result = Str(n / oc) + "oc";
+			break;
+		case 11 :
+			result = Str(n / nn) + "nn";
+			break;
+		case 12 :
+			result = Str(n / dc) + "dc";
+			break;
 		}
 		return result;
 	}
@@ -9755,40 +9919,40 @@ public class KL {
 			return formattedN;
 		String result = "";
 		switch (size) {
-			case 1 :
-			case 2 :
-				result = Str(n / K) + "k";
-				break;
-			case 3 :
-				result = Str(n / M) + "M";
-				break;
-			case 4 :
-				result = Str(n / B) + "B";
-				break;
-			case 5 :
-				result = Str(n / T) + "T";
-				break;
-			case 6 :
-				result = Str(n / qd) + "qd";
-				break;
-			case 7 :
-				result = Str(n / qt) + "qt";
-				break;
-			case 8 :
-				result = Str(n / sx) + "sx";
-				break;
-			case 9 :
-				result = Str(n / sp) + "sp";
-				break;
-			case 10 :
-				result = Str(n / oc) + "oc";
-				break;
-			case 11 :
-				result = Str(n / nn) + "nn";
-				break;
-			case 12 :
-				result = Str(n / dc) + "dc";
-				break;
+		case 1 :
+		case 2 :
+			result = Str(n / K) + "k";
+			break;
+		case 3 :
+			result = Str(n / M) + "M";
+			break;
+		case 4 :
+			result = Str(n / B) + "B";
+			break;
+		case 5 :
+			result = Str(n / T) + "T";
+			break;
+		case 6 :
+			result = Str(n / qd) + "qd";
+			break;
+		case 7 :
+			result = Str(n / qt) + "qt";
+			break;
+		case 8 :
+			result = Str(n / sx) + "sx";
+			break;
+		case 9 :
+			result = Str(n / sp) + "sp";
+			break;
+		case 10 :
+			result = Str(n / oc) + "oc";
+			break;
+		case 11 :
+			result = Str(n / nn) + "nn";
+			break;
+		case 12 :
+			result = Str(n / dc) + "dc";
+			break;
 		}
 		return result;
 	}
@@ -9801,49 +9965,49 @@ public class KL {
 			return formattedN;
 		String result = "";
 		switch (size) {
-			case 1 :
-			case 2 :
-				result = Str(n / K) + "k";
-				break;
-			case 3 :
-				result = Str(n / M) + "M";
-				break;
-			case 4 :
-				result = Str(n / B) + "B";
-				break;
-			case 5 :
-				result = Str(n / T) + "T";
-				break;
-			case 6 :
-				result = Str(n / qd) + "qd";
-				break;
-			case 7 :
-				result = Str(n / qt) + "qt";
-				break;
-			case 8 :
-				result = Str(n / sx) + "sx";
-				break;
-			case 9 :
-				result = Str(n / sp) + "sp";
-				break;
-			case 10 :
-				result = Str(n / oc) + "oc";
-				break;
-			case 11 :
-				result = Str(n / nn) + "nn";
-				break;
-			case 12 :
-				result = Str(n / dc) + "dc";
-				break;
+		case 1 :
+		case 2 :
+			result = Str(n / K) + "k";
+			break;
+		case 3 :
+			result = Str(n / M) + "M";
+			break;
+		case 4 :
+			result = Str(n / B) + "B";
+			break;
+		case 5 :
+			result = Str(n / T) + "T";
+			break;
+		case 6 :
+			result = Str(n / qd) + "qd";
+			break;
+		case 7 :
+			result = Str(n / qt) + "qt";
+			break;
+		case 8 :
+			result = Str(n / sx) + "sx";
+			break;
+		case 9 :
+			result = Str(n / sp) + "sp";
+			break;
+		case 10 :
+			result = Str(n / oc) + "oc";
+			break;
+		case 11 :
+			result = Str(n / nn) + "nn";
+			break;
+		case 12 :
+			result = Str(n / dc) + "dc";
+			break;
 		}
 		return result;
 	}
 	public static String toRoman(int n) {
 		Tree_I tree = new Tree_I();
 		tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X")
-				.add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
-				.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
-				.add(4000, "M_V").add(9000, "I_X").add(10000, "_X");
+		.add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
+		.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
+		.add(4000, "M_V").add(9000, "I_X").add(10000, "_X");
 		int x = tree.floorKey(n);
 		if (n != x)
 			return tree.get(x) + toRoman(n - x);
@@ -10541,7 +10705,7 @@ public class KL {
 	}
 	public static String randStr(int len) {
 		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop"
-				+ "qrstuvwxyz\\+=";
+						  + "qrstuvwxyz\\+=";
 		SecureRandom rnd = new SecureRandom();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; i++)
@@ -10853,11 +11017,11 @@ public class KL {
 		return arr.unique();
 	}
 	public static String replace(String str, String to_replace,
-			String regex_to_replace_with) {
+								 String regex_to_replace_with) {
 		return str.replaceAll(to_replace, regex_to_replace_with);
 	}
 	public static String replaceOne(String str, String to_replace,
-			String regex_to_replace_with) {
+									String regex_to_replace_with) {
 		return str.replaceFirst(to_replace, regex_to_replace_with);
 	}
 	public static String remove(String str, String re) {
@@ -10909,7 +11073,7 @@ public class KL {
 	}
 	public static String[] slice(String oldArr[], int start) {
 		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
-				len(oldArr));
+											 len(oldArr));
 		return newArr;
 	}
 	public static int[] slice(int oldArr[], int start) {
@@ -10926,12 +11090,12 @@ public class KL {
 	}
 	public static double[] slice(double oldArr[], int start) {
 		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
-				len(oldArr));
+											 len(oldArr));
 		return newArr;
 	}
 	public static boolean[] slice(boolean oldArr[], int start) {
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
-				len(oldArr));
+											  len(oldArr));
 		return newArr;
 	}
 	public static StrArr slice(StrArr arr, int start) {
@@ -11209,13 +11373,13 @@ public class KL {
 	}
 	public static boolean startsWith(String str, String re) {
 		Pattern pattern = Pattern.compile("^(" + re + ")",
-				Pattern.CASE_INSENSITIVE);
+										  Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(str);
 		return !!matcher.find();
 	}
 	public static boolean endsWith(String str, String re) {
 		Pattern pattern = Pattern.compile("(" + re + ")$",
-				Pattern.CASE_INSENSITIVE);
+										  Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(str);
 		return !!matcher.find();
 	}
@@ -11379,8 +11543,11 @@ public class KL {
 	}
 	public static String nthLastOf(String str, int n) {
 		return n > 0 && n <= len(str)
-				? ("" + str.toCharArray()[len(str) - n])
-				: "";
+			   ? ("" + str.toCharArray()[len(str) - n])
+			   : "";
+	}
+	public static char nthLastOf(char[] arr, int n) {
+		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : '\0';
 	}
 	public static String nthLastOf(String[] arr, int n) {
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : "";
@@ -11653,7 +11820,7 @@ public class KL {
 		return occurrences;
 	}
 	public static int numberOfOccurrencesIn(String[] inStrArr,
-			String lookupStr) {
+											String lookupStr) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inStrArr); i++) {
 			if (inStrArr[i].equals(lookupStr))
@@ -11686,7 +11853,7 @@ public class KL {
 		return occurrences;
 	}
 	public static int numberOfOccurrencesIn(double[] inDblArr,
-			double lookupDbl) {
+											double lookupDbl) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inDblArr); i++) {
 			if (inDblArr[i] == lookupDbl)
@@ -11695,7 +11862,7 @@ public class KL {
 		return occurrences;
 	}
 	public static int numberOfOccurrencesIn(boolean[] inBoolArr,
-			boolean lookupBool) {
+											boolean lookupBool) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inBoolArr); i++) {
 			if (inBoolArr[i] == lookupBool)
@@ -11769,11 +11936,11 @@ public class KL {
 		if (re.equals(".") || re.equals("*") || re.equals("+")
 				|| re.equals("?"))
 			re = "\\" + re;
-		re = re.replaceAll("\\.(?![*+])", "\\\\.")
-				.replaceAll("(?<![\\w\\.])\\+", "\\\\+")
-				.replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
-				.replaceAll("%s", "[A-Za-z][\\\\w]+")
-				.replaceAll("%d", "\\\\d+");
+		re = re.replaceAll("(?<!\\\\)\\.(?![*+])", "\\\\.")
+			 .replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
+			 .replaceAll("%s", "[A-Za-z][\\\\w]+")
+			 .replaceAll("%d", "\\\\d+");
+		//System.out.println("00"+re);
 		// modification precaution: it has been tested, and hence learned,
 		// the
 		// double-escaping remains AS-IS
@@ -11787,7 +11954,7 @@ public class KL {
 		if (is(bools))
 			strict = bools[0] == true;
 		Pattern pattern = Pattern.compile(re,
-				strict ? 0 : Pattern.CASE_INSENSITIVE);
+										  strict ? 0 : Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(str);
 		return !!matcher.find();
 	}
@@ -11796,14 +11963,13 @@ public class KL {
 				|| re.equals("?")) {
 			re = "\\" + re;
 		}
-		if (in(re, "%\\w")) {
-			re = re.replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
-					.replaceAll("%s", "[A-Za-z][\\\\w]+")
-					.replaceAll("%d", "\\\\d+");
-			// modification precaution: it has been tested, and hence learned,
-			// the
-			// double-escaping remains AS-IS
-		}
+		re = re.replaceAll("(?<!\\\\)\\.(?![*+])", "\\\\.")
+			 .replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
+			 .replaceAll("%s", "[A-Za-z][\\\\w]+")
+			 .replaceAll("%d", "\\\\d+");
+		// modification precaution: it has been tested, and hence learned,
+		// the
+		// double-escaping remains AS-IS
 		// escape tricky characters, if they're the only content: helps avoid
 		// false positives as a "." or a "*" alone, can match just anything;.
 		// Needless to say, these quantifiers, along with a "+" and an
@@ -11815,26 +11981,25 @@ public class KL {
 			strict = bools[0] == true;
 		}
 		Pattern pattern = Pattern.compile("(" + re + ")",
-				strict ? 0 : Pattern.CASE_INSENSITIVE);
+										  strict ? 0 : Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(str);
 		if (!matcher.find())
 			return "";
 		return matcher.group();
 	}
-	public static String[] findMatches(String str, String re,
-			boolean... bools) {
+	public static String[] findMatches(String str, String re, boolean... bools) {
 		if (re.equals(".") || re.equals("*") || re.equals("+")
 				|| re.equals("?")) {
 			re = "\\" + re;
 		}
-		if (in(re, "%\\w")) {
-			re = re.replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
-					.replaceAll("%s", "[A-Za-z][\\\\w]+")
-					.replaceAll("%d", "\\\\d+");
-			// modification precaution: it has been tested, and hence learned,
-			// the
-			// double-escaping remains AS-IS
-		}
+		re = re.replaceAll("(?<!\\\\)\\.(?![*+])", "\\\\.")
+			 .replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
+			 .replaceAll("%s", "[A-Za-z][\\\\w]+")
+			 .replaceAll("%d", "\\\\d+")
+			 .replaceAll("%f", "([\\\\d])*[\\\\.]\\\\d+");
+		// modification precaution: it has been tested, and hence learned,
+		// the
+		// double-escaping remains AS-IS
 		// escape tricky characters, if they're the only content: helps avoid
 		// false positives as a "." or a "*" alone, can match just anything;.
 		// Needless to say, these quantifiers, along with a "+" and an
@@ -11845,19 +12010,16 @@ public class KL {
 		if (is(bools)) {
 			strict = bools[0] == true;
 		}
-		Pattern pattern = Pattern.compile("(" + re + ")",
-				strict ? 0 : Pattern.CASE_INSENSITIVE);
+		Pattern pattern = Pattern.compile("(" + re + ")", strict ? 0 : Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(str);
 		StrArr arr = new StrArr();
-		if (!matcher.find())
-			return new String[]{};
 		while (matcher.find())
-			arr.push(matcher.group());
+            arr.push(matcher.group());
 		return arr.array();
 	}
 	public static int[] intsOf(String s) {
 		IntArr arr = new IntArr();
-		String[] matches = findMatches(s, "(?<!\\.)\\d+(?!\\.)");
+		String[] matches = findMatches(s, "(?<!\\.)(\\d+)(?!\\.)");
 		for (int i : range(matches))
 			arr.push(Int(matches[i]));
 		return arr.array();
@@ -11872,7 +12034,7 @@ public class KL {
 	}
 	public static float[] fltsOf(String s) {
 		FltArr arr = new FltArr();
-		String[] matches = findMatches(s, "(\\d+)?\\.\\d+");
+		String[] matches = findMatches(s, "\\d*\\.\\d+");
 		for (int i : range(matches))
 			arr.push(Flt(matches[i]));
 		return arr.array();
@@ -11887,7 +12049,7 @@ public class KL {
 	}
 	public static double[] dblsOf(String s) {
 		DblArr arr = new DblArr();
-		String[] matches = findMatches(s, "(\\d+)?\\.\\d+");
+		String[] matches = findMatches(s, "[\\d]*\\.\\d+");
 		for (int i : range(matches))
 			arr.push(Dbl(matches[i]));
 		return arr.array();
@@ -11899,6 +12061,24 @@ public class KL {
 				resultantArr.push((double) obj);
 		}
 		return resultantArr.array();
+	}
+	public static int[] findInts(String s) {
+		return intsOf(s);
+	}
+	public static int[] findInts(Object... objs) {
+		return intsOf(objs);
+	}
+	public static float[] findFlts(String s) {
+		return fltsOf(s);
+	}
+	public static float[] findFlts(Object... objs) {
+		return fltsOf(objs);
+	}
+	public static double[] findDbls(String s) {
+		return dblsOf(s);
+	}
+	public static double[] findDbls(Object... objs) {
+		return dblsOf(objs);
 	}
 	public static boolean intsIn(String s) {
 		return intsOf(s).length > 0;
@@ -12054,11 +12234,11 @@ public class KL {
 	}
 	public static int[] combine(int[] arrA, int[] arrB) {
 		return IntStream.concat(Arrays.stream(arrA), Arrays.stream(arrB))
-				.toArray();
+			   .toArray();
 	}
 	public static long[] combine(long[] arrA, long[] arrB) {
 		return LongStream.concat(Arrays.stream(arrA), Arrays.stream(arrB))
-				.toArray();
+			   .toArray();
 	}
 	public static float[] combine(float[] arrA, float[] arrB) {
 		int length1 = arrA.length;
@@ -12070,7 +12250,7 @@ public class KL {
 	}
 	public static double[] combine(double[] arrA, double[] arrB) {
 		return DoubleStream.concat(Arrays.stream(arrA), Arrays.stream(arrB))
-				.toArray();
+			   .toArray();
 	}
 	public static boolean[] combine(boolean[] arrA, boolean[] arrB) {
 		int length1 = arrA.length;
@@ -12465,8 +12645,8 @@ public class KL {
 	}
 	public static String sentCase(String input) {
 		input = (input.toUpperCase().substring(0, 1)
-				+ (!in(input, "[A-Z]{2,}") ? input.toLowerCase() : input)
-						.substring(1))
+				 + (!in(input, "[A-Z]{2,}") ? input.toLowerCase() : input)
+				 .substring(1))
 				.replaceAll("(?<!\\w)i(?!\\w)", "I");
 		return input;
 	}
@@ -12508,7 +12688,7 @@ public class KL {
 		return result;
 	}
 	public static int len(char[] arr) {
-		return Str(arr).length();
+		return arr.length;
 	}
 	public static int len(String arr[]) {
 		return arr.length;
@@ -12797,7 +12977,7 @@ public class KL {
 	}
 	// let's set up some "type"-helpers for the function
 	public static String Str = "string", Int = "integer", Char = "character",
-			Long = "long", Flt = "float", Dbl = "double", Bool = "boolean";
+						 Long = "long", Flt = "float", Dbl = "double", Bool = "boolean";
 	public static int[] intArrToIntArr(Integer[] inputArr) {
 		int length = inputArr.length;
 		int resultingArr[] = new int[length];
@@ -12819,14 +12999,14 @@ public class KL {
 			resultingArr[i] = inputArr[i];
 		return resultingArr;
 	}
-	public static double[] doubleArrToDoubleArr(Double[] inputArr) {
+	public static double[] dblArrToDblArr(Double[] inputArr) {
 		int length = inputArr.length;
 		double resultingArr[] = new double[length];
 		for (int i = 0; i < length; i++)
 			resultingArr[i] = inputArr[i];
 		return resultingArr;
 	}
-	public static boolean[] booleanArrToBooleanArr(Boolean[] inputArr) {
+	public static boolean[] boolArrToBoolArr(Boolean[] inputArr) {
 		int length = inputArr.length;
 		boolean resultingArr[] = new boolean[length];
 		for (int i = 0; i < length; i++)
@@ -12834,28 +13014,22 @@ public class KL {
 		return resultingArr;
 	}
 	public static String[] reverse(String[] arr) {
-		Collections.reverse(Arrays.asList(arr));
-		return arr;
+		return new StrArr(arr).reverse().array();
 	}
 	public static int[] reverse(int[] arr) {
-		Collections.reverse(Arrays.asList(arr));
-		return arr;
+		return new IntArr(arr).reverse().array();
 	}
 	public static long[] reverse(long[] arr) {
-		Collections.reverse(Arrays.asList(arr));
-		return arr;
+		return new LongArr(arr).reverse().array();
 	}
 	public static float[] reverse(float[] arr) {
-		Collections.reverse(Arrays.asList(arr));
-		return arr;
+		return new FltArr(arr).reverse().array();
 	}
 	public static double[] reverse(double[] arr) {
-		Collections.reverse(Arrays.asList(arr));
-		return arr;
+		return new DblArr(arr).reverse().array();
 	}
 	public static boolean[] reverse(boolean[] arr) {
-		Collections.reverse(Arrays.asList(arr));
-		return arr;
+		return new BoolArr(arr).reverse().array();
 	}
 	public static StrArr reverse(StrArr arr) {
 		return arr.reverse();
@@ -12914,28 +13088,22 @@ public class KL {
 		return arr.sort();
 	}
 	public static String[] sortReverse(String[] arr) {
-		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
-		return arr;
+		return new StrArr(arr).sortReverse().array();
 	}
 	public static int[] sortReverse(int[] arr) {
-		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
-		return arr;
+		return new IntArr(arr).sortReverse().array();
 	}
 	public static long[] sortReverse(long[] arr) {
-		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
-		return arr;
+		return new LongArr(arr).sortReverse().array();
 	}
 	public static float[] sortReverse(float[] arr) {
-		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
-		return arr;
+		return new FltArr(arr).sortReverse().array();
 	}
 	public static double[] sortReverse(double[] arr) {
-		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
-		return arr;
+		return new DblArr(arr).sortReverse().array();
 	}
 	public static boolean[] sortReverse(boolean[] arr) {
-		Collections.sort(Arrays.asList(arr), Collections.reverseOrder());
-		return arr;
+		return new BoolArr(arr).sortReverse().array();
 	}
 	public static StrArr sortReverse(StrArr arr) {
 		return arr.sortReverse();
@@ -13082,867 +13250,877 @@ public class KL {
 		return arr.shuffle();
 	}
 	private static String[] ctss = {"Abbottabad", "Adilpur", "Ahmadpur East",
-			"Ahmadpur Sial", "Akora", "Aliabad", "Alik Ghund", "Alipur",
-			"Alizai", "Alpurai", "Aman Garh", "Amirabad", "Arifwala",
-			"Ashanagro Koto", "Athmuqam", "Attock City", "Awaran", "Baddomalhi",
-			"Badin", "Baffa", "Bagarji", "Bagh", "Bahawalnagar", "Bahawalnagar",
-			"Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal",
-			"Barkhan", "Basirpur", "Basti Dosa", "Bat Khela", "Battagram",
-			"Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan",
-			"Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala",
-			"Bozdar Wada", "Bulri", "Burewala", "Chak", "Chak Azam Sahu",
-			"Chak Five Hundred Seventy-five", "Chak Jhumra",
-			"Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left",
-			"Chak Two Hundred Forty-nine Thal Development Authority", "Chakwal",
-			"Chaman", "Chamber", "Charsadda", "Chawinda", "Chenab Nagar",
-			"Cherat Cantonement", "Chhor", "Chichawatni", "Chilas", "Chiniot",
-			"Chishtian", "Chitral", "Choa Saidan Shah", "Chowki Jamali",
-			"Chuchar-kana Mandi", "Chuhar Jamali", "Chunian", "Dadhar", "Dadu",
-			"Daggar", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS",
-			"Daromehar", "Darya Khan", "Darya Khan Marri", "Daska Kalan",
-			"Dasu", "Daud Khel", "Daulatpur", "Daultala", "Daur",
-			"Dera Alahyar", "Dera Bugti", "Dera Ghazi Khan", "Dera Ismail Khan",
-			"Dera Murad Jamali", "Dhanot", "Dhaunkal", "Dhoro Naro", "Digri",
-			"Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo",
-			"Doaba", "Dokri", "Duki", "Dullewala", "Dunga Bunga", "Dunyapur",
-			"Eidgah", "Eminabad", "Faisalabad", "Faqirwali", "Faruka",
-			"Fazilpur", "Fort Abbas", "Gadani", "Gakuch", "Gambat", "Gandava",
-			"Garh Maharaja", "Garhi Khairo", "Garhiyasin", "Ghauspur", "Ghotki",
-			"Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan",
-			"Gujar Khan", "Gujranwala", "Gujrat", "Gulishah Kach", "Gwadar",
-			"Hadali", "Hafizabad", "Hala", "Hangu", "Haripur", "Harnai",
-			"Harnoli", "Harunabad", "Hasilpur", "Hattian Bala", "Haveli Lakha",
-			"Havelian", "Hazro City", "Hingorja", "Hujra Shah Muqim",
-			"Hyderabad", "Islamabad", "Islamkot", "Jacobabad", "Jahanian Shah",
-			"Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand",
-			"Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali",
-			"Jauharabad", "Jhang City", "Jhang Sadr", "Jhawarian", "Jhelum",
-			"Jhol", "Jiwani", "Johi", "Jam Sahib", "Kabirwala", "Kadhan",
-			"Kahna Nau", "Kahror Pakka", "Kahuta", "Kakad Wari Dir Upper",
-			"Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar",
-			"Kalur Kot", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke",
-			"Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi",
-			"Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur",
-			"Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur",
-			"Khairpur Mir\'s", "Khairpur Nathan Shah", "Khairpur Tamewah",
-			"Khalabat", "Khandowa", "Khanewal", "Khangah Dogran", "Khangarh",
-			"Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra",
-			"Khurrianwala", "Khushab", "Khuzdar", "Kohat", "Kohlu", "Kot Addu",
-			"Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar",
-			"Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba",
-			"Kot Sultan", "Kotli", "Kotli Loharan", "Kotri", "Kulachi",
-			"Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich",
-			"Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal",
-			"Larkana", "Layyah", "Liliani", "Lodhran", "Loralai", "Mach",
-			"Madeji", "Mailsi", "Malakand", "Malakwal", "Malakwal City",
-			"Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin",
-			"Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Matiari",
-			"Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun",
-			"Mianke Mor", "Mianwali", "Minchianabad", "Mingora", "Miran Shah",
-			"Miro Khan", "Mirpur Bhtoro", "Mirpur Khas", "Mirpur Mathelo",
-			"Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro",
-			"Moza Shahwala", "Multan", "Muridke", "Murree", "Musa Khel Bazar",
-			"Mustafabad", "Muzaffargarh", "Muzaffarabad", "Nabisar",
-			"Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Naudero",
-			"Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah",
-			"Nazir Town", "New Badah", "New Mirpur", "Noorabad", "Nowshera",
-			"Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi",
-			"Pad Idan", "Paharpur", "Pakpattan", "Panjgur", "Pano Aqil",
-			"Parachinar", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia",
-			"Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth",
-			"Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Abdullah",
-			"Qila Saifullah", "Quetta", "Rahim Yar Khan", "Raiwind",
-			"Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar",
-			"Ratodero", "Rawala Kot", "Rawalpindi", "Renala Khurd",
-			"Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Saddiqabad",
-			"Sahiwal", "Sahiwal", "Saidu Sharif", "Sakrand", "Samaro",
-			"Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann",
-			"Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha",
-			"Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur",
-			"Shahkot", "Shahpur", "Shahpur Chakar", "Shahr Sultan",
-			"Shakargarh", "Sharqpur Sharif", "Shekhupura", "Shikarpur",
-			"Shingli Bala", "Shinpokh", "Shorkot", "Shujaabad", "Sialkot",
-			"Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhri",
-			"Sohbatpur", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur",
-			"Swabi", "Sita Road", "Talagang", "Talamba", "Talhar",
-			"Tandlianwala", "Tando Adam", "Tando Alahyar", "Tando Bago",
-			"Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi",
-			"Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta",
-			"Thul", "Timargara", "Toba Tek Singh", "Topi", "Turbat", "Ubauro",
-			"Umarkot", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai",
-			"Vihari", "Wana", "Warah", "Wazirabad", "Yazman", "Zafarwal",
-			"Zahir Pir", "Zaida", "Zhob", "Ziarat"},
-			wdss = {"documentary", "compliment", "insult", "vocalist",
-					"pianist", "violinist", "thirst", "hunger", "brevity",
-					"longevity", "sanity", "insanity", "bikini", "panty",
-					"hymen", "synthesis", "dementia", "amnesia", "blood sugar",
-					"fever", "flu", "diarrhea", "glucose", "Latino", "Latina",
-					"anesthetics", "anesthesia", "Cannabis", "oasis", "desert",
-					"dessert", "hemoglobin", "cardiographer", "carpenter",
-					"oceanic", "terran", "abroad", "absorbing", "abstract",
-					"academic", "accelerated", "accented", "accountant",
-					"acquainted", "acute", "obtuse", "protective", "possessive",
-					"real", "unreal", "realistic", "unrealistic", "imagined",
-					"delusional", "addicting", "addictive", "adjustable",
-					"admired", "adult", "adverse", "advised", "aerosol",
-					"afraid", "creeped out", "horrified", "horrific",
-					"terrified", "terrific", "devastated", "frustrated",
-					"aggravated", "aggressive", "agreeable", "alienate",
-					"aligned", "all-round", "alleged", "almond", "alright",
-					"altruistic", "ambient", "ambivalent", "amiable", "amino",
-					"amorphous", "amused", "anatomical", "ancestral", "angelic",
-					"angrier", "answerable", "antiquarian", "antiretroviral",
-					"appellate", "applicable", "apportioned", "approachable",
-					"appropriated", "archer", "aroused", "arrested",
-					"assertive", "assigned", "athletic", "atrocious",
-					"attained", "authoritarian", "autobiographical",
-					"avaricious", "avocado", "awake", "awesome", "backstage",
-					"backwoods", "balding", "bandaged", "banded", "banned",
-					"barreled", "battle", "beaten", "begotten", "beguiled",
-					"bellied", "belted", "beneficent", "besieged", "betting",
-					"big-money", "biggest", "biochemical", "bipolar",
-					"blackened", "blame", "blessed", "blindfolded", "bloat",
-					"blocked", "blooded", "blue-collar", "blushing", "boastful",
-					"bolder", "bolstered", "bonnie", "bored", "boundary",
-					"bounded", "bounding", "branched", "brawling", "brazen",
-					"breeding", "bridged", "brimming", "brimstone", "broadest",
-					"broiled", "broker", "bronze", "bruising", "buffy",
-					"bullied", "bungling", "burial", "buttery", "candied",
-					"canonical", "cantankerous", "cardinal", "carefree",
-					"caretaker", "casual", "cathartic", "causal", "chapel",
-					"characterized", "charcoal", "cheeky", "cherished",
-					"chipotle", "chirping", "chivalrous", "circumstantial",
-					"civic", "civil", "civilised", "clanking", "clapping",
-					"claptrap", "classless", "cleansed", "cleric", "cloistered",
-					"codified", "colloquial", "colour", "combat", "combined",
-					"comely", "commissioned", "commonplace", "commuter",
-					"commuting", "comparable", "complementary", "compromising",
-					"conceding", "concentrated", "conceptual", "conditioned",
-					"confederate", "confident", "confidential", "confining",
-					"confuse", "congressional", "consequential", "conservative",
-					"constituent", "contaminated", "contemporaneous",
-					"contraceptive", "convertible", "convex", "cooked",
-					"coronary", "corporatist", "correlated", "corroborated",
-					"cosmic", "cover", "crash", "crypto", "culminate",
-					"cushioned", "dandy", "dashing", "dazzled", "decreased",
-					"decrepit", "dedicated", "defaced", "defective",
-					"defenseless", "deluded", "deodorant", "departed",
-					"depress", "designing", "despairing", "destitute",
-					"detective", "determined", "devastating", "deviant",
-					"devilish", "devoted", "diagonal", "dictated", "didactic",
-					"differentiated", "diffused", "dirtier", "disabling",
-					"disconnected", "discovered", "disdainful", "diseased",
-					"disfigured", "disheartened", "disheveled", "disillusioned",
-					"disparate", "dissident", "doable", "doctrinal", "doing",
-					"dotted", "double-blind", "downbeat", "dozen", "draining",
-					"draught", "dread", "dried", "dropped", "dulled",
-					"duplicate", "eaten", "echoing", "economical", "elaborated",
-					"elastic", "elective", "electoral", "elven", "embryo",
-					"emerald", "emergency", "emissary", "emotional", "employed",
-					"enamel", "encased", "encrusted", "endangered", "engraved",
-					"engrossing", "enlarged", "enlisted", "enlivened",
-					"ensconced", "entangled", "enthralling", "entire",
-					"envious", "eradicated", "eroded", "esoteric", "essential",
-					"evaporated", "ever-present", "evergreen", "everlasting",
-					"exacting", "exasperated", "excess", "exciting",
-					"executable", "existent", "exonerated", "exorbitant",
-					"exponential", "export", "extraordinary", "exultant",
-					"exulting", "facsimile", "fading", "fainter", "fallacious",
-					"faltering", "famous", "fancier", "fast-growing", "fated",
-					"favourable", "fearless", "feathered", "fellow",
-					"fermented", "ferocious", "fiddling", "filling", "firmer",
-					"fitted", "flammable", "flawed", "fledgling", "fleshy",
-					"flexible", "flickering", "floral", "flowering", "flowing",
-					"foggy", "folic", "foolhardy", "foolish", "footy",
-					"forehand", "forked", "formative", "formulaic",
-					"foul-mouthed", "fractional", "fragrant", "fraudulent",
-					"freakish", "freckled", "freelance", "freight", "fresh",
-					"fretted", "frugal", "indiscriminate", "indomitable",
-					"inert", "inflate", "inform", "inheriting", "injured",
-					"injurious", "inking", "inoffensive", "insane",
-					"insensible", "insidious", "insincere", "insistent",
-					"insolent", "insufferable", "intemperate", "interdependent",
-					"interesting", "interfering", "intern", "interpreted",
-					"intersecting", "intolerable", "intolerant", "intuitive",
-					"irresolute", "irritate", "jealous", "jerking", "joining",
-					"joint", "journalistic", "joyful", "keyed", "knowing",
-					"lacklustre", "laden", "lagging", "lamented", "laughable",
-					"layered", "leather", "leathern", "leery", "left-footed",
-					"legible", "leisure", "lessening", "liberating",
-					"life-size", "lifted", "lightest", "limitless", "listening",
-					"literary", "liver", "livid", "lobster", "locked",
-					"long-held", "long-lasting", "long-running", "oversize",
-					"overworked", "oyster", "paced", "panting", "paralyzed",
-					"paramount", "parental", "parted", "partisan", "passive",
-					"edible", "eatable", "kissable", "killable", "pastel"},
-			ntltss = {"Afghan", "Egyptian", "Alantic", "Albanian", "Algerian",
-					"Virgin Islander", "American Samoan", "Andorran", "Angolan",
-					"Anguillan", "Antarctic", "Antiguan and Barbudan",
-					"Equatorial Guinean", "Argentine; Argentinian", "Armenian",
-					"Aruban", "Azerbaijani", "Ethiopian", "Australian",
-					"Bahamian", "Bahraini", "Bangladeshi", "Barbadian",
-					"Belarusian", "Belgian", "Belizean", "Beninese",
-					"Bermudian", "Bhutanese", "Bolivian", "Bosnian",
-					"Botswanan", "of Bouvet Island", "Brazilian",
-					"of the British Indian Ocean Territory",
-					"British Virgin Islander", "Bruneian", "Bulgarian",
-					"Burkinabe", "Burundian", "Cape Verdean", "Chilean",
-					"Chinese", "of Clipperton Island", "Cook Islander",
-					"Costa Rican", "Ivorian", "Curacaoan", "Danish", "German",
-					"Dominican", "Djiboutian", "Ecuadorian",
-					"Salvadorian; Salvadoran", "Eritrean", "Estonian",
-					"Falklander", "Faroese", "Fijian", "Finnish", "French",
-					"of the French Southern and Antarctic Lands", "Guianese",
-					"Polynesian", "Gabonese", "Gambian", "Georgian", "Ghanaian",
-					"Gibraltarian", "Grenadian", "Greek", "Greenlandic",
-					"Guadeloupean", "Guamanian", "Guatemalan", "Guernsey",
-					"Guinean", "Bissau-Guinean", "Guyanese", "Haitian",
-					"of the Heard Island and McDonald Islands",
-					"of the Holy See/of the Vatican", "Honduran",
-					"Hong Kong Chinese", "Indian", "Indonesian", "Manx",
-					"Iraqi", "Iranian", "Irish", "Icelandic", "Israeli",
-					"Italian", "Jamaican", "Japanese", "Yemeni", "Jersey",
-					"Jordanian", "Caymanian", "Cambodian", "Cameroonian",
-					"Canadian", "Kazakh", "Qatari", "Kenyan", "Kyrgyz",
-					"Kiribatian", "of the Cocos (Keeling) Islands", "Colombian",
-					"Comorian", "Congolese", "Croatian", "Cuban", "Kuwaiti",
-					"Lao; Laotian", "Mesotho", "Latvian", "Lebanese",
-					"Liberian", "Libyan", "Liechtensteiners", "Lithuanian",
-					"Luxembourgish", "Macanese", "Malagasy", "Malawian",
-					"Malaysian", "Maldivian", "Malian", "Maltese", "Moroccan",
-					"Marshallese", "Martinican", "Mauritanian", "Mauritian",
-					"Mahoran", "Mexican", "Micronesian", "Moldovan",
-					"Monegasque", "Mongolian", "Montenegrin", "Montserratian",
-					"Mozambican", "Burmese", "Namibian", "Nauruan", "Nepalese",
-					"New Caledonian", "New Zealander", "Nicaraguan", "Dutch",
-					"Nigerien", "Nigerian", "Niuean", "North Korean",
-					"Marian Islander", "Norfolk Islander", "Norwegian", "Omani",
-					"Austrian", "Pakistani", "Palauan", "Panamanian",
-					"Papua New Guinean", "Paraguayan", "Peruvian", "Filipino",
-					"Pitcairner", "Polish", "Portuguese", "Puerto Rican",
-					"Reunionese", "Rwandan; Rwandese", "Romanian", "Russian",
-					"Solomon Islander", "Zambian", "Samoan", "Sammarinese",
-					"Sao Tomean", "Saudi Arabian", "Swedish", "Swiss",
-					"Senegalese", "Serbian", "Seychellois", "Sierra Leonean",
-					"Zimbabwean", "Singaporean", "Slovak", "Slovenian",
-					"Somali; Somalian", "Spanish", "Sri Lankan",
-					"Saint Barthelemian",
-					"of Saint Helena, Ascension and Tristan da Cunha",
-					"of Saint Kitts and Nevis", "Saint Lucian",
-					"of Saint Martin", "of Sint Maarten",
-					"of Saint Pierre and Miquelon",
-					"Vincentian; of Saint Vincent and the Grenadines",
-					"South African", "Sudanese",
-					"of South Georgia and the South Sandwich Islands",
-					"South Korean", "South Sudanese", "Surinamese",
-					"of Svalbard, of Jan Mayen", "Swazi", "Syrian", "Tajik",
-					"Taiwanese", "Tanzanian", "Thai", "East Timorese",
-					"Togolese", "Tokelauan", "Tongan", "of Trinidad and Tobago",
-					"Chadian", "Czech", "Tunisian", "Turkish", "Turkmen",
-					"of the Turks and Caicos Islands", "Tuvaluan", "Ugandan",
-					"Ukrainian", "Hungarian", "Uruguayan", "Uzbek", "Vanuatuan",
-					"Venezuelan", "Emirian",
-					"American; The United States of America", "British",
-					"Vietnamese", "of the Wallis and Futuna Islands",
-					"of Christmas Island", "Sahrawi", "Central African",
-					"Cypriot"},
-			rfnss = {"+92 (308) 215 2441", "+92 (305) 205 3250",
-					"+92 (314) 763 2228", "+92 (323) 267 3234",
-					"+92 (320) 005 8284", "+92 (312) 486 1408",
-					"+92 (313) 556 6782", "+92 (312) 188 8504",
-					"+92 (321) 517 0564", "+92 (300) 215 0018",
-					"+92 (331) 066 8182", "+92 (305) 621 8357",
-					"+92 (312) 303 6683", "+92 (330) 315 6554",
-					"+92 (318) 702 7462", "+92 (307) 083 6477",
-					"+92 (333) 585 3443", "+92 (315) 547 0136",
-					"+92 (327) 660 2848", "+92 (330) 144 4028",
-					"+92 (323) 276 4840", "+92 (327) 738 8321",
-					"+92 (305) 812 7050", "+92 (324) 620 5556",
-					"+92 (310) 681 7606", "+92 (336) 286 8600",
-					"+92 (333) 241 8207", "+92 (322) 527 1520",
-					"+92 (303) 510 4857", "+92 (337) 650 1744",
-					"+92 (321) 331 4144", "+92 (301) 515 4836",
-					"+92 (332) 460 3760", "+92 (333) 168 2174",
-					"+92 (304) 272 1350", "+92 (320) 375 3538",
-					"+92 (336) 516 5606", "+92 (330) 088 7340",
-					"+92 (317) 523 7275", "+92 (314) 128 3831",
-					"+92 (326) 825 7157", "+92 (302) 115 2032",
-					"+92 (336) 362 6505", "+92 (313) 627 6536",
-					"+92 (302) 832 5304", "+92 (300) 131 4753",
-					"+92 (311) 588 0281", "+92 (337) 412 0180",
-					"+92 (321) 601 7236", "+92 (306) 075 0548",
-					"+92 (336) 744 6742", "+92 (335) 684 5677",
-					"+92 (323) 753 4302", "+92 (322) 864 6866",
-					"+92 (301) 077 0316", "+92 (320) 080 7036",
-					"+92 (327) 613 3783", "+92 (334) 138 2771",
-					"+92 (330) 343 8104", "+92 (325) 201 0684",
-					"+92 (337) 775 7221", "+92 (311) 857 5310",
-					"+92 (322) 615 5255", "+92 (310) 731 2176",
-					"+92 (323) 412 7433", "+92 (323) 180 3238",
-					"+92 (318) 704 5111", "+92 (321) 485 2814",
-					"+92 (334) 611 2074", "+92 (314) 343 0881",
-					"+92 (300) 537 3177", "+92 (310) 187 8100",
-					"+92 (320) 878 2262", "+92 (324) 785 1028",
-					"+92 (313) 070 1354", "+92 (318) 204 0637",
-					"+92 (328) 877 2626", "+92 (318) 018 4006",
-					"+92 (306) 104 1463", "+92 (313) 862 3726",
-					"+92 (318) 388 7683", "+92 (330) 738 5730",
-					"+92 (316) 166 6803", "+92 (313) 271 3641",
-					"+92 (307) 718 8285", "+92 (306) 256 2360",
-					"+92 (321) 104 8067", "+92 (300) 884 5048",
-					"+92 (307) 085 3035", "+92 (335) 446 3531",
-					"+92 (322) 647 3410", "+92 (328) 760 2861",
-					"+92 (327) 772 6701", "+92 (300) 211 6834",
-					"+92 (333) 515 7716", "+92 (314) 534 3700",
-					"+92 (330) 078 1205", "+92 (304) 316 1564",
-					"+92 (338) 782 0723", "+92 (318) 250 1765",
-					"+92 (300) 125 7551", "+92 (330) 715 6381",
-					"+92 (306) 366 6305", "+92 (330) 548 0703",
-					"+92 (324) 818 1781", "+92 (334) 057 4635",
-					"+92 (327) 646 3800"},
-			rgynss = {"Ahmed Raza", "Bilal Tariq", "Usman Siddiqi",
-					"Omar Farooq", "Waleed Kamal", "Talha Iqbal",
-					"Faisal Latif", "Hassan Jameel", "Adnan Bashir",
-					"Kashif Rauf", "Imran Saeed", "Adeel Qureshi",
-					"Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid",
-					"Faizan Khalid", "Hammad Zubair", "Naveed Aslam",
-					"Waqar Mehmood", "Sarmad Sheikh", "Tariq Anwar",
-					"Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain",
-					"Mudassir Younas", "Jawad Hamid", "Ammar Khalil",
-					"Rizwan Waheed", "Hasnain Saleem", "Basit Jamal",
-					"Sheraz Ahmed", "Umer Shahbaz", "Arsalan Hashim",
-					"Raheel Sultan", "Fahad Zaman", "Sajid Irfan", "Owais Rauf",
-					"Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem",
-					"Tauseef Haroon", "Murtaza Shah", "Maaz Asif",
-					"Samiullah Arif", "Nabeel Qamar", "Taimoor Rauf",
-					"Atif Nawaz", "Hashir Siddiqui", "Zubair Imran",
-					"Abrar Hussain", "Farhan Waseem", "Umair Tariq", "Arif Ali",
-					"Shayan Latif", "Irfan Khalid", "Hamza Masood",
-					"Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed",
-					"Mudassir Kamal", "Haris Younas", "Noman Waqar",
-					"Waseem Abbas", "Faizan Rauf", "Mubashir Jamil",
-					"Sohail Shahzad", "Ubaid Latif", "Sikandar Saeed",
-					"Hasham Khalid", "Farrukh Hussain", "Zain Qureshi",
-					"Arslan Abbas", "Muzammil Tariq", "Usama Rasheed",
-					"Adeel Sultan", "Taha Iqbal", "Kamil Arshad", "Danish Rauf",
-					"Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar",
-					"Omer Siddiqi", "Dawood Mushtaq", "Ammar Waheed",
-					"Fasih Shah", "Adnan Khalil", "Imran Waseem",
-					"Waleed Anwar", "Yasir Rauf", "Arham Bashir",
-					"Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain",
-					"Hassan Qamar", "Usman Kamal", "Tariq Yousaf",
-					"Owais Farooq", "Raheel Bashir", "Waqas Khalid",
-					"Faisal Shah", "Bilal Latif", "Zeeshan Abbas",
-					"Faizan Hussain", "Mudassir Farooq", "Kashif Khalid",
-					"Abrar Tariq", "Umair Siddiqi", "Hamza Jameel",
-					"Nabeel Usman", "Khalil Laghari", "Murtaza Waseem",
-					"Sajid Waheed", "Noman Riaz", "Hashir Hussain",
-					"Sheraz Rauf", "Ahmed Tariq", "Atif Bashir",
-					"Omar Siddiqui", "Irfan Khalil", "Raheel Jamil",
-					"Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran",
-					"Waleed Hussain", "Taimoor Abbas", "Mudassir Waheed",
-					"Umer Khalid", "Khurram Anwar", "Junaid Bashir",
-					"Shayan Rauf", "Ahmed Hanif", "Bilal Hussain", "Umair Riaz",
-					"Zubair Khalid", "Adeel Haroon", "Sajid Qamar",
-					"Faizan Latif", "Hammad Saleem", "Shoaib Tariq",
-					"Noman Anwar", "Fahad Hussain", "Hashim Waseem",
-					"Hamza Abbas", "Arsalan Khalid", "Taha Rasheed",
-					"Usama Farooq", "Sarim Bashir", "Khizar Waheed",
-					"Mudassir Khalid", "Waqas Rauf", "Tariq Hussain",
-					"Jawad Siddiqui", "Shehryar Abbas", "Naveed Tariq",
-					"Muzammil Jamil", "Zeeshan Khalid", "Atif Hussain",
-					"Sarmad Waqar", "Shoaib Khalid", "Ahmed Qureshi",
-					"Raheel Abbas", "Hammad Riaz", "Sheraz Bashir",
-					"Danish Khalid", "Adil Waheed", "Hashir Tariq",
-					"Faizan Waseem", "Usman Abbas", "Khurram Latif",
-					"Owais Siddiqui", "Mudassir Hussain", "Tauseef Khalid",
-					"Farrukh Waseem", "Umer Saleem", "Hamza Rauf",
-					"Shoaib Kamran", "Bilal Abbas", "Sajid Tariq",
-					"Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid",
-					"Ahmed Farooq", "Atif Khalid", "Irfan Waseem",
-					"Junaid Tariq", "Umair Saleem", "Arsalan Hussain",
-					"Waleed Abbas", "Adnan Waseem", "Sheraz Khalid",
-					"Mudassir Abbas", "Shoaib Rauf", "Omar Hussain",
-					"Raheel Khalid", "Hammad Waseem", "Waseem Farooq",
-					"Hasham Tariq", "Faisal Khalid", "Kashif Abbas",
-					"Tauseef Abbas", "Hamza Saleem", "Zeeshan Waseem",
-					"Sarmad Hussain", "Bilal Khalid", "Umair Abbas",
-					"Mudassir Riaz", "Adil Khalid", "Ahmed Abbas",
-					"Owais Hussain"},
-			rglnss = {"Ayesha Waleed", "Fatima Kamal", "Hira Latif",
-					"Sana Farooq", "Mahnoor Tariq", "Faiza Tehseem",
-					"Fozia Mehshar", "Iqra Siddiqui", "Laiba Aslam",
-					"Anum Riaz", "Saba Kiani", "Hafsa Saeed", "Sidra Hashmi",
-					"Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel", "Rida Abbas",
-					"Nimra Waseem", "Huma Tariq", "Samina Khalid",
-					"Zeenat Rauf", "Amna Waheed", "Neelam Hashmi",
-					"Aiman Qamar", "Romaisa Hussain", "Fareeda Asif",
-					"Sania Anwar", "Humaisa Khalil", "Asma Riaz",
-					"Sadia Kamran", "Sehrish Waseem", "Uzma Tariq",
-					"Mehwish Latif", "Hina Abbas", "Areeba Waqar",
-					"Tanzeela Jafar", "Anila Saleem", "Mahira Umer",
-					"Bushra Nadeem", "Zoya Mehmood", "Nida Hashim",
-					"Sumaira Yasir", "Mahnoor Hussain", "Komal Saeed",
-					"Laiba Waseem", "Amina Abbas", "Rida Jameel",
-					"Saeeka Haroon", "Zainab Farooq", "Fatima Hussain",
-					"Hafsa Mehmood", "Minal Khawar", "Yumna Tariq",
-					"Ayeza Barkat", "Asia Farhan", "Kinza Jamal",
-					"Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed",
-					"Hira Khalid", "Amna Riaz", "Iqra Farooq", "Anum Abbas",
-					"Mehwish Iqrar", "Sumaiya Tariq", "Romaisa Khalil",
-					"Faiza Waseem", "Bushra Farooq", "Sadia Abbas",
-					"Hiba Hussain", "Afshan Siddiqui", "Sana Basit",
-					"Areeba Khalid", "Maira Waseem", "Nimra Hussain",
-					"Sehrish Saleem", "Amna Jameel", "Zoya Khalid",
-					"Mehreen Tariq", "Aiman Abbas", "Komal Riaz", "Hira Saleem",
-					"Palwasha Moazzam", "Laiba Nayyar", "Minahal Tahir",
-					"Mehwish Shuja", "Javeria Feroze", "Zara Munawwar",
-					"Fiza Jatoi", "Fatima Riaz", "Zainab Alvi",
-					"Tanzeela Abbas", "Kiran Waseem", "Ayesha Khalid",
-					"Samina Hussain", "Sadia Waseem", "Bisma Majeed",
-					"Areeba Latif", "Sehrish Tariq", "Hafsa Waseem",
-					"Hina Tariq", "Zoya Saleem", "Maham Khalid", "Muneera Rauf",
-					"Bushra Tariq", "Zeenat Hussain", "Areeba Saleem",
-					"Kainat Rizvi", "Sumaiya Hussain", "Sadia Khalid",
-					"Mahnoor Irshad", "Fatima Jameel", "Sakina Hilaj",
-					"Iqra Danyal", "Hina Riaz", "Neha Saleem", "Mehwish Khalid",
-					"Asma Waseem", "Romaisa Tariq", "Laiba Khalid",
-					"Komal Noor", "Bushra Waseem", "Zainab Tariq",
-					"Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad",
-					"Komal Hussain", "Maryam Raza", "Romaisa Haroon",
-					"Mehwish Abbas", "Maham Riaz", "Sumaiya Khalid",
-					"Anila Anjum", "Areeba Hussain"},
-			areas_in_karachi = {"Askari 1", "Askari 2", "Askari 3", "Askari 4",
-					"Askari 5", "Bahria Town - Precinct 1",
-					"Bahria Town - Precinct 10", "Bahria Town - Precinct 11",
-					"Bahria Town - Precinct 12", "Bahria Town - Precinct 13",
-					"Bahria Town - Precinct 14", "Bahria Town - Precinct 15",
-					"Bahria Town - Precinct 16", "Bahria Town - Precinct 17",
-					"Bahria Town - Precinct 18", "Bahria Town - Precinct 19",
-					"Bahria Town - Precinct 2", "Bahria Town - Precinct 20",
-					"Bahria Town - Precinct 21", "Bahria Town - Precinct 22",
-					"Bahria Town - Precinct 23", "Bahria Town - Precinct 24",
-					"Bahria Town - Precinct 25", "Bahria Town - Precinct 26",
-					"Bahria Town - Precinct 27", "Bahria Town - Precinct 28",
-					"Bahria Town - Precinct 29", "Bahria Town - Precinct 3",
-					"Bahria Town - Precinct 30", "Bahria Town - Precinct 31",
-					"Bahria Town - Precinct 32", "Bahria Town - Precinct 33",
-					"Bahria Town - Precinct 4", "Bahria Town - Precinct 5",
-					"Bahria Town - Precinct 6", "Bahria Town - Precinct 7",
-					"Bahria Town - Precinct 8", "Bahria Town - Precinct 9",
-					"BufferZone - Sector 15 A 1", "BufferZone - Sector 15 A 2",
-					"BufferZone - Sector 15 A 3", "BufferZone - Sector 15 A 4",
-					"BufferZone - Sector 15 A 5", "BufferZone - Sector 15 B",
-					"BufferZone - Sector 16 A", "BufferZone - Sector 16 B",
-					"Cantonment", "Clifton - Block 1", "Clifton - Block 2",
-					"Clifton - Block 3", "Clifton - Block 4",
-					"Clifton - Block 5", "Clifton - Block 6",
-					"Clifton - Block 7", "Clifton - Block 8",
-					"Clifton - Block 9", "Clifton - Kehkashan", "DHA - Phase 1",
-					"DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4",
-					"DHA - Phase 5", "DHA - Phase 6", "DHA - Phase 7",
-					"DHA - Phase 8", "DHA - Phase 9", "F.B Area - Azizabad",
-					"F.B Area - B1 Area", "F.B Area - B Area",
-					"F.B Area - Block 1", "F.B Area - Block 10",
-					"F.B Area - Block 11", "F.B Area - Block 12",
-					"F.B Area - Block 13", "F.B Area - Block 14",
-					"F.B Area - Block 15", "F.B Area - Block 16",
-					"F.B Area - Block 17", "F.B Area - Block 18",
-					"F.B Area - Block 19", "F.B Area - Block 2",
-					"F.B Area - Block 20", "F.B Area - Block 21",
-					"F.B Area - Block 22", "F.B Area - Block 3",
-					"F.B Area - Block 4", "F.B Area - Block 5",
-					"F.B Area - Block 6", "F.C Area - C1 Area",
-					"F.C Area - C Area", "Garden - Garden East",
-					"Garden - Garden West", "Garden - Soldier Bazaar",
-					"Gulistan-e-Johar - Block 1", "Gulistan-e-Johar - Block 10",
-					"Gulistan-e-Johar - Block 11",
-					"Gulistan-e-Johar - Block 12",
-					"Gulistan-e-Johar - Block 13",
-					"Gulistan-e-Johar - Block 14",
-					"Gulistan-e-Johar - Block 15",
-					"Gulistan-e-Johar - Block 16",
-					"Gulistan-e-Johar - Block 17",
-					"Gulistan-e-Johar - Block 18",
-					"Gulistan-e-Johar - Block 19", "Gulistan-e-Johar - Block 2",
-					"Gulistan-e-Johar - Block 20", "Gulistan-e-Johar - Block 3",
-					"Gulistan-e-Johar - Block 4", "Gulistan-e-Johar - Block 5",
-					"Gulistan-e-Johar - Block 6", "Gulistan-e-Johar - Block 7",
-					"Gulistan-e-Johar - Block 8", "Gulistan-e-Johar - Block 9",
-					"Gulshan-e-Hadeed - Data Nagar",
-					"Gulshan-e-Hadeed - EIDU Goth",
-					"Gulshan-e-Hadeed - Gulshan-e-Mauzzam",
-					"Gulshan-e-Hadeed - Gulshan-e-Rehman",
-					"Gulshan-e-Hadeed - Mehran Road",
-					"Gulshan-e-Hadeed - Phase 1", "Gulshan-e-Hadeed - Phase 2",
-					"Gulshan-e-Hadeed - Phase 3",
-					"Gulshan-e-Hadeed - PTCL Satellite Station",
-					"Gulshan-e-Hadeed - Shah Latif Town",
-					"Gulshan-e-Hadeed - Shahnawaz Goth",
-					"Gulshan-e-Hadeed - Shah Town",
-					"Gulshan-e-Hadeed - Steel Town",
-					"Gulshan-e-Iqbal - Adamjee Nagar",
-					"Gulshan-e-Iqbal - Block 1", "Gulshan-e-Iqbal - Block 10",
-					"Gulshan-e-Iqbal - Block 11", "Gulshan-e-Iqbal - Block 12",
-					"Gulshan-e-Iqbal - Block 13", "Gulshan-e-Iqbal - Block 14",
-					"Gulshan-e-Iqbal - Block 15", "Gulshan-e-Iqbal - Block 16",
-					"Gulshan-e-Iqbal - Block 17", "Gulshan-e-Iqbal - Block 18",
-					"Gulshan-e-Iqbal - Block 19", "Gulshan-e-Iqbal - Block 2",
-					"Gulshan-e-Iqbal - Block 3", "Gulshan-e-Iqbal - Block 4",
-					"Gulshan-e-Iqbal - Block 5", "Gulshan-e-Iqbal - Block 6",
-					"Gulshan-e-Iqbal - Block 7", "Gulshan-e-Iqbal - Block 8",
-					"Gulshan-e-Iqbal - Block 9",
-					"Gulshan-e-Iqbal - Civic Center",
-					"Gulshan-e-Iqbal - Dhoraji",
-					"Korangi - Abdullah Shah Noorani Pahari Colony",
-					"Korangi - Korangi Industrial Area",
-					"Korangi - Nasir Colony",
-					"Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town",
-					"Korangi - Zia Colony", "Landhi - Alflah Housing Society",
-					"Landhi - Awami Colony", "Landhi - Bagh-e-Korangi",
-					"Landhi - Bakhtawar Goth", "Landhi - Barmi Colony",
-					"Landhi - Bhutto Nagar", "Landhi - Future Colony",
-					"Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth",
-					"Landhi - Labour Colony", "Landhi - Landhi Industrial Area",
-					"Landhi - Muslimabad Colony",
-					"Landhi - Muzaffarabad Colony", "Landhi - Punjab Town",
-					"Landhi - Qasim Town", "Landhi - Sadat Colony",
-					"Landhi - Shah Khalid Colony", "Landhi - Sharafi Goth",
-					"Landhi - Zamanabad", "Liaquatabad - Block 1",
-					"Liaquatabad - Block 10", "Liaquatabad - Block 2",
-					"Liaquatabad - Block 3", "Liaquatabad - Block 4",
-					"Liaquatabad - Block 5", "Liaquatabad - Block 6",
-					"Liaquatabad - Block 7", "Liaquatabad - Block 8",
-					"Liaquatabad - Block 9", "Malir - Malir Halt",
-					"Malir - Malir Cantt", "Nazimabad - Block 1",
-					"Nazimabad - Block 2", "Nazimabad - Block 3",
-					"Nazimabad - Block 4", "Nazimabad - Block 5",
-					"North Karachi - Sector 10",
-					"North Karachi - Sector 11 - A",
-					"North Karachi - Sector 11 - B",
-					"North Karachi - Sector 11 - C 1",
-					"North Karachi - Sector 11 - C 2",
-					"North Karachi - Sector 11 - C 3",
-					"North Karachi - Sector 11 - E",
-					"North Karachi - Sector 11 - H",
-					"North Karachi - Sector 11 - I",
-					"North Karachi - Sector 11 - K",
-					"North Karachi - Sector 11 - L", "North Karachi - Sector 2",
-					"North Karachi - Sector 3", "North Karachi - Sector 4",
-					"North Karachi - Sector 5 - A 1",
-					"North Karachi - Sector 5 - A 2",
-					"North Karachi - Sector 5 - A 3",
-					"North Karachi - Sector 5 - A 4",
-					"North Karachi - Sector 5 - B 1",
-					"North Karachi - Sector 5 - B 2",
-					"North Karachi - Sector 5 - B 3",
-					"North Karachi - Sector 5 - B 4",
-					"North Karachi - Sector 5 - C 1",
-					"North Karachi - Sector 5 - C 2",
-					"North Karachi - Sector 5 - C 3",
-					"North Karachi - Sector 5 - C 4",
-					"North Karachi - Sector 5 - I",
-					"North Karachi - Sector 5 - J",
-					"North Karachi - Sector 5 - K",
-					"North Karachi - Sector 5 - L",
-					"North Karachi - Sector 5 - M", "North Karachi - Sector 6",
-					"North Karachi - Sector 7 - D 1",
-					"North Karachi - Sector 7 - D 2",
-					"North Karachi - Sector 7 - D 3",
-					"North Karachi - Sector 7 - D 4",
-					"North Karachi - Sector 8", "North Karachi - Sector 9",
-					"North Nazimabad - Block A", "North Nazimabad - Block B",
-					"North Nazimabad - Block C", "North Nazimabad - Block D",
-					"North Nazimabad - Block E", "North Nazimabad - Block F",
-					"North Nazimabad - Block G", "North Nazimabad - Block H",
-					"North Nazimabad - Block I", "North Nazimabad - Block J",
-					"North Nazimabad - Block K", "North Nazimabad - Block L",
-					"North Nazimabad - Block M", "North Nazimabad - Block N",
-					"North Nazimabad - Block O", "North Nazimabad - Block P",
-					"North Nazimabad - Block Q", "North Nazimabad - Block R",
-					"North Nazimabad - Block S", "North Nazimabad - Block T",
-					"Old Town - Bhimpora", "Old Town - Bohra Pir",
-					"Old Town - Bombay Bazar", "Old Town - Jodia Bazar",
-					"Old Town - Kagzi Bazar", "Old Town - Kakri Ground",
-					"Old Town - Kamil Gali", "Old Town - Khada Market",
-					"Old Town - Kharadar", "Old Town - Lee Market",
-					"Old Town - Mithadar", "Old Town - Nanwara",
-					"Old Town - Nishter Road", "Old Town - Pan Mandi",
-					"Old Town - Ramswami", "Old Town - Ranchorline",
-					"Orangi Town - Banaras Town", "Orangi Town - Bangla Bazaar",
-					"Orangi Town - Bilal Colony", "Orangi Town - Katti Pahari",
-					"Orangi Town - Moria Goth Orangi", "Orangi Town - Orangi",
-					"Orangi Town - Sector 14 - A",
-					"Orangi Town - Sector 14 - C", "Orangi Town - Thorani Goth",
-					"Baldiya Town", "Baloch Colony", "Civil Line", "FC Area",
-					"Firdous Colony", "Gulshan-e-Maymar", "Hawksbay",
-					"I.I Chundrigar", "Jamshed Road", "K.D.A Officers",
-					"Kemari", "Liyari", "M.A Jinnah Rd", "Manora",
-					"New Karachi", "New Surjani", "PIB Colony", "Pipri Goth",
-					"Rizvia Society", "Saddar", "Scheme 33", "Shabbirabad",
-					"P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2",
-					"P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4",
-					"P.E.C.H.S - Block 5", "P.E.C.H.S - Block 6",
-					"P.E.C.H.S - Khalid Bin Walid", "P.E.C.H.S - Tariq Road",
-					"S.I.T.E - Golimar", "S.I.T.E - S.I.T.E",
-					"Shah Faisal Colony - Aswan Town",
-					"Shah Faisal Colony - Gulshan-e-Asghar",
-					"Shah Faisal Colony - Shah Faisal Colony 1",
-					"Shah Faisal Colony - Shah Faisal Colony 5",
-					"F.B Area - Block 7", "F.B Area - Block 9",
-					"P.E.C.H.S - Block 7", "Aram Bagh", "Bath Island",
-					"University Road", "Bahadurabad", "Shah Faisal Colony - 4",
-					"Banglore Town", "Fowler Lines",
-					"Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal",
-					"Shah Faisal Colony - 3", "Shah Faisal Colony - Green Town",
-					"Darwaish Colony", "Korangi - Sector 31 B",
-					"Firdous Colony", "North Nazimabad - Block W",
-					"K.A.E.C.H.S", "Mehmoodabad", "Korangi - Mehran Town",
-					"Landhi Town - 36 B", "Karachi Memon Society",
-					"Madras Cooperative Housing Society", "Shahrah-e-Faisal",
-					"Korangi - Sector 41 B", "Clifton - Delhi Colony",
-					"Korangi - Sector 32 B", "Dhoraji - Adamjee Nagar",
-					"Bhimpura", "Dhoraji - CP& Berar Society",
-					"Shahra-e-Faisal - Umar Colony", "Model Colony",
-					"Gulshan-e-Shamim", "Clifton - Shah Rasool Colony",
-					"North Karachi - Sector 12 C",
-					"Jail Road - Hyderabad Colony", "Napier Quarter",
-					"Gulzar-e-Hijri", "North Karachi - Sector 12 A",
-					"Shahra-e-Faisal - Jinnah Housing Society",
-					"K.D.A Scheme 1", "Clifton - Punjab Colony",
-					"Korangi - Sector 31 D", "Clifton - Zamzama",
-					"Parsi Colony", "Qayyumabad", "Khokrapar",
-					"Shah Faisal Colony - Muslimabad Malir City",
-					"F.B Area - Block 8", "Nanak Wara", "Mohammad Ali Society",
-					"Manzoor Colony", "Dalmia", "Defence View - Phase 1",
-					"Defence View - Phase 2", "KDA Officers Housing Society",
-					"Karimabad", "Soldier Bazar", "Hussainabad",
-					"Sharfabad Society", "Gharibabad",
-					"Sindhi Muslim Cooperative Housing Society"},
-			rndcts = {
-					"Your heart is the size of an ocean. Go find yourself in its hidden depths.",
-					"Thinking is the capital, enterprise is the way, hard work is the solution.",
-					"If you can't make it good, at least make it look good.",
-					"Heart be brave. If you cannot be brave, just go. Love's glory is not a small thing.",
-					"If you are out to describe the truth, leave elegance to the tailor.",
-					"O man you are busy working for the world, and the world is busy trying to turn you out.",
-					"While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.",
-					"These capitalists generally act harmoniously and in concert, to fleece the people.",
-					"I don't believe in failure. It is not failure if you enjoyed the process.",
-					"Wear gratitude like a cloak and it will feed every corner of your life.",
-					"If you even dream of beating me you'd better wake up and apologize.",
-					"I will praise any man that will praise me.",
-					"One of the greatest diseases is to be nobody to anybody.",
-					"I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.",
-					"People must learn to hate and if they can learn to hate, they can be taught to love.",
-					"Everyone has been made for some particular work, and the desire for that work has been put in every heart.",
-					"The less of the world, the freer you live.",
-					"Respond to every call that excites your spirit.",
-					"The way to get started is to quit talking and begin doing.",
-					"Speak any language, turkish, greek, persian, arabic, but always speak with love.",
-					"Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.",
-					"When I am silent, I have thunder hidden inside.",
-					"Technological progress is like an axe in the hands of a pathological criminal.",
-					"No one would choose a friendless existence on condition of having all the other things in the world.",
-					"Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don't let yourself believe it will happen to you.",
-					"Let us sacrifice our today so that our children can have a better tomorrow.",
-					"Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.",
-					"Everything in the universe is within you. Ask all from yourself.",
-					"I'm not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.",
-					"A good head and a good heart are always a formidable combination.",
-					"The soul never thinks without a picture.",
-					"Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.",
-					"Success is dependent upon the glands - sweat glands."},
-			rkuniss = {"Aga Khan University",
-					"Air War College Institute, Karachi",
-					"Baqai Medical University",
-					"Benazir Bhutto Shaheed University Lyari",
-					"Commecs Institute of Business & Emerging Sciences",
-					"Dadabhoy Institute of Higher Education",
-					"Dawood University of Engineering & Technology",
-					"DHA Suffa University", "DOW University of Health Sciences",
-					"Emaan Institute of Management & Sciences, Karachi",
-					"Greenwich University", "Habib University",
-					"Hamdard University", "ILMA University", "Indus University",
-					"Indus Valley School of Art & Architecture",
-					"Institute of Business Administration",
-					"Institute of Business Management", "Iqra University",
-					"Jinnah Sindh Medical University",
-					"Jinnah University for Women",
-					"Karachi Institute of Economics & Technology",
-					"Karachi Institute of Technology and Entrepreneurship (KITE), "
-							+ "Karachi",
-					"Karachi School of Business and Leadership",
-					"KASB Institute of Technology",
-					"Malir University of Science & Technology, Karachi",
-					"Metropolitan University Karachi",
-					"Millennium Institute of Technology and Entrepreneurship, Karachi",
-					"Muhammad Ali Jinnah University",
-					"NED University of Engineering & Technology",
-					"Newport Institute of Communications & Economics",
-					"Pakistan Naval Academy",
-					"Preston Institute of Management, Science & Technology",
-					"Preston University",
-					"Salim Habib University (Former Barret Hodgson University), "
-							+ "Karachi",
-					"Shaheed Benazir Bhutto City University",
-					"Shaheed Benazir Bhutto Dewan University",
-					"Shaheed Zulfikar Ali Bhutto Institute of Science & Technology",
-					"Shaheed Zulfiqar Ali Bhutto University of Law",
-					"Sindh Institute of Management & Technology",
-					"Sindh Institute of Medical Sciences",
-					"Sindh Madresatul Islam University",
-					"Sir Syed University of Engineering & Technology",
-					"Sohail University, Karachi",
-					"Textile Institute of Pakistan",
-					"The Nazeer Hussain University", "UIT University, Karachi",
-					"University of Karachi", "Zia-ud-Din University"},
-			rjbss = {"Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor",
-					"Nurse", "Physician", "Laboratorian",
-					"Psychiatrist/Psychologist", "Dermatologist",
-					"Gynecologist", "Cardiologist", "Surgeon",
-					"Ophthalmologist", "Pediatrician", "Watchman", "Tailor",
-					"Designer", "Photographer", "Model", "Fashion Designer",
-					"Makeup Artist", "Dressmaker", "Content Writer",
-					"Police Officer", "Undercover Police Officer",
-					"Prison Officer/Jailer", "Reporter", "Journalist",
-					"Investigator", "Laborer", "Data Analyst", "Data Scientist",
-					"Saleswo/man", "Tele-saleswo/man", "Developer", "Engineer",
-					"Plumber", "Human Resources Manager", "Legal Counsel",
-					"Judge", "Lawyer", "Travel Guide", "Scientist", "Goldsmith",
-					"Blacksmith", "Lumberjack", "White-hat hacker",
-					"Black-hat hacker", "Caretaker", "Nanny", "Fisher",
-					"Architect", "Software Architect", "Farmer",
-					"Agriculture Engineer", "Software Engineer",
-					"Support Specialist", "Systems Analyst",
-					"Technical Support Engineer", "Web Developer",
-					"Web Designer", "Animator", "Filmmaker", "Actor",
-					"Comedian", "Director", "Vocalist", "Musician",
-					"Bedroom Musician/DJ", "Songwriter", "Screenwriter",
-					"Barber", "Barista/Bartender", "Tattooist", "Electrician",
-					"Vehicle Technician", "Cartoonist", "Cook",
-					"Travel Advisor", "Translator", "Relationship Counselor",
-					"accountant", "actor", "actuary",
-					"adhesive bonding machine tender", "adjudicator",
-					"administrative assistant",
-					"administrative services manager",
-					"adult education teacher", "advertising manager",
-					"advertising sales agent", "aerobics instructor",
-					"aerospace engineer", "aerospace engineering technician",
-					"agent", "agricultural engineer",
-					"agricultural equipment operator", "agricultural grader",
-					"agricultural inspector", "agricultural manager",
-					"agricultural sciences teacher", "agricultural sorter",
-					"agricultural technician", "agricultural worker",
-					"air conditioning installer", "air conditioning mechanic",
-					"air traffic controller",
-					"aircraft cargo handling supervisor", "aircraft mechanic",
-					"aircraft service technician", "airline copilot",
-					"airline pilot", "ambulance dispatcher", "ambulance driver",
-					"amusement machine servicer", "anesthesiologist",
-					"animal breeder", "animal control worker",
-					"animal scientist", "animal trainer", "animator",
-					"answering service operator", "anthropologist",
-					"apparel patternmaker", "apparel worker", "arbitrator",
-					"archeologist", "architect", "architectural drafter",
-					"architectural manager", "archivist", "art director",
-					"art teacher", "artist", "assembler", "astronomer",
-					"athlete", "athletic trainer", "ATM machine repairer",
-					"atmospheric scientist", "attendant",
-					"audio and video equipment technician",
-					"audio-visual and multimedia collections specialist",
-					"audiologist", "auditor", "author",
-					"auto damage insurance appraiser",
-					"automotive and watercraft service attendant",
-					"automotive glass installer", "automotive mechanic",
-					"avionics technician", "back-end developer",
-					"baggage porter", "bailiff", "baker", "barback", "barber",
-					"bartender", "basic education teacher",
-					"behavioral disorder counselor", "bellhop",
-					"bench carpenter", "bicycle repairer",
-					"bill and account collector", "billing and posting clerk",
-					"biochemist", "biological technician",
-					"biomedical engineer", "biophysicist", "blaster",
-					"blending machine operator", "blockmason",
-					"boiler operator", "boilermaker", "bookkeeper",
-					"boring machine tool tender", "brazer", "brickmason",
-					"bridge and lock tender", "broadcast news analyst",
-					"broadcast technician", "brokerage clerk", "budget analyst",
-					"building inspector", "bus mechanic", "butcher", "buyer",
-					"cabinetmaker", "cafeteria attendant", "cafeteria cook",
-					"camera operator", "camera repairer",
-					"cardiovascular technician", "cargo agent", "carpenter",
-					"carpet installer", "cartographer", "cashier", "caster",
-					"ceiling tile installer", "cellular equipment installer",
-					"cement mason", "channeling machine operator", "chauffeur",
-					"checker", "chef", "chemical engineer",
-					"chemical plant operator", "chemist", "chemistry teacher",
-					"chief executive", "child social worker",
-					"childcare worker", "chiropractor", "choreographer",
-					"civil drafter", "civil engineer",
-					"civil engineering technician", "claims adjuster",
-					"claims examiner", "claims investigator", "cleaner",
-					"clinical laboratory technician",
-					"clinical laboratory technologist", "clinical psychologist",
-					"coating worker", "coatroom attendant", "coil finisher",
-					"coil taper", "coil winder", "Coach",
-					"coin machine servicer", "commercial diver",
-					"commercial pilot", "commodities sales agent",
-					"communications equipment operator",
-					"communications teacher", "community association manager",
-					"community service manager",
-					"compensation and benefits manager", "compliance officer",
-					"composer", "computer hardware engineer",
-					"computer network architect", "computer operator",
-					"computer programmer", "computer science teacher",
-					"computer support specialist",
-					"computer systems administrator",
-					"computer systems analyst", "concierge", "conciliator",
-					"concrete finisher", "conservation science teacher",
-					"conservation scientist", "conservation worker",
-					"conservator", "construction inspector",
-					"construction manager", "construction painter",
-					"construction worker", "continuous mining machine operator",
-					"convention planner", "conveyor operator", "cook",
-					"cooling equipment operator", "copy marker",
-					"correctional officer", "correctional treatment specialist",
-					"correspondence clerk", "correspondent", "cosmetologist",
-					"cost estimator", "costume attendant",
-					"counseling psychologist", "counselor", "courier",
-					"court reporter", "craft artist", "crane operator",
-					"credit analyst", "credit checker", "credit counselor",
-					"criminal investigator", "criminal justice teacher",
-					"crossing guard", "curator", "custom sewer",
-					"customer service representative", "cutter",
-					"textile worker", "therapist", "ticket agent",
-					"ticket taker", "tile setter", "timekeeping clerk",
-					"timing device assembler", "tire builder", "tire changer",
-					"tire repairer", "title abstractor", "title examiner",
-					"title searcher", "tobacco roasting machine operator",
-					"tool filer", "tool grinder", "tool maker",
-					"tool sharpener", "tour guide", "tower equipment installer",
-					"tower operator", "track switch repairer",
-					"tractor operator", "tractor-trailer truck driver",
-					"traffic clerk", "traffic technician",
-					"training and development manager",
-					"training and development specialist", "transit police",
-					"translator", "transportation equipment painter",
-					"transportation inspector",
-					"transportation security screener", "transportation worker",
-					"trapper", "travel agent", "travel clerk", "travel guide",
-					"tree pruner", "tree trimmer", "trimmer", "truck loader",
-					"truck mechanic", "tuner", "turning machine tool operator",
-					"tutor", "typist", "umpire", "undertaker", "upholsterer",
-					"urban planner", "usher", "UX designer", "valve installer",
-					"vending machine servicer", "veterinarian",
-					"veterinary assistant", "veterinary technician",
-					"vocational counselor", "vocational education teacher",
-					"waiter", "waitress", "watch repairer",
-					"water treatment plant operator", "weaving machine setter",
-					"web developer", "weigher", "welder", "wellhead pumper",
-					"wholesale buyer", "wildlife biologist", "window trimmer",
-					"wood patternmaker", "woodworker", "word processor",
-					"writer", "yardmaster", "zoologist"};
+									"Ahmadpur Sial", "Akora", "Aliabad", "Alik Ghund", "Alipur",
+									"Alizai", "Alpurai", "Aman Garh", "Amirabad", "Arifwala",
+									"Ashanagro Koto", "Athmuqam", "Attock City", "Awaran", "Baddomalhi",
+									"Badin", "Baffa", "Bagarji", "Bagh", "Bahawalnagar", "Bahawalnagar",
+									"Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal",
+									"Barkhan", "Basirpur", "Basti Dosa", "Bat Khela", "Battagram",
+									"Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan",
+									"Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala",
+									"Bozdar Wada", "Bulri", "Burewala", "Chak", "Chak Azam Sahu",
+									"Chak Five Hundred Seventy-five", "Chak Jhumra",
+									"Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left",
+									"Chak Two Hundred Forty-nine Thal Development Authority", "Chakwal",
+									"Chaman", "Chamber", "Charsadda", "Chawinda", "Chenab Nagar",
+									"Cherat Cantonement", "Chhor", "Chichawatni", "Chilas", "Chiniot",
+									"Chishtian", "Chitral", "Choa Saidan Shah", "Chowki Jamali",
+									"Chuchar-kana Mandi", "Chuhar Jamali", "Chunian", "Dadhar", "Dadu",
+									"Daggar", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS",
+									"Daromehar", "Darya Khan", "Darya Khan Marri", "Daska Kalan",
+									"Dasu", "Daud Khel", "Daulatpur", "Daultala", "Daur",
+									"Dera Alahyar", "Dera Bugti", "Dera Ghazi Khan", "Dera Ismail Khan",
+									"Dera Murad Jamali", "Dhanot", "Dhaunkal", "Dhoro Naro", "Digri",
+									"Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo",
+									"Doaba", "Dokri", "Duki", "Dullewala", "Dunga Bunga", "Dunyapur",
+									"Eidgah", "Eminabad", "Faisalabad", "Faqirwali", "Faruka",
+									"Fazilpur", "Fort Abbas", "Gadani", "Gakuch", "Gambat", "Gandava",
+									"Garh Maharaja", "Garhi Khairo", "Garhiyasin", "Ghauspur", "Ghotki",
+									"Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan",
+									"Gujar Khan", "Gujranwala", "Gujrat", "Gulishah Kach", "Gwadar",
+									"Hadali", "Hafizabad", "Hala", "Hangu", "Haripur", "Harnai",
+									"Harnoli", "Harunabad", "Hasilpur", "Hattian Bala", "Haveli Lakha",
+									"Havelian", "Hazro City", "Hingorja", "Hujra Shah Muqim",
+									"Hyderabad", "Islamabad", "Islamkot", "Jacobabad", "Jahanian Shah",
+									"Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand",
+									"Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali",
+									"Jauharabad", "Jhang City", "Jhang Sadr", "Jhawarian", "Jhelum",
+									"Jhol", "Jiwani", "Johi", "Jam Sahib", "Kabirwala", "Kadhan",
+									"Kahna Nau", "Kahror Pakka", "Kahuta", "Kakad Wari Dir Upper",
+									"Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar",
+									"Kalur Kot", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke",
+									"Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi",
+									"Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur",
+									"Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur",
+									"Khairpur Mir\'s", "Khairpur Nathan Shah", "Khairpur Tamewah",
+									"Khalabat", "Khandowa", "Khanewal", "Khangah Dogran", "Khangarh",
+									"Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra",
+									"Khurrianwala", "Khushab", "Khuzdar", "Kohat", "Kohlu", "Kot Addu",
+									"Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar",
+									"Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba",
+									"Kot Sultan", "Kotli", "Kotli Loharan", "Kotri", "Kulachi",
+									"Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich",
+									"Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal",
+									"Larkana", "Layyah", "Liliani", "Lodhran", "Loralai", "Mach",
+									"Madeji", "Mailsi", "Malakand", "Malakwal", "Malakwal City",
+									"Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin",
+									"Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Matiari",
+									"Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun",
+									"Mianke Mor", "Mianwali", "Minchianabad", "Mingora", "Miran Shah",
+									"Miro Khan", "Mirpur Bhtoro", "Mirpur Khas", "Mirpur Mathelo",
+									"Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro",
+									"Moza Shahwala", "Multan", "Muridke", "Murree", "Musa Khel Bazar",
+									"Mustafabad", "Muzaffargarh", "Muzaffarabad", "Nabisar",
+									"Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Naudero",
+									"Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah",
+									"Nazir Town", "New Badah", "New Mirpur", "Noorabad", "Nowshera",
+									"Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi",
+									"Pad Idan", "Paharpur", "Pakpattan", "Panjgur", "Pano Aqil",
+									"Parachinar", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia",
+									"Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth",
+									"Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Abdullah",
+									"Qila Saifullah", "Quetta", "Rahim Yar Khan", "Raiwind",
+									"Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar",
+									"Ratodero", "Rawala Kot", "Rawalpindi", "Renala Khurd",
+									"Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Saddiqabad",
+									"Sahiwal", "Sahiwal", "Saidu Sharif", "Sakrand", "Samaro",
+									"Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann",
+									"Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha",
+									"Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur",
+									"Shahkot", "Shahpur", "Shahpur Chakar", "Shahr Sultan",
+									"Shakargarh", "Sharqpur Sharif", "Shekhupura", "Shikarpur",
+									"Shingli Bala", "Shinpokh", "Shorkot", "Shujaabad", "Sialkot",
+									"Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhri",
+									"Sohbatpur", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur",
+									"Swabi", "Sita Road", "Talagang", "Talamba", "Talhar",
+									"Tandlianwala", "Tando Adam", "Tando Alahyar", "Tando Bago",
+									"Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi",
+									"Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta",
+									"Thul", "Timargara", "Toba Tek Singh", "Topi", "Turbat", "Ubauro",
+									"Umarkot", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai",
+									"Vihari", "Wana", "Warah", "Wazirabad", "Yazman", "Zafarwal",
+									"Zahir Pir", "Zaida", "Zhob", "Ziarat"
+								   },
+							wdss = {"documentary", "compliment", "insult", "vocalist",
+									"pianist", "violinist", "thirst", "hunger", "brevity",
+									"longevity", "sanity", "insanity", "bikini", "panty",
+									"hymen", "synthesis", "dementia", "amnesia", "blood sugar",
+									"fever", "flu", "diarrhea", "glucose", "Latino", "Latina",
+									"anesthetics", "anesthesia", "Cannabis", "oasis", "desert",
+									"dessert", "hemoglobin", "cardiographer", "carpenter",
+									"oceanic", "terran", "abroad", "absorbing", "abstract",
+									"academic", "accelerated", "accented", "accountant",
+									"acquainted", "acute", "obtuse", "protective", "possessive",
+									"real", "unreal", "realistic", "unrealistic", "imagined",
+									"delusional", "addicting", "addictive", "adjustable",
+									"admired", "adult", "adverse", "advised", "aerosol",
+									"afraid", "creeped out", "horrified", "horrific",
+									"terrified", "terrific", "devastated", "frustrated",
+									"aggravated", "aggressive", "agreeable", "alienate",
+									"aligned", "all-round", "alleged", "almond", "alright",
+									"altruistic", "ambient", "ambivalent", "amiable", "amino",
+									"amorphous", "amused", "anatomical", "ancestral", "angelic",
+									"angrier", "answerable", "antiquarian", "antiretroviral",
+									"appellate", "applicable", "apportioned", "approachable",
+									"appropriated", "archer", "aroused", "arrested",
+									"assertive", "assigned", "athletic", "atrocious",
+									"attained", "authoritarian", "autobiographical",
+									"avaricious", "avocado", "awake", "awesome", "backstage",
+									"backwoods", "balding", "bandaged", "banded", "banned",
+									"barreled", "battle", "beaten", "begotten", "beguiled",
+									"bellied", "belted", "beneficent", "besieged", "betting",
+									"big-money", "biggest", "biochemical", "bipolar",
+									"blackened", "blame", "blessed", "blindfolded", "bloat",
+									"blocked", "blooded", "blue-collar", "blushing", "boastful",
+									"bolder", "bolstered", "bonnie", "bored", "boundary",
+									"bounded", "bounding", "branched", "brawling", "brazen",
+									"breeding", "bridged", "brimming", "brimstone", "broadest",
+									"broiled", "broker", "bronze", "bruising", "buffy",
+									"bullied", "bungling", "burial", "buttery", "candied",
+									"canonical", "cantankerous", "cardinal", "carefree",
+									"caretaker", "casual", "cathartic", "causal", "chapel",
+									"characterized", "charcoal", "cheeky", "cherished",
+									"chipotle", "chirping", "chivalrous", "circumstantial",
+									"civic", "civil", "civilised", "clanking", "clapping",
+									"claptrap", "classless", "cleansed", "cleric", "cloistered",
+									"codified", "colloquial", "colour", "combat", "combined",
+									"comely", "commissioned", "commonplace", "commuter",
+									"commuting", "comparable", "complementary", "compromising",
+									"conceding", "concentrated", "conceptual", "conditioned",
+									"confederate", "confident", "confidential", "confining",
+									"confuse", "congressional", "consequential", "conservative",
+									"constituent", "contaminated", "contemporaneous",
+									"contraceptive", "convertible", "convex", "cooked",
+									"coronary", "corporatist", "correlated", "corroborated",
+									"cosmic", "cover", "crash", "crypto", "culminate",
+									"cushioned", "dandy", "dashing", "dazzled", "decreased",
+									"decrepit", "dedicated", "defaced", "defective",
+									"defenseless", "deluded", "deodorant", "departed",
+									"depress", "designing", "despairing", "destitute",
+									"detective", "determined", "devastating", "deviant",
+									"devilish", "devoted", "diagonal", "dictated", "didactic",
+									"differentiated", "diffused", "dirtier", "disabling",
+									"disconnected", "discovered", "disdainful", "diseased",
+									"disfigured", "disheartened", "disheveled", "disillusioned",
+									"disparate", "dissident", "doable", "doctrinal", "doing",
+									"dotted", "double-blind", "downbeat", "dozen", "draining",
+									"draught", "dread", "dried", "dropped", "dulled",
+									"duplicate", "eaten", "echoing", "economical", "elaborated",
+									"elastic", "elective", "electoral", "elven", "embryo",
+									"emerald", "emergency", "emissary", "emotional", "employed",
+									"enamel", "encased", "encrusted", "endangered", "engraved",
+									"engrossing", "enlarged", "enlisted", "enlivened",
+									"ensconced", "entangled", "enthralling", "entire",
+									"envious", "eradicated", "eroded", "esoteric", "essential",
+									"evaporated", "ever-present", "evergreen", "everlasting",
+									"exacting", "exasperated", "excess", "exciting",
+									"executable", "existent", "exonerated", "exorbitant",
+									"exponential", "export", "extraordinary", "exultant",
+									"exulting", "facsimile", "fading", "fainter", "fallacious",
+									"faltering", "famous", "fancier", "fast-growing", "fated",
+									"favourable", "fearless", "feathered", "fellow",
+									"fermented", "ferocious", "fiddling", "filling", "firmer",
+									"fitted", "flammable", "flawed", "fledgling", "fleshy",
+									"flexible", "flickering", "floral", "flowering", "flowing",
+									"foggy", "folic", "foolhardy", "foolish", "footy",
+									"forehand", "forked", "formative", "formulaic",
+									"foul-mouthed", "fractional", "fragrant", "fraudulent",
+									"freakish", "freckled", "freelance", "freight", "fresh",
+									"fretted", "frugal", "indiscriminate", "indomitable",
+									"inert", "inflate", "inform", "inheriting", "injured",
+									"injurious", "inking", "inoffensive", "insane",
+									"insensible", "insidious", "insincere", "insistent",
+									"insolent", "insufferable", "intemperate", "interdependent",
+									"interesting", "interfering", "intern", "interpreted",
+									"intersecting", "intolerable", "intolerant", "intuitive",
+									"irresolute", "irritate", "jealous", "jerking", "joining",
+									"joint", "journalistic", "joyful", "keyed", "knowing",
+									"lacklustre", "laden", "lagging", "lamented", "laughable",
+									"layered", "leather", "leathern", "leery", "left-footed",
+									"legible", "leisure", "lessening", "liberating",
+									"life-size", "lifted", "lightest", "limitless", "listening",
+									"literary", "liver", "livid", "lobster", "locked",
+									"long-held", "long-lasting", "long-running", "oversize",
+									"overworked", "oyster", "paced", "panting", "paralyzed",
+									"paramount", "parental", "parted", "partisan", "passive",
+									"edible", "eatable", "kissable", "killable", "pastel"
+								   },
+							ntltss = {"Afghan", "Egyptian", "Alantic", "Albanian", "Algerian",
+									  "Virgin Islander", "American Samoan", "Andorran", "Angolan",
+									  "Anguillan", "Antarctic", "Antiguan and Barbudan",
+									  "Equatorial Guinean", "Argentine; Argentinian", "Armenian",
+									  "Aruban", "Azerbaijani", "Ethiopian", "Australian",
+									  "Bahamian", "Bahraini", "Bangladeshi", "Barbadian",
+									  "Belarusian", "Belgian", "Belizean", "Beninese",
+									  "Bermudian", "Bhutanese", "Bolivian", "Bosnian",
+									  "Botswanan", "of Bouvet Island", "Brazilian",
+									  "of the British Indian Ocean Territory",
+									  "British Virgin Islander", "Bruneian", "Bulgarian",
+									  "Burkinabe", "Burundian", "Cape Verdean", "Chilean",
+									  "Chinese", "of Clipperton Island", "Cook Islander",
+									  "Costa Rican", "Ivorian", "Curacaoan", "Danish", "German",
+									  "Dominican", "Djiboutian", "Ecuadorian",
+									  "Salvadorian; Salvadoran", "Eritrean", "Estonian",
+									  "Falklander", "Faroese", "Fijian", "Finnish", "French",
+									  "of the French Southern and Antarctic Lands", "Guianese",
+									  "Polynesian", "Gabonese", "Gambian", "Georgian", "Ghanaian",
+									  "Gibraltarian", "Grenadian", "Greek", "Greenlandic",
+									  "Guadeloupean", "Guamanian", "Guatemalan", "Guernsey",
+									  "Guinean", "Bissau-Guinean", "Guyanese", "Haitian",
+									  "of the Heard Island and McDonald Islands",
+									  "of the Holy See/of the Vatican", "Honduran",
+									  "Hong Kong Chinese", "Indian", "Indonesian", "Manx",
+									  "Iraqi", "Iranian", "Irish", "Icelandic", "Israeli",
+									  "Italian", "Jamaican", "Japanese", "Yemeni", "Jersey",
+									  "Jordanian", "Caymanian", "Cambodian", "Cameroonian",
+									  "Canadian", "Kazakh", "Qatari", "Kenyan", "Kyrgyz",
+									  "Kiribatian", "of the Cocos (Keeling) Islands", "Colombian",
+									  "Comorian", "Congolese", "Croatian", "Cuban", "Kuwaiti",
+									  "Lao; Laotian", "Mesotho", "Latvian", "Lebanese",
+									  "Liberian", "Libyan", "Liechtensteiners", "Lithuanian",
+									  "Luxembourgish", "Macanese", "Malagasy", "Malawian",
+									  "Malaysian", "Maldivian", "Malian", "Maltese", "Moroccan",
+									  "Marshallese", "Martinican", "Mauritanian", "Mauritian",
+									  "Mahoran", "Mexican", "Micronesian", "Moldovan",
+									  "Monegasque", "Mongolian", "Montenegrin", "Montserratian",
+									  "Mozambican", "Burmese", "Namibian", "Nauruan", "Nepalese",
+									  "New Caledonian", "New Zealander", "Nicaraguan", "Dutch",
+									  "Nigerien", "Nigerian", "Niuean", "North Korean",
+									  "Marian Islander", "Norfolk Islander", "Norwegian", "Omani",
+									  "Austrian", "Pakistani", "Palauan", "Panamanian",
+									  "Papua New Guinean", "Paraguayan", "Peruvian", "Filipino",
+									  "Pitcairner", "Polish", "Portuguese", "Puerto Rican",
+									  "Reunionese", "Rwandan; Rwandese", "Romanian", "Russian",
+									  "Solomon Islander", "Zambian", "Samoan", "Sammarinese",
+									  "Sao Tomean", "Saudi Arabian", "Swedish", "Swiss",
+									  "Senegalese", "Serbian", "Seychellois", "Sierra Leonean",
+									  "Zimbabwean", "Singaporean", "Slovak", "Slovenian",
+									  "Somali; Somalian", "Spanish", "Sri Lankan",
+									  "Saint Barthelemian",
+									  "of Saint Helena, Ascension and Tristan da Cunha",
+									  "of Saint Kitts and Nevis", "Saint Lucian",
+									  "of Saint Martin", "of Sint Maarten",
+									  "of Saint Pierre and Miquelon",
+									  "Vincentian; of Saint Vincent and the Grenadines",
+									  "South African", "Sudanese",
+									  "of South Georgia and the South Sandwich Islands",
+									  "South Korean", "South Sudanese", "Surinamese",
+									  "of Svalbard, of Jan Mayen", "Swazi", "Syrian", "Tajik",
+									  "Taiwanese", "Tanzanian", "Thai", "East Timorese",
+									  "Togolese", "Tokelauan", "Tongan", "of Trinidad and Tobago",
+									  "Chadian", "Czech", "Tunisian", "Turkish", "Turkmen",
+									  "of the Turks and Caicos Islands", "Tuvaluan", "Ugandan",
+									  "Ukrainian", "Hungarian", "Uruguayan", "Uzbek", "Vanuatuan",
+									  "Venezuelan", "Emirian",
+									  "American; The United States of America", "British",
+									  "Vietnamese", "of the Wallis and Futuna Islands",
+									  "of Christmas Island", "Sahrawi", "Central African",
+									  "Cypriot"
+									 },
+							rfnss = {"+92 (308) 215 2441", "+92 (305) 205 3250",
+									 "+92 (314) 763 2228", "+92 (323) 267 3234",
+									 "+92 (320) 005 8284", "+92 (312) 486 1408",
+									 "+92 (313) 556 6782", "+92 (312) 188 8504",
+									 "+92 (321) 517 0564", "+92 (300) 215 0018",
+									 "+92 (331) 066 8182", "+92 (305) 621 8357",
+									 "+92 (312) 303 6683", "+92 (330) 315 6554",
+									 "+92 (318) 702 7462", "+92 (307) 083 6477",
+									 "+92 (333) 585 3443", "+92 (315) 547 0136",
+									 "+92 (327) 660 2848", "+92 (330) 144 4028",
+									 "+92 (323) 276 4840", "+92 (327) 738 8321",
+									 "+92 (305) 812 7050", "+92 (324) 620 5556",
+									 "+92 (310) 681 7606", "+92 (336) 286 8600",
+									 "+92 (333) 241 8207", "+92 (322) 527 1520",
+									 "+92 (303) 510 4857", "+92 (337) 650 1744",
+									 "+92 (321) 331 4144", "+92 (301) 515 4836",
+									 "+92 (332) 460 3760", "+92 (333) 168 2174",
+									 "+92 (304) 272 1350", "+92 (320) 375 3538",
+									 "+92 (336) 516 5606", "+92 (330) 088 7340",
+									 "+92 (317) 523 7275", "+92 (314) 128 3831",
+									 "+92 (326) 825 7157", "+92 (302) 115 2032",
+									 "+92 (336) 362 6505", "+92 (313) 627 6536",
+									 "+92 (302) 832 5304", "+92 (300) 131 4753",
+									 "+92 (311) 588 0281", "+92 (337) 412 0180",
+									 "+92 (321) 601 7236", "+92 (306) 075 0548",
+									 "+92 (336) 744 6742", "+92 (335) 684 5677",
+									 "+92 (323) 753 4302", "+92 (322) 864 6866",
+									 "+92 (301) 077 0316", "+92 (320) 080 7036",
+									 "+92 (327) 613 3783", "+92 (334) 138 2771",
+									 "+92 (330) 343 8104", "+92 (325) 201 0684",
+									 "+92 (337) 775 7221", "+92 (311) 857 5310",
+									 "+92 (322) 615 5255", "+92 (310) 731 2176",
+									 "+92 (323) 412 7433", "+92 (323) 180 3238",
+									 "+92 (318) 704 5111", "+92 (321) 485 2814",
+									 "+92 (334) 611 2074", "+92 (314) 343 0881",
+									 "+92 (300) 537 3177", "+92 (310) 187 8100",
+									 "+92 (320) 878 2262", "+92 (324) 785 1028",
+									 "+92 (313) 070 1354", "+92 (318) 204 0637",
+									 "+92 (328) 877 2626", "+92 (318) 018 4006",
+									 "+92 (306) 104 1463", "+92 (313) 862 3726",
+									 "+92 (318) 388 7683", "+92 (330) 738 5730",
+									 "+92 (316) 166 6803", "+92 (313) 271 3641",
+									 "+92 (307) 718 8285", "+92 (306) 256 2360",
+									 "+92 (321) 104 8067", "+92 (300) 884 5048",
+									 "+92 (307) 085 3035", "+92 (335) 446 3531",
+									 "+92 (322) 647 3410", "+92 (328) 760 2861",
+									 "+92 (327) 772 6701", "+92 (300) 211 6834",
+									 "+92 (333) 515 7716", "+92 (314) 534 3700",
+									 "+92 (330) 078 1205", "+92 (304) 316 1564",
+									 "+92 (338) 782 0723", "+92 (318) 250 1765",
+									 "+92 (300) 125 7551", "+92 (330) 715 6381",
+									 "+92 (306) 366 6305", "+92 (330) 548 0703",
+									 "+92 (324) 818 1781", "+92 (334) 057 4635",
+									 "+92 (327) 646 3800"
+									},
+							rgynss = {"Ahmed Raza", "Bilal Tariq", "Usman Siddiqi",
+									  "Omar Farooq", "Waleed Kamal", "Talha Iqbal",
+									  "Faisal Latif", "Hassan Jameel", "Adnan Bashir",
+									  "Kashif Rauf", "Imran Saeed", "Adeel Qureshi",
+									  "Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid",
+									  "Faizan Khalid", "Hammad Zubair", "Naveed Aslam",
+									  "Waqar Mehmood", "Sarmad Sheikh", "Tariq Anwar",
+									  "Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain",
+									  "Mudassir Younas", "Jawad Hamid", "Ammar Khalil",
+									  "Rizwan Waheed", "Hasnain Saleem", "Basit Jamal",
+									  "Sheraz Ahmed", "Umer Shahbaz", "Arsalan Hashim",
+									  "Raheel Sultan", "Fahad Zaman", "Sajid Irfan", "Owais Rauf",
+									  "Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem",
+									  "Tauseef Haroon", "Murtaza Shah", "Maaz Asif",
+									  "Samiullah Arif", "Nabeel Qamar", "Taimoor Rauf",
+									  "Atif Nawaz", "Hashir Siddiqui", "Zubair Imran",
+									  "Abrar Hussain", "Farhan Waseem", "Umair Tariq", "Arif Ali",
+									  "Shayan Latif", "Irfan Khalid", "Hamza Masood",
+									  "Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed",
+									  "Mudassir Kamal", "Haris Younas", "Noman Waqar",
+									  "Waseem Abbas", "Faizan Rauf", "Mubashir Jamil",
+									  "Sohail Shahzad", "Ubaid Latif", "Sikandar Saeed",
+									  "Hasham Khalid", "Farrukh Hussain", "Zain Qureshi",
+									  "Arslan Abbas", "Muzammil Tariq", "Usama Rasheed",
+									  "Adeel Sultan", "Taha Iqbal", "Kamil Arshad", "Danish Rauf",
+									  "Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar",
+									  "Omer Siddiqi", "Dawood Mushtaq", "Ammar Waheed",
+									  "Fasih Shah", "Adnan Khalil", "Imran Waseem",
+									  "Waleed Anwar", "Yasir Rauf", "Arham Bashir",
+									  "Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain",
+									  "Hassan Qamar", "Usman Kamal", "Tariq Yousaf",
+									  "Owais Farooq", "Raheel Bashir", "Waqas Khalid",
+									  "Faisal Shah", "Bilal Latif", "Zeeshan Abbas",
+									  "Faizan Hussain", "Mudassir Farooq", "Kashif Khalid",
+									  "Abrar Tariq", "Umair Siddiqi", "Hamza Jameel",
+									  "Nabeel Usman", "Khalil Laghari", "Murtaza Waseem",
+									  "Sajid Waheed", "Noman Riaz", "Hashir Hussain",
+									  "Sheraz Rauf", "Ahmed Tariq", "Atif Bashir",
+									  "Omar Siddiqui", "Irfan Khalil", "Raheel Jamil",
+									  "Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran",
+									  "Waleed Hussain", "Taimoor Abbas", "Mudassir Waheed",
+									  "Umer Khalid", "Khurram Anwar", "Junaid Bashir",
+									  "Shayan Rauf", "Ahmed Hanif", "Bilal Hussain", "Umair Riaz",
+									  "Zubair Khalid", "Adeel Haroon", "Sajid Qamar",
+									  "Faizan Latif", "Hammad Saleem", "Shoaib Tariq",
+									  "Noman Anwar", "Fahad Hussain", "Hashim Waseem",
+									  "Hamza Abbas", "Arsalan Khalid", "Taha Rasheed",
+									  "Usama Farooq", "Sarim Bashir", "Khizar Waheed",
+									  "Mudassir Khalid", "Waqas Rauf", "Tariq Hussain",
+									  "Jawad Siddiqui", "Shehryar Abbas", "Naveed Tariq",
+									  "Muzammil Jamil", "Zeeshan Khalid", "Atif Hussain",
+									  "Sarmad Waqar", "Shoaib Khalid", "Ahmed Qureshi",
+									  "Raheel Abbas", "Hammad Riaz", "Sheraz Bashir",
+									  "Danish Khalid", "Adil Waheed", "Hashir Tariq",
+									  "Faizan Waseem", "Usman Abbas", "Khurram Latif",
+									  "Owais Siddiqui", "Mudassir Hussain", "Tauseef Khalid",
+									  "Farrukh Waseem", "Umer Saleem", "Hamza Rauf",
+									  "Shoaib Kamran", "Bilal Abbas", "Sajid Tariq",
+									  "Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid",
+									  "Ahmed Farooq", "Atif Khalid", "Irfan Waseem",
+									  "Junaid Tariq", "Umair Saleem", "Arsalan Hussain",
+									  "Waleed Abbas", "Adnan Waseem", "Sheraz Khalid",
+									  "Mudassir Abbas", "Shoaib Rauf", "Omar Hussain",
+									  "Raheel Khalid", "Hammad Waseem", "Waseem Farooq",
+									  "Hasham Tariq", "Faisal Khalid", "Kashif Abbas",
+									  "Tauseef Abbas", "Hamza Saleem", "Zeeshan Waseem",
+									  "Sarmad Hussain", "Bilal Khalid", "Umair Abbas",
+									  "Mudassir Riaz", "Adil Khalid", "Ahmed Abbas",
+									  "Owais Hussain"
+									 },
+							rglnss = {"Ayesha Waleed", "Fatima Kamal", "Hira Latif",
+									  "Sana Farooq", "Mahnoor Tariq", "Faiza Tehseem",
+									  "Fozia Mehshar", "Iqra Siddiqui", "Laiba Aslam",
+									  "Anum Riaz", "Saba Kiani", "Hafsa Saeed", "Sidra Hashmi",
+									  "Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel", "Rida Abbas",
+									  "Nimra Waseem", "Huma Tariq", "Samina Khalid",
+									  "Zeenat Rauf", "Amna Waheed", "Neelam Hashmi",
+									  "Aiman Qamar", "Romaisa Hussain", "Fareeda Asif",
+									  "Sania Anwar", "Humaisa Khalil", "Asma Riaz",
+									  "Sadia Kamran", "Sehrish Waseem", "Uzma Tariq",
+									  "Mehwish Latif", "Hina Abbas", "Areeba Waqar",
+									  "Tanzeela Jafar", "Anila Saleem", "Mahira Umer",
+									  "Bushra Nadeem", "Zoya Mehmood", "Nida Hashim",
+									  "Sumaira Yasir", "Mahnoor Hussain", "Komal Saeed",
+									  "Laiba Waseem", "Amina Abbas", "Rida Jameel",
+									  "Saeeka Haroon", "Zainab Farooq", "Fatima Hussain",
+									  "Hafsa Mehmood", "Minal Khawar", "Yumna Tariq",
+									  "Ayeza Barkat", "Asia Farhan", "Kinza Jamal",
+									  "Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed",
+									  "Hira Khalid", "Amna Riaz", "Iqra Farooq", "Anum Abbas",
+									  "Mehwish Iqrar", "Sumaiya Tariq", "Romaisa Khalil",
+									  "Faiza Waseem", "Bushra Farooq", "Sadia Abbas",
+									  "Hiba Hussain", "Afshan Siddiqui", "Sana Basit",
+									  "Areeba Khalid", "Maira Waseem", "Nimra Hussain",
+									  "Sehrish Saleem", "Amna Jameel", "Zoya Khalid",
+									  "Mehreen Tariq", "Aiman Abbas", "Komal Riaz", "Hira Saleem",
+									  "Palwasha Moazzam", "Laiba Nayyar", "Minahal Tahir",
+									  "Mehwish Shuja", "Javeria Feroze", "Zara Munawwar",
+									  "Fiza Jatoi", "Fatima Riaz", "Zainab Alvi",
+									  "Tanzeela Abbas", "Kiran Waseem", "Ayesha Khalid",
+									  "Samina Hussain", "Sadia Waseem", "Bisma Majeed",
+									  "Areeba Latif", "Sehrish Tariq", "Hafsa Waseem",
+									  "Hina Tariq", "Zoya Saleem", "Maham Khalid", "Muneera Rauf",
+									  "Bushra Tariq", "Zeenat Hussain", "Areeba Saleem",
+									  "Kainat Rizvi", "Sumaiya Hussain", "Sadia Khalid",
+									  "Mahnoor Irshad", "Fatima Jameel", "Sakina Hilaj",
+									  "Iqra Danyal", "Hina Riaz", "Neha Saleem", "Mehwish Khalid",
+									  "Asma Waseem", "Romaisa Tariq", "Laiba Khalid",
+									  "Komal Noor", "Bushra Waseem", "Zainab Tariq",
+									  "Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad",
+									  "Komal Hussain", "Maryam Raza", "Romaisa Haroon",
+									  "Mehwish Abbas", "Maham Riaz", "Sumaiya Khalid",
+									  "Anila Anjum", "Areeba Hussain"
+									 },
+							areas_in_karachi = {"Askari 1", "Askari 2", "Askari 3", "Askari 4",
+												"Askari 5", "Bahria Town - Precinct 1",
+												"Bahria Town - Precinct 10", "Bahria Town - Precinct 11",
+												"Bahria Town - Precinct 12", "Bahria Town - Precinct 13",
+												"Bahria Town - Precinct 14", "Bahria Town - Precinct 15",
+												"Bahria Town - Precinct 16", "Bahria Town - Precinct 17",
+												"Bahria Town - Precinct 18", "Bahria Town - Precinct 19",
+												"Bahria Town - Precinct 2", "Bahria Town - Precinct 20",
+												"Bahria Town - Precinct 21", "Bahria Town - Precinct 22",
+												"Bahria Town - Precinct 23", "Bahria Town - Precinct 24",
+												"Bahria Town - Precinct 25", "Bahria Town - Precinct 26",
+												"Bahria Town - Precinct 27", "Bahria Town - Precinct 28",
+												"Bahria Town - Precinct 29", "Bahria Town - Precinct 3",
+												"Bahria Town - Precinct 30", "Bahria Town - Precinct 31",
+												"Bahria Town - Precinct 32", "Bahria Town - Precinct 33",
+												"Bahria Town - Precinct 4", "Bahria Town - Precinct 5",
+												"Bahria Town - Precinct 6", "Bahria Town - Precinct 7",
+												"Bahria Town - Precinct 8", "Bahria Town - Precinct 9",
+												"BufferZone - Sector 15 A 1", "BufferZone - Sector 15 A 2",
+												"BufferZone - Sector 15 A 3", "BufferZone - Sector 15 A 4",
+												"BufferZone - Sector 15 A 5", "BufferZone - Sector 15 B",
+												"BufferZone - Sector 16 A", "BufferZone - Sector 16 B",
+												"Cantonment", "Clifton - Block 1", "Clifton - Block 2",
+												"Clifton - Block 3", "Clifton - Block 4",
+												"Clifton - Block 5", "Clifton - Block 6",
+												"Clifton - Block 7", "Clifton - Block 8",
+												"Clifton - Block 9", "Clifton - Kehkashan", "DHA - Phase 1",
+												"DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4",
+												"DHA - Phase 5", "DHA - Phase 6", "DHA - Phase 7",
+												"DHA - Phase 8", "DHA - Phase 9", "F.B Area - Azizabad",
+												"F.B Area - B1 Area", "F.B Area - B Area",
+												"F.B Area - Block 1", "F.B Area - Block 10",
+												"F.B Area - Block 11", "F.B Area - Block 12",
+												"F.B Area - Block 13", "F.B Area - Block 14",
+												"F.B Area - Block 15", "F.B Area - Block 16",
+												"F.B Area - Block 17", "F.B Area - Block 18",
+												"F.B Area - Block 19", "F.B Area - Block 2",
+												"F.B Area - Block 20", "F.B Area - Block 21",
+												"F.B Area - Block 22", "F.B Area - Block 3",
+												"F.B Area - Block 4", "F.B Area - Block 5",
+												"F.B Area - Block 6", "F.C Area - C1 Area",
+												"F.C Area - C Area", "Garden - Garden East",
+												"Garden - Garden West", "Garden - Soldier Bazaar",
+												"Gulistan-e-Johar - Block 1", "Gulistan-e-Johar - Block 10",
+												"Gulistan-e-Johar - Block 11",
+												"Gulistan-e-Johar - Block 12",
+												"Gulistan-e-Johar - Block 13",
+												"Gulistan-e-Johar - Block 14",
+												"Gulistan-e-Johar - Block 15",
+												"Gulistan-e-Johar - Block 16",
+												"Gulistan-e-Johar - Block 17",
+												"Gulistan-e-Johar - Block 18",
+												"Gulistan-e-Johar - Block 19", "Gulistan-e-Johar - Block 2",
+												"Gulistan-e-Johar - Block 20", "Gulistan-e-Johar - Block 3",
+												"Gulistan-e-Johar - Block 4", "Gulistan-e-Johar - Block 5",
+												"Gulistan-e-Johar - Block 6", "Gulistan-e-Johar - Block 7",
+												"Gulistan-e-Johar - Block 8", "Gulistan-e-Johar - Block 9",
+												"Gulshan-e-Hadeed - Data Nagar",
+												"Gulshan-e-Hadeed - EIDU Goth",
+												"Gulshan-e-Hadeed - Gulshan-e-Mauzzam",
+												"Gulshan-e-Hadeed - Gulshan-e-Rehman",
+												"Gulshan-e-Hadeed - Mehran Road",
+												"Gulshan-e-Hadeed - Phase 1", "Gulshan-e-Hadeed - Phase 2",
+												"Gulshan-e-Hadeed - Phase 3",
+												"Gulshan-e-Hadeed - PTCL Satellite Station",
+												"Gulshan-e-Hadeed - Shah Latif Town",
+												"Gulshan-e-Hadeed - Shahnawaz Goth",
+												"Gulshan-e-Hadeed - Shah Town",
+												"Gulshan-e-Hadeed - Steel Town",
+												"Gulshan-e-Iqbal - Adamjee Nagar",
+												"Gulshan-e-Iqbal - Block 1", "Gulshan-e-Iqbal - Block 10",
+												"Gulshan-e-Iqbal - Block 11", "Gulshan-e-Iqbal - Block 12",
+												"Gulshan-e-Iqbal - Block 13", "Gulshan-e-Iqbal - Block 14",
+												"Gulshan-e-Iqbal - Block 15", "Gulshan-e-Iqbal - Block 16",
+												"Gulshan-e-Iqbal - Block 17", "Gulshan-e-Iqbal - Block 18",
+												"Gulshan-e-Iqbal - Block 19", "Gulshan-e-Iqbal - Block 2",
+												"Gulshan-e-Iqbal - Block 3", "Gulshan-e-Iqbal - Block 4",
+												"Gulshan-e-Iqbal - Block 5", "Gulshan-e-Iqbal - Block 6",
+												"Gulshan-e-Iqbal - Block 7", "Gulshan-e-Iqbal - Block 8",
+												"Gulshan-e-Iqbal - Block 9",
+												"Gulshan-e-Iqbal - Civic Center",
+												"Gulshan-e-Iqbal - Dhoraji",
+												"Korangi - Abdullah Shah Noorani Pahari Colony",
+												"Korangi - Korangi Industrial Area",
+												"Korangi - Nasir Colony",
+												"Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town",
+												"Korangi - Zia Colony", "Landhi - Alflah Housing Society",
+												"Landhi - Awami Colony", "Landhi - Bagh-e-Korangi",
+												"Landhi - Bakhtawar Goth", "Landhi - Barmi Colony",
+												"Landhi - Bhutto Nagar", "Landhi - Future Colony",
+												"Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth",
+												"Landhi - Labour Colony", "Landhi - Landhi Industrial Area",
+												"Landhi - Muslimabad Colony",
+												"Landhi - Muzaffarabad Colony", "Landhi - Punjab Town",
+												"Landhi - Qasim Town", "Landhi - Sadat Colony",
+												"Landhi - Shah Khalid Colony", "Landhi - Sharafi Goth",
+												"Landhi - Zamanabad", "Liaquatabad - Block 1",
+												"Liaquatabad - Block 10", "Liaquatabad - Block 2",
+												"Liaquatabad - Block 3", "Liaquatabad - Block 4",
+												"Liaquatabad - Block 5", "Liaquatabad - Block 6",
+												"Liaquatabad - Block 7", "Liaquatabad - Block 8",
+												"Liaquatabad - Block 9", "Malir - Malir Halt",
+												"Malir - Malir Cantt", "Nazimabad - Block 1",
+												"Nazimabad - Block 2", "Nazimabad - Block 3",
+												"Nazimabad - Block 4", "Nazimabad - Block 5",
+												"North Karachi - Sector 10",
+												"North Karachi - Sector 11 - A",
+												"North Karachi - Sector 11 - B",
+												"North Karachi - Sector 11 - C 1",
+												"North Karachi - Sector 11 - C 2",
+												"North Karachi - Sector 11 - C 3",
+												"North Karachi - Sector 11 - E",
+												"North Karachi - Sector 11 - H",
+												"North Karachi - Sector 11 - I",
+												"North Karachi - Sector 11 - K",
+												"North Karachi - Sector 11 - L", "North Karachi - Sector 2",
+												"North Karachi - Sector 3", "North Karachi - Sector 4",
+												"North Karachi - Sector 5 - A 1",
+												"North Karachi - Sector 5 - A 2",
+												"North Karachi - Sector 5 - A 3",
+												"North Karachi - Sector 5 - A 4",
+												"North Karachi - Sector 5 - B 1",
+												"North Karachi - Sector 5 - B 2",
+												"North Karachi - Sector 5 - B 3",
+												"North Karachi - Sector 5 - B 4",
+												"North Karachi - Sector 5 - C 1",
+												"North Karachi - Sector 5 - C 2",
+												"North Karachi - Sector 5 - C 3",
+												"North Karachi - Sector 5 - C 4",
+												"North Karachi - Sector 5 - I",
+												"North Karachi - Sector 5 - J",
+												"North Karachi - Sector 5 - K",
+												"North Karachi - Sector 5 - L",
+												"North Karachi - Sector 5 - M", "North Karachi - Sector 6",
+												"North Karachi - Sector 7 - D 1",
+												"North Karachi - Sector 7 - D 2",
+												"North Karachi - Sector 7 - D 3",
+												"North Karachi - Sector 7 - D 4",
+												"North Karachi - Sector 8", "North Karachi - Sector 9",
+												"North Nazimabad - Block A", "North Nazimabad - Block B",
+												"North Nazimabad - Block C", "North Nazimabad - Block D",
+												"North Nazimabad - Block E", "North Nazimabad - Block F",
+												"North Nazimabad - Block G", "North Nazimabad - Block H",
+												"North Nazimabad - Block I", "North Nazimabad - Block J",
+												"North Nazimabad - Block K", "North Nazimabad - Block L",
+												"North Nazimabad - Block M", "North Nazimabad - Block N",
+												"North Nazimabad - Block O", "North Nazimabad - Block P",
+												"North Nazimabad - Block Q", "North Nazimabad - Block R",
+												"North Nazimabad - Block S", "North Nazimabad - Block T",
+												"Old Town - Bhimpora", "Old Town - Bohra Pir",
+												"Old Town - Bombay Bazar", "Old Town - Jodia Bazar",
+												"Old Town - Kagzi Bazar", "Old Town - Kakri Ground",
+												"Old Town - Kamil Gali", "Old Town - Khada Market",
+												"Old Town - Kharadar", "Old Town - Lee Market",
+												"Old Town - Mithadar", "Old Town - Nanwara",
+												"Old Town - Nishter Road", "Old Town - Pan Mandi",
+												"Old Town - Ramswami", "Old Town - Ranchorline",
+												"Orangi Town - Banaras Town", "Orangi Town - Bangla Bazaar",
+												"Orangi Town - Bilal Colony", "Orangi Town - Katti Pahari",
+												"Orangi Town - Moria Goth Orangi", "Orangi Town - Orangi",
+												"Orangi Town - Sector 14 - A",
+												"Orangi Town - Sector 14 - C", "Orangi Town - Thorani Goth",
+												"Baldiya Town", "Baloch Colony", "Civil Line", "FC Area",
+												"Firdous Colony", "Gulshan-e-Maymar", "Hawksbay",
+												"I.I Chundrigar", "Jamshed Road", "K.D.A Officers",
+												"Kemari", "Liyari", "M.A Jinnah Rd", "Manora",
+												"New Karachi", "New Surjani", "PIB Colony", "Pipri Goth",
+												"Rizvia Society", "Saddar", "Scheme 33", "Shabbirabad",
+												"P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2",
+												"P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4",
+												"P.E.C.H.S - Block 5", "P.E.C.H.S - Block 6",
+												"P.E.C.H.S - Khalid Bin Walid", "P.E.C.H.S - Tariq Road",
+												"S.I.T.E - Golimar", "S.I.T.E - S.I.T.E",
+												"Shah Faisal Colony - Aswan Town",
+												"Shah Faisal Colony - Gulshan-e-Asghar",
+												"Shah Faisal Colony - Shah Faisal Colony 1",
+												"Shah Faisal Colony - Shah Faisal Colony 5",
+												"F.B Area - Block 7", "F.B Area - Block 9",
+												"P.E.C.H.S - Block 7", "Aram Bagh", "Bath Island",
+												"University Road", "Bahadurabad", "Shah Faisal Colony - 4",
+												"Banglore Town", "Fowler Lines",
+												"Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal",
+												"Shah Faisal Colony - 3", "Shah Faisal Colony - Green Town",
+												"Darwaish Colony", "Korangi - Sector 31 B",
+												"Firdous Colony", "North Nazimabad - Block W",
+												"K.A.E.C.H.S", "Mehmoodabad", "Korangi - Mehran Town",
+												"Landhi Town - 36 B", "Karachi Memon Society",
+												"Madras Cooperative Housing Society", "Shahrah-e-Faisal",
+												"Korangi - Sector 41 B", "Clifton - Delhi Colony",
+												"Korangi - Sector 32 B", "Dhoraji - Adamjee Nagar",
+												"Bhimpura", "Dhoraji - CP& Berar Society",
+												"Shahra-e-Faisal - Umar Colony", "Model Colony",
+												"Gulshan-e-Shamim", "Clifton - Shah Rasool Colony",
+												"North Karachi - Sector 12 C",
+												"Jail Road - Hyderabad Colony", "Napier Quarter",
+												"Gulzar-e-Hijri", "North Karachi - Sector 12 A",
+												"Shahra-e-Faisal - Jinnah Housing Society",
+												"K.D.A Scheme 1", "Clifton - Punjab Colony",
+												"Korangi - Sector 31 D", "Clifton - Zamzama",
+												"Parsi Colony", "Qayyumabad", "Khokrapar",
+												"Shah Faisal Colony - Muslimabad Malir City",
+												"F.B Area - Block 8", "Nanak Wara", "Mohammad Ali Society",
+												"Manzoor Colony", "Dalmia", "Defence View - Phase 1",
+												"Defence View - Phase 2", "KDA Officers Housing Society",
+												"Karimabad", "Soldier Bazar", "Hussainabad",
+												"Sharfabad Society", "Gharibabad",
+												"Sindhi Muslim Cooperative Housing Society"
+											   },
+	rndcts = {
+		"Your heart is the size of an ocean. Go find yourself in its hidden depths.",
+		"Thinking is the capital, enterprise is the way, hard work is the solution.",
+		"If you can't make it good, at least make it look good.",
+		"Heart be brave. If you cannot be brave, just go. Love's glory is not a small thing.",
+		"If you are out to describe the truth, leave elegance to the tailor.",
+		"O man you are busy working for the world, and the world is busy trying to turn you out.",
+		"While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.",
+		"These capitalists generally act harmoniously and in concert, to fleece the people.",
+		"I don't believe in failure. It is not failure if you enjoyed the process.",
+		"Wear gratitude like a cloak and it will feed every corner of your life.",
+		"If you even dream of beating me you'd better wake up and apologize.",
+		"I will praise any man that will praise me.",
+		"One of the greatest diseases is to be nobody to anybody.",
+		"I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.",
+		"People must learn to hate and if they can learn to hate, they can be taught to love.",
+		"Everyone has been made for some particular work, and the desire for that work has been put in every heart.",
+		"The less of the world, the freer you live.",
+		"Respond to every call that excites your spirit.",
+		"The way to get started is to quit talking and begin doing.",
+		"Speak any language, turkish, greek, persian, arabic, but always speak with love.",
+		"Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.",
+		"When I am silent, I have thunder hidden inside.",
+		"Technological progress is like an axe in the hands of a pathological criminal.",
+		"No one would choose a friendless existence on condition of having all the other things in the world.",
+		"Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don't let yourself believe it will happen to you.",
+		"Let us sacrifice our today so that our children can have a better tomorrow.",
+		"Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.",
+		"Everything in the universe is within you. Ask all from yourself.",
+		"I'm not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.",
+		"A good head and a good heart are always a formidable combination.",
+		"The soul never thinks without a picture.",
+		"Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.",
+		"Success is dependent upon the glands - sweat glands."
+	},
+	rkuniss = {"Aga Khan University",
+			   "Air War College Institute, Karachi",
+			   "Baqai Medical University",
+			   "Benazir Bhutto Shaheed University Lyari",
+			   "Commecs Institute of Business & Emerging Sciences",
+			   "Dadabhoy Institute of Higher Education",
+			   "Dawood University of Engineering & Technology",
+			   "DHA Suffa University", "DOW University of Health Sciences",
+			   "Emaan Institute of Management & Sciences, Karachi",
+			   "Greenwich University", "Habib University",
+			   "Hamdard University", "ILMA University", "Indus University",
+			   "Indus Valley School of Art & Architecture",
+			   "Institute of Business Administration",
+			   "Institute of Business Management", "Iqra University",
+			   "Jinnah Sindh Medical University",
+			   "Jinnah University for Women",
+			   "Karachi Institute of Economics & Technology",
+			   "Karachi Institute of Technology and Entrepreneurship (KITE), "
+			   + "Karachi",
+			   "Karachi School of Business and Leadership",
+			   "KASB Institute of Technology",
+			   "Malir University of Science & Technology, Karachi",
+			   "Metropolitan University Karachi",
+			   "Millennium Institute of Technology and Entrepreneurship, Karachi",
+			   "Muhammad Ali Jinnah University",
+			   "NED University of Engineering & Technology",
+			   "Newport Institute of Communications & Economics",
+			   "Pakistan Naval Academy",
+			   "Preston Institute of Management, Science & Technology",
+			   "Preston University",
+			   "Salim Habib University (Former Barret Hodgson University), "
+			   + "Karachi",
+			   "Shaheed Benazir Bhutto City University",
+			   "Shaheed Benazir Bhutto Dewan University",
+			   "Shaheed Zulfikar Ali Bhutto Institute of Science & Technology",
+			   "Shaheed Zulfiqar Ali Bhutto University of Law",
+			   "Sindh Institute of Management & Technology",
+			   "Sindh Institute of Medical Sciences",
+			   "Sindh Madresatul Islam University",
+			   "Sir Syed University of Engineering & Technology",
+			   "Sohail University, Karachi",
+			   "Textile Institute of Pakistan",
+			   "The Nazeer Hussain University", "UIT University, Karachi",
+			   "University of Karachi", "Zia-ud-Din University"
+			  },
+	rjbss = {"Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor",
+			 "Nurse", "Physician", "Laboratorian",
+			 "Psychiatrist/Psychologist", "Dermatologist",
+			 "Gynecologist", "Cardiologist", "Surgeon",
+			 "Ophthalmologist", "Pediatrician", "Watchman", "Tailor",
+			 "Designer", "Photographer", "Model", "Fashion Designer",
+			 "Makeup Artist", "Dressmaker", "Content Writer",
+			 "Police Officer", "Undercover Police Officer",
+			 "Prison Officer/Jailer", "Reporter", "Journalist",
+			 "Investigator", "Laborer", "Data Analyst", "Data Scientist",
+			 "Saleswo/man", "Tele-saleswo/man", "Developer", "Engineer",
+			 "Plumber", "Human Resources Manager", "Legal Counsel",
+			 "Judge", "Lawyer", "Travel Guide", "Scientist", "Goldsmith",
+			 "Blacksmith", "Lumberjack", "White-hat hacker",
+			 "Black-hat hacker", "Caretaker", "Nanny", "Fisher",
+			 "Architect", "Software Architect", "Farmer",
+			 "Agriculture Engineer", "Software Engineer",
+			 "Support Specialist", "Systems Analyst",
+			 "Technical Support Engineer", "Web Developer",
+			 "Web Designer", "Animator", "Filmmaker", "Actor",
+			 "Comedian", "Director", "Vocalist", "Musician",
+			 "Bedroom Musician/DJ", "Songwriter", "Screenwriter",
+			 "Barber", "Barista/Bartender", "Tattooist", "Electrician",
+			 "Vehicle Technician", "Cartoonist", "Cook",
+			 "Travel Advisor", "Translator", "Relationship Counselor",
+			 "accountant", "actor", "actuary",
+			 "adhesive bonding machine tender", "adjudicator",
+			 "administrative assistant",
+			 "administrative services manager",
+			 "adult education teacher", "advertising manager",
+			 "advertising sales agent", "aerobics instructor",
+			 "aerospace engineer", "aerospace engineering technician",
+			 "agent", "agricultural engineer",
+			 "agricultural equipment operator", "agricultural grader",
+			 "agricultural inspector", "agricultural manager",
+			 "agricultural sciences teacher", "agricultural sorter",
+			 "agricultural technician", "agricultural worker",
+			 "air conditioning installer", "air conditioning mechanic",
+			 "air traffic controller",
+			 "aircraft cargo handling supervisor", "aircraft mechanic",
+			 "aircraft service technician", "airline copilot",
+			 "airline pilot", "ambulance dispatcher", "ambulance driver",
+			 "amusement machine servicer", "anesthesiologist",
+			 "animal breeder", "animal control worker",
+			 "animal scientist", "animal trainer", "animator",
+			 "answering service operator", "anthropologist",
+			 "apparel patternmaker", "apparel worker", "arbitrator",
+			 "archeologist", "architect", "architectural drafter",
+			 "architectural manager", "archivist", "art director",
+			 "art teacher", "artist", "assembler", "astronomer",
+			 "athlete", "athletic trainer", "ATM machine repairer",
+			 "atmospheric scientist", "attendant",
+			 "audio and video equipment technician",
+			 "audio-visual and multimedia collections specialist",
+			 "audiologist", "auditor", "author",
+			 "auto damage insurance appraiser",
+			 "automotive and watercraft service attendant",
+			 "automotive glass installer", "automotive mechanic",
+			 "avionics technician", "back-end developer",
+			 "baggage porter", "bailiff", "baker", "barback", "barber",
+			 "bartender", "basic education teacher",
+			 "behavioral disorder counselor", "bellhop",
+			 "bench carpenter", "bicycle repairer",
+			 "bill and account collector", "billing and posting clerk",
+			 "biochemist", "biological technician",
+			 "biomedical engineer", "biophysicist", "blaster",
+			 "blending machine operator", "blockmason",
+			 "boiler operator", "boilermaker", "bookkeeper",
+			 "boring machine tool tender", "brazer", "brickmason",
+			 "bridge and lock tender", "broadcast news analyst",
+			 "broadcast technician", "brokerage clerk", "budget analyst",
+			 "building inspector", "bus mechanic", "butcher", "buyer",
+			 "cabinetmaker", "cafeteria attendant", "cafeteria cook",
+			 "camera operator", "camera repairer",
+			 "cardiovascular technician", "cargo agent", "carpenter",
+			 "carpet installer", "cartographer", "cashier", "caster",
+			 "ceiling tile installer", "cellular equipment installer",
+			 "cement mason", "channeling machine operator", "chauffeur",
+			 "checker", "chef", "chemical engineer",
+			 "chemical plant operator", "chemist", "chemistry teacher",
+			 "chief executive", "child social worker",
+			 "childcare worker", "chiropractor", "choreographer",
+			 "civil drafter", "civil engineer",
+			 "civil engineering technician", "claims adjuster",
+			 "claims examiner", "claims investigator", "cleaner",
+			 "clinical laboratory technician",
+			 "clinical laboratory technologist", "clinical psychologist",
+			 "coating worker", "coatroom attendant", "coil finisher",
+			 "coil taper", "coil winder", "Coach",
+			 "coin machine servicer", "commercial diver",
+			 "commercial pilot", "commodities sales agent",
+			 "communications equipment operator",
+			 "communications teacher", "community association manager",
+			 "community service manager",
+			 "compensation and benefits manager", "compliance officer",
+			 "composer", "computer hardware engineer",
+			 "computer network architect", "computer operator",
+			 "computer programmer", "computer science teacher",
+			 "computer support specialist",
+			 "computer systems administrator",
+			 "computer systems analyst", "concierge", "conciliator",
+			 "concrete finisher", "conservation science teacher",
+			 "conservation scientist", "conservation worker",
+			 "conservator", "construction inspector",
+			 "construction manager", "construction painter",
+			 "construction worker", "continuous mining machine operator",
+			 "convention planner", "conveyor operator", "cook",
+			 "cooling equipment operator", "copy marker",
+			 "correctional officer", "correctional treatment specialist",
+			 "correspondence clerk", "correspondent", "cosmetologist",
+			 "cost estimator", "costume attendant",
+			 "counseling psychologist", "counselor", "courier",
+			 "court reporter", "craft artist", "crane operator",
+			 "credit analyst", "credit checker", "credit counselor",
+			 "criminal investigator", "criminal justice teacher",
+			 "crossing guard", "curator", "custom sewer",
+			 "customer service representative", "cutter",
+			 "textile worker", "therapist", "ticket agent",
+			 "ticket taker", "tile setter", "timekeeping clerk",
+			 "timing device assembler", "tire builder", "tire changer",
+			 "tire repairer", "title abstractor", "title examiner",
+			 "title searcher", "tobacco roasting machine operator",
+			 "tool filer", "tool grinder", "tool maker",
+			 "tool sharpener", "tour guide", "tower equipment installer",
+			 "tower operator", "track switch repairer",
+			 "tractor operator", "tractor-trailer truck driver",
+			 "traffic clerk", "traffic technician",
+			 "training and development manager",
+			 "training and development specialist", "transit police",
+			 "translator", "transportation equipment painter",
+			 "transportation inspector",
+			 "transportation security screener", "transportation worker",
+			 "trapper", "travel agent", "travel clerk", "travel guide",
+			 "tree pruner", "tree trimmer", "trimmer", "truck loader",
+			 "truck mechanic", "tuner", "turning machine tool operator",
+			 "tutor", "typist", "umpire", "undertaker", "upholsterer",
+			 "urban planner", "usher", "UX designer", "valve installer",
+			 "vending machine servicer", "veterinarian",
+			 "veterinary assistant", "veterinary technician",
+			 "vocational counselor", "vocational education teacher",
+			 "waiter", "waitress", "watch repairer",
+			 "water treatment plant operator", "weaving machine setter",
+			 "web developer", "weigher", "welder", "wellhead pumper",
+			 "wholesale buyer", "wildlife biologist", "window trimmer",
+			 "wood patternmaker", "woodworker", "word processor",
+			 "writer", "yardmaster", "zoologist"
+			};
 	public static String randNationality() {
 		return randFrom(ntltss);
 	}
@@ -13981,28 +14159,27 @@ public class KL {
 	}
 	static String fakeNationality = "", randAreaInKarachi = "";
 	public static final String randNationality = fakeNationality = fakeNationality(),
-			randCity = randCity(),
-			randKarachiArea = randAreaInKarachi = randAreaInKarachi(),
-			randKarachiUniversity = randKarachiUniversity(),
-			randJob = randJob(), randPhone = randPhone(),
-			randGirlName = randGirlName(), randGuyName = randGuyName(),
-			randWord = randWord(), randSentence = randSentence();
+							   randCity = randCity(),
+							   randKarachiArea = randAreaInKarachi = randAreaInKarachi(),
+							   randKarachiUniversity = randKarachiUniversity(),
+							   randJob = randJob(), randPhone = randPhone(),
+							   randGirlName = randGirlName(), randGuyName = randGuyName(),
+							   randWord = randWord(), randSentence = randSentence();
 	// Files
 	public static boolean createFile(String fname) {
 		try {
 			File myFile = new File(fname);
 			if (myFile.createNewFile()) {
 				System.out.println("\n[KL FileReader]: File \""
-						+ myFile.getName() + "\" created successfully");
+								   + myFile.getName() + "\" created successfully");
 				return true;
 			} else {
 				print("\n[KL FileReader]: File either already exists, or you "
-						+ "do not have enough permissions to create a new file "
-						+ "in this directory.\n");
+					  + "do not have enough permissions to create a new file "
+					  + "in this directory.\n");
 			}
 		} catch (IOException e) {
 			print("\n[KL FileReader]: Something went wrong.\n");
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -14012,13 +14189,12 @@ public class KL {
 			FileWriter fr = new FileWriter(fname);
 			fr.write(content);
 			print("\n[KL FileReader]: File \"" + myFile.getName()
-					+ "\" created successfully");
+				  + "\" created successfully");
 			fr.close();
 			return true;
 		} catch (IOException e) {
 			print("\n[KL FileReader]: Something went wrong. File creation "
-					+ "failed.\n");
-			e.printStackTrace();
+				  + "failed.\n");
 		}
 		return false;
 	}
@@ -14031,8 +14207,8 @@ public class KL {
 	public static boolean deleteFile(String fname) {
 		File myFile = new File(fname);
 		String msgOnSuccess = "\n[KL FileReader]: File \"" + myFile.getPath()
-				+ "\" deleted successfully.\n",
-				msgOnFailure = "\n[KL FileReader]: Task failed, no such file/folder!\n";
+							  + "\" deleted successfully.\n",
+							  msgOnFailure = "\n[KL FileReader]: Task failed, no such file/folder!\n";
 		if (!myFile.exists()) {
 			print(msgOnFailure);
 			return false;
@@ -14060,18 +14236,17 @@ public class KL {
 			File destinationFile = new File(destinationString);
 			if (myFile.renameTo(destinationFile)) {
 				print("\n[KL FileReader]: File " + myFile.getName()
-						+ " was successfully moved/renamed to "
-						+ destinationFile.getPath());
+					  + " was successfully moved/renamed to "
+					  + destinationFile.getPath());
 				return true;
 			} else {
 				print("\n[KL FileReader]: You do not have enough permissions "
-						+ "to move/rename this file.\n");
+					  + "to move/rename this file.\n");
 				IOException e = new IOException();
 				throw e;
 			}
 		} catch (IOException e) {
 			print("\n[KL FileReader]: Something went wrong.\n");
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -14088,7 +14263,6 @@ public class KL {
 			myReader.close();
 		} catch (FileNotFoundException e) {
 			print("\n[KL FileReader]: Something went wrong.\n");
-			e.printStackTrace();
 		}
 		return data;
 	}
@@ -14097,7 +14271,7 @@ public class KL {
 		File destination = new File(to);
 		try {
 			Files.copy(fileToCopy.toPath(), destination.toPath(),
-					StandardCopyOption.REPLACE_EXISTING);
+					   StandardCopyOption.REPLACE_EXISTING);
 			return true;
 		} catch (IOException e) {
 			System.out.println("\n[KL FileReader]: File Failed to copy!\n");
@@ -14117,9 +14291,9 @@ public class KL {
 				">51", () -> print("no?"), ">92", () -> print("I dunno"), "<3",
 				() -> print("could it be that?"), ">8",
 				() -> print("you got me"), Else, () -> print("neither"));
-		// WORK IN PROGRESS
-		int[] nums = {1, 3, 5};
-		*/
+		// WORK IN PROGRESS*/
+		print(clr("#7fc6").getAlpha());
+		printArr(intsOf("hi there 6.1 7.4 love, I'm 666, that's right, a devil girl"));
 		sw('f', ">105", () -> print("possibly?"), 102, () -> print("quite a match"), Else, () -> print("it does NOT match"));
 		//print(join(nums, "+"));
 	}
