@@ -11,6 +11,7 @@ import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
+import java.lang.reflect.*;
 import java.net.*;
 //GUI
 import java.awt.*;
@@ -1662,19 +1663,16 @@ public class KL {
 	}
 	public static class clr extends Color {
 		private static final long serialVersionUID = 1L;
-		clr(int clr) {
-			super(clr);
+		clr(int rgb) {
+			super(rgb);
+		}
+		clr(int rgb, boolean includesAlphaAtEnd) {
+			super(rgb, includesAlphaAtEnd);
 		}
 		clr(int r, int g, int b) {
 			super(r, g, b);
-		}
-		clr(float r, float g, float b) {
-			super(r, g, b);
-		}
-		clr(float r, float g, float b, float a) {
-			super(r, g, b, a);
 			/*
-			 * @params all in the floating range: 0 to 1
+			 * @params all in the integer range: 0 to 255
 			 */
 		}
 		clr(int r, int g, int b, int a) {
@@ -1683,51 +1681,58 @@ public class KL {
 			 * @params all in the integer range: 0 to 255
 			 */
 		}
+		clr(double r, double g, double b) {
+			super((float)r, (float)g, (float)b);
+		}
+		clr(double r, double g, double b, double a) {
+			super((float)r, (float)g, (float)b, (float)a);
+			/*
+			 * @params all in the floating range: 0 to 1
+			 */
+		}
 		clr(String hexStringWithAlpha, boolean hasApha) {
-		super(from(hexStringWithAlpha), hasApha);
+			this(from(hexStringWithAlpha), hasApha);
 			/*
 			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff
 			 */
 		}
 		clr(String hexStringWithAlpha) {
-		super(from(hexStringWithAlpha), false);
+			super(from(hexStringWithAlpha), false);
 			/*
 			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff
 			 */
 		}
 		public static int from(String hex) {
-		    hex = hex.replaceAll("^(0x|#)", "");
-		    if (!eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5 || len(hex) == 7) return 0;
-		    int len = len(hex);
-            int r, g, b, a = 255;
-            if (len == 8) {
-                a = Int(slice(hex, 6, 8), 16);
-                r = Int(slice(hex, 0, 2), 16);
-                g = Int(slice(hex, 2, 4), 16);
-                b = Int(slice(hex, 4, 6), 16);
-                return a << 24 | r << 16 | g << 8 | b;
-                //the order stays as-is
-            }
-            else if (len == 6) {
-                r = Int(slice(hex, 0, 2), 16);
-                g = Int(slice(hex, 2, 4), 16);
-                b = Int(slice(hex, 4, 6), 16);
-                return r << 16 | g << 8 | b;
-                //the order stays as-is
-            }
-            else if (len == 4) {
-                a = Int(slice(hex, 3, 4), 16) * 17;
-                r = Int(slice(hex, 0, 1), 16) * 17;
-                g = Int(slice(hex, 1, 2), 16) * 17;
-                b = Int(slice(hex, 2, 3), 16) * 17;
-                return a << 24 | r << 16 | g << 8 | b;
-                //the order stays as-is
-            }
-            r = Int(slice(hex, 0, 1), 16) * 17;
-            g = Int(slice(hex, 1, 2), 16) * 17;
-            b = Int(slice(hex, 2, 3), 16) * 17;
-            return r << 16 | g << 8 | b;
-            //the order stays as-is
+			hex = hex.replaceAll("^(0x|#)", "");
+			if (!eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5 || len(hex) == 7) return 0;
+			int len = len(hex);
+			int r, g, b, a = 255;
+			if (len == 8) {
+				a = Int(slice(hex, 6, 8), 16);
+				r = Int(slice(hex, 0, 2), 16);
+				g = Int(slice(hex, 2, 4), 16);
+				b = Int(slice(hex, 4, 6), 16);
+				return a << 24 | r << 16 | g << 8 | b;
+				//the order stays as-is
+			} else if (len == 6) {
+				r = Int(slice(hex, 0, 2), 16);
+				g = Int(slice(hex, 2, 4), 16);
+				b = Int(slice(hex, 4, 6), 16);
+				return r << 16 | g << 8 | b;
+				//the order stays as-is
+			} else if (len == 4) {
+				a = Int(slice(hex, 3, 4), 16) * 17;
+				r = Int(slice(hex, 0, 1), 16) * 17;
+				g = Int(slice(hex, 1, 2), 16) * 17;
+				b = Int(slice(hex, 2, 3), 16) * 17;
+				return a << 24 | r << 16 | g << 8 | b;
+				//the order stays as-is
+			}
+			r = Int(slice(hex, 0, 1), 16) * 17;
+			g = Int(slice(hex, 1, 2), 16) * 17;
+			b = Int(slice(hex, 2, 3), 16) * 17;
+			return r << 16 | g << 8 | b;
+			//the order stays as-is
 		}
 	}
 	// some global font variables for the ease of access, only handy if you
@@ -1762,10 +1767,10 @@ public class KL {
 		return new GridLay(rows, columns, hgap, vgap);
 	}
 	public static GridBagLay gridbaglay() {
-			return new GridBagLay();
+		return new GridBagLay();
 	}
 	public static GridBagSettings gridbagsettings() {
-			return new GridBagSettings();
+		return new GridBagSettings();
 	}
 	public static FlowLay flowlay() {
 		return new FlowLay();
@@ -1777,13 +1782,13 @@ public class KL {
 		return new FlowLay(align, hgap, vgap);
 	}
 	public static CardLay cardlay() {
-			return new CardLay();
+		return new CardLay();
 	}
 	public static CardLay cardlay(int hgap, int vgap) {
-			return new CardLay(hgap, vgap);
+		return new CardLay(hgap, vgap);
 	}
 	public static BoxLay boxlay(Container target, int axis) {
-			return new BoxLay(target, axis);
+		return new BoxLay(target, axis);
 	}
 	public static Panel panel() {
 		return new Panel();
@@ -1848,25 +1853,28 @@ public class KL {
 	public static Icon icon(java.net.URL urlObject) {
 		return new Icon(urlObject);
 	}
-	public static clr clr(int clr) {
-		return new clr(clr);
+	public static clr clr(int rgb) {
+		return new clr(rgb);
+	}
+	public static clr clr(int rgb, boolean includesAlphaAtEnd) {
+		return new clr(rgb, includesAlphaAtEnd);
 	}
 	public static clr clr(int r, int g, int b) {
 		return new clr(r, g, b);
-	}
-	public static clr clr(float r, float g, float b) {
-		return new clr(r, g, b);
-	}
-	public static clr clr(float r, float g, float b, float a) {
-		return new clr(r, g, b, a);
-		/*
-		 * @params all in the floating range: 0 to 1
-		 */
 	}
 	public static clr clr(int r, int g, int b, int a) {
 		return new clr(r, g, b, a);
 		/*
 		 * @params all in the integer range: 0 to 255
+		 */
+	}
+	public static clr clr(double r, double g, double b) {
+		return new clr(r, g, b);
+	}
+	public static clr clr(double r, double g, double b, double a) {
+		return new clr(r, g, b, a);
+		/*
+		 * @params all in the floating range: 0 to 1
 		 */
 	}
 	public static clr clr(String hexString) {
@@ -4202,7 +4210,7 @@ public class KL {
 		}
 	}
 	public static class Tree_B extends Tree<Integer, Boolean> {
-		// public static final long serialVersionUID = 1L;
+		public static final long serialVersionUID = 1L;
 		Tree_B() {
 			super();
 		}
@@ -4417,7 +4425,7 @@ public class KL {
 				super.add(x);
 			else {
 				if (i < 0 || i > super.size())
-					return null;
+					return this;
 				super.set(i, x);
 			}
 			return this;
@@ -4436,11 +4444,30 @@ public class KL {
 			return this;
 		}
 		StrArr sort() {
-			super.sort(null);
+			java.util.List newList = list();
+			Collections.sort(newList, String.CASE_INSENSITIVE_ORDER);
+			empty();
+			super.addAll(newList);
+			return this;
+		}
+		StrArr sort(String condition) {
+			if (not(condition)) return this;
+			if (condition.matches("^len(gth)?(:asc)?$")) {
+				super.sort((s1, s2) -> len(s1) - len(s2));
+			} else if (condition.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
+				super.sort((s1, s2) -> len(s2) - len(s1));
+			} else if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
+				sortReverse();
+			} else {
+				sort();
+			}
 			return this;
 		}
 		StrArr sortReverse() {
-			super.sort(Collections.reverseOrder());
+			java.util.List newList = list();
+			Collections.sort(newList, String.CASE_INSENSITIVE_ORDER.reversed());
+			empty();
+			super.addAll(newList);
 			return this;
 		}
 		StrArr reverseSort() {
@@ -4640,7 +4667,7 @@ public class KL {
 				super.add(x);
 			else {
 				if (i < 0 || i > super.size())
-					return null;
+					return this;
 				super.set(i, x);
 			}
 			return this;
@@ -4660,6 +4687,19 @@ public class KL {
 		}
 		IntArr sort() {
 			super.sort(null);
+			return this;
+		}
+		IntArr sort(String condition) {
+			if (not(condition)) return this;
+			if (condition.matches("^len(gth)?(:asc)?$")) {
+				super.sort((s1, s2) -> len(s1) - len(s2));
+			} else if (condition.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
+				super.sort((s1, s2) -> len(s2) - len(s1));
+			} else if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
+				sortReverse();
+			} else {
+				sort();
+			}
 			return this;
 		}
 		IntArr sortReverse() {
@@ -4879,7 +4919,7 @@ public class KL {
 				super.add(x);
 			else {
 				if (i < 0 || i > super.size())
-					return null;
+					return this;
 				super.set(i, x);
 			}
 			return this;
@@ -4899,6 +4939,19 @@ public class KL {
 		}
 		LongArr sort() {
 			super.sort(null);
+			return this;
+		}
+		LongArr sort(String condition) {
+			if (not(condition)) return this;
+			if (condition.matches("^len(gth)?(:asc)?$")) {
+				super.sort((s1, s2) -> len(s1) - len(s2));
+			} else if (condition.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
+				super.sort((s1, s2) -> len(s2) - len(s1));
+			} else if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
+				sortReverse();
+			} else {
+				sort();
+			}
 			return this;
 		}
 		LongArr sortReverse() {
@@ -5118,7 +5171,7 @@ public class KL {
 				super.add(x);
 			else {
 				if (i < 0 || i > super.size())
-					return null;
+					return this;
 				super.set(i, x);
 			}
 			return this;
@@ -5138,6 +5191,15 @@ public class KL {
 		}
 		FltArr sort() {
 			super.sort(null);
+			return this;
+		}
+		FltArr sort(String condition) {
+			if (not(condition)) return this;
+			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
+				sortReverse();
+			} else {
+				sort();
+			}
 			return this;
 		}
 		FltArr sortReverse() {
@@ -5357,7 +5419,7 @@ public class KL {
 				super.add(x);
 			else {
 				if (i < 0 || i > super.size())
-					return null;
+					return this;
 				super.set(i, x);
 			}
 			return this;
@@ -5377,6 +5439,15 @@ public class KL {
 		}
 		DblArr sort() {
 			super.sort(null);
+			return this;
+		}
+		DblArr sort(String condition) {
+			if (not(condition)) return this;
+			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
+				sortReverse();
+			} else {
+				sort();
+			}
 			return this;
 		}
 		DblArr sortReverse() {
@@ -5598,7 +5669,7 @@ public class KL {
 				super.add(x);
 			else {
 				if (i < 0 || i > super.size())
-					return null;
+					return this;
 				super.set(i, x);
 			}
 			return this;
@@ -5618,6 +5689,15 @@ public class KL {
 		}
 		BoolArr sort() {
 			super.sort(null);
+			return this;
+		}
+		BoolArr sort(String condition) {
+			if (not(condition)) return this;
+			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
+				sortReverse();
+			} else {
+				sort();
+			}
 			return this;
 		}
 		BoolArr sortReverse() {
@@ -6915,37 +6995,37 @@ public class KL {
 		return arr.array();
 	}
 	public static int[] range(int n, boolean reverse) {
-		if (not(n) || isNeg(n)) return new int[]{};
+		if (not(n) || isNeg(n)) return new int[] {};
 		if (reverse)
 			return range(n, 1);
 		return range(n);
 	}
 	public static int[] range(int m, int n, boolean reverse) {
-		if (not(m) || not(n) || eq(m, n)) return new int[]{};
+		if (not(m) || not(n) || eq(m, n)) return new int[] {};
 		if (reverse)
 			return range(n, m);
 		return range(m, n);
 	}
 	public static double[] range(double n, boolean reverse) {
-		if (not(n) || isNeg(n)) return new double[]{};
+		if (not(n) || isNeg(n)) return new double[] {};
 		if (reverse)
 			return range(n, 1);
 		return range(n);
 	}
 	public static double[] range(double m, double n, boolean reverse) {
-		if (not(m) || not(n) || eq(m, n)) return new double[]{};
+		if (not(m) || not(n) || eq(m, n)) return new double[] {};
 		if (reverse)
 			return range(n, m);
 		return range(m, n);
 	}
 	public static String[] range(String m, String n, boolean reverse) {
-		if (not(m) || not(n) || eq(m, n)) return new String[]{};
+		if (not(m) || not(n) || eq(m, n)) return new String[] {};
 		if (reverse)
 			return range(n, m);
 		return range(m, n);
 	}
 	public static char[] range(char m, char n, boolean reverse) {
-		if (not(m) || not(n) || eq(m, n)) return new char[]{};
+		if (not(m) || not(n) || eq(m, n)) return new char[] {};
 		if (reverse)
 			return range(n, m);
 		return range(m, n);
@@ -7201,25 +7281,47 @@ public class KL {
 	public static String repeat(String s) {
 		return repeat(s, 1);
 	}
-	public static String[] map(String[] arr, Function<String, String> func) {
-		if (arr == null || func == null) {
-			print("Neither the array, nor the function can be null");
-			return null;
+	public static char[] map(char[] arr, Function<Character, Character> func) {
+		if (not(arr) || not(func))
+			return arr;
+		char[] result = new char[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			result[i] = func.apply(arr[i]);
 		}
+		return result;
+	}
+	public static String[] map(String[] arr, Function<String, String> func) {
+		if (not(arr) || not(func))
+			return arr;
 		String[] result = new String[arr.length];
 		for (int i = 0; i < arr.length; i++) {
 			result[i] = func.apply(arr[i]);
 		}
 		return result;
 	}
-	public static int[] map(int[] array, IntUnaryOperator operator) {
-		return Arrays.stream(array).map(operator).toArray();
+	public static int[] map(int[] arr, IntUnaryOperator func) {
+		if (not(arr) || not(func))
+			return arr;
+		return Arrays.stream(arr).map(func).toArray();
 	}
-	public static long[] map(long[] array, LongUnaryOperator operator) {
-		return Arrays.stream(array).map(operator).toArray();
+	public static long[] map(long[] arr, LongUnaryOperator func) {
+		if (not(arr) || not(func))
+			return arr;
+		return Arrays.stream(arr).map(func).toArray();
 	}
-	public static double[] map(double[] array, DoubleUnaryOperator operator) {
-		return Arrays.stream(array).map(operator).toArray();
+	public static float[] map(float[] arr, Function<Float, Float> func) {
+		if (not(arr) || not(func))
+			return arr;
+		float[] result = new float[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			result[i] = func.apply(arr[i]);
+		}
+		return result;
+	}
+	public static double[] map(double[] arr, DoubleUnaryOperator func) {
+		if (not(arr) || not(func))
+			return arr;
+		return Arrays.stream(arr).map(func).toArray();
 	}
 	public static String[] popIf(String[] array, Predicate<String> condition) {
 		return new StrArr(array).popIf(condition).array();
@@ -8668,7 +8770,7 @@ public class KL {
 		}
 	}
 	public static int Int(String arg) {
-	    return Int(arg, 10);
+		return Int(arg, 10);
 	}
 	public static int Int(int n) {
 		return n;
@@ -8682,7 +8784,31 @@ public class KL {
 	public static int Int(double n) {
 		return (int) n;
 	}
+	public static int Int(Number n) {
+		return n.intValue();
+	}
 	public static int Int(boolean b) {
+		return b == true ? 1 : 0;
+	}
+	public static long Long(String arg) {
+		return (long) Int(arg);
+	}
+	public static long Long(int n) {
+		return (long) n;
+	}
+	public static long Long(long n) {
+		return n;
+	}
+	public static long Long(float n) {
+		return (long) n;
+	}
+	public static long Long(double n) {
+		return (long) n;
+	}
+	public static long Long(Number n) {
+		return n.longValue();
+	}
+	public static long Long(boolean b) {
 		return b == true ? 1 : 0;
 	}
 	public static float Flt(String arg) {
@@ -8704,25 +8830,10 @@ public class KL {
 	public static float Flt(double n) {
 		return (float) n;
 	}
+	public static float Flt(Number n) {
+		return n.floatValue();
+	}
 	public static float Flt(boolean b) {
-		return b == true ? 1 : 0;
-	}
-	public static long Long(String arg) {
-		return (long) Flt(arg);
-	}
-	public static long Long(int n) {
-		return (long) n;
-	}
-	public static long Long(long n) {
-		return n;
-	}
-	public static long Long(float n) {
-		return (long) n;
-	}
-	public static long Long(double n) {
-		return (long) n;
-	}
-	public static long Long(boolean b) {
 		return b == true ? 1 : 0;
 	}
 	public static double Dbl(String arg) {
@@ -8744,6 +8855,9 @@ public class KL {
 	public static double Dbl(double arg) {
 		return arg;
 	}
+	public static double Dbl(Number n) {
+		return n.doubleValue();
+	}
 	public static double Dbl(boolean b) {
 		return b == true ? 1 : 0;
 	}
@@ -8761,6 +8875,9 @@ public class KL {
 	}
 	public static double Double(double arg) {
 		return arg;
+	}
+	public static double Double(Number n) {
+		return Dbl(n);
 	}
 	public static double Double(boolean arg) {
 		return Dbl(arg);
@@ -10671,37 +10788,67 @@ public class KL {
 		return a && !b ? false : true;
 	}
 	public static int randInt() {
-		int number = ThreadLocalRandom.current().nextInt(0, 199);
+		int number = ThreadLocalRandom.current().nextInt(0, 99);
 		return number;
 	}
 	public static int randInt(int end) {
+		if (not(end)) return 0;
 		int number = ThreadLocalRandom.current().nextInt(0, end);
 		return number;
 	}
 	public static int randInt(int start, int end) {
+		if (not(start) || not(end) || eq(start, end)) return 0;
 		int number = ThreadLocalRandom.current().nextInt(start, end);
 		return number;
+	}
+	public static int randPin(int len) {
+	    String str = "";
+	    if (not(len) || len < 4) len = 4;
+	    if (isInf(len) || len > 8) len = 8;
+	    while (len > 0) {
+	        str += "" + randInt(10);
+	        len--;
+	    }
+	    int result = Int(str);
+	    return result;
+	}
+	public static int randPin() {
+	    return randPin(4);
+	}
+	public static int randOTP(int len) {
+	    return randPin(len);
+	}
+	public static int randOTP() {
+	    return randPin();
 	}
 	public static double randFlt() {
 		double number = randInt() * .3;
 		return number;
 	}
 	public static double randFlt(int end) {
+		if (not(end)) return 0;
 		double number = randInt(end) * .3;
 		return number;
 	}
 	public static double randFlt(int start, int end) {
+		if (not(start) || not(end) || eq(start, end)) return 0;
 		double number = randInt(start, end) * .3;
 		return number;
 	}
 	public static double randDbl() {
-		return randFlt();
+		return (double)randFlt();
 	}
 	public static double randDbl(int end) {
-		return randFlt(end);
+		if (not(end)) return 0;
+		return (double)randFlt(end);
 	}
 	public static double randDbl(int start, int end) {
-		return randFlt(start, end);
+		if (not(start) || not(end) || eq(start, end)) return 0;
+		return (double)randFlt(start, end);
+	}
+	public static String randPct() {
+		Number[] nums = {randInt(100), randDbl()};
+		return randFrom(nums) + "%";
 	}
 	public static String randStr(int len) {
 		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop"
@@ -12014,7 +12161,7 @@ public class KL {
 		Matcher matcher = pattern.matcher(str);
 		StrArr arr = new StrArr();
 		while (matcher.find())
-            arr.push(matcher.group());
+			arr.push(matcher.group());
 		return arr.array();
 	}
 	public static int[] intsOf(String s) {
@@ -12607,13 +12754,28 @@ public class KL {
 		s = s.toUpperCase();
 		return s;
 	}
+	public static String[] upper(String... arr) {
+		if (not(arr)) return arr;
+		arr = map(arr, KL::upper);
+		return arr;
+	}
 	public static char upper(char c) {
 		c = Str(c).toUpperCase().charAt(0);
 		return c;
 	}
+	public static char[] upper(char... arr) {
+		if (not(arr)) return arr;
+		arr = map(arr, KL::upper);
+		return arr;
+	}
 	public static String lower(String s) {
 		s = s.toLowerCase();
 		return s;
+	}
+	public static String[] lower(String... arr) {
+		if (not(arr)) return arr;
+		arr = map(arr, KL::lower);
+		return arr;
 	}
 	public static char lower(char c) {
 		c = Str(c).toLowerCase().charAt(0);
@@ -12650,6 +12812,10 @@ public class KL {
 				.replaceAll("(?<!\\w)i(?!\\w)", "I");
 		return input;
 	}
+	public static String[] sentCase(String... inputs) {
+		inputs = map(inputs, KL::sentCase);
+		return inputs;
+	}
 	public static String titleCase(String input) {
 		String[] parts = input.split("");
 		String result = "";
@@ -12664,6 +12830,10 @@ public class KL {
 			result += "" + c;
 		}
 		return result;
+	}
+	public static String[] titleCase(String... inputs) {
+		inputs = map(inputs, KL::titleCase);
+		return inputs;
 	}
 	public static String reverse(String str) {
 		return new StringBuilder(str).reverse().toString();
@@ -13050,42 +13220,87 @@ public class KL {
 		return arr.reverse();
 	}
 	public static String[] sort(String[] arr) {
-		Arrays.sort(arr);
-		return arr;
+		return new StrArr(arr).sort().array();
+	}
+	public static String[] sort(String[] arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return new StrArr(arr).sort(condition).array();
 	}
 	public static int[] sort(int[] arr) {
-		Arrays.sort(arr);
-		return arr;
+		return new IntArr(arr).sort().array();
+	}
+	public static int[] sort(int[] arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return new IntArr(arr).sort(condition).array();
 	}
 	public static long[] sort(long[] arr) {
-		Arrays.sort(arr);
-		return arr;
+		return new LongArr(arr).sort().array();
+	}
+	public static long[] sort(long[] arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return new LongArr(arr).sort(condition).array();
 	}
 	public static float[] sort(float[] arr) {
-		Arrays.sort(arr);
-		return arr;
+		return new FltArr(arr).sort().array();
+	}
+	public static float[] sort(float[] arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return new FltArr(arr).sort(condition).array();
 	}
 	public static double[] sort(double[] arr) {
-		Arrays.sort(arr);
-		return arr;
+		return new DblArr(arr).sort().array();
+	}
+	public static double[] sort(double[] arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return new DblArr(arr).sort(condition).array();
+	}
+	public static boolean[] sort(boolean[] arr) {
+		return new BoolArr(arr).sort().array();
+	}
+	public static boolean[] sort(boolean[] arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return new BoolArr(arr).sort(condition).array();
 	}
 	public static StrArr sort(StrArr arr) {
 		return arr.sort();
 	}
+	public static StrArr sort(StrArr arr, String condition) {
+		return new StrArr(sort(arr.array(), condition));
+	}
 	public static IntArr sort(IntArr arr) {
 		return arr.sort();
+	}
+	public static IntArr sort(IntArr arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return arr.sort(condition);
 	}
 	public static LongArr sort(LongArr arr) {
 		return arr.sort();
 	}
+	public static LongArr sort(LongArr arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return arr.sort(condition);
+	}
 	public static FltArr sort(FltArr arr) {
 		return arr.sort();
+	}
+	public static FltArr sort(FltArr arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return arr.sort(condition);
 	}
 	public static DblArr sort(DblArr arr) {
 		return arr.sort();
 	}
+	public static DblArr sort(DblArr arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return arr.sort(condition);
+	}
 	public static BoolArr sort(BoolArr arr) {
 		return arr.sort();
+	}
+	public static BoolArr sort(BoolArr arr, String condition) {
+		if (not(arr) || not(condition)) return arr;
+		return arr.sort(condition);
 	}
 	public static String[] sortReverse(String[] arr) {
 		return new StrArr(arr).sortReverse().array();
@@ -14286,15 +14501,11 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
-		/*sw(8.4, ">9", () -> print("uh...?"), "==8.47", () -> print("yeah"),
-				">16", () -> print("still a no?"), "==12", () -> print("ugh"),
-				">51", () -> print("no?"), ">92", () -> print("I dunno"), "<3",
-				() -> print("could it be that?"), ">8",
-				() -> print("you got me"), Else, () -> print("neither"));
-		// WORK IN PROGRESS*/
-		print(clr("#7fc6").getAlpha());
-		printArr(intsOf("hi there 6.1 7.4 love, I'm 666, that's right, a devil girl"));
-		sw('f', ">105", () -> print("possibly?"), 102, () -> print("quite a match"), Else, () -> print("it does NOT match"));
-		//print(join(nums, "+"));
+		String[] arr = {"hi", "Hola", "hallo", "bonjour", "zoo", "YiPPe yay"};
+		arr = sort(arr, "desc");
+		arr = lower(arr);
+		char[] chars = Chars(lastOf(arr));
+		printArr(upper(chars));
+		printArr(sentCase(arr));
 	}
 }
