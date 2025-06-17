@@ -227,8 +227,8 @@ public class KL {
 			return "";
 		}
 	}
-	public static Obj_S fetch(String url) {
-		Obj_S map = new Obj_S();
+	public static ObjS fetch(String url) {
+		ObjS map = new ObjS();
 		try {
 			URL urlString = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
@@ -1694,6 +1694,7 @@ public class KL {
 			this(from(hexStringWithAlpha), hasApha);
 			/*
 			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff
+			 clr red = clr("red
 			 */
 		}
 		clr(String hexStringWithAlpha) {
@@ -1949,11 +1950,11 @@ public class KL {
 		return null;
 	}
 	// general
-	public static final class Obj_S extends HashMap<String, String> {
-		Obj_S() {
+	public static final class ObjS extends HashMap<String, String> {
+		ObjS() {
 			super();
 		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
 			  String k4, String v4, String k5, String v5, String k6,
 			  String v6, String k7, String v7, String k8, String v8,
 			  String k9, String v9, String k10, String v10) {
@@ -1968,7 +1969,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
 			  String k4, String v4, String k5, String v5, String k6,
 			  String v6, String k7, String v7, String k8, String v8,
 			  String k9, String v9) {
@@ -1982,7 +1983,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
 			  String k4, String v4, String k5, String v5, String k6,
 			  String v6, String k7, String v7, String k8, String v8) {
 			super.put(k1, v1);
@@ -1994,7 +1995,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
 			  String k4, String v4, String k5, String v5, String k6,
 			  String v6, String k7, String v7) {
 			super.put(k1, v1);
@@ -2005,7 +2006,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
 			  String k4, String v4, String k5, String v5, String k6,
 			  String v6) {
 			super.put(k1, v1);
@@ -2015,7 +2016,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
 			  String k4, String v4, String k5, String v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2023,24 +2024,24 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3, String v3,
+		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
 			  String k4, String v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Obj_S(String k1, String v1, String k2, String v2, String k3,
+		ObjS(String k1, String v1, String k2, String v2, String k3,
 			  String v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Obj_S(String k1, String v1, String k2, String v2) {
+		ObjS(String k1, String v1, String k2, String v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Obj_S(String k1, String v1) {
+		ObjS(String k1, String v1) {
 			super.put(k1, v1);
 		}
 		String key(String k) {
@@ -2060,6 +2061,9 @@ public class KL {
 		}
 		boolean hasValue(String v) {
 			return super.containsValue(v);
+		}
+		boolean has(String o) {
+			return hasKey(o) || hasValue(o);
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -2082,6 +2086,11 @@ public class KL {
 		}
 		String nthValue(int n) {
 			return n >= 0 && n < length() ? array()[n] : "";
+		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
 		}
 		String nthLastValue(int n) {
 			return n > 0 && n <= length() ? array()[length() - n] : "";
@@ -2115,14 +2124,14 @@ public class KL {
 		String last() {
 			return nthlast(1);
 		}
-		Obj_S set(String k, String v) {
+		ObjS set(String k, String v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		Obj_S add(String k, String v) {
+		ObjS add(String k, String v) {
 			set(k, v);
 			return this;
 		}
@@ -2131,14 +2140,14 @@ public class KL {
 			super.remove(k);
 			return v;
 		}
-		Obj_S push(String k, String v) {
+		ObjS push(String k, String v) {
 			add(k, v);
 			return this;
 		}
 		String pop(String k) {
 			return delete (k);
 		}
-		Obj_S update(String k, String v) {
+		ObjS update(String k, String v) {
 			set(k, v);
 			return this;
 		}
@@ -2147,6 +2156,33 @@ public class KL {
 		}
 		Set<Map.Entry<String, String>> entries() {
 			return super.entrySet();
+		}
+		ObjS mapKey(Function<String, String> fn) {
+	        HashMap<String, String> newMap = new HashMap<>();
+	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+	        super.clear();
+	        super.putAll(newMap);
+	        return this;
+    	}
+		ObjS map(Function<String, String> fn) {
+	        super.replaceAll((k, v) -> fn.apply(v));
+	        return this;
+    	}
+    	ObjS map(BiFunction<? super String, ? super String, ? extends String> fn) {
+	        super.replaceAll(fn);
+	        return this;
+    	}
+    	ObjS eachKey(Consumer<String> fn) {
+			super.keySet().forEach(fn);
+			return this;
+		}
+    	ObjS each(Consumer<String> fn) {
+			super.values().forEach(fn);
+			return this;
+		}
+		ObjS each(BiConsumer<? super String, ? super String> fn) {
+			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -2158,11 +2194,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class Obj_I extends HashMap<String, Integer> {
-		Obj_I() {
+	public static final class ObjI extends HashMap<String, Integer> {
+		ObjI() {
 			super();
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3, String k4, Integer v4, String k5, Integer v5,
 			  String k6, Integer v6, String k7, Integer v7, String k8,
 			  Integer v8, String k9, Integer v9, String k10, Integer v10) {
@@ -2177,7 +2213,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3, String k4, Integer v4, String k5, Integer v5,
 			  String k6, Integer v6, String k7, Integer v7, String k8,
 			  Integer v8, String k9, Integer v9) {
@@ -2191,7 +2227,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3, String k4, Integer v4, String k5, Integer v5,
 			  String k6, Integer v6, String k7, Integer v7, String k8,
 			  Integer v8) {
@@ -2204,7 +2240,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3, String k4, Integer v4, String k5, Integer v5,
 			  String k6, Integer v6, String k7, Integer v7) {
 			super.put(k1, v1);
@@ -2215,7 +2251,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3, String k4, Integer v4, String k5, Integer v5,
 			  String k6, Integer v6) {
 			super.put(k1, v1);
@@ -2225,7 +2261,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3, String k4, Integer v4, String k5, Integer v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2233,24 +2269,24 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3, String k4, Integer v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2, String k3,
+		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
 			  Integer v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Obj_I(String k1, Integer v1, String k2, Integer v2) {
+		ObjI(String k1, Integer v1, String k2, Integer v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Obj_I(String k, Integer v) {
+		ObjI(String k, Integer v) {
 			super.put(k, v);
 		}
 		int key(String k) {
@@ -2270,6 +2306,11 @@ public class KL {
 		}
 		boolean hasValue(Integer v) {
 			return super.containsValue(v);
+		}
+		boolean has(Object o) {
+			if (o instanceof String) return hasKey((String)o);
+			else if (o instanceof Integer) return hasValue((Integer)o);
+			return false;
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -2292,6 +2333,11 @@ public class KL {
 		}
 		int nthValue(int n) {
 			return n >= 0 && n < length() ? array()[n] : 0;
+		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
 		}
 		int nthLastValue(int n) {
 			return n > 0 && n <= length() ? array()[length() - n] : 0;
@@ -2325,14 +2371,14 @@ public class KL {
 		int last() {
 			return nthlast(1);
 		}
-		Obj_I set(String k, Integer v) {
+		ObjI set(String k, Integer v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		Obj_I add(String k, Integer v) {
+		ObjI add(String k, Integer v) {
 			set(k, v);
 			return this;
 		}
@@ -2341,14 +2387,14 @@ public class KL {
 			super.remove(k);
 			return v;
 		}
-		Obj_I push(String k, int v) {
+		ObjI push(String k, int v) {
 			add(k, v);
 			return this;
 		}
 		int pop(String k) {
 			return delete (k);
 		}
-		Obj_I update(String k, Integer v) {
+		ObjI update(String k, Integer v) {
 			set(k, v);
 			return this;
 		}
@@ -2357,6 +2403,33 @@ public class KL {
 		}
 		Set<Map.Entry<String, Integer>> entries() {
 			return super.entrySet();
+		}
+		ObjI mapKey(Function<String, String> fn) {
+	        HashMap<String, Integer> newMap = new HashMap<>();
+	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+	        super.clear();
+	        super.putAll(newMap);
+	        return this;
+    	}
+		ObjI map(Function<Integer, Integer> fn) {
+	        super.replaceAll((k, v) -> fn.apply(v));
+	        return this;
+    	}
+    	ObjI map(BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
+	        super.replaceAll(fn);
+	        return this;
+    	}
+    	ObjI eachKey(Consumer<String> fn) {
+			super.keySet().forEach(fn);
+			return this;
+		}
+    	ObjI each(Consumer<Integer> fn) {
+			super.values().forEach(fn);
+			return this;
+		}
+		ObjI each(BiConsumer<? super String, ? super Integer> fn) {
+			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -2368,11 +2441,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class Obj_L extends HashMap<String, Long> {
-		Obj_L() {
+	public static final class ObjL extends HashMap<String, Long> {
+		ObjL() {
 			super();
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
 			  String k7, Long v7, String k8, Long v8, String k9, Long v9,
 			  String k10, Long v10) {
@@ -2387,7 +2460,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
 			  String k7, Long v7, String k8, Long v8, String k9, Long v9) {
 			super.put(k1, v1);
@@ -2400,7 +2473,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
 			  String k7, Long v7, String k8, Long v8) {
 			super.put(k1, v1);
@@ -2412,7 +2485,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
 			  String k7, Long v7) {
 			super.put(k1, v1);
@@ -2423,7 +2496,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 			  String k4, Long v4, String k5, Long v5, String k6, Long v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2432,7 +2505,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 			  String k4, Long v4, String k5, Long v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2440,23 +2513,23 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 			  String k4, Long v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
+		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Obj_L(String k1, Long v1, String k2, Long v2) {
+		ObjL(String k1, Long v1, String k2, Long v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Obj_L(String k, Long v) {
+		ObjL(String k, Long v) {
 			super.put(k, v);
 		}
 		long key(String k) {
@@ -2492,6 +2565,11 @@ public class KL {
 		}
 		long nthValue(int n) {
 			return n >= 0 && n < length() ? array()[n] : 0;
+		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
 		}
 		long nthLastValue(int n) {
 			return n > 0 && n <= length() ? array()[length() - n] : 0;
@@ -2531,28 +2609,33 @@ public class KL {
 		boolean hasValue(Long v) {
 			return super.containsValue(v);
 		}
-		Obj_L set(String k, Long v) {
+		boolean has(Object o) {
+			if (o instanceof String) return hasKey((String)o);
+			else if (o instanceof Long) return hasValue((Long)o);
+			return false;
+		}
+		ObjL set(String k, Long v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		Obj_L add(String k, Long v) {
+		ObjL add(String k, Long v) {
 			set(k, v);
 			return this;
 		}
 		long delete (String k) {
 			return super.remove(k);
 		}
-		Obj_L push(String k, long v) {
+		ObjL push(String k, long v) {
 			add(k, v);
 			return this;
 		}
 		long pop(String k) {
 			return delete (k);
 		}
-		Obj_L update(String k, Long v) {
+		ObjL update(String k, Long v) {
 			set(k, v);
 			return this;
 		}
@@ -2561,6 +2644,33 @@ public class KL {
 		}
 		Set<Map.Entry<String, Long>> entries() {
 			return super.entrySet();
+		}
+		ObjL mapKey(Function<String, String> fn) {
+	        HashMap<String, Long> newMap = new HashMap<>();
+	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+	        super.clear();
+	        super.putAll(newMap);
+	        return this;
+    	}
+		ObjL map(Function<Long, Long> fn) {
+	        super.replaceAll((k, v) -> fn.apply(v));
+	        return this;
+    	}
+    	ObjL map(BiFunction<? super String, ? super Long, ? extends Long> fn) {
+	        super.replaceAll(fn);
+	        return this;
+    	}
+    	ObjL eachKey(Consumer<String> fn) {
+			super.keySet().forEach(fn);
+			return this;
+		}
+    	ObjL each(Consumer<Long> fn) {
+			super.values().forEach(fn);
+			return this;
+		}
+		ObjL each(BiConsumer<? super String, ? super Long> fn) {
+			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -2572,11 +2682,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class Obj_F extends HashMap<String, Float> {
-		Obj_F() {
+	public static final class ObjF extends HashMap<String, Float> {
+		ObjF() {
 			super();
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
 			  String k7, Float v7, String k8, Float v8, String k9, Float v9,
 			  String k10, Float v10) {
@@ -2591,7 +2701,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
 			  String k7, Float v7, String k8, Float v8, String k9, Float v9) {
 			super.put(k1, v1);
@@ -2604,7 +2714,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
 			  String k7, Float v7, String k8, Float v8) {
 			super.put(k1, v1);
@@ -2616,7 +2726,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
 			  String k7, Float v7) {
 			super.put(k1, v1);
@@ -2627,7 +2737,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 			  String k4, Float v4, String k5, Float v5, String k6, Float v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2636,7 +2746,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 			  String k4, Float v4, String k5, Float v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2644,23 +2754,23 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 			  String k4, Float v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
+		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Obj_F(String k1, Float v1, String k2, Float v2) {
+		ObjF(String k1, Float v1, String k2, Float v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Obj_F(String k1, Float v1) {
+		ObjF(String k1, Float v1) {
 			super.put(k1, v1);
 		}
 		float key(String k) {
@@ -2696,6 +2806,11 @@ public class KL {
 		}
 		float nthValue(int n) {
 			return n >= 0 && n < length() ? array()[n] : 0;
+		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
 		}
 		float nthLastValue(int n) {
 			return n > 0 && n <= length() ? array()[length() - n] : 0;
@@ -2735,28 +2850,33 @@ public class KL {
 		boolean hasValue(Float v) {
 			return super.containsValue(v);
 		}
-		Obj_F set(String k, Float v) {
+		boolean has(Object o) {
+			if (o instanceof String) return hasKey((String)o);
+			else if (o instanceof Float) return hasValue((Float)o);
+			return false;
+		}
+		ObjF set(String k, Float v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		Obj_F add(String k, Float v) {
+		ObjF add(String k, Float v) {
 			set(k, v);
 			return this;
 		}
 		float delete (String k) {
 			return super.remove(k);
 		}
-		Obj_F push(String k, float v) {
+		ObjF push(String k, float v) {
 			add(k, v);
 			return this;
 		}
 		float pop(String k) {
 			return delete (k);
 		}
-		Obj_F update(String k, Float v) {
+		ObjF update(String k, Float v) {
 			set(k, v);
 			return this;
 		}
@@ -2765,6 +2885,33 @@ public class KL {
 		}
 		Set<Map.Entry<String, Float>> entries() {
 			return super.entrySet();
+		}
+		ObjF mapKey(Function<String, String> fn) {
+	        HashMap<String, Float> newMap = new HashMap<>();
+	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+	        super.clear();
+	        super.putAll(newMap);
+	        return this;
+    	}
+		ObjF map(Function<Float, Float> fn) {
+	        super.replaceAll((k, v) -> fn.apply(v));
+	        return this;
+    	}
+    	ObjF map(BiFunction<? super String, ? super Float, ? extends Float> fn) {
+	        super.replaceAll(fn);
+	        return this;
+    	}
+    	ObjF eachKey(Consumer<String> fn) {
+			super.keySet().forEach(fn);
+			return this;
+		}
+    	ObjF each(Consumer<Float> fn) {
+			super.values().forEach(fn);
+			return this;
+		}
+		ObjF each(BiConsumer<? super String, ? super Float> fn) {
+			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -2776,11 +2923,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class Obj_D extends HashMap<String, Double> {
-		Obj_D() {
+	public static final class ObjD extends HashMap<String, Double> {
+		ObjD() {
 			super();
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 			  String k4, Double v4, String k5, Double v5, String k6,
 			  Double v6, String k7, Double v7, String k8, Double v8,
 			  String k9, Double v9, String k10, Double v10) {
@@ -2795,7 +2942,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 			  String k4, Double v4, String k5, Double v5, String k6,
 			  Double v6, String k7, Double v7, String k8, Double v8,
 			  String k9, Double v9) {
@@ -2809,7 +2956,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 			  String k4, Double v4, String k5, Double v5, String k6,
 			  Double v6, String k7, Double v7, String k8, Double v8) {
 			super.put(k1, v1);
@@ -2821,7 +2968,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 			  String k4, Double v4, String k5, Double v5, String k6,
 			  Double v6, String k7, Double v7) {
 			super.put(k1, v1);
@@ -2832,7 +2979,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 			  String k4, Double v4, String k5, Double v5, String k6,
 			  Double v6) {
 			super.put(k1, v1);
@@ -2842,7 +2989,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 			  String k4, Double v4, String k5, Double v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2850,24 +2997,24 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 			  String k4, Double v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2, String k3,
+		ObjD(String k1, Double v1, String k2, Double v2, String k3,
 			  Double v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Obj_D(String k1, Double v1, String k2, Double v2) {
+		ObjD(String k1, Double v1, String k2, Double v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Obj_D(String k, Double v) {
+		ObjD(String k, Double v) {
 			super.put(k, v);
 		}
 		double key(String k) {
@@ -2903,6 +3050,11 @@ public class KL {
 		}
 		double nthValue(int n) {
 			return n >= 0 && n < length() ? array()[n] : 0;
+		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
 		}
 		double nthLastValue(int n) {
 			return n > 0 && n <= length() ? array()[length() - n] : 0;
@@ -2942,28 +3094,33 @@ public class KL {
 		boolean hasValue(Double v) {
 			return super.containsValue(v);
 		}
-		Obj_D set(String k, Double v) {
+		boolean has(Object o) {
+			if (o instanceof String) return hasKey((String)o);
+			else if (o instanceof Double) return hasValue((Double)o);
+			return false;
+		}
+		ObjD set(String k, Double v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		Obj_D add(String k, Double v) {
+		ObjD add(String k, Double v) {
 			set(k, v);
 			return this;
 		}
 		double delete (String k) {
 			return super.remove(k);
 		}
-		Obj_D push(String k, double v) {
+		ObjD push(String k, double v) {
 			add(k, v);
 			return this;
 		}
 		double pop(String k) {
 			return delete (k);
 		}
-		Obj_D update(String k, Double v) {
+		ObjD update(String k, Double v) {
 			set(k, v);
 			return this;
 		}
@@ -2972,6 +3129,33 @@ public class KL {
 		}
 		Set<Map.Entry<String, Double>> entries() {
 			return super.entrySet();
+		}
+		ObjD mapKey(Function<String, String> fn) {
+	        HashMap<String, Double> newMap = new HashMap<>();
+	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+	        super.clear();
+	        super.putAll(newMap);
+	        return this;
+    	}
+		ObjD map(Function<Double, Double> fn) {
+	        super.replaceAll((k, v) -> fn.apply(v));
+	        return this;
+    	}
+    	ObjD map(BiFunction<? super String, ? super Double, ? extends Double> fn) {
+	        super.replaceAll(fn);
+	        return this;
+    	}
+    	ObjD eachKey(Consumer<String> fn) {
+			super.keySet().forEach(fn);
+			return this;
+		}
+    	ObjD each(Consumer<Double> fn) {
+			super.values().forEach(fn);
+			return this;
+		}
+		ObjD each(BiConsumer<? super String, ? super Double> fn) {
+			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -2983,11 +3167,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class Obj_B extends HashMap<String, Boolean> {
-		Obj_B() {
+	public static final class ObjB extends HashMap<String, Boolean> {
+		ObjB() {
 			super();
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 			  String k6, Boolean v6, String k7, Boolean v7, String k8,
 			  Boolean v8, String k9, Boolean v9, String k10, Boolean v10) {
@@ -3002,7 +3186,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 			  String k6, Boolean v6, String k7, Boolean v7, String k8,
 			  Boolean v8, String k9, Boolean v9) {
@@ -3016,7 +3200,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 			  String k6, Boolean v6, String k7, Boolean v7, String k8,
 			  Boolean v8) {
@@ -3029,7 +3213,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 			  String k6, Boolean v6, String k7, Boolean v7) {
 			super.put(k1, v1);
@@ -3040,7 +3224,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 			  String k6, Boolean v6) {
 			super.put(k1, v1);
@@ -3050,7 +3234,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -3058,24 +3242,24 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3, String k4, Boolean v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 			  Boolean v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Obj_B(String k1, Boolean v1, String k2, Boolean v2) {
+		ObjB(String k1, Boolean v1, String k2, Boolean v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Obj_B(String k, Boolean v) {
+		ObjB(String k, Boolean v) {
 			super.put(k, v);
 		}
 		boolean key(String k) {
@@ -3111,6 +3295,11 @@ public class KL {
 		}
 		boolean nthValue(int n) {
 			return n >= 0 && n < length() ? array()[n] : false;
+		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
 		}
 		boolean nthLastValue(int n) {
 			return n > 0 && n <= length() ? array()[length() - n] : false;
@@ -3150,28 +3339,33 @@ public class KL {
 		boolean hasValue(Boolean v) {
 			return super.containsValue(v);
 		}
-		Obj_B set(String k, Boolean v) {
+		boolean has(Object o) {
+			if (o instanceof String) return hasKey((String)o);
+			else if (o instanceof Boolean) return hasValue((Boolean)o);
+			return false;
+		}
+		ObjB set(String k, Boolean v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		Obj_B add(String k, Boolean v) {
+		ObjB add(String k, Boolean v) {
 			set(k, v);
 			return this;
 		}
 		boolean delete (String k) {
 			return super.remove(k);
 		}
-		Obj_B push(String k, Boolean v) {
+		ObjB push(String k, Boolean v) {
 			add(k, v);
 			return this;
 		}
 		boolean pop(String k) {
 			return delete (k);
 		}
-		Obj_B update(String k, Boolean v) {
+		ObjB update(String k, Boolean v) {
 			set(k, v);
 			return this;
 		}
@@ -3180,6 +3374,33 @@ public class KL {
 		}
 		Set<Map.Entry<String, Boolean>> entries() {
 			return super.entrySet();
+		}
+		ObjB mapKey(Function<String, String> fn) {
+	        HashMap<String, Boolean> newMap = new HashMap<>();
+	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+	        super.clear();
+	        super.putAll(newMap);
+	        return this;
+    	}
+		ObjB map(Function<Boolean, Boolean> fn) {
+	        super.replaceAll((k, v) -> fn.apply(v));
+	        return this;
+    	}
+    	ObjB map(BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
+	        super.replaceAll(fn);
+	        return this;
+    	}
+    	ObjB eachKey(Consumer<String> fn) {
+			super.keySet().forEach(fn);
+			return this;
+		}
+    	ObjB each(Consumer<Boolean> fn) {
+			super.values().forEach(fn);
+			return this;
+		}
+		ObjB each(BiConsumer<? super String, ? super Boolean> fn) {
+			super.forEach(fn);
+			return this;
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -3192,6 +3413,7 @@ public class KL {
 		}
 	}
 	public static class Tree<Key, Value> extends TreeMap<Key, Value> {
+		public static final long serialVersionUID = 1L;
 		Tree() {
 			super();
 		}
@@ -3348,6 +3570,33 @@ public class KL {
 		Set<Map.Entry<Key, Value>> entries() {
 			return super.entrySet();
 		}
+		Tree<Key, Value> mapKey(Function<Key, Key> fn) {
+	        HashMap<Key, Value> newMap = new HashMap<>();
+	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+	        super.clear();
+	        super.putAll(newMap);
+	        return this;
+    	}
+		Tree<Key, Value> map(Function<Value, Value> fn) {
+	        super.replaceAll((k, v) -> fn.apply(v));
+	        return this;
+    	}
+    	Tree<Key, Value> map(BiFunction<? super Key, ? super Value, ? extends Value> fn) {
+	        super.replaceAll(fn);
+	        return this;
+    	}
+    	Tree<Key, Value> eachKey(Consumer<Key> fn) {
+			super.keySet().forEach(fn);
+			return this;
+		}
+    	Tree<Key, Value> each(Consumer<Value> fn) {
+			super.values().forEach(fn);
+			return this;
+		}
+		Tree<Key, Value> each(BiConsumer<? super Key, ? super Value> fn) {
+			super.forEach(fn);
+			return this;
+		}
 		void printMap() {
 			System.out.println(super.clone());
 		}
@@ -3358,55 +3607,55 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Tree_S extends Tree<String, Integer> {
-		// public static final long serialVersionUID = 1L;
-		Tree_S() {
+	public static class TreeS extends Tree<String, Integer> {
+		public static final long serialVersionUID = 1L;
+		TreeS() {
 			super();
 		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
 			   String k4, int v4, String k5, int v5, String k6, int v6,
 			   String k7, int v7, String k8, int v8, String k9, int v9,
 			   String k10, int v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
 			   String k4, int v4, String k5, int v5, String k6, int v6,
 			   String k7, int v7, String k8, int v8, String k9, int v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
 			   String k4, int v4, String k5, int v5, String k6, int v6,
 			   String k7, int v7, String k8, int v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
 			   String k4, int v4, String k5, int v5, String k6, int v6,
 			   String k7, int v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
 			   String k4, int v4, String k5, int v5, String k6, int v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
 			   String k4, int v4, String k5, int v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3,
+		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
 			   String k4, int v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_S(String k1, int v1, String k2, int v2, String k3, int v3) {
+		TreeS(String k1, int v1, String k2, int v2, String k3, int v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_S(String k1, int v1, String k2, int v2) {
+		TreeS(String k1, int v1, String k2, int v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_S(String k1, int v1) {
+		TreeS(String k1, int v1) {
 			super(k1, v1);
 		}
-		Tree_S copy() {
-			return (Tree_S) super.clone();
+		TreeS copy() {
+			return (TreeS) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3430,6 +3679,10 @@ public class KL {
 		int nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : 0;
 		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// bugfixed
+		}
 		int nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -3451,56 +3704,61 @@ public class KL {
 		int nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof String) return super.hasKey((String)o);
+			else if (o instanceof Integer) return super.hasValue((Integer)o);
+			return false;
+		}
 	}
-	public static class Tree_SL extends Tree<String, Long> {
+	public static class TreeSL extends Tree<String, Long> {
 		// public static final long serialVersionUID = 1L;
-		Tree_SL() {
+		TreeSL() {
 			super();
 		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8, String k9, long v9,
 				String k10, long v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8, String k9, long v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3,
+		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_SL(String k1, long v1, String k2, long v2, String k3, long v3) {
+		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_SL(String k1, long v1, String k2, long v2) {
+		TreeSL(String k1, long v1, String k2, long v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_SL(String k1, long v1) {
+		TreeSL(String k1, long v1) {
 			super(k1, v1);
 		}
-		Tree_SL copy() {
-			return (Tree_SL) super.clone();
+		TreeSL copy() {
+			return (TreeSL) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3524,6 +3782,10 @@ public class KL {
 		long nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : 0;
 		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// bugfixed
+		}
 		long nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -3546,56 +3808,61 @@ public class KL {
 		long nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof String) return super.hasKey((String)o);
+			else if (o instanceof Long) return super.hasValue((Long)o);
+			return false;
+		}
 	}
-	public static class Tree_SF extends Tree<String, Float> {
+	public static class TreeSF extends Tree<String, Float> {
 		// public static final long serialVersionUID = 1L;
-		Tree_SF() {
+		TreeSF() {
 			super();
 		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8, String k9, float v9,
 				String k10, float v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8, String k9, float v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3,
+		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_SF(String k1, float v1, String k2, float v2, String k3, float v3) {
+		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_SF(String k1, float v1, String k2, float v2) {
+		TreeSF(String k1, float v1, String k2, float v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_SF(String k1, float v1) {
+		TreeSF(String k1, float v1) {
 			super(k1, v1);
 		}
-		Tree_SF copy() {
-			return (Tree_SF) super.clone();
+		TreeSF copy() {
+			return (TreeSF) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3619,6 +3886,10 @@ public class KL {
 		float nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : 0;
 		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// bugfixed
+		}
 		float nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -3641,60 +3912,65 @@ public class KL {
 		float nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof String) return super.hasKey((String)o);
+			else if (o instanceof Float) return super.hasValue((Float)o);
+			return false;
+		}
 	}
-	public static class Tree_SD extends Tree<String, Double> {
+	public static class TreeSD extends Tree<String, Double> {
 		// public static final long serialVersionUID = 1L;
-		Tree_SD() {
+		TreeSD() {
 			super();
 		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3,
+		TreeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6, String k7, double v7, String k8,
 				double v8, String k9, double v9, String k10, double v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3,
+		TreeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6, String k7, double v7, String k8,
 				double v8, String k9, double v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3,
+		TreeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6, String k7, double v7, String k8,
 				double v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3,
+		TreeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6, String k7, double v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3,
+		TreeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5,
 				String k6, double v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3,
+		TreeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4, String k5, double v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3,
+		TreeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3, String k4, double v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_SD(String k1, double v1, String k2, double v2, String k3,
+		TreeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_SD(String k1, double v1, String k2, double v2) {
+		TreeSD(String k1, double v1, String k2, double v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_SD(String k1, double v1) {
+		TreeSD(String k1, double v1) {
 			super(k1, v1);
 		}
-		Tree_SD copy() {
-			return (Tree_SD) super.clone();
+		TreeSD copy() {
+			return (TreeSD) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3718,6 +3994,10 @@ public class KL {
 		double nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : 0;
 		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// bugfixed
+		}
 		double nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -3740,60 +4020,65 @@ public class KL {
 		double nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof String) return super.hasKey((String)o);
+			else if (o instanceof Double) return super.hasValue((Double)o);
+			return false;
+		}
 	}
-	public static class Tree_SB extends Tree<String, Boolean> {
+	public static class TreeSB extends Tree<String, Boolean> {
 		// public static final long serialVersionUID = 1L;
-		Tree_SB() {
+		TreeSB() {
 			super();
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8, String k9, boolean v9, String k10, boolean v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8, String k9, boolean v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2, String k3,
+		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_SB(String k1, boolean v1, String k2, boolean v2) {
+		TreeSB(String k1, boolean v1, String k2, boolean v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_SB(String k1, boolean v1) {
+		TreeSB(String k1, boolean v1) {
 			super(k1, v1);
 		}
-		Tree_SB copy() {
-			return (Tree_SB) super.clone();
+		TreeSB copy() {
+			return (TreeSB) super.clone();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3817,6 +4102,10 @@ public class KL {
 		boolean nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : false;
 		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// bugfixed
+		}
 		boolean nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -3839,51 +4128,56 @@ public class KL {
 		boolean nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof String) return super.hasKey((String)o);
+			else if (o instanceof Boolean) return super.hasValue((Boolean)o);
+			return false;
+		}
 	}
-	public static class Tree_I extends Tree<Integer, String> {
+	public static class TreeI extends Tree<Integer, String> {
 		// public static final long serialVersionUID = 1L;
-		Tree_I() {
+		TreeI() {
 			super();
 		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10, String v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 			   String v4, int k5, String v5, int k6, String v6, int k7, String v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 			   String v4, int k5, String v5, int k6, String v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 			   String v4, int k5, String v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 			   String v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_I(int k1, String v1, int k2, String v2, int k3, String v3) {
+		TreeI(int k1, String v1, int k2, String v2, int k3, String v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_I(int k1, String v1, int k2, String v2) {
+		TreeI(int k1, String v1, int k2, String v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_I(int k1, String v1) {
+		TreeI(int k1, String v1) {
 			super(k1, v1);
 		}
-		Tree_I copy() {
-			return (Tree_I) super.clone();
+		TreeI copy() {
+			return (TreeI) super.clone();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3907,6 +4201,10 @@ public class KL {
 		String nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : "";
 		}
+		int nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
 		String nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -3929,54 +4227,59 @@ public class KL {
 		String nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof Integer) return super.hasKey((Integer)o);
+			else if (o instanceof String) return super.hasValue((String)o);
+			return false;
+		}
 	}
-	public static class Tree_L extends Tree<Integer, Long> {
-		// public static final long serialVersionUID = 1L;
-		Tree_L() {
+	public static class TreeL extends Tree<Integer, Long> {
+		public static final long serialVersionUID = 1L;
+		TreeL() {
 			super();
 		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 			   int k8, long v8, int k9, long v9, int k10, long v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 			   int k8, long v8, int k9, long v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 			   int k8, long v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 			   long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 			   long v4, int k5, long v5, int k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 			   long v4, int k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 			   long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_L(int k1, long v1, int k2, long v2, int k3, long v3) {
+		TreeL(int k1, long v1, int k2, long v2, int k3, long v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_L(int k1, long v1, int k2, long v2) {
+		TreeL(int k1, long v1, int k2, long v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_L(int k1, long v1) {
+		TreeL(int k1, long v1) {
 			super(k1, v1);
 		}
-		Tree_L copy() {
-			return (Tree_L) super.clone();
+		TreeL copy() {
+			return (TreeL) super.clone();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4000,6 +4303,10 @@ public class KL {
 		long nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : 0;
 		}
+		int nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
 		long nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -4022,54 +4329,59 @@ public class KL {
 		long nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof Integer) return super.hasKey((Integer)o);
+			else if (o instanceof Long) return super.hasValue((Long)o);
+			return false;
+		}
 	}
-	public static class Tree_F extends Tree<Integer, Float> {
-		// public static final long serialVersionUID = 1L;
-		Tree_F() {
+	public static class TreeF extends Tree<Integer, Float> {
+		public static final long serialVersionUID = 1L;
+		TreeF() {
 			super();
 		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
 			   int k8, float v8, int k9, float v9, int k10, float v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
 			   int k8, float v8, int k9, float v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
 			   int k8, float v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 			   float v4, int k5, float v5, int k6, float v6, int k7, float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 			   float v4, int k5, float v5, int k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 			   float v4, int k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 			   float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_F(int k1, float v1, int k2, float v2, int k3, float v3) {
+		TreeF(int k1, float v1, int k2, float v2, int k3, float v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_F(int k1, float v1, int k2, float v2) {
+		TreeF(int k1, float v1, int k2, float v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_F(int k1, float v1) {
+		TreeF(int k1, float v1) {
 			super(k1, v1);
 		}
-		Tree_F copy() {
-			return (Tree_F) super.clone();
+		TreeF copy() {
+			return (TreeF) super.clone();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4093,6 +4405,10 @@ public class KL {
 		float nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : 0;
 		}
+		int nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
 		float nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -4115,54 +4431,59 @@ public class KL {
 		float nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof Integer) return super.hasKey((Integer)o);
+			else if (o instanceof Float) return super.hasValue((Float)o);
+			return false;
+		}
 	}
-	public static class Tree_D extends Tree<Integer, Double> {
+	public static class TreeD extends Tree<Integer, Double> {
 		// public static final long serialVersionUID = 1L;
-		Tree_D() {
+		TreeD() {
 			super();
 		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
 			   int k8, double v8, int k9, double v9, int k10, double v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
 			   int k8, double v8, int k9, double v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
 			   int k8, double v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 			   double v4, int k5, double v5, int k6, double v6, int k7, double v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 			   double v4, int k5, double v5, int k6, double v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 			   double v4, int k5, double v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 			   double v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_D(int k1, double v1, int k2, double v2, int k3, double v3) {
+		TreeD(int k1, double v1, int k2, double v2, int k3, double v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_D(int k1, double v1, int k2, double v2) {
+		TreeD(int k1, double v1, int k2, double v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_D(int k1, double v1) {
+		TreeD(int k1, double v1) {
 			super(k1, v1);
 		}
-		Tree_D copy() {
-			return (Tree_D) super.clone();
+		TreeD copy() {
+			return (TreeD) super.clone();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4186,6 +4507,10 @@ public class KL {
 		double nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : 0;
 		}
+		int nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
 		double nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -4208,54 +4533,59 @@ public class KL {
 		double nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean has(Object o) {
+			if (o instanceof Integer) return super.hasKey((Integer)o);
+			else if (o instanceof Double) return super.hasValue((Double)o);
+			return false;
+		}
 	}
-	public static class Tree_B extends Tree<Integer, Boolean> {
+	public static class TreeB extends Tree<Integer, Boolean> {
 		public static final long serialVersionUID = 1L;
-		Tree_B() {
+		TreeB() {
 			super();
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
 			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
 			   int k8, boolean v8, int k9, boolean v9, int k10, boolean v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
 			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
 			   int k8, boolean v8, int k9, boolean v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
 			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
 			   int k8, boolean v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
 			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
 			   boolean v4, int k5, boolean v5, int k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
 			   boolean v4, int k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
+		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
 			   boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
+		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		Tree_B(int k1, boolean v1, int k2, boolean v2) {
+		TreeB(int k1, boolean v1, int k2, boolean v2) {
 			super(k1, v1, k2, v2);
 		}
-		Tree_B(int k1, boolean v1) {
+		TreeB(int k1, boolean v1) {
 			super(k1, v1);
 		}
-		Tree_B copy() {
-			return (Tree_B) super.clone();
+		TreeB copy() {
+			return (TreeB) super.clone();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4279,6 +4609,10 @@ public class KL {
 		boolean nthValue(int n) {
 			return n >= 0 && n < super.length() ? array()[n] : false;
 		}
+		int nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
 		boolean nthLastValue(int n) {
 			return n > 0 && n <= super.length()
 				   ? array()[super.length() - n]
@@ -4300,6 +4634,11 @@ public class KL {
 		}
 		boolean nthlast(int n) {
 			return nthLastValue(n);
+		}
+		boolean has(Object o) {
+			if (o instanceof Integer) return super.hasKey((Integer)o);
+			else if (o instanceof Boolean) return super.hasValue((Boolean)o);
+			return false;
 		}
 	}
 	public static final class StrArr extends ArrayList<String> {
@@ -7323,6 +7662,35 @@ public class KL {
 			return arr;
 		return Arrays.stream(arr).map(func).toArray();
 	}
+	public static boolean[] map(boolean[] arr, Function<Boolean, Boolean> func) {
+		if (not(arr) || not(func))
+			return arr;
+		boolean[] result = new boolean[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			result[i] = func.apply(arr[i]);
+		}
+		return result;
+	}
+	public static String reduce(String[] arr, BinaryOperator<String> func) {
+		if (not(arr) || not(func))
+			return "";
+		return Arrays.stream(arr).reduce("", func);
+	}
+	public static int reduce(int[] arr, IntBinaryOperator func) {
+		if (not(arr) || not(func))
+			return 0;
+		return Arrays.stream(arr).reduce(0, func);
+	}
+	public static long reduce(long[] arr, LongBinaryOperator func) {
+		if (not(arr) || not(func))
+			return 0;
+		return Arrays.stream(arr).reduce(0, func);
+	}
+	public static double reduce(double[] arr, DoubleBinaryOperator func) {
+		if (not(arr) || not(func))
+			return 0;
+		return Arrays.stream(arr).reduce(0, func);
+	}
 	public static String[] popIf(String[] array, Predicate<String> condition) {
 		return new StrArr(array).popIf(condition).array();
 	}
@@ -7963,52 +8331,52 @@ public class KL {
 	public static void printArr(BoolArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(Obj_S o) {
+	public static void printArr(ObjS o) {
 		print(o.toString());
 	}
-	public static void printArr(Obj_I o) {
+	public static void printArr(ObjI o) {
 		print(o.toString());
 	}
-	public static void printArr(Obj_L o) {
+	public static void printArr(ObjL o) {
 		print(o.toString());
 	}
-	public static void printArr(Obj_F o) {
+	public static void printArr(ObjF o) {
 		print(o.toString());
 	}
-	public static void printArr(Obj_D o) {
+	public static void printArr(ObjD o) {
 		print(o.toString());
 	}
-	public static void printArr(Obj_B o) {
+	public static void printArr(ObjB o) {
 		print(o.toString());
 	}
-	public static void printArr(Tree_S t) {
+	public static void printArr(TreeS t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_I t) {
+	public static void printArr(TreeI t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_SL t) {
+	public static void printArr(TreeSL t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_L t) {
+	public static void printArr(TreeL t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_SF t) {
+	public static void printArr(TreeSF t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_F t) {
+	public static void printArr(TreeF t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_SD t) {
+	public static void printArr(TreeSD t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_D t) {
+	public static void printArr(TreeD t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_SB t) {
+	public static void printArr(TreeSB t) {
 		print(t.toString());
 	}
-	public static void printArr(Tree_B t) {
+	public static void printArr(TreeB t) {
 		print(t.toString());
 	}
 	public static void printAll(String arr[]) {
@@ -8050,52 +8418,52 @@ public class KL {
 	public static void printAll(BoolArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(Obj_S o) {
+	public static void printAll(ObjS o) {
 		printArr(o);
 	}
-	public static void printAll(Obj_I o) {
+	public static void printAll(ObjI o) {
 		printArr(o);
 	}
-	public static void printAll(Obj_L o) {
+	public static void printAll(ObjL o) {
 		printArr(o);
 	}
-	public static void printAll(Obj_F o) {
+	public static void printAll(ObjF o) {
 		printArr(o);
 	}
-	public static void printAll(Obj_D o) {
+	public static void printAll(ObjD o) {
 		printArr(o);
 	}
-	public static void printAll(Obj_B o) {
+	public static void printAll(ObjB o) {
 		printArr(o);
 	}
-	public static void printAll(Tree_S t) {
+	public static void printAll(TreeS t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_I t) {
+	public static void printAll(TreeI t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_SL t) {
+	public static void printAll(TreeSL t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_L t) {
+	public static void printAll(TreeL t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_SF t) {
+	public static void printAll(TreeSF t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_F t) {
+	public static void printAll(TreeF t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_SD t) {
+	public static void printAll(TreeSD t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_D t) {
+	public static void printAll(TreeD t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_SB t) {
+	public static void printAll(TreeSB t) {
 		printArr(t);
 	}
-	public static void printAll(Tree_B t) {
+	public static void printAll(TreeB t) {
 		printArr(t);
 	}
 	public static void printEach(String arr[]) {
@@ -8137,52 +8505,52 @@ public class KL {
 	public static void printEach(BoolArr arr) {
 		printArr(arr);
 	}
-	public static void printEach(Obj_S o) {
+	public static void printEach(ObjS o) {
 		printArr(o);
 	}
-	public static void printEach(Obj_I o) {
+	public static void printEach(ObjI o) {
 		printArr(o);
 	}
-	public static void printEach(Obj_L o) {
+	public static void printEach(ObjL o) {
 		printArr(o);
 	}
-	public static void printEach(Obj_F o) {
+	public static void printEach(ObjF o) {
 		printArr(o);
 	}
-	public static void printEach(Obj_D o) {
+	public static void printEach(ObjD o) {
 		printArr(o);
 	}
-	public static void printEach(Obj_B o) {
+	public static void printEach(ObjB o) {
 		printArr(o);
 	}
-	public static void printEach(Tree_S t) {
+	public static void printEach(TreeS t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_I t) {
+	public static void printEach(TreeI t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_SL t) {
+	public static void printEach(TreeSL t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_L t) {
+	public static void printEach(TreeL t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_SF t) {
+	public static void printEach(TreeSF t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_F t) {
+	public static void printEach(TreeF t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_SD t) {
+	public static void printEach(TreeSD t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_D t) {
+	public static void printEach(TreeD t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_SB t) {
+	public static void printEach(TreeSB t) {
 		printArr(t);
 	}
-	public static void printEach(Tree_B t) {
+	public static void printEach(TreeB t) {
 		printArr(t);
 	}
 	// getting user input
@@ -8318,52 +8686,52 @@ public class KL {
 	public static String String(BoolArr arr) {
 		return arr.toString();
 	}
-	public static String String(Obj_S o) {
+	public static String String(ObjS o) {
 		return o.toString();
 	}
-	public static String String(Obj_I o) {
+	public static String String(ObjI o) {
 		return o.toString();
 	}
-	public static String String(Obj_L o) {
+	public static String String(ObjL o) {
 		return o.toString();
 	}
-	public static String String(Obj_F o) {
+	public static String String(ObjF o) {
 		return o.toString();
 	}
-	public static String String(Obj_D o) {
+	public static String String(ObjD o) {
 		return o.toString();
 	}
-	public static String String(Obj_B o) {
+	public static String String(ObjB o) {
 		return o.toString();
 	}
-	public static String String(Tree_S t) {
+	public static String String(TreeS t) {
 		return t.toString();
 	}
-	public static String String(Tree_I t) {
+	public static String String(TreeI t) {
 		return t.toString();
 	}
-	public static String String(Tree_SL t) {
+	public static String String(TreeSL t) {
 		return t.toString();
 	}
-	public static String String(Tree_L t) {
+	public static String String(TreeL t) {
 		return t.toString();
 	}
-	public static String String(Tree_SF t) {
+	public static String String(TreeSF t) {
 		return t.toString();
 	}
-	public static String String(Tree_F t) {
+	public static String String(TreeF t) {
 		return t.toString();
 	}
-	public static String String(Tree_SD t) {
+	public static String String(TreeSD t) {
 		return t.toString();
 	}
-	public static String String(Tree_D t) {
+	public static String String(TreeD t) {
 		return t.toString();
 	}
-	public static String String(Tree_SB t) {
+	public static String String(TreeSB t) {
 		return t.toString();
 	}
-	public static String String(Tree_B t) {
+	public static String String(TreeB t) {
 		return t.toString();
 	}
 	public static String Str(String arg) {
@@ -8433,52 +8801,52 @@ public class KL {
 	public static String Str(BoolArr arr) {
 		return String(arr);
 	}
-	public static String Str(Obj_S o) {
+	public static String Str(ObjS o) {
 		return String(o);
 	}
-	public static String Str(Obj_I o) {
+	public static String Str(ObjI o) {
 		return String(o);
 	}
-	public static String Str(Obj_L o) {
+	public static String Str(ObjL o) {
 		return String(o);
 	}
-	public static String Str(Obj_F o) {
+	public static String Str(ObjF o) {
 		return String(o);
 	}
-	public static String Str(Obj_D o) {
+	public static String Str(ObjD o) {
 		return String(o);
 	}
-	public static String Str(Obj_B o) {
+	public static String Str(ObjB o) {
 		return String(o);
 	}
-	public static String Str(Tree_S t) {
+	public static String Str(TreeS t) {
 		return String(t);
 	}
-	public static String Str(Tree_I t) {
+	public static String Str(TreeI t) {
 		return String(t);
 	}
-	public static String Str(Tree_SL t) {
+	public static String Str(TreeSL t) {
 		return String(t);
 	}
-	public static String Str(Tree_L t) {
+	public static String Str(TreeL t) {
 		return String(t);
 	}
-	public static String Str(Tree_SF t) {
+	public static String Str(TreeSF t) {
 		return String(t);
 	}
-	public static String Str(Tree_F t) {
+	public static String Str(TreeF t) {
 		return String(t);
 	}
-	public static String Str(Tree_SD t) {
+	public static String Str(TreeSD t) {
 		return String(t);
 	}
-	public static String Str(Tree_D t) {
+	public static String Str(TreeD t) {
 		return String(t);
 	}
-	public static String Str(Tree_SB t) {
+	public static String Str(TreeSB t) {
 		return String(t);
 	}
-	public static String Str(Tree_B t) {
+	public static String Str(TreeB t) {
 		return String(t);
 	}
 	public static String concat(Object... args) {
@@ -8539,52 +8907,52 @@ public class KL {
 			arr[i] = items[i];
 		return arr;
 	}
-	public static String[] Arr(Obj_S o) {
+	public static String[] Arr(ObjS o) {
 		return o.array();
 	}
-	public static int[] Arr(Obj_I o) {
+	public static int[] Arr(ObjI o) {
 		return o.array();
 	}
-	public static long[] Arr(Obj_L o) {
+	public static long[] Arr(ObjL o) {
 		return o.array();
 	}
-	public static float[] Arr(Obj_F o) {
+	public static float[] Arr(ObjF o) {
 		return o.array();
 	}
-	public static double[] Arr(Obj_D o) {
+	public static double[] Arr(ObjD o) {
 		return o.array();
 	}
-	public static boolean[] Arr(Obj_B o) {
+	public static boolean[] Arr(ObjB o) {
 		return o.array();
 	}
-	public static int[] Arr(Tree_S t) {
+	public static int[] Arr(TreeS t) {
 		return t.array();
 	}
-	public static String[] Arr(Tree_I t) {
+	public static String[] Arr(TreeI t) {
 		return t.array();
 	}
-	public static long[] Arr(Tree_SL t) {
+	public static long[] Arr(TreeSL t) {
 		return t.array();
 	}
-	public static long[] Arr(Tree_L t) {
+	public static long[] Arr(TreeL t) {
 		return t.array();
 	}
-	public static float[] Arr(Tree_SF t) {
+	public static float[] Arr(TreeSF t) {
 		return t.array();
 	}
-	public static float[] Arr(Tree_F t) {
+	public static float[] Arr(TreeF t) {
 		return t.array();
 	}
-	public static double[] Arr(Tree_SD t) {
+	public static double[] Arr(TreeSD t) {
 		return t.array();
 	}
-	public static double[] Arr(Tree_D t) {
+	public static double[] Arr(TreeD t) {
 		return t.array();
 	}
-	public static boolean[] Arr(Tree_SB t) {
+	public static boolean[] Arr(TreeSB t) {
 		return t.array();
 	}
-	public static boolean[] Arr(Tree_B t) {
+	public static boolean[] Arr(TreeB t) {
 		return t.array();
 	}
 	public static char[] Chars(String str) {
@@ -9052,43 +9420,43 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(Tree_S ns) {
+	public static double sum(TreeS ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(Tree_SL ns) {
+	public static double sum(TreeSL ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(Tree_L ns) {
+	public static double sum(TreeL ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(Tree_SF ns) {
+	public static double sum(TreeSF ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(Tree_F ns) {
+	public static double sum(TreeF ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(Tree_SD ns) {
+	public static double sum(TreeSD ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(Tree_D ns) {
+	public static double sum(TreeD ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
@@ -9142,43 +9510,43 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(Tree_S ns) {
+	public static double difference(TreeS ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(Tree_SL ns) {
+	public static double difference(TreeSL ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(Tree_L ns) {
+	public static double difference(TreeL ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(Tree_SF ns) {
+	public static double difference(TreeSF ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(Tree_F ns) {
+	public static double difference(TreeF ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(Tree_SD ns) {
+	public static double difference(TreeSD ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(Tree_D ns) {
+	public static double difference(TreeD ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
@@ -9232,43 +9600,43 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(Tree_S ns) {
+	public static double product(TreeS ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(Tree_SL ns) {
+	public static double product(TreeSL ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(Tree_L ns) {
+	public static double product(TreeL ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(Tree_SF ns) {
+	public static double product(TreeSF ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(Tree_F ns) {
+	public static double product(TreeF ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(Tree_SD ns) {
+	public static double product(TreeSD ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(Tree_D ns) {
+	public static double product(TreeD ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
@@ -9322,43 +9690,43 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(Tree_S ns) {
+	public static double quotient(TreeS ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(Tree_SL ns) {
+	public static double quotient(TreeSL ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(Tree_L ns) {
+	public static double quotient(TreeL ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(Tree_SF ns) {
+	public static double quotient(TreeSF ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(Tree_F ns) {
+	public static double quotient(TreeF ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(Tree_SD ns) {
+	public static double quotient(TreeSD ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(Tree_D ns) {
+	public static double quotient(TreeD ns) {
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
@@ -9412,27 +9780,27 @@ public class KL {
 									   .summaryStatistics();
 		return stat.getMin();
 	}
-	public static int min(Tree_S nums) {
+	public static int min(TreeS nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 									.summaryStatistics();
 		return stat.getMin();
 	}
-	public static long min(Tree_SL nums) {
+	public static long min(TreeSL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 									 .summaryStatistics();
 		return stat.getMin();
 	}
-	public static long min(Tree_L nums) {
+	public static long min(TreeL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 									 .summaryStatistics();
 		return stat.getMin();
 	}
-	public static double min(Tree_SD nums) {
+	public static double min(TreeSD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 									   .summaryStatistics();
 		return stat.getMin();
 	}
-	public static double min(Tree_D nums) {
+	public static double min(TreeD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 									   .summaryStatistics();
 		return stat.getMin();
@@ -9464,27 +9832,27 @@ public class KL {
 									   .summaryStatistics();
 		return stat.getMax();
 	}
-	public static int max(Tree_S nums) {
+	public static int max(TreeS nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 									.summaryStatistics();
 		return stat.getMax();
 	}
-	public static long max(Tree_SL nums) {
+	public static long max(TreeSL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 									 .summaryStatistics();
 		return stat.getMax();
 	}
-	public static long max(Tree_L nums) {
+	public static long max(TreeL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 									 .summaryStatistics();
 		return stat.getMax();
 	}
-	public static double max(Tree_SD nums) {
+	public static double max(TreeSD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 									   .summaryStatistics();
 		return stat.getMax();
 	}
-	public static double max(Tree_D nums) {
+	public static double max(TreeD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 									   .summaryStatistics();
 		return stat.getMax();
@@ -10120,7 +10488,7 @@ public class KL {
 		return result;
 	}
 	public static String toRoman(int n) {
-		Tree_I tree = new Tree_I();
+		TreeI tree = new TreeI();
 		tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X")
 		.add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
 		.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
@@ -10258,34 +10626,34 @@ public class KL {
 	public static boolean eq(BoolArr x, BoolArr y) {
 		return x.eq(y);
 	}
-	public static boolean eq(Tree_S x, Tree_S y) {
+	public static boolean eq(TreeS x, TreeS y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_I x, Tree_I y) {
+	public static boolean eq(TreeI x, TreeI y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_SL x, Tree_SL y) {
+	public static boolean eq(TreeSL x, TreeSL y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_L x, Tree_L y) {
+	public static boolean eq(TreeL x, TreeL y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_SF x, Tree_SF y) {
+	public static boolean eq(TreeSF x, TreeSF y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_F x, Tree_F y) {
+	public static boolean eq(TreeF x, TreeF y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_SD x, Tree_SD y) {
+	public static boolean eq(TreeSD x, TreeSD y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_D x, Tree_D y) {
+	public static boolean eq(TreeD x, TreeD y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_SB x, Tree_SB y) {
+	public static boolean eq(TreeSB x, TreeSB y) {
 		return x.equals(y);
 	}
-	public static boolean eq(Tree_B x, Tree_B y) {
+	public static boolean eq(TreeB x, TreeB y) {
 		return x.equals(y);
 	}
 	public static boolean uneq(char x, char y) {
@@ -10348,34 +10716,34 @@ public class KL {
 	public static boolean uneq(BoolArr x, BoolArr y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_S x, Tree_S y) {
+	public static boolean uneq(TreeS x, TreeS y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_I x, Tree_I y) {
+	public static boolean uneq(TreeI x, TreeI y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_SL x, Tree_SL y) {
+	public static boolean uneq(TreeSL x, TreeSL y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_L x, Tree_L y) {
+	public static boolean uneq(TreeL x, TreeL y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_SF x, Tree_SF y) {
+	public static boolean uneq(TreeSF x, TreeSF y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_F x, Tree_F y) {
+	public static boolean uneq(TreeF x, TreeF y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_SD x, Tree_SD y) {
+	public static boolean uneq(TreeSD x, TreeSD y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_D x, Tree_D y) {
+	public static boolean uneq(TreeD x, TreeD y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_SB x, Tree_SB y) {
+	public static boolean uneq(TreeSB x, TreeSB y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(Tree_B x, Tree_B y) {
+	public static boolean uneq(TreeB x, TreeB y) {
 		return !eq(x, y);
 	}
 	public static boolean both(String... strings) {
@@ -10474,14 +10842,6 @@ public class KL {
 		}
 		return count > 0;
 	}
-	public static boolean either(Object... objs) {
-		int count = 0;
-		for (Object obj : objs) {
-			if (is(obj))
-				count += 1;
-		}
-		return count > 0;
-	}
 	public static boolean any(String... strings) {
 		return either(strings);
 	}
@@ -10499,9 +10859,6 @@ public class KL {
 	}
 	public static boolean any(boolean... bools) {
 		return either(bools);
-	}
-	public static boolean any(Object... objs) {
-		return either(objs);
 	}
 	public static boolean neither(String... strings) {
 		int count = 0;
@@ -10550,14 +10907,6 @@ public class KL {
 				count += 1;
 		}
 		return count == len(bools);
-	}
-	public static boolean neither(Object... objs) {
-		int count = 0;
-		for (Object obj : objs) {
-			if (not(obj))
-				count += 1;
-		}
-		return count == len(objs);
 	}
 	public static boolean not(String s) {
 		return isnl(s) || isEmpty(s);
@@ -10622,52 +10971,52 @@ public class KL {
 	public static boolean not(BoolArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
-	public static boolean not(Obj_S o) {
+	public static boolean not(ObjS o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(Obj_I o) {
+	public static boolean not(ObjI o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(Obj_L o) {
+	public static boolean not(ObjL o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(Obj_F o) {
+	public static boolean not(ObjF o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(Obj_D o) {
+	public static boolean not(ObjD o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(Obj_B o) {
+	public static boolean not(ObjB o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(Tree_S t) {
+	public static boolean not(TreeS t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_I t) {
+	public static boolean not(TreeI t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_SL t) {
+	public static boolean not(TreeSL t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_L t) {
+	public static boolean not(TreeL t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_SF t) {
+	public static boolean not(TreeSF t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_F t) {
+	public static boolean not(TreeF t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_SD t) {
+	public static boolean not(TreeSD t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_D t) {
+	public static boolean not(TreeD t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_SB t) {
+	public static boolean not(TreeSB t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(Tree_B t) {
+	public static boolean not(TreeB t) {
 		return isnl(t) || isEmpty(t);
 	}
 	public static boolean is(char c) {
@@ -10733,56 +11082,71 @@ public class KL {
 	public static boolean is(BoolArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(Obj_S o) {
+	public static boolean is(ObjS o) {
 		return !not(o);
 	}
-	public static boolean is(Obj_I o) {
+	public static boolean is(ObjI o) {
 		return !not(o);
 	}
-	public static boolean is(Obj_L o) {
+	public static boolean is(ObjL o) {
 		return !not(o);
 	}
-	public static boolean is(Obj_F o) {
+	public static boolean is(ObjF o) {
 		return !not(o);
 	}
-	public static boolean is(Obj_D o) {
+	public static boolean is(ObjD o) {
 		return !not(o);
 	}
-	public static boolean is(Obj_B o) {
+	public static boolean is(ObjB o) {
 		return !not(o);
 	}
-	public static boolean is(Tree_S t) {
+	public static boolean is(TreeS t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_I t) {
+	public static boolean is(TreeI t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_SL t) {
+	public static boolean is(TreeSL t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_L t) {
+	public static boolean is(TreeL t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_SF t) {
+	public static boolean is(TreeSF t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_F t) {
+	public static boolean is(TreeF t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_SD t) {
+	public static boolean is(TreeSD t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_D t) {
+	public static boolean is(TreeD t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_SB t) {
+	public static boolean is(TreeSB t) {
 		return !not(t);
 	}
-	public static boolean is(Tree_B t) {
+	public static boolean is(TreeB t) {
 		return !not(t);
+	}
+	public static boolean xor(String a, String b) {
+		return (is(a) || is(b)) && !(is(a) && is(b));
+	}
+	public static boolean xor(int a, int b) {
+		return (is(a) || is(b)) && !(is(a) && is(b));
+	}
+	public static boolean xor(long a, long b) {
+		return (is(a) || is(b)) && !(is(a) && is(b));
+	}
+	public static boolean xor(float a, float b) {
+		return (is(a) || is(b)) && !(is(a) && is(b));
+	}
+	public static boolean xor(double a, double b) {
+		return (is(a) || is(b)) && !(is(a) && is(b));
 	}
 	public static boolean xor(boolean a, boolean b) {
-		return a || b && !(a && b);
+		return (a || b) && !(a && b);
 	}
 	public static boolean implies(boolean a, boolean b) {
 		return a && !b ? false : true;
@@ -10914,52 +11278,52 @@ public class KL {
 	public static boolean randItem(BoolArr arr) {
 		return arr.i(randInt(arr.length()));
 	}
-	public static String randItem(Obj_S arr) {
+	public static String randItem(ObjS arr) {
 		return arr.i(randInt(arr.length()));
 	}
-	public static int randItem(Obj_I arr) {
+	public static int randItem(ObjI arr) {
 		return arr.i(randInt(arr.length()));
 	}
-	public static long randItem(Obj_L arr) {
+	public static long randItem(ObjL arr) {
 		return arr.i(randInt(arr.length()));
 	}
-	public static float randItem(Obj_F arr) {
+	public static float randItem(ObjF arr) {
 		return arr.i(randInt(arr.length()));
 	}
-	public static double randItem(Obj_D arr) {
+	public static double randItem(ObjD arr) {
 		return arr.i(randInt(arr.length()));
 	}
-	public static boolean randItem(Obj_B arr) {
+	public static boolean randItem(ObjB arr) {
 		return arr.i(randInt(arr.length()));
 	}
-	public static int randItem(Tree_S t) {
+	public static int randItem(TreeS t) {
 		return t.i(randInt(t.length()));
 	}
-	public static String randItem(Tree_I t) {
+	public static String randItem(TreeI t) {
 		return t.i(randInt(t.length()));
 	}
-	public static long randItem(Tree_SL t) {
+	public static long randItem(TreeSL t) {
 		return t.i(randInt(t.length()));
 	}
-	public static long randItem(Tree_L t) {
+	public static long randItem(TreeL t) {
 		return t.i(randInt(t.length()));
 	}
-	public static float randItem(Tree_SF t) {
+	public static float randItem(TreeSF t) {
 		return t.i(randInt(t.length()));
 	}
-	public static float randItem(Tree_F t) {
+	public static float randItem(TreeF t) {
 		return t.i(randInt(t.length()));
 	}
-	public static double randItem(Tree_SD t) {
+	public static double randItem(TreeSD t) {
 		return t.i(randInt(t.length()));
 	}
-	public static double randItem(Tree_D t) {
+	public static double randItem(TreeD t) {
 		return t.i(randInt(t.length()));
 	}
-	public static boolean randItem(Tree_SB t) {
+	public static boolean randItem(TreeSB t) {
 		return t.i(randInt(t.length()));
 	}
-	public static boolean randItem(Tree_B t) {
+	public static boolean randItem(TreeB t) {
 		return t.i(randInt(t.length()));
 	}
 	public static String randFrom(String arr[]) {
@@ -11001,52 +11365,52 @@ public class KL {
 	public static boolean randFrom(BoolArr arr) {
 		return randItem(arr);
 	}
-	public static int randFrom(Tree_S t) {
+	public static int randFrom(TreeS t) {
 		return randItem(t);
 	}
-	public static String randFrom(Tree_I t) {
+	public static String randFrom(TreeI t) {
 		return randItem(t);
 	}
-	public static long randFrom(Tree_SL t) {
+	public static long randFrom(TreeSL t) {
 		return randItem(t);
 	}
-	public static long randFrom(Tree_L t) {
+	public static long randFrom(TreeL t) {
 		return randItem(t);
 	}
-	public static float randFrom(Tree_SF t) {
+	public static float randFrom(TreeSF t) {
 		return randItem(t);
 	}
-	public static float randFrom(Tree_F t) {
+	public static float randFrom(TreeF t) {
 		return randItem(t);
 	}
-	public static double randFrom(Tree_SD t) {
+	public static double randFrom(TreeSD t) {
 		return randItem(t);
 	}
-	public static double randFrom(Tree_D t) {
+	public static double randFrom(TreeD t) {
 		return randItem(t);
 	}
-	public static boolean randFrom(Tree_SB t) {
+	public static boolean randFrom(TreeSB t) {
 		return randItem(t);
 	}
-	public static boolean randFrom(Tree_B t) {
+	public static boolean randFrom(TreeB t) {
 		return randItem(t);
 	}
-	public static String randFrom(Obj_S o) {
+	public static String randFrom(ObjS o) {
 		return randItem(o);
 	}
-	public static int randFrom(Obj_I o) {
+	public static int randFrom(ObjI o) {
 		return randItem(o);
 	}
-	public static long randFrom(Obj_L o) {
+	public static long randFrom(ObjL o) {
 		return randItem(o);
 	}
-	public static float randFrom(Obj_F o) {
+	public static float randFrom(ObjF o) {
 		return randItem(o);
 	}
-	public static double randFrom(Obj_D o) {
+	public static double randFrom(ObjD o) {
 		return randItem(o);
 	}
-	public static boolean randFrom(Obj_B o) {
+	public static boolean randFrom(ObjB o) {
 		return randItem(o);
 	}
 	public static String anyOf(String arr[]) {
@@ -11088,52 +11452,52 @@ public class KL {
 	public static boolean anyOf(BoolArr arr) {
 		return randItem(arr);
 	}
-	public static int anyOf(Tree_S t) {
+	public static int anyOf(TreeS t) {
 		return randItem(t);
 	}
-	public static String anyOf(Tree_I t) {
+	public static String anyOf(TreeI t) {
 		return randItem(t);
 	}
-	public static long anyOf(Tree_SL t) {
+	public static long anyOf(TreeSL t) {
 		return randItem(t);
 	}
-	public static long anyOf(Tree_L t) {
+	public static long anyOf(TreeL t) {
 		return randItem(t);
 	}
-	public static float anyOf(Tree_SF t) {
+	public static float anyOf(TreeSF t) {
 		return randItem(t);
 	}
-	public static float anyOf(Tree_F t) {
+	public static float anyOf(TreeF t) {
 		return randItem(t);
 	}
-	public static double anyOf(Tree_SD t) {
+	public static double anyOf(TreeSD t) {
 		return randItem(t);
 	}
-	public static double anyOf(Tree_D t) {
+	public static double anyOf(TreeD t) {
 		return randItem(t);
 	}
-	public static boolean anyOf(Tree_SB t) {
+	public static boolean anyOf(TreeSB t) {
 		return randItem(t);
 	}
-	public static boolean anyOf(Tree_B t) {
+	public static boolean anyOf(TreeB t) {
 		return randItem(t);
 	}
-	public static String anyOf(Obj_S o) {
+	public static String anyOf(ObjS o) {
 		return randItem(o);
 	}
-	public static int anyOf(Obj_I o) {
+	public static int anyOf(ObjI o) {
 		return randItem(o);
 	}
-	public static long anyOf(Obj_L o) {
+	public static long anyOf(ObjL o) {
 		return randItem(o);
 	}
-	public static float anyOf(Obj_F o) {
+	public static float anyOf(ObjF o) {
 		return randItem(o);
 	}
-	public static double anyOf(Obj_D o) {
+	public static double anyOf(ObjD o) {
 		return randItem(o);
 	}
-	public static boolean anyOf(Obj_B o) {
+	public static boolean anyOf(ObjB o) {
 		return randItem(o);
 	}
 	public static int[] noDuplicates(int[] arr) {
@@ -11590,22 +11954,22 @@ public class KL {
 			return false;
 		return arr.last() == lookupBool;
 	}
-	public static boolean endsWith(Tree_S tree, int lookupInt) {
+	public static boolean endsWith(TreeS tree, int lookupInt) {
 		if (not(len(tree)))
 			return false;
 		return tree.last() == lookupInt;
 	}
-	public static boolean endsWith(Tree_I tree, String lookupStr) {
+	public static boolean endsWith(TreeI tree, String lookupStr) {
 		if (not(len(tree)))
 			return false;
 		return tree.last() == lookupStr;
 	}
-	public static boolean endsWith(Tree_SL tree, long lookupLong) {
+	public static boolean endsWith(TreeSL tree, long lookupLong) {
 		if (not(len(tree)))
 			return false;
 		return tree.last() == lookupLong;
 	}
-	public static boolean endsWith(Tree_L tree, long lookupLong) {
+	public static boolean endsWith(TreeL tree, long lookupLong) {
 		if (not(len(tree)))
 			return false;
 		return tree.last() == lookupLong;
@@ -12332,7 +12696,7 @@ public class KL {
 	public static BoolArr clone(BoolArr arr) {
 		return slice(arr);
 	}
-	public static Tree_S clone(Tree_S arr) {
+	public static TreeS clone(TreeS arr) {
 		return arr.copy();
 	}
 	public static String[] copyArr(String[] arr) {
@@ -12899,52 +13263,52 @@ public class KL {
 	public static int len(BoolArr arr) {
 		return arr.length();
 	}
-	public static int len(Obj_S o) {
+	public static int len(ObjS o) {
 		return o.length();
 	}
-	public static int len(Obj_I o) {
+	public static int len(ObjI o) {
 		return o.length();
 	}
-	public static int len(Obj_L o) {
+	public static int len(ObjL o) {
 		return o.length();
 	}
-	public static int len(Obj_F o) {
+	public static int len(ObjF o) {
 		return o.length();
 	}
-	public static int len(Obj_D o) {
+	public static int len(ObjD o) {
 		return o.length();
 	}
-	public static int len(Obj_B o) {
+	public static int len(ObjB o) {
 		return o.length();
 	}
-	public static int len(Tree_S t) {
+	public static int len(TreeS t) {
 		return t.length();
 	}
-	public static int len(Tree_I t) {
+	public static int len(TreeI t) {
 		return t.length();
 	}
-	public static int len(Tree_SL t) {
+	public static int len(TreeSL t) {
 		return t.length();
 	}
-	public static int len(Tree_L t) {
+	public static int len(TreeL t) {
 		return t.length();
 	}
-	public static int len(Tree_SF t) {
+	public static int len(TreeSF t) {
 		return t.length();
 	}
-	public static int len(Tree_F t) {
+	public static int len(TreeF t) {
 		return t.length();
 	}
-	public static int len(Tree_SD t) {
+	public static int len(TreeSD t) {
 		return t.length();
 	}
-	public static int len(Tree_D t) {
+	public static int len(TreeD t) {
 		return t.length();
 	}
-	public static int len(Tree_SB t) {
+	public static int len(TreeSB t) {
 		return t.length();
 	}
-	public static int len(Tree_B t) {
+	public static int len(TreeB t) {
 		return t.length();
 	}
 	public static int size(String str) {
@@ -12992,52 +13356,52 @@ public class KL {
 	public static int size(BoolArr arr) {
 		return len(arr);
 	}
-	public static int size(Obj_S o) {
+	public static int size(ObjS o) {
 		return len(o);
 	}
-	public static int size(Obj_I o) {
+	public static int size(ObjI o) {
 		return len(o);
 	}
-	public static int size(Obj_L o) {
+	public static int size(ObjL o) {
 		return len(o);
 	}
-	public static int size(Obj_F o) {
+	public static int size(ObjF o) {
 		return len(o);
 	}
-	public static int size(Obj_D o) {
+	public static int size(ObjD o) {
 		return len(o);
 	}
-	public static int size(Obj_B o) {
+	public static int size(ObjB o) {
 		return len(o);
 	}
-	public static int size(Tree_S t) {
+	public static int size(TreeS t) {
 		return len(t);
 	}
-	public static int size(Tree_I t) {
+	public static int size(TreeI t) {
 		return len(t);
 	}
-	public static int size(Tree_SL t) {
+	public static int size(TreeSL t) {
 		return len(t);
 	}
-	public static int size(Tree_L t) {
+	public static int size(TreeL t) {
 		return len(t);
 	}
-	public static int size(Tree_SF t) {
+	public static int size(TreeSF t) {
 		return len(t);
 	}
-	public static int size(Tree_F t) {
+	public static int size(TreeF t) {
 		return len(t);
 	}
-	public static int size(Tree_SD t) {
+	public static int size(TreeSD t) {
 		return len(t);
 	}
-	public static int size(Tree_D t) {
+	public static int size(TreeD t) {
 		return len(t);
 	}
-	public static int size(Tree_SB t) {
+	public static int size(TreeSB t) {
 		return len(t);
 	}
-	public static int size(Tree_B t) {
+	public static int size(TreeB t) {
 		return len(t);
 	}
 	public static boolean isEmpty(String s) {
@@ -13082,52 +13446,52 @@ public class KL {
 	public static boolean isEmpty(BoolArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
 	}
-	public static boolean isEmpty(Obj_S o) {
+	public static boolean isEmpty(ObjS o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(Obj_I o) {
+	public static boolean isEmpty(ObjI o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(Obj_L o) {
+	public static boolean isEmpty(ObjL o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(Obj_F o) {
+	public static boolean isEmpty(ObjF o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(Obj_D o) {
+	public static boolean isEmpty(ObjD o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(Obj_B o) {
+	public static boolean isEmpty(ObjB o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(Tree_S t) {
+	public static boolean isEmpty(TreeS t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_I t) {
+	public static boolean isEmpty(TreeI t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_SL t) {
+	public static boolean isEmpty(TreeSL t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_L t) {
+	public static boolean isEmpty(TreeL t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_SF t) {
+	public static boolean isEmpty(TreeSF t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_F t) {
+	public static boolean isEmpty(TreeF t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_SD t) {
+	public static boolean isEmpty(TreeSD t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_D t) {
+	public static boolean isEmpty(TreeD t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_SB t) {
+	public static boolean isEmpty(TreeSB t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(Tree_B t) {
+	public static boolean isEmpty(TreeB t) {
 		return 0 == len(t) || t.isEmpty();
 	}
 	// Arrays
@@ -14501,6 +14865,7 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
+		print(xor(Yes, not(Yes)));
 		String[] arr = {"hi", "Hola", "hallo", "bonjour", "zoo", "YiPPe yay"};
 		arr = sort(arr, "desc");
 		arr = lower(arr);
