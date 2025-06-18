@@ -1663,11 +1663,17 @@ public class KL {
 	}
 	public static class clr extends Color {
 		private static final long serialVersionUID = 1L;
+		clr() {
+			super(0, 0, 0);
+		}
 		clr(int rgb) {
 			super(rgb);
 		}
 		clr(int rgb, boolean includesAlphaAtEnd) {
 			super(rgb, includesAlphaAtEnd);
+		}
+		clr(Color c) {
+			this(c.getRGB());
 		}
 		clr(int r, int g, int b) {
 			super(r, g, b);
@@ -1690,22 +1696,22 @@ public class KL {
 			 * @params all in the floating range: 0 to 1
 			 */
 		}
-		clr(String hexStringWithAlpha, boolean hasApha) {
-			this(from(hexStringWithAlpha), hasApha);
+		clr(String hexStringWithOrWithoutAlpha, boolean hasApha) {
+			this(from(hexStringWithOrWithoutAlpha), hasApha);
 			/*
 			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff
 			 clr red = clr("red
 			 */
 		}
-		clr(String hexStringWithAlpha) {
-			super(from(hexStringWithAlpha), false);
+		clr(String hexStringWithoutAlpha) {
+			this(from(hexStringWithoutAlpha), false);
 			/*
 			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff
 			 */
 		}
 		public static int from(String hex) {
 			hex = hex.replaceAll("^(0x|#)", "");
-			if (!eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5 || len(hex) == 7) return 0;
+			if (not(hex) || !eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5 || len(hex) == 7) return 0;
 			int len = len(hex);
 			int r, g, b, a = 255;
 			if (len == 8) {
@@ -1742,6 +1748,23 @@ public class KL {
 	int BOLD, PLAIN, ITALIC, BOLDITALIC, Bold = BOLD = Font.BOLD,
 										 Plain = PLAIN = Font.PLAIN, Italic = ITALIC = Font.ITALIC,
 										 BoldItalic = BOLDITALIC = Bold | Italic;
+	// some colors
+	// standard
+	public static clr red = new clr(clr.red),
+	  green = new clr(clr.green),
+	  blue = new clr(clr.blue),
+	  pink = new clr(clr.pink),
+	  magenta = new clr(clr.magenta),
+	  orange = new clr(clr.orange),
+	  lightgray = new clr(clr.lightGray),
+	  gray = new clr(clr.gray),
+	  darkgray = new clr(clr.darkGray),
+	  cyan = new clr(clr.cyan),
+	  yellow = new clr(clr.yellow),
+	  white = new clr(clr.white),
+	  black = new clr(clr.black);
+	// developer's choice
+	
 	// some other syntax candies
 	public static Pesa pesa() {
 		return new Pesa();
@@ -6141,18 +6164,84 @@ public class KL {
 		new Thread(fn).run();
 		return true;
 	}
-	public static void setTimeout(Runnable fn, int delay) {
-		new Thread(() -> {
-			try {
-				Thread.sleep(delay < 1000 ? delay * 1000 : delay);
-			} catch (InterruptedException e) {
-				print("The timeout was interrupted by a background task.");
-			}
-			SwingUtilities.invokeLater(fn);
-		}).start();
+	private static final Map<Integer, Thread> timeoutThreads = new ConcurrentHashMap<>();
+	private static int timeoutId = 0,
+	  iterationsDone = 0;
+	public static int setTimeout(Runnable fn, int delay) {
+	    if (isNull(fn) || isNull(delay) || isInf(delay) || isNeg(delay)) return -1;
+	    timeoutId++;
+	    Thread thread = new Thread(() -> {
+	        try {
+	            Thread.sleep(delay < 1000 ? delay * 1000 : delay);
+	        } catch (InterruptedException e) {
+	            print("[KL.Info.InterruptedTimeout]:\nThe timeout was interrupted, either intentionally or by a background task.");
+	            return;
+	        }
+	        SwingUtilities.invokeLater(fn);
+	    });
+	    timeoutThreads.put(timeoutId, thread);
+	    thread.start();
+	    return timeoutId;
+	}
+	public static void clearTimeout(int id) {
+	    Thread thread = timeoutThreads.remove(id);
+	    if (thread != null) {
+	        thread.interrupt();
+	    }
 	}
 	public static void delay(Runnable fn, int delay) {
 		setTimeout(fn, delay);
+	}
+	public static void clearDelay(int id) {
+		clearTimeout(id);
+	}
+	private static final Map<Integer, Thread> intervalThreads = new ConcurrentHashMap<>();
+	private static int intervalId = 0;
+	public static int setInterval(Runnable fn, int interval) {
+	    if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval)) return -1;
+	    intervalId++;
+	    Thread thread = new Thread(() -> {
+	        while (!Thread.currentThread().isInterrupted()) {
+	            try {
+	                Thread.sleep(interval < 1000 ? interval * 1000 : interval);
+	            } catch (InterruptedException e) {
+	                print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a background task.");
+	                break;
+	            }
+	            SwingUtilities.invokeLater(fn);
+	        }
+	    });
+	    intervalThreads.put(intervalId, thread);
+	    thread.start();
+	    return intervalId;
+	}
+	public static int setInterval(Runnable fn, int interval, int maxIterations) {
+	    if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval) || isNull(maxIterations) || isInf(maxIterations) || isNeg(maxIterations) || not(maxIterations)) return -1;
+	    intervalId++;
+	    Thread thread = new Thread(() -> {
+	        while (!Thread.currentThread().isInterrupted()) {
+	            try {
+	                if (iterationsDone < maxIterations) {
+	                	Thread.sleep(interval < 1000 ? interval * 1000 : interval);
+	                	iterationsDone++;
+	                }
+	                else clearInterval(intervalId);
+	            } catch (InterruptedException e) {
+	                print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a background task.");
+	                break;
+	            }
+	            SwingUtilities.invokeLater(fn);
+	        }
+	    });
+	    intervalThreads.put(intervalId, thread);
+	    thread.start();
+	    return intervalId;
+	}
+	public static void clearInterval(int id) {
+	    Thread thread = intervalThreads.remove(id);
+	    if (thread != null) {
+	        thread.interrupt();
+	    }
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
 							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
@@ -11236,8 +11325,17 @@ public class KL {
 	public static char randChar() {
 		return randChar(47, 127);
 	}
-	public static String randId() {
+	public static String randUuid() {
 		return UUID.randomUUID().toString();
+	}
+	public static String randId(int len) {
+		String id = randUuid().replaceAll("-", "");
+		if (not(len) || isNeg(len) || len > len(id)) return id;
+		return id.substring(0, len);
+	}
+	public static String randId() {
+		String id = randUuid().replaceAll("-", "");
+		return id.substring(0, 8);
 	}
 	public static String randItem(String arr[]) {
 		return arr[randInt(arr.length)];
@@ -11531,8 +11629,13 @@ public class KL {
 								 String regex_to_replace_with) {
 		return str.replaceAll(to_replace, regex_to_replace_with);
 	}
-	public static String replaceOne(String str, String to_replace,
-									String regex_to_replace_with) {
+	public static String replace(String str, String to_replace, Function<String, String> fn) {
+		StringBuilder s = new StringBuilder(str);
+		Pattern p = Pattern.compile(to_replace);
+		Matcher matcher = p.matcher(s);
+		return matcher.replaceAll(m -> fn.apply(m.group()));
+	}
+	public static String replaceOne(String str, String to_replace, String regex_to_replace_with) {
 		return str.replaceFirst(to_replace, regex_to_replace_with);
 	}
 	public static String remove(String str, String re) {
@@ -11628,7 +11731,7 @@ public class KL {
 		return arr.slice(start, arr.length());
 	}
 	public static String slice(String str, int start, int end) {
-		if (start < 0 || start >= len(str) || end <= 0 || end >= len(str))
+		if (start < 0 || start >= len(str) || eq(start, end) || end < start || end <= 0 || end >= len(str))
 			return str;
 		return str.substring(start, end);
 	}
@@ -11674,44 +11777,239 @@ public class KL {
 	public static BoolArr slice(BoolArr arr, int start, int end) {
 		return arr.slice(start, end);
 	}
-	public static String sliceEnd(String str, int start) {
-		return slice(str, str.length() - start);
+	public static String sliceRight(String str, int start) {
+		return slice(str, 0, len(str) - start);
 	}
-	public static String[] sliceEnd(String[] arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static String[] sliceRight(String[] arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static int[] sliceEnd(int[] arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static int[] sliceRight(int[] arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static long[] sliceEnd(long[] arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static long[] sliceRight(long[] arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static float[] sliceEnd(float[] arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static float[] sliceRight(float[] arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static double[] sliceEnd(double[] arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static double[] sliceRight(double[] arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static boolean[] sliceEnd(boolean[] arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static boolean[] sliceRight(boolean[] arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static StrArr sliceEnd(StrArr arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static StrArr sliceRight(StrArr arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static IntArr sliceEnd(IntArr arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static IntArr sliceRight(IntArr arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static LongArr sliceEnd(LongArr arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static LongArr sliceRight(LongArr arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static FltArr sliceEnd(FltArr arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static FltArr sliceRight(FltArr arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static DblArr sliceEnd(DblArr arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static DblArr sliceRight(DblArr arr, int start) {
+		return slice(arr, 0, len(arr) - start);
 	}
-	public static BoolArr sliceEnd(BoolArr arr, int start) {
-		return slice(arr, len(arr) - start);
+	public static BoolArr sliceRight(BoolArr arr, int start) {
+		return slice(arr, 0, len(arr) - start);
+	}
+	public static String sliceEnd(String str, int earlyEnd) {
+		return slice(str, len(str) - earlyEnd);
+	}
+	public static String[] sliceEnd(String[] arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static int[] sliceEnd(int[] arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static long[] sliceEnd(long[] arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static float[] sliceEnd(float[] arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static double[] sliceEnd(double[] arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static boolean[] sliceEnd(boolean[] arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static StrArr sliceEnd(StrArr arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static IntArr sliceEnd(IntArr arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static LongArr sliceEnd(LongArr arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static FltArr sliceEnd(FltArr arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static DblArr sliceEnd(DblArr arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static BoolArr sliceEnd(BoolArr arr, int earlyEnd) {
+		return slice(arr, len(arr) - earlyEnd);
+	}
+	public static String sliceOff(String str, int earlyEnd) {
+		return sliceEnd(str, earlyEnd);
+	}
+	public static String[] sliceOff(String[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static int[] sliceOff(int[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static long[] sliceOff(long[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static float[] sliceOff(float[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static double[] sliceOff(double[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static boolean[] sliceOff(boolean[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static StrArr sliceOff(StrArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static IntArr sliceOff(IntArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static LongArr sliceOff(LongArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static FltArr sliceOff(FltArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static DblArr sliceOff(DblArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static BoolArr sliceOff(BoolArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static String sliceOut(String str, int earlyEnd) {
+		return sliceEnd(str, earlyEnd);
+	}
+	public static String[] sliceOut(String[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static int[] sliceOut(int[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static long[] sliceOut(long[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static float[] sliceOut(float[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static double[] sliceOut(double[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static boolean[] sliceOut(boolean[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static StrArr sliceOut(StrArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static IntArr sliceOut(IntArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static LongArr sliceOut(LongArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static FltArr sliceOut(FltArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static DblArr sliceOut(DblArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static BoolArr sliceOut(BoolArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static String trimRight(String str, int start) {
+		return sliceRight(str, start);
+	}
+	public static String[] trimRight(String[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static int[] trimRight(int[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static long[] trimRight(long[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static float[] trimRight(float[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static double[] trimRight(double[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static boolean[] trimRight(boolean[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static StrArr trimRight(StrArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static IntArr trimRight(IntArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static LongArr trimRight(LongArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static FltArr trimRight(FltArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static DblArr trimRight(DblArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static BoolArr trimRight(BoolArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static String sliceKeep(String str, int end) {
+		return slice(str, 0, end);
+	}
+	public static String[] sliceKeep(String[] arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static int[] sliceKeep(int[] arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static long[] sliceKeep(long[] arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static float[] sliceKeep(float[] arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static double[] sliceKeep(double[] arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static boolean[] sliceKeep(boolean[] arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static StrArr sliceKeep(StrArr arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static IntArr sliceKeep(IntArr arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static LongArr sliceKeep(LongArr arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static FltArr sliceKeep(FltArr arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static DblArr sliceKeep(DblArr arr, int end) {
+		return slice(arr, 0, end);
+	}
+	public static BoolArr sliceKeep(BoolArr arr, int end) {
+		return slice(arr, 0, end);
 	}
 	public static String trim(String str) {
 		return slice(str);
@@ -11830,44 +12128,161 @@ public class KL {
 	public static BoolArr trim(BoolArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static String trimEnd(String str, int start) {
-		return sliceEnd(str, start);
+	public static String trimKeep(String str, int end) {
+		return sliceKeep(str, end);
 	}
-	public static String[] trimEnd(String[] arr, int start) {
-		return sliceEnd(arr, start);
+	public static String[] trimKeep(String[] arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static int[] trimEnd(int[] arr, int start) {
-		return sliceEnd(arr, start);
+	public static int[] trimKeep(int[] arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static long[] trimEnd(long[] arr, int start) {
-		return sliceEnd(arr, start);
+	public static long[] trimKeep(long[] arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static float[] trimEnd(float[] arr, int start) {
-		return sliceEnd(arr, start);
+	public static float[] trimKeep(float[] arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static double[] trimEnd(double[] arr, int start) {
-		return sliceEnd(arr, start);
+	public static double[] trimKeep(double[] arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static boolean[] trimEnd(boolean[] arr, int start) {
-		return sliceEnd(arr, start);
+	public static boolean[] trimKeep(boolean[] arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static StrArr trimEnd(StrArr arr, int start) {
-		return sliceEnd(arr, start);
+	public static StrArr trimKeep(StrArr arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static IntArr trimEnd(IntArr arr, int start) {
-		return sliceEnd(arr, start);
+	public static IntArr trimKeep(IntArr arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static LongArr trimEnd(LongArr arr, int start) {
-		return sliceEnd(arr, start);
+	public static LongArr trimKeep(LongArr arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static FltArr trimEnd(FltArr arr, int start) {
-		return sliceEnd(arr, start);
+	public static FltArr trimKeep(FltArr arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static DblArr trimEnd(DblArr arr, int start) {
-		return sliceEnd(arr, start);
+	public static DblArr trimKeep(DblArr arr, int end) {
+		return sliceKeep(arr, end);
 	}
-	public static BoolArr trimEnd(BoolArr arr, int start) {
-		return sliceEnd(arr, start);
+	public static BoolArr trimKeep(BoolArr arr, int end) {
+		return sliceKeep(arr, end);
+	}
+	public static String trimEnd(String str, int earlyEnd) {
+		return sliceEnd(str, earlyEnd);
+	}
+	public static String[] trimEnd(String[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static int[] trimEnd(int[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static long[] trimEnd(long[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static float[] trimEnd(float[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static double[] trimEnd(double[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static boolean[] trimEnd(boolean[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static StrArr trimEnd(StrArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static IntArr trimEnd(IntArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static LongArr trimEnd(LongArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static FltArr trimEnd(FltArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static DblArr trimEnd(DblArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static BoolArr trimEnd(BoolArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static String trimOff(String str, int earlyEnd) {
+		return trimEnd(str, earlyEnd);
+	}
+	public static String[] trimOff(String[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static int[] trimOff(int[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static long[] trimOff(long[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static float[] trimOff(float[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static double[] trimOff(double[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static boolean[] trimOff(boolean[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static StrArr trimOff(StrArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static IntArr trimOff(IntArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static LongArr trimOff(LongArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static FltArr trimOff(FltArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static DblArr trimOff(DblArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static BoolArr trimOff(BoolArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static String trimOut(String str, int earlyEnd) {
+		return trimEnd(str, earlyEnd);
+	}
+	public static String[] trimOut(String[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static int[] trimOut(int[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static long[] trimOut(long[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static float[] trimOut(float[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static double[] trimOut(double[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static boolean[] trimOut(boolean[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static StrArr trimOut(StrArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static IntArr trimOut(IntArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static LongArr trimOut(LongArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static FltArr trimOut(FltArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static DblArr trimOut(DblArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static BoolArr trimOut(BoolArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
 	}
 	public static String sliceTo(String str, String thatSpecificPart) {
 		int index = indexOf(str, thatSpecificPart);
@@ -13499,8 +13914,7 @@ public class KL {
 		if (isNull(o))
 			return "null";
 		String middleware = o.getClass().toString();
-		if (!in(middleware, "\\."))
-			return "unidentified";
+		if (!in(middleware, "\\.") && in(middleware, " ")) return middleware.split(" ")[1].replaceAll("\\$", "\\.");
 		String result = middleware.split("\\.")[2].toLowerCase();
 		return result;
 	}
@@ -14865,6 +15279,10 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
+		print(replace("hello there", "^hel\\w+", m -> m.toUpperCase()));
+		int interval = setInterval(() -> print(randId()), 5, 2);
+		//setTimeout(() -> clearInterval(interval), 20);
+		print(type(red));
 		print(xor(Yes, not(Yes)));
 		String[] arr = {"hi", "Hola", "hallo", "bonjour", "zoo", "YiPPe yay"};
 		arr = sort(arr, "desc");
