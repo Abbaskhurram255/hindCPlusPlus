@@ -1764,7 +1764,11 @@ public class KL {
 	  white = new clr(clr.white),
 	  black = new clr(clr.black);
 	// developer's choice
-	
+	public static final class colors {
+	    public static final clr acidgreen=new clr("#8ffe09"),adobe=new clr("#bd6c48"),alga=new clr("#54ac68"),algagreen=new clr("#21c36f"),almostblack=new clr("#070d0d"),amber=new clr("#feb308"),amber100=new clr("#ffecb3"),amber200=new clr("#ffe082"),amber300=new clr("#ffd54f"),amber400=new clr("#ffca28"),amber50=new clr("#fff8e1"),amber500=new clr("#ffc107"),amber600=new clr("#ffb300"),amber700=new clr("#ffa000"),amber800=new clr("#ff8f00"),amber900=new clr("#ff6f00"),amberextra1=new clr("#ffe57f"),amberextra2=new clr("#ffd740"),amberextra3=new clr("#ffc400"),amberextra4=new clr("#ffab00"),amethyst=new clr("#9b5fc0"),apple=new clr("#6ecb3c"),applegreen=new clr("#76cd26"),apricot=new clr("#ffb16d"),aqua=new clr("#13eac9"),aquablue=new clr("#02d8e9"),aquagreen=new clr("#12e193"),aquamarine=new clr("#04d8b2"),armygreen=new clr("#4b5d16"),asparagus=new clr("#77ab56"),aubergine=new clr("#3d0734"),auburn=new clr("#9a3001"),avocado=new clr("#90b134"),avocadogreen=new clr("#87a922"),azul=new clr("#1d5dec"),azure=new clr("#069af3"),babyblue=new clr("#a2cffe"),babygreen=new clr("#8cff9e"),babypink=new clr("#ffb7ce"),babypoo=new clr("#ab9004"),babypoop=new clr("#937c00"),babypoopgreen=new clr("#8f9805"),babypukegreen=new clr("#b6c406"),babypurple=new clr("#ca9bf7"),babyshitbrown=new clr("#ad900d"),babyshitgreen=new clr("#889717"),banana=new clr("#ffff7e"),bananayellow=new clr("#fafe4b"),barbiepink=new clr("#fe46a5"),barfgreen=new clr("#94ac02"),barney=new clr("#ac1db8"),barneypurple=new clr("#a00498"),battleshipgray=new clr("#6b7c85"),beige=new clr("#e6daa6"),berry=new clr("#990f4b"),bile=new clr("#b5c306"),black=new clr("#000000"),bland=new clr("#afa88b"),blood=new clr("#770001"),bloodorange=new clr("#fe4b03"),bloodred=new clr("#980002"),blue=new clr("#0343df"),blue100=new clr("#bbdefb"),blue200=new clr("#90caf9"),blue300=new clr("#64b5f6"),blue400=new clr("#42a5f5"),blue50=new clr("#e3f2fd"),blue500=new clr("#2196f3"),blue600=new clr("#1e88e5"),blue700=new clr("#1976d2"),blue800=new clr("#1565c0"),blue900=new clr("#0d47a1"),blueblue=new clr("#2242c7"),blueextra1=new clr("#82b1ff"),blueextra2=new clr("#448aff"),blueextra3=new clr("#2979ff"),blueextra4=new clr("#2962ff"),bluegray=new clr("#85a3b2"),bluegreen=new clr("#017a79"),bluepurple=new clr("#5a06ef"),blueviolet=new clr("#5d06e9"),bluewithahintofpurple=new clr("#533cc6"),blueberry=new clr("#464196"),bluegray100=new clr("#cfd8dc"),bluegray200=new clr("#b0bec5"),bluegray300=new clr("#90a4ae"),bluegray400=new clr("#78909c"),bluegray50=new clr("#eceff1"),bluegray500=new clr("#607d8b"),bluegray600=new clr("#546e7a"),bluegray700=new clr("#455a64"),bluegray800=new clr("#37474f"),bluegray900=new clr("#263238"),blueygray=new clr("#89a0b0"),blueygreen=new clr("#2bb179"),blueypurple=new clr("#6241c7"),bluish=new clr("#2976bb"),bluishgray=new clr("#748b97"),bluishgreen=new clr("#10a674"),bluishpurple=new clr("#703be7"),blurple=new clr("#5539cc"),blush=new clr("#f29e8e"),blushpink=new clr("#fe828c"),booger=new clr("#9bb53c"),boogergreen=new clr("#96b403"),bordeaux=new clr("#7b002c"),boringgreen=new clr("#63b365"),bottlegreen=new clr("#044a05"),brick=new clr("#a03623"),brickorange=new clr("#c14a09"),brickred=new clr("#8f1402"),brightaqua=new clr("#0bf9ea"),brightblue=new clr("#0165fc"),brightcyan=new clr("#41fdfe"),brightgreen=new clr("#01ff07"),brightlavender=new clr("#c760ff"),brightlightblue=new clr("#26f7fd"),brightlightgreen=new clr("#2dfe54"),brightlilac=new clr("#c95efb"),brightlime=new clr("#87fd05"),brightlimegreen=new clr("#65fe08"),brightmagenta=new clr("#ff08e8"),brightolive=new clr("#9cbb04"),brightorange=new clr("#ff5b00"),brightpink=new clr("#fe01b1"),brightpurple=new clr("#be03fd"),brightred=new clr("#ff000d"),brightseagreen=new clr("#05ffa6"),brightskyblue=new clr("#02ccfe"),brightteal=new clr("#01f9c6"),brightturquoise=new clr("#0ffef9"),brightviolet=new clr("#ad0afd"),brightyellow=new clr("#fffd01"),brightyellowgreen=new clr("#9dff00"),britishracinggreen=new clr("#05480d"),bronze=new clr("#a87900"),brown=new clr("#653700"),brown100=new clr("#d7ccc8"),brown200=new clr("#bcaaa4"),brown300=new clr("#a1887f"),brown400=new clr("#8d6e63"),brown50=new clr("#efebe9"),brown500=new clr("#795548"),brown600=new clr("#6d4c41"),brown700=new clr("#5d4037"),brown800=new clr("#4e342e"),brown900=new clr("#3e2723"),browngray=new clr("#8d8468"),browngreen=new clr("#706c11"),brownorange=new clr("#b96902"),brownred=new clr("#922b05"),brownyellow=new clr("#b29705"),brownish=new clr("#9c6d57"),brownishgray=new clr("#86775f"),brownishgreen=new clr("#6a6e09"),brownishorange=new clr("#cb7723"),brownishpink=new clr("#c27e79"),brownishpurple=new clr("#76424e"),brownishred=new clr("#9e3623"),brownishyellow=new clr("#c9b003"),brownygreen=new clr("#6f6c0a"),brownyorange=new clr("#ca6b02"),bruise=new clr("#7e4071"),bubblegumpink=new clr("#fe83cc"),bubblegum=new clr("#ff6cb5"),buff=new clr("#fef69e"),burgundy=new clr("#610023"),burntorange=new clr("#c04e01"),burntred=new clr("#9f2305"),burntsiena=new clr("#b75203"),burntsienna=new clr("#b04e0f"),burntumber=new clr("#a0450e"),burntyellow=new clr("#d5ab09"),burple=new clr("#6832e3"),butter=new clr("#ffff81"),butteryellow=new clr("#fffd74"),butterscotch=new clr("#fdb147"),cadetblue=new clr("#4e7496"),camel=new clr("#c69f59"),camo=new clr("#7f8f4e"),camogreen=new clr("#526525"),camouflagegreen=new clr("#4b6113"),canary=new clr("#fdff63"),canaryyellow=new clr("#fffe40"),candypink=new clr("#ff63e9"),caramel=new clr("#af6f09"),carmine=new clr("#9d0216"),carnation=new clr("#fd798f"),carnationpink=new clr("#ff7fa7"),carolinablue=new clr("#8ab8fe"),celadon=new clr("#befdb7"),celery=new clr("#c1fd95"),cement=new clr("#a5a391"),cerise=new clr("#de0c62"),cerulean=new clr("#0485d1"),ceruleanblue=new clr("#056eee"),charcoal=new clr("#343837"),charcoalgray=new clr("#3c4142"),chartreuse=new clr("#c1f80a"),cherry=new clr("#cf0234"),cherryred=new clr("#f7022a"),chestnut=new clr("#742802"),chocolate=new clr("#3d1c02"),chocolatebrown=new clr("#411900"),cinnamon=new clr("#ac4f06"),claret=new clr("#680018"),clay=new clr("#b66a50"),claybrown=new clr("#b2713d"),clearblue=new clr("#247afd"),cloudyblue=new clr("#acc2d9"),cobalt=new clr("#1e488f"),cobaltblue=new clr("#030aa7"),cocoa=new clr("#875f42"),coffee=new clr("#a6814c"),coolblue=new clr("#4984b8"),coolgray=new clr("#95a3a6"),coolgreen=new clr("#33b864"),copper=new clr("#b66325"),coral=new clr("#fc5a50"),coralpink=new clr("#ff6163"),cornflower=new clr("#6a79f7"),cornflowerblue=new clr("#5170d7"),cranberry=new clr("#9e003a"),cream=new clr("#ffffc2"),creme=new clr("#ffffb6"),crimson=new clr("#8c000f"),custard=new clr("#fffd78"),cyan=new clr("#00ffff"),cyan100=new clr("#b2ebf2"),cyan200=new clr("#80deea"),cyan300=new clr("#4dd0e1"),cyan400=new clr("#26c6da"),cyan50=new clr("#e0f7fa"),cyan500=new clr("#00bcd4"),cyan600=new clr("#00acc1"),cyan700=new clr("#0097a7"),cyan800=new clr("#00838f"),cyan900=new clr("#006064"),cyanextra1=new clr("#84ffff"),cyanextra2=new clr("#18ffff"),cyanextra3=new clr("#00e5ff"),cyanextra4=new clr("#00b8d4"),dandelion=new clr("#fedf08"),dark=new clr("#1b2431"),darkaqua=new clr("#05696b"),darkaquamarine=new clr("#017371"),darkbeige=new clr("#ac9362"),darkblue=new clr("#030764"),darkbluegray=new clr("#1f3b4d"),darkbluegreen=new clr("#005249"),darkbrown=new clr("#341c02"),darkcoral=new clr("#cf524e"),darkcream=new clr("#fff39a"),darkcyan=new clr("#0a888a"),darkforestgreen=new clr("#002d04"),darkfuchsia=new clr("#9d0759"),darkgold=new clr("#b59410"),darkgrassgreen=new clr("#388004"),darkgray=new clr("#363737"),darkgrayblue=new clr("#29465b"),darkgreen=new clr("#054907"),darkgreenblue=new clr("#1f6357"),darkhotpink=new clr("#d90166"),darkindigo=new clr("#1f0954"),darkkhaki=new clr("#9b8f55"),darklavender=new clr("#856798"),darklilac=new clr("#9c6da5"),darklime=new clr("#84b701"),darklimegreen=new clr("#7ebd01"),darkmagenta=new clr("#960056"),darkmaroon=new clr("#3c0008"),darkmauve=new clr("#874c62"),darkmint=new clr("#48c072"),darkmintgreen=new clr("#20c073"),darkmustard=new clr("#a88905"),darknavy=new clr("#000435"),darknavyblue=new clr("#00022e"),darkolive=new clr("#373e02"),darkolivegreen=new clr("#3c4d03"),darkorange=new clr("#c65102"),darkpastelgreen=new clr("#56ae57"),darkpeach=new clr("#de7e5d"),darkperiwinkle=new clr("#665fd1"),darkpink=new clr("#cb416b"),darkplum=new clr("#3f012c"),darkpurple=new clr("#35063e"),darkred=new clr("#840000"),darkrose=new clr("#b5485d"),darkroyalblue=new clr("#02066f"),darksage=new clr("#598556"),darksalmon=new clr("#c85a53"),darksand=new clr("#a88f59"),darkseagreen=new clr("#11875d"),darkseafoam=new clr("#1fb57a"),darkseafoamgreen=new clr("#3eaf76"),darkskyblue=new clr("#448ee4"),darkslateblue=new clr("#214761"),darktan=new clr("#af884a"),darktaupe=new clr("#7f684e"),darkteal=new clr("#014d4e"),darkturquoise=new clr("#045c5a"),darkviolet=new clr("#34013f"),darkyellow=new clr("#d5b60a"),darkyellowgreen=new clr("#728f02"),darkerblue=new clr("#011288"),darkergreen=new clr("#087804"),darkerpink=new clr("#c4387f"),darkerpurple=new clr("#5f1b6b"),darkishblue=new clr("#014182"),darkishgreen=new clr("#287c37"),darkishpink=new clr("#da467d"),darkishpurple=new clr("#751973"),darkishred=new clr("#a90308"),deepaqua=new clr("#08787f"),deepblue=new clr("#040273"),deepbrown=new clr("#410200"),deepgreen=new clr("#02590f"),deeplavender=new clr("#8d5eb7"),deeplilac=new clr("#966ebd"),deepmagenta=new clr("#a0025c"),deeporange=new clr("#dc4d01"),deeppink=new clr("#cb0162"),deeppurple=new clr("#36013f"),deepred=new clr("#9a0200"),deeprose=new clr("#c74767"),deepseablue=new clr("#015482"),deepskyblue=new clr("#0d75f8"),deepteal=new clr("#00555a"),deepturquoise=new clr("#017374"),deepviolet=new clr("#490648"),deeporange100=new clr("#ffccbc"),deeporange200=new clr("#ffab91"),deeporange300=new clr("#ff8a65"),deeporange400=new clr("#ff7043"),deeporange50=new clr("#fbe9e7"),deeporange500=new clr("#ff5722"),deeporange600=new clr("#f4511e"),deeporange700=new clr("#e64a19"),deeporange800=new clr("#d84315"),deeporange900=new clr("#bf360c"),deeporangeextra1=new clr("#ff9e80"),deeporangeextra2=new clr("#ff6e40"),deeporangeextra3=new clr("#ff3d00"),deeporangeextra4=new clr("#dd2c00"),deeppurple100=new clr("#d1c4e9"),deeppurple200=new clr("#b39ddb"),deeppurple300=new clr("#9575cd"),deeppurple400=new clr("#7e57c2"),deeppurple50=new clr("#ede7f6"),deeppurple500=new clr("#673ab7"),deeppurple600=new clr("#5e35b1"),deeppurple700=new clr("#512da8"),deeppurple800=new clr("#4527a0"),deeppurple900=new clr("#311b92"),deeppurpleextra1=new clr("#b388ff"),deeppurpleextra2=new clr("#7c4dff"),deeppurpleextra3=new clr("#651fff"),deeppurpleextra4=new clr("#6200ea"),denim=new clr("#3b638c"),denimblue=new clr("#3b5b92"),desert=new clr("#ccad60"),diarrhea=new clr("#9f8303"),dirt=new clr("#8a6e45"),dirtbrown=new clr("#836539"),dirtyblue=new clr("#3f829d"),dirtygreen=new clr("#667e2c"),dirtyorange=new clr("#c87606"),dirtypink=new clr("#ca7b80"),dirtypurple=new clr("#734a65"),dirtyyellow=new clr("#cdc50a"),dodgerblue=new clr("#3e82fc"),drab=new clr("#828344"),drabgreen=new clr("#749551"),driedblood=new clr("#4b0101"),duckeggblue=new clr("#c3fbf4"),dullblue=new clr("#49759c"),dullbrown=new clr("#876e4b"),dullgreen=new clr("#74a662"),dullorange=new clr("#d8863b"),dullpink=new clr("#d5869d"),dullpurple=new clr("#84597e"),dullred=new clr("#bb3f3f"),dullteal=new clr("#5f9e8f"),dullyellow=new clr("#eedc5b"),dusk=new clr("#4e5481"),duskblue=new clr("#26538d"),duskyblue=new clr("#475f94"),duskypink=new clr("#cc7a8b"),duskypurple=new clr("#895b7b"),duskyrose=new clr("#ba6873"),dust=new clr("#b2996e"),dustyblue=new clr("#5a86ad"),dustygreen=new clr("#76a973"),dustylavender=new clr("#ac86a8"),dustyorange=new clr("#f0833a"),dustypink=new clr("#d58a94"),dustypurple=new clr("#825f87"),dustyred=new clr("#b9484e"),dustyrose=new clr("#c0737a"),dustyteal=new clr("#4c9085"),earth=new clr("#a2653e"),eastergreen=new clr("#8cfd7e"),easterpurple=new clr("#c071fe"),ecru=new clr("#feffca"),eggshell=new clr("#ffffd4"),eggplant=new clr("#380835"),eggplantpurple=new clr("#430541"),eggshellblue=new clr("#c4fff7"),electricblue=new clr("#0652ff"),electricgreen=new clr("#21fc0d"),electriclime=new clr("#a8ff04"),electricpink=new clr("#ff0490"),electricpurple=new clr("#aa23ff"),emerald=new clr("#01a049"),emeraldgreen=new clr("#028f1e"),evergreen=new clr("#05472a"),fadedblue=new clr("#658cbb"),fadedgreen=new clr("#7bb274"),fadedorange=new clr("#f0944d"),fadedpink=new clr("#de9dac"),fadedpurple=new clr("#916e99"),fadedred=new clr("#d3494e"),fadedyellow=new clr("#feff7f"),fawn=new clr("#cfaf7b"),fern=new clr("#63a950"),ferngreen=new clr("#548d44"),fireenginered=new clr("#fe0002"),flatblue=new clr("#3c73a8"),flatgreen=new clr("#699d4c"),fluorescentgreen=new clr("#08ff08"),flurogreen=new clr("#0aff02"),foamgreen=new clr("#90fda9"),forest=new clr("#0b5509"),forestgreen=new clr("#06470c"),forrestgreen=new clr("#154406"),frenchblue=new clr("#436bad"),freshgreen=new clr("#69d84f"),froggreen=new clr("#58bc08"),fuchsia=new clr("#ed0dd9"),gold=new clr("#dbb40c"),golden=new clr("#f5bf03"),goldenbrown=new clr("#b27a01"),goldenrod=new clr("#fac205"),goldenyellow=new clr("#fec615"),grape=new clr("#6c3461"),grapepurple=new clr("#5d1451"),grapefruit=new clr("#fd5956"),grass=new clr("#5cac2d"),grassgreen=new clr("#3f9b0b"),grassygreen=new clr("#419c03"),gray=new clr("#929591"),gray100=new clr("#f5f5f5"),gray200=new clr("#eeeeee"),gray300=new clr("#e0e0e0"),gray400=new clr("#bdbdbd"),gray50=new clr("#fafafa"),gray500=new clr("#9e9e9e"),gray600=new clr("#757575"),gray700=new clr("#616161"),gray800=new clr("#424242"),gray900=new clr("#212121"),grayblue=new clr("#77a1b5"),graybrown=new clr("#7f7053"),graygreen=new clr("#86a17d"),graypink=new clr("#c3909b"),graypurple=new clr("#826d8c"),grayteal=new clr("#5e9b8a"),grayish=new clr("#a8a495"),grayishblue=new clr("#5e819d"),grayishbrown=new clr("#7a6a4f"),grayishgreen=new clr("#82a67d"),grayishpink=new clr("#c88d94"),grayishpurple=new clr("#887191"),grayishteal=new clr("#719f91"),green=new clr("#15b01a"),green100=new clr("#c8e6c9"),green200=new clr("#a5d6a7"),green300=new clr("#81c784"),green400=new clr("#66bb6a"),green50=new clr("#e8f5e9"),green500=new clr("#4caf50"),green600=new clr("#43a047"),green700=new clr("#388e3c"),green800=new clr("#2e7d32"),green900=new clr("#1b5e20"),greenagain=new clr("#16d43f"),greenapple=new clr("#5edc1f"),greenblue=new clr("#23c48b"),greenbrown=new clr("#544e03"),greenextra1=new clr("#b9f6ca"),greenextra2=new clr("#69f0ae"),greenextra3=new clr("#00e676"),greenextra4=new clr("#00c853"),greengray=new clr("#77926f"),greenteal=new clr("#0cb577"),greenyellow=new clr("#b5ce08"),greenish=new clr("#40a368"),greenishbeige=new clr("#c9d179"),greenishblue=new clr("#0b8b87"),greenishbrown=new clr("#696112"),greenishcyan=new clr("#2afeb7"),greenishgray=new clr("#96ae8d"),greenishtan=new clr("#bccb7a"),greenishteal=new clr("#32bf84"),greenishturquoise=new clr("#00fbb0"),greenishyellow=new clr("#cdfd02"),greenyblue=new clr("#42b395"),greenybrown=new clr("#696006"),greenygray=new clr("#7ea07a"),greenyyellow=new clr("#c6f808"),grossgreen=new clr("#a0bf16"),gunmetal=new clr("#536267"),hazel=new clr("#8e7618"),heather=new clr("#a484ac"),heliotrope=new clr("#d94ff5"),highlightergreen=new clr("#1bfc06"),hospitalgreen=new clr("#9be5aa"),hotgreen=new clr("#25ff29"),hotmagenta=new clr("#f504c9"),hotpink=new clr("#ff028d"),hotpurple=new clr("#cb00f5"),huntergreen=new clr("#0b4008"),ice=new clr("#d6fffa"),iceblue=new clr("#d7fffe"),ickygreen=new clr("#8fae22"),indianred=new clr("#850e04"),indigo=new clr("#380282"),indigo100=new clr("#c5cae9"),indigo200=new clr("#9fa8da"),indigo300=new clr("#7986cb"),indigo400=new clr("#5c6bc0"),indigo50=new clr("#e8eaf6"),indigo500=new clr("#3f51b5"),indigo600=new clr("#3949ab"),indigo700=new clr("#303f9f"),indigo800=new clr("#283593"),indigo900=new clr("#1a237e"),indigoblue=new clr("#3a18b1"),indigoextra1=new clr("#8c9eff"),indigoextra2=new clr("#536dfe"),indigoextra3=new clr("#3d5afe"),indigoextra4=new clr("#304ffe"),iris=new clr("#6258c4"),irishgreen=new clr("#019529"),ivory=new clr("#ffffcb"),jade=new clr("#1fa774"),jadegreen=new clr("#2baf6a"),junglegreen=new clr("#048243"),kelleygreen=new clr("#009337"),kellygreen=new clr("#02ab2e"),kermitgreen=new clr("#5cb200"),keylime=new clr("#aeff6e"),khaki=new clr("#aaa662"),khakigreen=new clr("#728639"),kiwi=new clr("#9cef43"),kiwigreen=new clr("#8ee53f"),lavender=new clr("#c79fef"),lavenderblue=new clr("#8b88f8"),lavenderpink=new clr("#dd85d7"),lawngreen=new clr("#4da409"),leaf=new clr("#71aa34"),leafgreen=new clr("#5ca904"),leafygreen=new clr("#51b73b"),leather=new clr("#ac7434"),lemon=new clr("#fdff52"),lemongreen=new clr("#adf802"),lemonlime=new clr("#bffe28"),lemonyellow=new clr("#fdff38"),lichen=new clr("#8fb67b"),lightaqua=new clr("#8cffdb"),lightaquamarine=new clr("#7bfdc7"),lightbeige=new clr("#fffeb6"),lightblue=new clr("#7bc8f6"),lightbluegray=new clr("#b7c9e2"),lightbluegreen=new clr("#7efbb3"),lightbluishgreen=new clr("#76fda8"),lightbrightgreen=new clr("#53fe5c"),lightbrown=new clr("#ad8150"),lightburgundy=new clr("#a8415b"),lightcyan=new clr("#acfffc"),lighteggplant=new clr("#894585"),lightforestgreen=new clr("#4f9153"),lightgold=new clr("#fddc5c"),lightgrassgreen=new clr("#9af764"),lightgray=new clr("#d8dcd6"),lightgrayblue=new clr("#9dbcd4"),lightgraygreen=new clr("#b7e1a1"),lightgreen=new clr("#76ff7b"),lightgreenblue=new clr("#56fca2"),lightgreenishblue=new clr("#63f7b4"),lightindigo=new clr("#6d5acf"),lightkhaki=new clr("#e6f2a2"),lightlavendar=new clr("#efc0fe"),lightlavender=new clr("#dfc5fe"),lightlightblue=new clr("#cafffb"),lightlightgreen=new clr("#c8ffb0"),lightlilac=new clr("#edc8ff"),lightlime=new clr("#aefd6c"),lightlimegreen=new clr("#b9ff66"),lightmagenta=new clr("#fa5ff7"),lightmaroon=new clr("#a24857"),lightmauve=new clr("#c292a1"),lightmint=new clr("#b6ffbb"),lightmintgreen=new clr("#a6fbb2"),lightmossgreen=new clr("#a6c875"),lightmustard=new clr("#f7d560"),lightnavy=new clr("#155084"),lightnavyblue=new clr("#2e5a88"),lightneongreen=new clr("#4efd54"),lightolive=new clr("#acbf69"),lightolivegreen=new clr("#a4be5c"),lightorange=new clr("#fdaa48"),lightpastelgreen=new clr("#b2fba5"),lightpeagreen=new clr("#c4fe82"),lightpeach=new clr("#ffd8b1"),lightperiwinkle=new clr("#c1c6fc"),lightpink=new clr("#ffd1df"),lightplum=new clr("#9d5783"),lightpurple=new clr("#bf77f6"),lightred=new clr("#ff474c"),lightrose=new clr("#ffc5cb"),lightroyalblue=new clr("#3a2efe"),lightsage=new clr("#bcecac"),lightsalmon=new clr("#fea993"),lightseagreen=new clr("#98f6b0"),lightseafoam=new clr("#a0febf"),lightseafoamgreen=new clr("#a7ffb5"),lightskyblue=new clr("#c6fcff"),lighttan=new clr("#fbeeac"),lightteal=new clr("#90e4c1"),lightturquoise=new clr("#7ef4cc"),lighturple=new clr("#b36ff6"),lightviolet=new clr("#d6b4fc"),lightyellow=new clr("#fffe7a"),lightyellowgreen=new clr("#ccfd7f"),lightyellowishgreen=new clr("#c2ff89"),lightblue100=new clr("#b3e5fc"),lightblue200=new clr("#81d4fa"),lightblue300=new clr("#4fc3f7"),lightblue400=new clr("#29b6f6"),lightblue50=new clr("#e1f5fe"),lightblue500=new clr("#03a9f4"),lightblue600=new clr("#039be5"),lightblue700=new clr("#0288d1"),lightblue800=new clr("#0277bd"),lightblue900=new clr("#01579b"),lightblueextra1=new clr("#80d8ff"),lightblueextra2=new clr("#40c4ff"),lightblueextra3=new clr("#00b0ff"),lightblueextra4=new clr("#0091ea"),lightergreen=new clr("#75fd63"),lighterpurple=new clr("#a55af4"),lightgreen100=new clr("#dcedc8"),lightgreen200=new clr("#c5e1a5"),lightgreen300=new clr("#aed581"),lightgreen400=new clr("#9ccc65"),lightgreen50=new clr("#f1f8e9"),lightgreen500=new clr("#8bc34a"),lightgreen600=new clr("#7cb342"),lightgreen700=new clr("#689f38"),lightgreen800=new clr("#558b2f"),lightgreen900=new clr("#33691e"),lightgreenextra1=new clr("#ccff90"),lightgreenextra2=new clr("#b2ff59"),lightgreenextra3=new clr("#76ff03"),lightgreenextra4=new clr("#64dd17"),lightishblue=new clr("#3d7afd"),lightishgreen=new clr("#61e160"),lightishpurple=new clr("#a552e6"),lightishred=new clr("#fe2f4a"),lilac=new clr("#cea2fd"),liliac=new clr("#c48efd"),lime=new clr("#aaff32"),lime100=new clr("#f0f4c3"),lime200=new clr("#e6ee9c"),lime300=new clr("#dce775"),lime400=new clr("#d4e157"),lime50=new clr("#f9fbe7"),lime500=new clr("#cddc39"),lime600=new clr("#c0ca33"),lime700=new clr("#afb42b"),lime800=new clr("#9e9d24"),lime900=new clr("#827717"),limeextra1=new clr("#f4ff81"),limeextra2=new clr("#eeff41"),limeextra3=new clr("#c6ff00"),limeextra4=new clr("#aeea00"),limegreen=new clr("#89fe05"),limeyellow=new clr("#d0fe1d"),lipstick=new clr("#d5174e"),lipstickred=new clr("#c0022f"),macaroniandcheese=new clr("#efb435"),magenta=new clr("#c20078"),mahogany=new clr("#4a0100"),maize=new clr("#f4d054"),mango=new clr("#ffa62b"),manilla=new clr("#fffa86"),marigold=new clr("#fcc006"),marine=new clr("#042e60"),marineblue=new clr("#01386a"),maroon=new clr("#650021"),mauve=new clr("#ae7181"),mediumblue=new clr("#2c6fbb"),mediumbrown=new clr("#7f5112"),mediumgray=new clr("#7d7f7c"),mediumgreen=new clr("#39ad48"),mediumpink=new clr("#f36196"),mediumpurple=new clr("#9e43a2"),melon=new clr("#ff7855"),merlot=new clr("#730039"),metallicblue=new clr("#4f738e"),midblue=new clr("#276ab3"),midgreen=new clr("#50a747"),midnight=new clr("#03012d"),midnightblue=new clr("#020035"),midnightpurple=new clr("#280137"),militarygreen=new clr("#667c3e"),milkchocolate=new clr("#7f4e1e"),mint=new clr("#9ffeb0"),mintgreen=new clr("#8fff9f"),mintygreen=new clr("#0bf77d"),mocha=new clr("#9d7651"),moss=new clr("#769958"),mossgreen=new clr("#658b38"),mossygreen=new clr("#638b27"),mud=new clr("#735c12"),mudbrown=new clr("#60460f"),mudgreen=new clr("#606602"),muddybrown=new clr("#886806"),muddygreen=new clr("#657432"),muddyyellow=new clr("#bfac05"),mulberry=new clr("#920a4e"),murkygreen=new clr("#6c7a0e"),mushroom=new clr("#ba9e88"),mustard=new clr("#ceb301"),mustardbrown=new clr("#ac7e04"),mustardgreen=new clr("#a8b504"),mustardyellow=new clr("#d2bd0a"),mutedblue=new clr("#3b719f"),mutedgreen=new clr("#5fa052"),mutedpink=new clr("#d1768f"),mutedpurple=new clr("#805b87"),nastygreen=new clr("#70b23f"),navy=new clr("#01153e"),navyblue=new clr("#001146"),navygreen=new clr("#35530a"),neonblue=new clr("#04d9ff"),neongreen=new clr("#0cff0c"),neonpink=new clr("#fe019a"),neonpurple=new clr("#bc13fe"),neonred=new clr("#ff073a"),neonyellow=new clr("#cfff04"),niceblue=new clr("#107ab0"),nightblue=new clr("#040348"),ocean=new clr("#017b92"),oceanblue=new clr("#03719c"),oceangreen=new clr("#3d9973"),ocher=new clr("#bf9b0c"),ochre=new clr("#bf9005"),ocre=new clr("#c69c04"),offblue=new clr("#5684ae"),offgreen=new clr("#6ba353"),offwhite=new clr("#ffffe4"),offyellow=new clr("#f1f33f"),oldpink=new clr("#c77986"),oldrose=new clr("#c87f89"),olive=new clr("#6e750e"),olivebrown=new clr("#645403"),olivedrab=new clr("#6f7632"),olivegreen=new clr("#677a04"),oliveyellow=new clr("#c2b709"),orange=new clr("#f97306"),orange100=new clr("#ffe0b2"),orange200=new clr("#ffcc80"),orange300=new clr("#ffb74d"),orange400=new clr("#ffa726"),orange50=new clr("#fff3e0"),orange500=new clr("#ff9800"),orange600=new clr("#fb8c00"),orange700=new clr("#f57c00"),orange800=new clr("#ef6c00"),orange900=new clr("#e65100"),orangebrown=new clr("#be6400"),orangeextra1=new clr("#ffd180"),orangeextra2=new clr("#ffab40"),orangeextra3=new clr("#ff9100"),orangeextra4=new clr("#ff6d00"),orangepink=new clr("#ff6f52"),orangered=new clr("#fe420f"),orangeyellow=new clr("#ffad01"),orangeish=new clr("#fd8d49"),orangeybrown=new clr("#b16002"),orangeyred=new clr("#fa4224"),orangeyyellow=new clr("#fdb915"),orangish=new clr("#fc824a"),orangishbrown=new clr("#b25f03"),orangishred=new clr("#f43605"),orchid=new clr("#c875c4"),pale=new clr("#fff9d0"),paleaqua=new clr("#b8ffeb"),paleblue=new clr("#d0fefe"),palebrown=new clr("#b1916e"),palecyan=new clr("#b7fffa"),palegold=new clr("#fdde6c"),palegray=new clr("#fdfdfe"),palegreen=new clr("#c7fdb5"),palelavender=new clr("#eecffe"),palelightgreen=new clr("#b1fc99"),palelilac=new clr("#e4cbff"),palelime=new clr("#befd73"),palelimegreen=new clr("#b1ff65"),palemagenta=new clr("#d767ad"),palemauve=new clr("#fed0fc"),paleolive=new clr("#b9cc81"),paleolivegreen=new clr("#b1d27b"),paleorange=new clr("#ffa756"),palepeach=new clr("#ffe5ad"),palepink=new clr("#ffcfdc"),palepurple=new clr("#b790d4"),palered=new clr("#d9544d"),palerose=new clr("#fdc1c5"),palesalmon=new clr("#ffb19a"),paleskyblue=new clr("#bdf6fe"),paleteal=new clr("#82cbb2"),paleturquoise=new clr("#a5fbd5"),paleviolet=new clr("#ceaefa"),paleyellow=new clr("#ffff84"),parchment=new clr("#fefcaf"),pastelblue=new clr("#a2bffe"),pastelgreen=new clr("#b0ff9d"),pastelorange=new clr("#ff964f"),pastelpink=new clr("#ffbacd"),pastelpurple=new clr("#caa0ff"),pastelred=new clr("#db5856"),pastelyellow=new clr("#fffe71"),pea=new clr("#a4bf20"),peagreen=new clr("#8eab12"),peasoup=new clr("#929901"),peasoupgreen=new clr("#94a617"),peach=new clr("#ffb07c"),peachypink=new clr("#ff9a8a"),peacockblue=new clr("#016795"),pear=new clr("#cbf85f"),periwinkle=new clr("#8e82fe"),periwinkleblue=new clr("#8f99fb"),perrywinkle=new clr("#8f8ce7"),petrol=new clr("#005f6a"),pigpink=new clr("#e78ea5"),pine=new clr("#2b5d34"),pinegreen=new clr("#0a481e"),pink=new clr("#ff81c0"),pink100=new clr("#f8bbd0"),pink200=new clr("#f48fb1"),pink300=new clr("#f06292"),pink400=new clr("#ec407a"),pink50=new clr("#fce4ec"),pink500=new clr("#e91e63"),pink600=new clr("#d81b60"),pink700=new clr("#c2185b"),pink800=new clr("#ad1457"),pink900=new clr("#880e4f"),pinkextra1=new clr("#ff80ab"),pinkextra2=new clr("#ff4081"),pinkextra3=new clr("#f50057"),pinkextra4=new clr("#c51162"),pinkpurple=new clr("#ef1de7"),pinkred=new clr("#f5054f"),pinkish=new clr("#d46a7e"),pinkishbrown=new clr("#b17261"),pinkishgray=new clr("#c8aca9"),pinkishorange=new clr("#ff724c"),pinkishpurple=new clr("#d648d7"),pinkishred=new clr("#f10c45"),pinkishtan=new clr("#d99b82"),pinky=new clr("#fc86aa"),pinkypurple=new clr("#c94cbe"),pinkyred=new clr("#fc2647"),pissyellow=new clr("#ddd618"),pistachio=new clr("#c0fa8b"),plum=new clr("#580f41"),plumpurple=new clr("#4e0550"),poisongreen=new clr("#40fd14"),poo=new clr("#8f7303"),poobrown=new clr("#885f01"),poop=new clr("#7f5e00"),poopbrown=new clr("#7a5901"),poopgreen=new clr("#6f7c00"),powderblue=new clr("#b1d1fc"),powderpink=new clr("#ffb2d0"),primaryblue=new clr("#0804f9"),prussianblue=new clr("#004577"),puce=new clr("#a57e52"),puke=new clr("#a5a502"),pukebrown=new clr("#947706"),pukegreen=new clr("#9aae07"),pukeyellow=new clr("#c2be0e"),pumpkin=new clr("#e17701"),pumpkinorange=new clr("#fb7d07"),pureblue=new clr("#0203e2"),purple=new clr("#7e1e9c"),purple100=new clr("#e1bee7"),purple200=new clr("#ce93d8"),purple300=new clr("#ba68c8"),purple400=new clr("#ab47bc"),purple50=new clr("#f3e5f5"),purple500=new clr("#9c27b0"),purple600=new clr("#8e24aa"),purple700=new clr("#7b1fa2"),purple800=new clr("#6a1b9a"),purple900=new clr("#4a148c"),purpleblue=new clr("#5d21d0"),purplebrown=new clr("#673a3f"),purpleextra1=new clr("#ea80fc"),purpleextra2=new clr("#e040fb"),purpleextra3=new clr("#d500f9"),purpleextra4=new clr("#aa00ff"),purplegray=new clr("#866f85"),purplepink=new clr("#d725de"),purplered=new clr("#990147"),purpleish=new clr("#98568d"),purpleishblue=new clr("#6140ef"),purpleishpink=new clr("#df4ec8"),purpley=new clr("#8756e4"),purpleyblue=new clr("#5f34e7"),purpleygray=new clr("#947e94"),purpleypink=new clr("#c83cb9"),purplish=new clr("#94568c"),purplishblue=new clr("#601ef9"),purplishbrown=new clr("#6b4247"),purplishgray=new clr("#7a687f"),purplishpink=new clr("#ce5dae"),purplishred=new clr("#b0054b"),purply=new clr("#983fb2"),purplyblue=new clr("#661aee"),purplypink=new clr("#f075e6"),putty=new clr("#beae8a"),racinggreen=new clr("#014600"),radioactivegreen=new clr("#2cfa1f"),raspberry=new clr("#b00149"),rawsienna=new clr("#9a6200"),rawumber=new clr("#a75e09"),reallylightblue=new clr("#d4ffff"),red=new clr("#e50000"),red100=new clr("#ffcdd2"),red200=new clr("#ef9a9a"),red300=new clr("#e57373"),red400=new clr("#ef5350"),red50=new clr("#ffebee"),red500=new clr("#f44336"),red600=new clr("#e53935"),red700=new clr("#d32f2f"),red800=new clr("#c62828"),red900=new clr("#b71c1c"),redbrown=new clr("#8b2e16"),redextra1=new clr("#ff8a80"),redextra2=new clr("#ff5252"),redextra3=new clr("#ff1744"),redextra4=new clr("#d50000"),redorange=new clr("#fd3c06"),redpink=new clr("#fa2a55"),redpurple=new clr("#820747"),redviolet=new clr("#9e0168"),redwine=new clr("#8c0034"),reddish=new clr("#c44240"),reddishbrown=new clr("#7f2b0a"),reddishgray=new clr("#997570"),reddishorange=new clr("#f8481c"),reddishpink=new clr("#fe2c54"),reddishpurple=new clr("#910951"),reddybrown=new clr("#6e1005"),richblue=new clr("#021bf9"),richpurple=new clr("#720058"),robinsegg=new clr("#6dedfd"),robinseggblue=new clr("#98eff9"),robineggblue=new clr("#8af1fe"),rosa=new clr("#fe86a4"),rose=new clr("#cf6275"),rosepink=new clr("#f7879a"),rosered=new clr("#be013c"),rosypink=new clr("#f6688e"),rouge=new clr("#ab1239"),royal=new clr("#0c1793"),royalblue=new clr("#0504aa"),royalpurple=new clr("#4b006e"),ruby=new clr("#ca0147"),russet=new clr("#a13905"),rust=new clr("#a83c09"),rustbrown=new clr("#8b3103"),rustorange=new clr("#c45508"),rustred=new clr("#aa2704"),rustyorange=new clr("#cd5909"),rustyred=new clr("#af2f0d"),saffron=new clr("#feb209"),sage=new clr("#87ae73"),sagegreen=new clr("#88b378"),salmon=new clr("#ff796c"),salmonpink=new clr("#fe7b7c"),sand=new clr("#e2ca76"),sandbrown=new clr("#cba560"),sandyellow=new clr("#fce166"),sandstone=new clr("#c9ae74"),sandy=new clr("#f1da7a"),sandybrown=new clr("#c4a661"),sandyyellow=new clr("#fdee73"),sapgreen=new clr("#5c8b15"),sapphire=new clr("#2138ab"),scarlet=new clr("#be0119"),sea=new clr("#3c9992"),seablue=new clr("#047495"),seagreen=new clr("#53fca1"),seafoam=new clr("#80f9ad"),seafoamblue=new clr("#78d1b6"),seafoamgreen=new clr("#7af9ab"),seaweed=new clr("#18d17b"),seaweedgreen=new clr("#35ad6b"),sepia=new clr("#985e2b"),shamrock=new clr("#01b44c"),shamrockgreen=new clr("#02c14d"),shit=new clr("#7f5f00"),shitbrown=new clr("#7b5804"),shitgreen=new clr("#758000"),shockingpink=new clr("#fe02a2"),sickgreen=new clr("#9db92c"),sicklygreen=new clr("#94b21c"),sicklyyellow=new clr("#d0e429"),sienna=new clr("#a9561e"),silver=new clr("#c5c9c7"),sky=new clr("#82cafc"),skyblue=new clr("#75bbfd"),slate=new clr("#516572"),slateblue=new clr("#5b7c99"),slategray=new clr("#59656d"),slategreen=new clr("#658d6d"),slimegreen=new clr("#99cc04"),snot=new clr("#acbb0d"),snotgreen=new clr("#9dc100"),softblue=new clr("#6488ea"),softgreen=new clr("#6fc276"),softpink=new clr("#fdb0c0"),softpurple=new clr("#a66fb5"),spearmint=new clr("#1ef876"),springgreen=new clr("#a9f971"),spruce=new clr("#0a5f38"),squash=new clr("#f2ab15"),steel=new clr("#738595"),steelblue=new clr("#5a7d9a"),steelgray=new clr("#6f828a"),stone=new clr("#ada587"),stormyblue=new clr("#507b9c"),straw=new clr("#fcf679"),strawberry=new clr("#fb2943"),strongblue=new clr("#0c06f7"),strongpink=new clr("#ff0789"),sunyellow=new clr("#ffdf22"),sunflower=new clr("#ffc512"),sunfloweryellow=new clr("#ffda03"),sunnyyellow=new clr("#fff917"),sunshineyellow=new clr("#fffd37"),swamp=new clr("#698339"),swampgreen=new clr("#748500"),tan=new clr("#d1b26f"),tanbrown=new clr("#ab7e4c"),tangreen=new clr("#a9be70"),tangerine=new clr("#ff9408"),taupe=new clr("#b9a281"),tea=new clr("#65ab7c"),teagreen=new clr("#bdf8a3"),teal=new clr("#029386"),teal100=new clr("#b2dfdb"),teal200=new clr("#80cbc4"),teal300=new clr("#4db6ac"),teal400=new clr("#26a69a"),teal50=new clr("#e0f2f1"),teal500=new clr("#009688"),teal600=new clr("#00897b"),teal700=new clr("#00796b"),teal800=new clr("#00695c"),teal900=new clr("#004d40"),tealblue=new clr("#01889f"),tealextra1=new clr("#a7ffeb"),tealextra2=new clr("#64ffda"),tealextra3=new clr("#1de9b6"),tealextra4=new clr("#00bfa5"),tealgreen=new clr("#25a36f"),tealish=new clr("#24bca8"),tealishgreen=new clr("#0cdc73"),terracotta=new clr("#ca6641"),terracota=new clr("#cb6843"),tiffanyblue=new clr("#7bf2da"),tomato=new clr("#ef4026"),tomatored=new clr("#ec2d01"),topaz=new clr("#13bbaf"),toupe=new clr("#c7ac7d"),toxicgreen=new clr("#61de2a"),treegreen=new clr("#2a7e19"),trueblue=new clr("#010fcc"),truegreen=new clr("#089404"),turquoise=new clr("#06c2ac"),turquoiseblue=new clr("#06b1c4"),turquoisegreen=new clr("#04f489"),turtlegreen=new clr("#75b84f"),twilight=new clr("#4e518b"),twilightblue=new clr("#0a437a"),uglyblue=new clr("#31668a"),uglybrown=new clr("#7d7103"),uglygreen=new clr("#7a9703"),uglypink=new clr("#cd7584"),uglypurple=new clr("#a442a0"),uglyyellow=new clr("#d0c101"),ultramarine=new clr("#2000b1"),ultramarineblue=new clr("#1805db"),umber=new clr("#b26400"),velvet=new clr("#750851"),vermillion=new clr("#f4320c"),verydarkblue=new clr("#000133"),verydarkbrown=new clr("#1d0200"),verydarkgreen=new clr("#062e03"),verydarkpurple=new clr("#2a0134"),verylightblue=new clr("#d5ffff"),verylightbrown=new clr("#d3b683"),verylightgreen=new clr("#d1ffbd"),verylightpink=new clr("#fff4f2"),verylightpurple=new clr("#f6cefc"),verypaleblue=new clr("#d6fffe"),verypalegreen=new clr("#cffdbc"),vibrantblue=new clr("#0339f8"),vibrantgreen=new clr("#0add08"),vibrantpurple=new clr("#ad03de"),violet=new clr("#9a0eea"),violetblue=new clr("#510ac9"),violetpink=new clr("#fb5ffc"),violetred=new clr("#a50055"),viridian=new clr("#1e9167"),vividblue=new clr("#152eff"),vividgreen=new clr("#2fef10"),vividpurple=new clr("#9900fa"),vomit=new clr("#a2a415"),vomitgreen=new clr("#89a203"),vomityellow=new clr("#c7c10c"),warmblue=new clr("#4b57db"),warmbrown=new clr("#964e02"),warmgray=new clr("#978a84"),warmpink=new clr("#fb5581"),warmpurple=new clr("#952e8f"),washedoutgreen=new clr("#bcf5a6"),waterblue=new clr("#0e87cc"),watermelon=new clr("#fd4659"),weirdgreen=new clr("#3ae57f"),wheat=new clr("#fbdd7e"),white=new clr("#ffffff"),windowsblue=new clr("#3778bf"),wine=new clr("#80013f"),winered=new clr("#7b0323"),wintergreen=new clr("#20f986"),wisteria=new clr("#a87dc2"),yellow=new clr("#ffff14"),yellow100=new clr("#fff9c4"),yellow200=new clr("#fff59d"),yellow300=new clr("#fff176"),yellow400=new clr("#ffee58"),yellow50=new clr("#fffde7"),yellow500=new clr("#ffeb3b"),yellow600=new clr("#fdd835"),yellow700=new clr("#fbc02d"),yellow800=new clr("#f9a825"),yellow900=new clr("#f57f17"),yellowbrown=new clr("#b79400"),yellowextra1=new clr("#ffff8d"),yellowextra2=new clr("#ffff00"),yellowextra3=new clr("#ffea00"),yellowextra4=new clr("#ffd600"),yellowgreen=new clr("#bbf90f"),yellowochre=new clr("#cb9d06"),yelloworange=new clr("#fcb001"),yellowtan=new clr("#ffe36e"),yellowish=new clr("#faee66"),yellowishbrown=new clr("#9b7a01"),yellowishgreen=new clr("#b0dd16"),yellowishorange=new clr("#ffab0f"),yellowishtan=new clr("#fcfc81"),yellowybrown=new clr("#ae8b0c"),yellowygreen=new clr("#bff128");
+	}
+	  
+	  
 	// some other syntax candies
 	public static Pesa pesa() {
 		return new Pesa();
@@ -4912,7 +4916,8 @@ public class KL {
 		int length() {
 			return super.size();
 		}
-	}
+		int length = super.size(); int size = length;
+	} 
 	public static StrArr strArr(String... strings) {
 		return new StrArr(strings);
 	}
@@ -5153,6 +5158,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
+		int length = super.size(); int size = length;
 	}
 	public static IntArr intArr(int... ints) {
 		return new IntArr(ints);
@@ -5405,6 +5411,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
+		int length = super.size(); int size = length;
 	}
 	public static LongArr longArr(long... longs) {
 		return new LongArr(longs);
@@ -5653,6 +5660,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
+		int length = super.size(); int size = length;
 	}
 	public static FltArr fltArr(float... floats) {
 		return new FltArr(floats);
@@ -5901,6 +5909,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
+		int length = super.size(); int size = length;
 	}
 	public static DblArr dblArr(double...doubles) {
 		return new DblArr(doubles);
@@ -6151,6 +6160,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
+		int length = super.size(); int size = length;
 	}
 	public static BoolArr boolArr(boolean...bools) {
 		return new BoolArr(bools);
@@ -6252,41 +6262,253 @@ public class KL {
 		if (src instanceof Number || src instanceof Character) {
 			double srcDbl = src instanceof Character ? (char)src : Dbl(Str(src));
 			if (cond1 instanceof String) {
-				if (!in(Str(cond1), "(?<=[<>=])\\-?\\d")) {
+				if (!in(Str(cond1), "(?<=[<>=])\\-?\\d*\\.?\\d")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware = Dbl(Str(cond1).replaceAll("[^\\-\\d\\.]", ""));
+				String cond1B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond1), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+					String op = Str(cond1).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond1).split("\\s*[\\&\\|]+\\s*");
+					cond1 = parts[0];
+					cond1B = parts[1];
+				}
+				double middleware = Dbl(Str(cond1).replaceAll("[^\\-\\d\\.]", "")),
+				  middlewareB = Dbl(Str(cond1B).replaceAll("[^\\-\\d\\.]", ""));
 				cond1 = String(cond1).replaceAll("[^<>=]", "");
-				if (eq(cond1, ">")) {
-					if (srcDbl > middleware) {
-						if (!isNull(sol1))
-							new Thread(sol1).run();
-						return true;
+				cond1B = String(cond1B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond1, ">") || eq(cond1B, ">")) {
+						if (srcDbl > middleware || srcDbl > middlewareB) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
+					} else if (eq(cond1, ">=") || eq(cond1B, ">=")) {
+						if (srcDbl >= middleware || srcDbl >= middlewareB) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
+					} else if (eq(cond1, "<") || eq(cond1B, "<")) {
+						if (srcDbl < middleware || srcDbl < middlewareB) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
+					} else if (eq(cond1, "<=") || eq(cond1B, "<=")) {
+						if (srcDbl <= middleware || srcDbl <= middlewareB) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
+					} else if (eq(cond1, "==") || eq(cond1B, "==")) {
+						if (srcDbl == middleware || srcDbl == middlewareB) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
 					}
-				} else if (eq(cond1, ">=")) {
-					if (srcDbl >= middleware) {
-						if (!isNull(sol1))
-							new Thread(sol1).run();
-						return true;
+				}
+				else if (both) {
+					if (eq(cond1, ">")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl > middleware && srcDbl > middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl > middleware && srcDbl >= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl > middleware && srcDbl < middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl > middleware && srcDbl <= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl > middleware || srcDbl == middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						}
+					} else if (eq(cond1, ">=")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl >= middleware && srcDbl > middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl >= middleware && srcDbl >= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl >= middleware && srcDbl < middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl >= middleware && srcDbl <= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl >= middleware || srcDbl == middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						}
+					} else if (eq(cond1, "<")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl < middleware && srcDbl > middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl < middleware && srcDbl >= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl < middleware && srcDbl < middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl < middleware && srcDbl <= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl < middleware || srcDbl == middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						}
+					} else if (eq(cond1, "<=")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl <= middleware && srcDbl > middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl <= middleware && srcDbl >= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl <= middleware && srcDbl < middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl <= middleware && srcDbl <= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl <= middleware || srcDbl == middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						}
+					} else if (eq(cond1, "==")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl == middleware && srcDbl > middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl == middleware && srcDbl >= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl == middleware && srcDbl < middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl == middleware && srcDbl <= middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl == middleware || srcDbl == middlewareB) {
+								if (!isNull(sol1))
+									new Thread(sol1).run();
+								return true;
+							}
+						}
 					}
-				} else if (eq(cond1, "<")) {
-					if (srcDbl < middleware) {
-						if (!isNull(sol1))
-							new Thread(sol1).run();
-						return true;
-					}
-				} else if (eq(cond1, "<=")) {
-					if (srcDbl <= middleware) {
-						if (!isNull(sol1))
-							new Thread(sol1).run();
-						return true;
-					}
-				} else if (eq(cond1, "==")) {
-					if (srcDbl == middleware) {
-						if (!isNull(sol1))
-							new Thread(sol1).run();
-						return true;
+				}
+				else {
+					if (eq(cond1, ">")) {
+						if (srcDbl > middleware) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
+					} else if (eq(cond1, ">=")) {
+						if (srcDbl >= middleware) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
+					} else if (eq(cond1, "<")) {
+						if (srcDbl < middleware) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
+					} else if (eq(cond1, "<=")) {
+						if (srcDbl <= middleware) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
+					} else if (eq(cond1, "==")) {
+						if (srcDbl == middleware) {
+							if (!isNull(sol1))
+								new Thread(sol1).run();
+							return true;
+						}
 					}
 				}
 			} else if (cond1 instanceof Number) {
@@ -6308,47 +6530,261 @@ public class KL {
 				return false;
 			}
 			if (cond2 instanceof String) {
-				if (!in(Str(cond2), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond2), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware2 = Dbl(
-										 String(cond2).replaceAll("[^\\-\\d\\.]", ""));
+				String cond2B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond2), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+					String op = Str(cond2).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond2).split("\\s*[\\&\\|]+\\s*");
+					cond2 = parts[0];
+					cond2B = parts[1];
+				}
+				double middleware2 = Dbl(Str(cond2).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware2B = Dbl(Str(cond2B).replaceAll("[^\\-\\d\\.]", ""));
 				cond2 = String(cond2).replaceAll("[^<>=else]", "");
-				if (eq(cond2, ">")) {
-					if (srcDbl > middleware2) {
+				cond2B = String(cond2B).replaceAll("[^<>=]", "");
+				printf("%f\n%f\nBoth: %b\nNeither: %b", middleware2, middleware2B, both, either);
+				
+				if (either) {
+					if (eq(cond2, ">") || eq(cond2B, ">")) {
+						if (srcDbl > middleware2 || srcDbl > middleware2B) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, ">=") || eq(cond2B, ">=")) {
+						if (srcDbl >= middleware2 || srcDbl >= middleware2B) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, "<") || eq(cond2B, "<")) {
+						if (srcDbl < middleware2 || srcDbl < middleware2B) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, "<=") || eq(cond2B, "<=")) {
+						if (srcDbl <= middleware2 || srcDbl <= middleware2B) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, "==") || eq(cond2B, "==")) {
+						if (srcDbl == middleware2 || srcDbl == middleware2B) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond2, ">")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl > middleware2 && srcDbl > middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl > middleware2 && srcDbl >= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl > middleware2 && srcDbl < middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl > middleware2 && srcDbl <= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl > middleware2 || srcDbl == middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						}
+					} else if (eq(cond2, ">=")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl >= middleware2 && srcDbl > middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl >= middleware2 && srcDbl >= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl >= middleware2 && srcDbl < middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl >= middleware2 && srcDbl <= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl >= middleware2 || srcDbl == middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						}
+					} else if (eq(cond2, "<")) {
+						
+						if (eq(cond2B, ">")) {
+							if (srcDbl < middleware2 && srcDbl > middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl < middleware2 && srcDbl >= middleware2B) {
+								
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl < middleware2 && srcDbl < middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl < middleware2 && srcDbl <= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl < middleware2 || srcDbl == middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						}
+					} else if (eq(cond2, "<=")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl <= middleware2 && srcDbl > middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl <= middleware2 && srcDbl >= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl <= middleware2 && srcDbl < middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl <= middleware2 && srcDbl <= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl <= middleware2 || srcDbl == middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						}
+					} else if (eq(cond2, "==")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl == middleware2 && srcDbl > middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl == middleware2 && srcDbl >= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl == middleware2 && srcDbl < middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl == middleware2 && srcDbl <= middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl == middleware2 || srcDbl == middleware2B) {
+								if (!isNull(sol2))
+									new Thread(sol2).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond2, ">")) {
+						if (srcDbl > middleware2) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, ">=")) {
+						if (srcDbl >= middleware2) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, "<")) {
+						if (srcDbl < middleware2) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, "<=")) {
+						if (srcDbl <= middleware2) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, "==")) {
+						if (srcDbl == middleware2) {
+							if (!isNull(sol2))
+								new Thread(sol2).run();
+							return true;
+						}
+					} else if (eq(cond2, "else")) {
 						if (!isNull(sol2))
 							new Thread(sol2).run();
-						return true;
+						return false;
 					}
-				} else if (eq(cond2, ">=")) {
-					if (srcDbl >= middleware2) {
-						if (!isNull(sol2))
-							new Thread(sol2).run();
-						return true;
-					}
-				} else if (eq(cond2, "<")) {
-					if (srcDbl < middleware2) {
-						if (!isNull(sol2))
-							new Thread(sol2).run();
-						return true;
-					}
-				} else if (eq(cond2, "<=")) {
-					if (srcDbl <= middleware2) {
-						if (!isNull(sol2))
-							new Thread(sol2).run();
-						return true;
-					}
-				} else if (eq(cond2, "==")) {
-					if (srcDbl == middleware2) {
-						if (!isNull(sol2))
-							new Thread(sol2).run();
-						return true;
-					}
-				} else if (eq(cond2, "else")) {
-					if (!isNull(sol2))
-						new Thread(sol2).run();
-					return false;
 				}
 			} else if (cond2 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond2)))) {
@@ -6369,47 +6805,258 @@ public class KL {
 				return false;
 			}
 			if (cond3 instanceof String) {
-				if (!in(Str(cond3), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond3), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware3 = Dbl(
-										 String(cond3).replaceAll("[^\\-\\d\\.]", ""));
+				String cond3B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond3), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond3).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond3).split("\\s*[\\&\\|]+\\s*");
+					cond3 = parts[0];
+					cond3B = parts[1];
+				}
+				double middleware3 = Dbl(Str(cond3).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware3B = Dbl(Str(cond3B).replaceAll("[^\\-\\d\\.]", ""));
 				cond3 = String(cond3).replaceAll("[^<>=else]", "");
-				if (eq(cond3, ">")) {
-					if (srcDbl > middleware3) {
+				cond3B = String(cond3B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond3, ">") || eq(cond3B, ">")) {
+						if (srcDbl > middleware3 || srcDbl > middleware3B) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, ">=") || eq(cond3B, ">=")) {
+						if (srcDbl >= middleware3 || srcDbl >= middleware3B) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, "<") || eq(cond3B, "<")) {
+						if (srcDbl < middleware3 || srcDbl < middleware3B) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, "<=") || eq(cond3B, "<=")) {
+						if (srcDbl <= middleware3 || srcDbl <= middleware3B) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, "==") || eq(cond3B, "==")) {
+						if (srcDbl == middleware3 || srcDbl == middleware3B) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond3, ">")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl > middleware3 && srcDbl > middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl > middleware3 && srcDbl >= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl > middleware3 && srcDbl < middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl > middleware3 && srcDbl <= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl > middleware3 || srcDbl == middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						}
+					} else if (eq(cond3, ">=")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl >= middleware3 && srcDbl > middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl >= middleware3 && srcDbl >= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl >= middleware3 && srcDbl < middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl >= middleware3 && srcDbl <= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl >= middleware3 || srcDbl == middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						}
+					} else if (eq(cond3, "<")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl < middleware3 && srcDbl > middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl < middleware3 && srcDbl >= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl < middleware3 && srcDbl < middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl < middleware3 && srcDbl <= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl < middleware3 || srcDbl == middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						}
+					} else if (eq(cond3, "<=")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl <= middleware3 && srcDbl > middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl <= middleware3 && srcDbl >= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl <= middleware3 && srcDbl < middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl <= middleware3 && srcDbl <= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl <= middleware3 || srcDbl == middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						}
+					} else if (eq(cond3, "==")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl == middleware3 && srcDbl > middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl == middleware3 && srcDbl >= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl == middleware3 && srcDbl < middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl == middleware3 && srcDbl <= middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl == middleware3 || srcDbl == middleware3B) {
+								if (!isNull(sol3))
+									new Thread(sol3).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond3, ">")) {
+						if (srcDbl > middleware3) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, ">=")) {
+						if (srcDbl >= middleware3) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, "<")) {
+						if (srcDbl < middleware3) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, "<=")) {
+						if (srcDbl <= middleware3) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, "==")) {
+						if (srcDbl == middleware3) {
+							if (!isNull(sol3))
+								new Thread(sol3).run();
+							return true;
+						}
+					} else if (eq(cond3, "else")) {
 						if (!isNull(sol3))
 							new Thread(sol3).run();
-						return true;
+						return false;
 					}
-				} else if (eq(cond3, ">=")) {
-					if (srcDbl >= middleware3) {
-						if (!isNull(sol3))
-							new Thread(sol3).run();
-						return true;
-					}
-				} else if (eq(cond3, "<")) {
-					if (srcDbl < middleware3) {
-						if (!isNull(sol3))
-							new Thread(sol3).run();
-						return true;
-					}
-				} else if (eq(cond3, "<=")) {
-					if (srcDbl <= middleware3) {
-						if (!isNull(sol3))
-							new Thread(sol3).run();
-						return true;
-					}
-				} else if (eq(cond3, "==")) {
-					if (srcDbl == middleware3) {
-						if (!isNull(sol3))
-							new Thread(sol3).run();
-						return true;
-					}
-				} else if (eq(cond3, "else")) {
-					if (!isNull(sol3))
-						new Thread(sol3).run();
-					return false;
 				}
 			} else if (cond3 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond3)))) {
@@ -6434,43 +7081,258 @@ public class KL {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware4 = Dbl(
-										 String(cond4).replaceAll("[^\\-\\d\\.]", ""));
-				cond4 = String(cond4).replaceAll("[^<>=else]", "");
-				if (eq(cond4, ">")) {
-					if (srcDbl > middleware4) {
-						if (!isNull(sol4))
-							new Thread(sol4).run();
-						return true;
-					}
-				} else if (eq(cond4, ">=")) {
-					if (srcDbl >= middleware4) {
-						if (!isNull(sol4))
-							new Thread(sol4).run();
-						return true;
-					}
-				} else if (eq(cond4, "<")) {
-					if (srcDbl < middleware4) {
-						if (!isNull(sol4))
-							new Thread(sol4).run();
-						return true;
-					}
-				} else if (eq(cond4, "<=")) {
-					if (srcDbl <= middleware4) {
-						if (!isNull(sol4))
-							new Thread(sol4).run();
-						return true;
-					}
-				} else if (eq(cond4, "==")) {
-					if (srcDbl == middleware4) {
-						if (!isNull(sol4))
-							new Thread(sol4).run();
-						return true;
-					}
-				} else if (eq(cond4, "else")) {
-					if (!isNull(sol4))
-						new Thread(sol4).run();
+				if (!in(Str(cond4), "(?<=[<>=])\\-?\\d*\\.?\\d")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String cond4B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond4), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond4).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond4).split("\\s*[\\&\\|]+\\s*");
+					cond4 = parts[0];
+					cond4B = parts[1];
+				}
+				double middleware4 = Dbl(Str(cond4).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware4B = Dbl(Str(cond4B).replaceAll("[^\\-\\d\\.]", ""));
+				cond4 = String(cond4).replaceAll("[^<>=else]", "");
+				cond4B = String(cond4B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond4, ">") || eq(cond4B, ">")) {
+						if (srcDbl > middleware4 || srcDbl > middleware4B) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, ">=") || eq(cond4B, ">=")) {
+						if (srcDbl >= middleware4 || srcDbl >= middleware4B) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, "<") || eq(cond4B, "<")) {
+						if (srcDbl < middleware4 || srcDbl < middleware4B) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, "<=") || eq(cond4B, "<=")) {
+						if (srcDbl <= middleware4 || srcDbl <= middleware4B) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, "==") || eq(cond4B, "==")) {
+						if (srcDbl == middleware4 || srcDbl == middleware4B) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond4, ">")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl > middleware4 && srcDbl > middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl > middleware4 && srcDbl >= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl > middleware4 && srcDbl < middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl > middleware4 && srcDbl <= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl > middleware4 || srcDbl == middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						}
+					} else if (eq(cond4, ">=")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl >= middleware4 && srcDbl > middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl >= middleware4 && srcDbl >= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl >= middleware4 && srcDbl < middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl >= middleware4 && srcDbl <= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl >= middleware4 || srcDbl == middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						}
+					} else if (eq(cond4, "<")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl < middleware4 && srcDbl > middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl < middleware4 && srcDbl >= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl < middleware4 && srcDbl < middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl < middleware4 && srcDbl <= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl < middleware4 || srcDbl == middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						}
+					} else if (eq(cond4, "<=")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl <= middleware4 && srcDbl > middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl <= middleware4 && srcDbl >= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl <= middleware4 && srcDbl < middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl <= middleware4 && srcDbl <= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl <= middleware4 || srcDbl == middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						}
+					} else if (eq(cond4, "==")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl == middleware4 && srcDbl > middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl == middleware4 && srcDbl >= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl == middleware4 && srcDbl < middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl == middleware4 && srcDbl <= middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl == middleware4 || srcDbl == middleware4B) {
+								if (!isNull(sol4))
+									new Thread(sol4).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond4, ">")) {
+						if (srcDbl > middleware4) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, ">=")) {
+						if (srcDbl >= middleware4) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, "<")) {
+						if (srcDbl < middleware4) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, "<=")) {
+						if (srcDbl <= middleware4) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, "==")) {
+						if (srcDbl == middleware4) {
+							if (!isNull(sol4))
+								new Thread(sol4).run();
+							return true;
+						}
+					} else if (eq(cond4, "else")) {
+						if (!isNull(sol4))
+							new Thread(sol4).run();
+						return false;
+					}
 				}
 			} else if (cond4 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond4)))) {
@@ -6495,43 +7357,254 @@ public class KL {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware5 = Dbl(
-										 String(cond5).replaceAll("[^\\-\\d\\.]", ""));
+				String cond5B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond5), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond5).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond5).split("\\s*[\\&\\|]+\\s*");
+					cond5 = parts[0];
+					cond5B = parts[1];
+				}
+				double middleware5 = Dbl(Str(cond5).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware5B = Dbl(Str(cond5B).replaceAll("[^\\-\\d\\.]", ""));
 				cond5 = String(cond5).replaceAll("[^<>=else]", "");
-				if (eq(cond5, ">")) {
-					if (srcDbl > middleware5) {
+				cond5B = String(cond5B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond5, ">") || eq(cond5B, ">")) {
+						if (srcDbl > middleware5 || srcDbl > middleware5B) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, ">=") || eq(cond5B, ">=")) {
+						if (srcDbl >= middleware5 || srcDbl >= middleware5B) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, "<") || eq(cond5B, "<")) {
+						if (srcDbl < middleware5 || srcDbl < middleware5B) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, "<=") || eq(cond5B, "<=")) {
+						if (srcDbl <= middleware5 || srcDbl <= middleware5B) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, "==") || eq(cond5B, "==")) {
+						if (srcDbl == middleware5 || srcDbl == middleware5B) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond5, ">")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl > middleware5 && srcDbl > middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl > middleware5 && srcDbl >= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl > middleware5 && srcDbl < middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl > middleware5 && srcDbl <= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl > middleware5 || srcDbl == middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						}
+					} else if (eq(cond5, ">=")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl >= middleware5 && srcDbl > middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl >= middleware5 && srcDbl >= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl >= middleware5 && srcDbl < middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl >= middleware5 && srcDbl <= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl >= middleware5 || srcDbl == middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						}
+					} else if (eq(cond5, "<")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl < middleware5 && srcDbl > middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl < middleware5 && srcDbl >= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl < middleware5 && srcDbl < middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl < middleware5 && srcDbl <= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl < middleware5 || srcDbl == middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						}
+					} else if (eq(cond5, "<=")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl <= middleware5 && srcDbl > middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl <= middleware5 && srcDbl >= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl <= middleware5 && srcDbl < middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl <= middleware5 && srcDbl <= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl <= middleware5 || srcDbl == middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						}
+					} else if (eq(cond5, "==")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl == middleware5 && srcDbl > middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl == middleware5 && srcDbl >= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl == middleware5 && srcDbl < middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl == middleware5 && srcDbl <= middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl == middleware5 || srcDbl == middleware5B) {
+								if (!isNull(sol5))
+									new Thread(sol5).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond5, ">")) {
+						if (srcDbl > middleware5) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, ">=")) {
+						if (srcDbl >= middleware5) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, "<")) {
+						if (srcDbl < middleware5) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, "<=")) {
+						if (srcDbl <= middleware5) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, "==")) {
+						if (srcDbl == middleware5) {
+							if (!isNull(sol5))
+								new Thread(sol5).run();
+							return true;
+						}
+					} else if (eq(cond5, "else")) {
 						if (!isNull(sol5))
 							new Thread(sol5).run();
-						return true;
+						return false;
 					}
-				} else if (eq(cond5, ">=")) {
-					if (srcDbl >= middleware5) {
-						if (!isNull(sol5))
-							new Thread(sol5).run();
-						return true;
-					}
-				} else if (eq(cond5, "<")) {
-					if (srcDbl < middleware5) {
-						if (!isNull(sol5))
-							new Thread(sol5).run();
-						return true;
-					}
-				} else if (eq(cond5, "<=")) {
-					if (srcDbl <= middleware5) {
-						if (!isNull(sol5))
-							new Thread(sol5).run();
-						return true;
-					}
-				} else if (eq(cond5, "==")) {
-					if (srcDbl == middleware5) {
-						if (!isNull(sol5))
-							new Thread(sol5).run();
-						return true;
-					}
-				} else if (eq(cond5, "else")) {
-					if (!isNull(sol5))
-						new Thread(sol5).run();
-					return false;
 				}
 			} else if (cond5 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond5)))) {
@@ -6552,47 +7625,258 @@ public class KL {
 				return false;
 			}
 			if (cond6 instanceof String) {
-				if (!in(Str(cond6), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond6), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware6 = Dbl(
-										 String(cond6).replaceAll("[^\\-\\d\\.]", ""));
+				String cond6B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond6), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond6).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond6).split("\\s*[\\&\\|]+\\s*");
+					cond6 = parts[0];
+					cond6B = parts[1];
+				}
+				double middleware6 = Dbl(Str(cond6).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware6B = Dbl(Str(cond6B).replaceAll("[^\\-\\d\\.]", ""));
 				cond6 = String(cond6).replaceAll("[^<>=else]", "");
-				if (eq(cond6, ">")) {
-					if (srcDbl > middleware6) {
+				cond6B = String(cond6B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond6, ">") || eq(cond6B, ">")) {
+						if (srcDbl > middleware6 || srcDbl > middleware6B) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, ">=") || eq(cond6B, ">=")) {
+						if (srcDbl >= middleware6 || srcDbl >= middleware6B) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, "<") || eq(cond6B, "<")) {
+						if (srcDbl < middleware6 || srcDbl < middleware6B) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, "<=") || eq(cond6B, "<=")) {
+						if (srcDbl <= middleware6 || srcDbl <= middleware6B) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, "==") || eq(cond6B, "==")) {
+						if (srcDbl == middleware6 || srcDbl == middleware6B) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond6, ">")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl > middleware6 && srcDbl > middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl > middleware6 && srcDbl >= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl > middleware6 && srcDbl < middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl > middleware6 && srcDbl <= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl > middleware6 || srcDbl == middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						}
+					} else if (eq(cond6, ">=")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl >= middleware6 && srcDbl > middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl >= middleware6 && srcDbl >= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl >= middleware6 && srcDbl < middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl >= middleware6 && srcDbl <= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl >= middleware6 || srcDbl == middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						}
+					} else if (eq(cond6, "<")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl < middleware6 && srcDbl > middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl < middleware6 && srcDbl >= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl < middleware6 && srcDbl < middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl < middleware6 && srcDbl <= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl < middleware6 || srcDbl == middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						}
+					} else if (eq(cond6, "<=")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl <= middleware6 && srcDbl > middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl <= middleware6 && srcDbl >= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl <= middleware6 && srcDbl < middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl <= middleware6 && srcDbl <= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl <= middleware6 || srcDbl == middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						}
+					} else if (eq(cond6, "==")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl == middleware6 && srcDbl > middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl == middleware6 && srcDbl >= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl == middleware6 && srcDbl < middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl == middleware6 && srcDbl <= middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl == middleware6 || srcDbl == middleware6B) {
+								if (!isNull(sol6))
+									new Thread(sol6).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond6, ">")) {
+						if (srcDbl > middleware6) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, ">=")) {
+						if (srcDbl >= middleware6) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, "<")) {
+						if (srcDbl < middleware6) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, "<=")) {
+						if (srcDbl <= middleware6) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, "==")) {
+						if (srcDbl == middleware6) {
+							if (!isNull(sol6))
+								new Thread(sol6).run();
+							return true;
+						}
+					} else if (eq(cond6, "else")) {
 						if (!isNull(sol6))
 							new Thread(sol6).run();
-						return true;
+						return false;
 					}
-				} else if (eq(cond6, ">=")) {
-					if (srcDbl >= middleware6) {
-						if (!isNull(sol6))
-							new Thread(sol6).run();
-						return true;
-					}
-				} else if (eq(cond6, "<")) {
-					if (srcDbl < middleware6) {
-						if (!isNull(sol6))
-							new Thread(sol6).run();
-						return true;
-					}
-				} else if (eq(cond6, "<=")) {
-					if (srcDbl <= middleware6) {
-						if (!isNull(sol6))
-							new Thread(sol6).run();
-						return true;
-					}
-				} else if (eq(cond6, "==")) {
-					if (srcDbl == middleware6) {
-						if (!isNull(sol6))
-							new Thread(sol6).run();
-						return true;
-					}
-				} else if (eq(cond6, "else")) {
-					if (!isNull(sol6))
-						new Thread(sol6).run();
-					return false;
 				}
 			} else if (cond6 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond6)))) {
@@ -6613,47 +7897,258 @@ public class KL {
 				return false;
 			}
 			if (cond7 instanceof String) {
-				if (!in(Str(cond7), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond7), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware7 = Dbl(
-										 String(cond7).replaceAll("[^\\-\\d\\.]", ""));
+				String cond7B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond7), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond7).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond7).split("\\s*[\\&\\|]+\\s*");
+					cond7 = parts[0];
+					cond7B = parts[1];
+				}
+				double middleware7 = Dbl(Str(cond7).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware7B = Dbl(Str(cond7B).replaceAll("[^\\-\\d\\.]", ""));
 				cond7 = String(cond7).replaceAll("[^<>=else]", "");
-				if (eq(cond7, ">")) {
-					if (srcDbl > middleware7) {
+				cond7B = String(cond7B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond7, ">") || eq(cond7B, ">")) {
+						if (srcDbl > middleware7 || srcDbl > middleware7B) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, ">=") || eq(cond7B, ">=")) {
+						if (srcDbl >= middleware7 || srcDbl >= middleware7B) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, "<") || eq(cond7B, "<")) {
+						if (srcDbl < middleware7 || srcDbl < middleware7B) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, "<=") || eq(cond7B, "<=")) {
+						if (srcDbl <= middleware7 || srcDbl <= middleware7B) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, "==") || eq(cond7B, "==")) {
+						if (srcDbl == middleware7 || srcDbl == middleware7B) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond7, ">")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl > middleware7 && srcDbl > middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl > middleware7 && srcDbl >= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl > middleware7 && srcDbl < middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl > middleware7 && srcDbl <= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl > middleware7 || srcDbl == middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						}
+					} else if (eq(cond7, ">=")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl >= middleware7 && srcDbl > middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl >= middleware7 && srcDbl >= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl >= middleware7 && srcDbl < middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl >= middleware7 && srcDbl <= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl >= middleware7 || srcDbl == middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						}
+					} else if (eq(cond7, "<")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl < middleware7 && srcDbl > middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl < middleware7 && srcDbl >= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl < middleware7 && srcDbl < middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl < middleware7 && srcDbl <= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl < middleware7 || srcDbl == middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						}
+					} else if (eq(cond7, "<=")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl <= middleware7 && srcDbl > middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl <= middleware7 && srcDbl >= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl <= middleware7 && srcDbl < middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl <= middleware7 && srcDbl <= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl <= middleware7 || srcDbl == middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						}
+					} else if (eq(cond7, "==")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl == middleware7 && srcDbl > middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl == middleware7 && srcDbl >= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl == middleware7 && srcDbl < middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl == middleware7 && srcDbl <= middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl == middleware7 || srcDbl == middleware7B) {
+								if (!isNull(sol7))
+									new Thread(sol7).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond7, ">")) {
+						if (srcDbl > middleware7) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, ">=")) {
+						if (srcDbl >= middleware7) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, "<")) {
+						if (srcDbl < middleware7) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, "<=")) {
+						if (srcDbl <= middleware7) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, "==")) {
+						if (srcDbl == middleware7) {
+							if (!isNull(sol7))
+								new Thread(sol7).run();
+							return true;
+						}
+					} else if (eq(cond7, "else")) {
 						if (!isNull(sol7))
 							new Thread(sol7).run();
-						return true;
+						return false;
 					}
-				} else if (eq(cond7, ">=")) {
-					if (srcDbl >= middleware7) {
-						if (!isNull(sol7))
-							new Thread(sol7).run();
-						return true;
-					}
-				} else if (eq(cond7, "<")) {
-					if (srcDbl < middleware7) {
-						if (!isNull(sol7))
-							new Thread(sol7).run();
-						return true;
-					}
-				} else if (eq(cond7, "<=")) {
-					if (srcDbl <= middleware7) {
-						if (!isNull(sol7))
-							new Thread(sol7).run();
-						return true;
-					}
-				} else if (eq(cond7, "==")) {
-					if (srcDbl == middleware7) {
-						if (!isNull(sol7))
-							new Thread(sol7).run();
-						return true;
-					}
-				} else if (eq(cond7, "else")) {
-					if (!isNull(sol7))
-						new Thread(sol7).run();
-					return false;
 				}
 			} else if (cond7 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond7)))) {
@@ -6674,47 +8169,258 @@ public class KL {
 				return false;
 			}
 			if (cond8 instanceof String) {
-				if (!in(Str(cond8), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond8), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware8 = Dbl(
-										 String(cond8).replaceAll("[^\\-\\d\\.]", ""));
+				String cond8B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond8), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond8).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond8).split("\\s*[\\&\\|]+\\s*");
+					cond8 = parts[0];
+					cond8B = parts[1];
+				}
+				double middleware8 = Dbl(Str(cond8).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware8B = Dbl(Str(cond8B).replaceAll("[^\\-\\d\\.]", ""));
 				cond8 = String(cond8).replaceAll("[^<>=else]", "");
-				if (eq(cond8, ">")) {
-					if (srcDbl > middleware8) {
+				cond8B = String(cond8B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond8, ">") || eq(cond8B, ">")) {
+						if (srcDbl > middleware8 || srcDbl > middleware8B) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, ">=") || eq(cond8B, ">=")) {
+						if (srcDbl >= middleware8 || srcDbl >= middleware8B) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, "<") || eq(cond8B, "<")) {
+						if (srcDbl < middleware8 || srcDbl < middleware8B) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, "<=") || eq(cond8B, "<=")) {
+						if (srcDbl <= middleware8 || srcDbl <= middleware8B) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, "==") || eq(cond8B, "==")) {
+						if (srcDbl == middleware8 || srcDbl == middleware8B) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond8, ">")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl > middleware8 && srcDbl > middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl > middleware8 && srcDbl >= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl > middleware8 && srcDbl < middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl > middleware8 && srcDbl <= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl > middleware8 || srcDbl == middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						}
+					} else if (eq(cond8, ">=")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl >= middleware8 && srcDbl > middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl >= middleware8 && srcDbl >= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl >= middleware8 && srcDbl < middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl >= middleware8 && srcDbl <= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl >= middleware8 || srcDbl == middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						}
+					} else if (eq(cond8, "<")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl < middleware8 && srcDbl > middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl < middleware8 && srcDbl >= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl < middleware8 && srcDbl < middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl < middleware8 && srcDbl <= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl < middleware8 || srcDbl == middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						}
+					} else if (eq(cond8, "<=")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl <= middleware8 && srcDbl > middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl <= middleware8 && srcDbl >= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl <= middleware8 && srcDbl < middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl <= middleware8 && srcDbl <= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl <= middleware8 || srcDbl == middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						}
+					} else if (eq(cond8, "==")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl == middleware8 && srcDbl > middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl == middleware8 && srcDbl >= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl == middleware8 && srcDbl < middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl == middleware8 && srcDbl <= middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl == middleware8 || srcDbl == middleware8B) {
+								if (!isNull(sol8))
+									new Thread(sol8).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond8, ">")) {
+						if (srcDbl > middleware8) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, ">=")) {
+						if (srcDbl >= middleware8) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, "<")) {
+						if (srcDbl < middleware8) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, "<=")) {
+						if (srcDbl <= middleware8) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, "==")) {
+						if (srcDbl == middleware8) {
+							if (!isNull(sol8))
+								new Thread(sol8).run();
+							return true;
+						}
+					} else if (eq(cond8, "else")) {
 						if (!isNull(sol8))
 							new Thread(sol8).run();
-						return true;
+						return false;
 					}
-				} else if (eq(cond8, ">=")) {
-					if (srcDbl >= middleware8) {
-						if (!isNull(sol8))
-							new Thread(sol8).run();
-						return true;
-					}
-				} else if (eq(cond8, "<")) {
-					if (srcDbl < middleware8) {
-						if (!isNull(sol8))
-							new Thread(sol8).run();
-						return true;
-					}
-				} else if (eq(cond8, "<=")) {
-					if (srcDbl <= middleware8) {
-						if (!isNull(sol8))
-							new Thread(sol8).run();
-						return true;
-					}
-				} else if (eq(cond8, "==")) {
-					if (srcDbl == middleware8) {
-						if (!isNull(sol8))
-							new Thread(sol8).run();
-						return true;
-					}
-				} else if (eq(cond8, "else")) {
-					if (!isNull(sol8))
-						new Thread(sol8).run();
-					return false;
 				}
 			} else if (cond8 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond8)))) {
@@ -6735,47 +8441,258 @@ public class KL {
 				return false;
 			}
 			if (cond9 instanceof String) {
-				if (!in(Str(cond9), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond9), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware9 = Dbl(
-										 String(cond9).replaceAll("[^\\-\\d\\.]", ""));
+				String cond9B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond9), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond9).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond9).split("\\s*[\\&\\|]+\\s*");
+					cond9 = parts[0];
+					cond9B = parts[1];
+				}
+				double middleware9 = Dbl(Str(cond9).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware9B = Dbl(Str(cond9B).replaceAll("[^\\-\\d\\.]", ""));
 				cond9 = String(cond9).replaceAll("[^<>=else]", "");
-				if (eq(cond9, ">")) {
-					if (srcDbl > middleware9) {
+				cond9B = String(cond9B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond9, ">") || eq(cond9B, ">")) {
+						if (srcDbl > middleware9 || srcDbl > middleware9B) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, ">=") || eq(cond9B, ">=")) {
+						if (srcDbl >= middleware9 || srcDbl >= middleware9B) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, "<") || eq(cond9B, "<")) {
+						if (srcDbl < middleware9 || srcDbl < middleware9B) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, "<=") || eq(cond9B, "<=")) {
+						if (srcDbl <= middleware9 || srcDbl <= middleware9B) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, "==") || eq(cond9B, "==")) {
+						if (srcDbl == middleware9 || srcDbl == middleware9B) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond9, ">")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl > middleware9 && srcDbl > middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl > middleware9 && srcDbl >= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl > middleware9 && srcDbl < middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl > middleware9 && srcDbl <= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl > middleware9 || srcDbl == middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						}
+					} else if (eq(cond9, ">=")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl >= middleware9 && srcDbl > middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl >= middleware9 && srcDbl >= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl >= middleware9 && srcDbl < middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl >= middleware9 && srcDbl <= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl >= middleware9 || srcDbl == middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						}
+					} else if (eq(cond9, "<")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl < middleware9 && srcDbl > middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl < middleware9 && srcDbl >= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl < middleware9 && srcDbl < middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl < middleware9 && srcDbl <= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl < middleware9 || srcDbl == middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						}
+					} else if (eq(cond9, "<=")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl <= middleware9 && srcDbl > middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl <= middleware9 && srcDbl >= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl <= middleware9 && srcDbl < middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl <= middleware9 && srcDbl <= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl <= middleware9 || srcDbl == middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						}
+					} else if (eq(cond9, "==")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl == middleware9 && srcDbl > middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl == middleware9 && srcDbl >= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl == middleware9 && srcDbl < middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl == middleware9 && srcDbl <= middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl == middleware9 || srcDbl == middleware9B) {
+								if (!isNull(sol9))
+									new Thread(sol9).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond9, ">")) {
+						if (srcDbl > middleware9) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, ">=")) {
+						if (srcDbl >= middleware9) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, "<")) {
+						if (srcDbl < middleware9) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, "<=")) {
+						if (srcDbl <= middleware9) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, "==")) {
+						if (srcDbl == middleware9) {
+							if (!isNull(sol9))
+								new Thread(sol9).run();
+							return true;
+						}
+					} else if (eq(cond9, "else")) {
 						if (!isNull(sol9))
 							new Thread(sol9).run();
-						return true;
+						return false;
 					}
-				} else if (eq(cond9, ">=")) {
-					if (srcDbl >= middleware9) {
-						if (!isNull(sol9))
-							new Thread(sol9).run();
-						return true;
-					}
-				} else if (eq(cond9, "<")) {
-					if (srcDbl < middleware9) {
-						if (!isNull(sol9))
-							new Thread(sol9).run();
-						return true;
-					}
-				} else if (eq(cond9, "<=")) {
-					if (srcDbl <= middleware9) {
-						if (!isNull(sol9))
-							new Thread(sol9).run();
-						return true;
-					}
-				} else if (eq(cond9, "==")) {
-					if (srcDbl == middleware9) {
-						if (!isNull(sol9))
-							new Thread(sol9).run();
-						return true;
-					}
-				} else if (eq(cond9, "else")) {
-					if (!isNull(sol9))
-						new Thread(sol9).run();
-					return false;
 				}
 			} else if (cond9 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond9)))) {
@@ -6796,47 +8713,258 @@ public class KL {
 				return false;
 			}
 			if (cond10 instanceof String) {
-				if (!in(Str(cond10), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond10), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				double middleware10 = Dbl(
-										  String(cond10).replaceAll("[^\\-\\d\\.]", ""));
+				String cond10B = "";
+				boolean either = false, 
+				  both = false;
+				if (in(Str(cond10), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond10).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
+					else both = true;
+					String[] parts = Str(cond10).split("\\s*[\\&\\|]+\\s*");
+					cond10 = parts[0];
+					cond10B = parts[1];
+				}
+				double middleware10 = Dbl(Str(cond10).replaceAll("[^\\-\\d\\.]", "")),
+				  middleware10B = Dbl(Str(cond10B).replaceAll("[^\\-\\d\\.]", ""));
 				cond10 = String(cond10).replaceAll("[^<>=else]", "");
-				if (eq(cond10, ">")) {
-					if (srcDbl > middleware10) {
+				cond10B = String(cond10B).replaceAll("[^<>=]", "");
+				
+				if (either) {
+					if (eq(cond10, ">") || eq(cond10B, ">")) {
+						if (srcDbl > middleware10 || srcDbl > middleware10B) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, ">=") || eq(cond10B, ">=")) {
+						if (srcDbl >= middleware10 || srcDbl >= middleware10B) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, "<") || eq(cond10B, "<")) {
+						if (srcDbl < middleware10 || srcDbl < middleware10B) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, "<=") || eq(cond10B, "<=")) {
+						if (srcDbl <= middleware10 || srcDbl <= middleware10B) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, "==") || eq(cond10B, "==")) {
+						if (srcDbl == middleware10 || srcDbl == middleware10B) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					}
+				}
+				else if (both) {
+					if (eq(cond10, ">")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl > middleware10 && srcDbl > middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl > middleware10 && srcDbl >= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl > middleware10 && srcDbl < middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl > middleware10 && srcDbl <= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl > middleware10 || srcDbl == middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						}
+					} else if (eq(cond10, ">=")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl >= middleware10 && srcDbl > middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl >= middleware10 && srcDbl >= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl >= middleware10 && srcDbl < middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl >= middleware10 && srcDbl <= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl >= middleware10 || srcDbl == middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						}
+					} else if (eq(cond10, "<")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl < middleware10 && srcDbl > middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl < middleware10 && srcDbl >= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl < middleware10 && srcDbl < middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl < middleware10 && srcDbl <= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl < middleware10 || srcDbl == middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						}
+					} else if (eq(cond10, "<=")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl <= middleware10 && srcDbl > middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl <= middleware10 && srcDbl >= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl <= middleware10 && srcDbl < middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl <= middleware10 && srcDbl <= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl <= middleware10 || srcDbl == middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						}
+					} else if (eq(cond10, "==")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl == middleware10 && srcDbl > middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl == middleware10 && srcDbl >= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl == middleware10 && srcDbl < middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl == middleware10 && srcDbl <= middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl == middleware10 || srcDbl == middleware10B) {
+								if (!isNull(sol10))
+									new Thread(sol10).run();
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					if (eq(cond10, ">")) {
+						if (srcDbl > middleware10) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, ">=")) {
+						if (srcDbl >= middleware10) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, "<")) {
+						if (srcDbl < middleware10) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, "<=")) {
+						if (srcDbl <= middleware10) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, "==")) {
+						if (srcDbl == middleware10) {
+							if (!isNull(sol10))
+								new Thread(sol10).run();
+							return true;
+						}
+					} else if (eq(cond10, "else")) {
 						if (!isNull(sol10))
 							new Thread(sol10).run();
-						return true;
+						return false;
 					}
-				} else if (eq(cond10, ">=")) {
-					if (srcDbl >= middleware10) {
-						if (!isNull(sol10))
-							new Thread(sol10).run();
-						return true;
-					}
-				} else if (eq(cond10, "<")) {
-					if (srcDbl < middleware10) {
-						if (!isNull(sol10))
-							new Thread(sol10).run();
-						return true;
-					}
-				} else if (eq(cond10, "<=")) {
-					if (srcDbl <= middleware10) {
-						if (!isNull(sol10))
-							new Thread(sol10).run();
-						return true;
-					}
-				} else if (eq(cond10, "==")) {
-					if (srcDbl == middleware10) {
-						if (!isNull(sol10))
-							new Thread(sol10).run();
-						return true;
-					}
-				} else if (eq(cond10, "else")) {
-					if (!isNull(sol10))
-						new Thread(sol10).run();
-					return false;
 				}
 			} else if (cond10 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond10)))) {
@@ -7702,12 +9830,12 @@ public class KL {
 	public static String repeat(String s, int times) {
 		if (not(s) || not(times) || isNeg(times)) return s;
 		String org = s;
-		for (; times > 0; times--)
+		for (; -1+times > 0; times--)
 			s += org;
 		return s;
 	}
 	public static String repeat(String s) {
-		return repeat(s, 1);
+		return repeat(s, 2);
 	}
 	public static char[] map(char[] arr, Function<Character, Character> func) {
 		if (not(arr) || not(func))
@@ -8947,53 +11075,28 @@ public class KL {
 	public static String cat(Object... args) {
 		return concat(args);
 	}
-	public static String[] Arr(String... items) {
-		int length = items.length;
-		String[] arr = new String[length];
-		for (int i = 0; i < length; i++)
-			arr[i] = items[i];
+	public static StrArr Arr(String... items) {
+		StrArr arr = new StrArr(items);
 		return arr;
 	}
-	public static int[] Arr(int... items) {
-		int length = items.length;
-		int[] arr = new int[length];
-		for (int i = 0; i < length; i++)
-			arr[i] = items[i];
+	public static IntArr Arr(int... items) {
+		IntArr arr = new IntArr(items);
 		return arr;
 	}
-	public static long[] Arr(long... items) {
-		int length = items.length;
-		long[] arr = new long[length];
-		for (int i = 0; i < length; i++)
-			arr[i] = items[i];
+	public static LongArr Arr(long... items) {
+		LongArr arr = new LongArr(items);
 		return arr;
 	}
-	public static float[] Arr(float... items) {
-		int length = items.length;
-		float[] arr = new float[length];
-		for (int i = 0; i < length; i++)
-			arr[i] = items[i];
+	public static FltArr Arr(float... items) {
+		FltArr arr = new FltArr(items);
 		return arr;
 	}
-	public static double[] Arr(double... items) {
-		int length = items.length;
-		double[] arr = new double[length];
-		for (int i = 0; i < length; i++)
-			arr[i] = items[i];
+	public static DblArr Arr(double... items) {
+		DblArr arr = new DblArr(items);
 		return arr;
 	}
-	public static boolean[] Arr(boolean... items) {
-		int length = items.length;
-		boolean[] arr = new boolean[length];
-		for (int i = 0; i < length; i++)
-			arr[i] = items[i];
-		return arr;
-	}
-	public static Object[] Arr(Object... items) {
-		int length = items.length;
-		Object[] arr = new Object[length];
-		for (int i = 0; i < length; i++)
-			arr[i] = items[i];
+	public static BoolArr Arr(boolean... items) {
+		BoolArr arr = new BoolArr(items);
 		return arr;
 	}
 	public static String[] Arr(ObjS o) {
@@ -9347,6 +11450,14 @@ public class KL {
 	public static double setPrecision(double n) {
 		return setPrecision(n, 2);
 	}
+	public static float setPrecision(float n, int decimalPlaces) {
+		if (not(n) || not(decimalPlaces) || isNeg(decimalPlaces)) return n;
+		DecimalFormat formatter = new DecimalFormat("#." + repeat("0", decimalPlaces));
+		return Flt(formatter.format(n));
+	}
+	public static float setPrecision(float n) {
+		return setPrecision(n, 2);
+	}
 	public static <T> java.util.List<T> List(T args) {
 		return Arrays.asList(args);
 	}
@@ -9394,6 +11505,24 @@ public class KL {
 		} catch (Exception err) {
 			return false;
 		}
+	}
+	public static boolean isStr(Object o) {
+		return type(o, Str);
+	}
+	public static boolean isInt(Object o) {
+		return type(o, Int);
+	}
+	public static boolean isLong(Object o) {
+		return type(o, Long);
+	}
+	public static boolean isFlt(Object o) {
+		return type(o, Flt);
+	}
+	public static boolean isDbl(Object o) {
+		return type(o, Dbl);
+	}
+	public static boolean isBool(Object o) {
+		return type(o, Bool);
 	}
 	public static boolean isAlpha(char c) {
 		return c >= 65 && c <= 122;
@@ -10195,10 +12324,17 @@ public class KL {
 	public static String f(double n) {
 		return fpkr(n);
 	}
-	public static <T> String f(String s, T... args) {
+	public static String f(String s, Object... args) {
 		if (not(s) || args.length == 0) return s;
-		s = s.replaceAll("%f", "%.2f");
-		return String.format(s, args);
+		s = s.replaceAll("%[\\.\\\\d]*f", "%f");
+		for (Object arg : args) {
+			if (arg instanceof String) s = replaceFirst(s, "%s", Str(arg));
+			else if (arg instanceof Integer) s = replaceFirst(s, "%[di]", Str((int)arg));
+			else if (arg instanceof Float || arg instanceof Double) s = replaceFirst(s, "%f", Str(setPrecision((double)arg)));
+			else if (arg instanceof Boolean) s = replaceFirst(s, "%b", Str((boolean)arg));
+			//replaceFirst is really what we need here, as replacing "all" %b's with the args array just wouldn't work, as the first argument would get to be the one to replace all %b's with itself, rendering all other boolean args useless
+		}
+		return s;
 	}
 	public static String pkr(int n) {
 		String formattedN = fpkr(n);
@@ -11635,8 +13771,11 @@ public class KL {
 		Matcher matcher = p.matcher(s);
 		return matcher.replaceAll(m -> fn.apply(m.group()));
 	}
-	public static String replaceOne(String str, String to_replace, String regex_to_replace_with) {
+	public static String replaceFirst(String str, String to_replace, String regex_to_replace_with) {
 		return str.replaceFirst(to_replace, regex_to_replace_with);
+	}
+	public static String replaceOne(String str, String to_replace, String regex_to_replace_with) {
+		return replaceOne(str, to_replace, regex_to_replace_with);
 	}
 	public static String remove(String str, String re) {
 		return replace(str, re, "");
@@ -12863,15 +15002,17 @@ public class KL {
 				|| re.equals("?"))
 			re = "\\" + re;
 		re = re.replaceAll("(?<!\\\\)\\.(?![*+])", "\\\\.")
-			 .replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
-			 .replaceAll("%s", "[A-Za-z][\\\\w]+")
-			 .replaceAll("%d", "\\\\d+");
-		//System.out.println("00"+re);
+			 .replaceAll("(?<!\\\\)%w", "[A-Za-z]+").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+			 .replaceAll("(?<!\\\\)%s", "[A-Za-z][\\\\w]+")
+			 .replaceAll("(?<!\\\\)%b", "(true|false)")
+			 .replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
+			 .replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
+			 .replaceAll("(?<!\\\\)%n", "\\\\d+");
 		// modification precaution: it has been tested, and hence learned,
 		// the
 		// double-escaping remains AS-IS
-		// escape tricky characters, if they're the only content: helps avoid
-		// false positives as a "." or a "*" alone, can match just anything;.
+		// escaping tricky characters, if they're the only content: helps avoid
+		// false positives as a "." or a "*" alone, can match just anything.
 		// Needless to say, these quantifiers, along with a "+" and an
 		// optionality quantifier, i.e. a "?" quantifier, might also cause
 		// memory heap to exceed
@@ -12890,13 +15031,16 @@ public class KL {
 			re = "\\" + re;
 		}
 		re = re.replaceAll("(?<!\\\\)\\.(?![*+])", "\\\\.")
-			 .replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
-			 .replaceAll("%s", "[A-Za-z][\\\\w]+")
-			 .replaceAll("%d", "\\\\d+");
+			 .replaceAll("(?<!\\\\)%w", "[A-Za-z]+").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+			 .replaceAll("(?<!\\\\)%s", "[A-Za-z][\\\\w]+")
+			 .replaceAll("(?<!\\\\)%b", "(true|false)")
+			 .replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
+			 .replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
+			 .replaceAll("(?<!\\\\)%n", "\\\\d+");
 		// modification precaution: it has been tested, and hence learned,
 		// the
 		// double-escaping remains AS-IS
-		// escape tricky characters, if they're the only content: helps avoid
+		// escaping tricky characters, if they're the only content: helps avoid
 		// false positives as a "." or a "*" alone, can match just anything;.
 		// Needless to say, these quantifiers, along with a "+" and an
 		// optionality quantifier, i.e. a "?" quantifier, might also cause
@@ -12919,14 +15063,16 @@ public class KL {
 			re = "\\" + re;
 		}
 		re = re.replaceAll("(?<!\\\\)\\.(?![*+])", "\\\\.")
-			 .replaceAll("%w", "[A-Za-z]+").replaceAll("%c", "[A-Za-z]")
-			 .replaceAll("%s", "[A-Za-z][\\\\w]+")
-			 .replaceAll("%d", "\\\\d+")
-			 .replaceAll("%f", "([\\\\d])*[\\\\.]\\\\d+");
+			 .replaceAll("(?<!\\\\)%w", "[A-Za-z]+").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+			 .replaceAll("(?<!\\\\)%s", "[A-Za-z][\\\\w]+")
+			 .replaceAll("(?<!\\\\)%b", "(true|false)")
+			 .replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
+			 .replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
+			 .replaceAll("(?<!\\\\)%n", "\\\\d+");
 		// modification precaution: it has been tested, and hence learned,
 		// the
 		// double-escaping remains AS-IS
-		// escape tricky characters, if they're the only content: helps avoid
+		// escaping tricky characters, if they're the only content: helps avoid
 		// false positives as a "." or a "*" alone, can match just anything;.
 		// Needless to say, these quantifiers, along with a "+" and an
 		// optionality quantifier, i.e. a "?" quantifier, might also cause
@@ -13921,7 +16067,7 @@ public class KL {
 	public static boolean type(Object obj, String guessedType) {
 		if (not(obj) || not(guessedType))
 			return false;
-		return startsWith(type(obj), guessedType);
+		return len(guessedType) < 3 ? startsWith(type(obj), guessedType) : in(type(obj), guessedType);
 	}
 	// let's set up some "type"-helpers for the function
 	public static String Str = "string", Int = "integer", Char = "character",
@@ -15279,6 +17425,16 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
+		sw(len("hiya"), "<2|>4", () -> print("match"), Else, () -> print("not a match"));
+		print(eq("hey", "(hi|he.+)"));
+		int age = 22;
+		print(sw(age, "<18", () -> print("Just too young."), "<23&>=18", () -> print("sorry, still underaged"), Else, () -> print("you're in the drinking age, get in the bar🍺")));
+		
+		
+		
+		
+		//print(repeat("hi ", 3));
+		/*
 		print(replace("hello there", "^hel\\w+", m -> m.toUpperCase()));
 		int interval = setInterval(() -> print(randId()), 5, 2);
 		//setTimeout(() -> clearInterval(interval), 20);
@@ -15290,5 +17446,6 @@ public class KL {
 		char[] chars = Chars(lastOf(arr));
 		printArr(upper(chars));
 		printArr(sentCase(arr));
+		*/
 	}
 }
