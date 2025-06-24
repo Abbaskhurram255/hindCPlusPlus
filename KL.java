@@ -199,11 +199,11 @@ public class KL {
 		return decoded;
 	}
 	public static String encrypt(String data, String key) {
-		final String algo = "AES";
+		final String ofXAlgo = "AES";
 		try {
 			SecretKeySpec secretKey = new SecretKeySpec(
-				key.getBytes(StandardCharsets.UTF_8), algo);
-			Cipher cipher = Cipher.getInstance(algo);
+				key.getBytes(StandardCharsets.UTF_8), ofXAlgo);
+			Cipher cipher = Cipher.getInstance(ofXAlgo);
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			byte[] encryptedBytes = cipher
 									.doFinal(data.getBytes(StandardCharsets.UTF_8));
@@ -213,11 +213,11 @@ public class KL {
 		}
 	}
 	public static String decrypt(String encryptedData, String key) {
-		final String algo = "AES";
+		final String ofXAlgo = "AES";
 		try {
 			SecretKeySpec secretKey = new SecretKeySpec(
-				key.getBytes(StandardCharsets.UTF_8), algo);
-			Cipher cipher = Cipher.getInstance(algo);
+				key.getBytes(StandardCharsets.UTF_8), ofXAlgo);
+			Cipher cipher = Cipher.getInstance(ofXAlgo);
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			byte[] decryptedBytes = cipher
 									.doFinal(Base64.getDecoder().decode(encryptedData));
@@ -230,7 +230,7 @@ public class KL {
 	public static ObjS fetch(String url) {
 		ObjS map = new ObjS();
 		try {
-			URL urlString = new URL(url);
+			URL urlString = url(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
 										   .openConnection();
 			connection.setRequestMethod("GET");
@@ -244,8 +244,7 @@ public class KL {
 					respBuilder.append(line);
 				}
 				reader.close();
-				String jsonString = respBuilder.toString();
-				jsonString = jsonString.trim();
+				String jsonString = respBuilder.toString().trim();
 				if (jsonString.startsWith("{") && jsonString.endsWith("}"))
 					jsonString = jsonString.substring(1,
 													  jsonString.length() - 1);
@@ -277,10 +276,59 @@ public class KL {
 		}
 		return map;
 	}
+	public static ObjS silentFetch(String url) {
+		ObjS map = new ObjS();
+		try {
+			URL urlString = url(url);
+			HttpURLConnection connection = (HttpURLConnection) urlString
+										   .openConnection();
+			connection.setRequestMethod("GET");
+			int statusCode = connection.getResponseCode();
+			if (statusCode == HttpURLConnection.HTTP_OK) {
+				BufferedReader reader = new BufferedReader(
+					new InputStreamReader(connection.getInputStream()));
+				String line;
+				StringBuilder respBuilder = new StringBuilder();
+				while ((line = reader.readLine()) != null) {
+					respBuilder.append(line);
+				}
+				reader.close();
+				String jsonString = respBuilder.toString().trim();
+				if (jsonString.startsWith("{") && jsonString.endsWith("}"))
+					jsonString = jsonString.substring(1,
+													  jsonString.length() - 1);
+				String[] keyValuePairs = jsonString.split(",");
+				for (String pair : keyValuePairs) {
+					String[] parts = pair.split(":", 2);
+					if (parts.length == 2) {
+						String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]",
+																"");
+						String value = parts[1].trim()
+									   .replaceAll("[\"\\{\\}\\]]", "");
+						map.put(key, value);
+					}
+				}
+				map.add("response", "200").add("status", "ok").add("error",
+						"no");
+				return map;
+			} else {
+				map.add("response", Str(statusCode)).add("status", "notok")
+				.add("error", "yes");
+			}
+			connection.disconnect();
+		} catch (IOException e) {
+			map.add("response", "404").add("status", "notok").add("error",
+					"yes");
+		}
+		return map;
+	}
 	public String getPath(String to) {
 		if (not(to))
 			return "";
 		return getClass().getResource(to).toString();
+	}
+	public String filePath(String filename) {
+		 return getPath(filename);
 	}
 	public static String fileSeparator = System.getProperty("file.separator"),
 						 workDirectory = System.getProperty("user.dir").toLowerCase();
@@ -1751,26 +1799,163 @@ public class KL {
 	// some colors
 	// standard
 	public static clr red = new clr(clr.red),
-	  green = new clr(clr.green),
-	  blue = new clr(clr.blue),
-	  pink = new clr(clr.pink),
-	  magenta = new clr(clr.magenta),
-	  orange = new clr(clr.orange),
-	  lightgray = new clr(clr.lightGray),
-	  gray = new clr(clr.gray),
-	  darkgray = new clr(clr.darkGray),
-	  cyan = new clr(clr.cyan),
-	  yellow = new clr(clr.yellow),
-	  white = new clr(clr.white),
-	  black = new clr(clr.black);
+	green = new clr(clr.green),
+	blue = new clr(clr.blue),
+	pink = new clr(clr.pink),
+	magenta = new clr(clr.magenta),
+	orange = new clr(clr.orange),
+	lightgray = new clr(clr.lightGray),
+	gray = new clr(clr.gray),
+	darkgray = new clr(clr.darkGray),
+	cyan = new clr(clr.cyan),
+	yellow = new clr(clr.yellow),
+	white = new clr(clr.white),
+	black = new clr(clr.black);
 	// developer's choice
 	public static class colors {
-	    public static final clr acidgreen=new clr("#8ffe09"),adobe=new clr("#bd6c48"),alga=new clr("#54ac68"),algagreen=new clr("#21c36f"),almostblack=new clr("#070d0d"),amber=new clr("#feb308"),amber100=new clr("#ffecb3"),amber200=new clr("#ffe082"),amber300=new clr("#ffd54f"),amber400=new clr("#ffca28"),amber50=new clr("#fff8e1"),amber500=new clr("#ffc107"),amber600=new clr("#ffb300"),amber700=new clr("#ffa000"),amber800=new clr("#ff8f00"),amber900=new clr("#ff6f00"),amberextra1=new clr("#ffe57f"),amberextra2=new clr("#ffd740"),amberextra3=new clr("#ffc400"),amberextra4=new clr("#ffab00"),amethyst=new clr("#9b5fc0"),apple=new clr("#6ecb3c"),applegreen=new clr("#76cd26"),apricot=new clr("#ffb16d"),aqua=new clr("#13eac9"),aquablue=new clr("#02d8e9"),aquagreen=new clr("#12e193"),aquamarine=new clr("#04d8b2"),armygreen=new clr("#4b5d16"),asparagus=new clr("#77ab56"),aubergine=new clr("#3d0734"),auburn=new clr("#9a3001"),avocado=new clr("#90b134"),avocadogreen=new clr("#87a922"),azul=new clr("#1d5dec"),azure=new clr("#069af3"),babyblue=new clr("#a2cffe"),babygreen=new clr("#8cff9e"),babypink=new clr("#ffb7ce"),babypoo=new clr("#ab9004"),babypoop=new clr("#937c00"),babypoopgreen=new clr("#8f9805"),babypukegreen=new clr("#b6c406"),babypurple=new clr("#ca9bf7"),babyshitbrown=new clr("#ad900d"),babyshitgreen=new clr("#889717"),banana=new clr("#ffff7e"),bananayellow=new clr("#fafe4b"),barbiepink=new clr("#fe46a5"),barfgreen=new clr("#94ac02"),barney=new clr("#ac1db8"),barneypurple=new clr("#a00498"),battleshipgray=new clr("#6b7c85"),beige=new clr("#e6daa6"),berry=new clr("#990f4b"),bile=new clr("#b5c306"),black=new clr("#000000"),bland=new clr("#afa88b"),blood=new clr("#770001"),bloodorange=new clr("#fe4b03"),bloodred=new clr("#980002"),blue=new clr("#0343df"),blue100=new clr("#bbdefb"),blue200=new clr("#90caf9"),blue300=new clr("#64b5f6"),blue400=new clr("#42a5f5"),blue50=new clr("#e3f2fd"),blue500=new clr("#2196f3"),blue600=new clr("#1e88e5"),blue700=new clr("#1976d2"),blue800=new clr("#1565c0"),blue900=new clr("#0d47a1"),blueblue=new clr("#2242c7"),blueextra1=new clr("#82b1ff"),blueextra2=new clr("#448aff"),blueextra3=new clr("#2979ff"),blueextra4=new clr("#2962ff"),bluegray=new clr("#85a3b2"),bluegreen=new clr("#017a79"),bluepurple=new clr("#5a06ef"),blueviolet=new clr("#5d06e9"),bluewithahintofpurple=new clr("#533cc6"),blueberry=new clr("#464196"),bluegray100=new clr("#cfd8dc"),bluegray200=new clr("#b0bec5"),bluegray300=new clr("#90a4ae"),bluegray400=new clr("#78909c"),bluegray50=new clr("#eceff1"),bluegray500=new clr("#607d8b"),bluegray600=new clr("#546e7a"),bluegray700=new clr("#455a64"),bluegray800=new clr("#37474f"),bluegray900=new clr("#263238"),blueygray=new clr("#89a0b0"),blueygreen=new clr("#2bb179"),blueypurple=new clr("#6241c7"),bluish=new clr("#2976bb"),bluishgray=new clr("#748b97"),bluishgreen=new clr("#10a674"),bluishpurple=new clr("#703be7"),blurple=new clr("#5539cc"),blush=new clr("#f29e8e"),blushpink=new clr("#fe828c"),booger=new clr("#9bb53c"),boogergreen=new clr("#96b403"),bordeaux=new clr("#7b002c"),boringgreen=new clr("#63b365"),bottlegreen=new clr("#044a05"),brick=new clr("#a03623"),brickorange=new clr("#c14a09"),brickred=new clr("#8f1402"),brightaqua=new clr("#0bf9ea"),brightblue=new clr("#0165fc"),brightcyan=new clr("#41fdfe"),brightgreen=new clr("#01ff07"),brightlavender=new clr("#c760ff"),brightlightblue=new clr("#26f7fd"),brightlightgreen=new clr("#2dfe54"),brightlilac=new clr("#c95efb"),brightlime=new clr("#87fd05"),brightlimegreen=new clr("#65fe08"),brightmagenta=new clr("#ff08e8"),brightolive=new clr("#9cbb04"),brightorange=new clr("#ff5b00"),brightpink=new clr("#fe01b1"),brightpurple=new clr("#be03fd"),brightred=new clr("#ff000d"),brightseagreen=new clr("#05ffa6"),brightskyblue=new clr("#02ccfe"),brightteal=new clr("#01f9c6"),brightturquoise=new clr("#0ffef9"),brightviolet=new clr("#ad0afd"),brightyellow=new clr("#fffd01"),brightyellowgreen=new clr("#9dff00"),britishracinggreen=new clr("#05480d"),bronze=new clr("#a87900"),brown=new clr("#653700"),brown100=new clr("#d7ccc8"),brown200=new clr("#bcaaa4"),brown300=new clr("#a1887f"),brown400=new clr("#8d6e63"),brown50=new clr("#efebe9"),brown500=new clr("#795548"),brown600=new clr("#6d4c41"),brown700=new clr("#5d4037"),brown800=new clr("#4e342e"),brown900=new clr("#3e2723"),browngray=new clr("#8d8468"),browngreen=new clr("#706c11"),brownorange=new clr("#b96902"),brownred=new clr("#922b05"),brownyellow=new clr("#b29705"),brownish=new clr("#9c6d57"),brownishgray=new clr("#86775f"),brownishgreen=new clr("#6a6e09"),brownishorange=new clr("#cb7723"),brownishpink=new clr("#c27e79"),brownishpurple=new clr("#76424e"),brownishred=new clr("#9e3623"),brownishyellow=new clr("#c9b003"),brownygreen=new clr("#6f6c0a"),brownyorange=new clr("#ca6b02"),bruise=new clr("#7e4071"),bubblegumpink=new clr("#fe83cc"),bubblegum=new clr("#ff6cb5"),buff=new clr("#fef69e"),burgundy=new clr("#610023"),burntorange=new clr("#c04e01"),burntred=new clr("#9f2305"),burntsiena=new clr("#b75203"),burntsienna=new clr("#b04e0f"),burntumber=new clr("#a0450e"),burntyellow=new clr("#d5ab09"),burple=new clr("#6832e3"),butter=new clr("#ffff81"),butteryellow=new clr("#fffd74"),butterscotch=new clr("#fdb147"),cadetblue=new clr("#4e7496"),camel=new clr("#c69f59"),camo=new clr("#7f8f4e"),camogreen=new clr("#526525"),camouflagegreen=new clr("#4b6113"),canary=new clr("#fdff63"),canaryyellow=new clr("#fffe40"),candypink=new clr("#ff63e9"),caramel=new clr("#af6f09"),carmine=new clr("#9d0216"),carnation=new clr("#fd798f"),carnationpink=new clr("#ff7fa7"),carolinablue=new clr("#8ab8fe"),celadon=new clr("#befdb7"),celery=new clr("#c1fd95"),cement=new clr("#a5a391"),cerise=new clr("#de0c62"),cerulean=new clr("#0485d1"),ceruleanblue=new clr("#056eee"),charcoal=new clr("#343837"),charcoalgray=new clr("#3c4142"),chartreuse=new clr("#c1f80a"),cherry=new clr("#cf0234"),cherryred=new clr("#f7022a"),chestnut=new clr("#742802"),chocolate=new clr("#3d1c02"),chocolatebrown=new clr("#411900"),cinnamon=new clr("#ac4f06"),claret=new clr("#680018"),clay=new clr("#b66a50"),claybrown=new clr("#b2713d"),clearblue=new clr("#247afd"),cloudyblue=new clr("#acc2d9"),cobalt=new clr("#1e488f"),cobaltblue=new clr("#030aa7"),cocoa=new clr("#875f42"),coffee=new clr("#a6814c"),coolblue=new clr("#4984b8"),coolgray=new clr("#95a3a6"),coolgreen=new clr("#33b864"),copper=new clr("#b66325"),coral=new clr("#fc5a50"),coralpink=new clr("#ff6163"),cornflower=new clr("#6a79f7"),cornflowerblue=new clr("#5170d7"),cranberry=new clr("#9e003a"),cream=new clr("#ffffc2"),creme=new clr("#ffffb6"),crimson=new clr("#8c000f"),custard=new clr("#fffd78"),cyan=new clr("#00ffff"),cyan100=new clr("#b2ebf2"),cyan200=new clr("#80deea"),cyan300=new clr("#4dd0e1"),cyan400=new clr("#26c6da"),cyan50=new clr("#e0f7fa"),cyan500=new clr("#00bcd4"),cyan600=new clr("#00acc1"),cyan700=new clr("#0097a7"),cyan800=new clr("#00838f"),cyan900=new clr("#006064"),cyanextra1=new clr("#84ffff"),cyanextra2=new clr("#18ffff"),cyanextra3=new clr("#00e5ff"),cyanextra4=new clr("#00b8d4"),dandelion=new clr("#fedf08"),dark=new clr("#1b2431"),darkaqua=new clr("#05696b"),darkaquamarine=new clr("#017371"),darkbeige=new clr("#ac9362"),darkblue=new clr("#030764"),darkbluegray=new clr("#1f3b4d"),darkbluegreen=new clr("#005249"),darkbrown=new clr("#341c02"),darkcoral=new clr("#cf524e"),darkcream=new clr("#fff39a"),darkcyan=new clr("#0a888a"),darkforestgreen=new clr("#002d04"),darkfuchsia=new clr("#9d0759"),darkgold=new clr("#b59410"),darkgrassgreen=new clr("#388004"),darkgray=new clr("#363737"),darkgrayblue=new clr("#29465b"),darkgreen=new clr("#054907"),darkgreenblue=new clr("#1f6357"),darkhotpink=new clr("#d90166"),darkindigo=new clr("#1f0954"),darkkhaki=new clr("#9b8f55"),darklavender=new clr("#856798"),darklilac=new clr("#9c6da5"),darklime=new clr("#84b701"),darklimegreen=new clr("#7ebd01"),darkmagenta=new clr("#960056"),darkmaroon=new clr("#3c0008"),darkmauve=new clr("#874c62"),darkmint=new clr("#48c072"),darkmintgreen=new clr("#20c073"),darkmustard=new clr("#a88905"),darknavy=new clr("#000435"),darknavyblue=new clr("#00022e"),darkolive=new clr("#373e02"),darkolivegreen=new clr("#3c4d03"),darkorange=new clr("#c65102"),darkpastelgreen=new clr("#56ae57"),darkpeach=new clr("#de7e5d"),darkperiwinkle=new clr("#665fd1"),darkpink=new clr("#cb416b"),darkplum=new clr("#3f012c"),darkpurple=new clr("#35063e"),darkred=new clr("#840000"),darkrose=new clr("#b5485d"),darkroyalblue=new clr("#02066f"),darksage=new clr("#598556"),darksalmon=new clr("#c85a53"),darksand=new clr("#a88f59"),darkseagreen=new clr("#11875d"),darkseafoam=new clr("#1fb57a"),darkseafoamgreen=new clr("#3eaf76"),darkskyblue=new clr("#448ee4"),darkslateblue=new clr("#214761"),darktan=new clr("#af884a"),darktaupe=new clr("#7f684e"),darkteal=new clr("#014d4e"),darkturquoise=new clr("#045c5a"),darkviolet=new clr("#34013f"),darkyellow=new clr("#d5b60a"),darkyellowgreen=new clr("#728f02"),darkerblue=new clr("#011288"),darkergreen=new clr("#087804"),darkerpink=new clr("#c4387f"),darkerpurple=new clr("#5f1b6b"),darkishblue=new clr("#014182"),darkishgreen=new clr("#287c37"),darkishpink=new clr("#da467d"),darkishpurple=new clr("#751973"),darkishred=new clr("#a90308"),deepaqua=new clr("#08787f"),deepblue=new clr("#040273"),deepbrown=new clr("#410200"),deepgreen=new clr("#02590f"),deeplavender=new clr("#8d5eb7"),deeplilac=new clr("#966ebd"),deepmagenta=new clr("#a0025c"),deeporange=new clr("#dc4d01"),deeppink=new clr("#cb0162"),deeppurple=new clr("#36013f"),deepred=new clr("#9a0200"),deeprose=new clr("#c74767"),deepseablue=new clr("#015482"),deepskyblue=new clr("#0d75f8"),deepteal=new clr("#00555a"),deepturquoise=new clr("#017374"),deepviolet=new clr("#490648"),deeporange100=new clr("#ffccbc"),deeporange200=new clr("#ffab91"),deeporange300=new clr("#ff8a65"),deeporange400=new clr("#ff7043"),deeporange50=new clr("#fbe9e7"),deeporange500=new clr("#ff5722"),deeporange600=new clr("#f4511e"),deeporange700=new clr("#e64a19"),deeporange800=new clr("#d84315"),deeporange900=new clr("#bf360c"),deeporangeextra1=new clr("#ff9e80"),deeporangeextra2=new clr("#ff6e40"),deeporangeextra3=new clr("#ff3d00"),deeporangeextra4=new clr("#dd2c00"),deeppurple100=new clr("#d1c4e9"),deeppurple200=new clr("#b39ddb"),deeppurple300=new clr("#9575cd"),deeppurple400=new clr("#7e57c2"),deeppurple50=new clr("#ede7f6"),deeppurple500=new clr("#673ab7"),deeppurple600=new clr("#5e35b1"),deeppurple700=new clr("#512da8"),deeppurple800=new clr("#4527a0"),deeppurple900=new clr("#311b92"),deeppurpleextra1=new clr("#b388ff"),deeppurpleextra2=new clr("#7c4dff"),deeppurpleextra3=new clr("#651fff"),deeppurpleextra4=new clr("#6200ea"),denim=new clr("#3b638c"),denimblue=new clr("#3b5b92"),desert=new clr("#ccad60"),diarrhea=new clr("#9f8303"),dirt=new clr("#8a6e45"),dirtbrown=new clr("#836539"),dirtyblue=new clr("#3f829d"),dirtygreen=new clr("#667e2c"),dirtyorange=new clr("#c87606"),dirtypink=new clr("#ca7b80"),dirtypurple=new clr("#734a65"),dirtyyellow=new clr("#cdc50a"),dodgerblue=new clr("#3e82fc"),drab=new clr("#828344"),drabgreen=new clr("#749551"),driedblood=new clr("#4b0101"),duckeggblue=new clr("#c3fbf4"),dullblue=new clr("#49759c"),dullbrown=new clr("#876e4b"),dullgreen=new clr("#74a662"),dullorange=new clr("#d8863b"),dullpink=new clr("#d5869d"),dullpurple=new clr("#84597e"),dullred=new clr("#bb3f3f"),dullteal=new clr("#5f9e8f"),dullyellow=new clr("#eedc5b"),dusk=new clr("#4e5481"),duskblue=new clr("#26538d"),duskyblue=new clr("#475f94"),duskypink=new clr("#cc7a8b"),duskypurple=new clr("#895b7b"),duskyrose=new clr("#ba6873"),dust=new clr("#b2996e"),dustyblue=new clr("#5a86ad"),dustygreen=new clr("#76a973"),dustylavender=new clr("#ac86a8"),dustyorange=new clr("#f0833a"),dustypink=new clr("#d58a94"),dustypurple=new clr("#825f87"),dustyred=new clr("#b9484e"),dustyrose=new clr("#c0737a"),dustyteal=new clr("#4c9085"),earth=new clr("#a2653e"),eastergreen=new clr("#8cfd7e"),easterpurple=new clr("#c071fe"),ecru=new clr("#feffca"),eggshell=new clr("#ffffd4"),eggplant=new clr("#380835"),eggplantpurple=new clr("#430541"),eggshellblue=new clr("#c4fff7"),electricblue=new clr("#0652ff"),electricgreen=new clr("#21fc0d"),electriclime=new clr("#a8ff04"),electricpink=new clr("#ff0490"),electricpurple=new clr("#aa23ff"),emerald=new clr("#01a049"),emeraldgreen=new clr("#028f1e"),evergreen=new clr("#05472a"),fadedblue=new clr("#658cbb"),fadedgreen=new clr("#7bb274"),fadedorange=new clr("#f0944d"),fadedpink=new clr("#de9dac"),fadedpurple=new clr("#916e99"),fadedred=new clr("#d3494e"),fadedyellow=new clr("#feff7f"),fawn=new clr("#cfaf7b"),fern=new clr("#63a950"),ferngreen=new clr("#548d44"),fireenginered=new clr("#fe0002"),flatblue=new clr("#3c73a8"),flatgreen=new clr("#699d4c"),fluorescentgreen=new clr("#08ff08"),flurogreen=new clr("#0aff02"),foamgreen=new clr("#90fda9"),forest=new clr("#0b5509"),forestgreen=new clr("#06470c"),forrestgreen=new clr("#154406"),frenchblue=new clr("#436bad"),freshgreen=new clr("#69d84f"),froggreen=new clr("#58bc08"),fuchsia=new clr("#ed0dd9"),gold=new clr("#dbb40c"),golden=new clr("#f5bf03"),goldenbrown=new clr("#b27a01"),goldenrod=new clr("#fac205"),goldenyellow=new clr("#fec615"),grape=new clr("#6c3461"),grapepurple=new clr("#5d1451"),grapefruit=new clr("#fd5956"),grass=new clr("#5cac2d"),grassgreen=new clr("#3f9b0b"),grassygreen=new clr("#419c03"),gray=new clr("#929591"),gray100=new clr("#f5f5f5"),gray200=new clr("#eeeeee"),gray300=new clr("#e0e0e0"),gray400=new clr("#bdbdbd"),gray50=new clr("#fafafa"),gray500=new clr("#9e9e9e"),gray600=new clr("#757575"),gray700=new clr("#616161"),gray800=new clr("#424242"),gray900=new clr("#212121"),grayblue=new clr("#77a1b5"),graybrown=new clr("#7f7053"),graygreen=new clr("#86a17d"),graypink=new clr("#c3909b"),graypurple=new clr("#826d8c"),grayteal=new clr("#5e9b8a"),grayish=new clr("#a8a495"),grayishblue=new clr("#5e819d"),grayishbrown=new clr("#7a6a4f"),grayishgreen=new clr("#82a67d"),grayishpink=new clr("#c88d94"),grayishpurple=new clr("#887191"),grayishteal=new clr("#719f91"),green=new clr("#15b01a"),green100=new clr("#c8e6c9"),green200=new clr("#a5d6a7"),green300=new clr("#81c784"),green400=new clr("#66bb6a"),green50=new clr("#e8f5e9"),green500=new clr("#4caf50"),green600=new clr("#43a047"),green700=new clr("#388e3c"),green800=new clr("#2e7d32"),green900=new clr("#1b5e20"),greenagain=new clr("#16d43f"),greenapple=new clr("#5edc1f"),greenblue=new clr("#23c48b"),greenbrown=new clr("#544e03"),greenextra1=new clr("#b9f6ca"),greenextra2=new clr("#69f0ae"),greenextra3=new clr("#00e676"),greenextra4=new clr("#00c853"),greengray=new clr("#77926f"),greenteal=new clr("#0cb577"),greenyellow=new clr("#b5ce08"),greenish=new clr("#40a368"),greenishbeige=new clr("#c9d179"),greenishblue=new clr("#0b8b87"),greenishbrown=new clr("#696112"),greenishcyan=new clr("#2afeb7"),greenishgray=new clr("#96ae8d"),greenishtan=new clr("#bccb7a"),greenishteal=new clr("#32bf84"),greenishturquoise=new clr("#00fbb0"),greenishyellow=new clr("#cdfd02"),greenyblue=new clr("#42b395"),greenybrown=new clr("#696006"),greenygray=new clr("#7ea07a"),greenyyellow=new clr("#c6f808"),grossgreen=new clr("#a0bf16"),gunmetal=new clr("#536267"),hazel=new clr("#8e7618"),heather=new clr("#a484ac"),heliotrope=new clr("#d94ff5"),highlightergreen=new clr("#1bfc06"),hospitalgreen=new clr("#9be5aa"),hotgreen=new clr("#25ff29"),hotmagenta=new clr("#f504c9"),hotpink=new clr("#ff028d"),hotpurple=new clr("#cb00f5"),huntergreen=new clr("#0b4008"),ice=new clr("#d6fffa"),iceblue=new clr("#d7fffe"),ickygreen=new clr("#8fae22"),indianred=new clr("#850e04"),indigo=new clr("#380282"),indigo100=new clr("#c5cae9"),indigo200=new clr("#9fa8da"),indigo300=new clr("#7986cb"),indigo400=new clr("#5c6bc0"),indigo50=new clr("#e8eaf6"),indigo500=new clr("#3f51b5"),indigo600=new clr("#3949ab"),indigo700=new clr("#303f9f"),indigo800=new clr("#283593"),indigo900=new clr("#1a237e"),indigoblue=new clr("#3a18b1"),indigoextra1=new clr("#8c9eff"),indigoextra2=new clr("#536dfe"),indigoextra3=new clr("#3d5afe"),indigoextra4=new clr("#304ffe"),iris=new clr("#6258c4"),irishgreen=new clr("#019529"),ivory=new clr("#ffffcb"),jade=new clr("#1fa774"),jadegreen=new clr("#2baf6a"),junglegreen=new clr("#048243"),kelleygreen=new clr("#009337"),kellygreen=new clr("#02ab2e"),kermitgreen=new clr("#5cb200"),keylime=new clr("#aeff6e"),khaki=new clr("#aaa662"),khakigreen=new clr("#728639"),kiwi=new clr("#9cef43"),kiwigreen=new clr("#8ee53f"),lavender=new clr("#c79fef"),lavenderblue=new clr("#8b88f8"),lavenderpink=new clr("#dd85d7"),lawngreen=new clr("#4da409"),leaf=new clr("#71aa34"),leafgreen=new clr("#5ca904"),leafygreen=new clr("#51b73b"),leather=new clr("#ac7434"),lemon=new clr("#fdff52"),lemongreen=new clr("#adf802"),lemonlime=new clr("#bffe28"),lemonyellow=new clr("#fdff38"),lichen=new clr("#8fb67b"),lightaqua=new clr("#8cffdb"),lightaquamarine=new clr("#7bfdc7"),lightbeige=new clr("#fffeb6"),lightblue=new clr("#7bc8f6"),lightbluegray=new clr("#b7c9e2"),lightbluegreen=new clr("#7efbb3"),lightbluishgreen=new clr("#76fda8"),lightbrightgreen=new clr("#53fe5c"),lightbrown=new clr("#ad8150"),lightburgundy=new clr("#a8415b"),lightcyan=new clr("#acfffc"),lighteggplant=new clr("#894585"),lightforestgreen=new clr("#4f9153"),lightgold=new clr("#fddc5c"),lightgrassgreen=new clr("#9af764"),lightgray=new clr("#d8dcd6"),lightgrayblue=new clr("#9dbcd4"),lightgraygreen=new clr("#b7e1a1"),lightgreen=new clr("#76ff7b"),lightgreenblue=new clr("#56fca2"),lightgreenishblue=new clr("#63f7b4"),lightindigo=new clr("#6d5acf"),lightkhaki=new clr("#e6f2a2"),lightlavendar=new clr("#efc0fe"),lightlavender=new clr("#dfc5fe"),lightlightblue=new clr("#cafffb"),lightlightgreen=new clr("#c8ffb0"),lightlilac=new clr("#edc8ff"),lightlime=new clr("#aefd6c"),lightlimegreen=new clr("#b9ff66"),lightmagenta=new clr("#fa5ff7"),lightmaroon=new clr("#a24857"),lightmauve=new clr("#c292a1"),lightmint=new clr("#b6ffbb"),lightmintgreen=new clr("#a6fbb2"),lightmossgreen=new clr("#a6c875"),lightmustard=new clr("#f7d560"),lightnavy=new clr("#155084"),lightnavyblue=new clr("#2e5a88"),lightneongreen=new clr("#4efd54"),lightolive=new clr("#acbf69"),lightolivegreen=new clr("#a4be5c"),lightorange=new clr("#fdaa48"),lightpastelgreen=new clr("#b2fba5"),lightpeagreen=new clr("#c4fe82"),lightpeach=new clr("#ffd8b1"),lightperiwinkle=new clr("#c1c6fc"),lightpink=new clr("#ffd1df"),lightplum=new clr("#9d5783"),lightpurple=new clr("#bf77f6"),lightred=new clr("#ff474c"),lightrose=new clr("#ffc5cb"),lightroyalblue=new clr("#3a2efe"),lightsage=new clr("#bcecac"),lightsalmon=new clr("#fea993"),lightseagreen=new clr("#98f6b0"),lightseafoam=new clr("#a0febf"),lightseafoamgreen=new clr("#a7ffb5"),lightskyblue=new clr("#c6fcff"),lighttan=new clr("#fbeeac"),lightteal=new clr("#90e4c1"),lightturquoise=new clr("#7ef4cc"),lighturple=new clr("#b36ff6"),lightviolet=new clr("#d6b4fc"),lightyellow=new clr("#fffe7a"),lightyellowgreen=new clr("#ccfd7f"),lightyellowishgreen=new clr("#c2ff89"),lightblue100=new clr("#b3e5fc"),lightblue200=new clr("#81d4fa"),lightblue300=new clr("#4fc3f7"),lightblue400=new clr("#29b6f6"),lightblue50=new clr("#e1f5fe"),lightblue500=new clr("#03a9f4"),lightblue600=new clr("#039be5"),lightblue700=new clr("#0288d1"),lightblue800=new clr("#0277bd"),lightblue900=new clr("#01579b"),lightblueextra1=new clr("#80d8ff"),lightblueextra2=new clr("#40c4ff"),lightblueextra3=new clr("#00b0ff"),lightblueextra4=new clr("#0091ea"),lightergreen=new clr("#75fd63"),lighterpurple=new clr("#a55af4"),lightgreen100=new clr("#dcedc8"),lightgreen200=new clr("#c5e1a5"),lightgreen300=new clr("#aed581"),lightgreen400=new clr("#9ccc65"),lightgreen50=new clr("#f1f8e9"),lightgreen500=new clr("#8bc34a"),lightgreen600=new clr("#7cb342"),lightgreen700=new clr("#689f38"),lightgreen800=new clr("#558b2f"),lightgreen900=new clr("#33691e"),lightgreenextra1=new clr("#ccff90"),lightgreenextra2=new clr("#b2ff59"),lightgreenextra3=new clr("#76ff03"),lightgreenextra4=new clr("#64dd17"),lightishblue=new clr("#3d7afd"),lightishgreen=new clr("#61e160"),lightishpurple=new clr("#a552e6"),lightishred=new clr("#fe2f4a"),lilac=new clr("#cea2fd"),liliac=new clr("#c48efd"),lime=new clr("#aaff32"),lime100=new clr("#f0f4c3"),lime200=new clr("#e6ee9c"),lime300=new clr("#dce775"),lime400=new clr("#d4e157"),lime50=new clr("#f9fbe7"),lime500=new clr("#cddc39"),lime600=new clr("#c0ca33"),lime700=new clr("#afb42b"),lime800=new clr("#9e9d24"),lime900=new clr("#827717"),limeextra1=new clr("#f4ff81"),limeextra2=new clr("#eeff41"),limeextra3=new clr("#c6ff00"),limeextra4=new clr("#aeea00"),limegreen=new clr("#89fe05"),limeyellow=new clr("#d0fe1d"),lipstick=new clr("#d5174e"),lipstickred=new clr("#c0022f"),macaroniandcheese=new clr("#efb435"),magenta=new clr("#c20078"),mahogany=new clr("#4a0100"),maize=new clr("#f4d054"),mango=new clr("#ffa62b"),manilla=new clr("#fffa86"),marigold=new clr("#fcc006"),marine=new clr("#042e60"),marineblue=new clr("#01386a"),maroon=new clr("#650021"),mauve=new clr("#ae7181"),mediumblue=new clr("#2c6fbb"),mediumbrown=new clr("#7f5112"),mediumgray=new clr("#7d7f7c"),mediumgreen=new clr("#39ad48"),mediumpink=new clr("#f36196"),mediumpurple=new clr("#9e43a2"),melon=new clr("#ff7855"),merlot=new clr("#730039"),metallicblue=new clr("#4f738e"),midblue=new clr("#276ab3"),midgreen=new clr("#50a747"),midnight=new clr("#03012d"),midnightblue=new clr("#020035"),midnightpurple=new clr("#280137"),militarygreen=new clr("#667c3e"),milkchocolate=new clr("#7f4e1e"),mint=new clr("#9ffeb0"),mintgreen=new clr("#8fff9f"),mintygreen=new clr("#0bf77d"),mocha=new clr("#9d7651"),moss=new clr("#769958"),mossgreen=new clr("#658b38"),mossygreen=new clr("#638b27"),mud=new clr("#735c12"),mudbrown=new clr("#60460f"),mudgreen=new clr("#606602"),muddybrown=new clr("#886806"),muddygreen=new clr("#657432"),muddyyellow=new clr("#bfac05"),mulberry=new clr("#920a4e"),murkygreen=new clr("#6c7a0e"),mushroom=new clr("#ba9e88"),mustard=new clr("#ceb301"),mustardbrown=new clr("#ac7e04"),mustardgreen=new clr("#a8b504"),mustardyellow=new clr("#d2bd0a"),mutedblue=new clr("#3b719f"),mutedgreen=new clr("#5fa052"),mutedpink=new clr("#d1768f"),mutedpurple=new clr("#805b87"),nastygreen=new clr("#70b23f"),navy=new clr("#01153e"),navyblue=new clr("#001146"),navygreen=new clr("#35530a"),neonblue=new clr("#04d9ff"),neongreen=new clr("#0cff0c"),neonpink=new clr("#fe019a"),neonpurple=new clr("#bc13fe"),neonred=new clr("#ff073a"),neonyellow=new clr("#cfff04"),niceblue=new clr("#107ab0"),nightblue=new clr("#040348"),ocean=new clr("#017b92"),oceanblue=new clr("#03719c"),oceangreen=new clr("#3d9973"),ocher=new clr("#bf9b0c"),ochre=new clr("#bf9005"),ocre=new clr("#c69c04"),offblue=new clr("#5684ae"),offgreen=new clr("#6ba353"),offwhite=new clr("#ffffe4"),offyellow=new clr("#f1f33f"),oldpink=new clr("#c77986"),oldrose=new clr("#c87f89"),olive=new clr("#6e750e"),olivebrown=new clr("#645403"),olivedrab=new clr("#6f7632"),olivegreen=new clr("#677a04"),oliveyellow=new clr("#c2b709"),orange=new clr("#f97306"),orange100=new clr("#ffe0b2"),orange200=new clr("#ffcc80"),orange300=new clr("#ffb74d"),orange400=new clr("#ffa726"),orange50=new clr("#fff3e0"),orange500=new clr("#ff9800"),orange600=new clr("#fb8c00"),orange700=new clr("#f57c00"),orange800=new clr("#ef6c00"),orange900=new clr("#e65100"),orangebrown=new clr("#be6400"),orangeextra1=new clr("#ffd180"),orangeextra2=new clr("#ffab40"),orangeextra3=new clr("#ff9100"),orangeextra4=new clr("#ff6d00"),orangepink=new clr("#ff6f52"),orangered=new clr("#fe420f"),orangeyellow=new clr("#ffad01"),orangeish=new clr("#fd8d49"),orangeybrown=new clr("#b16002"),orangeyred=new clr("#fa4224"),orangeyyellow=new clr("#fdb915"),orangish=new clr("#fc824a"),orangishbrown=new clr("#b25f03"),orangishred=new clr("#f43605"),orchid=new clr("#c875c4"),pale=new clr("#fff9d0"),paleaqua=new clr("#b8ffeb"),paleblue=new clr("#d0fefe"),palebrown=new clr("#b1916e"),palecyan=new clr("#b7fffa"),palegold=new clr("#fdde6c"),palegray=new clr("#fdfdfe"),palegreen=new clr("#c7fdb5"),palelavender=new clr("#eecffe"),palelightgreen=new clr("#b1fc99"),palelilac=new clr("#e4cbff"),palelime=new clr("#befd73"),palelimegreen=new clr("#b1ff65"),palemagenta=new clr("#d767ad"),palemauve=new clr("#fed0fc"),paleolive=new clr("#b9cc81"),paleolivegreen=new clr("#b1d27b"),paleorange=new clr("#ffa756"),palepeach=new clr("#ffe5ad"),palepink=new clr("#ffcfdc"),palepurple=new clr("#b790d4"),palered=new clr("#d9544d"),palerose=new clr("#fdc1c5"),palesalmon=new clr("#ffb19a"),paleskyblue=new clr("#bdf6fe"),paleteal=new clr("#82cbb2"),paleturquoise=new clr("#a5fbd5"),paleviolet=new clr("#ceaefa"),paleyellow=new clr("#ffff84"),parchment=new clr("#fefcaf"),pastelblue=new clr("#a2bffe"),pastelgreen=new clr("#b0ff9d"),pastelorange=new clr("#ff964f"),pastelpink=new clr("#ffbacd"),pastelpurple=new clr("#caa0ff"),pastelred=new clr("#db5856"),pastelyellow=new clr("#fffe71"),pea=new clr("#a4bf20"),peagreen=new clr("#8eab12"),peasoup=new clr("#929901"),peasoupgreen=new clr("#94a617"),peach=new clr("#ffb07c"),peachypink=new clr("#ff9a8a"),peacockblue=new clr("#016795"),pear=new clr("#cbf85f"),periwinkle=new clr("#8e82fe"),periwinkleblue=new clr("#8f99fb"),perrywinkle=new clr("#8f8ce7"),petrol=new clr("#005f6a"),pigpink=new clr("#e78ea5"),pine=new clr("#2b5d34"),pinegreen=new clr("#0a481e"),pink=new clr("#ff81c0"),pink100=new clr("#f8bbd0"),pink200=new clr("#f48fb1"),pink300=new clr("#f06292"),pink400=new clr("#ec407a"),pink50=new clr("#fce4ec"),pink500=new clr("#e91e63"),pink600=new clr("#d81b60"),pink700=new clr("#c2185b"),pink800=new clr("#ad1457"),pink900=new clr("#880e4f"),pinkextra1=new clr("#ff80ab"),pinkextra2=new clr("#ff4081"),pinkextra3=new clr("#f50057"),pinkextra4=new clr("#c51162"),pinkpurple=new clr("#ef1de7"),pinkred=new clr("#f5054f"),pinkish=new clr("#d46a7e"),pinkishbrown=new clr("#b17261"),pinkishgray=new clr("#c8aca9"),pinkishorange=new clr("#ff724c"),pinkishpurple=new clr("#d648d7"),pinkishred=new clr("#f10c45"),pinkishtan=new clr("#d99b82"),pinky=new clr("#fc86aa"),pinkypurple=new clr("#c94cbe"),pinkyred=new clr("#fc2647"),pissyellow=new clr("#ddd618"),pistachio=new clr("#c0fa8b"),plum=new clr("#580f41"),plumpurple=new clr("#4e0550"),poisongreen=new clr("#40fd14"),poo=new clr("#8f7303"),poobrown=new clr("#885f01"),poop=new clr("#7f5e00"),poopbrown=new clr("#7a5901"),poopgreen=new clr("#6f7c00"),powderblue=new clr("#b1d1fc"),powderpink=new clr("#ffb2d0"),primaryblue=new clr("#0804f9"),prussianblue=new clr("#004577"),puce=new clr("#a57e52"),puke=new clr("#a5a502"),pukebrown=new clr("#947706"),pukegreen=new clr("#9aae07"),pukeyellow=new clr("#c2be0e"),pumpkin=new clr("#e17701"),pumpkinorange=new clr("#fb7d07"),pureblue=new clr("#0203e2"),purple=new clr("#7e1e9c"),purple100=new clr("#e1bee7"),purple200=new clr("#ce93d8"),purple300=new clr("#ba68c8"),purple400=new clr("#ab47bc"),purple50=new clr("#f3e5f5"),purple500=new clr("#9c27b0"),purple600=new clr("#8e24aa"),purple700=new clr("#7b1fa2"),purple800=new clr("#6a1b9a"),purple900=new clr("#4a148c"),purpleblue=new clr("#5d21d0"),purplebrown=new clr("#673a3f"),purpleextra1=new clr("#ea80fc"),purpleextra2=new clr("#e040fb"),purpleextra3=new clr("#d500f9"),purpleextra4=new clr("#aa00ff"),purplegray=new clr("#866f85"),purplepink=new clr("#d725de"),purplered=new clr("#990147"),purpleish=new clr("#98568d"),purpleishblue=new clr("#6140ef"),purpleishpink=new clr("#df4ec8"),purpley=new clr("#8756e4"),purpleyblue=new clr("#5f34e7"),purpleygray=new clr("#947e94"),purpleypink=new clr("#c83cb9"),purplish=new clr("#94568c"),purplishblue=new clr("#601ef9"),purplishbrown=new clr("#6b4247"),purplishgray=new clr("#7a687f"),purplishpink=new clr("#ce5dae"),purplishred=new clr("#b0054b"),purply=new clr("#983fb2"),purplyblue=new clr("#661aee"),purplypink=new clr("#f075e6"),putty=new clr("#beae8a"),racinggreen=new clr("#014600"),radioactivegreen=new clr("#2cfa1f"),raspberry=new clr("#b00149"),rawsienna=new clr("#9a6200"),rawumber=new clr("#a75e09"),reallylightblue=new clr("#d4ffff"),red=new clr("#e50000"),red100=new clr("#ffcdd2"),red200=new clr("#ef9a9a"),red300=new clr("#e57373"),red400=new clr("#ef5350"),red50=new clr("#ffebee"),red500=new clr("#f44336"),red600=new clr("#e53935"),red700=new clr("#d32f2f"),red800=new clr("#c62828"),red900=new clr("#b71c1c"),redbrown=new clr("#8b2e16"),redextra1=new clr("#ff8a80"),redextra2=new clr("#ff5252"),redextra3=new clr("#ff1744"),redextra4=new clr("#d50000"),redorange=new clr("#fd3c06"),redpink=new clr("#fa2a55"),redpurple=new clr("#820747"),redviolet=new clr("#9e0168"),redwine=new clr("#8c0034"),reddish=new clr("#c44240"),reddishbrown=new clr("#7f2b0a"),reddishgray=new clr("#997570"),reddishorange=new clr("#f8481c"),reddishpink=new clr("#fe2c54"),reddishpurple=new clr("#910951"),reddybrown=new clr("#6e1005"),richblue=new clr("#021bf9"),richpurple=new clr("#720058"),robinsegg=new clr("#6dedfd"),robinseggblue=new clr("#98eff9"),robineggblue=new clr("#8af1fe"),rosa=new clr("#fe86a4"),rose=new clr("#cf6275"),rosepink=new clr("#f7879a"),rosered=new clr("#be013c"),rosypink=new clr("#f6688e"),rouge=new clr("#ab1239"),royal=new clr("#0c1793"),royalblue=new clr("#0504aa"),royalpurple=new clr("#4b006e"),ruby=new clr("#ca0147"),russet=new clr("#a13905"),rust=new clr("#a83c09"),rustbrown=new clr("#8b3103"),rustorange=new clr("#c45508"),rustred=new clr("#aa2704"),rustyorange=new clr("#cd5909"),rustyred=new clr("#af2f0d"),saffron=new clr("#feb209"),sage=new clr("#87ae73"),sagegreen=new clr("#88b378"),salmon=new clr("#ff796c"),salmonpink=new clr("#fe7b7c"),sand=new clr("#e2ca76"),sandbrown=new clr("#cba560"),sandyellow=new clr("#fce166"),sandstone=new clr("#c9ae74"),sandy=new clr("#f1da7a"),sandybrown=new clr("#c4a661"),sandyyellow=new clr("#fdee73"),sapgreen=new clr("#5c8b15"),sapphire=new clr("#2138ab"),scarlet=new clr("#be0119"),sea=new clr("#3c9992"),seablue=new clr("#047495"),seagreen=new clr("#53fca1"),seafoam=new clr("#80f9ad"),seafoamblue=new clr("#78d1b6"),seafoamgreen=new clr("#7af9ab"),seaweed=new clr("#18d17b"),seaweedgreen=new clr("#35ad6b"),sepia=new clr("#985e2b"),shamrock=new clr("#01b44c"),shamrockgreen=new clr("#02c14d"),shit=new clr("#7f5f00"),shitbrown=new clr("#7b5804"),shitgreen=new clr("#758000"),shockingpink=new clr("#fe02a2"),sickgreen=new clr("#9db92c"),sicklygreen=new clr("#94b21c"),sicklyyellow=new clr("#d0e429"),sienna=new clr("#a9561e"),silver=new clr("#c5c9c7"),sky=new clr("#82cafc"),skyblue=new clr("#75bbfd"),slate=new clr("#516572"),slateblue=new clr("#5b7c99"),slategray=new clr("#59656d"),slategreen=new clr("#658d6d"),slimegreen=new clr("#99cc04"),snot=new clr("#acbb0d"),snotgreen=new clr("#9dc100"),softblue=new clr("#6488ea"),softgreen=new clr("#6fc276"),softpink=new clr("#fdb0c0"),softpurple=new clr("#a66fb5"),spearmint=new clr("#1ef876"),springgreen=new clr("#a9f971"),spruce=new clr("#0a5f38"),squash=new clr("#f2ab15"),steel=new clr("#738595"),steelblue=new clr("#5a7d9a"),steelgray=new clr("#6f828a"),stone=new clr("#ada587"),stormyblue=new clr("#507b9c"),straw=new clr("#fcf679"),strawberry=new clr("#fb2943"),strongblue=new clr("#0c06f7"),strongpink=new clr("#ff0789"),sunyellow=new clr("#ffdf22"),sunflower=new clr("#ffc512"),sunfloweryellow=new clr("#ffda03"),sunnyyellow=new clr("#fff917"),sunshineyellow=new clr("#fffd37"),swamp=new clr("#698339"),swampgreen=new clr("#748500"),tan=new clr("#d1b26f"),tanbrown=new clr("#ab7e4c"),tangreen=new clr("#a9be70"),tangerine=new clr("#ff9408"),taupe=new clr("#b9a281"),tea=new clr("#65ab7c"),teagreen=new clr("#bdf8a3"),teal=new clr("#029386"),teal100=new clr("#b2dfdb"),teal200=new clr("#80cbc4"),teal300=new clr("#4db6ac"),teal400=new clr("#26a69a"),teal50=new clr("#e0f2f1"),teal500=new clr("#009688"),teal600=new clr("#00897b"),teal700=new clr("#00796b"),teal800=new clr("#00695c"),teal900=new clr("#004d40"),tealblue=new clr("#01889f"),tealextra1=new clr("#a7ffeb"),tealextra2=new clr("#64ffda"),tealextra3=new clr("#1de9b6"),tealextra4=new clr("#00bfa5"),tealgreen=new clr("#25a36f"),tealish=new clr("#24bca8"),tealishgreen=new clr("#0cdc73"),terracotta=new clr("#ca6641"),terracota=new clr("#cb6843"),tiffanyblue=new clr("#7bf2da"),tomato=new clr("#ef4026"),tomatored=new clr("#ec2d01"),topaz=new clr("#13bbaf"),toupe=new clr("#c7ac7d"),toxicgreen=new clr("#61de2a"),treegreen=new clr("#2a7e19"),trueblue=new clr("#010fcc"),truegreen=new clr("#089404"),turquoise=new clr("#06c2ac"),turquoiseblue=new clr("#06b1c4"),turquoisegreen=new clr("#04f489"),turtlegreen=new clr("#75b84f"),twilight=new clr("#4e518b"),twilightblue=new clr("#0a437a"),uglyblue=new clr("#31668a"),uglybrown=new clr("#7d7103"),uglygreen=new clr("#7a9703"),uglypink=new clr("#cd7584"),uglypurple=new clr("#a442a0"),uglyyellow=new clr("#d0c101"),ultramarine=new clr("#2000b1"),ultramarineblue=new clr("#1805db"),umber=new clr("#b26400"),velvet=new clr("#750851"),vermillion=new clr("#f4320c"),verydarkblue=new clr("#000133"),verydarkbrown=new clr("#1d0200"),verydarkgreen=new clr("#062e03"),verydarkpurple=new clr("#2a0134"),verylightblue=new clr("#d5ffff"),verylightbrown=new clr("#d3b683"),verylightgreen=new clr("#d1ffbd"),verylightpink=new clr("#fff4f2"),verylightpurple=new clr("#f6cefc"),verypaleblue=new clr("#d6fffe"),verypalegreen=new clr("#cffdbc"),vibrantblue=new clr("#0339f8"),vibrantgreen=new clr("#0add08"),vibrantpurple=new clr("#ad03de"),violet=new clr("#9a0eea"),violetblue=new clr("#510ac9"),violetpink=new clr("#fb5ffc"),violetred=new clr("#a50055"),viridian=new clr("#1e9167"),vividblue=new clr("#152eff"),vividgreen=new clr("#2fef10"),vividpurple=new clr("#9900fa"),vomit=new clr("#a2a415"),vomitgreen=new clr("#89a203"),vomityellow=new clr("#c7c10c"),warmblue=new clr("#4b57db"),warmbrown=new clr("#964e02"),warmgray=new clr("#978a84"),warmpink=new clr("#fb5581"),warmpurple=new clr("#952e8f"),washedoutgreen=new clr("#bcf5a6"),waterblue=new clr("#0e87cc"),watermelon=new clr("#fd4659"),weirdgreen=new clr("#3ae57f"),wheat=new clr("#fbdd7e"),white=new clr("#ffffff"),windowsblue=new clr("#3778bf"),wine=new clr("#80013f"),winered=new clr("#7b0323"),wintergreen=new clr("#20f986"),wisteria=new clr("#a87dc2"),yellow=new clr("#ffff14"),yellow100=new clr("#fff9c4"),yellow200=new clr("#fff59d"),yellow300=new clr("#fff176"),yellow400=new clr("#ffee58"),yellow50=new clr("#fffde7"),yellow500=new clr("#ffeb3b"),yellow600=new clr("#fdd835"),yellow700=new clr("#fbc02d"),yellow800=new clr("#f9a825"),yellow900=new clr("#f57f17"),yellowbrown=new clr("#b79400"),yellowextra1=new clr("#ffff8d"),yellowextra2=new clr("#ffff00"),yellowextra3=new clr("#ffea00"),yellowextra4=new clr("#ffd600"),yellowgreen=new clr("#bbf90f"),yellowochre=new clr("#cb9d06"),yelloworange=new clr("#fcb001"),yellowtan=new clr("#ffe36e"),yellowish=new clr("#faee66"),yellowishbrown=new clr("#9b7a01"),yellowishgreen=new clr("#b0dd16"),yellowishorange=new clr("#ffab0f"),yellowishtan=new clr("#fcfc81"),yellowybrown=new clr("#ae8b0c"),yellowygreen=new clr("#bff128");
+		public static final clr apple = new clr("#6ecb3c"), applegreen = new clr("#76cd26"), apricot = new clr("#ffb16d"), aqua = new clr("#13eac9"), aquablue = new clr("#02d8e9"),
+		aquagreen = new clr("#12e193"), aquamarine = new clr("#04d8b2"), armygreen = new clr("#4b5d16"), asparagus = new clr("#77ab56"), aubergine = new clr("#3d0734"), auburn = new clr("#9a3001"),
+		avocado = new clr("#90b134"), avocadogreen = new clr("#87a922"), azul = new clr("#1d5dec"), azure = new clr("#069af3"), babyblue = new clr("#a2cffe"), babygreen = new clr("#8cff9e"),
+		babypink = new clr("#ffb7ce"), babypoo = new clr("#ab9004"), babypurple = new clr("#ca9bf7"), barbiepink = new clr("#fe46a5"), beige = new clr("#e6daa6"), black = new clr("#000000"),
+		blood = new clr("#770001"), bloodorange = new clr("#fe4b03"), bloodred = new clr("#980002"), blue = new clr("#0343df"), blue100 = new clr("#bbdefb"), blue200 = new clr("#90caf9"),
+		blue300 = new clr("#64b5f6"), blue400 = new clr("#42a5f5"), blue50 = new clr("#e3f2fd"), blue500 = new clr("#2196f3"), blue600 = new clr("#1e88e5"), blue700 = new clr("#1976d2"),
+		blue800 = new clr("#1565c0"), blue900 = new clr("#0d47a1"), blueblue = new clr("#2242c7"), blueextra1 = new clr("#82b1ff"), blueextra2 = new clr("#448aff"), blueextra3 = new clr("#2979ff"),
+		blueextra4 = new clr("#2962ff"), bluegray = new clr("#85a3b2"), bluegreen = new clr("#017a79"), bluepurple = new clr("#5a06ef"), blueviolet = new clr("#5d06e9"),
+		bluewithahintofpurple = new clr("#533cc6"), blueberry = new clr("#464196"), bluegray100 = new clr("#cfd8dc"), bluegray200 = new clr("#b0bec5"), bluegray300 = new clr("#90a4ae"),
+		bluegray400 = new clr("#78909c"), bluegray50 = new clr("#eceff1"), bluegray500 = new clr("#607d8b"), bluegray600 = new clr("#546e7a"), bluegray700 = new clr("#455a64"),
+		bluegray800 = new clr("#37474f"), bluegray900 = new clr("#263238"), blueygray = new clr("#89a0b0"), blueygreen = new clr("#2bb179"), blueypurple = new clr("#6241c7"), bluish = new clr("#2976bb"),
+		bluishgray = new clr("#748b97"), bluishgreen = new clr("#10a674"), bluishpurple = new clr("#703be7"), blurple = new clr("#5539cc"), blush = new clr("#f29e8e"), blushpink = new clr("#fe828c"),
+		brick = new clr("#a03623"), brickorange = new clr("#c14a09"), brickred = new clr("#8f1402"), bronze = new clr("#a87900"), brown = new clr("#653700"), brown100 = new clr("#d7ccc8"),
+		brown200 = new clr("#bcaaa4"), brown300 = new clr("#a1887f"), brown400 = new clr("#8d6e63"), brown50 = new clr("#efebe9"), brown500 = new clr("#795548"), brown600 = new clr("#6d4c41"),
+		brown700 = new clr("#5d4037"), brown800 = new clr("#4e342e"), brown900 = new clr("#3e2723"), browngray = new clr("#8d8468"), browngreen = new clr("#706c11"), brownorange = new clr("#b96902"),
+		brownred = new clr("#922b05"), brownyellow = new clr("#b29705"), brownish = new clr("#9c6d57"), brownishgray = new clr("#86775f"), brownishgreen = new clr("#6a6e09"),
+		brownishorange = new clr("#cb7723"), brownishpink = new clr("#c27e79"), brownishpurple = new clr("#76424e"), brownishred = new clr("#9e3623"), brownishyellow = new clr("#c9b003"),
+		brownygreen = new clr("#6f6c0a"), brownyorange = new clr("#ca6b02"), bruise = new clr("#7e4071"), bubblegumpink = new clr("#fe83cc"), bubblegum = new clr("#ff6cb5"), burgundy = new clr("#610023"),
+		butter = new clr("#ffff81"), cadetblue = new clr("#4e7496"), camel = new clr("#c69f59"), candypink = new clr("#ff63e9"), caramel = new clr("#af6f09"), cherry = new clr("#cf0234"),
+		cherryred = new clr("#f7022a"), chestnut = new clr("#742802"), chocolate = new clr("#3d1c02"), chocolatebrown = new clr("#411900"), cinnamon = new clr("#ac4f06"), cocoa = new clr("#875f42"),
+		coffee = new clr("#a6814c"), copper = new clr("#b66325"), coral = new clr("#fc5a50"), coralpink = new clr("#ff6163"), cornflower = new clr("#6a79f7"), cornflowerblue = new clr("#5170d7"),
+		cranberry = new clr("#9e003a"), cream = new clr("#ffffc2"), custard = new clr("#fffd78"), cyan = new clr("#00ffff"), cyan100 = new clr("#b2ebf2"), cyan200 = new clr("#80deea"),
+		cyan300 = new clr("#4dd0e1"), cyan400 = new clr("#26c6da"), cyan50 = new clr("#e0f7fa"), cyan500 = new clr("#00bcd4"), cyan600 = new clr("#00acc1"), cyan700 = new clr("#0097a7"),
+		cyan800 = new clr("#00838f"), cyan900 = new clr("#006064"), cyanextra1 = new clr("#84ffff"), cyanextra2 = new clr("#18ffff"), cyanextra3 = new clr("#00e5ff"), cyanextra4 = new clr("#00b8d4"),
+		dandelion = new clr("#fedf08"), dark = new clr("#1b2431"), darkaqua = new clr("#05696b"), darkaquamarine = new clr("#017371"), darkbeige = new clr("#ac9362"), darkblue = new clr("#030764"),
+		darkbluegray = new clr("#1f3b4d"), darkbluegreen = new clr("#005249"), darkbrown = new clr("#341c02"), darkcoral = new clr("#cf524e"), darkcream = new clr("#fff39a"), darkcyan = new clr("#0a888a"),
+		darkforestgreen = new clr("#002d04"), darkfuchsia = new clr("#9d0759"), darkgold = new clr("#b59410"), darkgrassgreen = new clr("#388004"), darkgray = new clr("#363737"),
+		darkgrayblue = new clr("#29465b"), darkgreen = new clr("#054907"), darkgreenblue = new clr("#1f6357"), darkhotpink = new clr("#d90166"), darkindigo = new clr("#1f0954"),
+		darkkhaki = new clr("#9b8f55"), darklavender = new clr("#856798"), darklilac = new clr("#9c6da5"), darklime = new clr("#84b701"), darklimegreen = new clr("#7ebd01"), darkmagenta = new clr("#960056"),
+		darkmaroon = new clr("#3c0008"), darkmauve = new clr("#874c62"), darkmint = new clr("#48c072"), darkmintgreen = new clr("#20c073"), darkmustard = new clr("#a88905"), darknavy = new clr("#000435"),
+		darknavyblue = new clr("#00022e"), darkolive = new clr("#373e02"), darkolivegreen = new clr("#3c4d03"), darkorange = new clr("#c65102"), darkpastelgreen = new clr("#56ae57"),
+		darkpeach = new clr("#de7e5d"), darkperiwinkle = new clr("#665fd1"), darkpink = new clr("#cb416b"), darkplum = new clr("#3f012c"), darkpurple = new clr("#35063e"), darkred = new clr("#840000"),
+		darkrose = new clr("#b5485d"), darkroyalblue = new clr("#02066f"), darkseagreen = new clr("#11875d"), darkskyblue = new clr("#448ee4"), darkslateblue = new clr("#214761"),
+		darktan = new clr("#af884a"), darktaupe = new clr("#7f684e"), darkteal = new clr("#014d4e"), darkturquoise = new clr("#045c5a"), darkviolet = new clr("#34013f"), darkyellow = new clr("#d5b60a"),
+		darkyellowgreen = new clr("#728f02"), darkerblue = new clr("#011288"), darkergreen = new clr("#087804"), darkerpink = new clr("#c4387f"), darkerpurple = new clr("#5f1b6b"),
+		darkishblue = new clr("#014182"), darkishgreen = new clr("#287c37"), darkishpink = new clr("#da467d"), darkishpurple = new clr("#751973"), darkishred = new clr("#a90308"),
+		deepaqua = new clr("#08787f"), deepblue = new clr("#040273"), deepbrown = new clr("#410200"), deepgreen = new clr("#02590f"), deeplavender = new clr("#8d5eb7"), deepmagenta = new clr("#a0025c"),
+		deeporange = new clr("#dc4d01"), deeppink = new clr("#cb0162"), deeppurple = new clr("#36013f"), deepred = new clr("#9a0200"), deeprose = new clr("#c74767"), deepseablue = new clr("#015482"),
+		deepskyblue = new clr("#0d75f8"), deepteal = new clr("#00555a"), deepturquoise = new clr("#017374"), deepviolet = new clr("#490648"), deeporange100 = new clr("#ffccbc"),
+		deeporange200 = new clr("#ffab91"), deeporange300 = new clr("#ff8a65"), deeporange400 = new clr("#ff7043"), deeporange50 = new clr("#fbe9e7"), deeporange500 = new clr("#ff5722"),
+		deeporange600 = new clr("#f4511e"), deeporange700 = new clr("#e64a19"), deeporange800 = new clr("#d84315"), deeporange900 = new clr("#bf360c"), deeporangeextra1 = new clr("#ff9e80"),
+		deeporangeextra2 = new clr("#ff6e40"), deeporangeextra3 = new clr("#ff3d00"), deeporangeextra4 = new clr("#dd2c00"), deeppurple100 = new clr("#d1c4e9"), deeppurple200 = new clr("#b39ddb"),
+		deeppurple300 = new clr("#9575cd"), deeppurple400 = new clr("#7e57c2"), deeppurple50 = new clr("#ede7f6"), deeppurple500 = new clr("#673ab7"), deeppurple600 = new clr("#5e35b1"),
+		deeppurple700 = new clr("#512da8"), deeppurple800 = new clr("#4527a0"), deeppurple900 = new clr("#311b92"), deeppurpleextra1 = new clr("#b388ff"), deeppurpleextra2 = new clr("#7c4dff"),
+		deeppurpleextra3 = new clr("#651fff"), deeppurpleextra4 = new clr("#6200ea"), fuchsia = new clr("#ed0dd9"), gold = new clr("#dbb40c"), golden = new clr("#f5bf03"), goldenbrown = new clr("#b27a01"),
+		goldenrod = new clr("#fac205"), goldenyellow = new clr("#fec615"), grape = new clr("#6c3461"), grapepurple = new clr("#5d1451"), grapefruit = new clr("#fd5956"), grass = new clr("#5cac2d"),
+		grassgreen = new clr("#3f9b0b"), gray = new clr("#929591"), gray100 = new clr("#f5f5f5"), gray200 = new clr("#eeeeee"), gray300 = new clr("#e0e0e0"), gray400 = new clr("#bdbdbd"),
+		gray50 = new clr("#fafafa"), gray500 = new clr("#9e9e9e"), gray600 = new clr("#757575"), gray700 = new clr("#616161"), gray800 = new clr("#424242"), gray900 = new clr("#212121"),
+		grayblue = new clr("#77a1b5"), graybrown = new clr("#7f7053"), graygreen = new clr("#86a17d"), graypink = new clr("#c3909b"), graypurple = new clr("#826d8c"), grayteal = new clr("#5e9b8a"),
+		grayish = new clr("#a8a495"), grayishblue = new clr("#5e819d"), grayishbrown = new clr("#7a6a4f"), grayishgreen = new clr("#82a67d"), grayishpink = new clr("#c88d94"),
+		grayishpurple = new clr("#887191"), grayishteal = new clr("#719f91"), green = new clr("#15b01a"), green100 = new clr("#c8e6c9"), green200 = new clr("#a5d6a7"), green300 = new clr("#81c784"),
+		green400 = new clr("#66bb6a"), green50 = new clr("#e8f5e9"), green500 = new clr("#4caf50"), green600 = new clr("#43a047"), green700 = new clr("#388e3c"), green800 = new clr("#2e7d32"),
+		green900 = new clr("#1b5e20"), greenagain = new clr("#16d43f"), greenapple = new clr("#5edc1f"), greenblue = new clr("#23c48b"), greenbrown = new clr("#544e03"), greenextra1 = new clr("#b9f6ca"),
+		greenextra2 = new clr("#69f0ae"), greenextra3 = new clr("#00e676"), greenextra4 = new clr("#00c853"), greengray = new clr("#77926f"), greenteal = new clr("#0cb577"), greenyellow = new clr("#b5ce08"),
+		greenish = new clr("#40a368"), greenishbeige = new clr("#c9d179"), greenishblue = new clr("#0b8b87"), greenishbrown = new clr("#696112"), greenishcyan = new clr("#2afeb7"),
+		greenishgray = new clr("#96ae8d"), greenishtan = new clr("#bccb7a"), greenishteal = new clr("#32bf84"), greenishturquoise = new clr("#00fbb0"), greenishyellow = new clr("#cdfd02"),
+		greenyblue = new clr("#42b395"), greenybrown = new clr("#696006"), greenygray = new clr("#7ea07a"), greenyyellow = new clr("#c6f808"), hotgreen = new clr("#25ff29"), hotmagenta = new clr("#f504c9"),
+		hotpink = new clr("#ff028d"), hotpurple = new clr("#cb00f5"), ice = new clr("#d6fffa"), iceblue = new clr("#d7fffe"), ickygreen = new clr("#8fae22"), indianred = new clr("#850e04"),
+		indigo = new clr("#380282"), indigo100 = new clr("#c5cae9"), indigo200 = new clr("#9fa8da"), indigo300 = new clr("#7986cb"), indigo400 = new clr("#5c6bc0"), indigo50 = new clr("#e8eaf6"),
+		indigo500 = new clr("#3f51b5"), indigo600 = new clr("#3949ab"), indigo700 = new clr("#303f9f"), indigo800 = new clr("#283593"), indigo900 = new clr("#1a237e"), indigoblue = new clr("#3a18b1"),
+		indigoextra1 = new clr("#8c9eff"), indigoextra2 = new clr("#536dfe"), indigoextra3 = new clr("#3d5afe"), indigoextra4 = new clr("#304ffe"), iris = new clr("#6258c4"), irishgreen = new clr("#019529"),
+		junglegreen = new clr("#048243"), khaki = new clr("#aaa662"), khakigreen = new clr("#728639"), kiwi = new clr("#9cef43"), kiwigreen = new clr("#8ee53f"), lavender = new clr("#c79fef"),
+		lavenderblue = new clr("#8b88f8"), lavenderpink = new clr("#dd85d7"), lawngreen = new clr("#4da409"), leaf = new clr("#71aa34"), leafgreen = new clr("#5ca904"), leafygreen = new clr("#51b73b"),
+		leather = new clr("#ac7434"), lemon = new clr("#fdff52"), lemongreen = new clr("#adf802"), lemonlime = new clr("#bffe28"), lemonyellow = new clr("#fdff38"), lichen = new clr("#8fb67b"),
+		lightaqua = new clr("#8cffdb"), lightaquamarine = new clr("#7bfdc7"), lightbeige = new clr("#fffeb6"), lightblue = new clr("#7bc8f6"), lightbluegray = new clr("#b7c9e2"),
+		lightbluegreen = new clr("#7efbb3"), lightbluishgreen = new clr("#76fda8"), lightbrightgreen = new clr("#53fe5c"), lightbrown = new clr("#ad8150"), lightburgundy = new clr("#a8415b"),
+		lightcyan = new clr("#acfffc"), lighteggplant = new clr("#894585"), lightforestgreen = new clr("#4f9153"), lightgold = new clr("#fddc5c"), lightgrassgreen = new clr("#9af764"),
+		lightgray = new clr("#d8dcd6"), lightgrayblue = new clr("#9dbcd4"), lightgraygreen = new clr("#b7e1a1"), lightgreen = new clr("#76ff7b"), lightgreenblue = new clr("#56fca2"),
+		lightgreenishblue = new clr("#63f7b4"), lightindigo = new clr("#6d5acf"), lightkhaki = new clr("#e6f2a2"), lightlavendar = new clr("#efc0fe"), lightlavender = new clr("#dfc5fe"),
+		lightlightblue = new clr("#cafffb"), lightlightgreen = new clr("#c8ffb0"), lightlime = new clr("#aefd6c"), lightlimegreen = new clr("#b9ff66"), lightmagenta = new clr("#fa5ff7"),
+		lightmaroon = new clr("#a24857"), lightmauve = new clr("#c292a1"), lightmint = new clr("#b6ffbb"), lightmintgreen = new clr("#a6fbb2"), lightmustard = new clr("#f7d560"),
+		lightnavy = new clr("#155084"), lightnavyblue = new clr("#2e5a88"), lightneongreen = new clr("#4efd54"), lightolive = new clr("#acbf69"), lightolivegreen = new clr("#a4be5c"),
+		lightorange = new clr("#fdaa48"), lightpastelgreen = new clr("#b2fba5"), lightpeagreen = new clr("#c4fe82"), lightpeach = new clr("#ffd8b1"), lightperiwinkle = new clr("#c1c6fc"),
+		lightpink = new clr("#ffd1df"), lightplum = new clr("#9d5783"), lightpurple = new clr("#bf77f6"), lightred = new clr("#ff474c"), lightrose = new clr("#ffc5cb"), lightroyalblue = new clr("#3a2efe"),
+		lightsage = new clr("#bcecac"), lightsalmon = new clr("#fea993"), lightseagreen = new clr("#98f6b0"), lightseafoam = new clr("#a0febf"), lightseafoamgreen = new clr("#a7ffb5"),
+		lightskyblue = new clr("#c6fcff"), lighttan = new clr("#fbeeac"), lightteal = new clr("#90e4c1"), lightturquoise = new clr("#7ef4cc"), lighturple = new clr("#b36ff6"),
+		lightviolet = new clr("#d6b4fc"), lightyellow = new clr("#fffe7a"), lightyellowgreen = new clr("#ccfd7f"), lightyellowishgreen = new clr("#c2ff89"), lightblue100 = new clr("#b3e5fc"),
+		lightblue200 = new clr("#81d4fa"), lightblue300 = new clr("#4fc3f7"), lightblue400 = new clr("#29b6f6"), lightblue50 = new clr("#e1f5fe"), lightblue500 = new clr("#03a9f4"),
+		lightblue600 = new clr("#039be5"), lightblue700 = new clr("#0288d1"), lightblue800 = new clr("#0277bd"), lightblue900 = new clr("#01579b"), lightblueextra1 = new clr("#80d8ff"),
+		lightblueextra2 = new clr("#40c4ff"), lightblueextra3 = new clr("#00b0ff"), lightblueextra4 = new clr("#0091ea"), lightergreen = new clr("#75fd63"), lighterpurple = new clr("#a55af4"),
+		lightgreen100 = new clr("#dcedc8"), lightgreen200 = new clr("#c5e1a5"), lightgreen300 = new clr("#aed581"), lightgreen400 = new clr("#9ccc65"), lightgreen50 = new clr("#f1f8e9"),
+		lightgreen500 = new clr("#8bc34a"), lightgreen600 = new clr("#7cb342"), lightgreen700 = new clr("#689f38"), lightgreen800 = new clr("#558b2f"), lightgreen900 = new clr("#33691e"),
+		lightgreenextra1 = new clr("#ccff90"), lightgreenextra2 = new clr("#b2ff59"), lightgreenextra3 = new clr("#76ff03"), lightgreenextra4 = new clr("#64dd17"), lightishblue = new clr("#3d7afd"),
+		lightishgreen = new clr("#61e160"), lightishpurple = new clr("#a552e6"), lightishred = new clr("#fe2f4a"), lime = new clr("#aaff32"), lime100 = new clr("#f0f4c3"), lime200 = new clr("#e6ee9c"),
+		lime300 = new clr("#dce775"), lime400 = new clr("#d4e157"), lime50 = new clr("#f9fbe7"), lime500 = new clr("#cddc39"), lime600 = new clr("#c0ca33"), lime700 = new clr("#afb42b"),
+		lime800 = new clr("#9e9d24"), lime900 = new clr("#827717"), limeextra1 = new clr("#f4ff81"), limeextra2 = new clr("#eeff41"), limeextra3 = new clr("#c6ff00"), limeextra4 = new clr("#aeea00"),
+		limegreen = new clr("#89fe05"), limeyellow = new clr("#d0fe1d"), lipstick = new clr("#d5174e"), lipstickred = new clr("#c0022f"), magenta = new clr("#c20078"), mahogany = new clr("#4a0100"),
+		maize = new clr("#f4d054"), mango = new clr("#ffa62b"), manilla = new clr("#fffa86"), marigold = new clr("#fcc006"), marine = new clr("#042e60"), marineblue = new clr("#01386a"),
+		maroon = new clr("#650021"), mediumblue = new clr("#2c6fbb"), mediumbrown = new clr("#7f5112"), mediumgray = new clr("#7d7f7c"), mediumgreen = new clr("#39ad48"), mediumpink = new clr("#f36196"),
+		mediumpurple = new clr("#9e43a2"), melon = new clr("#ff7855"), merlot = new clr("#730039"), metallicblue = new clr("#4f738e"), midblue = new clr("#276ab3"), midgreen = new clr("#50a747"),
+		midnight = new clr("#03012d"), midnightblue = new clr("#020035"), midnightpurple = new clr("#280137"), militarygreen = new clr("#667c3e"), milkchocolate = new clr("#7f4e1e"),
+		mint = new clr("#9ffeb0"), mintgreen = new clr("#8fff9f"), mintygreen = new clr("#0bf77d"), mushroom = new clr("#ba9e88"), mustard = new clr("#ceb301"), mustardbrown = new clr("#ac7e04"),
+		mustardgreen = new clr("#a8b504"), mustardyellow = new clr("#d2bd0a"), mutedblue = new clr("#3b719f"), mutedgreen = new clr("#5fa052"), mutedpink = new clr("#d1768f"),
+		mutedpurple = new clr("#805b87"), nastygreen = new clr("#70b23f"), navy = new clr("#01153e"), navyblue = new clr("#001146"), navygreen = new clr("#35530a"), neonblue = new clr("#04d9ff"),
+		neongreen = new clr("#0cff0c"), neonpink = new clr("#fe019a"), neonpurple = new clr("#bc13fe"), neonred = new clr("#ff073a"), neonyellow = new clr("#cfff04"), niceblue = new clr("#107ab0"),
+		nightblue = new clr("#040348"), ocean = new clr("#017b92"), oceanblue = new clr("#03719c"), oceangreen = new clr("#3d9973"), ocre = new clr("#c69c04"), offblue = new clr("#5684ae"),
+		offgreen = new clr("#6ba353"), offwhite = new clr("#ffffe4"), offyellow = new clr("#f1f33f"), oldpink = new clr("#c77986"), oldrose = new clr("#c87f89"), olive = new clr("#6e750e"),
+		orange = new clr("#f97306"), orange100 = new clr("#ffe0b2"), orange200 = new clr("#ffcc80"), orange300 = new clr("#ffb74d"), orange400 = new clr("#ffa726"), orange50 = new clr("#fff3e0"),
+		orange500 = new clr("#ff9800"), orange600 = new clr("#fb8c00"), orange700 = new clr("#f57c00"), orange800 = new clr("#ef6c00"), orange900 = new clr("#e65100"), orangebrown = new clr("#be6400"),
+		orangeextra1 = new clr("#ffd180"), orangeextra2 = new clr("#ffab40"), orangeextra3 = new clr("#ff9100"), orangeextra4 = new clr("#ff6d00"), orangepink = new clr("#ff6f52"),
+		orangered = new clr("#fe420f"), orangeyellow = new clr("#ffad01"), orangeish = new clr("#fd8d49"), orangeybrown = new clr("#b16002"), orangeyred = new clr("#fa4224"),
+		orangeyyellow = new clr("#fdb915"), orangish = new clr("#fc824a"), orangishbrown = new clr("#b25f03"), orangishred = new clr("#f43605"), orchid = new clr("#c875c4"), peach = new clr("#ffb07c"),
+		peachypink = new clr("#ff9a8a"), peacockblue = new clr("#016795"), pear = new clr("#cbf85f"), pink = new clr("#ff81c0"), pink100 = new clr("#f8bbd0"), pink200 = new clr("#f48fb1"),
+		pink300 = new clr("#f06292"), pink400 = new clr("#ec407a"), pink50 = new clr("#fce4ec"), pink500 = new clr("#e91e63"), pink600 = new clr("#d81b60"), pink700 = new clr("#c2185b"),
+		pink800 = new clr("#ad1457"), pink900 = new clr("#880e4f"), pinkextra1 = new clr("#ff80ab"), pinkextra2 = new clr("#ff4081"), pinkextra3 = new clr("#f50057"), pinkextra4 = new clr("#c51162"),
+		pinkpurple = new clr("#ef1de7"), pinkred = new clr("#f5054f"), pinkish = new clr("#d46a7e"), pinkishbrown = new clr("#b17261"), pinkishgray = new clr("#c8aca9"), pinkishorange = new clr("#ff724c"),
+		pinkishpurple = new clr("#d648d7"), pinkishred = new clr("#f10c45"), pinky = new clr("#fc86aa"), pinkypurple = new clr("#c94cbe"), pinkyred = new clr("#fc2647"), pissyellow = new clr("#ddd618"),
+		pistachio = new clr("#c0fa8b"), plum = new clr("#580f41"), plumpurple = new clr("#4e0550"), purple = new clr("#7e1e9c"), purple100 = new clr("#e1bee7"), purple200 = new clr("#ce93d8"),
+		purple300 = new clr("#ba68c8"), purple400 = new clr("#ab47bc"), purple50 = new clr("#f3e5f5"), purple500 = new clr("#9c27b0"), purple600 = new clr("#8e24aa"), purple700 = new clr("#7b1fa2"),
+		purple800 = new clr("#6a1b9a"), purple900 = new clr("#4a148c"), purpleblue = new clr("#5d21d0"), purplebrown = new clr("#673a3f"), purpleextra1 = new clr("#ea80fc"), purpleextra2 = new clr("#e040fb"),
+		purpleextra3 = new clr("#d500f9"), purpleextra4 = new clr("#aa00ff"), purplegray = new clr("#866f85"), purplepink = new clr("#d725de"), purplered = new clr("#990147"), purpleish = new clr("#98568d"),
+		purpleishblue = new clr("#6140ef"), purpleishpink = new clr("#df4ec8"), purpley = new clr("#8756e4"), purpleyblue = new clr("#5f34e7"), purpleygray = new clr("#947e94"),
+		purpleypink = new clr("#c83cb9"), purplish = new clr("#94568c"), purplishblue = new clr("#601ef9"), purplishbrown = new clr("#6b4247"), purplishgray = new clr("#7a687f"),
+		purplishpink = new clr("#ce5dae"), purplishred = new clr("#b0054b"), purply = new clr("#983fb2"), purplyblue = new clr("#661aee"), purplypink = new clr("#f075e6"), red = new clr("#e50000"),
+		red100 = new clr("#ffcdd2"), red200 = new clr("#ef9a9a"), red300 = new clr("#e57373"), red400 = new clr("#ef5350"), red50 = new clr("#ffebee"), red500 = new clr("#f44336"),
+		red600 = new clr("#e53935"), red700 = new clr("#d32f2f"), red800 = new clr("#c62828"), red900 = new clr("#b71c1c"), redbrown = new clr("#8b2e16"), redextra1 = new clr("#ff8a80"),
+		redextra2 = new clr("#ff5252"), redextra3 = new clr("#ff1744"), redextra4 = new clr("#d50000"), redorange = new clr("#fd3c06"), redpink = new clr("#fa2a55"), redpurple = new clr("#820747"),
+		redviolet = new clr("#9e0168"), redwine = new clr("#8c0034"), reddish = new clr("#c44240"), reddishbrown = new clr("#7f2b0a"), reddishgray = new clr("#997570"), reddishorange = new clr("#f8481c"),
+		reddishpink = new clr("#fe2c54"), reddishpurple = new clr("#910951"), rosa = new clr("#fe86a4"), rose = new clr("#cf6275"), rosepink = new clr("#f7879a"), rosered = new clr("#be013c"),
+		rosypink = new clr("#f6688e"), rouge = new clr("#ab1239"), saffron = new clr("#feb209"), sand = new clr("#e2ca76"), sandbrown = new clr("#cba560"), sandyellow = new clr("#fce166"),
+		sea = new clr("#3c9992"), seablue = new clr("#047495"), seagreen = new clr("#53fca1"), sepia = new clr("#985e2b"), shockingpink = new clr("#fe02a2"), silver = new clr("#c5c9c7"),
+		sky = new clr("#82cafc"), skyblue = new clr("#75bbfd"), slate = new clr("#516572"), slateblue = new clr("#5b7c99"), slategray = new clr("#59656d"), slategreen = new clr("#658d6d"),
+		steel = new clr("#738595"), steelblue = new clr("#5a7d9a"), steelgray = new clr("#6f828a"), stone = new clr("#ada587"), stormyblue = new clr("#507b9c"), straw = new clr("#fcf679"),
+		strawberry = new clr("#fb2943"), sunflower = new clr("#ffc512"), sunfloweryellow = new clr("#ffda03"), tan = new clr("#d1b26f"), tanbrown = new clr("#ab7e4c"), tangreen = new clr("#a9be70"),
+		tangerine = new clr("#ff9408"), taupe = new clr("#b9a281"), teal = new clr("#029386"), teal100 = new clr("#b2dfdb"), teal200 = new clr("#80cbc4"), teal300 = new clr("#4db6ac"),
+		teal400 = new clr("#26a69a"), teal50 = new clr("#e0f2f1"), teal500 = new clr("#009688"), teal600 = new clr("#00897b"), teal700 = new clr("#00796b"), teal800 = new clr("#00695c"),
+		teal900 = new clr("#004d40"), tealblue = new clr("#01889f"), tealextra1 = new clr("#a7ffeb"), tealextra2 = new clr("#64ffda"), tealextra3 = new clr("#1de9b6"), tealextra4 = new clr("#00bfa5"),
+		tealgreen = new clr("#25a36f"), tealish = new clr("#24bca8"), tealishgreen = new clr("#0cdc73"), tomato = new clr("#ef4026"), tomatored = new clr("#ec2d01"), turquoise = new clr("#06c2ac"),
+		turquoiseblue = new clr("#06b1c4"), turquoisegreen = new clr("#04f489"), umber = new clr("#b26400"), verydarkblue = new clr("#000133"), verydarkbrown = new clr("#1d0200"),
+		verydarkgreen = new clr("#062e03"), verydarkpurple = new clr("#2a0134"), verylightblue = new clr("#d5ffff"), verylightbrown = new clr("#d3b683"), verylightgreen = new clr("#d1ffbd"),
+		verylightpink = new clr("#fff4f2"), verylightpurple = new clr("#f6cefc"), violet = new clr("#9a0eea"), violetblue = new clr("#510ac9"), violetpink = new clr("#fb5ffc"), violetred = new clr("#a50055"),
+		viridian = new clr("#1e9167"), vividblue = new clr("#152eff"), vividgreen = new clr("#2fef10"), vividpurple = new clr("#9900fa"), wheat = new clr("#fbdd7e"), white = new clr("#ffffff"),
+		wine = new clr("#80013f"), winered = new clr("#7b0323"), yellow = new clr("#ffff14"), yellow100 = new clr("#fff9c4"), yellow200 = new clr("#fff59d"), yellow300 = new clr("#fff176"),
+		yellow400 = new clr("#ffee58"), yellow50 = new clr("#fffde7"), yellow500 = new clr("#ffeb3b"), yellow600 = new clr("#fdd835"), yellow700 = new clr("#fbc02d"), yellow800 = new clr("#f9a825"),
+		yellow900 = new clr("#f57f17"), yellowbrown = new clr("#b79400"), yellowextra1 = new clr("#ffff8d"), yellowextra2 = new clr("#ffff00"), yellowextra3 = new clr("#ffea00"),
+		yellowextra4 = new clr("#ffd600"), yellowgreen = new clr("#bbf90f"), yellowochre = new clr("#cb9d06"), yelloworange = new clr("#fcb001"), yellowtan = new clr("#ffe36e"),
+		yellowish = new clr("#faee66"), yellowishbrown = new clr("#9b7a01"), yellowishgreen = new clr("#b0dd16"), yellowishorange = new clr("#ffab0f"), yellowishtan = new clr("#fcfc81"),
+		yellowybrown = new clr("#ae8b0c"), yellowygreen = new clr("#bff128");
 	}
 	public static final class clrs extends colors {
-		
+
 	}
-	  
+
 	// some other syntax candies
 	public static Pesa pesa() {
 		return new Pesa();
@@ -1978,15 +2163,18 @@ public class KL {
 		}
 		return null;
 	}
+	public static URL URL(String address) {
+		return url(address);
+	}
 	// general
 	public static final class ObjS extends HashMap<String, String> {
 		ObjS() {
 			super();
 		}
 		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
-			  String k4, String v4, String k5, String v5, String k6,
-			  String v6, String k7, String v7, String k8, String v8,
-			  String k9, String v9, String k10, String v10) {
+			 String k4, String v4, String k5, String v5, String k6,
+			 String v6, String k7, String v7, String k8, String v8,
+			 String k9, String v9, String k10, String v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -1999,9 +2187,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
-			  String k4, String v4, String k5, String v5, String k6,
-			  String v6, String k7, String v7, String k8, String v8,
-			  String k9, String v9) {
+			 String k4, String v4, String k5, String v5, String k6,
+			 String v6, String k7, String v7, String k8, String v8,
+			 String k9, String v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2013,8 +2201,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
-			  String k4, String v4, String k5, String v5, String k6,
-			  String v6, String k7, String v7, String k8, String v8) {
+			 String k4, String v4, String k5, String v5, String k6,
+			 String v6, String k7, String v7, String k8, String v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2025,8 +2213,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
-			  String k4, String v4, String k5, String v5, String k6,
-			  String v6, String k7, String v7) {
+			 String k4, String v4, String k5, String v5, String k6,
+			 String v6, String k7, String v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2036,8 +2224,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
-			  String k4, String v4, String k5, String v5, String k6,
-			  String v6) {
+			 String k4, String v4, String k5, String v5, String k6,
+			 String v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2046,7 +2234,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
-			  String k4, String v4, String k5, String v5) {
+			 String k4, String v4, String k5, String v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2054,14 +2242,14 @@ public class KL {
 			super.put(k5, v5);
 		}
 		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
-			  String k4, String v4) {
+			 String k4, String v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 		ObjS(String k1, String v1, String k2, String v2, String k3,
-			  String v3) {
+			 String v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2072,6 +2260,23 @@ public class KL {
 		}
 		ObjS(String k1, String v1) {
 			super.put(k1, v1);
+		}
+		ObjS copy() {
+			return (ObjS)super.clone();
+		}
+		ObjS slice() {
+			return copy();
+		}
+		String random() {
+			if (super.isEmpty())
+				return "";
+			return i(randInt(length()));
+		}
+		String rand() {
+			return random();
+		}
+		String any() {
+			return random();
 		}
 		String key(String k) {
 			return hasKey(k) ? super.get(k) : null;
@@ -2187,25 +2392,25 @@ public class KL {
 			return super.entrySet();
 		}
 		ObjS mapKey(Function<String, String> fn) {
-	        HashMap<String, String> newMap = new HashMap<>();
-	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
-	        super.clear();
-	        super.putAll(newMap);
-	        return this;
-    	}
+			HashMap<String, String> newMap = new HashMap<>();
+			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+			super.clear();
+			super.putAll(newMap);
+			return this;
+		}
 		ObjS map(Function<String, String> fn) {
-	        super.replaceAll((k, v) -> fn.apply(v));
-	        return this;
-    	}
-    	ObjS map(BiFunction<? super String, ? super String, ? extends String> fn) {
-	        super.replaceAll(fn);
-	        return this;
-    	}
-    	ObjS eachKey(Consumer<String> fn) {
+			super.replaceAll((k, v) -> fn.apply(v));
+			return this;
+		}
+		ObjS map(BiFunction<? super String, ? super String, ? extends String> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+		ObjS eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-    	ObjS each(Consumer<String> fn) {
+		ObjS each(Consumer<String> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
@@ -2228,9 +2433,9 @@ public class KL {
 			super();
 		}
 		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
-			  Integer v3, String k4, Integer v4, String k5, Integer v5,
-			  String k6, Integer v6, String k7, Integer v7, String k8,
-			  Integer v8, String k9, Integer v9, String k10, Integer v10) {
+			 Integer v3, String k4, Integer v4, String k5, Integer v5,
+			 String k6, Integer v6, String k7, Integer v7, String k8,
+			 Integer v8, String k9, Integer v9, String k10, Integer v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2243,9 +2448,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
-			  Integer v3, String k4, Integer v4, String k5, Integer v5,
-			  String k6, Integer v6, String k7, Integer v7, String k8,
-			  Integer v8, String k9, Integer v9) {
+			 Integer v3, String k4, Integer v4, String k5, Integer v5,
+			 String k6, Integer v6, String k7, Integer v7, String k8,
+			 Integer v8, String k9, Integer v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2257,9 +2462,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
-			  Integer v3, String k4, Integer v4, String k5, Integer v5,
-			  String k6, Integer v6, String k7, Integer v7, String k8,
-			  Integer v8) {
+			 Integer v3, String k4, Integer v4, String k5, Integer v5,
+			 String k6, Integer v6, String k7, Integer v7, String k8,
+			 Integer v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2270,8 +2475,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
-			  Integer v3, String k4, Integer v4, String k5, Integer v5,
-			  String k6, Integer v6, String k7, Integer v7) {
+			 Integer v3, String k4, Integer v4, String k5, Integer v5,
+			 String k6, Integer v6, String k7, Integer v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2281,8 +2486,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
-			  Integer v3, String k4, Integer v4, String k5, Integer v5,
-			  String k6, Integer v6) {
+			 Integer v3, String k4, Integer v4, String k5, Integer v5,
+			 String k6, Integer v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2291,7 +2496,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
-			  Integer v3, String k4, Integer v4, String k5, Integer v5) {
+			 Integer v3, String k4, Integer v4, String k5, Integer v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2299,14 +2504,14 @@ public class KL {
 			super.put(k5, v5);
 		}
 		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
-			  Integer v3, String k4, Integer v4) {
+			 Integer v3, String k4, Integer v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
-			  Integer v3) {
+			 Integer v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2317,6 +2522,23 @@ public class KL {
 		}
 		ObjI(String k, Integer v) {
 			super.put(k, v);
+		}
+		ObjI copy() {
+			return (ObjI)super.clone();
+		}
+		ObjI slice() {
+			return copy();
+		}
+		int random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		int rand() {
+			return random();
+		}
+		int any() {
+			return random();
 		}
 		int key(String k) {
 			return hasKey(k) ? super.get(k) : null;
@@ -2434,25 +2656,25 @@ public class KL {
 			return super.entrySet();
 		}
 		ObjI mapKey(Function<String, String> fn) {
-	        HashMap<String, Integer> newMap = new HashMap<>();
-	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
-	        super.clear();
-	        super.putAll(newMap);
-	        return this;
-    	}
+			HashMap<String, Integer> newMap = new HashMap<>();
+			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+			super.clear();
+			super.putAll(newMap);
+			return this;
+		}
 		ObjI map(Function<Integer, Integer> fn) {
-	        super.replaceAll((k, v) -> fn.apply(v));
-	        return this;
-    	}
-    	ObjI map(BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
-	        super.replaceAll(fn);
-	        return this;
-    	}
-    	ObjI eachKey(Consumer<String> fn) {
+			super.replaceAll((k, v) -> fn.apply(v));
+			return this;
+		}
+		ObjI map(BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+		ObjI eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-    	ObjI each(Consumer<Integer> fn) {
+		ObjI each(Consumer<Integer> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
@@ -2475,9 +2697,9 @@ public class KL {
 			super();
 		}
 		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
-			  String k7, Long v7, String k8, Long v8, String k9, Long v9,
-			  String k10, Long v10) {
+			 String k4, Long v4, String k5, Long v5, String k6, Long v6,
+			 String k7, Long v7, String k8, Long v8, String k9, Long v9,
+			 String k10, Long v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2490,8 +2712,8 @@ public class KL {
 			super.put(k10, v10);
 		}
 		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
-			  String k7, Long v7, String k8, Long v8, String k9, Long v9) {
+			 String k4, Long v4, String k5, Long v5, String k6, Long v6,
+			 String k7, Long v7, String k8, Long v8, String k9, Long v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2503,8 +2725,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
-			  String k7, Long v7, String k8, Long v8) {
+			 String k4, Long v4, String k5, Long v5, String k6, Long v6,
+			 String k7, Long v7, String k8, Long v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2515,8 +2737,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-			  String k4, Long v4, String k5, Long v5, String k6, Long v6,
-			  String k7, Long v7) {
+			 String k4, Long v4, String k5, Long v5, String k6, Long v6,
+			 String k7, Long v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2526,7 +2748,7 @@ public class KL {
 			super.put(k7, v7);
 		}
 		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-			  String k4, Long v4, String k5, Long v5, String k6, Long v6) {
+			 String k4, Long v4, String k5, Long v5, String k6, Long v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2535,7 +2757,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-			  String k4, Long v4, String k5, Long v5) {
+			 String k4, Long v4, String k5, Long v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2543,7 +2765,7 @@ public class KL {
 			super.put(k5, v5);
 		}
 		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
-			  String k4, Long v4) {
+			 String k4, Long v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2560,6 +2782,23 @@ public class KL {
 		}
 		ObjL(String k, Long v) {
 			super.put(k, v);
+		}
+		ObjL copy() {
+			return (ObjL)super.clone();
+		}
+		ObjL slice() {
+			return copy();
+		}
+		long random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		long rand() {
+			return random();
+		}
+		long any() {
+			return random();
 		}
 		long key(String k) {
 			return hasKey(k) ? super.get(k) : null;
@@ -2675,25 +2914,25 @@ public class KL {
 			return super.entrySet();
 		}
 		ObjL mapKey(Function<String, String> fn) {
-	        HashMap<String, Long> newMap = new HashMap<>();
-	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
-	        super.clear();
-	        super.putAll(newMap);
-	        return this;
-    	}
+			HashMap<String, Long> newMap = new HashMap<>();
+			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+			super.clear();
+			super.putAll(newMap);
+			return this;
+		}
 		ObjL map(Function<Long, Long> fn) {
-	        super.replaceAll((k, v) -> fn.apply(v));
-	        return this;
-    	}
-    	ObjL map(BiFunction<? super String, ? super Long, ? extends Long> fn) {
-	        super.replaceAll(fn);
-	        return this;
-    	}
-    	ObjL eachKey(Consumer<String> fn) {
+			super.replaceAll((k, v) -> fn.apply(v));
+			return this;
+		}
+		ObjL map(BiFunction<? super String, ? super Long, ? extends Long> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+		ObjL eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-    	ObjL each(Consumer<Long> fn) {
+		ObjL each(Consumer<Long> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
@@ -2716,9 +2955,9 @@ public class KL {
 			super();
 		}
 		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
-			  String k7, Float v7, String k8, Float v8, String k9, Float v9,
-			  String k10, Float v10) {
+			 String k4, Float v4, String k5, Float v5, String k6, Float v6,
+			 String k7, Float v7, String k8, Float v8, String k9, Float v9,
+			 String k10, Float v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2731,8 +2970,8 @@ public class KL {
 			super.put(k10, v10);
 		}
 		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
-			  String k7, Float v7, String k8, Float v8, String k9, Float v9) {
+			 String k4, Float v4, String k5, Float v5, String k6, Float v6,
+			 String k7, Float v7, String k8, Float v8, String k9, Float v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2744,8 +2983,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
-			  String k7, Float v7, String k8, Float v8) {
+			 String k4, Float v4, String k5, Float v5, String k6, Float v6,
+			 String k7, Float v7, String k8, Float v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2756,8 +2995,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-			  String k4, Float v4, String k5, Float v5, String k6, Float v6,
-			  String k7, Float v7) {
+			 String k4, Float v4, String k5, Float v5, String k6, Float v6,
+			 String k7, Float v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2767,7 +3006,7 @@ public class KL {
 			super.put(k7, v7);
 		}
 		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-			  String k4, Float v4, String k5, Float v5, String k6, Float v6) {
+			 String k4, Float v4, String k5, Float v5, String k6, Float v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2776,7 +3015,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-			  String k4, Float v4, String k5, Float v5) {
+			 String k4, Float v4, String k5, Float v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2784,7 +3023,7 @@ public class KL {
 			super.put(k5, v5);
 		}
 		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
-			  String k4, Float v4) {
+			 String k4, Float v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2801,6 +3040,23 @@ public class KL {
 		}
 		ObjF(String k1, Float v1) {
 			super.put(k1, v1);
+		}
+		ObjF copy() {
+			return (ObjF)super.clone();
+		}
+		ObjF slice() {
+			return copy();
+		}
+		float random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		float rand() {
+			return random();
+		}
+		float any() {
+			return random();
 		}
 		float key(String k) {
 			return hasKey(k) ? super.get(k) : null;
@@ -2916,25 +3172,25 @@ public class KL {
 			return super.entrySet();
 		}
 		ObjF mapKey(Function<String, String> fn) {
-	        HashMap<String, Float> newMap = new HashMap<>();
-	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
-	        super.clear();
-	        super.putAll(newMap);
-	        return this;
-    	}
+			HashMap<String, Float> newMap = new HashMap<>();
+			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+			super.clear();
+			super.putAll(newMap);
+			return this;
+		}
 		ObjF map(Function<Float, Float> fn) {
-	        super.replaceAll((k, v) -> fn.apply(v));
-	        return this;
-    	}
-    	ObjF map(BiFunction<? super String, ? super Float, ? extends Float> fn) {
-	        super.replaceAll(fn);
-	        return this;
-    	}
-    	ObjF eachKey(Consumer<String> fn) {
+			super.replaceAll((k, v) -> fn.apply(v));
+			return this;
+		}
+		ObjF map(BiFunction<? super String, ? super Float, ? extends Float> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+		ObjF eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-    	ObjF each(Consumer<Float> fn) {
+		ObjF each(Consumer<Float> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
@@ -2957,9 +3213,9 @@ public class KL {
 			super();
 		}
 		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-			  String k4, Double v4, String k5, Double v5, String k6,
-			  Double v6, String k7, Double v7, String k8, Double v8,
-			  String k9, Double v9, String k10, Double v10) {
+			 String k4, Double v4, String k5, Double v5, String k6,
+			 Double v6, String k7, Double v7, String k8, Double v8,
+			 String k9, Double v9, String k10, Double v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2972,9 +3228,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-			  String k4, Double v4, String k5, Double v5, String k6,
-			  Double v6, String k7, Double v7, String k8, Double v8,
-			  String k9, Double v9) {
+			 String k4, Double v4, String k5, Double v5, String k6,
+			 Double v6, String k7, Double v7, String k8, Double v8,
+			 String k9, Double v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2986,8 +3242,8 @@ public class KL {
 			super.put(k9, v9);
 		}
 		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-			  String k4, Double v4, String k5, Double v5, String k6,
-			  Double v6, String k7, Double v7, String k8, Double v8) {
+			 String k4, Double v4, String k5, Double v5, String k6,
+			 Double v6, String k7, Double v7, String k8, Double v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -2998,8 +3254,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-			  String k4, Double v4, String k5, Double v5, String k6,
-			  Double v6, String k7, Double v7) {
+			 String k4, Double v4, String k5, Double v5, String k6,
+			 Double v6, String k7, Double v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3009,8 +3265,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-			  String k4, Double v4, String k5, Double v5, String k6,
-			  Double v6) {
+			 String k4, Double v4, String k5, Double v5, String k6,
+			 Double v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3019,7 +3275,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-			  String k4, Double v4, String k5, Double v5) {
+			 String k4, Double v4, String k5, Double v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3027,14 +3283,14 @@ public class KL {
 			super.put(k5, v5);
 		}
 		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
-			  String k4, Double v4) {
+			 String k4, Double v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 		ObjD(String k1, Double v1, String k2, Double v2, String k3,
-			  Double v3) {
+			 Double v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3045,6 +3301,23 @@ public class KL {
 		}
 		ObjD(String k, Double v) {
 			super.put(k, v);
+		}
+		ObjD copy() {
+			return (ObjD)super.clone();
+		}
+		ObjD slice() {
+			return copy();
+		}
+		double random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		double rand() {
+			return random();
+		}
+		double any() {
+			return random();
 		}
 		double key(String k) {
 			return hasKey(k) ? super.get(k) : null;
@@ -3160,25 +3433,25 @@ public class KL {
 			return super.entrySet();
 		}
 		ObjD mapKey(Function<String, String> fn) {
-	        HashMap<String, Double> newMap = new HashMap<>();
-	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
-	        super.clear();
-	        super.putAll(newMap);
-	        return this;
-    	}
+			HashMap<String, Double> newMap = new HashMap<>();
+			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+			super.clear();
+			super.putAll(newMap);
+			return this;
+		}
 		ObjD map(Function<Double, Double> fn) {
-	        super.replaceAll((k, v) -> fn.apply(v));
-	        return this;
-    	}
-    	ObjD map(BiFunction<? super String, ? super Double, ? extends Double> fn) {
-	        super.replaceAll(fn);
-	        return this;
-    	}
-    	ObjD eachKey(Consumer<String> fn) {
+			super.replaceAll((k, v) -> fn.apply(v));
+			return this;
+		}
+		ObjD map(BiFunction<? super String, ? super Double, ? extends Double> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+		ObjD eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-    	ObjD each(Consumer<Double> fn) {
+		ObjD each(Consumer<Double> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
@@ -3201,9 +3474,9 @@ public class KL {
 			super();
 		}
 		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-			  String k6, Boolean v6, String k7, Boolean v7, String k8,
-			  Boolean v8, String k9, Boolean v9, String k10, Boolean v10) {
+			 Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			 String k6, Boolean v6, String k7, Boolean v7, String k8,
+			 Boolean v8, String k9, Boolean v9, String k10, Boolean v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3216,9 +3489,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-			  String k6, Boolean v6, String k7, Boolean v7, String k8,
-			  Boolean v8, String k9, Boolean v9) {
+			 Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			 String k6, Boolean v6, String k7, Boolean v7, String k8,
+			 Boolean v8, String k9, Boolean v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3230,9 +3503,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-			  String k6, Boolean v6, String k7, Boolean v7, String k8,
-			  Boolean v8) {
+			 Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			 String k6, Boolean v6, String k7, Boolean v7, String k8,
+			 Boolean v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3243,8 +3516,8 @@ public class KL {
 			super.put(k8, v8);
 		}
 		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-			  String k6, Boolean v6, String k7, Boolean v7) {
+			 Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			 String k6, Boolean v6, String k7, Boolean v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3254,8 +3527,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-			  String k6, Boolean v6) {
+			 Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
+			 String k6, Boolean v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3264,7 +3537,7 @@ public class KL {
 			super.put(k6, v6);
 		}
 		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-			  Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
+			 Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3272,14 +3545,14 @@ public class KL {
 			super.put(k5, v5);
 		}
 		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-			  Boolean v3, String k4, Boolean v4) {
+			 Boolean v3, String k4, Boolean v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-			  Boolean v3) {
+			 Boolean v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -3290,6 +3563,23 @@ public class KL {
 		}
 		ObjB(String k, Boolean v) {
 			super.put(k, v);
+		}
+		ObjB copy() {
+			return (ObjB)super.clone();
+		}
+		ObjB slice() {
+			return copy();
+		}
+		boolean random() {
+			if (super.isEmpty())
+				return false;
+			return i(randInt(length()));
+		}
+		boolean rand() {
+			return random();
+		}
+		boolean any() {
+			return random();
 		}
 		boolean key(String k) {
 			return hasKey(k) ? super.get(k) : null;
@@ -3405,25 +3695,25 @@ public class KL {
 			return super.entrySet();
 		}
 		ObjB mapKey(Function<String, String> fn) {
-	        HashMap<String, Boolean> newMap = new HashMap<>();
-	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
-	        super.clear();
-	        super.putAll(newMap);
-	        return this;
-    	}
+			HashMap<String, Boolean> newMap = new HashMap<>();
+			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+			super.clear();
+			super.putAll(newMap);
+			return this;
+		}
 		ObjB map(Function<Boolean, Boolean> fn) {
-	        super.replaceAll((k, v) -> fn.apply(v));
-	        return this;
-    	}
-    	ObjB map(BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
-	        super.replaceAll(fn);
-	        return this;
-    	}
-    	ObjB eachKey(Consumer<String> fn) {
+			super.replaceAll((k, v) -> fn.apply(v));
+			return this;
+		}
+		ObjB map(BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+		ObjB eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-    	ObjB each(Consumer<Boolean> fn) {
+		ObjB each(Consumer<Boolean> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
@@ -3600,25 +3890,25 @@ public class KL {
 			return super.entrySet();
 		}
 		Tree<Key, Value> mapKey(Function<Key, Key> fn) {
-	        HashMap<Key, Value> newMap = new HashMap<>();
-	        super.forEach((k, v) -> newMap.put(fn.apply(k), v));
-	        super.clear();
-	        super.putAll(newMap);
-	        return this;
-    	}
+			HashMap<Key, Value> newMap = new HashMap<>();
+			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+			super.clear();
+			super.putAll(newMap);
+			return this;
+		}
 		Tree<Key, Value> map(Function<Value, Value> fn) {
-	        super.replaceAll((k, v) -> fn.apply(v));
-	        return this;
-    	}
-    	Tree<Key, Value> map(BiFunction<? super Key, ? super Value, ? extends Value> fn) {
-	        super.replaceAll(fn);
-	        return this;
-    	}
-    	Tree<Key, Value> eachKey(Consumer<Key> fn) {
+			super.replaceAll((k, v) -> fn.apply(v));
+			return this;
+		}
+		Tree<Key, Value> map(BiFunction<? super Key, ? super Value, ? extends Value> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+		Tree<Key, Value> eachKey(Consumer<Key> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-    	Tree<Key, Value> each(Consumer<Value> fn) {
+		Tree<Key, Value> each(Consumer<Value> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
@@ -3642,36 +3932,36 @@ public class KL {
 			super();
 		}
 		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
-			   String k4, int v4, String k5, int v5, String k6, int v6,
-			   String k7, int v7, String k8, int v8, String k9, int v9,
-			   String k10, int v10) {
+			  String k4, int v4, String k5, int v5, String k6, int v6,
+			  String k7, int v7, String k8, int v8, String k9, int v9,
+			  String k10, int v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
-			   String k4, int v4, String k5, int v5, String k6, int v6,
-			   String k7, int v7, String k8, int v8, String k9, int v9) {
+			  String k4, int v4, String k5, int v5, String k6, int v6,
+			  String k7, int v7, String k8, int v8, String k9, int v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
-			   String k4, int v4, String k5, int v5, String k6, int v6,
-			   String k7, int v7, String k8, int v8) {
+			  String k4, int v4, String k5, int v5, String k6, int v6,
+			  String k7, int v7, String k8, int v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
-			   String k4, int v4, String k5, int v5, String k6, int v6,
-			   String k7, int v7) {
+			  String k4, int v4, String k5, int v5, String k6, int v6,
+			  String k7, int v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
-			   String k4, int v4, String k5, int v5, String k6, int v6) {
+			  String k4, int v4, String k5, int v5, String k6, int v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
-			   String k4, int v4, String k5, int v5) {
+			  String k4, int v4, String k5, int v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
-			   String k4, int v4) {
+			  String k4, int v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeS(String k1, int v1, String k2, int v2, String k3, int v3) {
@@ -3685,6 +3975,20 @@ public class KL {
 		}
 		TreeS copy() {
 			return (TreeS) super.clone();
+		}
+		TreeS slice() {
+			return copy();
+		}
+		int random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		int rand() {
+			return random();
+		}
+		int any() {
+			return random();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3745,36 +4049,36 @@ public class KL {
 			super();
 		}
 		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6,
-				String k7, long v7, String k8, long v8, String k9, long v9,
-				String k10, long v10) {
+			   String k4, long v4, String k5, long v5, String k6, long v6,
+			   String k7, long v7, String k8, long v8, String k9, long v9,
+			   String k10, long v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6,
-				String k7, long v7, String k8, long v8, String k9, long v9) {
+			   String k4, long v4, String k5, long v5, String k6, long v6,
+			   String k7, long v7, String k8, long v8, String k9, long v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6,
-				String k7, long v7, String k8, long v8) {
+			   String k4, long v4, String k5, long v5, String k6, long v6,
+			   String k7, long v7, String k8, long v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6,
-				String k7, long v7) {
+			   String k4, long v4, String k5, long v5, String k6, long v6,
+			   String k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6) {
+			   String k4, long v4, String k5, long v5, String k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5) {
+			   String k4, long v4, String k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4) {
+			   String k4, long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3) {
@@ -3788,6 +4092,20 @@ public class KL {
 		}
 		TreeSL copy() {
 			return (TreeSL) super.clone();
+		}
+		TreeSL slice() {
+			return copy();
+		}
+		long random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		long rand() {
+			return random();
+		}
+		long any() {
+			return random();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3849,36 +4167,36 @@ public class KL {
 			super();
 		}
 		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6,
-				String k7, float v7, String k8, float v8, String k9, float v9,
-				String k10, float v10) {
+			   String k4, float v4, String k5, float v5, String k6, float v6,
+			   String k7, float v7, String k8, float v8, String k9, float v9,
+			   String k10, float v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6,
-				String k7, float v7, String k8, float v8, String k9, float v9) {
+			   String k4, float v4, String k5, float v5, String k6, float v6,
+			   String k7, float v7, String k8, float v8, String k9, float v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6,
-				String k7, float v7, String k8, float v8) {
+			   String k4, float v4, String k5, float v5, String k6, float v6,
+			   String k7, float v7, String k8, float v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6,
-				String k7, float v7) {
+			   String k4, float v4, String k5, float v5, String k6, float v6,
+			   String k7, float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6) {
+			   String k4, float v4, String k5, float v5, String k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5) {
+			   String k4, float v4, String k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4) {
+			   String k4, float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3) {
@@ -3892,6 +4210,20 @@ public class KL {
 		}
 		TreeSF copy() {
 			return (TreeSF) super.clone();
+		}
+		TreeSF slice() {
+			return copy();
+		}
+		float random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		float rand() {
+			return random();
+		}
+		float any() {
+			return random();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -3953,43 +4285,43 @@ public class KL {
 			super();
 		}
 		TreeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3, String k4, double v4, String k5, double v5,
-				String k6, double v6, String k7, double v7, String k8,
-				double v8, String k9, double v9, String k10, double v10) {
+			   double v3, String k4, double v4, String k5, double v5,
+			   String k6, double v6, String k7, double v7, String k8,
+			   double v8, String k9, double v9, String k10, double v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3, String k4, double v4, String k5, double v5,
-				String k6, double v6, String k7, double v7, String k8,
-				double v8, String k9, double v9) {
+			   double v3, String k4, double v4, String k5, double v5,
+			   String k6, double v6, String k7, double v7, String k8,
+			   double v8, String k9, double v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3, String k4, double v4, String k5, double v5,
-				String k6, double v6, String k7, double v7, String k8,
-				double v8) {
+			   double v3, String k4, double v4, String k5, double v5,
+			   String k6, double v6, String k7, double v7, String k8,
+			   double v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3, String k4, double v4, String k5, double v5,
-				String k6, double v6, String k7, double v7) {
+			   double v3, String k4, double v4, String k5, double v5,
+			   String k6, double v6, String k7, double v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3, String k4, double v4, String k5, double v5,
-				String k6, double v6) {
+			   double v3, String k4, double v4, String k5, double v5,
+			   String k6, double v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3, String k4, double v4, String k5, double v5) {
+			   double v3, String k4, double v4, String k5, double v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3, String k4, double v4) {
+			   double v3, String k4, double v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3) {
+			   double v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
 		TreeSD(String k1, double v1, String k2, double v2) {
@@ -4000,6 +4332,20 @@ public class KL {
 		}
 		TreeSD copy() {
 			return (TreeSD) super.clone();
+		}
+		TreeSD slice() {
+			return copy();
+		}
+		double random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		double rand() {
+			return random();
+		}
+		double any() {
+			return random();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4061,43 +4407,43 @@ public class KL {
 			super();
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6, String k7, boolean v7, String k8,
-				boolean v8, String k9, boolean v9, String k10, boolean v10) {
+			   boolean v3, String k4, boolean v4, String k5, boolean v5,
+			   String k6, boolean v6, String k7, boolean v7, String k8,
+			   boolean v8, String k9, boolean v9, String k10, boolean v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6, String k7, boolean v7, String k8,
-				boolean v8, String k9, boolean v9) {
+			   boolean v3, String k4, boolean v4, String k5, boolean v5,
+			   String k6, boolean v6, String k7, boolean v7, String k8,
+			   boolean v8, String k9, boolean v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6, String k7, boolean v7, String k8,
-				boolean v8) {
+			   boolean v3, String k4, boolean v4, String k5, boolean v5,
+			   String k6, boolean v6, String k7, boolean v7, String k8,
+			   boolean v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6, String k7, boolean v7) {
+			   boolean v3, String k4, boolean v4, String k5, boolean v5,
+			   String k6, boolean v6, String k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6) {
+			   boolean v3, String k4, boolean v4, String k5, boolean v5,
+			   String k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5) {
+			   boolean v3, String k4, boolean v4, String k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4) {
+			   boolean v3, String k4, boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3) {
+			   boolean v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
 		TreeSB(String k1, boolean v1, String k2, boolean v2) {
@@ -4108,6 +4454,20 @@ public class KL {
 		}
 		TreeSB copy() {
 			return (TreeSB) super.clone();
+		}
+		TreeSB slice() {
+			return copy();
+		}
+		boolean random() {
+			if (super.isEmpty())
+				return false;
+			return i(randInt(length()));
+		}
+		boolean rand() {
+			return random();
+		}
+		boolean any() {
+			return random();
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4169,31 +4529,31 @@ public class KL {
 			super();
 		}
 		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10, String v10) {
+			  String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10, String v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
+			  String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-			   String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8) {
+			  String v4, int k5, String v5, int k6, String v6, int k7, String v7, int k8, String v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-			   String v4, int k5, String v5, int k6, String v6, int k7, String v7) {
+			  String v4, int k5, String v5, int k6, String v6, int k7, String v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-			   String v4, int k5, String v5, int k6, String v6) {
+			  String v4, int k5, String v5, int k6, String v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-			   String v4, int k5, String v5) {
+			  String v4, int k5, String v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
-			   String v4) {
+			  String v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeI(int k1, String v1, int k2, String v2, int k3, String v3) {
@@ -4207,6 +4567,20 @@ public class KL {
 		}
 		TreeI copy() {
 			return (TreeI) super.clone();
+		}
+		TreeI slice() {
+			return copy();
+		}
+		String random() {
+			if (super.isEmpty())
+				return "";
+			return i(randInt(length()));
+		}
+		String rand() {
+			return random();
+		}
+		String any() {
+			return random();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4268,34 +4642,34 @@ public class KL {
 			super();
 		}
 		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
-			   int k8, long v8, int k9, long v9, int k10, long v10) {
+			  long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			  int k8, long v8, int k9, long v9, int k10, long v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
-			   int k8, long v8, int k9, long v9) {
+			  long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			  int k8, long v8, int k9, long v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-			   long v4, int k5, long v5, int k6, long v6, int k7, long v7,
-			   int k8, long v8) {
+			  long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			  int k8, long v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-			   long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
+			  long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-			   long v4, int k5, long v5, int k6, long v6) {
+			  long v4, int k5, long v5, int k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-			   long v4, int k5, long v5) {
+			  long v4, int k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
-			   long v4) {
+			  long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeL(int k1, long v1, int k2, long v2, int k3, long v3) {
@@ -4309,6 +4683,20 @@ public class KL {
 		}
 		TreeL copy() {
 			return (TreeL) super.clone();
+		}
+		TreeL slice() {
+			return copy();
+		}
+		long random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		long rand() {
+			return random();
+		}
+		long any() {
+			return random();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4370,34 +4758,34 @@ public class KL {
 			super();
 		}
 		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
-			   int k8, float v8, int k9, float v9, int k10, float v10) {
+			  float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+			  int k8, float v8, int k9, float v9, int k10, float v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
-			   int k8, float v8, int k9, float v9) {
+			  float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+			  int k8, float v8, int k9, float v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-			   float v4, int k5, float v5, int k6, float v6, int k7, float v7,
-			   int k8, float v8) {
+			  float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+			  int k8, float v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-			   float v4, int k5, float v5, int k6, float v6, int k7, float v7) {
+			  float v4, int k5, float v5, int k6, float v6, int k7, float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-			   float v4, int k5, float v5, int k6, float v6) {
+			  float v4, int k5, float v5, int k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-			   float v4, int k5, float v5) {
+			  float v4, int k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
-			   float v4) {
+			  float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeF(int k1, float v1, int k2, float v2, int k3, float v3) {
@@ -4411,6 +4799,20 @@ public class KL {
 		}
 		TreeF copy() {
 			return (TreeF) super.clone();
+		}
+		TreeF slice() {
+			return copy();
+		}
+		float random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		float rand() {
+			return random();
+		}
+		float any() {
+			return random();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4472,34 +4874,34 @@ public class KL {
 			super();
 		}
 		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
-			   int k8, double v8, int k9, double v9, int k10, double v10) {
+			  double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+			  int k8, double v8, int k9, double v9, int k10, double v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
-			   int k8, double v8, int k9, double v9) {
+			  double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+			  int k8, double v8, int k9, double v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-			   double v4, int k5, double v5, int k6, double v6, int k7, double v7,
-			   int k8, double v8) {
+			  double v4, int k5, double v5, int k6, double v6, int k7, double v7,
+			  int k8, double v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-			   double v4, int k5, double v5, int k6, double v6, int k7, double v7) {
+			  double v4, int k5, double v5, int k6, double v6, int k7, double v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-			   double v4, int k5, double v5, int k6, double v6) {
+			  double v4, int k5, double v5, int k6, double v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-			   double v4, int k5, double v5) {
+			  double v4, int k5, double v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
-			   double v4) {
+			  double v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeD(int k1, double v1, int k2, double v2, int k3, double v3) {
@@ -4513,6 +4915,20 @@ public class KL {
 		}
 		TreeD copy() {
 			return (TreeD) super.clone();
+		}
+		TreeD slice() {
+			return copy();
+		}
+		double random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		double rand() {
+			return random();
+		}
+		double any() {
+			return random();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4574,34 +4990,34 @@ public class KL {
 			super();
 		}
 		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
-			   int k8, boolean v8, int k9, boolean v9, int k10, boolean v10) {
+			  boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+			  int k8, boolean v8, int k9, boolean v9, int k10, boolean v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
 		}
 		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
-			   int k8, boolean v8, int k9, boolean v9) {
+			  boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+			  int k8, boolean v8, int k9, boolean v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		}
 		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
-			   int k8, boolean v8) {
+			  boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7,
+			  int k8, boolean v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
 		}
 		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-			   boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7) {
+			  boolean v4, int k5, boolean v5, int k6, boolean v6, int k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-			   boolean v4, int k5, boolean v5, int k6, boolean v6) {
+			  boolean v4, int k5, boolean v5, int k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-			   boolean v4, int k5, boolean v5) {
+			  boolean v4, int k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4,
-			   boolean v4) {
+			  boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
@@ -4615,6 +5031,20 @@ public class KL {
 		}
 		TreeB copy() {
 			return (TreeB) super.clone();
+		}
+		TreeB slice() {
+			return copy();
+		}
+		boolean random() {
+			if (super.isEmpty())
+				return false;
+			return i(randInt(length()));
+		}
+		boolean rand() {
+			return random();
+		}
+		boolean any() {
+			return random();
 		}
 		int[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -4681,8 +5111,9 @@ public class KL {
 		}
 		StrArr pushAt(int i, String... strings) {
 			if (i >= 0 && i <= super.size() && 0 != len(strings)) {
-				for (String s : strings)
-					super.add(i, s);
+				for (String s : strings) {
+					if (!KL.isEmpty(s)) super.add(i, s);
+				}
 			}
 			return this;
 		}
@@ -4695,6 +5126,18 @@ public class KL {
 			if (0 != len(strings))
 				pushAt(super.size(), strings);
 			return this;
+		}
+		StrArr push(String[]... stringArrays) {
+			//this one's for appending entire arrays, for ease of pushing
+			if (!KL.isEmpty(stringArrays)) {
+				for (int i : range(stringArrays)) {
+					if (!KL.isEmpty(stringArrays[i])) pushAt(super.size(), stringArrays[i]);
+				}
+			}
+			return this;
+		}
+		StrArr push(StrArr arrB) {
+			return combine(arrB);
 		}
 		String shift() {
 			if (super.isEmpty())
@@ -4758,10 +5201,10 @@ public class KL {
 			return super.contains(x);
 		}
 		String i(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : "";
+			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : "";
 		}
 		String lasti(int n) {
-			return n > 0 && n <= super.size()
+			return !isNull(n) && n > 0 && n <= super.size()
 				   ? super.get(super.size() - n)
 				   : "";
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
@@ -4863,26 +5306,72 @@ public class KL {
 			return super.toString();
 		}
 		StrArr slice(int x, int y) {
-			if (x < 0 || x >= length() || y <= 0 || y >= length())
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (StrArr)(super.subList(x, y).toArray())[0];
+			return new StrArr(KL.slice(array(), x, y));
+		}
+		StrArr slice(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(x, length());
+		}
+		StrArr slice() {
+			return copy();
+		}
+		StrArr sliceKeep(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, x);
+		}
+		StrArr sliceRight(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(length()-x);
+		}
+		StrArr sliceEnd(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, length()-x);
+		}
+		StrArr sliceOff(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		StrArr sliceOut(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		String random() {
+			if (super.isEmpty())
+				return "";
+			return i(randInt(length()));
+		}
+		String rand() {
+			return random();
+		}
+		String any() {
+			return random();
 		}
 		StrArr empty() {
 			super.clear();
 			return this;
 		}
 		boolean eq(StrArr arrB) {
+			if (not(arrB)) return false;
 			StrArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
 		boolean compare(StrArr arrB) {
-			int len = intersection(arrB).length();
-			return len > len / 2;
+			int oldLen = length(), newLen = intersection(arrB).length();
+			return newLen > oldLen / 2;
 		}
 		StrArr combine(StrArr arrB) {
 			StrArr arrA = copy();
+			if (not(arrB)) return arrA;
 			ArrayList<String> combined = new ArrayList<>();
 			combined.addAll(arrA);
 			combined.addAll(arrB);
@@ -4918,8 +5407,8 @@ public class KL {
 		int length() {
 			return super.size();
 		}
-		int length = super.size(); int size = length;
-	} 
+		public int length = super.size(), size = length;
+	}
 	public static StrArr strArr(String... strings) {
 		return new StrArr(strings);
 	}
@@ -4951,6 +5440,18 @@ public class KL {
 			if (0 != len(ints))
 				pushAt(super.size(), ints);
 			return this;
+		}
+		IntArr push(int[]... intArrays) {
+			//this one's for appending entire arrays, for ease of pushing
+			if (!KL.isEmpty(intArrays)) {
+				for (int i : range(intArrays)) {
+					if (!KL.isEmpty(intArrays[i])) pushAt(super.size(), intArrays[i]);
+				}
+			}
+			return this;
+		}
+		IntArr push(IntArr arrB) {
+			return combine(arrB);
 		}
 		int shift() {
 			if (super.isEmpty())
@@ -5003,10 +5504,10 @@ public class KL {
 			return super.contains(x);
 		}
 		int i(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : 0;
+			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
 		int lasti(int n) {
-			return n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -5105,26 +5606,72 @@ public class KL {
 			return super.toString();
 		}
 		IntArr slice(int x, int y) {
-			if (x < 0 || x >= length() || y <= 0 || y >= length())
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (IntArr)(super.subList(x, y).toArray())[0];
+			return new IntArr(KL.slice(array(), x, y));
+		}
+		IntArr slice(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(x, length());
+		}
+		IntArr slice() {
+			return copy();
+		}
+		IntArr sliceKeep(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, x);
+		}
+		IntArr sliceRight(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(length()-x);
+		}
+		IntArr sliceEnd(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, length()-x);
+		}
+		IntArr sliceOff(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		IntArr sliceOut(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		int random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		int rand() {
+			return random();
+		}
+		int any() {
+			return random();
 		}
 		IntArr empty() {
 			super.clear();
 			return this;
 		}
 		boolean eq(IntArr arrB) {
+			if (not(arrB)) return false;
 			IntArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
 		boolean compare(IntArr arrB) {
-			int len = intersection(arrB).length();
-			return len > len / 2;
+			int oldLen = length(), newLen = intersection(arrB).length();
+			return newLen > oldLen / 2;
 		}
 		IntArr combine(IntArr arrB) {
 			IntArr arrA = copy();
+			if (not(arrB)) return arrA;
 			ArrayList<Integer> combined = new ArrayList<>();
 			combined.addAll(arrA);
 			combined.addAll(arrB);
@@ -5160,7 +5707,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
-		int length = super.size(); int size = length;
+		public int length = super.size(), size = length;
 	}
 	public static IntArr intArr(int... ints) {
 		return new IntArr(ints);
@@ -5193,6 +5740,18 @@ public class KL {
 			if (0 != len(longs))
 				pushAt(super.size(), longs);
 			return this;
+		}
+		LongArr push(long[]... longArrays) {
+			//this one's for appending entire arrays, for ease of pushing
+			if (!KL.isEmpty(longArrays)) {
+				for (int i : range(longArrays)) {
+					if (!KL.isEmpty(longArrays[i])) pushAt(super.size(), longArrays[i]);
+				}
+			}
+			return this;
+		}
+		LongArr push(LongArr arrB) {
+			return combine(arrB);
 		}
 		long shift() {
 			if (super.isEmpty())
@@ -5256,10 +5815,10 @@ public class KL {
 			return super.contains(x);
 		}
 		long i(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : 0;
+			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
 		long lasti(int n) {
-			return n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -5358,26 +5917,72 @@ public class KL {
 			return super.toString();
 		}
 		LongArr slice(int x, int y) {
-			if (x < 0 || x >= length() || y <= 0 || y >= length())
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (LongArr)(super.subList(x, y).toArray())[0];
+			return new LongArr(KL.slice(array(), x, y));
+		}
+		LongArr slice(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(x, length());
+		}
+		LongArr slice() {
+			return copy();
+		}
+		LongArr sliceKeep(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, x);
+		}
+		LongArr sliceRight(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(length()-x);
+		}
+		LongArr sliceEnd(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, length()-x);
+		}
+		LongArr sliceOff(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		LongArr sliceOut(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		long random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		long rand() {
+			return random();
+		}
+		long any() {
+			return random();
 		}
 		LongArr empty() {
 			super.clear();
 			return this;
 		}
 		boolean eq(LongArr arrB) {
+			if (not(arrB)) return false;
 			LongArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
 		boolean compare(LongArr arrB) {
-			int len = intersection(arrB).length();
-			return len > len / 2;
+			int oldLen = length(), newLen = intersection(arrB).length();
+			return newLen > oldLen / 2;
 		}
 		LongArr combine(LongArr arrB) {
 			LongArr arrA = copy();
+			if (not(arrB)) return arrA;
 			ArrayList<Long> combined = new ArrayList<>();
 			combined.addAll(arrA);
 			combined.addAll(arrB);
@@ -5413,7 +6018,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
-		int length = super.size(); int size = length;
+		public int length = super.size(), size = length;
 	}
 	public static LongArr longArr(long... longs) {
 		return new LongArr(longs);
@@ -5446,6 +6051,18 @@ public class KL {
 			if (0 != len(floats))
 				pushAt(super.size(), floats);
 			return this;
+		}
+		FltArr push(float[]... fltArrays) {
+			//this one's for appending entire arrays, for ease of pushing
+			if (!KL.isEmpty(fltArrays)) {
+				for (int i : range(fltArrays)) {
+					if (!KL.isEmpty(fltArrays[i])) pushAt(super.size(), fltArrays[i]);
+				}
+			}
+			return this;
+		}
+		FltArr push(FltArr arrB) {
+			return combine(arrB);
 		}
 		float shift() {
 			if (super.isEmpty())
@@ -5509,10 +6126,10 @@ public class KL {
 			return super.contains(x);
 		}
 		float i(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : 0;
+			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
 		float lasti(int n) {
-			return n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -5607,26 +6224,72 @@ public class KL {
 			return super.toString();
 		}
 		FltArr slice(int x, int y) {
-			if (x < 0 || x >= length() || y <= 0 || y >= length())
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (FltArr)(super.subList(x, y).toArray())[0];
+			return new FltArr(KL.slice(array(), x, y));
+		}
+		FltArr slice(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(x, length());
+		}
+		FltArr slice() {
+			return copy();
+		}
+		FltArr sliceKeep(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, x);
+		}
+		FltArr sliceRight(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(length()-x);
+		}
+		FltArr sliceEnd(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, length()-x);
+		}
+		FltArr sliceOff(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		FltArr sliceOut(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		float random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		float rand() {
+			return random();
+		}
+		float any() {
+			return random();
 		}
 		FltArr empty() {
 			super.clear();
 			return this;
 		}
 		boolean eq(FltArr arrB) {
+			if (not(arrB)) return false;
 			FltArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
 		boolean compare(FltArr arrB) {
-			int len = intersection(arrB).length();
-			return len > len / 2;
+			int oldLen = length(), newLen = intersection(arrB).length();
+			return newLen > oldLen / 2;
 		}
 		FltArr combine(FltArr arrB) {
 			FltArr arrA = copy();
+			if (not(arrB)) return arrA;
 			ArrayList<Float> combined = new ArrayList<>();
 			combined.addAll(arrA);
 			combined.addAll(arrB);
@@ -5662,7 +6325,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
-		int length = super.size(); int size = length;
+		public int length = super.size(), size = length;
 	}
 	public static FltArr fltArr(float... floats) {
 		return new FltArr(floats);
@@ -5695,6 +6358,18 @@ public class KL {
 			if (0 != len(doubles))
 				pushAt(super.size(), doubles);
 			return this;
+		}
+		DblArr push(double[]... dblArrays) {
+			//this one's for appending entire arrays, for ease of pushing
+			if (!KL.isEmpty(dblArrays)) {
+				for (int i : range(dblArrays)) {
+					if (!KL.isEmpty(dblArrays[i])) pushAt(super.size(), dblArrays[i]);
+				}
+			}
+			return this;
+		}
+		DblArr push(DblArr arrB) {
+			return combine(arrB);
 		}
 		double shift() {
 			if (super.isEmpty())
@@ -5758,10 +6433,10 @@ public class KL {
 			return super.contains(x);
 		}
 		double i(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : 0;
+			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : 0;
 		}
 		double lasti(int n) {
-			return n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -5856,26 +6531,72 @@ public class KL {
 			return super.toString();
 		}
 		DblArr slice(int x, int y) {
-			if (x < 0 || x >= length() || y <= 0 || y >= length())
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (DblArr)(super.subList(x, y).toArray())[0];
+			return new DblArr(KL.slice(array(), x, y));
+		}
+		DblArr slice(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(x, length());
+		}
+		DblArr slice() {
+			return copy();
+		}
+		DblArr sliceKeep(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, x);
+		}
+		DblArr sliceRight(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(length()-x);
+		}
+		DblArr sliceEnd(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, length()-x);
+		}
+		DblArr sliceOff(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		DblArr sliceOut(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		double random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		double rand() {
+			return random();
+		}
+		double any() {
+			return random();
 		}
 		DblArr empty() {
 			super.clear();
 			return this;
 		}
 		boolean eq(DblArr arrB) {
+			if (not(arrB)) return false;
 			DblArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
 		boolean compare(DblArr arrB) {
-			int len = intersection(arrB).length();
-			return len > len / 2;
+			int oldLen = length(), newLen = intersection(arrB).length();
+			return newLen > oldLen / 2;
 		}
 		DblArr combine(DblArr arrB) {
 			DblArr arrA = copy();
+			if (not(arrB)) return arrA;
 			ArrayList<Double> combined = new ArrayList<>();
 			combined.addAll(arrA);
 			combined.addAll(arrB);
@@ -5911,7 +6632,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
-		int length = super.size(); int size = length;
+		public int length = super.size(), size = length;
 	}
 	public static DblArr dblArr(double...doubles) {
 		return new DblArr(doubles);
@@ -5944,6 +6665,18 @@ public class KL {
 			if (0 != len(bools))
 				pushAt(super.size(), bools);
 			return this;
+		}
+		BoolArr push(boolean[]... boolArrays) {
+			//this one's for appending entire arrays, for ease of pushing
+			if (!KL.isEmpty(boolArrays)) {
+				for (int i : range(boolArrays)) {
+					if (!KL.isEmpty(boolArrays[i])) pushAt(super.size(), boolArrays[i]);
+				}
+			}
+			return this;
+		}
+		BoolArr push(BoolArr arrB) {
+			return combine(arrB);
 		}
 		boolean shift() {
 			if (super.isEmpty())
@@ -6007,10 +6740,10 @@ public class KL {
 			return super.contains(x);
 		}
 		boolean i(int i) {
-			return i >= 0 && i < super.size() ? super.get(i) : false;
+			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : false;
 		}
 		boolean lasti(int n) {
-			return n > 0 && n <= super.size()
+			return !isNull(n) && n > 0 && n <= super.size()
 				   ? super.get(super.size() - n)
 				   : false;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
@@ -6107,26 +6840,72 @@ public class KL {
 			return super.toString();
 		}
 		BoolArr slice(int x, int y) {
-			if (x < 0 || x >= length() || y <= 0 || y >= length())
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length())
 				return copy();
-			return (BoolArr)(super.subList(x, y).toArray())[0];
+			return new BoolArr(KL.slice(array(), x, y));
+		}
+		BoolArr slice(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(x, length());
+		}
+		BoolArr slice() {
+			return copy();
+		}
+		BoolArr sliceKeep(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, x);
+		}
+		BoolArr sliceRight(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(length()-x);
+		}
+		BoolArr sliceEnd(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return slice(0, length()-x);
+		}
+		BoolArr sliceOff(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		BoolArr sliceOut(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+				return copy();
+			return sliceEnd(x);
+		}
+		boolean random() {
+			if (super.isEmpty())
+				return false;
+			return i(randInt(length()));
+		}
+		boolean rand() {
+			return random();
+		}
+		boolean any() {
+			return random();
 		}
 		BoolArr empty() {
 			super.clear();
 			return this;
 		}
 		boolean eq(BoolArr arrB) {
+			if (not(arrB)) return false;
 			BoolArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
 		boolean compare(BoolArr arrB) {
-			int len = intersection(arrB).length();
-			return len > len / 2;
+			int oldLen = length(), newLen = intersection(arrB).length();
+			return newLen > oldLen / 2;
 		}
 		BoolArr combine(BoolArr arrB) {
 			BoolArr arrA = copy();
+			if (not(arrB)) return arrA;
 			ArrayList<Boolean> combined = new ArrayList<>();
 			combined.addAll(arrA);
 			combined.addAll(arrB);
@@ -6162,7 +6941,7 @@ public class KL {
 		int length() {
 			return super.size();
 		}
-		int length = super.size(); int size = length;
+		public int length = super.size(), size = length;
 	}
 	public static BoolArr boolArr(boolean...bools) {
 		return new BoolArr(bools);
@@ -6178,28 +6957,28 @@ public class KL {
 	}
 	private static final Map<Integer, Thread> timeoutThreads = new ConcurrentHashMap<>();
 	private static int timeoutId = 0,
-	  iterationsDone = 0;
+					   iterationsDone = 0;
 	public static int setTimeout(Runnable fn, int delay) {
-	    if (isNull(fn) || isNull(delay) || isInf(delay) || isNeg(delay)) return -1;
-	    timeoutId++;
-	    Thread thread = new Thread(() -> {
-	        try {
-	            Thread.sleep(delay < 1000 ? delay * 1000 : delay);
-	        } catch (InterruptedException e) {
-	            print("[KL.Info.InterruptedTimeout]:\nThe timeout was interrupted, either intentionally or by a background task.");
-	            return;
-	        }
-	        SwingUtilities.invokeLater(fn);
-	    });
-	    timeoutThreads.put(timeoutId, thread);
-	    thread.start();
-	    return timeoutId;
+		if (isNull(fn) || isNull(delay) || isInf(delay) || isNeg(delay)) return -1;
+		timeoutId++;
+		Thread thread = new Thread(() -> {
+			try {
+				Thread.sleep(delay < 1000 ? delay * 1000 : delay);
+			} catch (InterruptedException e) {
+				print("[KL.Info.InterruptedTimeout]:\nThe timeout was interrupted, either intentionally or by a background task.");
+				return;
+			}
+			SwingUtilities.invokeLater(fn);
+		});
+		timeoutThreads.put(timeoutId, thread);
+		thread.start();
+		return timeoutId;
 	}
 	public static void clearTimeout(int id) {
-	    Thread thread = timeoutThreads.remove(id);
-	    if (thread != null) {
-	        thread.interrupt();
-	    }
+		Thread thread = timeoutThreads.remove(id);
+		if (thread != null) {
+			thread.interrupt();
+		}
 	}
 	public static void delay(Runnable fn, int delay) {
 		setTimeout(fn, delay);
@@ -6210,50 +6989,49 @@ public class KL {
 	private static final Map<Integer, Thread> intervalThreads = new ConcurrentHashMap<>();
 	private static int intervalId = 0;
 	public static int setInterval(Runnable fn, int interval) {
-	    if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval)) return -1;
-	    intervalId++;
-	    Thread thread = new Thread(() -> {
-	        while (!Thread.currentThread().isInterrupted()) {
-	            try {
-	                Thread.sleep(interval < 1000 ? interval * 1000 : interval);
-	            } catch (InterruptedException e) {
-	                print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a background task.");
-	                break;
-	            }
-	            SwingUtilities.invokeLater(fn);
-	        }
-	    });
-	    intervalThreads.put(intervalId, thread);
-	    thread.start();
-	    return intervalId;
+		if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval)) return -1;
+		intervalId++;
+		Thread thread = new Thread(() -> {
+			while (!Thread.currentThread().isInterrupted()) {
+				try {
+					Thread.sleep(interval < 1000 ? interval * 1000 : interval);
+				} catch (InterruptedException e) {
+					print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a background task.");
+					break;
+				}
+				SwingUtilities.invokeLater(fn);
+			}
+		});
+		intervalThreads.put(intervalId, thread);
+		thread.start();
+		return intervalId;
 	}
 	public static int setInterval(Runnable fn, int interval, int maxIterations) {
-	    if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval) || isNull(maxIterations) || isInf(maxIterations) || isNeg(maxIterations) || not(maxIterations)) return -1;
-	    intervalId++;
-	    Thread thread = new Thread(() -> {
-	        while (!Thread.currentThread().isInterrupted()) {
-	            try {
-	                if (iterationsDone < maxIterations) {
-	                	Thread.sleep(interval < 1000 ? interval * 1000 : interval);
-	                	iterationsDone++;
-	                }
-	                else clearInterval(intervalId);
-	            } catch (InterruptedException e) {
-	                print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a background task.");
-	                break;
-	            }
-	            SwingUtilities.invokeLater(fn);
-	        }
-	    });
-	    intervalThreads.put(intervalId, thread);
-	    thread.start();
-	    return intervalId;
+		if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval) || isNull(maxIterations) || isInf(maxIterations) || isNeg(maxIterations) || not(maxIterations)) return -1;
+		intervalId++;
+		Thread thread = new Thread(() -> {
+			while (!Thread.currentThread().isInterrupted()) {
+				try {
+					if (iterationsDone < maxIterations) {
+						Thread.sleep(interval < 1000 ? interval * 1000 : interval);
+						iterationsDone++;
+					} else clearInterval(intervalId);
+				} catch (InterruptedException e) {
+					print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a background task.");
+					break;
+				}
+				SwingUtilities.invokeLater(fn);
+			}
+		});
+		intervalThreads.put(intervalId, thread);
+		thread.start();
+		return intervalId;
 	}
 	public static void clearInterval(int id) {
-	    Thread thread = intervalThreads.remove(id);
-	    if (thread != null) {
-	        thread.interrupt();
-	    }
+		Thread thread = intervalThreads.remove(id);
+		if (thread != null) {
+			thread.interrupt();
+		}
 	}
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
 							 Object cond2, Runnable sol2, Object cond3, Runnable sol3,
@@ -6269,8 +7047,8 @@ public class KL {
 					return false;
 				}
 				String cond1B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond1), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
 					String op = Str(cond1).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -6280,10 +7058,10 @@ public class KL {
 					cond1B = parts[1];
 				}
 				double middleware = Dbl(Str(cond1).replaceAll("[^\\-\\d\\.]", "")),
-				  middlewareB = Dbl(Str(cond1B).replaceAll("[^\\-\\d\\.]", ""));
+					   middlewareB = Dbl(Str(cond1B).replaceAll("[^\\-\\d\\.]", ""));
 				cond1 = String(cond1).replaceAll("[^<>=]", "");
 				cond1B = String(cond1B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond1, ">") || eq(cond1B, ">")) {
 						if (srcDbl > middleware || srcDbl > middlewareB) {
@@ -6316,8 +7094,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond1, ">")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl > middleware && srcDbl > middlewareB) {
@@ -6479,8 +7256,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond1, ">")) {
 						if (srcDbl > middleware) {
 							if (!isNull(sol1))
@@ -6537,8 +7313,8 @@ public class KL {
 					return false;
 				}
 				String cond2B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond2), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
 					String op = Str(cond2).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -6548,11 +7324,11 @@ public class KL {
 					cond2B = parts[1];
 				}
 				double middleware2 = Dbl(Str(cond2).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware2B = Dbl(Str(cond2B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware2B = Dbl(Str(cond2B).replaceAll("[^\\-\\d\\.]", ""));
 				cond2 = String(cond2).replaceAll("[^<>=else]", "");
 				cond2B = String(cond2B).replaceAll("[^<>=]", "");
 				printf("%%\n%%\nBoth: %b\nNeither: {}", middleware2, middleware2B, both, either);
-				
+
 				if (either) {
 					if (eq(cond2, ">") || eq(cond2B, ">")) {
 						if (srcDbl > middleware2 || srcDbl > middleware2B) {
@@ -6585,8 +7361,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond2, ">")) {
 						if (eq(cond2B, ">")) {
 							if (srcDbl > middleware2 && srcDbl > middleware2B) {
@@ -6652,7 +7427,7 @@ public class KL {
 							}
 						}
 					} else if (eq(cond2, "<")) {
-						
+
 						if (eq(cond2B, ">")) {
 							if (srcDbl < middleware2 && srcDbl > middleware2B) {
 								if (!isNull(sol2))
@@ -6661,7 +7436,7 @@ public class KL {
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl < middleware2 && srcDbl >= middleware2B) {
-								
+
 								if (!isNull(sol2))
 									new Thread(sol2).run();
 								return true;
@@ -6750,8 +7525,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond2, ">")) {
 						if (srcDbl > middleware2) {
 							if (!isNull(sol2))
@@ -6812,8 +7586,8 @@ public class KL {
 					return false;
 				}
 				String cond3B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond3), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond3).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -6823,10 +7597,10 @@ public class KL {
 					cond3B = parts[1];
 				}
 				double middleware3 = Dbl(Str(cond3).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware3B = Dbl(Str(cond3B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware3B = Dbl(Str(cond3B).replaceAll("[^\\-\\d\\.]", ""));
 				cond3 = String(cond3).replaceAll("[^<>=else]", "");
 				cond3B = String(cond3B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond3, ">") || eq(cond3B, ">")) {
 						if (srcDbl > middleware3 || srcDbl > middleware3B) {
@@ -6859,8 +7633,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond3, ">")) {
 						if (eq(cond3B, ">")) {
 							if (srcDbl > middleware3 && srcDbl > middleware3B) {
@@ -7022,8 +7795,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond3, ">")) {
 						if (srcDbl > middleware3) {
 							if (!isNull(sol3))
@@ -7088,8 +7860,8 @@ public class KL {
 					return false;
 				}
 				String cond4B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond4), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond4).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -7099,10 +7871,10 @@ public class KL {
 					cond4B = parts[1];
 				}
 				double middleware4 = Dbl(Str(cond4).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware4B = Dbl(Str(cond4B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware4B = Dbl(Str(cond4B).replaceAll("[^\\-\\d\\.]", ""));
 				cond4 = String(cond4).replaceAll("[^<>=else]", "");
 				cond4B = String(cond4B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond4, ">") || eq(cond4B, ">")) {
 						if (srcDbl > middleware4 || srcDbl > middleware4B) {
@@ -7135,8 +7907,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond4, ">")) {
 						if (eq(cond4B, ">")) {
 							if (srcDbl > middleware4 && srcDbl > middleware4B) {
@@ -7298,8 +8069,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond4, ">")) {
 						if (srcDbl > middleware4) {
 							if (!isNull(sol4))
@@ -7360,8 +8130,8 @@ public class KL {
 					return false;
 				}
 				String cond5B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond5), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond5).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -7371,10 +8141,10 @@ public class KL {
 					cond5B = parts[1];
 				}
 				double middleware5 = Dbl(Str(cond5).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware5B = Dbl(Str(cond5B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware5B = Dbl(Str(cond5B).replaceAll("[^\\-\\d\\.]", ""));
 				cond5 = String(cond5).replaceAll("[^<>=else]", "");
 				cond5B = String(cond5B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond5, ">") || eq(cond5B, ">")) {
 						if (srcDbl > middleware5 || srcDbl > middleware5B) {
@@ -7407,8 +8177,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond5, ">")) {
 						if (eq(cond5B, ">")) {
 							if (srcDbl > middleware5 && srcDbl > middleware5B) {
@@ -7570,8 +8339,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond5, ">")) {
 						if (srcDbl > middleware5) {
 							if (!isNull(sol5))
@@ -7632,8 +8400,8 @@ public class KL {
 					return false;
 				}
 				String cond6B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond6), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond6).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -7643,10 +8411,10 @@ public class KL {
 					cond6B = parts[1];
 				}
 				double middleware6 = Dbl(Str(cond6).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware6B = Dbl(Str(cond6B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware6B = Dbl(Str(cond6B).replaceAll("[^\\-\\d\\.]", ""));
 				cond6 = String(cond6).replaceAll("[^<>=else]", "");
 				cond6B = String(cond6B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond6, ">") || eq(cond6B, ">")) {
 						if (srcDbl > middleware6 || srcDbl > middleware6B) {
@@ -7679,8 +8447,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond6, ">")) {
 						if (eq(cond6B, ">")) {
 							if (srcDbl > middleware6 && srcDbl > middleware6B) {
@@ -7842,8 +8609,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond6, ">")) {
 						if (srcDbl > middleware6) {
 							if (!isNull(sol6))
@@ -7904,8 +8670,8 @@ public class KL {
 					return false;
 				}
 				String cond7B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond7), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond7).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -7915,10 +8681,10 @@ public class KL {
 					cond7B = parts[1];
 				}
 				double middleware7 = Dbl(Str(cond7).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware7B = Dbl(Str(cond7B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware7B = Dbl(Str(cond7B).replaceAll("[^\\-\\d\\.]", ""));
 				cond7 = String(cond7).replaceAll("[^<>=else]", "");
 				cond7B = String(cond7B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond7, ">") || eq(cond7B, ">")) {
 						if (srcDbl > middleware7 || srcDbl > middleware7B) {
@@ -7951,8 +8717,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond7, ">")) {
 						if (eq(cond7B, ">")) {
 							if (srcDbl > middleware7 && srcDbl > middleware7B) {
@@ -8114,8 +8879,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond7, ">")) {
 						if (srcDbl > middleware7) {
 							if (!isNull(sol7))
@@ -8176,8 +8940,8 @@ public class KL {
 					return false;
 				}
 				String cond8B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond8), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond8).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -8187,10 +8951,10 @@ public class KL {
 					cond8B = parts[1];
 				}
 				double middleware8 = Dbl(Str(cond8).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware8B = Dbl(Str(cond8B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware8B = Dbl(Str(cond8B).replaceAll("[^\\-\\d\\.]", ""));
 				cond8 = String(cond8).replaceAll("[^<>=else]", "");
 				cond8B = String(cond8B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond8, ">") || eq(cond8B, ">")) {
 						if (srcDbl > middleware8 || srcDbl > middleware8B) {
@@ -8223,8 +8987,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond8, ">")) {
 						if (eq(cond8B, ">")) {
 							if (srcDbl > middleware8 && srcDbl > middleware8B) {
@@ -8386,8 +9149,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond8, ">")) {
 						if (srcDbl > middleware8) {
 							if (!isNull(sol8))
@@ -8448,8 +9210,8 @@ public class KL {
 					return false;
 				}
 				String cond9B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond9), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond9).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -8459,10 +9221,10 @@ public class KL {
 					cond9B = parts[1];
 				}
 				double middleware9 = Dbl(Str(cond9).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware9B = Dbl(Str(cond9B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware9B = Dbl(Str(cond9B).replaceAll("[^\\-\\d\\.]", ""));
 				cond9 = String(cond9).replaceAll("[^<>=else]", "");
 				cond9B = String(cond9B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond9, ">") || eq(cond9B, ">")) {
 						if (srcDbl > middleware9 || srcDbl > middleware9B) {
@@ -8495,8 +9257,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond9, ">")) {
 						if (eq(cond9B, ">")) {
 							if (srcDbl > middleware9 && srcDbl > middleware9B) {
@@ -8658,8 +9419,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond9, ">")) {
 						if (srcDbl > middleware9) {
 							if (!isNull(sol9))
@@ -8720,8 +9480,8 @@ public class KL {
 					return false;
 				}
 				String cond10B = "";
-				boolean either = false, 
-				  both = false;
+				boolean either = false,
+						both = false;
 				if (in(Str(cond10), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond10).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) either = true;
@@ -8731,10 +9491,10 @@ public class KL {
 					cond10B = parts[1];
 				}
 				double middleware10 = Dbl(Str(cond10).replaceAll("[^\\-\\d\\.]", "")),
-				  middleware10B = Dbl(Str(cond10B).replaceAll("[^\\-\\d\\.]", ""));
+					   middleware10B = Dbl(Str(cond10B).replaceAll("[^\\-\\d\\.]", ""));
 				cond10 = String(cond10).replaceAll("[^<>=else]", "");
 				cond10B = String(cond10B).replaceAll("[^<>=]", "");
-				
+
 				if (either) {
 					if (eq(cond10, ">") || eq(cond10B, ">")) {
 						if (srcDbl > middleware10 || srcDbl > middleware10B) {
@@ -8767,8 +9527,7 @@ public class KL {
 							return true;
 						}
 					}
-				}
-				else if (both) {
+				} else if (both) {
 					if (eq(cond10, ">")) {
 						if (eq(cond10B, ">")) {
 							if (srcDbl > middleware10 && srcDbl > middleware10B) {
@@ -8930,8 +9689,7 @@ public class KL {
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					if (eq(cond10, ">")) {
 						if (srcDbl > middleware10) {
 							if (!isNull(sol10))
@@ -9832,7 +10590,7 @@ public class KL {
 	public static String repeat(String s, int times) {
 		if (not(s) || not(times) || isNeg(times)) return s;
 		String org = s;
-		for (; -1+times > 0; times--)
+		for (; -1 + times > 0; times--)
 			s += org;
 		return s;
 	}
@@ -11069,6 +11827,7 @@ public class KL {
 		return String(t);
 	}
 	public static String concat(Object... args) {
+		if (not(args)) return "";
 		String result = "";
 		for (var arg : args)
 			result += ("" + arg);
@@ -11102,68 +11861,90 @@ public class KL {
 		return arr;
 	}
 	public static String[] Arr(ObjS o) {
+		if (not(o)) return blank.Str;
 		return o.array();
 	}
 	public static int[] Arr(ObjI o) {
+		if (not(o)) return blank.Int;
 		return o.array();
 	}
 	public static long[] Arr(ObjL o) {
+		if (not(o)) return blank.Long;
 		return o.array();
 	}
 	public static float[] Arr(ObjF o) {
+		if (not(o)) return blank.Flt;
 		return o.array();
 	}
 	public static double[] Arr(ObjD o) {
+		if (not(o)) return blank.Dbl;
 		return o.array();
 	}
 	public static boolean[] Arr(ObjB o) {
+		if (not(o)) return blank.Bool;
 		return o.array();
 	}
 	public static int[] Arr(TreeS t) {
+		if (not(t)) return blank.Int;
 		return t.array();
 	}
 	public static String[] Arr(TreeI t) {
+		if (not(t)) return blank.Str;
 		return t.array();
 	}
 	public static long[] Arr(TreeSL t) {
+		if (not(t)) return blank.Long;
 		return t.array();
 	}
 	public static long[] Arr(TreeL t) {
+		if (not(t)) return blank.Long;
 		return t.array();
 	}
 	public static float[] Arr(TreeSF t) {
+		if (not(t)) return blank.Flt;
 		return t.array();
 	}
 	public static float[] Arr(TreeF t) {
+		if (not(t)) return blank.Flt;
 		return t.array();
 	}
 	public static double[] Arr(TreeSD t) {
+		if (not(t)) return blank.Dbl;
 		return t.array();
 	}
 	public static double[] Arr(TreeD t) {
+		if (not(t)) return blank.Dbl;
 		return t.array();
 	}
 	public static boolean[] Arr(TreeSB t) {
+		if (not(t)) return blank.Bool;
 		return t.array();
 	}
 	public static boolean[] Arr(TreeB t) {
+		if (not(t)) return blank.Bool;
 		return t.array();
 	}
 	public static char[] Chars(String str) {
+		if (not(str)) return blank.Char;
 		char[] result = str.toCharArray();
 		return result;
 	}
 	public static char Char(String str) {
+		if (not(str)) return '\0';
 		char result = Chars(str)[0];
 		return result;
 	}
 	public static char Char(int n) {
+		if (isNull(n))
+			return '\0';
 		char result = (char) n;
 		if (!isAlpha(result))
 			return '\0';
 		return result;
 	}
 	public static char Char(String str, int n) {
+		if (n < 0 || n >= len(str))
+			return '\0';
 		char result = Chars(str)[n];
 		return result;
 	}
@@ -11199,8 +11980,14 @@ public class KL {
 		return returnValue;
 	}
 	public static String[] splitIntoWords(String str) {
-		String[] returnValue = split(str, "[^a-zA-Z'\\-]|\\-(?![a-zA-Z]{2,})");
+		String[] returnValue = split(str, "[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 		return returnValue;
+	}
+	public static String[] wordsOf(String str) {
+		return splitIntoWords(str);
+	}
+	public static boolean wordsIn(String str) {
+		return splitIntoWords(str).length > 0;
 	}
 	public static String join(String[] stringedArray, String with) {
 		String returnValue = String.join(with, stringedArray);
@@ -11241,7 +12028,7 @@ public class KL {
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
-	public static String join(String[] array) {
+	public static String join(String... array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 									 "$1and$1");
@@ -11251,7 +12038,7 @@ public class KL {
 		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
-	public static String join(int[] array) {
+	public static String join(int... array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 									 "$1and$1");
@@ -11261,7 +12048,7 @@ public class KL {
 		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
-	public static String join(long[] array) {
+	public static String join(long... array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 									 "$1and$1");
@@ -11271,7 +12058,7 @@ public class KL {
 		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
-	public static String join(float[] array) {
+	public static String join(float... array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 									 "$1and$1");
@@ -11281,7 +12068,7 @@ public class KL {
 		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
-	public static String join(double[] array) {
+	public static String join(double... array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 									 "$1and$1");
@@ -11291,7 +12078,7 @@ public class KL {
 		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
-	public static String join(boolean[] array) {
+	public static String join(boolean... array) {
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 									 "$1and$1");
@@ -13393,24 +14180,24 @@ public class KL {
 		return number;
 	}
 	public static int randPin(int len) {
-	    String str = "";
-	    if (not(len) || len < 4) len = 4;
-	    if (isInf(len) || len > 8) len = 8;
-	    while (len > 0) {
-	        str += "" + randInt(10);
-	        len--;
-	    }
-	    int result = Int(str);
-	    return result;
+		String str = "";
+		if (not(len) || len < 4) len = 4;
+		if (isInf(len) || len > 8) len = 8;
+		while (len > 0) {
+			str += "" + randInt(10);
+			len--;
+		}
+		int result = Int(str);
+		return result;
 	}
 	public static int randPin() {
-	    return randPin(4);
+		return randPin(4);
 	}
 	public static int randOTP(int len) {
-	    return randPin(len);
+		return randPin(len);
 	}
 	public static int randOTP() {
-	    return randPin();
+		return randPin();
 	}
 	public static double randFlt() {
 		double number = randInt() * .3;
@@ -13468,7 +14255,7 @@ public class KL {
 	}
 	public static String randId(int len) {
 		String id = randUuid().replaceAll("-", "");
-		if (not(len) || isNeg(len) || len > len(id)) return id;
+		if (not(len) || isNeg(len) || len >= len(id)) return id;
 		return id.substring(0, len);
 	}
 	public static String randId() {
@@ -13476,90 +14263,119 @@ public class KL {
 		return id.substring(0, 8);
 	}
 	public static String randItem(String arr[]) {
-		return arr[randInt(arr.length)];
+		if (not(arr)) return "";
+		return arr[randInt(len(arr))];
 	}
 	public static int randItem(int arr[]) {
-		return arr[randInt(arr.length)];
+		if (not(arr)) return 0;
+		return arr[randInt(len(arr))];
 	}
 	public static long randItem(long arr[]) {
-		return arr[randInt(arr.length)];
+		if (not(arr)) return 0;
+		return arr[randInt(len(arr))];
 	}
 	public static float randItem(float arr[]) {
-		return arr[randInt(arr.length)];
+		if (not(arr)) return 0;
+		return arr[randInt(len(arr))];
 	}
 	public static double randItem(double arr[]) {
-		return arr[randInt(arr.length)];
+		if (not(arr)) return 0;
+		return arr[randInt(len(arr))];
 	}
 	public static boolean randItem(boolean arr[]) {
-		return arr[randInt(arr.length)];
+		if (not(arr)) return false;
+		return arr[randInt(len(arr))];
 	}
 	public static Object randItem(Object arr[]) {
-		return arr[randInt(arr.length)];
+		if (not(arr)) return false;
+		return arr[randInt(len(arr))];
 	}
 	public static String randItem(StrArr arr) {
+		if (not(arr)) return "";
 		return arr.i(randInt(arr.length()));
 	}
 	public static int randItem(IntArr arr) {
+		if (not(arr)) return 0;
 		return arr.i(randInt(arr.length()));
 	}
 	public static long randItem(LongArr arr) {
+		if (not(arr)) return 0;
 		return arr.i(randInt(arr.length()));
 	}
 	public static float randItem(FltArr arr) {
+		if (not(arr)) return 0;
 		return arr.i(randInt(arr.length()));
 	}
 	public static double randItem(DblArr arr) {
+		if (not(arr)) return 0;
 		return arr.i(randInt(arr.length()));
 	}
 	public static boolean randItem(BoolArr arr) {
+		if (not(arr)) return false;
 		return arr.i(randInt(arr.length()));
 	}
 	public static String randItem(ObjS arr) {
+		if (not(arr)) return "";
 		return arr.i(randInt(arr.length()));
 	}
 	public static int randItem(ObjI arr) {
+		if (not(arr)) return 0;
 		return arr.i(randInt(arr.length()));
 	}
 	public static long randItem(ObjL arr) {
+		if (not(arr)) return 0;
 		return arr.i(randInt(arr.length()));
 	}
 	public static float randItem(ObjF arr) {
+		if (not(arr)) return 0;
 		return arr.i(randInt(arr.length()));
 	}
 	public static double randItem(ObjD arr) {
+		if (not(arr)) return 0;
 		return arr.i(randInt(arr.length()));
 	}
 	public static boolean randItem(ObjB arr) {
+		if (not(arr)) return false;
 		return arr.i(randInt(arr.length()));
 	}
 	public static int randItem(TreeS t) {
+		if (not(t)) return 0;
 		return t.i(randInt(t.length()));
 	}
 	public static String randItem(TreeI t) {
+		if (not(t)) return "";
 		return t.i(randInt(t.length()));
 	}
 	public static long randItem(TreeSL t) {
+		if (not(t)) return 0;
 		return t.i(randInt(t.length()));
 	}
 	public static long randItem(TreeL t) {
+		if (not(t)) return 0;
 		return t.i(randInt(t.length()));
 	}
 	public static float randItem(TreeSF t) {
+		if (not(t)) return 0;
 		return t.i(randInt(t.length()));
 	}
 	public static float randItem(TreeF t) {
+		if (not(t)) return 0;
 		return t.i(randInt(t.length()));
 	}
 	public static double randItem(TreeSD t) {
+		if (not(t)) return 0;
 		return t.i(randInt(t.length()));
 	}
 	public static double randItem(TreeD t) {
+		if (not(t)) return 0;
 		return t.i(randInt(t.length()));
 	}
 	public static boolean randItem(TreeSB t) {
+		if (not(t)) return false;
 		return t.i(randInt(t.length()));
 	}
 	public static boolean randItem(TreeB t) {
+		if (not(t)) return false;
 		return t.i(randInt(t.length()));
 	}
 	public static String randFrom(String arr[]) {
@@ -13737,265 +14553,392 @@ public class KL {
 		return randItem(o);
 	}
 	public static int[] noDuplicates(int[] arr) {
+		if (not(arr)) return blank.Int;
 		return IntStream.of(arr).distinct().toArray();
 	}
 	public static long[] noDuplicates(long[] arr) {
+		if (not(arr)) return blank.Long;
 		return LongStream.of(arr).distinct().toArray();
 	}
 	public static double[] noDuplicates(double[] arr) {
+		if (not(arr)) return blank.Dbl;
 		return DoubleStream.of(arr).distinct().toArray();
 	}
 	public static StrArr noDuplicates(StrArr arr) {
+		if (not(arr)) return new StrArr(blank.Str);
 		return arr.unique();
 	}
 	public static IntArr noDuplicates(IntArr arr) {
+		if (not(arr)) return new IntArr(blank.Int);
 		return arr.unique();
 	}
 	public static LongArr noDuplicates(LongArr arr) {
+		if (not(arr)) return new LongArr(blank.Long);
 		return arr.unique();
 	}
 	public static FltArr noDuplicates(FltArr arr) {
+		if (not(arr)) return new FltArr(blank.Flt);
 		return arr.unique();
 	}
 	public static DblArr noDuplicates(DblArr arr) {
+		if (not(arr)) return new DblArr(blank.Dbl);
 		return arr.unique();
 	}
 	public static BoolArr noDuplicates(BoolArr arr) {
+		if (not(arr)) return new BoolArr(blank.Bool);
 		return arr.unique();
 	}
 	public static String replace(String str, String to_replace,
 								 String regex_to_replace_with) {
+								 	if (not(str) || not(to_replace)) return str;
 		return str.replaceAll(to_replace, regex_to_replace_with);
 	}
 	public static String replace(String str, String to_replace, Function<String, String> fn) {
+		if (not(str) || not(to_replace) || not(fn)) return str;
 		StringBuilder s = new StringBuilder(str);
 		Pattern p = Pattern.compile(to_replace);
 		Matcher matcher = p.matcher(s);
 		return matcher.replaceAll(m -> fn.apply(m.group()));
 	}
 	public static String replaceFirst(String str, String to_replace, String regex_to_replace_with) {
+		if (not(str) || not(to_replace)) return str;
 		return str.replaceFirst(to_replace, regex_to_replace_with);
 	}
 	public static String replaceOne(String str, String to_replace, String regex_to_replace_with) {
-		return replaceOne(str, to_replace, regex_to_replace_with);
+		if (not(str) || not(to_replace)) return str;
+		return replaceFirst(str, to_replace, regex_to_replace_with);
 	}
 	public static String remove(String str, String re) {
+		if (not(str) || not(re)) return str;
 		return replace(str, re, "");
 	}
 	public static String slice(String str) {
+		if (not(str)) return "";
 		return remove(str, "^\\s+|\\s+$");
-        //TESTED, and proven: DOUBLE-ESCAPING WASN'T NEEDED here. As a matter of fact, for some reason, it's not needed with whitespaces ("\\s") in Java. Though functionally equivalent to str.trim(), I believe it's better to at least try and create your own implementation.
+		//TESTED, and proven: DOUBLE-ESCAPING WASN'T NEEDED here. As a matter of fact, for some reason, it's not needed with whitespaces ("\\s") in Java. Though functionally equivalent to str.trim(), I believe it's better to at least try and create your own implementation.
 	}
 	public static String[] slice(String arr[]) {
+		if (not(arr)) return blank.Str;
 		return arr.clone();
 	}
 	public static int[] slice(int arr[]) {
+		if (not(arr)) return blank.Int;
 		return arr.clone();
 	}
 	public static long[] slice(long arr[]) {
+		if (not(arr)) return blank.Long;
 		return arr.clone();
 	}
 	public static float[] slice(float arr[]) {
+		if (not(arr)) return blank.Flt;
 		return arr.clone();
 	}
 	public static double[] slice(double arr[]) {
+		if (not(arr)) return blank.Dbl;
 		return arr.clone();
 	}
 	public static boolean[] slice(boolean arr[]) {
+		if (not(arr)) return blank.Bool;
 		return arr.clone();
 	}
 	public static StrArr slice(StrArr arr) {
+		if (not(arr)) return new StrArr(blank.Str);
 		return arr.copy();
 	}
 	public static IntArr slice(IntArr arr) {
+		if (not(arr)) return new IntArr(blank.Int);
 		return arr.copy();
 	}
 	public static LongArr slice(LongArr arr) {
+		if (not(arr)) return new LongArr(blank.Long);
 		return arr.copy();
 	}
 	public static FltArr slice(FltArr arr) {
+		if (not(arr)) return new FltArr(blank.Flt);
 		return arr.copy();
 	}
 	public static DblArr slice(DblArr arr) {
+		if (not(arr)) return new DblArr(blank.Dbl);
 		return arr.copy();
 	}
 	public static BoolArr slice(BoolArr arr) {
+		if (not(arr)) return new BoolArr(blank.Bool);
 		return arr.copy();
 	}
 	public static String slice(String str, int start) {
-		if (start < 0 || start >= len(str))
-			return str;
+		if (not(str) || not(start) || isNeg(start) || start >= len(str))
+			return slice(str);
 		return str.substring(start, len(str));
 	}
 	public static String[] slice(String oldArr[], int start) {
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+			return slice(oldArr);
 		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
 											 len(oldArr));
 		return newArr;
 	}
 	public static int[] slice(int oldArr[], int start) {
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+			return slice(oldArr);
 		int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
 		return newArr;
 	}
 	public static long[] slice(long oldArr[], int start) {
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+			return slice(oldArr);
 		long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
 		return newArr;
 	}
 	public static float[] slice(float oldArr[], int start) {
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+			return slice(oldArr);
 		float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
 		return newArr;
 	}
 	public static double[] slice(double oldArr[], int start) {
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+			return slice(oldArr);
 		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
 											 len(oldArr));
 		return newArr;
 	}
 	public static boolean[] slice(boolean oldArr[], int start) {
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+			return slice(oldArr);
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
 											  len(oldArr));
 		return newArr;
 	}
 	public static StrArr slice(StrArr arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
 	public static IntArr slice(IntArr arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
 	public static LongArr slice(LongArr arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
 	public static FltArr slice(FltArr arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
 	public static DblArr slice(DblArr arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
 	public static BoolArr slice(BoolArr arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
 	public static String slice(String str, int start, int end) {
-		if (start < 0 || start >= len(str) || eq(start, end) || end < start || end <= 0 || end >= len(str))
-			return str;
+		if (not(str) || isNull(start) || start >= len(str) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(str))
+			return slice(str);
 		return str.substring(start, end);
 	}
 	public static String[] slice(String oldArr[], int start, int end) {
+		if (not(oldArr) || isNull(start) ||  start >= len(oldArr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(oldArr))
+			return slice(oldArr);
 		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static int[] slice(int oldArr[], int start, int end) {
+		if (not(oldArr) || isNull(start) ||  start >= len(oldArr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(oldArr))
+			return slice(oldArr);
 		int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static long[] slice(long oldArr[], int start, int end) {
+		if (not(oldArr) || isNull(start) ||  start >= len(oldArr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(oldArr))
+			return slice(oldArr);
 		long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static float[] slice(float oldArr[], int start, int end) {
+		if (not(oldArr) || isNull(start) ||  start >= len(oldArr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(oldArr))
+			return slice(oldArr);
 		float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static double[] slice(double oldArr[], int start, int end) {
+		if (not(oldArr) || isNull(start) ||  start >= len(oldArr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(oldArr))
+			return slice(oldArr);
 		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static boolean[] slice(boolean oldArr[], int start, int end) {
+		if (not(oldArr) || isNull(start) ||  start >= len(oldArr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(oldArr))
+			return slice(oldArr);
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static StrArr slice(StrArr arr, int start, int end) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(arr))
+			return slice(arr);
 		return arr.slice(start, end);
 	}
 	public static IntArr slice(IntArr arr, int start, int end) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(arr))
+			return slice(arr);
 		return arr.slice(start, end);
 	}
 	public static LongArr slice(LongArr arr, int start, int end) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(arr))
+			return slice(arr);
 		return arr.slice(start, end);
 	}
 	public static FltArr slice(FltArr arr, int start, int end) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(arr))
+			return slice(arr);
 		return arr.slice(start, end);
 	}
 	public static DblArr slice(DblArr arr, int start, int end) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(arr))
+			return slice(arr);
 		return arr.slice(start, end);
 	}
 	public static BoolArr slice(BoolArr arr, int start, int end) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(arr))
+			return slice(arr);
 		return arr.slice(start, end);
 	}
 	public static String sliceRight(String str, int start) {
-		return slice(str, 0, len(str) - start);
+		if (not(str) || not(start) || isNeg(start) || start >= len(str))
+			return slice(str);
+		return slice(str, len(str) - start, len(str));
 	}
 	public static String[] sliceRight(String[] arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static int[] sliceRight(int[] arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static long[] sliceRight(long[] arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static float[] sliceRight(float[] arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static double[] sliceRight(double[] arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static boolean[] sliceRight(boolean[] arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static StrArr sliceRight(StrArr arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static IntArr sliceRight(IntArr arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static LongArr sliceRight(LongArr arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static FltArr sliceRight(FltArr arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static DblArr sliceRight(DblArr arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static BoolArr sliceRight(BoolArr arr, int start) {
-		return slice(arr, 0, len(arr) - start);
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static String sliceEnd(String str, int earlyEnd) {
-		return slice(str, len(str) - earlyEnd);
+		if (not(str) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(str))
+			return slice(str);
+		return slice(str, 0, len(str) - earlyEnd);
 	}
 	public static String[] sliceEnd(String[] arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static int[] sliceEnd(int[] arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static long[] sliceEnd(long[] arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static float[] sliceEnd(float[] arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static double[] sliceEnd(double[] arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static boolean[] sliceEnd(boolean[] arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static StrArr sliceEnd(StrArr arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static IntArr sliceEnd(IntArr arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static LongArr sliceEnd(LongArr arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static FltArr sliceEnd(FltArr arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static DblArr sliceEnd(DblArr arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static BoolArr sliceEnd(BoolArr arr, int earlyEnd) {
-		return slice(arr, len(arr) - earlyEnd);
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static String sliceOff(String str, int earlyEnd) {
 		return sliceEnd(str, earlyEnd);
@@ -14115,42 +15058,67 @@ public class KL {
 		return sliceRight(arr, start);
 	}
 	public static String sliceKeep(String str, int end) {
+		if (not(str) || not(end) || isNeg(end) || end >= len(str)) return str;
 		return slice(str, 0, end);
 	}
 	public static String[] sliceKeep(String[] arr, int end) {
+		if (not(arr)) return blank.Str;
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static int[] sliceKeep(int[] arr, int end) {
+		if (not(arr)) return blank.Int;
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static long[] sliceKeep(long[] arr, int end) {
+		if (not(arr)) return blank.Long;
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static float[] sliceKeep(float[] arr, int end) {
+		if (not(arr)) return blank.Flt;
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static double[] sliceKeep(double[] arr, int end) {
+		if (not(arr)) return blank.Dbl;
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static boolean[] sliceKeep(boolean[] arr, int end) {
+		if (not(arr)) return blank.Bool;
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static StrArr sliceKeep(StrArr arr, int end) {
+		if (not(arr)) return new StrArr(blank.Str);
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static IntArr sliceKeep(IntArr arr, int end) {
+		if (not(arr)) return new IntArr(blank.Int);
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static LongArr sliceKeep(LongArr arr, int end) {
+		if (not(arr)) return new LongArr(blank.Long);
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static FltArr sliceKeep(FltArr arr, int end) {
+		if (not(arr)) return new FltArr(blank.Flt);
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static DblArr sliceKeep(DblArr arr, int end) {
+		if (not(arr)) return new DblArr(blank.Dbl);
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static BoolArr sliceKeep(BoolArr arr, int end) {
+		if (not(arr)) return new BoolArr(blank.Bool);
+		if (not(end) || isNeg(end) || end >= len(arr)) return slice(arr);
 		return slice(arr, 0, end);
 	}
 	public static String trim(String str) {
@@ -15001,11 +15969,13 @@ public class KL {
 		return in(arr, targetValue);
 	}
 	public static boolean match(String str, String re, boolean... bools) {
+		if (not(str) || not(re)) return false;
 		if (re.equals(".") || re.equals("*") || re.equals("+")
 				|| re.equals("?"))
 			re = "\\" + re;
 		re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
-		     .replaceAll("%%", "%")
+		     .replaceAll("(?<![\\.\\w\\)\\]\\\\])([\\+\\*])", "\\\\$1")
+			 .replaceAll("%%", "%")
 			 .replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 			 .replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
 			 .replaceAll("(?<!\\\\)%b", "(true|false)")
@@ -15027,16 +15997,18 @@ public class KL {
 			strict = bools[0] == true;
 		Pattern pattern = Pattern.compile(re,
 										  strict ? 0 : Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(str);
+		Matcher matcher = pattern.matcher(str.trim());
 		return !!matcher.find();
 	}
 	public static String findMatch(String str, String re, boolean... bools) {
+		if (not(str) || not(re)) return "";
 		if (re.equals(".") || re.equals("*") || re.equals("+")
 				|| re.equals("?")) {
 			re = "\\" + re;
 		}
 		re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
-		     .replaceAll("%%", "%")
+		     .replaceAll("(?<![\\.\\w\\)\\]\\\\])([\\+\\*])", "\\\\$1")
+			 .replaceAll("%%", "%")
 			 .replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 			 .replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
 			 .replaceAll("(?<!\\\\)%b", "(true|false)")
@@ -15059,18 +16031,21 @@ public class KL {
 		}
 		Pattern pattern = Pattern.compile("(" + re + ")",
 										  strict ? 0 : Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(str);
+		Matcher matcher = pattern.matcher(str.trim());
 		if (!matcher.find())
 			return "";
 		return matcher.group();
 	}
 	public static String[] findMatches(String str, String re, boolean... bools) {
+		if (not(str) || not(re)) return blank.Str;
+		//blank.Str actually refers to new String[]{}. I know it could have been blank.StrArr, but that would have been too long, and would be almost the same as typing new String[]{}. Sometimes, we're just looking for conciseness.
 		if (re.equals(".") || re.equals("*") || re.equals("+")
 				|| re.equals("?")) {
 			re = "\\" + re;
 		}
 		re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
-		     .replaceAll("%%", "%")
+		     .replaceAll("(?<![\\.\\w\\)\\]\\\\])([\\+\\*])", "\\\\$1")
+			 .replaceAll("%%", "%")
 			 .replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 			 .replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
 			 .replaceAll("(?<!\\\\)%b", "(true|false)")
@@ -15092,14 +16067,16 @@ public class KL {
 			strict = bools[0] == true;
 		}
 		Pattern pattern = Pattern.compile("(" + re + ")", strict ? 0 : Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(str);
+		Matcher matcher = pattern.matcher(str.trim());
 		StrArr arr = new StrArr();
-		while (matcher.find())
-			arr.push(matcher.group());
+		while (matcher.find()) {
+			if (!isEmpty(matcher.group())) arr.push(trim(matcher.group()));
+			//the isEmpty check has proven to be helpful
+		}
 		return arr.array();
 	}
 	public static int[] intsOf(String s) {
-		if (not(s)) return new int[]{};
+		if (not(s)) return new int[] {};
 		IntArr arr = new IntArr();
 		String[] matches = findMatches(s, "(?<!\\.)(\\d+)(?!\\.)");
 		for (int i : range(matches))
@@ -15115,7 +16092,7 @@ public class KL {
 		return resultantArr.array();
 	}
 	public static float[] fltsOf(String s) {
-		if (not(s)) return new float[]{};
+		if (not(s)) return new float[] {};
 		FltArr arr = new FltArr();
 		String[] matches = findMatches(s, "\\d*\\.\\d+");
 		for (int i : range(matches))
@@ -15131,7 +16108,7 @@ public class KL {
 		return resultantArr.array();
 	}
 	public static double[] dblsOf(String s) {
-		if (not(s)) return new double[]{};
+		if (not(s)) return new double[] {};
 		DblArr arr = new DblArr();
 		String[] matches = findMatches(s, "[\\d]*\\.\\d+");
 		for (int i : range(matches))
@@ -15143,45 +16120,67 @@ public class KL {
 		for (Object obj : objs) {
 			if (obj instanceof Double)
 				resultantArr.push((double) obj);
+			}
+			return resultantArr.array();
+		}
+		public static double[] numsOf(String s) {
+		if (not(s)) return new double[] {};
+		DblArr arr = new DblArr();
+		String[] matches = findMatches(s, "\\d*\\.?\\d+");
+		for (int i : range(matches))
+			arr.push(Dbl(matches[i]));
+		return arr.array();
+	}
+	public static double[] numsOf(Object... objs) {
+		DblArr resultantArr = new DblArr();
+		for (Object obj : objs) {
+			if (obj instanceof Number)
+				resultantArr.push((double) obj);
 		}
 		return resultantArr.array();
 	}
 	public static String[] emailsOf(String s) {
-		if (not(s)) return new String[]{};
+		if (not(s)) return new String[] {};
 		StrArr arr = new StrArr();
-		String[] matches = findMatches(s, "[\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
+		String[] matches = findMatches(s, "[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
 		for (int i : range(matches))
 			arr.push(matches[i]);
 		return arr.array();
 	}
 	public static String[] urlsOf(String s) {
-		if (not(s)) return new String[]{};
+		if (not(s)) return new String[] {};
 		StrArr arr = new StrArr();
-		String[] matches = findMatches(s, "(((ht|f)tps?|file|smb):\\\\/{2,3})?[\\w\\-]+\\.[a-zA-Z\\-]{2,}(\\.[\\w\\-]{2,})?(\\.[\\w\\-]{2,})?(\\\\/?[\\w\\\\/\\-\\+\\?\\=\\&\\%\\#\\s\\.\\:\\~\\;]+)");
+		String[] matches = findMatches(s, "(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?");
 		for (int i : range(matches))
 			arr.push(matches[i]);
 		return arr.array();
 	}
 	public static String[] phonesOf(String s) {
-		if (not(s)) return new String[]{};
+		if (not(s)) return new String[] {};
 		StrArr arr = new StrArr();
-		String[] matches = findMatches(s, "((([\\+\\d\\-\\.]{1,4})?[\\s\\-\\.]?\\d{3,5})|([\\+?\\d\\-\\.]{1,4})?[\\s\\-\\.]?\\\\((\\d{3}\\)))?");
+		String[] matches = findMatches(s, "((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))");
 		for (int i : range(matches))
 			arr.push(matches[i]);
 		return arr.array();
 	}
+	public static String[] findUserData(String s) {
+		if (not(s)) return blank.Str;
+		StrArr arr = new StrArr();
+		arr.push(emailsOf(s), urlsOf(s), phonesOf(s));
+		return arr.array();
+	}
 	public static boolean isEmail(String s) {
 		if (not(s)) return false;
-		return eq(trim(s), "[\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
+		return eq(trim(s), "[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
 		//apparently, Java is stupid when it comes to regular expression. Learned: neither "\\s"
 	}
 	public static boolean isUrl(String s) {
 		if (not(s)) return false;
-		return eq(trim(s), "(((ht|f)tps?|file|smb):\\\\/{2,3})?[\\w\\-]+\\.[a-zA-Z\\-]{2,}(\\.[\\w\\-]{2,})?(\\.[\\w\\-]{2,})?(\\\\/?[\\w\\\\/\\-\\+\\?\\=\\&\\%\\#\\s\\.\\:\\~\\;]+)");
+		return eq(trim(s), "(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?");
 	}
 	public static boolean isPhone(String s) {
 		if (not(s)) return false;
-		return eq(trim(s), "((([\\+\\d\\-\\.]{1,4})?[\\s\\-\\.]?\\d{3,5})|([\\+?\\d\\-\\.]{1,4})?[\\s\\-\\.]?\\\\((\\d{3}\\\\)))?");
+		return eq(trim(s), "((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))");
 	}
 	public static int[] findInts(String s) {
 		return intsOf(s);
@@ -15200,6 +16199,12 @@ public class KL {
 	}
 	public static double[] findDbls(Object... objs) {
 		return dblsOf(objs);
+	}
+	public static double[] findNums(String s) {
+		return numsOf(s);
+	}
+	public static double[] findNums(Object... objs) {
+		return numsOf(objs);
 	}
 	public static String[] findEmails(String s) {
 		return emailsOf(s);
@@ -15227,6 +16232,12 @@ public class KL {
 	}
 	public static boolean dblsIn(Object... objs) {
 		return dblsOf(objs).length > 0;
+	}
+	public static boolean numsIn(String s) {
+		return numsOf(s).length > 0;
+	}
+	public static boolean numsIn(Object... objs) {
+		return numsOf(objs).length > 0;
 	}
 	public static boolean emailsIn(String s) {
 		return emailsOf(s).length > 0;
@@ -15363,6 +16374,17 @@ public class KL {
 	public static BoolArr copyArr(BoolArr arr) {
 		return clone(arr);
 	}
+	public static final class blank {
+		public static String[] Str = new String[]{};
+		public static int[] Int = new int[]{};
+		public static char[] Char = new char[]{};
+		public static long[] Long = new long[]{};
+		public static float[] Flt = new float[]{};
+		public static double[] Dbl = new double[]{};
+		public static boolean[] Bool = new boolean[]{};
+		public static Object[] Obj = new Object[]{};
+	}
+	
 	public static String[] combine(String[] arrA, String[] arrB) {
 		int length1 = arrA.length;
 		int length2 = arrB.length;
@@ -15532,40 +16554,92 @@ public class KL {
 		return intersection(arrA, arrB);
 	}
 	public static String[] onlyKeep(String[] arrA, String... arrB) {
+		if (not(arrA) || not(arrB)) return blank.Str;
 		return intersection(arrA, arrB);
 	}
+	public static String[] onlyKeep(String[] arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return blank.Str;
+		return sliceKeep(arrA, end);
+	}
 	public static int[] onlyKeep(int[] arrA, int... arrB) {
+		if (not(arrA) || not(arrB)) return blank.Int;
+		//blank.Int is sugar for new int[]{}
+		if (len(arrB) == 1) {
+			int end = arrB[0];
+			if (not(end) || isInf(end) || isNeg(end)) return blank.Int;
+			return sliceKeep(arrA, end);
+		}
 		return intersection(arrA, arrB);
 	}
 	public static long[] onlyKeep(long[] arrA, long... arrB) {
 		return intersection(arrA, arrB);
 	}
+	public static long[] onlyKeep(long[] arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return blank.Long;
+		return sliceKeep(arrA, end);
+	}
 	public static float[] onlyKeep(float[] arrA, float... arrB) {
 		return intersection(arrA, arrB);
+	}
+	public static float[] onlyKeep(float[] arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return blank.Flt;
+		return sliceKeep(arrA, end);
 	}
 	public static double[] onlyKeep(double[] arrA, double... arrB) {
 		return intersection(arrA, arrB);
 	}
+	public static double[] onlyKeep(double[] arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return blank.Dbl;
+		return sliceKeep(arrA, end);
+	}
 	public static boolean[] onlyKeep(boolean[] arrA, boolean... arrB) {
 		return intersection(arrA, arrB);
+	}
+	public static boolean[] onlyKeep(boolean[] arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return blank.Bool;
+		return sliceKeep(arrA, end);
 	}
 	public static StrArr onlyKeep(StrArr arrA, StrArr arrB) {
 		return intersection(arrA, arrB);
 	}
+	public static StrArr onlyKeep(StrArr arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return new StrArr(blank.Str);
+		return sliceKeep(arrA, end);
+	}
 	public static IntArr onlyKeep(IntArr arrA, IntArr arrB) {
 		return intersection(arrA, arrB);
+	}
+	public static IntArr onlyKeep(IntArr arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return new IntArr(blank.Int);
+		return sliceKeep(arrA, end);
 	}
 	public static LongArr onlyKeep(LongArr arrA, LongArr arrB) {
 		return intersection(arrA, arrB);
 	}
+	public static LongArr onlyKeep(LongArr arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return new LongArr(blank.Long);
+		return sliceKeep(arrA, end);
+	}
 	public static FltArr onlyKeep(FltArr arrA, FltArr arrB) {
 		return intersection(arrA, arrB);
+	}
+	public static FltArr onlyKeep(FltArr arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return new FltArr(blank.Flt);
+		return sliceKeep(arrA, end);
 	}
 	public static DblArr onlyKeep(DblArr arrA, DblArr arrB) {
 		return intersection(arrA, arrB);
 	}
+	public static DblArr onlyKeep(DblArr arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return new DblArr(blank.Dbl);
+		return sliceKeep(arrA, end);
+	}
 	public static BoolArr onlyKeep(BoolArr arrA, BoolArr arrB) {
 		return intersection(arrA, arrB);
+	}
+	public static BoolArr onlyKeep(BoolArr arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) return new BoolArr(blank.Bool);
+		return sliceKeep(arrA, end);
 	}
 	public static String[] negativeIntersection(String[] arrA, String... arrB) {
 		StrArr result = new StrArr(arrA);
@@ -16127,7 +17201,20 @@ public class KL {
 		if (isNull(o))
 			return "null";
 		String middleware = o.getClass().toString();
-		if (!in(middleware, "\\.") && in(middleware, " ")) return middleware.split(" ")[1].replaceAll("\\$", "\\.");
+		if (!in(middleware, "\\.") && in(middleware, " ")) {
+			middleware = middleware .split(" ")[1];
+			if (in(middleware, "\\[")) return replace(middleware.replaceAll("\\[", "array\\."), "\\w$", m -> {
+				if (eq(m, "S")) return "str";
+				else if (eq(m, "I")) return "int";
+				else if (eq(m, "L")) return "long";
+				else if (eq(m, "F")) return "flt";
+				else if (eq(m, "D")) return "dbl";
+				else if (eq(m, "B")) return "bool";
+				else if (eq(m, "N")) return "num";
+				return "obj";
+			});
+			return middleware.replaceAll("\\$", "\\.");
+		}
 		String result = middleware.split("\\.")[2].toLowerCase();
 		return result;
 	}
@@ -17493,24 +18580,15 @@ public class KL {
 	}
 	public static void main(String[] args) {
 		sw(len("hiya"), "<2|>4", () -> print("match"), Else, () -> print("not a match"));
-		print(eq("hey", "(hi|he.+)"));
 		int age = 22;
 		print(sw(age, "<18", () -> print("Just too young."), "<23&>=18", () -> print("sorry, still underaged"), Else, () -> print("you're in the drinking age, get in the bar🍺")));
-		
-		
-		print("Check:",isEmail("abbaskhurram255@gmail.com.pk"));
-		print(trim("      g     p    u     "));
-		print(clrs.orange.getRed());
-		
-		String re = "\\%d %n %s %f %s %% \\%b . {}";
-		print(re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
-		     .replaceAll("%%", "%")
-			 .replaceAll("(?<!\\\\)%c", "[A-Za-z]")
-			 .replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
-			 .replaceAll("(?<!\\\\)%b", "(true|false)")
-			 .replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
-			 .replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
-			 .replaceAll("(?<!\\\\)%n", "\\\\d+"));
+
+
+	print(type(blank.Int));	print(type(numsOf("abbaskhurram255@gmail.com.pk ayeshaguriya656@xxx.com https://google.com/search?q=twitter 03012965459 +923141109738")));
+		printArr(numsOf("I love myself,. Ooh, have a look, that couple is kissing under-the-rain! 6 4 7 6.9 .44 acc255"));
+		print(join("me", "myself", "I"));
+
+        print(intArr(range(1, 10)).slice(0, 9));
 
 		/*
 		print(replace("hello there", "^hel\\w+", m -> m.toUpperCase()));
