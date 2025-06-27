@@ -12179,7 +12179,8 @@ public class KL {
 		   false, null, false, null, false, null, false, null, false,
 		   null);
 	}
-	public static final boolean Yes = true, No = !Yes;
+	public static final boolean Yes = true, No = !Yes, On = Yes, Off = No, Ok = Yes, NotOk = !Ok, Fail = NotOk;
+	public static Object none = null, ignore = none, pass = ignore;
 	public static String Else = "else";
 	public static int[] range(int n) {
 		IntArr arr = new IntArr();
@@ -12199,7 +12200,7 @@ public class KL {
 	}
 	public static int[] range(int m, int n, int... optional) {
 		IntArr arr = new IntArr();
-		if (isNull(m) || not(n) || eq(m, n))
+		if (isNull(m) || isNull(n) || eq(m, n))
 			return arr.array();
 		int step = 1;
 		if (is(optional) && len(optional) == 1) {
@@ -12239,7 +12240,7 @@ public class KL {
 	}
 	public static double[] range(double m, double n, int... optional) {
 		DblArr arr = new DblArr();
-		if (isNull(m) || not(n) || eq(m, n))
+		if (isNull(m) || isNull(n) || eq(m, n))
 			return arr.array();
 		int step = 1;
 		if (is(optional) && len(optional) == 1) {
@@ -12279,13 +12280,13 @@ public class KL {
 		return range(n);
 	}
 	public static double[] range(double m, double n, int gap, boolean reverse) {
-		if (isNull(m) || not(n) || eq(m, n)) return new double[] {};
+		if (isNull(m) || isNull(n) || eq(m, n)) return new double[] {};
 		if (reverse)
 			return range(n, m, gap);
 		return range(m, n, gap);
 	}
 	public static double[] range(double m, double n, boolean reverse) {
-		if (isNull(m) || not(n) || eq(m, n)) return new double[] {};
+		if (isNull(m) || isNull(n) || eq(m, n)) return new double[] {};
 		if (reverse)
 			return range(n, m);
 		return range(m, n);
@@ -13196,44 +13197,52 @@ public class KL {
 	// utilities
 	public static void println(Object... args) {
 		each(args, (arg, i) -> {
-			if (isChar(arg)) arg = "'" + arg + "'";
-			if (isDbl(arg)) arg = setPrecision((double)arg);
-			if (isArr(arg)) {
-				if (isArrOfChar(arg)) {
-					System.out.print("[\'"+join((char[])arg, "\', \'")+"\']");
-				}
-				else if (isArrOfStr(arg)) {
-					System.out.print("[\""+join((String[])arg, "\", \"")+"\"]");
-				}
-				else if (isArrOfInt(arg)) {
-					System.out.print("["+join((int[])arg)+"]");
-				}
-				else if (isArrOfLong(arg)) {
-					System.out.print("["+join((long[])arg)+"]");
-				}
-				else if (isArrOfFlt(arg)) {
-					System.out.print("["+join((float[])arg)+"]");
-				}
-				else if (isArrOfDbl(arg)) {
-					System.out.print("["+join((double[])arg)+"]");
-				}
-				else if (isArrOfBool(arg)) {
-					System.out.print("["+join((boolean[])arg)+"]");
-				}
-				else if (isArrOfNum(arg)) {
-					System.out.print("["+join((Number[])arg)+"]");
-				}
-				else if (isArrOfObj(arg)) {
-					System.out.print("["+join((Object[])arg, ", ")+"]");
-				}
-				return;
-			}
+			if (arg instanceof Character) arg = "'" + arg + "'";
+			if (arg instanceof Double) arg = setPrecision((double)arg);
 			System.out.print(arg + " ");
 		});
+	}
+	public static void println(Object[]... arrays) {
+		//System.out.println("here");
+		for (Object arr[] : arrays) {
+			if (isNull(arr)) continue;
+				if (isArrOfChar(arr)) {
+					System.out.print("[\'"+join(untangle((Character[])arr), "\', \'")+"\']");
+				}
+				else if (isArrOfStr(arr)) {
+					System.out.print("[\""+join((String[])arr, "\", \"")+"\"]");
+				}
+				else if (isArrOfInt(arr)) {
+					System.out.print("["+join(untangle((Integer[])arr))+"]");
+				}
+				else if (isArrOfLong(arr)) {
+					System.out.print("["+join(untangle((Long[])arr))+"]");
+				}
+				else if (isArrOfFlt(arr)) {
+					System.out.print("["+join(untangle((Float[])arr))+"]");
+				}
+				else if (isArrOfDbl(arr)) {
+					System.out.print("["+join(untangle((Double[])arr))+"]");
+				}
+				else if (isArrOfBool(arr)) {
+					System.out.print("["+join(untangle((Boolean[])arr))+"]");
+				}
+				else if (isArrOfNum(arr)) {
+					System.out.print("["+join((Number[])arr)+"]");
+				}
+				else if (isArrOfObj(arr)) {
+					System.out.print("["+join((Object[])arr, ", ")+"]");
+				}
+		}
 	}
 	public static void print(Object... args) {
 		// don't change this line
 		println(args);
+		System.out.print("\n");
+	}
+	public static void print(Object[]... arrays) {
+		// don't change this line
+		println(arrays);
 		System.out.print("\n");
 	}
 	public static void printf(String str, Object... args) {
@@ -14655,129 +14664,178 @@ public class KL {
 	}
 	public static int sum(int... ns) {
 		if (not(ns)) return 0;
-		return reduce(ns, (a, b) -> a+b);
+		int acc = 0;
+		for (int next = 0; next < ns.length; next++)
+			acc += ns[next];
+		return acc;
 	}
-	public static double sum(long... ns) {
+	public static long sum(long... ns) {
+		if (not(ns)) return 0;
 		long acc = 0;
 		for (int next = 0; next < ns.length; next++)
 			acc += ns[next];
 		return acc;
 	}
-	public static double sum(float... ns) {
+	public static float sum(float... ns) {
+		if (not(ns)) return 0;
 		float acc = 0;
 		for (int next = 0; next < ns.length; next++)
 			acc += ns[next];
 		return acc;
 	}
 	public static double sum(double... ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length; next++)
 			acc += ns[next];
 		return acc;
 	}
-	public static double sum(IntArr ns) {
+	public static int sum(IntArr ns) {
+		if (not(ns)) return 0;
 		int acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(LongArr ns) {
+	public static long sum(LongArr ns) {
+		if (not(ns)) return 0;
 		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(FltArr ns) {
+	public static float sum(FltArr ns) {
+		if (not(ns)) return 0;
 		float acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
 	public static double sum(DblArr ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(TreeS ns) {
+	public static int sum(ObjI ns) {
+		if (not(ns)) return 0;
+		int acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc += ns.array()[next];
+		return acc;
+	}
+	public static long sum(ObjL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc += ns.array()[next];
+		return acc;
+	}
+	public static float sum(ObjF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc += ns.array()[next];
+		return acc;
+	}
+	public static double sum(ObjD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(TreeSL ns) {
-		double acc = 0;
+	public static int sum(TreeS ns) {
+		if (not(ns)) return 0;
+		int acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(TreeL ns) {
-		double acc = 0;
+	public static long sum(TreeSL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(TreeSF ns) {
-		double acc = 0;
+	public static long sum(TreeL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(TreeF ns) {
-		double acc = 0;
+	public static float sum(TreeSF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc += ns.array()[next];
+		return acc;
+	}
+	public static float sum(TreeF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
 	public static double sum(TreeSD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
 	public static double sum(TreeD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double difference(int... ns) {
+	public static int difference(int... ns) {
+		if (not(ns)) return 0;
 		int acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc -= ns[next];
 		return acc;
 	}
-	public static double difference(long... ns) {
+	public static long difference(long... ns) {
+		if (not(ns)) return 0;
 		long acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc -= ns[next];
 		return acc;
 	}
-	public static double difference(float... ns) {
+	public static float difference(float... ns) {
+		if (not(ns)) return 0;
 		float acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc -= ns[next];
 		return acc;
 	}
 	public static double difference(double... ns) {
+		if (not(ns)) return 0;
 		double acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc -= ns[next];
 		return acc;
 	}
-	public static double difference(IntArr ns) {
+	public static int difference(IntArr ns) {
 		int acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(LongArr ns) {
+	public static long difference(LongArr ns) {
 		long acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(FltArr ns) {
+	public static float difference(FltArr ns) {
 		float acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc -= ns.array()[next];
@@ -14789,229 +14847,351 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(TreeS ns) {
+	public static int difference(ObjI ns) {
+		if (not(ns)) return 0;
+		int acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc -= ns.array()[next];
+		return acc;
+	}
+	public static long difference(ObjL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc -= ns.array()[next];
+		return acc;
+	}
+	public static float difference(ObjF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc -= ns.array()[next];
+		return acc;
+	}
+	public static double difference(ObjD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(TreeSL ns) {
-		double acc = 0;
+	public static int difference(TreeS ns) {
+		if (not(ns)) return 0;
+		int acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(TreeL ns) {
-		double acc = 0;
+	public static long difference(TreeSL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(TreeSF ns) {
-		double acc = 0;
+	public static long difference(TreeL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(TreeF ns) {
-		double acc = 0;
+	public static float difference(TreeSF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc -= ns.array()[next];
+		return acc;
+	}
+	public static float difference(TreeF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
 	public static double difference(TreeSD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
 	public static double difference(TreeD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double product(int... ns) {
+	public static int product(int... ns) {
+		if (not(ns)) return 0;
 		int acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc *= ns[next];
 		return acc;
 	}
-	public static double product(long... ns) {
+	public static long product(long... ns) {
+		if (not(ns)) return 0;
 		long acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc *= ns[next];
 		return acc;
 	}
-	public static double product(float... ns) {
+	public static float product(float... ns) {
+		if (not(ns)) return 0;
 		float acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc *= ns[next];
 		return acc;
 	}
 	public static double product(double... ns) {
+		if (not(ns)) return 0;
 		double acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc *= ns[next];
 		return acc;
 	}
-	public static double product(IntArr ns) {
+	public static int product(IntArr ns) {
+		if (not(ns)) return 0;
 		int acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(LongArr ns) {
+	public static long product(LongArr ns) {
+		if (not(ns)) return 0;
 		long acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(FltArr ns) {
+	public static float product(FltArr ns) {
+		if (not(ns)) return 0;
 		float acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
 	public static double product(DblArr ns) {
+		if (not(ns)) return 0;
 		double acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(TreeS ns) {
+	public static int product(ObjI ns) {
+		if (not(ns)) return 0;
+		int acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc *= ns.array()[next];
+		return acc;
+	}
+	public static long product(ObjL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc *= ns.array()[next];
+		return acc;
+	}
+	public static float product(ObjF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc *= ns.array()[next];
+		return acc;
+	}
+	public static double product(ObjD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(TreeSL ns) {
-		double acc = 0;
+	public static int product(TreeS ns) {
+		if (not(ns)) return 0;
+		int acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(TreeL ns) {
-		double acc = 0;
+	public static long product(TreeSL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(TreeSF ns) {
-		double acc = 0;
+	public static long product(TreeL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(TreeF ns) {
-		double acc = 0;
+	public static float product(TreeSF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc *= ns.array()[next];
+		return acc;
+	}
+	public static float product(TreeF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
 	public static double product(TreeSD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
 	public static double product(TreeD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(int... ns) {
+	public static int quotient(int... ns) {
+		if (not(ns)) return 0;
 		int acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc /= ns[next];
 		return acc;
 	}
-	public static double quotient(long... ns) {
+	public static long quotient(long... ns) {
+		if (not(ns)) return 0;
 		long acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc /= ns[next];
 		return acc;
 	}
-	public static double quotient(float... ns) {
+	public static float quotient(float... ns) {
+		if (not(ns)) return 0;
 		float acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc /= ns[next];
 		return acc;
 	}
 	public static double quotient(double... ns) {
+		if (not(ns)) return 0;
 		double acc = ns[0];
 		for (int next = 1; next < ns.length; next++)
 			acc /= ns[next];
 		return acc;
 	}
-	public static double quotient(IntArr ns) {
+	public static int quotient(IntArr ns) {
+		if (not(ns)) return 0;
 		int acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(LongArr ns) {
+	public static long quotient(LongArr ns) {
+		if (not(ns)) return 0;
 		long acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(FltArr ns) {
+	public static float quotient(FltArr ns) {
+		if (not(ns)) return 0;
 		float acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
 	public static double quotient(DblArr ns) {
+		if (not(ns)) return 0;
 		double acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(TreeS ns) {
+	public static int quotient(ObjI ns) {
+		if (not(ns)) return 0;
+		int acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc /= ns.array()[next];
+		return acc;
+	}
+	public static long quotient(ObjL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc /= ns.array()[next];
+		return acc;
+	}
+	public static float quotient(ObjF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc /= ns.array()[next];
+		return acc;
+	}
+	public static double quotient(ObjD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(TreeSL ns) {
-		double acc = 0;
+	public static int quotient(TreeS ns) {
+		if (not(ns)) return 0;
+		int acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(TreeL ns) {
-		double acc = 0;
+	public static long quotient(TreeSL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(TreeSF ns) {
-		double acc = 0;
+	public static long quotient(TreeL ns) {
+		if (not(ns)) return 0;
+		long acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(TreeF ns) {
-		double acc = 0;
+	public static float quotient(TreeSF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
+		for (int next = 0; next < ns.length(); next++)
+			acc /= ns.array()[next];
+		return acc;
+	}
+	public static float quotient(TreeF ns) {
+		if (not(ns)) return 0;
+		float acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
 	public static double quotient(TreeSD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
 	public static double quotient(TreeD ns) {
+		if (not(ns)) return 0;
 		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
 	}
 	public static int pow(int n, int power) {
+		if (isNull(n, power)) return 0;
 		return (int) Math.pow(n, power);
 	}
 	public static double sq(double n) {
@@ -15055,6 +15235,21 @@ public class KL {
 		return stat.getMin();
 	}
 	public static double min(DblArr nums) {
+		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
+									   .summaryStatistics();
+		return stat.getMin();
+	}
+	public static int min(ObjI nums) {
+		IntSummaryStatistics stat = Arrays.stream(nums.array())
+									   .summaryStatistics();
+		return stat.getMin();
+	}
+	public static long min(ObjL nums) {
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+									   .summaryStatistics();
+		return stat.getMin();
+	}
+	public static double min(ObjD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 									   .summaryStatistics();
 		return stat.getMin();
@@ -15107,6 +15302,21 @@ public class KL {
 		return stat.getMax();
 	}
 	public static double max(DblArr nums) {
+		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
+									   .summaryStatistics();
+		return stat.getMax();
+	}
+	public static int max(ObjI nums) {
+		IntSummaryStatistics stat = Arrays.stream(nums.array())
+									   .summaryStatistics();
+		return stat.getMax();
+	}
+	public static long max(ObjL nums) {
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+									   .summaryStatistics();
+		return stat.getMax();
+	}
+	public static double max(ObjD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 									   .summaryStatistics();
 		return stat.getMax();
@@ -15796,6 +16006,7 @@ public class KL {
 		return result.array();
 	}
 	public static double percentify(double n1, double n2) {
+		if (not(n1) || not(n2)) return 0;
 		if (n1 < n2)
 			return Math.round(n1 / n2 * 100.0) / 100.0;
 		else
@@ -15806,8 +16017,10 @@ public class KL {
 		if (objs == null) return true;
 		int count = 0;
 		for (Object o : objs) {
-			if (o == null)
+			if (o == null || (o instanceof Double ? isInfinity((double)o) : false)) {
+				//tested: the else false clause stays, as it gets ignored; if o is a non-double, only the first condition is tested, the RHS will just be ignored
 				count++;
+			}
 		}
 		return count > 0;
 	}
@@ -15834,7 +16047,7 @@ public class KL {
 		return isNull(subArrays);
 	}
 	public static boolean isInfinity(double n) {
-		return n == infinity || n == Double.NEGATIVE_INFINITY || isNull(n);
+		return n == infinity || n == Double.NEGATIVE_INFINITY;
 	}
 	public static boolean isInf(double n) {
 		return isInfinity(n);
@@ -16232,49 +16445,50 @@ public class KL {
 	public static boolean not(Object o) {
 		return isnl(o);
 	}
-	public static boolean not(char... arr) {
+	public static boolean not(char[] arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(char[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
 	}
-	public static boolean not(String... arr) {
+	public static boolean not(String[] arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(String[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
 	}
-	public static boolean not(int... arr) {
+	public static boolean not(int[] arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(int[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
 	}
-	public static boolean not(long... arr) {
+	public static boolean not(long[] arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(long[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
 	}
-	public static boolean not(float... arr) {
+	public static boolean not(float[] arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(float[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
 	}
-	public static boolean not(double... arr) {
+	public static boolean not(double[] arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(double[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
 	}
-	public static boolean not(boolean... arr) {
+	public static boolean not(boolean[] arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(boolean[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(Object... arr) {
+		//^ *parameter Object... has to stay Object..., not `Object[]`, to avoid overlap in method calls
 		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(Object[]... arrays) {
@@ -16370,26 +16584,53 @@ public class KL {
 	public static boolean is(Object o) {
 		return !not(o);
 	}
+	public static boolean is(char[] arr) {
+		return !not(arr);
+	}
+	public static boolean is(char[]... arrays) {
+		return !not(arrays);
+	}
 	public static boolean is(String[] arr) {
 		return !not(arr);
+	}
+	public static boolean is(String[]... arrays) {
+		return !not(arrays);
 	}
 	public static boolean is(int[] arr) {
 		return !not(arr);
 	}
+	public static boolean is(int[]... arrays) {
+		return !not(arrays);
+	}
 	public static boolean is(long[] arr) {
 		return !not(arr);
+	}
+	public static boolean is(long[]... arrays) {
+		return !not(arrays);
 	}
 	public static boolean is(float[] arr) {
 		return !not(arr);
 	}
+	public static boolean is(float[]... arrays) {
+		return !not(arrays);
+	}
 	public static boolean is(double[] arr) {
 		return !not(arr);
+	}
+	public static boolean is(double[]... arrays) {
+		return !not(arrays);
 	}
 	public static boolean is(boolean[] arr) {
 		return !not(arr);
 	}
-	public static boolean is(Object[] arr) {
+	public static boolean is(boolean[]... arrays) {
+		return !not(arrays);
+	}
+	public static boolean is(Object... arr) {
 		return !not(arr);
+	}
+	public static boolean is(Object[]... arrays) {
+		return !not(arrays);
 	}
 	public static boolean is(StrArr arr) {
 		return !not(arr);
@@ -18312,7 +18553,8 @@ public class KL {
 		return in(arr, targetValue);
 	}
 	public static boolean match(String str, String re, boolean... bools) {
-		if (not(str) || not(re)) return false;
+		if (isNull(str) || isNull(re)) return false;
+		//these null checks have to stay NULL checks, not entire `not` checks, as not(re) would trim whitespace " ", which we sometimes DO need to look up in a string to see if the string is more than one word, down to ""
 		if (re.equals(".") || re.equals("*") || re.equals("+")
 				|| re.equals("?"))
 			re = "\\" + re;
@@ -19519,6 +19761,18 @@ public class KL {
 	public static boolean isEmpty(String s) {
 		return 0 == len(s);
 	}
+	public static boolean isEmpty(int n) {
+		return 0 == n;
+	}
+	public static boolean isEmpty(long n) {
+		return 0 == n;
+	}
+	public static boolean isEmpty(float n) {
+		return 0 == n;
+	}
+	public static boolean isEmpty(double n) {
+		return 0 == n;
+	}
 	public static boolean isEmpty(char[] arr) {
 		return 0 == len(arr);
 	}
@@ -19678,31 +19932,30 @@ public class KL {
 		if (isNull(o))
 			return "null";
 		String middleware = o.getClass().toString();
-		if (!in(middleware, "\\.") && in(middleware, " ")) {
+		if (!in(middleware, "\\.") && in(middleware, "\\s")) {
 			middleware = middleware .split(" ")[1];
 			if (in(middleware, "\\[")) return replace(middleware.replaceAll("\\[", "array\\."), "\\w$", m -> {
 				if (eq(m, "C")) return "char";
-				else if (eq(m, "S")) return "str";
+				//we'll fix string arrays later
 				else if (eq(m, "I")) return "int";
 				else if (eq(m, "L")) return "long";
 				else if (eq(m, "F")) return "flt";
 				else if (eq(m, "D")) return "dbl";
 				else if (eq(m, "B")) return "bool";
-				else if (eq(m, "N")) return "num";
-				return "obj";
+				return "arr";
 			});
 			return middleware.replaceAll("\\$", "\\.").replaceAll("^KL\\.", "");
 		}
-		String result = middleware.split("\\.")[2].replaceAll(";$", "").toLowerCase();
+		String result = middleware.split("\\.")[2].toLowerCase().replaceAll("string[;;]+", "array.str").replaceAll("number[;;]+", "array.num").replaceAll("object[;;]+", "array.obj");
 		return result;
 	}
 	public static boolean type(Object obj, String guessedType) {
-		if (not(obj) || not(guessedType))
+		if (not(guessedType))
 			return false;
 		return len(guessedType) < 3 ? startsWith(type(obj), guessedType) : in(type(obj), guessedType);
 	}
 	// let's set up some "type"-helpers for the function
-	public static String Ch, Str = "string", Int = "integer", Char = Ch = "character",
+	public static String None = "null", Ch, Str = "string", Int = "integer", Char = Ch = "character",
 						 Long = "long", Flt = "float", Dbl = "double", Bool = "boolean",
 						 Arr = "array\\.",
 						 ArrOfChar = "array\\.char",
@@ -19720,6 +19973,13 @@ public class KL {
 						 FltArr = "FltArr",
 						 DblArr = "DblArr",
 						 BoolArr = "BoolArr";
+	public static char[] charArrToCharArr(Character[] inputArr) {
+		int length = inputArr.length;
+		char resultingArr[] = new char[length];
+		for (int i = 0; i < length; i++)
+			resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
 	public static int[] intArrToIntArr(Integer[] inputArr) {
 		int length = inputArr.length;
 		int resultingArr[] = new int[length];
@@ -19741,6 +20001,9 @@ public class KL {
 			resultingArr[i] = inputArr[i];
 		return resultingArr;
 	}
+	public static float[] fltArrToFltArr(Float[] inputArr) {
+		return floatArrToFloatArr(inputArr);
+	}
 	public static double[] dblArrToDblArr(Double[] inputArr) {
 		int length = inputArr.length;
 		double resultingArr[] = new double[length];
@@ -19754,6 +20017,24 @@ public class KL {
 		for (int i = 0; i < length; i++)
 			resultingArr[i] = inputArr[i];
 		return resultingArr;
+	}
+	public static char[] untangle(Character[] inputArr) {
+		return charArrToCharArr(inputArr);
+	}
+	public static int[] untangle(Integer[] inputArr) {
+		return intArrToIntArr(inputArr);
+	}
+	public static long[] untangle(Long[] inputArr) {
+		return longArrToLongArr(inputArr);
+	}
+	public static float[] untangle(Float[] inputArr) {
+		return floatArrToFloatArr(inputArr);
+	}
+	public static double[] untangle(Double[] inputArr) {
+		return dblArrToDblArr(inputArr);
+	}
+	public static boolean[] untangle(Boolean[] inputArr) {
+		return boolArrToBoolArr(inputArr);
 	}
 	public static String[] reverse(String[] arr) {
 		return new StrArr(arr).reverse().array();
@@ -21073,20 +21354,28 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static void main(String[] args) {
-		sw(len("hiya"), "<12&>=4", () -> print("match"), Else, () -> print("not a match"));
-		int age = 22;
-		print(sw(age, "<18", () -> print("Just too young."), "<23&>=18", () -> print("sorry, still underaged"), Else, () -> print("you're in the drinking age, get in the bar🍺")));
-		sw(true, Yes, () -> print("the lights are on"), Else, () -> print("off"));
-
-
-    	printArr(range(3, 1));
-    	print(type(pesa(), "pesa"));
-    	print(type(StrArr(), StrArr));
-    	print(type(wordsOf("hi hey yippee")));
-    	print(type(new String[]{"hi", "hey"}));
+    	String[] arr = {},
+		  arr2 = blank.Str;
+		print(arr); //printf -> print missing
+		
+		
+		
+		
+		
+		
+		
+		/*
+		print(type(colors.red));
+		print(type(new Number[]{7}));
+		print(type(new Object[]{"hi"}));
+    	print(type(arr2));
     	print(not(new String[]{}, new String[]{"hi"}));
-    	print(sum(3, 8)); //note: sum(int...ns) might need fixing
         print(not("hi", null));
+        */
+        
+        
+        
+        
         
 		/*
 		print(replace("hello there", "^hel\\w+", m -> m.toUpperCase()));
@@ -21100,6 +21389,11 @@ public class KL {
 		char[] chars = Chars(lastOf(arr));
 		printArr(upper(chars));
 		printArr(sentCase(arr));
+		
+		sw(len("hiya"), "<12&>=4", () -> print("match"), Else, () -> print("not a match"));
+		int age = 22;
+		print(sw(age, "<18", () -> print("Just too young."), "<23&>=18", () -> print("sorry, still underaged"), Else, () -> print("you're in the drinking age, get in the bar🍺")));
+		sw(true, Yes, () -> print("the lights are on"), Else, () -> print("off"));
 		*/
 	}
 }
