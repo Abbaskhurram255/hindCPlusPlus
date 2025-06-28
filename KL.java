@@ -4051,22 +4051,6 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		Value first() {
-			Map.Entry<Key, Value> firstEntry = super.firstEntry();
-			Value firstValue = null;
-			if (firstEntry != null) {
-				firstValue = firstEntry.getValue();
-			}
-			return firstValue;
-		}
-		Value last() {
-			Map.Entry<Key, Value> lastEntry = super.lastEntry();
-			Value lastValue = null;
-			if (lastEntry != null) {
-				lastValue = lastEntry.getValue();
-			}
-			return lastValue;
-		}
 		Set<Key> keys() {
 			return super.keySet();
 		}
@@ -4221,6 +4205,18 @@ public class KL {
 		int nthlast(int n) {
 			return nthLastValue(n);
 		}
+		int first() {
+			return nth(0);
+		}
+		int second() {
+			return nth(1);
+		}
+		int seclast() {
+			return nthlast(2);
+		}
+		int last() {
+			return nthlast(1);
+		}
 		boolean has(Object o) {
 			if (o instanceof String) return super.hasKey((String)o);
 			else if (o instanceof Integer) return super.hasValue((Integer)o);
@@ -4339,6 +4335,18 @@ public class KL {
 		long nthlast(int n) {
 			return nthLastValue(n);
 		}
+		long first() {
+			return nth(0);
+		}
+		long second() {
+			return nth(1);
+		}
+		long seclast() {
+			return nthlast(2);
+		}
+		long last() {
+			return nthlast(1);
+		}
 		boolean has(Object o) {
 			if (o instanceof String) return super.hasKey((String)o);
 			else if (o instanceof Long) return super.hasValue((Long)o);
@@ -4456,6 +4464,18 @@ public class KL {
 		}
 		float nthlast(int n) {
 			return nthLastValue(n);
+		}
+		float first() {
+			return nth(0);
+		}
+		float second() {
+			return nth(1);
+		}
+		float seclast() {
+			return nthlast(2);
+		}
+		float last() {
+			return nthlast(1);
 		}
 		boolean has(Object o) {
 			if (o instanceof String) return super.hasKey((String)o);
@@ -4579,6 +4599,18 @@ public class KL {
 		double nthlast(int n) {
 			return nthLastValue(n);
 		}
+		double first() {
+			return nth(0);
+		}
+		double second() {
+			return nth(1);
+		}
+		double seclast() {
+			return nthlast(2);
+		}
+		double last() {
+			return nthlast(1);
+		}
 		boolean has(Object o) {
 			if (o instanceof String) return super.hasKey((String)o);
 			else if (o instanceof Double) return super.hasValue((Double)o);
@@ -4701,6 +4733,18 @@ public class KL {
 		boolean nthlast(int n) {
 			return nthLastValue(n);
 		}
+		boolean first() {
+			return nth(0);
+		}
+		boolean second() {
+			return nth(1);
+		}
+		boolean seclast() {
+			return nthlast(2);
+		}
+		boolean last() {
+			return nthlast(1);
+		}
 		boolean has(Object o) {
 			if (o instanceof String) return super.hasKey((String)o);
 			else if (o instanceof Boolean) return super.hasValue((Boolean)o);
@@ -4813,6 +4857,18 @@ public class KL {
 		}
 		String nthlast(int n) {
 			return nthLastValue(n);
+		}
+		String first() {
+			return nth(0);
+		}
+		String second() {
+			return nth(1);
+		}
+		String seclast() {
+			return nthlast(2);
+		}
+		String last() {
+			return nthlast(1);
 		}
 		boolean has(Object o) {
 			if (o instanceof Integer) return super.hasKey((Integer)o);
@@ -4930,6 +4986,18 @@ public class KL {
 		long nthlast(int n) {
 			return nthLastValue(n);
 		}
+		long first() {
+			return nth(0);
+		}
+		long second() {
+			return nth(1);
+		}
+		long seclast() {
+			return nthlast(2);
+		}
+		long last() {
+			return nthlast(1);
+		}
 		boolean has(Object o) {
 			if (o instanceof Integer) return super.hasKey((Integer)o);
 			else if (o instanceof Long) return super.hasValue((Long)o);
@@ -5045,6 +5113,18 @@ public class KL {
 		}
 		float nthlast(int n) {
 			return nthLastValue(n);
+		}
+		float first() {
+			return nth(0);
+		}
+		float second() {
+			return nth(1);
+		}
+		float seclast() {
+			return nthlast(2);
+		}
+		float last() {
+			return nthlast(1);
 		}
 		boolean has(Object o) {
 			if (o instanceof Integer) return super.hasKey((Integer)o);
@@ -5162,6 +5242,18 @@ public class KL {
 		double nthlast(int n) {
 			return nthLastValue(n);
 		}
+		double first() {
+			return nth(0);
+		}
+		double second() {
+			return nth(1);
+		}
+		double seclast() {
+			return nthlast(2);
+		}
+		double last() {
+			return nthlast(1);
+		}
 		boolean has(Object o) {
 			if (o instanceof Integer) return super.hasKey((Integer)o);
 			else if (o instanceof Double) return super.hasValue((Double)o);
@@ -5277,6 +5369,18 @@ public class KL {
 		}
 		boolean nthlast(int n) {
 			return nthLastValue(n);
+		}
+		boolean first() {
+			return nth(0);
+		}
+		boolean second() {
+			return nth(1);
+		}
+		boolean seclast() {
+			return nthlast(2);
+		}
+		boolean last() {
+			return nthlast(1);
 		}
 		boolean has(Object o) {
 			if (o instanceof Integer) return super.hasKey((Integer)o);
@@ -13196,56 +13300,31 @@ public class KL {
 	}
 	// utilities
 	public static void println(Object... args) {
-		each(args, (arg, i) -> {
-			if (arg instanceof Character) arg = "'" + arg + "'";
-			if (arg instanceof Double) arg = setPrecision((double)arg);
-			System.out.print(arg + " ");
-		});
-	}
-	public static void println(Object[]... arrays) {
-		//System.out.println("here");
-		for (Object arr[] : arrays) {
-			if (isNull(arr)) continue;
-				if (isArrOfChar(arr)) {
-					System.out.print("[\'"+join(untangle((Character[])arr), "\', \'")+"\']");
+		if (len(args) >= 2 && !isNull(args[0]) && args[0] instanceof String && in(Str(args[0]), "[\\%\\{\\}]")) {
+			new KL().printf((String) args[0], slice(args, 1));
+			return;
+		}
+		if (len(args) == 1 && !isNull(args[0]) && isArr(args[0])) {
+			printArr(args[0]);
+			return;
+		}
+		else {
+			for (Object arg : args) {
+				if (!isNull(arg) && isArr(arg)) {
+					printArr(arg);
+					System.out.print(" ");
 				}
-				else if (isArrOfStr(arr)) {
-					System.out.print("[\""+join((String[])arr, "\", \"")+"\"]");
-				}
-				else if (isArrOfInt(arr)) {
-					System.out.print("["+join(untangle((Integer[])arr))+"]");
-				}
-				else if (isArrOfLong(arr)) {
-					System.out.print("["+join(untangle((Long[])arr))+"]");
-				}
-				else if (isArrOfFlt(arr)) {
-					System.out.print("["+join(untangle((Float[])arr))+"]");
-				}
-				else if (isArrOfDbl(arr)) {
-					System.out.print("["+join(untangle((Double[])arr))+"]");
-				}
-				else if (isArrOfBool(arr)) {
-					System.out.print("["+join(untangle((Boolean[])arr))+"]");
-				}
-				else if (isArrOfNum(arr)) {
-					System.out.print("["+join((Number[])arr)+"]");
-				}
-				else if (isArrOfObj(arr)) {
-					System.out.print("["+join((Object[])arr, ", ")+"]");
-				}
+				if (arg instanceof Character) arg = "'" + arg + "'";
+				if (arg instanceof Double) arg = setPrecision((double)arg);
+				System.out.print(arg + " ");
+			}
 		}
 	}
 	public static void print(Object... args) {
-		// don't change this line
 		println(args);
 		System.out.print("\n");
 	}
-	public static void print(Object[]... arrays) {
-		// don't change this line
-		println(arrays);
-		System.out.print("\n");
-	}
-	public static void printf(String str, Object... args) {
+	public void printf(String str, Object... args) {
 		print(f(str, args));
 	}
 	public static void printf(int n) {
@@ -13261,35 +13340,39 @@ public class KL {
 		print(f(n));
 	}
 	// printing arrays
-	public static void printArr(char[] arr) {
-		print("[");
-		for (char arg : arr)
-			print("\t'" + arg + "', ");
-		print("]");
-	}
-	public static void printArr(String[] arr) {
-		print("[");
-		for (String arg : arr)
-			print("\t\"" + arg + "\", ");
-		print("]");
-	}
-	public static void printArr(int[] arr) {
-		print(Arrays.toString(arr));
-	}
-	public static void printArr(long[] arr) {
-		print(Arrays.toString(arr));
-	}
-	public static void printArr(float[] arr) {
-		print(Arrays.toString(arr));
-	}
-	public static void printArr(double[] arr) {
-		print(Arrays.toString(arr));
-	}
-	public static void printArr(boolean[] arr) {
-		print(Arrays.toString(arr));
-	}
-	public static void printArr(Object[] arr) {
-		print(Arrays.toString(arr));
+	public static void printArr(Object arg) {
+        if (isNull(arg)) return;
+    	if (arg instanceof Object[]) {
+			//if one it's of those arrays that are based on a class
+			if (isArrOfStr(arg)) {
+				System.out.print("[\""+join((String[])arg, "\", \"")+"\"]");
+			}
+			else if (isArrOfNum(arg)) {
+				System.out.print("["+join((Number[])arg)+"]");
+			}
+			else if (isArrOfObj(arg)) {
+				System.out.print("["+join((Object[])arg, ", ")+"]");
+			}
+		} else {
+			if (isArrOfChar(arg)) {
+				System.out.print("[\'"+join((char[])arg, "\', \'")+"\']");
+			}
+			else if (isArrOfInt(arg)) {
+				System.out.print("["+join((int[])arg)+"]");
+			}
+			else if (isArrOfLong(arg)) {
+				System.out.print("["+join((long[])arg)+"]");
+			}
+			else if (isArrOfFlt(arg)) {
+				System.out.print("["+join((float[])arg)+"]");
+			}
+			else if (isArrOfDbl(arg)) {
+				System.out.print("["+join((double[])arg)+"]");
+			}
+			else if (isArrOfBool(arg)) {
+				System.out.print("["+join((boolean[])arg)+"]");
+			}
+		}
 	}
 	public static void printArr(StrArr arr) {
 		print(arr.toString());
@@ -13375,9 +13458,6 @@ public class KL {
 	public static void printAll(boolean arr[]) {
 		printArr(arr);
 	}
-	public static void printAll(Object arr[]) {
-		printArr(arr);
-	}
 	public static void printAll(StrArr arr) {
 		printArr(arr);
 	}
@@ -13442,93 +13522,6 @@ public class KL {
 		printArr(t);
 	}
 	public static void printAll(TreeB t) {
-		printArr(t);
-	}
-	public static void printEach(String arr[]) {
-		printArr(arr);
-	}
-	public static void printEach(int arr[]) {
-		printArr(arr);
-	}
-	public static void printEach(long arr[]) {
-		printArr(arr);
-	}
-	public static void printEach(float arr[]) {
-		printArr(arr);
-	}
-	public static void printEach(double arr[]) {
-		printArr(arr);
-	}
-	public static void printEach(boolean arr[]) {
-		printArr(arr);
-	}
-	public static void printEach(Object arr[]) {
-		printArr(arr);
-	}
-	public static void printEach(StrArr arr) {
-		printArr(arr);
-	}
-	public static void printEach(IntArr arr) {
-		printArr(arr);
-	}
-	public static void printEach(LongArr arr) {
-		printArr(arr);
-	}
-	public static void printEach(FltArr arr) {
-		printArr(arr);
-	}
-	public static void printEach(DblArr arr) {
-		printArr(arr);
-	}
-	public static void printEach(BoolArr arr) {
-		printArr(arr);
-	}
-	public static void printEach(ObjS o) {
-		printArr(o);
-	}
-	public static void printEach(ObjI o) {
-		printArr(o);
-	}
-	public static void printEach(ObjL o) {
-		printArr(o);
-	}
-	public static void printEach(ObjF o) {
-		printArr(o);
-	}
-	public static void printEach(ObjD o) {
-		printArr(o);
-	}
-	public static void printEach(ObjB o) {
-		printArr(o);
-	}
-	public static void printEach(TreeS t) {
-		printArr(t);
-	}
-	public static void printEach(TreeI t) {
-		printArr(t);
-	}
-	public static void printEach(TreeSL t) {
-		printArr(t);
-	}
-	public static void printEach(TreeL t) {
-		printArr(t);
-	}
-	public static void printEach(TreeSF t) {
-		printArr(t);
-	}
-	public static void printEach(TreeF t) {
-		printArr(t);
-	}
-	public static void printEach(TreeSD t) {
-		printArr(t);
-	}
-	public static void printEach(TreeD t) {
-		printArr(t);
-	}
-	public static void printEach(TreeSB t) {
-		printArr(t);
-	}
-	public static void printEach(TreeB t) {
 		printArr(t);
 	}
 	// getting user input
@@ -15456,6 +15449,8 @@ public class KL {
 	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
 						 qt = 1e18, sx = 1e21, sp = 1e24, oc = 1e27, nn = 1e30, dc = 1e33;
 	public static String fpkr(int amount) {
+		if (isNull(amount))
+			return "";
 		double floats = amount % 1;
 		long amountFix = Long(amount - floats);
 		StringBuilder stringBuilder = new StringBuilder();
@@ -15477,11 +15472,13 @@ public class KL {
 			}
 		}
 		return replace(
-				   stringBuilder.reverse().toString() + "."
-				   + sliceToAfter(Str(floats), "."),
-				   "(?<=\\.\\d{2})\\d+", "");
+				stringBuilder.reverse().toString() + "."
+						+ sliceToAfter(Str(floats), "."),
+				"(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(long amount) {
+		if (isNull(amount))
+			return "";
 		double floats = amount % 1;
 		long amountFix = Long(amount - floats);
 		StringBuilder stringBuilder = new StringBuilder();
@@ -15503,12 +15500,14 @@ public class KL {
 			}
 		}
 		return replace(
-				   stringBuilder.reverse().toString() + "."
-				   + sliceToAfter(Str(floats), "."),
-				   "(?<=\\.\\d{2})\\d+", "");
+				stringBuilder.reverse().toString() + "."
+						+ sliceToAfter(Str(floats), "."),
+				"(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(float amount) {
-		double floats = amount % 1;
+		if (isNull(amount))
+			return "";
+		double floats = setPrecision(amount % 1);
 		long amountFix = Long(amount - floats);
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
@@ -15529,12 +15528,14 @@ public class KL {
 			}
 		}
 		return replace(
-				   stringBuilder.reverse().toString() + "."
-				   + sliceToAfter(Str(floats), "."),
-				   "(?<=\\.\\d{2})\\d+", "");
+				stringBuilder.reverse().toString() + "."
+						+ sliceToAfter(Str(floats), "."),
+				"(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(double amount) {
-		double floats = amount % 1;
+		if (isNull(amount))
+			return "";
+		double floats = setPrecision(amount % 1);
 		long amountFix = Long(amount - floats);
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
@@ -15555,33 +15556,41 @@ public class KL {
 			}
 		}
 		return replace(
-				   stringBuilder.reverse().toString() + "."
-				   + sliceToAfter(Str(floats), "."),
-				   "(?<=\\.\\d{2})\\d+", "");
+				stringBuilder.reverse().toString() + "."
+						+ sliceToAfter(Str(floats), "."),
+				"(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fus(int n) {
+		if (isNull(n))
+			return "";
 		return NumberFormat
-			   .getCurrencyInstance(new Locale.Builder().setLanguage("en")
-									.setRegion("US").build())
-			   .format(n).replaceAll("[^\\d\\,\\.]", "");
+				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
+						.setRegion("US").build())
+				.format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(long n) {
+		if (isNull(n))
+			return "";
 		return NumberFormat
-			   .getCurrencyInstance(new Locale.Builder().setLanguage("en")
-									.setRegion("US").build())
-			   .format(n).replaceAll("[^\\d\\,\\.]", "");
+				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
+						.setRegion("US").build())
+				.format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(float n) {
+		if (isNull(n))
+			return "";
 		return NumberFormat
-			   .getCurrencyInstance(new Locale.Builder().setLanguage("en")
-									.setRegion("US").build())
-			   .format(n).replaceAll("[^\\d\\,\\.]", "");
+				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
+						.setRegion("US").build())
+				.format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(double n) {
+		if (isNull(n))
+			return "";
 		return NumberFormat
-			   .getCurrencyInstance(new Locale.Builder().setLanguage("en")
-									.setRegion("US").build())
-			   .format(n).replaceAll("[^\\d\\,\\.]", "");
+				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
+						.setRegion("US").build())
+				.format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String f(int n) {
 		return fpkr(n);
@@ -15595,16 +15604,74 @@ public class KL {
 	public static String f(double n) {
 		return fpkr(n);
 	}
-	public static String f(String s, Object... args) {
-		if (not(s) || args.length == 0) return s;
-		s = s.replaceAll("%[\\.\\\\d]*f", "%f");
+	public String f(String s, Object... args) {
+		if (not(s) || args.length == 0)
+			return s;
+		s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
+				.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
 		for (Object arg : args) {
-			if (arg instanceof String) s = replaceFirst(s, "%[%s]|\\{\\}", Str(arg));
-			else if (arg instanceof Integer) s = replaceFirst(s, "%[%di]|\\{\\}", Str((int)arg));
-			else if (arg instanceof Float || arg instanceof Double) s = replaceFirst(s, "%[%f]|\\{\\}", Str(setPrecision((double)arg)));
-			else if (arg instanceof Boolean) s = replaceFirst(s, "%[%b]|\\{\\}", Str((boolean)arg));
-			//replaceFirst is really what we need here, as replacing "all" %b's, for instance, in the case of booleans, with the args array, just wouldn't work, as the first argument would get to be the one to replace all %b's with itself, rendering all other <typename> args useless
+			if (arg instanceof Character)
+				s = replaceFirst(s, "%[%c]|\\$*\\{\\}", Str(arg));
+			else if (arg instanceof String)
+				s = replaceFirst(s, "%[%sw]|\\$*\\{\\}", Str(arg));
+			else if (arg instanceof Integer || arg instanceof Long) {
+				if (in(s, "%[\\%din]u")) {
+					// DOESN'T work IF the % is not escaped
+					s = replaceFirst(s, "%[%din]u|\\$*\\{\\}", Str(fus(
+							arg instanceof Integer ? (int) arg : (long) arg))
+							.replaceAll("\\.[0]+(?!\\d)$", ""));
+				} else {
+					s = replaceFirst(s, "%[%din]|\\$*\\{\\}", Str(
+							f(arg instanceof Integer ? (int) arg : (long) arg))
+							.replaceAll("\\.[0]+(?!\\d)$", ""));
+				}
+			} else if (arg instanceof Float || arg instanceof Double) {
+				if (in(s, "%[\\%fn]u")) {
+					// DOESN'T work IF the % is not escaped
+					s = replaceFirst(s, "%[%fn]u|\\$*\\{(\\.\\d*f)?\\}",
+							Str(fus(setPrecision(arg instanceof Float
+									? (float) arg
+									: (double) arg))
+									.replaceAll("\\.[0]+(?!\\d)$", "")));
+				} else {
+					s = replaceFirst(s, "%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
+							Str(f(setPrecision(arg instanceof Float
+									? (float) arg
+									: (double) arg))
+									.replaceAll("\\.[0]+(?!\\d)$", "")));
+				}
+			} else if (arg instanceof Boolean) {
+				s = replaceFirst(s, "%[%b]|\\$*\\{\\}", Str((boolean) arg));
+			}
+			// replaceFirst is really what we need here, as replacing "all"
+			// %b's, for instance, in the case of booleans, with the args array,
+			// just wouldn't work, as the first argument would get to be the one
+			// to replace all %b's with itself, rendering all other <typename>
+			// args useless
 		}
+		//post processing...
+		if (in(s, "\\$*\\{\\w+\\}|\\$+\\w+")) {
+			try {
+				Class<?> cls = this.getClass();
+				Object field;
+				String[] matches = findMatches(s, "\\$*\\{\\w+\\}|\\$+\\w+");
+				for (String m : matches) {
+					String toGet = m.replaceAll("[\\$\\{\\}]", "");
+					field = cls.getField(toGet).get(this);
+					m = m.replaceAll("([\\$\\{\\}])", "\\\\$1");
+					s = s.replaceFirst(m,
+							field instanceof Character
+                                    || field instanceof String
+									|| field instanceof Number
+									|| field instanceof Boolean
+											? Str(field)
+											: m);
+				}
+			} catch (NoSuchFieldException | IllegalAccessException
+					| SecurityException e) {
+			}
+		}
+		s = sentCase(s);
 		return s;
 	}
 	public static String pkr(int n) {
@@ -17195,6 +17262,10 @@ public class KL {
 		if (not(arr)) return blank.Bool;
 		return arr.clone();
 	}
+	public static Object[] slice(Object arr[]) {
+		if (not(arr)) return blank.Obj;
+		return arr.clone();
+	}
 	public static StrArr slice(StrArr arr) {
 		if (not(arr)) return new StrArr(blank.Str);
 		return arr.copy();
@@ -17260,6 +17331,13 @@ public class KL {
 		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
 			return slice(oldArr);
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
+											  len(oldArr));
+		return newArr;
+	}
+	public static Object[] slice(Object oldArr[], int start) {
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+			return slice(oldArr);
+		Object newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
 											  len(oldArr));
 		return newArr;
 	}
@@ -17334,6 +17412,12 @@ public class KL {
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
+	public static Object[] slice(Object oldArr[], int start, int end) {
+		if (not(oldArr) || isNull(start) ||  start >= len(oldArr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(oldArr))
+			return slice(oldArr);
+		Object newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
+		return newArr;
+	}
 	public static StrArr slice(StrArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start) || isNeg(end) || end >= len(arr))
 			return slice(arr);
@@ -17395,6 +17479,11 @@ public class KL {
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static boolean[] sliceRight(boolean[] arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+			return slice(arr);
+		return slice(arr, len(arr) - start, len(arr));
+	}
+	public static Object[] sliceRight(Object[] arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return slice(arr, len(arr) - start, len(arr));
@@ -17464,6 +17553,11 @@ public class KL {
 			return slice(arr);
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
+	public static Object[] sliceEnd(Object[] arr, int earlyEnd) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
+			return slice(arr);
+		return slice(arr, 0, len(arr) - earlyEnd);
+	}
 	public static StrArr sliceEnd(StrArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd >= len(arr))
 			return slice(arr);
@@ -17515,6 +17609,9 @@ public class KL {
 	public static boolean[] sliceOff(boolean[] arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
+	public static Object[] sliceOff(Object[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
 	public static StrArr sliceOff(StrArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
@@ -17554,6 +17651,9 @@ public class KL {
 	public static boolean[] sliceOut(boolean[] arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
+	public static Object[] sliceOut(Object[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
 	public static StrArr sliceOut(StrArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
@@ -17571,45 +17671,6 @@ public class KL {
 	}
 	public static BoolArr sliceOut(BoolArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
-	}
-	public static String trimRight(String str, int start) {
-		return sliceRight(str, start);
-	}
-	public static String[] trimRight(String[] arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static int[] trimRight(int[] arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static long[] trimRight(long[] arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static float[] trimRight(float[] arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static double[] trimRight(double[] arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static boolean[] trimRight(boolean[] arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static StrArr trimRight(StrArr arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static IntArr trimRight(IntArr arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static LongArr trimRight(LongArr arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static FltArr trimRight(FltArr arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static DblArr trimRight(DblArr arr, int start) {
-		return sliceRight(arr, start);
-	}
-	public static BoolArr trimRight(BoolArr arr, int start) {
-		return sliceRight(arr, start);
 	}
 	public static String sliceKeep(String str, int end) {
 		if (not(str) || not(end) || isNeg(end) || end >= len(str)) return str;
@@ -17791,6 +17852,45 @@ public class KL {
 	}
 	public static BoolArr trim(BoolArr arr, int start, int end) {
 		return slice(arr, start, end);
+	}
+	public static String trimRight(String str, int start) {
+		return sliceRight(str, start);
+	}
+	public static String[] trimRight(String[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static int[] trimRight(int[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static long[] trimRight(long[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static float[] trimRight(float[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static double[] trimRight(double[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static boolean[] trimRight(boolean[] arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static StrArr trimRight(StrArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static IntArr trimRight(IntArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static LongArr trimRight(LongArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static FltArr trimRight(FltArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static DblArr trimRight(DblArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static BoolArr trimRight(BoolArr arr, int start) {
+		return sliceRight(arr, start);
 	}
 	public static String trimKeep(String str, int end) {
 		return sliceKeep(str, end);
@@ -18283,15 +18383,119 @@ public class KL {
 	public static boolean lastOf(BoolArr arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
-	public static int indexOf(String inStr, String lookupStr) {
-		return inStr.indexOf(lookupStr);
+	public static String secondLastOf(ObjS arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : "";
 	}
-	public static int indexOf(String inStr, char lookupCh) {
-		for (int i = 0; i < len(inStr); i++) {
-			if (inStr.toCharArray()[i] == lookupCh)
+	public static String lastOf(ObjS arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : "";
+	}
+	public static int secondLastOf(ObjI arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static int lastOf(ObjI arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static long secondLastOf(ObjL arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static long lastOf(ObjL arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static float secondLastOf(ObjF arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static float lastOf(ObjF arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static double secondLastOf(ObjD arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static double lastOf(ObjD arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static boolean secondLastOf(ObjB arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : false;
+	}
+	public static boolean lastOf(ObjB arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : false;
+	}
+	public static int secondLastOf(TreeS arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static int lastOf(TreeS arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static String secondLastOf(TreeI arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : "";
+	}
+	public static String lastOf(TreeI arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : "";
+	}
+	public static long secondLastOf(TreeSL arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static long lastOf(TreeSL arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static long secondLastOf(TreeL arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static long lastOf(TreeL arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static float secondLastOf(TreeSF arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static float lastOf(TreeSF arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static float secondLastOf(TreeF arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static float lastOf(TreeF arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static double secondLastOf(TreeSD arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static double lastOf(TreeSD arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static double secondLastOf(TreeD arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
+	}
+	public static double lastOf(TreeD arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : 0;
+	}
+	public static boolean secondLastOf(TreeSB arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : false;
+	}
+	public static boolean lastOf(TreeSB arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : false;
+	}
+	public static boolean secondLastOf(TreeB arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : false;
+	}
+	public static boolean lastOf(TreeB arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : false;
+	}
+	public static int indexOf(String inStr, String lookupStr, int startIndex) {
+		if (not(inStr) || isNull(startIndex) || isNeg(startIndex)) return -1;
+		return inStr.indexOf(lookupStr, startIndex);
+	}
+	public static int indexOf(String inStr, String lookupStr) {
+		return indexOf(inStr, lookupStr, 0);
+	}
+	public static int indexOf(String inStr, char lookupCh, int startIndex) {
+		if (not(inStr) || not(lookupCh) || isNull(startIndex) || isNeg(startIndex)) return -1;
+		for (int i : range(inStr)) {
+			if (slice(inStr, startIndex).toCharArray()[i] == lookupCh)
 				return i;
 		}
 		return -1;
+	}
+	public static int indexOf(String inStr, char lookupCh) {
+		return indexOf(inStr, lookupCh, 0);
 	}
 	public static int lastIndexOf(String inStr, String lookupStr) {
 		return inStr.lastIndexOf(lookupStr);
@@ -18559,7 +18763,7 @@ public class KL {
 				|| re.equals("?"))
 			re = "\\" + re;
 		re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
-		     .replaceAll("(?<![\\.\\w\\)\\]\\\\])([\\+\\*])", "\\\\$1")
+		     .replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])", "\\\\$1")
 			 .replaceAll("%%", "%")
 			 .replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 			 .replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
@@ -18592,7 +18796,7 @@ public class KL {
 			re = "\\" + re;
 		}
 		re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
-		     .replaceAll("(?<![\\.\\w\\)\\]\\\\])([\\+\\*])", "\\\\$1")
+		     .replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])", "\\\\$1")
 			 .replaceAll("%%", "%")
 			 .replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 			 .replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
@@ -18629,7 +18833,7 @@ public class KL {
 			re = "\\" + re;
 		}
 		re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
-		     .replaceAll("(?<![\\.\\w\\)\\]\\\\])([\\+\\*])", "\\\\$1")
+		     .replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])", "\\\\$1")
 			 .replaceAll("%%", "%")
 			 .replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 			 .replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
@@ -18994,6 +19198,7 @@ public class KL {
 		public static float[] Flt = new float[]{};
 		public static double[] Dbl = new double[]{};
 		public static boolean[] Bool = new boolean[]{};
+		public static Number[] Num = new Number[]{};
 		public static Object[] Obj = new Object[]{};
 		public static StrArr StrArr = new StrArr();
 		public static IntArr IntArr = new IntArr();
@@ -19938,15 +20143,18 @@ public class KL {
 				if (eq(m, "C")) return "char";
 				//we'll fix string arrays later
 				else if (eq(m, "I")) return "int";
-				else if (eq(m, "L")) return "long";
+				else if (eq(m, "J")) return "long";
+				//BE CAUTIOUS: For some reason, the long arrays fall under group J memory addresses. Catching I just couldn't work <beware that it's been tested, and failed>. Just so you know, WITH J... IT DOES WORK.
 				else if (eq(m, "F")) return "flt";
 				else if (eq(m, "D")) return "dbl";
-				else if (eq(m, "B")) return "bool";
+				else if (eq(m, "Z")) return "bool";
+				//BE CAUTIOUS: For some reason, the bool arrays fall under group Z memory addresses. Catching I just couldn't work <beware that it's been tested, and failed>. Just so you know, WITH Z... IT DOES WORK.
 				return "arr";
 			});
 			return middleware.replaceAll("\\$", "\\.").replaceAll("^KL\\.", "");
 		}
 		String result = middleware.split("\\.")[2].toLowerCase().replaceAll("string[;;]+", "array.str").replaceAll("number[;;]+", "array.num").replaceAll("object[;;]+", "array.obj");
+		//arrays that belong to a class, for instance, Number[], Object[], instead leave a trailing semicolon at the end
 		return result;
 	}
 	public static boolean type(Object obj, String guessedType) {
@@ -21353,26 +21561,16 @@ public class KL {
 	public static boolean newFolder(String folderName) {
 		return createFolder(folderName);
 	}
+	public static String name = "Ayesha";
 	public static void main(String[] args) {
-    	String[] arr = {},
+    	String[] arr = {"hi", "hey"},
 		  arr2 = blank.Str;
-		print(arr); //printf -> print missing
+		print(type(blank.Num));
+		print("Hi, it's $name, {}. And I am ${} year old", "love", 19);
+		printArr(arr);
 		
 		
 		
-		
-		
-		
-		
-		/*
-		print(type(colors.red));
-		print(type(new Number[]{7}));
-		print(type(new Object[]{"hi"}));
-    	print(type(arr2));
-    	print(not(new String[]{}, new String[]{"hi"}));
-        print(not("hi", null));
-        */
-        
         
         
         
