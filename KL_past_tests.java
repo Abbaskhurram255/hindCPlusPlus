@@ -185,3 +185,43 @@ Money m = new Money(5*cr);
 	    	print(cat("#", i+1, "."), "Is a", type(obj), ":", type(obj, Bool));
 	    });
 */
+
+/*
+        sw(8.4, ">9", () -> print("uh...?"), "==8.47", () -> print("yeah"),
+				">16", () -> print("still a no?"), "==12", () -> print("ugh"),
+				">51", () -> print("no?"), ">92", () -> print("I dunno"), "<3",
+				() -> print("could it be that?"), ">8",
+				() -> print("you got me"), Else, () -> print("neither"));
+		
+		print(randPct());
+		print(clr("#7fc6").getAlpha());
+		printArr(intsOf("hi there 6.1 7.4 love, I'm 666, that's right, a devil girl"));
+		sw('f', ">105", () -> print("possibly?"), 102, () -> print("quite a match"), Else, () -> print("it does NOT match"));
+		//print(join(nums, "+"));
+*/
+
+        /*
+		print(type(colors.red));
+		print(type(new Number[]{7}));
+		print(type(new Object[]{"hi"}));
+    	print(type(arr2));
+    	print(not(new String[]{}, new String[]{"hi"}));
+        print(not("hi", null));
+        */
+        
+        /*
+		 * print(replace("hello there", "^hel\\w+", m -> m.toUpperCase())); int
+		 * interval = setInterval(() -> print(randId()), 5, 2); //setTimeout(()
+		 * -> clearInterval(interval), 20); print(type(red)); print(xor(Yes,
+		 * not(Yes))); String[] arr = {"hi", "Hola", "hallo", "bonjour", "zoo",
+		 * "YiPPe yay"}; arr = sort(arr, "desc"); arr = lower(arr); char[] chars
+		 * = Chars(lastOf(arr)); printArr(upper(chars));
+		 * printArr(sentCase(arr));
+		 * 
+		 * sw(len("hiya"), "<12&>=4", () -> print("match"), Else, () ->
+		 * print("not a match")); int age = 22; print(sw(age, "<18", () ->
+		 * print("Just too young."), "<23&>=18", () ->
+		 * print("sorry, still underaged"), Else, () ->
+		 * print("you're in the drinking age, get in the bar🍺"))); sw(true,
+		 * Yes, () -> print("the lights are on"), Else, () -> print("off"));
+		 */
