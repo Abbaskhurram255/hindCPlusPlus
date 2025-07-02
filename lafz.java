@@ -1,5 +1,6 @@
 class lafz {
-	String str;
+	String str = "";
+	String[] words = {};
 	lafz() {
 		this.str = "";
 	}
@@ -9,6 +10,22 @@ class lafz {
 			if (o != null) this.str += " "+o;
 		}
 		trim();
+		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
+	}
+	lafz concat(Object... objs) {
+		for (Object o : objs) {
+			if (o != null) this.str += " "+o;
+		}
+		trim();
+		return this;
+	}
+	lafz cat(Object... objs) {
+		concat(objs);
+		return this;
+	}
+	lafz add(Object... objs) {
+		concat(objs);
+		return this;
 	}
 	lafz trim() {
 		this.str = this.str.trim();
@@ -68,6 +85,44 @@ class lafz {
 		if (i > length()) return split()[length()-1];
 		return split()[length()-i];
 	}
+	String firstWord() {
+		if (length() == 0 || words.length == 0) return "";
+		return words[0];
+	}
+	String secWord() {
+		if (length() == 0 || words.length == 0) return "";
+		if (words.length < 2) return words[0];
+		return words[1];
+	}
+	String secondWord() {
+		return secWord();
+	}
+	String secLastWord() {
+		if (length() == 0 || words.length == 0) return "";
+		if (words.length < 3) return words[0];
+		return words[words.length-2];
+	}
+	String lastWord() {
+		if (length() == 0 || words.length == 0) return "";
+		return words[words.length-1];
+	}
+	String nthWord(int i) {
+		if (length() == 0 || words.length == 0 || i >= words.length) return "";
+		if (i >= length()) return words[words.length - 1];
+		if (i < 0) {
+			i = Math.abs(i);
+			if (i > 0 && i <= words.length)
+                return lasti(i);
+            return words[0];
+        }
+		return words[i];
+	}
+	String nthLastWord(int i) {
+		if (length() == 0 || words.length == 0) return "";
+		if (i <= 0) return words[0];
+		if (i > words.length) return words[words.length-1];
+		return words[words.length-i];
+	}
 	String[] split() {
 		return str.split("");
 	}
@@ -85,6 +140,16 @@ class lafz {
 	}
 	char[] chars() {
 		return toCharArray();
+	}
+	String join() {
+		if (isEmpty()) return "";
+		if (words.length < 2)
+			return nthWord(0);
+		String halfProcessed = String.join(", ", words);
+		String returnValue = halfProcessed.replaceAll("(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
+		returnValue = new lafz(returnValue).sentCase().str();
+		return returnValue;
 	}
 	lafz toUpperCase() {
 		this.str = str.toUpperCase();
@@ -130,14 +195,21 @@ class lafz {
 	public String string() {
 		return toString();
 	}
+	public String str() {
+		return toString();
+	}
 }
 class Str extends lafz {
+	Str() {
+		this.str = "";
+	}
 	Str(Object... objs) {
 		this.str = "";
 		for (Object o : objs) {
 			if (o != null) this.str += " "+o;
 		}
 		trim();
+		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 	}
 }
 
@@ -158,5 +230,7 @@ public class Main {
 		Str name = Str("mehrunisa ji");
 		System.out.println(salaam.sentCase());
 		System.out.println(name.i(-12));
+		System.out.println(name.lastWord());
+		System.out.println(lafz("boyfriends", "love", "money").join());
 	}
 }

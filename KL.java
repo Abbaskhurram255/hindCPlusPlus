@@ -127,8 +127,14 @@ public class KL {
 		public String string() {
 			return toString();
 		}
+		public String str() {
+			return string();
+		}
 		public String string(boolean suffixMode) {
 			return toString(suffixMode);
+		}
+		public String str(boolean suffixMode) {
+			return string(suffixMode);
 		}
 		public String balance() {
 			return toString();
@@ -3280,7 +3286,10 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -3780,7 +3789,10 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -4273,7 +4285,10 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -4767,7 +4782,10 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -5263,7 +5281,10 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -5761,7 +5782,10 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -6136,7 +6160,10 @@ public class KL {
 			return result;
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		void printMap() {
 			System.out.println(super.clone());
@@ -8056,7 +8083,10 @@ public class KL {
 			return result;
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		StrArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
@@ -8441,7 +8471,10 @@ public class KL {
 			return result;
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		IntArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
@@ -8846,7 +8879,10 @@ public class KL {
 			return result;
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		LongArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
@@ -9249,7 +9285,10 @@ public class KL {
 			return result;
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		FltArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
@@ -9652,7 +9691,10 @@ public class KL {
 			return result;
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		DblArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
@@ -10057,7 +10099,10 @@ public class KL {
 			return result;
 		}
 		String string() {
-			return super.toString();
+			return super.toString(); 		
+		}
+		String str() {
+			return string();
 		}
 		BoolArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
@@ -16411,14 +16456,17 @@ public class KL {
 			return;
 		} else {
 			for (Object arg : args) {
-				if (!isNull(arg) && isArr(arg)) {
+				if (isNull(arg)) continue;
+				if (isArr(arg)) {
 					printArr(arg);
 					System.out.print(" ");
 				}
 				if (arg instanceof Character)
 					arg = "'" + arg + "'";
-				if (arg instanceof Double)
-					arg = setPrecision((double) arg);
+				if (arg instanceof Double) {
+					if (in(Str((double)arg), "(?<=\\.)\\d{3,}")) arg = setPrecision((double) arg, 2);
+					else arg = setPrecision((double) arg);
+			    }
 				System.out.print(arg + " ");
 			}
 		}
@@ -16922,8 +16970,10 @@ public class KL {
 		if (not(args))
 			return "";
 		String result = "";
-		for (var arg : args)
+		for (var arg : args) {
+			if (isNull(arg)) continue;
 			result += ("" + arg);
+		}
 		return result;
 	}
 	public static String cat(Object... args) {
@@ -17662,27 +17712,34 @@ public class KL {
 		return Dbl(arg);
 	}
 	public static double setPrecision(double n, int decimalPlaces) {
-		if (not(n) || not(decimalPlaces) || isNeg(decimalPlaces))
+		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces))
 			return n;
-		DecimalFormat formatter = new DecimalFormat(
-				"#." + repeat("0", decimalPlaces));
-		return Dbl(formatter.format(n));
+		String formatted = String.format("%." + Str(decimalPlaces) + "f", n);
+		return Dbl(formatted);
+	}
+	public static double toPrecision(double n, int decimalPlaces) {
+		return setPrecision(n, decimalPlaces);
 	}
 	public static double setPrecision(double n) {
-		return setPrecision(n, 2);
+		return setPrecision(n, 1);
+	}
+	public static double toPrecision(double n) {
+		return setPrecision(n);
 	}
 	public static float setPrecision(float n, int decimalPlaces) {
-		if (not(n) || not(decimalPlaces) || isNeg(decimalPlaces))
+		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces))
 			return n;
-		DecimalFormat formatter = new DecimalFormat(
-				"#." + repeat("0", decimalPlaces));
-		return Flt(formatter.format(n));
+		String formatted = String.format("%." + Str(decimalPlaces) + "f", n);
+		return Flt(formatted);
+	}
+	public static float toPrecision(float n, int decimalPlaces) {
+		return setPrecision(n, decimalPlaces);
 	}
 	public static float setPrecision(float n) {
-		return setPrecision(n, 2);
+		return setPrecision(n, 1);
 	}
-	public static <T> java.util.List<T> List(T args) {
-		return Arrays.asList(args);
+	public static float toPrecision(float n) {
+		return setPrecision(n);
 	}
 	public static <T> java.util.List<T> List(T... args) {
 		return Arrays.asList(args);
@@ -18879,9 +18936,17 @@ public class KL {
 			else if (arg instanceof String)
 				s = replaceFirst(s, "%[%sw]|\\$*\\{\\}", Str(arg));
 			else if (arg instanceof Integer || arg instanceof Long) {
+				String[] matches = findMatches(s, "%[\\%din](c|u|uc|th)|\\$*\\{\\}");
+				for (String m : matches) {
+					
+					print("Current:", m);
+					s = replaceFirst(s, "%[%din](?!th|u|uc|c)|\\$*\\{\\}",
+								Str(f(arg instanceof Integer
+										? (int) arg
+										: (long) arg))
+										.replaceAll("\\.[0]+(?!\\d)$", ""));
 				if (in(s, "%[din]u")) {
-					// DOESN'T work IF the % is not escaped
-					if (in(s, "%[din]uc")) {
+					if (eq(m, "%[din]uc")) {
 						s = replaceFirst(s, "%[din]uc",
 								Str(usd(arg instanceof Integer
 										? (int) arg
@@ -18894,25 +18959,19 @@ public class KL {
 										: (long) arg))
 										.replaceAll("\\.[0]+(?!\\d)$", ""));
 					}
-				} else if (in(s, "%[din]th")) {
-					// DOESN'T work IF the % is not escaped
+				} else if (eq(m, "%[din]th")) {
 					s = replaceFirst(s, "%[din]th", Str(
 							th(arg instanceof Integer ? (int) arg : (long) arg))
 							.replaceAll("\\.[0]+(?!\\d)$", ""));
 				} else {
-					if (in(s, "%[din]c")) {
-						s = replaceFirst(s, "%[%din]c",
+					if (eq(m, "%[din]c")) {
+						s = replaceFirst(s, "%[din]c",
 								Str(pkr(arg instanceof Integer
 										? (int) arg
 										: (long) arg))
 										.replaceAll("\\.[0]+(?!\\d)$", ""));
-					} else {
-						s = replaceFirst(s, "%[%din]|\\$*\\{\\}",
-								Str(f(arg instanceof Integer
-										? (int) arg
-										: (long) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", ""));
 					}
+				}
 				}
 			} else if (arg instanceof Float || arg instanceof Double) {
 				if (in(s, "%[\\%fn]u|\\$*\\{(\\.\\d*f)?\\}")) {
@@ -25479,12 +25538,9 @@ public class KL {
 	}
 	public static String name = "Ayesha";
 	public static void main(String[] args) {
-		String[] arr = {"hi", "hey"}, arr2 = blank.Str;
-		print(type(blank.Num));
-		print("Hi, it's {name}, {}. And I am ${} year old, and I'm %dth happiest person in the room", "love", 19, 6);
-		print(randEmail());
-		printArr(arr);
-
+		print("Hi, it's {name}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room", "love", 9, 19, 6);
+		int decimalPlaces = 2;
+        print(8.643);
 		
 	}
 }
