@@ -13,7 +13,7 @@ import java.util.regex.*;
 import java.util.stream.*;
 import java.lang.reflect.*;
 import java.net.*;
-//GUI
+//gui
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -21,81 +21,81 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 @SuppressWarnings("all")
 public class KL {
-	public static class Money {
+	public static class money {
 		private double amnt;
 		private String curr;
-		Money() {
+		money() {
 			this.amnt = 0;
 			this.curr = "Rs. ";
 		}
-		Money(double amnt) {
+		money(double amnt) {
 			this.amnt = not(amnt) ? 0 : amnt;
 			this.curr = "Rs. ";
 		}
-		Money(double amnt, String curr) {
+		money(double amnt, String curr) {
 			this.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
 			this.curr = not(this.curr) || len(this.curr) < 1
 					|| len(this.curr) > 4 ? "Rs. " : titleCase(curr);
 		}
-		Money curr(String curr) {
+		money curr(String curr) {
 			this.curr = not(curr) || len(curr) < 1 || len(curr) > 4
 					? "Rs. "
 					: titleCase(curr);
 			return this;
 		}
-		Money amount(double newAmnt) {
+		money amount(double newAmnt) {
 			this.amnt = isinf(newAmnt) ? this.amnt : newAmnt;
 			return this;
 		}
-		Money set(double newAmnt) {
+		money set(double newAmnt) {
 			amount(newAmnt);
 			return this;
 		}
-		Money add(double... nums) {
+		money add(double... nums) {
 			each(nums, (n, i) -> this.amnt += n);
 			return this;
 		}
-		Money give(double... nums) {
+		money give(double... nums) {
 			add(nums);
 			return this;
 		}
-		Money plus(double... nums) {
+		money plus(double... nums) {
 			add(nums);
 			return this;
 		}
-		Money deposit(double... nums) {
+		money deposit(double... nums) {
 			add(nums);
 			return this;
 		}
-		Money minus(double... nums) {
+		money minus(double... nums) {
 			each(nums, (n, i) -> this.amnt -= n);
 			return this;
 		}
-		Money take(double... nums) {
+		money take(double... nums) {
 			minus(nums);
 			return this;
 		}
-		Money sub(double... nums) {
+		money sub(double... nums) {
 			minus(nums);
 			return this;
 		}
-		Money withdraw(double... nums) {
+		money withdraw(double... nums) {
 			minus(nums);
 			return this;
 		}
-		Money times(double... nums) {
+		money times(double... nums) {
 			each(nums, (n, i) -> this.amnt *= n);
 			return this;
 		}
-		Money mul(double... nums) {
+		money mul(double... nums) {
 			times(nums);
 			return this;
 		}
-		Money div(double... nums) {
+		money div(double... nums) {
 			each(nums, (n, i) -> this.amnt /= n);
 			return this;
 		}
-		Money quotient(double... nums) {
+		money quotient(double... nums) {
 			div(nums);
 			return this;
 		}
@@ -155,28 +155,27 @@ public class KL {
 			return toString(suffixMode);
 		}
 	}
-	public static final class Pesa extends Money {
-		Pesa() {
+	public static final class pesa extends money {
+		pesa() {
 			super.amnt = 0;
 			super.curr = "Rs. ";
 		}
-		Pesa(double amnt) {
+		pesa(double amnt) {
 			super.amnt = isinf(amnt) ? 0 : amnt;
 			super.curr = "Rs. ";
 		}
-		Pesa(double amnt, String curr) {
+		pesa(double amnt, String curr) {
 			super.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
 			super.curr = not(super.curr) || len(super.curr) < 1
 					|| len(super.curr) > 4 ? "Rs. " : titleCase(curr);
 		}
 	}
-	public static final class Kmath {
-		public static double Pi = 3.141592653589793, C = 2.99792e8,
+	public static final class kmath {
+		public static double pi = 3.141592653589793, c = 2.99792e8,
 				earthsGravity = 9.80665, earthsMass = 5.9722e24,
 				earthsRadius = 6.378137e3;
-		public static String C_Unit = "m/s", K_Unit = "Nm^2/c^2",
-				earthsGravity_Unit = "m/s^2", earthsMass_Unit = "km",
-				earthsRadius_Unit = "km";
+		public static String cUnit = "m/s", earthsGravityUnit = "m/s^2",
+				earthsMassUnit = "km", earthsRadiusUnit = "km";
 	}
 	public static String encode(String s) {
 		return Base64.getEncoder().encodeToString(s.getBytes());
@@ -243,8 +242,8 @@ public class KL {
 			return false;
 		}
 	}
-	public static ObjS fetch(String url) {
-		ObjS map = new ObjS();
+	public static objS fetch(String url) {
+		objS map = new objS();
 		try {
 			URL urlString = url(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
@@ -292,8 +291,8 @@ public class KL {
 		}
 		return map;
 	}
-	public static ObjS silentFetch(String url) {
-		ObjS map = new ObjS();
+	public static objS silentFetch(String url) {
+		objS map = new objS();
 		try {
 			URL urlString = url(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
@@ -346,6 +345,9 @@ public class KL {
 	public String filePath(String filename) {
 		return getPath(filename);
 	}
+	public String pathTo(String filename) {
+		return getPath(filename);
+	}
 	public static String fileSeparator = System.getProperty("file.separator"),
 			workDirectory = System.getProperty("user.dir").toLowerCase();
 	public static class os {
@@ -363,23 +365,23 @@ public class KL {
 				homeDirectory = System.getProperty("user.home"),
 				workDirectory = KL.workDirectory;
 	}
-	// GUI
-	public static class GUI extends JFrame {
+	// gui
+	public static class gui extends JFrame {
 		private static final long serialVersionUID = 1L;
-		GUI() {
+		gui() {
 			super();
 			exitOnClose();
 			resizable();
 			super.setLayout(new BorderLayout());
 		}
-		GUI(String title) {
+		gui(String title) {
 			super();
 			exitOnClose();
 			resizable();
 			title(title);
 			super.setLayout(new BorderLayout());
 		}
-		GUI(String title, int w, int h) {
+		gui(String title, int w, int h) {
 			super();
 			exitOnClose();
 			resizable();
@@ -387,89 +389,96 @@ public class KL {
 			size(w, h);
 			super.setLayout(new BorderLayout());
 		}
-		GUI title(String title) {
+		gui title(String title) {
 			super.setTitle(title);
 			return this;
 		}
-		GUI kaTitle(String title) {
+		gui kaTitle(String title) {
 			title(title);
 			return this;
 		}
-		GUI size(int w, int h) {
-			super.setSize(w, h);
+		gui size(int w, int h) {
+			if (w < 100 || h < 100 || w > 10e3 || h > 10e3)
+				super.setSize(400, 600);
+			else
+				super.setSize(w, h);
 			super.setLocationRelativeTo(null);
 			return this;
 		}
-		GUI kiSize(int w, int h) {
+		gui kiSize(int w, int h) {
 			size(w, h);
 			return this;
 		}
-		GUI start() {
+		gui start() {
+			Dimension res = super.getSize();
+			int width = res.width, height = res.height;
+			if (width < 100 || height < 100 || width > 10e3 || height > 10e3)
+				size(400, 600);
 			super.setVisible(true);
 			return this;
 		}
-		GUI start(int w, int h) {
+		gui start(int w, int h) {
 			size(w, h);
 			super.setVisible(true);
 			return this;
 		}
-		GUI shuru() {
+		gui shuru() {
 			start();
 			return this;
 		}
-		GUI shuru(int w, int h) {
+		gui shuru(int w, int h) {
 			start(w, h);
 			return this;
 		}
-		GUI appear() {
+		gui appear() {
 			start();
 			return this;
 		}
-		GUI disappear() {
+		gui disappear() {
 			super.setVisible(false);
 			return this;
 		}
-		GUI resizable() {
+		gui resizable() {
 			super.setResizable(true);
 			return this;
 		}
-		GUI notResizable() {
+		gui notResizable() {
 			super.setResizable(false);
 			return this;
 		}
-		GUI resizableNaHo() {
+		gui resizableNaHo() {
 			notResizable();
 			return this;
 		}
-		GUI onTop(boolean b) {
+		gui onTop(boolean b) {
 			super.setAlwaysOnTop(b);
 			return this;
 		}
-		GUI onTop() {
+		gui onTop() {
 			onTop(true);
 			return this;
 		}
-		GUI offTop() {
+		gui offTop() {
 			onTop(false);
 			return this;
 		}
-		GUI alwaysOnTop(boolean b) {
+		gui alwaysOnTop(boolean b) {
 			onTop(b);
 			return this;
 		}
-		GUI alwaysOnTop() {
+		gui alwaysOnTop() {
 			onTop();
 			return this;
 		}
-		GUI hameshaTopPe(boolean b) {
+		gui hameshaTopPe(boolean b) {
 			onTop(b);
 			return this;
 		}
-		GUI hameshaTopPe() {
+		gui hameshaTopPe() {
 			onTop();
 			return this;
 		}
-		GUI opacity(double o) {
+		gui opacity(double o) {
 			if (o <= 100) {
 				if (o >= 0 && o <= 1)
 					super.setOpacity((float) o);
@@ -478,31 +487,31 @@ public class KL {
 			}
 			return this;
 		}
-		GUI cursor(int c) {
+		gui cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		GUI cursor(Cursor crsrObj) {
+		gui cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		GUI bg(Color clr) {
+		gui bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		GUI setBg(Color clr) {
+		gui setBg(Color clr) {
 			bg(clr);
 			return this;
 		}
-		GUI font(String fontFamily, int fontSize) {
+		gui font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
 		}
-		GUI font(String fontFamily, int fontSize, int fontWidth) {
+		gui font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
-		GUI font(String fontFamily, int fontSize, boolean bold,
+		gui font(String fontFamily, int fontSize, boolean bold,
 				boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
 					? Font.BOLD | Font.ITALIC
@@ -510,11 +519,11 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		GUI font(String fontFamily, int fontSize, boolean bold) {
+		gui font(String fontFamily, int fontSize, boolean bold) {
 			font(fontFamily, fontSize, bold, false);
 			return this;
 		}
-		GUI font(String fontFamily, int fontSize, int bold, int italic) {
+		gui font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
 					bold == 1 && italic == 1
 							? Font.BOLD | Font.ITALIC
@@ -524,7 +533,7 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		GUI font(Font fnt) {
+		gui font(Font fnt) {
 			super.setFont(fnt);
 			return this;
 		}
@@ -534,11 +543,11 @@ public class KL {
 		double mouseY() {
 			return MouseInfo.getPointerInfo().getLocation().getY();
 		}
-		GUI exitOnClose() {
+		gui exitOnClose() {
 			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
 			return this;
 		}
-		GUI on(String k, Runnable action) {
+		gui on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
 				String[] keys = k.split("[|]");
 				for (var key : keys) {
@@ -681,7 +690,7 @@ public class KL {
 			}
 			return this;
 		}
-		GUI state(String newState) {
+		gui state(String newState) {
 			switch (newState) {
 				case "min" :
 					super.setExtendedState(super.ICONIFIED);
@@ -708,81 +717,81 @@ public class KL {
 									: "unknown";
 			return state;
 		}
-		GUI min() {
+		gui min() {
 			state("min");
 			return this;
 		}
-		GUI max() {
+		gui max() {
 			state("max");
 			return this;
 		}
-		GUI message(String message) {
+		gui message(String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, "Message",
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
-		GUI message(String title, String message) {
+		gui message(String title, String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
-		GUI message(String title, String message, String iconAddress) {
+		gui message(String title, String message, String iconAddress) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.INFORMATION_MESSAGE, new Icon(iconAddress));
+					JOptionPane.INFORMATION_MESSAGE, new icon(iconAddress));
 			return this;
 		}
-		GUI message(String title, String message, Icon ico) {
+		gui message(String title, String message, Icon ico) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE, ico);
 			return this;
 		}
-		GUI error(String message) {
+		gui error(String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
-		GUI error(String title, String message) {
+		gui error(String title, String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
-		GUI error(String title, String message, String iconAddress) {
+		gui error(String title, String message, String iconAddress) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.ERROR_MESSAGE, new Icon(iconAddress));
+					JOptionPane.ERROR_MESSAGE, new icon(iconAddress));
 			return this;
 		}
-		GUI error(String title, String message, Icon ico) {
+		gui error(String title, String message, Icon ico) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE, ico);
 			return this;
 		}
-		GUI warn(String message) {
+		gui warn(String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, "Warning",
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
-		GUI warn(String title, String message) {
+		gui warn(String title, String message) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
-		GUI warn(String title, String message, String iconAddress) {
+		gui warn(String title, String message, String iconAddress) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
-					JOptionPane.WARNING_MESSAGE, new Icon(iconAddress));
+					JOptionPane.WARNING_MESSAGE, new icon(iconAddress));
 			return this;
 		}
-		GUI warn(String title, String message, Icon ico) {
+		gui warn(String title, String message, Icon ico) {
 			offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE, ico);
@@ -804,7 +813,7 @@ public class KL {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-					new Icon(iconAddress)) == 0);
+					new icon(iconAddress)) == 0);
 		}
 		boolean confirm(String title, String message, Icon ico) {
 			offTop();
@@ -829,7 +838,7 @@ public class KL {
 			offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE, new Icon(iconAddress)) == 0);
+					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
 		}
 		boolean confirmCancellable(String title, String message, Icon ico) {
 			offTop();
@@ -848,65 +857,70 @@ public class KL {
 					JOptionPane.QUESTION_MESSAGE);
 		}
 	}
-	public static class gui extends GUI {
+	public static class label extends JLabel {
 		private static final long serialVersionUID = 1L;
-		gui() {
-			super();
-		}
-		gui(String title) {
-			super(title);
-		}
-		gui(String title, int w, int h) {
-			super(title, w, h);
-		}
-	}
-	public static class Label extends JLabel {
-		private static final long serialVersionUID = 1L;
-		Label() {
+		public static int top = TOP, left = LEFT, bottom = BOTTOM,
+				right = RIGHT, center = CENTER, east = EAST, west = WEST,
+				north = NORTH, south = SOUTH, northeast = NORTH_EAST,
+				northwest = NORTH_WEST, southeast = SOUTH_EAST,
+				southwest = SOUTH_WEST, y = VERTICAL, x = HORIZONTAL;
+		label() {
 			super();
 			super.setOpaque(true);
 		}
-		Label(String text) {
+		label(String text) {
 			super(text);
 			super.setOpaque(true);
 		}
-		Label(String text, int alignment) {
+		label(String text, int alignment) {
 			super(text, alignment);
 			super.setOpaque(true);
 		}
-		Label bg(Color clr) {
+		label(Icon image) {
+			super(image);
+			super.setOpaque(true);
+		}
+		label(Icon image, int alignment) {
+			super(image, alignment);
+			super.setOpaque(true);
+		}
+		label(String text, Icon icon, int horizontalAlignment) {
+			super(text, icon, horizontalAlignment);
+			super.setOpaque(true);
+		}
+		label bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		Label fg(Color clr) {
+		label fg(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		Label setBg(Color clr) {
+		label setBg(Color clr) {
 			bg(clr);
 			return this;
 		}
-		Label setFg(Color clr) {
+		label setFg(Color clr) {
 			fg(clr);
 			return this;
 		}
-		Label cursor(int c) {
+		label cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		Label cursor(Cursor crsrObj) {
+		label cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		Label font(String fontFamily, int fontSize) {
+		label font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
 		}
-		Label font(String fontFamily, int fontSize, int fontWidth) {
+		label font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
-		Label font(String fontFamily, int fontSize, boolean bold,
+		label font(String fontFamily, int fontSize, boolean bold,
 				boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
 					? Font.BOLD | Font.ITALIC
@@ -914,11 +928,11 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		Label font(String fontFamily, int fontSize, boolean bold) {
+		label font(String fontFamily, int fontSize, boolean bold) {
 			font(fontFamily, fontSize, bold, false);
 			return this;
 		}
-		Label font(String fontFamily, int fontSize, int bold, int italic) {
+		label font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
 					bold == 1 && italic == 1
 							? Font.BOLD | Font.ITALIC
@@ -928,26 +942,26 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		Label font(Font fnt) {
+		label font(Font fnt) {
 			super.setFont(fnt);
 			return this;
 		}
-		Label alignx(int pos) {
+		label alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
 		}
-		Label aligny(int pos) {
+		label aligny(int pos) {
 			super.setVerticalAlignment(pos);
 			return this;
 		}
 		String text() {
 			return super.getText();
 		}
-		Label text(String s) {
+		label text(String s) {
 			super.setText(s);
 			return this;
 		}
-		Label on(String k, Runnable action) {
+		label on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
 				String[] keys = k.split("[|]");
 				for (var key : keys) {
@@ -1050,126 +1064,148 @@ public class KL {
 			}
 			return this;
 		}
+		label addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		label removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		label toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		label toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
 	}
-	public static class BordLay extends BorderLayout {
+	public static class bordLay extends BorderLayout {
 		private static final long serialVersionUID = 1L;
-		BordLay() {
+		bordLay() {
 			super();
 		}
-		BordLay(int hgap, int vgap) {
+		bordLay(int hgap, int vgap) {
 			super(hgap, vgap);
 		}
+		public static String center = CENTER, east = EAST, right = east,
+				west = WEST, left = west, north = NORTH, top = north,
+				south = SOUTH, bottom = south;
 	}
-	public static class GridLay extends GridLayout {
+	public static class gridLay extends GridLayout {
 		private static final long serialVersionUID = 1L;
-		GridLay() {
+		gridLay() {
 			super();
 		}
-		GridLay(int rows, int columns) {
+		gridLay(int rows, int columns) {
 			super(rows, columns);
 		}
-		GridLay(int rows, int columns, int hgap, int vgap) {
+		gridLay(int rows, int columns, int hgap, int vgap) {
 			super(rows, columns, hgap, vgap);
 		}
 	}
-	public static class GridBagLay extends GridBagLayout {
+	public static class gridBagLay extends GridBagLayout {
 		private static final long serialVersionUID = 1L;
-		GridBagLay() {
+		gridBagLay() {
 			super();
 		}
 	}
-	public static class GridBagSettings extends GridBagConstraints {
+	public static class gridBagSettings extends GridBagConstraints {
 		private static final long serialVersionUID = 1L;
-		GridBagSettings() {
+		gridBagSettings() {
 			super();
 		}
 	}
-	public static class FlowLay extends FlowLayout {
+	public static class flowLay extends FlowLayout {
 		private static final long serialVersionUID = 1L;
-		FlowLay() {
+		flowLay() {
 			super();
 		}
-		FlowLay(int align) {
+		flowLay(int align) {
 			super(align);
 		}
-		FlowLay(int align, int hgap, int vgap) {
+		flowLay(int align, int hgap, int vgap) {
 			super(align, hgap, vgap);
 		}
 	}
-	public static class CardLay extends CardLayout {
+	public static class cardLay extends CardLayout {
 		private static final long serialVersionUID = 1L;
-		CardLay() {
+		cardLay() {
 			super();
 		}
-		CardLay(int hgap, int vgap) {
+		cardLay(int hgap, int vgap) {
 			super(hgap, vgap);
 		}
 	}
-	public static class BoxLay extends BoxLayout {
+	public static class boxLay extends BoxLayout {
 		private static final long serialVersionUID = 1L;
-		BoxLay(Container target, int axis) {
+		boxLay(Container target, int axis) {
 			super(target, axis);
 		}
 	}
-	public static class Panel extends JPanel {
+	public static class panel extends JPanel {
 		private static final long serialVersionUID = 1L;
-		Panel() {
+		panel() {
 			super();
 		}
-		Panel(LayoutManager layout) {
+		panel(LayoutManager layout) {
 			super(layout);
 		}
-		Panel(boolean isDoubleBuffered) {
+		panel(boolean isDoubleBuffered) {
 			super(isDoubleBuffered);
 		}
-		Panel(LayoutManager layout, boolean isDoubleBuffered) {
+		panel(LayoutManager layout, boolean isDoubleBuffered) {
 			super(layout, isDoubleBuffered);
 		}
-		Panel lay(LayoutManager layout) {
+		panel lay(LayoutManager layout) {
 			super.setLayout(layout);
 			return this;
 		}
-		Panel setLay(LayoutManager layout) {
+		panel setLay(LayoutManager layout) {
 			lay(layout);
 			return this;
 		}
-		Panel layout(LayoutManager layout) {
+		panel layout(LayoutManager layout) {
 			lay(layout);
 			return this;
 		}
-		Panel bg(Color clr) {
+		panel bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		Panel fg(Color clr) {
+		panel fg(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		Panel setBg(Color clr) {
+		panel setBg(Color clr) {
 			bg(clr);
 			return this;
 		}
-		Panel setFg(Color clr) {
+		panel setFg(Color clr) {
 			fg(clr);
 			return this;
 		}
-		Panel cursor(int c) {
+		panel cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		Panel cursor(Cursor crsrObj) {
+		panel cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		Panel font(String fontFamily, int fontSize) {
+		panel font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
 		}
-		Panel font(String fontFamily, int fontSize, int fontWidth) {
+		panel font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
-		Panel font(String fontFamily, int fontSize, boolean bold,
+		panel font(String fontFamily, int fontSize, boolean bold,
 				boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
 					? Font.BOLD | Font.ITALIC
@@ -1177,11 +1213,11 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		Panel font(String fontFamily, int fontSize, boolean bold) {
+		panel font(String fontFamily, int fontSize, boolean bold) {
 			font(fontFamily, fontSize, bold, false);
 			return this;
 		}
-		Panel font(String fontFamily, int fontSize, int bold, int italic) {
+		panel font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
 					bold == 1 && italic == 1
 							? Font.BOLD | Font.ITALIC
@@ -1191,15 +1227,15 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		Panel font(Font fnt) {
+		panel font(Font fnt) {
 			super.setFont(fnt);
 			return this;
 		}
-		Panel border(LineBorder brdr) {
+		panel border(LineBorder brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
-		Panel on(String k, Runnable action) {
+		panel on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
 				String[] keys = k.split("[|]");
 				for (var key : keys) {
@@ -1302,80 +1338,123 @@ public class KL {
 			}
 			return this;
 		}
+		panel addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		panel removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		panel toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		panel toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
 	}
-	public static class Btn extends JButton {
+	public static class btn extends JButton {
 		private static final long serialVersionUID = 1L;
-		Btn() {
+		btn() {
 			super();
 			super.setFocusable(false);
 		}
-		Btn(String text) {
+		btn(String text) {
 			super(text);
 			super.setFocusable(false);
 		}
-		Btn(Action a) {
+		btn(Action a) {
 			super(a);
 			super.setFocusable(false);
 		}
-		Btn(Icon i) {
+		btn(icon i) {
 			super(i);
 			super.setFocusable(false);
 		}
-		Btn(String text, Icon i) {
+		btn(String text, icon i) {
 			super(text, i);
 			super.setFocusable(false);
 		}
-		Btn(String text, ActionListener listener) {
+		btn(String text, ActionListener listener) {
 			super(text);
 			super.setFocusable(false);
 			click(listener);
 		}
-		Btn(String text, ActionListener listener, Color bg, Color fg) {
+		btn(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
 			bg(bg);
 			fg(fg);
 		}
-		Btn click(ActionListener listener) {
+		btn click(ActionListener listener) {
 			super.addActionListener(listener);
 			return this;
 		}
-		Btn offClick(ActionListener listener) {
+		btn offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		Btn bg(Color clr) {
+		btn bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		Btn fg(Color clr) {
+		btn fg(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		Btn setBg(Color clr) {
+		btn setBg(Color clr) {
 			bg(clr);
 			return this;
 		}
-		Btn setFg(Color clr) {
+		btn setFg(Color clr) {
 			fg(clr);
 			return this;
 		}
-		Btn cursor(int c) {
+		btn img(Icon ico) {
+			super.setIcon(ico);
+			return this;
+		}
+		btn img(String address) {
+			img(new image(address));
+			return this;
+		}
+		btn icon(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		btn icon(String address) {
+			this.img(address);
+			return this;
+		}
+		btn setImage(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		btn setImage(String address) {
+			this.img(address);
+			return this;
+		}
+		btn cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		Btn cursor(Cursor crsrObj) {
+		btn cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		Btn font(String fontFamily, int fontSize) {
+		btn font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
 		}
-		Btn font(String fontFamily, int fontSize, int fontWidth) {
+		btn font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
-		Btn font(String fontFamily, int fontSize, boolean bold,
+		btn font(String fontFamily, int fontSize, boolean bold,
 				boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
 					? Font.BOLD | Font.ITALIC
@@ -1383,11 +1462,11 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		Btn font(String fontFamily, int fontSize, boolean bold) {
+		btn font(String fontFamily, int fontSize, boolean bold) {
 			font(fontFamily, fontSize, bold, false);
 			return this;
 		}
-		Btn font(String fontFamily, int fontSize, int bold, int italic) {
+		btn font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
 					bold == 1 && italic == 1
 							? Font.BOLD | Font.ITALIC
@@ -1397,86 +1476,105 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		Btn font(Font fnt) {
+		btn font(Font fnt) {
 			super.setFont(fnt);
 			return this;
 		}
-		Btn border(LineBorder brdr) {
+		btn border(LineBorder brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
-		Btn alignx(int pos) {
+		btn alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
 		}
-		Btn aligny(int pos) {
+		btn aligny(int pos) {
 			super.setVerticalAlignment(pos);
 			return this;
 		}
 		String text() {
 			return super.getText();
 		}
-		Btn text(String s) {
+		btn text(String s) {
 			super.setText(s);
 			return this;
 		}
-		Btn on(String evt, ActionListener action) {
+		btn on(String evt, ActionListener action) {
 			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
 				click(action);
 			return this;
 		}
+		btn addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		btn removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		btn toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		btn toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
 	}
-	public static class TxtField extends JTextField {
+	public static class txtField extends JTextField {
 		private static final long serialVersionUID = 1L;
-		TxtField() {
+		txtField() {
 			super();
 		}
-		TxtField(String text) {
+		txtField(String text) {
 			super(text);
 		}
-		TxtField(int columns) {
+		txtField(int columns) {
 			super(columns);
 		}
-		TxtField(String text, int columns) {
+		txtField(String text, int columns) {
 			super(text, columns);
 		}
-		TxtField(Document doc, String text, int columns) {
+		txtField(Document doc, String text, int columns) {
 			super(doc, text, columns);
 		}
-		TxtField cursor(int c) {
+		txtField cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		TxtField cursor(Cursor crsrObj) {
+		txtField cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		TxtField border(LineBorder brdr) {
+		txtField border(LineBorder brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
 		String text() {
 			return super.getText();
 		}
-		TxtField text(String s) {
+		txtField text(String s) {
 			super.setText(s);
 			return this;
 		}
 		String val() {
 			return text();
 		}
-		TxtField val(String s) {
+		txtField val(String s) {
 			text(s);
 			return this;
 		}
 		String value() {
 			return text();
 		}
-		TxtField value(String s) {
+		txtField value(String s) {
 			text(s);
 			return this;
 		}
-		TxtField on(String k, Runnable action) {
+		txtField on(String k, Runnable action) {
 			if (KL.is(k) && KL.is(action)) {
 				super.addKeyListener(new KeyListener() {
 					@Override
@@ -1573,58 +1671,244 @@ public class KL {
 			}
 			return this;
 		}
+		txtField addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		txtField removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		txtField toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		txtField toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
 	}
-	public static class PwdField extends JPasswordField {
+	public static class txtArea extends JTextArea {
 		private static final long serialVersionUID = 1L;
-		PwdField() {
+		txtArea() {
 			super();
 		}
-		PwdField(String text) {
+		txtArea(String text) {
 			super(text);
 		}
-		PwdField(int columns) {
-			super(columns);
+		txtArea(int rows, int columns) {
+			super(rows, columns);
 		}
-		PwdField(String text, int columns) {
-			super(text, columns);
+		txtArea(String text, int rows, int columns) {
+			super(text, rows, columns);
 		}
-		PwdField(Document doc, String text, int columns) {
-			super(doc, text, columns);
+		txtArea(Document doc, String text, int rows, int columns) {
+			super(doc, text, rows, columns);
 		}
-		PwdField cursor(int c) {
+		txtArea cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		PwdField cursor(Cursor crsrObj) {
+		txtArea cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		PwdField border(LineBorder brdr) {
+		txtArea border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		txtArea text(String s) {
+			super.setText(s);
+			return this;
+		}
+		String val() {
+			return text();
+		}
+		txtArea val(String s) {
+			text(s);
+			return this;
+		}
+		String value() {
+			return text();
+		}
+		txtArea value(String s) {
+			text(s);
+			return this;
+		}
+		txtArea on(String k, Runnable action) {
+			if (KL.is(k) && KL.is(action)) {
+				super.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						char keyCharCaptured = e.getKeyChar();
+						int keyCodeCaptured = e.getKeyCode();
+						String keyCaptured = "" + keyCharCaptured;
+						switch (keyCodeCaptured) {
+							case KeyEvent.VK_UP :
+								keyCaptured = "up";
+								break;
+							case KeyEvent.VK_DOWN :
+								keyCaptured = "down";
+								break;
+							case KeyEvent.VK_LEFT :
+								keyCaptured = "left";
+								break;
+							case KeyEvent.VK_RIGHT :
+								keyCaptured = "right";
+								break;
+							case KeyEvent.VK_CONTROL :
+								keyCaptured = "ctrl";
+								break;
+						}
+						if (KL.eq(k, keyCaptured)) {
+							new Thread(action).run();;
+						}
+					}
+					@Override
+					public void keyReleased(KeyEvent e) {
+					}
+					@Override
+					public void keyTyped(KeyEvent e) {
+					}
+				});
+				super.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int button = -1;
+						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+							button = MouseEvent.BUTTON1;
+						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+							button = MouseEvent.BUTTON2;
+						else if (KL.eq(k, "clickr"))
+							button = MouseEvent.BUTTON3;
+						if (e.getButton() == button) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (KL.eq(k, "release")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (KL.eq(k, "enter")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (KL.eq(k, "leave")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseMotionListener(new MouseMotionListener() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						if (KL.eq(k, "drag")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						if (KL.eq(k, "move")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseWheelListener(new MouseWheelListener() {
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						if (KL.eq(k, "wheel")) {
+							new Thread(action).run();
+						}
+					}
+				});
+			}
+			return this;
+		}
+		txtArea addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		txtArea removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		txtArea toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		txtArea toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class pwdField extends JPasswordField {
+		private static final long serialVersionUID = 1L;
+		pwdField() {
+			super();
+		}
+		pwdField(String text) {
+			super(text);
+		}
+		pwdField(int columns) {
+			super(columns);
+		}
+		pwdField(String text, int columns) {
+			super(text, columns);
+		}
+		pwdField(Document doc, String text, int columns) {
+			super(doc, text, columns);
+		}
+		pwdField cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		pwdField cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		pwdField border(LineBorder brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
 		String text() {
 			return new String(super.getPassword());
 		}
-		PwdField text(String text) {
+		pwdField text(String text) {
 			super.setText(text);
 			return this;
 		}
 		String val() {
 			return text();
 		}
-		PwdField val(String s) {
+		pwdField val(String s) {
 			text(s);
 			return this;
 		}
 		String value() {
 			return text();
 		}
-		PwdField value(String s) {
+		pwdField value(String s) {
 			text(s);
 			return this;
 		}
-		PwdField on(String k, Runnable action) {
+		pwdField on(String k, Runnable action) {
 			if (KL.is(k) && KL.is(action)) {
 				super.addKeyListener(new KeyListener() {
 					@Override
@@ -1721,22 +2005,95 @@ public class KL {
 			}
 			return this;
 		}
+		pwdField addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		pwdField removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		pwdField toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		pwdField toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
 	}
-	public static class Icon extends ImageIcon {
-		Icon() {
+	public static class icon extends ImageIcon {
+		icon() {
 			super();
 		}
-		Icon(byte[] imageData) {
+		icon(byte[] imageData) {
 			super(imageData);
 		}
-		Icon(Image image) {
+		icon(Image image) {
 			super(image);
 		}
-		Icon(String filename) {
+		icon(String filename) {
 			super(filename);
 		}
-		Icon(java.net.URL urlObject) {
+		icon(URL urlObject) {
 			super(urlObject);
+		}
+		icon(String urlString, boolean isUrl) {
+			this(url(urlString));
+		}
+	}
+	public static class image extends icon {
+		image() {
+			super();
+		}
+		image(byte[] imageData) {
+			super(imageData);
+		}
+		image(Image image) {
+			super(image);
+		}
+		image(String filename) {
+			super(filename);
+		}
+		image(URL urlObject) {
+			super(urlObject);
+		}
+		image(String urlString, boolean isUrl) {
+			this(url(urlString));
+		}
+	}
+	public static class img extends image {
+		img() {
+			super();
+		}
+		img(byte[] imageData) {
+			super(imageData);
+		}
+		img(Image image) {
+			super(image);
+		}
+		img(String filename) {
+			super(filename);
+		}
+		img(URL urlObject) {
+			super(urlObject);
+		}
+		img(String urlString, boolean isUrl) {
+			this(url(urlString));
+		}
+	}
+	public static class lineBorder extends LineBorder {
+		lineBorder(Color color) {
+			super(color);
+		}
+		lineBorder(Color color, int thickness) {
+			super(color, thickness);
+		}
+		lineBorder(Color color, int thickness, boolean roundedCorners) {
+			super(color, thickness, roundedCorners);
 		}
 	}
 	public static class clr extends Color {
@@ -1821,51 +2178,6 @@ public class KL {
 			return r << 16 | g << 8 | b;
 			// the order stays as-is
 		}
-		public static final class font extends Font {
-			font(String fontFamily, int fontSize) {
-				super(fontFamily, Font.PLAIN, fontSize);
-			}
-			font(String fontFamily, int fontSize, int fontWidth) {
-				super(fontFamily, fontWidth, fontSize);
-			}
-			font(String fontFamily, int fontSize, boolean bold,
-					boolean italic) {
-				super(fontFamily, bold && italic
-						? Font.BOLD | Font.ITALIC
-						: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
-						fontSize);
-			}
-			font(String fontFamily, int fontSize, boolean bold) {
-				this(fontFamily, fontSize, bold, false);
-			}
-			font(String fontFamily, int fontSize, int bold, int italic) {
-				super(fontFamily, bold == 1 && italic == 1
-						? Font.BOLD | Font.ITALIC
-						: bold == 1
-								? Font.BOLD
-								: italic == 1 ? Font.ITALIC : Font.PLAIN,
-						fontSize);
-			}
-		}
-	}
-	// some global font variables for the ease of access, only handy if you
-	// extend
-	// the library class with your own
-	int Bold, Italic, BoldItalic, Plain, BOLD, ITALIC, BOLDITALIC, PLAIN,
-			bold = Bold = BOLD = Font.BOLD, plain = Plain = PLAIN = Font.PLAIN,
-			italic = Italic = ITALIC = Font.ITALIC,
-			bolditalic = BoldItalic = BOLDITALIC = Bold | Italic;
-	// some colors
-	// standard
-	public static clr red = new clr(clr.red), green = new clr(clr.green),
-			blue = new clr(clr.blue), pink = new clr(clr.pink),
-			magenta = new clr(clr.magenta), orange = new clr(clr.orange),
-			lightgray = new clr(clr.lightGray), gray = new clr(clr.gray),
-			darkgray = new clr(clr.darkGray), cyan = new clr(clr.cyan),
-			yellow = new clr(clr.yellow), white = new clr(clr.white),
-			black = new clr(clr.black);
-	// developer's choice
-	public static class colors {
 		public static final clr apple = new clr("#6ecb3c"),
 				applegreen = new clr("#76cd26"), apricot = new clr("#ffb16d"),
 				aqua = new clr("#13eac9"), aquablue = new clr("#02d8e9"),
@@ -2410,268 +2722,540 @@ public class KL {
 				yellowybrown = new clr("#ae8b0c"),
 				yellowygreen = new clr("#bff128");
 	}
-	public static final class clrs extends colors {
+	public static final class font extends Font {
+		font(String fontFamily, int fontSize) {
+			super(fontFamily, Font.PLAIN, fontSize);
+		}
+		font(String fontFamily, int fontSize, int fontWidth) {
+			super(fontFamily, fontWidth, fontSize);
+		}
+		font(String fontFamily, int fontSize, boolean bold, boolean italic) {
+			super(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize);
+		}
+		font(String fontFamily, int fontSize, boolean bold) {
+			this(fontFamily, fontSize, bold, false);
+		}
+		font(String fontFamily, int fontSize, int bold, int italic) {
+			super(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize);
+		}
+	}
+	public static class file extends File {
+		file(File parent, String child) {
+			super(parent, child);
+		}
+		file(String path) {
+			super(path);
+		}
+		file(String parent, String child) {
+			super(parent, child);
+		}
+		file(URI uri) {
+			super(uri);
+		}
+	}
+	// some global font variables for the ease of access, only handy if you
+	// extend
+	// the library class with your own
+	int Bold, Italic, BoldItalic, Plain, BOLD, ITALIC, BOLDITALIC, PLAIN,
+			bold = Bold = BOLD = Font.BOLD, plain = Plain = PLAIN = Font.PLAIN,
+			italic = Italic = ITALIC = Font.ITALIC,
+			bolditalic = BoldItalic = BOLDITALIC = Bold | Italic;
+	// making some colors globally accessible, for ease
+	// standard
+	public static clr red = new clr(clr.red), green = new clr(clr.green),
+			blue = new clr(clr.blue), pink = new clr(clr.pink),
+			magenta = new clr(clr.magenta), orange = new clr(clr.orange),
+			lightgray = new clr(clr.lightGray), gray = new clr(clr.gray),
+			darkgray = new clr(clr.darkGray), cyan = new clr(clr.cyan),
+			yellow = new clr(clr.yellow), white = new clr(clr.white),
+			black = new clr(clr.black);
+	public static class colors extends clr {
+
+	}
+	public static class clrs extends clr {
 
 	}
 	// some other syntax candies
-	public static Pesa rakam() {
-		return new Pesa();
+	public static pesa rakam() {
+		return new pesa();
 	}
-	public static Pesa rakam(double amnt) {
-		return new Pesa(amnt);
+	public static pesa rakam(double amnt) {
+		return new pesa(amnt);
 	}
-	public static Pesa rakam(double amnt, String curr) {
-		return new Pesa(amnt, curr);
+	public static pesa rakam(double amnt, String curr) {
+		return new pesa(amnt, curr);
 	}
-	public static Pesa pesa() {
-		return new Pesa();
+	public static pesa pesa() {
+		return new pesa();
 	}
-	public static Pesa pesa(double amnt) {
-		return new Pesa(amnt);
+	public static pesa pesa(double amnt) {
+		return new pesa(amnt);
 	}
-	public static Pesa pesa(double amnt, String curr) {
-		return new Pesa(amnt, curr);
+	public static pesa pesa(double amnt, String curr) {
+		return new pesa(amnt, curr);
 	}
-	public static Pesa naiRakam() {
-		return new Pesa();
+	public static pesa naiRakam() {
+		return new pesa();
 	}
-	public static Pesa naiRakam(double amnt) {
-		return new Pesa(amnt);
+	public static pesa naiRakam(double amnt) {
+		return new pesa(amnt);
 	}
-	public static Pesa naiRakam(double amnt, String curr) {
-		return new Pesa(amnt, curr);
+	public static pesa naiRakam(double amnt, String curr) {
+		return new pesa(amnt, curr);
 	}
-	public static BordLay bordlay() {
-		return new BordLay();
+	public static bordLay bordLay() {
+		return new bordLay();
 	}
-	public static BordLay bordlay(int hgap, int vgap) {
-		return new BordLay(hgap, vgap);
+	public static bordLay bordLay(int hgap, int vgap) {
+		return new bordLay(hgap, vgap);
 	}
-	public static BordLay nayaBordLay() {
-		return new BordLay();
+	public static bordLay nayaBordLay() {
+		return new bordLay();
 	}
-	public static BordLay nayaBordLay(int hgap, int vgap) {
-		return new BordLay(hgap, vgap);
+	public static bordLay nayaBordLay(int hgap, int vgap) {
+		return new bordLay(hgap, vgap);
 	}
-	public static GridLay gridlay() {
-		return new GridLay();
+	public static gridLay gridLay() {
+		return new gridLay();
 	}
-	public static GridLay gridlay(int rows, int columns) {
-		return new GridLay(rows, columns);
+	public static gridLay gridLay(int rows, int columns) {
+		return new gridLay(rows, columns);
 	}
-	public static GridLay gridlay(int rows, int columns, int hgap, int vgap) {
-		return new GridLay(rows, columns, hgap, vgap);
+	public static gridLay gridLay(int rows, int columns, int hgap, int vgap) {
+		return new gridLay(rows, columns, hgap, vgap);
 	}
-	public static GridLay nayaGridLay() {
-		return new GridLay();
+	public static gridLay nayaGridLay() {
+		return new gridLay();
 	}
-	public static GridLay nayaGridLay(int rows, int columns) {
-		return new GridLay(rows, columns);
+	public static gridLay nayaGridLay(int rows, int columns) {
+		return new gridLay(rows, columns);
 	}
-	public static GridLay nayaGridLay(int rows, int columns, int hgap,
+	public static gridLay nayaGridLay(int rows, int columns, int hgap,
 			int vgap) {
-		return new GridLay(rows, columns, hgap, vgap);
+		return new gridLay(rows, columns, hgap, vgap);
 	}
-	public static GridBagLay gridbaglay() {
-		return new GridBagLay();
+	public static gridBagLay gridBagLay() {
+		return new gridBagLay();
 	}
-	public static GridBagSettings gridbagsettings() {
-		return new GridBagSettings();
+	public static gridBagSettings gridBagSettings() {
+		return new gridBagSettings();
 	}
-	public static GridBagLay nayaGridBagLay() {
-		return new GridBagLay();
+	public static gridBagLay nayaGridBagLay() {
+		return new gridBagLay();
 	}
-	public static GridBagSettings naiGridBagSettings() {
-		return new GridBagSettings();
+	public static gridBagSettings naiGridBagSettings() {
+		return new gridBagSettings();
 	}
-	public static FlowLay flowlay() {
-		return new FlowLay();
+	public static flowLay flowLay() {
+		return new flowLay();
 	}
-	public static FlowLay flowlay(int align) {
-		return new FlowLay(align);
+	public static flowLay flowLay(int align) {
+		return new flowLay(align);
 	}
-	public static FlowLay flowlay(int align, int hgap, int vgap) {
-		return new FlowLay(align, hgap, vgap);
+	public static flowLay flowLay(int align, int hgap, int vgap) {
+		return new flowLay(align, hgap, vgap);
 	}
-	public static FlowLay nayaFlowLay() {
-		return new FlowLay();
+	public static flowLay nayaFlowLay() {
+		return new flowLay();
 	}
-	public static FlowLay nayaFlowLay(int align) {
-		return new FlowLay(align);
+	public static flowLay nayaFlowLay(int align) {
+		return new flowLay(align);
 	}
-	public static FlowLay nayaFlowLay(int align, int hgap, int vgap) {
-		return new FlowLay(align, hgap, vgap);
+	public static flowLay nayaFlowLay(int align, int hgap, int vgap) {
+		return new flowLay(align, hgap, vgap);
 	}
-	public static CardLay cardlay() {
-		return new CardLay();
+	public static cardLay cardLay() {
+		return new cardLay();
 	}
-	public static CardLay cardlay(int hgap, int vgap) {
-		return new CardLay(hgap, vgap);
+	public static cardLay cardLay(int hgap, int vgap) {
+		return new cardLay(hgap, vgap);
 	}
-	public static CardLay nayaCardLay() {
-		return new CardLay();
+	public static cardLay nayaCardLay() {
+		return new cardLay();
 	}
-	public static CardLay nayaCardLay(int hgap, int vgap) {
-		return new CardLay(hgap, vgap);
+	public static cardLay nayaCardLay(int hgap, int vgap) {
+		return new cardLay(hgap, vgap);
 	}
-	public static BoxLay boxlay(Container target, int axis) {
-		return new BoxLay(target, axis);
+	public static boxLay boxLay(Container target, int axis) {
+		return new boxLay(target, axis);
 	}
-	public static BoxLay nayaBoxLay(Container target, int axis) {
-		return new BoxLay(target, axis);
+	public static boxLay nayaBoxLay(Container target, int axis) {
+		return new boxLay(target, axis);
 	}
-	public static LineBorder lineborder(Color color) {
-		return new LineBorder(color);
+	public static lineBorder lineBorder(Color color) {
+		return new lineBorder(color);
 	}
-	public static LineBorder lineborder(Color color, int thickness) {
-		return new LineBorder(color, thickness);
+	public static lineBorder lineBorder(Color color, int thickness) {
+		return new lineBorder(color, thickness);
 	}
-	public static LineBorder lineborder(Color color, int thickness,
+	public static lineBorder lineBorder(Color color, int thickness,
 			boolean roundedCorners) {
-		return new LineBorder(color, thickness, roundedCorners);
+		return new lineBorder(color, thickness, roundedCorners);
 	}
-	public static LineBorder nayaLineBorder(Color color) {
-		return new LineBorder(color);
+	public static lineBorder nayaLineBorder(Color color) {
+		return new lineBorder(color);
 	}
-	public static LineBorder nayaLineBorder(Color color, int thickness) {
-		return new LineBorder(color, thickness);
+	public static lineBorder nayaLineBorder(Color color, int thickness) {
+		return new lineBorder(color, thickness);
 	}
-	public static LineBorder nayaLineBorder(Color color, int thickness,
+	public static lineBorder nayaLineBorder(Color color, int thickness,
 			boolean roundedCorners) {
-		return new LineBorder(color, thickness, roundedCorners);
+		return new lineBorder(color, thickness, roundedCorners);
 	}
-	public static Panel panel() {
-		return new Panel();
+	public static font font(String fontFamily, int fontSize) {
+		return new font(fontFamily, Font.PLAIN, fontSize);
 	}
-	public static Panel panel(LayoutManager layout) {
-		return new Panel(layout);
+	public static font font(String fontFamily, int fontSize, int fontWidth) {
+		return new font(fontFamily, fontWidth, fontSize);
 	}
-	public static Panel panel(boolean isDoubleBuffered) {
-		return new Panel(isDoubleBuffered);
+	public static font font(String fontFamily, int fontSize, boolean bold,
+			boolean italic) {
+		return new font(fontFamily,
+				bold && italic
+						? Font.BOLD | Font.ITALIC
+						: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+				fontSize);
 	}
-	public static Panel panel(LayoutManager layout, boolean isDoubleBuffered) {
-		return new Panel(layout, isDoubleBuffered);
+	public static font font(String fontFamily, int fontSize, boolean bold) {
+		return new font(fontFamily, fontSize, bold, false);
 	}
-	public static Panel nayaPanel() {
-		return new Panel();
+	public static font font(String fontFamily, int fontSize, int bold,
+			int italic) {
+		return new font(fontFamily,
+				bold == 1 && italic == 1
+						? Font.BOLD | Font.ITALIC
+						: bold == 1
+								? Font.BOLD
+								: italic == 1 ? Font.ITALIC : Font.PLAIN,
+				fontSize);
 	}
-	public static Panel nayaPanel(LayoutManager layout) {
-		return new Panel(layout);
+	public static file file(File parent, String child) {
+		return new file(parent, child);
 	}
-	public static Panel nayaPanel(boolean isDoubleBuffered) {
-		return new Panel(isDoubleBuffered);
+	public static file file(String path) {
+		return new file(path);
 	}
-	public static Panel nayaPanel(LayoutManager layout,
+	public static file file(String parent, String child) {
+		return new file(parent, child);
+	}
+	public static file file(URI uri) {
+		return new file(uri);
+	}
+	public static panel panel() {
+		return new panel();
+	}
+	public static panel panel(LayoutManager layout) {
+		return new panel(layout);
+	}
+	public static panel panel(boolean isDoubleBuffered) {
+		return new panel(isDoubleBuffered);
+	}
+	public static panel panel(LayoutManager layout, boolean isDoubleBuffered) {
+		return new panel(layout, isDoubleBuffered);
+	}
+	public static panel nayaPanel() {
+		return new panel();
+	}
+	public static panel nayaPanel(LayoutManager layout) {
+		return new panel(layout);
+	}
+	public static panel nayaPanel(boolean isDoubleBuffered) {
+		return new panel(isDoubleBuffered);
+	}
+	public static panel nayaPanel(LayoutManager layout,
 			boolean isDoubleBuffered) {
-		return new Panel(layout, isDoubleBuffered);
+		return new panel(layout, isDoubleBuffered);
 	}
-	public static Label label() {
-		return new Label();
+	public static label label() {
+		return new label();
 	}
-	public static Label label(String text) {
-		return new Label(text);
+	public static label label(String text) {
+		return new label(text);
 	}
-	public static Label label(String text, int alignment) {
-		return new Label(text, alignment);
+	public static label label(String text, int alignment) {
+		return new label(text, alignment);
 	}
-	public static Label nayaLabel() {
-		return new Label();
+	public static label nayaLabel() {
+		return new label();
 	}
-	public static Label nayaLabel(String text) {
-		return new Label(text);
+	public static label nayaLabel(String text) {
+		return new label(text);
 	}
-	public static Label nayaLabel(String text, int alignment) {
-		return new Label(text, alignment);
+	public static label nayaLabel(String text, int alignment) {
+		return new label(text, alignment);
 	}
-	public static TxtField txtField() {
-		return new TxtField();
+	public static txtField txtField() {
+		return new txtField();
 	}
-	public static TxtField txtField(String text) {
-		return new TxtField(text);
+	public static txtField txtField(String text) {
+		return new txtField(text);
 	}
-	public static TxtField txtField(int columns) {
-		return new TxtField(columns);
+	public static txtField txtField(int columns) {
+		return new txtField(columns);
 	}
-	public static TxtField txtField(String text, int columns) {
-		return new TxtField(text, columns);
+	public static txtField txtField(String text, int columns) {
+		return new txtField(text, columns);
 	}
-	public static TxtField txtField(Document doc, String text, int columns) {
-		return new TxtField(doc, text, columns);
+	public static txtField txtField(Document doc, String text, int columns) {
+		return new txtField(doc, text, columns);
 	}
-	public static TxtField naiTxtField() {
-		return new TxtField();
+	public static txtField naiTxtField() {
+		return new txtField();
 	}
-	public static TxtField naiTxtField(String text) {
-		return new TxtField(text);
+	public static txtField naiTxtField(String text) {
+		return new txtField(text);
 	}
-	public static TxtField naiTxtField(int columns) {
-		return new TxtField(columns);
+	public static txtField naiTxtField(int columns) {
+		return new txtField(columns);
 	}
-	public static TxtField naiTxtField(String text, int columns) {
-		return new TxtField(text, columns);
+	public static txtField naiTxtField(String text, int columns) {
+		return new txtField(text, columns);
 	}
-	public static TxtField naiTxtField(Document doc, String text, int columns) {
-		return new TxtField(doc, text, columns);
+	public static txtField naiTxtField(Document doc, String text, int columns) {
+		return new txtField(doc, text, columns);
 	}
-	public static PwdField pwdField() {
-		return new PwdField();
+	public static pwdField pwdField() {
+		return new pwdField();
 	}
-	public static PwdField pwdField(String text) {
-		return new PwdField(text);
+	public static pwdField pwdField(String text) {
+		return new pwdField(text);
 	}
-	public static PwdField pwdField(int columns) {
-		return new PwdField(columns);
+	public static pwdField pwdField(int columns) {
+		return new pwdField(columns);
 	}
-	public static PwdField pwdField(String text, int columns) {
-		return new PwdField(text, columns);
+	public static pwdField pwdField(String text, int columns) {
+		return new pwdField(text, columns);
 	}
-	public static PwdField pwdField(Document doc, String text, int columns) {
-		return new PwdField(doc, text, columns);
+	public static pwdField pwdField(Document doc, String text, int columns) {
+		return new pwdField(doc, text, columns);
 	}
-	public static PwdField naiPwdField() {
-		return new PwdField();
+	public static pwdField naiPwdField() {
+		return new pwdField();
 	}
-	public static PwdField naiPwdField(String text) {
-		return new PwdField(text);
+	public static pwdField naiPwdField(String text) {
+		return new pwdField(text);
 	}
-	public static PwdField naiPwdField(int columns) {
-		return new PwdField(columns);
+	public static pwdField naiPwdField(int columns) {
+		return new pwdField(columns);
 	}
-	public static PwdField naiPwdField(String text, int columns) {
-		return new PwdField(text, columns);
+	public static pwdField naiPwdField(String text, int columns) {
+		return new pwdField(text, columns);
 	}
-	public static PwdField naiPwdField(Document doc, String text, int columns) {
-		return new PwdField(doc, text, columns);
+	public static pwdField naiPwdField(Document doc, String text, int columns) {
+		return new pwdField(doc, text, columns);
 	}
-	public static Icon icon() {
-		return new Icon();
+	public static icon icon() {
+		return new icon();
 	}
-	public static Icon icon(byte[] imageData) {
-		return new Icon(imageData);
+	public static icon icon(byte[] imageData) {
+		return new icon(imageData);
 	}
-	public static Icon icon(Image image) {
-		return new Icon(image);
+	public static icon icon(Image image) {
+		try {
+			return new icon(image);
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	public static Icon icon(String filename) {
-		return new Icon(filename);
+	public static icon icon(String filename) {
+		try {
+			return new icon(filename);
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	public static Icon icon(java.net.URL urlObject) {
-		return new Icon(urlObject);
+	public static icon icon(String urlString, boolean isUrl) {
+		try {
+			return new icon(urlString, isUrl);
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	public static Icon naiIcon() {
-		return new Icon();
+	public static icon icon(URL urlObject) {
+		try {
+			return new icon(urlObject);
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	public static Icon naiIcon(byte[] imageData) {
-		return new Icon(imageData);
+	public static icon naiIcon() {
+		return new icon();
 	}
-	public static Icon naiIcon(Image image) {
-		return new Icon(image);
+	public static icon naiIcon(byte[] imageData) {
+		return new icon(imageData);
 	}
-	public static Icon naiIcon(String filename) {
-		return new Icon(filename);
+	public static icon naiIcon(Image image) {
+		try {
+			return new icon(image);
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	public static Icon naiIcon(java.net.URL urlObject) {
-		return new Icon(urlObject);
+	public static icon naiIcon(String filename) {
+		try {
+			return new icon(filename);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static icon naiIcon(String urlString, boolean isUrl) {
+		try {
+			return new icon(urlString, isUrl);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static icon naiIcon(URL urlObject) {
+		try {
+			return new icon(urlObject);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static image image() {
+		return new image();
+	}
+	public static image image(byte[] imageData) {
+		return new image(imageData);
+	}
+	public static image image(Image image) {
+		try {
+			return new image(image);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static image image(String filename) {
+		try {
+			return new image(filename);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static image image(String urlString, boolean isUrl) {
+		try {
+			return new image(urlString, isUrl);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static image image(URL urlObject) {
+		try {
+			return new image(urlObject);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static image naiImage() {
+		return new image();
+	}
+	public static image naiImage(byte[] imageData) {
+		return new image(imageData);
+	}
+	public static image naiImage(Image image) {
+		try {
+			return new image(image);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static image naiImage(String filename) {
+		try {
+			return new image(filename);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static image naiImage(String urlString, boolean isUrl) {
+		try {
+			return new image(urlString, isUrl);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static image naiImage(URL urlObject) {
+		try {
+			return new image(urlObject);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static img img() {
+		return new img();
+	}
+	public static img img(byte[] imageData) {
+		return new img(imageData);
+	}
+	public static img img(Image image) {
+		try {
+			return new img(image);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static img img(String filename) {
+		try {
+			return new img(filename);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static img img(String urlString, boolean isUrl) {
+		try {
+			return new img(urlString, isUrl);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static img img(URL urlObject) {
+		try {
+			return new img(urlObject);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static img naiImg() {
+		return new img();
+	}
+	public static img naiImg(byte[] imageData) {
+		return new img(imageData);
+	}
+	public static img naiImg(Image image) {
+		try {
+			return new img(image);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static img naiImg(String filename) {
+		try {
+			return new img(filename);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static img naiImg(String urlString, boolean isUrl) {
+		try {
+			return new img(urlString, isUrl);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public static img naiImg(URL urlObject) {
+		try {
+			return new img(urlObject);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	public static clr clr(int rgb) {
 		return new clr(rgb);
@@ -2741,59 +3325,59 @@ public class KL {
 		 * @params all in the hex range: (0x|#)?000 thru (0x|#)?ffffffff
 		 */
 	}
-	public static GUI gui() {
-		return new GUI();
+	public static gui gui() {
+		return new gui();
 	}
-	public static GUI gui(String t) {
-		return new GUI(t);
+	public static gui gui(String t) {
+		return new gui(t);
 	}
-	public static GUI gui(String t, int w, int h) {
-		return new GUI(t, w, h);
+	public static gui gui(String t, int w, int h) {
+		return new gui(t, w, h);
 	}
-	public static GUI nayaGUI() {
-		return new GUI();
+	public static gui nayaGUI() {
+		return new gui();
 	}
-	public static GUI nayaGUI(String t) {
-		return new GUI(t);
+	public static gui nayaGUI(String t) {
+		return new gui(t);
 	}
-	public static GUI nayaGUI(String t, int w, int h) {
-		return new GUI(t, w, h);
+	public static gui nayaGUI(String t, int w, int h) {
+		return new gui(t, w, h);
 	}
-	public static Btn btn() {
-		return new Btn();
+	public static btn btn() {
+		return new btn();
 	}
-	public static Btn btn(String txt) {
-		return new Btn(txt);
+	public static btn btn(String txt) {
+		return new btn(txt);
 	}
-	public static Btn btn(String txt, ActionListener actionOnClick) {
-		return new Btn(txt, actionOnClick);
+	public static btn btn(String txt, ActionListener actionOnClick) {
+		return new btn(txt, actionOnClick);
 	}
-	public static Btn btn(Action a) {
-		return new Btn(a);
+	public static btn btn(Action a) {
+		return new btn(a);
 	}
-	public static Btn btn(Icon i) {
-		return new Btn(i);
+	public static btn btn(icon i) {
+		return new btn(i);
 	}
-	public static Btn btn(String text, Icon i) {
-		return new Btn(text, i);
+	public static btn btn(String text, icon i) {
+		return new btn(text, i);
 	}
-	public static Btn nayaBtn() {
-		return new Btn();
+	public static btn nayaBtn() {
+		return new btn();
 	}
-	public static Btn nayaBtn(String txt) {
-		return new Btn(txt);
+	public static btn nayaBtn(String txt) {
+		return new btn(txt);
 	}
-	public static Btn nayaBtn(String txt, ActionListener actionOnClick) {
-		return new Btn(txt, actionOnClick);
+	public static btn nayaBtn(String txt, ActionListener actionOnClick) {
+		return new btn(txt, actionOnClick);
 	}
-	public static Btn nayaBtn(Action a) {
-		return new Btn(a);
+	public static btn nayaBtn(Action a) {
+		return new btn(a);
 	}
-	public static Btn nayaBtn(Icon i) {
-		return new Btn(i);
+	public static btn nayaBtn(icon i) {
+		return new btn(i);
 	}
-	public static Btn nayaBtn(String text, Icon i) {
-		return new Btn(text, i);
+	public static btn nayaBtn(String text, icon i) {
+		return new btn(text, i);
 	}
 	public static URL url(String address) {
 		try {
@@ -2807,11 +3391,11 @@ public class KL {
 		return url(address);
 	}
 	// general
-	public static final class ObjS extends HashMap<String, String> {
-		ObjS() {
+	public static final class objS extends HashMap<String, String> {
+		objS() {
 			super();
 		}
-		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
+		objS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6, String k7, String v7, String k8, String v8,
 				String k9, String v9, String k10, String v10) {
@@ -2826,7 +3410,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
+		objS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6, String k7, String v7, String k8, String v8,
 				String k9, String v9) {
@@ -2840,7 +3424,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
+		objS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6, String k7, String v7, String k8, String v8) {
 			super.put(k1, v1);
@@ -2852,7 +3436,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
+		objS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6, String k7, String v7) {
 			super.put(k1, v1);
@@ -2863,7 +3447,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
+		objS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6) {
 			super.put(k1, v1);
@@ -2873,7 +3457,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
+		objS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -2881,29 +3465,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		ObjS(String k1, String v1, String k2, String v2, String k3, String v3,
+		objS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		ObjS(String k1, String v1, String k2, String v2, String k3, String v3) {
+		objS(String k1, String v1, String k2, String v2, String k3, String v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		ObjS(String k1, String v1, String k2, String v2) {
+		objS(String k1, String v1, String k2, String v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		ObjS(String k1, String v1) {
+		objS(String k1, String v1) {
 			super.put(k1, v1);
 		}
-		ObjS copy() {
-			return (ObjS) super.clone();
+		objS copy() {
+			return (objS) super.clone();
 		}
-		ObjS slice() {
+		objS slice() {
 			return copy();
 		}
 		String random() {
@@ -2997,14 +3581,14 @@ public class KL {
 		String last() {
 			return nthlast(1);
 		}
-		ObjS set(String k, String v) {
+		objS set(String k, String v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		ObjS add(String k, String v) {
+		objS add(String k, String v) {
 			set(k, v);
 			return this;
 		}
@@ -3013,14 +3597,14 @@ public class KL {
 			super.remove(k);
 			return v;
 		}
-		ObjS push(String k, String v) {
+		objS push(String k, String v) {
 			add(k, v);
 			return this;
 		}
 		String pop(String k) {
 			return delete(k);
 		}
-		ObjS update(String k, String v) {
+		objS update(String k, String v) {
 			set(k, v);
 			return this;
 		}
@@ -3030,15 +3614,15 @@ public class KL {
 		Set<Map.Entry<String, String>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(ObjS arrB) {
+		boolean compare(objS arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		ObjS intersection(ObjS other) {
+		objS intersection(objS other) {
 			if (other == null) {
-				return new ObjS();
+				return new objS();
 			}
-			ObjS result = new ObjS();
+			objS result = new objS();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -3047,19 +3631,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjS negativeIntersection(ObjS other) {
+		objS negativeIntersection(objS other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjS result = copy();
+			objS result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		ObjS keyIntersection(ObjS other) {
+		objS keyIntersection(objS other) {
 			if (other == null) {
-				return new ObjS();
+				return new objS();
 			}
-			ObjS result = new ObjS();
+			objS result = new objS();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -3067,19 +3651,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjS negativeKeyIntersection(ObjS other) {
+		objS negativeKeyIntersection(objS other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjS result = copy();
+			objS result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		ObjS valueIntersection(ObjS other) {
+		objS valueIntersection(objS other) {
 			if (other == null) {
-				return new ObjS();
+				return new objS();
 			}
-			ObjS result = new ObjS();
+			objS result = new objS();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -3089,26 +3673,26 @@ public class KL {
 			}
 			return result;
 		}
-		ObjS negativeValueIntersection(ObjS other) {
+		objS negativeValueIntersection(objS other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjS result = copy();
+			objS result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		ObjS slice(int start) {
+		objS slice(int start) {
 			if (super.isEmpty()) {
-				return new ObjS();
+				return new objS();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new ObjS();
+				return new objS();
 			}
-			ObjS subMap = new ObjS();
+			objS subMap = new objS();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -3118,9 +3702,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjS slice(int start, int end) {
+		objS slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new ObjS();
+				return new objS();
 			}
 			if (start < 0) {
 				start = 0;
@@ -3133,7 +3717,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			ObjS subMap = new ObjS();
+			objS subMap = new objS();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -3143,17 +3727,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjS sliceKeep(int end) {
+		objS sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new ObjS();
+				return new objS();
 			}
 			if (end < 0) {
-				return new ObjS();
+				return new objS();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			ObjS subMap = new ObjS();
+			objS subMap = new objS();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -3163,16 +3747,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjS sliceEnd(int earlyEnd) {
+		objS sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (ObjS) super.clone();
+					return (objS) super.clone();
 				} else {
-					return new ObjS();
+					return new objS();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			ObjS subMap = new ObjS();
+			objS subMap = new objS();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -3182,20 +3766,20 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjS mapIfPresent(String key, Function<String, String> fn) {
+		objS mapIfPresent(String key, Function<String, String> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjS mapIfPresent(String key,
+		objS mapIfPresent(String key,
 				BiFunction<? super String, ? super String, ? extends String> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		ObjS map(String value, Function<String, String> fn) {
+		objS map(String value, Function<String, String> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -3211,7 +3795,7 @@ public class KL {
 			}
 			return this;
 		}
-		ObjS mapKey(String key, Function<String, String> fn) {
+		objS mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -3223,57 +3807,57 @@ public class KL {
 			}
 			return this;
 		}
-		ObjS mapKey(Function<String, String> fn) {
+		objS mapKey(Function<String, String> fn) {
 			HashMap<String, String> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		ObjS map(Function<String, String> fn) {
+		objS map(Function<String, String> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjS map(
+		objS map(
 				BiFunction<? super String, ? super String, ? extends String> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		ObjS eachKey(Consumer<String> fn) {
+		objS eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		ObjS each(Consumer<String> fn) {
+		objS each(Consumer<String> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		ObjS each(BiConsumer<? super String, ? super String> fn) {
+		objS each(BiConsumer<? super String, ? super String> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		ObjS combine(ObjS... others) {
+		objS combine(objS... others) {
 			if (not(others))
 				return this;
-			for (ObjS other : others) {
+			for (objS other : others) {
 				if (not(other))
 					continue;
 				super.putAll(other);
 			}
 			return this;
 		}
-		ObjS union(ObjS... others) {
+		objS union(objS... others) {
 			combine(others);
 			return this;
 		}
-		ObjS cat(ObjS... others) {
+		objS cat(objS... others) {
 			combine(others);
 			return this;
 		}
-		ObjS concat(ObjS... others) {
+		objS concat(objS... others) {
 			combine(others);
 			return this;
 		}
-		ObjS join(ObjS... others) {
+		objS join(objS... others) {
 			combine(others);
 			return this;
 		}
@@ -3286,7 +3870,7 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
@@ -3301,11 +3885,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class ObjI extends HashMap<String, Integer> {
-		ObjI() {
+	public static final class objI extends HashMap<String, Integer> {
+		objI() {
 			super();
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
+		objI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3, String k4, Integer v4, String k5, Integer v5,
 				String k6, Integer v6, String k7, Integer v7, String k8,
 				Integer v8, String k9, Integer v9, String k10, Integer v10) {
@@ -3320,7 +3904,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
+		objI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3, String k4, Integer v4, String k5, Integer v5,
 				String k6, Integer v6, String k7, Integer v7, String k8,
 				Integer v8, String k9, Integer v9) {
@@ -3334,7 +3918,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
+		objI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3, String k4, Integer v4, String k5, Integer v5,
 				String k6, Integer v6, String k7, Integer v7, String k8,
 				Integer v8) {
@@ -3347,7 +3931,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
+		objI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3, String k4, Integer v4, String k5, Integer v5,
 				String k6, Integer v6, String k7, Integer v7) {
 			super.put(k1, v1);
@@ -3358,7 +3942,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
+		objI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3, String k4, Integer v4, String k5, Integer v5,
 				String k6, Integer v6) {
 			super.put(k1, v1);
@@ -3368,7 +3952,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
+		objI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3, String k4, Integer v4, String k5, Integer v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -3376,30 +3960,30 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
+		objI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3, String k4, Integer v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2, String k3,
+		objI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		ObjI(String k1, Integer v1, String k2, Integer v2) {
+		objI(String k1, Integer v1, String k2, Integer v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		ObjI(String k, Integer v) {
+		objI(String k, Integer v) {
 			super.put(k, v);
 		}
-		ObjI copy() {
-			return (ObjI) super.clone();
+		objI copy() {
+			return (objI) super.clone();
 		}
-		ObjI slice() {
+		objI slice() {
 			return copy();
 		}
 		int random() {
@@ -3497,14 +4081,14 @@ public class KL {
 		int last() {
 			return nthlast(1);
 		}
-		ObjI set(String k, Integer v) {
+		objI set(String k, Integer v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		ObjI add(String k, Integer v) {
+		objI add(String k, Integer v) {
 			set(k, v);
 			return this;
 		}
@@ -3513,14 +4097,14 @@ public class KL {
 			super.remove(k);
 			return v;
 		}
-		ObjI push(String k, int v) {
+		objI push(String k, int v) {
 			add(k, v);
 			return this;
 		}
 		int pop(String k) {
 			return delete(k);
 		}
-		ObjI update(String k, Integer v) {
+		objI update(String k, Integer v) {
 			set(k, v);
 			return this;
 		}
@@ -3530,15 +4114,15 @@ public class KL {
 		Set<Map.Entry<String, Integer>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(ObjI arrB) {
+		boolean compare(objI arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		ObjI intersection(ObjI other) {
+		objI intersection(objI other) {
 			if (other == null) {
-				return new ObjI();
+				return new objI();
 			}
-			ObjI result = new ObjI();
+			objI result = new objI();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -3547,19 +4131,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjI negativeIntersection(ObjI other) {
+		objI negativeIntersection(objI other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjI result = copy();
+			objI result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		ObjI keyIntersection(ObjI other) {
+		objI keyIntersection(objI other) {
 			if (other == null) {
-				return new ObjI();
+				return new objI();
 			}
-			ObjI result = new ObjI();
+			objI result = new objI();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -3567,19 +4151,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjI negativeKeyIntersection(ObjI other) {
+		objI negativeKeyIntersection(objI other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjI result = copy();
+			objI result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		ObjI valueIntersection(ObjI other) {
+		objI valueIntersection(objI other) {
 			if (other == null) {
-				return new ObjI();
+				return new objI();
 			}
-			ObjI result = new ObjI();
+			objI result = new objI();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -3589,26 +4173,26 @@ public class KL {
 			}
 			return result;
 		}
-		ObjI negativeValueIntersection(ObjI other) {
+		objI negativeValueIntersection(objI other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjI result = copy();
+			objI result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		ObjI slice(int start) {
+		objI slice(int start) {
 			if (super.isEmpty()) {
-				return new ObjI();
+				return new objI();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new ObjI();
+				return new objI();
 			}
-			ObjI subMap = new ObjI();
+			objI subMap = new objI();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -3618,9 +4202,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjI slice(int start, int end) {
+		objI slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new ObjI();
+				return new objI();
 			}
 			if (start < 0) {
 				start = 0;
@@ -3633,7 +4217,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			ObjI subMap = new ObjI();
+			objI subMap = new objI();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -3643,17 +4227,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjI sliceKeep(int end) {
+		objI sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new ObjI();
+				return new objI();
 			}
 			if (end < 0) {
-				return new ObjI();
+				return new objI();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			ObjI subMap = new ObjI();
+			objI subMap = new objI();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -3663,16 +4247,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjI sliceEnd(int earlyEnd) {
+		objI sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (ObjI) super.clone();
+					return (objI) super.clone();
 				} else {
-					return new ObjI();
+					return new objI();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			ObjI subMap = new ObjI();
+			objI subMap = new objI();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -3682,23 +4266,23 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjI mapIfPresent(String key, Function<Integer, Integer> fn) {
+		objI mapIfPresent(String key, Function<Integer, Integer> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjI mapIfPresent(int value, Function<Integer, Integer> fn) {
+		objI mapIfPresent(int value, Function<Integer, Integer> fn) {
 			return map(value, fn);
 		}
-		ObjI mapIfPresent(String key,
+		objI mapIfPresent(String key,
 				BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		ObjI map(int value, Function<Integer, Integer> fn) {
+		objI map(int value, Function<Integer, Integer> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -3714,7 +4298,7 @@ public class KL {
 			}
 			return this;
 		}
-		ObjI mapKey(String key, Function<String, String> fn) {
+		objI mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -3726,57 +4310,57 @@ public class KL {
 			}
 			return this;
 		}
-		ObjI mapKey(Function<String, String> fn) {
+		objI mapKey(Function<String, String> fn) {
 			HashMap<String, Integer> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		ObjI map(Function<Integer, Integer> fn) {
+		objI map(Function<Integer, Integer> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjI map(
+		objI map(
 				BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		ObjI eachKey(Consumer<String> fn) {
+		objI eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		ObjI each(Consumer<Integer> fn) {
+		objI each(Consumer<Integer> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		ObjI each(BiConsumer<? super String, ? super Integer> fn) {
+		objI each(BiConsumer<? super String, ? super Integer> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		ObjI combine(ObjI... others) {
+		objI combine(objI... others) {
 			if (not(others))
 				return this;
-			for (ObjI other : others) {
+			for (objI other : others) {
 				if (not(other))
 					continue;
 				super.putAll(other);
 			}
 			return this;
 		}
-		ObjI union(ObjI... others) {
+		objI union(objI... others) {
 			combine(others);
 			return this;
 		}
-		ObjI cat(ObjI... others) {
+		objI cat(objI... others) {
 			combine(others);
 			return this;
 		}
-		ObjI concat(ObjI... others) {
+		objI concat(objI... others) {
 			combine(others);
 			return this;
 		}
-		ObjI join(ObjI... others) {
+		objI join(objI... others) {
 			combine(others);
 			return this;
 		}
@@ -3789,7 +4373,7 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
@@ -3804,11 +4388,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class ObjL extends HashMap<String, Long> {
-		ObjL() {
+	public static final class objL extends HashMap<String, Long> {
+		objL() {
 			super();
 		}
-		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6,
 				String k7, Long v7, String k8, Long v8, String k9, Long v9,
 				String k10, Long v10) {
@@ -3823,7 +4407,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6,
 				String k7, Long v7, String k8, Long v8, String k9, Long v9) {
 			super.put(k1, v1);
@@ -3836,7 +4420,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6,
 				String k7, Long v7, String k8, Long v8) {
 			super.put(k1, v1);
@@ -3848,7 +4432,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6,
 				String k7, Long v7) {
 			super.put(k1, v1);
@@ -3859,7 +4443,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -3868,7 +4452,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -3876,29 +4460,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		ObjL(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
+		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		ObjL(String k1, Long v1, String k2, Long v2) {
+		objL(String k1, Long v1, String k2, Long v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		ObjL(String k, Long v) {
+		objL(String k, Long v) {
 			super.put(k, v);
 		}
-		ObjL copy() {
-			return (ObjL) super.clone();
+		objL copy() {
+			return (objL) super.clone();
 		}
-		ObjL slice() {
+		objL slice() {
 			return copy();
 		}
 		long random() {
@@ -3996,28 +4580,28 @@ public class KL {
 				return hasValue((Long) o);
 			return false;
 		}
-		ObjL set(String k, Long v) {
+		objL set(String k, Long v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		ObjL add(String k, Long v) {
+		objL add(String k, Long v) {
 			set(k, v);
 			return this;
 		}
 		long delete(String k) {
 			return super.remove(k);
 		}
-		ObjL push(String k, long v) {
+		objL push(String k, long v) {
 			add(k, v);
 			return this;
 		}
 		long pop(String k) {
 			return delete(k);
 		}
-		ObjL update(String k, Long v) {
+		objL update(String k, Long v) {
 			set(k, v);
 			return this;
 		}
@@ -4027,15 +4611,15 @@ public class KL {
 		Set<Map.Entry<String, Long>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(ObjL arrB) {
+		boolean compare(objL arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		ObjL intersection(ObjL other) {
+		objL intersection(objL other) {
 			if (other == null) {
-				return new ObjL();
+				return new objL();
 			}
-			ObjL result = new ObjL();
+			objL result = new objL();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -4044,19 +4628,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjL negativeIntersection(ObjL other) {
+		objL negativeIntersection(objL other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjL result = copy();
+			objL result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		ObjL keyIntersection(ObjL other) {
+		objL keyIntersection(objL other) {
 			if (other == null) {
-				return new ObjL();
+				return new objL();
 			}
-			ObjL result = new ObjL();
+			objL result = new objL();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -4064,19 +4648,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjL negativeKeyIntersection(ObjL other) {
+		objL negativeKeyIntersection(objL other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjL result = copy();
+			objL result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		ObjL valueIntersection(ObjL other) {
+		objL valueIntersection(objL other) {
 			if (other == null) {
-				return new ObjL();
+				return new objL();
 			}
-			ObjL result = new ObjL();
+			objL result = new objL();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -4086,26 +4670,26 @@ public class KL {
 			}
 			return result;
 		}
-		ObjL negativeValueIntersection(ObjL other) {
+		objL negativeValueIntersection(objL other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjL result = copy();
+			objL result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		ObjL slice(int start) {
+		objL slice(int start) {
 			if (super.isEmpty()) {
-				return new ObjL();
+				return new objL();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new ObjL();
+				return new objL();
 			}
-			ObjL subMap = new ObjL();
+			objL subMap = new objL();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -4115,9 +4699,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjL slice(int start, int end) {
+		objL slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new ObjL();
+				return new objL();
 			}
 			if (start < 0) {
 				start = 0;
@@ -4130,7 +4714,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			ObjL subMap = new ObjL();
+			objL subMap = new objL();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -4140,17 +4724,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjL sliceKeep(int end) {
+		objL sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new ObjL();
+				return new objL();
 			}
 			if (end < 0) {
-				return new ObjL();
+				return new objL();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			ObjL subMap = new ObjL();
+			objL subMap = new objL();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -4160,16 +4744,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjL sliceEnd(int earlyEnd) {
+		objL sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (ObjL) super.clone();
+					return (objL) super.clone();
 				} else {
-					return new ObjL();
+					return new objL();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			ObjL subMap = new ObjL();
+			objL subMap = new objL();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -4179,23 +4763,23 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjL mapIfPresent(String key, Function<Long, Long> fn) {
+		objL mapIfPresent(String key, Function<Long, Long> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjL mapIfPresent(long value, Function<Long, Long> fn) {
+		objL mapIfPresent(long value, Function<Long, Long> fn) {
 			return map(value, fn);
 		}
-		ObjL mapIfPresent(String key,
+		objL mapIfPresent(String key,
 				BiFunction<? super String, ? super Long, ? extends Long> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		ObjL map(long value, Function<Long, Long> fn) {
+		objL map(long value, Function<Long, Long> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -4211,7 +4795,7 @@ public class KL {
 			}
 			return this;
 		}
-		ObjL mapKey(String key, Function<String, String> fn) {
+		objL mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -4223,56 +4807,56 @@ public class KL {
 			}
 			return this;
 		}
-		ObjL mapKey(Function<String, String> fn) {
+		objL mapKey(Function<String, String> fn) {
 			HashMap<String, Long> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		ObjL map(Function<Long, Long> fn) {
+		objL map(Function<Long, Long> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjL map(BiFunction<? super String, ? super Long, ? extends Long> fn) {
+		objL map(BiFunction<? super String, ? super Long, ? extends Long> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		ObjL eachKey(Consumer<String> fn) {
+		objL eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		ObjL each(Consumer<Long> fn) {
+		objL each(Consumer<Long> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		ObjL each(BiConsumer<? super String, ? super Long> fn) {
+		objL each(BiConsumer<? super String, ? super Long> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		ObjL combine(ObjL... others) {
+		objL combine(objL... others) {
 			if (not(others))
 				return this;
-			for (ObjL other : others) {
+			for (objL other : others) {
 				if (not(other))
 					continue;
 				super.putAll(other);
 			}
 			return this;
 		}
-		ObjL union(ObjL... others) {
+		objL union(objL... others) {
 			combine(others);
 			return this;
 		}
-		ObjL cat(ObjL... others) {
+		objL cat(objL... others) {
 			combine(others);
 			return this;
 		}
-		ObjL concat(ObjL... others) {
+		objL concat(objL... others) {
 			combine(others);
 			return this;
 		}
-		ObjL join(ObjL... others) {
+		objL join(objL... others) {
 			combine(others);
 			return this;
 		}
@@ -4285,7 +4869,7 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
@@ -4300,11 +4884,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class ObjF extends HashMap<String, Float> {
-		ObjF() {
+	public static final class objF extends HashMap<String, Float> {
+		objF() {
 			super();
 		}
-		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6,
 				String k7, Float v7, String k8, Float v8, String k9, Float v9,
 				String k10, Float v10) {
@@ -4319,7 +4903,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6,
 				String k7, Float v7, String k8, Float v8, String k9, Float v9) {
 			super.put(k1, v1);
@@ -4332,7 +4916,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6,
 				String k7, Float v7, String k8, Float v8) {
 			super.put(k1, v1);
@@ -4344,7 +4928,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6,
 				String k7, Float v7) {
 			super.put(k1, v1);
@@ -4355,7 +4939,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -4364,7 +4948,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -4372,29 +4956,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		ObjF(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
+		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		ObjF(String k1, Float v1, String k2, Float v2) {
+		objF(String k1, Float v1, String k2, Float v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		ObjF(String k1, Float v1) {
+		objF(String k1, Float v1) {
 			super.put(k1, v1);
 		}
-		ObjF copy() {
-			return (ObjF) super.clone();
+		objF copy() {
+			return (objF) super.clone();
 		}
-		ObjF slice() {
+		objF slice() {
 			return copy();
 		}
 		float random() {
@@ -4492,28 +5076,28 @@ public class KL {
 				return hasValue((Float) o);
 			return false;
 		}
-		ObjF set(String k, Float v) {
+		objF set(String k, Float v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		ObjF add(String k, Float v) {
+		objF add(String k, Float v) {
 			set(k, v);
 			return this;
 		}
 		float delete(String k) {
 			return super.remove(k);
 		}
-		ObjF push(String k, float v) {
+		objF push(String k, float v) {
 			add(k, v);
 			return this;
 		}
 		float pop(String k) {
 			return delete(k);
 		}
-		ObjF update(String k, Float v) {
+		objF update(String k, Float v) {
 			set(k, v);
 			return this;
 		}
@@ -4523,15 +5107,15 @@ public class KL {
 		Set<Map.Entry<String, Float>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(ObjF arrB) {
+		boolean compare(objF arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		ObjF intersection(ObjF other) {
+		objF intersection(objF other) {
 			if (other == null) {
-				return new ObjF();
+				return new objF();
 			}
-			ObjF result = new ObjF();
+			objF result = new objF();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -4540,19 +5124,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjF negativeIntersection(ObjF other) {
+		objF negativeIntersection(objF other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjF result = copy();
+			objF result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		ObjF keyIntersection(ObjF other) {
+		objF keyIntersection(objF other) {
 			if (other == null) {
-				return new ObjF();
+				return new objF();
 			}
-			ObjF result = new ObjF();
+			objF result = new objF();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -4560,19 +5144,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjF negativeKeyIntersection(ObjF other) {
+		objF negativeKeyIntersection(objF other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjF result = copy();
+			objF result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		ObjF valueIntersection(ObjF other) {
+		objF valueIntersection(objF other) {
 			if (other == null) {
-				return new ObjF();
+				return new objF();
 			}
-			ObjF result = new ObjF();
+			objF result = new objF();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -4582,26 +5166,26 @@ public class KL {
 			}
 			return result;
 		}
-		ObjF negativeValueIntersection(ObjF other) {
+		objF negativeValueIntersection(objF other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjF result = copy();
+			objF result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		ObjF slice(int start) {
+		objF slice(int start) {
 			if (super.isEmpty()) {
-				return new ObjF();
+				return new objF();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new ObjF();
+				return new objF();
 			}
-			ObjF subMap = new ObjF();
+			objF subMap = new objF();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -4611,9 +5195,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjF slice(int start, int end) {
+		objF slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new ObjF();
+				return new objF();
 			}
 			if (start < 0) {
 				start = 0;
@@ -4626,7 +5210,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			ObjF subMap = new ObjF();
+			objF subMap = new objF();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -4636,17 +5220,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjF sliceKeep(int end) {
+		objF sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new ObjF();
+				return new objF();
 			}
 			if (end < 0) {
-				return new ObjF();
+				return new objF();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			ObjF subMap = new ObjF();
+			objF subMap = new objF();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -4656,16 +5240,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjF sliceEnd(int earlyEnd) {
+		objF sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (ObjF) super.clone();
+					return (objF) super.clone();
 				} else {
-					return new ObjF();
+					return new objF();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			ObjF subMap = new ObjF();
+			objF subMap = new objF();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -4675,23 +5259,23 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjF mapIfPresent(String key, Function<Float, Float> fn) {
+		objF mapIfPresent(String key, Function<Float, Float> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjF mapIfPresent(float value, Function<Float, Float> fn) {
+		objF mapIfPresent(float value, Function<Float, Float> fn) {
 			return map(value, fn);
 		}
-		ObjF mapIfPresent(String key,
+		objF mapIfPresent(String key,
 				BiFunction<? super String, ? super Float, ? extends Float> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		ObjF map(float value, Function<Float, Float> fn) {
+		objF map(float value, Function<Float, Float> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -4707,7 +5291,7 @@ public class KL {
 			}
 			return this;
 		}
-		ObjF mapKey(String key, Function<String, String> fn) {
+		objF mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -4719,57 +5303,57 @@ public class KL {
 			}
 			return this;
 		}
-		ObjF mapKey(Function<String, String> fn) {
+		objF mapKey(Function<String, String> fn) {
 			HashMap<String, Float> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		ObjF map(Function<Float, Float> fn) {
+		objF map(Function<Float, Float> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjF map(
+		objF map(
 				BiFunction<? super String, ? super Float, ? extends Float> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		ObjF eachKey(Consumer<String> fn) {
+		objF eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		ObjF each(Consumer<Float> fn) {
+		objF each(Consumer<Float> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		ObjF each(BiConsumer<? super String, ? super Float> fn) {
+		objF each(BiConsumer<? super String, ? super Float> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		ObjF combine(ObjF... others) {
+		objF combine(objF... others) {
 			if (not(others))
 				return this;
-			for (ObjF other : others) {
+			for (objF other : others) {
 				if (not(other))
 					continue;
 				super.putAll(other);
 			}
 			return this;
 		}
-		ObjF union(ObjF... others) {
+		objF union(objF... others) {
 			combine(others);
 			return this;
 		}
-		ObjF cat(ObjF... others) {
+		objF cat(objF... others) {
 			combine(others);
 			return this;
 		}
-		ObjF concat(ObjF... others) {
+		objF concat(objF... others) {
 			combine(others);
 			return this;
 		}
-		ObjF join(ObjF... others) {
+		objF join(objF... others) {
 			combine(others);
 			return this;
 		}
@@ -4782,7 +5366,7 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
@@ -4797,11 +5381,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class ObjD extends HashMap<String, Double> {
-		ObjD() {
+	public static final class objD extends HashMap<String, Double> {
+		objD() {
 			super();
 		}
-		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6, String k7, Double v7, String k8, Double v8,
 				String k9, Double v9, String k10, Double v10) {
@@ -4816,7 +5400,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6, String k7, Double v7, String k8, Double v8,
 				String k9, Double v9) {
@@ -4830,7 +5414,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6, String k7, Double v7, String k8, Double v8) {
 			super.put(k1, v1);
@@ -4842,7 +5426,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6, String k7, Double v7) {
 			super.put(k1, v1);
@@ -4853,7 +5437,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6) {
 			super.put(k1, v1);
@@ -4863,7 +5447,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -4871,29 +5455,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		ObjD(String k1, Double v1, String k2, Double v2, String k3, Double v3) {
+		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		ObjD(String k1, Double v1, String k2, Double v2) {
+		objD(String k1, Double v1, String k2, Double v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		ObjD(String k, Double v) {
+		objD(String k, Double v) {
 			super.put(k, v);
 		}
-		ObjD copy() {
-			return (ObjD) super.clone();
+		objD copy() {
+			return (objD) super.clone();
 		}
-		ObjD slice() {
+		objD slice() {
 			return copy();
 		}
 		double random() {
@@ -4991,28 +5575,28 @@ public class KL {
 				return hasValue((Double) o);
 			return false;
 		}
-		ObjD set(String k, Double v) {
+		objD set(String k, Double v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		ObjD add(String k, Double v) {
+		objD add(String k, Double v) {
 			set(k, v);
 			return this;
 		}
 		double delete(String k) {
 			return super.remove(k);
 		}
-		ObjD push(String k, double v) {
+		objD push(String k, double v) {
 			add(k, v);
 			return this;
 		}
 		double pop(String k) {
 			return delete(k);
 		}
-		ObjD update(String k, Double v) {
+		objD update(String k, Double v) {
 			set(k, v);
 			return this;
 		}
@@ -5022,15 +5606,15 @@ public class KL {
 		Set<Map.Entry<String, Double>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(ObjD arrB) {
+		boolean compare(objD arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		ObjD intersection(ObjD other) {
+		objD intersection(objD other) {
 			if (other == null) {
-				return new ObjD();
+				return new objD();
 			}
-			ObjD result = new ObjD();
+			objD result = new objD();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -5039,19 +5623,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjD negativeIntersection(ObjD other) {
+		objD negativeIntersection(objD other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjD result = copy();
+			objD result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		ObjD keyIntersection(ObjD other) {
+		objD keyIntersection(objD other) {
 			if (other == null) {
-				return new ObjD();
+				return new objD();
 			}
-			ObjD result = new ObjD();
+			objD result = new objD();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -5059,19 +5643,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjD negativeKeyIntersection(ObjD other) {
+		objD negativeKeyIntersection(objD other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjD result = copy();
+			objD result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		ObjD valueIntersection(ObjD other) {
+		objD valueIntersection(objD other) {
 			if (other == null) {
-				return new ObjD();
+				return new objD();
 			}
-			ObjD result = new ObjD();
+			objD result = new objD();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -5081,26 +5665,26 @@ public class KL {
 			}
 			return result;
 		}
-		ObjD negativeValueIntersection(ObjD other) {
+		objD negativeValueIntersection(objD other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjD result = copy();
+			objD result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		ObjD slice(int start) {
+		objD slice(int start) {
 			if (super.isEmpty()) {
-				return new ObjD();
+				return new objD();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new ObjD();
+				return new objD();
 			}
-			ObjD subMap = new ObjD();
+			objD subMap = new objD();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -5110,9 +5694,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjD slice(int start, int end) {
+		objD slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new ObjD();
+				return new objD();
 			}
 			if (start < 0) {
 				start = 0;
@@ -5125,7 +5709,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			ObjD subMap = new ObjD();
+			objD subMap = new objD();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -5135,17 +5719,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjD sliceKeep(int end) {
+		objD sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new ObjD();
+				return new objD();
 			}
 			if (end < 0) {
-				return new ObjD();
+				return new objD();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			ObjD subMap = new ObjD();
+			objD subMap = new objD();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -5155,16 +5739,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjD sliceEnd(int earlyEnd) {
+		objD sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (ObjD) super.clone();
+					return (objD) super.clone();
 				} else {
-					return new ObjD();
+					return new objD();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			ObjD subMap = new ObjD();
+			objD subMap = new objD();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -5174,23 +5758,23 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjD mapIfPresent(String key, Function<Double, Double> fn) {
+		objD mapIfPresent(String key, Function<Double, Double> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjD mapIfPresent(double value, Function<Double, Double> fn) {
+		objD mapIfPresent(double value, Function<Double, Double> fn) {
 			return map(value, fn);
 		}
-		ObjD mapIfPresent(String key,
+		objD mapIfPresent(String key,
 				BiFunction<? super String, ? super Double, ? extends Double> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		ObjD map(double value, Function<Double, Double> fn) {
+		objD map(double value, Function<Double, Double> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -5206,7 +5790,7 @@ public class KL {
 			}
 			return this;
 		}
-		ObjD mapKey(String key, Function<String, String> fn) {
+		objD mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -5218,57 +5802,57 @@ public class KL {
 			}
 			return this;
 		}
-		ObjD mapKey(Function<String, String> fn) {
+		objD mapKey(Function<String, String> fn) {
 			HashMap<String, Double> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		ObjD map(Function<Double, Double> fn) {
+		objD map(Function<Double, Double> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjD map(
+		objD map(
 				BiFunction<? super String, ? super Double, ? extends Double> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		ObjD eachKey(Consumer<String> fn) {
+		objD eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		ObjD each(Consumer<Double> fn) {
+		objD each(Consumer<Double> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		ObjD each(BiConsumer<? super String, ? super Double> fn) {
+		objD each(BiConsumer<? super String, ? super Double> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		ObjD combine(ObjD... others) {
+		objD combine(objD... others) {
 			if (not(others))
 				return this;
-			for (ObjD other : others) {
+			for (objD other : others) {
 				if (not(other))
 					continue;
 				super.putAll(other);
 			}
 			return this;
 		}
-		ObjD union(ObjD... others) {
+		objD union(objD... others) {
 			combine(others);
 			return this;
 		}
-		ObjD cat(ObjD... others) {
+		objD cat(objD... others) {
 			combine(others);
 			return this;
 		}
-		ObjD concat(ObjD... others) {
+		objD concat(objD... others) {
 			combine(others);
 			return this;
 		}
-		ObjD join(ObjD... others) {
+		objD join(objD... others) {
 			combine(others);
 			return this;
 		}
@@ -5281,7 +5865,7 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
@@ -5296,11 +5880,11 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static final class ObjB extends HashMap<String, Boolean> {
-		ObjB() {
+	public static final class objB extends HashMap<String, Boolean> {
+		objB() {
 			super();
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 				String k6, Boolean v6, String k7, Boolean v7, String k8,
 				Boolean v8, String k9, Boolean v9, String k10, Boolean v10) {
@@ -5315,7 +5899,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 				String k6, Boolean v6, String k7, Boolean v7, String k8,
 				Boolean v8, String k9, Boolean v9) {
@@ -5329,7 +5913,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 				String k6, Boolean v6, String k7, Boolean v7, String k8,
 				Boolean v8) {
@@ -5342,7 +5926,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 				String k6, Boolean v6, String k7, Boolean v7) {
 			super.put(k1, v1);
@@ -5353,7 +5937,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
 				String k6, Boolean v6) {
 			super.put(k1, v1);
@@ -5363,7 +5947,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -5371,30 +5955,30 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3, String k4, Boolean v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		ObjB(String k1, Boolean v1, String k2, Boolean v2) {
+		objB(String k1, Boolean v1, String k2, Boolean v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		ObjB(String k, Boolean v) {
+		objB(String k, Boolean v) {
 			super.put(k, v);
 		}
-		ObjB copy() {
-			return (ObjB) super.clone();
+		objB copy() {
+			return (objB) super.clone();
 		}
-		ObjB slice() {
+		objB slice() {
 			return copy();
 		}
 		boolean random() {
@@ -5492,28 +6076,28 @@ public class KL {
 				return hasValue((Boolean) o);
 			return false;
 		}
-		ObjB set(String k, Boolean v) {
+		objB set(String k, Boolean v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		ObjB add(String k, Boolean v) {
+		objB add(String k, Boolean v) {
 			set(k, v);
 			return this;
 		}
 		boolean delete(String k) {
 			return super.remove(k);
 		}
-		ObjB push(String k, Boolean v) {
+		objB push(String k, Boolean v) {
 			add(k, v);
 			return this;
 		}
 		boolean pop(String k) {
 			return delete(k);
 		}
-		ObjB update(String k, Boolean v) {
+		objB update(String k, Boolean v) {
 			set(k, v);
 			return this;
 		}
@@ -5523,15 +6107,15 @@ public class KL {
 		Set<Map.Entry<String, Boolean>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(ObjB arrB) {
+		boolean compare(objB arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		ObjB intersection(ObjB other) {
+		objB intersection(objB other) {
 			if (other == null) {
-				return new ObjB();
+				return new objB();
 			}
-			ObjB result = new ObjB();
+			objB result = new objB();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -5540,19 +6124,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjB negativeIntersection(ObjB other) {
+		objB negativeIntersection(objB other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjB result = copy();
+			objB result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		ObjB keyIntersection(ObjB other) {
+		objB keyIntersection(objB other) {
 			if (other == null) {
-				return new ObjB();
+				return new objB();
 			}
-			ObjB result = new ObjB();
+			objB result = new objB();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -5560,19 +6144,19 @@ public class KL {
 			}
 			return result;
 		}
-		ObjB negativeKeyIntersection(ObjB other) {
+		objB negativeKeyIntersection(objB other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjB result = copy();
+			objB result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		ObjB valueIntersection(ObjB other) {
+		objB valueIntersection(objB other) {
 			if (other == null) {
-				return new ObjB();
+				return new objB();
 			}
-			ObjB result = new ObjB();
+			objB result = new objB();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -5582,26 +6166,26 @@ public class KL {
 			}
 			return result;
 		}
-		ObjB negativeValueIntersection(ObjB other) {
+		objB negativeValueIntersection(objB other) {
 			if (other == null) {
 				return copy();
 			}
-			ObjB result = copy();
+			objB result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		ObjB slice(int start) {
+		objB slice(int start) {
 			if (super.isEmpty()) {
-				return new ObjB();
+				return new objB();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new ObjB();
+				return new objB();
 			}
-			ObjB subMap = new ObjB();
+			objB subMap = new objB();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -5611,9 +6195,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjB slice(int start, int end) {
+		objB slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new ObjB();
+				return new objB();
 			}
 			if (start < 0) {
 				start = 0;
@@ -5626,7 +6210,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			ObjB subMap = new ObjB();
+			objB subMap = new objB();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -5636,17 +6220,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjB sliceKeep(int end) {
+		objB sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new ObjB();
+				return new objB();
 			}
 			if (end < 0) {
-				return new ObjB();
+				return new objB();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			ObjB subMap = new ObjB();
+			objB subMap = new objB();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -5656,16 +6240,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjB sliceEnd(int earlyEnd) {
+		objB sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (ObjB) super.clone();
+					return (objB) super.clone();
 				} else {
-					return new ObjB();
+					return new objB();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			ObjB subMap = new ObjB();
+			objB subMap = new objB();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -5675,23 +6259,23 @@ public class KL {
 			}
 			return subMap;
 		}
-		ObjB mapIfPresent(String key, Function<Boolean, Boolean> fn) {
+		objB mapIfPresent(String key, Function<Boolean, Boolean> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjB mapIfPresent(boolean value, Function<Boolean, Boolean> fn) {
+		objB mapIfPresent(boolean value, Function<Boolean, Boolean> fn) {
 			return map(value, fn);
 		}
-		ObjB mapIfPresent(String key,
+		objB mapIfPresent(String key,
 				BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		ObjB map(boolean value, Function<Boolean, Boolean> fn) {
+		objB map(boolean value, Function<Boolean, Boolean> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -5707,7 +6291,7 @@ public class KL {
 			}
 			return this;
 		}
-		ObjB mapKey(String key, Function<String, String> fn) {
+		objB mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -5719,57 +6303,57 @@ public class KL {
 			}
 			return this;
 		}
-		ObjB mapKey(Function<String, String> fn) {
+		objB mapKey(Function<String, String> fn) {
 			HashMap<String, Boolean> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		ObjB map(Function<Boolean, Boolean> fn) {
+		objB map(Function<Boolean, Boolean> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		ObjB map(
+		objB map(
 				BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		ObjB eachKey(Consumer<String> fn) {
+		objB eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		ObjB each(Consumer<Boolean> fn) {
+		objB each(Consumer<Boolean> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		ObjB each(BiConsumer<? super String, ? super Boolean> fn) {
+		objB each(BiConsumer<? super String, ? super Boolean> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		ObjB combine(ObjB... others) {
+		objB combine(objB... others) {
 			if (not(others))
 				return this;
-			for (ObjB other : others) {
+			for (objB other : others) {
 				if (not(other))
 					continue;
 				super.putAll(other);
 			}
 			return this;
 		}
-		ObjB union(ObjB... others) {
+		objB union(objB... others) {
 			combine(others);
 			return this;
 		}
-		ObjB cat(ObjB... others) {
+		objB cat(objB... others) {
 			combine(others);
 			return this;
 		}
-		ObjB concat(ObjB... others) {
+		objB concat(objB... others) {
 			combine(others);
 			return this;
 		}
-		ObjB join(ObjB... others) {
+		objB join(objB... others) {
 			combine(others);
 			return this;
 		}
@@ -5782,7 +6366,7 @@ public class KL {
 			return KL.join(array(), s);
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
@@ -6160,7 +6744,7 @@ public class KL {
 			return result;
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
@@ -6175,60 +6759,60 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class TreeS extends Tree<String, Integer> {
+	public static class treeS extends Tree<String, Integer> {
 		public static final long serialVersionUID = 1L;
-		TreeS() {
+		treeS() {
 			super();
 		}
-		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
+		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6,
 				String k7, int v7, String k8, int v8, String k9, int v9,
 				String k10, int v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
+		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6,
 				String k7, int v7, String k8, int v8, String k9, int v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
+		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6,
 				String k7, int v7, String k8, int v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
+		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6,
 				String k7, int v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
+		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5, String k6, int v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
+		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4, String k5, int v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeS(String k1, int v1, String k2, int v2, String k3, int v3,
+		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
 				String k4, int v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeS(String k1, int v1, String k2, int v2, String k3, int v3) {
+		treeS(String k1, int v1, String k2, int v2, String k3, int v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeS(String k1, int v1, String k2, int v2) {
+		treeS(String k1, int v1, String k2, int v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeS(String k1, int v1) {
+		treeS(String k1, int v1) {
 			super(k1, v1);
 		}
-		TreeS copy() {
-			return (TreeS) super.clone();
+		treeS copy() {
+			return (treeS) super.clone();
 		}
-		TreeS slice() {
+		treeS slice() {
 			return copy();
 		}
 		int random() {
@@ -6301,29 +6885,29 @@ public class KL {
 		int last() {
 			return nthlast(1);
 		}
-		TreeS combine(TreeS... trees) {
+		treeS combine(treeS... trees) {
 			if (not(trees))
 				return this;
-			for (TreeS tree : trees) {
+			for (treeS tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeS union(TreeS... trees) {
+		treeS union(treeS... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeS cat(TreeS... trees) {
+		treeS cat(treeS... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeS concat(TreeS... trees) {
+		treeS concat(treeS... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeS join(TreeS... trees) {
+		treeS join(treeS... trees) {
 			combine(trees);
 			return this;
 		}
@@ -6343,60 +6927,60 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeSL extends Tree<String, Long> {
+	public static class treeSL extends Tree<String, Long> {
 		// public static final long serialVersionUID = 1L;
-		TreeSL() {
+		treeSL() {
 			super();
 		}
-		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
+		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8, String k9, long v9,
 				String k10, long v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
+		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8, String k9, long v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
+		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7, String k8, long v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
+		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6,
 				String k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
+		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5, String k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
+		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4, String k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3,
+		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
 				String k4, long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeSL(String k1, long v1, String k2, long v2, String k3, long v3) {
+		treeSL(String k1, long v1, String k2, long v2, String k3, long v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeSL(String k1, long v1, String k2, long v2) {
+		treeSL(String k1, long v1, String k2, long v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeSL(String k1, long v1) {
+		treeSL(String k1, long v1) {
 			super(k1, v1);
 		}
-		TreeSL copy() {
-			return (TreeSL) super.clone();
+		treeSL copy() {
+			return (treeSL) super.clone();
 		}
-		TreeSL slice() {
+		treeSL slice() {
 			return copy();
 		}
 		long random() {
@@ -6470,29 +7054,29 @@ public class KL {
 		long last() {
 			return nthlast(1);
 		}
-		TreeSL combine(TreeSL... trees) {
+		treeSL combine(treeSL... trees) {
 			if (not(trees))
 				return this;
-			for (TreeSL tree : trees) {
+			for (treeSL tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeSL union(TreeSL... trees) {
+		treeSL union(treeSL... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSL cat(TreeSL... trees) {
+		treeSL cat(treeSL... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSL concat(TreeSL... trees) {
+		treeSL concat(treeSL... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSL join(TreeSL... trees) {
+		treeSL join(treeSL... trees) {
 			combine(trees);
 			return this;
 		}
@@ -6512,60 +7096,60 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeSF extends Tree<String, Float> {
+	public static class treeSF extends Tree<String, Float> {
 		// public static final long serialVersionUID = 1L;
-		TreeSF() {
+		treeSF() {
 			super();
 		}
-		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
+		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8, String k9, float v9,
 				String k10, float v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
+		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8, String k9, float v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
+		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7, String k8, float v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
+		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6,
 				String k7, float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
+		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5, String k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
+		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4, String k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3,
+		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
 				String k4, float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeSF(String k1, float v1, String k2, float v2, String k3, float v3) {
+		treeSF(String k1, float v1, String k2, float v2, String k3, float v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeSF(String k1, float v1, String k2, float v2) {
+		treeSF(String k1, float v1, String k2, float v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeSF(String k1, float v1) {
+		treeSF(String k1, float v1) {
 			super(k1, v1);
 		}
-		TreeSF copy() {
-			return (TreeSF) super.clone();
+		treeSF copy() {
+			return (treeSF) super.clone();
 		}
-		TreeSF slice() {
+		treeSF slice() {
 			return copy();
 		}
 		float random() {
@@ -6639,29 +7223,29 @@ public class KL {
 		float last() {
 			return nthlast(1);
 		}
-		TreeSF combine(TreeSF... trees) {
+		treeSF combine(treeSF... trees) {
 			if (not(trees))
 				return this;
-			for (TreeSF tree : trees) {
+			for (treeSF tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeSF union(TreeSF... trees) {
+		treeSF union(treeSF... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSF cat(TreeSF... trees) {
+		treeSF cat(treeSF... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSF concat(TreeSF... trees) {
+		treeSF concat(treeSF... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSF join(TreeSF... trees) {
+		treeSF join(treeSF... trees) {
 			combine(trees);
 			return this;
 		}
@@ -6681,63 +7265,63 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeSD extends Tree<String, Double> {
+	public static class treeSD extends Tree<String, Double> {
 		// public static final long serialVersionUID = 1L;
-		TreeSD() {
+		treeSD() {
 			super();
 		}
-		TreeSD(String k1, double v1, String k2, double v2, String k3, double v3,
+		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
 				String k4, double v4, String k5, double v5, String k6,
 				double v6, String k7, double v7, String k8, double v8,
 				String k9, double v9, String k10, double v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeSD(String k1, double v1, String k2, double v2, String k3, double v3,
+		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
 				String k4, double v4, String k5, double v5, String k6,
 				double v6, String k7, double v7, String k8, double v8,
 				String k9, double v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeSD(String k1, double v1, String k2, double v2, String k3, double v3,
+		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
 				String k4, double v4, String k5, double v5, String k6,
 				double v6, String k7, double v7, String k8, double v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeSD(String k1, double v1, String k2, double v2, String k3, double v3,
+		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
 				String k4, double v4, String k5, double v5, String k6,
 				double v6, String k7, double v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeSD(String k1, double v1, String k2, double v2, String k3, double v3,
+		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
 				String k4, double v4, String k5, double v5, String k6,
 				double v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeSD(String k1, double v1, String k2, double v2, String k3, double v3,
+		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
 				String k4, double v4, String k5, double v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeSD(String k1, double v1, String k2, double v2, String k3, double v3,
+		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
 				String k4, double v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeSD(String k1, double v1, String k2, double v2, String k3,
+		treeSD(String k1, double v1, String k2, double v2, String k3,
 				double v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeSD(String k1, double v1, String k2, double v2) {
+		treeSD(String k1, double v1, String k2, double v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeSD(String k1, double v1) {
+		treeSD(String k1, double v1) {
 			super(k1, v1);
 		}
-		TreeSD copy() {
-			return (TreeSD) super.clone();
+		treeSD copy() {
+			return (treeSD) super.clone();
 		}
-		TreeSD slice() {
+		treeSD slice() {
 			return copy();
 		}
 		double random() {
@@ -6811,29 +7395,29 @@ public class KL {
 		double last() {
 			return nthlast(1);
 		}
-		TreeSD combine(TreeSD... trees) {
+		treeSD combine(treeSD... trees) {
 			if (not(trees))
 				return this;
-			for (TreeSD tree : trees) {
+			for (treeSD tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeSD union(TreeSD... trees) {
+		treeSD union(treeSD... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSD cat(TreeSD... trees) {
+		treeSD cat(treeSD... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSD concat(TreeSD... trees) {
+		treeSD concat(treeSD... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSD join(TreeSD... trees) {
+		treeSD join(treeSD... trees) {
 			combine(trees);
 			return this;
 		}
@@ -6853,64 +7437,64 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeSB extends Tree<String, Boolean> {
+	public static class treeSB extends Tree<String, Boolean> {
 		// public static final long serialVersionUID = 1L;
-		TreeSB() {
+		treeSB() {
 			super();
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
+		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8, String k9, boolean v9, String k10, boolean v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
+		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8, String k9, boolean v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
+		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7, String k8,
 				boolean v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
+		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6, String k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
+		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5,
 				String k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
+		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4, String k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
+		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3, String k4, boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2, String k3,
+		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
 				boolean v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeSB(String k1, boolean v1, String k2, boolean v2) {
+		treeSB(String k1, boolean v1, String k2, boolean v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeSB(String k1, boolean v1) {
+		treeSB(String k1, boolean v1) {
 			super(k1, v1);
 		}
-		TreeSB copy() {
-			return (TreeSB) super.clone();
+		treeSB copy() {
+			return (treeSB) super.clone();
 		}
-		TreeSB slice() {
+		treeSB slice() {
 			return copy();
 		}
 		boolean random() {
@@ -6984,29 +7568,29 @@ public class KL {
 		boolean last() {
 			return nthlast(1);
 		}
-		TreeSB combine(TreeSB... trees) {
+		treeSB combine(treeSB... trees) {
 			if (not(trees))
 				return this;
-			for (TreeSB tree : trees) {
+			for (treeSB tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeSB union(TreeSB... trees) {
+		treeSB union(treeSB... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSB cat(TreeSB... trees) {
+		treeSB cat(treeSB... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSB concat(TreeSB... trees) {
+		treeSB concat(treeSB... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeSB join(TreeSB... trees) {
+		treeSB join(treeSB... trees) {
 			combine(trees);
 			return this;
 		}
@@ -7026,60 +7610,60 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeI extends Tree<Integer, String> {
+	public static class treeI extends Tree<Integer, String> {
 		// public static final long serialVersionUID = 1L;
-		TreeI() {
+		treeI() {
 			super();
 		}
-		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4, int k5, String v5, int k6, String v6, int k7,
 				String v7, int k8, String v8, int k9, String v9, int k10,
 				String v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4, int k5, String v5, int k6, String v6, int k7,
 				String v7, int k8, String v8, int k9, String v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4, int k5, String v5, int k6, String v6, int k7,
 				String v7, int k8, String v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4, int k5, String v5, int k6, String v6, int k7,
 				String v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4, int k5, String v5, int k6, String v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4, int k5, String v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
 				String v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeI(int k1, String v1, int k2, String v2, int k3, String v3) {
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeI(int k1, String v1, int k2, String v2) {
+		treeI(int k1, String v1, int k2, String v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeI(int k1, String v1) {
+		treeI(int k1, String v1) {
 			super(k1, v1);
 		}
-		TreeI copy() {
-			return (TreeI) super.clone();
+		treeI copy() {
+			return (treeI) super.clone();
 		}
-		TreeI slice() {
+		treeI slice() {
 			return copy();
 		}
 		String random() {
@@ -7153,29 +7737,29 @@ public class KL {
 		String last() {
 			return nthlast(1);
 		}
-		TreeI combine(TreeI... trees) {
+		treeI combine(treeI... trees) {
 			if (not(trees))
 				return this;
-			for (TreeI tree : trees) {
+			for (treeI tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeI union(TreeI... trees) {
+		treeI union(treeI... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeI cat(TreeI... trees) {
+		treeI cat(treeI... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeI concat(TreeI... trees) {
+		treeI concat(treeI... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeI join(TreeI... trees) {
+		treeI join(treeI... trees) {
 			combine(trees);
 			return this;
 		}
@@ -7195,58 +7779,58 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeL extends Tree<Integer, Long> {
+	public static class treeL extends Tree<Integer, Long> {
 		public static final long serialVersionUID = 1L;
-		TreeL() {
+		treeL() {
 			super();
 		}
-		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 				int k8, long v8, int k9, long v9, int k10, long v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 				int k8, long v8, int k9, long v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
 				int k8, long v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5, int k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4, int k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
 				long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeL(int k1, long v1, int k2, long v2, int k3, long v3) {
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeL(int k1, long v1, int k2, long v2) {
+		treeL(int k1, long v1, int k2, long v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeL(int k1, long v1) {
+		treeL(int k1, long v1) {
 			super(k1, v1);
 		}
-		TreeL copy() {
-			return (TreeL) super.clone();
+		treeL copy() {
+			return (treeL) super.clone();
 		}
-		TreeL slice() {
+		treeL slice() {
 			return copy();
 		}
 		long random() {
@@ -7320,29 +7904,29 @@ public class KL {
 		long last() {
 			return nthlast(1);
 		}
-		TreeL combine(TreeL... trees) {
+		treeL combine(treeL... trees) {
 			if (not(trees))
 				return this;
-			for (TreeL tree : trees) {
+			for (treeL tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeL union(TreeL... trees) {
+		treeL union(treeL... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeL cat(TreeL... trees) {
+		treeL cat(treeL... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeL concat(TreeL... trees) {
+		treeL concat(treeL... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeL join(TreeL... trees) {
+		treeL join(treeL... trees) {
 			combine(trees);
 			return this;
 		}
@@ -7362,59 +7946,59 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeF extends Tree<Integer, Float> {
+	public static class treeF extends Tree<Integer, Float> {
 		public static final long serialVersionUID = 1L;
-		TreeF() {
+		treeF() {
 			super();
 		}
-		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
 				int k8, float v8, int k9, float v9, int k10, float v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
 				int k8, float v8, int k9, float v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
 				int k8, float v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4, int k5, float v5, int k6, float v6, int k7,
 				float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4, int k5, float v5, int k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4, int k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
 				float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeF(int k1, float v1, int k2, float v2, int k3, float v3) {
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeF(int k1, float v1, int k2, float v2) {
+		treeF(int k1, float v1, int k2, float v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeF(int k1, float v1) {
+		treeF(int k1, float v1) {
 			super(k1, v1);
 		}
-		TreeF copy() {
-			return (TreeF) super.clone();
+		treeF copy() {
+			return (treeF) super.clone();
 		}
-		TreeF slice() {
+		treeF slice() {
 			return copy();
 		}
 		float random() {
@@ -7488,29 +8072,29 @@ public class KL {
 		float last() {
 			return nthlast(1);
 		}
-		TreeF combine(TreeF... trees) {
+		treeF combine(treeF... trees) {
 			if (not(trees))
 				return this;
-			for (TreeF tree : trees) {
+			for (treeF tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeF union(TreeF... trees) {
+		treeF union(treeF... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeF cat(TreeF... trees) {
+		treeF cat(treeF... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeF concat(TreeF... trees) {
+		treeF concat(treeF... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeF join(TreeF... trees) {
+		treeF join(treeF... trees) {
 			combine(trees);
 			return this;
 		}
@@ -7530,60 +8114,60 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeD extends Tree<Integer, Double> {
+	public static class treeD extends Tree<Integer, Double> {
 		// public static final long serialVersionUID = 1L;
-		TreeD() {
+		treeD() {
 			super();
 		}
-		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4, int k5, double v5, int k6, double v6, int k7,
 				double v7, int k8, double v8, int k9, double v9, int k10,
 				double v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4, int k5, double v5, int k6, double v6, int k7,
 				double v7, int k8, double v8, int k9, double v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4, int k5, double v5, int k6, double v6, int k7,
 				double v7, int k8, double v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4, int k5, double v5, int k6, double v6, int k7,
 				double v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4, int k5, double v5, int k6, double v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4, int k5, double v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
 				double v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeD(int k1, double v1, int k2, double v2, int k3, double v3) {
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeD(int k1, double v1, int k2, double v2) {
+		treeD(int k1, double v1, int k2, double v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeD(int k1, double v1) {
+		treeD(int k1, double v1) {
 			super(k1, v1);
 		}
-		TreeD copy() {
-			return (TreeD) super.clone();
+		treeD copy() {
+			return (treeD) super.clone();
 		}
-		TreeD slice() {
+		treeD slice() {
 			return copy();
 		}
 		double random() {
@@ -7657,29 +8241,29 @@ public class KL {
 		double last() {
 			return nthlast(1);
 		}
-		TreeD combine(TreeD... trees) {
+		treeD combine(treeD... trees) {
 			if (not(trees))
 				return this;
-			for (TreeD tree : trees) {
+			for (treeD tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeD union(TreeD... trees) {
+		treeD union(treeD... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeD cat(TreeD... trees) {
+		treeD cat(treeD... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeD concat(TreeD... trees) {
+		treeD concat(treeD... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeD join(TreeD... trees) {
+		treeD join(treeD... trees) {
 			combine(trees);
 			return this;
 		}
@@ -7699,60 +8283,60 @@ public class KL {
 			return false;
 		}
 	}
-	public static class TreeB extends Tree<Integer, Boolean> {
+	public static class treeB extends Tree<Integer, Boolean> {
 		public static final long serialVersionUID = 1L;
-		TreeB() {
+		treeB() {
 			super();
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
 				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6,
 				int k7, boolean v7, int k8, boolean v8, int k9, boolean v9,
 				int k10, boolean v10) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9, k10, v10);
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
 				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6,
 				int k7, boolean v7, int k8, boolean v8, int k9, boolean v9) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8, k9, v9);
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
 				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6,
 				int k7, boolean v7, int k8, boolean v8) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
 					v8);
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
 				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6,
 				int k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
 				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
 				int k4, boolean v4, int k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
 				int k4, boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
-		TreeB(int k1, boolean v1, int k2, boolean v2) {
+		treeB(int k1, boolean v1, int k2, boolean v2) {
 			super(k1, v1, k2, v2);
 		}
-		TreeB(int k1, boolean v1) {
+		treeB(int k1, boolean v1) {
 			super(k1, v1);
 		}
-		TreeB copy() {
-			return (TreeB) super.clone();
+		treeB copy() {
+			return (treeB) super.clone();
 		}
-		TreeB slice() {
+		treeB slice() {
 			return copy();
 		}
 		boolean random() {
@@ -7826,29 +8410,29 @@ public class KL {
 		boolean last() {
 			return nthlast(1);
 		}
-		TreeB combine(TreeB... trees) {
+		treeB combine(treeB... trees) {
 			if (not(trees))
 				return this;
-			for (TreeB tree : trees) {
+			for (treeB tree : trees) {
 				if (not(tree))
 					continue;
 				super.putAll(tree);
 			}
 			return this;
 		}
-		TreeB union(TreeB... trees) {
+		treeB union(treeB... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeB cat(TreeB... trees) {
+		treeB cat(treeB... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeB concat(TreeB... trees) {
+		treeB concat(treeB... trees) {
 			combine(trees);
 			return this;
 		}
-		TreeB join(TreeB... trees) {
+		treeB join(treeB... trees) {
 			combine(trees);
 			return this;
 		}
@@ -7868,16 +8452,16 @@ public class KL {
 			return false;
 		}
 	}
-	public static final class StrArr extends ArrayList<String> {
-		StrArr() {
+	public static final class strArr extends ArrayList<String> {
+		strArr() {
 			super();
 		}
-		StrArr(String... strings) {
+		strArr(String... strings) {
 			super();
 			for (String s : strings)
 				super.add(s);
 		}
-		StrArr pushAt(int i, String... strings) {
+		strArr pushAt(int i, String... strings) {
 			if (i >= 0 && i <= super.size() && 0 != len(strings)) {
 				for (String s : strings) {
 					if (!KL.isEmpty(s))
@@ -7886,17 +8470,17 @@ public class KL {
 			}
 			return this;
 		}
-		StrArr pushStart(String... strings) {
+		strArr pushStart(String... strings) {
 			if (0 != len(strings))
 				pushAt(0, strings);
 			return this;
 		}
-		StrArr push(String... strings) {
+		strArr push(String... strings) {
 			if (0 != len(strings))
 				pushAt(super.size(), strings);
 			return this;
 		}
-		StrArr push(String[]... stringArrays) {
+		strArr push(String[]... stringArrays) {
 			// this one's for appending entire arrays, for ease of pushing
 			if (not(stringArrays))
 				return this;
@@ -7906,13 +8490,13 @@ public class KL {
 			}
 			return this;
 		}
-		StrArr push(StrArr... arrays) {
+		strArr push(strArr... arrays) {
 			return combine(arrays);
 		}
-		StrArr pop(String[]... arrays) {
+		strArr pop(String[]... arrays) {
 			return negativeIntersection(arrays);
 		}
-		StrArr pop(StrArr... arrays) {
+		strArr pop(strArr... arrays) {
 			return negativeIntersection(arrays);
 		}
 		String shift() {
@@ -7942,27 +8526,27 @@ public class KL {
 			}
 			return strings[0];
 		}
-		StrArr popIf(Predicate<? super String> fn) {
+		strArr popIf(Predicate<? super String> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		StrArr filterOut(Predicate<? super String> fn) {
+		strArr filterOut(Predicate<? super String> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		StrArr keepIf(Predicate<? super String> fn) {
+		strArr keepIf(Predicate<? super String> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		StrArr filter(Predicate<? super String> fn) {
+		strArr filter(Predicate<? super String> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		StrArr map(UnaryOperator<String> fn) {
+		strArr map(UnaryOperator<String> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		StrArr unique() {
+		strArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -8007,7 +8591,7 @@ public class KL {
 		String last() {
 			return nthlast(1);
 		}
-		StrArr update(int i, String x) {
+		strArr update(int i, String x) {
 			if (isNull(i) || isNull(x))
 				return this;
 			if (!has(x))
@@ -8019,7 +8603,7 @@ public class KL {
 			}
 			return this;
 		}
-		StrArr shuffle() {
+		strArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -8032,14 +8616,14 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		StrArr sort() {
+		strArr sort() {
 			java.util.List newList = list();
 			Collections.sort(newList, String.CASE_INSENSITIVE_ORDER);
 			empty();
 			super.addAll(newList);
 			return this;
 		}
-		StrArr sort(String condition) {
+		strArr sort(String condition) {
 			if (not(condition))
 				return this;
 			if (condition.matches("^len(gth)?(:asc)?$")) {
@@ -8054,18 +8638,18 @@ public class KL {
 			}
 			return this;
 		}
-		StrArr sortReverse() {
+		strArr sortReverse() {
 			java.util.List newList = list();
 			Collections.sort(newList, String.CASE_INSENSITIVE_ORDER.reversed());
 			empty();
 			super.addAll(newList);
 			return this;
 		}
-		StrArr reverseSort() {
+		strArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		StrArr reverse() {
+		strArr reverse() {
 			java.util.List newList = list();
 			Collections.reverse(newList);
 			empty();
@@ -8077,52 +8661,52 @@ public class KL {
 		}
 		ArrayList<String> list() {
 			ArrayList<String> result = new ArrayList<>();
-			StrArr clone = copy();
+			strArr clone = copy();
 			for (int i : range(clone))
 				result.add(clone.i(i));
 			return result;
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
 		}
-		StrArr slice(int x, int y) {
+		strArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
 					|| y <= 0 || y >= length())
 				return copy();
-			return new StrArr(KL.slice(array(), x, y));
+			return new strArr(KL.slice(array(), x, y));
 		}
-		StrArr slice(int x) {
+		strArr slice(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(x, length());
 		}
-		StrArr slice() {
+		strArr slice() {
 			return copy();
 		}
-		StrArr sliceKeep(int x) {
+		strArr sliceKeep(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, x);
 		}
-		StrArr sliceRight(int x) {
+		strArr sliceRight(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(length() - x);
 		}
-		StrArr sliceEnd(int x) {
+		strArr sliceEnd(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, length() - x);
 		}
-		StrArr sliceOff(int x) {
+		strArr sliceOff(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
 		}
-		StrArr sliceOut(int x) {
+		strArr sliceOut(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
@@ -8138,70 +8722,70 @@ public class KL {
 		String any() {
 			return random();
 		}
-		StrArr empty() {
+		strArr empty() {
 			super.clear();
 			return this;
 		}
-		boolean eq(StrArr arrB) {
+		boolean eq(strArr arrB) {
 			if (not(arrB))
 				return false;
-			StrArr arrA = copy();
+			strArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
-		boolean compare(StrArr arrB) {
+		boolean compare(strArr arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		StrArr combine(StrArr... arrays) {
-			StrArr arrA = copy();
+		strArr combine(strArr... arrays) {
+			strArr arrA = copy();
 			if (not(arrays))
 				return arrA;
-			for (StrArr arrB : arrays) {
+			for (strArr arrB : arrays) {
 				if (not(arrB))
 					continue;
 				super.addAll(arrB);
 			}
 			return this;
 		}
-		StrArr combine(String[]... arrays) {
-			StrArr arrA = copy();
+		strArr combine(String[]... arrays) {
+			strArr arrA = copy();
 			if (not(arrays))
 				return arrA;
 			for (String[] arrB : arrays)
-				combine(new StrArr(arrB));
+				combine(new strArr(arrB));
 			return this;
 		}
-		StrArr union(StrArr... arrays) {
+		strArr union(strArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		StrArr union(String[]... arrays) {
+		strArr union(String[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		StrArr cat(StrArr... arrays) {
+		strArr cat(strArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		StrArr cat(String[]... arrays) {
+		strArr cat(String[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		StrArr concat(StrArr... arrays) {
+		strArr concat(strArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		StrArr concat(String[]... arrays) {
+		strArr concat(String[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		StrArr join(StrArr... arrays) {
+		strArr join(strArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		StrArr join(String[]... arrays) {
+		strArr join(String[]... arrays) {
 			combine(arrays);
 			return this;
 		}
@@ -8213,54 +8797,54 @@ public class KL {
 				return string();
 			return KL.join(array(), s);
 		}
-		StrArr intersection(StrArr... arrays) {
+		strArr intersection(strArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (StrArr arrB : arrays) {
+			for (strArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.retainAll(arrB);
 			}
 			return this;
 		}
-		StrArr intersection(String[]... arrays) {
+		strArr intersection(String[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (String[] arrB : arrays)
-				intersection(new StrArr(arrB));
+				intersection(new strArr(arrB));
 			return this;
 		}
-		StrArr negativeIntersection(StrArr... arrays) {
+		strArr negativeIntersection(strArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (StrArr arrB : arrays) {
+			for (strArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.removeAll(arrB);
 			}
 			return this;
 		}
-		StrArr negativeIntersection(String[]... arrays) {
+		strArr negativeIntersection(String[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (String[] arrB : arrays)
-				negativeIntersection(new StrArr(arrB));
+				negativeIntersection(new strArr(arrB));
 			return this;
 		}
-		StrArr map(String oldVal, String newVal) {
+		strArr map(String oldVal, String newVal) {
 			int index = super.indexOf(oldVal);
 			if (not(oldVal) || not(newVal) || isNeg(index))
 				return this;
 			super.set(index, newVal);
 			return this;
 		}
-		StrArr update(String oldVal, String newVal) {
+		strArr update(String oldVal, String newVal) {
 			return map(oldVal, newVal);
 		}
-		StrArr copy() {
-			return (StrArr) super.clone();
+		strArr copy() {
+			return (strArr) super.clone();
 		}
-		StrArr each(Consumer<? super String> fn) {
+		strArr each(Consumer<? super String> fn) {
 			if (not(fn))
 				return this;
 			super.forEach(fn);
@@ -8276,39 +8860,36 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static StrArr strArr(String... strings) {
-		return new StrArr(strings);
+	public static strArr strArr(String... strings) {
+		return new strArr(strings);
 	}
-	public static StrArr StrArr(String... strings) {
-		return new StrArr(strings);
-	}
-	public static final class IntArr extends ArrayList<Integer> {
-		IntArr() {
+	public static final class intArr extends ArrayList<Integer> {
+		intArr() {
 			super();
 		}
-		IntArr(int... nums) {
+		intArr(int... nums) {
 			super();
 			for (int n : nums)
 				super.add(n);
 		}
-		IntArr pushAt(int i, int... ints) {
+		intArr pushAt(int i, int... ints) {
 			if (i >= 0 && i <= super.size() && 0 != len(ints)) {
 				for (int n : ints)
 					super.add(i, n);
 			}
 			return this;
 		}
-		IntArr pushStart(int... ints) {
+		intArr pushStart(int... ints) {
 			if (0 != len(ints))
 				pushAt(0, ints);
 			return this;
 		}
-		IntArr push(int... ints) {
+		intArr push(int... ints) {
 			if (0 != len(ints))
 				pushAt(super.size(), ints);
 			return this;
 		}
-		IntArr push(int[]... intArrays) {
+		intArr push(int[]... intArrays) {
 			// this one's for appending entire arrays, for ease of pushing
 			if (not(intArrays))
 				return this;
@@ -8318,13 +8899,13 @@ public class KL {
 			}
 			return this;
 		}
-		IntArr push(IntArr... arrays) {
+		intArr push(intArr... arrays) {
 			return combine(arrays);
 		}
-		IntArr pop(int[]... arrays) {
+		intArr pop(int[]... arrays) {
 			return negativeIntersection(arrays);
 		}
-		IntArr pop(IntArr... arrays) {
+		intArr pop(intArr... arrays) {
 			return negativeIntersection(arrays);
 		}
 		int shift() {
@@ -8343,27 +8924,27 @@ public class KL {
 			}
 			return ints[0];
 		}
-		IntArr popIf(Predicate<? super Integer> fn) {
+		intArr popIf(Predicate<? super Integer> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		IntArr filterOut(Predicate<? super Integer> fn) {
+		intArr filterOut(Predicate<? super Integer> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		IntArr keepIf(Predicate<? super Integer> fn) {
+		intArr keepIf(Predicate<? super Integer> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		IntArr filter(Predicate<? super Integer> fn) {
+		intArr filter(Predicate<? super Integer> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		IntArr map(UnaryOperator<Integer> fn) {
+		intArr map(UnaryOperator<Integer> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		IntArr unique() {
+		intArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -8408,7 +8989,7 @@ public class KL {
 		int last() {
 			return nthlast(1);
 		}
-		IntArr shuffle() {
+		intArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -8421,11 +9002,11 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		IntArr sort() {
+		intArr sort() {
 			super.sort(null);
 			return this;
 		}
-		IntArr sort(String condition) {
+		intArr sort(String condition) {
 			if (not(condition))
 				return this;
 			if (condition.matches("^len(gth)?(:asc)?$")) {
@@ -8440,15 +9021,15 @@ public class KL {
 			}
 			return this;
 		}
-		IntArr sortReverse() {
+		intArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		IntArr reverseSort() {
+		intArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		IntArr reverse() {
+		intArr reverse() {
 			java.util.List newList = list();
 			Collections.reverse(newList);
 			empty();
@@ -8465,52 +9046,52 @@ public class KL {
 		}
 		ArrayList<Integer> list() {
 			ArrayList<Integer> result = new ArrayList<>();
-			IntArr clone = copy();
+			intArr clone = copy();
 			for (int i : range(clone))
 				result.add(clone.i(i));
 			return result;
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
 		}
-		IntArr slice(int x, int y) {
+		intArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
 					|| y <= 0 || y >= length())
 				return copy();
-			return new IntArr(KL.slice(array(), x, y));
+			return new intArr(KL.slice(array(), x, y));
 		}
-		IntArr slice(int x) {
+		intArr slice(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(x, length());
 		}
-		IntArr slice() {
+		intArr slice() {
 			return copy();
 		}
-		IntArr sliceKeep(int x) {
+		intArr sliceKeep(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, x);
 		}
-		IntArr sliceRight(int x) {
+		intArr sliceRight(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(length() - x);
 		}
-		IntArr sliceEnd(int x) {
+		intArr sliceEnd(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, length() - x);
 		}
-		IntArr sliceOff(int x) {
+		intArr sliceOff(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
 		}
-		IntArr sliceOut(int x) {
+		intArr sliceOut(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
@@ -8526,70 +9107,70 @@ public class KL {
 		int any() {
 			return random();
 		}
-		IntArr empty() {
+		intArr empty() {
 			super.clear();
 			return this;
 		}
-		boolean eq(IntArr arrB) {
+		boolean eq(intArr arrB) {
 			if (not(arrB))
 				return false;
-			IntArr arrA = copy();
+			intArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
-		boolean compare(IntArr arrB) {
+		boolean compare(intArr arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		IntArr combine(IntArr... arrays) {
-			IntArr arrA = copy();
+		intArr combine(intArr... arrays) {
+			intArr arrA = copy();
 			if (not(arrays))
 				return arrA;
-			for (IntArr arrB : arrays) {
+			for (intArr arrB : arrays) {
 				if (not(arrB))
 					continue;
 				super.addAll(arrB);
 			}
 			return this;
 		}
-		IntArr combine(int[]... arrays) {
-			IntArr arrA = copy();
+		intArr combine(int[]... arrays) {
+			intArr arrA = copy();
 			if (not(arrays))
 				return arrA;
 			for (int[] arrB : arrays)
-				combine(new IntArr(arrB));
+				combine(new intArr(arrB));
 			return this;
 		}
-		IntArr union(IntArr... arrays) {
+		intArr union(intArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		IntArr union(int[]... arrays) {
+		intArr union(int[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		IntArr cat(IntArr... arrays) {
+		intArr cat(intArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		IntArr cat(int[]... arrays) {
+		intArr cat(int[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		IntArr concat(IntArr... arrays) {
+		intArr concat(intArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		IntArr concat(int[]... arrays) {
+		intArr concat(int[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		IntArr join(IntArr... arrays) {
+		intArr join(intArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		IntArr join(int[]... arrays) {
+		intArr join(int[]... arrays) {
 			combine(arrays);
 			return this;
 		}
@@ -8601,51 +9182,51 @@ public class KL {
 				return string();
 			return KL.join(array(), s);
 		}
-		IntArr intersection(IntArr... arrays) {
+		intArr intersection(intArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (IntArr arrB : arrays) {
+			for (intArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.retainAll(arrB);
 			}
 			return this;
 		}
-		IntArr intersection(int[]... arrays) {
+		intArr intersection(int[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (int[] arrB : arrays)
-				intersection(new IntArr(arrB));
+				intersection(new intArr(arrB));
 			return this;
 		}
-		IntArr negativeIntersection(IntArr... arrays) {
+		intArr negativeIntersection(intArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (IntArr arrB : arrays) {
+			for (intArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.removeAll(arrB);
 			}
 			return this;
 		}
-		IntArr negativeIntersection(int[]... arrays) {
+		intArr negativeIntersection(int[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (int[] arrB : arrays)
-				negativeIntersection(new IntArr(arrB));
+				negativeIntersection(new intArr(arrB));
 			return this;
 		}
-		IntArr map(int oldVal, int newVal) {
+		intArr map(int oldVal, int newVal) {
 			int index = super.indexOf(oldVal);
 			if (not(oldVal) || not(newVal) || isNeg(index))
 				return this;
 			super.set(index, newVal);
 			return this;
 		}
-		IntArr copy() {
-			return (IntArr) super.clone();
+		intArr copy() {
+			return (intArr) super.clone();
 		}
-		IntArr each(Consumer<? super Integer> fn) {
+		intArr each(Consumer<? super Integer> fn) {
 			if (not(fn))
 				return this;
 			super.forEach(fn);
@@ -8661,39 +9242,36 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static IntArr intArr(int... ints) {
-		return new IntArr(ints);
+	public static intArr intArr(int... ints) {
+		return new intArr(ints);
 	}
-	public static IntArr IntArr(int... ints) {
-		return new IntArr(ints);
-	}
-	public static final class LongArr extends ArrayList<Long> {
-		LongArr() {
+	public static final class longArr extends ArrayList<Long> {
+		longArr() {
 			super();
 		}
-		LongArr(long... nums) {
+		longArr(long... nums) {
 			super();
 			for (long n : nums)
 				super.add(n);
 		}
-		LongArr pushAt(int i, long... longs) {
+		longArr pushAt(int i, long... longs) {
 			if (i >= 0 && i <= super.size() && 0 != len(longs)) {
 				for (long l : longs)
 					super.add(i, l);
 			}
 			return this;
 		}
-		LongArr pushStart(long... longs) {
+		longArr pushStart(long... longs) {
 			if (0 != len(longs))
 				pushAt(0, longs);
 			return this;
 		}
-		LongArr push(long... longs) {
+		longArr push(long... longs) {
 			if (0 != len(longs))
 				pushAt(super.size(), longs);
 			return this;
 		}
-		LongArr push(long[]... longArrays) {
+		longArr push(long[]... longArrays) {
 			// this one's for appending entire arrays, for ease of pushing
 			if (not(longArrays))
 				return this;
@@ -8703,13 +9281,13 @@ public class KL {
 			}
 			return this;
 		}
-		LongArr push(LongArr... arrays) {
+		longArr push(longArr... arrays) {
 			return combine(arrays);
 		}
-		LongArr pop(long[]... arrays) {
+		longArr pop(long[]... arrays) {
 			return negativeIntersection(arrays);
 		}
-		LongArr pop(LongArr... arrays) {
+		longArr pop(longArr... arrays) {
 			return negativeIntersection(arrays);
 		}
 		long shift() {
@@ -8739,27 +9317,27 @@ public class KL {
 			}
 			return longs[0];
 		}
-		LongArr popIf(Predicate<? super Long> fn) {
+		longArr popIf(Predicate<? super Long> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		LongArr filterOut(Predicate<? super Long> fn) {
+		longArr filterOut(Predicate<? super Long> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		LongArr keepIf(Predicate<? super Long> fn) {
+		longArr keepIf(Predicate<? super Long> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		LongArr filter(Predicate<? super Long> fn) {
+		longArr filter(Predicate<? super Long> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		LongArr map(UnaryOperator<Long> fn) {
+		longArr map(UnaryOperator<Long> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		LongArr unique() {
+		longArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -8804,7 +9382,7 @@ public class KL {
 		long last() {
 			return nthlast(1);
 		}
-		LongArr update(int i, long x) {
+		longArr update(int i, long x) {
 			if (isNull(i) || isNull(x))
 				return this;
 			if (!has(x))
@@ -8816,7 +9394,7 @@ public class KL {
 			}
 			return this;
 		}
-		LongArr shuffle() {
+		longArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -8829,11 +9407,11 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		LongArr sort() {
+		longArr sort() {
 			super.sort(null);
 			return this;
 		}
-		LongArr sort(String condition) {
+		longArr sort(String condition) {
 			if (not(condition))
 				return this;
 			if (condition.matches("^len(gth)?(:asc)?$")) {
@@ -8848,15 +9426,15 @@ public class KL {
 			}
 			return this;
 		}
-		LongArr sortReverse() {
+		longArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		LongArr reverseSort() {
+		longArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		LongArr reverse() {
+		longArr reverse() {
 			java.util.List newList = list();
 			Collections.reverse(newList);
 			empty();
@@ -8873,52 +9451,52 @@ public class KL {
 		}
 		ArrayList<Long> list() {
 			ArrayList<Long> result = new ArrayList<>();
-			LongArr clone = copy();
+			longArr clone = copy();
 			for (int i : range(clone))
 				result.add(clone.i(i));
 			return result;
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
 		}
-		LongArr slice(int x, int y) {
+		longArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
 					|| y <= 0 || y >= length())
 				return copy();
-			return new LongArr(KL.slice(array(), x, y));
+			return new longArr(KL.slice(array(), x, y));
 		}
-		LongArr slice(int x) {
+		longArr slice(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(x, length());
 		}
-		LongArr slice() {
+		longArr slice() {
 			return copy();
 		}
-		LongArr sliceKeep(int x) {
+		longArr sliceKeep(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, x);
 		}
-		LongArr sliceRight(int x) {
+		longArr sliceRight(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(length() - x);
 		}
-		LongArr sliceEnd(int x) {
+		longArr sliceEnd(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, length() - x);
 		}
-		LongArr sliceOff(int x) {
+		longArr sliceOff(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
 		}
-		LongArr sliceOut(int x) {
+		longArr sliceOut(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
@@ -8934,70 +9512,70 @@ public class KL {
 		long any() {
 			return random();
 		}
-		LongArr empty() {
+		longArr empty() {
 			super.clear();
 			return this;
 		}
-		boolean eq(LongArr arrB) {
+		boolean eq(longArr arrB) {
 			if (not(arrB))
 				return false;
-			LongArr arrA = copy();
+			longArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
-		boolean compare(LongArr arrB) {
+		boolean compare(longArr arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		LongArr combine(LongArr... arrays) {
-			LongArr arrA = copy();
+		longArr combine(longArr... arrays) {
+			longArr arrA = copy();
 			if (not(arrays))
 				return arrA;
-			for (LongArr arrB : arrays) {
+			for (longArr arrB : arrays) {
 				if (not(arrB))
 					continue;
 				super.addAll(arrB);
 			}
 			return this;
 		}
-		LongArr combine(long[]... arrays) {
-			LongArr arrA = copy();
+		longArr combine(long[]... arrays) {
+			longArr arrA = copy();
 			if (not(arrays))
 				return arrA;
 			for (long[] arrB : arrays)
-				combine(new LongArr(arrB));
+				combine(new longArr(arrB));
 			return this;
 		}
-		LongArr union(LongArr... arrays) {
+		longArr union(longArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		LongArr union(long[]... arrays) {
+		longArr union(long[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		LongArr cat(LongArr... arrays) {
+		longArr cat(longArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		LongArr cat(long[]... arrays) {
+		longArr cat(long[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		LongArr concat(LongArr... arrays) {
+		longArr concat(longArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		LongArr concat(long[]... arrays) {
+		longArr concat(long[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		LongArr join(LongArr... arrays) {
+		longArr join(longArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		LongArr join(long[]... arrays) {
+		longArr join(long[]... arrays) {
 			combine(arrays);
 			return this;
 		}
@@ -9009,54 +9587,54 @@ public class KL {
 				return string();
 			return KL.join(array(), s);
 		}
-		LongArr intersection(LongArr... arrays) {
+		longArr intersection(longArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (LongArr arrB : arrays) {
+			for (longArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.retainAll(arrB);
 			}
 			return this;
 		}
-		LongArr intersection(long[]... arrays) {
+		longArr intersection(long[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (long[] arrB : arrays)
-				intersection(new LongArr(arrB));
+				intersection(new longArr(arrB));
 			return this;
 		}
-		LongArr negativeIntersection(LongArr... arrays) {
+		longArr negativeIntersection(longArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (LongArr arrB : arrays) {
+			for (longArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.removeAll(arrB);
 			}
 			return this;
 		}
-		LongArr negativeIntersection(long[]... arrays) {
+		longArr negativeIntersection(long[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (long[] arrB : arrays)
-				negativeIntersection(new LongArr(arrB));
+				negativeIntersection(new longArr(arrB));
 			return this;
 		}
-		LongArr map(long oldVal, long newVal) {
+		longArr map(long oldVal, long newVal) {
 			int index = super.indexOf(oldVal);
 			if (not(oldVal) || not(newVal) || isNeg(index))
 				return this;
 			super.set(index, newVal);
 			return this;
 		}
-		LongArr update(long oldVal, long newVal) {
+		longArr update(long oldVal, long newVal) {
 			return map(oldVal, newVal);
 		}
-		LongArr copy() {
-			return (LongArr) super.clone();
+		longArr copy() {
+			return (longArr) super.clone();
 		}
-		LongArr each(Consumer<? super Long> fn) {
+		longArr each(Consumer<? super Long> fn) {
 			if (not(fn))
 				return this;
 			super.forEach(fn);
@@ -9072,39 +9650,36 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static LongArr longArr(long... longs) {
-		return new LongArr(longs);
+	public static longArr longArr(long... longs) {
+		return new longArr(longs);
 	}
-	public static LongArr LongArr(long... longs) {
-		return new LongArr(longs);
-	}
-	public static final class FltArr extends ArrayList<Float> {
-		FltArr() {
+	public static final class fltArr extends ArrayList<Float> {
+		fltArr() {
 			super();
 		}
-		FltArr(float... nums) {
+		fltArr(float... nums) {
 			super();
 			for (float n : nums)
 				super.add(n);
 		}
-		FltArr pushAt(int i, float... floats) {
+		fltArr pushAt(int i, float... floats) {
 			if (i >= 0 && i <= super.size() && 0 != len(floats)) {
 				for (float f : floats)
 					super.add(i, f);
 			}
 			return this;
 		}
-		FltArr pushStart(float... floats) {
+		fltArr pushStart(float... floats) {
 			if (0 != len(floats))
 				pushAt(0, floats);
 			return this;
 		}
-		FltArr push(float... floats) {
+		fltArr push(float... floats) {
 			if (0 != len(floats))
 				pushAt(super.size(), floats);
 			return this;
 		}
-		FltArr push(float[]... fltArrays) {
+		fltArr push(float[]... fltArrays) {
 			// this one's for appending entire arrays, for ease of pushing
 			if (not(fltArrays))
 				return this;
@@ -9114,13 +9689,13 @@ public class KL {
 			}
 			return this;
 		}
-		FltArr push(FltArr... arrays) {
+		fltArr push(fltArr... arrays) {
 			return combine(arrays);
 		}
-		FltArr pop(float[]... arrays) {
+		fltArr pop(float[]... arrays) {
 			return negativeIntersection(arrays);
 		}
-		FltArr pop(FltArr... arrays) {
+		fltArr pop(fltArr... arrays) {
 			return negativeIntersection(arrays);
 		}
 		float shift() {
@@ -9150,27 +9725,27 @@ public class KL {
 			}
 			return floats[0];
 		}
-		FltArr popIf(Predicate<? super Float> fn) {
+		fltArr popIf(Predicate<? super Float> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		FltArr filterOut(Predicate<? super Float> fn) {
+		fltArr filterOut(Predicate<? super Float> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		FltArr keepIf(Predicate<? super Float> fn) {
+		fltArr keepIf(Predicate<? super Float> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		FltArr filter(Predicate<? super Float> fn) {
+		fltArr filter(Predicate<? super Float> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		FltArr map(UnaryOperator<Float> fn) {
+		fltArr map(UnaryOperator<Float> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		FltArr unique() {
+		fltArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -9215,7 +9790,7 @@ public class KL {
 		float last() {
 			return nthlast(1);
 		}
-		FltArr update(int i, float x) {
+		fltArr update(int i, float x) {
 			if (isNull(i) || isNull(x))
 				return this;
 			if (!has(x))
@@ -9227,7 +9802,7 @@ public class KL {
 			}
 			return this;
 		}
-		FltArr shuffle() {
+		fltArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -9240,11 +9815,11 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		FltArr sort() {
+		fltArr sort() {
 			super.sort(null);
 			return this;
 		}
-		FltArr sort(String condition) {
+		fltArr sort(String condition) {
 			if (not(condition))
 				return this;
 			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
@@ -9254,15 +9829,15 @@ public class KL {
 			}
 			return this;
 		}
-		FltArr sortReverse() {
+		fltArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		FltArr reverseSort() {
+		fltArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		FltArr reverse() {
+		fltArr reverse() {
 			java.util.List newList = list();
 			Collections.reverse(newList);
 			empty();
@@ -9279,52 +9854,52 @@ public class KL {
 		}
 		ArrayList<Float> list() {
 			ArrayList<Float> result = new ArrayList<>();
-			FltArr clone = copy();
+			fltArr clone = copy();
 			for (int i : range(clone))
 				result.add(clone.i(i));
 			return result;
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
 		}
-		FltArr slice(int x, int y) {
+		fltArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
 					|| y <= 0 || y >= length())
 				return copy();
-			return new FltArr(KL.slice(array(), x, y));
+			return new fltArr(KL.slice(array(), x, y));
 		}
-		FltArr slice(int x) {
+		fltArr slice(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(x, length());
 		}
-		FltArr slice() {
+		fltArr slice() {
 			return copy();
 		}
-		FltArr sliceKeep(int x) {
+		fltArr sliceKeep(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, x);
 		}
-		FltArr sliceRight(int x) {
+		fltArr sliceRight(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(length() - x);
 		}
-		FltArr sliceEnd(int x) {
+		fltArr sliceEnd(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, length() - x);
 		}
-		FltArr sliceOff(int x) {
+		fltArr sliceOff(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
 		}
-		FltArr sliceOut(int x) {
+		fltArr sliceOut(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
@@ -9340,70 +9915,70 @@ public class KL {
 		float any() {
 			return random();
 		}
-		FltArr empty() {
+		fltArr empty() {
 			super.clear();
 			return this;
 		}
-		boolean eq(FltArr arrB) {
+		boolean eq(fltArr arrB) {
 			if (not(arrB))
 				return false;
-			FltArr arrA = copy();
+			fltArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
-		boolean compare(FltArr arrB) {
+		boolean compare(fltArr arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		FltArr combine(FltArr... arrays) {
-			FltArr arrA = copy();
+		fltArr combine(fltArr... arrays) {
+			fltArr arrA = copy();
 			if (not(arrays))
 				return arrA;
-			for (FltArr arrB : arrays) {
+			for (fltArr arrB : arrays) {
 				if (not(arrB))
 					continue;
 				super.addAll(arrB);
 			}
 			return this;
 		}
-		FltArr combine(float[]... arrays) {
-			FltArr arrA = copy();
+		fltArr combine(float[]... arrays) {
+			fltArr arrA = copy();
 			if (not(arrays))
 				return arrA;
 			for (float[] arrB : arrays)
-				combine(new FltArr(arrB));
+				combine(new fltArr(arrB));
 			return this;
 		}
-		FltArr union(FltArr... arrays) {
+		fltArr union(fltArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		FltArr union(float[]... arrays) {
+		fltArr union(float[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		FltArr cat(FltArr... arrays) {
+		fltArr cat(fltArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		FltArr cat(float[]... arrays) {
+		fltArr cat(float[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		FltArr concat(FltArr... arrays) {
+		fltArr concat(fltArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		FltArr concat(float[]... arrays) {
+		fltArr concat(float[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		FltArr join(FltArr... arrays) {
+		fltArr join(fltArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		FltArr join(float[]... arrays) {
+		fltArr join(float[]... arrays) {
 			combine(arrays);
 			return this;
 		}
@@ -9415,54 +9990,54 @@ public class KL {
 				return string();
 			return KL.join(array(), s);
 		}
-		FltArr intersection(FltArr... arrays) {
+		fltArr intersection(fltArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (FltArr arrB : arrays) {
+			for (fltArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.retainAll(arrB);
 			}
 			return this;
 		}
-		FltArr intersection(float[]... arrays) {
+		fltArr intersection(float[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (float[] arrB : arrays)
-				intersection(new FltArr(arrB));
+				intersection(new fltArr(arrB));
 			return this;
 		}
-		FltArr negativeIntersection(FltArr... arrays) {
+		fltArr negativeIntersection(fltArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (FltArr arrB : arrays) {
+			for (fltArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.removeAll(arrB);
 			}
 			return this;
 		}
-		FltArr negativeIntersection(float[]... arrays) {
+		fltArr negativeIntersection(float[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (float[] arrB : arrays)
-				negativeIntersection(new FltArr(arrB));
+				negativeIntersection(new fltArr(arrB));
 			return this;
 		}
-		FltArr map(float oldVal, float newVal) {
+		fltArr map(float oldVal, float newVal) {
 			int index = super.indexOf(oldVal);
 			if (not(oldVal) || not(newVal) || isNeg(index))
 				return this;
 			super.set(index, newVal);
 			return this;
 		}
-		FltArr update(float oldVal, float newVal) {
+		fltArr update(float oldVal, float newVal) {
 			return map(oldVal, newVal);
 		}
-		FltArr copy() {
-			return (FltArr) super.clone();
+		fltArr copy() {
+			return (fltArr) super.clone();
 		}
-		FltArr each(Consumer<? super Float> fn) {
+		fltArr each(Consumer<? super Float> fn) {
 			if (not(fn))
 				return this;
 			super.forEach(fn);
@@ -9478,39 +10053,36 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static FltArr fltArr(float... floats) {
-		return new FltArr(floats);
+	public static fltArr fltArr(float... floats) {
+		return new fltArr(floats);
 	}
-	public static FltArr FltArr(float... floats) {
-		return new FltArr(floats);
-	}
-	public static final class DblArr extends ArrayList<Double> {
-		DblArr() {
+	public static final class dblArr extends ArrayList<Double> {
+		dblArr() {
 			super();
 		}
-		DblArr(double... doubles) {
+		dblArr(double... doubles) {
 			super();
 			for (double d : doubles)
 				super.add(d);
 		}
-		DblArr pushAt(int i, double... doubles) {
+		dblArr pushAt(int i, double... doubles) {
 			if (i >= 0 && i <= super.size() && 0 != len(doubles)) {
 				for (double d : doubles)
 					super.add(i, d);
 			}
 			return this;
 		}
-		DblArr pushStart(double... doubles) {
+		dblArr pushStart(double... doubles) {
 			if (0 != len(doubles))
 				pushAt(0, doubles);
 			return this;
 		}
-		DblArr push(double... doubles) {
+		dblArr push(double... doubles) {
 			if (0 != len(doubles))
 				pushAt(super.size(), doubles);
 			return this;
 		}
-		DblArr push(double[]... dblArrays) {
+		dblArr push(double[]... dblArrays) {
 			// this one's for appending entire arrays, for ease of pushing
 			if (not(dblArrays))
 				return this;
@@ -9520,13 +10092,13 @@ public class KL {
 			}
 			return this;
 		}
-		DblArr push(DblArr... arrays) {
+		dblArr push(dblArr... arrays) {
 			return combine(arrays);
 		}
-		DblArr pop(double[]... arrays) {
+		dblArr pop(double[]... arrays) {
 			return negativeIntersection(arrays);
 		}
-		DblArr pop(DblArr... arrays) {
+		dblArr pop(dblArr... arrays) {
 			return negativeIntersection(arrays);
 		}
 		double shift() {
@@ -9556,27 +10128,27 @@ public class KL {
 			}
 			return doubles[0];
 		}
-		DblArr popIf(Predicate<? super Double> fn) {
+		dblArr popIf(Predicate<? super Double> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		DblArr filterOut(Predicate<? super Double> fn) {
+		dblArr filterOut(Predicate<? super Double> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		DblArr keepIf(Predicate<? super Double> fn) {
+		dblArr keepIf(Predicate<? super Double> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		DblArr filter(Predicate<? super Double> fn) {
+		dblArr filter(Predicate<? super Double> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		DblArr map(UnaryOperator<Double> fn) {
+		dblArr map(UnaryOperator<Double> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		DblArr unique() {
+		dblArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -9621,7 +10193,7 @@ public class KL {
 		double last() {
 			return nthlast(1);
 		}
-		DblArr update(int i, double x) {
+		dblArr update(int i, double x) {
 			if (isNull(i) || isNull(x))
 				return this;
 			if (!has(x))
@@ -9633,7 +10205,7 @@ public class KL {
 			}
 			return this;
 		}
-		DblArr shuffle() {
+		dblArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -9646,11 +10218,11 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		DblArr sort() {
+		dblArr sort() {
 			super.sort(null);
 			return this;
 		}
-		DblArr sort(String condition) {
+		dblArr sort(String condition) {
 			if (not(condition))
 				return this;
 			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
@@ -9660,15 +10232,15 @@ public class KL {
 			}
 			return this;
 		}
-		DblArr sortReverse() {
+		dblArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		DblArr reverseSort() {
+		dblArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		DblArr reverse() {
+		dblArr reverse() {
 			java.util.List newList = list();
 			Collections.reverse(newList);
 			empty();
@@ -9685,52 +10257,52 @@ public class KL {
 		}
 		ArrayList<Double> list() {
 			ArrayList<Double> result = new ArrayList<>();
-			DblArr clone = copy();
+			dblArr clone = copy();
 			for (int i : range(clone))
 				result.add(clone.i(i));
 			return result;
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
 		}
-		DblArr slice(int x, int y) {
+		dblArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
 					|| y <= 0 || y >= length())
 				return copy();
-			return new DblArr(KL.slice(array(), x, y));
+			return new dblArr(KL.slice(array(), x, y));
 		}
-		DblArr slice(int x) {
+		dblArr slice(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(x, length());
 		}
-		DblArr slice() {
+		dblArr slice() {
 			return copy();
 		}
-		DblArr sliceKeep(int x) {
+		dblArr sliceKeep(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, x);
 		}
-		DblArr sliceRight(int x) {
+		dblArr sliceRight(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(length() - x);
 		}
-		DblArr sliceEnd(int x) {
+		dblArr sliceEnd(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, length() - x);
 		}
-		DblArr sliceOff(int x) {
+		dblArr sliceOff(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
 		}
-		DblArr sliceOut(int x) {
+		dblArr sliceOut(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
@@ -9746,70 +10318,70 @@ public class KL {
 		double any() {
 			return random();
 		}
-		DblArr empty() {
+		dblArr empty() {
 			super.clear();
 			return this;
 		}
-		boolean eq(DblArr arrB) {
+		boolean eq(dblArr arrB) {
 			if (not(arrB))
 				return false;
-			DblArr arrA = copy();
+			dblArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
-		boolean compare(DblArr arrB) {
+		boolean compare(dblArr arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		DblArr combine(DblArr... arrays) {
-			DblArr arrA = copy();
+		dblArr combine(dblArr... arrays) {
+			dblArr arrA = copy();
 			if (not(arrays))
 				return arrA;
-			for (DblArr arrB : arrays) {
+			for (dblArr arrB : arrays) {
 				if (not(arrB))
 					continue;
 				super.addAll(arrB);
 			}
 			return this;
 		}
-		DblArr combine(double[]... arrays) {
-			DblArr arrA = copy();
+		dblArr combine(double[]... arrays) {
+			dblArr arrA = copy();
 			if (not(arrays))
 				return arrA;
 			for (double[] arrB : arrays)
-				combine(new DblArr(arrB));
+				combine(new dblArr(arrB));
 			return this;
 		}
-		DblArr union(DblArr... arrays) {
+		dblArr union(dblArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		DblArr union(double[]... arrays) {
+		dblArr union(double[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		DblArr cat(DblArr... arrays) {
+		dblArr cat(dblArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		DblArr cat(double[]... arrays) {
+		dblArr cat(double[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		DblArr concat(DblArr... arrays) {
+		dblArr concat(dblArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		DblArr concat(double[]... arrays) {
+		dblArr concat(double[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		DblArr join(DblArr... arrays) {
+		dblArr join(dblArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		DblArr join(double[]... arrays) {
+		dblArr join(double[]... arrays) {
 			combine(arrays);
 			return this;
 		}
@@ -9821,54 +10393,54 @@ public class KL {
 				return string();
 			return KL.join(array(), s);
 		}
-		DblArr intersection(DblArr... arrays) {
+		dblArr intersection(dblArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (DblArr arrB : arrays) {
+			for (dblArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.retainAll(arrB);
 			}
 			return this;
 		}
-		DblArr intersection(double[]... arrays) {
+		dblArr intersection(double[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (double[] arrB : arrays)
-				intersection(new DblArr(arrB));
+				intersection(new dblArr(arrB));
 			return this;
 		}
-		DblArr negativeIntersection(DblArr... arrays) {
+		dblArr negativeIntersection(dblArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (DblArr arrB : arrays) {
+			for (dblArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.removeAll(arrB);
 			}
 			return this;
 		}
-		DblArr negativeIntersection(double[]... arrays) {
+		dblArr negativeIntersection(double[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (double[] arrB : arrays)
-				negativeIntersection(new DblArr(arrB));
+				negativeIntersection(new dblArr(arrB));
 			return this;
 		}
-		DblArr map(double oldVal, double newVal) {
+		dblArr map(double oldVal, double newVal) {
 			int index = super.indexOf(oldVal);
 			if (not(oldVal) || not(newVal) || isNeg(index))
 				return this;
 			super.set(index, newVal);
 			return this;
 		}
-		DblArr update(double oldVal, double newVal) {
+		dblArr update(double oldVal, double newVal) {
 			return map(oldVal, newVal);
 		}
-		DblArr copy() {
-			return (DblArr) super.clone();
+		dblArr copy() {
+			return (dblArr) super.clone();
 		}
-		DblArr each(Consumer<? super Double> fn) {
+		dblArr each(Consumer<? super Double> fn) {
 			if (not(fn))
 				return this;
 			super.forEach(fn);
@@ -9884,39 +10456,36 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static DblArr dblArr(double... doubles) {
-		return new DblArr(doubles);
+	public static dblArr dblArr(double... doubles) {
+		return new dblArr(doubles);
 	}
-	public static DblArr DblArr(double... doubles) {
-		return new DblArr(doubles);
-	}
-	public static final class BoolArr extends ArrayList<Boolean> {
-		BoolArr() {
+	public static final class boolArr extends ArrayList<Boolean> {
+		boolArr() {
 			super();
 		}
-		BoolArr(boolean... bools) {
+		boolArr(boolean... bools) {
 			super();
 			for (boolean b : bools)
 				super.add(b);
 		}
-		BoolArr pushAt(int i, boolean... bools) {
+		boolArr pushAt(int i, boolean... bools) {
 			if (i >= 0 && i <= super.size() && 0 != len(bools)) {
 				for (boolean b : bools)
 					super.add(i, b);
 			}
 			return this;
 		}
-		BoolArr pushStart(boolean... bools) {
+		boolArr pushStart(boolean... bools) {
 			if (0 != len(bools))
 				pushAt(0, bools);
 			return this;
 		}
-		BoolArr push(boolean... bools) {
+		boolArr push(boolean... bools) {
 			if (0 != len(bools))
 				pushAt(super.size(), bools);
 			return this;
 		}
-		BoolArr push(boolean[]... boolArrays) {
+		boolArr push(boolean[]... boolArrays) {
 			// this one's for appending entire arrays, for ease of pushing
 			if (not(boolArrays))
 				return this;
@@ -9926,13 +10495,13 @@ public class KL {
 			}
 			return this;
 		}
-		BoolArr push(BoolArr... arrays) {
+		boolArr push(boolArr... arrays) {
 			return combine(arrays);
 		}
-		BoolArr pop(boolean[]... arrays) {
+		boolArr pop(boolean[]... arrays) {
 			return negativeIntersection(arrays);
 		}
-		BoolArr pop(BoolArr... arrays) {
+		boolArr pop(boolArr... arrays) {
 			return negativeIntersection(arrays);
 		}
 		boolean shift() {
@@ -9962,27 +10531,27 @@ public class KL {
 			}
 			return bools[0];
 		}
-		BoolArr popIf(Predicate<? super Boolean> fn) {
+		boolArr popIf(Predicate<? super Boolean> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		BoolArr filterOut(Predicate<? super Boolean> fn) {
+		boolArr filterOut(Predicate<? super Boolean> fn) {
 			super.removeIf(fn);
 			return this;
 		}
-		BoolArr keepIf(Predicate<? super Boolean> fn) {
+		boolArr keepIf(Predicate<? super Boolean> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		BoolArr filter(Predicate<? super Boolean> fn) {
+		boolArr filter(Predicate<? super Boolean> fn) {
 			super.removeIf(fn.negate());
 			return this;
 		}
-		BoolArr map(UnaryOperator<Boolean> fn) {
+		boolArr map(UnaryOperator<Boolean> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		BoolArr unique() {
+		boolArr unique() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -10029,7 +10598,7 @@ public class KL {
 		boolean last() {
 			return nthlast(1);
 		}
-		BoolArr update(int i, boolean x) {
+		boolArr update(int i, boolean x) {
 			if (isNull(i) || isNull(x))
 				return this;
 			if (!has(x))
@@ -10041,7 +10610,7 @@ public class KL {
 			}
 			return this;
 		}
-		BoolArr shuffle() {
+		boolArr shuffle() {
 			Object obj = super.clone();
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
@@ -10054,11 +10623,11 @@ public class KL {
 			super.addAll(list);
 			return this;
 		}
-		BoolArr sort() {
+		boolArr sort() {
 			super.sort(null);
 			return this;
 		}
-		BoolArr sort(String condition) {
+		boolArr sort(String condition) {
 			if (not(condition))
 				return this;
 			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
@@ -10068,15 +10637,15 @@ public class KL {
 			}
 			return this;
 		}
-		BoolArr sortReverse() {
+		boolArr sortReverse() {
 			super.sort(Collections.reverseOrder());
 			return this;
 		}
-		BoolArr reverseSort() {
+		boolArr reverseSort() {
 			sortReverse();
 			return this;
 		}
-		BoolArr reverse() {
+		boolArr reverse() {
 			java.util.List newList = list();
 			Collections.reverse(newList);
 			empty();
@@ -10093,52 +10662,52 @@ public class KL {
 		}
 		ArrayList<Boolean> list() {
 			ArrayList<Boolean> result = new ArrayList<>();
-			BoolArr clone = copy();
+			boolArr clone = copy();
 			for (int i : range(clone))
 				result.add(clone.i(i));
 			return result;
 		}
 		String string() {
-			return super.toString(); 		
+			return super.toString();
 		}
 		String str() {
 			return string();
 		}
-		BoolArr slice(int x, int y) {
+		boolArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
 					|| y <= 0 || y >= length())
 				return copy();
-			return new BoolArr(KL.slice(array(), x, y));
+			return new boolArr(KL.slice(array(), x, y));
 		}
-		BoolArr slice(int x) {
+		boolArr slice(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(x, length());
 		}
-		BoolArr slice() {
+		boolArr slice() {
 			return copy();
 		}
-		BoolArr sliceKeep(int x) {
+		boolArr sliceKeep(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, x);
 		}
-		BoolArr sliceRight(int x) {
+		boolArr sliceRight(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(length() - x);
 		}
-		BoolArr sliceEnd(int x) {
+		boolArr sliceEnd(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return slice(0, length() - x);
 		}
-		BoolArr sliceOff(int x) {
+		boolArr sliceOff(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
 		}
-		BoolArr sliceOut(int x) {
+		boolArr sliceOut(int x) {
 			if (super.isEmpty() || not(x) || x < 0 || x >= length())
 				return copy();
 			return sliceEnd(x);
@@ -10154,70 +10723,70 @@ public class KL {
 		boolean any() {
 			return random();
 		}
-		BoolArr empty() {
+		boolArr empty() {
 			super.clear();
 			return this;
 		}
-		boolean eq(BoolArr arrB) {
+		boolean eq(boolArr arrB) {
 			if (not(arrB))
 				return false;
-			BoolArr arrA = copy();
+			boolArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
 			return arrA.equals(arrB);
 		}
-		boolean compare(BoolArr arrB) {
+		boolean compare(boolArr arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		BoolArr combine(BoolArr... arrays) {
-			BoolArr arrA = copy();
+		boolArr combine(boolArr... arrays) {
+			boolArr arrA = copy();
 			if (not(arrays))
 				return arrA;
-			for (BoolArr arrB : arrays) {
+			for (boolArr arrB : arrays) {
 				if (not(arrB))
 					continue;
 				super.addAll(arrB);
 			}
 			return this;
 		}
-		BoolArr combine(boolean[]... arrays) {
-			BoolArr arrA = copy();
+		boolArr combine(boolean[]... arrays) {
+			boolArr arrA = copy();
 			if (not(arrays))
 				return arrA;
 			for (boolean[] arrB : arrays)
-				combine(new BoolArr(arrB));
+				combine(new boolArr(arrB));
 			return this;
 		}
-		BoolArr union(BoolArr... arrays) {
+		boolArr union(boolArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		BoolArr union(boolean[]... arrays) {
+		boolArr union(boolean[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		BoolArr cat(BoolArr... arrays) {
+		boolArr cat(boolArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		BoolArr cat(boolean[]... arrays) {
+		boolArr cat(boolean[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		BoolArr concat(BoolArr... arrays) {
+		boolArr concat(boolArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		BoolArr concat(boolean[]... arrays) {
+		boolArr concat(boolean[]... arrays) {
 			combine(arrays);
 			return this;
 		}
-		BoolArr join(BoolArr... arrays) {
+		boolArr join(boolArr... arrays) {
 			combine(arrays);
 			return this;
 		}
-		BoolArr join(boolean[]... arrays) {
+		boolArr join(boolean[]... arrays) {
 			combine(arrays);
 			return this;
 		}
@@ -10229,54 +10798,54 @@ public class KL {
 				return string();
 			return KL.join(array(), s);
 		}
-		BoolArr intersection(BoolArr... arrays) {
+		boolArr intersection(boolArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (BoolArr arrB : arrays) {
+			for (boolArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.retainAll(arrB);
 			}
 			return this;
 		}
-		BoolArr intersection(boolean[]... arrays) {
+		boolArr intersection(boolean[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (boolean[] arrB : arrays)
-				intersection(new BoolArr(arrB));
+				intersection(new boolArr(arrB));
 			return this;
 		}
-		BoolArr negativeIntersection(BoolArr... arrays) {
+		boolArr negativeIntersection(boolArr... arrays) {
 			if (not(arrays))
 				return this;
-			for (BoolArr arrB : arrays) {
+			for (boolArr arrB : arrays) {
 				if (not(arrB))
 					return this;
 				super.removeAll(arrB);
 			}
 			return this;
 		}
-		BoolArr negativeIntersection(boolean[]... arrays) {
+		boolArr negativeIntersection(boolean[]... arrays) {
 			if (not(arrays))
 				return this;
 			for (boolean[] arrB : arrays)
-				negativeIntersection(new BoolArr(arrB));
+				negativeIntersection(new boolArr(arrB));
 			return this;
 		}
-		BoolArr map(boolean oldVal, boolean newVal) {
+		boolArr map(boolean oldVal, boolean newVal) {
 			int index = super.indexOf(oldVal);
 			if (not(oldVal) || not(newVal) || isNeg(index))
 				return this;
 			super.set(index, newVal);
 			return this;
 		}
-		BoolArr update(boolean oldVal, boolean newVal) {
+		boolArr update(boolean oldVal, boolean newVal) {
 			return map(oldVal, newVal);
 		}
-		BoolArr copy() {
-			return (BoolArr) super.clone();
+		boolArr copy() {
+			return (boolArr) super.clone();
 		}
-		BoolArr each(Consumer<? super Boolean> fn) {
+		boolArr each(Consumer<? super Boolean> fn) {
 			if (not(fn))
 				return this;
 			super.forEach(fn);
@@ -10292,11 +10861,8 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static BoolArr boolArr(boolean... bools) {
-		return new BoolArr(bools);
-	}
-	public static BoolArr BoolArr(boolean... bools) {
-		return new BoolArr(bools);
+	public static boolArr boolArr(boolean... bools) {
+		return new boolArr(bools);
 	}
 	public static boolean runTask(Runnable fn) {
 		if (not(fn))
@@ -15417,7 +15983,7 @@ public class KL {
 	public static Object none = null, ignore = none, pass = ignore;
 	public static String Else = "else";
 	public static int[] range(int n) {
-		IntArr arr = new IntArr();
+		intArr arr = new intArr();
 		if (not(n) || n < 1)
 			return arr.array();
 		for (int i = 0; i < n; i++)
@@ -15425,7 +15991,7 @@ public class KL {
 		return arr.array();
 	}
 	public static double[] range(double n) {
-		DblArr arr = new DblArr();
+		dblArr arr = new dblArr();
 		if (not(n) || n < 1.1)
 			return arr.array();
 		for (double i = 0; i < n; i += .1)
@@ -15433,7 +15999,7 @@ public class KL {
 		return arr.array();
 	}
 	public static int[] range(int m, int n, int... optional) {
-		IntArr arr = new IntArr();
+		intArr arr = new intArr();
 		if (isNull(m) || isNull(n) || eq(m, n))
 			return arr.array();
 		int step = 1;
@@ -15452,7 +16018,7 @@ public class KL {
 		return arr.array();
 	}
 	public static String[] range(String m, String n, int... optional) {
-		StrArr arr = new StrArr();
+		strArr arr = new strArr();
 		if (isNull(m) || isNull(n) || eq(m, n) || !eq(m, "[A-Za-z]")
 				|| !eq(n, "[A-Za-z]"))
 			return arr.array();
@@ -15478,7 +16044,7 @@ public class KL {
 		return join(range(Str(m), Str(n)), "").toCharArray();
 	}
 	public static double[] range(double m, double n, int... optional) {
-		DblArr arr = new DblArr();
+		dblArr arr = new dblArr();
 		if (isNull(m) || isNull(n) || eq(m, n))
 			return arr.array();
 		int step = 1;
@@ -15586,22 +16152,22 @@ public class KL {
 	public static int[] range(Object[] arr) {
 		return range(len(arr));
 	}
-	public static int[] range(StrArr arr) {
+	public static int[] range(strArr arr) {
 		return range(len(arr));
 	}
-	public static int[] range(IntArr arr) {
+	public static int[] range(intArr arr) {
 		return range(len(arr));
 	}
-	public static int[] range(LongArr arr) {
+	public static int[] range(longArr arr) {
 		return range(len(arr));
 	}
-	public static int[] range(FltArr arr) {
+	public static int[] range(fltArr arr) {
 		return range(len(arr));
 	}
-	public static int[] range(DblArr arr) {
+	public static int[] range(dblArr arr) {
 		return range(len(arr));
 	}
-	public static int[] range(BoolArr arr) {
+	public static int[] range(boolArr arr) {
 		return range(len(arr));
 	}
 	public static int[] idx(String str) {
@@ -15631,22 +16197,22 @@ public class KL {
 	public static int[] idx(Object[] arr) {
 		return range(arr);
 	}
-	public static int[] idx(StrArr arr) {
+	public static int[] idx(strArr arr) {
 		return range(arr);
 	}
-	public static int[] idx(IntArr arr) {
+	public static int[] idx(intArr arr) {
 		return range(arr);
 	}
-	public static int[] idx(LongArr arr) {
+	public static int[] idx(longArr arr) {
 		return range(arr);
 	}
-	public static int[] idx(FltArr arr) {
+	public static int[] idx(fltArr arr) {
 		return range(arr);
 	}
-	public static int[] idx(DblArr arr) {
+	public static int[] idx(dblArr arr) {
 		return range(arr);
 	}
-	public static int[] idx(BoolArr arr) {
+	public static int[] idx(boolArr arr) {
 		return range(arr);
 	}
 	public static void each(String[] iterable,
@@ -15657,7 +16223,7 @@ public class KL {
 			i++;
 		}
 	}
-	public static void each(StrArr iterable, ObjIntConsumer<String> consumer) {
+	public static void each(strArr iterable, ObjIntConsumer<String> consumer) {
 		int i = 0;
 		for (String item : iterable) {
 			consumer.accept(item, i);
@@ -15671,7 +16237,7 @@ public class KL {
 			i++;
 		}
 	}
-	public static void each(IntArr iterable, ObjIntConsumer<Integer> consumer) {
+	public static void each(intArr iterable, ObjIntConsumer<Integer> consumer) {
 		int i = 0;
 		for (int item : iterable) {
 			consumer.accept(item, i);
@@ -15685,7 +16251,7 @@ public class KL {
 			i++;
 		}
 	}
-	public static void each(LongArr iterable, ObjIntConsumer<Long> consumer) {
+	public static void each(longArr iterable, ObjIntConsumer<Long> consumer) {
 		int i = 0;
 		for (long item : iterable) {
 			consumer.accept(item, i);
@@ -15699,7 +16265,7 @@ public class KL {
 			i++;
 		}
 	}
-	public static void each(FltArr iterable, ObjIntConsumer<Float> consumer) {
+	public static void each(fltArr iterable, ObjIntConsumer<Float> consumer) {
 		int i = 0;
 		for (float item : iterable) {
 			consumer.accept(item, i);
@@ -15714,7 +16280,7 @@ public class KL {
 			i++;
 		}
 	}
-	public static void each(DblArr iterable, ObjIntConsumer<Double> consumer) {
+	public static void each(dblArr iterable, ObjIntConsumer<Double> consumer) {
 		int i = 0;
 		for (double item : iterable) {
 			consumer.accept(item, i);
@@ -15729,7 +16295,7 @@ public class KL {
 			i++;
 		}
 	}
-	public static void each(BoolArr iterable,
+	public static void each(boolArr iterable,
 			ObjIntConsumer<Boolean> consumer) {
 		int i = 0;
 		for (boolean item : iterable) {
@@ -15749,7 +16315,7 @@ public class KL {
 			ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
 	}
-	public static void forEach(StrArr iterable,
+	public static void forEach(strArr iterable,
 			ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
 	}
@@ -15757,14 +16323,14 @@ public class KL {
 			ObjIntConsumer<Integer> consumer) {
 		each(iterable, consumer);
 	}
-	public static void forEach(IntArr iterable,
+	public static void forEach(intArr iterable,
 			ObjIntConsumer<Integer> consumer) {
 		each(iterable, consumer);
 	}
 	public static void forEach(long[] iterable, ObjIntConsumer<Long> consumer) {
 		each(iterable, consumer);
 	}
-	public static void forEach(LongArr iterable,
+	public static void forEach(longArr iterable,
 			ObjIntConsumer<Long> consumer) {
 		each(iterable, consumer);
 	}
@@ -15772,7 +16338,7 @@ public class KL {
 			ObjIntConsumer<Float> consumer) {
 		each(iterable, consumer);
 	}
-	public static void forEach(FltArr iterable,
+	public static void forEach(fltArr iterable,
 			ObjIntConsumer<Float> consumer) {
 		each(iterable, consumer);
 	}
@@ -15780,7 +16346,7 @@ public class KL {
 			ObjIntConsumer<Double> consumer) {
 		each(iterable, consumer);
 	}
-	public static void forEach(DblArr iterable,
+	public static void forEach(dblArr iterable,
 			ObjIntConsumer<Double> consumer) {
 		each(iterable, consumer);
 	}
@@ -15788,7 +16354,7 @@ public class KL {
 			ObjIntConsumer<Boolean> consumer) {
 		each(iterable, consumer);
 	}
-	public static void forEach(BoolArr iterable,
+	public static void forEach(boolArr iterable,
 			ObjIntConsumer<Boolean> consumer) {
 		each(iterable, consumer);
 	}
@@ -15884,77 +16450,77 @@ public class KL {
 		return Arrays.stream(arr).reduce(0, func);
 	}
 	public static String[] popIf(String[] array, Predicate<String> condition) {
-		return new StrArr(array).popIf(condition).array();
+		return new strArr(array).popIf(condition).array();
 	}
 	public static int[] popIf(int[] array, Predicate<Integer> condition) {
-		return new IntArr(array).popIf(condition).array();
+		return new intArr(array).popIf(condition).array();
 	}
 	public static long[] popIf(long[] array, Predicate<Long> condition) {
-		return new LongArr(array).popIf(condition).array();
+		return new longArr(array).popIf(condition).array();
 	}
 	public static float[] popIf(float[] array, Predicate<Float> condition) {
-		return new FltArr(array).popIf(condition).array();
+		return new fltArr(array).popIf(condition).array();
 	}
 	public static double[] popIf(double[] array, Predicate<Double> condition) {
-		return new DblArr(array).popIf(condition).array();
+		return new dblArr(array).popIf(condition).array();
 	}
 	public static boolean[] popIf(boolean[] array,
 			Predicate<Boolean> condition) {
-		return new BoolArr(array).popIf(condition).array();
+		return new boolArr(array).popIf(condition).array();
 	}
-	public static StrArr popIf(StrArr list, Predicate<String> condition) {
+	public static strArr popIf(strArr list, Predicate<String> condition) {
 		return list.popIf(condition);
 	}
-	public static IntArr popIf(IntArr list, Predicate<Integer> condition) {
+	public static intArr popIf(intArr list, Predicate<Integer> condition) {
 		return list.popIf(condition);
 	}
-	public static LongArr popIf(LongArr list, Predicate<Long> condition) {
+	public static longArr popIf(longArr list, Predicate<Long> condition) {
 		return list.popIf(condition);
 	}
-	public static FltArr popIf(FltArr list, Predicate<Float> condition) {
+	public static fltArr popIf(fltArr list, Predicate<Float> condition) {
 		return list.popIf(condition);
 	}
-	public static DblArr popIf(DblArr list, Predicate<Double> condition) {
+	public static dblArr popIf(dblArr list, Predicate<Double> condition) {
 		return list.popIf(condition);
 	}
-	public static BoolArr popIf(BoolArr list, Predicate<Boolean> condition) {
+	public static boolArr popIf(boolArr list, Predicate<Boolean> condition) {
 		return list.popIf(condition);
 	}
 	public static String[] keepIf(String[] array, Predicate<String> condition) {
-		return new StrArr(array).keepIf(condition).array();
+		return new strArr(array).keepIf(condition).array();
 	}
 	public static int[] keepIf(int[] array, Predicate<Integer> condition) {
-		return new IntArr(array).keepIf(condition).array();
+		return new intArr(array).keepIf(condition).array();
 	}
 	public static long[] keepIf(long[] array, Predicate<Long> condition) {
-		return new LongArr(array).keepIf(condition).array();
+		return new longArr(array).keepIf(condition).array();
 	}
 	public static float[] keepIf(float[] array, Predicate<Float> condition) {
-		return new FltArr(array).keepIf(condition).array();
+		return new fltArr(array).keepIf(condition).array();
 	}
 	public static double[] keepIf(double[] array, Predicate<Double> condition) {
-		return new DblArr(array).keepIf(condition).array();
+		return new dblArr(array).keepIf(condition).array();
 	}
 	public static boolean[] keepIf(boolean[] array,
 			Predicate<Boolean> condition) {
-		return new BoolArr(array).keepIf(condition).array();
+		return new boolArr(array).keepIf(condition).array();
 	}
-	public static StrArr keepIf(StrArr list, Predicate<String> condition) {
+	public static strArr keepIf(strArr list, Predicate<String> condition) {
 		return list.keepIf(condition);
 	}
-	public static IntArr keepIf(IntArr list, Predicate<Integer> condition) {
+	public static intArr keepIf(intArr list, Predicate<Integer> condition) {
 		return list.keepIf(condition);
 	}
-	public static LongArr keepIf(LongArr list, Predicate<Long> condition) {
+	public static longArr keepIf(longArr list, Predicate<Long> condition) {
 		return list.keepIf(condition);
 	}
-	public static FltArr keepIf(FltArr list, Predicate<Float> condition) {
+	public static fltArr keepIf(fltArr list, Predicate<Float> condition) {
 		return list.keepIf(condition);
 	}
-	public static DblArr keepIf(DblArr list, Predicate<Double> condition) {
+	public static dblArr keepIf(dblArr list, Predicate<Double> condition) {
 		return list.keepIf(condition);
 	}
-	public static BoolArr keepIf(BoolArr list, Predicate<Boolean> condition) {
+	public static boolArr keepIf(boolArr list, Predicate<Boolean> condition) {
 		return list.keepIf(condition);
 	}
 	public static String[] filterOut(String[] array,
@@ -15978,22 +16544,22 @@ public class KL {
 			Predicate<Boolean> condition) {
 		return popIf(array, condition);
 	}
-	public static StrArr filterOut(StrArr list, Predicate<String> condition) {
+	public static strArr filterOut(strArr list, Predicate<String> condition) {
 		return popIf(list, condition);
 	}
-	public static IntArr filterOut(IntArr list, Predicate<Integer> condition) {
+	public static intArr filterOut(intArr list, Predicate<Integer> condition) {
 		return popIf(list, condition);
 	}
-	public static LongArr filterOut(LongArr list, Predicate<Long> condition) {
+	public static longArr filterOut(longArr list, Predicate<Long> condition) {
 		return popIf(list, condition);
 	}
-	public static FltArr filterOut(FltArr list, Predicate<Float> condition) {
+	public static fltArr filterOut(fltArr list, Predicate<Float> condition) {
 		return popIf(list, condition);
 	}
-	public static DblArr filterOut(DblArr list, Predicate<Double> condition) {
+	public static dblArr filterOut(dblArr list, Predicate<Double> condition) {
 		return popIf(list, condition);
 	}
-	public static BoolArr filterOut(BoolArr list,
+	public static boolArr filterOut(boolArr list,
 			Predicate<Boolean> condition) {
 		return popIf(list, condition);
 	}
@@ -16016,22 +16582,22 @@ public class KL {
 			Predicate<Boolean> condition) {
 		return keepIf(array, condition);
 	}
-	public static StrArr filter(StrArr list, Predicate<String> condition) {
+	public static strArr filter(strArr list, Predicate<String> condition) {
 		return keepIf(list, condition);
 	}
-	public static IntArr filter(IntArr list, Predicate<Integer> condition) {
+	public static intArr filter(intArr list, Predicate<Integer> condition) {
 		return keepIf(list, condition);
 	}
-	public static LongArr filter(LongArr list, Predicate<Long> condition) {
+	public static longArr filter(longArr list, Predicate<Long> condition) {
 		return keepIf(list, condition);
 	}
-	public static FltArr filter(FltArr list, Predicate<Float> condition) {
+	public static fltArr filter(fltArr list, Predicate<Float> condition) {
 		return keepIf(list, condition);
 	}
-	public static DblArr filter(DblArr list, Predicate<Double> condition) {
+	public static dblArr filter(dblArr list, Predicate<Double> condition) {
 		return keepIf(list, condition);
 	}
-	public static BoolArr filter(BoolArr list, Predicate<Boolean> condition) {
+	public static boolArr filter(boolArr list, Predicate<Boolean> condition) {
 		return keepIf(list, condition);
 	}
 	public static String[] onlyPop(String[] array,
@@ -16055,22 +16621,22 @@ public class KL {
 			Predicate<Boolean> condition) {
 		return popIf(array, condition);
 	}
-	public static StrArr onlyPop(StrArr list, Predicate<String> condition) {
+	public static strArr onlyPop(strArr list, Predicate<String> condition) {
 		return popIf(list, condition);
 	}
-	public static IntArr onlyPop(IntArr list, Predicate<Integer> condition) {
+	public static intArr onlyPop(intArr list, Predicate<Integer> condition) {
 		return popIf(list, condition);
 	}
-	public static LongArr onlyPop(LongArr list, Predicate<Long> condition) {
+	public static longArr onlyPop(longArr list, Predicate<Long> condition) {
 		return popIf(list, condition);
 	}
-	public static FltArr onlyPop(FltArr list, Predicate<Float> condition) {
+	public static fltArr onlyPop(fltArr list, Predicate<Float> condition) {
 		return popIf(list, condition);
 	}
-	public static DblArr onlyPop(DblArr list, Predicate<Double> condition) {
+	public static dblArr onlyPop(dblArr list, Predicate<Double> condition) {
 		return popIf(list, condition);
 	}
-	public static BoolArr onlyPop(BoolArr list, Predicate<Boolean> condition) {
+	public static boolArr onlyPop(boolArr list, Predicate<Boolean> condition) {
 		return popIf(list, condition);
 	}
 	public static String[] onlyKeep(String[] array,
@@ -16094,22 +16660,22 @@ public class KL {
 			Predicate<Boolean> condition) {
 		return keepIf(array, condition);
 	}
-	public static StrArr onlyKeep(StrArr list, Predicate<String> condition) {
+	public static strArr onlyKeep(strArr list, Predicate<String> condition) {
 		return keepIf(list, condition);
 	}
-	public static IntArr onlyKeep(IntArr list, Predicate<Integer> condition) {
+	public static intArr onlyKeep(intArr list, Predicate<Integer> condition) {
 		return keepIf(list, condition);
 	}
-	public static LongArr onlyKeep(LongArr list, Predicate<Long> condition) {
+	public static longArr onlyKeep(longArr list, Predicate<Long> condition) {
 		return keepIf(list, condition);
 	}
-	public static FltArr onlyKeep(FltArr list, Predicate<Float> condition) {
+	public static fltArr onlyKeep(fltArr list, Predicate<Float> condition) {
 		return keepIf(list, condition);
 	}
-	public static DblArr onlyKeep(DblArr list, Predicate<Double> condition) {
+	public static dblArr onlyKeep(dblArr list, Predicate<Double> condition) {
 		return keepIf(list, condition);
 	}
-	public static BoolArr onlyKeep(BoolArr list, Predicate<Boolean> condition) {
+	public static boolArr onlyKeep(boolArr list, Predicate<Boolean> condition) {
 		return keepIf(list, condition);
 	}
 	// Date functions
@@ -16140,18 +16706,21 @@ public class KL {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * (3600 * 1000))); // fix 5-hour bug
 		String date = formattedDate(dt);
-		return date;
+		String parts[] = date.split(", ");
+		parts[0] = parts[0];
+		parts[1] = split(parts[1], " ")[0] + " " + split(parts[1], " ")[1];
+		String time = slice(parts, len(parts) - 1)[0];
+		String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
+		String result = join(x, ", ");
+		return result;
 	}
 	public static String now(boolean shortened) {
 		if (!shortened)
 			return now();
 		String parts[] = now().split(", ");
-		parts[0] = slice(parts[0], 0, 3);
-		parts[1] = slice(split(parts[1], " ")[0], 0, 3) + " "
-				+ split(parts[1], " ")[1];
-		String time = slice(parts, len(parts) - 1)[0];
-		String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
-		String result = join(x, ", ");
+		String time = parts[0], day = sliceKeep(parts[1], 3),
+				month = sliceKeep(parts[2], 3), year = parts[3];
+		String result = join(new String[]{time, day, month, year}, ", ");
 		return result;
 	}
 	public static String getDate() {
@@ -16456,7 +17025,8 @@ public class KL {
 			return;
 		} else {
 			for (Object arg : args) {
-				if (isNull(arg)) continue;
+				if (isNull(arg))
+					continue;
 				if (isArr(arg)) {
 					printArr(arg);
 					System.out.print(" ");
@@ -16464,14 +17034,20 @@ public class KL {
 				if (arg instanceof Character)
 					arg = "'" + arg + "'";
 				if (arg instanceof Double) {
-					if (in(Str((double)arg), "(?<=\\.)\\d{3,}")) arg = setPrecision((double) arg, 2);
-					else arg = setPrecision((double) arg);
-			    }
+					if (in(Str((double) arg), "(?<=\\.)\\d{3,}"))
+						arg = setPrecision((double) arg, 2);
+					else
+						arg = setPrecision((double) arg);
+				}
 				System.out.print(arg + " ");
 			}
 		}
 	}
 	public static void print(Object... args) {
+		println(args);
+		System.out.print("\n");
+	}
+	public static void kaho(Object... args) {
 		println(args);
 		System.out.print("\n");
 	}
@@ -16520,70 +17096,70 @@ public class KL {
 			}
 		}
 	}
-	public static void printArr(StrArr arr) {
+	public static void printArr(strArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(IntArr arr) {
+	public static void printArr(intArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(LongArr arr) {
+	public static void printArr(longArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(FltArr arr) {
+	public static void printArr(fltArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(DblArr arr) {
+	public static void printArr(dblArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(BoolArr arr) {
+	public static void printArr(boolArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(ObjS o) {
+	public static void printArr(objS o) {
 		print(o.toString());
 	}
-	public static void printArr(ObjI o) {
+	public static void printArr(objI o) {
 		print(o.toString());
 	}
-	public static void printArr(ObjL o) {
+	public static void printArr(objL o) {
 		print(o.toString());
 	}
-	public static void printArr(ObjF o) {
+	public static void printArr(objF o) {
 		print(o.toString());
 	}
-	public static void printArr(ObjD o) {
+	public static void printArr(objD o) {
 		print(o.toString());
 	}
-	public static void printArr(ObjB o) {
+	public static void printArr(objB o) {
 		print(o.toString());
 	}
-	public static void printArr(TreeS t) {
+	public static void printArr(treeS t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeI t) {
+	public static void printArr(treeI t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeSL t) {
+	public static void printArr(treeSL t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeL t) {
+	public static void printArr(treeL t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeSF t) {
+	public static void printArr(treeSF t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeF t) {
+	public static void printArr(treeF t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeSD t) {
+	public static void printArr(treeSD t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeD t) {
+	public static void printArr(treeD t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeSB t) {
+	public static void printArr(treeSB t) {
 		print(t.toString());
 	}
-	public static void printArr(TreeB t) {
+	public static void printArr(treeB t) {
 		print(t.toString());
 	}
 	public static void printAll(String arr[]) {
@@ -16604,70 +17180,70 @@ public class KL {
 	public static void printAll(boolean arr[]) {
 		printArr(arr);
 	}
-	public static void printAll(StrArr arr) {
+	public static void printAll(strArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(IntArr arr) {
+	public static void printAll(intArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(LongArr arr) {
+	public static void printAll(longArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(FltArr arr) {
+	public static void printAll(fltArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(DblArr arr) {
+	public static void printAll(dblArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(BoolArr arr) {
+	public static void printAll(boolArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(ObjS o) {
+	public static void printAll(objS o) {
 		printArr(o);
 	}
-	public static void printAll(ObjI o) {
+	public static void printAll(objI o) {
 		printArr(o);
 	}
-	public static void printAll(ObjL o) {
+	public static void printAll(objL o) {
 		printArr(o);
 	}
-	public static void printAll(ObjF o) {
+	public static void printAll(objF o) {
 		printArr(o);
 	}
-	public static void printAll(ObjD o) {
+	public static void printAll(objD o) {
 		printArr(o);
 	}
-	public static void printAll(ObjB o) {
+	public static void printAll(objB o) {
 		printArr(o);
 	}
-	public static void printAll(TreeS t) {
+	public static void printAll(treeS t) {
 		printArr(t);
 	}
-	public static void printAll(TreeI t) {
+	public static void printAll(treeI t) {
 		printArr(t);
 	}
-	public static void printAll(TreeSL t) {
+	public static void printAll(treeSL t) {
 		printArr(t);
 	}
-	public static void printAll(TreeL t) {
+	public static void printAll(treeL t) {
 		printArr(t);
 	}
-	public static void printAll(TreeSF t) {
+	public static void printAll(treeSF t) {
 		printArr(t);
 	}
-	public static void printAll(TreeF t) {
+	public static void printAll(treeF t) {
 		printArr(t);
 	}
-	public static void printAll(TreeSD t) {
+	public static void printAll(treeSD t) {
 		printArr(t);
 	}
-	public static void printAll(TreeD t) {
+	public static void printAll(treeD t) {
 		printArr(t);
 	}
-	public static void printAll(TreeSB t) {
+	public static void printAll(treeSB t) {
 		printArr(t);
 	}
-	public static void printAll(TreeB t) {
+	public static void printAll(treeB t) {
 		printArr(t);
 	}
 	// getting user input
@@ -16785,70 +17361,70 @@ public class KL {
 	public static String String(Object[] arr) {
 		return Arrays.toString(arr);
 	}
-	public static String String(StrArr arr) {
+	public static String String(strArr arr) {
 		return arr.toString();
 	}
-	public static String String(IntArr arr) {
+	public static String String(intArr arr) {
 		return arr.toString();
 	}
-	public static String String(LongArr arr) {
+	public static String String(longArr arr) {
 		return arr.toString();
 	}
-	public static String String(FltArr arr) {
+	public static String String(fltArr arr) {
 		return arr.toString();
 	}
-	public static String String(DblArr arr) {
+	public static String String(dblArr arr) {
 		return arr.toString();
 	}
-	public static String String(BoolArr arr) {
+	public static String String(boolArr arr) {
 		return arr.toString();
 	}
-	public static String String(ObjS o) {
+	public static String String(objS o) {
 		return o.toString();
 	}
-	public static String String(ObjI o) {
+	public static String String(objI o) {
 		return o.toString();
 	}
-	public static String String(ObjL o) {
+	public static String String(objL o) {
 		return o.toString();
 	}
-	public static String String(ObjF o) {
+	public static String String(objF o) {
 		return o.toString();
 	}
-	public static String String(ObjD o) {
+	public static String String(objD o) {
 		return o.toString();
 	}
-	public static String String(ObjB o) {
+	public static String String(objB o) {
 		return o.toString();
 	}
-	public static String String(TreeS t) {
+	public static String String(treeS t) {
 		return t.toString();
 	}
-	public static String String(TreeI t) {
+	public static String String(treeI t) {
 		return t.toString();
 	}
-	public static String String(TreeSL t) {
+	public static String String(treeSL t) {
 		return t.toString();
 	}
-	public static String String(TreeL t) {
+	public static String String(treeL t) {
 		return t.toString();
 	}
-	public static String String(TreeSF t) {
+	public static String String(treeSF t) {
 		return t.toString();
 	}
-	public static String String(TreeF t) {
+	public static String String(treeF t) {
 		return t.toString();
 	}
-	public static String String(TreeSD t) {
+	public static String String(treeSD t) {
 		return t.toString();
 	}
-	public static String String(TreeD t) {
+	public static String String(treeD t) {
 		return t.toString();
 	}
-	public static String String(TreeSB t) {
+	public static String String(treeSB t) {
 		return t.toString();
 	}
-	public static String String(TreeB t) {
+	public static String String(treeB t) {
 		return t.toString();
 	}
 	public static String Str(String arg) {
@@ -16900,70 +17476,70 @@ public class KL {
 	public static String Str(Object[] arg) {
 		return String(arg);
 	}
-	public static String Str(StrArr arr) {
+	public static String Str(strArr arr) {
 		return String(arr);
 	}
-	public static String Str(IntArr arr) {
+	public static String Str(intArr arr) {
 		return String(arr);
 	}
-	public static String Str(LongArr arr) {
+	public static String Str(longArr arr) {
 		return String(arr);
 	}
-	public static String Str(FltArr arr) {
+	public static String Str(fltArr arr) {
 		return String(arr);
 	}
-	public static String Str(DblArr arr) {
+	public static String Str(dblArr arr) {
 		return String(arr);
 	}
-	public static String Str(BoolArr arr) {
+	public static String Str(boolArr arr) {
 		return String(arr);
 	}
-	public static String Str(ObjS o) {
+	public static String Str(objS o) {
 		return String(o);
 	}
-	public static String Str(ObjI o) {
+	public static String Str(objI o) {
 		return String(o);
 	}
-	public static String Str(ObjL o) {
+	public static String Str(objL o) {
 		return String(o);
 	}
-	public static String Str(ObjF o) {
+	public static String Str(objF o) {
 		return String(o);
 	}
-	public static String Str(ObjD o) {
+	public static String Str(objD o) {
 		return String(o);
 	}
-	public static String Str(ObjB o) {
+	public static String Str(objB o) {
 		return String(o);
 	}
-	public static String Str(TreeS t) {
+	public static String Str(treeS t) {
 		return String(t);
 	}
-	public static String Str(TreeI t) {
+	public static String Str(treeI t) {
 		return String(t);
 	}
-	public static String Str(TreeSL t) {
+	public static String Str(treeSL t) {
 		return String(t);
 	}
-	public static String Str(TreeL t) {
+	public static String Str(treeL t) {
 		return String(t);
 	}
-	public static String Str(TreeSF t) {
+	public static String Str(treeSF t) {
 		return String(t);
 	}
-	public static String Str(TreeF t) {
+	public static String Str(treeF t) {
 		return String(t);
 	}
-	public static String Str(TreeSD t) {
+	public static String Str(treeSD t) {
 		return String(t);
 	}
-	public static String Str(TreeD t) {
+	public static String Str(treeD t) {
 		return String(t);
 	}
-	public static String Str(TreeSB t) {
+	public static String Str(treeSB t) {
 		return String(t);
 	}
-	public static String Str(TreeB t) {
+	public static String Str(treeB t) {
 		return String(t);
 	}
 	public static String concat(Object... args) {
@@ -16971,7 +17547,8 @@ public class KL {
 			return "";
 		String result = "";
 		for (var arg : args) {
-			if (isNull(arg)) continue;
+			if (isNull(arg))
+				continue;
 			result += ("" + arg);
 		}
 		return result;
@@ -16979,139 +17556,205 @@ public class KL {
 	public static String cat(Object... args) {
 		return concat(args);
 	}
-	public static StrArr Arr(String... items) {
+	public static strArr Arr(String... items) {
 		if (isNull(items) || isEmpty(items))
-			return blank.StrArr;
-		StrArr arr = new StrArr(items);
+			return blank.strArr;
+		strArr arr = new strArr(items);
 		return arr;
 	}
-	public static IntArr Arr(int... items) {
+	public static intArr Arr(int... items) {
 		if (isNull(items) || isEmpty(items))
-			return blank.IntArr;
-		IntArr arr = new IntArr(items);
+			return blank.intArr;
+		intArr arr = new intArr(items);
 		return arr;
 	}
-	public static LongArr Arr(long... items) {
+	public static longArr Arr(long... items) {
 		if (isNull(items) || isEmpty(items))
-			return blank.LongArr;
-		LongArr arr = new LongArr(items);
+			return blank.longArr;
+		longArr arr = new longArr(items);
 		return arr;
 	}
-	public static FltArr Arr(float... items) {
+	public static fltArr Arr(float... items) {
 		if (isNull(items) || isEmpty(items))
-			return blank.FltArr;
-		FltArr arr = new FltArr(items);
+			return blank.fltArr;
+		fltArr arr = new fltArr(items);
 		return arr;
 	}
-	public static DblArr Arr(double... items) {
+	public static dblArr Arr(double... items) {
 		if (isNull(items) || isEmpty(items))
-			return blank.DblArr;
-		DblArr arr = new DblArr(items);
+			return blank.dblArr;
+		dblArr arr = new dblArr(items);
 		return arr;
 	}
-	public static BoolArr Arr(boolean... items) {
+	public static boolArr Arr(boolean... items) {
 		if (isNull(items) || isEmpty(items))
-			return blank.BoolArr;
-		BoolArr arr = new BoolArr(items);
+			return blank.boolArr;
+		boolArr arr = new boolArr(items);
 		return arr;
 	}
-	public static StrArr naiArr(String... items) {
+	public static strArr arr(String... items) {
 		return Arr(items);
 	}
-	public static IntArr naiArr(int... items) {
+	public static intArr arr(int... items) {
 		return Arr(items);
 	}
-	public static LongArr naiArr(long... items) {
+	public static longArr arr(long... items) {
 		return Arr(items);
 	}
-	public static FltArr naiArr(float... items) {
+	public static fltArr arr(float... items) {
 		return Arr(items);
 	}
-	public static DblArr naiArr(double... items) {
+	public static dblArr arr(double... items) {
 		return Arr(items);
 	}
-	public static BoolArr naiArr(boolean... items) {
+	public static boolArr arr(boolean... items) {
 		return Arr(items);
 	}
-	public static String[] Arr(ObjS o) {
+	public static strArr naiArr(String... items) {
+		return Arr(items);
+	}
+	public static intArr naiArr(int... items) {
+		return Arr(items);
+	}
+	public static longArr naiArr(long... items) {
+		return Arr(items);
+	}
+	public static fltArr naiArr(float... items) {
+		return Arr(items);
+	}
+	public static dblArr naiArr(double... items) {
+		return Arr(items);
+	}
+	public static boolArr naiArr(boolean... items) {
+		return Arr(items);
+	}
+	public static String[] Arr(objS o) {
 		if (not(o))
 			return blank.Str;
 		return o.array();
 	}
-	public static int[] Arr(ObjI o) {
+	public static int[] Arr(objI o) {
 		if (not(o))
 			return blank.Int;
 		return o.array();
 	}
-	public static long[] Arr(ObjL o) {
+	public static long[] Arr(objL o) {
 		if (not(o))
 			return blank.Long;
 		return o.array();
 	}
-	public static float[] Arr(ObjF o) {
+	public static float[] Arr(objF o) {
 		if (not(o))
 			return blank.Flt;
 		return o.array();
 	}
-	public static double[] Arr(ObjD o) {
+	public static double[] Arr(objD o) {
 		if (not(o))
 			return blank.Dbl;
 		return o.array();
 	}
-	public static boolean[] Arr(ObjB o) {
+	public static boolean[] Arr(objB o) {
 		if (not(o))
 			return blank.Bool;
 		return o.array();
 	}
-	public static int[] Arr(TreeS t) {
+	public static int[] Arr(treeS t) {
 		if (not(t))
 			return blank.Int;
 		return t.array();
 	}
-	public static String[] Arr(TreeI t) {
+	public static String[] Arr(treeI t) {
 		if (not(t))
 			return blank.Str;
 		return t.array();
 	}
-	public static long[] Arr(TreeSL t) {
+	public static long[] Arr(treeSL t) {
 		if (not(t))
 			return blank.Long;
 		return t.array();
 	}
-	public static long[] Arr(TreeL t) {
+	public static long[] Arr(treeL t) {
 		if (not(t))
 			return blank.Long;
 		return t.array();
 	}
-	public static float[] Arr(TreeSF t) {
+	public static float[] Arr(treeSF t) {
 		if (not(t))
 			return blank.Flt;
 		return t.array();
 	}
-	public static float[] Arr(TreeF t) {
+	public static float[] Arr(treeF t) {
 		if (not(t))
 			return blank.Flt;
 		return t.array();
 	}
-	public static double[] Arr(TreeSD t) {
+	public static double[] Arr(treeSD t) {
 		if (not(t))
 			return blank.Dbl;
 		return t.array();
 	}
-	public static double[] Arr(TreeD t) {
+	public static double[] Arr(treeD t) {
 		if (not(t))
 			return blank.Dbl;
 		return t.array();
 	}
-	public static boolean[] Arr(TreeSB t) {
+	public static boolean[] Arr(treeSB t) {
 		if (not(t))
 			return blank.Bool;
 		return t.array();
 	}
-	public static boolean[] Arr(TreeB t) {
+	public static boolean[] Arr(treeB t) {
 		if (not(t))
 			return blank.Bool;
 		return t.array();
+	}
+	public static String[] arr(objS o) {
+		return Arr(o);
+	}
+	public static int[] arr(objI o) {
+		return Arr(o);
+	}
+	public static long[] arr(objL o) {
+		return Arr(o);
+	}
+	public static float[] arr(objF o) {
+		return Arr(o);
+	}
+	public static double[] arr(objD o) {
+		return Arr(o);
+	}
+	public static boolean[] arr(objB o) {
+		return Arr(o);
+	}
+	public static int[] arr(treeS t) {
+		return Arr(t);
+	}
+	public static String[] arr(treeI t) {
+		return Arr(t);
+	}
+	public static long[] arr(treeSL t) {
+		return Arr(t);
+	}
+	public static long[] arr(treeL t) {
+		return Arr(t);
+	}
+	public static float[] arr(treeSF t) {
+		return Arr(t);
+	}
+	public static float[] arr(treeF t) {
+		return Arr(t);
+	}
+	public static double[] arr(treeSD t) {
+		return Arr(t);
+	}
+	public static double[] arr(treeD t) {
+		return Arr(t);
+	}
+	public static boolean[] arr(treeSB t) {
+		return Arr(t);
+	}
+	public static boolean[] arr(treeB t) {
+		return Arr(t);
 	}
 	public static char[] Chars(String str) {
 		if (not(str))
@@ -17129,8 +17772,6 @@ public class KL {
 		if (isNull(n))
 			return '\0';
 		char result = (char) n;
-		if (!isAlpha(result))
-			return '\0';
 		return result;
 	}
 	public static char Char(String str, int n) {
@@ -17251,112 +17892,112 @@ public class KL {
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
-	public static String join(StrArr arr, String with) {
+	public static String join(strArr arr, String with) {
 		if (not(arr))
 			return "";
 		return join(arr.array(), with);
 	}
-	public static String join(IntArr arr, String with) {
+	public static String join(intArr arr, String with) {
 		if (not(arr))
 			return "";
 		return join(arr.array(), with);
 	}
-	public static String join(LongArr arr, String with) {
+	public static String join(longArr arr, String with) {
 		if (not(arr))
 			return "";
 		return join(arr.array(), with);
 	}
-	public static String join(FltArr arr, String with) {
+	public static String join(fltArr arr, String with) {
 		if (not(arr))
 			return "";
 		return join(arr.array(), with);
 	}
-	public static String join(DblArr arr, String with) {
+	public static String join(dblArr arr, String with) {
 		if (not(arr))
 			return "";
 		return join(arr.array(), with);
 	}
-	public static String join(BoolArr arr, String with) {
+	public static String join(boolArr arr, String with) {
 		if (not(arr))
 			return "";
 		return join(arr.array(), with);
 	}
-	public static String join(ObjS o, String with) {
+	public static String join(objS o, String with) {
 		if (not(o))
 			return "";
 		return join(o.array(), with);
 	}
-	public static String join(ObjI o, String with) {
+	public static String join(objI o, String with) {
 		if (not(o))
 			return "";
 		return join(o.array(), with);
 	}
-	public static String join(ObjL o, String with) {
+	public static String join(objL o, String with) {
 		if (not(o))
 			return "";
 		return join(o.array(), with);
 	}
-	public static String join(ObjF o, String with) {
+	public static String join(objF o, String with) {
 		if (not(o))
 			return "";
 		return join(o.array(), with);
 	}
-	public static String join(ObjD o, String with) {
+	public static String join(objD o, String with) {
 		if (not(o))
 			return "";
 		return join(o.array(), with);
 	}
-	public static String join(ObjB o, String with) {
+	public static String join(objB o, String with) {
 		if (not(o))
 			return "";
 		return join(o.array(), with);
 	}
-	public static String join(TreeS t, String with) {
+	public static String join(treeS t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeI t, String with) {
+	public static String join(treeI t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeSL t, String with) {
+	public static String join(treeSL t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeL t, String with) {
+	public static String join(treeL t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeSF t, String with) {
+	public static String join(treeSF t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeF t, String with) {
+	public static String join(treeF t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeSD t, String with) {
+	public static String join(treeSD t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeD t, String with) {
+	public static String join(treeD t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeSB t, String with) {
+	public static String join(treeSB t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(TreeB t, String with) {
+	public static String join(treeB t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
@@ -17457,112 +18098,112 @@ public class KL {
 		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
-	public static String join(StrArr arr) {
+	public static String join(strArr arr) {
 		if (not(arr))
 			return "";
 		return join(arr.array());
 	}
-	public static String join(IntArr arr) {
+	public static String join(intArr arr) {
 		if (not(arr))
 			return "";
 		return join(arr.array());
 	}
-	public static String join(LongArr arr) {
+	public static String join(longArr arr) {
 		if (not(arr))
 			return "";
 		return join(arr.array());
 	}
-	public static String join(FltArr arr) {
+	public static String join(fltArr arr) {
 		if (not(arr))
 			return "";
 		return join(arr.array());
 	}
-	public static String join(DblArr arr) {
+	public static String join(dblArr arr) {
 		if (not(arr))
 			return "";
 		return join(arr.array());
 	}
-	public static String join(BoolArr arr) {
+	public static String join(boolArr arr) {
 		if (not(arr))
 			return "";
 		return join(arr.array());
 	}
-	public static String join(ObjS o) {
+	public static String join(objS o) {
 		if (not(o))
 			return "";
 		return join(o.array());
 	}
-	public static String join(ObjI o) {
+	public static String join(objI o) {
 		if (not(o))
 			return "";
 		return join(o.array());
 	}
-	public static String join(ObjL o) {
+	public static String join(objL o) {
 		if (not(o))
 			return "";
 		return join(o.array());
 	}
-	public static String join(ObjF o) {
+	public static String join(objF o) {
 		if (not(o))
 			return "";
 		return join(o.array());
 	}
-	public static String join(ObjD o) {
+	public static String join(objD o) {
 		if (not(o))
 			return "";
 		return join(o.array());
 	}
-	public static String join(ObjB o) {
+	public static String join(objB o) {
 		if (not(o))
 			return "";
 		return join(o.array());
 	}
-	public static String join(TreeS t) {
+	public static String join(treeS t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeI t) {
+	public static String join(treeI t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeSL t) {
+	public static String join(treeSL t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeL t) {
+	public static String join(treeL t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeSF t) {
+	public static String join(treeSF t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeF t) {
+	public static String join(treeF t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeSD t) {
+	public static String join(treeSD t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeD t) {
+	public static String join(treeD t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeSB t) {
+	public static String join(treeSB t) {
 		if (not(t))
 			return "";
 		return join(t.array());
 	}
-	public static String join(TreeB t) {
+	public static String join(treeB t) {
 		if (not(t))
 			return "";
 		return join(t.array());
@@ -17935,7 +18576,7 @@ public class KL {
 			acc += ns[next];
 		return acc;
 	}
-	public static int sum(IntArr ns) {
+	public static int sum(intArr ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -17943,7 +18584,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static long sum(LongArr ns) {
+	public static long sum(longArr ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -17951,7 +18592,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static float sum(FltArr ns) {
+	public static float sum(fltArr ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -17959,7 +18600,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(DblArr ns) {
+	public static double sum(dblArr ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -17967,7 +18608,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static int sum(ObjI ns) {
+	public static int sum(objI ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -17975,7 +18616,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static long sum(ObjL ns) {
+	public static long sum(objL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -17983,7 +18624,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static float sum(ObjF ns) {
+	public static float sum(objF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -17991,7 +18632,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(ObjD ns) {
+	public static double sum(objD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -17999,7 +18640,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static int sum(TreeS ns) {
+	public static int sum(treeS ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -18007,7 +18648,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static long sum(TreeSL ns) {
+	public static long sum(treeSL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18015,7 +18656,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static long sum(TreeL ns) {
+	public static long sum(treeL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18023,7 +18664,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static float sum(TreeSF ns) {
+	public static float sum(treeSF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18031,7 +18672,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static float sum(TreeF ns) {
+	public static float sum(treeF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18039,7 +18680,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(TreeSD ns) {
+	public static double sum(treeSD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18047,7 +18688,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static double sum(TreeD ns) {
+	public static double sum(treeD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18087,31 +18728,31 @@ public class KL {
 			acc -= ns[next];
 		return acc;
 	}
-	public static int difference(IntArr ns) {
+	public static int difference(intArr ns) {
 		int acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static long difference(LongArr ns) {
+	public static long difference(longArr ns) {
 		long acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static float difference(FltArr ns) {
+	public static float difference(fltArr ns) {
 		float acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(DblArr ns) {
+	public static double difference(dblArr ns) {
 		double acc = ns.i(0);
 		for (int next = 1; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static int difference(ObjI ns) {
+	public static int difference(objI ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -18119,7 +18760,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static long difference(ObjL ns) {
+	public static long difference(objL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18127,7 +18768,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static float difference(ObjF ns) {
+	public static float difference(objF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18135,7 +18776,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(ObjD ns) {
+	public static double difference(objD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18143,7 +18784,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static int difference(TreeS ns) {
+	public static int difference(treeS ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -18151,7 +18792,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static long difference(TreeSL ns) {
+	public static long difference(treeSL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18159,7 +18800,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static long difference(TreeL ns) {
+	public static long difference(treeL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18167,7 +18808,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static float difference(TreeSF ns) {
+	public static float difference(treeSF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18175,7 +18816,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static float difference(TreeF ns) {
+	public static float difference(treeF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18183,7 +18824,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(TreeSD ns) {
+	public static double difference(treeSD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18191,7 +18832,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static double difference(TreeD ns) {
+	public static double difference(treeD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18231,7 +18872,7 @@ public class KL {
 			acc *= ns[next];
 		return acc;
 	}
-	public static int product(IntArr ns) {
+	public static int product(intArr ns) {
 		if (not(ns))
 			return 0;
 		int acc = ns.i(0);
@@ -18239,7 +18880,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static long product(LongArr ns) {
+	public static long product(longArr ns) {
 		if (not(ns))
 			return 0;
 		long acc = ns.i(0);
@@ -18247,7 +18888,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static float product(FltArr ns) {
+	public static float product(fltArr ns) {
 		if (not(ns))
 			return 0;
 		float acc = ns.i(0);
@@ -18255,7 +18896,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(DblArr ns) {
+	public static double product(dblArr ns) {
 		if (not(ns))
 			return 0;
 		double acc = ns.i(0);
@@ -18263,7 +18904,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static int product(ObjI ns) {
+	public static int product(objI ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -18271,7 +18912,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static long product(ObjL ns) {
+	public static long product(objL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18279,7 +18920,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static float product(ObjF ns) {
+	public static float product(objF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18287,7 +18928,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(ObjD ns) {
+	public static double product(objD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18295,7 +18936,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static int product(TreeS ns) {
+	public static int product(treeS ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -18303,7 +18944,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static long product(TreeSL ns) {
+	public static long product(treeSL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18311,7 +18952,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static long product(TreeL ns) {
+	public static long product(treeL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18319,7 +18960,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static float product(TreeSF ns) {
+	public static float product(treeSF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18327,7 +18968,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static float product(TreeF ns) {
+	public static float product(treeF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18335,7 +18976,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(TreeSD ns) {
+	public static double product(treeSD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18343,7 +18984,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static double product(TreeD ns) {
+	public static double product(treeD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18383,7 +19024,7 @@ public class KL {
 			acc /= ns[next];
 		return acc;
 	}
-	public static int quotient(IntArr ns) {
+	public static int quotient(intArr ns) {
 		if (not(ns))
 			return 0;
 		int acc = ns.i(0);
@@ -18391,7 +19032,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static long quotient(LongArr ns) {
+	public static long quotient(longArr ns) {
 		if (not(ns))
 			return 0;
 		long acc = ns.i(0);
@@ -18399,7 +19040,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static float quotient(FltArr ns) {
+	public static float quotient(fltArr ns) {
 		if (not(ns))
 			return 0;
 		float acc = ns.i(0);
@@ -18407,7 +19048,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(DblArr ns) {
+	public static double quotient(dblArr ns) {
 		if (not(ns))
 			return 0;
 		double acc = ns.i(0);
@@ -18415,7 +19056,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static int quotient(ObjI ns) {
+	public static int quotient(objI ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -18423,7 +19064,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static long quotient(ObjL ns) {
+	public static long quotient(objL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18431,7 +19072,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static float quotient(ObjF ns) {
+	public static float quotient(objF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18439,7 +19080,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(ObjD ns) {
+	public static double quotient(objD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18447,7 +19088,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static int quotient(TreeS ns) {
+	public static int quotient(treeS ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -18455,7 +19096,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static long quotient(TreeSL ns) {
+	public static long quotient(treeSL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18463,7 +19104,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static long quotient(TreeL ns) {
+	public static long quotient(treeL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -18471,7 +19112,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static float quotient(TreeSF ns) {
+	public static float quotient(treeSF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18479,7 +19120,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static float quotient(TreeF ns) {
+	public static float quotient(treeF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -18487,7 +19128,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(TreeSD ns) {
+	public static double quotient(treeSD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18495,7 +19136,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static double quotient(TreeD ns) {
+	public static double quotient(treeD ns) {
 		if (not(ns))
 			return 0;
 		double acc = 0;
@@ -18538,57 +19179,57 @@ public class KL {
 		DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMin();
 	}
-	public static int min(IntArr nums) {
+	public static int min(intArr nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static long min(LongArr nums) {
+	public static long min(longArr nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static double min(DblArr nums) {
+	public static double min(dblArr nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static int min(ObjI nums) {
+	public static int min(objI nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static long min(ObjL nums) {
+	public static long min(objL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static double min(ObjD nums) {
+	public static double min(objD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static int min(TreeS nums) {
+	public static int min(treeS nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static long min(TreeSL nums) {
+	public static long min(treeSL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static long min(TreeL nums) {
+	public static long min(treeL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static double min(TreeSD nums) {
+	public static double min(treeSD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static double min(TreeD nums) {
+	public static double min(treeD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
@@ -18605,57 +19246,57 @@ public class KL {
 		DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMax();
 	}
-	public static int max(IntArr nums) {
+	public static int max(intArr nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static long max(LongArr nums) {
+	public static long max(longArr nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static double max(DblArr nums) {
+	public static double max(dblArr nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static int max(ObjI nums) {
+	public static int max(objI nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static long max(ObjL nums) {
+	public static long max(objL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static double max(ObjD nums) {
+	public static double max(objD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static int max(TreeS nums) {
+	public static int max(treeS nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static long max(TreeSL nums) {
+	public static long max(treeSL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static long max(TreeL nums) {
+	public static long max(treeL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static double max(TreeSD nums) {
+	public static double max(treeSD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static double max(TreeD nums) {
+	public static double max(treeD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
@@ -18673,7 +19314,7 @@ public class KL {
 		return mod(n1, n2) == 0;
 	}
 	public static int[] divisorsOf(int n) {
-		IntArr result = new IntArr();
+		intArr result = new intArr();
 		for (int i = 2; i < n; i++) {
 			if (isPerfectMod(n, i))
 				result.add(i);
@@ -18681,7 +19322,7 @@ public class KL {
 		return result.array();
 	}
 	public static long[] divisorsOf(long n) {
-		LongArr result = new LongArr();
+		longArr result = new longArr();
 		for (long i = 2; i < n; i++) {
 			if (isPerfectMod(n, i))
 				result.add(i);
@@ -18689,7 +19330,7 @@ public class KL {
 		return result.array();
 	}
 	public static double[] divisorsOf(double n) {
-		DblArr result = new DblArr();
+		dblArr result = new dblArr();
 		for (double i = 2; i < n; i++) {
 			if (isPerfectMod(n, i))
 				result.add(i);
@@ -18936,42 +19577,43 @@ public class KL {
 			else if (arg instanceof String)
 				s = replaceFirst(s, "%[%sw]|\\$*\\{\\}", Str(arg));
 			else if (arg instanceof Integer || arg instanceof Long) {
-				String[] matches = findMatches(s, "%[\\%din](c|u|uc|th)|\\$*\\{\\}");
+				String[] matches = findMatches(s,
+						"%[\\%din](c|u|uc|th)|\\$*\\{\\}");
 				for (String m : matches) {
-					
+
 					print("Current:", m);
-					s = replaceFirst(s, "%[%din](?!th|u|uc|c)|\\$*\\{\\}",
-								Str(f(arg instanceof Integer
-										? (int) arg
-										: (long) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", ""));
-				if (in(s, "%[din]u")) {
-					if (eq(m, "%[din]uc")) {
-						s = replaceFirst(s, "%[din]uc",
-								Str(usd(arg instanceof Integer
+					s = replaceFirst(s, "%[%din](?!th|u|uc|c)|\\$*\\{\\}", Str(
+							f(arg instanceof Integer ? (int) arg : (long) arg))
+							.replaceAll("\\.[0]+(?!\\d)$", ""));
+					if (in(s, "%[din]u")) {
+						if (eq(m, "%[din]uc")) {
+							s = replaceFirst(s, "%[din]uc",
+									Str(usd(arg instanceof Integer
+											? (int) arg
+											: (long) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", ""));
+						} else {
+							s = replaceFirst(s, "%[din]u",
+									Str(fus(arg instanceof Integer
+											? (int) arg
+											: (long) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", ""));
+						}
+					} else if (eq(m, "%[din]th")) {
+						s = replaceFirst(s, "%[din]th",
+								Str(th(arg instanceof Integer
 										? (int) arg
 										: (long) arg))
 										.replaceAll("\\.[0]+(?!\\d)$", ""));
 					} else {
-						s = replaceFirst(s, "%[din]u",
-								Str(fus(arg instanceof Integer
-										? (int) arg
-										: (long) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", ""));
+						if (eq(m, "%[din]c")) {
+							s = replaceFirst(s, "%[din]c",
+									Str(pkr(arg instanceof Integer
+											? (int) arg
+											: (long) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", ""));
+						}
 					}
-				} else if (eq(m, "%[din]th")) {
-					s = replaceFirst(s, "%[din]th", Str(
-							th(arg instanceof Integer ? (int) arg : (long) arg))
-							.replaceAll("\\.[0]+(?!\\d)$", ""));
-				} else {
-					if (eq(m, "%[din]c")) {
-						s = replaceFirst(s, "%[din]c",
-								Str(pkr(arg instanceof Integer
-										? (int) arg
-										: (long) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", ""));
-					}
-				}
 				}
 			} else if (arg instanceof Float || arg instanceof Double) {
 				if (in(s, "%[\\%fn]u|\\$*\\{(\\.\\d*f)?\\}")) {
@@ -19415,7 +20057,7 @@ public class KL {
 		return result;
 	}
 	public static String toRoman(int n) {
-		TreeI tree = new TreeI();
+		treeI tree = new treeI();
 		tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X")
 				.add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
 				.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
@@ -19426,7 +20068,7 @@ public class KL {
 		return tree.get(n);
 	}
 	public static String toRoman(long n) {
-		TreeI tree = new TreeI();
+		treeI tree = new treeI();
 		tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X")
 				.add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
 				.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
@@ -19442,7 +20084,7 @@ public class KL {
 		return fibonacci(n - 1) + fibonacci(n - 2);
 	}
 	public static int[] fibonacciSequence(int n) {
-		IntArr result = new IntArr();
+		intArr result = new intArr();
 		for (int i : range(n))
 			result.push(fibonacci(i + 1));
 		return result.array();
@@ -19569,52 +20211,52 @@ public class KL {
 	public static boolean eq(Object[] x, Object[] y) {
 		return Arrays.equals(x, y);
 	}
-	public static boolean eq(StrArr x, StrArr y) {
+	public static boolean eq(strArr x, strArr y) {
 		return x.eq(y);
 	}
-	public static boolean eq(IntArr x, IntArr y) {
+	public static boolean eq(intArr x, intArr y) {
 		return x.eq(y);
 	}
-	public static boolean eq(LongArr x, LongArr y) {
+	public static boolean eq(longArr x, longArr y) {
 		return x.eq(y);
 	}
-	public static boolean eq(FltArr x, FltArr y) {
+	public static boolean eq(fltArr x, fltArr y) {
 		return x.eq(y);
 	}
-	public static boolean eq(DblArr x, DblArr y) {
+	public static boolean eq(dblArr x, dblArr y) {
 		return x.eq(y);
 	}
-	public static boolean eq(BoolArr x, BoolArr y) {
+	public static boolean eq(boolArr x, boolArr y) {
 		return x.eq(y);
 	}
-	public static boolean eq(TreeS x, TreeS y) {
+	public static boolean eq(treeS x, treeS y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeI x, TreeI y) {
+	public static boolean eq(treeI x, treeI y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeSL x, TreeSL y) {
+	public static boolean eq(treeSL x, treeSL y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeL x, TreeL y) {
+	public static boolean eq(treeL x, treeL y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeSF x, TreeSF y) {
+	public static boolean eq(treeSF x, treeSF y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeF x, TreeF y) {
+	public static boolean eq(treeF x, treeF y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeSD x, TreeSD y) {
+	public static boolean eq(treeSD x, treeSD y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeD x, TreeD y) {
+	public static boolean eq(treeD x, treeD y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeSB x, TreeSB y) {
+	public static boolean eq(treeSB x, treeSB y) {
 		return x.equals(y);
 	}
-	public static boolean eq(TreeB x, TreeB y) {
+	public static boolean eq(treeB x, treeB y) {
 		return x.equals(y);
 	}
 	public static boolean uneq(char x, char y) {
@@ -19659,52 +20301,52 @@ public class KL {
 	public static boolean uneq(Object[] x, Object[] y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(StrArr x, StrArr y) {
+	public static boolean uneq(strArr x, strArr y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(IntArr x, IntArr y) {
+	public static boolean uneq(intArr x, intArr y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(LongArr x, LongArr y) {
+	public static boolean uneq(longArr x, longArr y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(FltArr x, FltArr y) {
+	public static boolean uneq(fltArr x, fltArr y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(DblArr x, DblArr y) {
+	public static boolean uneq(dblArr x, dblArr y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(BoolArr x, BoolArr y) {
+	public static boolean uneq(boolArr x, boolArr y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeS x, TreeS y) {
+	public static boolean uneq(treeS x, treeS y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeI x, TreeI y) {
+	public static boolean uneq(treeI x, treeI y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeSL x, TreeSL y) {
+	public static boolean uneq(treeSL x, treeSL y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeL x, TreeL y) {
+	public static boolean uneq(treeL x, treeL y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeSF x, TreeSF y) {
+	public static boolean uneq(treeSF x, treeSF y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeF x, TreeF y) {
+	public static boolean uneq(treeF x, treeF y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeSD x, TreeSD y) {
+	public static boolean uneq(treeSD x, treeSD y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeD x, TreeD y) {
+	public static boolean uneq(treeD x, treeD y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeSB x, TreeSB y) {
+	public static boolean uneq(treeSB x, treeSB y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(TreeB x, TreeB y) {
+	public static boolean uneq(treeB x, treeB y) {
 		return !eq(x, y);
 	}
 	public static boolean both(String... strings) {
@@ -19943,70 +20585,70 @@ public class KL {
 	public static boolean not(Object[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
 	}
-	public static boolean not(StrArr arr) {
+	public static boolean not(strArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
-	public static boolean not(IntArr arr) {
+	public static boolean not(intArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
-	public static boolean not(LongArr arr) {
+	public static boolean not(longArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
-	public static boolean not(FltArr arr) {
+	public static boolean not(fltArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
-	public static boolean not(DblArr arr) {
+	public static boolean not(dblArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
-	public static boolean not(BoolArr arr) {
+	public static boolean not(boolArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
-	public static boolean not(ObjS o) {
+	public static boolean not(objS o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(ObjI o) {
+	public static boolean not(objI o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(ObjL o) {
+	public static boolean not(objL o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(ObjF o) {
+	public static boolean not(objF o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(ObjD o) {
+	public static boolean not(objD o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(ObjB o) {
+	public static boolean not(objB o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(TreeS t) {
+	public static boolean not(treeS t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeI t) {
+	public static boolean not(treeI t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeSL t) {
+	public static boolean not(treeSL t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeL t) {
+	public static boolean not(treeL t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeSF t) {
+	public static boolean not(treeSF t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeF t) {
+	public static boolean not(treeF t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeSD t) {
+	public static boolean not(treeSD t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeD t) {
+	public static boolean not(treeD t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeSB t) {
+	public static boolean not(treeSB t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(TreeB t) {
+	public static boolean not(treeB t) {
 		return isnl(t) || isEmpty(t);
 	}
 	public static boolean is(char c) {
@@ -20081,70 +20723,70 @@ public class KL {
 	public static boolean is(Object[]... arrays) {
 		return !not(arrays);
 	}
-	public static boolean is(StrArr arr) {
+	public static boolean is(strArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(IntArr arr) {
+	public static boolean is(intArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(LongArr arr) {
+	public static boolean is(longArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(FltArr arr) {
+	public static boolean is(fltArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(DblArr arr) {
+	public static boolean is(dblArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(BoolArr arr) {
+	public static boolean is(boolArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(ObjS o) {
+	public static boolean is(objS o) {
 		return !not(o);
 	}
-	public static boolean is(ObjI o) {
+	public static boolean is(objI o) {
 		return !not(o);
 	}
-	public static boolean is(ObjL o) {
+	public static boolean is(objL o) {
 		return !not(o);
 	}
-	public static boolean is(ObjF o) {
+	public static boolean is(objF o) {
 		return !not(o);
 	}
-	public static boolean is(ObjD o) {
+	public static boolean is(objD o) {
 		return !not(o);
 	}
-	public static boolean is(ObjB o) {
+	public static boolean is(objB o) {
 		return !not(o);
 	}
-	public static boolean is(TreeS t) {
+	public static boolean is(treeS t) {
 		return !not(t);
 	}
-	public static boolean is(TreeI t) {
+	public static boolean is(treeI t) {
 		return !not(t);
 	}
-	public static boolean is(TreeSL t) {
+	public static boolean is(treeSL t) {
 		return !not(t);
 	}
-	public static boolean is(TreeL t) {
+	public static boolean is(treeL t) {
 		return !not(t);
 	}
-	public static boolean is(TreeSF t) {
+	public static boolean is(treeSF t) {
 		return !not(t);
 	}
-	public static boolean is(TreeF t) {
+	public static boolean is(treeF t) {
 		return !not(t);
 	}
-	public static boolean is(TreeSD t) {
+	public static boolean is(treeSD t) {
 		return !not(t);
 	}
-	public static boolean is(TreeD t) {
+	public static boolean is(treeD t) {
 		return !not(t);
 	}
-	public static boolean is(TreeSB t) {
+	public static boolean is(treeSB t) {
 		return !not(t);
 	}
-	public static boolean is(TreeB t) {
+	public static boolean is(treeB t) {
 		return !not(t);
 	}
 	public static boolean xor(String a, String b) {
@@ -20309,112 +20951,112 @@ public class KL {
 			return false;
 		return arr[randInt(len(arr))];
 	}
-	public static String randItem(StrArr arr) {
+	public static String randItem(strArr arr) {
 		if (not(arr))
 			return "";
 		return arr.i(randInt(arr.length()));
 	}
-	public static int randItem(IntArr arr) {
+	public static int randItem(intArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.i(randInt(arr.length()));
 	}
-	public static long randItem(LongArr arr) {
+	public static long randItem(longArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.i(randInt(arr.length()));
 	}
-	public static float randItem(FltArr arr) {
+	public static float randItem(fltArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.i(randInt(arr.length()));
 	}
-	public static double randItem(DblArr arr) {
+	public static double randItem(dblArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.i(randInt(arr.length()));
 	}
-	public static boolean randItem(BoolArr arr) {
+	public static boolean randItem(boolArr arr) {
 		if (not(arr))
 			return false;
 		return arr.i(randInt(arr.length()));
 	}
-	public static String randItem(ObjS arr) {
+	public static String randItem(objS arr) {
 		if (not(arr))
 			return "";
 		return arr.i(randInt(arr.length()));
 	}
-	public static int randItem(ObjI arr) {
+	public static int randItem(objI arr) {
 		if (not(arr))
 			return 0;
 		return arr.i(randInt(arr.length()));
 	}
-	public static long randItem(ObjL arr) {
+	public static long randItem(objL arr) {
 		if (not(arr))
 			return 0;
 		return arr.i(randInt(arr.length()));
 	}
-	public static float randItem(ObjF arr) {
+	public static float randItem(objF arr) {
 		if (not(arr))
 			return 0;
 		return arr.i(randInt(arr.length()));
 	}
-	public static double randItem(ObjD arr) {
+	public static double randItem(objD arr) {
 		if (not(arr))
 			return 0;
 		return arr.i(randInt(arr.length()));
 	}
-	public static boolean randItem(ObjB arr) {
+	public static boolean randItem(objB arr) {
 		if (not(arr))
 			return false;
 		return arr.i(randInt(arr.length()));
 	}
-	public static int randItem(TreeS t) {
+	public static int randItem(treeS t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static String randItem(TreeI t) {
+	public static String randItem(treeI t) {
 		if (not(t))
 			return "";
 		return t.i(randInt(t.length()));
 	}
-	public static long randItem(TreeSL t) {
+	public static long randItem(treeSL t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static long randItem(TreeL t) {
+	public static long randItem(treeL t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static float randItem(TreeSF t) {
+	public static float randItem(treeSF t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static float randItem(TreeF t) {
+	public static float randItem(treeF t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static double randItem(TreeSD t) {
+	public static double randItem(treeSD t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static double randItem(TreeD t) {
+	public static double randItem(treeD t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static boolean randItem(TreeSB t) {
+	public static boolean randItem(treeSB t) {
 		if (not(t))
 			return false;
 		return t.i(randInt(t.length()));
 	}
-	public static boolean randItem(TreeB t) {
+	public static boolean randItem(treeB t) {
 		if (not(t))
 			return false;
 		return t.i(randInt(t.length()));
@@ -20440,70 +21082,70 @@ public class KL {
 	public static Object randFrom(Object arr[]) {
 		return randItem(arr);
 	}
-	public static String randFrom(StrArr arr) {
+	public static String randFrom(strArr arr) {
 		return randItem(arr);
 	}
-	public static int randFrom(IntArr arr) {
+	public static int randFrom(intArr arr) {
 		return randItem(arr);
 	}
-	public static long randFrom(LongArr arr) {
+	public static long randFrom(longArr arr) {
 		return randItem(arr);
 	}
-	public static float randFrom(FltArr arr) {
+	public static float randFrom(fltArr arr) {
 		return randItem(arr);
 	}
-	public static double randFrom(DblArr arr) {
+	public static double randFrom(dblArr arr) {
 		return randItem(arr);
 	}
-	public static boolean randFrom(BoolArr arr) {
+	public static boolean randFrom(boolArr arr) {
 		return randItem(arr);
 	}
-	public static int randFrom(TreeS t) {
+	public static int randFrom(treeS t) {
 		return randItem(t);
 	}
-	public static String randFrom(TreeI t) {
+	public static String randFrom(treeI t) {
 		return randItem(t);
 	}
-	public static long randFrom(TreeSL t) {
+	public static long randFrom(treeSL t) {
 		return randItem(t);
 	}
-	public static long randFrom(TreeL t) {
+	public static long randFrom(treeL t) {
 		return randItem(t);
 	}
-	public static float randFrom(TreeSF t) {
+	public static float randFrom(treeSF t) {
 		return randItem(t);
 	}
-	public static float randFrom(TreeF t) {
+	public static float randFrom(treeF t) {
 		return randItem(t);
 	}
-	public static double randFrom(TreeSD t) {
+	public static double randFrom(treeSD t) {
 		return randItem(t);
 	}
-	public static double randFrom(TreeD t) {
+	public static double randFrom(treeD t) {
 		return randItem(t);
 	}
-	public static boolean randFrom(TreeSB t) {
+	public static boolean randFrom(treeSB t) {
 		return randItem(t);
 	}
-	public static boolean randFrom(TreeB t) {
+	public static boolean randFrom(treeB t) {
 		return randItem(t);
 	}
-	public static String randFrom(ObjS o) {
+	public static String randFrom(objS o) {
 		return randItem(o);
 	}
-	public static int randFrom(ObjI o) {
+	public static int randFrom(objI o) {
 		return randItem(o);
 	}
-	public static long randFrom(ObjL o) {
+	public static long randFrom(objL o) {
 		return randItem(o);
 	}
-	public static float randFrom(ObjF o) {
+	public static float randFrom(objF o) {
 		return randItem(o);
 	}
-	public static double randFrom(ObjD o) {
+	public static double randFrom(objD o) {
 		return randItem(o);
 	}
-	public static boolean randFrom(ObjB o) {
+	public static boolean randFrom(objB o) {
 		return randItem(o);
 	}
 	public static String anyOf(String arr[]) {
@@ -20527,70 +21169,70 @@ public class KL {
 	public static Object anyOf(Object arr[]) {
 		return arr[randInt(arr.length)];
 	}
-	public static String anyOf(StrArr arr) {
+	public static String anyOf(strArr arr) {
 		return randItem(arr);
 	}
-	public static int anyOf(IntArr arr) {
+	public static int anyOf(intArr arr) {
 		return randItem(arr);
 	}
-	public static long anyOf(LongArr arr) {
+	public static long anyOf(longArr arr) {
 		return randItem(arr);
 	}
-	public static float anyOf(FltArr arr) {
+	public static float anyOf(fltArr arr) {
 		return randItem(arr);
 	}
-	public static double anyOf(DblArr arr) {
+	public static double anyOf(dblArr arr) {
 		return randItem(arr);
 	}
-	public static boolean anyOf(BoolArr arr) {
+	public static boolean anyOf(boolArr arr) {
 		return randItem(arr);
 	}
-	public static int anyOf(TreeS t) {
+	public static int anyOf(treeS t) {
 		return randItem(t);
 	}
-	public static String anyOf(TreeI t) {
+	public static String anyOf(treeI t) {
 		return randItem(t);
 	}
-	public static long anyOf(TreeSL t) {
+	public static long anyOf(treeSL t) {
 		return randItem(t);
 	}
-	public static long anyOf(TreeL t) {
+	public static long anyOf(treeL t) {
 		return randItem(t);
 	}
-	public static float anyOf(TreeSF t) {
+	public static float anyOf(treeSF t) {
 		return randItem(t);
 	}
-	public static float anyOf(TreeF t) {
+	public static float anyOf(treeF t) {
 		return randItem(t);
 	}
-	public static double anyOf(TreeSD t) {
+	public static double anyOf(treeSD t) {
 		return randItem(t);
 	}
-	public static double anyOf(TreeD t) {
+	public static double anyOf(treeD t) {
 		return randItem(t);
 	}
-	public static boolean anyOf(TreeSB t) {
+	public static boolean anyOf(treeSB t) {
 		return randItem(t);
 	}
-	public static boolean anyOf(TreeB t) {
+	public static boolean anyOf(treeB t) {
 		return randItem(t);
 	}
-	public static String anyOf(ObjS o) {
+	public static String anyOf(objS o) {
 		return randItem(o);
 	}
-	public static int anyOf(ObjI o) {
+	public static int anyOf(objI o) {
 		return randItem(o);
 	}
-	public static long anyOf(ObjL o) {
+	public static long anyOf(objL o) {
 		return randItem(o);
 	}
-	public static float anyOf(ObjF o) {
+	public static float anyOf(objF o) {
 		return randItem(o);
 	}
-	public static double anyOf(ObjD o) {
+	public static double anyOf(objD o) {
 		return randItem(o);
 	}
-	public static boolean anyOf(ObjB o) {
+	public static boolean anyOf(objB o) {
 		return randItem(o);
 	}
 	public static int[] noDuplicates(int[] arr) {
@@ -20608,34 +21250,34 @@ public class KL {
 			return blank.Dbl;
 		return DoubleStream.of(arr).distinct().toArray();
 	}
-	public static StrArr noDuplicates(StrArr arr) {
+	public static strArr noDuplicates(strArr arr) {
 		if (not(arr))
-			return new StrArr(blank.Str);
+			return new strArr(blank.Str);
 		return arr.unique();
 	}
-	public static IntArr noDuplicates(IntArr arr) {
+	public static intArr noDuplicates(intArr arr) {
 		if (not(arr))
-			return new IntArr(blank.Int);
+			return new intArr(blank.Int);
 		return arr.unique();
 	}
-	public static LongArr noDuplicates(LongArr arr) {
+	public static longArr noDuplicates(longArr arr) {
 		if (not(arr))
-			return new LongArr(blank.Long);
+			return new longArr(blank.Long);
 		return arr.unique();
 	}
-	public static FltArr noDuplicates(FltArr arr) {
+	public static fltArr noDuplicates(fltArr arr) {
 		if (not(arr))
-			return new FltArr(blank.Flt);
+			return new fltArr(blank.Flt);
 		return arr.unique();
 	}
-	public static DblArr noDuplicates(DblArr arr) {
+	public static dblArr noDuplicates(dblArr arr) {
 		if (not(arr))
-			return new DblArr(blank.Dbl);
+			return new dblArr(blank.Dbl);
 		return arr.unique();
 	}
-	public static BoolArr noDuplicates(BoolArr arr) {
+	public static boolArr noDuplicates(boolArr arr) {
 		if (not(arr))
-			return new BoolArr(blank.Bool);
+			return new boolArr(blank.Bool);
 		return arr.unique();
 	}
 	public static String replace(String str, String to_replace,
@@ -20714,34 +21356,34 @@ public class KL {
 			return blank.Obj;
 		return arr.clone();
 	}
-	public static StrArr slice(StrArr arr) {
+	public static strArr slice(strArr arr) {
 		if (not(arr))
-			return new StrArr(blank.Str);
+			return new strArr(blank.Str);
 		return arr.copy();
 	}
-	public static IntArr slice(IntArr arr) {
+	public static intArr slice(intArr arr) {
 		if (not(arr))
-			return new IntArr(blank.Int);
+			return new intArr(blank.Int);
 		return arr.copy();
 	}
-	public static LongArr slice(LongArr arr) {
+	public static longArr slice(longArr arr) {
 		if (not(arr))
-			return new LongArr(blank.Long);
+			return new longArr(blank.Long);
 		return arr.copy();
 	}
-	public static FltArr slice(FltArr arr) {
+	public static fltArr slice(fltArr arr) {
 		if (not(arr))
-			return new FltArr(blank.Flt);
+			return new fltArr(blank.Flt);
 		return arr.copy();
 	}
-	public static DblArr slice(DblArr arr) {
+	public static dblArr slice(dblArr arr) {
 		if (not(arr))
-			return new DblArr(blank.Dbl);
+			return new dblArr(blank.Dbl);
 		return arr.copy();
 	}
-	public static BoolArr slice(BoolArr arr) {
+	public static boolArr slice(boolArr arr) {
 		if (not(arr))
-			return new BoolArr(blank.Bool);
+			return new boolArr(blank.Bool);
 		return arr.copy();
 	}
 	public static String slice(String str, int start) {
@@ -20795,32 +21437,32 @@ public class KL {
 				len(oldArr));
 		return newArr;
 	}
-	public static StrArr slice(StrArr arr, int start) {
+	public static strArr slice(strArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
-	public static IntArr slice(IntArr arr, int start) {
+	public static intArr slice(intArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
-	public static LongArr slice(LongArr arr, int start) {
+	public static longArr slice(longArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
-	public static FltArr slice(FltArr arr, int start) {
+	public static fltArr slice(fltArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
-	public static DblArr slice(DblArr arr, int start) {
+	public static dblArr slice(dblArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return arr.slice(start, arr.length());
 	}
-	public static BoolArr slice(BoolArr arr, int start) {
+	public static boolArr slice(boolArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return arr.slice(start, arr.length());
@@ -20888,42 +21530,42 @@ public class KL {
 		Object newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
-	public static StrArr slice(StrArr arr, int start, int end) {
+	public static strArr slice(strArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
 				|| end >= len(arr))
 			return slice(arr);
 		return arr.slice(start, end);
 	}
-	public static IntArr slice(IntArr arr, int start, int end) {
+	public static intArr slice(intArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
 				|| end >= len(arr))
 			return slice(arr);
 		return arr.slice(start, end);
 	}
-	public static LongArr slice(LongArr arr, int start, int end) {
+	public static longArr slice(longArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
 				|| end >= len(arr))
 			return slice(arr);
 		return arr.slice(start, end);
 	}
-	public static FltArr slice(FltArr arr, int start, int end) {
+	public static fltArr slice(fltArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
 				|| end >= len(arr))
 			return slice(arr);
 		return arr.slice(start, end);
 	}
-	public static DblArr slice(DblArr arr, int start, int end) {
+	public static dblArr slice(dblArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
 				|| end >= len(arr))
 			return slice(arr);
 		return arr.slice(start, end);
 	}
-	public static BoolArr slice(BoolArr arr, int start, int end) {
+	public static boolArr slice(boolArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
 				|| end >= len(arr))
@@ -20970,32 +21612,32 @@ public class KL {
 			return slice(arr);
 		return slice(arr, len(arr) - start, len(arr));
 	}
-	public static StrArr sliceRight(StrArr arr, int start) {
+	public static strArr sliceRight(strArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return slice(arr, len(arr) - start, len(arr));
 	}
-	public static IntArr sliceRight(IntArr arr, int start) {
+	public static intArr sliceRight(intArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return slice(arr, len(arr) - start, len(arr));
 	}
-	public static LongArr sliceRight(LongArr arr, int start) {
+	public static longArr sliceRight(longArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return slice(arr, len(arr) - start, len(arr));
 	}
-	public static FltArr sliceRight(FltArr arr, int start) {
+	public static fltArr sliceRight(fltArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return slice(arr, len(arr) - start, len(arr));
 	}
-	public static DblArr sliceRight(DblArr arr, int start) {
+	public static dblArr sliceRight(dblArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return slice(arr, len(arr) - start, len(arr));
 	}
-	public static BoolArr sliceRight(BoolArr arr, int start) {
+	public static boolArr sliceRight(boolArr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
 			return slice(arr);
 		return slice(arr, len(arr) - start, len(arr));
@@ -21048,37 +21690,37 @@ public class KL {
 			return slice(arr);
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
-	public static StrArr sliceEnd(StrArr arr, int earlyEnd) {
+	public static strArr sliceEnd(strArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
 				|| earlyEnd >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
-	public static IntArr sliceEnd(IntArr arr, int earlyEnd) {
+	public static intArr sliceEnd(intArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
 				|| earlyEnd >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
-	public static LongArr sliceEnd(LongArr arr, int earlyEnd) {
+	public static longArr sliceEnd(longArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
 				|| earlyEnd >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
-	public static FltArr sliceEnd(FltArr arr, int earlyEnd) {
+	public static fltArr sliceEnd(fltArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
 				|| earlyEnd >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
-	public static DblArr sliceEnd(DblArr arr, int earlyEnd) {
+	public static dblArr sliceEnd(dblArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
 				|| earlyEnd >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
-	public static BoolArr sliceEnd(BoolArr arr, int earlyEnd) {
+	public static boolArr sliceEnd(boolArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
 				|| earlyEnd >= len(arr))
 			return slice(arr);
@@ -21108,22 +21750,22 @@ public class KL {
 	public static Object[] sliceOff(Object[] arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static StrArr sliceOff(StrArr arr, int earlyEnd) {
+	public static strArr sliceOff(strArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static IntArr sliceOff(IntArr arr, int earlyEnd) {
+	public static intArr sliceOff(intArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static LongArr sliceOff(LongArr arr, int earlyEnd) {
+	public static longArr sliceOff(longArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static FltArr sliceOff(FltArr arr, int earlyEnd) {
+	public static fltArr sliceOff(fltArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static DblArr sliceOff(DblArr arr, int earlyEnd) {
+	public static dblArr sliceOff(dblArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static BoolArr sliceOff(BoolArr arr, int earlyEnd) {
+	public static boolArr sliceOff(boolArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static String sliceOut(String str, int earlyEnd) {
@@ -21150,22 +21792,22 @@ public class KL {
 	public static Object[] sliceOut(Object[] arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static StrArr sliceOut(StrArr arr, int earlyEnd) {
+	public static strArr sliceOut(strArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static IntArr sliceOut(IntArr arr, int earlyEnd) {
+	public static intArr sliceOut(intArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static LongArr sliceOut(LongArr arr, int earlyEnd) {
+	public static longArr sliceOut(longArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static FltArr sliceOut(FltArr arr, int earlyEnd) {
+	public static fltArr sliceOut(fltArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static DblArr sliceOut(DblArr arr, int earlyEnd) {
+	public static dblArr sliceOut(dblArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static BoolArr sliceOut(BoolArr arr, int earlyEnd) {
+	public static boolArr sliceOut(boolArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static String sliceKeep(String str, int end) {
@@ -21215,44 +21857,44 @@ public class KL {
 			return slice(arr);
 		return slice(arr, 0, end);
 	}
-	public static StrArr sliceKeep(StrArr arr, int end) {
+	public static strArr sliceKeep(strArr arr, int end) {
 		if (not(arr))
-			return new StrArr(blank.Str);
+			return new strArr(blank.Str);
 		if (not(end) || isNeg(end) || end >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, end);
 	}
-	public static IntArr sliceKeep(IntArr arr, int end) {
+	public static intArr sliceKeep(intArr arr, int end) {
 		if (not(arr))
-			return new IntArr(blank.Int);
+			return new intArr(blank.Int);
 		if (not(end) || isNeg(end) || end >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, end);
 	}
-	public static LongArr sliceKeep(LongArr arr, int end) {
+	public static longArr sliceKeep(longArr arr, int end) {
 		if (not(arr))
-			return new LongArr(blank.Long);
+			return new longArr(blank.Long);
 		if (not(end) || isNeg(end) || end >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, end);
 	}
-	public static FltArr sliceKeep(FltArr arr, int end) {
+	public static fltArr sliceKeep(fltArr arr, int end) {
 		if (not(arr))
-			return new FltArr(blank.Flt);
+			return new fltArr(blank.Flt);
 		if (not(end) || isNeg(end) || end >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, end);
 	}
-	public static DblArr sliceKeep(DblArr arr, int end) {
+	public static dblArr sliceKeep(dblArr arr, int end) {
 		if (not(arr))
-			return new DblArr(blank.Dbl);
+			return new dblArr(blank.Dbl);
 		if (not(end) || isNeg(end) || end >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, end);
 	}
-	public static BoolArr sliceKeep(BoolArr arr, int end) {
+	public static boolArr sliceKeep(boolArr arr, int end) {
 		if (not(arr))
-			return new BoolArr(blank.Bool);
+			return new boolArr(blank.Bool);
 		if (not(end) || isNeg(end) || end >= len(arr))
 			return slice(arr);
 		return slice(arr, 0, end);
@@ -21278,22 +21920,22 @@ public class KL {
 	public static boolean[] trim(boolean[] arr) {
 		return slice(arr);
 	}
-	public static StrArr trim(StrArr arr) {
+	public static strArr trim(strArr arr) {
 		return slice(arr);
 	}
-	public static IntArr trim(IntArr arr) {
+	public static intArr trim(intArr arr) {
 		return slice(arr);
 	}
-	public static LongArr trim(LongArr arr) {
+	public static longArr trim(longArr arr) {
 		return slice(arr);
 	}
-	public static FltArr trim(FltArr arr) {
+	public static fltArr trim(fltArr arr) {
 		return slice(arr);
 	}
-	public static DblArr trim(DblArr arr) {
+	public static dblArr trim(dblArr arr) {
 		return slice(arr);
 	}
-	public static BoolArr trim(BoolArr arr) {
+	public static boolArr trim(boolArr arr) {
 		return slice(arr);
 	}
 	public static String trim(String str, int start) {
@@ -21317,22 +21959,22 @@ public class KL {
 	public static boolean[] trim(boolean[] arr, int start) {
 		return slice(arr, start);
 	}
-	public static StrArr trim(StrArr arr, int start) {
+	public static strArr trim(strArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static IntArr trim(IntArr arr, int start) {
+	public static intArr trim(intArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static LongArr trim(LongArr arr, int start) {
+	public static longArr trim(longArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static FltArr trim(FltArr arr, int start) {
+	public static fltArr trim(fltArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static DblArr trim(DblArr arr, int start) {
+	public static dblArr trim(dblArr arr, int start) {
 		return slice(arr, start);
 	}
-	public static BoolArr trim(BoolArr arr, int start) {
+	public static boolArr trim(boolArr arr, int start) {
 		return slice(arr, start);
 	}
 	public static String trim(String str, int start, int end) {
@@ -21356,22 +21998,22 @@ public class KL {
 	public static boolean[] trim(boolean[] arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static StrArr trim(StrArr arr, int start, int end) {
+	public static strArr trim(strArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static IntArr trim(IntArr arr, int start, int end) {
+	public static intArr trim(intArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static LongArr trim(LongArr arr, int start, int end) {
+	public static longArr trim(longArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static FltArr trim(FltArr arr, int start, int end) {
+	public static fltArr trim(fltArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static DblArr trim(DblArr arr, int start, int end) {
+	public static dblArr trim(dblArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
-	public static BoolArr trim(BoolArr arr, int start, int end) {
+	public static boolArr trim(boolArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
 	public static String trimRight(String str, int start) {
@@ -21395,22 +22037,22 @@ public class KL {
 	public static boolean[] trimRight(boolean[] arr, int start) {
 		return sliceRight(arr, start);
 	}
-	public static StrArr trimRight(StrArr arr, int start) {
+	public static strArr trimRight(strArr arr, int start) {
 		return sliceRight(arr, start);
 	}
-	public static IntArr trimRight(IntArr arr, int start) {
+	public static intArr trimRight(intArr arr, int start) {
 		return sliceRight(arr, start);
 	}
-	public static LongArr trimRight(LongArr arr, int start) {
+	public static longArr trimRight(longArr arr, int start) {
 		return sliceRight(arr, start);
 	}
-	public static FltArr trimRight(FltArr arr, int start) {
+	public static fltArr trimRight(fltArr arr, int start) {
 		return sliceRight(arr, start);
 	}
-	public static DblArr trimRight(DblArr arr, int start) {
+	public static dblArr trimRight(dblArr arr, int start) {
 		return sliceRight(arr, start);
 	}
-	public static BoolArr trimRight(BoolArr arr, int start) {
+	public static boolArr trimRight(boolArr arr, int start) {
 		return sliceRight(arr, start);
 	}
 	public static String trimKeep(String str, int end) {
@@ -21434,22 +22076,22 @@ public class KL {
 	public static boolean[] trimKeep(boolean[] arr, int end) {
 		return sliceKeep(arr, end);
 	}
-	public static StrArr trimKeep(StrArr arr, int end) {
+	public static strArr trimKeep(strArr arr, int end) {
 		return sliceKeep(arr, end);
 	}
-	public static IntArr trimKeep(IntArr arr, int end) {
+	public static intArr trimKeep(intArr arr, int end) {
 		return sliceKeep(arr, end);
 	}
-	public static LongArr trimKeep(LongArr arr, int end) {
+	public static longArr trimKeep(longArr arr, int end) {
 		return sliceKeep(arr, end);
 	}
-	public static FltArr trimKeep(FltArr arr, int end) {
+	public static fltArr trimKeep(fltArr arr, int end) {
 		return sliceKeep(arr, end);
 	}
-	public static DblArr trimKeep(DblArr arr, int end) {
+	public static dblArr trimKeep(dblArr arr, int end) {
 		return sliceKeep(arr, end);
 	}
-	public static BoolArr trimKeep(BoolArr arr, int end) {
+	public static boolArr trimKeep(boolArr arr, int end) {
 		return sliceKeep(arr, end);
 	}
 	public static String trimEnd(String str, int earlyEnd) {
@@ -21473,22 +22115,22 @@ public class KL {
 	public static boolean[] trimEnd(boolean[] arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static StrArr trimEnd(StrArr arr, int earlyEnd) {
+	public static strArr trimEnd(strArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static IntArr trimEnd(IntArr arr, int earlyEnd) {
+	public static intArr trimEnd(intArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static LongArr trimEnd(LongArr arr, int earlyEnd) {
+	public static longArr trimEnd(longArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static FltArr trimEnd(FltArr arr, int earlyEnd) {
+	public static fltArr trimEnd(fltArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static DblArr trimEnd(DblArr arr, int earlyEnd) {
+	public static dblArr trimEnd(dblArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
-	public static BoolArr trimEnd(BoolArr arr, int earlyEnd) {
+	public static boolArr trimEnd(boolArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static String trimOff(String str, int earlyEnd) {
@@ -21512,22 +22154,22 @@ public class KL {
 	public static boolean[] trimOff(boolean[] arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static StrArr trimOff(StrArr arr, int earlyEnd) {
+	public static strArr trimOff(strArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static IntArr trimOff(IntArr arr, int earlyEnd) {
+	public static intArr trimOff(intArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static LongArr trimOff(LongArr arr, int earlyEnd) {
+	public static longArr trimOff(longArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static FltArr trimOff(FltArr arr, int earlyEnd) {
+	public static fltArr trimOff(fltArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static DblArr trimOff(DblArr arr, int earlyEnd) {
+	public static dblArr trimOff(dblArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static BoolArr trimOff(BoolArr arr, int earlyEnd) {
+	public static boolArr trimOff(boolArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
 	public static String trimOut(String str, int earlyEnd) {
@@ -21551,22 +22193,22 @@ public class KL {
 	public static boolean[] trimOut(boolean[] arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static StrArr trimOut(StrArr arr, int earlyEnd) {
+	public static strArr trimOut(strArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static IntArr trimOut(IntArr arr, int earlyEnd) {
+	public static intArr trimOut(intArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static LongArr trimOut(LongArr arr, int earlyEnd) {
+	public static longArr trimOut(longArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static FltArr trimOut(FltArr arr, int earlyEnd) {
+	public static fltArr trimOut(fltArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static DblArr trimOut(DblArr arr, int earlyEnd) {
+	public static dblArr trimOut(dblArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
-	public static BoolArr trimOut(BoolArr arr, int earlyEnd) {
+	public static boolArr trimOut(boolArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
 	public static String sliceTo(String str, String thatSpecificPart) {
@@ -21624,160 +22266,160 @@ public class KL {
 			return false;
 		return arr[len(arr) - 1] == lookupBool;
 	}
-	public static boolean endsWith(StrArr arr, String lookupStr) {
+	public static boolean endsWith(strArr arr, String lookupStr) {
 		if (not(arr))
 			return false;
 		return arr.last() == lookupStr;
 	}
-	public static boolean endsWith(IntArr arr, int lookupInt) {
+	public static boolean endsWith(intArr arr, int lookupInt) {
 		if (not(arr))
 			return false;
 		return arr.last() == lookupInt;
 	}
-	public static boolean endsWith(LongArr arr, long lookupLong) {
+	public static boolean endsWith(longArr arr, long lookupLong) {
 		if (not(arr))
 			return false;
 		return arr.last() == lookupLong;
 	}
-	public static boolean endsWith(FltArr arr, float lookupFlt) {
+	public static boolean endsWith(fltArr arr, float lookupFlt) {
 		if (not(arr))
 			return false;
 		return arr.last() == lookupFlt;
 	}
-	public static boolean endsWith(DblArr arr, double lookupDbl) {
+	public static boolean endsWith(dblArr arr, double lookupDbl) {
 		if (not(arr))
 			return false;
 		return arr.last() == lookupDbl;
 	}
-	public static boolean endsWith(BoolArr arr, boolean lookupBool) {
+	public static boolean endsWith(boolArr arr, boolean lookupBool) {
 		if (not(arr))
 			return false;
 		return arr.last() == lookupBool;
 	}
-	public static boolean endsWith(TreeS tree, int lookupInt) {
+	public static boolean endsWith(treeS tree, int lookupInt) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupInt;
 	}
-	public static boolean endsWith(TreeI tree, String lookupStr) {
+	public static boolean endsWith(treeI tree, String lookupStr) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupStr;
 	}
-	public static boolean endsWith(TreeSL tree, long lookupLong) {
+	public static boolean endsWith(treeSL tree, long lookupLong) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupLong;
 	}
-	public static boolean endsWith(TreeL tree, long lookupLong) {
+	public static boolean endsWith(treeL tree, long lookupLong) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupLong;
 	}
-	public static boolean endsWith(TreeSF tree, float lookupFloat) {
+	public static boolean endsWith(treeSF tree, float lookupFloat) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupFloat;
 	}
-	public static boolean endsWith(TreeF tree, float lookupFloat) {
+	public static boolean endsWith(treeF tree, float lookupFloat) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupFloat;
 	}
-	public static boolean endsWith(TreeSD tree, double lookupDouble) {
+	public static boolean endsWith(treeSD tree, double lookupDouble) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupDouble;
 	}
-	public static boolean endsWith(TreeD tree, double lookupDouble) {
+	public static boolean endsWith(treeD tree, double lookupDouble) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupDouble;
 	}
-	public static boolean endsWith(TreeSB tree, boolean lookupBool) {
+	public static boolean endsWith(treeSB tree, boolean lookupBool) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupBool;
 	}
-	public static boolean endsWith(TreeB tree, boolean lookupBool) {
+	public static boolean endsWith(treeB tree, boolean lookupBool) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupBool;
 	}
-	public static String nth(StrArr arr, int n) {
+	public static String nth(strArr arr, int n) {
 		return n >= 0 && n < len(arr) ? arr.i(n) : "";
 	}
-	public static int nth(IntArr arr, int n) {
+	public static int nth(intArr arr, int n) {
 		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
 	}
-	public static long nth(LongArr arr, int n) {
+	public static long nth(longArr arr, int n) {
 		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
 	}
-	public static float nth(FltArr arr, int n) {
+	public static float nth(fltArr arr, int n) {
 		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
 	}
-	public static double nth(DblArr arr, int n) {
+	public static double nth(dblArr arr, int n) {
 		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
 	}
-	public static boolean nth(BoolArr arr, int n) {
+	public static boolean nth(boolArr arr, int n) {
 		return n >= 0 && n < len(arr) ? arr.i(n) : false;
 	}
-	public static String firstOf(StrArr arr) {
+	public static String firstOf(strArr arr) {
 		if (not(arr))
 			return "";
 		return arr.first();
 	}
-	public static String secondOf(StrArr arr) {
+	public static String secondOf(strArr arr) {
 		if (not(arr))
 			return "";
 		return arr.second();
 	}
-	public static int firstOf(IntArr arr) {
+	public static int firstOf(intArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.first();
 	}
-	public static int secondOf(IntArr arr) {
+	public static int secondOf(intArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.second();
 	}
-	public static float firstOf(LongArr arr) {
+	public static float firstOf(longArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.first();
 	}
-	public static float secondOf(LongArr arr) {
+	public static float secondOf(longArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.second();
 	}
-	public static float firstOf(FltArr arr) {
+	public static float firstOf(fltArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.first();
 	}
-	public static float secondOf(FltArr arr) {
+	public static float secondOf(fltArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.second();
 	}
-	public static double firstOf(DblArr arr) {
+	public static double firstOf(dblArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.first();
 	}
-	public static double secondOf(DblArr arr) {
+	public static double secondOf(dblArr arr) {
 		if (not(arr))
 			return 0;
 		return arr.second();
 	}
-	public static boolean firstOf(BoolArr arr) {
+	public static boolean firstOf(boolArr arr) {
 		if (not(arr))
 			return false;
 		return arr.first();
 	}
-	public static boolean secondOf(BoolArr arr) {
+	public static boolean secondOf(boolArr arr) {
 		if (not(arr))
 			return false;
 		return arr.second();
@@ -21808,22 +22450,22 @@ public class KL {
 	public static boolean nthLastOf(boolean[] arr, int n) {
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : false;
 	}
-	public static String nthLastOf(StrArr arr, int n) {
+	public static String nthLastOf(strArr arr, int n) {
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : "";
 	}
-	public static int nthLastOf(IntArr arr, int n) {
+	public static int nthLastOf(intArr arr, int n) {
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
 	}
-	public static long nthLastOf(LongArr arr, int n) {
+	public static long nthLastOf(longArr arr, int n) {
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
 	}
-	public static float nthLastOf(FltArr arr, int n) {
+	public static float nthLastOf(fltArr arr, int n) {
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
 	}
-	public static double nthLastOf(DblArr arr, int n) {
+	public static double nthLastOf(dblArr arr, int n) {
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
 	}
-	public static boolean nthLastOf(BoolArr arr, int n) {
+	public static boolean nthLastOf(boolArr arr, int n) {
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : false;
 	}
 	public static String secondLastOf(String str) {
@@ -21868,136 +22510,136 @@ public class KL {
 	public static boolean lastOf(boolean[] arr) {
 		return len(arr) - 1 >= 0 ? arr[len(arr) - 1] : false;
 	}
-	public static String secondLastOf(StrArr arr) {
+	public static String secondLastOf(strArr arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : "";
 	}
-	public static String lastOf(StrArr arr) {
+	public static String lastOf(strArr arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : "";
 	}
-	public static int secondLastOf(IntArr arr) {
+	public static int secondLastOf(intArr arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static int lastOf(IntArr arr) {
+	public static int lastOf(intArr arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static float secondLastOf(LongArr arr) {
+	public static float secondLastOf(longArr arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static float lastOf(LongArr arr) {
+	public static float lastOf(longArr arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static float secondLastOf(FltArr arr) {
+	public static float secondLastOf(fltArr arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static float lastOf(FltArr arr) {
+	public static float lastOf(fltArr arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static double secondLastOf(DblArr arr) {
+	public static double secondLastOf(dblArr arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static double lastOf(DblArr arr) {
+	public static double lastOf(dblArr arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static boolean secondLastOf(BoolArr arr) {
+	public static boolean secondLastOf(boolArr arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : false;
 	}
-	public static boolean lastOf(BoolArr arr) {
+	public static boolean lastOf(boolArr arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
-	public static String secondLastOf(ObjS arr) {
+	public static String secondLastOf(objS arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : "";
 	}
-	public static String lastOf(ObjS arr) {
+	public static String lastOf(objS arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : "";
 	}
-	public static int secondLastOf(ObjI arr) {
+	public static int secondLastOf(objI arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static int lastOf(ObjI arr) {
+	public static int lastOf(objI arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static long secondLastOf(ObjL arr) {
+	public static long secondLastOf(objL arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static long lastOf(ObjL arr) {
+	public static long lastOf(objL arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static float secondLastOf(ObjF arr) {
+	public static float secondLastOf(objF arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static float lastOf(ObjF arr) {
+	public static float lastOf(objF arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static double secondLastOf(ObjD arr) {
+	public static double secondLastOf(objD arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static double lastOf(ObjD arr) {
+	public static double lastOf(objD arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static boolean secondLastOf(ObjB arr) {
+	public static boolean secondLastOf(objB arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : false;
 	}
-	public static boolean lastOf(ObjB arr) {
+	public static boolean lastOf(objB arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
-	public static int secondLastOf(TreeS arr) {
+	public static int secondLastOf(treeS arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static int lastOf(TreeS arr) {
+	public static int lastOf(treeS arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static String secondLastOf(TreeI arr) {
+	public static String secondLastOf(treeI arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : "";
 	}
-	public static String lastOf(TreeI arr) {
+	public static String lastOf(treeI arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : "";
 	}
-	public static long secondLastOf(TreeSL arr) {
+	public static long secondLastOf(treeSL arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static long lastOf(TreeSL arr) {
+	public static long lastOf(treeSL arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static long secondLastOf(TreeL arr) {
+	public static long secondLastOf(treeL arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static long lastOf(TreeL arr) {
+	public static long lastOf(treeL arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static float secondLastOf(TreeSF arr) {
+	public static float secondLastOf(treeSF arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static float lastOf(TreeSF arr) {
+	public static float lastOf(treeSF arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static float secondLastOf(TreeF arr) {
+	public static float secondLastOf(treeF arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static float lastOf(TreeF arr) {
+	public static float lastOf(treeF arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static double secondLastOf(TreeSD arr) {
+	public static double secondLastOf(treeSD arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static double lastOf(TreeSD arr) {
+	public static double lastOf(treeSD arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static double secondLastOf(TreeD arr) {
+	public static double secondLastOf(treeD arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static double lastOf(TreeD arr) {
+	public static double lastOf(treeD arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static boolean secondLastOf(TreeSB arr) {
+	public static boolean secondLastOf(treeSB arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : false;
 	}
-	public static boolean lastOf(TreeSB arr) {
+	public static boolean lastOf(treeSB arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
-	public static boolean secondLastOf(TreeB arr) {
+	public static boolean secondLastOf(treeB arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : false;
 	}
-	public static boolean lastOf(TreeB arr) {
+	public static boolean lastOf(treeB arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
 	public static int indexOf(String inStr, String lookupStr, int startIndex) {
@@ -22115,40 +22757,40 @@ public class KL {
 		}
 		return -1;
 	}
-	public static int indexOf(StrArr arr, String s) {
+	public static int indexOf(strArr arr, String s) {
 		return arr.indexOf(s);
 	}
-	public static int lastIndexOf(StrArr arr, String s) {
+	public static int lastIndexOf(strArr arr, String s) {
 		return arr.lastIndexOf(s);
 	}
-	public static int indexOf(IntArr arr, int n) {
+	public static int indexOf(intArr arr, int n) {
 		return arr.indexOf(n);
 	}
-	public static int lastIndexOf(IntArr arr, int n) {
+	public static int lastIndexOf(intArr arr, int n) {
 		return arr.lastIndexOf(n);
 	}
-	public static int indexOf(LongArr arr, long n) {
+	public static int indexOf(longArr arr, long n) {
 		return arr.indexOf(n);
 	}
-	public static int lastIndexOf(LongArr arr, long n) {
+	public static int lastIndexOf(longArr arr, long n) {
 		return arr.lastIndexOf(n);
 	}
-	public static int indexOf(FltArr arr, float n) {
+	public static int indexOf(fltArr arr, float n) {
 		return arr.indexOf(n);
 	}
-	public static int lastIndexOf(FltArr arr, float n) {
+	public static int lastIndexOf(fltArr arr, float n) {
 		return arr.lastIndexOf(n);
 	}
-	public static int indexOf(DblArr arr, double n) {
+	public static int indexOf(dblArr arr, double n) {
 		return arr.indexOf(n);
 	}
-	public static int lastIndexOf(DblArr arr, double n) {
+	public static int lastIndexOf(dblArr arr, double n) {
 		return arr.lastIndexOf(n);
 	}
-	public static int indexOf(BoolArr arr, boolean b) {
+	public static int indexOf(boolArr arr, boolean b) {
 		return arr.indexOf(b);
 	}
-	public static int lastIndexOf(BoolArr arr, boolean b) {
+	public static int lastIndexOf(boolArr arr, boolean b) {
 		return arr.lastIndexOf(b);
 	}
 	public static int numberOfOccurrencesIn(String inStr, char lookupCh) {
@@ -22359,7 +23001,7 @@ public class KL {
 		if (not(str) || not(re))
 			return blank.Str;
 		// blank.Str actually refers to new String[]{}. I know it could have
-		// been blank.StrArr, but that would have been too long, and would be
+		// been blank.strArr, but that would have been too long, and would be
 		// almost the same as typing new String[]{}. Sometimes, we're just
 		// looking for conciseness.
 		if (re.equals(".") || re.equals("*") || re.equals("+")
@@ -22392,7 +23034,7 @@ public class KL {
 		Pattern pattern = Pattern.compile("(" + re + ")",
 				strict ? 0 : Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(str.trim());
-		StrArr arr = new StrArr();
+		strArr arr = new strArr();
 		while (matcher.find()) {
 			if (!isEmpty(matcher.group()))
 				arr.push(trim(matcher.group()));
@@ -22403,7 +23045,7 @@ public class KL {
 	public static int[] intsOf(String s) {
 		if (not(s))
 			return new int[]{};
-		IntArr arr = new IntArr();
+		intArr arr = new intArr();
 		String[] matches = findMatches(s, "(?<!\\.)(\\d+)(?!\\.)");
 		for (int i : range(matches))
 			arr.push(Int(matches[i]));
@@ -22412,7 +23054,7 @@ public class KL {
 	public static int[] intsOf(Number... nums) {
 		if (not(nums))
 			return blank.Int;
-		IntArr resultantArr = new IntArr();
+		intArr resultantArr = new intArr();
 		for (Number n : nums) {
 			if (!isNull(n))
 				resultantArr.push(n.intValue());
@@ -22420,7 +23062,7 @@ public class KL {
 		return resultantArr.array();
 	}
 	public static int[] intsOf(Object... objs) {
-		IntArr resultantArr = new IntArr();
+		intArr resultantArr = new intArr();
 		for (Object obj : objs) {
 			if (obj instanceof Integer)
 				resultantArr.push((int) obj);
@@ -22430,7 +23072,7 @@ public class KL {
 	public static float[] fltsOf(String s) {
 		if (not(s))
 			return new float[]{};
-		FltArr arr = new FltArr();
+		fltArr arr = new fltArr();
 		String[] matches = findMatches(s, "\\d*\\.\\d+");
 		for (int i : range(matches))
 			arr.push(Flt(matches[i]));
@@ -22439,7 +23081,7 @@ public class KL {
 	public static float[] fltsOf(Number... nums) {
 		if (not(nums))
 			return blank.Flt;
-		FltArr resultantArr = new FltArr();
+		fltArr resultantArr = new fltArr();
 		for (Number n : nums) {
 			if (!isNull(n))
 				resultantArr.push(n.floatValue());
@@ -22447,7 +23089,7 @@ public class KL {
 		return resultantArr.array();
 	}
 	public static float[] fltsOf(Object... objs) {
-		FltArr resultantArr = new FltArr();
+		fltArr resultantArr = new fltArr();
 		for (Object obj : objs) {
 			if (obj instanceof Float)
 				resultantArr.push((float) obj);
@@ -22457,7 +23099,7 @@ public class KL {
 	public static double[] dblsOf(String s) {
 		if (not(s))
 			return new double[]{};
-		DblArr arr = new DblArr();
+		dblArr arr = new dblArr();
 		String[] matches = findMatches(s, "[\\d]*\\.\\d+");
 		for (int i : range(matches))
 			arr.push(Dbl(matches[i]));
@@ -22466,7 +23108,7 @@ public class KL {
 	public static double[] dblsOf(Number... nums) {
 		if (not(nums))
 			return blank.Dbl;
-		DblArr resultantArr = new DblArr();
+		dblArr resultantArr = new dblArr();
 		for (Number n : nums) {
 			if (!isNull(n))
 				resultantArr.push(n.doubleValue());
@@ -22474,7 +23116,7 @@ public class KL {
 		return resultantArr.array();
 	}
 	public static double[] dblsOf(Object... objs) {
-		DblArr resultantArr = new DblArr();
+		dblArr resultantArr = new dblArr();
 		for (Object obj : objs) {
 			if (obj instanceof Double)
 				resultantArr.push((double) obj);
@@ -22484,14 +23126,14 @@ public class KL {
 	public static double[] numsOf(String s) {
 		if (not(s))
 			return new double[]{};
-		DblArr arr = new DblArr();
+		dblArr arr = new dblArr();
 		String[] matches = findMatches(s, "\\d*\\.?\\d+");
 		for (int i : range(matches))
 			arr.push(Dbl(matches[i]));
 		return arr.array();
 	}
 	public static double[] numsOf(Object... objs) {
-		DblArr resultantArr = new DblArr();
+		dblArr resultantArr = new dblArr();
 		for (Object obj : objs) {
 			if (obj instanceof Number)
 				resultantArr.push(setPrecision(((Number) obj).doubleValue()));
@@ -22501,7 +23143,7 @@ public class KL {
 	public static String[] emailsOf(String s) {
 		if (not(s))
 			return new String[]{};
-		StrArr arr = new StrArr();
+		strArr arr = new strArr();
 		String[] matches = findMatches(s,
 				"[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
 		for (int i : range(matches))
@@ -22511,7 +23153,7 @@ public class KL {
 	public static String[] urlsOf(String s) {
 		if (not(s))
 			return new String[]{};
-		StrArr arr = new StrArr();
+		strArr arr = new strArr();
 		String[] matches = findMatches(s,
 				"(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?");
 		for (int i : range(matches))
@@ -22521,7 +23163,7 @@ public class KL {
 	public static String[] phonesOf(String s) {
 		if (not(s))
 			return new String[]{};
-		StrArr arr = new StrArr();
+		strArr arr = new strArr();
 		String[] matches = findMatches(s,
 				"((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))");
 		for (int i : range(matches))
@@ -22531,7 +23173,7 @@ public class KL {
 	public static String[] findUserData(String s) {
 		if (not(s))
 			return blank.Str;
-		StrArr arr = new StrArr();
+		strArr arr = new strArr();
 		arr.push(emailsOf(s), urlsOf(s), phonesOf(s));
 		return arr.array();
 	}
@@ -22690,25 +23332,25 @@ public class KL {
 	public static boolean[] clone(boolean[] arr) {
 		return slice(arr);
 	}
-	public static StrArr clone(StrArr arr) {
+	public static strArr clone(strArr arr) {
 		return slice(arr);
 	}
-	public static IntArr clone(IntArr arr) {
+	public static intArr clone(intArr arr) {
 		return slice(arr);
 	}
-	public static LongArr clone(LongArr arr) {
+	public static longArr clone(longArr arr) {
 		return slice(arr);
 	}
-	public static FltArr clone(FltArr arr) {
+	public static fltArr clone(fltArr arr) {
 		return slice(arr);
 	}
-	public static DblArr clone(DblArr arr) {
+	public static dblArr clone(dblArr arr) {
 		return slice(arr);
 	}
-	public static BoolArr clone(BoolArr arr) {
+	public static boolArr clone(boolArr arr) {
 		return slice(arr);
 	}
-	public static TreeS clone(TreeS arr) {
+	public static treeS clone(treeS arr) {
 		return arr.copy();
 	}
 	public static String[] copyArr(String[] arr) {
@@ -22729,22 +23371,22 @@ public class KL {
 	public static boolean[] copyArr(boolean[] arr) {
 		return clone(arr);
 	}
-	public static StrArr copyArr(StrArr arr) {
+	public static strArr copyArr(strArr arr) {
 		return clone(arr);
 	}
-	public static IntArr copyArr(IntArr arr) {
+	public static intArr copyArr(intArr arr) {
 		return clone(arr);
 	}
-	public static LongArr copyArr(LongArr arr) {
+	public static longArr copyArr(longArr arr) {
 		return clone(arr);
 	}
-	public static FltArr copyArr(FltArr arr) {
+	public static fltArr copyArr(fltArr arr) {
 		return clone(arr);
 	}
-	public static DblArr copyArr(DblArr arr) {
+	public static dblArr copyArr(dblArr arr) {
 		return clone(arr);
 	}
-	public static BoolArr copyArr(BoolArr arr) {
+	public static boolArr copyArr(boolArr arr) {
 		return clone(arr);
 	}
 	public static final class blank {
@@ -22757,595 +23399,595 @@ public class KL {
 		public static boolean[] Bool = new boolean[]{};
 		public static Number[] Num = new Number[]{};
 		public static Object[] Obj = new Object[]{};
-		public static StrArr StrArr = new StrArr();
-		public static IntArr IntArr = new IntArr();
-		public static LongArr LongArr = new LongArr();
-		public static FltArr FltArr = new FltArr();
-		public static DblArr DblArr = new DblArr();
-		public static BoolArr BoolArr = new BoolArr();
+		public static strArr strArr = new strArr();
+		public static intArr intArr = new intArr();
+		public static longArr longArr = new longArr();
+		public static fltArr fltArr = new fltArr();
+		public static dblArr dblArr = new dblArr();
+		public static boolArr boolArr = new boolArr();
 	}
 	public static String[] combine(String[] arrA, String[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Str;
-		return combine(new StrArr(arrA), arrays).array();
+		return combine(new strArr(arrA), arrays).array();
 	}
-	public static String[] combine(String[] arrA, StrArr... arrays) {
+	public static String[] combine(String[] arrA, strArr... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Str;
-		return combine(new StrArr(arrA), arrays).array();
+		return combine(new strArr(arrA), arrays).array();
 	}
 	public static int[] combine(int[] arrA, int[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Int;
-		return combine(new IntArr(arrA), arrays).array();
+		return combine(new intArr(arrA), arrays).array();
 	}
-	public static int[] combine(int[] arrA, IntArr... arrays) {
+	public static int[] combine(int[] arrA, intArr... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Int;
-		return combine(new IntArr(arrA), arrays).array();
+		return combine(new intArr(arrA), arrays).array();
 	}
 	public static long[] combine(long[] arrA, long[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Long;
-		return combine(new LongArr(arrA), arrays).array();
+		return combine(new longArr(arrA), arrays).array();
 	}
-	public static long[] combine(long[] arrA, LongArr... arrays) {
+	public static long[] combine(long[] arrA, longArr... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Long;
-		return combine(new LongArr(arrA), arrays).array();
+		return combine(new longArr(arrA), arrays).array();
 	}
 	public static float[] combine(float[] arrA, float[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Flt;
-		return combine(new FltArr(arrA), arrays).array();
+		return combine(new fltArr(arrA), arrays).array();
 	}
-	public static float[] combine(float[] arrA, FltArr... arrays) {
+	public static float[] combine(float[] arrA, fltArr... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Flt;
-		return combine(new FltArr(arrA), arrays).array();
+		return combine(new fltArr(arrA), arrays).array();
 	}
 	public static double[] combine(double[] arrA, double[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Dbl;
-		return combine(new DblArr(arrA), arrays).array();
+		return combine(new dblArr(arrA), arrays).array();
 	}
-	public static double[] combine(double[] arrA, DblArr... arrays) {
+	public static double[] combine(double[] arrA, dblArr... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Dbl;
-		return combine(new DblArr(arrA), arrays).array();
+		return combine(new dblArr(arrA), arrays).array();
 	}
 	public static boolean[] combine(boolean[] arrA, boolean[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Bool;
-		return combine(new BoolArr(arrA), arrays).array();
+		return combine(new boolArr(arrA), arrays).array();
 	}
-	public static boolean[] combine(boolean[] arrA, BoolArr... arrays) {
+	public static boolean[] combine(boolean[] arrA, boolArr... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Bool;
-		return combine(new BoolArr(arrA), arrays).array();
+		return combine(new boolArr(arrA), arrays).array();
 	}
-	public static StrArr combine(StrArr arrA, StrArr... arrays) {
+	public static strArr combine(strArr arrA, strArr... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static StrArr combine(StrArr arrA, String[]... arrays) {
+	public static strArr combine(strArr arrA, String[]... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static IntArr combine(IntArr arrA, IntArr... arrays) {
+	public static intArr combine(intArr arrA, intArr... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static IntArr combine(IntArr arrA, int[]... arrays) {
+	public static intArr combine(intArr arrA, int[]... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static LongArr combine(LongArr arrA, LongArr... arrays) {
+	public static longArr combine(longArr arrA, longArr... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static LongArr combine(LongArr arrA, long[]... arrays) {
+	public static longArr combine(longArr arrA, long[]... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static FltArr combine(FltArr arrA, FltArr... arrays) {
+	public static fltArr combine(fltArr arrA, fltArr... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static FltArr combine(FltArr arrA, float[]... arrays) {
+	public static fltArr combine(fltArr arrA, float[]... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static DblArr combine(DblArr arrA, DblArr... arrays) {
+	public static dblArr combine(dblArr arrA, dblArr... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static DblArr combine(DblArr arrA, double[]... arrays) {
+	public static dblArr combine(dblArr arrA, double[]... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static BoolArr combine(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr combine(boolArr arrA, boolArr... arrays) {
 		return arrA.combine(arrays);
 	}
-	public static BoolArr combine(BoolArr arrA, boolean[]... arrays) {
+	public static boolArr combine(boolArr arrA, boolean[]... arrays) {
 		return arrA.combine(arrays);
 	}
 
 	public static String[] concat(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static String[] concat(String[] arrA, StrArr... arrays) {
+	public static String[] concat(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static int[] concat(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static int[] concat(int[] arrA, IntArr... arrays) {
+	public static int[] concat(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] concat(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static long[] concat(long[] arrA, LongArr... arrays) {
+	public static long[] concat(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static float[] concat(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static float[] concat(float[] arrA, FltArr... arrays) {
+	public static float[] concat(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] concat(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static double[] concat(double[] arrA, DblArr... arrays) {
+	public static double[] concat(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolean[] concat(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static boolean[] concat(boolean[] arrA, BoolArr... arrays) {
+	public static boolean[] concat(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr concat(StrArr arrA, StrArr... arrays) {
+	public static strArr concat(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr concat(StrArr arrA, String[]... arrays) {
+	public static strArr concat(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr concat(IntArr arrA, IntArr... arrays) {
+	public static intArr concat(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr concat(IntArr arrA, int[]... arrays) {
+	public static intArr concat(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr concat(LongArr arrA, LongArr... arrays) {
+	public static longArr concat(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr concat(LongArr arrA, long[]... arrays) {
+	public static longArr concat(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr concat(FltArr arrA, FltArr... arrays) {
+	public static fltArr concat(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr concat(FltArr arrA, float[]... arrays) {
+	public static fltArr concat(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr concat(DblArr arrA, DblArr... arrays) {
+	public static dblArr concat(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr concat(DblArr arrA, double[]... arrays) {
+	public static dblArr concat(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr concat(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr concat(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr concat(BoolArr arrA, boolean[]... arrays) {
+	public static boolArr concat(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] cat(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static String[] cat(String[] arrA, StrArr... arrays) {
+	public static String[] cat(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static int[] cat(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static int[] cat(int[] arrA, IntArr... arrays) {
+	public static int[] cat(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] cat(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static long[] cat(long[] arrA, LongArr... arrays) {
+	public static long[] cat(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static float[] cat(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static float[] cat(float[] arrA, FltArr... arrays) {
+	public static float[] cat(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] cat(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static double[] cat(double[] arrA, DblArr... arrays) {
+	public static double[] cat(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolean[] cat(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static boolean[] cat(boolean[] arrA, BoolArr... arrays) {
+	public static boolean[] cat(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr cat(StrArr arrA, StrArr... arrays) {
+	public static strArr cat(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr cat(StrArr arrA, String[]... arrays) {
+	public static strArr cat(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr cat(IntArr arrA, IntArr... arrays) {
+	public static intArr cat(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr cat(IntArr arrA, int[]... arrays) {
+	public static intArr cat(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr cat(LongArr arrA, LongArr... arrays) {
+	public static longArr cat(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr cat(LongArr arrA, long[]... arrays) {
+	public static longArr cat(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr cat(FltArr arrA, FltArr... arrays) {
+	public static fltArr cat(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr cat(FltArr arrA, float[]... arrays) {
+	public static fltArr cat(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr cat(DblArr arrA, DblArr... arrays) {
+	public static dblArr cat(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr cat(DblArr arrA, double[]... arrays) {
+	public static dblArr cat(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr cat(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr cat(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr cat(BoolArr arrA, boolean[]... arrays) {
+	public static boolArr cat(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] merge(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static String[] merge(String[] arrA, StrArr... arrays) {
+	public static String[] merge(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static int[] merge(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static int[] merge(int[] arrA, IntArr... arrays) {
+	public static int[] merge(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] merge(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static long[] merge(long[] arrA, LongArr... arrays) {
+	public static long[] merge(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static float[] merge(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static float[] merge(float[] arrA, FltArr... arrays) {
+	public static float[] merge(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] merge(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static double[] merge(double[] arrA, DblArr... arrays) {
+	public static double[] merge(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolean[] merge(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static boolean[] merge(boolean[] arrA, BoolArr... arrays) {
+	public static boolean[] merge(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr merge(StrArr arrA, StrArr... arrays) {
+	public static strArr merge(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr merge(StrArr arrA, String[]... arrays) {
+	public static strArr merge(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr merge(IntArr arrA, IntArr... arrays) {
+	public static intArr merge(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr merge(IntArr arrA, int[]... arrays) {
+	public static intArr merge(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr merge(LongArr arrA, LongArr... arrays) {
+	public static longArr merge(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr merge(LongArr arrA, long[]... arrays) {
+	public static longArr merge(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr merge(FltArr arrA, FltArr... arrays) {
+	public static fltArr merge(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr merge(FltArr arrA, float[]... arrays) {
+	public static fltArr merge(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr merge(DblArr arrA, DblArr... arrays) {
+	public static dblArr merge(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr merge(DblArr arrA, double[]... arrays) {
+	public static dblArr merge(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr merge(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr merge(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr merge(BoolArr arrA, boolean[]... arrays) {
+	public static boolArr merge(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] join(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static String[] join(String[] arrA, StrArr... arrays) {
+	public static String[] join(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static int[] join(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static int[] join(int[] arrA, IntArr... arrays) {
+	public static int[] join(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] join(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static long[] join(long[] arrA, LongArr... arrays) {
+	public static long[] join(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static float[] join(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static float[] join(float[] arrA, FltArr... arrays) {
+	public static float[] join(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] join(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static double[] join(double[] arrA, DblArr... arrays) {
+	public static double[] join(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolean[] join(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static boolean[] join(boolean[] arrA, BoolArr... arrays) {
+	public static boolean[] join(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr join(StrArr arrA, StrArr... arrays) {
+	public static strArr join(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr join(StrArr arrA, String[]... arrays) {
+	public static strArr join(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr join(IntArr arrA, IntArr... arrays) {
+	public static intArr join(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr join(IntArr arrA, int[]... arrays) {
+	public static intArr join(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr join(LongArr arrA, LongArr... arrays) {
+	public static longArr join(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr join(LongArr arrA, long[]... arrays) {
+	public static longArr join(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr join(FltArr arrA, FltArr... arrays) {
+	public static fltArr join(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr join(FltArr arrA, float[]... arrays) {
+	public static fltArr join(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr join(DblArr arrA, DblArr... arrays) {
+	public static dblArr join(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr join(DblArr arrA, double[]... arrays) {
+	public static dblArr join(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr join(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr join(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr join(BoolArr arrA, boolean[]... arrays) {
+	public static boolArr join(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
 
 	public static String[] add(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static String[] add(String[] arrA, StrArr... arrays) {
+	public static String[] add(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static int[] add(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static int[] add(int[] arrA, IntArr... arrays) {
+	public static int[] add(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] add(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static long[] add(long[] arrA, LongArr... arrays) {
+	public static long[] add(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static float[] add(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static float[] add(float[] arrA, FltArr... arrays) {
+	public static float[] add(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] add(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static double[] add(double[] arrA, DblArr... arrays) {
+	public static double[] add(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolean[] add(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static boolean[] add(boolean[] arrA, BoolArr... arrays) {
+	public static boolean[] add(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr add(StrArr arrA, StrArr... arrays) {
+	public static strArr add(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static StrArr add(StrArr arrA, String[]... arrays) {
+	public static strArr add(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr add(IntArr arrA, IntArr... arrays) {
+	public static intArr add(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static IntArr add(IntArr arrA, int[]... arrays) {
+	public static intArr add(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr add(LongArr arrA, LongArr... arrays) {
+	public static longArr add(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static LongArr add(LongArr arrA, long[]... arrays) {
+	public static longArr add(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr add(FltArr arrA, FltArr... arrays) {
+	public static fltArr add(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static FltArr add(FltArr arrA, float[]... arrays) {
+	public static fltArr add(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr add(DblArr arrA, DblArr... arrays) {
+	public static dblArr add(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static DblArr add(DblArr arrA, double[]... arrays) {
+	public static dblArr add(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr add(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr add(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
-	public static BoolArr add(BoolArr arrA, boolean[]... arrays) {
+	public static boolArr add(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] intersection(String[] arrA, String[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Str;
-		return new StrArr(arrA).intersection(arrays).array();
+		return new strArr(arrA).intersection(arrays).array();
 	}
 	public static int[] intersection(int[] arrA, int[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Int;
-		return new IntArr(arrA).intersection(arrays).array();
+		return new intArr(arrA).intersection(arrays).array();
 	}
 	public static long[] intersection(long[] arrA, long[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Long;
-		return new LongArr(arrA).intersection(arrays).array();
+		return new longArr(arrA).intersection(arrays).array();
 	}
 	public static float[] intersection(float[] arrA, float[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Flt;
-		return new FltArr(arrA).intersection(arrays).array();
+		return new fltArr(arrA).intersection(arrays).array();
 	}
 	public static double[] intersection(double[] arrA, double[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Dbl;
-		return new DblArr(arrA).intersection(arrays).array();
+		return new dblArr(arrA).intersection(arrays).array();
 	}
 	public static boolean[] intersection(boolean[] arrA, boolean[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Bool;
-		return new BoolArr(arrA).intersection(arrays).array();
+		return new boolArr(arrA).intersection(arrays).array();
 	}
-	public static StrArr intersection(StrArr arrA, StrArr... arrays) {
+	public static strArr intersection(strArr arrA, strArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.StrArr;
+			return blank.strArr;
 		return arrA.intersection(arrays);
 	}
-	public static IntArr intersection(IntArr arrA, IntArr... arrays) {
+	public static intArr intersection(intArr arrA, intArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.IntArr;
+			return blank.intArr;
 		return arrA.intersection(arrays);
 	}
-	public static LongArr intersection(LongArr arrA, LongArr... arrays) {
+	public static longArr intersection(longArr arrA, longArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.LongArr;
+			return blank.longArr;
 		return arrA.intersection(arrays);
 	}
-	public static FltArr intersection(FltArr arrA, FltArr... arrays) {
+	public static fltArr intersection(fltArr arrA, fltArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.FltArr;
+			return blank.fltArr;
 		return arrA.intersection(arrays);
 	}
-	public static DblArr intersection(DblArr arrA, DblArr... arrays) {
+	public static dblArr intersection(dblArr arrA, dblArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.DblArr;
+			return blank.dblArr;
 		return arrA.intersection(arrays);
 	}
-	public static BoolArr intersection(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr intersection(boolArr arrA, boolArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.BoolArr;
+			return blank.boolArr;
 		return arrA.intersection(arrays);
 	}
 	public static String[] negativeIntersection(String[] arrA,
 			String[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Str;
-		return new StrArr(arrA).negativeIntersection(arrays).array();
+		return new strArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static int[] negativeIntersection(int[] arrA, int[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Int;
-		return new IntArr(arrA).negativeIntersection(arrays).array();
+		return new intArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static long[] negativeIntersection(long[] arrA, long[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Long;
-		return new LongArr(arrA).negativeIntersection(arrays).array();
+		return new longArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static float[] negativeIntersection(float[] arrA,
 			float[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Flt;
-		return new FltArr(arrA).negativeIntersection(arrays).array();
+		return new fltArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static double[] negativeIntersection(double[] arrA,
 			double[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Dbl;
-		return new DblArr(arrA).negativeIntersection(arrays).array();
+		return new dblArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static boolean[] negativeIntersection(boolean[] arrA,
 			boolean[]... arrays) {
 		if (not(arrA) || not(arrays))
 			return blank.Bool;
-		return new BoolArr(arrA).negativeIntersection(arrays).array();
+		return new boolArr(arrA).negativeIntersection(arrays).array();
 	}
-	public static StrArr negativeIntersection(StrArr arrA, StrArr... arrays) {
+	public static strArr negativeIntersection(strArr arrA, strArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.StrArr;
+			return blank.strArr;
 		return arrA.negativeIntersection(arrays);
 	}
-	public static IntArr negativeIntersection(IntArr arrA, IntArr... arrays) {
+	public static intArr negativeIntersection(intArr arrA, intArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.IntArr;
+			return blank.intArr;
 		return arrA.negativeIntersection(arrays);
 	}
-	public static LongArr negativeIntersection(LongArr arrA,
-			LongArr... arrays) {
+	public static longArr negativeIntersection(longArr arrA,
+			longArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.LongArr;
+			return blank.longArr;
 		return arrA.negativeIntersection(arrays);
 	}
-	public static FltArr negativeIntersection(FltArr arrA, FltArr... arrays) {
+	public static fltArr negativeIntersection(fltArr arrA, fltArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.FltArr;
+			return blank.fltArr;
 		return arrA.negativeIntersection(arrays);
 	}
-	public static DblArr negativeIntersection(DblArr arrA, DblArr... arrays) {
+	public static dblArr negativeIntersection(dblArr arrA, dblArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.DblArr;
+			return blank.dblArr;
 		return arrA.negativeIntersection(arrays);
 	}
-	public static BoolArr negativeIntersection(BoolArr arrA,
-			BoolArr... arrays) {
+	public static boolArr negativeIntersection(boolArr arrA,
+			boolArr... arrays) {
 		if (not(arrA) || not(arrays))
-			return blank.BoolArr;
+			return blank.boolArr;
 		return arrA.negativeIntersection(arrays);
 	}
 	public static String[] keepIfMatch(String[] arrA, String[]... arrays) {
@@ -23366,22 +24008,22 @@ public class KL {
 	public static boolean[] keepIfMatch(boolean[] arrA, boolean[]... arrays) {
 		return intersection(arrA, arrays);
 	}
-	public static StrArr keepIfMatch(StrArr arrA, StrArr... arrays) {
+	public static strArr keepIfMatch(strArr arrA, strArr... arrays) {
 		return intersection(arrA, arrays);
 	}
-	public static IntArr keepIfMatch(IntArr arrA, IntArr... arrays) {
+	public static intArr keepIfMatch(intArr arrA, intArr... arrays) {
 		return intersection(arrA, arrays);
 	}
-	public static LongArr keepIfMatch(LongArr arrA, LongArr... arrays) {
+	public static longArr keepIfMatch(longArr arrA, longArr... arrays) {
 		return intersection(arrA, arrays);
 	}
-	public static FltArr keepIfMatch(FltArr arrA, FltArr... arrays) {
+	public static fltArr keepIfMatch(fltArr arrA, fltArr... arrays) {
 		return intersection(arrA, arrays);
 	}
-	public static DblArr keepIfMatch(DblArr arrA, DblArr... arrays) {
+	public static dblArr keepIfMatch(dblArr arrA, dblArr... arrays) {
 		return intersection(arrA, arrays);
 	}
-	public static BoolArr keepIfMatch(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr keepIfMatch(boolArr arrA, boolArr... arrays) {
 		return intersection(arrA, arrays);
 	}
 	public static String[] popIfMatch(String[] arrA, String[]... arrays) {
@@ -23402,22 +24044,22 @@ public class KL {
 	public static boolean[] popIfMatch(boolean[] arrA, boolean[]... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static StrArr popIfMatch(StrArr arrA, StrArr... arrays) {
+	public static strArr popIfMatch(strArr arrA, strArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static IntArr popIfMatch(IntArr arrA, IntArr... arrays) {
+	public static intArr popIfMatch(intArr arrA, intArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static LongArr popIfMatch(LongArr arrA, LongArr... arrays) {
+	public static longArr popIfMatch(longArr arrA, longArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static FltArr popIfMatch(FltArr arrA, FltArr... arrays) {
+	public static fltArr popIfMatch(fltArr arrA, fltArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static DblArr popIfMatch(DblArr arrA, DblArr... arrays) {
+	public static dblArr popIfMatch(dblArr arrA, dblArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static BoolArr popIfMatch(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr popIfMatch(boolArr arrA, boolArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
 	public static String[] onlyKeep(String[] arrA, String... arrB) {
@@ -23474,56 +24116,56 @@ public class KL {
 			return blank.Bool;
 		return sliceKeep(arrA, end);
 	}
-	public static StrArr onlyKeep(StrArr arrA, StrArr arrB) {
+	public static strArr onlyKeep(strArr arrA, strArr arrB) {
 		return intersection(arrA, arrB);
 	}
-	public static StrArr onlyKeep(StrArr arrA, int end) {
+	public static strArr onlyKeep(strArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
-			return new StrArr(blank.Str);
+			return new strArr(blank.Str);
 		return sliceKeep(arrA, end);
 	}
-	public static IntArr onlyKeep(IntArr arrA, IntArr arrB) {
+	public static intArr onlyKeep(intArr arrA, intArr arrB) {
 		return intersection(arrA, arrB);
 	}
-	public static IntArr onlyKeep(IntArr arrA, int end) {
+	public static intArr onlyKeep(intArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
-			return new IntArr(blank.Int);
+			return new intArr(blank.Int);
 		return sliceKeep(arrA, end);
 	}
-	public static LongArr onlyKeep(LongArr arrA, LongArr arrB) {
+	public static longArr onlyKeep(longArr arrA, longArr arrB) {
 		return intersection(arrA, arrB);
 	}
-	public static LongArr onlyKeep(LongArr arrA, int end) {
+	public static longArr onlyKeep(longArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
-			return new LongArr(blank.Long);
+			return new longArr(blank.Long);
 		return sliceKeep(arrA, end);
 	}
-	public static FltArr onlyKeep(FltArr arrA, FltArr arrB) {
+	public static fltArr onlyKeep(fltArr arrA, fltArr arrB) {
 		return intersection(arrA, arrB);
 	}
-	public static FltArr onlyKeep(FltArr arrA, int end) {
+	public static fltArr onlyKeep(fltArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
-			return new FltArr(blank.Flt);
+			return new fltArr(blank.Flt);
 		return sliceKeep(arrA, end);
 	}
-	public static DblArr onlyKeep(DblArr arrA, DblArr arrB) {
+	public static dblArr onlyKeep(dblArr arrA, dblArr arrB) {
 		return intersection(arrA, arrB);
 	}
-	public static DblArr onlyKeep(DblArr arrA, int end) {
+	public static dblArr onlyKeep(dblArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
-			return new DblArr(blank.Dbl);
+			return new dblArr(blank.Dbl);
 		return sliceKeep(arrA, end);
 	}
-	public static BoolArr onlyKeep(BoolArr arrA, BoolArr arrB) {
+	public static boolArr onlyKeep(boolArr arrA, boolArr arrB) {
 		return intersection(arrA, arrB);
 	}
-	public static BoolArr onlyKeep(BoolArr arrA, int end) {
+	public static boolArr onlyKeep(boolArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
-			return new BoolArr(blank.Bool);
+			return new boolArr(blank.Bool);
 		return sliceKeep(arrA, end);
 	}
 	public static String[] negativeIntersection(String[] arrA, String... arrB) {
-		StrArr result = new StrArr(arrA);
+		strArr result = new strArr(arrA);
 		for (int i : range(arrB)) {
 			if (in(arrA, arrB[i]))
 				result.pop(arrB[i]);
@@ -23531,7 +24173,7 @@ public class KL {
 		return result.array();
 	}
 	public static int[] negativeIntersection(int[] arrA, int... arrB) {
-		IntArr result = new IntArr(arrA);
+		intArr result = new intArr(arrA);
 		for (int i : range(arrB)) {
 			if (in(arrA, arrB[i]))
 				result.pop(arrB[i]);
@@ -23539,7 +24181,7 @@ public class KL {
 		return result.array();
 	}
 	public static long[] negativeIntersection(long[] arrA, long... arrB) {
-		LongArr result = new LongArr(arrA);
+		longArr result = new longArr(arrA);
 		for (int i : range(arrB)) {
 			if (in(arrA, arrB[i]))
 				result.pop(arrB[i]);
@@ -23547,7 +24189,7 @@ public class KL {
 		return result.array();
 	}
 	public static float[] negativeIntersection(float[] arrA, float... arrB) {
-		FltArr result = new FltArr(arrA);
+		fltArr result = new fltArr(arrA);
 		for (int i : range(arrB)) {
 			if (in(arrA, arrB[i]))
 				result.pop(arrB[i]);
@@ -23555,7 +24197,7 @@ public class KL {
 		return result.array();
 	}
 	public static double[] negativeIntersection(double[] arrA, double... arrB) {
-		DblArr result = new DblArr(arrA);
+		dblArr result = new dblArr(arrA);
 		for (int i : range(arrB)) {
 			if (in(arrA, arrB[i]))
 				result.pop(arrB[i]);
@@ -23564,29 +24206,29 @@ public class KL {
 	}
 	public static boolean[] negativeIntersection(boolean[] arrA,
 			boolean... arrB) {
-		BoolArr result = new BoolArr(arrA);
+		boolArr result = new boolArr(arrA);
 		for (int i : range(arrB)) {
 			if (in(arrA, arrB[i]))
 				result.pop(arrB[i]);
 		}
 		return result.array();
 	}
-	public static StrArr negativeIntersection(StrArr arrA, StrArr arrB) {
+	public static strArr negativeIntersection(strArr arrA, strArr arrB) {
 		return arrA.negativeIntersection(arrB);
 	}
-	public static IntArr negativeIntersection(IntArr arrA, IntArr arrB) {
+	public static intArr negativeIntersection(intArr arrA, intArr arrB) {
 		return arrA.negativeIntersection(arrB);
 	}
-	public static LongArr negativeIntersection(LongArr arrA, LongArr arrB) {
+	public static longArr negativeIntersection(longArr arrA, longArr arrB) {
 		return arrA.negativeIntersection(arrB);
 	}
-	public static FltArr negativeIntersection(FltArr arrA, FltArr arrB) {
+	public static fltArr negativeIntersection(fltArr arrA, fltArr arrB) {
 		return arrA.negativeIntersection(arrB);
 	}
-	public static DblArr negativeIntersection(DblArr arrA, DblArr arrB) {
+	public static dblArr negativeIntersection(dblArr arrA, dblArr arrB) {
 		return arrA.negativeIntersection(arrB);
 	}
-	public static BoolArr negativeIntersection(BoolArr arrA, BoolArr arrB) {
+	public static boolArr negativeIntersection(boolArr arrA, boolArr arrB) {
 		return arrA.negativeIntersection(arrB);
 	}
 	public static String[] popIfMatch(String[] arrA, String... arrB) {
@@ -23607,22 +24249,22 @@ public class KL {
 	public static boolean[] popIfMatch(boolean[] arrA, boolean... arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static StrArr popIfMatch(StrArr arrA, StrArr arrB) {
+	public static strArr popIfMatch(strArr arrA, strArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static IntArr popIfMatch(IntArr arrA, IntArr arrB) {
+	public static intArr popIfMatch(intArr arrA, intArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static LongArr popIfMatch(LongArr arrA, LongArr arrB) {
+	public static longArr popIfMatch(longArr arrA, longArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static FltArr popIfMatch(FltArr arrA, FltArr arrB) {
+	public static fltArr popIfMatch(fltArr arrA, fltArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static DblArr popIfMatch(DblArr arrA, DblArr arrB) {
+	public static dblArr popIfMatch(dblArr arrA, dblArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static BoolArr popIfMatch(BoolArr arrA, BoolArr arrB) {
+	public static boolArr popIfMatch(boolArr arrA, boolArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
 	public static String[] popAll(String[] arrA, String... arrB) {
@@ -23643,22 +24285,22 @@ public class KL {
 	public static boolean[] popAll(boolean[] arrA, boolean... arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static StrArr popAll(StrArr arrA, StrArr arrB) {
+	public static strArr popAll(strArr arrA, strArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static IntArr popAll(IntArr arrA, IntArr arrB) {
+	public static intArr popAll(intArr arrA, intArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static LongArr popAll(LongArr arrA, LongArr arrB) {
+	public static longArr popAll(longArr arrA, longArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static FltArr popAll(FltArr arrA, FltArr arrB) {
+	public static fltArr popAll(fltArr arrA, fltArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static DblArr popAll(DblArr arrA, DblArr arrB) {
+	public static dblArr popAll(dblArr arrA, dblArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static BoolArr popAll(BoolArr arrA, BoolArr arrB) {
+	public static boolArr popAll(boolArr arrA, boolArr arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
 	public static String[] onlyPop(String[] arrA, String... arrB) {
@@ -23679,22 +24321,22 @@ public class KL {
 	public static boolean[] onlyPop(boolean[] arrA, boolean... arrB) {
 		return negativeIntersection(arrA, arrB);
 	}
-	public static StrArr onlyPop(StrArr arrA, StrArr... arrays) {
+	public static strArr onlyPop(strArr arrA, strArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static IntArr onlyPop(IntArr arrA, IntArr... arrays) {
+	public static intArr onlyPop(intArr arrA, intArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static LongArr onlyPop(LongArr arrA, LongArr... arrays) {
+	public static longArr onlyPop(longArr arrA, longArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static FltArr onlyPop(FltArr arrA, FltArr... arrays) {
+	public static fltArr onlyPop(fltArr arrA, fltArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static DblArr onlyPop(DblArr arrA, DblArr... arrays) {
+	public static dblArr onlyPop(dblArr arrA, dblArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static BoolArr onlyPop(BoolArr arrA, BoolArr... arrays) {
+	public static boolArr onlyPop(boolArr arrA, boolArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
 	public static String upper(String s) {
@@ -23849,112 +24491,112 @@ public class KL {
 			return 0;
 		return arr.length;
 	}
-	public static int len(StrArr arr) {
+	public static int len(strArr arr) {
 		if (arr == null)
 			return 0;
 		return arr.length();
 	}
-	public static int len(IntArr arr) {
+	public static int len(intArr arr) {
 		if (arr == null)
 			return 0;
 		return arr.length();
 	}
-	public static int len(LongArr arr) {
+	public static int len(longArr arr) {
 		if (arr == null)
 			return 0;
 		return arr.length();
 	}
-	public static int len(FltArr arr) {
+	public static int len(fltArr arr) {
 		if (arr == null)
 			return 0;
 		return arr.length();
 	}
-	public static int len(DblArr arr) {
+	public static int len(dblArr arr) {
 		if (arr == null)
 			return 0;
 		return arr.length();
 	}
-	public static int len(BoolArr arr) {
+	public static int len(boolArr arr) {
 		if (arr == null)
 			return 0;
 		return arr.length();
 	}
-	public static int len(ObjS o) {
+	public static int len(objS o) {
 		if (o == null)
 			return 0;
 		return o.length();
 	}
-	public static int len(ObjI o) {
+	public static int len(objI o) {
 		if (o == null)
 			return 0;
 		return o.length();
 	}
-	public static int len(ObjL o) {
+	public static int len(objL o) {
 		if (o == null)
 			return 0;
 		return o.length();
 	}
-	public static int len(ObjF o) {
+	public static int len(objF o) {
 		if (o == null)
 			return 0;
 		return o.length();
 	}
-	public static int len(ObjD o) {
+	public static int len(objD o) {
 		if (o == null)
 			return 0;
 		return o.length();
 	}
-	public static int len(ObjB o) {
+	public static int len(objB o) {
 		if (o == null)
 			return 0;
 		return o.length();
 	}
-	public static int len(TreeS t) {
+	public static int len(treeS t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeI t) {
+	public static int len(treeI t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeSL t) {
+	public static int len(treeSL t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeL t) {
+	public static int len(treeL t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeSF t) {
+	public static int len(treeSF t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeF t) {
+	public static int len(treeF t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeSD t) {
+	public static int len(treeSD t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeD t) {
+	public static int len(treeD t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeSB t) {
+	public static int len(treeSB t) {
 		if (t == null)
 			return 0;
 		return t.length();
 	}
-	public static int len(TreeB t) {
+	public static int len(treeB t) {
 		if (t == null)
 			return 0;
 		return t.length();
@@ -23986,70 +24628,70 @@ public class KL {
 	public static int size(boolean arr[]) {
 		return len(arr);
 	}
-	public static int size(StrArr arr) {
+	public static int size(strArr arr) {
 		return len(arr);
 	}
-	public static int size(IntArr arr) {
+	public static int size(intArr arr) {
 		return len(arr);
 	}
-	public static int size(LongArr arr) {
+	public static int size(longArr arr) {
 		return len(arr);
 	}
-	public static int size(FltArr arr) {
+	public static int size(fltArr arr) {
 		return len(arr);
 	}
-	public static int size(DblArr arr) {
+	public static int size(dblArr arr) {
 		return len(arr);
 	}
-	public static int size(BoolArr arr) {
+	public static int size(boolArr arr) {
 		return len(arr);
 	}
-	public static int size(ObjS o) {
+	public static int size(objS o) {
 		return len(o);
 	}
-	public static int size(ObjI o) {
+	public static int size(objI o) {
 		return len(o);
 	}
-	public static int size(ObjL o) {
+	public static int size(objL o) {
 		return len(o);
 	}
-	public static int size(ObjF o) {
+	public static int size(objF o) {
 		return len(o);
 	}
-	public static int size(ObjD o) {
+	public static int size(objD o) {
 		return len(o);
 	}
-	public static int size(ObjB o) {
+	public static int size(objB o) {
 		return len(o);
 	}
-	public static int size(TreeS t) {
+	public static int size(treeS t) {
 		return len(t);
 	}
-	public static int size(TreeI t) {
+	public static int size(treeI t) {
 		return len(t);
 	}
-	public static int size(TreeSL t) {
+	public static int size(treeSL t) {
 		return len(t);
 	}
-	public static int size(TreeL t) {
+	public static int size(treeL t) {
 		return len(t);
 	}
-	public static int size(TreeSF t) {
+	public static int size(treeSF t) {
 		return len(t);
 	}
-	public static int size(TreeF t) {
+	public static int size(treeF t) {
 		return len(t);
 	}
-	public static int size(TreeSD t) {
+	public static int size(treeSD t) {
 		return len(t);
 	}
-	public static int size(TreeD t) {
+	public static int size(treeD t) {
 		return len(t);
 	}
-	public static int size(TreeSB t) {
+	public static int size(treeSB t) {
 		return len(t);
 	}
-	public static int size(TreeB t) {
+	public static int size(treeB t) {
 		return len(t);
 	}
 	public static boolean isEmpty(char c) {
@@ -24166,70 +24808,70 @@ public class KL {
 		return count > 0;
 		// to handle sub arays
 	}
-	public static boolean isEmpty(StrArr arr) {
+	public static boolean isEmpty(strArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
 	}
-	public static boolean isEmpty(IntArr arr) {
+	public static boolean isEmpty(intArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
 	}
-	public static boolean isEmpty(LongArr arr) {
+	public static boolean isEmpty(longArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
 	}
-	public static boolean isEmpty(FltArr arr) {
+	public static boolean isEmpty(fltArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
 	}
-	public static boolean isEmpty(DblArr arr) {
+	public static boolean isEmpty(dblArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
 	}
-	public static boolean isEmpty(BoolArr arr) {
+	public static boolean isEmpty(boolArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
 	}
-	public static boolean isEmpty(ObjS o) {
+	public static boolean isEmpty(objS o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(ObjI o) {
+	public static boolean isEmpty(objI o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(ObjL o) {
+	public static boolean isEmpty(objL o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(ObjF o) {
+	public static boolean isEmpty(objF o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(ObjD o) {
+	public static boolean isEmpty(objD o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(ObjB o) {
+	public static boolean isEmpty(objB o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(TreeS t) {
+	public static boolean isEmpty(treeS t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeI t) {
+	public static boolean isEmpty(treeI t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeSL t) {
+	public static boolean isEmpty(treeSL t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeL t) {
+	public static boolean isEmpty(treeL t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeSF t) {
+	public static boolean isEmpty(treeSF t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeF t) {
+	public static boolean isEmpty(treeF t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeSD t) {
+	public static boolean isEmpty(treeSD t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeD t) {
+	public static boolean isEmpty(treeD t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeSB t) {
+	public static boolean isEmpty(treeSB t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(TreeB t) {
+	public static boolean isEmpty(treeB t) {
 		return 0 == len(t) || t.isEmpty();
 	}
 	// Arrays
@@ -24292,9 +24934,9 @@ public class KL {
 			ArrOfInt = "array\\.int", ArrOfLong = "array\\.long",
 			ArrOfFlt = "array\\.flt", ArrOfDbl = "array\\.dbl",
 			ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num",
-			ArrOfObj = "array\\.obj", StrArr = "StrArr", IntArr = "IntArr",
-			LongArr = "LongArr", FltArr = "FltArr", DblArr = "DblArr",
-			BoolArr = "BoolArr";
+			ArrOfObj = "array\\.obj", strArr = "strArr", intArr = "intArr",
+			longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
+			boolArr = "boolArr";
 	public static char[] charArrToCharArr(Character[] inputArr) {
 		int length = inputArr.length;
 		char resultingArr[] = new char[length];
@@ -24359,169 +25001,169 @@ public class KL {
 		return boolArrToBoolArr(inputArr);
 	}
 	public static String[] reverse(String[] arr) {
-		return new StrArr(arr).reverse().array();
+		return new strArr(arr).reverse().array();
 	}
 	public static int[] reverse(int[] arr) {
-		return new IntArr(arr).reverse().array();
+		return new intArr(arr).reverse().array();
 	}
 	public static long[] reverse(long[] arr) {
-		return new LongArr(arr).reverse().array();
+		return new longArr(arr).reverse().array();
 	}
 	public static float[] reverse(float[] arr) {
-		return new FltArr(arr).reverse().array();
+		return new fltArr(arr).reverse().array();
 	}
 	public static double[] reverse(double[] arr) {
-		return new DblArr(arr).reverse().array();
+		return new dblArr(arr).reverse().array();
 	}
 	public static boolean[] reverse(boolean[] arr) {
-		return new BoolArr(arr).reverse().array();
+		return new boolArr(arr).reverse().array();
 	}
-	public static StrArr reverse(StrArr arr) {
+	public static strArr reverse(strArr arr) {
 		return arr.reverse();
 	}
-	public static IntArr reverse(IntArr arr) {
+	public static intArr reverse(intArr arr) {
 		return arr.reverse();
 	}
-	public static LongArr reverse(LongArr arr) {
+	public static longArr reverse(longArr arr) {
 		return arr.reverse();
 	}
-	public static FltArr reverse(FltArr arr) {
+	public static fltArr reverse(fltArr arr) {
 		return arr.reverse();
 	}
-	public static DblArr reverse(DblArr arr) {
+	public static dblArr reverse(dblArr arr) {
 		return arr.reverse();
 	}
-	public static BoolArr reverse(BoolArr arr) {
+	public static boolArr reverse(boolArr arr) {
 		return arr.reverse();
 	}
 	public static String[] sort(String[] arr) {
-		return new StrArr(arr).sort().array();
+		return new strArr(arr).sort().array();
 	}
 	public static String[] sort(String[] arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
-		return new StrArr(arr).sort(condition).array();
+		return new strArr(arr).sort(condition).array();
 	}
 	public static int[] sort(int[] arr) {
-		return new IntArr(arr).sort().array();
+		return new intArr(arr).sort().array();
 	}
 	public static int[] sort(int[] arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
-		return new IntArr(arr).sort(condition).array();
+		return new intArr(arr).sort(condition).array();
 	}
 	public static long[] sort(long[] arr) {
-		return new LongArr(arr).sort().array();
+		return new longArr(arr).sort().array();
 	}
 	public static long[] sort(long[] arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
-		return new LongArr(arr).sort(condition).array();
+		return new longArr(arr).sort(condition).array();
 	}
 	public static float[] sort(float[] arr) {
-		return new FltArr(arr).sort().array();
+		return new fltArr(arr).sort().array();
 	}
 	public static float[] sort(float[] arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
-		return new FltArr(arr).sort(condition).array();
+		return new fltArr(arr).sort(condition).array();
 	}
 	public static double[] sort(double[] arr) {
-		return new DblArr(arr).sort().array();
+		return new dblArr(arr).sort().array();
 	}
 	public static double[] sort(double[] arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
-		return new DblArr(arr).sort(condition).array();
+		return new dblArr(arr).sort(condition).array();
 	}
 	public static boolean[] sort(boolean[] arr) {
-		return new BoolArr(arr).sort().array();
+		return new boolArr(arr).sort().array();
 	}
 	public static boolean[] sort(boolean[] arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
-		return new BoolArr(arr).sort(condition).array();
+		return new boolArr(arr).sort(condition).array();
 	}
-	public static StrArr sort(StrArr arr) {
+	public static strArr sort(strArr arr) {
 		return arr.sort();
 	}
-	public static StrArr sort(StrArr arr, String condition) {
-		return new StrArr(sort(arr.array(), condition));
+	public static strArr sort(strArr arr, String condition) {
+		return new strArr(sort(arr.array(), condition));
 	}
-	public static IntArr sort(IntArr arr) {
+	public static intArr sort(intArr arr) {
 		return arr.sort();
 	}
-	public static IntArr sort(IntArr arr, String condition) {
+	public static intArr sort(intArr arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
 		return arr.sort(condition);
 	}
-	public static LongArr sort(LongArr arr) {
+	public static longArr sort(longArr arr) {
 		return arr.sort();
 	}
-	public static LongArr sort(LongArr arr, String condition) {
+	public static longArr sort(longArr arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
 		return arr.sort(condition);
 	}
-	public static FltArr sort(FltArr arr) {
+	public static fltArr sort(fltArr arr) {
 		return arr.sort();
 	}
-	public static FltArr sort(FltArr arr, String condition) {
+	public static fltArr sort(fltArr arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
 		return arr.sort(condition);
 	}
-	public static DblArr sort(DblArr arr) {
+	public static dblArr sort(dblArr arr) {
 		return arr.sort();
 	}
-	public static DblArr sort(DblArr arr, String condition) {
+	public static dblArr sort(dblArr arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
 		return arr.sort(condition);
 	}
-	public static BoolArr sort(BoolArr arr) {
+	public static boolArr sort(boolArr arr) {
 		return arr.sort();
 	}
-	public static BoolArr sort(BoolArr arr, String condition) {
+	public static boolArr sort(boolArr arr, String condition) {
 		if (not(arr) || not(condition))
 			return arr;
 		return arr.sort(condition);
 	}
 	public static String[] sortReverse(String[] arr) {
-		return new StrArr(arr).sortReverse().array();
+		return new strArr(arr).sortReverse().array();
 	}
 	public static int[] sortReverse(int[] arr) {
-		return new IntArr(arr).sortReverse().array();
+		return new intArr(arr).sortReverse().array();
 	}
 	public static long[] sortReverse(long[] arr) {
-		return new LongArr(arr).sortReverse().array();
+		return new longArr(arr).sortReverse().array();
 	}
 	public static float[] sortReverse(float[] arr) {
-		return new FltArr(arr).sortReverse().array();
+		return new fltArr(arr).sortReverse().array();
 	}
 	public static double[] sortReverse(double[] arr) {
-		return new DblArr(arr).sortReverse().array();
+		return new dblArr(arr).sortReverse().array();
 	}
 	public static boolean[] sortReverse(boolean[] arr) {
-		return new BoolArr(arr).sortReverse().array();
+		return new boolArr(arr).sortReverse().array();
 	}
-	public static StrArr sortReverse(StrArr arr) {
+	public static strArr sortReverse(strArr arr) {
 		return arr.sortReverse();
 	}
-	public static IntArr sortReverse(IntArr arr) {
+	public static intArr sortReverse(intArr arr) {
 		return arr.sortReverse();
 	}
-	public static LongArr sortReverse(LongArr arr) {
+	public static longArr sortReverse(longArr arr) {
 		return arr.sortReverse();
 	}
-	public static FltArr sortReverse(FltArr arr) {
+	public static fltArr sortReverse(fltArr arr) {
 		return arr.sortReverse();
 	}
-	public static DblArr sortReverse(DblArr arr) {
+	public static dblArr sortReverse(dblArr arr) {
 		return arr.sortReverse();
 	}
-	public static BoolArr sortReverse(BoolArr arr) {
+	public static boolArr sortReverse(boolArr arr) {
 		return arr.sortReverse();
 	}
 	public static String[] reverseSort(String[] arr) {
@@ -24542,22 +25184,22 @@ public class KL {
 	public static boolean[] reverseSort(boolean[] arr) {
 		return sortReverse(arr);
 	}
-	public static StrArr reverseSort(StrArr arr) {
+	public static strArr reverseSort(strArr arr) {
 		return sortReverse(arr);
 	}
-	public static IntArr reverseSort(IntArr arr) {
+	public static intArr reverseSort(intArr arr) {
 		return sortReverse(arr);
 	}
-	public static LongArr reverseSort(LongArr arr) {
+	public static longArr reverseSort(longArr arr) {
 		return sortReverse(arr);
 	}
-	public static FltArr reverseSort(FltArr arr) {
+	public static fltArr reverseSort(fltArr arr) {
 		return sortReverse(arr);
 	}
-	public static DblArr reverseSort(DblArr arr) {
+	public static dblArr reverseSort(dblArr arr) {
 		return sortReverse(arr);
 	}
-	public static BoolArr reverseSort(BoolArr arr) {
+	public static boolArr reverseSort(boolArr arr) {
 		return sortReverse(arr);
 	}
 	public static String shuffle(String str) {
@@ -24632,22 +25274,22 @@ public class KL {
 		}
 		return arr;
 	}
-	public static StrArr shuffle(StrArr arr) {
+	public static strArr shuffle(strArr arr) {
 		return arr.shuffle();
 	}
-	public static IntArr shuffle(IntArr arr) {
+	public static intArr shuffle(intArr arr) {
 		return arr.shuffle();
 	}
-	public static LongArr shuffle(LongArr arr) {
+	public static longArr shuffle(longArr arr) {
 		return arr.shuffle();
 	}
-	public static FltArr shuffle(FltArr arr) {
+	public static fltArr shuffle(fltArr arr) {
 		return arr.shuffle();
 	}
-	public static DblArr shuffle(DblArr arr) {
+	public static dblArr shuffle(dblArr arr) {
 		return arr.shuffle();
 	}
-	public static BoolArr shuffle(BoolArr arr) {
+	public static boolArr shuffle(boolArr arr) {
 		return arr.shuffle();
 	}
 	private static String[] ctss = {"Abbottabad", "Adilpur", "Ahmadpur East",
@@ -24958,7 +25600,7 @@ public class KL {
 					"Omar Siddiqui", "Irfan Khalil", "Raheel Jamil",
 					"Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran",
 					"Waleed Hussain", "Taimoor Abbas", "Mudassir Waheed",
-					"Umer Khalid", "Khurram Anwar", "Junaid Bashir",
+					"Umer Khalid", "Azeem Munawar", "Junaid Bashir",
 					"Shayan Rauf", "Ahmed Hanif", "Bilal Hussain", "Umair Riaz",
 					"Zubair Khalid", "Adeel Haroon", "Sajid Qamar",
 					"Faizan Latif", "Hammad Saleem", "Shoaib Tariq",
@@ -25382,8 +26024,10 @@ public class KL {
 		String[] names = combine(rgynss, rglnss);
 		String randName = randFrom(names);
 		String addonA = randFrom(new String[]{".", "_", "-"});
-		String addonB = randFrom(new String[]{addonA, ""}) + Str(randInt(10, 500));
-		String processedName = lower(randName).replaceAll("\\s",addonA) + addonB;
+		String addonB = randFrom(new String[]{addonA, ""})
+				+ Str(randInt(10, 500));
+		String processedName = lower(randName).replaceAll("\\s", addonA)
+				+ addonB;
 		String[] mailProviders = {"gmail", "yahoo", "hotmail", "outlook",
 				"icloud"};
 		String provider = randFrom(mailProviders);
@@ -25537,10 +26181,12 @@ public class KL {
 		return createFolder(folderName);
 	}
 	public static String name = "Ayesha";
+	public static int age = 23;
 	public static void main(String[] args) {
-		print("Hi, it's {name}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room", "love", 9, 19, 6);
+		print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room",
+				"love", 9, 19, 6);
 		int decimalPlaces = 2;
-        print(8.643);
-		
+		print(8.643);
+
 	}
 }
