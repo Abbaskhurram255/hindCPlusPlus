@@ -470,12 +470,27 @@ public class KL {
 			onTop();
 			return this;
 		}
+		boolean isOnTop() {
+			return super.isAlwaysOnTop();
+		}
 		gui hameshaTopPe(boolean b) {
 			onTop(b);
 			return this;
 		}
 		gui hameshaTopPe() {
 			onTop();
+			return this;
+		}
+		gui TopPe(boolean b) {
+			onTop(b);
+			return this;
+		}
+		gui hameshaTopPeHe() {
+			isOnTop();
+			return this;
+		}
+		gui topPeHe() {
+			isOnTop();
 			return this;
 		}
 		gui opacity(double o) {
@@ -544,12 +559,63 @@ public class KL {
 			return MouseInfo.getPointerInfo().getLocation().getY();
 		}
 		gui exitOnClose() {
-			super.setDefaultCloseOperation(super.EXIT_ON_CLOSE);
+			this.on("close", () -> {
+				boolean confirmed = this
+						.confirm("Are you sure you want to close?");
+				if (confirmed)
+					super.dispose();
+			});
+			return this;
+		}
+		gui updateListener(Component c, EventListener newL) {
+			if (c == null || newL == null) {
+				System.err.println("Component or new listener cannot be null");
+				return this;
+			}
+			try {
+				String listenerType = newL.getClass().getSimpleName();
+				Method removeMethod;
+				if (c instanceof Window && newL instanceof WindowListener) {
+					removeMethod = Window.class.getMethod(
+							"removeWindowListener", WindowListener.class);
+				} else {
+					removeMethod = c.getClass().getMethod(
+							"remove" + listenerType, newL.getClass());
+				}
+				// Remove all existing listeners
+				for (EventListener listener : c.getListeners(newL.getClass())) {
+					removeMethod.invoke(c, listener);
+				}
+				Method addMethod;
+				if (c instanceof Window) {
+					addMethod = Window.class.getMethod("addWindowListener",
+							WindowListener.class);
+				} else {
+					addMethod = c.getClass().getMethod("add" + listenerType,
+							newL.getClass());
+				}
+				addMethod.invoke(c, newL);
+			} catch (NoSuchMethodException e) {
+				System.err.println("No method found for listener type: "
+						+ newL.getClass().getSimpleName());
+			} catch (IllegalAccessException e) {
+				System.err
+						.println("Access denied for method: " + e.getMessage());
+			} catch (InvocationTargetException e) {
+				System.err.println(
+						"Error invoking method: " + e.getCause().getMessage());
+			} catch (Exception e) {
+				System.err.println("An error occurred: " + e.getMessage());
+			}
+			return this;
+		}
+		gui exitOnCloseWithoutAsking() {
+			// implement later
 			return this;
 		}
 		gui on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
-				String[] keys = k.split("[|]");
+			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
+				String[] keys = k.split("\\|");
 				for (var key : keys) {
 					on(key, action);
 				}
@@ -726,135 +792,181 @@ public class KL {
 			return this;
 		}
 		gui message(String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();
 			JOptionPane.showMessageDialog(null, message, "Message",
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 		gui message(String title, String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 		gui message(String title, String message, String iconAddress) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui message(String title, String message, Icon ico) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE, ico);
 			return this;
 		}
 		gui error(String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 		gui error(String title, String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 		gui error(String title, String message, String iconAddress) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui error(String title, String message, Icon ico) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE, ico);
 			return this;
 		}
 		gui warn(String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, "Warning",
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 		gui warn(String title, String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 		gui warn(String title, String message, String iconAddress) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui warn(String title, String message, Icon ico) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE, ico);
 			return this;
 		}
 		boolean confirm(String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirm(String title, String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirm(String title, String message, String iconAddress) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					new icon(iconAddress)) == 0);
 		}
 		boolean confirm(String title, String message, Icon ico) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					ico) == 0);
 		}
 		boolean confirmCancellable(String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirmCancellable(String title, String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirmCancellable(String title, String message,
 				String iconAddress) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
 		}
 		boolean confirmCancellable(String title, String message, Icon ico) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, ico) == 0);
 		}
 		String ask(String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return JOptionPane.showInputDialog(null, message, "Input",
 					JOptionPane.QUESTION_MESSAGE);
 		}
 		String ask(String title, String message) {
-			offTop();
+			if (this.isOnTop())
+				offTop();;
 			return JOptionPane.showInputDialog(null, message, title,
 					JOptionPane.QUESTION_MESSAGE);
+		}
+		int askInt(String message) {
+			return Int(this.ask(message));
+		}
+		int askInt(String title, String message) {
+			return Int(this.ask(title, message));
+		}
+		long askLong(String message) {
+			return Long(this.ask(message));
+		}
+		long askLong(String title, String message) {
+			return Long(this.ask(title, message));
+		}
+		float askFlt(String message) {
+			return Flt(this.ask(message));
+		}
+		float askFlt(String title, String message) {
+			return Flt(this.ask(title, message));
+		}
+		double askDbl(String message) {
+			return Dbl(this.ask(message));
+		}
+		double askDbl(String title, String message) {
+			return Dbl(this.ask(title, message));
 		}
 	}
 	public static class label extends JLabel {
@@ -962,8 +1074,8 @@ public class KL {
 			return this;
 		}
 		label on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
-				String[] keys = k.split("[|]");
+			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
+				String[] keys = k.split("\\|");
 				for (var key : keys) {
 					on(key, action);
 				}
@@ -1236,8 +1348,8 @@ public class KL {
 			return this;
 		}
 		panel on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}[|]\\w{3,}")) {
-				String[] keys = k.split("[|]");
+			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
+				String[] keys = k.split("\\|");
 				for (var key : keys) {
 					on(key, action);
 				}
@@ -19580,7 +19692,6 @@ public class KL {
 				String[] matches = findMatches(s,
 						"%[\\%din](c|u|uc|th)|\\$*\\{\\}");
 				for (String m : matches) {
-
 					print("Current:", m);
 					s = replaceFirst(s, "%[%din](?!th|u|uc|c)|\\$*\\{\\}", Str(
 							f(arg instanceof Integer ? (int) arg : (long) arg))
@@ -26187,6 +26298,7 @@ public class KL {
 				"love", 9, 19, 6);
 		int decimalPlaces = 2;
 		print(8.643);
+		print(minsAgo(5));
 
 	}
 }
