@@ -242,6 +242,26 @@ public class KL {
 			return false;
 		}
 	}
+	public static objS parseJson(String jsonString) {
+		objS map = new objS();
+		if (not(jsonString)) return map;
+		if (!jsonString.startsWith("{") || !jsonString.endsWith("}")) {
+			map.add("status", "notok").add("error", "yes");
+			return map;
+		}
+		jsonString = jsonString.substring(1, jsonString.length() - 1);
+		String[] keyValuePairs = jsonString.split(",");
+		for (String pair : keyValuePairs) {
+			String[] parts = pair.split(":", 2);
+			if (parts.length == 2) {
+				String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]", "").trim();
+				String value = parts[1].trim().replaceAll("[\"\\{\\}\\]]", "");
+				if (key.length() != 0 && in(key, "[a-zA-Z]+")) map.add(key, value);
+			}
+		}
+		map.add("status", "ok").add("error", "no");
+		return map;
+	}
 	public static objS fetch(String url) {
 		objS map = new objS();
 		try {
@@ -260,22 +280,8 @@ public class KL {
 				}
 				reader.close();
 				String jsonString = respBuilder.toString().trim();
-				if (jsonString.startsWith("{") && jsonString.endsWith("}"))
-					jsonString = jsonString.substring(1,
-							jsonString.length() - 1);
-				String[] keyValuePairs = jsonString.split(",");
-				for (String pair : keyValuePairs) {
-					String[] parts = pair.split(":", 2);
-					if (parts.length == 2) {
-						String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]",
-								"");
-						String value = parts[1].trim()
-								.replaceAll("[\"\\{\\}\\]]", "");
-						map.put(key, value);
-					}
-				}
-				map.add("response", "200").add("status", "ok").add("error",
-						"no");
+				map = parseJson(jsonString);
+				map.add("response", "200").add("status", "ok").add("error", "no");
 				return map;
 			} else {
 				map.add("response", Str(statusCode)).add("status", "notok")
@@ -316,11 +322,9 @@ public class KL {
 				for (String pair : keyValuePairs) {
 					String[] parts = pair.split(":", 2);
 					if (parts.length == 2) {
-						String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]",
-								"");
-						String value = parts[1].trim()
-								.replaceAll("[\"\\{\\}\\]]", "");
-						map.put(key, value);
+						String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]", "").trim();
+						String value = parts[1].trim().replaceAll("[\"\\{\\}\\]]", "");
+						if (key.length() != 0 && in(key, "[a-zA-Z]+")) map.add(key, value);
 					}
 				}
 				map.add("response", "200").add("status", "ok").add("error",
@@ -481,7 +485,7 @@ public class KL {
 			onTop();
 			return this;
 		}
-		gui TopPe(boolean b) {
+		gui topPe(boolean b) {
 			onTop(b);
 			return this;
 		}
@@ -494,12 +498,11 @@ public class KL {
 			return this;
 		}
 		gui opacity(double o) {
-			if (o <= 100) {
-				if (o >= 0 && o <= 1)
-					super.setOpacity((float) o);
-				else if (o > 1)
-					super.setOpacity((float) o / 100);
-			}
+			if (o < 0 || o > 100) return this;
+			if (o > 1)
+                super.setOpacity((float) o / 100);
+			else if (o >= 0 && o <= 1)
+				super.setOpacity((float) o);
 			return this;
 		}
 		gui cursor(int c) {
@@ -2873,6 +2876,229 @@ public class KL {
 		file(URI uri) {
 			super(uri);
 		}
+		String string() {
+			return super.toString();
+		}
+		String str() {
+			return string();
+		}
+		String path() {
+			return super.getPath();
+		}
+		String absolutePath() {
+			return super.getAbsolutePath();
+		}
+		String absPath() {
+			return absolutePath();
+		}
+		boolean isFolder() {
+			return super.isDirectory();
+		}
+		//@static methods
+		public static boolean create(String fname, String content) {
+			if (not(fname) || not(content)) return false;
+			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
+				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+					create(subFileName, content);
+				}
+				return true;
+				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+			}
+			try {
+				File myFile = new File(fname);
+				FileWriter fr = new FileWriter(fname);
+				fr.write(content);
+				print("[KL.file.JobSuccess]:\nFile \"" + myFile.getName()
+						+ "\" created successfully.");
+				fr.close();
+				return true;
+			} catch (IOException e) {
+				print("[KL.file.JobFailed]: Something went wrong. File creation "
+						+ "failed.");
+			}
+			return false;
+		}
+		public static boolean create(String fname) {
+			if (not(fname)) return false;
+			return create(fname, "");
+			//creates a blank file
+		}
+		public static boolean createFolder(String folderName) {
+			if (not(folderName)) return false;
+			if (in(folderName, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
+				for (String folder : folderName.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+					createFolder(folder);
+				}
+				return true;
+				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+			}
+			try {
+				File fileFolder = new File(folderName);
+				return fileFolder.mkdirs();
+				//mkdirs is used to make both directories, and subdirectories
+			}
+			catch (Exception e) {
+				print("[KL.file.JobFailed]:\nFolder failed to create.");
+			}
+			return false;
+		}
+		public static boolean newFolder(String folderName) {
+			return createFolder(folderName);
+		}
+		public static boolean createDirectory(String folderName) {
+			return createFolder(folderName);
+		}
+		public static boolean newDirectory(String folderName) {
+			return createFolder(folderName);
+		}
+		public static String read(String fname) {
+			if (not(fname)) return "";
+			try {
+				File myFile = new File(fname);
+				if (!myFile.exists()) return "";
+				Scanner myReader = new Scanner(myFile);
+				String data = "";
+				while (myReader.hasNextLine())
+					data += myReader.nextLine();
+				myReader.close();
+				return data;
+			} catch (IOException e) {
+				print("[KL.file.JobFailed]:\nSomething went wrong. Failed to read the file.");
+				return "";
+			}
+		}
+		public static objS readJson(String fname) {
+			return parseJson(read(fname));
+		}
+		public static boolean append(String fname, String content) {
+			if (not(fname) || not(content)) return false;
+			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
+				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+					append(subFileName, content);
+				}
+				return true;
+				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+			}
+			//order matters
+		    File file = new File(fname);
+		    if (file == null || !file.exists()) return false;
+		    try (FileWriter writer = new FileWriter(fname, true)) {
+		        writer.write(content);
+		        writer.flush();
+		        print("[KL.file.JobSuccess]:\nAppending to file \"%s\" was successful.", fname);
+		        return true;
+		    } catch (Exception e) {
+		        print("[KL.file.JobFailed]:\nFailed to append to file \"%s\"", fname);
+		    }
+		    return false;
+		    //this method is different than createFile, and unlike the former, this one will append some new content to an existing file, instead of replacing the old content with the new one, which, if the file exists, is the case for createFile method
+		}
+		public static boolean appendTo(String fname, String content) {
+			return append(fname, content);
+		}
+		public static boolean push(String fname, String content) {
+			return append(fname, content);
+		}
+		public static boolean add(String fname, String content) {
+			return append(fname, content);
+		}
+		public static boolean delete(String fname) {
+			if (not(fname)) return false;
+			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
+				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+					delete(subFileName);
+					//refers to the delete method that belongs to this class, not the delete that belonged to the original File class
+				}
+				return true;
+				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+			}
+			File myFile = new File(fname);
+			String msgOnSuccess = "[KL.file.JobSuccess]:\nFile \"" + myFile.getPath()
+					+ "\" deleted successfully.",
+					msgOnFailure = new KL().f("[KL.file.JobFailed]:\nFile \"%s\" failed to delete. No such file, or folder!", fname);
+			if (myFile == null || !myFile.exists()) {
+				print(msgOnFailure);
+				return false;
+			}
+			if (myFile.isDirectory()) {
+				for (File f : myFile.listFiles())
+					delete(f.toString());
+			}
+			myFile.delete();
+			//NOTICE: this delete method refers to the delete METHOD OF THE PARENT CLASS File, not of the current "file" class, because that'd just make a highly recursive, infinite loop you can never get out of
+			print(msgOnSuccess);
+			return true;
+		}
+		public static boolean remove(String fname) {
+			return delete(fname);
+		}
+		public static boolean deleteFolder(String fname) {
+			return delete(fname);
+			//the deleteFile method can delete anything: be it a folder, or directory
+		}
+		public static boolean removeFolder(String fname) {
+			return delete(fname);
+		}
+		public static boolean rename(String fname, String destinationString) {
+			if (not(fname) || not(destinationString)) return false;
+			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)") && in(destinationString, "[\\\\\\/]")) {
+				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+					rename(subFileName, destinationString);
+					//makes no sense in the form of a file-renaming function anymore, but in the case of a file mover (that's quite right, moving is possible with the exact same function if you pass in the folder name + separator), it does make sense in the case where want to move multiple files to the same specific directory
+				}
+				return true;
+				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+			}
+			try {
+				File myFile = new File(fname);
+				if (myFile == null || !myFile.exists()) throw new FileNotFoundException();
+				File destinationFile = new File(destinationString);
+				if (myFile.renameTo(destinationFile)) {
+					print("\n[KL.file.JobSuccess]:\nFile " + myFile.getName()
+							+ " was successfully moved/renamed to "
+							+ destinationFile.getPath());
+					return true;
+				}
+				print("[KL.file.JobFailed]:\nYou do not have enough permissions "
+							+ "to move/rename this file.");
+			} catch (FileNotFoundException e) {
+				print("[KL.file.JobFailed]:\nNothing to rename.");
+			}
+			return false;
+		}
+		public static boolean move(String from, String to) {
+			return rename(from, to);
+		}
+		public static boolean copy(String from, String to, boolean overwrite) {
+			if (not(from) || not(to)) return false;
+			//order matters, this check always comes first
+			if (in(from, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
+				for (String subFileName : from.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+					copy(subFileName, to, overwrite);
+				}
+				return true;
+				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+			}
+			File fileToCopy = new File(from);
+			File destination = new File(to);
+			//order matter, this check SHOULD come after
+			if (isNull(fileToCopy) || !fileToCopy.exists()) return false;
+			try {
+				if (!overwrite) {
+					Files.copy(fileToCopy.toPath(), destination.toPath());
+				} else {
+					Files.copy(fileToCopy.toPath(), destination.toPath(),
+							StandardCopyOption.REPLACE_EXISTING);
+				}
+				return true;
+			} catch (IOException e) {
+				print("[KL.file.JobFailed]:\nFile failed to copy!");
+			}
+			return false;
+		}
+		public static boolean copy(String from, String to) {
+			return copy(from, to, true);
+		}
 	}
 	// some global font variables for the ease of access, only handy if you
 	// extend
@@ -3651,10 +3877,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		String nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : "";
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return "";
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -3997,6 +4235,36 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9, String v9, String k10, String v10) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9, String v9) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3) {
+		return new objS(k1, v1, k2, v2, k3, v3);
+	}
+	public static objS objS(String k1, String v1, String k2, String v2) {
+		return new objS(k1, v1, k2, v2);
+	}
+	public static objS objS(String k1, String v1) {
+		return new objS(k1, v1);
+	}
 	public static final class objI extends HashMap<String, Integer> {
 		objI() {
 			super();
@@ -4151,10 +4419,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		int nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -4500,6 +4780,36 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3) {
+		return new objI(k1, v1, k2, v2, k3, v3);
+	}
+	public static objI objI(String k1, int v1, String k2, int v2) {
+		return new objI(k1, v1, k2, v2);
+	}
+	public static objI objI(String k1, int v1) {
+		return new objI(k1, v1);
+	}
 	public static final class objL extends HashMap<String, Long> {
 		objL() {
 			super();
@@ -4637,10 +4947,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		long nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -4996,6 +5318,36 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9, String k10, long v10) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3) {
+		return new objL(k1, v1, k2, v2, k3, v3);
+	}
+	public static objL objL(String k1, long v1, String k2, long v2) {
+		return new objL(k1, v1, k2, v2);
+	}
+	public static objL objL(String k1, long v1) {
+		return new objL(k1, v1);
+	}
 	public static final class objF extends HashMap<String, Float> {
 		objF() {
 			super();
@@ -5133,10 +5485,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		float nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -5493,6 +5857,36 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9, String k10, float v10) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3) {
+		return new objF(k1, v1, k2, v2, k3, v3);
+	}
+	public static objF objF(String k1, float v1, String k2, float v2) {
+		return new objF(k1, v1, k2, v2);
+	}
+	public static objF objF(String k1, float v1) {
+		return new objF(k1, v1);
+	}
 	public static final class objD extends HashMap<String, Double> {
 		objD() {
 			super();
@@ -5632,10 +6026,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		double nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -5992,6 +6398,36 @@ public class KL {
 			return super.size();
 		}
 	}
+	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9, double v9, String k10, double v10) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9, double v9) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3) {
+		return new objD(k1, v1, k2, v2, k3, v3);
+	}
+	public static objD objD(String k1, double v1, String k2, double v2) {
+		return new objD(k1, v1, k2, v2);
+	}
+	public static objD objD(String k1, double v1) {
+		return new objD(k1, v1);
+	}
 	public static final class objB extends HashMap<String, Boolean> {
 		objB() {
 			super();
@@ -6133,10 +6569,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		boolean nthValue(int n) {
-			return n >= 0 && n < length() ? array()[n] : false;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return false;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -6493,12 +6941,42 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class Tree<Key, Value> extends TreeMap<Key, Value> {
+	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9, boolean v9, String k10, boolean v10) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9, boolean v9) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3) {
+		return new objB(k1, v1, k2, v2, k3, v3);
+	}
+	public static objB objB(String k1, boolean v1, String k2, boolean v2) {
+		return new objB(k1, v1, k2, v2);
+	}
+	public static objB objB(String k1, boolean v1) {
+		return new objB(k1, v1);
+	}
+	public static class tree<Key, Value> extends TreeMap<Key, Value> {
 		public static final long serialVersionUID = 1L;
-		Tree() {
+		tree() {
 			super();
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
 				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
 				Key k8, Value v8, Key k9, Value v9, Key k10, Value v10) {
 			super.put(k1, v1);
@@ -6512,7 +6990,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
 				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
 				Key k8, Value v8, Key k9, Value v9) {
 			super.put(k1, v1);
@@ -6525,7 +7003,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
 				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
 				Key k8, Value v8) {
 			super.put(k1, v1);
@@ -6537,7 +7015,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
 				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7,
 				Value v7) {
 			super.put(k1, v1);
@@ -6548,7 +7026,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
 				Value v4, Key k5, Value v5, Key k6, Value v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -6557,7 +7035,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
 				Value v4, Key k5, Value v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -6565,23 +7043,23 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
 				Value v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3) {
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		Tree(Key k1, Value v1, Key k2, Value v2) {
+		tree(Key k1, Value v1, Key k2, Value v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		Tree(Key k1, Value v1) {
+		tree(Key k1, Value v1) {
 			super.put(k1, v1);
 		}
 		Value key(Key k) {
@@ -6602,14 +7080,14 @@ public class KL {
 		boolean hasValue(Value v) {
 			return super.containsValue(v);
 		}
-		Tree<Key, Value> set(Key k, Value v) {
+		tree<Key, Value> set(Key k, Value v) {
 			if (!super.containsKey(k))
 				super.put(k, v);
 			else
 				super.replace(k, v);
 			return this;
 		}
-		Tree<Key, Value> add(Key k, Value v) {
+		tree<Key, Value> add(Key k, Value v) {
 			set(k, v);
 			return this;
 		}
@@ -6618,14 +7096,14 @@ public class KL {
 			super.remove(k);
 			return v;
 		}
-		Tree<Key, Value> push(Key k, Value v) {
+		tree<Key, Value> push(Key k, Value v) {
 			add(k, v);
 			return this;
 		}
 		Value pop(Key k) {
 			return delete(k);
 		}
-		Tree<Key, Value> update(Key k, Value v) {
+		tree<Key, Value> update(Key k, Value v) {
 			set(k, v);
 			return this;
 		}
@@ -6635,27 +7113,27 @@ public class KL {
 		Set<Map.Entry<Key, Value>> entries() {
 			return super.entrySet();
 		}
-		Tree<Key, Value> mapIfPresent(Key key, Function<Value, Value> fn) {
+		tree<Key, Value> mapIfPresent(Key key, Function<Value, Value> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		Tree<Key, Value> mapIfPresent(Key key,
+		tree<Key, Value> mapIfPresent(Key key,
 				BiFunction<? super Key, ? super Value, ? extends Value> fn) {
 			if (not(fn))
 				return this;
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		Tree<Key, Value> mapKey(Function<Key, Key> fn) {
+		tree<Key, Value> mapKey(Function<Key, Key> fn) {
 			HashMap<Key, Value> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		Tree<Key, Value> mapKey(Key key, Function<Key, Key> fn) {
+		tree<Key, Value> mapKey(Key key, Function<Key, Key> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -6669,7 +7147,7 @@ public class KL {
 			}
 			return this;
 		}
-		Tree<Key, Value> map(Value value, Function<Value, Value> fn) {
+		tree<Key, Value> map(Value value, Function<Value, Value> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -6685,38 +7163,38 @@ public class KL {
 			}
 			return this;
 		}
-		Tree<Key, Value> map(Function<Value, Value> fn) {
+		tree<Key, Value> map(Function<Value, Value> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		Tree<Key, Value> map(
+		tree<Key, Value> map(
 				BiFunction<? super Key, ? super Value, ? extends Value> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		Tree<Key, Value> eachKey(Consumer<Key> fn) {
+		tree<Key, Value> eachKey(Consumer<Key> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		Tree<Key, Value> each(Consumer<Value> fn) {
+		tree<Key, Value> each(Consumer<Value> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		Tree<Key, Value> each(BiConsumer<? super Key, ? super Value> fn) {
+		tree<Key, Value> each(BiConsumer<? super Key, ? super Value> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		Tree<Key, Value> slice(int start) {
+		tree<Key, Value> slice(int start) {
 			if (super.isEmpty()) {
-				return new Tree<>();
+				return new tree<>();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new Tree<>();
+				return new tree<>();
 			}
-			Tree<Key, Value> subMap = new Tree<>();
+			tree<Key, Value> subMap = new tree<>();
 			int index = 0;
 			for (Key key : super.keySet()) {
 				if (index >= start) {
@@ -6726,9 +7204,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		Tree<Key, Value> slice(int start, int end) {
+		tree<Key, Value> slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new Tree<>();
+				return new tree<>();
 			}
 			if (start < 0) {
 				start = 0;
@@ -6741,7 +7219,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			Tree<Key, Value> subMap = new Tree<>();
+			tree<Key, Value> subMap = new tree<>();
 			int index = 0;
 			for (Key key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -6751,17 +7229,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		Tree<Key, Value> sliceKeep(int end) {
+		tree<Key, Value> sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new Tree<>();
+				return new tree<>();
 			}
 			if (end < 0) {
-				return new Tree<>();
+				return new tree<>();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			Tree<Key, Value> subMap = new Tree<>();
+			tree<Key, Value> subMap = new tree<>();
 			int index = 0;
 			for (Key key : super.keySet()) {
 				if (index < end) {
@@ -6771,12 +7249,12 @@ public class KL {
 			}
 			return subMap;
 		}
-		Tree<Key, Value> sliceEnd(int earlyEnd) {
+		tree<Key, Value> sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
-				return (Tree<Key, Value>) super.clone();
+				return (tree<Key, Value>) super.clone();
 			}
 			int start = super.size() - earlyEnd;
-			Tree<Key, Value> subMap = new Tree<>();
+			tree<Key, Value> subMap = new tree<>();
 			int index = 0;
 			for (Key key : super.keySet()) {
 				if (index >= start) {
@@ -6786,15 +7264,15 @@ public class KL {
 			}
 			return subMap;
 		}
-		boolean compare(Tree<Key, Value> arrB) {
+		boolean compare(tree<Key, Value> arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		Tree<Key, Value> intersection(Tree<Key, Value> other) {
+		tree<Key, Value> intersection(tree<Key, Value> other) {
 			if (other == null) {
-				return new Tree<>();
+				return new tree<>();
 			}
-			Tree<Key, Value> result = new Tree<>();
+			tree<Key, Value> result = new tree<>();
 			for (Key key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -6803,20 +7281,20 @@ public class KL {
 			}
 			return result;
 		}
-		Tree<Key, Value> negativeIntersection(Tree<Key, Value> other) {
+		tree<Key, Value> negativeIntersection(tree<Key, Value> other) {
 			if (other == null) {
-				return (Tree<Key, Value>) super.clone();
+				return (tree<Key, Value>) super.clone();
 			}
-			Tree<Key, Value> result = (Tree<Key, Value>) super.clone();
+			tree<Key, Value> result = (tree<Key, Value>) super.clone();
 			result.keySet().removeAll(other
-					.intersection((Tree<Key, Value>) super.clone()).keySet());
+					.intersection((tree<Key, Value>) super.clone()).keySet());
 			return result;
 		}
-		Tree<Key, Value> keyIntersection(Tree<Key, Value> other) {
+		tree<Key, Value> keyIntersection(tree<Key, Value> other) {
 			if (other == null) {
-				return new Tree<>();
+				return new tree<>();
 			}
-			Tree<Key, Value> result = new Tree<>();
+			tree<Key, Value> result = new tree<>();
 			for (Key key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -6824,19 +7302,19 @@ public class KL {
 			}
 			return result;
 		}
-		Tree<Key, Value> negativeKeyIntersection(Tree<Key, Value> other) {
+		tree<Key, Value> negativeKeyIntersection(tree<Key, Value> other) {
 			if (other == null) {
-				return (Tree<Key, Value>) super.clone();
+				return (tree<Key, Value>) super.clone();
 			}
-			Tree<Key, Value> result = (Tree<Key, Value>) super.clone();
+			tree<Key, Value> result = (tree<Key, Value>) super.clone();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		Tree<Key, Value> valueIntersection(Tree<Key, Value> other) {
+		tree<Key, Value> valueIntersection(tree<Key, Value> other) {
 			if (other == null) {
-				return new Tree<>();
+				return new tree<>();
 			}
-			Tree<Key, Value> result = new Tree<>();
+			tree<Key, Value> result = new tree<>();
 			for (Key key1 : super.keySet()) {
 				for (Key key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -6846,11 +7324,11 @@ public class KL {
 			}
 			return result;
 		}
-		Tree<Key, Value> negativeValueIntersection(Tree<Key, Value> other) {
+		tree<Key, Value> negativeValueIntersection(tree<Key, Value> other) {
 			if (other == null) {
-				return (Tree<Key, Value>) super.clone();
+				return (tree<Key, Value>) super.clone();
 			}
-			Tree<Key, Value> result = (Tree<Key, Value>) super.clone();
+			tree<Key, Value> result = (tree<Key, Value>) super.clone();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
@@ -6871,7 +7349,7 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class treeS extends Tree<String, Integer> {
+	public static class treeS extends tree<String, Integer> {
 		public static final long serialVersionUID = 1L;
 		treeS() {
 			super();
@@ -6955,10 +7433,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		int nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -7039,7 +7529,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeSL extends Tree<String, Long> {
+	public static class treeSL extends tree<String, Long> {
 		// public static final long serialVersionUID = 1L;
 		treeSL() {
 			super();
@@ -7123,10 +7613,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		long nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -7208,7 +7710,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeSF extends Tree<String, Float> {
+	public static class treeSF extends tree<String, Float> {
 		// public static final long serialVersionUID = 1L;
 		treeSF() {
 			super();
@@ -7292,10 +7794,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		float nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -7377,7 +7891,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeSD extends Tree<String, Double> {
+	public static class treeSD extends tree<String, Double> {
 		// public static final long serialVersionUID = 1L;
 		treeSD() {
 			super();
@@ -7464,10 +7978,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		double nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -7549,7 +8075,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeSB extends Tree<String, Boolean> {
+	public static class treeSB extends tree<String, Boolean> {
 		// public static final long serialVersionUID = 1L;
 		treeSB() {
 			super();
@@ -7637,10 +8163,22 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : "";
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return "";
 		}
 		boolean nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : false;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return false;
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -7722,7 +8260,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeI extends Tree<Integer, String> {
+	public static class treeI extends tree<Integer, String> {
 		// public static final long serialVersionUID = 1L;
 		treeI() {
 			super();
@@ -7806,10 +8344,22 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return 0;
 		}
 		String nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : "";
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return "";
 		}
 		int nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
@@ -7891,7 +8441,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeL extends Tree<Integer, Long> {
+	public static class treeL extends tree<Integer, Long> {
 		public static final long serialVersionUID = 1L;
 		treeL() {
 			super();
@@ -7973,10 +8523,22 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return 0;
 		}
 		long nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		int nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
@@ -8058,7 +8620,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeF extends Tree<Integer, Float> {
+	public static class treeF extends tree<Integer, Float> {
 		public static final long serialVersionUID = 1L;
 		treeF() {
 			super();
@@ -8141,10 +8703,22 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return 0;
 		}
 		float nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		int nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
@@ -8226,7 +8800,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeD extends Tree<Integer, Double> {
+	public static class treeD extends tree<Integer, Double> {
 		// public static final long serialVersionUID = 1L;
 		treeD() {
 			super();
@@ -8310,10 +8884,22 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return 0;
 		}
 		double nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : 0;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return 0;
 		}
 		int nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
@@ -8395,7 +8981,7 @@ public class KL {
 			return false;
 		}
 	}
-	public static class treeB extends Tree<Integer, Boolean> {
+	public static class treeB extends tree<Integer, Boolean> {
 		public static final long serialVersionUID = 1L;
 		treeB() {
 			super();
@@ -8479,10 +9065,22 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			return n >= 0 && n < super.length() ? keyArray()[n] : 0;
+			if (n >= 0 && n < length()) return keyArray()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastKey(n);
+            }
+			return 0;
 		}
 		boolean nthValue(int n) {
-			return n >= 0 && n < super.length() ? array()[n] : false;
+			if (n >= 0 && n < length()) return array()[n];
+			else if (n < 0) {
+				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
+                n = Pos(n);
+                if (n <= length()) return nthLastValue(n);
+            }
+			return false;
 		}
 		int nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
@@ -17868,6 +18466,186 @@ public class KL {
 	public static boolean[] arr(treeB t) {
 		return Arr(t);
 	}
+	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9, String v9, String k10, String v10) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9, String v9) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3) {
+		return new objS(k1, v1, k2, v2, k3, v3);
+	}
+	public static objS obj(String k1, String v1, String k2, String v2) {
+		return new objS(k1, v1, k2, v2);
+	}
+	public static objS obj(String k1, String v1) {
+		return new objS(k1, v1);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3) {
+		return new objI(k1, v1, k2, v2, k3, v3);
+	}
+	public static objI obj(String k1, int v1, String k2, int v2) {
+		return new objI(k1, v1, k2, v2);
+	}
+	public static objI obj(String k1, int v1) {
+		return new objI(k1, v1);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9, String k10, long v10) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3) {
+		return new objL(k1, v1, k2, v2, k3, v3);
+	}
+	public static objL obj(String k1, long v1, String k2, long v2) {
+		return new objL(k1, v1, k2, v2);
+	}
+	public static objL obj(String k1, long v1) {
+		return new objL(k1, v1);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9, String k10, float v10) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3) {
+		return new objF(k1, v1, k2, v2, k3, v3);
+	}
+	public static objF obj(String k1, float v1, String k2, float v2) {
+		return new objF(k1, v1, k2, v2);
+	}
+	public static objF obj(String k1, float v1) {
+		return new objF(k1, v1);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9, double v9, String k10, double v10) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9, double v9) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3) {
+		return new objD(k1, v1, k2, v2, k3, v3);
+	}
+	public static objD obj(String k1, double v1, String k2, double v2) {
+		return new objD(k1, v1, k2, v2);
+	}
+	public static objD obj(String k1, double v1) {
+		return new objD(k1, v1);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9, boolean v9, String k10, boolean v10) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9, boolean v9) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3) {
+		return new objB(k1, v1, k2, v2, k3, v3);
+	}
+	public static objB obj(String k1, boolean v1, String k2, boolean v2) {
+		return new objB(k1, v1, k2, v2);
+	}
+	public static objB obj(String k1, boolean v1) {
+		return new objB(k1, v1);
+	}
 	public static char[] Chars(String str) {
 		if (not(str))
 			return blank.Char;
@@ -20268,6 +21046,30 @@ public class KL {
 	public static int round(double n) {
 		return (int) Math.round(n);
 	}
+	public static int ceil(int n) {
+		return n;
+	}
+	public static long ceil(long n) {
+		return n;
+	}
+	public static int ceil(float n) {
+		return (int) Math.ceil(n);
+	}
+	public static int ceil(double n) {
+		return (int) Math.ceil(n);
+	}
+	public static int floor(int n) {
+		return n;
+	}
+	public static long floor(long n) {
+		return n;
+	}
+	public static int floor(float n) {
+		return (int) Math.floor(n);
+	}
+	public static int floor(double n) {
+		return (int) Math.floor(n);
+	}
 	public static double celciusToFarhenheit(double c) {
 		return (double) round(1.8 * c + 32);
 	}
@@ -20687,11 +21489,6 @@ public class KL {
 	}
 	public static boolean not(boolean[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
-	}
-	public static boolean not(Object... arr) {
-		// ^ *parameter Object... has to stay Object..., not `Object[]`, to
-		// avoid overlap in method calls
-		return isnl(arr) || isEmpty(arr);
 	}
 	public static boolean not(Object[]... arrays) {
 		return isnl(arrays) || isEmpty(arrays);
@@ -26171,134 +26968,13 @@ public class KL {
 			randEmail = randEmail(), randGirlName = randGirlName(),
 			randGuyName = randGuyName(), randWord = randWord(),
 			randSentence = randSentence();
-	// Files
-	public static boolean createFile(String fname) {
-		try {
-			File myFile = new File(fname);
-			if (myFile.createNewFile()) {
-				System.out.println("\n[KL FileReader]: File \""
-						+ myFile.getName() + "\" created successfully");
-				return true;
-			} else {
-				print("\n[KL FileReader]: File either already exists, or you "
-						+ "do not have enough permissions to create a new file "
-						+ "in this directory.\n");
-			}
-		} catch (IOException e) {
-			print("\n[KL FileReader]: Something went wrong.\n");
-		}
-		return false;
-	}
-	public static boolean createFile(String fname, String content) {
-		try {
-			File myFile = new File(fname);
-			FileWriter fr = new FileWriter(fname);
-			fr.write(content);
-			print("\n[KL FileReader]: File \"" + myFile.getName()
-					+ "\" created successfully");
-			fr.close();
-			return true;
-		} catch (IOException e) {
-			print("\n[KL FileReader]: Something went wrong. File creation "
-					+ "failed.\n");
-		}
-		return false;
-	}
-	public static boolean newFile(String fname) {
-		return createFile(fname);
-	}
-	public static boolean newFile(String fname, String content) {
-		return createFile(fname, content);
-	}
-	public static boolean deleteFile(String fname) {
-		File myFile = new File(fname);
-		String msgOnSuccess = "\n[KL FileReader]: File \"" + myFile.getPath()
-				+ "\" deleted successfully.\n",
-				msgOnFailure = "\n[KL FileReader]: Task failed, no such file/folder!\n";
-		if (!myFile.exists()) {
-			print(msgOnFailure);
-			return false;
-		}
-		if (myFile.isDirectory()) {
-			for (File c : myFile.listFiles())
-				deleteFile(c.toString());
-		}
-		myFile.delete();
-		print(msgOnSuccess);
-		return true;
-	}
-	public static boolean removeFile(String fname) {
-		return deleteFile(fname);
-	}
-	public static boolean deleteFolder(String fname) {
-		return deleteFile(fname);
-	}
-	public static boolean removeFolder(String fname) {
-		return deleteFile(fname);
-	}
-	public static boolean renameFile(String fname, String destinationString) {
-		try {
-			File myFile = new File(fname);
-			File destinationFile = new File(destinationString);
-			if (myFile.renameTo(destinationFile)) {
-				print("\n[KL FileReader]: File " + myFile.getName()
-						+ " was successfully moved/renamed to "
-						+ destinationFile.getPath());
-				return true;
-			} else {
-				print("\n[KL FileReader]: You do not have enough permissions "
-						+ "to move/rename this file.\n");
-				IOException e = new IOException();
-				throw e;
-			}
-		} catch (IOException e) {
-			print("\n[KL FileReader]: Something went wrong.\n");
-		}
-		return false;
-	}
-	public static boolean moveFile(String from, String to) {
-		return renameFile(from, to);
-	}
-	public static String readFile(String fname) {
-		String data = "";
-		try {
-			File myObj = new File(fname);
-			Scanner myReader = new Scanner(myObj);
-			while (myReader.hasNextLine())
-				data += myReader.nextLine();
-			myReader.close();
-		} catch (FileNotFoundException e) {
-			print("\n[KL FileReader]: Something went wrong.\n");
-		}
-		return data;
-	}
-	public static boolean copyFile(String from, String to) {
-		File fileToCopy = new File(from);
-		File destination = new File(to);
-		try {
-			Files.copy(fileToCopy.toPath(), destination.toPath(),
-					StandardCopyOption.REPLACE_EXISTING);
-			return true;
-		} catch (IOException e) {
-			System.out.println("\n[KL FileReader]: File Failed to copy!\n");
-		}
-		return false;
-	}
-	public static boolean createFolder(String folderName) {
-		File fileFolder = new File(folderName);
-		return fileFolder.mkdirs();
-	}
-	public static boolean newFolder(String folderName) {
-		return createFolder(folderName);
-	}
 	public static String name = "Ayesha";
 	public static int age = 23;
 	public static void main(String[] args) {
 		print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room",
 				"love", 9, 19, 6);
-		int decimalPlaces = 2;
 		print(8.643);
-		print(minsAgo(5));
-
+        objB o = obj("fuckme", true);
+        
 	}
 }

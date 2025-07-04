@@ -199,7 +199,20 @@ class lafz {
 		return toString();
 	}
 }
-class Str extends lafz {
+class str extends lafz {
+	str() {
+		this.str = "";
+	}
+	str(Object... objs) {
+		this.str = "";
+		for (Object o : objs) {
+			if (o != null) this.str += " "+o;
+		}
+		trim();
+		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
+	}
+}
+class Str extends str {
 	Str() {
 		this.str = "";
 	}
@@ -227,7 +240,7 @@ public class Main {
 	public static void main(String[] args) {
 		lafz salaam = $("  hi", "there", "love!", "I'm", 23);
 		lafz greeting2 = $("hi", " boyfriends");
-		Str name = Str("mehrunisa ji");
+		str name = str("mehrunisa ji")[i];
 		System.out.println(salaam.sentCase());
 		System.out.println(name.i(-12));
 		System.out.println(name.lastWord());

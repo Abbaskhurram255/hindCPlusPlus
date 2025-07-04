@@ -225,3 +225,7 @@ Money m = new Money(5*cr);
 		 * print("you're in the drinking age, get in the bar🍺"))); sw(true,
 		 * Yes, () -> print("the lights are on"), Else, () -> print("off"));
 		 */
+		 
+		 /*
+		 print(file.readJson("o.json"));
+		 */
