@@ -244,7 +244,8 @@ public class KL {
 	}
 	public static objS parseJson(String jsonString) {
 		objS map = new objS();
-		if (not(jsonString)) return map;
+		if (not(jsonString))
+			return map;
 		if (!jsonString.startsWith("{") || !jsonString.endsWith("}")) {
 			map.add("status", "notok").add("error", "yes");
 			return map;
@@ -254,9 +255,11 @@ public class KL {
 		for (String pair : keyValuePairs) {
 			String[] parts = pair.split(":", 2);
 			if (parts.length == 2) {
-				String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]", "").trim();
+				String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]", "")
+						.trim();
 				String value = parts[1].trim().replaceAll("[\"\\{\\}\\]]", "");
-				if (key.length() != 0 && in(key, "[a-zA-Z]+")) map.add(key, value);
+				if (key.length() != 0 && in(key, "[a-zA-Z]+"))
+					map.add(key, value);
 			}
 		}
 		map.add("status", "ok").add("error", "no");
@@ -281,7 +284,8 @@ public class KL {
 				reader.close();
 				String jsonString = respBuilder.toString().trim();
 				map = parseJson(jsonString);
-				map.add("response", "200").add("status", "ok").add("error", "no");
+				map.add("response", "200").add("status", "ok").add("error",
+						"no");
 				return map;
 			} else {
 				map.add("response", Str(statusCode)).add("status", "notok")
@@ -322,9 +326,12 @@ public class KL {
 				for (String pair : keyValuePairs) {
 					String[] parts = pair.split(":", 2);
 					if (parts.length == 2) {
-						String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]", "").trim();
-						String value = parts[1].trim().replaceAll("[\"\\{\\}\\]]", "");
-						if (key.length() != 0 && in(key, "[a-zA-Z]+")) map.add(key, value);
+						String key = parts[0].trim()
+								.replaceAll("[\"\\{\\}\\]]", "").trim();
+						String value = parts[1].trim()
+								.replaceAll("[\"\\{\\}\\]]", "");
+						if (key.length() != 0 && in(key, "[a-zA-Z]+"))
+							map.add(key, value);
 					}
 				}
 				map.add("response", "200").add("status", "ok").add("error",
@@ -498,9 +505,10 @@ public class KL {
 			return this;
 		}
 		gui opacity(double o) {
-			if (o < 0 || o > 100) return this;
+			if (o < 0 || o > 100)
+				return this;
 			if (o > 1)
-                super.setOpacity((float) o / 100);
+				super.setOpacity((float) o / 100);
 			else if (o >= 0 && o <= 1)
 				super.setOpacity((float) o);
 			return this;
@@ -555,6 +563,16 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		boolean openUrl(String urlString) {
+			try {
+				if (!isUrl(urlString))
+					return false;
+				Desktop.getDesktop().browse(new URI(urlString));
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		}
 		double mouseX() {
 			return MouseInfo.getPointerInfo().getLocation().getX();
 		}
@@ -562,58 +580,13 @@ public class KL {
 			return MouseInfo.getPointerInfo().getLocation().getY();
 		}
 		gui exitOnClose() {
+			super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			this.on("close", () -> {
 				boolean confirmed = this
 						.confirm("Are you sure you want to close?");
 				if (confirmed)
 					super.dispose();
 			});
-			return this;
-		}
-		gui updateListener(Component c, EventListener newL) {
-			if (c == null || newL == null) {
-				System.err.println("Component or new listener cannot be null");
-				return this;
-			}
-			try {
-				String listenerType = newL.getClass().getSimpleName();
-				Method removeMethod;
-				if (c instanceof Window && newL instanceof WindowListener) {
-					removeMethod = Window.class.getMethod(
-							"removeWindowListener", WindowListener.class);
-				} else {
-					removeMethod = c.getClass().getMethod(
-							"remove" + listenerType, newL.getClass());
-				}
-				// Remove all existing listeners
-				for (EventListener listener : c.getListeners(newL.getClass())) {
-					removeMethod.invoke(c, listener);
-				}
-				Method addMethod;
-				if (c instanceof Window) {
-					addMethod = Window.class.getMethod("addWindowListener",
-							WindowListener.class);
-				} else {
-					addMethod = c.getClass().getMethod("add" + listenerType,
-							newL.getClass());
-				}
-				addMethod.invoke(c, newL);
-			} catch (NoSuchMethodException e) {
-				System.err.println("No method found for listener type: "
-						+ newL.getClass().getSimpleName());
-			} catch (IllegalAccessException e) {
-				System.err
-						.println("Access denied for method: " + e.getMessage());
-			} catch (InvocationTargetException e) {
-				System.err.println(
-						"Error invoking method: " + e.getCause().getMessage());
-			} catch (Exception e) {
-				System.err.println("An error occurred: " + e.getMessage());
-			}
-			return this;
-		}
-		gui exitOnCloseWithoutAsking() {
-			// implement later
 			return this;
 		}
 		gui on(String k, Runnable action) {
@@ -624,7 +597,7 @@ public class KL {
 				}
 			}
 			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyListener() {
+				super.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						char keyCharCaptured = e.getKeyChar();
@@ -651,27 +624,22 @@ public class KL {
 							new Thread(action).run();;
 						}
 					}
-					@Override
-					public void keyReleased(KeyEvent e) {
-					}
-					@Override
-					public void keyTyped(KeyEvent e) {
-					}
 				});
-				super.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-					}
+				super.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						int button = -1;
-						if (KL.eq(k, "click") || KL.eq(k, "clickl")
-								|| KL.eq(k, "lclick"))
+						if (KL.eq(k, "(m(ouse)?)?\\W?click")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
 							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw")
-								|| KL.eq(k, "mclick") || KL.eq(k, "wclick"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
 							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "clickr") || KL.eq(k, "rclick"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
 							button = MouseEvent.BUTTON3;
 						if (e.getButton() == button) {
 							new Thread(action).run();
@@ -679,33 +647,33 @@ public class KL {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "release")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "enter")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "leave")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
 							new Thread(action).run();
 						}
 					}
 				});
-				super.addMouseMotionListener(new MouseMotionListener() {
+				super.addMouseMotionListener(new MouseMotionAdapter() {
 					@Override
 					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "drag")) {
+						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "move")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
 							new Thread(action).run();
 						}
 					}
@@ -713,26 +681,30 @@ public class KL {
 				super.addMouseWheelListener(new MouseWheelListener() {
 					@Override
 					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "wheel")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
 							new Thread(action).run();
 						}
 					}
 				});
-				super.addWindowListener(new WindowListener() {
+				super.addWindowListener(new WindowAdapter() {
 					@Override
 					public void windowOpened(WindowEvent e) {
-						if (KL.eq(k, "launch")) {
+						if (KL.eq(k, "launch|start")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void windowClosing(WindowEvent e) {
-						if (KL.in(k, "exit|close")) {
+						if (KL.eq(k, "exit|close")) {
 							new Thread(action).run();
 						}
 					}
+					// there's a difference between these two
 					@Override
 					public void windowClosed(WindowEvent e) {
+						if (KL.eq(k, "exited|closed|(after|post)\\s?close")) {
+							new Thread(action).run();
+						}
 					}
 					@Override
 					public void windowIconified(WindowEvent e) {
@@ -1084,7 +1056,7 @@ public class KL {
 				}
 			}
 			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyListener() {
+				super.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						char keyCharCaptured = e.getKeyChar();
@@ -1111,25 +1083,22 @@ public class KL {
 							new Thread(action).run();;
 						}
 					}
-					@Override
-					public void keyReleased(KeyEvent e) {
-					}
-					@Override
-					public void keyTyped(KeyEvent e) {
-					}
 				});
-				super.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-					}
+				super.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						int button = -1;
-						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+						if (KL.eq(k, "(m(ouse)?)?\\W?click")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
 							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
 							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "clickr"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
 							button = MouseEvent.BUTTON3;
 						if (e.getButton() == button) {
 							new Thread(action).run();
@@ -1137,33 +1106,33 @@ public class KL {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "release")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "enter")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "leave")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
 							new Thread(action).run();
 						}
 					}
 				});
-				super.addMouseMotionListener(new MouseMotionListener() {
+				super.addMouseMotionListener(new MouseMotionAdapter() {
 					@Override
 					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "drag")) {
+						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "move")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
 							new Thread(action).run();
 						}
 					}
@@ -1171,7 +1140,7 @@ public class KL {
 				super.addMouseWheelListener(new MouseWheelListener() {
 					@Override
 					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "wheel")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
 							new Thread(action).run();
 						}
 					}
@@ -1358,7 +1327,7 @@ public class KL {
 				}
 			}
 			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyListener() {
+				super.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						char keyCharCaptured = e.getKeyChar();
@@ -1385,25 +1354,22 @@ public class KL {
 							new Thread(action).run();;
 						}
 					}
-					@Override
-					public void keyReleased(KeyEvent e) {
-					}
-					@Override
-					public void keyTyped(KeyEvent e) {
-					}
 				});
-				super.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-					}
+				super.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						int button = -1;
-						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+						if (KL.eq(k, "(m(ouse)?)?\\W?click")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
 							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
 							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "clickr"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
 							button = MouseEvent.BUTTON3;
 						if (e.getButton() == button) {
 							new Thread(action).run();
@@ -1411,33 +1377,33 @@ public class KL {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "release")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "enter")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "leave")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
 							new Thread(action).run();
 						}
 					}
 				});
-				super.addMouseMotionListener(new MouseMotionListener() {
+				super.addMouseMotionListener(new MouseMotionAdapter() {
 					@Override
 					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "drag")) {
+						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "move")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
 							new Thread(action).run();
 						}
 					}
@@ -1445,7 +1411,7 @@ public class KL {
 				super.addMouseWheelListener(new MouseWheelListener() {
 					@Override
 					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "wheel")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
 							new Thread(action).run();
 						}
 					}
@@ -1690,8 +1656,14 @@ public class KL {
 			return this;
 		}
 		txtField on(String k, Runnable action) {
+			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
+				String[] keys = k.split("\\|");
+				for (var key : keys) {
+					on(key, action);
+				}
+			}
 			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyListener() {
+				super.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						char keyCharCaptured = e.getKeyChar();
@@ -1718,25 +1690,22 @@ public class KL {
 							new Thread(action).run();;
 						}
 					}
-					@Override
-					public void keyReleased(KeyEvent e) {
-					}
-					@Override
-					public void keyTyped(KeyEvent e) {
-					}
 				});
-				super.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-					}
+				super.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						int button = -1;
-						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+						if (KL.eq(k, "(m(ouse)?)?\\W?click")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
 							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
 							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "clickr"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
 							button = MouseEvent.BUTTON3;
 						if (e.getButton() == button) {
 							new Thread(action).run();
@@ -1744,33 +1713,33 @@ public class KL {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "release")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "enter")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "leave")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
 							new Thread(action).run();
 						}
 					}
 				});
-				super.addMouseMotionListener(new MouseMotionListener() {
+				super.addMouseMotionListener(new MouseMotionAdapter() {
 					@Override
 					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "drag")) {
+						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "move")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
 							new Thread(action).run();
 						}
 					}
@@ -1778,7 +1747,7 @@ public class KL {
 				super.addMouseWheelListener(new MouseWheelListener() {
 					@Override
 					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "wheel")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
 							new Thread(action).run();
 						}
 					}
@@ -1857,8 +1826,14 @@ public class KL {
 			return this;
 		}
 		txtArea on(String k, Runnable action) {
+			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
+				String[] keys = k.split("\\|");
+				for (var key : keys) {
+					on(key, action);
+				}
+			}
 			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyListener() {
+				super.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						char keyCharCaptured = e.getKeyChar();
@@ -1885,25 +1860,22 @@ public class KL {
 							new Thread(action).run();;
 						}
 					}
-					@Override
-					public void keyReleased(KeyEvent e) {
-					}
-					@Override
-					public void keyTyped(KeyEvent e) {
-					}
 				});
-				super.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-					}
+				super.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						int button = -1;
-						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+						if (KL.eq(k, "(m(ouse)?)?\\W?click")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
 							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
 							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "clickr"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
 							button = MouseEvent.BUTTON3;
 						if (e.getButton() == button) {
 							new Thread(action).run();
@@ -1911,33 +1883,33 @@ public class KL {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "release")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "enter")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "leave")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
 							new Thread(action).run();
 						}
 					}
 				});
-				super.addMouseMotionListener(new MouseMotionListener() {
+				super.addMouseMotionListener(new MouseMotionAdapter() {
 					@Override
 					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "drag")) {
+						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "move")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
 							new Thread(action).run();
 						}
 					}
@@ -1945,7 +1917,7 @@ public class KL {
 				super.addMouseWheelListener(new MouseWheelListener() {
 					@Override
 					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "wheel")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
 							new Thread(action).run();
 						}
 					}
@@ -2024,8 +1996,14 @@ public class KL {
 			return this;
 		}
 		pwdField on(String k, Runnable action) {
+			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
+				String[] keys = k.split("\\|");
+				for (var key : keys) {
+					on(key, action);
+				}
+			}
 			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyListener() {
+				super.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						char keyCharCaptured = e.getKeyChar();
@@ -2052,25 +2030,22 @@ public class KL {
 							new Thread(action).run();;
 						}
 					}
-					@Override
-					public void keyReleased(KeyEvent e) {
-					}
-					@Override
-					public void keyTyped(KeyEvent e) {
-					}
 				});
-				super.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-					}
+				super.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						int button = -1;
-						if (KL.eq(k, "click") || KL.eq(k, "clickl"))
+						if (KL.eq(k, "(m(ouse)?)?\\W?click")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
 							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "clickm") || KL.eq(k, "clickw"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
 							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "clickr"))
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
 							button = MouseEvent.BUTTON3;
 						if (e.getButton() == button) {
 							new Thread(action).run();
@@ -2078,33 +2053,33 @@ public class KL {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "release")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "enter")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "leave")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
 							new Thread(action).run();
 						}
 					}
 				});
-				super.addMouseMotionListener(new MouseMotionListener() {
+				super.addMouseMotionListener(new MouseMotionAdapter() {
 					@Override
 					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "drag")) {
+						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
 							new Thread(action).run();
 						}
 					}
 					@Override
 					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "move")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
 							new Thread(action).run();
 						}
 					}
@@ -2112,7 +2087,7 @@ public class KL {
 				super.addMouseWheelListener(new MouseWheelListener() {
 					@Override
 					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "wheel")) {
+						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
 							new Thread(action).run();
 						}
 					}
@@ -2894,15 +2869,22 @@ public class KL {
 		boolean isFolder() {
 			return super.isDirectory();
 		}
-		//@static methods
+		// @static methods
 		public static boolean create(String fname, String content) {
-			if (not(fname) || not(content)) return false;
+			if (not(fname) || not(content))
+				return false;
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String subFileName : fname
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					create(subFileName, content);
 				}
 				return true;
-				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+				// since we have got some exception handling, let's just guess
+				// everything works as expected, I mean one can't return null
+				// here, if I could I would, it has to be a boolean. Can't be
+				// false either. False negatives? Not my thing. Neither are
+				// false positives, but not much choice left other than to give
+				// either a false negative, or a false positive.
 			}
 			try {
 				File myFile = new File(fname);
@@ -2919,25 +2901,32 @@ public class KL {
 			return false;
 		}
 		public static boolean create(String fname) {
-			if (not(fname)) return false;
+			if (not(fname))
+				return false;
 			return create(fname, "");
-			//creates a blank file
+			// creates a blank file
 		}
 		public static boolean createFolder(String folderName) {
-			if (not(folderName)) return false;
+			if (not(folderName))
+				return false;
 			if (in(folderName, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String folder : folderName.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String folder : folderName
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					createFolder(folder);
 				}
 				return true;
-				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+				// since we have got some exception handling, let's just guess
+				// everything works as expected, I mean one can't return null
+				// here, if I could I would, it has to be a boolean. Can't be
+				// false either. False negatives? Not my thing. Neither are
+				// false positives, but not much choice left other than to give
+				// either a false negative, or a false positive.
 			}
 			try {
 				File fileFolder = new File(folderName);
 				return fileFolder.mkdirs();
-				//mkdirs is used to make both directories, and subdirectories
-			}
-			catch (Exception e) {
+				// mkdirs is used to make both directories, and subdirectories
+			} catch (Exception e) {
 				print("[KL.file.JobFailed]:\nFolder failed to create.");
 			}
 			return false;
@@ -2952,10 +2941,12 @@ public class KL {
 			return createFolder(folderName);
 		}
 		public static String read(String fname) {
-			if (not(fname)) return "";
+			if (not(fname))
+				return "";
 			try {
 				File myFile = new File(fname);
-				if (!myFile.exists()) return "";
+				if (!myFile.exists())
+					return "";
 				Scanner myReader = new Scanner(myFile);
 				String data = "";
 				while (myReader.hasNextLine())
@@ -2971,27 +2962,40 @@ public class KL {
 			return parseJson(read(fname));
 		}
 		public static boolean append(String fname, String content) {
-			if (not(fname) || not(content)) return false;
+			if (not(fname) || not(content))
+				return false;
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String subFileName : fname
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					append(subFileName, content);
 				}
 				return true;
-				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+				// since we have got some exception handling, let's just guess
+				// everything works as expected, I mean one can't return null
+				// here, if I could I would, it has to be a boolean. Can't be
+				// false either. False negatives? Not my thing. Neither are
+				// false positives, but not much choice left other than to give
+				// either a false negative, or a false positive.
 			}
-			//order matters
-		    File file = new File(fname);
-		    if (file == null || !file.exists()) return false;
-		    try (FileWriter writer = new FileWriter(fname, true)) {
-		        writer.write(content);
-		        writer.flush();
-		        print("[KL.file.JobSuccess]:\nAppending to file \"%s\" was successful.", fname);
-		        return true;
-		    } catch (Exception e) {
-		        print("[KL.file.JobFailed]:\nFailed to append to file \"%s\"", fname);
-		    }
-		    return false;
-		    //this method is different than createFile, and unlike the former, this one will append some new content to an existing file, instead of replacing the old content with the new one, which, if the file exists, is the case for createFile method
+			// order matters
+			File file = new File(fname);
+			if (file == null || !file.exists())
+				return false;
+			try (FileWriter writer = new FileWriter(fname, true)) {
+				writer.write(content);
+				writer.flush();
+				print("[KL.file.JobSuccess]:\nAppending to file \"%s\" was successful.",
+						fname);
+				return true;
+			} catch (Exception e) {
+				print("[KL.file.JobFailed]:\nFailed to append to file \"%s\"",
+						fname);
+			}
+			return false;
+			// this method is different than createFile, and unlike the former,
+			// this one will append some new content to an existing file,
+			// instead of replacing the old content with the new one, which, if
+			// the file exists, is the case for createFile method
 		}
 		public static boolean appendTo(String fname, String content) {
 			return append(fname, content);
@@ -3003,19 +3007,29 @@ public class KL {
 			return append(fname, content);
 		}
 		public static boolean delete(String fname) {
-			if (not(fname)) return false;
+			if (not(fname))
+				return false;
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String subFileName : fname
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					delete(subFileName);
-					//refers to the delete method that belongs to this class, not the delete that belonged to the original File class
+					// refers to the delete method that belongs to this class,
+					// not the delete that belonged to the original File class
 				}
 				return true;
-				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+				// since we have got some exception handling, let's just guess
+				// everything works as expected, I mean one can't return null
+				// here, if I could I would, it has to be a boolean. Can't be
+				// false either. False negatives? Not my thing. Neither are
+				// false positives, but not much choice left other than to give
+				// either a false negative, or a false positive.
 			}
 			File myFile = new File(fname);
-			String msgOnSuccess = "[KL.file.JobSuccess]:\nFile \"" + myFile.getPath()
-					+ "\" deleted successfully.",
-					msgOnFailure = new KL().f("[KL.file.JobFailed]:\nFile \"%s\" failed to delete. No such file, or folder!", fname);
+			String msgOnSuccess = "[KL.file.JobSuccess]:\nFile \""
+					+ myFile.getPath() + "\" deleted successfully.",
+					msgOnFailure = new KL().f(
+							"[KL.file.JobFailed]:\nFile \"%s\" failed to delete. No such file, or folder!",
+							fname);
 			if (myFile == null || !myFile.exists()) {
 				print(msgOnFailure);
 				return false;
@@ -3025,7 +3039,10 @@ public class KL {
 					delete(f.toString());
 			}
 			myFile.delete();
-			//NOTICE: this delete method refers to the delete METHOD OF THE PARENT CLASS File, not of the current "file" class, because that'd just make a highly recursive, infinite loop you can never get out of
+			// NOTICE: this delete method refers to the delete METHOD OF THE
+			// PARENT CLASS File, not of the current "file" class, because
+			// that'd just make a highly recursive, infinite loop you can never
+			// get out of
 			print(msgOnSuccess);
 			return true;
 		}
@@ -3034,24 +3051,39 @@ public class KL {
 		}
 		public static boolean deleteFolder(String fname) {
 			return delete(fname);
-			//the deleteFile method can delete anything: be it a folder, or directory
+			// the deleteFile method can delete anything: be it a folder, or
+			// directory
 		}
 		public static boolean removeFolder(String fname) {
 			return delete(fname);
 		}
 		public static boolean rename(String fname, String destinationString) {
-			if (not(fname) || not(destinationString)) return false;
-			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)") && in(destinationString, "[\\\\\\/]")) {
-				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+			if (not(fname) || not(destinationString))
+				return false;
+			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")
+					&& in(destinationString, "[\\\\\\/]")) {
+				for (String subFileName : fname
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					rename(subFileName, destinationString);
-					//makes no sense in the form of a file-renaming function anymore, but in the case of a file mover (that's quite right, moving is possible with the exact same function if you pass in the folder name + separator), it does make sense in the case where want to move multiple files to the same specific directory
+					// makes no sense in the form of a file-renaming function
+					// anymore, but in the case of a file mover (that's quite
+					// right, moving is possible with the exact same function if
+					// you pass in the folder name + separator), it does make
+					// sense in the case where want to move multiple files to
+					// the same specific directory
 				}
 				return true;
-				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+				// since we have got some exception handling, let's just guess
+				// everything works as expected, I mean one can't return null
+				// here, if I could I would, it has to be a boolean. Can't be
+				// false either. False negatives? Not my thing. Neither are
+				// false positives, but not much choice left other than to give
+				// either a false negative, or a false positive.
 			}
 			try {
 				File myFile = new File(fname);
-				if (myFile == null || !myFile.exists()) throw new FileNotFoundException();
+				if (myFile == null || !myFile.exists())
+					throw new FileNotFoundException();
 				File destinationFile = new File(destinationString);
 				if (myFile.renameTo(destinationFile)) {
 					print("\n[KL.file.JobSuccess]:\nFile " + myFile.getName()
@@ -3060,7 +3092,7 @@ public class KL {
 					return true;
 				}
 				print("[KL.file.JobFailed]:\nYou do not have enough permissions "
-							+ "to move/rename this file.");
+						+ "to move/rename this file.");
 			} catch (FileNotFoundException e) {
 				print("[KL.file.JobFailed]:\nNothing to rename.");
 			}
@@ -3070,19 +3102,27 @@ public class KL {
 			return rename(from, to);
 		}
 		public static boolean copy(String from, String to, boolean overwrite) {
-			if (not(from) || not(to)) return false;
-			//order matters, this check always comes first
+			if (not(from) || not(to))
+				return false;
+			// order matters, this check always comes first
 			if (in(from, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String subFileName : from.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String subFileName : from
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					copy(subFileName, to, overwrite);
 				}
 				return true;
-				//since we have got some exception handling, let's just guess everything works as expected, I mean one can't return null here, if I could I would, it has to be a boolean. Can't be false either. False negatives? Not my thing. Neither are false positives, but not much choice left other than to give either a false negative, or a false positive.
+				// since we have got some exception handling, let's just guess
+				// everything works as expected, I mean one can't return null
+				// here, if I could I would, it has to be a boolean. Can't be
+				// false either. False negatives? Not my thing. Neither are
+				// false positives, but not much choice left other than to give
+				// either a false negative, or a false positive.
 			}
 			File fileToCopy = new File(from);
 			File destination = new File(to);
-			//order matter, this check SHOULD come after
-			if (isNull(fileToCopy) || !fileToCopy.exists()) return false;
+			// order matter, this check SHOULD come after
+			if (isNull(fileToCopy) || !fileToCopy.exists())
+				return false;
 			try {
 				if (!overwrite) {
 					Files.copy(fileToCopy.toPath(), destination.toPath());
@@ -3877,21 +3917,29 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return "";
 		}
 		String nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return "";
 		}
 		String nthLastKey(int n) {
@@ -4235,28 +4283,46 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9, String v9, String k10, String v10) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objS objS(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6, String k7, String v7, String k8, String v8,
+			String k9, String v9, String k10, String v10) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9, String v9) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objS objS(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6, String k7, String v7, String k8, String v8,
+			String k9, String v9) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objS objS(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6, String k7, String v7, String k8, String v8) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7) {
+	public static objS objS(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6, String k7, String v7) {
 		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6) {
+	public static objS objS(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6) {
 		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
+	public static objS objS(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5) {
 		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
+	public static objS objS(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4) {
 		return new objS(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2, String k3, String v3) {
+	public static objS objS(String k1, String v1, String k2, String v2,
+			String k3, String v3) {
 		return new objS(k1, v1, k2, v2, k3, v3);
 	}
 	public static objS objS(String k1, String v1, String k2, String v2) {
@@ -4419,21 +4485,29 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return "";
 		}
 		int nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return 0;
 		}
 		String nthLastKey(int n) {
@@ -4780,28 +4854,44 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
+			String k7, int v7, String k8, int v8, String k9, int v9, String k10,
+			int v10) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
+			String k7, int v7, String k8, int v8, String k9, int v9) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
+			String k7, int v7, String k8, int v8) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7) {
+	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
+			String k7, int v7) {
 		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
+	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
 		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5) {
+	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5) {
 		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4) {
+	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4) {
 		return new objI(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3, int v3) {
+	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+			int v3) {
 		return new objI(k1, v1, k2, v2, k3, v3);
 	}
 	public static objI objI(String k1, int v1, String k2, int v2) {
@@ -4947,21 +5037,29 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return "";
 		}
 		long nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return 0;
 		}
 		String nthLastKey(int n) {
@@ -5318,28 +5416,45 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9, String k10, long v10) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8, String k9, long v9,
+			String k10, long v10) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8, String k9, long v9) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7) {
+	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7) {
 		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6) {
+	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6,
+			long v6) {
 		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5) {
+	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5) {
 		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4) {
+	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4) {
 		return new objL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3, long v3) {
+	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+			long v3) {
 		return new objL(k1, v1, k2, v2, k3, v3);
 	}
 	public static objL objL(String k1, long v1, String k2, long v2) {
@@ -5485,21 +5600,29 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return "";
 		}
 		float nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return 0;
 		}
 		String nthLastKey(int n) {
@@ -5857,28 +5980,46 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9, String k10, float v10) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8, String k9,
+			float v9, String k10, float v10) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8, String k9,
+			float v9) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7) {
+	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7) {
 		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6) {
+	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6) {
 		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5) {
+	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5) {
 		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4) {
+	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4) {
 		return new objF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3, float v3) {
+	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+			float v3) {
 		return new objF(k1, v1, k2, v2, k3, v3);
 	}
 	public static objF objF(String k1, float v1, String k2, float v2) {
@@ -6026,21 +6167,29 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return "";
 		}
 		double nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return 0;
 		}
 		String nthLastKey(int n) {
@@ -6398,28 +6547,46 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9, double v9, String k10, double v10) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objD objD(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6, String k7, double v7, String k8, double v8,
+			String k9, double v9, String k10, double v10) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9, double v9) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objD objD(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6, String k7, double v7, String k8, double v8,
+			String k9, double v9) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objD objD(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6, String k7, double v7, String k8, double v8) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7) {
+	public static objD objD(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6, String k7, double v7) {
 		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6) {
+	public static objD objD(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6) {
 		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5) {
+	public static objD objD(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5) {
 		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4) {
+	public static objD objD(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4) {
 		return new objD(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2, String k3, double v3) {
+	public static objD objD(String k1, double v1, String k2, double v2,
+			String k3, double v3) {
 		return new objD(k1, v1, k2, v2, k3, v3);
 	}
 	public static objD objD(String k1, double v1, String k2, double v2) {
@@ -6569,21 +6736,29 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return "";
 		}
 		boolean nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return false;
 		}
 		String nthLastKey(int n) {
@@ -6941,28 +7116,48 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9, boolean v9, String k10, boolean v10) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objB objB(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
+			String k9, boolean v9, String k10, boolean v10) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9, boolean v9) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objB objB(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
+			String k9, boolean v9) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objB objB(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6, String k7, boolean v7, String k8,
+			boolean v8) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7) {
+	public static objB objB(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6, String k7, boolean v7) {
 		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6) {
+	public static objB objB(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6) {
 		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5) {
+	public static objB objB(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5,
+			boolean v5) {
 		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4) {
+	public static objB objB(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4) {
 		return new objB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3) {
+	public static objB objB(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3) {
 		return new objB(k1, v1, k2, v2, k3, v3);
 	}
 	public static objB objB(String k1, boolean v1, String k2, boolean v2) {
@@ -7349,919 +7544,8 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static class treeS extends tree<String, Integer> {
-		public static final long serialVersionUID = 1L;
-		treeS() {
-			super();
-		}
-		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6,
-				String k7, int v7, String k8, int v8, String k9, int v9,
-				String k10, int v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9, k10, v10);
-		}
-		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6,
-				String k7, int v7, String k8, int v8, String k9, int v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9);
-		}
-		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6,
-				String k7, int v7, String k8, int v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8);
-		}
-		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6,
-				String k7, int v7) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
-		}
-		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5, String k6, int v6) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
-		}
-		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4, String k5, int v5) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
-		}
-		treeS(String k1, int v1, String k2, int v2, String k3, int v3,
-				String k4, int v4) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4);
-		}
-		treeS(String k1, int v1, String k2, int v2, String k3, int v3) {
-			super(k1, v1, k2, v2, k3, v3);
-		}
-		treeS(String k1, int v1, String k2, int v2) {
-			super(k1, v1, k2, v2);
-		}
-		treeS(String k1, int v1) {
-			super(k1, v1);
-		}
-		treeS copy() {
-			return (treeS) super.clone();
-		}
-		treeS slice() {
-			return copy();
-		}
-		int random() {
-			if (super.isEmpty())
-				return 0;
-			return i(randInt(length()));
-		}
-		int rand() {
-			return random();
-		}
-		int any() {
-			return random();
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		int[] array() {
-			Object[] objArray = super.values().toArray();
-			int[] resultantArr = new int[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Integer) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
-			return "";
-		}
-		int nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
-			return 0;
-		}
-		String nthLastKey(int n) {
-			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
-			// bugfixed
-		}
-		int nthLastValue(int n) {
-			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
-			// bugfixed
-		}
-		int i(int n) {
-			return nthValue(n);
-		}
-		int lasti(int n) {
-			return nthLastValue(n);
-		}
-		int ilast(int n) {
-			return nthLastValue(n);
-		}
-		int nth(int n) {
-			return nthValue(n);
-		}
-		int nthlast(int n) {
-			return nthLastValue(n);
-		}
-		int first() {
-			return nth(0);
-		}
-		int second() {
-			return nth(1);
-		}
-		int seclast() {
-			return nthlast(2);
-		}
-		int last() {
-			return nthlast(1);
-		}
-		treeS combine(treeS... trees) {
-			if (not(trees))
-				return this;
-			for (treeS tree : trees) {
-				if (not(tree))
-					continue;
-				super.putAll(tree);
-			}
-			return this;
-		}
-		treeS union(treeS... trees) {
-			combine(trees);
-			return this;
-		}
-		treeS cat(treeS... trees) {
-			combine(trees);
-			return this;
-		}
-		treeS concat(treeS... trees) {
-			combine(trees);
-			return this;
-		}
-		treeS join(treeS... trees) {
-			combine(trees);
-			return this;
-		}
-		String join() {
-			return string();
-		}
-		String join(String s) {
-			if (not(s) || not(length()))
-				return string();
-			return KL.join(array(), s);
-		}
-		boolean has(Object o) {
-			if (o instanceof String)
-				return super.hasKey((String) o);
-			else if (o instanceof Integer)
-				return super.hasValue((Integer) o);
-			return false;
-		}
-	}
-	public static class treeSL extends tree<String, Long> {
-		// public static final long serialVersionUID = 1L;
-		treeSL() {
-			super();
-		}
-		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6,
-				String k7, long v7, String k8, long v8, String k9, long v9,
-				String k10, long v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9, k10, v10);
-		}
-		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6,
-				String k7, long v7, String k8, long v8, String k9, long v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9);
-		}
-		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6,
-				String k7, long v7, String k8, long v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8);
-		}
-		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6,
-				String k7, long v7) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
-		}
-		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5, String k6, long v6) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
-		}
-		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4, String k5, long v5) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
-		}
-		treeSL(String k1, long v1, String k2, long v2, String k3, long v3,
-				String k4, long v4) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4);
-		}
-		treeSL(String k1, long v1, String k2, long v2, String k3, long v3) {
-			super(k1, v1, k2, v2, k3, v3);
-		}
-		treeSL(String k1, long v1, String k2, long v2) {
-			super(k1, v1, k2, v2);
-		}
-		treeSL(String k1, long v1) {
-			super(k1, v1);
-		}
-		treeSL copy() {
-			return (treeSL) super.clone();
-		}
-		treeSL slice() {
-			return copy();
-		}
-		long random() {
-			if (super.isEmpty())
-				return 0;
-			return i(randInt(length()));
-		}
-		long rand() {
-			return random();
-		}
-		long any() {
-			return random();
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		long[] array() {
-			Object[] objArray = super.values().toArray();
-			long[] resultantArr = new long[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Long) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
-			return "";
-		}
-		long nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
-			return 0;
-		}
-		String nthLastKey(int n) {
-			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
-			// bugfixed
-		}
-		long nthLastValue(int n) {
-			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
-			// resolved bugfix: some changes helped avoid an index-out-of-bound
-			// exception
-		}
-		long i(int n) {
-			return nthValue(n);
-		}
-		long lasti(int n) {
-			return nthLastValue(n);
-		}
-		long ilast(int n) {
-			return nthLastValue(n);
-		}
-		long nth(int n) {
-			return nthValue(n);
-		}
-		long nthlast(int n) {
-			return nthLastValue(n);
-		}
-		long first() {
-			return nth(0);
-		}
-		long second() {
-			return nth(1);
-		}
-		long seclast() {
-			return nthlast(2);
-		}
-		long last() {
-			return nthlast(1);
-		}
-		treeSL combine(treeSL... trees) {
-			if (not(trees))
-				return this;
-			for (treeSL tree : trees) {
-				if (not(tree))
-					continue;
-				super.putAll(tree);
-			}
-			return this;
-		}
-		treeSL union(treeSL... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSL cat(treeSL... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSL concat(treeSL... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSL join(treeSL... trees) {
-			combine(trees);
-			return this;
-		}
-		String join() {
-			return string();
-		}
-		String join(String s) {
-			if (not(s) || not(length()))
-				return string();
-			return KL.join(array(), s);
-		}
-		boolean has(Object o) {
-			if (o instanceof String)
-				return super.hasKey((String) o);
-			else if (o instanceof Long)
-				return super.hasValue((Long) o);
-			return false;
-		}
-	}
-	public static class treeSF extends tree<String, Float> {
-		// public static final long serialVersionUID = 1L;
-		treeSF() {
-			super();
-		}
-		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6,
-				String k7, float v7, String k8, float v8, String k9, float v9,
-				String k10, float v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9, k10, v10);
-		}
-		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6,
-				String k7, float v7, String k8, float v8, String k9, float v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9);
-		}
-		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6,
-				String k7, float v7, String k8, float v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8);
-		}
-		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6,
-				String k7, float v7) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
-		}
-		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5, String k6, float v6) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
-		}
-		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4, String k5, float v5) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
-		}
-		treeSF(String k1, float v1, String k2, float v2, String k3, float v3,
-				String k4, float v4) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4);
-		}
-		treeSF(String k1, float v1, String k2, float v2, String k3, float v3) {
-			super(k1, v1, k2, v2, k3, v3);
-		}
-		treeSF(String k1, float v1, String k2, float v2) {
-			super(k1, v1, k2, v2);
-		}
-		treeSF(String k1, float v1) {
-			super(k1, v1);
-		}
-		treeSF copy() {
-			return (treeSF) super.clone();
-		}
-		treeSF slice() {
-			return copy();
-		}
-		float random() {
-			if (super.isEmpty())
-				return 0;
-			return i(randInt(length()));
-		}
-		float rand() {
-			return random();
-		}
-		float any() {
-			return random();
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		float[] array() {
-			Object[] objArray = super.values().toArray();
-			float[] resultantArr = new float[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Float) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
-			return "";
-		}
-		float nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
-			return 0;
-		}
-		String nthLastKey(int n) {
-			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
-			// bugfixed
-		}
-		float nthLastValue(int n) {
-			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
-			// resolved bugfix: some changes helped avoid an index-out-of-bound
-			// exception
-		}
-		float i(int n) {
-			return nthValue(n);
-		}
-		float lasti(int n) {
-			return nthLastValue(n);
-		}
-		float ilast(int n) {
-			return nthLastValue(n);
-		}
-		float nth(int n) {
-			return nthValue(n);
-		}
-		float nthlast(int n) {
-			return nthLastValue(n);
-		}
-		float first() {
-			return nth(0);
-		}
-		float second() {
-			return nth(1);
-		}
-		float seclast() {
-			return nthlast(2);
-		}
-		float last() {
-			return nthlast(1);
-		}
-		treeSF combine(treeSF... trees) {
-			if (not(trees))
-				return this;
-			for (treeSF tree : trees) {
-				if (not(tree))
-					continue;
-				super.putAll(tree);
-			}
-			return this;
-		}
-		treeSF union(treeSF... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSF cat(treeSF... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSF concat(treeSF... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSF join(treeSF... trees) {
-			combine(trees);
-			return this;
-		}
-		String join() {
-			return string();
-		}
-		String join(String s) {
-			if (not(s) || not(length()))
-				return string();
-			return KL.join(array(), s);
-		}
-		boolean has(Object o) {
-			if (o instanceof String)
-				return super.hasKey((String) o);
-			else if (o instanceof Float)
-				return super.hasValue((Float) o);
-			return false;
-		}
-	}
-	public static class treeSD extends tree<String, Double> {
-		// public static final long serialVersionUID = 1L;
-		treeSD() {
-			super();
-		}
-		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
-				String k4, double v4, String k5, double v5, String k6,
-				double v6, String k7, double v7, String k8, double v8,
-				String k9, double v9, String k10, double v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9, k10, v10);
-		}
-		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
-				String k4, double v4, String k5, double v5, String k6,
-				double v6, String k7, double v7, String k8, double v8,
-				String k9, double v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9);
-		}
-		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
-				String k4, double v4, String k5, double v5, String k6,
-				double v6, String k7, double v7, String k8, double v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8);
-		}
-		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
-				String k4, double v4, String k5, double v5, String k6,
-				double v6, String k7, double v7) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
-		}
-		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
-				String k4, double v4, String k5, double v5, String k6,
-				double v6) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
-		}
-		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
-				String k4, double v4, String k5, double v5) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
-		}
-		treeSD(String k1, double v1, String k2, double v2, String k3, double v3,
-				String k4, double v4) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4);
-		}
-		treeSD(String k1, double v1, String k2, double v2, String k3,
-				double v3) {
-			super(k1, v1, k2, v2, k3, v3);
-		}
-		treeSD(String k1, double v1, String k2, double v2) {
-			super(k1, v1, k2, v2);
-		}
-		treeSD(String k1, double v1) {
-			super(k1, v1);
-		}
-		treeSD copy() {
-			return (treeSD) super.clone();
-		}
-		treeSD slice() {
-			return copy();
-		}
-		double random() {
-			if (super.isEmpty())
-				return 0;
-			return i(randInt(length()));
-		}
-		double rand() {
-			return random();
-		}
-		double any() {
-			return random();
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		double[] array() {
-			Object[] objArray = super.values().toArray();
-			double[] resultantArr = new double[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Double) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
-			return "";
-		}
-		double nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
-			return 0;
-		}
-		String nthLastKey(int n) {
-			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
-			// bugfixed
-		}
-		double nthLastValue(int n) {
-			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: 0;
-			// resolved bugfix: some changes helped avoid an index-out-of-bound
-			// exception
-		}
-		double i(int n) {
-			return nthValue(n);
-		}
-		double lasti(int n) {
-			return nthLastValue(n);
-		}
-		double ilast(int n) {
-			return nthLastValue(n);
-		}
-		double nth(int n) {
-			return nthValue(n);
-		}
-		double nthlast(int n) {
-			return nthLastValue(n);
-		}
-		double first() {
-			return nth(0);
-		}
-		double second() {
-			return nth(1);
-		}
-		double seclast() {
-			return nthlast(2);
-		}
-		double last() {
-			return nthlast(1);
-		}
-		treeSD combine(treeSD... trees) {
-			if (not(trees))
-				return this;
-			for (treeSD tree : trees) {
-				if (not(tree))
-					continue;
-				super.putAll(tree);
-			}
-			return this;
-		}
-		treeSD union(treeSD... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSD cat(treeSD... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSD concat(treeSD... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSD join(treeSD... trees) {
-			combine(trees);
-			return this;
-		}
-		String join() {
-			return string();
-		}
-		String join(String s) {
-			if (not(s) || not(length()))
-				return string();
-			return KL.join(array(), s);
-		}
-		boolean has(Object o) {
-			if (o instanceof String)
-				return super.hasKey((String) o);
-			else if (o instanceof Double)
-				return super.hasValue((Double) o);
-			return false;
-		}
-	}
-	public static class treeSB extends tree<String, Boolean> {
-		// public static final long serialVersionUID = 1L;
-		treeSB() {
-			super();
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6, String k7, boolean v7, String k8,
-				boolean v8, String k9, boolean v9, String k10, boolean v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9, k10, v10);
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6, String k7, boolean v7, String k8,
-				boolean v8, String k9, boolean v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8, k9, v9);
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6, String k7, boolean v7, String k8,
-				boolean v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-					v8);
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6, String k7, boolean v7) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5,
-				String k6, boolean v6) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4, String k5, boolean v5) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3, String k4, boolean v4) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4);
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2, String k3,
-				boolean v3) {
-			super(k1, v1, k2, v2, k3, v3);
-		}
-		treeSB(String k1, boolean v1, String k2, boolean v2) {
-			super(k1, v1, k2, v2);
-		}
-		treeSB(String k1, boolean v1) {
-			super(k1, v1);
-		}
-		treeSB copy() {
-			return (treeSB) super.clone();
-		}
-		treeSB slice() {
-			return copy();
-		}
-		boolean random() {
-			if (super.isEmpty())
-				return false;
-			return i(randInt(length()));
-		}
-		boolean rand() {
-			return random();
-		}
-		boolean any() {
-			return random();
-		}
-		String[] keyArray() {
-			Object[] objArray = super.keySet().toArray();
-			String[] resultantArr = new String[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (String) objArray[i];
-			}
-			return resultantArr;
-		}
-		boolean[] array() {
-			Object[] objArray = super.values().toArray();
-			boolean[] resultantArr = new boolean[objArray.length];
-			for (int i = 0; i < objArray.length; i++) {
-				resultantArr[i] = (Boolean) objArray[i];
-			}
-			return resultantArr;
-		}
-		String nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
-			return "";
-		}
-		boolean nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
-			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
-			return false;
-		}
-		String nthLastKey(int n) {
-			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
-			// bugfixed
-		}
-		boolean nthLastValue(int n) {
-			return n > 0 && n <= super.length()
-					? array()[super.length() - n]
-					: false;
-			// resolved bugfix: some changes helped avoid an index-out-of-bound
-			// exception
-		}
-		boolean i(int n) {
-			return nthValue(n);
-		}
-		boolean lasti(int n) {
-			return nthLastValue(n);
-		}
-		boolean ilast(int n) {
-			return nthLastValue(n);
-		}
-		boolean nth(int n) {
-			return nthValue(n);
-		}
-		boolean nthlast(int n) {
-			return nthLastValue(n);
-		}
-		boolean first() {
-			return nth(0);
-		}
-		boolean second() {
-			return nth(1);
-		}
-		boolean seclast() {
-			return nthlast(2);
-		}
-		boolean last() {
-			return nthlast(1);
-		}
-		treeSB combine(treeSB... trees) {
-			if (not(trees))
-				return this;
-			for (treeSB tree : trees) {
-				if (not(tree))
-					continue;
-				super.putAll(tree);
-			}
-			return this;
-		}
-		treeSB union(treeSB... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSB cat(treeSB... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSB concat(treeSB... trees) {
-			combine(trees);
-			return this;
-		}
-		treeSB join(treeSB... trees) {
-			combine(trees);
-			return this;
-		}
-		String join() {
-			return string();
-		}
-		String join(String s) {
-			if (not(s) || not(length()))
-				return string();
-			return KL.join(array(), s);
-		}
-		boolean has(Object o) {
-			if (o instanceof String)
-				return super.hasKey((String) o);
-			else if (o instanceof Boolean)
-				return super.hasValue((Boolean) o);
-			return false;
-		}
-	}
 	public static class treeI extends tree<Integer, String> {
-		// public static final long serialVersionUID = 1L;
+		public static final long serialVersionUID = 1L;
 		treeI() {
 			super();
 		}
@@ -8344,21 +7628,29 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return 0;
 		}
 		String nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return "";
 		}
 		int nthLastKey(int n) {
@@ -8440,6 +7732,54 @@ public class KL {
 				return super.hasValue((String) o);
 			return false;
 		}
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8, int k9, String v9, int k10,
+			String v10) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8, int k9, String v9) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6,
+			String v6) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3) {
+		return new treeI(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeI treeI(int k1, String v1, int k2, String v2) {
+		return new treeI(k1, v1, k2, v2);
+	}
+	public static treeI treeI(int k1, String v1) {
+		return new treeI(k1, v1);
 	}
 	public static class treeL extends tree<Integer, Long> {
 		public static final long serialVersionUID = 1L;
@@ -8523,21 +7863,29 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return 0;
 		}
 		long nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return 0;
 		}
 		int nthLastKey(int n) {
@@ -8619,6 +7967,52 @@ public class KL {
 				return super.hasValue((Long) o);
 			return false;
 		}
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8, int k9, long v9, int k10, long v10) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8, int k9, long v9) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7,
+			long v7) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3,
+			long v3) {
+		return new treeL(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeL treeL(int k1, long v1, int k2, long v2) {
+		return new treeL(k1, v1, k2, v2);
+	}
+	public static treeL treeL(int k1, long v1) {
+		return new treeL(k1, v1);
 	}
 	public static class treeF extends tree<Integer, Float> {
 		public static final long serialVersionUID = 1L;
@@ -8703,21 +8097,29 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return 0;
 		}
 		float nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return 0;
 		}
 		int nthLastKey(int n) {
@@ -8800,8 +8202,55 @@ public class KL {
 			return false;
 		}
 	}
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8, int k9, float v9, int k10,
+			float v10) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8, int k9, float v9) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3) {
+		return new treeF(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeF treeF(int k1, float v1, int k2, float v2) {
+		return new treeF(k1, v1, k2, v2);
+	}
+	public static treeF treeF(int k1, float v1) {
+		return new treeF(k1, v1);
+	}
 	public static class treeD extends tree<Integer, Double> {
-		// public static final long serialVersionUID = 1L;
+		public static final long serialVersionUID = 1L;
 		treeD() {
 			super();
 		}
@@ -8884,21 +8333,29 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return 0;
 		}
 		double nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return 0;
 		}
 		int nthLastKey(int n) {
@@ -8980,6 +8437,54 @@ public class KL {
 				return super.hasValue((Double) o);
 			return false;
 		}
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8, int k9, double v9, int k10,
+			double v10) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8, int k9, double v9) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6,
+			double v6) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3) {
+		return new treeD(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeD treeD(int k1, double v1, int k2, double v2) {
+		return new treeD(k1, v1, k2, v2);
+	}
+	public static treeD treeD(int k1, double v1) {
+		return new treeD(k1, v1);
 	}
 	public static class treeB extends tree<Integer, Boolean> {
 		public static final long serialVersionUID = 1L;
@@ -9065,21 +8570,29 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length()) return keyArray()[n];
+			if (n >= 0 && n < length())
+				return keyArray()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastKey(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
 			return 0;
 		}
 		boolean nthValue(int n) {
-			if (n >= 0 && n < length()) return array()[n];
+			if (n >= 0 && n < length())
+				return array()[n];
 			else if (n < 0) {
-				//Shorter than 0, huh? Let's posi-tize the number, and see if it's under the size of the array. If it is, we'll try and fetch the elements in reverse order
-                n = Pos(n);
-                if (n <= length()) return nthLastValue(n);
-            }
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
 			return false;
 		}
 		int nthLastKey(int n) {
@@ -9161,6 +8674,1204 @@ public class KL {
 				return super.hasValue((Boolean) o);
 			return false;
 		}
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8, int k9,
+			boolean v9, int k10, boolean v10) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8, int k9,
+			boolean v9) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3) {
+		return new treeB(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2) {
+		return new treeB(k1, v1, k2, v2);
+	}
+	public static treeB treeB(int k1, boolean v1) {
+		return new treeB(k1, v1);
+	}
+	public static class treeDS extends tree<Double, String> {
+		public static final long serialVersionUID = 1L;
+		treeDS() {
+			super();
+		}
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6, double k7, String v7, double k8, String v8,
+				double k9, String v9, double k10, String v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
+		}
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6, double k7, String v7, double k8, String v8,
+				double k9, String v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
+		}
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6, double k7, String v7, double k8, String v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
+		}
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6, double k7, String v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		}
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
+		}
+		treeDS(double k1, String v1, double k2, String v2, double k3,
+				String v3) {
+			super(k1, v1, k2, v2, k3, v3);
+		}
+		treeDS(double k1, String v1, double k2, String v2) {
+			super(k1, v1, k2, v2);
+		}
+		treeDS(double k1, String v1) {
+			super(k1, v1);
+		}
+		treeDS copy() {
+			return (treeDS) super.clone();
+		}
+		treeDS slice() {
+			return copy();
+		}
+		String random() {
+			if (super.isEmpty())
+				return "";
+			return i(randInt(length()));
+		}
+		String rand() {
+			return random();
+		}
+		String any() {
+			return random();
+		}
+		double[] keyArray() {
+			Object[] objArray = super.keySet().toArray();
+			double[] resultantArr = new double[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (double) objArray[i];
+			}
+			return resultantArr;
+		}
+		String[] array() {
+			Object[] objArray = super.values().toArray();
+			String[] resultantArr = new String[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (String) objArray[i];
+			}
+			return resultantArr;
+		}
+		double nthKey(int n) {
+			if (n >= 0 && n < length())
+				return keyArray()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
+			return 0;
+		}
+		String nthValue(int n) {
+			if (n >= 0 && n < length())
+				return array()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
+			return "";
+		}
+		double nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
+		String nthLastValue(int n) {
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
+		}
+		String i(int n) {
+			return nthValue(n);
+		}
+		String lasti(int n) {
+			return nthLastValue(n);
+		}
+		String ilast(int n) {
+			return nthLastValue(n);
+		}
+		String nth(int n) {
+			return nthValue(n);
+		}
+		String nthlast(int n) {
+			return nthLastValue(n);
+		}
+		String first() {
+			return nth(0);
+		}
+		String second() {
+			return nth(1);
+		}
+		String seclast() {
+			return nthlast(2);
+		}
+		String last() {
+			return nthlast(1);
+		}
+		treeDS combine(treeDS... trees) {
+			if (not(trees))
+				return this;
+			for (treeDS tree : trees) {
+				if (not(tree))
+					continue;
+				super.putAll(tree);
+			}
+			return this;
+		}
+		treeDS union(treeDS... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDS cat(treeDS... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDS concat(treeDS... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDS join(treeDS... trees) {
+			combine(trees);
+			return this;
+		}
+		String join() {
+			return string();
+		}
+		String join(String s) {
+			if (not(s) || not(length()))
+				return string();
+			return KL.join(array(), s);
+		}
+		boolean has(Object o) {
+			if (o instanceof Double)
+				return super.hasKey((double) o);
+			else if (o instanceof String)
+				return super.hasValue((String) o);
+			return false;
+		}
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8,
+			double k9, String v9, double k10, String v10) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8,
+			double k9, String v9) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3) {
+		return new treeDS(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeDS treeDS(double k1, String v1, double k2, String v2) {
+		return new treeDS(k1, v1, k2, v2);
+	}
+	public static treeDS treeDS(double k1, String v1) {
+		return new treeDS(k1, v1);
+	}
+	public static class treeDI extends tree<Double, Integer> {
+		public static final long serialVersionUID = 1L;
+		treeDI() {
+			super();
+		}
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6,
+				double k7, int v7, double k8, int v8, double k9, int v9,
+				double k10, int v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
+		}
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6,
+				double k7, int v7, double k8, int v8, double k9, int v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
+		}
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6,
+				double k7, int v7, double k8, int v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
+		}
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6,
+				double k7, int v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		}
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
+		}
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3) {
+			super(k1, v1, k2, v2, k3, v3);
+		}
+		treeDI(double k1, int v1, double k2, int v2) {
+			super(k1, v1, k2, v2);
+		}
+		treeDI(double k1, int v1) {
+			super(k1, v1);
+		}
+		treeDI copy() {
+			return (treeDI) super.clone();
+		}
+		treeDI slice() {
+			return copy();
+		}
+		int random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		int rand() {
+			return random();
+		}
+		int any() {
+			return random();
+		}
+		double[] keyArray() {
+			Object[] objArray = super.keySet().toArray();
+			double[] resultantArr = new double[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (double) objArray[i];
+			}
+			return resultantArr;
+		}
+		int[] array() {
+			Object[] objArray = super.values().toArray();
+			int[] resultantArr = new int[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (Integer) objArray[i];
+			}
+			return resultantArr;
+		}
+		double nthKey(int n) {
+			if (n >= 0 && n < length())
+				return keyArray()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
+			return 0;
+		}
+		int nthValue(int n) {
+			if (n >= 0 && n < length())
+				return array()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
+			return 0;
+		}
+		double nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
+		int nthLastValue(int n) {
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
+			// bugfixed
+		}
+		int i(int n) {
+			return nthValue(n);
+		}
+		int lasti(int n) {
+			return nthLastValue(n);
+		}
+		int ilast(int n) {
+			return nthLastValue(n);
+		}
+		int nth(int n) {
+			return nthValue(n);
+		}
+		int nthlast(int n) {
+			return nthLastValue(n);
+		}
+		int first() {
+			return nth(0);
+		}
+		int second() {
+			return nth(1);
+		}
+		int seclast() {
+			return nthlast(2);
+		}
+		int last() {
+			return nthlast(1);
+		}
+		treeDI combine(treeDI... trees) {
+			if (not(trees))
+				return this;
+			for (treeDI tree : trees) {
+				if (not(tree))
+					continue;
+				super.putAll(tree);
+			}
+			return this;
+		}
+		treeDI union(treeDI... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDI cat(treeDI... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDI concat(treeDI... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDI join(treeDI... trees) {
+			combine(trees);
+			return this;
+		}
+		String join() {
+			return string();
+		}
+		String join(String s) {
+			if (not(s) || not(length()))
+				return string();
+			return KL.join(array(), s);
+		}
+		boolean has(Object o) {
+			if (o instanceof Double)
+				return super.hasKey((double) o);
+			else if (o instanceof Integer)
+				return super.hasValue((Integer) o);
+			return false;
+		}
+	}
+	public static class treeDL extends tree<Double, Long> {
+		public static final long serialVersionUID = 1L;
+		treeDL() {
+			super();
+		}
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6,
+				double k7, long v7, double k8, long v8, double k9, long v9,
+				double k10, long v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
+		}
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6,
+				double k7, long v7, double k8, long v8, double k9, long v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
+		}
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6,
+				double k7, long v7, double k8, long v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
+		}
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6,
+				double k7, long v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		}
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
+		}
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3) {
+			super(k1, v1, k2, v2, k3, v3);
+		}
+		treeDL(double k1, long v1, double k2, long v2) {
+			super(k1, v1, k2, v2);
+		}
+		treeDL(double k1, long v1) {
+			super(k1, v1);
+		}
+		treeDL copy() {
+			return (treeDL) super.clone();
+		}
+		treeDL slice() {
+			return copy();
+		}
+		long random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		long rand() {
+			return random();
+		}
+		long any() {
+			return random();
+		}
+		double[] keyArray() {
+			Object[] objArray = super.keySet().toArray();
+			double[] resultantArr = new double[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (double) objArray[i];
+			}
+			return resultantArr;
+		}
+		long[] array() {
+			Object[] objArray = super.values().toArray();
+			long[] resultantArr = new long[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (Long) objArray[i];
+			}
+			return resultantArr;
+		}
+		double nthKey(int n) {
+			if (n >= 0 && n < length())
+				return keyArray()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
+			return 0;
+		}
+		long nthValue(int n) {
+			if (n >= 0 && n < length())
+				return array()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
+			return 0;
+		}
+		double nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
+		long nthLastValue(int n) {
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
+		}
+		long i(int n) {
+			return nthValue(n);
+		}
+		long lasti(int n) {
+			return nthLastValue(n);
+		}
+		long ilast(int n) {
+			return nthLastValue(n);
+		}
+		long nth(int n) {
+			return nthValue(n);
+		}
+		long nthlast(int n) {
+			return nthLastValue(n);
+		}
+		long first() {
+			return nth(0);
+		}
+		long second() {
+			return nth(1);
+		}
+		long seclast() {
+			return nthlast(2);
+		}
+		long last() {
+			return nthlast(1);
+		}
+		treeDL combine(treeDL... trees) {
+			if (not(trees))
+				return this;
+			for (treeDL tree : trees) {
+				if (not(tree))
+					continue;
+				super.putAll(tree);
+			}
+			return this;
+		}
+		treeDL union(treeDL... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDL cat(treeDL... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDL concat(treeDL... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDL join(treeDL... trees) {
+			combine(trees);
+			return this;
+		}
+		String join() {
+			return string();
+		}
+		String join(String s) {
+			if (not(s) || not(length()))
+				return string();
+			return KL.join(array(), s);
+		}
+		boolean has(Object o) {
+			if (o instanceof Double)
+				return super.hasKey((double) o);
+			else if (o instanceof Long)
+				return super.hasValue((Long) o);
+			return false;
+		}
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6, double k7, long v7, double k8, long v8,
+			double k9, long v9, double k10, long v10) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6, double k7, long v7, double k8, long v8,
+			double k9, long v9) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6, double k7, long v7, double k8, long v8) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6, double k7, long v7) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3) {
+		return new treeDL(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeDL treeDL(double k1, long v1, double k2, long v2) {
+		return new treeDL(k1, v1, k2, v2);
+	}
+	public static treeDL treeDL(double k1, long v1) {
+		return new treeDL(k1, v1);
+	}
+	public static class treeDF extends tree<Double, Float> {
+		public static final long serialVersionUID = 1L;
+		treeDF() {
+			super();
+		}
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6,
+				double k7, float v7, double k8, float v8, double k9, float v9,
+				double k10, float v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
+		}
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6,
+				double k7, float v7, double k8, float v8, double k9, float v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
+		}
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6,
+				double k7, float v7, double k8, float v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
+		}
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6,
+				double k7, float v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		}
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
+		}
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3) {
+			super(k1, v1, k2, v2, k3, v3);
+		}
+		treeDF(double k1, float v1, double k2, float v2) {
+			super(k1, v1, k2, v2);
+		}
+		treeDF(double k1, float v1) {
+			super(k1, v1);
+		}
+		treeDF copy() {
+			return (treeDF) super.clone();
+		}
+		treeDF slice() {
+			return copy();
+		}
+		float random() {
+			if (super.isEmpty())
+				return 0;
+			return i(randInt(length()));
+		}
+		float rand() {
+			return random();
+		}
+		float any() {
+			return random();
+		}
+		double[] keyArray() {
+			Object[] objArray = super.keySet().toArray();
+			double[] resultantArr = new double[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (double) objArray[i];
+			}
+			return resultantArr;
+		}
+		float[] array() {
+			Object[] objArray = super.values().toArray();
+			float[] resultantArr = new float[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (Float) objArray[i];
+			}
+			return resultantArr;
+		}
+		double nthKey(int n) {
+			if (n >= 0 && n < length())
+				return keyArray()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
+			return 0;
+		}
+		float nthValue(int n) {
+			if (n >= 0 && n < length())
+				return array()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
+			return 0;
+		}
+		double nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
+		float nthLastValue(int n) {
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
+		}
+		float i(int n) {
+			return nthValue(n);
+		}
+		float lasti(int n) {
+			return nthLastValue(n);
+		}
+		float ilast(int n) {
+			return nthLastValue(n);
+		}
+		float nth(int n) {
+			return nthValue(n);
+		}
+		float nthlast(int n) {
+			return nthLastValue(n);
+		}
+		float first() {
+			return nth(0);
+		}
+		float second() {
+			return nth(1);
+		}
+		float seclast() {
+			return nthlast(2);
+		}
+		float last() {
+			return nthlast(1);
+		}
+		treeDF combine(treeDF... trees) {
+			if (not(trees))
+				return this;
+			for (treeDF tree : trees) {
+				if (not(tree))
+					continue;
+				super.putAll(tree);
+			}
+			return this;
+		}
+		treeDF union(treeDF... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDF cat(treeDF... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDF concat(treeDF... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDF join(treeDF... trees) {
+			combine(trees);
+			return this;
+		}
+		String join() {
+			return string();
+		}
+		String join(String s) {
+			if (not(s) || not(length()))
+				return string();
+			return KL.join(array(), s);
+		}
+		boolean has(Object o) {
+			if (o instanceof Double)
+				return super.hasKey((double) o);
+			else if (o instanceof Float)
+				return super.hasValue((Float) o);
+			return false;
+		}
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8,
+			double k9, float v9, double k10, float v10) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8,
+			double k9, float v9) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3) {
+		return new treeDF(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeDF treeDF(double k1, float v1, double k2, float v2) {
+		return new treeDF(k1, v1, k2, v2);
+	}
+	public static treeDF treeDF(double k1, float v1) {
+		return new treeDF(k1, v1);
+	}
+	public static class treeDB extends tree<Double, Boolean> {
+		public static final long serialVersionUID = 1L;
+		treeDB() {
+			super();
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6, double k7, boolean v7, double k8,
+				boolean v8, double k9, boolean v9, double k10, boolean v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6, double k7, boolean v7, double k8,
+				boolean v8, double k9, boolean v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6, double k7, boolean v7, double k8,
+				boolean v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6, double k7, boolean v7) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4);
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3) {
+			super(k1, v1, k2, v2, k3, v3);
+		}
+		treeDB(double k1, boolean v1, double k2, boolean v2) {
+			super(k1, v1, k2, v2);
+		}
+		treeDB(double k1, boolean v1) {
+			super(k1, v1);
+		}
+		treeDB copy() {
+			return (treeDB) super.clone();
+		}
+		treeDB slice() {
+			return copy();
+		}
+		boolean random() {
+			if (super.isEmpty())
+				return false;
+			return i(randInt(length()));
+		}
+		boolean rand() {
+			return random();
+		}
+		boolean any() {
+			return random();
+		}
+		double[] keyArray() {
+			Object[] objArray = super.keySet().toArray();
+			double[] resultantArr = new double[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (double) objArray[i];
+			}
+			return resultantArr;
+		}
+		boolean[] array() {
+			Object[] objArray = super.values().toArray();
+			boolean[] resultantArr = new boolean[objArray.length];
+			for (int i = 0; i < objArray.length; i++) {
+				resultantArr[i] = (Boolean) objArray[i];
+			}
+			return resultantArr;
+		}
+		double nthKey(int n) {
+			if (n >= 0 && n < length())
+				return keyArray()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
+			return 0;
+		}
+		boolean nthValue(int n) {
+			if (n >= 0 && n < length())
+				return array()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
+			return false;
+		}
+		double nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : 0;
+			// bugfixed
+		}
+		boolean nthLastValue(int n) {
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: false;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
+		}
+		boolean i(int n) {
+			return nthValue(n);
+		}
+		boolean lasti(int n) {
+			return nthLastValue(n);
+		}
+		boolean ilast(int n) {
+			return nthLastValue(n);
+		}
+		boolean nth(int n) {
+			return nthValue(n);
+		}
+		boolean nthlast(int n) {
+			return nthLastValue(n);
+		}
+		boolean first() {
+			return nth(0);
+		}
+		boolean second() {
+			return nth(1);
+		}
+		boolean seclast() {
+			return nthlast(2);
+		}
+		boolean last() {
+			return nthlast(1);
+		}
+		treeDB combine(treeDB... trees) {
+			if (not(trees))
+				return this;
+			for (treeDB tree : trees) {
+				if (not(tree))
+					continue;
+				super.putAll(tree);
+			}
+			return this;
+		}
+		treeDB union(treeDB... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDB cat(treeDB... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDB concat(treeDB... trees) {
+			combine(trees);
+			return this;
+		}
+		treeDB join(treeDB... trees) {
+			combine(trees);
+			return this;
+		}
+		String join() {
+			return string();
+		}
+		String join(String s) {
+			if (not(s) || not(length()))
+				return string();
+			return KL.join(array(), s);
+		}
+		boolean has(Object o) {
+			if (o instanceof Double)
+				return super.hasKey((double) o);
+			else if (o instanceof Boolean)
+				return super.hasValue((Boolean) o);
+			return false;
+		}
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
+			double k9, boolean v9, double k10, boolean v10) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
+			double k9, boolean v9) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8,
+			boolean v8) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5,
+			boolean v5) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3) {
+		return new treeDB(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2) {
+		return new treeDB(k1, v1, k2, v2);
+	}
+	public static treeDB treeDB(double k1, boolean v1) {
+		return new treeDB(k1, v1);
 	}
 	public static final class strArr extends ArrayList<String> {
 		strArr() {
@@ -9271,7 +9982,17 @@ public class KL {
 			return super.contains(x);
 		}
 		String i(int i) {
-			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : "";
+			if (i >= 0 && i < length())
+				return array()[i];
+			else if (i < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				i = Pos(i);
+				if (i <= length())
+					return lasti(i);
+			}
+			return "";
 		}
 		String lasti(int n) {
 			return !isNull(n) && n > 0 && n <= super.size()
@@ -9669,7 +10390,17 @@ public class KL {
 			return super.contains(x);
 		}
 		int i(int i) {
-			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : 0;
+			if (i >= 0 && i < length())
+				return array()[i];
+			else if (i < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				i = Pos(i);
+				if (i <= length())
+					return lasti(i);
+			}
+			return 0;
 		}
 		int lasti(int n) {
 			return !isNull(n) && n > 0 && n <= super.size()
@@ -10062,7 +10793,17 @@ public class KL {
 			return super.contains(x);
 		}
 		long i(int i) {
-			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : 0;
+			if (i >= 0 && i < length())
+				return array()[i];
+			else if (i < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				i = Pos(i);
+				if (i <= length())
+					return lasti(i);
+			}
+			return 0;
 		}
 		long lasti(int n) {
 			return !isNull(n) && n > 0 && n <= super.size()
@@ -10470,7 +11211,17 @@ public class KL {
 			return super.contains(x);
 		}
 		float i(int i) {
-			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : 0;
+			if (i >= 0 && i < length())
+				return array()[i];
+			else if (i < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				i = Pos(i);
+				if (i <= length())
+					return lasti(i);
+			}
+			return 0;
 		}
 		float lasti(int n) {
 			return !isNull(n) && n > 0 && n <= super.size()
@@ -10873,7 +11624,17 @@ public class KL {
 			return super.contains(x);
 		}
 		double i(int i) {
-			return !isNull(i) && i >= 0 && i < super.size() ? super.get(i) : 0;
+			if (i >= 0 && i < length())
+				return array()[i];
+			else if (i < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				i = Pos(i);
+				if (i <= length())
+					return lasti(i);
+			}
+			return 0;
 		}
 		double lasti(int n) {
 			return !isNull(n) && n > 0 && n <= super.size()
@@ -11276,9 +12037,17 @@ public class KL {
 			return super.contains(x);
 		}
 		boolean i(int i) {
-			return !isNull(i) && i >= 0 && i < super.size()
-					? super.get(i)
-					: false;
+			if (i >= 0 && i < length())
+				return array()[i];
+			else if (i < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				i = Pos(i);
+				if (i <= length())
+					return lasti(i);
+			}
+			return false;
 		}
 		boolean lasti(int n) {
 			return !isNull(n) && n > 0 && n <= super.size()
@@ -17444,10 +18213,10 @@ public class KL {
 		return now().split(", ")[1].split(" ")[0];
 	}
 	public static String getYear() {
-		return now().split(", ")[2];
+		return now().split(", ")[3];
 	}
 	public static String getTime() {
-		return now().split(", ")[3];
+		return now().split(", ")[0];
 	}
 	public static String getSeason() {
 		String m = slice(getMonth(), 0, 3).toLowerCase();
@@ -17842,31 +18611,31 @@ public class KL {
 	public static void printArr(objB o) {
 		print(o.toString());
 	}
-	public static void printArr(treeS t) {
+	public static void printArr(treeDS t) {
+		print(t.toString());
+	}
+	public static void printArr(treeDI t) {
 		print(t.toString());
 	}
 	public static void printArr(treeI t) {
 		print(t.toString());
 	}
-	public static void printArr(treeSL t) {
+	public static void printArr(treeDL t) {
 		print(t.toString());
 	}
 	public static void printArr(treeL t) {
 		print(t.toString());
 	}
-	public static void printArr(treeSF t) {
+	public static void printArr(treeDF t) {
 		print(t.toString());
 	}
 	public static void printArr(treeF t) {
 		print(t.toString());
 	}
-	public static void printArr(treeSD t) {
-		print(t.toString());
-	}
 	public static void printArr(treeD t) {
 		print(t.toString());
 	}
-	public static void printArr(treeSB t) {
+	public static void printArr(treeDB t) {
 		print(t.toString());
 	}
 	public static void printArr(treeB t) {
@@ -17926,31 +18695,31 @@ public class KL {
 	public static void printAll(objB o) {
 		printArr(o);
 	}
-	public static void printAll(treeS t) {
+	public static void printAll(treeDI t) {
 		printArr(t);
 	}
 	public static void printAll(treeI t) {
 		printArr(t);
 	}
-	public static void printAll(treeSL t) {
+	public static void printAll(treeDL t) {
 		printArr(t);
 	}
 	public static void printAll(treeL t) {
 		printArr(t);
 	}
-	public static void printAll(treeSF t) {
+	public static void printAll(treeDF t) {
 		printArr(t);
 	}
 	public static void printAll(treeF t) {
 		printArr(t);
 	}
-	public static void printAll(treeSD t) {
+	public static void printAll(treeDS t) {
 		printArr(t);
 	}
 	public static void printAll(treeD t) {
 		printArr(t);
 	}
-	public static void printAll(treeSB t) {
+	public static void printAll(treeDB t) {
 		printArr(t);
 	}
 	public static void printAll(treeB t) {
@@ -18107,31 +18876,31 @@ public class KL {
 	public static String String(objB o) {
 		return o.toString();
 	}
-	public static String String(treeS t) {
+	public static String String(treeDI t) {
 		return t.toString();
 	}
 	public static String String(treeI t) {
 		return t.toString();
 	}
-	public static String String(treeSL t) {
+	public static String String(treeDL t) {
 		return t.toString();
 	}
 	public static String String(treeL t) {
 		return t.toString();
 	}
-	public static String String(treeSF t) {
+	public static String String(treeDF t) {
 		return t.toString();
 	}
 	public static String String(treeF t) {
 		return t.toString();
 	}
-	public static String String(treeSD t) {
+	public static String String(treeDS t) {
 		return t.toString();
 	}
 	public static String String(treeD t) {
 		return t.toString();
 	}
-	public static String String(treeSB t) {
+	public static String String(treeDB t) {
 		return t.toString();
 	}
 	public static String String(treeB t) {
@@ -18222,31 +18991,31 @@ public class KL {
 	public static String Str(objB o) {
 		return String(o);
 	}
-	public static String Str(treeS t) {
+	public static String Str(treeDI t) {
 		return String(t);
 	}
 	public static String Str(treeI t) {
 		return String(t);
 	}
-	public static String Str(treeSL t) {
+	public static String Str(treeDL t) {
 		return String(t);
 	}
 	public static String Str(treeL t) {
 		return String(t);
 	}
-	public static String Str(treeSF t) {
+	public static String Str(treeDF t) {
 		return String(t);
 	}
 	public static String Str(treeF t) {
 		return String(t);
 	}
-	public static String Str(treeSD t) {
+	public static String Str(treeDS t) {
 		return String(t);
 	}
 	public static String Str(treeD t) {
 		return String(t);
 	}
-	public static String Str(treeSB t) {
+	public static String Str(treeDB t) {
 		return String(t);
 	}
 	public static String Str(treeB t) {
@@ -18368,7 +19137,12 @@ public class KL {
 			return blank.Bool;
 		return o.array();
 	}
-	public static int[] Arr(treeS t) {
+	public static String[] Arr(treeDS t) {
+		if (not(t))
+			return blank.Str;
+		return t.array();
+	}
+	public static int[] Arr(treeDI t) {
 		if (not(t))
 			return blank.Int;
 		return t.array();
@@ -18378,7 +19152,7 @@ public class KL {
 			return blank.Str;
 		return t.array();
 	}
-	public static long[] Arr(treeSL t) {
+	public static long[] Arr(treeDL t) {
 		if (not(t))
 			return blank.Long;
 		return t.array();
@@ -18388,7 +19162,7 @@ public class KL {
 			return blank.Long;
 		return t.array();
 	}
-	public static float[] Arr(treeSF t) {
+	public static float[] Arr(treeDF t) {
 		if (not(t))
 			return blank.Flt;
 		return t.array();
@@ -18398,17 +19172,12 @@ public class KL {
 			return blank.Flt;
 		return t.array();
 	}
-	public static double[] Arr(treeSD t) {
-		if (not(t))
-			return blank.Dbl;
-		return t.array();
-	}
 	public static double[] Arr(treeD t) {
 		if (not(t))
 			return blank.Dbl;
 		return t.array();
 	}
-	public static boolean[] Arr(treeSB t) {
+	public static boolean[] Arr(treeDB t) {
 		if (not(t))
 			return blank.Bool;
 		return t.array();
@@ -18436,58 +19205,76 @@ public class KL {
 	public static boolean[] arr(objB o) {
 		return Arr(o);
 	}
-	public static int[] arr(treeS t) {
+	public static String[] arr(treeDS t) {
+		return Arr(t);
+	}
+	public static int[] arr(treeDI t) {
 		return Arr(t);
 	}
 	public static String[] arr(treeI t) {
 		return Arr(t);
 	}
-	public static long[] arr(treeSL t) {
+	public static long[] arr(treeDL t) {
 		return Arr(t);
 	}
 	public static long[] arr(treeL t) {
 		return Arr(t);
 	}
-	public static float[] arr(treeSF t) {
+	public static float[] arr(treeDF t) {
 		return Arr(t);
 	}
 	public static float[] arr(treeF t) {
 		return Arr(t);
 	}
-	public static double[] arr(treeSD t) {
-		return Arr(t);
-	}
 	public static double[] arr(treeD t) {
 		return Arr(t);
 	}
-	public static boolean[] arr(treeSB t) {
+	public static boolean[] arr(treeDB t) {
 		return Arr(t);
 	}
 	public static boolean[] arr(treeB t) {
 		return Arr(t);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9, String v9, String k10, String v10) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objS obj(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6, String k7, String v7, String k8, String v8,
+			String k9, String v9, String k10, String v10) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8, String k9, String v9) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objS obj(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6, String k7, String v7, String k8, String v8,
+			String k9, String v9) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7, String k8, String v8) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objS obj(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6, String k7, String v7, String k8, String v8) {
+		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6, String k7, String v7) {
+	public static objS obj(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6, String k7, String v7) {
 		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5, String k6, String v6) {
+	public static objS obj(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5,
+			String k6, String v6) {
 		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
+	public static objS obj(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4, String k5, String v5) {
 		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
+	public static objS obj(String k1, String v1, String k2, String v2,
+			String k3, String v3, String k4, String v4) {
 		return new objS(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2, String k3, String v3) {
+	public static objS obj(String k1, String v1, String k2, String v2,
+			String k3, String v3) {
 		return new objS(k1, v1, k2, v2, k3, v3);
 	}
 	public static objS obj(String k1, String v1, String k2, String v2) {
@@ -18496,28 +19283,44 @@ public class KL {
 	public static objS obj(String k1, String v1) {
 		return new objS(k1, v1);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
+			String k7, int v7, String k8, int v8, String k9, int v9, String k10,
+			int v10) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
+			String k7, int v7, String k8, int v8, String k9, int v9) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7, String k8, int v8) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
+			String k7, int v7, String k8, int v8) {
+		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6, String k7, int v7) {
+	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
+			String k7, int v7) {
 		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
+	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
 		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5) {
+	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4, String k5, int v5) {
 		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4) {
+	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+			int v3, String k4, int v4) {
 		return new objI(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3, int v3) {
+	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+			int v3) {
 		return new objI(k1, v1, k2, v2, k3, v3);
 	}
 	public static objI obj(String k1, int v1, String k2, int v2) {
@@ -18526,28 +19329,45 @@ public class KL {
 	public static objI obj(String k1, int v1) {
 		return new objI(k1, v1);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9, String k10, long v10) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8, String k9, long v9,
+			String k10, long v10) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8, String k9, long v9) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7, String k8, long v8) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8) {
+		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6, String k7, long v7) {
+	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7) {
 		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5, String k6, long v6) {
+	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6,
+			long v6) {
 		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5, long v5) {
+	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5) {
 		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4) {
+	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4) {
 		return new objL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3, long v3) {
+	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+			long v3) {
 		return new objL(k1, v1, k2, v2, k3, v3);
 	}
 	public static objL obj(String k1, long v1, String k2, long v2) {
@@ -18556,28 +19376,46 @@ public class KL {
 	public static objL obj(String k1, long v1) {
 		return new objL(k1, v1);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9, String k10, float v10) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8, String k9,
+			float v9, String k10, float v10) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8, String k9,
+			float v9) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7, String k8, float v8) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8) {
+		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6, String k7, float v7) {
+	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7) {
 		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5, String k6, float v6) {
+	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6) {
 		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5, float v5) {
+	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5) {
 		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4) {
+	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4) {
 		return new objF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3, float v3) {
+	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+			float v3) {
 		return new objF(k1, v1, k2, v2, k3, v3);
 	}
 	public static objF obj(String k1, float v1, String k2, float v2) {
@@ -18586,28 +19424,46 @@ public class KL {
 	public static objF obj(String k1, float v1) {
 		return new objF(k1, v1);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9, double v9, String k10, double v10) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objD obj(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6, String k7, double v7, String k8, double v8,
+			String k9, double v9, String k10, double v10) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9, double v9) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objD obj(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6, String k7, double v7, String k8, double v8,
+			String k9, double v9) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objD obj(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6, String k7, double v7, String k8, double v8) {
+		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6, String k7, double v7) {
+	public static objD obj(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6, String k7, double v7) {
 		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5, String k6, double v6) {
+	public static objD obj(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5,
+			String k6, double v6) {
 		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4, String k5, double v5) {
+	public static objD obj(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4, String k5, double v5) {
 		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4) {
+	public static objD obj(String k1, double v1, String k2, double v2,
+			String k3, double v3, String k4, double v4) {
 		return new objD(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2, String k3, double v3) {
+	public static objD obj(String k1, double v1, String k2, double v2,
+			String k3, double v3) {
 		return new objD(k1, v1, k2, v2, k3, v3);
 	}
 	public static objD obj(String k1, double v1, String k2, double v2) {
@@ -18616,28 +19472,48 @@ public class KL {
 	public static objD obj(String k1, double v1) {
 		return new objD(k1, v1);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9, boolean v9, String k10, boolean v10) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static objB obj(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
+			String k9, boolean v9, String k10, boolean v10) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9, boolean v9) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static objB obj(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
+			String k9, boolean v9) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static objB obj(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6, String k7, boolean v7, String k8,
+			boolean v8) {
+		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6, String k7, boolean v7) {
+	public static objB obj(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6, String k7, boolean v7) {
 		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5, String k6, boolean v6) {
+	public static objB obj(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
+			String k6, boolean v6) {
 		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4, String k5, boolean v5) {
+	public static objB obj(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4, String k5,
+			boolean v5) {
 		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4) {
+	public static objB obj(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3, String k4, boolean v4) {
 		return new objB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3) {
+	public static objB obj(String k1, boolean v1, String k2, boolean v2,
+			String k3, boolean v3) {
 		return new objB(k1, v1, k2, v2, k3, v3);
 	}
 	public static objB obj(String k1, boolean v1, String k2, boolean v2) {
@@ -18645,6 +19521,450 @@ public class KL {
 	}
 	public static objB obj(String k1, boolean v1) {
 		return new objB(k1, v1);
+	}
+	// treeI
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8, int k9, String v9, int k10,
+			String v10) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8, int k9, String v9) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6,
+			String v6) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3) {
+		return new treeI(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeI tree(int k1, String v1, int k2, String v2) {
+		return new treeI(k1, v1, k2, v2);
+	}
+	public static treeI tree(int k1, String v1) {
+		return new treeI(k1, v1);
+	}
+	// part B
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8,
+			double k9, String v9, double k10, String v10) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8,
+			double k9, String v9) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
+	}
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
+	}
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3) {
+		return new treeDS(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeDS tree(double k1, String v1, double k2, String v2) {
+		return new treeDS(k1, v1, k2, v2);
+	}
+	public static treeDS tree(double k1, String v1) {
+		return new treeDS(k1, v1);
+	}
+	// treeL
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8, int k9, long v9, int k10, long v10) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8, int k9, long v9) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7,
+			long v7) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3,
+			long v3) {
+		return new treeL(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeL tree(int k1, long v1, int k2, long v2) {
+		return new treeL(k1, v1, k2, v2);
+	}
+	public static treeL tree(int k1, long v1) {
+		return new treeL(k1, v1);
+	}
+	// part B
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6, long v6,
+			double k7, long v7, double k8, long v8, double k9, long v9,
+			double k10, long v10) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6, long v6,
+			double k7, long v7, double k8, long v8, double k9, long v9) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
+	}
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6, long v6,
+			double k7, long v7, double k8, long v8) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
+	}
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6, long v6,
+			double k7, long v7) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6,
+			long v6) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3) {
+		return new treeDL(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeDL tree(double k1, long v1, double k2, long v2) {
+		return new treeDL(k1, v1, k2, v2);
+	}
+	public static treeDL tree(double k1, long v1) {
+		return new treeDL(k1, v1);
+	}
+	// treeF
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8, int k9, float v9, int k10,
+			float v10) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8, int k9, float v9) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3) {
+		return new treeF(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeF tree(int k1, float v1, int k2, float v2) {
+		return new treeF(k1, v1, k2, v2);
+	}
+	public static treeF tree(int k1, float v1) {
+		return new treeF(k1, v1);
+	}
+	// partB
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8,
+			double k9, float v9, double k10, float v10) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8,
+			double k9, float v9) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
+	}
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
+	}
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3) {
+		return new treeDF(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeDF tree(double k1, float v1, double k2, float v2) {
+		return new treeDF(k1, v1, k2, v2);
+	}
+	public static treeDF tree(double k1, float v1) {
+		return new treeDF(k1, v1);
+	}
+	// treeD: exclusive
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8, int k9, double v9, int k10,
+			double v10) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8, int k9, double v9) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6,
+			double v6) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3) {
+		return new treeD(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeD tree(int k1, double v1, int k2, double v2) {
+		return new treeD(k1, v1, k2, v2);
+	}
+	public static treeD tree(int k1, double v1) {
+		return new treeD(k1, v1);
+	}
+	// treeB
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8, int k9,
+			boolean v9, int k10, boolean v10) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8, int k9,
+			boolean v9) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3) {
+		return new treeB(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2) {
+		return new treeB(k1, v1, k2, v2);
+	}
+	public static treeB tree(int k1, boolean v1) {
+		return new treeB(k1, v1);
+	}
+	// part B
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
+			double k9, boolean v9, double k10, boolean v10) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
+	}
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
+			double k9, boolean v9) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
+	}
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8,
+			boolean v8) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
+	}
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
+	}
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5,
+			boolean v5) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3) {
+		return new treeDB(k1, v1, k2, v2, k3, v3);
+	}
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2) {
+		return new treeDB(k1, v1, k2, v2);
+	}
+	public static treeDB tree(double k1, boolean v1) {
+		return new treeDB(k1, v1);
 	}
 	public static char[] Chars(String str) {
 		if (not(str))
@@ -18842,7 +20162,7 @@ public class KL {
 			return "";
 		return join(o.array(), with);
 	}
-	public static String join(treeS t, String with) {
+	public static String join(treeDI t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
@@ -18852,7 +20172,7 @@ public class KL {
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(treeSL t, String with) {
+	public static String join(treeDL t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
@@ -18862,7 +20182,7 @@ public class KL {
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(treeSF t, String with) {
+	public static String join(treeDF t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
@@ -18872,7 +20192,7 @@ public class KL {
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(treeSD t, String with) {
+	public static String join(treeDS t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
@@ -18882,7 +20202,7 @@ public class KL {
 			return "";
 		return join(t.array(), with);
 	}
-	public static String join(treeSB t, String with) {
+	public static String join(treeDB t, String with) {
 		if (not(t))
 			return "";
 		return join(t.array(), with);
@@ -19048,7 +20368,7 @@ public class KL {
 			return "";
 		return join(o.array());
 	}
-	public static String join(treeS t) {
+	public static String join(treeDI t) {
 		if (not(t))
 			return "";
 		return join(t.array());
@@ -19058,7 +20378,7 @@ public class KL {
 			return "";
 		return join(t.array());
 	}
-	public static String join(treeSL t) {
+	public static String join(treeDL t) {
 		if (not(t))
 			return "";
 		return join(t.array());
@@ -19068,7 +20388,7 @@ public class KL {
 			return "";
 		return join(t.array());
 	}
-	public static String join(treeSF t) {
+	public static String join(treeDF t) {
 		if (not(t))
 			return "";
 		return join(t.array());
@@ -19078,7 +20398,7 @@ public class KL {
 			return "";
 		return join(t.array());
 	}
-	public static String join(treeSD t) {
+	public static String join(treeDS t) {
 		if (not(t))
 			return "";
 		return join(t.array());
@@ -19088,7 +20408,7 @@ public class KL {
 			return "";
 		return join(t.array());
 	}
-	public static String join(treeSB t) {
+	public static String join(treeDB t) {
 		if (not(t))
 			return "";
 		return join(t.array());
@@ -19530,7 +20850,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static int sum(treeS ns) {
+	public static int sum(treeDI ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -19538,7 +20858,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static long sum(treeSL ns) {
+	public static long sum(treeDL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -19554,7 +20874,7 @@ public class KL {
 			acc += ns.array()[next];
 		return acc;
 	}
-	public static float sum(treeSF ns) {
+	public static float sum(treeDF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -19566,14 +20886,6 @@ public class KL {
 		if (not(ns))
 			return 0;
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
-			acc += ns.array()[next];
-		return acc;
-	}
-	public static double sum(treeSD ns) {
-		if (not(ns))
-			return 0;
-		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc += ns.array()[next];
 		return acc;
@@ -19674,7 +20986,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static int difference(treeS ns) {
+	public static int difference(treeDI ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -19682,7 +20994,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static long difference(treeSL ns) {
+	public static long difference(treeDL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -19698,7 +21010,7 @@ public class KL {
 			acc -= ns.array()[next];
 		return acc;
 	}
-	public static float difference(treeSF ns) {
+	public static float difference(treeDF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -19710,14 +21022,6 @@ public class KL {
 		if (not(ns))
 			return 0;
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
-			acc -= ns.array()[next];
-		return acc;
-	}
-	public static double difference(treeSD ns) {
-		if (not(ns))
-			return 0;
-		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc -= ns.array()[next];
 		return acc;
@@ -19826,7 +21130,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static int product(treeS ns) {
+	public static int product(treeDI ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -19834,7 +21138,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static long product(treeSL ns) {
+	public static long product(treeDL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -19850,7 +21154,7 @@ public class KL {
 			acc *= ns.array()[next];
 		return acc;
 	}
-	public static float product(treeSF ns) {
+	public static float product(treeDF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -19862,14 +21166,6 @@ public class KL {
 		if (not(ns))
 			return 0;
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
-			acc *= ns.array()[next];
-		return acc;
-	}
-	public static double product(treeSD ns) {
-		if (not(ns))
-			return 0;
-		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc *= ns.array()[next];
 		return acc;
@@ -19978,7 +21274,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static int quotient(treeS ns) {
+	public static int quotient(treeDI ns) {
 		if (not(ns))
 			return 0;
 		int acc = 0;
@@ -19986,7 +21282,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static long quotient(treeSL ns) {
+	public static long quotient(treeDL ns) {
 		if (not(ns))
 			return 0;
 		long acc = 0;
@@ -20002,7 +21298,7 @@ public class KL {
 			acc /= ns.array()[next];
 		return acc;
 	}
-	public static float quotient(treeSF ns) {
+	public static float quotient(treeDF ns) {
 		if (not(ns))
 			return 0;
 		float acc = 0;
@@ -20014,14 +21310,6 @@ public class KL {
 		if (not(ns))
 			return 0;
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
-			acc /= ns.array()[next];
-		return acc;
-	}
-	public static double quotient(treeSD ns) {
-		if (not(ns))
-			return 0;
-		double acc = 0;
 		for (int next = 0; next < ns.length(); next++)
 			acc /= ns.array()[next];
 		return acc;
@@ -20099,23 +21387,18 @@ public class KL {
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static int min(treeS nums) {
+	public static int min(treeDI nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static long min(treeSL nums) {
+	public static long min(treeDL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(treeL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
-		return stat.getMin();
-	}
-	public static double min(treeSD nums) {
-		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
@@ -20166,23 +21449,18 @@ public class KL {
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static int max(treeS nums) {
+	public static int max(treeDI nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static long max(treeSL nums) {
+	public static long max(treeDL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(treeL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
-				.summaryStatistics();
-		return stat.getMax();
-	}
-	public static double max(treeSD nums) {
-		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
@@ -20203,7 +21481,15 @@ public class KL {
 	public static boolean isPerfectMod(double n1, double n2) {
 		return mod(n1, n2) == 0;
 	}
+	public static boolean isDivisorOf(int n1, int n2) {
+		return isPerfectMod(n1, n2);
+	}
+	public static boolean isDivisorOf(long n1, long n2) {
+		return isPerfectMod(n1, n2);
+	}
 	public static int[] divisorsOf(int n) {
+		if (not(n))
+			return blank.Int;
 		intArr result = new intArr();
 		for (int i = 2; i < n; i++) {
 			if (isPerfectMod(n, i))
@@ -20212,29 +21498,14 @@ public class KL {
 		return result.array();
 	}
 	public static long[] divisorsOf(long n) {
+		if (not(n))
+			return blank.Long;
 		longArr result = new longArr();
 		for (long i = 2; i < n; i++) {
 			if (isPerfectMod(n, i))
 				result.add(i);
 		}
 		return result.array();
-	}
-	public static double[] divisorsOf(double n) {
-		dblArr result = new dblArr();
-		for (double i = 2; i < n; i++) {
-			if (isPerfectMod(n, i))
-				result.add(i);
-		}
-		return result.array();
-	}
-	public static boolean isDivisorOf(int n1, int n2) {
-		return isPerfectMod(n1, n2);
-	}
-	public static boolean isDivisorOf(long n1, long n2) {
-		return isPerfectMod(n1, n2);
-	}
-	public static boolean isDivisorOf(double n1, double n2) {
-		return isPerfectMod(n1, n2);
 	}
 	public static boolean isEven(int n) {
 		return isPerfectMod(n, 2);
@@ -21142,31 +22413,31 @@ public class KL {
 	public static boolean eq(boolArr x, boolArr y) {
 		return x.eq(y);
 	}
-	public static boolean eq(treeS x, treeS y) {
+	public static boolean eq(treeDI x, treeDI y) {
 		return x.equals(y);
 	}
 	public static boolean eq(treeI x, treeI y) {
 		return x.equals(y);
 	}
-	public static boolean eq(treeSL x, treeSL y) {
+	public static boolean eq(treeDL x, treeDL y) {
 		return x.equals(y);
 	}
 	public static boolean eq(treeL x, treeL y) {
 		return x.equals(y);
 	}
-	public static boolean eq(treeSF x, treeSF y) {
+	public static boolean eq(treeDF x, treeDF y) {
 		return x.equals(y);
 	}
 	public static boolean eq(treeF x, treeF y) {
 		return x.equals(y);
 	}
-	public static boolean eq(treeSD x, treeSD y) {
+	public static boolean eq(treeDS x, treeDS y) {
 		return x.equals(y);
 	}
 	public static boolean eq(treeD x, treeD y) {
 		return x.equals(y);
 	}
-	public static boolean eq(treeSB x, treeSB y) {
+	public static boolean eq(treeDB x, treeDB y) {
 		return x.equals(y);
 	}
 	public static boolean eq(treeB x, treeB y) {
@@ -21232,31 +22503,31 @@ public class KL {
 	public static boolean uneq(boolArr x, boolArr y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(treeS x, treeS y) {
+	public static boolean uneq(treeDI x, treeDI y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(treeI x, treeI y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(treeSL x, treeSL y) {
+	public static boolean uneq(treeDL x, treeDL y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(treeL x, treeL y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(treeSF x, treeSF y) {
+	public static boolean uneq(treeDF x, treeDF y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(treeF x, treeF y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(treeSD x, treeSD y) {
+	public static boolean uneq(treeDS x, treeDS y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(treeD x, treeD y) {
 		return !eq(x, y);
 	}
-	public static boolean uneq(treeSB x, treeSB y) {
+	public static boolean uneq(treeDB x, treeDB y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(treeB x, treeB y) {
@@ -21529,31 +22800,31 @@ public class KL {
 	public static boolean not(objB o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(treeS t) {
+	public static boolean not(treeDI t) {
 		return isnl(t) || isEmpty(t);
 	}
 	public static boolean not(treeI t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(treeSL t) {
+	public static boolean not(treeDL t) {
 		return isnl(t) || isEmpty(t);
 	}
 	public static boolean not(treeL t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(treeSF t) {
+	public static boolean not(treeDF t) {
 		return isnl(t) || isEmpty(t);
 	}
 	public static boolean not(treeF t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(treeSD t) {
+	public static boolean not(treeDS t) {
 		return isnl(t) || isEmpty(t);
 	}
 	public static boolean not(treeD t) {
 		return isnl(t) || isEmpty(t);
 	}
-	public static boolean not(treeSB t) {
+	public static boolean not(treeDB t) {
 		return isnl(t) || isEmpty(t);
 	}
 	public static boolean not(treeB t) {
@@ -21667,31 +22938,31 @@ public class KL {
 	public static boolean is(objB o) {
 		return !not(o);
 	}
-	public static boolean is(treeS t) {
+	public static boolean is(treeDI t) {
 		return !not(t);
 	}
 	public static boolean is(treeI t) {
 		return !not(t);
 	}
-	public static boolean is(treeSL t) {
+	public static boolean is(treeDL t) {
 		return !not(t);
 	}
 	public static boolean is(treeL t) {
 		return !not(t);
 	}
-	public static boolean is(treeSF t) {
+	public static boolean is(treeDF t) {
 		return !not(t);
 	}
 	public static boolean is(treeF t) {
 		return !not(t);
 	}
-	public static boolean is(treeSD t) {
+	public static boolean is(treeDS t) {
 		return !not(t);
 	}
 	public static boolean is(treeD t) {
 		return !not(t);
 	}
-	public static boolean is(treeSB t) {
+	public static boolean is(treeDB t) {
 		return !not(t);
 	}
 	public static boolean is(treeB t) {
@@ -21919,7 +23190,12 @@ public class KL {
 			return false;
 		return arr.i(randInt(arr.length()));
 	}
-	public static int randItem(treeS t) {
+	public static String randItem(treeDS t) {
+		if (not(t))
+			return "";
+		return t.i(randInt(t.length()));
+	}
+	public static int randItem(treeDI t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
@@ -21929,7 +23205,7 @@ public class KL {
 			return "";
 		return t.i(randInt(t.length()));
 	}
-	public static long randItem(treeSL t) {
+	public static long randItem(treeDL t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
@@ -21939,7 +23215,7 @@ public class KL {
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static float randItem(treeSF t) {
+	public static float randItem(treeDF t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
@@ -21949,17 +23225,12 @@ public class KL {
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static double randItem(treeSD t) {
-		if (not(t))
-			return 0;
-		return t.i(randInt(t.length()));
-	}
 	public static double randItem(treeD t) {
 		if (not(t))
 			return 0;
 		return t.i(randInt(t.length()));
 	}
-	public static boolean randItem(treeSB t) {
+	public static boolean randItem(treeDB t) {
 		if (not(t))
 			return false;
 		return t.i(randInt(t.length()));
@@ -22008,31 +23279,31 @@ public class KL {
 	public static boolean randFrom(boolArr arr) {
 		return randItem(arr);
 	}
-	public static int randFrom(treeS t) {
+	public static String randFrom(treeDS t) {
+		return randItem(t);
+	}
+	public static int randFrom(treeDI t) {
 		return randItem(t);
 	}
 	public static String randFrom(treeI t) {
 		return randItem(t);
 	}
-	public static long randFrom(treeSL t) {
+	public static long randFrom(treeDL t) {
 		return randItem(t);
 	}
 	public static long randFrom(treeL t) {
 		return randItem(t);
 	}
-	public static float randFrom(treeSF t) {
+	public static float randFrom(treeDF t) {
 		return randItem(t);
 	}
 	public static float randFrom(treeF t) {
 		return randItem(t);
 	}
-	public static double randFrom(treeSD t) {
-		return randItem(t);
-	}
 	public static double randFrom(treeD t) {
 		return randItem(t);
 	}
-	public static boolean randFrom(treeSB t) {
+	public static boolean randFrom(treeDB t) {
 		return randItem(t);
 	}
 	public static boolean randFrom(treeB t) {
@@ -22095,31 +23366,31 @@ public class KL {
 	public static boolean anyOf(boolArr arr) {
 		return randItem(arr);
 	}
-	public static int anyOf(treeS t) {
+	public static String anyOf(treeDS t) {
+		return randItem(t);
+	}
+	public static int anyOf(treeDI t) {
 		return randItem(t);
 	}
 	public static String anyOf(treeI t) {
 		return randItem(t);
 	}
-	public static long anyOf(treeSL t) {
+	public static long anyOf(treeDL t) {
 		return randItem(t);
 	}
 	public static long anyOf(treeL t) {
 		return randItem(t);
 	}
-	public static float anyOf(treeSF t) {
+	public static float anyOf(treeDF t) {
 		return randItem(t);
 	}
 	public static float anyOf(treeF t) {
 		return randItem(t);
 	}
-	public static double anyOf(treeSD t) {
-		return randItem(t);
-	}
 	public static double anyOf(treeD t) {
 		return randItem(t);
 	}
-	public static boolean anyOf(treeSB t) {
+	public static boolean anyOf(treeDB t) {
 		return randItem(t);
 	}
 	public static boolean anyOf(treeB t) {
@@ -23204,7 +24475,12 @@ public class KL {
 			return false;
 		return arr.last() == lookupBool;
 	}
-	public static boolean endsWith(treeS tree, int lookupInt) {
+	public static boolean endsWith(treeDS tree, String lookupString) {
+		if (not(tree))
+			return false;
+		return eq(tree.last(), lookupString);
+	}
+	public static boolean endsWith(treeDI tree, int lookupInt) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupInt;
@@ -23214,7 +24490,7 @@ public class KL {
 			return false;
 		return tree.last() == lookupStr;
 	}
-	public static boolean endsWith(treeSL tree, long lookupLong) {
+	public static boolean endsWith(treeDL tree, long lookupLong) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupLong;
@@ -23224,7 +24500,7 @@ public class KL {
 			return false;
 		return tree.last() == lookupLong;
 	}
-	public static boolean endsWith(treeSF tree, float lookupFloat) {
+	public static boolean endsWith(treeDF tree, float lookupFloat) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupFloat;
@@ -23234,17 +24510,12 @@ public class KL {
 			return false;
 		return tree.last() == lookupFloat;
 	}
-	public static boolean endsWith(treeSD tree, double lookupDouble) {
-		if (not(tree))
-			return false;
-		return tree.last() == lookupDouble;
-	}
 	public static boolean endsWith(treeD tree, double lookupDouble) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupDouble;
 	}
-	public static boolean endsWith(treeSB tree, boolean lookupBool) {
+	public static boolean endsWith(treeDB tree, boolean lookupBool) {
 		if (not(tree))
 			return false;
 		return tree.last() == lookupBool;
@@ -23490,10 +24761,16 @@ public class KL {
 	public static boolean lastOf(objB arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
-	public static int secondLastOf(treeS arr) {
+	public static String secondLastOf(treeDS arr) {
+		return len(arr) - 2 >= 0 ? arr.seclast() : "";
+	}
+	public static String lastOf(treeDS arr) {
+		return len(arr) - 1 >= 0 ? arr.last() : "";
+	}
+	public static int secondLastOf(treeDI arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static int lastOf(treeS arr) {
+	public static int lastOf(treeDI arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
 	public static String secondLastOf(treeI arr) {
@@ -23502,10 +24779,10 @@ public class KL {
 	public static String lastOf(treeI arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : "";
 	}
-	public static long secondLastOf(treeSL arr) {
+	public static long secondLastOf(treeDL arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static long lastOf(treeSL arr) {
+	public static long lastOf(treeDL arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
 	public static long secondLastOf(treeL arr) {
@@ -23514,10 +24791,10 @@ public class KL {
 	public static long lastOf(treeL arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static float secondLastOf(treeSF arr) {
+	public static float secondLastOf(treeDF arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static float lastOf(treeSF arr) {
+	public static float lastOf(treeDF arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
 	public static float secondLastOf(treeF arr) {
@@ -23526,22 +24803,16 @@ public class KL {
 	public static float lastOf(treeF arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static double secondLastOf(treeSD arr) {
-		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
-	}
-	public static double lastOf(treeSD arr) {
-		return len(arr) - 1 >= 0 ? arr.last() : 0;
-	}
 	public static double secondLastOf(treeD arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
 	public static double lastOf(treeD arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static boolean secondLastOf(treeSB arr) {
+	public static boolean secondLastOf(treeDB arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : false;
 	}
-	public static boolean lastOf(treeSB arr) {
+	public static boolean lastOf(treeDB arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
 	public static boolean secondLastOf(treeB arr) {
@@ -24258,7 +25529,7 @@ public class KL {
 	public static boolArr clone(boolArr arr) {
 		return slice(arr);
 	}
-	public static treeS clone(treeS arr) {
+	public static treeDI clone(treeDI arr) {
 		return arr.copy();
 	}
 	public static String[] copyArr(String[] arr) {
@@ -24410,7 +25681,6 @@ public class KL {
 	public static boolArr combine(boolArr arrA, boolean[]... arrays) {
 		return arrA.combine(arrays);
 	}
-
 	public static String[] concat(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
@@ -25459,7 +26729,7 @@ public class KL {
 			return 0;
 		return o.length();
 	}
-	public static int len(treeS t) {
+	public static int len(treeDI t) {
 		if (t == null)
 			return 0;
 		return t.length();
@@ -25469,7 +26739,7 @@ public class KL {
 			return 0;
 		return t.length();
 	}
-	public static int len(treeSL t) {
+	public static int len(treeDL t) {
 		if (t == null)
 			return 0;
 		return t.length();
@@ -25479,7 +26749,7 @@ public class KL {
 			return 0;
 		return t.length();
 	}
-	public static int len(treeSF t) {
+	public static int len(treeDF t) {
 		if (t == null)
 			return 0;
 		return t.length();
@@ -25489,7 +26759,7 @@ public class KL {
 			return 0;
 		return t.length();
 	}
-	public static int len(treeSD t) {
+	public static int len(treeDS t) {
 		if (t == null)
 			return 0;
 		return t.length();
@@ -25499,7 +26769,7 @@ public class KL {
 			return 0;
 		return t.length();
 	}
-	public static int len(treeSB t) {
+	public static int len(treeDB t) {
 		if (t == null)
 			return 0;
 		return t.length();
@@ -25572,31 +26842,31 @@ public class KL {
 	public static int size(objB o) {
 		return len(o);
 	}
-	public static int size(treeS t) {
+	public static int size(treeDI t) {
 		return len(t);
 	}
 	public static int size(treeI t) {
 		return len(t);
 	}
-	public static int size(treeSL t) {
+	public static int size(treeDL t) {
 		return len(t);
 	}
 	public static int size(treeL t) {
 		return len(t);
 	}
-	public static int size(treeSF t) {
+	public static int size(treeDF t) {
 		return len(t);
 	}
 	public static int size(treeF t) {
 		return len(t);
 	}
-	public static int size(treeSD t) {
+	public static int size(treeDS t) {
 		return len(t);
 	}
 	public static int size(treeD t) {
 		return len(t);
 	}
-	public static int size(treeSB t) {
+	public static int size(treeDB t) {
 		return len(t);
 	}
 	public static int size(treeB t) {
@@ -25752,31 +27022,31 @@ public class KL {
 	public static boolean isEmpty(objB o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(treeS t) {
+	public static boolean isEmpty(treeDI t) {
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeI t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(treeSL t) {
+	public static boolean isEmpty(treeDL t) {
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeL t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(treeSF t) {
+	public static boolean isEmpty(treeDF t) {
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeF t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(treeSD t) {
+	public static boolean isEmpty(treeDS t) {
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeD t) {
 		return 0 == len(t) || t.isEmpty();
 	}
-	public static boolean isEmpty(treeSB t) {
+	public static boolean isEmpty(treeDB t) {
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeB t) {
@@ -25787,7 +27057,7 @@ public class KL {
 		if (isNull(o))
 			return "null";
 		String middleware = o.getClass().toString();
-		if (!in(middleware, "\\.") && in(middleware, "\\s")) {
+		if (in(middleware, "\\s")) {
 			middleware = middleware.split(" ")[1];
 			if (in(middleware, "\\["))
 				return replace(middleware.replaceAll("\\[", "array\\."), "\\w$",
@@ -25816,13 +27086,14 @@ public class KL {
 							// and failed>. Just so you know, WITH Z... IT DOES
 							// WORK.
 							return "arr";
-						});
-			return middleware.replaceAll("\\$", "\\.").replaceAll("^KL\\.", "");
+						}).replaceAll("Ljava\\.lang\\.|\\;", "")
+						.replaceAll("String", "str").replaceAll("Number", "num")
+						.replaceAll("Object", "obj");
+			return middleware.toLowerCase()
+					.replaceAll("(?<=\\w{3,4})arr", "Arr")
+					.replaceAll("\\$", "\\.").replaceAll("\\w+\\.", "");
 		}
-		String result = middleware.split("\\.")[2].toLowerCase()
-				.replaceAll("string[;;]+", "array.str")
-				.replaceAll("number[;;]+", "array.num")
-				.replaceAll("object[;;]+", "array.obj");
+		String result = middleware.split("\\.")[2].toLowerCase();
 		// arrays that belong to a class, for instance, Number[], Object[],
 		// instead leave a trailing semicolon at the end
 		return result;
@@ -26974,7 +28245,7 @@ public class KL {
 		print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room",
 				"love", 9, 19, 6);
 		print(8.643);
-        objB o = obj("fuckme", true);
-        
+		objB o = obj("fuckme", true);
+
 	}
 }
