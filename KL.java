@@ -621,7 +621,7 @@ public class KL {
 								break;
 						}
 						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();;
+							new Thread(action).run();
 						}
 					}
 				});
@@ -702,7 +702,7 @@ public class KL {
 					// there's a difference between these two
 					@Override
 					public void windowClosed(WindowEvent e) {
-						if (KL.eq(k, "exited|closed|(after|post)\\s?close")) {
+						if (KL.eq(k, "exited|closed|(after|post)\\W?close")) {
 							new Thread(action).run();
 						}
 					}
@@ -775,119 +775,119 @@ public class KL {
 		}
 		gui message(String title, String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 		gui message(String title, String message, String iconAddress) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui message(String title, String message, Icon ico) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE, ico);
 			return this;
 		}
 		gui error(String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 		gui error(String title, String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 		gui error(String title, String message, String iconAddress) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui error(String title, String message, Icon ico) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE, ico);
 			return this;
 		}
 		gui warn(String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, "Warning",
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 		gui warn(String title, String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 		gui warn(String title, String message, String iconAddress) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui warn(String title, String message, Icon ico) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE, ico);
 			return this;
 		}
 		boolean confirm(String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirm(String title, String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirm(String title, String message, String iconAddress) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					new icon(iconAddress)) == 0);
 		}
 		boolean confirm(String title, String message, Icon ico) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					ico) == 0);
 		}
 		boolean confirmCancellable(String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirmCancellable(String title, String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
@@ -895,27 +895,27 @@ public class KL {
 		boolean confirmCancellable(String title, String message,
 				String iconAddress) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
 		}
 		boolean confirmCancellable(String title, String message, Icon ico) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, ico) == 0);
 		}
 		String ask(String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return JOptionPane.showInputDialog(null, message, "Input",
 					JOptionPane.QUESTION_MESSAGE);
 		}
 		String ask(String title, String message) {
 			if (this.isOnTop())
-				offTop();;
+				offTop();
 			return JOptionPane.showInputDialog(null, message, title,
 					JOptionPane.QUESTION_MESSAGE);
 		}
@@ -1080,7 +1080,7 @@ public class KL {
 								break;
 						}
 						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();;
+							new Thread(action).run();
 						}
 					}
 				});
@@ -1351,7 +1351,7 @@ public class KL {
 								break;
 						}
 						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();;
+							new Thread(action).run();
 						}
 					}
 				});
@@ -1687,7 +1687,7 @@ public class KL {
 								break;
 						}
 						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();;
+							new Thread(action).run();
 						}
 					}
 				});
@@ -1857,7 +1857,7 @@ public class KL {
 								break;
 						}
 						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();;
+							new Thread(action).run();
 						}
 					}
 				});
@@ -2027,7 +2027,7 @@ public class KL {
 								break;
 						}
 						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();;
+							new Thread(action).run();
 						}
 					}
 				});
@@ -18198,25 +18198,43 @@ public class KL {
 			return now();
 		String parts[] = now().split(", ");
 		String time = parts[0], day = sliceKeep(parts[1], 3),
-				month = sliceKeep(parts[2], 3), year = parts[3];
-		String result = join(new String[]{time, day, month, year}, ", ");
+				dateOfMonth = sliceKeep(parts[2], 3) + " " + parts[2].split(" ")[1], year = parts[3];
+		String result = join(new String[]{time, day, dateOfMonth, year}, ", ");
 		return result;
 	}
 	public static String getDate() {
 		String parts[] = now().split(", ");
-		return parts[1] + ", " + parts[2];
+		return parts[2] + ", " + parts[3];
 	}
 	public static String getDay() {
-		return now().split(", ")[0];
+		return now().split(", ")[1];
 	}
 	public static String getMonth() {
-		return now().split(", ")[1].split(" ")[0];
+		return now().split(", ")[2].split(" ")[0];
 	}
 	public static String getYear() {
 		return now().split(", ")[3];
 	}
 	public static String getTime() {
 		return now().split(", ")[0];
+	}
+	public static String getTimestamp() {
+		return now(true).toUpperCase().replaceAll("\\W+", "-");
+	}
+	public static String timestamp() {
+		return getTimestamp();
+	}
+	public static String timesignature() {
+		return getDatestamp();
+	}
+	public static String getDatestamp() {
+		return getTimestamp().split("AM-")[1];
+	}
+	public static String datestamp() {
+		return getDatestamp();
+	}
+	public static String datesignature() {
+		return getDatestamp();
 	}
 	public static String getSeason() {
 		String m = slice(getMonth(), 0, 3).toLowerCase();
@@ -21816,7 +21834,28 @@ public class KL {
 			// args useless
 		}
 		// post processing...
-		if (in(s, "\\$*\\{\\w+\\}|\\$+\\w+")) {
+		// for methods
+		if (in(s, "\\$*\\{\\w+\\(\\)\\}|\\$+\\w+\\(\\)")) {
+			try {
+				Class<?> cls = this.getClass();
+				Object field;
+				String[] matches = findMatches(s, "\\$*\\{\\w+\\(\\)\\}|\\$+\\w+\\(\\)");
+				for (String m : matches) {
+					String toGet = m.replaceAll("[\\$\\{\\(\\)\\}]", "");
+					Object valueFromMethod = cls.getMethod(toGet).invoke(this);
+					m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
+					s = s.replaceFirst(m,
+							valueFromMethod instanceof Character
+									|| valueFromMethod instanceof String
+									|| valueFromMethod instanceof Number
+									|| valueFromMethod instanceof Boolean ? Str(valueFromMethod) : m);
+				}
+			} catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+				
+			}
+		}
+		// for fields
+		if (in(s, "\\$*\\{\\w+\\}|\\$+\\w+(?!\\(\\))")) {
 			try {
 				Class<?> cls = this.getClass();
 				Object field;
@@ -21833,8 +21872,8 @@ public class KL {
 											? Str(field)
 											: m);
 				}
-			} catch (NoSuchFieldException | IllegalAccessException
-					| SecurityException e) {
+			} catch (NoSuchFieldException | IllegalAccessException | SecurityException e) {
+				
 			}
 		}
 		s = sentCase(s);
@@ -22994,13 +23033,13 @@ public class KL {
 		return number;
 	}
 	public static int randInt(int end) {
-		if (not(end))
+		if (not(end) || isNeg(end))
 			return 0;
 		int number = ThreadLocalRandom.current().nextInt(0, end);
 		return number;
 	}
 	public static int randInt(int start, int end) {
-		if (not(start) || not(end) || eq(start, end))
+		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end))
 			return 0;
 		int number = ThreadLocalRandom.current().nextInt(start, end);
 		return number;
@@ -23029,30 +23068,30 @@ public class KL {
 	}
 	public static double randFlt() {
 		double number = randInt() * .3;
-		return number;
+		return toPrecision(number, 1);
 	}
 	public static double randFlt(int end) {
-		if (not(end))
+		if (not(end) || isNeg(end))
 			return 0;
 		double number = randInt(end) * .3;
-		return number;
+		return toPrecision(number, 1);
 	}
 	public static double randFlt(int start, int end) {
-		if (not(start) || not(end) || eq(start, end))
+		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end))
 			return 0;
 		double number = randInt(start, end) * .3;
-		return number;
+		return toPrecision(number, 1);
 	}
 	public static double randDbl() {
 		return (double) randFlt();
 	}
 	public static double randDbl(int end) {
-		if (not(end))
+		if (not(end) || isNeg(end))
 			return 0;
 		return (double) randFlt(end);
 	}
 	public static double randDbl(int start, int end) {
-		if (not(start) || not(end) || eq(start, end))
+		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end))
 			return 0;
 		return (double) randFlt(start, end);
 	}
@@ -28242,10 +28281,10 @@ public class KL {
 	public static String name = "Ayesha";
 	public static int age = 23;
 	public static void main(String[] args) {
-		print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room",
+		print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room. $randFlt().",
 				"love", 9, 19, 6);
 		print(8.643);
-		objB o = obj("fuckme", true);
+		print(timestamp(), ";", datestamp());
 
 	}
 }
