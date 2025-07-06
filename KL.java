@@ -4129,7 +4129,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new objS();
 			}
-			if (end < 0) {
+			if (not(end) || isNeg(end)) {
 				return new objS();
 			}
 			if (end > super.size()) {
@@ -4697,7 +4697,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new objI();
 			}
-			if (end < 0) {
+			if (not(end) || isNeg(end)) {
 				return new objI();
 			}
 			if (end > super.size()) {
@@ -5260,7 +5260,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new objL();
 			}
-			if (end < 0) {
+			if (not(end) || isNeg(end)) {
 				return new objL();
 			}
 			if (end > super.size()) {
@@ -5823,7 +5823,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new objF();
 			}
-			if (end < 0) {
+			if (not(end) || isNeg(end)) {
 				return new objF();
 			}
 			if (end > super.size()) {
@@ -6390,7 +6390,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new objD();
 			}
-			if (end < 0) {
+			if (not(end) || isNeg(end)) {
 				return new objD();
 			}
 			if (end > super.size()) {
@@ -6959,7 +6959,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new objB();
 			}
-			if (end < 0) {
+			if (not(end) || isNeg(end)) {
 				return new objB();
 			}
 			if (end > super.size()) {
@@ -7165,6 +7165,947 @@ public class KL {
 	}
 	public static objB objB(String k1, boolean v1) {
 		return new objB(k1, v1);
+	}
+	public static final class obj extends HashMap<String, Object> {
+		obj() {
+			super();
+		}
+		obj(String k1, Object v1, String k2, Object v2, String k3,
+				Object v3, String k4, Object v4, String k5, Object v5,
+				String k6, Object v6, String k7, Object v7, String k8,
+				Object v8, String k9, Object v9, String k10, Object v10) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+			super.put(k10, v10);
+		}
+		obj(String k1, Object v1, String k2, Object v2, String k3,
+				Object v3, String k4, Object v4, String k5, Object v5,
+				String k6, Object v6, String k7, Object v7, String k8,
+				Object v8, String k9, Object v9) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+			super.put(k9, v9);
+		}
+		obj(String k1, Object v1, String k2, Object v2, String k3,
+				Object v3, String k4, Object v4, String k5, Object v5,
+				String k6, Object v6, String k7, Object v7, String k8,
+				Object v8) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+			super.put(k8, v8);
+		}
+		obj(String k1, Object v1, String k2, Object v2, String k3,
+				Object v3, String k4, Object v4, String k5, Object v5,
+				String k6, Object v6, String k7, Object v7) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+			super.put(k7, v7);
+		}
+		obj(String k1, Object v1, String k2, Object v2, String k3,
+				Object v3, String k4, Object v4, String k5, Object v5,
+				String k6, Object v6) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+			super.put(k6, v6);
+		}
+		obj(String k1, Object v1, String k2, Object v2, String k3,
+				Object v3, String k4, Object v4, String k5, Object v5) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+			super.put(k5, v5);
+		}
+		obj(String k1, Object v1, String k2, Object v2, String k3,
+				Object v3, String k4, Object v4) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+			super.put(k4, v4);
+		}
+		obj(String k1, Object v1, String k2, Object v2, String k3,
+				Object v3) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+			super.put(k3, v3);
+		}
+		obj(String k1, Object v1, String k2, Object v2) {
+			super.put(k1, v1);
+			super.put(k2, v2);
+		}
+		obj(String k, Object v) {
+			super.put(k, v);
+		}
+		obj copy() {
+			return (obj) super.clone();
+		}
+		obj slice() {
+			return copy();
+		}
+		Object random() {
+			if (super.isEmpty())
+				return false;
+			return i(randInt(length()));
+		}
+		String random(String type) {
+			if (not(isStr(random()))) return "";
+			return (String)random();
+		}
+		int random(int type) {
+			if (not(isInt(random()))) return 0;
+			return (int)random();
+		}
+		long random(long type) {
+			if (not(isLong(random()))) return 0;
+			return (long)random();
+		}
+		float random(float type) {
+			if (not(isFlt(random()))) return 0;
+			return (float)random();
+		}
+		double random(double type) {
+			if (not(isDbl(random()))) return 0;
+			return (double)random();
+		}
+		boolean random(boolean type) {
+			if (not(isBool(random()))) return false;
+			return (boolean)random();
+		}
+		Object rand() {
+			return random();
+		}
+		String rand(String type) {
+			return random(type);
+		}
+		int rand(int type) {
+			return random(type);
+		}
+		long rand(long type) {
+			return random(type);
+		}
+		float rand(float type) {
+			return random(type);
+		}
+		double rand(double type) {
+			return random(type);
+		}
+		boolean rand(boolean type) {
+			return random(type);
+		}
+		Object any() {
+			return random();
+		}
+		String any(String type) {
+			return random(type);
+		}
+		int any(int type) {
+			return random(type);
+		}
+		long any(long type) {
+			return random(type);
+		}
+		float any(float type) {
+			return random(type);
+		}
+		double any(double type) {
+			return random(type);
+		}
+		boolean any(boolean type) {
+			return random(type);
+		}
+		Object key(String k) {
+			return hasKey(k) ? super.get(k) : null;
+			//will take a key in the form of a string, but RETURN AN OBJECT
+		}
+		String key(String k, String type) {
+			if (not(isStr(key(k)))) return "";
+			return (String)key(k);
+		}
+		int key(String k, int type) {
+			if (not(isInt(key(k)))) return 0;
+			return (int)key(k);
+		}
+		long key(String k, long type) {
+			if (not(isLong(key(k)))) return 0;
+			return (long)key(k);
+		}
+		float key(String k, float type) {
+			if (not(isFlt(key(k)))) return 0;
+			return (float)key(k);
+		}
+		double key(String k, double type) {
+			if (not(isDbl(key(k)))) return 0;
+			return (double)key(k);
+		}
+		boolean key(String k, boolean type) {
+			if (not(isBool(key(k)))) return false;
+			return (boolean)key(k);
+		}
+		Object k(String k) {
+			return key(k);
+		}
+		String k(String k, String type) {
+			return key(k, type);
+		}
+		int k(String k, int type) {
+			return key(k, type);
+		}
+		long k(String k, long type) {
+			return key(k, type);
+		}
+		float k(String k, float type) {
+			return key(k, type);
+		}
+		double k(String k, double type) {
+			return key(k, type);
+		}
+		boolean k(String k, boolean type) {
+			return key(k, type);
+		}
+		Object val(String k) {
+			return key(k);
+		}
+		String val(String k, String type) {
+			return key(k, type);
+		}
+		int val(String k, int type) {
+			return key(k, type);
+		}
+		long val(String k, long type) {
+			return key(k, type);
+		}
+		float val(String k, float type) {
+			return key(k, type);
+		}
+		double val(String k, double type) {
+			return key(k, type);
+		}
+		boolean val(String k, boolean type) {
+			return key(k, type);
+		}
+		Object v(String k) {
+			return key(k);
+		}
+		String v(String k, String type) {
+			return key(k, type);
+		}
+		int v(String k, int type) {
+			return key(k, type);
+		}
+		long v(String k, long type) {
+			return key(k, type);
+		}
+		float v(String k, float type) {
+			return key(k, type);
+		}
+		double v(String k, double type) {
+			return key(k, type);
+		}
+		boolean v(String k, boolean type) {
+			return key(k, type);
+		}
+		String[] keyArray() {
+			Object[] keysObj = super.keySet().toArray();
+			String[] keys = new String[keysObj.length];
+			for (int i : range(keysObj)) keys[i] = (String)keysObj[i];
+			return keys;
+		}
+		Object[] array() {
+			Object[] values = super.values().toArray();
+			return values;
+		}
+		String nthKey(int n) {
+			if (n >= 0 && n < length())
+				return keyArray()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastKey(n);
+			}
+			return "";
+		}
+		Object nthValue(int n) {
+			if (n >= 0 && n < length())
+				return array()[n];
+			else if (n < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				n = Pos(n);
+				if (n <= length())
+					return nthLastValue(n);
+			}
+			return none;
+		}
+		String nthValue(int n, String type) {
+			if (not(isStr(nthValue(n)))) return "";
+			return (String)nthValue(n);
+		}
+		int nthValue(int n, int type) {
+			if (not(isInt(nthValue(n)))) return 0;
+			return (int)nthValue(n);
+		}
+		long nthValue(int n, long type) {
+			if (not(isLong(nthValue(n)))) return 0;
+			return (long)nthValue(n);
+		}
+		float nthValue(int n, float type) {
+			if (not(isFlt(nthValue(n)))) return 0;
+			return (float)nthValue(n);
+		}
+		double nthValue(int n, double type) {
+			if (not(isDbl(nthValue(n)))) return 0;
+			return (double)nthValue(n);
+		}
+		boolean nthValue(int n, boolean type) {
+			if (not(isBool(nthValue(n)))) return false;
+			return (boolean)nthValue(n);
+		}
+		String nthLastKey(int n) {
+			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
+		}
+		Object nthLastValue(int n) {
+			return n > 0 && n <= length() ? array()[length() - n] : false;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
+		}
+		String nthLastValue(int n, String type) {
+			if (not(isStr(nthLastValue(n)))) return "";
+			return (String)nthLastValue(n);
+		}
+		int nthLastValue(int n, int type) {
+			if (not(isInt(nthLastValue(n)))) return 0;
+			return (int)nthLastValue(n);
+		}
+		long nthLastValue(int n, long type) {
+			if (not(isLong(nthLastValue(n)))) return 0;
+			return (long)nthLastValue(n);
+		}
+		float nthLastValue(int n, float type) {
+			if (not(isFlt(nthLastValue(n)))) return 0;
+			return (float)nthLastValue(n);
+		}
+		double nthLastValue(int n, double type) {
+			if (not(isDbl(nthLastValue(n)))) return 0;
+			return (double)nthLastValue(n);
+		}
+		boolean nthLastValue(int n, boolean type) {
+			if (not(isBool(nthLastValue(n)))) return false;
+			return (boolean)nthLastValue(n);
+		}
+		Object i(int n) {
+			return nthValue(n);
+		}
+		String i(int n, String type) {
+			if (not(isStr(i(n)))) return "";
+			return (String)i(n);
+		}
+		int i(int n, int type) {
+			if (not(isInt(i(n)))) return 0;
+			return (int)i(n);
+		}
+		long i(int n, long type) {
+			if (not(isLong(i(n)))) return 0;
+			return (long)i(n);
+		}
+		float i(int n, float type) {
+			if (not(isFlt(i(n)))) return 0;
+			return (float)i(n);
+		}
+		double i(int n, double type) {
+			if (not(isDbl(i(n)))) return 0;
+			return (double)i(n);
+		}
+		boolean i(int n, boolean type) {
+			if (not(isBool(i(n)))) return false;
+			return (boolean)i(n);
+		}
+		Object lasti(int n) {
+			return nthLastValue(n);
+		}
+		String lasti(int n, String type) {
+			if (not(isStr(lasti(n)))) return "";
+			return (String)lasti(n);
+		}
+		int lasti(int n, int type) {
+			if (not(isInt(lasti(n)))) return 0;
+			return (int)lasti(n);
+		}
+		long lasti(int n, long type) {
+			if (not(isLong(lasti(n)))) return 0;
+			return (long)lasti(n);
+		}
+		float lasti(int n, float type) {
+			if (not(isFlt(lasti(n)))) return 0;
+			return (float)lasti(n);
+		}
+		double lasti(int n, double type) {
+			if (not(isDbl(lasti(n)))) return 0;
+			return (double)lasti(n);
+		}
+		boolean lasti(int n, boolean type) {
+			if (not(isBool(lasti(n)))) return false;
+			return (boolean)lasti(n);
+		}
+		Object ilast(int n) {
+			return lasti(n);
+		}
+		String ilast(int n, String type) {
+			return lasti(n, type);
+		}
+		int ilast(int n, int type) {
+			return lasti(n, type);
+		}
+		long ilast(int n, long type) {
+			return lasti(n, type);
+		}
+		float ilast(int n, float type) {
+			return lasti(n, type);
+		}
+		double ilast(int n, double type) {
+			return lasti(n, type);
+		}
+		boolean ilast(int n, boolean type) {
+			return lasti(n, type);
+		}
+		Object nth(int n) {
+			return i(n);
+		}
+		String nth(int n, String type) {
+			return i(n, type);
+		}
+		int nth(int n, int type) {
+			return i(n, type);
+		}
+		long nth(int n, long type) {
+			return i(n, type);
+		}
+		float nth(int n, float type) {
+			return i(n, type);
+		}
+		double nth(int n, double type) {
+			return i(n, type);
+		}
+		boolean nth(int n, boolean type) {
+			return i(n, type);
+		}
+		Object nthlast(int n) {
+			return lasti(n);
+		}
+		String nthlast(int n, String type) {
+			return lasti(n, type);
+		}
+		int nthlast(int n, int type) {
+			return lasti(n, type);
+		}
+		long nthlast(int n, long type) {
+			return lasti(n, type);
+		}
+		float nthlast(int n, float type) {
+			return lasti(n, type);
+		}
+		double nthlast(int n, double type) {
+			return lasti(n, type);
+		}
+		boolean nthlast(int n, boolean type) {
+			return lasti(n, type);
+		}
+		Object first() {
+			return nth(0);
+		}
+		String first(String type) {
+			if (not(isStr(first()))) return "";
+			return (String)first();
+		}
+		int first(int type) {
+			if (not(isInt(first()))) return 0;
+			return (int)first();
+		}
+		long first(long type) {
+			if (not(isLong(first()))) return 0;
+			return (long)first();
+		}
+		float first(float type) {
+			if (not(isFlt(first()))) return 0;
+			return (float)first();
+		}
+		double first(double type) {
+			if (not(isDbl(first()))) return 0;
+			return (double)first();
+		}
+		boolean first(boolean type) {
+			if (not(isBool(first()))) return false;
+			return (boolean)first();
+		}
+		Object second() {
+			return nth(1);
+		}
+		String second(String type) {
+			if (not(isStr(second()))) return "";
+			return (String)second();
+		}
+		int second(int type) {
+			if (not(isInt(second()))) return 0;
+			return (int)second();
+		}
+		long second(long type) {
+			if (not(isLong(second()))) return 0;
+			return (long)second();
+		}
+		float second(float type) {
+			if (not(isFlt(second()))) return 0;
+			return (float)second();
+		}
+		double second(double type) {
+			if (not(isDbl(second()))) return 0;
+			return (double)second();
+		}
+		boolean second(boolean type) {
+			if (not(isBool(second()))) return false;
+			return (boolean)second();
+		}
+		Object seclast() {
+			return nthlast(2);
+		}
+		String seclast(String type) {
+			if (not(isStr(seclast()))) return "";
+			return (String)seclast();
+		}
+		int seclast(int type) {
+			if (not(isInt(seclast()))) return 0;
+			return (int)seclast();
+		}
+		long seclast(long type) {
+			if (not(isLong(seclast()))) return 0;
+			return (long)seclast();
+		}
+		float seclast(float type) {
+			if (not(isFlt(seclast()))) return 0;
+			return (float)seclast();
+		}
+		double seclast(double type) {
+			if (not(isDbl(seclast()))) return 0;
+			return (double)seclast();
+		}
+		boolean seclast(boolean type) {
+			if (not(isBool(seclast()))) return false;
+			return (boolean)seclast();
+		}
+		Object last() {
+			return nthlast(1);
+		}
+		String last(String type) {
+			if (not(isStr(last()))) return "";
+			return (String)last();
+		}
+		int last(int type) {
+			if (not(isInt(last()))) return 0;
+			return (int)last();
+		}
+		long last(long type) {
+			if (not(isLong(last()))) return 0;
+			return (long)last();
+		}
+		float last(float type) {
+			if (not(isFlt(last()))) return 0;
+			return (float)last();
+		}
+		double last(double type) {
+			if (not(isDbl(last()))) return 0;
+			return (double)last();
+		}
+		boolean last(boolean type) {
+			if (not(isBool(last()))) return false;
+			return (boolean)last();
+		}
+		boolean hasKey(String k) {
+			return super.containsKey(k);
+		}
+		boolean hasValue(Object v) {
+			return super.containsValue(v);
+		}
+		boolean has(Object o) {
+			if (o instanceof String) return hasKey((String)o);
+			return hasValue(o);
+		}
+		obj set(String k, Object v) {
+			if (!super.containsKey(k))
+				super.put(k, v);
+			else
+				super.replace(k, v);
+			return this;
+		}
+		obj add(String k, Object v) {
+			set(k, v);
+			return this;
+		}
+		Object delete(String k) {
+			return super.remove(k);
+		}
+		obj push(String k, Object v) {
+			add(k, v);
+			return this;
+		}
+		Object pop(String k) {
+			return delete(k);
+		}
+		obj update(String k, Object v) {
+			set(k, v);
+			return this;
+		}
+		Set<String> keys() {
+			return super.keySet();
+		}
+		Set<Map.Entry<String, Object>> entries() {
+			return super.entrySet();
+		}
+		boolean compare(obj arrB) {
+			int oldLen = length(), newLen = intersection(arrB).length();
+			return newLen > oldLen / 2;
+		}
+		obj intersection(obj other) {
+			if (other == null) {
+				return new obj();
+			}
+			obj result = new obj();
+			for (String key : super.keySet()) {
+				if (other.containsKey(key)
+						&& other.get(key).equals(super.get(key))) {
+					result.put(key, super.get(key));
+				}
+			}
+			return result;
+		}
+		obj negativeIntersection(obj other) {
+			if (other == null) {
+				return copy();
+			}
+			obj result = copy();
+			result.keySet().removeAll(other.intersection(copy()).keySet());
+			return result;
+		}
+		obj keyIntersection(obj other) {
+			if (other == null) {
+				return new obj();
+			}
+			obj result = new obj();
+			for (String key : super.keySet()) {
+				if (other.containsKey(key)) {
+					result.put(key, super.get(key));
+				}
+			}
+			return result;
+		}
+		obj negativeKeyIntersection(obj other) {
+			if (other == null) {
+				return copy();
+			}
+			obj result = copy();
+			result.keySet().removeAll(other.keySet());
+			return result;
+		}
+		obj valueIntersection(obj other) {
+			if (other == null) {
+				return new obj();
+			}
+			obj result = new obj();
+			for (String key1 : super.keySet()) {
+				for (String key2 : other.keySet()) {
+					if (super.get(key1).equals(other.get(key2))) {
+						result.put(key1, super.get(key1));
+					}
+				}
+			}
+			return result;
+		}
+		obj negativeValueIntersection(obj other) {
+			if (other == null) {
+				return copy();
+			}
+			obj result = copy();
+			result.entrySet()
+					.removeIf(entry -> other.containsValue(entry.getValue()));
+			return result;
+		}
+		obj slice(int start) {
+			if (super.isEmpty()) {
+				return new obj();
+			}
+			if (start < 0) {
+				start = 0;
+			}
+			if (start >= super.size()) {
+				return new obj();
+			}
+			obj subMap = new obj();
+			int index = 0;
+			for (String key : super.keySet()) {
+				if (index >= start) {
+					subMap.put(key, super.get(key));
+				}
+				index++;
+			}
+			return subMap;
+		}
+		obj slice(int start, int end) {
+			if (super.isEmpty()) {
+				return new obj();
+			}
+			if (start < 0) {
+				start = 0;
+			}
+			if (end > super.size()) {
+				end = super.size();
+			}
+			if (start > end) {
+				int temp = start;
+				start = end;
+				end = temp;
+			}
+			obj subMap = new obj();
+			int index = 0;
+			for (String key : super.keySet()) {
+				if (index >= start && index < end) {
+					subMap.put(key, super.get(key));
+				}
+				index++;
+			}
+			return subMap;
+		}
+		obj sliceKeep(int end) {
+			if (super.isEmpty()) {
+				return new obj();
+			}
+			if (not(end) || isNeg(end)) {
+				return new obj();
+			}
+			if (end > super.size()) {
+				end = super.size();
+			}
+			obj subMap = new obj();
+			int index = 0;
+			for (String key : super.keySet()) {
+				if (index < end) {
+					subMap.put(key, super.get(key));
+				}
+				index++;
+			}
+			return subMap;
+		}
+		obj sliceEnd(int earlyEnd) {
+			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
+				if (earlyEnd <= 0) {
+					return (obj) super.clone();
+				} else {
+					return new obj();
+				}
+			}
+			int start = super.size() - earlyEnd;
+			obj subMap = new obj();
+			int index = 0;
+			for (String key : super.keySet()) {
+				if (index >= start) {
+					subMap.put(key, super.get(key));
+				}
+				index++;
+			}
+			return subMap;
+		}
+		obj mapIfPresent(Object value, Function<Object, Object> fn) {
+			return map(value, fn);
+		}
+		obj mapIfPresent(String key,
+				BiFunction<? super String, ? super Object, ? extends Object> fn) {
+			if (not(fn))
+				return this;
+			super.computeIfPresent(key, fn);
+			return this;
+		}
+		obj map(Object value, Function<Object, Object> fn) {
+			if (!super.containsValue(value) || isNull(value) || fn == null) {
+				return this;
+			}
+			for (String key : this.keySet()) {
+				if (this.get(key).equals(value)) {
+					Object newValue = fn.apply(this.get(key));
+					if (isNull(newValue)) {
+						this.remove(key);
+					} else {
+						this.put(key, newValue);
+					}
+				}
+			}
+			return this;
+		}
+		obj mapKey(String key, Function<String, String> fn) {
+			if (not(key) || not(fn) || !this.containsKey(key)) {
+				return this;
+			}
+			String newKey = fn.apply(key);
+			if (not(newKey)) {
+				this.remove(key);
+			} else if (!newKey.equals(key)) {
+				this.put(newKey, this.remove(key));
+			}
+			return this;
+		}
+		obj mapKey(Function<String, String> fn) {
+			HashMap<String, Object> newMap = new HashMap<>();
+			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
+			super.clear();
+			super.putAll(newMap);
+			return this;
+		}
+		obj map(Function<Object, Object> fn) {
+			super.replaceAll((k, v) -> fn.apply(v));
+			return this;
+		}
+		obj map(
+				BiFunction<? super String, ? super Object, ? extends Object> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+		obj eachKey(Consumer<String> fn) {
+			super.keySet().forEach(fn);
+			return this;
+		}
+		obj each(Consumer<Object> fn) {
+			super.values().forEach(fn);
+			return this;
+		}
+		obj each(BiConsumer<? super String, ? super Object> fn) {
+			super.forEach(fn);
+			return this;
+		}
+		obj combine(obj... others) {
+			if (not(others))
+				return this;
+			for (obj other : others) {
+				if (not(other))
+					continue;
+				super.putAll(other);
+			}
+			return this;
+		}
+		obj union(obj... others) {
+			combine(others);
+			return this;
+		}
+		obj cat(obj... others) {
+			combine(others);
+			return this;
+		}
+		obj concat(obj... others) {
+			combine(others);
+			return this;
+		}
+		obj join(obj... others) {
+			combine(others);
+			return this;
+		}
+		String join() {
+			return string();
+		}
+		String join(String s) {
+			if (not(s) || not(length()))
+				return string();
+			return KL.join(array(), s);
+		}
+		String string() {
+			return super.toString();
+		}
+		String str() {
+			return string();
+		}
+		void printMap() {
+			System.out.println(super.clone());
+		}
+		void printAll() {
+			printMap();
+		}
+		int length() {
+			return super.size();
+		}
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2,
+			String k3, Object v3, String k4, Object v4, String k5, Object v5,
+			String k6, Object v6, String k7, Object v7, String k8, Object v8,
+			String k9, Object v9, String k10, Object v10) {
+		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2,
+			String k3, Object v3, String k4, Object v4, String k5, Object v5,
+			String k6, Object v6, String k7, Object v7, String k8, Object v8,
+			String k9, Object v9) {
+		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2,
+			String k3, Object v3, String k4, Object v4, String k5, Object v5,
+			String k6, Object v6, String k7, Object v7, String k8,
+			Object v8) {
+		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2,
+			String k3, Object v3, String k4, Object v4, String k5, Object v5,
+			String k6, Object v6, String k7, Object v7) {
+		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2,
+			String k3, Object v3, String k4, Object v4, String k5, Object v5,
+			String k6, Object v6) {
+		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2,
+			String k3, Object v3, String k4, Object v4, String k5,
+			Object v5) {
+		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2,
+			String k3, Object v3, String k4, Object v4) {
+		return new obj(k1, v1, k2, v2, k3, v3, k4, v4);
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2,
+			String k3, Object v3) {
+		return new obj(k1, v1, k2, v2, k3, v3);
+	}
+	public static obj obj(String k1, Object v1, String k2, Object v2) {
+		return new obj(k1, v1, k2, v2);
+	}
+	public static obj obj(String k1, Object v1) {
+		return new obj(k1, v1);
 	}
 	public static class tree<Key, Value> extends TreeMap<Key, Value> {
 		public static final long serialVersionUID = 1L;
@@ -7428,7 +8369,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new tree<>();
 			}
-			if (end < 0) {
+			if (not(end) || isNeg(end)) {
 				return new tree<>();
 			}
 			if (end > super.size()) {
@@ -18228,7 +19169,7 @@ public class KL {
 		return getDatestamp();
 	}
 	public static String getDatestamp() {
-		return getTimestamp().split("AM-")[1];
+		return getTimestamp().split("(?<=[AP]M)-")[1];
 	}
 	public static String datestamp() {
 		return getDatestamp();
@@ -18592,6 +19533,7 @@ public class KL {
 				System.out.print("[" + join((boolean[]) arg) + "]");
 			}
 		}
+		System.out.print("\n");
 	}
 	public static void printArr(strArr arr) {
 		print(arr.toString());
@@ -21750,22 +22692,25 @@ public class KL {
 			return s;
 		s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
 				.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
-		for (Object arg : args) {
-			if (arg instanceof Character)
-				s = replaceFirst(s, "%[%c]|\\$*\\{\\}", Str(arg));
-			else if (arg instanceof String)
-				s = replaceFirst(s, "%[%sw]|\\$*\\{\\}", Str(arg));
-			else if (arg instanceof Integer || arg instanceof Long) {
-				String[] matches = findMatches(s,
-						"%[\\%din](c|u|uc|th)|\\$*\\{\\}");
-				for (String m : matches) {
-					print("Current:", m);
-					s = replaceFirst(s, "%[%din](?!th|u|uc|c)|\\$*\\{\\}", Str(
-							f(arg instanceof Integer ? (int) arg : (long) arg))
-							.replaceAll("\\.[0]+(?!\\d)$", ""));
-					if (in(s, "%[din]u")) {
+		String[] matches = findMatches(s,
+						"%[\\%cswdifnb](c|u|uc|th)?|\\$*\\{(\\.\\d*f)?\\}");
+		printArr(matches);
+		for (String m : matches) {
+			for (Object arg : args) {
+				if (arg instanceof Character && eq(m, "%[\\%c]|\\$*\\{\\}")) {
+					s = replaceFirst(s, m, Str(arg));
+				}
+				else if (arg instanceof String && eq(m, "%[\\%sw]|\\$*\\{\\}")) {
+					s = replaceFirst(s, m, Str(arg));
+				}
+				else if ((arg instanceof Integer || arg instanceof Long) && (in(m, "%[\\%din](th|u|uc|c)?|\\$*\\{\\}"))) {
+					if (eq(m, "%[\\%din](?!th|u|uc|c)|\\$*\\{\\}")) {
+						s = replaceFirst(s, m, Str(
+								f(arg instanceof Integer ? (int) arg : (long) arg))
+								.replaceAll("\\.[0]+(?!\\d)$", ""));
+					} else if (in(m, "%[din]u")) {
 						if (eq(m, "%[din]uc")) {
-							s = replaceFirst(s, "%[din]uc",
+							s = replaceFirst(s, m,
 									Str(usd(arg instanceof Integer
 											? (int) arg
 											: (long) arg))
@@ -21778,60 +22723,60 @@ public class KL {
 											.replaceAll("\\.[0]+(?!\\d)$", ""));
 						}
 					} else if (eq(m, "%[din]th")) {
-						s = replaceFirst(s, "%[din]th",
+						s = replaceFirst(s, m,
 								Str(th(arg instanceof Integer
 										? (int) arg
 										: (long) arg))
 										.replaceAll("\\.[0]+(?!\\d)$", ""));
 					} else {
 						if (eq(m, "%[din]c")) {
-							s = replaceFirst(s, "%[din]c",
+							s = replaceFirst(s, m,
 									Str(pkr(arg instanceof Integer
 											? (int) arg
 											: (long) arg))
 											.replaceAll("\\.[0]+(?!\\d)$", ""));
 						}
 					}
-				}
-			} else if (arg instanceof Float || arg instanceof Double) {
-				if (in(s, "%[\\%fn]u|\\$*\\{(\\.\\d*f)?\\}")) {
-					// DOESN'T work IF the % is not escaped
-					if (in(s, "%[\\%fn]uc")) {
-						s = replaceFirst(s, "%[%fn]uc",
-								Str(usd(setPrecision(arg instanceof Float
-										? (float) arg
-										: (double) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", "")));
-					} else {
-						s = replaceFirst(s, "%[%fn]u|\\$*\\{(\\.\\d*f)?\\}",
-								Str(fus(setPrecision(arg instanceof Float
-										? (float) arg
-										: (double) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", "")));
+				} else if (arg instanceof Float || arg instanceof Double) {
+					if (in(m, "%[\\%fn]u|\\$*\\{(\\.\\d*f)?\\}")) {
+						// DOESN'T work IF the % is not escaped
+						if (eq(m, "%[\\%fn]uc")) {
+							s = replaceFirst(s, m,
+									Str(usd(setPrecision(arg instanceof Float
+											? (float) arg
+											: (double) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", "")));
+						} else {
+							s = replaceFirst(s, "%[%fn]u|\\$*\\{(\\.\\d*f)?\\}",
+									Str(fus(setPrecision(arg instanceof Float
+											? (float) arg
+											: (double) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", "")));
+						}
+					} else if (in(m, "%[\\%fn](?!u)|\\$*\\{(\\.\\d*f)?\\}")) {
+						if (eq(m, "%[\\%fn]c")) {
+							s = replaceFirst(s, m,
+									Str(pkr(setPrecision(arg instanceof Float
+											? (float) arg
+											: (double) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", "")));
+						} else {
+							s = replaceFirst(s, "%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
+									Str(f(setPrecision(arg instanceof Float
+											? (float) arg
+											: (double) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", "")));
+						}
 					}
-				} else if (in(s, "%[\\%fn]|\\$*\\{(\\.\\d*f)?\\}")) {
-					if (in(s, "%[\\%fn]c")) {
-						s = replaceFirst(s, "%[%fn]c",
-								Str(pkr(setPrecision(arg instanceof Float
-										? (float) arg
-										: (double) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", "")));
-					} else {
-						s = replaceFirst(s, "%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
-								Str(f(setPrecision(arg instanceof Float
-										? (float) arg
-										: (double) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", "")));
-					}
+				} else if (arg instanceof Boolean && eq(m, "%[\\%b]|\\$*\\{\\}")) {
+					s = replaceFirst(s, m, Str((boolean) arg));
 				}
-			} else if (arg instanceof Boolean) {
-				s = replaceFirst(s, "%[%b]|\\$*\\{\\}", Str((boolean) arg));
+				// replaceFirst is really what we need here, as replacing "all"
+				// %b's, for instance, in the case of booleans, with the args array,
+				// just wouldn't work, as the first argument would get to be the one
+				// to replace all %b's with itself, rendering all other <typename>
+				// args useless
 			}
-			// replaceFirst is really what we need here, as replacing "all"
-			// %b's, for instance, in the case of booleans, with the args array,
-			// just wouldn't work, as the first argument would get to be the one
-			// to replace all %b's with itself, rendering all other <typename>
-			// args useless
 		}
 		// post processing...
 		// for methods
@@ -21839,8 +22784,8 @@ public class KL {
 			try {
 				Class<?> cls = this.getClass();
 				Object field;
-				String[] matches = findMatches(s, "\\$*\\{\\w+\\(\\)\\}|\\$+\\w+\\(\\)");
-				for (String m : matches) {
+				String[] methodicalMatches = findMatches(s, "\\$*\\{\\w+\\(\\)\\}|\\$+\\w+\\(\\)");
+				for (String m : methodicalMatches) {
 					String toGet = m.replaceAll("[\\$\\{\\(\\)\\}]", "");
 					Object valueFromMethod = cls.getMethod(toGet).invoke(this);
 					m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
@@ -21859,8 +22804,8 @@ public class KL {
 			try {
 				Class<?> cls = this.getClass();
 				Object field;
-				String[] matches = findMatches(s, "\\$*\\{\\w+\\}|\\$+\\w+");
-				for (String m : matches) {
+				String[] fieldMatches = findMatches(s, "\\$*\\{\\w+\\}|\\$+\\w+");
+				for (String m : fieldMatches) {
 					String toGet = m.replaceAll("[\\$\\{\\}]", "");
 					field = cls.getField(toGet).get(this);
 					m = m.replaceAll("([\\$\\{\\}])", "\\\\$1");
@@ -28284,7 +29229,11 @@ public class KL {
 		print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room. $randFlt().",
 				"love", 9, 19, 6);
 		print(8.643);
-		print(timestamp(), ";", datestamp());
-
+		
+		
+		obj userData = obj("name", "Ayesha", "age", 23);
+        String name = userData.k("name", "");
+        int age = userData.k("age", 0);
+        print("Name:", name, "\nAge:", age);
 	}
 }
