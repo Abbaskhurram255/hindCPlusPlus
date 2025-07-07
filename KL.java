@@ -18402,6 +18402,13 @@ public class KL {
 			Ok = Yes, NotOk = !Ok, Fail = NotOk;
 	public static Object none = null, ignore = none, pass = ignore;
 	public static String Else = "else";
+	//helps method sw handle default/else cases
+	public static String _s = "";
+	public static int _i = 0;
+	public static long _l = 0;
+	public static float _f = 0;
+	public static double _d = 0;
+	public static boolean _b = false;
 	public static int[] range(int n) {
 		intArr arr = new intArr();
 		if (not(n) || n < 1)
