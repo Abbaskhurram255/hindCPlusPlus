@@ -7,24 +7,23 @@ using namespace std;
 
 class Student {
     public:
-    string name;
-    int rollno;
+        string name;
+        int rollno;
     
-    Student(string name, int rollno) {
+    Student(std::string name, int rollno) {
         this->name = name;
         this->rollno = rollno;
     }
     void printData() {
-        Student student = *new Student(this->name, this->rollno);
-        print "Name: " plus student.name enough;
-        print "Student's ID: B" plus student.rollno;
+        print "Name: " plus this->name enough;
+        print "Student's ID: B" plus this->rollno;
     }
 };
 
 int main() {
     Student student1 = *new Student("Kainat", 2541166);
     student1 = {"Ayesh", 2531044};
-    //sorry, fixing the *intentional* typo, for further education:
+    //sorry, fixing the *intentional* typo I made for educational purposes...
     student1.name = "Ayesha Mehnaaz";
     
     student1.printData();
