@@ -232,7 +232,7 @@ public class KL {
 			return "";
 		}
 	}
-	public static boolean internetAccess() {
+	public static boolean internet() {
 		try {
 			URL url = url("https://java.com/");
 			URLConnection conn = url.openConnection();
@@ -246,18 +246,18 @@ public class KL {
 		objS map = new objS();
 		if (not(jsonString))
 			return map;
+		jsonString = jsonString.trim();;
 		if (!jsonString.startsWith("{") || !jsonString.endsWith("}")) {
 			map.add("status", "notok").add("error", "yes");
 			return map;
 		}
 		jsonString = jsonString.substring(1, jsonString.length() - 1);
-		String[] keyValuePairs = jsonString.split(",");
+		String[] keyValuePairs = jsonString.split("\\s*,\\s*");
 		for (String pair : keyValuePairs) {
-			String[] parts = pair.split(":", 2);
+			String[] parts = pair.split("\\s*:\\s*", 2);
 			if (parts.length == 2) {
-				String key = parts[0].trim().replaceAll("[\"\\{\\}\\]]", "")
-						.trim();
-				String value = parts[1].trim().replaceAll("[\"\\{\\}\\]]", "");
+				String key = parts[0].replaceAll("[\"\\{\\[\\]\\}:]", "").trim();
+				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}:]", "").trim();
 				if (key.length() != 0 && in(key, "[a-zA-Z]+"))
 					map.add(key, value);
 			}
@@ -7170,10 +7170,10 @@ public class KL {
 		obj() {
 			super();
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3,
-				Object v3, String k4, Object v4, String k5, Object v5,
-				String k6, Object v6, String k7, Object v7, String k8,
-				Object v8, String k9, Object v9, String k10, Object v10) {
+		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+				String k4, Object v4, String k5, Object v5, String k6,
+				Object v6, String k7, Object v7, String k8, Object v8,
+				String k9, Object v9, String k10, Object v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -7185,10 +7185,10 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3,
-				Object v3, String k4, Object v4, String k5, Object v5,
-				String k6, Object v6, String k7, Object v7, String k8,
-				Object v8, String k9, Object v9) {
+		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+				String k4, Object v4, String k5, Object v5, String k6,
+				Object v6, String k7, Object v7, String k8, Object v8,
+				String k9, Object v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -7199,10 +7199,9 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3,
-				Object v3, String k4, Object v4, String k5, Object v5,
-				String k6, Object v6, String k7, Object v7, String k8,
-				Object v8) {
+		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+				String k4, Object v4, String k5, Object v5, String k6,
+				Object v6, String k7, Object v7, String k8, Object v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -7212,9 +7211,9 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3,
-				Object v3, String k4, Object v4, String k5, Object v5,
-				String k6, Object v6, String k7, Object v7) {
+		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+				String k4, Object v4, String k5, Object v5, String k6,
+				Object v6, String k7, Object v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -7223,9 +7222,9 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3,
-				Object v3, String k4, Object v4, String k5, Object v5,
-				String k6, Object v6) {
+		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+				String k4, Object v4, String k5, Object v5, String k6,
+				Object v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -7233,23 +7232,22 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3,
-				Object v3, String k4, Object v4, String k5, Object v5) {
+		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+				String k4, Object v4, String k5, Object v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3,
-				Object v3, String k4, Object v4) {
+		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+				String k4, Object v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3,
-				Object v3) {
+		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -7273,28 +7271,34 @@ public class KL {
 			return i(randInt(length()));
 		}
 		String random(String type) {
-			if (not(isStr(random()))) return "";
-			return (String)random();
+			if (not(isStr(random())))
+				return "";
+			return (String) random();
 		}
 		int random(int type) {
-			if (not(isInt(random()))) return 0;
-			return (int)random();
+			if (not(isInt(random())))
+				return 0;
+			return (int) random();
 		}
 		long random(long type) {
-			if (not(isLong(random()))) return 0;
-			return (long)random();
+			if (not(isLong(random())))
+				return 0;
+			return (long) random();
 		}
 		float random(float type) {
-			if (not(isFlt(random()))) return 0;
-			return (float)random();
+			if (not(isFlt(random())))
+				return 0;
+			return (float) random();
 		}
 		double random(double type) {
-			if (not(isDbl(random()))) return 0;
-			return (double)random();
+			if (not(isDbl(random())))
+				return 0;
+			return (double) random();
 		}
 		boolean random(boolean type) {
-			if (not(isBool(random()))) return false;
-			return (boolean)random();
+			if (not(isBool(random())))
+				return false;
+			return (boolean) random();
 		}
 		Object rand() {
 			return random();
@@ -7340,31 +7344,37 @@ public class KL {
 		}
 		Object key(String k) {
 			return hasKey(k) ? super.get(k) : null;
-			//will take a key in the form of a string, but RETURN AN OBJECT
+			// will take a key in the form of a string, but RETURN AN OBJECT
 		}
 		String key(String k, String type) {
-			if (not(isStr(key(k)))) return "";
-			return (String)key(k);
+			if (not(isStr(key(k))))
+				return "";
+			return (String) key(k);
 		}
 		int key(String k, int type) {
-			if (not(isInt(key(k)))) return 0;
-			return (int)key(k);
+			if (not(isInt(key(k))))
+				return 0;
+			return (int) key(k);
 		}
 		long key(String k, long type) {
-			if (not(isLong(key(k)))) return 0;
-			return (long)key(k);
+			if (not(isLong(key(k))))
+				return 0;
+			return (long) key(k);
 		}
 		float key(String k, float type) {
-			if (not(isFlt(key(k)))) return 0;
-			return (float)key(k);
+			if (not(isFlt(key(k))))
+				return 0;
+			return (float) key(k);
 		}
 		double key(String k, double type) {
-			if (not(isDbl(key(k)))) return 0;
-			return (double)key(k);
+			if (not(isDbl(key(k))))
+				return 0;
+			return (double) key(k);
 		}
 		boolean key(String k, boolean type) {
-			if (not(isBool(key(k)))) return false;
-			return (boolean)key(k);
+			if (not(isBool(key(k))))
+				return false;
+			return (boolean) key(k);
 		}
 		Object k(String k) {
 			return key(k);
@@ -7432,7 +7442,8 @@ public class KL {
 		String[] keyArray() {
 			Object[] keysObj = super.keySet().toArray();
 			String[] keys = new String[keysObj.length];
-			for (int i : range(keysObj)) keys[i] = (String)keysObj[i];
+			for (int i : range(keysObj))
+				keys[i] = (String) keysObj[i];
 			return keys;
 		}
 		Object[] array() {
@@ -7466,28 +7477,34 @@ public class KL {
 			return none;
 		}
 		String nthValue(int n, String type) {
-			if (not(isStr(nthValue(n)))) return "";
-			return (String)nthValue(n);
+			if (not(isStr(nthValue(n))))
+				return "";
+			return (String) nthValue(n);
 		}
 		int nthValue(int n, int type) {
-			if (not(isInt(nthValue(n)))) return 0;
-			return (int)nthValue(n);
+			if (not(isInt(nthValue(n))))
+				return 0;
+			return (int) nthValue(n);
 		}
 		long nthValue(int n, long type) {
-			if (not(isLong(nthValue(n)))) return 0;
-			return (long)nthValue(n);
+			if (not(isLong(nthValue(n))))
+				return 0;
+			return (long) nthValue(n);
 		}
 		float nthValue(int n, float type) {
-			if (not(isFlt(nthValue(n)))) return 0;
-			return (float)nthValue(n);
+			if (not(isFlt(nthValue(n))))
+				return 0;
+			return (float) nthValue(n);
 		}
 		double nthValue(int n, double type) {
-			if (not(isDbl(nthValue(n)))) return 0;
-			return (double)nthValue(n);
+			if (not(isDbl(nthValue(n))))
+				return 0;
+			return (double) nthValue(n);
 		}
 		boolean nthValue(int n, boolean type) {
-			if (not(isBool(nthValue(n)))) return false;
-			return (boolean)nthValue(n);
+			if (not(isBool(nthValue(n))))
+				return false;
+			return (boolean) nthValue(n);
 		}
 		String nthLastKey(int n) {
 			return n > 0 && n <= length() ? keyArray()[length() - n] : "";
@@ -7500,82 +7517,100 @@ public class KL {
 			// exception
 		}
 		String nthLastValue(int n, String type) {
-			if (not(isStr(nthLastValue(n)))) return "";
-			return (String)nthLastValue(n);
+			if (not(isStr(nthLastValue(n))))
+				return "";
+			return (String) nthLastValue(n);
 		}
 		int nthLastValue(int n, int type) {
-			if (not(isInt(nthLastValue(n)))) return 0;
-			return (int)nthLastValue(n);
+			if (not(isInt(nthLastValue(n))))
+				return 0;
+			return (int) nthLastValue(n);
 		}
 		long nthLastValue(int n, long type) {
-			if (not(isLong(nthLastValue(n)))) return 0;
-			return (long)nthLastValue(n);
+			if (not(isLong(nthLastValue(n))))
+				return 0;
+			return (long) nthLastValue(n);
 		}
 		float nthLastValue(int n, float type) {
-			if (not(isFlt(nthLastValue(n)))) return 0;
-			return (float)nthLastValue(n);
+			if (not(isFlt(nthLastValue(n))))
+				return 0;
+			return (float) nthLastValue(n);
 		}
 		double nthLastValue(int n, double type) {
-			if (not(isDbl(nthLastValue(n)))) return 0;
-			return (double)nthLastValue(n);
+			if (not(isDbl(nthLastValue(n))))
+				return 0;
+			return (double) nthLastValue(n);
 		}
 		boolean nthLastValue(int n, boolean type) {
-			if (not(isBool(nthLastValue(n)))) return false;
-			return (boolean)nthLastValue(n);
+			if (not(isBool(nthLastValue(n))))
+				return false;
+			return (boolean) nthLastValue(n);
 		}
 		Object i(int n) {
 			return nthValue(n);
 		}
 		String i(int n, String type) {
-			if (not(isStr(i(n)))) return "";
-			return (String)i(n);
+			if (not(isStr(i(n))))
+				return "";
+			return (String) i(n);
 		}
 		int i(int n, int type) {
-			if (not(isInt(i(n)))) return 0;
-			return (int)i(n);
+			if (not(isInt(i(n))))
+				return 0;
+			return (int) i(n);
 		}
 		long i(int n, long type) {
-			if (not(isLong(i(n)))) return 0;
-			return (long)i(n);
+			if (not(isLong(i(n))))
+				return 0;
+			return (long) i(n);
 		}
 		float i(int n, float type) {
-			if (not(isFlt(i(n)))) return 0;
-			return (float)i(n);
+			if (not(isFlt(i(n))))
+				return 0;
+			return (float) i(n);
 		}
 		double i(int n, double type) {
-			if (not(isDbl(i(n)))) return 0;
-			return (double)i(n);
+			if (not(isDbl(i(n))))
+				return 0;
+			return (double) i(n);
 		}
 		boolean i(int n, boolean type) {
-			if (not(isBool(i(n)))) return false;
-			return (boolean)i(n);
+			if (not(isBool(i(n))))
+				return false;
+			return (boolean) i(n);
 		}
 		Object lasti(int n) {
 			return nthLastValue(n);
 		}
 		String lasti(int n, String type) {
-			if (not(isStr(lasti(n)))) return "";
-			return (String)lasti(n);
+			if (not(isStr(lasti(n))))
+				return "";
+			return (String) lasti(n);
 		}
 		int lasti(int n, int type) {
-			if (not(isInt(lasti(n)))) return 0;
-			return (int)lasti(n);
+			if (not(isInt(lasti(n))))
+				return 0;
+			return (int) lasti(n);
 		}
 		long lasti(int n, long type) {
-			if (not(isLong(lasti(n)))) return 0;
-			return (long)lasti(n);
+			if (not(isLong(lasti(n))))
+				return 0;
+			return (long) lasti(n);
 		}
 		float lasti(int n, float type) {
-			if (not(isFlt(lasti(n)))) return 0;
-			return (float)lasti(n);
+			if (not(isFlt(lasti(n))))
+				return 0;
+			return (float) lasti(n);
 		}
 		double lasti(int n, double type) {
-			if (not(isDbl(lasti(n)))) return 0;
-			return (double)lasti(n);
+			if (not(isDbl(lasti(n))))
+				return 0;
+			return (double) lasti(n);
 		}
 		boolean lasti(int n, boolean type) {
-			if (not(isBool(lasti(n)))) return false;
-			return (boolean)lasti(n);
+			if (not(isBool(lasti(n))))
+				return false;
+			return (boolean) lasti(n);
 		}
 		Object ilast(int n) {
 			return lasti(n);
@@ -7644,109 +7679,133 @@ public class KL {
 			return nth(0);
 		}
 		String first(String type) {
-			if (not(isStr(first()))) return "";
-			return (String)first();
+			if (not(isStr(first())))
+				return "";
+			return (String) first();
 		}
 		int first(int type) {
-			if (not(isInt(first()))) return 0;
-			return (int)first();
+			if (not(isInt(first())))
+				return 0;
+			return (int) first();
 		}
 		long first(long type) {
-			if (not(isLong(first()))) return 0;
-			return (long)first();
+			if (not(isLong(first())))
+				return 0;
+			return (long) first();
 		}
 		float first(float type) {
-			if (not(isFlt(first()))) return 0;
-			return (float)first();
+			if (not(isFlt(first())))
+				return 0;
+			return (float) first();
 		}
 		double first(double type) {
-			if (not(isDbl(first()))) return 0;
-			return (double)first();
+			if (not(isDbl(first())))
+				return 0;
+			return (double) first();
 		}
 		boolean first(boolean type) {
-			if (not(isBool(first()))) return false;
-			return (boolean)first();
+			if (not(isBool(first())))
+				return false;
+			return (boolean) first();
 		}
 		Object second() {
 			return nth(1);
 		}
 		String second(String type) {
-			if (not(isStr(second()))) return "";
-			return (String)second();
+			if (not(isStr(second())))
+				return "";
+			return (String) second();
 		}
 		int second(int type) {
-			if (not(isInt(second()))) return 0;
-			return (int)second();
+			if (not(isInt(second())))
+				return 0;
+			return (int) second();
 		}
 		long second(long type) {
-			if (not(isLong(second()))) return 0;
-			return (long)second();
+			if (not(isLong(second())))
+				return 0;
+			return (long) second();
 		}
 		float second(float type) {
-			if (not(isFlt(second()))) return 0;
-			return (float)second();
+			if (not(isFlt(second())))
+				return 0;
+			return (float) second();
 		}
 		double second(double type) {
-			if (not(isDbl(second()))) return 0;
-			return (double)second();
+			if (not(isDbl(second())))
+				return 0;
+			return (double) second();
 		}
 		boolean second(boolean type) {
-			if (not(isBool(second()))) return false;
-			return (boolean)second();
+			if (not(isBool(second())))
+				return false;
+			return (boolean) second();
 		}
 		Object seclast() {
 			return nthlast(2);
 		}
 		String seclast(String type) {
-			if (not(isStr(seclast()))) return "";
-			return (String)seclast();
+			if (not(isStr(seclast())))
+				return "";
+			return (String) seclast();
 		}
 		int seclast(int type) {
-			if (not(isInt(seclast()))) return 0;
-			return (int)seclast();
+			if (not(isInt(seclast())))
+				return 0;
+			return (int) seclast();
 		}
 		long seclast(long type) {
-			if (not(isLong(seclast()))) return 0;
-			return (long)seclast();
+			if (not(isLong(seclast())))
+				return 0;
+			return (long) seclast();
 		}
 		float seclast(float type) {
-			if (not(isFlt(seclast()))) return 0;
-			return (float)seclast();
+			if (not(isFlt(seclast())))
+				return 0;
+			return (float) seclast();
 		}
 		double seclast(double type) {
-			if (not(isDbl(seclast()))) return 0;
-			return (double)seclast();
+			if (not(isDbl(seclast())))
+				return 0;
+			return (double) seclast();
 		}
 		boolean seclast(boolean type) {
-			if (not(isBool(seclast()))) return false;
-			return (boolean)seclast();
+			if (not(isBool(seclast())))
+				return false;
+			return (boolean) seclast();
 		}
 		Object last() {
 			return nthlast(1);
 		}
 		String last(String type) {
-			if (not(isStr(last()))) return "";
-			return (String)last();
+			if (not(isStr(last())))
+				return "";
+			return (String) last();
 		}
 		int last(int type) {
-			if (not(isInt(last()))) return 0;
-			return (int)last();
+			if (not(isInt(last())))
+				return 0;
+			return (int) last();
 		}
 		long last(long type) {
-			if (not(isLong(last()))) return 0;
-			return (long)last();
+			if (not(isLong(last())))
+				return 0;
+			return (long) last();
 		}
 		float last(float type) {
-			if (not(isFlt(last()))) return 0;
-			return (float)last();
+			if (not(isFlt(last())))
+				return 0;
+			return (float) last();
 		}
 		double last(double type) {
-			if (not(isDbl(last()))) return 0;
-			return (double)last();
+			if (not(isDbl(last())))
+				return 0;
+			return (double) last();
 		}
 		boolean last(boolean type) {
-			if (not(isBool(last()))) return false;
-			return (boolean)last();
+			if (not(isBool(last())))
+				return false;
+			return (boolean) last();
 		}
 		boolean hasKey(String k) {
 			return super.containsKey(k);
@@ -7755,7 +7814,8 @@ public class KL {
 			return super.containsValue(v);
 		}
 		boolean has(Object o) {
-			if (o instanceof String) return hasKey((String)o);
+			if (o instanceof String)
+				return hasKey((String) o);
 			return hasValue(o);
 		}
 		obj set(String k, Object v) {
@@ -7990,8 +8050,7 @@ public class KL {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		obj map(
-				BiFunction<? super String, ? super Object, ? extends Object> fn) {
+		obj map(BiFunction<? super String, ? super Object, ? extends Object> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
@@ -8057,48 +8116,46 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2,
-			String k3, Object v3, String k4, Object v4, String k5, Object v5,
-			String k6, Object v6, String k7, Object v7, String k8, Object v8,
-			String k9, Object v9, String k10, Object v10) {
+	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3, String k4, Object v4, String k5, Object v5, String k6,
+			Object v6, String k7, Object v7, String k8, Object v8, String k9,
+			Object v9, String k10, Object v10) {
 		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2,
-			String k3, Object v3, String k4, Object v4, String k5, Object v5,
-			String k6, Object v6, String k7, Object v7, String k8, Object v8,
-			String k9, Object v9) {
+	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3, String k4, Object v4, String k5, Object v5, String k6,
+			Object v6, String k7, Object v7, String k8, Object v8, String k9,
+			Object v9) {
 		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2,
-			String k3, Object v3, String k4, Object v4, String k5, Object v5,
-			String k6, Object v6, String k7, Object v7, String k8,
-			Object v8) {
+	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3, String k4, Object v4, String k5, Object v5, String k6,
+			Object v6, String k7, Object v7, String k8, Object v8) {
 		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2,
-			String k3, Object v3, String k4, Object v4, String k5, Object v5,
-			String k6, Object v6, String k7, Object v7) {
+	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3, String k4, Object v4, String k5, Object v5, String k6,
+			Object v6, String k7, Object v7) {
 		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2,
-			String k3, Object v3, String k4, Object v4, String k5, Object v5,
-			String k6, Object v6) {
+	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3, String k4, Object v4, String k5, Object v5, String k6,
+			Object v6) {
 		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2,
-			String k3, Object v3, String k4, Object v4, String k5,
-			Object v5) {
+	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3, String k4, Object v4, String k5, Object v5) {
 		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2,
-			String k3, Object v3, String k4, Object v4) {
+	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3, String k4, Object v4) {
 		return new obj(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2,
-			String k3, Object v3) {
+	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3) {
 		return new obj(k1, v1, k2, v2, k3, v3);
 	}
 	public static obj obj(String k1, Object v1, String k2, Object v2) {
@@ -18402,7 +18459,7 @@ public class KL {
 			Ok = Yes, NotOk = !Ok, Fail = NotOk;
 	public static Object none = null, ignore = none, pass = ignore;
 	public static String Else = "else";
-	//helps method sw handle default/else cases
+	// helps method sw handle default/else cases
 	public static String _s = "";
 	public static int _i = 0;
 	public static long _l = 0;
@@ -18642,102 +18699,142 @@ public class KL {
 	public static int[] idx(boolArr arr) {
 		return range(arr);
 	}
-	public static void each(String[] iterable,
-			ObjIntConsumer<String> consumer) {
+	public static void each(String[] iterable, ObjIntConsumer<String> consumer) {
+		if (not(iterable) || not(consumer)) return;
 		int i = 0;
 		for (String item : iterable) {
 			consumer.accept(item, i);
 			i++;
+		}
+	}
+	public static void each(String[] iterable, Consumer<String> consumer) {
+		if (not(iterable) || not(consumer)) return;
+		for (String item : iterable) {
+			consumer.accept(item);
 		}
 	}
 	public static void each(strArr iterable, ObjIntConsumer<String> consumer) {
-		int i = 0;
-		for (String item : iterable) {
-			consumer.accept(item, i);
-			i++;
-		}
+		each(iterable.array(), consumer);
+	}
+	public static void each(strArr iterable, Consumer<String> consumer) {
+		each(iterable.array(), consumer);
 	}
 	public static void each(int[] iterable, ObjIntConsumer<Integer> consumer) {
+		if (not(iterable) || not(consumer)) return;
 		int i = 0;
 		for (int item : iterable) {
 			consumer.accept(item, i);
 			i++;
+		}
+	}
+	public static void each(int[] iterable, Consumer<Integer> consumer) {
+		if (not(iterable) || not(consumer)) return;
+		for (int item : iterable) {
+			consumer.accept(item);
 		}
 	}
 	public static void each(intArr iterable, ObjIntConsumer<Integer> consumer) {
-		int i = 0;
-		for (int item : iterable) {
-			consumer.accept(item, i);
-			i++;
-		}
+		each(iterable.array(), consumer);
+	}
+	public static void each(intArr iterable, Consumer<Integer> consumer) {
+		each(iterable.array(), consumer);
 	}
 	public static void each(long[] iterable, ObjIntConsumer<Long> consumer) {
+		if (not(iterable) || not(consumer)) return;
 		int i = 0;
 		for (long item : iterable) {
 			consumer.accept(item, i);
 			i++;
+		}
+	}
+	public static void each(long[] iterable, Consumer<Long> consumer) {
+		if (not(iterable) || not(consumer)) return;
+		for (long item : iterable) {
+			consumer.accept(item);
 		}
 	}
 	public static void each(longArr iterable, ObjIntConsumer<Long> consumer) {
-		int i = 0;
-		for (long item : iterable) {
-			consumer.accept(item, i);
-			i++;
-		}
+		each(iterable.array(), consumer);
+	}
+	public static void each(longArr iterable, Consumer<Long> consumer) {
+		each(iterable.array(), consumer);
 	}
 	public static void each(float[] iterable, ObjIntConsumer<Float> consumer) {
+		if (not(iterable) || not(consumer)) return;
 		int i = 0;
 		for (float item : iterable) {
 			consumer.accept(item, i);
 			i++;
+		}
+	}
+	public static void each(float[] iterable, Consumer<Float> consumer) {
+		if (not(iterable) || not(consumer)) return;
+		for (float item : iterable) {
+			consumer.accept(item);
 		}
 	}
 	public static void each(fltArr iterable, ObjIntConsumer<Float> consumer) {
-		int i = 0;
-		for (float item : iterable) {
-			consumer.accept(item, i);
-			i++;
-		}
+		each(iterable.array(), consumer);
 	}
-	public static void each(double[] iterable,
-			ObjIntConsumer<Double> consumer) {
+	public static void each(fltArr iterable, Consumer<Float> consumer) {
+		each(iterable.array(), consumer);
+	}
+	public static void each(double[] iterable, ObjIntConsumer<Double> consumer) {
+		if (not(iterable) || not(consumer)) return;
 		int i = 0;
 		for (double item : iterable) {
 			consumer.accept(item, i);
 			i++;
+		}
+	}
+	public static void each(double[] iterable, Consumer<Double> consumer) {
+		if (not(iterable) || not(consumer)) return;
+		for (double item : iterable) {
+			consumer.accept(item);
 		}
 	}
 	public static void each(dblArr iterable, ObjIntConsumer<Double> consumer) {
-		int i = 0;
-		for (double item : iterable) {
-			consumer.accept(item, i);
-			i++;
-		}
+		each(iterable.array(), consumer);
 	}
-	public static void each(boolean[] iterable,
-			ObjIntConsumer<Boolean> consumer) {
-		int i = 0;
-		for (boolean item : iterable) {
-			consumer.accept(item, i);
-			i++;
-		}
+	public static void each(dblArr iterable, Consumer<Double> consumer) {
+		each(iterable.array(), consumer);
 	}
-	public static void each(boolArr iterable,
-			ObjIntConsumer<Boolean> consumer) {
+	public static void each(boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
+		if (not(iterable) || not(consumer)) return;
 		int i = 0;
 		for (boolean item : iterable) {
 			consumer.accept(item, i);
 			i++;
 		}
 	}
-	public static void each(Object[] iterable,
-			ObjIntConsumer<Object> consumer) {
+	public static void each(boolean[] iterable, Consumer<Boolean> consumer) {
+		if (not(iterable) || not(consumer)) return;
+		for (boolean item : iterable) {
+			consumer.accept(item);
+		}
+	}
+	public static void each(boolArr iterable, ObjIntConsumer<Boolean> consumer) {
+		each(iterable.array(), consumer);
+	}
+	public static void each(boolArr iterable, Consumer<Boolean> consumer) {
+		each(iterable.array(), consumer);
+	}
+	public static <T> void each(T[] iterable, ObjIntConsumer<T> consumer) {
+		if (not(iterable) || not(consumer)) return;
 		int i = 0;
-		for (Object item : iterable) {
+		for (T item : iterable) {
 			consumer.accept(item, i);
 			i++;
 		}
 	}
+	public static <T> void each(T[] iterable, Consumer<T> consumer) {
+		if (not(iterable) || not(consumer)) return;
+		for (T item : iterable) {
+			consumer.accept(item);
+		}
+	}
+    //handling Object arrays
+    //DON'T remove
 	public static void forEach(String[] iterable,
 			ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
@@ -18785,10 +18882,12 @@ public class KL {
 			ObjIntConsumer<Boolean> consumer) {
 		each(iterable, consumer);
 	}
-	public static void forEach(Object[] iterable,
-			ObjIntConsumer<Object> consumer) {
+	public static <T> void forEach(T[] iterable,
+			ObjIntConsumer<T> consumer) {
 		each(iterable, consumer);
 	}
+	//handling Object arrays
+    //DON'T remove
 	public static void repeat(Runnable fn, int times) {
 		for (; times > 0; times--)
 			new Thread(fn).run();
@@ -19146,7 +19245,9 @@ public class KL {
 			return now();
 		String parts[] = now().split(", ");
 		String time = parts[0], day = sliceKeep(parts[1], 3),
-				dateOfMonth = sliceKeep(parts[2], 3) + " " + parts[2].split(" ")[1], year = parts[3];
+				dateOfMonth = sliceKeep(parts[2], 3) + " "
+						+ parts[2].split(" ")[1],
+				year = parts[3];
 		String result = join(new String[]{time, day, dateOfMonth, year}, ", ");
 		return result;
 	}
@@ -21584,13 +21685,20 @@ public class KL {
 		return Arrays.asList(arg);
 	}
 	public static boolean isIntLike(String s) {
+		if (not(s))
+			return false;
 		try {
 			return Integer.parseInt(s) % 1 == 0;
 		} catch (Exception err) {
 			return false;
 		}
 	}
+	public static boolean isLongLike(String s) {
+		return isIntLike(s);
+	}
 	public static boolean isFltLike(String s) {
+		if (not(s))
+			return false;
 		try {
 			return Float.parseFloat(s) % 1 != 0;
 		} catch (Exception err) {
@@ -21598,6 +21706,8 @@ public class KL {
 		}
 	}
 	public static boolean isDblLike(String s) {
+		if (not(s))
+			return false;
 		try {
 			return Double.parseDouble(s) % 1 != 0;
 		} catch (Exception err) {
@@ -22493,6 +22603,47 @@ public class KL {
 		}
 		return true;
 	}
+	public static String th(int n) {
+		String result = Str(n);
+		int size = len(result);
+		char seclast_char = size - 2 >= 0 ? result.charAt(size - 2) : '\0';
+		char last_char = size - 1 >= 0 ? result.charAt(size - 1) : '\0';
+		String last_two = Str(seclast_char) + Str(last_char);
+		if (n > 14 && n < 111) {
+			switch (last_char) {
+				case '1' :
+					result += "st";
+					break;
+				case '2' :
+					result += "nd";
+					break;
+				case '3' :
+					result += "rd";
+					break;
+				default :
+					result += "th";
+			}
+		} else {
+			if (eq(last_two, "11") || eq(last_two, "12") || eq(last_two, "13"))
+				result += "th";
+			else {
+				switch (last_char) {
+					case '1' :
+						result += "st";
+						break;
+					case '2' :
+						result += "nd";
+						break;
+					case '3' :
+						result += "rd";
+						break;
+					default :
+						result += "th";
+				}
+			}
+		}
+		return result;
+	}
 	public static String th(long n) {
 		String result = Str(n);
 		int size = len(result);
@@ -22534,6 +22685,7 @@ public class KL {
 		}
 		return result;
 	}
+	// since a long is just a LONG integer, this should work^
 	// let's set up some currency variables
 	public static double zr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9, kh = 1e11;
 	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
@@ -22700,21 +22852,23 @@ public class KL {
 		s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
 				.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
 		String[] matches = findMatches(s,
-						"%[\\%cswdifnb](c|u|uc|th)?|\\$*\\{(\\.\\d*f)?\\}");
+				"%[\\%cswdifnb](c|u|uc|th)?|\\$*\\{(\\.\\d*f)?\\}");
 		printArr(matches);
 		for (String m : matches) {
 			for (Object arg : args) {
 				if (arg instanceof Character && eq(m, "%[\\%c]|\\$*\\{\\}")) {
 					s = replaceFirst(s, m, Str(arg));
-				}
-				else if (arg instanceof String && eq(m, "%[\\%sw]|\\$*\\{\\}")) {
+				} else if (arg instanceof String
+						&& eq(m, "%[\\%sw]|\\$*\\{\\}")) {
 					s = replaceFirst(s, m, Str(arg));
-				}
-				else if ((arg instanceof Integer || arg instanceof Long) && (in(m, "%[\\%din](th|u|uc|c)?|\\$*\\{\\}"))) {
+				} else if ((arg instanceof Integer || arg instanceof Long)
+						&& (in(m, "%[\\%din](th|u|uc|c)?|\\$*\\{\\}"))) {
 					if (eq(m, "%[\\%din](?!th|u|uc|c)|\\$*\\{\\}")) {
-						s = replaceFirst(s, m, Str(
-								f(arg instanceof Integer ? (int) arg : (long) arg))
-								.replaceAll("\\.[0]+(?!\\d)$", ""));
+						s = replaceFirst(s, m,
+								Str(f(arg instanceof Integer
+										? (int) arg
+										: (long) arg))
+										.replaceAll("\\.[0]+(?!\\d)$", ""));
 					} else if (in(m, "%[din]u")) {
 						if (eq(m, "%[din]uc")) {
 							s = replaceFirst(s, m,
@@ -22751,59 +22905,176 @@ public class KL {
 							s = replaceFirst(s, m,
 									Str(usd(setPrecision(arg instanceof Float
 											? (float) arg
-											: (double) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", "")));
+											: (double) arg)).replaceAll(
+													"\\.[0]+(?!\\d)$", "")));
 						} else {
 							s = replaceFirst(s, "%[%fn]u|\\$*\\{(\\.\\d*f)?\\}",
 									Str(fus(setPrecision(arg instanceof Float
 											? (float) arg
-											: (double) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", "")));
+											: (double) arg)).replaceAll(
+													"\\.[0]+(?!\\d)$", "")));
 						}
 					} else if (in(m, "%[\\%fn](?!u)|\\$*\\{(\\.\\d*f)?\\}")) {
 						if (eq(m, "%[\\%fn]c")) {
 							s = replaceFirst(s, m,
 									Str(pkr(setPrecision(arg instanceof Float
 											? (float) arg
-											: (double) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", "")));
+											: (double) arg)).replaceAll(
+													"\\.[0]+(?!\\d)$", "")));
 						} else {
 							s = replaceFirst(s, "%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
 									Str(f(setPrecision(arg instanceof Float
 											? (float) arg
-											: (double) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", "")));
+											: (double) arg)).replaceAll(
+													"\\.[0]+(?!\\d)$", "")));
 						}
 					}
-				} else if (arg instanceof Boolean && eq(m, "%[\\%b]|\\$*\\{\\}")) {
+				} else if (arg instanceof Boolean
+						&& eq(m, "%[\\%b]|\\$*\\{\\}")) {
 					s = replaceFirst(s, m, Str((boolean) arg));
 				}
 				// replaceFirst is really what we need here, as replacing "all"
-				// %b's, for instance, in the case of booleans, with the args array,
-				// just wouldn't work, as the first argument would get to be the one
-				// to replace all %b's with itself, rendering all other <typename>
+				// %b's, for instance, in the case of booleans, with the args
+				// array,
+				// just wouldn't work, as the first argument would get to be the
+				// one
+				// to replace all %b's with itself, rendering all other
+				// <typename>
 				// args useless
 			}
 		}
 		// post processing...
 		// for methods
-		if (in(s, "\\$*\\{\\w+\\(\\)\\}|\\$+\\w+\\(\\)")) {
+		if (in(s, "\\$*\\{\\w+\\([\\w\\s,]*\\)\\}|\\$+\\w+\\([\\w\\s,]*\\)")) {
 			try {
 				Class<?> cls = this.getClass();
-				Object field;
-				String[] methodicalMatches = findMatches(s, "\\$*\\{\\w+\\(\\)\\}|\\$+\\w+\\(\\)");
+				Object valueFromMethod = new Object();
+				boolean hasParams = false;
+				String[] methodicalMatches = findMatches(s,
+						"\\$*\\{\\w+\\([\\w\\s,]*\\)\\}|\\$+\\w+\\([\\w\\s,]*\\)");
 				for (String m : methodicalMatches) {
-					String toGet = m.replaceAll("[\\$\\{\\(\\)\\}]", "");
-					Object valueFromMethod = cls.getMethod(toGet).invoke(this);
+					String toGet = m.replaceAll(
+							"[\\$\\{\\(\\)\\}]|(?<=\\w\\()[\\w\\s,]+(?=\\))",
+							"");
+					if (in(m, "(?<=\\w\\()[\\w\\s,]+(?=\\))"))
+						hasParams = true;
+					if (!hasParams)
+						valueFromMethod = cls.getMethod(toGet).invoke(this);
+					else {
+						boolean multiParam = false;
+						String unprocessedParamString = m
+								.replaceAll("^[\\$\\w]+\\((?=\\w+)|\\)$", "");
+						if (in(unprocessedParamString, "\\s*,\\s*")) {
+							multiParam = true;
+							String[] paramMatches = unprocessedParamString
+									.split("\\s*,\\s*");
+							Object[] finalParams = new Object[paramMatches.length];
+							Class<?>[] paramTypes = new Class<?>[paramMatches.length];
+							for (int i : range(paramMatches)) {
+								String param = paramMatches[i];
+								paramTypes[i] = isIntLike(param)
+										? (!in(param, "(?<=\\d)[Ll]$")
+												? int.class
+												: long.class)
+										: isFltLike(param)
+												? (!in(param, "(?<=\\d)[Ff]$")
+														? double.class
+														: float.class)
+												: eq(param, "true|false")
+														? boolean.class
+														: String.class;
+								param = param.replaceAll("(?<=\\d)[LlFf]$", "");
+								// ----------------------- NOTE
+								// -----------------------------
+								// Since longs can hold both ints, and longs,
+								// and
+								// are literally just LONG integers, LONG.CLASS
+								// DOES
+								// THE JOB!!
+								// Same goes for floats, and doubles. A double
+								// is
+								// literally just a float, except with extra, or
+								// double, precision.
+								// ----------------------------------------------------------
+								finalParams[i] = isIntLike(param)
+										? Int(param)
+										: isDblLike(param)
+												? Dbl(param)
+												: eq(param, "true|false")
+														? (eq(param, "true")
+																? true
+																: false)
+														: String.class;
+							}
+							for (String param : paramMatches) {
+								valueFromMethod = cls
+										.getMethod(toGet, paramTypes)
+										.invoke(this, finalParams);
+
+								m = m.replaceAll("([\\$\\{\\(\\)\\}])",
+										"\\\\$1");
+								s = s.replaceFirst(m,
+										valueFromMethod instanceof Character
+												|| valueFromMethod instanceof String
+												|| valueFromMethod instanceof Number
+												|| valueFromMethod instanceof Boolean
+														? Str(valueFromMethod)
+														: m);
+							}
+						} else {
+							Class<?> type = isIntLike(unprocessedParamString)
+									? (!in(unprocessedParamString,
+											"(?<=\\d)[Ll]$")
+													? int.class
+													: long.class)
+									: isFltLike(unprocessedParamString)
+											? (!in(unprocessedParamString,
+													"(?<=\\d)[Ff]$")
+															? double.class
+															: float.class)
+											: eq(unprocessedParamString,
+													"true|false")
+															? boolean.class
+															: String.class;
+							unprocessedParamString = unprocessedParamString
+									.replaceAll("(?<=\\d)[LlFf]$", "");
+							// ----------------------- NOTE
+							// -----------------------------
+							// Since longs can hold both ints, and longs, and
+							// are literally just LONG integers, LONG.CLASS DOES
+							// THE JOB!!
+							// Same goes for floats, and doubles. A double is
+							// literally just a float, except with extra, or
+							// double, precision.
+							// ----------------------------------------------------------
+							valueFromMethod = cls.getMethod(toGet, type).invoke(
+									this,
+									isIntLike(unprocessedParamString)
+											? Int(unprocessedParamString)
+											: isDblLike(unprocessedParamString)
+													? Dbl(unprocessedParamString)
+													: eq(unprocessedParamString,
+															"true|false")
+																	? (eq(unprocessedParamString,
+																			"true")
+																					? true
+																					: false)
+																	: unprocessedParamString);
+						}
+					}
 					m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
 					s = s.replaceFirst(m,
 							valueFromMethod instanceof Character
 									|| valueFromMethod instanceof String
 									|| valueFromMethod instanceof Number
-									|| valueFromMethod instanceof Boolean ? Str(valueFromMethod) : m);
+									|| valueFromMethod instanceof Boolean
+											? Str(valueFromMethod)
+											: m);
 				}
-			} catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
-				
+			} catch (NoSuchMethodException | IllegalAccessException
+					| IllegalArgumentException | InvocationTargetException
+					| SecurityException e) {
+
 			}
 		}
 		// for fields
@@ -22811,7 +23082,8 @@ public class KL {
 			try {
 				Class<?> cls = this.getClass();
 				Object field;
-				String[] fieldMatches = findMatches(s, "\\$*\\{\\w+\\}|\\$+\\w+");
+				String[] fieldMatches = findMatches(s,
+						"\\$*\\{\\w+\\}|\\$+\\w+");
 				for (String m : fieldMatches) {
 					String toGet = m.replaceAll("[\\$\\{\\}]", "");
 					field = cls.getField(toGet).get(this);
@@ -22824,8 +23096,9 @@ public class KL {
 											? Str(field)
 											: m);
 				}
-			} catch (NoSuchFieldException | IllegalAccessException | SecurityException e) {
-				
+			} catch (NoSuchFieldException | IllegalAccessException
+					| SecurityException e) {
+
 			}
 		}
 		s = sentCase(s);
@@ -23991,7 +24264,8 @@ public class KL {
 		return number;
 	}
 	public static int randInt(int start, int end) {
-		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end))
+		if (isNull(start) || not(end) || eq(start, end) || start > end
+				|| isNeg(end))
 			return 0;
 		int number = ThreadLocalRandom.current().nextInt(start, end);
 		return number;
@@ -24029,7 +24303,8 @@ public class KL {
 		return toPrecision(number, 1);
 	}
 	public static double randFlt(int start, int end) {
-		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end))
+		if (isNull(start) || not(end) || eq(start, end) || start > end
+				|| isNeg(end))
 			return 0;
 		double number = randInt(start, end) * .3;
 		return toPrecision(number, 1);
@@ -24043,7 +24318,8 @@ public class KL {
 		return (double) randFlt(end);
 	}
 	public static double randDbl(int start, int end) {
-		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end))
+		if (isNull(start) || not(end) || eq(start, end) || start > end
+				|| isNeg(end))
 			return 0;
 		return (double) randFlt(start, end);
 	}
@@ -29232,15 +29508,17 @@ public class KL {
 			randSentence = randSentence();
 	public static String name = "Ayesha";
 	public static int age = 23;
+	public static objS currentUser = silentFetch(
+			"https://api.ipdata.co/?api-key=63a8b1ef829b0a90909b1bb7e9c931fe1ffb70e27378da4c302e22c7");
+
 	public static void main(String[] args) {
-		print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room. $randFlt().",
+		print("Hi, it's $name, $age, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room. $randInt(50, 500). $th(4). $reverse(string). $xor(true, true).",
 				"love", 9, 19, 6);
 		print(8.643);
-		
-		
-		obj userData = obj("name", "Ayesha", "age", 23);
-        String name = userData.k("name", "");
-        int age = userData.k("age", 0);
-        print("Name:", name, "\nAge:", age);
+		print(currentUser);
+		print(internet());
+		Object[] myArr = {"hi", "hey"}; 
+        
+        each(myArr, (it, i) -> print(it));
 	}
 }
