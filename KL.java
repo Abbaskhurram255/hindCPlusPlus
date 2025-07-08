@@ -254,11 +254,11 @@ public class KL {
 		jsonString = jsonString.substring(1, jsonString.length() - 1);
 		String[] keyValuePairs = jsonString.split("\\s*,\\s*");
 		for (String pair : keyValuePairs) {
-			String[] parts = pair.split("\\s*:\\s*", 2);
+			String[] parts = pair.split("[\\[\\]\\s\\w]*:[\\[\\]\\s\\w]*", 2);
 			if (parts.length == 2) {
-				String key = parts[0].replaceAll("[\"\\{\\[\\]\\}:]", "").trim();
-				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}:]", "").trim();
-				if (key.length() != 0 && in(key, "[a-zA-Z]+"))
+				String key = parts[0].replaceAll("[\"\\{\\[\\]\\}]+", "").trim();
+				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}]+", "").replaceAll("\\w+:\\s*", "").trim();
+				if (key.length() != 0 && in(key, "[a-zA-Z]+") && value.length() != 0 && in(value, "[a-zA-Z]+"))
 					map.add(key, value);
 			}
 		}
@@ -319,21 +319,7 @@ public class KL {
 				}
 				reader.close();
 				String jsonString = respBuilder.toString().trim();
-				if (jsonString.startsWith("{") && jsonString.endsWith("}"))
-					jsonString = jsonString.substring(1,
-							jsonString.length() - 1);
-				String[] keyValuePairs = jsonString.split(",");
-				for (String pair : keyValuePairs) {
-					String[] parts = pair.split(":", 2);
-					if (parts.length == 2) {
-						String key = parts[0].trim()
-								.replaceAll("[\"\\{\\}\\]]", "").trim();
-						String value = parts[1].trim()
-								.replaceAll("[\"\\{\\}\\]]", "");
-						if (key.length() != 0 && in(key, "[a-zA-Z]+"))
-							map.add(key, value);
-					}
-				}
+				map = parseJson(jsonString);
 				map.add("response", "200").add("status", "ok").add("error",
 						"no");
 				return map;
