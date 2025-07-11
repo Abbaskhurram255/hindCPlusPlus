@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.regex.*;
 
 class lafz {
 	String str = "";
@@ -210,7 +211,22 @@ class lafz {
 		returnValue = new lafz(returnValue).sentCase();
 		return returnValue;
 	}
-    
+    String replace(String re, String _with) {
+    	try {
+    		return str.replaceAll(re, _with);
+    	} catch (PatternSyntaxException|StackOverflowError e) {
+    		return str;
+    	}
+    }
+    String replaceAll(String re, String _with) {
+    	return replace(re, _with);
+    }
+    String remove(String re) {
+    	return replace(re, "");
+    }
+    String removeAll(String re) {
+    	return remove(re);
+    }
 	int length() {
 		if (str == null) str = "";
 		return str.trim().length();

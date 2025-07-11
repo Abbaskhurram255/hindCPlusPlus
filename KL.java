@@ -19551,8 +19551,8 @@ public class KL {
                                 && in(Str(args[0]), "[\\%\\$\\{\\}]")) {
                         new KL().printf((String) args[0], slice(args, 1));
                         return;
-                } else if (len(args) == 1 && in(Str(args[0]), "[\\%\\$\\{\\}]")) {
-                        new KL().printf((String) args[0], new String[]{});
+                } else if (len(args) == 1 && !isNull(args[0]) && in(Str(args[0]), "[\\%\\$\\{\\}]")) {
+                        new KL().printf((String) args[0], new String[]{""});
                         return;
                 }
 		if (len(args) == 1 && !isNull(args[0]) && isArr(args[0])) {
@@ -19609,7 +19609,7 @@ public class KL {
 			// if one it's of those arrays that are based on a class
 			if (isArrOfStr(arg)) {
 				System.out
-						.print("[\"" + join((String[]) arg, "\", \"") + "\"]");
+						.print("[" + (!isEmpty((String[])arg) ? "\"" + join((String[]) arg, "\", \"") + "\"" : "") + "]");
 			} else if (isArrOfNum(arg)) {
 				System.out.print("[" + join((Number[]) arg) + "]");
 			} else if (isArrOfObj(arg)) {
@@ -19617,7 +19617,8 @@ public class KL {
 			}
 		} else {
 			if (isArrOfChar(arg)) {
-				System.out.print("[\'" + join((char[]) arg, "\', \'") + "\']");
+				System.out
+						.print("[" + (!isEmpty((char[])arg) ? "\'" + join((char[]) arg, "\', \'") + "\'" : "") + "]");
 			} else if (isArrOfInt(arg)) {
 				System.out.print("[" + join((int[]) arg) + "]");
 			} else if (isArrOfLong(arg)) {
@@ -23128,7 +23129,7 @@ public class KL {
                                                         break;
                                         }
                                         s = replaceFirst(s, catchNumericValuesWithOperator,
-                                                        Str(result));
+                                                        Str(result).replaceAll("\\.0(?!\\d)$", ""));
                                 }
                         }
                 }
@@ -29656,8 +29657,7 @@ public class KL {
 	public static int age = 23;
 	
 	public static void main(String[] args) {
-		print("Hi, it's $name, $age, %.3f, %s. And I am %d year old, and I'm the %ith happiest person in the room. $randInt:50, 500. $th:4. $reverse:string. $xor:true, true $isEmpty:0 &390-1-7-3-9+3.5",
-				"love", 9, 19, 6);
+		print("Hi, name's $name, &10+13");
 		print(isEmpty(0.0));
 		print(8.643);
 	}
