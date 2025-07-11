@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class lafz {
 	String str = "";
 	String[] words = {};
@@ -14,6 +16,7 @@ class lafz {
 	}
 	lafz concat(Object... objs) {
 		for (Object o : objs) {
+			if (o == null) continue;
 			if (o != null) this.str += " "+o;
 		}
 		trim();
@@ -31,13 +34,15 @@ class lafz {
 		this.str = this.str.trim();
 		return this;
 	}
-	lafz sentCase() {
-		this.str = (str.toUpperCase().substring(0, 1)
+	String sentCase() {
+		if (isEmpty()) return "";
+		String result = (str.toUpperCase().substring(0, 1)
 				 + str.toLowerCase().substring(1))
 				.replaceAll("(?<!\\w)i(?!\\w)", "I");
-		return this;
+		return result;
 	}
-	lafz titleCase() {
+	String titleCase() {
+		if (isEmpty()) return "";
 		StringBuilder titleCased = new StringBuilder(str.length());
 		boolean nextTitleCase = true;
 		for (char c : str.toCharArray()) {
@@ -49,24 +54,50 @@ class lafz {
 			}
 			titleCased.append(c);
 		}
-		this.str = titleCased.toString();
-		return this;
+		return titleCased.toString();
 	}
-	lafz sent() {
+	String sent() {
 		return sentCase();
 	}
-	lafz title() {
+	String title() {
 		return titleCase();
 	}
-	lafz reverse() {
-		this.str = new StringBuilder(str).reverse().toString();
-		return this;
+	String toUpperCase() {
+		return str.toUpperCase();
+	}
+	String toLowerCase() {
+		return str.toLowerCase();
+	}
+	String toUpper() {
+		return toUpperCase();
+	}
+	String toLower() {
+		return toLowerCase();
+	}
+	String upper() {
+		return toUpper();
+	}
+	String lower() {
+		return toLower();
+	}
+	String reverse() {
+		String reversed = new StringBuilder(str).reverse().toString();
+		return reversed;
+	}
+	String rev() {
+		return reverse();
 	}
 	String[] split(String _with, int maxSplits) {
-		return str.split(_with, maxSplits);
+		if (_with == null) _with = "";
+		String[] splitted = str.split(_with, maxSplits);
+		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals(""))) splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
+		return splitted;
 	}
 	String[] split(String _with) {
-		return str.split(_with);
+		if (_with == null) _with = "";
+		String[] splitted = str.split(_with);
+		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals(""))) splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
+		return splitted;
 	}
 	String i(int i) {
 		if (isEmpty()) return "";
@@ -85,6 +116,9 @@ class lafz {
 		if (i > length()) return split()[length()-1];
 		return split()[length()-i];
 	}
+	String[] splitIntoWords() {
+		return words;
+	}
 	String firstWord() {
 		if (length() == 0 || words.length == 0) return "";
 		return words[0];
@@ -101,6 +135,9 @@ class lafz {
 		if (length() == 0 || words.length == 0) return "";
 		if (words.length < 3) return words[0];
 		return words[words.length-2];
+	}
+	String secondLastWord() {
+		return secLastWord();
 	}
 	String lastWord() {
 		if (length() == 0 || words.length == 0) return "";
@@ -124,13 +161,23 @@ class lafz {
 		return words[words.length-i];
 	}
 	String[] split() {
-		return str.split("");
+		String[] splitted = str.split("");
+		splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
+		return splitted;
+		//TESTED, AND CONCLUDED: java split(""), unlike JavaScript's, returns an extra empty string at the beginning of the array, we need to kill it
 	}
 	String[] array() {
-		return str.split("");
+		return split();
+	}
+	String[] arr() {
+		return split();
 	}
 	String[] toArray() {
-		return array();
+		return split();
+	}
+	Object[] toStrArr() {
+		return (Object[])splitIntoWords();
+		//replace the `Object[]` part with `new StrArr($rest)`
 	}
 	char[] toCharArray() {
 		return str.toCharArray();
@@ -141,6 +188,18 @@ class lafz {
 	char[] chars() {
 		return toCharArray();
 	}
+	char charAt(int i) {
+		String charInStringForm = i(i);
+		if (charInStringForm.equals("")) return '\0';
+		char character = charInStringForm.toCharArray()[0];
+		return character;
+	}
+	char at(int i) {
+		return charAt(i);
+	}
+	char c(int i) {
+		return charAt(i);
+	}
 	String join() {
 		if (isEmpty()) return "";
 		if (words.length < 2)
@@ -148,33 +207,10 @@ class lafz {
 		String halfProcessed = String.join(", ", words);
 		String returnValue = halfProcessed.replaceAll("(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
-		returnValue = new lafz(returnValue).sentCase().str();
+		returnValue = new lafz(returnValue).sentCase();
 		return returnValue;
 	}
-	lafz toUpperCase() {
-		this.str = str.toUpperCase();
-		return this;
-	}
-	lafz toLowerCase() {
-		this.str = str.toLowerCase();
-		return this;
-	}
-	lafz toUpper() {
-		toUpperCase();
-		return this;
-	}
-	lafz toLower() {
-		toLowerCase();
-		return this;
-	}
-	lafz upper() {
-		toUpperCase();
-		return this;
-	}
-	lafz lower() {
-		toLowerCase();
-		return this;
-	}
+    
 	int length() {
 		if (str == null) str = "";
 		return str.trim().length();
@@ -189,8 +225,8 @@ class lafz {
 		return str.isEmpty();
 	}
 	public String toString() {
-		if (str != null) return str;
-		return "";
+		if (str == null) return "";
+		return str;
 	}
 	public String string() {
 		return toString();
@@ -237,10 +273,13 @@ public class Main {
     public static Str Str(Object... objs) {
 	    return new Str(objs);
     }
+    public static str str(Object... objs) {
+	    return new str(objs);
+    }
 	public static void main(String[] args) {
 		lafz salaam = $("  hi", "there", "love!", "I'm", 23);
 		lafz greeting2 = $("hi", " boyfriends");
-		str name = str("mehrunisa ji")[i];
+		str name = str("mehrunisa ji");
 		System.out.println(salaam.sentCase());
 		System.out.println(name.i(-12));
 		System.out.println(name.lastWord());
