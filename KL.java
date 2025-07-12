@@ -3749,7 +3749,7 @@ public class KL {
 	public static URL url(String address) {
 		try {
 			return URI.create(address).toURL();
-		} catch (IllegalArgumentException | MalformedURLException e) {
+		} catch (IllegalArgumentException | IOException e) {
 			print("[KL.Exception.MalformedURL]\nBad URL!");
 		}
 		return null;
@@ -19570,7 +19570,7 @@ public class KL {
 		if (isNull(args) || not(args.length))
 			return;
 		if (!isNull(args[0]) && args[0] instanceof String
-				&& in(Str(args[0]), "[\\%\\$\\{\\}]")) {
+				&& in(Str(args[0]), "[\\%\\$\\&\\{\\}]")) {
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
 				return;
@@ -22881,11 +22881,12 @@ public class KL {
 	public String f(String s, Object... args) {
 		if (not(s) || args.length == 0)
 			return s;
+		// for specifiers
 		s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
 				.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
 		String[] matches = findMatches(s,
-				"%[\\%cswdifnb](c|u|uc|th)?|\\$*\\{(\\.\\d*f)?\\}");
-		printArr(matches.length > 0 ? matches : blank.Str);
+				"%[\\%cswdifnb](c|uc?|th)?|\\$*\\{(\\.\\d*f)?\\}");
+		// printArr(matches.length > 0 ? matches : blank.Str);
 		for (String m : matches) {
 			for (Object arg : args) {
 				if (arg instanceof Character && eq(m, "%[\\%c]|\\$*\\{\\}")) {
@@ -22894,8 +22895,8 @@ public class KL {
 						&& eq(m, "%[\\%sw]|\\$*\\{\\}")) {
 					s = replaceFirst(s, m, Str(arg));
 				} else if ((arg instanceof Integer || arg instanceof Long)
-						&& (in(m, "%[\\%din](th|u|uc|c)?|\\$*\\{\\}"))) {
-					if (eq(m, "%[\\%din](?!th|u|uc|c)|\\$*\\{\\}")) {
+						&& (in(m, "%[\\%din](th|uc?|c)?|\\$*\\{\\}"))) {
+					if (eq(m, "%[\\%din](?!th|uc?|c)|\\$*\\{\\}")) {
 						s = replaceFirst(s, m,
 								Str(f(arg instanceof Integer
 										? (int) arg
@@ -22903,7 +22904,6 @@ public class KL {
 										.replaceAll("\\.[0]+(?!\\d)$", ""));
 					} else if (in(m, "%[din]u")) {
 						if (eq(m, "%[din]uc")) {
-							System.out.println("here");
 							s = replaceFirst(s, m,
 									Str(usd(arg instanceof Integer
 											? (int) arg
@@ -23038,7 +23038,7 @@ public class KL {
 														? (eq(param, "true")
 																? true
 																: false)
-														: String.class;
+														: Str(param);
 							}
 							for (String param : paramMatches) {
 								valueFromMethod = cls
@@ -23112,7 +23112,7 @@ public class KL {
 			}
 		}
 		// FOR FIELDS
-		if (in(s, "\\$*\\{\\w+\\}|\\$+\\w+(?!\\(\\))")) {
+		if (in(s, "\\$*\\{\\w+\\}|\\$+\\w+(?!\\(\\w*\\))")) {
 			try {
 				Class<?> cls = this.getClass();
 				Object field;
@@ -29698,8 +29698,12 @@ public class KL {
 			randSentence = randSentence();
 	public static String name = "Ayesha";
 	public static int age = 23;
+	public static String _dev = "https://github.com/abbaskhurram255";
+	public static obj obj = obj("name", "Ayesha", "age", 23);
 
 	public static void main(String[] args) {
-		print("Hi, it's $name, $age. Hi $toRoman(&-11+23). %f", 20000000.5);
+		print("Hi, it's $name, $age. $toRoman(&2+3) is my height. $upper(love myself). %dc is how much I want to earn coding. ",
+				736660);
+		print("2 + 3 = &2+3");
 	}
 }
