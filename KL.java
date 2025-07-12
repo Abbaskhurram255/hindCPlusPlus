@@ -228,7 +228,7 @@ public class KL {
 					.doFinal(Base64.getDecoder().decode(encryptedData));
 			return new String(decryptedBytes, StandardCharsets.UTF_8);
 		} catch (Exception err) {
-			print("[KL.EncrypTool.BadArguments]:\nFailed to decrypt the message.");
+			print("[KL.Decryptor.BadArguments]:\nFailed to decrypt the message.");
 			return "";
 		}
 	}
@@ -238,7 +238,7 @@ public class KL {
 			URLConnection conn = url.openConnection();
 			conn.connect();
 			return true;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			return false;
 		}
 	}
@@ -256,9 +256,12 @@ public class KL {
 		for (String pair : keyValuePairs) {
 			String[] parts = pair.split("[\\[\\]\\s\\w]*:[\\[\\]\\s\\w]*", 2);
 			if (parts.length == 2) {
-				String key = parts[0].replaceAll("[\"\\{\\[\\]\\}]+", "").trim();
-				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}]+", "").replaceAll("\\w+:\\s*", "").trim();
-				if (key.length() != 0 && in(key, "[a-zA-Z]+") && value.length() != 0 && in(value, "[a-zA-Z]+"))
+				String key = parts[0].replaceAll("[\"\\{\\[\\]\\}]+", "")
+						.trim();
+				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}]+", "")
+						.replaceAll("\\w+:\\s*", "").trim();
+				if (key.length() != 0 && in(key, "[a-zA-Z]+")
+						&& value.length() != 0 && in(value, "[a-zA-Z]+"))
 					map.add(key, value);
 			}
 		}
@@ -18685,8 +18688,10 @@ public class KL {
 	public static int[] idx(boolArr arr) {
 		return range(arr);
 	}
-	public static void each(String[] iterable, ObjIntConsumer<String> consumer) {
-		if (not(iterable) || not(consumer)) return;
+	public static void each(String[] iterable,
+			ObjIntConsumer<String> consumer) {
+		if (not(iterable) || not(consumer))
+			return;
 		int i = 0;
 		for (String item : iterable) {
 			consumer.accept(item, i);
@@ -18694,7 +18699,8 @@ public class KL {
 		}
 	}
 	public static void each(String[] iterable, Consumer<String> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		for (String item : iterable) {
 			consumer.accept(item);
 		}
@@ -18706,7 +18712,8 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 	public static void each(int[] iterable, ObjIntConsumer<Integer> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		int i = 0;
 		for (int item : iterable) {
 			consumer.accept(item, i);
@@ -18714,7 +18721,8 @@ public class KL {
 		}
 	}
 	public static void each(int[] iterable, Consumer<Integer> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		for (int item : iterable) {
 			consumer.accept(item);
 		}
@@ -18726,7 +18734,8 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 	public static void each(long[] iterable, ObjIntConsumer<Long> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		int i = 0;
 		for (long item : iterable) {
 			consumer.accept(item, i);
@@ -18734,7 +18743,8 @@ public class KL {
 		}
 	}
 	public static void each(long[] iterable, Consumer<Long> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		for (long item : iterable) {
 			consumer.accept(item);
 		}
@@ -18746,7 +18756,8 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 	public static void each(float[] iterable, ObjIntConsumer<Float> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		int i = 0;
 		for (float item : iterable) {
 			consumer.accept(item, i);
@@ -18754,7 +18765,8 @@ public class KL {
 		}
 	}
 	public static void each(float[] iterable, Consumer<Float> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		for (float item : iterable) {
 			consumer.accept(item);
 		}
@@ -18765,8 +18777,10 @@ public class KL {
 	public static void each(fltArr iterable, Consumer<Float> consumer) {
 		each(iterable.array(), consumer);
 	}
-	public static void each(double[] iterable, ObjIntConsumer<Double> consumer) {
-		if (not(iterable) || not(consumer)) return;
+	public static void each(double[] iterable,
+			ObjIntConsumer<Double> consumer) {
+		if (not(iterable) || not(consumer))
+			return;
 		int i = 0;
 		for (double item : iterable) {
 			consumer.accept(item, i);
@@ -18774,7 +18788,8 @@ public class KL {
 		}
 	}
 	public static void each(double[] iterable, Consumer<Double> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		for (double item : iterable) {
 			consumer.accept(item);
 		}
@@ -18785,8 +18800,10 @@ public class KL {
 	public static void each(dblArr iterable, Consumer<Double> consumer) {
 		each(iterable.array(), consumer);
 	}
-	public static void each(boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
-		if (not(iterable) || not(consumer)) return;
+	public static void each(boolean[] iterable,
+			ObjIntConsumer<Boolean> consumer) {
+		if (not(iterable) || not(consumer))
+			return;
 		int i = 0;
 		for (boolean item : iterable) {
 			consumer.accept(item, i);
@@ -18794,19 +18811,22 @@ public class KL {
 		}
 	}
 	public static void each(boolean[] iterable, Consumer<Boolean> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		for (boolean item : iterable) {
 			consumer.accept(item);
 		}
 	}
-	public static void each(boolArr iterable, ObjIntConsumer<Boolean> consumer) {
+	public static void each(boolArr iterable,
+			ObjIntConsumer<Boolean> consumer) {
 		each(iterable.array(), consumer);
 	}
 	public static void each(boolArr iterable, Consumer<Boolean> consumer) {
 		each(iterable.array(), consumer);
 	}
 	public static <T> void each(T[] iterable, ObjIntConsumer<T> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		int i = 0;
 		for (T item : iterable) {
 			consumer.accept(item, i);
@@ -18814,13 +18834,14 @@ public class KL {
 		}
 	}
 	public static <T> void each(T[] iterable, Consumer<T> consumer) {
-		if (not(iterable) || not(consumer)) return;
+		if (not(iterable) || not(consumer))
+			return;
 		for (T item : iterable) {
 			consumer.accept(item);
 		}
 	}
-    //handling Object arrays
-    //DON'T remove
+	// handling Object arrays
+	// DON'T remove
 	public static void forEach(String[] iterable,
 			ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
@@ -18868,12 +18889,11 @@ public class KL {
 			ObjIntConsumer<Boolean> consumer) {
 		each(iterable, consumer);
 	}
-	public static <T> void forEach(T[] iterable,
-			ObjIntConsumer<T> consumer) {
+	public static <T> void forEach(T[] iterable, ObjIntConsumer<T> consumer) {
 		each(iterable, consumer);
 	}
-	//handling Object arrays
-    //DON'T remove
+	// handling Object arrays
+	// DON'T remove
 	public static void repeat(Runnable fn, int times) {
 		for (; times > 0; times--)
 			new Thread(fn).run();
@@ -19547,14 +19567,18 @@ public class KL {
 	}
 	// utilities
 	public static void println(Object... args) {
-                if (len(args) >= 2 && !isNull(args[0]) && args[0] instanceof String
-                                && in(Str(args[0]), "[\\%\\$\\{\\}]")) {
-                        new KL().printf((String) args[0], slice(args, 1));
-                        return;
-                } else if (len(args) == 1 && !isNull(args[0]) && in(Str(args[0]), "[\\%\\$\\{\\}]")) {
-                        new KL().printf((String) args[0], new String[]{""});
-                        return;
-                }
+		if (isNull(args) || not(args.length))
+			return;
+		if (!isNull(args[0]) && args[0] instanceof String
+				&& in(Str(args[0]), "[\\%\\$\\{\\}]")) {
+			if (len(args) >= 2) {
+				new KL().printf((String) args[0], slice(args, 1));
+				return;
+			} else {
+				new KL().printf((String) args[0], '\0', "", 0, 0L, 0F, 0D, No);
+				return;
+			}
+		}
 		if (len(args) == 1 && !isNull(args[0]) && isArr(args[0])) {
 			printArr(args[0]);
 			return;
@@ -19608,8 +19632,9 @@ public class KL {
 		if (arg instanceof Object[]) {
 			// if one it's of those arrays that are based on a class
 			if (isArrOfStr(arg)) {
-				System.out
-						.print("[" + (!isEmpty((String[])arg) ? "\"" + join((String[]) arg, "\", \"") + "\"" : "") + "]");
+				System.out.print("[" + (!isEmpty((String[]) arg)
+						? "\"" + join((String[]) arg, "\", \"") + "\""
+						: "") + "]");
 			} else if (isArrOfNum(arg)) {
 				System.out.print("[" + join((Number[]) arg) + "]");
 			} else if (isArrOfObj(arg)) {
@@ -19617,8 +19642,9 @@ public class KL {
 			}
 		} else {
 			if (isArrOfChar(arg)) {
-				System.out
-						.print("[" + (!isEmpty((char[])arg) ? "\'" + join((char[]) arg, "\', \'") + "\'" : "") + "]");
+				System.out.print("[" + (!isEmpty((char[]) arg)
+						? "\'" + join((char[]) arg, "\', \'") + "\'"
+						: "") + "]");
 			} else if (isArrOfInt(arg)) {
 				System.out.print("[" + join((int[]) arg) + "]");
 			} else if (isArrOfLong(arg)) {
@@ -21072,17 +21098,27 @@ public class KL {
 		return result;
 	}
 	public static String[] split(String str) {
-		if (not(str)) return blank.Str;
+		if (not(str))
+			return blank.Str;
 		String[] returnValue = slice(str.split(""), 1);
-		//TESTED AND LEARNED: Java split(""), unlike in JavaScript , adds an extra "" character at the beginning, i.e. at index 0, of the array the string has been split into. JavaScript is way better in this case.
+		// TESTED AND LEARNED: Java split(""), unlike in JavaScript , adds an
+		// extra "" character at the beginning, i.e. at index 0, of the array
+		// the string has been split into. JavaScript is way better in this
+		// case.
 		return returnValue;
 	}
 	public static String[] split(String str, String delimiting_str_or_regex) {
-		if (not(str) || isNull(delimiting_str_or_regex)) return blank.Str;
-		//the null check was needed here
+		if (not(str) || isNull(delimiting_str_or_regex))
+			return blank.Str;
+		// the null check was needed here
 		String[] returnValue = str.split(delimiting_str_or_regex);
-		if (eq(delimiting_str_or_regex, "") || (len(returnValue) > 0 && eq(returnValue[0], ""))) returnValue = slice(returnValue, 1);
-		//TESTED AND LEARNED: Java split(""), unlike in JavaScript , adds an extra "" character at the beginning, i.e. at index 0, of the array the string has been split into. JavaScript is way better in this case.
+		if (eq(delimiting_str_or_regex, "")
+				|| (len(returnValue) > 0 && eq(returnValue[0], "")))
+			returnValue = slice(returnValue, 1);
+		// TESTED AND LEARNED: Java split(""), unlike in JavaScript , adds an
+		// extra "" character at the beginning, i.e. at index 0, of the array
+		// the string has been split into. JavaScript is way better in this
+		// case.
 		return returnValue;
 	}
 	public static String[] splitIntoWords(String str) {
@@ -22849,7 +22885,7 @@ public class KL {
 				.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
 		String[] matches = findMatches(s,
 				"%[\\%cswdifnb](c|u|uc|th)?|\\$*\\{(\\.\\d*f)?\\}");
-		printArr(matches);
+		printArr(matches.length > 0 ? matches : blank.Str);
 		for (String m : matches) {
 			for (Object arg : args) {
 				if (arg instanceof Character && eq(m, "%[\\%c]|\\$*\\{\\}")) {
@@ -22867,6 +22903,7 @@ public class KL {
 										.replaceAll("\\.[0]+(?!\\d)$", ""));
 					} else if (in(m, "%[din]u")) {
 						if (eq(m, "%[din]uc")) {
+							System.out.println("here");
 							s = replaceFirst(s, m,
 									Str(usd(arg instanceof Integer
 											? (int) arg
@@ -22941,7 +22978,8 @@ public class KL {
 		}
 		// post processing...
 		// for methods
-		if (in(s, "\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")) {
+		if (in(s,
+				"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")) {
 			try {
 				Class<?> cls = this.getClass();
 				Object valueFromMethod = new Object();
@@ -22952,16 +22990,14 @@ public class KL {
 					String toGet = m.replaceAll(
 							"(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
 							"");
-					print(m);
-				    print("get:", toGet);
 					if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)"))
 						hasParams = true;
 					if (!hasParams)
 						valueFromMethod = cls.getMethod(toGet).invoke(this);
 					else {
 						boolean multiParam = false;
-						String unprocessedParamString = m
-								.replaceAll("^[\\$\\w]+[:\\(](?=\\w+)|\\)*$", "");
+						String unprocessedParamString = m.replaceAll(
+								"^[\\$\\w]+[:\\(](?=\\w+)|\\)*$", "");
 						if (in(unprocessedParamString, "\\s*,\\s*")) {
 							multiParam = true;
 							String[] paramMatches = unprocessedParamString
@@ -23100,43 +23136,43 @@ public class KL {
 			}
 		}
 		// for numeric operations
-                String catchNumericValuesWithOperator = "(?<=\\&)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)";
-                while (in(s, catchNumericValuesWithOperator)) {
-                        String[] numericMatchesWithOperators = findMatches(s,
-                                        catchNumericValuesWithOperator);
-                        if (in(s, catchNumericValuesWithOperator)) {
-                                for (String m : numericMatchesWithOperators) {
-                                        String[] parts = m
-                                                        .split("(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=\\d)");
-                                        double operandA = Dbl(parts[0]), operandB = Dbl(parts[1]);
-                                        String op = m.replaceAll(
-                                                        "[^\\+\\-\\*\\×\\/\\÷]|^[\\+\\-\\*\\×\\/\\÷]", "");
-                                        double result = 0;
-                                        switch (op) {
-                                                case "+" :
-                                                        result = operandA + operandB;
-                                                        break;
-                                                case "-" :
-                                                        result = operandA - operandB;
-                                                        break;
-                                                case "*" :
-                                                case "×" :
-                                                        result = operandA * operandB;
-                                                        break;
-                                                case "/" :
-                                                case "÷" :
-                                                        result = operandA / operandB;
-                                                        break;
-                                        }
-                                        s = replaceFirst(s, catchNumericValuesWithOperator,
-                                                        Str(result).replaceAll("\\.0(?!\\d)$", ""));
-                                }
-                        }
-                }
-                s = s.replaceAll("&(?=\\-?\\d*\\.?\\d+)", "");
-                // cleaning up to make up for the numeric results, removing the &
-                // operator
-                s = sentCase(s);
+		String catchNumericValuesWithOperator = "(?<=\\&)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)";
+		while (in(s, catchNumericValuesWithOperator)) {
+			String[] numericMatchesWithOperators = findMatches(s,
+					catchNumericValuesWithOperator);
+			if (in(s, catchNumericValuesWithOperator)) {
+				for (String m : numericMatchesWithOperators) {
+					String[] parts = m
+							.split("(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=\\d)");
+					double operandA = Dbl(parts[0]), operandB = Dbl(parts[1]);
+					String op = m.replaceAll(
+							"[^\\+\\-\\*\\×\\/\\÷]|^[\\+\\-\\*\\×\\/\\÷]", "");
+					double result = 0;
+					switch (op) {
+						case "+" :
+							result = operandA + operandB;
+							break;
+						case "-" :
+							result = operandA - operandB;
+							break;
+						case "*" :
+						case "×" :
+							result = operandA * operandB;
+							break;
+						case "/" :
+						case "÷" :
+							result = operandA / operandB;
+							break;
+					}
+					s = replaceFirst(s, catchNumericValuesWithOperator,
+							Str(result).replaceAll("\\.0(?!\\d)$", ""));
+				}
+			}
+		}
+		s = s.replaceAll("&(?=\\-?\\d*\\.?\\d+)", "");
+		// cleaning up to make up for the numeric results, removing the &
+		// operator
+		s = sentCase(s);
 		return s;
 	}
 	public static String pkr(int n) {
@@ -26424,7 +26460,7 @@ public class KL {
 					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
 					.replaceAll("(?<!\\\\)%n", "\\\\d+");
 		} catch (Exception e) {
-			
+
 		}
 		// modification precaution: it has been tested, and hence learned,
 		// the
@@ -26462,7 +26498,7 @@ public class KL {
 					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
 					.replaceAll("(?<!\\\\)%n", "\\\\d+");
 		} catch (Exception e) {
-			
+
 		}
 		// modification precaution: it has been tested, and hence learned,
 		// the
@@ -26508,7 +26544,7 @@ public class KL {
 					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
 					.replaceAll("(?<!\\\\)%n", "\\\\d+");
 		} catch (Exception e) {
-			
+
 		}
 		// modification precaution: it has been tested, and hence learned,
 		// the
@@ -27890,7 +27926,8 @@ public class KL {
 		return !inLower(c);
 	}
 	public static String sentCase(String input) {
-		if (not(input)) return "";
+		if (not(input))
+			return "";
 		input = (input.toUpperCase().substring(0, 1)
 				+ (!in(input, "[A-Z]{2,}") ? input.toLowerCase() : input)
 						.substring(1))
@@ -27898,12 +27935,14 @@ public class KL {
 		return input;
 	}
 	public static String[] sentCase(String... inputs) {
-		if (not(inputs)) return blank.Str;
+		if (not(inputs))
+			return blank.Str;
 		inputs = map(inputs, KL::sentCase);
 		return inputs;
 	}
 	public static String titleCase(String input) {
-		if (not(input)) return "";
+		if (not(input))
+			return "";
 		String[] parts = input.split("");
 		String result = "";
 		boolean nextTitleCase = true;
@@ -27919,12 +27958,14 @@ public class KL {
 		return result;
 	}
 	public static String[] titleCase(String... inputs) {
-		if (not(inputs)) return blank.Str;
+		if (not(inputs))
+			return blank.Str;
 		inputs = map(inputs, KL::titleCase);
 		return inputs;
 	}
 	public static String reverse(String str) {
-		if (not(str)) return "";
+		if (not(str))
+			return "";
 		return new StringBuilder(str).reverse().toString();
 	}
 	public static int len(String str) {
@@ -28418,163 +28459,165 @@ public class KL {
 		return result;
 	}
 	public static boolean type(Object obj, String guessedType) {
-                if (not(guessedType))
-                        return false;
-                return len(guessedType) < 3
-                                ? startsWith(type(obj), guessedType)
-                                : in(type(obj), guessedType);
-        }
-        // ^this one stays too
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-                        Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-                        Object cond6, Runnable sol6, Object cond7, Runnable sol7,
-                        Object cond8, Runnable sol8, Object cond9, Runnable sol9,
-                        Object cond10, Runnable sol10) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5,
-                                sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
-                                cond10, sol10);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-                        Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-                        Object cond6, Runnable sol6, Object cond7, Runnable sol7,
-                        Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5,
-                                sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-                        Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-                        Object cond6, Runnable sol6, Object cond7, Runnable sol7,
-                        Object cond8, Runnable sol8) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5,
-                                sol5, cond6, sol6, cond7, sol7, cond8, sol8);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-                        Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-                        Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5,
-                                sol5, cond6, sol6, cond7, sol7);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-                        Object cond4, Runnable sol4, Object cond5, Runnable sol5,
-                        Object cond6, Runnable sol6) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5,
-                                sol5, cond6, sol6);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-                        Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5,
-                                sol5);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2, Object cond3, Runnable sol3,
-                        Object cond4, Runnable sol4) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1,
-                        Object cond2, Runnable sol2) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1, cond2, sol2);
-        }
-        public static boolean type(Object src, Object cond1, Runnable sol1) {
-                if (not(src))
-                        return false;
-                return sw(type(src), cond1, sol1);
-        }
-        // let's set up some "type"-helpers for the function
-        public static String None = "null", Ch, Str = "string", Int = "integer",
-                        Char = Ch = "character", Long = "long", Flt = "float",
-                        Dbl = "double", Bool = "boolean", Arr = "array\\.",
-                        ArrOfChar = "array\\.char", ArrOfStr = "array\\.str",
-                        ArrOfInt = "array\\.int", ArrOfLong = "array\\.long",
-                        ArrOfFlt = "array\\.flt", ArrOfDbl = "array\\.dbl",
-                        ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num",
-                        ArrOfObj = "array\\.obj", strArr = "strArr", intArr = "intArr",
-                        longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
-                        boolArr = "boolArr";
-        public static char[] charArrToCharArr(Character[] inputArr) {
-                if (not(inputArr))
-                        return blank.Char;
-                int length = inputArr.length;
-                char resultingArr[] = new char[length];
-                for (int i = 0; i < length; i++)
-                        resultingArr[i] = inputArr[i];
-                return resultingArr;
-        }
-        public static int[] intArrToIntArr(Integer[] inputArr) {
-                if (not(inputArr))
-                        return blank.Int;
-                int length = inputArr.length;
-                int resultingArr[] = new int[length];
-                for (int i = 0; i < length; i++)
-                        resultingArr[i] = inputArr[i];
-                return resultingArr;
-        }
-        public static long[] longArrToLongArr(Long[] inputArr) {
-                if (not(inputArr))
-                        return blank.Long;
-                int length = inputArr.length;
-                long resultingArr[] = new long[length];
-                for (int i = 0; i < length; i++)
-                        resultingArr[i] = inputArr[i];
-                return resultingArr;
-        }
-        public static float[] floatArrToFloatArr(Float[] inputArr) {
-                if (not(inputArr))
-                        return blank.Flt;
-                int length = inputArr.length;
-                float resultingArr[] = new float[length];
-                for (int i = 0; i < length; i++)
-                        resultingArr[i] = inputArr[i];
-                return resultingArr;
-        }
-        public static float[] fltArrToFltArr(Float[] inputArr) {
-                return floatArrToFloatArr(inputArr);
-        }
-        public static double[] dblArrToDblArr(Double[] inputArr) {
-                if (not(inputArr))
-                        return blank.Dbl;
-                int length = inputArr.length;
-                double resultingArr[] = new double[length];
-                for (int i = 0; i < length; i++)
-                        resultingArr[i] = inputArr[i];
-                return resultingArr;
-        }
-        public static boolean[] boolArrToBoolArr(Boolean[] inputArr) {
-                if (not(inputArr))
-                        return blank.Bool;
-                int length = inputArr.length;
-                boolean resultingArr[] = new boolean[length];
-                for (int i = 0; i < length; i++)
-                        resultingArr[i] = inputArr[i];
-                return resultingArr;
-        }
+		if (not(guessedType))
+			return false;
+		return len(guessedType) < 3
+				? startsWith(type(obj), guessedType)
+				: in(type(obj), guessedType);
+	}
+	// ^this one stays too
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4,
+				sol4);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1, cond2, sol2);
+	}
+	public static boolean type(Object src, Object cond1, Runnable sol1) {
+		if (not(src))
+			return false;
+		return sw(type(src), cond1, sol1);
+	}
+	// let's set up some "type"-helpers for the function
+	public static String None = "null", Ch, Str = "string", Int = "integer",
+			Char = Ch = "character", Long = "long", Flt = "float",
+			Dbl = "double", Bool = "boolean", Arr = "array\\.",
+			ArrOfChar = "array\\.char", ArrOfStr = "array\\.str",
+			ArrOfInt = "array\\.int", ArrOfLong = "array\\.long",
+			ArrOfFlt = "array\\.flt", ArrOfDbl = "array\\.dbl",
+			ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num",
+			ArrOfObj = "array\\.obj", strArr = "strArr", intArr = "intArr",
+			longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
+			boolArr = "boolArr";
+	public static char[] charArrToCharArr(Character[] inputArr) {
+		if (not(inputArr))
+			return blank.Char;
+		int length = inputArr.length;
+		char resultingArr[] = new char[length];
+		for (int i = 0; i < length; i++)
+			resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static int[] intArrToIntArr(Integer[] inputArr) {
+		if (not(inputArr))
+			return blank.Int;
+		int length = inputArr.length;
+		int resultingArr[] = new int[length];
+		for (int i = 0; i < length; i++)
+			resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static long[] longArrToLongArr(Long[] inputArr) {
+		if (not(inputArr))
+			return blank.Long;
+		int length = inputArr.length;
+		long resultingArr[] = new long[length];
+		for (int i = 0; i < length; i++)
+			resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static float[] floatArrToFloatArr(Float[] inputArr) {
+		if (not(inputArr))
+			return blank.Flt;
+		int length = inputArr.length;
+		float resultingArr[] = new float[length];
+		for (int i = 0; i < length; i++)
+			resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static float[] fltArrToFltArr(Float[] inputArr) {
+		return floatArrToFloatArr(inputArr);
+	}
+	public static double[] dblArrToDblArr(Double[] inputArr) {
+		if (not(inputArr))
+			return blank.Dbl;
+		int length = inputArr.length;
+		double resultingArr[] = new double[length];
+		for (int i = 0; i < length; i++)
+			resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
+	public static boolean[] boolArrToBoolArr(Boolean[] inputArr) {
+		if (not(inputArr))
+			return blank.Bool;
+		int length = inputArr.length;
+		boolean resultingArr[] = new boolean[length];
+		for (int i = 0; i < length; i++)
+			resultingArr[i] = inputArr[i];
+		return resultingArr;
+	}
 	public static char[] untangle(Character[] inputArr) {
 		return charArrToCharArr(inputArr);
 	}
@@ -29655,10 +29698,8 @@ public class KL {
 			randSentence = randSentence();
 	public static String name = "Ayesha";
 	public static int age = 23;
-	
+
 	public static void main(String[] args) {
-		print("Hi, name's $name, &10+13");
-		print(isEmpty(0.0));
-		print(8.643);
+		print("Hi, it's $name, $age. Hi $toRoman(&-11+23). %f", 20000000.5);
 	}
 }
