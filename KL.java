@@ -18351,6 +18351,67 @@ public class KL {
 				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9, Object cond10, Runnable sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static boolean when(Object src, Object cond1, Runnable sol1) {
+		return sw(src, cond1, sol1);
+	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
 			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
 			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
@@ -29699,11 +29760,10 @@ public class KL {
 	public static String name = "Ayesha";
 	public static int age = 23;
 	public static String _dev = "https://github.com/abbaskhurram255";
-	public static obj obj = obj("name", "Ayesha", "age", 23);
+	public static obj obj = obj("name", "someone", "age", 23);
 
 	public static void main(String[] args) {
-		print("Hi, it's $name, $age. $toRoman(&2+3) is my height. $upper(love myself). %dc is how much I want to earn coding. ",
-				736660);
+		print("Hi, it's $_dev, $age. $toRoman(&2+3) is my height. $upper(love myself). $curr(80000, usd) is how much I want to earn coding.");
 		print("2 + 3 = &2+3");
 	}
 }
