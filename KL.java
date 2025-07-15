@@ -19,6 +19,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.text.*;
+import static java.lang.System.out;
 @SuppressWarnings("all")
 public class KL {
 	public static class money {
@@ -102,20 +103,20 @@ public class KL {
 		public String suffix(boolean... bools) {
 			boolean forceInternational = bools.length > 0 ? bools[0] : false;
 			this.curr = trim(this.curr) + " ";
-			if (in(this.curr, "pk|rs"))
+			if (in(this.curr, "pk|in|rs"))
 				return "Rs. " + (forceInternational
 						? ussuffix(amnt)
 						: pksuffix(amnt));
 			if (in(this.curr, "us"))
-				return "US$ " + ussuffix(amnt);
+				return "USD " + ussuffix(amnt);
 			return this.curr + (forceInternational
-					|| (is(this.curr) && !in(this.curr, "pk|rs"))
+					|| (is(this.curr) && !in(this.curr, "pk|in|rs"))
 							? ussuffix(amnt)
 							: pksuffix(amnt));
 		}
 		public String toString() {
 			this.curr = trim(this.curr) + " ";
-			if (not(this.curr) || in(this.curr, "pk|rs"))
+			if (not(this.curr) || in(this.curr, "pk|in|rs"))
 				return pkr(amnt);
 			if (in(this.curr, "us"))
 				return usd(amnt);
@@ -18355,7 +18356,8 @@ public class KL {
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
 			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
 			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
-			Object cond8, Runnable sol8, Object cond9, Runnable sol9, Object cond10, Runnable sol10) {
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
 				cond10, sol10);
@@ -18366,7 +18368,8 @@ public class KL {
 			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
 			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9);
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
 	}
 	public static boolean when(Object src, Object cond1, Runnable sol1,
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
@@ -22945,8 +22948,41 @@ public class KL {
 		// for specifiers
 		s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
 				.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
+		// handling exponentials
+		String[] exponentialMatches = findMatches(s,
+				"\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
+		if (hasLen(exponentialMatches)) {
+			double[] parsedNumsWithoutPowers = new double[exponentialMatches.length];
+			int[] parsedExponentialPowers = new int[exponentialMatches.length];
+			for (int i : range(exponentialMatches)) {
+				parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i]
+						.replaceAll("[Ee][\\+\\-]?\\d+$", ""));
+				parsedExponentialPowers[i] = Int(findMatch(
+						exponentialMatches[i], "(?<=\\d[Ee])[\\+\\-]?\\d+"));
+				double[] parsedNumsWithPowers = parsedNumsWithoutPowers;
+				// temporarily
+				int power = parsedExponentialPowers[i];
+				if (isNeg(power)) {
+					while (power < 0) {
+						parsedNumsWithPowers[i] /= 10;
+						parsedNumsWithPowers[i] = setPrecision(
+								parsedNumsWithPowers[i], 14);
+						power++;
+					}
+				} else {
+					while (power > 0) {
+						parsedNumsWithPowers[i] *= 10;
+						parsedNumsWithPowers[i] = setPrecision(
+								parsedNumsWithPowers[i], 14);
+						power--;
+					}
+				}
+				s = s.replaceFirst(exponentialMatches[i].replaceAll(
+						"([\\+\\-])", "\\\\$1"), Str(parsedNumsWithPowers[i]));
+			}
+		}
 		String[] matches = findMatches(s,
-				"%[\\%cswdifnb](c|uc?|th)?|\\$*\\{(\\.\\d*f)?\\}");
+				"%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d*f)?\\}");
 		// printArr(matches.length > 0 ? matches : blank.Str);
 		for (String m : matches) {
 			for (Object arg : args) {
@@ -22956,7 +22992,7 @@ public class KL {
 						&& eq(m, "%[\\%sw]|\\$*\\{\\}")) {
 					s = replaceFirst(s, m, Str(arg));
 				} else if ((arg instanceof Integer || arg instanceof Long)
-						&& (in(m, "%[\\%din](th|uc?|c)?|\\$*\\{\\}"))) {
+						&& (in(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}"))) {
 					if (eq(m, "%[\\%din](?!th|uc?|c)|\\$*\\{\\}")) {
 						s = replaceFirst(s, m,
 								Str(f(arg instanceof Integer
@@ -22981,15 +23017,26 @@ public class KL {
 						s = replaceFirst(s, m,
 								Str(th(arg instanceof Integer
 										? (int) arg
-										: (long) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", ""));
+										: (long) arg)));
+					} else if (eq(m, "%[din]r")) {
+						s = replaceFirst(s, m, Str(toRoman((int) arg)));
 					} else {
-						if (eq(m, "%[din]c")) {
-							s = replaceFirst(s, m,
-									Str(pkr(arg instanceof Integer
-											? (int) arg
-											: (long) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", ""));
+						if (in(m, "%[din]c([\\:\\.][A-Za-z]{3,4})?")) {
+							if (eq(m, "%[din]c([\\:\\.][A-Za-z]{3,4})")) {
+								String currency = m.split("[\\:\\.]")[1];
+								s = replaceFirst(s, m,
+										Str(curr(arg instanceof Integer
+												? (int) arg
+												: (long) arg, currency))
+												.replaceAll("\\.[0]+(?!\\d)$",
+														""));
+							} else {
+								s = replaceFirst(s, m,
+										Str(pkr(arg instanceof Integer
+												? (int) arg
+												: (long) arg)).replaceAll(
+														"\\.[0]+(?!\\d)$", ""));
+							}
 						}
 					}
 				} else if (arg instanceof Float || arg instanceof Double) {
@@ -23008,13 +23055,24 @@ public class KL {
 											: (double) arg)).replaceAll(
 													"\\.[0]+(?!\\d)$", "")));
 						}
-					} else if (in(m, "%[\\%fn](?!u)|\\$*\\{(\\.\\d*f)?\\}")) {
-						if (eq(m, "%[\\%fn]c")) {
-							s = replaceFirst(s, m,
-									Str(pkr(setPrecision(arg instanceof Float
-											? (float) arg
-											: (double) arg)).replaceAll(
-													"\\.[0]+(?!\\d)$", "")));
+					} else if (in(m, "%[\\%fn]c?(?!u)|\\$*\\{(\\.\\d*f)?\\}")) {
+						if (in(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})?")) {
+							if (eq(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})")) {
+								String currency = m.split("[\\:\\.]")[1];
+								s = replaceFirst(s, m,
+										Str(curr(
+												arg instanceof Float
+														? (float) arg
+														: (double) arg,
+												currency)).replaceAll(
+														"\\.[0]+(?!\\d)$", ""));
+							} else {
+								s = replaceFirst(s, m,
+										Str(pkr(arg instanceof Float
+												? (float) arg
+												: (double) arg)).replaceAll(
+														"\\.[0]+(?!\\d)$", ""));
+							}
 						} else {
 							s = replaceFirst(s, "%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
 									Str(f(setPrecision(arg instanceof Float
@@ -23204,7 +23262,7 @@ public class KL {
 			if (in(s, catchNumericValuesWithOperator)) {
 				for (String m : numericMatchesWithOperators) {
 					String[] parts = m
-							.split("(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=\\d)");
+							.split("(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=[\\.\\d]+)");
 					double operandA = Dbl(parts[0]), operandB = Dbl(parts[1]);
 					String op = m.replaceAll(
 							"[^\\+\\-\\*\\×\\/\\÷]|^[\\+\\-\\*\\×\\/\\÷]", "");
@@ -23258,27 +23316,27 @@ public class KL {
 	}
 	public static String usd(int n) {
 		String formattedN = fus(n);
-		String result = "US$ " + formattedN;
+		String result = "USD " + formattedN;
 		return result;
 	}
 	public static String usd(long n) {
 		String formattedN = fus(n);
-		String result = "US$ " + formattedN;
+		String result = "USD " + formattedN;
 		return result;
 	}
 	public static String usd(float n) {
 		String formattedN = fus(n);
-		String result = "US$ " + formattedN;
+		String result = "USD " + formattedN;
 		return result;
 	}
 	public static String usd(double n) {
 		String formattedN = fus(n);
-		String result = "US$ " + formattedN;
+		String result = "USD " + formattedN;
 		return result;
 	}
 	public static String curr(int n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|rs"))
+		if (startsWith(locale, "pk|in|rs"))
 			return pkr(n);
 		else if (startsWith(locale, "us"))
 			return usd(n);
@@ -23288,7 +23346,7 @@ public class KL {
 	}
 	public static String curr(long n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|rs"))
+		if (startsWith(locale, "pk|in|rs"))
 			return pkr(n);
 		else if (startsWith(locale, "us"))
 			return usd(n);
@@ -23298,7 +23356,7 @@ public class KL {
 	}
 	public static String curr(float n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|rs"))
+		if (startsWith(locale, "pk|in|rs"))
 			return pkr(n);
 		else if (startsWith(locale, "us"))
 			return usd(n);
@@ -23308,7 +23366,7 @@ public class KL {
 	}
 	public static String curr(double n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|rs"))
+		if (startsWith(locale, "pk|in|rs"))
 			return pkr(n);
 		else if (startsWith(locale, "us"))
 			return usd(n);
@@ -23619,17 +23677,6 @@ public class KL {
 				.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
 				.add(4000, "M_V").add(9000, "I_X").add(10000, "_X");
 		int x = tree.floorKey(n);
-		if (n != x)
-			return tree.get(x) + toRoman(n - x);
-		return tree.get(n);
-	}
-	public static String toRoman(long n) {
-		treeI tree = new treeI();
-		tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X")
-				.add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
-				.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
-				.add(4000, "M_V").add(9000, "I_X").add(10000, "_X");
-		int x = tree.floorKey((int) n);
 		if (n != x)
 			return tree.get(x) + toRoman(n - x);
 		return tree.get(n);
@@ -28473,6 +28520,138 @@ public class KL {
 	public static boolean isEmpty(treeB t) {
 		return 0 == len(t) || t.isEmpty();
 	}
+	public static boolean hasLen(char c) {
+		return !isEmpty(c);
+	}
+	public static boolean hasLen(String s) {
+		return !isEmpty(s);
+	}
+	public static boolean hasLen(int n) {
+		return !isEmpty(n);
+	}
+	public static boolean hasLen(long n) {
+		return !isEmpty(n);
+	}
+	public static boolean hasLen(float n) {
+		return !isEmpty(n);
+	}
+	public static boolean hasLen(double n) {
+		return !isEmpty(n);
+	}
+	public static boolean hasLen(char[] arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(char[]... subArrays) {
+		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(String[] arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(String[]... subArrays) {
+		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(int[] arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(int[]... subArrays) {
+		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(long[] arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(long[]... subArrays) {
+		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(float[] arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(float[]... subArrays) {
+		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(double[] arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(double[]... subArrays) {
+		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(boolean[] arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(boolean[]... subArrays) {
+		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(Object[] arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(Object[]... subArrays) {
+		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(strArr arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(intArr arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(longArr arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(fltArr arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(dblArr arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(boolArr arr) {
+		return !isEmpty(arr);
+	}
+	public static boolean hasLen(objS o) {
+		return !isEmpty(o);
+	}
+	public static boolean hasLen(objI o) {
+		return !isEmpty(o);
+	}
+	public static boolean hasLen(objL o) {
+		return !isEmpty(o);
+	}
+	public static boolean hasLen(objF o) {
+		return !isEmpty(o);
+	}
+	public static boolean hasLen(objD o) {
+		return !isEmpty(o);
+	}
+	public static boolean hasLen(objB o) {
+		return !isEmpty(o);
+	}
+	public static boolean hasLen(treeDI t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeI t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeDL t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeL t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeDF t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeF t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeDS t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeD t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeDB t) {
+		return !isEmpty(t);
+	}
+	public static boolean hasLen(treeB t) {
+		return !isEmpty(t);
+	}
 	// Arrays
 	public static String type(Object o) {
 		if (isNull(o))
@@ -29763,7 +29942,7 @@ public class KL {
 	public static obj obj = obj("name", "someone", "age", 23);
 
 	public static void main(String[] args) {
-		print("Hi, it's $_dev, $age. $toRoman(&2+3) is my height. $upper(love myself). $curr(80000, usd) is how much I want to earn coding.");
-		print("2 + 3 = &2+3");
+		print("Hi, it's $name, $age. $toRoman(&2+3) is my height. $upper(love myself). %nc is how much I want to earn coding. &4.2+.3",
+				736660.2);
 	}
 }
