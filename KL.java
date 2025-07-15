@@ -1,3 +1,4 @@
+package jcalculator;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.*;
@@ -21780,6 +21781,30 @@ public class KL {
 	public static java.util.List<Boolean> List(Boolean... arg) {
 		return Arrays.asList(arg);
 	}
+	public static <T> java.util.List<T> list(T... args) {
+		return List(args);
+	}
+	// may or MAY NOT work, as working with generic types can be unpredictable,
+	// as
+	// learned from the mistakes in the past. So, here are some backup plans:
+	public static java.util.List<String> list(String... arg) {
+		return List(arg);
+	}
+	public static java.util.List<Integer> list(Integer... arg) {
+		return List(arg);
+	}
+	public static java.util.List<Long> list(Long... arg) {
+		return List(arg);
+	}
+	public static java.util.List<Float> list(Float... arg) {
+		return List(arg);
+	}
+	public static java.util.List<Double> list(Double... arg) {
+		return List(arg);
+	}
+	public static java.util.List<Boolean> list(Boolean... arg) {
+		return List(arg);
+	}
 	public static boolean isIntLike(String s) {
 		if (not(s))
 			return false;
@@ -29942,7 +29967,6 @@ public class KL {
 	public static obj obj = obj("name", "someone", "age", 23);
 
 	public static void main(String[] args) {
-		print("Hi, it's $name, $age. $toRoman(&2+3) is my height. $upper(love myself). %nc is how much I want to earn coding. ",
-				736660.2);
+
 	}
 }
