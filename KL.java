@@ -23269,18 +23269,18 @@ public class KL {
 					double result = 0;
 					switch (op) {
 						case "+" :
-							result = operandA + operandB;
+							result = setPrecision(operandA + operandB);
 							break;
 						case "-" :
-							result = operandA - operandB;
+							result = setPrecision(operandA - operandB);
 							break;
 						case "*" :
 						case "×" :
-							result = operandA * operandB;
+							result = setPrecision(operandA * operandB);
 							break;
 						case "/" :
 						case "÷" :
-							result = operandA / operandB;
+							result = setPrecision(operandA / operandB);
 							break;
 					}
 					s = replaceFirst(s, catchNumericValuesWithOperator,
@@ -29942,7 +29942,7 @@ public class KL {
 	public static obj obj = obj("name", "someone", "age", 23);
 
 	public static void main(String[] args) {
-		print("Hi, it's $name, $age. $toRoman(&2+3) is my height. $upper(love myself). %nc is how much I want to earn coding. &4.2+.3",
+		print("Hi, it's $name, $age. $toRoman(&2+3) is my height. $upper(love myself). %nc is how much I want to earn coding. ",
 				736660.2);
 	}
 }
