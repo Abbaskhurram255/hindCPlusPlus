@@ -494,6 +494,14 @@ public class KL {
 			isOnTop();
 			return this;
 		}
+		gui add(Component... components) {
+			for (Component c : components) {
+				if (c == null)
+					continue;
+				super.add(c);
+			}
+			return this;
+		}
 		gui opacity(double o) {
 			if (o < 0 || o > 100)
 				return this;
@@ -517,6 +525,15 @@ public class KL {
 		}
 		gui setBg(Color clr) {
 			bg(clr);
+			return this;
+		}
+		gui icon(String address) {
+			// set title-bar icon
+			try {
+				super.setIconImage(new ImageIcon(address).getImage());
+			} catch (Exception e) {
+
+			}
 			return this;
 		}
 		gui font(String fontFamily, int fontSize) {
@@ -981,6 +998,14 @@ public class KL {
 			fg(clr);
 			return this;
 		}
+		label add(Component... components) {
+			for (Component c : components) {
+				if (c == null)
+					continue;
+				super.add(c);
+			}
+			return this;
+		}
 		label cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
@@ -1263,6 +1288,14 @@ public class KL {
 			fg(clr);
 			return this;
 		}
+		panel add(Component... components) {
+			for (Component c : components) {
+				if (c == null)
+					continue;
+				super.add(c);
+			}
+			return this;
+		}
 		panel cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
@@ -1443,11 +1476,11 @@ public class KL {
 			super(a);
 			super.setFocusable(false);
 		}
-		btn(icon i) {
+		btn(Icon i) {
 			super(i);
 			super.setFocusable(false);
 		}
-		btn(String text, icon i) {
+		btn(String text, Icon i) {
 			super(text, i);
 			super.setFocusable(false);
 		}
@@ -1595,6 +1628,1407 @@ public class KL {
 			return super.getToolTipText();
 		}
 	}
+	public static class toggleBtn extends JToggleButton {
+		private static final long serialVersionUID = 1L;
+		toggleBtn() {
+			super();
+			super.setFocusable(false);
+		}
+		toggleBtn(Action a) {
+			super(a);
+			super.setFocusable(false);
+		}
+		toggleBtn(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		toggleBtn(String text, boolean selected) {
+			super(text, selected);
+			super.setFocusable(false);
+		}
+		toggleBtn(Icon i) {
+			super(i);
+			super.setFocusable(false);
+		}
+		toggleBtn(Icon i, boolean selected) {
+			super(i, selected);
+		}
+		toggleBtn(String text, Icon i) {
+			super(text, i);
+			super.setFocusable(false);
+		}
+		toggleBtn(String text, Icon i, boolean selected) {
+			super(text, i, selected);
+		}
+		toggleBtn(String text, ActionListener listener) {
+			super(text);
+			super.setFocusable(false);
+			click(listener);
+		}
+		toggleBtn(String text, ActionListener listener, Color bg, Color fg) {
+			this(text, listener);
+			bg(bg);
+			fg(fg);
+		}
+		toggleBtn click(ActionListener listener) {
+			super.addActionListener(listener);
+			return this;
+		}
+		toggleBtn offClick(ActionListener listener) {
+			super.removeActionListener(listener);
+			return this;
+		}
+		toggleBtn bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		toggleBtn fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		toggleBtn setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		toggleBtn img(Icon ico) {
+			super.setIcon(ico);
+			return this;
+		}
+		toggleBtn img(String address) {
+			img(new image(address));
+			return this;
+		}
+		toggleBtn icon(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		toggleBtn icon(String address) {
+			this.img(address);
+			return this;
+		}
+		toggleBtn setImage(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		toggleBtn setImage(String address) {
+			this.img(address);
+			return this;
+		}
+		toggleBtn cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		toggleBtn cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		toggleBtn font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		toggleBtn font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		toggleBtn font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		toggleBtn font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		toggleBtn font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		toggleBtn font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		toggleBtn border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		toggleBtn alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+			return this;
+		}
+		toggleBtn aligny(int pos) {
+			super.setVerticalAlignment(pos);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		toggleBtn text(String s) {
+			super.setText(s);
+			return this;
+		}
+		toggleBtn on(String evt, ActionListener action) {
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+				click(action);
+			return this;
+		}
+		toggleBtn addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		toggleBtn removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		toggleBtn toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		toggleBtn toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class radioBtn extends JRadioButton {
+		private static final long serialVersionUID = 1L;
+		radioBtn() {
+			super();
+			super.setFocusable(false);
+		}
+		radioBtn(Action a) {
+			super(a);
+			super.setFocusable(false);
+		}
+		radioBtn(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		radioBtn(String text, boolean selected) {
+			super(text, selected);
+			super.setFocusable(false);
+		}
+		radioBtn(Icon i) {
+			super(i);
+			super.setFocusable(false);
+		}
+		radioBtn(Icon i, boolean selected) {
+			super(i, selected);
+		}
+		radioBtn(String text, Icon i) {
+			super(text, i);
+			super.setFocusable(false);
+		}
+		radioBtn(String text, Icon i, boolean selected) {
+			super(text, i, selected);
+		}
+		radioBtn(String text, ActionListener listener) {
+			super(text);
+			super.setFocusable(false);
+			click(listener);
+		}
+		radioBtn(String text, ActionListener listener, Color bg, Color fg) {
+			this(text, listener);
+			bg(bg);
+			fg(fg);
+		}
+		radioBtn click(ActionListener listener) {
+			super.addActionListener(listener);
+			return this;
+		}
+		radioBtn offClick(ActionListener listener) {
+			super.removeActionListener(listener);
+			return this;
+		}
+		radioBtn bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		radioBtn fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		radioBtn setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		radioBtn img(Icon ico) {
+			super.setIcon(ico);
+			return this;
+		}
+		radioBtn img(String address) {
+			img(new image(address));
+			return this;
+		}
+		radioBtn icon(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		radioBtn icon(String address) {
+			this.img(address);
+			return this;
+		}
+		radioBtn setImage(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		radioBtn setImage(String address) {
+			this.img(address);
+			return this;
+		}
+		radioBtn cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		radioBtn cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		radioBtn font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		radioBtn font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		radioBtn font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		radioBtn font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		radioBtn font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		radioBtn font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		radioBtn border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		radioBtn alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+			return this;
+		}
+		radioBtn aligny(int pos) {
+			super.setVerticalAlignment(pos);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		radioBtn text(String s) {
+			super.setText(s);
+			return this;
+		}
+		radioBtn on(String evt, ActionListener action) {
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+				click(action);
+			return this;
+		}
+		radioBtn addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		radioBtn removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		radioBtn toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		radioBtn toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class radioBtnItem extends JRadioButtonMenuItem {
+		private static final long serialVersionUID = 1L;
+		radioBtnItem() {
+			super();
+			super.setFocusable(false);
+		}
+		radioBtnItem(Action a) {
+			super(a);
+			super.setFocusable(false);
+		}
+		radioBtnItem(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		radioBtnItem(String text, boolean selected) {
+			super(text, selected);
+			super.setFocusable(false);
+		}
+		radioBtnItem(Icon i) {
+			super(i);
+			super.setFocusable(false);
+		}
+		radioBtnItem(Icon i, boolean selected) {
+			super(i, selected);
+		}
+		radioBtnItem(String text, Icon i) {
+			super(text, i);
+			super.setFocusable(false);
+		}
+		radioBtnItem(String text, Icon i, boolean selected) {
+			super(text, i, selected);
+		}
+		radioBtnItem(String text, ActionListener listener) {
+			super(text);
+			super.setFocusable(false);
+			click(listener);
+		}
+		radioBtnItem(String text, ActionListener listener, Color bg, Color fg) {
+			this(text, listener);
+			bg(bg);
+			fg(fg);
+		}
+		radioBtnItem click(ActionListener listener) {
+			super.addActionListener(listener);
+			return this;
+		}
+		radioBtnItem offClick(ActionListener listener) {
+			super.removeActionListener(listener);
+			return this;
+		}
+		radioBtnItem bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		radioBtnItem fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		radioBtnItem setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		radioBtnItem img(Icon ico) {
+			super.setIcon(ico);
+			return this;
+		}
+		radioBtnItem img(String address) {
+			img(new image(address));
+			return this;
+		}
+		radioBtnItem icon(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		radioBtnItem icon(String address) {
+			this.img(address);
+			return this;
+		}
+		radioBtnItem setImage(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		radioBtnItem setImage(String address) {
+			this.img(address);
+			return this;
+		}
+		radioBtnItem cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		radioBtnItem cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		radioBtnItem font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		radioBtnItem font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		radioBtnItem font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		radioBtnItem font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		radioBtnItem font(String fontFamily, int fontSize, int bold,
+				int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		radioBtnItem font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		radioBtnItem border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		radioBtnItem alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+			return this;
+		}
+		radioBtnItem aligny(int pos) {
+			super.setVerticalAlignment(pos);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		radioBtnItem text(String s) {
+			super.setText(s);
+			return this;
+		}
+		radioBtnItem on(String evt, ActionListener action) {
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+				click(action);
+			return this;
+		}
+		radioBtnItem addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		radioBtnItem removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		radioBtnItem toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		radioBtnItem toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class checkBox extends JCheckBox {
+		private static final long serialVersionUID = 1L;
+		checkBox() {
+			super();
+			super.setFocusable(false);
+		}
+		checkBox(Action a) {
+			super(a);
+			super.setFocusable(false);
+		}
+		checkBox(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		checkBox(String text, boolean selected) {
+			super(text, selected);
+			super.setFocusable(false);
+		}
+		checkBox(Icon i) {
+			super(i);
+			super.setFocusable(false);
+		}
+		checkBox(Icon i, boolean selected) {
+			super(i, selected);
+		}
+		checkBox(String text, Icon i) {
+			super(text, i);
+			super.setFocusable(false);
+		}
+		checkBox(String text, Icon i, boolean selected) {
+			super(text, i, selected);
+		}
+		checkBox(String text, ActionListener listener) {
+			super(text);
+			super.setFocusable(false);
+			click(listener);
+		}
+		checkBox(String text, ActionListener listener, Color bg, Color fg) {
+			this(text, listener);
+			bg(bg);
+			fg(fg);
+		}
+		checkBox click(ActionListener listener) {
+			super.addActionListener(listener);
+			return this;
+		}
+		checkBox offClick(ActionListener listener) {
+			super.removeActionListener(listener);
+			return this;
+		}
+		checkBox bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		checkBox fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		checkBox setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		checkBox img(Icon ico) {
+			super.setIcon(ico);
+			return this;
+		}
+		checkBox img(String address) {
+			img(new image(address));
+			return this;
+		}
+		checkBox icon(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		checkBox icon(String address) {
+			this.img(address);
+			return this;
+		}
+		checkBox setImage(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		checkBox setImage(String address) {
+			this.img(address);
+			return this;
+		}
+		checkBox cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		checkBox cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		checkBox font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		checkBox font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		checkBox font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		checkBox font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		checkBox font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		checkBox font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		checkBox border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		checkBox alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+			return this;
+		}
+		checkBox aligny(int pos) {
+			super.setVerticalAlignment(pos);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		checkBox text(String s) {
+			super.setText(s);
+			return this;
+		}
+		checkBox on(String evt, ActionListener action) {
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+				click(action);
+			return this;
+		}
+		checkBox addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		checkBox removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		checkBox toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		checkBox toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class checkBoxItem extends JCheckBoxMenuItem {
+		private static final long serialVersionUID = 1L;
+		checkBoxItem() {
+			super();
+			super.setFocusable(false);
+		}
+		checkBoxItem(Action a) {
+			super(a);
+			super.setFocusable(false);
+		}
+		checkBoxItem(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		checkBoxItem(String text, boolean selected) {
+			super(text, selected);
+			super.setFocusable(false);
+		}
+		checkBoxItem(Icon i) {
+			super(i);
+			super.setFocusable(false);
+		}
+		checkBoxItem(String text, Icon i) {
+			super(text, i);
+			super.setFocusable(false);
+		}
+		checkBoxItem(String text, Icon i, boolean selected) {
+			super(text, i, selected);
+		}
+		checkBoxItem(String text, ActionListener listener) {
+			super(text);
+			super.setFocusable(false);
+			click(listener);
+		}
+		checkBoxItem(String text, ActionListener listener, Color bg, Color fg) {
+			this(text, listener);
+			bg(bg);
+			fg(fg);
+		}
+		checkBoxItem click(ActionListener listener) {
+			super.addActionListener(listener);
+			return this;
+		}
+		checkBoxItem offClick(ActionListener listener) {
+			super.removeActionListener(listener);
+			return this;
+		}
+		checkBoxItem bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		checkBoxItem fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		checkBoxItem setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		checkBoxItem img(Icon ico) {
+			super.setIcon(ico);
+			return this;
+		}
+		checkBoxItem img(String address) {
+			img(new image(address));
+			return this;
+		}
+		checkBoxItem icon(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		checkBoxItem icon(String address) {
+			this.img(address);
+			return this;
+		}
+		checkBoxItem setImage(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		checkBoxItem setImage(String address) {
+			this.img(address);
+			return this;
+		}
+		checkBoxItem cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		checkBoxItem cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		checkBoxItem font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		checkBoxItem font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		checkBoxItem font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		checkBoxItem font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		checkBoxItem font(String fontFamily, int fontSize, int bold,
+				int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		checkBoxItem font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		checkBoxItem border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		checkBoxItem alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+			return this;
+		}
+		checkBoxItem aligny(int pos) {
+			super.setVerticalAlignment(pos);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		checkBoxItem text(String s) {
+			super.setText(s);
+			return this;
+		}
+		checkBoxItem on(String evt, ActionListener action) {
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+				click(action);
+			return this;
+		}
+		checkBoxItem addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		checkBoxItem removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		checkBoxItem toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		checkBoxItem toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class menu extends JMenu {
+		private static final long serialVersionUID = 1L;
+		menu() {
+			super();
+			super.setFocusable(false);
+		}
+		menu(Action a) {
+			super(a);
+			super.setFocusable(false);
+		}
+		menu(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		menu(String text, boolean canBeTornOff) {
+			super(text, canBeTornOff);
+			super.setFocusable(false);
+		}
+		menu(String text, ActionListener listener) {
+			super(text);
+			super.setFocusable(false);
+			click(listener);
+		}
+		menu(String text, ActionListener listener, Color bg, Color fg) {
+			this(text, listener);
+			bg(bg);
+			fg(fg);
+		}
+		menu click(ActionListener listener) {
+			super.addActionListener(listener);
+			return this;
+		}
+		menu offClick(ActionListener listener) {
+			super.removeActionListener(listener);
+			return this;
+		}
+		menu bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		menu fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		menu setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		menu img(Icon ico) {
+			super.setIcon(ico);
+			return this;
+		}
+		menu img(String address) {
+			img(new image(address));
+			return this;
+		}
+		menu icon(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		menu icon(String address) {
+			this.img(address);
+			return this;
+		}
+		menu setImage(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		menu setImage(String address) {
+			this.img(address);
+			return this;
+		}
+		menu cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		menu cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		menu font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		menu font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		menu font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		menu font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		menu font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		menu font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		menu border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		menu alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+			return this;
+		}
+		menu aligny(int pos) {
+			super.setVerticalAlignment(pos);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		menu text(String s) {
+			super.setText(s);
+			return this;
+		}
+		menu on(String evt, ActionListener action) {
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+				click(action);
+			return this;
+		}
+		menu addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		menu removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		menu toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		menu toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class menuItem extends JMenuItem {
+		private static final long serialVersionUID = 1L;
+		menuItem() {
+			super();
+			super.setFocusable(false);
+		}
+		menuItem(Action a) {
+			super(a);
+			super.setFocusable(false);
+		}
+		menuItem(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		menuItem(String text, int mnemonic) {
+			super(text, mnemonic);
+			super.setFocusable(false);
+		}
+		menuItem(Icon i) {
+			super(i);
+			super.setFocusable(false);
+		}
+		menuItem(String text, Icon i) {
+			super(text, i);
+			super.setFocusable(false);
+		}
+		menuItem(String text, ActionListener listener) {
+			super(text);
+			super.setFocusable(false);
+			click(listener);
+		}
+		menuItem(String text, ActionListener listener, Color bg, Color fg) {
+			this(text, listener);
+			bg(bg);
+			fg(fg);
+		}
+		menuItem click(ActionListener listener) {
+			super.addActionListener(listener);
+			return this;
+		}
+		menuItem offClick(ActionListener listener) {
+			super.removeActionListener(listener);
+			return this;
+		}
+		menuItem bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		menuItem fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		menuItem setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		menuItem img(Icon ico) {
+			super.setIcon(ico);
+			return this;
+		}
+		menuItem img(String address) {
+			img(new image(address));
+			return this;
+		}
+		menuItem icon(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		menuItem icon(String address) {
+			this.img(address);
+			return this;
+		}
+		menuItem setImage(Icon ico) {
+			this.img(ico);
+			return this;
+		}
+		menuItem setImage(String address) {
+			this.img(address);
+			return this;
+		}
+		menuItem cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		menuItem cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		menuItem font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		menuItem font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		menuItem font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		menuItem font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		menuItem font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		menuItem font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		menuItem border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		menuItem alignx(int pos) {
+			super.setHorizontalAlignment(pos);
+			return this;
+		}
+		menuItem aligny(int pos) {
+			super.setVerticalAlignment(pos);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		menuItem text(String s) {
+			super.setText(s);
+			return this;
+		}
+		menuItem on(String evt, ActionListener action) {
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+				click(action);
+			return this;
+		}
+		menuItem addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		menuItem removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		menuItem toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		menuItem toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class menuBar extends JMenuBar {
+		private static final long serialVersionUID = 1L;
+		menuBar() {
+			super();
+			super.setFocusable(false);
+		}
+		menuBar bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		menuBar fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		menuBar setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		menuBar cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		menuBar cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		menuBar font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		menuBar border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		menuBar addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		menuBar removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		menuBar toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		menuBar toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class popupMenu extends JPopupMenu {
+		private static final long serialVersionUID = 1L;
+		popupMenu() {
+			super();
+			super.setFocusable(false);
+		}
+		popupMenu(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		popupMenu(String text, Color bg) {
+			this(text);
+			bg(bg);
+		}
+		popupMenu(String text, Color bg, Color fg) {
+			this(text);
+			bg(bg);
+			fg(fg);
+		}
+		popupMenu bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		popupMenu fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		popupMenu setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		popupMenu setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		popupMenu cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		popupMenu cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		popupMenu font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		popupMenu font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		popupMenu font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		popupMenu font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		popupMenu font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		popupMenu font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		popupMenu border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		popupMenu addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		popupMenu removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		popupMenu toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		popupMenu toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+
 	public static class txtField extends JTextField {
 		private static final long serialVersionUID = 1L;
 		txtField() {
@@ -1928,6 +3362,167 @@ public class KL {
 			return this;
 		}
 		txtArea toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
+	public static class txtPane extends JTextPane {
+		private static final long serialVersionUID = 1L;
+		txtPane() {
+			super();
+		}
+		txtPane(StyledDocument doc) {
+			super(doc);
+		}
+		txtPane cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		txtPane cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		txtPane border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		String text() {
+			return super.getText();
+		}
+		txtPane text(String s) {
+			super.setText(s);
+			return this;
+		}
+		String val() {
+			return text();
+		}
+		txtPane val(String s) {
+			text(s);
+			return this;
+		}
+		String value() {
+			return text();
+		}
+		txtPane value(String s) {
+			text(s);
+			return this;
+		}
+		txtPane on(String k, Runnable action) {
+			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
+				String[] keys = k.split("\\|");
+				for (var key : keys) {
+					on(key, action);
+				}
+			}
+			if (KL.is(k) && KL.is(action)) {
+				super.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						char keyCharCaptured = e.getKeyChar();
+						int keyCodeCaptured = e.getKeyCode();
+						String keyCaptured = "" + keyCharCaptured;
+						switch (keyCodeCaptured) {
+							case KeyEvent.VK_UP :
+								keyCaptured = "up";
+								break;
+							case KeyEvent.VK_DOWN :
+								keyCaptured = "down";
+								break;
+							case KeyEvent.VK_LEFT :
+								keyCaptured = "left";
+								break;
+							case KeyEvent.VK_RIGHT :
+								keyCaptured = "right";
+								break;
+							case KeyEvent.VK_CONTROL :
+								keyCaptured = "ctrl";
+								break;
+						}
+						if (KL.eq(k, keyCaptured)) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int button = -1;
+						if (KL.eq(k, "(m(ouse)?)?\\W?click")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+							button = MouseEvent.BUTTON1;
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+							button = MouseEvent.BUTTON2;
+						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+							button = MouseEvent.BUTTON3;
+						if (e.getButton() == button) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseMotionListener(new MouseMotionAdapter() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
+							new Thread(action).run();
+						}
+					}
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
+							new Thread(action).run();
+						}
+					}
+				});
+				super.addMouseWheelListener(new MouseWheelListener() {
+					@Override
+					public void mouseWheelMoved(MouseWheelEvent e) {
+						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
+							new Thread(action).run();
+						}
+					}
+				});
+			}
+			return this;
+		}
+		txtPane addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		txtPane removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		txtPane toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		txtPane toolTip() {
 			removeToolTip();
 			return this;
 		}
@@ -3723,10 +5318,10 @@ public class KL {
 	public static btn btn(Action a) {
 		return new btn(a);
 	}
-	public static btn btn(icon i) {
+	public static btn btn(Icon i) {
 		return new btn(i);
 	}
-	public static btn btn(String text, icon i) {
+	public static btn btn(String text, Icon i) {
 		return new btn(text, i);
 	}
 	public static btn nayaBtn() {
@@ -3741,10 +5336,10 @@ public class KL {
 	public static btn nayaBtn(Action a) {
 		return new btn(a);
 	}
-	public static btn nayaBtn(icon i) {
+	public static btn nayaBtn(Icon i) {
 		return new btn(i);
 	}
-	public static btn nayaBtn(String text, icon i) {
+	public static btn nayaBtn(String text, Icon i) {
 		return new btn(text, i);
 	}
 	public static URL url(String address) {
