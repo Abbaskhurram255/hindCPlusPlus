@@ -2507,6 +2507,104 @@ public class KL {
 			return super.getToolTipText();
 		}
 	}
+	public static class menuBar extends JMenuBar {
+		private static final long serialVersionUID = 1L;
+		menuBar() {
+			super();
+			super.setFocusable(false);
+		}
+		menuBar(JMenu... menus) {
+			this();
+			if (menus == null)
+				return;
+			for (JMenu item : menus) {
+				if (item == null)
+					continue;
+				super.add(item);
+			}
+		}
+		menuBar bg(Color clr) {
+			super.setBackground(clr);
+			return this;
+		}
+		menuBar fg(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		menuBar setBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar setFg(Color clr) {
+			fg(clr);
+			return this;
+		}
+		menuBar cursor(int c) {
+			super.setCursor(new Cursor(c));
+			return this;
+		}
+		menuBar cursor(Cursor crsrObj) {
+			super.setCursor(crsrObj);
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		menuBar font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		menuBar font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		menuBar border(LineBorder brdr) {
+			super.setBorder(brdr);
+			return this;
+		}
+		menuBar addToolTip(String textToDisplayOnHover) {
+			super.setToolTipText(textToDisplayOnHover);
+			return this;
+		}
+		menuBar removeToolTip() {
+			super.setToolTipText(null);
+			return this;
+		}
+		menuBar toolTip(String textToDisplayOnHover) {
+			addToolTip(textToDisplayOnHover);
+			return this;
+		}
+		menuBar toolTip() {
+			removeToolTip();
+			return this;
+		}
+		public String toolTipText() {
+			return super.getToolTipText();
+		}
+	}
 	public static class menu extends JMenu {
 		private static final long serialVersionUID = 1L;
 		menu() {
@@ -2534,6 +2632,16 @@ public class KL {
 			this(text, listener);
 			bg(bg);
 			fg(fg);
+		}
+		menu(JMenuItem... menuItems) {
+			super();
+			if (menuItems == null)
+				return;
+			for (JMenuItem item : menuItems) {
+				if (item == null)
+					continue;
+				super.add(item);
+			}
 		}
 		menu click(ActionListener listener) {
 			super.addActionListener(listener);
@@ -2839,45 +2947,63 @@ public class KL {
 			return super.getToolTipText();
 		}
 	}
-	public static class menuBar extends JMenuBar {
+	public static class contextMenu extends JPopupMenu {
 		private static final long serialVersionUID = 1L;
-		menuBar() {
+		contextMenu() {
 			super();
 			super.setFocusable(false);
 		}
-		menuBar bg(Color clr) {
+		contextMenu(String text) {
+			super(text);
+			super.setFocusable(false);
+		}
+		contextMenu(String text, Color bg) {
+			this(text);
+			bg(bg);
+		}
+		contextMenu(String... items) {
+			super();
+			if (items == null)
+				return;
+			for (String item : items) {
+				if (item == null)
+					continue;
+				super.add(item);
+			}
+		}
+		contextMenu bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		menuBar fg(Color clr) {
+		contextMenu fg(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		menuBar setBg(Color clr) {
+		contextMenu setBg(Color clr) {
 			bg(clr);
 			return this;
 		}
-		menuBar setFg(Color clr) {
+		contextMenu setFg(Color clr) {
 			fg(clr);
 			return this;
 		}
-		menuBar cursor(int c) {
+		contextMenu cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		menuBar cursor(Cursor crsrObj) {
+		contextMenu cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		menuBar font(String fontFamily, int fontSize) {
+		contextMenu font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
 		}
-		menuBar font(String fontFamily, int fontSize, int fontWidth) {
+		contextMenu font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
-		menuBar font(String fontFamily, int fontSize, boolean bold,
+		contextMenu font(String fontFamily, int fontSize, boolean bold,
 				boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
 					? Font.BOLD | Font.ITALIC
@@ -2885,11 +3011,12 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		menuBar font(String fontFamily, int fontSize, boolean bold) {
+		contextMenu font(String fontFamily, int fontSize, boolean bold) {
 			font(fontFamily, fontSize, bold, false);
 			return this;
 		}
-		menuBar font(String fontFamily, int fontSize, int bold, int italic) {
+		contextMenu font(String fontFamily, int fontSize, int bold,
+				int italic) {
 			super.setFont(new Font(fontFamily,
 					bold == 1 && italic == 1
 							? Font.BOLD | Font.ITALIC
@@ -2899,27 +3026,27 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		menuBar font(Font fnt) {
+		contextMenu font(Font fnt) {
 			super.setFont(fnt);
 			return this;
 		}
-		menuBar border(LineBorder brdr) {
+		contextMenu border(LineBorder brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
-		menuBar addToolTip(String textToDisplayOnHover) {
+		contextMenu addToolTip(String textToDisplayOnHover) {
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		menuBar removeToolTip() {
+		contextMenu removeToolTip() {
 			super.setToolTipText(null);
 			return this;
 		}
-		menuBar toolTip(String textToDisplayOnHover) {
+		contextMenu toolTip(String textToDisplayOnHover) {
 			addToolTip(textToDisplayOnHover);
 			return this;
 		}
-		menuBar toolTip() {
+		contextMenu toolTip() {
 			removeToolTip();
 			return this;
 		}
@@ -2927,58 +3054,70 @@ public class KL {
 			return super.getToolTipText();
 		}
 	}
-	public static class popupMenu extends JPopupMenu {
+	public static class dropDown extends JComboBox {
 		private static final long serialVersionUID = 1L;
-		popupMenu() {
+		int size = 0;
+		dropDown() {
 			super();
 			super.setFocusable(false);
 		}
-		popupMenu(String text) {
-			super(text);
-			super.setFocusable(false);
+		<T> dropDown(T... items) {
+			super(items);
+			size = items.length;
 		}
-		popupMenu(String text, Color bg) {
-			this(text);
-			bg(bg);
+		<T> dropDown(Vector<T> itemsOfTypeVector) {
+			super(itemsOfTypeVector);
+			size = itemsOfTypeVector.size();
 		}
-		popupMenu(String text, Color bg, Color fg) {
-			this(text);
-			bg(bg);
-			fg(fg);
+		<T> dropDown(ComboBoxModel<T> model) {
+			super(model);
+			size = model.getSize();
 		}
-		popupMenu bg(Color clr) {
+		dropDown add(int i) {
+			if (i < 0 || i >= size)
+				return this;
+			super.setSelectedIndex(i);
+			return this;
+		}
+		dropDown select(int i) {
+			if (i < 0 || i >= size)
+				return this;
+			super.setSelectedIndex(i);
+			return this;
+		}
+		dropDown bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		popupMenu fg(Color clr) {
+		dropDown fg(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		popupMenu setBg(Color clr) {
+		dropDown setBg(Color clr) {
 			bg(clr);
 			return this;
 		}
-		popupMenu setFg(Color clr) {
+		dropDown setFg(Color clr) {
 			fg(clr);
 			return this;
 		}
-		popupMenu cursor(int c) {
+		dropDown cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		popupMenu cursor(Cursor crsrObj) {
+		dropDown cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		popupMenu font(String fontFamily, int fontSize) {
+		dropDown font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
 		}
-		popupMenu font(String fontFamily, int fontSize, int fontWidth) {
+		dropDown font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
-		popupMenu font(String fontFamily, int fontSize, boolean bold,
+		dropDown font(String fontFamily, int fontSize, boolean bold,
 				boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
 					? Font.BOLD | Font.ITALIC
@@ -2986,11 +3125,11 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		popupMenu font(String fontFamily, int fontSize, boolean bold) {
+		dropDown font(String fontFamily, int fontSize, boolean bold) {
 			font(fontFamily, fontSize, bold, false);
 			return this;
 		}
-		popupMenu font(String fontFamily, int fontSize, int bold, int italic) {
+		dropDown font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
 					bold == 1 && italic == 1
 							? Font.BOLD | Font.ITALIC
@@ -3000,27 +3139,27 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		popupMenu font(Font fnt) {
+		dropDown font(Font fnt) {
 			super.setFont(fnt);
 			return this;
 		}
-		popupMenu border(LineBorder brdr) {
+		dropDown border(LineBorder brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
-		popupMenu addToolTip(String textToDisplayOnHover) {
+		dropDown addToolTip(String textToDisplayOnHover) {
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		popupMenu removeToolTip() {
+		dropDown removeToolTip() {
 			super.setToolTipText(null);
 			return this;
 		}
-		popupMenu toolTip(String textToDisplayOnHover) {
+		dropDown toolTip(String textToDisplayOnHover) {
 			addToolTip(textToDisplayOnHover);
 			return this;
 		}
-		popupMenu toolTip() {
+		dropDown toolTip() {
 			removeToolTip();
 			return this;
 		}
