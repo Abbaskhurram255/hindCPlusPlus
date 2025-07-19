@@ -3,6 +3,31 @@ import requests
 import os
 import tkinter as tk
 from tkinter import font as tkFont, messagebox, simpledialog
+import os
+import sys
+import math
+import re
+from collections import defaultdict
+from functools import reduce
+from typing import List, Callable
+
+obj = dict
+# allows obj(name=$x, age=$y)
+sort = sorted
+sortMutate = lambda x: x.sort()
+reverseSort = lambda arr: sorted(arr, reverse=Yes)
+reverseSortMutate = lambda arr: arr.sort(reverse=Yes)
+Yes = true = True
+No = false = False
+def reverse(x):
+	if type(x) != str and type(x) != list: return None
+	if type(x) == list:
+		x.reverse()
+		return x
+	return x[::-1]
+filter = lambda arr, condition: filter(condition, arr)
+# test this
+rng = lambda *args, **kwargs: list(range(*args, **kwargs))
 
 class money:
     def __init__(self, amount=0, currency="Rs. "):
@@ -258,7 +283,7 @@ class label(tk.Label):
             self.tooltip_window.destroy()
             self.tooltip_window = None
 
-class Panel(tk.Frame):
+class panel(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
 
