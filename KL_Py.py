@@ -2,7 +2,7 @@ import base64
 import requests
 import os
 import tkinter as tk
-from tkinter import messagebox, simpledialog
+from tkinter import font as tkFont, messagebox, simpledialog
 
 class money:
     def __init__(self, amount=0, currency="Rs. "):
@@ -80,14 +80,14 @@ def internet_access():
 def get_file_path(filename):
     return os.path.join(os.getcwd(), filename)
 
-class GUI:
+class gui:
     def __init__(self, title="Application", width=400, height=600):
         self.root = tk.Tk()
         self.root.title(title)
-        self.set_size(width, height)
+        self.size(width, height)
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
-    def size(self, width, height):
+    def size(self, width:int, height:int):
         if width < 100 or height < 100 or width > 10000 or height > 10000:
             width, height = 400, 600
         self.root.geometry(f"{width}x{height}")
@@ -111,23 +111,20 @@ class GUI:
         if messagebox.askyesno("Close", "Are you sure you want to exit?"):
             self.root.destroy()
 
-    def set_resizable(self, resizable):
+    def resizable(self, resizable):
         self.root.resizable(resizable, resizable)
 
-    def set_always_on_top(self, on_top):
+    def always_on_top(self, on_top):
         self.root.attributes("-topmost", on_top)
 
-    def always_on_top(self):
-        self.set_always_on_top(True)
-
     def on_top(self):
-        self.set_always_on_top(True)
+        self.always_on_top(True)
 
     def is_on_top(self) -> bool:
         return self.root.attributes("-topmost") == True
 
     def is_always_on_top(self) -> bool:
-        return is_on_top()
+        return self.is_on_top()
 
     def opacity(self, opacity):
         if 0 <= opacity <= 1:
@@ -155,33 +152,157 @@ class GUI:
 
     def error(self, title: str, message: str):
         if self.is_on_top():
-            self.set_always_on_top(False)
+            self.always_on_top(False)
         messagebox.showerror(title, message)
     def err(self, title: str, message: str):
         self.error(title, message)
 
     def warning(self, title: str, message: str):
         if self.is_on_top():
-            self.set_always_on_top(False)
+            self.always_on_top(False)
         messagebox.showwarning(title, message)
 
     def confirm(self, title: str, message: str):
         if self.is_on_top():
-            self.set_always_on_top(False)
+            self.always_on_top(False)
         return messagebox.askyesno(title, message)
 
     def ask(self, title: str, message: str) -> str:
         if self.is_on_top():
-            self.set_always_on_top(False)
+            self.always_on_top(False)
         return simpledialog.askstring(title, message)
 
     def askInt(self, title: str, message: str) -> int:
         if self.is_on_top():
-            self.set_always_on_top(False)
+            self.always_on_top(False)
         return simpledialog.askinteger(title, message, minvalue=9e-18, maxvalue=9e18)
 
     def askFlt(self, title: str, message: str) -> int:
         if self.is_on_top():
-            self.set_always_on_top(False)
+            self.always_on_top(False)
         return simpledialog.askfloat(title, message, minvalue=9e-18, maxvalue=9e18)
 
+class label(tk.Label):
+    def __init__(self, master=None, text="", alignment="center", image=None, **kwargs):
+        super().__init__(master, text=text, image=image, **kwargs)
+        self.config(justify=alignment)
+        self.opaque()
+
+    def opaque(self):
+        self.config(bg=self.cget("bg"))
+
+    def bg(self, color):
+        self.config(bg=color)
+        return self
+
+    def fg(self, color):
+        self.config(fg=color)
+        return self
+
+    def setBg(self, color):
+        return self.bg(color)
+
+    def setFg(self, color):
+        return self.fg(color)
+
+    def add(self, *components):
+        for component in components:
+            if component is not None:
+                component.pack()
+        return self
+
+    def cursor(self, cursor_type):
+        self.config(cursor=cursor_type)
+        return self
+
+    def font(self, font_family, font_size, bold=False, italic=False):
+        font_style = tkFont.Font(family=font_family, size=font_size, weight="bold" if bold else "normal", slant="italic" if italic else "roman")
+        self.config(font=font_style)
+        return self
+
+    def align_x(self, pos):
+        self.config(anchor=pos)
+        return self
+
+    def align_y(self, pos):
+        self.config(anchor=pos)
+        return self
+
+    def text(self, s=None):
+        if s is not None:
+            self.config(text=s)
+            return self
+        return self.cget("text")
+
+    def on(self, key, action):
+        self.bind(f"<{key}>", lambda e: action())
+        return self
+
+    def add_tooltip(self, text):
+        self.tooltip = text
+        self.bind("<Enter>", self.show_tooltip)
+        self.bind("<Leave>", self.hide_tooltip)
+        return self
+
+    def show_tooltip(self, event):
+        x = event.x_root + 20
+        y = event.y_root + 10
+        self.tooltip_window = tk.Toplevel(self)
+        self.tooltip_window.wm_overrideredirect(True)
+        self.tooltip_window.wm_geometry(f"+{x}+{y}")
+        label = tk.Label(self.tooltip_window, text=self.tooltip, background="yellow")
+        label.pack()
+
+    def hide_tooltip(self, event):
+        if self.tooltip_window:
+            self.tooltip_window.destroy()
+            self.tooltip_window = None
+
+class Panel(tk.Frame):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+
+    def bg(self, color):
+        self.config(bg=color)
+        return self
+
+    def fg(self, color):
+        self.config(fg=color)
+        return self
+
+    def add(self, *components):
+        for component in components:
+            if component is not None:
+                component.pack()
+        return self
+
+    def layout(self, layout):
+        self.config(layout)
+        return self
+
+    def add_tooltip(self, text):
+        self.tooltip = text
+        self.bind("<Enter>", self.show_tooltip)
+        self.bind("<Leave>", self.hide_tooltip)
+        return self
+
+    def show_tooltip(self, event):
+        x = event.x_root + 20
+        y = event.y_root + 10
+        self.tooltip_window = tk.Toplevel(self)
+        self.tooltip_window.wm_overrideredirect(True)
+        self.tooltip_window.wm_geometry(f"+{x}+{y}")
+        label = tk.Label(self.tooltip_window, text=self.tooltip, background="yellow")
+        label.pack()
+
+    def hide_tooltip(self, event):
+        if self.tooltip_window:
+            self.tooltip_window.destroy()
+            self.tooltip_window = None
+            
+def main():
+    ui:gui = gui("My GUI")
+    ui.start()
+    
+if __name__ == "__main__":
+    main()
