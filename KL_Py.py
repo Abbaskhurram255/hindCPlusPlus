@@ -1,18 +1,20 @@
 import base64
 import requests
 import os
+import tkinter as tk
+from tkinter import messagebox, simpledialog
 
-class Money:
+class money:
     def __init__(self, amount=0, currency="Rs. "):
         self.amount = amount if amount >= 0 else 0
         self.currency = currency if currency and len(currency) <= 4 else "Rs. "
 
-    def set_currency(self, currency):
+    def setCurrency(self, currency):
         if currency and len(currency) <= 4:
             self.currency = currency
         return self
 
-    def set_amount(self, new_amount):
+    def setAmount(self, new_amount):
         if new_amount >= 0:
             self.amount = new_amount
         return self
@@ -42,11 +44,11 @@ class Money:
     def balance(self):
         return str(self)
 
-class Pesa(Money):
+class pesa(money):
     def __init__(self, amount=0, currency="Rs. "):
         super().__init__(amount, currency)
 
-class KMath:
+class kmath:
     pi = 3.141592653589793
     speed_of_light = 2.99792e8
     earth_gravity = 9.80665
@@ -78,10 +80,6 @@ def internet_access():
 def get_file_path(filename):
     return os.path.join(os.getcwd(), filename)
 
-
-import tkinter as tk
-from tkinter import messagebox, simpledialog
-
 class GUI:
     def __init__(self, title="Application", width=400, height=600):
         self.root = tk.Tk()
@@ -89,7 +87,7 @@ class GUI:
         self.set_size(width, height)
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
-    def set_size(self, width, height):
+    def size(self, width, height):
         if width < 100 or height < 100 or width > 10000 or height > 10000:
             width, height = 400, 600
         self.root.geometry(f"{width}x{height}")
@@ -131,14 +129,16 @@ class GUI:
     def is_always_on_top(self) -> bool:
         return is_on_top()
 
-    def set_opacity(self, opacity):
+    def opacity(self, opacity):
         if 0 <= opacity <= 1:
             self.root.attributes("-alpha", opacity)
-
-    def set_background(self, color):
+    def background(self, color):
         self.root.configure(bg=color)
+    
+    def bg(self, color):
+        self.background(bg=color)
 
-    def set_font(self, font_family, font_size, bold=False, italic=False):
+    def font(self, font_family, font_size, bold=False, italic=False):
         font_style = "normal"
         if bold and italic:
             font_style = "bold italic"
@@ -148,15 +148,19 @@ class GUI:
             font_style = "italic"
         self.root.option_add("*Font", f"{font_family} {font_size} {font_style}")
 
-    def show_message(self, title: str, message: str):
+    def message(self, title: str, message: str):
         messagebox.showinfo(title, message)
+    def msg(self, title: str, message: str):
+        self.message(title, message)
 
-    def show_error(self, title: str, message: str):
+    def error(self, title: str, message: str):
         if self.is_on_top():
             self.set_always_on_top(False)
         messagebox.showerror(title, message)
+    def err(self, title: str, message: str):
+        self.error(title, message)
 
-    def show_warning(self, title: str, message: str):
+    def warning(self, title: str, message: str):
         if self.is_on_top():
             self.set_always_on_top(False)
         messagebox.showwarning(title, message)
@@ -171,12 +175,13 @@ class GUI:
             self.set_always_on_top(False)
         return simpledialog.askstring(title, message)
 
-    def askint(self, title: str, message: str) -> int:
+    def askInt(self, title: str, message: str) -> int:
         if self.is_on_top():
             self.set_always_on_top(False)
         return simpledialog.askinteger(title, message, minvalue=9e-18, maxvalue=9e18)
 
-    def askfloat(self, title: str, message: str) -> int:
+    def askFlt(self, title: str, message: str) -> int:
         if self.is_on_top():
             self.set_always_on_top(False)
-        return simpledialog.askfloat(title, message, minvalue=9e-18, maxvalue=9e18
+        return simpledialog.askfloat(title, message, minvalue=9e-18, maxvalue=9e18)
+
