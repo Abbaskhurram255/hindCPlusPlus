@@ -1,7 +1,24 @@
-class KL() {
-    class money {
-        private var amnt: Double
-        private var curr: String
+import android.media.Image
+import java.io.*
+import java.nio.file.*
+import java.nio.charset.*
+import java.security.*
+import javax.crypto.*
+import javax.crypto.spec.*
+import java.text.*
+import java.util.*
+import java.util.TreeMap.*
+import java.util.concurrent.*
+import java.util.function.*
+import java.util.regex.*
+import java.util.stream.*
+import java.lang.reflect.*
+import java.net.*
+
+open class KL() {
+    open class money {
+        var amnt: Double = 0.0
+        var curr: String = ""
 
         internal constructor() {
             amnt = 0.0
@@ -9,12 +26,12 @@ class KL() {
         }
 
         internal constructor(amnt: Double) {
-            this.amnt = if (not(amnt)) 0 else amnt
+            this.amnt = if (not(amnt)) 0.0 else amnt
             curr = "Rs. "
         }
 
         internal constructor(amnt: Double, curr: String) {
-            this.amnt = if (not(amnt) || isinf(amnt)) 0 else amnt
+            this.amnt = if (not(amnt) || isinf(amnt)) 0.0 else amnt
             this.curr = if (not(this.curr) || len(this.curr) < 1 || len(this.curr) > 4) "Rs. " else titleCase(curr)
         }
 
@@ -34,7 +51,7 @@ class KL() {
         }
 
         fun add(vararg nums: Double): money {
-            each(nums, ObjIntConsumer<Double> { n: Double, i: Int -> amnt += n })
+            each(nums, ObjIntConsumer<Double> { n: Double -> amnt += n })
             return this
         }
 
@@ -54,7 +71,7 @@ class KL() {
         }
 
         fun minus(vararg nums: Double): money {
-            each(nums, ObjIntConsumer<Double> { n: Double, i: Int -> amnt -= n })
+            each(nums, ObjIntConsumer<Double> { n: Double -> amnt -= n })
             return this
         }
 
@@ -74,7 +91,7 @@ class KL() {
         }
 
         fun times(vararg nums: Double): money {
-            each(nums, ObjIntConsumer<Double> { n: Double, i: Int -> amnt *= n })
+            each(nums, ObjIntConsumer<Double> { n: Double -> amnt *= n })
             return this
         }
 
@@ -84,7 +101,7 @@ class KL() {
         }
 
         fun div(vararg nums: Double): money {
-            each(nums, ObjIntConsumer<Double> { n: Double, i: Int -> amnt /= n })
+            each(nums, ObjIntConsumer<Double> { n: Double -> amnt /= n })
             return this
         }
 
@@ -98,7 +115,7 @@ class KL() {
             curr = trim(curr) + " "
             if (`in`(curr, "pk|in|rs")) return "Rs. " + if (forceInternational) ussuffix(amnt) else pksuffix(amnt)
             return if (`in`(curr, "us")) "USD " + ussuffix(amnt) else curr + (if ((forceInternational
-                            || (`is`(curr) && !`in`(curr, "pk|in|rs")))) ussuffix(amnt) else pksuffix(amnt))
+                        || (`is`(curr) && !`in`(curr, "pk|in|rs")))) ussuffix(amnt) else pksuffix(amnt))
         }
 
         override fun toString(): String {
@@ -159,7 +176,7 @@ class KL() {
         }
 
         internal constructor(amnt: Double) {
-            super.amnt = if (isinf(amnt)) 0 else amnt
+            super.amnt = if (isinf(amnt)) 0.0 else amnt
             super.curr = "Rs. "
         }
 
@@ -195,7 +212,7 @@ class KL() {
 
     object os {
         var name: String = java.lang.System.getProperty("os.name").lowercase(Locale.getDefault())
-                .split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().get(0)
+            .split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().get(0)
         var version: String = java.lang.System.getProperty("os.version").lowercase(Locale.getDefault())
         var arch: String = java.lang.System.getProperty("os.arch").lowercase(Locale.getDefault())
         fun `is`(s: String): Boolean {
@@ -404,7 +421,7 @@ class KL() {
         fun font(fontFamily: String?, fontSize: Int, bold: Boolean,
                  italic: Boolean): gui {
             super.setFont(Font(fontFamily, if (bold && italic) Font.BOLD or Font.ITALIC else if (bold) Font.BOLD else if (italic) Font.ITALIC else Font.PLAIN,
-                    fontSize))
+                fontSize))
             return this
         }
 
@@ -415,8 +432,8 @@ class KL() {
 
         fun font(fontFamily: String?, fontSize: Int, bold: Int, italic: Int): gui {
             super.setFont(Font(fontFamily,
-                    if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
-                    fontSize))
+                if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
+                fontSize))
             return this
         }
 
@@ -447,7 +464,7 @@ class KL() {
             super.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
             on("close", Runnable {
                 val confirmed: Boolean = this
-                        .confirm("Are you sure you want to close?")
+                    .confirm("Are you sure you want to close?")
                 if (confirmed) super.dispose()
             })
             return this
@@ -482,12 +499,12 @@ class KL() {
                     override fun mousePressed(e: java.awt.event.MouseEvent) {
                         var button = -1
                         if (eq(k, "(m(ouse)?)?\\W?click")
-                                || eq(k, "(m(ouse)?)?\\W?clickl")
-                                || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
-                                || eq(k, "(m(ouse)?)?\\W?clickw")
-                                || eq(k, "(m(ouse)?)?\\W?mclick")
-                                || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
-                                || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
+                            || eq(k, "(m(ouse)?)?\\W?clickl")
+                            || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
+                            || eq(k, "(m(ouse)?)?\\W?clickw")
+                            || eq(k, "(m(ouse)?)?\\W?mclick")
+                            || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
+                            || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
                         if (e.getButton() == button) {
                             java.lang.Thread(action).run()
                         }
@@ -601,154 +618,154 @@ class KL() {
         fun message(message: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, "Message",
-                    JOptionPane.INFORMATION_MESSAGE)
+                JOptionPane.INFORMATION_MESSAGE)
             return this
         }
 
         fun message(title: String?, message: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.INFORMATION_MESSAGE)
+                JOptionPane.INFORMATION_MESSAGE)
             return this
         }
 
         fun message(title: String?, message: String?, iconAddress: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.INFORMATION_MESSAGE, icon(iconAddress))
+                JOptionPane.INFORMATION_MESSAGE, icon(iconAddress))
             return this
         }
 
         fun message(title: String?, message: String?, ico: Icon?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.INFORMATION_MESSAGE, ico)
+                JOptionPane.INFORMATION_MESSAGE, ico)
             return this
         }
 
         fun error(message: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, "Error",
-                    JOptionPane.ERROR_MESSAGE)
+                JOptionPane.ERROR_MESSAGE)
             return this
         }
 
         fun error(title: String?, message: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.ERROR_MESSAGE)
+                JOptionPane.ERROR_MESSAGE)
             return this
         }
 
         fun error(title: String?, message: String?, iconAddress: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.ERROR_MESSAGE, icon(iconAddress))
+                JOptionPane.ERROR_MESSAGE, icon(iconAddress))
             return this
         }
 
         fun error(title: String?, message: String?, ico: Icon?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.ERROR_MESSAGE, ico)
+                JOptionPane.ERROR_MESSAGE, ico)
             return this
         }
 
         fun warn(message: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, "Warning",
-                    JOptionPane.WARNING_MESSAGE)
+                JOptionPane.WARNING_MESSAGE)
             return this
         }
 
         fun warn(title: String?, message: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.WARNING_MESSAGE)
+                JOptionPane.WARNING_MESSAGE)
             return this
         }
 
         fun warn(title: String?, message: String?, iconAddress: String?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.WARNING_MESSAGE, icon(iconAddress))
+                JOptionPane.WARNING_MESSAGE, icon(iconAddress))
             return this
         }
 
         fun warn(title: String?, message: String?, ico: Icon?): gui {
             if (isOnTop) offTop()
             JOptionPane.showMessageDialog(null, message, title,
-                    JOptionPane.WARNING_MESSAGE, ico)
+                JOptionPane.WARNING_MESSAGE, ico)
             return this
         }
 
         fun confirm(message: String?): Boolean {
             if (isOnTop) offTop()
             return JOptionPane.showConfirmDialog(null, message, "Confirmation",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == 0
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == 0
         }
 
         fun confirm(title: String?, message: String?): Boolean {
             if (isOnTop) offTop()
             return JOptionPane.showConfirmDialog(null, message, title,
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == 0
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == 0
         }
 
         fun confirm(title: String?, message: String?, iconAddress: String?): Boolean {
             if (isOnTop) offTop()
             return JOptionPane.showConfirmDialog(null, message, title,
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    icon(iconAddress)) == 0
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                icon(iconAddress)) == 0
         }
 
         fun confirm(title: String?, message: String?, ico: Icon?): Boolean {
             if (isOnTop) offTop()
             return JOptionPane.showConfirmDialog(null, message, title,
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    ico) == 0
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                ico) == 0
         }
 
         fun confirmCancellable(message: String?): Boolean {
             if (isOnTop) offTop()
             return JOptionPane.showConfirmDialog(null, message, "Confirmation",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == 0
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == 0
         }
 
         fun confirmCancellable(title: String?, message: String?): Boolean {
             if (isOnTop) offTop()
             return JOptionPane.showConfirmDialog(null, message, title,
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == 0
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == 0
         }
 
         fun confirmCancellable(title: String?, message: String?,
                                iconAddress: String?): Boolean {
             if (isOnTop) offTop()
             return JOptionPane.showConfirmDialog(null, message, title,
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE, icon(iconAddress)) == 0
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, icon(iconAddress)) == 0
         }
 
         fun confirmCancellable(title: String?, message: String?, ico: Icon?): Boolean {
             if (isOnTop) offTop()
             return JOptionPane.showConfirmDialog(null, message, title,
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE, ico) == 0
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, ico) == 0
         }
 
         fun ask(message: String?): String {
             if (isOnTop) offTop()
             return JOptionPane.showInputDialog(null, message, "Input",
-                    JOptionPane.QUESTION_MESSAGE)
+                JOptionPane.QUESTION_MESSAGE)
         }
 
         fun ask(title: String?, message: String?): String {
             if (isOnTop) offTop()
             return JOptionPane.showInputDialog(null, message, title,
-                    JOptionPane.QUESTION_MESSAGE)
+                JOptionPane.QUESTION_MESSAGE)
         }
 
         fun askInt(message: String?): Int {
@@ -864,7 +881,7 @@ class KL() {
         fun font(fontFamily: String?, fontSize: Int, bold: Boolean,
                  italic: Boolean): label {
             super.setFont(Font(fontFamily, if (bold && italic) Font.BOLD or Font.ITALIC else if (bold) Font.BOLD else if (italic) Font.ITALIC else Font.PLAIN,
-                    fontSize))
+                fontSize))
             return this
         }
 
@@ -875,8 +892,8 @@ class KL() {
 
         fun font(fontFamily: String?, fontSize: Int, bold: Int, italic: Int): label {
             super.setFont(Font(fontFamily,
-                    if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
-                    fontSize))
+                if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
+                fontSize))
             return this
         }
 
@@ -933,12 +950,12 @@ class KL() {
                     override fun mousePressed(e: java.awt.event.MouseEvent) {
                         var button = -1
                         if (eq(k, "(m(ouse)?)?\\W?click")
-                                || eq(k, "(m(ouse)?)?\\W?clickl")
-                                || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
-                                || eq(k, "(m(ouse)?)?\\W?clickw")
-                                || eq(k, "(m(ouse)?)?\\W?mclick")
-                                || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
-                                || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
+                            || eq(k, "(m(ouse)?)?\\W?clickl")
+                            || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
+                            || eq(k, "(m(ouse)?)?\\W?clickw")
+                            || eq(k, "(m(ouse)?)?\\W?mclick")
+                            || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
+                            || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
                         if (e.getButton() == button) {
                             java.lang.Thread(action).run()
                         }
@@ -1163,7 +1180,7 @@ class KL() {
         fun font(fontFamily: String?, fontSize: Int, bold: Boolean,
                  italic: Boolean): panel {
             super.setFont(Font(fontFamily, if (bold && italic) Font.BOLD or Font.ITALIC else if (bold) Font.BOLD else if (italic) Font.ITALIC else Font.PLAIN,
-                    fontSize))
+                fontSize))
             return this
         }
 
@@ -1174,8 +1191,8 @@ class KL() {
 
         fun font(fontFamily: String?, fontSize: Int, bold: Int, italic: Int): panel {
             super.setFont(Font(fontFamily,
-                    if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
-                    fontSize))
+                if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
+                fontSize))
             return this
         }
 
@@ -1218,12 +1235,12 @@ class KL() {
                     override fun mousePressed(e: java.awt.event.MouseEvent) {
                         var button = -1
                         if (eq(k, "(m(ouse)?)?\\W?click")
-                                || eq(k, "(m(ouse)?)?\\W?clickl")
-                                || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
-                                || eq(k, "(m(ouse)?)?\\W?clickw")
-                                || eq(k, "(m(ouse)?)?\\W?mclick")
-                                || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
-                                || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
+                            || eq(k, "(m(ouse)?)?\\W?clickl")
+                            || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
+                            || eq(k, "(m(ouse)?)?\\W?clickw")
+                            || eq(k, "(m(ouse)?)?\\W?mclick")
+                            || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
+                            || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
                         if (e.getButton() == button) {
                             java.lang.Thread(action).run()
                         }
@@ -1414,7 +1431,7 @@ class KL() {
         fun font(fontFamily: String?, fontSize: Int, bold: Boolean,
                  italic: Boolean): btn {
             super.setFont(Font(fontFamily, if (bold && italic) Font.BOLD or Font.ITALIC else if (bold) Font.BOLD else if (italic) Font.ITALIC else Font.PLAIN,
-                    fontSize))
+                fontSize))
             return this
         }
 
@@ -1425,8 +1442,8 @@ class KL() {
 
         fun font(fontFamily: String?, fontSize: Int, bold: Int, italic: Int): btn {
             super.setFont(Font(fontFamily,
-                    if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
-                    fontSize))
+                if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
+                fontSize))
             return this
         }
 
@@ -1571,12 +1588,12 @@ class KL() {
                     override fun mousePressed(e: java.awt.event.MouseEvent) {
                         var button = -1
                         if (eq(k, "(m(ouse)?)?\\W?click")
-                                || eq(k, "(m(ouse)?)?\\W?clickl")
-                                || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
-                                || eq(k, "(m(ouse)?)?\\W?clickw")
-                                || eq(k, "(m(ouse)?)?\\W?mclick")
-                                || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
-                                || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
+                            || eq(k, "(m(ouse)?)?\\W?clickl")
+                            || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
+                            || eq(k, "(m(ouse)?)?\\W?clickw")
+                            || eq(k, "(m(ouse)?)?\\W?mclick")
+                            || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
+                            || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
                         if (e.getButton() == button) {
                             java.lang.Thread(action).run()
                         }
@@ -1731,12 +1748,12 @@ class KL() {
                     override fun mousePressed(e: java.awt.event.MouseEvent) {
                         var button = -1
                         if (eq(k, "(m(ouse)?)?\\W?click")
-                                || eq(k, "(m(ouse)?)?\\W?clickl")
-                                || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
-                                || eq(k, "(m(ouse)?)?\\W?clickw")
-                                || eq(k, "(m(ouse)?)?\\W?mclick")
-                                || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
-                                || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
+                            || eq(k, "(m(ouse)?)?\\W?clickl")
+                            || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
+                            || eq(k, "(m(ouse)?)?\\W?clickw")
+                            || eq(k, "(m(ouse)?)?\\W?mclick")
+                            || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
+                            || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
                         if (e.getButton() == button) {
                             java.lang.Thread(action).run()
                         }
@@ -1891,12 +1908,12 @@ class KL() {
                     override fun mousePressed(e: java.awt.event.MouseEvent) {
                         var button = -1
                         if (eq(k, "(m(ouse)?)?\\W?click")
-                                || eq(k, "(m(ouse)?)?\\W?clickl")
-                                || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
-                                || eq(k, "(m(ouse)?)?\\W?clickw")
-                                || eq(k, "(m(ouse)?)?\\W?mclick")
-                                || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
-                                || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
+                            || eq(k, "(m(ouse)?)?\\W?clickl")
+                            || eq(k, "(m(ouse)?)?\\W?lclick")) button = java.awt.event.MouseEvent.BUTTON1 else if (eq(k, "(m(ouse)?)?\\W?clickm")
+                            || eq(k, "(m(ouse)?)?\\W?clickw")
+                            || eq(k, "(m(ouse)?)?\\W?mclick")
+                            || eq(k, "(m(ouse)?)?\\W?wclick")) button = java.awt.event.MouseEvent.BUTTON2 else if (eq(k, "(m(ouse)?)?\\W?clickr")
+                            || eq(k, "(m(ouse)?)?\\W?rclick")) button = java.awt.event.MouseEvent.BUTTON3
                         if (e.getButton() == button) {
                             java.lang.Thread(action).run()
                         }
@@ -1976,7 +1993,7 @@ class KL() {
     class icon : ImageIcon {
         internal constructor() : super()
         internal constructor(imageData: ByteArray?) : super(imageData)
-        internal constructor(image: Image?) : super(image)
+        internal constructor(image: ImageIcon?) : super(image)
         internal constructor(filename: String?) : super(filename)
         internal constructor(urlObject: java.net.URL?) : super(urlObject)
         internal constructor(urlString: String?, isUrl: Boolean) : this(url(urlString))
@@ -2021,7 +2038,7 @@ class KL() {
         companion object {
             private val serialVersionUID = 1L
             fun from(hex: String): Int {
-                var hex = hex
+
                 hex = hex.replace("^(0x|#)".toRegex(), "")
                 if (not(hex) || !eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5 || len(hex) == 7) return 0
                 val len = len(hex)
@@ -2840,11 +2857,11 @@ class KL() {
 
         @kotlin.jvm.JvmOverloads
         internal constructor(fontFamily: String?, fontSize: Int, bold: Boolean, italic: Boolean = false) : super(fontFamily, if (bold && italic) Font.BOLD or Font.ITALIC else if (bold) Font.BOLD else if (italic) Font.ITALIC else Font.PLAIN,
-                fontSize)
+            fontSize)
 
         internal constructor(fontFamily: String?, fontSize: Int, bold: Int, italic: Int) : super(fontFamily,
-                if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
-                fontSize)
+            if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
+            fontSize)
     }
 
     class file : File {
@@ -2882,7 +2899,7 @@ class KL() {
                 if (not(fname) || not(content)) return false
                 if (`in`(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
                     for (subFileName: String in fname
-                            .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
                         create(subFileName, content)
                     }
                     return true
@@ -2917,7 +2934,7 @@ class KL() {
                 if (not(folderName)) return false
                 if (`in`(folderName, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
                     for (folder: String in folderName
-                            .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
                         createFolder(folder)
                     }
                     return true
@@ -2974,7 +2991,7 @@ class KL() {
                 if (not(fname) || not(content)) return false
                 if (`in`(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
                     for (subFileName: String in fname
-                            .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
                         append(subFileName, content)
                     }
                     return true
@@ -2987,18 +3004,18 @@ class KL() {
                 }
                 // order matters
                 val file: File = File(fname)
-                if (file == null || !file.exists()) return false
+                if (!file.exists()) return false
                 try {
                     FileWriter(fname, true).use { writer ->
                         writer.write(content)
                         writer.flush()
                         print("[KL.file.JobSuccess]:\nAppending to file \"%s\" was successful.",
-                                fname)
+                            fname)
                         return true
                     }
                 } catch (e: java.lang.Exception) {
                     print("[KL.file.JobFailed]:\nFailed to append to file \"%s\"",
-                            fname)
+                        fname)
                 }
                 return false
                 // this method is different than createFile, and unlike the former,
@@ -3023,7 +3040,7 @@ class KL() {
                 if (not(fname)) return false
                 if (`in`(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
                     for (subFileName: String in fname
-                            .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
                         delete(subFileName)
                         // refers to the delete method that belongs to this class,
                         // not the delete that belonged to the original File class
@@ -3040,8 +3057,8 @@ class KL() {
                 val msgOnSuccess = ("[KL.file.JobSuccess]:\nFile \""
                         + myFile.getPath() + "\" deleted successfully.")
                 val msgOnFailure = KL().f(
-                        "[KL.file.JobFailed]:\nFile \"%s\" failed to delete. No such file, or folder!",
-                        fname)
+                    "[KL.file.JobFailed]:\nFile \"%s\" failed to delete. No such file, or folder!",
+                    fname)
                 if (myFile == null || !myFile.exists()) {
                     print(msgOnFailure)
                     return false
@@ -3075,9 +3092,9 @@ class KL() {
             fun rename(fname: String, destinationString: String?): Boolean {
                 if (not(fname) || not(destinationString)) return false
                 if (`in`(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")
-                        && `in`(destinationString, "[\\\\\\/]")) {
+                    && `in`(destinationString, "[\\\\\\/]")) {
                     for (subFileName: String in fname
-                            .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
                         rename(subFileName, destinationString)
                         // makes no sense in the form of a file-renaming function
                         // anymore, but in the case of a file mover (that's quite
@@ -3122,7 +3139,7 @@ class KL() {
                 // order matters, this check always comes first
                 if (`in`(from, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
                     for (subFileName: String in from
-                            .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        .split("\\s*[\\|\\+\\&\\,\\;]\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
                         copy(subFileName, to, overwrite)
                     }
                     return true
@@ -3142,7 +3159,7 @@ class KL() {
                         Files.copy(fileToCopy.toPath(), destination.toPath())
                     } else {
                         Files.copy(fileToCopy.toPath(), destination.toPath(),
-                                StandardCopyOption.REPLACE_EXISTING)
+                            StandardCopyOption.REPLACE_EXISTING)
                     }
                     return true
                 } catch (e: IOException) {
@@ -3341,7 +3358,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): String {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -3353,7 +3370,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): String? {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -3521,12 +3538,12 @@ class KL() {
             }
             val result = copy()
             result.entries
-                    .removeIf(java.util.function.Predicate<Map.Entry<String, String>> { entry: Map.Entry<String?, String?> -> other.containsValue(entry.value) })
+                .removeIf(java.util.function.Predicate<Map.Entry<String, String>> { entry: Map.Entry<String?, String?> -> other.containsValue(entry.value) })
             return result
         }
 
         fun slice(start: Int): objS {
-            var start = start
+
             if (super.isEmpty()) {
                 return objS()
             }
@@ -3548,8 +3565,8 @@ class KL() {
         }
 
         fun slice(start: Int, end: Int): objS {
-            var start = start
-            var end = end
+
+
             if (super.isEmpty()) {
                 return objS()
             }
@@ -3576,7 +3593,7 @@ class KL() {
         }
 
         fun sliceKeep(end: Int): objS {
-            var end = end
+
             if (super.isEmpty()) {
                 return objS()
             }
@@ -3674,7 +3691,7 @@ class KL() {
         }
 
         fun map(
-                fn: BiFunction<in String?, in String?, out String?>?): objS {
+            fn: BiFunction<in String?, in String?, out String?>?): objS {
             super.replaceAll(fn)
             return this
         }
@@ -3923,7 +3940,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): String {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -3935,7 +3952,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Int {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -4103,12 +4120,12 @@ class KL() {
             }
             val result = copy()
             result.entries
-                    .removeIf(java.util.function.Predicate<Map.Entry<String, Int>> { entry: Map.Entry<String?, Int?> -> other.containsValue(entry.value) })
+                .removeIf(java.util.function.Predicate<Map.Entry<String, Int>> { entry: Map.Entry<String?, Int?> -> other.containsValue(entry.value) })
             return result
         }
 
         fun slice(start: Int): objI {
-            var start = start
+
             if (super.isEmpty()) {
                 return objI()
             }
@@ -4130,8 +4147,8 @@ class KL() {
         }
 
         fun slice(start: Int, end: Int): objI {
-            var start = start
-            var end = end
+
+
             if (super.isEmpty()) {
                 return objI()
             }
@@ -4158,7 +4175,7 @@ class KL() {
         }
 
         fun sliceKeep(end: Int): objI {
-            var end = end
+
             if (super.isEmpty()) {
                 return objI()
             }
@@ -4260,7 +4277,7 @@ class KL() {
         }
 
         fun map(
-                fn: BiFunction<in String?, in Int?, out Int?>?): objI {
+            fn: BiFunction<in String?, in Int?, out Int?>?): objI {
             super.replaceAll(fn)
             return this
         }
@@ -4492,7 +4509,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): String {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -4504,7 +4521,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Long {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -4683,12 +4700,12 @@ class KL() {
             }
             val result = copy()
             result.entries
-                    .removeIf(java.util.function.Predicate<Map.Entry<String, Long>> { entry: Map.Entry<String?, Long?> -> other.containsValue(entry.value) })
+                .removeIf(java.util.function.Predicate<Map.Entry<String, Long>> { entry: Map.Entry<String?, Long?> -> other.containsValue(entry.value) })
             return result
         }
 
         fun slice(start: Int): objL {
-            var start = start
+
             if (super.isEmpty()) {
                 return objL()
             }
@@ -4710,8 +4727,8 @@ class KL() {
         }
 
         fun slice(start: Int, end: Int): objL {
-            var start = start
-            var end = end
+
+
             if (super.isEmpty()) {
                 return objL()
             }
@@ -4738,7 +4755,7 @@ class KL() {
         }
 
         fun sliceKeep(end: Int): objL {
-            var end = end
+
             if (super.isEmpty()) {
                 return objL()
             }
@@ -5071,7 +5088,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): String {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -5083,7 +5100,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Float {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -5262,12 +5279,12 @@ class KL() {
             }
             val result = copy()
             result.entries
-                    .removeIf(java.util.function.Predicate<Map.Entry<String, Float>> { entry: Map.Entry<String?, Float?> -> other.containsValue(entry.value) })
+                .removeIf(java.util.function.Predicate<Map.Entry<String, Float>> { entry: Map.Entry<String?, Float?> -> other.containsValue(entry.value) })
             return result
         }
 
         fun slice(start: Int): objF {
-            var start = start
+
             if (super.isEmpty()) {
                 return objF()
             }
@@ -5289,8 +5306,8 @@ class KL() {
         }
 
         fun slice(start: Int, end: Int): objF {
-            var start = start
-            var end = end
+
+
             if (super.isEmpty()) {
                 return objF()
             }
@@ -5317,7 +5334,7 @@ class KL() {
         }
 
         fun sliceKeep(end: Int): objF {
-            var end = end
+
             if (super.isEmpty()) {
                 return objF()
             }
@@ -5419,7 +5436,7 @@ class KL() {
         }
 
         fun map(
-                fn: BiFunction<in String?, in Float?, out Float?>?): objF {
+            fn: BiFunction<in String?, in Float?, out Float?>?): objF {
             super.replaceAll(fn)
             return this
         }
@@ -5653,7 +5670,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): String {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -5665,7 +5682,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Double {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -5844,12 +5861,12 @@ class KL() {
             }
             val result = copy()
             result.entries
-                    .removeIf(java.util.function.Predicate<Map.Entry<String, Double>> { entry: Map.Entry<String?, Double?> -> other.containsValue(entry.value) })
+                .removeIf(java.util.function.Predicate<Map.Entry<String, Double>> { entry: Map.Entry<String?, Double?> -> other.containsValue(entry.value) })
             return result
         }
 
         fun slice(start: Int): objD {
-            var start = start
+
             if (super.isEmpty()) {
                 return objD()
             }
@@ -5871,8 +5888,8 @@ class KL() {
         }
 
         fun slice(start: Int, end: Int): objD {
-            var start = start
-            var end = end
+
+
             if (super.isEmpty()) {
                 return objD()
             }
@@ -5899,7 +5916,7 @@ class KL() {
         }
 
         fun sliceKeep(end: Int): objD {
-            var end = end
+
             if (super.isEmpty()) {
                 return objD()
             }
@@ -6001,7 +6018,7 @@ class KL() {
         }
 
         fun map(
-                fn: BiFunction<in String?, in Double?, out Double?>?): objD {
+            fn: BiFunction<in String?, in Double?, out Double?>?): objD {
             super.replaceAll(fn)
             return this
         }
@@ -6237,7 +6254,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): String {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -6249,7 +6266,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Boolean {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -6428,12 +6445,12 @@ class KL() {
             }
             val result = copy()
             result.entries
-                    .removeIf(java.util.function.Predicate<Map.Entry<String, Boolean>> { entry: Map.Entry<String?, Boolean?> -> other.containsValue(entry.value) })
+                .removeIf(java.util.function.Predicate<Map.Entry<String, Boolean>> { entry: Map.Entry<String?, Boolean?> -> other.containsValue(entry.value) })
             return result
         }
 
         fun slice(start: Int): objB {
-            var start = start
+
             if (super.isEmpty()) {
                 return objB()
             }
@@ -6455,8 +6472,8 @@ class KL() {
         }
 
         fun slice(start: Int, end: Int): objB {
-            var start = start
-            var end = end
+
+
             if (super.isEmpty()) {
                 return objB()
             }
@@ -6483,7 +6500,7 @@ class KL() {
         }
 
         fun sliceKeep(end: Int): objB {
-            var end = end
+
             if (super.isEmpty()) {
                 return objB()
             }
@@ -6585,7 +6602,7 @@ class KL() {
         }
 
         fun map(
-                fn: BiFunction<in String?, in Boolean?, out Boolean?>?): objB {
+            fn: BiFunction<in String?, in Boolean?, out Boolean?>?): objB {
             super.replaceAll(fn)
             return this
         }
@@ -6981,7 +6998,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): String {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -6993,7 +7010,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Any? {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -7435,12 +7452,11 @@ class KL() {
             }
             val result = copy()
             result.entries
-                    .removeIf(java.util.function.Predicate<Map.Entry<String, Any>> { entry: Map.Entry<String?, Any?> -> other.containsValue(entry.value) })
+                .removeIf(java.util.function.Predicate<Map.Entry<String, Any>> { entry: Map.Entry<String?, Any?> -> other.containsValue(entry.value) })
             return result
         }
 
         fun slice(start: Int): obj {
-            var start = start
             if (super.isEmpty()) {
                 return obj()
             }
@@ -7462,8 +7478,6 @@ class KL() {
         }
 
         fun slice(start: Int, end: Int): obj {
-            var start = start
-            var end = end
             if (super.isEmpty()) {
                 return obj()
             }
@@ -7490,7 +7504,6 @@ class KL() {
         }
 
         fun sliceKeep(end: Int): obj {
-            var end = end
             if (super.isEmpty()) {
                 return obj()
             }
@@ -7882,7 +7895,7 @@ class KL() {
         }
 
         fun map(
-                fn: BiFunction<in Key, in Value, out Value>?): tree<Key, Value> {
+            fn: BiFunction<in Key, in Value, out Value>?): tree<Key, Value> {
             super.replaceAll(fn)
             return this
         }
@@ -7903,7 +7916,7 @@ class KL() {
         }
 
         fun slice(start: Int): tree<Key, Value> {
-            var start = start
+
             if (super.isEmpty()) {
                 return tree()
             }
@@ -7925,8 +7938,8 @@ class KL() {
         }
 
         fun slice(start: Int, end: Int): tree<Key, Value> {
-            var start = start
-            var end = end
+
+
             if (super.isEmpty()) {
                 return tree()
             }
@@ -7953,7 +7966,7 @@ class KL() {
         }
 
         fun sliceKeep(end: Int): tree<Key, Value> {
-            var end = end
+
             if (super.isEmpty()) {
                 return tree()
             }
@@ -8015,7 +8028,7 @@ class KL() {
             }
             val result = super.clone() as tree<Key, Value>
             result.keys.removeAll(other
-                    .intersection(super.clone() as tree<Key, Value>?).keys)
+                .intersection(super.clone() as tree<Key, Value>?).keys)
             return result
         }
 
@@ -8062,7 +8075,7 @@ class KL() {
             }
             val result = super.clone() as tree<Key, Value>
             result.entries
-                    .removeIf(java.util.function.Predicate<Map.Entry<Key, Value>> { entry: Map.Entry<Key, Value> -> other.containsValue(entry.value) })
+                .removeIf(java.util.function.Predicate<Map.Entry<Key, Value>> { entry: Map.Entry<Key, Value> -> other.containsValue(entry.value) })
             return result
         }
 
@@ -8097,17 +8110,17 @@ class KL() {
                              v4: String, k5: Int, v5: String, k6: Int, v6: String, k7: Int,
                              v7: String, k8: Int, v8: String, k9: Int, v9: String, k10: Int,
                              v10: String) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Int, v1: String, k2: Int, v2: String, k3: Int, v3: String, k4: Int,
                              v4: String, k5: Int, v5: String, k6: Int, v6: String, k7: Int,
                              v7: String, k8: Int, v8: String, k9: Int, v9: String) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Int, v1: String, k2: Int, v2: String, k3: Int, v3: String, k4: Int,
                              v4: String, k5: Int, v5: String, k6: Int, v6: String, k7: Int,
                              v7: String, k8: Int, v8: String) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Int, v1: String, k2: Int, v2: String, k3: Int, v3: String, k4: Int,
                              v4: String, k5: Int, v5: String, k6: Int, v6: String, k7: Int,
@@ -8165,7 +8178,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Int {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8177,7 +8190,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): String? {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8287,17 +8300,17 @@ class KL() {
         internal constructor(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long, k4: Int,
                              v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                              k8: Int, v8: Long, k9: Int, v9: Long, k10: Int, v10: Long) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long, k4: Int,
                              v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                              k8: Int, v8: Long, k9: Int, v9: Long) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long, k4: Int,
                              v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                              k8: Int, v8: Long) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long, k4: Int,
                              v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7)
@@ -8354,7 +8367,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Int {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8366,7 +8379,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Long {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8476,17 +8489,17 @@ class KL() {
         internal constructor(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int, v3: Float, k4: Int,
                              v4: Float, k5: Int, v5: Float, k6: Int, v6: Float, k7: Int, v7: Float,
                              k8: Int, v8: Float, k9: Int, v9: Float, k10: Int, v10: Float) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int, v3: Float, k4: Int,
                              v4: Float, k5: Int, v5: Float, k6: Int, v6: Float, k7: Int, v7: Float,
                              k8: Int, v8: Float, k9: Int, v9: Float) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int, v3: Float, k4: Int,
                              v4: Float, k5: Int, v5: Float, k6: Int, v6: Float, k7: Int, v7: Float,
                              k8: Int, v8: Float) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int, v3: Float, k4: Int,
                              v4: Float, k5: Int, v5: Float, k6: Int, v6: Float, k7: Int,
@@ -8544,7 +8557,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Int {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8556,7 +8569,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Float {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8667,17 +8680,17 @@ class KL() {
                              v4: Double, k5: Int, v5: Double, k6: Int, v6: Double, k7: Int,
                              v7: Double, k8: Int, v8: Double, k9: Int, v9: Double, k10: Int,
                              v10: Double) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int, v3: Double, k4: Int,
                              v4: Double, k5: Int, v5: Double, k6: Int, v6: Double, k7: Int,
                              v7: Double, k8: Int, v8: Double, k9: Int, v9: Double) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int, v3: Double, k4: Int,
                              v4: Double, k5: Int, v5: Double, k6: Int, v6: Double, k7: Int,
                              v7: Double, k8: Int, v8: Double) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int, v3: Double, k4: Int,
                              v4: Double, k5: Int, v5: Double, k6: Int, v6: Double, k7: Int,
@@ -8735,7 +8748,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Int {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8747,7 +8760,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Double {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8858,17 +8871,17 @@ class KL() {
                              k4: Int, v4: Boolean, k5: Int, v5: Boolean, k6: Int, v6: Boolean,
                              k7: Int, v7: Boolean, k8: Int, v8: Boolean, k9: Int, v9: Boolean,
                              k10: Int, v10: Boolean) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int, v3: Boolean,
                              k4: Int, v4: Boolean, k5: Int, v5: Boolean, k6: Int, v6: Boolean,
                              k7: Int, v7: Boolean, k8: Int, v8: Boolean, k9: Int, v9: Boolean) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int, v3: Boolean,
                              k4: Int, v4: Boolean, k5: Int, v5: Boolean, k6: Int, v6: Boolean,
                              k7: Int, v7: Boolean, k8: Int, v8: Boolean) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int, v3: Boolean,
                              k4: Int, v4: Boolean, k5: Int, v5: Boolean, k6: Int, v6: Boolean,
@@ -8926,7 +8939,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Int {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -8938,7 +8951,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Boolean {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9049,18 +9062,18 @@ class KL() {
                              k4: Double, v4: String, k5: Double, v5: String, k6: Double,
                              v6: String, k7: Double, v7: String, k8: Double, v8: String,
                              k9: Double, v9: String, k10: Double, v10: String) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Double, v1: String, k2: Double, v2: String, k3: Double, v3: String,
                              k4: Double, v4: String, k5: Double, v5: String, k6: Double,
                              v6: String, k7: Double, v7: String, k8: Double, v8: String,
                              k9: Double, v9: String) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Double, v1: String, k2: Double, v2: String, k3: Double, v3: String,
                              k4: Double, v4: String, k5: Double, v5: String, k6: Double,
                              v6: String, k7: Double, v7: String, k8: Double, v8: String) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Double, v1: String, k2: Double, v2: String, k3: Double, v3: String,
                              k4: Double, v4: String, k5: Double, v5: String, k6: Double,
@@ -9121,7 +9134,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Double {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9133,7 +9146,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): String? {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9244,17 +9257,17 @@ class KL() {
                              k4: Double, v4: Int, k5: Double, v5: Int, k6: Double, v6: Int,
                              k7: Double, v7: Int, k8: Double, v8: Int, k9: Double, v9: Int,
                              k10: Double, v10: Int) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Double, v1: Int, k2: Double, v2: Int, k3: Double, v3: Int,
                              k4: Double, v4: Int, k5: Double, v5: Int, k6: Double, v6: Int,
                              k7: Double, v7: Int, k8: Double, v8: Int, k9: Double, v9: Int) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Double, v1: Int, k2: Double, v2: Int, k3: Double, v3: Int,
                              k4: Double, v4: Int, k5: Double, v5: Int, k6: Double, v6: Int,
                              k7: Double, v7: Int, k8: Double, v8: Int) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Double, v1: Int, k2: Double, v2: Int, k3: Double, v3: Int,
                              k4: Double, v4: Int, k5: Double, v5: Int, k6: Double, v6: Int,
@@ -9312,7 +9325,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Double {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9324,7 +9337,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Int {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9434,17 +9447,17 @@ class KL() {
                              k4: Double, v4: Long, k5: Double, v5: Long, k6: Double, v6: Long,
                              k7: Double, v7: Long, k8: Double, v8: Long, k9: Double, v9: Long,
                              k10: Double, v10: Long) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Double, v1: Long, k2: Double, v2: Long, k3: Double, v3: Long,
                              k4: Double, v4: Long, k5: Double, v5: Long, k6: Double, v6: Long,
                              k7: Double, v7: Long, k8: Double, v8: Long, k9: Double, v9: Long) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Double, v1: Long, k2: Double, v2: Long, k3: Double, v3: Long,
                              k4: Double, v4: Long, k5: Double, v5: Long, k6: Double, v6: Long,
                              k7: Double, v7: Long, k8: Double, v8: Long) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Double, v1: Long, k2: Double, v2: Long, k3: Double, v3: Long,
                              k4: Double, v4: Long, k5: Double, v5: Long, k6: Double, v6: Long,
@@ -9502,7 +9515,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Double {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9514,7 +9527,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Long {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9625,17 +9638,17 @@ class KL() {
                              k4: Double, v4: Float, k5: Double, v5: Float, k6: Double, v6: Float,
                              k7: Double, v7: Float, k8: Double, v8: Float, k9: Double, v9: Float,
                              k10: Double, v10: Float) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Double, v1: Float, k2: Double, v2: Float, k3: Double, v3: Float,
                              k4: Double, v4: Float, k5: Double, v5: Float, k6: Double, v6: Float,
                              k7: Double, v7: Float, k8: Double, v8: Float, k9: Double, v9: Float) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Double, v1: Float, k2: Double, v2: Float, k3: Double, v3: Float,
                              k4: Double, v4: Float, k5: Double, v5: Float, k6: Double, v6: Float,
                              k7: Double, v7: Float, k8: Double, v8: Float) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Double, v1: Float, k2: Double, v2: Float, k3: Double, v3: Float,
                              k4: Double, v4: Float, k5: Double, v5: Float, k6: Double, v6: Float,
@@ -9693,7 +9706,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Double {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9705,7 +9718,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Float {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9816,19 +9829,19 @@ class KL() {
                              v3: Boolean, k4: Double, v4: Boolean, k5: Double, v5: Boolean,
                              k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double,
                              v8: Boolean, k9: Double, v9: Boolean, k10: Double, v10: Boolean) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9, k10, v10)
+            v8, k9, v9, k10, v10)
 
         internal constructor(k1: Double, v1: Boolean, k2: Double, v2: Boolean, k3: Double,
                              v3: Boolean, k4: Double, v4: Boolean, k5: Double, v5: Boolean,
                              k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double,
                              v8: Boolean, k9: Double, v9: Boolean) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8, k9, v9)
+            v8, k9, v9)
 
         internal constructor(k1: Double, v1: Boolean, k2: Double, v2: Boolean, k3: Double,
                              v3: Boolean, k4: Double, v4: Boolean, k5: Double, v5: Boolean,
                              k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double,
                              v8: Boolean) : super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-                v8)
+            v8)
 
         internal constructor(k1: Double, v1: Boolean, k2: Double, v2: Boolean, k3: Double,
                              v3: Boolean, k4: Double, v4: Boolean, k5: Double, v5: Boolean,
@@ -9889,7 +9902,7 @@ class KL() {
         }
 
         fun nthKey(n: Int): Double {
-            var n = n
+
             if (n >= 0 && n < length()) return keyArray()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -9901,7 +9914,7 @@ class KL() {
         }
 
         fun nthValue(n: Int): Boolean {
-            var n = n
+
             if (n >= 0 && n < length()) return array()[n] else if (n < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -10119,7 +10132,7 @@ class KL() {
         }
 
         fun i(i: Int): String? {
-            var i = i
+
             if (i >= 0 && i < length()) return array()[i] else if (i < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -10199,7 +10212,7 @@ class KL() {
             if (condition.matches("^len(gth)?(:asc)?$".toRegex())) {
                 super.sort(java.util.Comparator<String> { s1: String?, s2: String? -> len(s1) - len(s2) })
             } else if (condition
-                            .matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$".toRegex())) {
+                    .matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$".toRegex())) {
                 super.sort(java.util.Comparator<String> { s1: String?, s2: String? -> len(s2) - len(s1) })
             } else if (condition.matches("^(desc|r(ev)?(ersed?)?)$".toRegex())) {
                 sortReverse()
@@ -10251,7 +10264,7 @@ class KL() {
 
         fun slice(x: Int, y: Int): strArr {
             return if (isNull(x) || not(y) || (y < x) || (x == y) || (x < 0) || (x >= length()
-                            ) || (y <= 0) || (y >= length())) copy() else strArr(*slice(array(), x, y))
+                        ) || (y <= 0) || (y >= length())) copy() else strArr(*slice(array(), x, y))
         }
 
         fun slice(x: Int): strArr {
@@ -10542,7 +10555,7 @@ class KL() {
         }
 
         fun i(i: Int): Int {
-            var i = i
+
             if (i >= 0 && i < length()) return array()[i] else if (i < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -10610,7 +10623,7 @@ class KL() {
             if (condition.matches("^len(gth)?(:asc)?$".toRegex())) {
                 super.sort(java.util.Comparator<Int> { s1: Int, s2: Int -> len(s1) - len(s2) })
             } else if (condition
-                            .matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$".toRegex())) {
+                    .matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$".toRegex())) {
                 super.sort(java.util.Comparator<Int> { s1: Int, s2: Int -> len(s2) - len(s1) })
             } else if (condition.matches("^(desc|r(ev)?(ersed?)?)$".toRegex())) {
                 sortReverse()
@@ -10664,7 +10677,7 @@ class KL() {
 
         fun slice(x: Int, y: Int): intArr {
             return if (isNull(x) || not(y) || (y < x) || (x == y) || (x < 0) || (x >= length()
-                            ) || (y <= 0) || (y >= length())) copy() else intArr(*slice(array(), x, y))
+                        ) || (y <= 0) || (y >= length())) copy() else intArr(*slice(array(), x, y))
         }
 
         fun slice(x: Int): intArr {
@@ -10962,7 +10975,6 @@ class KL() {
         }
 
         fun i(i: Int): Long {
-            var i = i
             if (i >= 0 && i < length()) return array()[i] else if (i < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -11039,7 +11051,7 @@ class KL() {
             if (condition.matches("^len(gth)?(:asc)?$".toRegex())) {
                 super.sort(java.util.Comparator<Long> { s1: Long, s2: Long -> len(s1) - len(s2) })
             } else if (condition
-                            .matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$".toRegex())) {
+                    .matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$".toRegex())) {
                 super.sort(java.util.Comparator<Long> { s1: Long, s2: Long -> len(s2) - len(s1) })
             } else if (condition.matches("^(desc|r(ev)?(ersed?)?)$".toRegex())) {
                 sortReverse()
@@ -11093,7 +11105,7 @@ class KL() {
 
         fun slice(x: Int, y: Int): longArr {
             return if (isNull(x) || not(y) || (y < x) || (x == y) || (x < 0) || (x >= length()
-                            ) || (y <= 0) || (y >= length())) copy() else longArr(*slice(array(), x, y))
+                        ) || (y <= 0) || (y >= length())) copy() else longArr(*slice(array(), x, y))
         }
 
         fun slice(x: Int): longArr {
@@ -11395,7 +11407,7 @@ class KL() {
         }
 
         fun i(i: Int): Float {
-            var i = i
+
             if (i >= 0 && i < length()) return array()[i] else if (i < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -11521,7 +11533,7 @@ class KL() {
 
         fun slice(x: Int, y: Int): fltArr {
             return if (isNull(x) || not(y) || (y < x) || (x == y) || (x < 0) || (x >= length()
-                            ) || (y <= 0) || (y >= length())) copy() else fltArr(*slice(array(), x, y))
+                        ) || (y <= 0) || (y >= length())) copy() else fltArr(*slice(array(), x, y))
         }
 
         fun slice(x: Int): fltArr {
@@ -11823,7 +11835,7 @@ class KL() {
         }
 
         fun i(i: Int): Double {
-            var i = i
+
             if (i >= 0 && i < length()) return array()[i] else if (i < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -11949,7 +11961,7 @@ class KL() {
 
         fun slice(x: Int, y: Int): dblArr {
             return if (isNull(x) || not(y) || (y < x) || (x == y) || (x < 0) || (x >= length()
-                            ) || (y <= 0) || (y >= length())) copy() else dblArr(*slice(array(), x, y))
+                        ) || (y <= 0) || (y >= length())) copy() else dblArr(*slice(array(), x, y))
         }
 
         fun slice(x: Int): dblArr {
@@ -12251,7 +12263,7 @@ class KL() {
         }
 
         fun i(i: Int): Boolean {
-            var i = i
+
             if (i >= 0 && i < length()) return array()[i] else if (i < 0) {
                 // Shorter than 0, huh? Let's posi-tize the number, and see if
                 // it's under the size of the array. If it is, we'll try and
@@ -12377,7 +12389,7 @@ class KL() {
 
         fun slice(x: Int, y: Int): boolArr {
             return if (isNull(x) || not(y) || (y < x) || (x == y) || (x < 0) || (x >= length()
-                            ) || (y <= 0) || (y >= length())) copy() else boolArr(*slice(array(), x, y))
+                        ) || (y <= 0) || (y >= length())) copy() else boolArr(*slice(array(), x, y))
         }
 
         fun slice(x: Int): boolArr {
@@ -12573,22 +12585,21 @@ class KL() {
     }
 
     fun f(s: String, vararg args: Any?): String {
-        var s = s
         if (not(s) || args.size == 0) return s
         // for specifiers
         s = s.replace("%l".toRegex(), "%d").replace("%[\\.\\d]*f".toRegex(), "%f")
-                .replace("%[\\.\\d]*db(u)?".toRegex(), "%n$1")
+            .replace("%[\\.\\d]*db(u)?".toRegex(), "%n$1")
         // handling exponentials
         val exponentialMatches = findMatches(s,
-                "\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+")
+            "\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+")
         if (hasLen(exponentialMatches)) {
             val parsedNumsWithoutPowers = DoubleArray(exponentialMatches.size)
             val parsedExponentialPowers = IntArray(exponentialMatches.size)
             for (i: Int in range(exponentialMatches)) {
                 parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i]
-                        .replace("[Ee][\\+\\-]?\\d+$".toRegex(), ""))
+                    .replace("[Ee][\\+\\-]?\\d+$".toRegex(), ""))
                 parsedExponentialPowers[i] = Int(findMatch(
-                        exponentialMatches[i], "(?<=\\d[Ee])[\\+\\-]?\\d+"))
+                    exponentialMatches[i], "(?<=\\d[Ee])[\\+\\-]?\\d+"))
                 val parsedNumsWithPowers = parsedNumsWithoutPowers
                 // temporarily
                 var power = parsedExponentialPowers[i]
@@ -12596,50 +12607,50 @@ class KL() {
                     while (power < 0) {
                         parsedNumsWithPowers[i] /= 10.0
                         parsedNumsWithPowers[i] = setPrecision(
-                                parsedNumsWithPowers[i], 14)
+                            parsedNumsWithPowers[i], 14)
                         power++
                     }
                 } else {
                     while (power > 0) {
                         parsedNumsWithPowers[i] *= 10.0
                         parsedNumsWithPowers[i] = setPrecision(
-                                parsedNumsWithPowers[i], 14)
+                            parsedNumsWithPowers[i], 14)
                         power--
                     }
                 }
                 s = s.replaceFirst(exponentialMatches[i].replace(
-                        "([\\+\\-])".toRegex(), "\\\\$1").toRegex(), Str(parsedNumsWithPowers[i]))
+                    "([\\+\\-])".toRegex(), "\\\\$1").toRegex(), Str(parsedNumsWithPowers[i]))
             }
         }
         val matches = findMatches(s,
-                "%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d*f)?\\}")
+            "%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d*f)?\\}")
         // printArr(matches.length > 0 ? matches : blank.Str);
         for (m: String? in matches) {
             for (arg: Any? in args) {
                 if (arg is Char && eq(m, "%[\\%c]|\\$*\\{\\}")) {
                     s = replaceFirst(s, m, Str(arg))
                 } else if (arg is String
-                        && eq(m, "%[\\%sw]|\\$*\\{\\}")) {
+                    && eq(m, "%[\\%sw]|\\$*\\{\\}")) {
                     s = replaceFirst(s, m, Str(arg))
                 } else if ((arg is Int || arg is Long)
-                        && `in`(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}")) {
+                    && `in`(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}")) {
                     if (eq(m, "%[\\%din](?!th|uc?|c)|\\$*\\{\\}")) {
                         s = replaceFirst(s, m,
-                                Str(f(if (arg is Int) arg else arg as Long))
-                                        .replace("\\.[0]+(?!\\d)$".toRegex(), ""))
+                            Str(f(if (arg is Int) arg else arg as Long))
+                                .replace("\\.[0]+(?!\\d)$".toRegex(), ""))
                     } else if (`in`(m, "%[din]u")) {
                         if (eq(m, "%[din]uc")) {
                             s = replaceFirst(s, m,
-                                    Str(usd(if (arg is Int) arg else arg as Long))
-                                            .replace("\\.[0]+(?!\\d)$".toRegex(), ""))
+                                Str(usd(if (arg is Int) arg else arg as Long))
+                                    .replace("\\.[0]+(?!\\d)$".toRegex(), ""))
                         } else {
                             s = replaceFirst(s, "%[din]u",
-                                    Str(fus(if (arg is Int) arg else arg as Long))
-                                            .replace("\\.[0]+(?!\\d)$".toRegex(), ""))
+                                Str(fus(if (arg is Int) arg else arg as Long))
+                                    .replace("\\.[0]+(?!\\d)$".toRegex(), ""))
                         }
                     } else if (eq(m, "%[din]th")) {
                         s = replaceFirst(s, m,
-                                Str(th(if (arg is Int) arg else arg as Long)))
+                            Str(th(if (arg is Int) arg else arg as Long)))
                     } else if (eq(m, "%[din]r")) {
                         s = replaceFirst(s, m, Str(toRoman(arg as Int)))
                     } else {
@@ -12647,13 +12658,13 @@ class KL() {
                             if (eq(m, "%[din]c([\\:\\.][A-Za-z]{3,4})")) {
                                 val currency: String = m.split("[\\:\\.]".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().get(1)
                                 s = replaceFirst(s, m,
-                                        Str(curr(if (arg is Int) arg else arg as Long, currency))
-                                                .replace("\\.[0]+(?!\\d)$".toRegex(),
-                                                        ""))
+                                    Str(curr(if (arg is Int) arg else arg as Long, currency))
+                                        .replace("\\.[0]+(?!\\d)$".toRegex(),
+                                            ""))
                             } else {
                                 s = replaceFirst(s, m,
-                                        Str(pkr(if (arg is Int) arg else arg as Long)).replace(
-                                                "\\.[0]+(?!\\d)$".toRegex(), ""))
+                                    Str(pkr(if (arg is Int) arg else arg as Long)).replace(
+                                        "\\.[0]+(?!\\d)$".toRegex(), ""))
                             }
                         }
                     }
@@ -12662,35 +12673,35 @@ class KL() {
                         // DOESN'T work IF the % is not escaped
                         if (eq(m, "%[\\%fn]uc")) {
                             s = replaceFirst(s, m,
-                                    Str(usd(setPrecision(if (arg is Float) arg else arg as Double)).replace(
-                                            "\\.[0]+(?!\\d)$".toRegex(), "")))
+                                Str(usd(setPrecision(if (arg is Float) arg else arg as Double)).replace(
+                                    "\\.[0]+(?!\\d)$".toRegex(), "")))
                         } else {
                             s = replaceFirst(s, "%[%fn]u|\\$*\\{(\\.\\d*f)?\\}",
-                                    Str(fus(setPrecision(if (arg is Float) arg else arg as Double)).replace(
-                                            "\\.[0]+(?!\\d)$".toRegex(), "")))
+                                Str(fus(setPrecision(if (arg is Float) arg else arg as Double)).replace(
+                                    "\\.[0]+(?!\\d)$".toRegex(), "")))
                         }
                     } else if (`in`(m, "%[\\%fn]c?(?!u)|\\$*\\{(\\.\\d*f)?\\}")) {
                         if (`in`(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})?")) {
                             if (eq(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})")) {
                                 val currency: String = m.split("[\\:\\.]".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().get(1)
                                 s = replaceFirst(s, m,
-                                        Str(curr(
-                                                if (arg is Float) arg else arg as Double,
-                                                currency)).replace(
-                                                "\\.[0]+(?!\\d)$".toRegex(), ""))
+                                    Str(curr(
+                                        if (arg is Float) arg else arg as Double,
+                                        currency)).replace(
+                                        "\\.[0]+(?!\\d)$".toRegex(), ""))
                             } else {
                                 s = replaceFirst(s, m,
-                                        Str(pkr(if (arg is Float) arg else arg as Double)).replace(
-                                                "\\.[0]+(?!\\d)$".toRegex(), ""))
+                                    Str(pkr(if (arg is Float) arg else arg as Double)).replace(
+                                        "\\.[0]+(?!\\d)$".toRegex(), ""))
                             }
                         } else {
                             s = replaceFirst(s, "%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
-                                    Str(f(setPrecision(if (arg is Float) arg else arg as Double)).replace(
-                                            "\\.[0]+(?!\\d)$".toRegex(), "")))
+                                Str(f(setPrecision(if (arg is Float) arg else arg as Double)).replace(
+                                    "\\.[0]+(?!\\d)$".toRegex(), "")))
                         }
                     }
                 } else if (arg is Boolean
-                        && eq(m, "%[\\%b]|\\$*\\{\\}")) {
+                    && eq(m, "%[\\%b]|\\$*\\{\\}")) {
                     s = replaceFirst(s, m, Str(arg))
                 }
                 // replaceFirst is really what we need here, as replacing "all"
@@ -12706,30 +12717,30 @@ class KL() {
         // post processing...
         // for methods
         if (`in`(s,
-                        "\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")) {
+                "\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")) {
             try {
                 val cls: java.lang.Class<*> = this.javaClass
                 var valueFromMethod: Any = Any()
                 var hasParams = false
                 val methodicalMatches = findMatches(s,
-                        "\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")
+                    "\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")
                 for (m: String? in methodicalMatches) {
                     val toGet: String = m.replace(
-                            "(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]".toRegex(),
-                            "")
+                        "(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]".toRegex(),
+                        "")
                     if (`in`(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)")) hasParams = true
                     if (!hasParams) valueFromMethod = cls.getMethod(toGet).invoke(this) else {
                         var multiParam = false
                         var unprocessedParamString: String = m.replace(
-                                "^[\\$\\w]+[:\\(](?=\\w+)|\\)*$".toRegex(), "")
+                            "^[\\$\\w]+[:\\(](?=\\w+)|\\)*$".toRegex(), "")
                         if (`in`(unprocessedParamString, "\\s*,\\s*")) {
                             multiParam = true
                             val paramMatches: Array<String?> = unprocessedParamString
-                                    .split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                                .split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                             val finalParams: Array<Any> = arrayOfNulls(paramMatches.size)
                             val paramTypes: Array<java.lang.Class<*>> = arrayOfNulls<java.lang.Class<*>>(paramMatches.size)
                             for (i: Int in range(paramMatches)) {
-                                var param = paramMatches[i]
+                                Matches[i]
                                 paramTypes[i] = if (isIntLike(param)) (if (!`in`(param, "(?<=\\d)[Ll]$")) Int::class.javaPrimitiveType else Long::class.javaPrimitiveType) else if (isFltLike(param)) (if (!`in`(param, "(?<=\\d)[Ff]$")) Double::class.javaPrimitiveType else Float::class.javaPrimitiveType) else if (eq(param, "true|false")) Boolean::class.javaPrimitiveType else String::class.java
                                 param = param.replace("(?<=\\d)[LlFf]$".toRegex(), "")
                                 // ----------------------- NOTE
@@ -12748,23 +12759,23 @@ class KL() {
                             }
                             for (param: String? in paramMatches) {
                                 valueFromMethod = cls
-                                        .getMethod(toGet, *paramTypes)
-                                        .invoke(this, *finalParams)
+                                    .getMethod(toGet, *paramTypes)
+                                    .invoke(this, *finalParams)
                                 m = m.replace("([\\$\\{\\(\\)\\}])".toRegex(),
-                                        "\\\\$1")
+                                    "\\\\$1")
                                 s = s.replaceFirst(m.toRegex(),
-                                        if (valueFromMethod is Char
-                                                || valueFromMethod is String
-                                                || valueFromMethod is Number
-                                                || valueFromMethod is Boolean) Str(valueFromMethod) else m)
+                                    if (valueFromMethod is Char
+                                        || valueFromMethod is String
+                                        || valueFromMethod is Number
+                                        || valueFromMethod is Boolean) Str(valueFromMethod) else m)
                             }
                         } else {
                             val type: java.lang.Class<*> = if (isIntLike(unprocessedParamString)) (if (!`in`(unprocessedParamString,
-                                            "(?<=\\d)[Ll]$")) Int::class.javaPrimitiveType else Long::class.javaPrimitiveType) else if (isFltLike(unprocessedParamString)) (if (!`in`(unprocessedParamString,
-                                            "(?<=\\d)[Ff]$")) Double::class.javaPrimitiveType else Float::class.javaPrimitiveType) else if (eq(unprocessedParamString,
-                                            "true|false")) Boolean::class.javaPrimitiveType else String::class.java
+                                    "(?<=\\d)[Ll]$")) Int::class.javaPrimitiveType else Long::class.javaPrimitiveType) else if (isFltLike(unprocessedParamString)) (if (!`in`(unprocessedParamString,
+                                    "(?<=\\d)[Ff]$")) Double::class.javaPrimitiveType else Float::class.javaPrimitiveType) else if (eq(unprocessedParamString,
+                                    "true|false")) Boolean::class.javaPrimitiveType else String::class.java
                             unprocessedParamString = unprocessedParamString
-                                    .replace("(?<=\\d)[LlFf]$".toRegex(), "")
+                                .replace("(?<=\\d)[LlFf]$".toRegex(), "")
                             // ----------------------- NOTE
                             // -----------------------------
                             // Since longs can hold both ints, and longs, and
@@ -12775,18 +12786,18 @@ class KL() {
                             // double, precision.
                             // ----------------------------------------------------------
                             valueFromMethod = cls.getMethod(toGet, type).invoke(
-                                    this,
-                                    if (isIntLike(unprocessedParamString)) Int(unprocessedParamString) else if (isDblLike(unprocessedParamString)) Dbl(unprocessedParamString) else if (eq(unprocessedParamString,
-                                                    "true|false")) (if (eq(unprocessedParamString,
-                                                    "true")) true else false) else unprocessedParamString)
+                                this,
+                                if (isIntLike(unprocessedParamString)) Int(unprocessedParamString) else if (isDblLike(unprocessedParamString)) Dbl(unprocessedParamString) else if (eq(unprocessedParamString,
+                                        "true|false")) (if (eq(unprocessedParamString,
+                                        "true")) true else false) else unprocessedParamString)
                         }
                     }
                     m = m.replace("([\\$\\{\\(\\)\\}])".toRegex(), "\\\\$1")
                     s = s.replaceFirst(m.toRegex(),
-                            if (valueFromMethod is Char
-                                    || valueFromMethod is String
-                                    || valueFromMethod is Number
-                                    || valueFromMethod is Boolean) Str(valueFromMethod) else m)
+                        if (valueFromMethod is Char
+                            || valueFromMethod is String
+                            || valueFromMethod is Number
+                            || valueFromMethod is Boolean) Str(valueFromMethod) else m)
                 }
             } catch (e: NoSuchMethodException) {
             } catch (e: IllegalAccessException) {
@@ -12801,16 +12812,16 @@ class KL() {
                 val cls: java.lang.Class<*> = this.javaClass
                 var field: Any
                 val fieldMatches = findMatches(s,
-                        "\\$*\\{\\w+\\}|\\$+\\w+")
+                    "\\$*\\{\\w+\\}|\\$+\\w+")
                 for (m: String? in fieldMatches) {
                     val toGet: String = m.replace("[\\$\\{\\}]".toRegex(), "")
                     field = cls.getField(toGet).get(this)
                     m = m.replace("([\\$\\{\\}])".toRegex(), "\\\\$1")
                     s = s.replaceFirst(m.toRegex(),
-                            if (field is Char
-                                    || field is String
-                                    || field is Number
-                                    || field is Boolean) Str(field) else m)
+                        if (field is Char
+                            || field is String
+                            || field is Number
+                            || field is Boolean) Str(field) else m)
                 }
             } catch (e: NoSuchFieldException) {
             } catch (e: IllegalAccessException) {
@@ -12821,15 +12832,15 @@ class KL() {
         val catchNumericValuesWithOperator = "(?<=\\&)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)"
         while (`in`(s, catchNumericValuesWithOperator)) {
             val numericMatchesWithOperators = findMatches(s,
-                    catchNumericValuesWithOperator)
+                catchNumericValuesWithOperator)
             if (`in`(s, catchNumericValuesWithOperator)) {
                 for (m: String? in numericMatchesWithOperators) {
                     val parts: Array<String> = m
-                            .split("(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=[\\.\\d]+)".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                        .split("(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=[\\.\\d]+)".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                     val operandA = Dbl(parts[0])
                     val operandB = Dbl(parts[1])
                     val op: String = m.replace(
-                            "[^\\+\\-\\*\\×\\/\\÷]|^[\\+\\-\\*\\×\\/\\÷]".toRegex(), "")
+                        "[^\\+\\-\\*\\×\\/\\÷]|^[\\+\\-\\*\\×\\/\\÷]".toRegex(), "")
                     var result = 0.0
                     when (op) {
                         "+" -> result = setPrecision(operandA + operandB)
@@ -12838,7 +12849,7 @@ class KL() {
                         "/", "÷" -> result = setPrecision(operandA / operandB)
                     }
                     s = replaceFirst(s, catchNumericValuesWithOperator,
-                            Str(result).replace("\\.0(?!\\d)$".toRegex(), ""))
+                        Str(result).replace("\\.0(?!\\d)$".toRegex(), ""))
                 }
             }
         }
@@ -12859,13 +12870,7 @@ class KL() {
         var Dbl = doubleArrayOf()
         var Bool = booleanArrayOf()
         var Num = arrayOf<Number>()
-        var Obj = arrayOf<Any>()
-        var strArr = strArr()
-        var intArr = intArr()
-        var longArr = longArr()
-        var fltArr = fltArr()
-        var dblArr = dblArr()
-        var boolArr = boolArr()
+        var Obj = arrayOf<Any>()()()()()()()
     }
 
     companion object {
@@ -12879,33 +12884,33 @@ class KL() {
 
         fun encodeUrl(s: String): String {
             return s.replace("%", "%25").replace(" ", "%20")
-                    .replace("!", "%21").replace("#", "%23").replace("$", "%24")
-                    .replace("&", "%26").replace("'", "%27").replace("(", "%28")
-                    .replace(")", "%29").replace("*", "%2A").replace("+", "%2B")
-                    .replace(",", "%2C").replace("/", "%2F").replace(":", "%3A")
-                    .replace(";", "%3B").replace("=", "%3D").replace("?", "%3F")
-                    .replace("@", "%40").replace("[", "%5B").replace("]", "%5D")
+                .replace("!", "%21").replace("#", "%23").replace("$", "%24")
+                .replace("&", "%26").replace("'", "%27").replace("(", "%28")
+                .replace(")", "%29").replace("*", "%2A").replace("+", "%2B")
+                .replace(",", "%2C").replace("/", "%2F").replace(":", "%3A")
+                .replace(";", "%3B").replace("=", "%3D").replace("?", "%3F")
+                .replace("@", "%40").replace("[", "%5B").replace("]", "%5D")
         }
 
         fun decodeUrl(s: String): String {
             return s.replace("%21", "!").replace("%20", " ")
-                    .replace("%23", "#").replace("%24", "$").replace("%26", "&")
-                    .replace("%27", "'").replace("%28", "(").replace("%29", ")")
-                    .replace("%2A", "*").replace("%2B", "+").replace("%2C", ",")
-                    .replace("%2F", "/").replace("%3A", ":").replace("%3B", ";")
-                    .replace("%3D", "=").replace("%3F", "?").replace("%40", "@")
-                    .replace("%5B", "[").replace("%5D", "]").replace("%25", "%")
+                .replace("%23", "#").replace("%24", "$").replace("%26", "&")
+                .replace("%27", "'").replace("%28", "(").replace("%29", ")")
+                .replace("%2A", "*").replace("%2B", "+").replace("%2C", ",")
+                .replace("%2F", "/").replace("%3A", ":").replace("%3B", ";")
+                .replace("%3D", "=").replace("%3F", "?").replace("%40", "@")
+                .replace("%5B", "[").replace("%5D", "]").replace("%25", "%")
         }
 
         fun encrypt(data: String, key: String): String {
             val ofXAlgo = "AES"
             try {
                 val secretKey = SecretKeySpec(
-                        key.toByteArray(java.nio.charset.StandardCharsets.UTF_8), ofXAlgo)
+                    key.toByteArray(java.nio.charset.StandardCharsets.UTF_8), ofXAlgo)
                 val cipher: Cipher = Cipher.getInstance(ofXAlgo)
                 cipher.init(Cipher.ENCRYPT_MODE, secretKey)
                 val encryptedBytes: ByteArray = cipher
-                        .doFinal(data.toByteArray(java.nio.charset.StandardCharsets.UTF_8))
+                    .doFinal(data.toByteArray(java.nio.charset.StandardCharsets.UTF_8))
                 return java.util.Base64.getEncoder().encodeToString(encryptedBytes)
             } catch (err: java.lang.Exception) {
                 return data
@@ -12916,11 +12921,11 @@ class KL() {
             val ofXAlgo = "AES"
             try {
                 val secretKey = SecretKeySpec(
-                        key.toByteArray(java.nio.charset.StandardCharsets.UTF_8), ofXAlgo)
+                    key.toByteArray(java.nio.charset.StandardCharsets.UTF_8), ofXAlgo)
                 val cipher: Cipher = Cipher.getInstance(ofXAlgo)
                 cipher.init(Cipher.DECRYPT_MODE, secretKey)
                 val decryptedBytes: ByteArray = cipher
-                        .doFinal(java.util.Base64.getDecoder().decode(encryptedData))
+                    .doFinal(java.util.Base64.getDecoder().decode(encryptedData))
                 return String(decryptedBytes, java.nio.charset.StandardCharsets.UTF_8)
             } catch (err: java.lang.Exception) {
                 print("[KL.Decryptor.BadArguments]:\nFailed to decrypt the message.")
@@ -12940,7 +12945,7 @@ class KL() {
         }
 
         fun parseJson(jsonString: String): objS {
-            var jsonString = jsonString
+
             val map = objS()
             if (not(jsonString)) return map
             jsonString = jsonString.trim { it <= ' ' }
@@ -12954,9 +12959,9 @@ class KL() {
                 val parts: Array<String> = pair.split("[\\[\\]\\s\\w]*:[\\[\\]\\s\\w]*".toRegex(), limit = 2).toTypedArray()
                 if (parts.size == 2) {
                     val key: String = parts[0].replace("[\"\\{\\[\\]\\}]+".toRegex(), "")
-                            .trim { it <= ' ' }
+                        .trim { it <= ' ' }
                     val value: String = parts[1].replace("[\"\\{\\[\\]\\}]+".toRegex(), "")
-                            .replace("\\w+:\\s*".toRegex(), "").trim { it <= ' ' }
+                        .replace("\\w+:\\s*".toRegex(), "").trim { it <= ' ' }
                     if (key.length != 0 && `in`(key, "[a-zA-Z]+") && value.length != 0 && `in`(value, "[a-zA-Z]+")) map.add(key, value)
                 }
             }
@@ -12969,12 +12974,12 @@ class KL() {
             try {
                 val urlString: java.net.URL? = url(url)
                 val connection: java.net.HttpURLConnection = urlString
-                        .openConnection() as java.net.HttpURLConnection
+                    .openConnection() as java.net.HttpURLConnection
                 connection.setRequestMethod("GET")
                 val statusCode: Int = connection.getResponseCode()
                 if (statusCode == java.net.HttpURLConnection.HTTP_OK) {
                     val reader = BufferedReader(
-                            java.io.InputStreamReader(connection.getInputStream()))
+                        java.io.InputStreamReader(connection.getInputStream()))
                     var line: String?
                     val respBuilder = StringBuilder()
                     while (reader.readLine().also { line = it } != null) {
@@ -12984,18 +12989,18 @@ class KL() {
                     val jsonString: String = respBuilder.toString().trim { it <= ' ' }
                     map = parseJson(jsonString)
                     map.add("response", "200").add("status", "ok").add("error",
-                            "no")
+                        "no")
                     return map
                 } else {
                     map.add("response", Str(statusCode)).add("status", "notok")
-                            .add("error", "yes")
+                        .add("error", "yes")
                     print("[KLFetch.Status.NotOK]:\nMessage: GET request failed with status code",
-                            statusCode)
+                        statusCode)
                 }
                 connection.disconnect()
             } catch (e: IOException) {
                 map.add("response", "404").add("status", "notok").add("error",
-                        "yes")
+                    "yes")
                 print("[KLFetch.Status.Offline]:\nMessage: Failed to fetch. It appears, you might be offline.")
             }
             return map
@@ -13006,12 +13011,12 @@ class KL() {
             try {
                 val urlString: java.net.URL? = url(url)
                 val connection: java.net.HttpURLConnection = urlString
-                        .openConnection() as java.net.HttpURLConnection
+                    .openConnection() as java.net.HttpURLConnection
                 connection.setRequestMethod("GET")
                 val statusCode: Int = connection.getResponseCode()
                 if (statusCode == java.net.HttpURLConnection.HTTP_OK) {
                     val reader = BufferedReader(
-                            java.io.InputStreamReader(connection.getInputStream()))
+                        java.io.InputStreamReader(connection.getInputStream()))
                     var line: String?
                     val respBuilder = StringBuilder()
                     while (reader.readLine().also { line = it } != null) {
@@ -13021,16 +13026,16 @@ class KL() {
                     val jsonString: String = respBuilder.toString().trim { it <= ' ' }
                     map = parseJson(jsonString)
                     map.add("response", "200").add("status", "ok").add("error",
-                            "no")
+                        "no")
                     return map
                 } else {
                     map.add("response", Str(statusCode)).add("status", "notok")
-                            .add("error", "yes")
+                        .add("error", "yes")
                 }
                 connection.disconnect()
             } catch (e: IOException) {
                 map.add("response", "404").add("status", "notok").add("error",
-                        "yes")
+                    "yes")
             }
             return map
         }
@@ -13233,8 +13238,8 @@ class KL() {
         fun font(fontFamily: String?, fontSize: Int, bold: Boolean,
                  italic: Boolean): font {
             return font(fontFamily,
-                    if (bold && italic) Font.BOLD or Font.ITALIC else if (bold) Font.BOLD else if (italic) Font.ITALIC else Font.PLAIN,
-                    fontSize)
+                if (bold && italic) Font.BOLD or Font.ITALIC else if (bold) Font.BOLD else if (italic) Font.ITALIC else Font.PLAIN,
+                fontSize)
         }
 
         fun font(fontFamily: String?, fontSize: Int, bold: Boolean): font {
@@ -13244,8 +13249,8 @@ class KL() {
         fun font(fontFamily: String?, fontSize: Int, bold: Int,
                  italic: Int): font {
             return font(fontFamily,
-                    if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
-                    fontSize)
+                if (bold == 1 && italic == 1) Font.BOLD or Font.ITALIC else if (bold == 1) Font.BOLD else if (italic == 1) Font.ITALIC else Font.PLAIN,
+                fontSize)
         }
 
         fun file(parent: File?, child: String?): file {
@@ -13672,7 +13677,7 @@ class KL() {
         }
 
         fun clr(hexString: String): clr {
-            var hexString = hexString
+
             hexString = hexString.replace("^(0x|#)".toRegex(), "")
             val len = len(hexString)
             return if (len == 8 || len == 4) clr(hexString, true) else clr(hexString, false)
@@ -13712,7 +13717,7 @@ class KL() {
         }
 
         fun nayaClr(hexString: String): clr {
-            var hexString = hexString
+
             hexString = hexString.replace("^(0x|#)".toRegex(), "")
             val len = len(hexString)
             return if (len == 8 || len == 4) clr(hexString, true) else clr(hexString, false)
@@ -13813,7 +13818,7 @@ class KL() {
                  k6: String?, v6: String?, k7: String?, v7: String?, k8: String?, v8: String?,
                  k9: String?, v9: String?, k10: String?, v10: String?): objS {
             return KL.objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun objS(k1: String?, v1: String?, k2: String?, v2: String?,
@@ -13821,14 +13826,14 @@ class KL() {
                  k6: String?, v6: String?, k7: String?, v7: String?, k8: String?, v8: String?,
                  k9: String?, v9: String?): objS {
             return KL.objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun objS(k1: String?, v1: String?, k2: String?, v2: String?,
                  k3: String?, v3: String?, k4: String?, v4: String?, k5: String?, v5: String?,
                  k6: String?, v6: String?, k7: String?, v7: String?, k8: String?, v8: String?): objS {
             return KL.objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun objS(k1: String?, v1: String?, k2: String?, v2: String?,
@@ -13871,21 +13876,21 @@ class KL() {
                  k7: String?, v7: Int, k8: String?, v8: Int, k9: String?, v9: Int, k10: String?,
                  v10: Int): objI {
             return KL.objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun objI(k1: String?, v1: Int, k2: String?, v2: Int, k3: String?,
                  v3: Int, k4: String?, v4: Int, k5: String?, v5: Int, k6: String?, v6: Int,
                  k7: String?, v7: Int, k8: String?, v8: Int, k9: String?, v9: Int): objI {
             return KL.objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun objI(k1: String?, v1: Int, k2: String?, v2: Int, k3: String?,
                  v3: Int, k4: String?, v4: Int, k5: String?, v5: Int, k6: String?, v6: Int,
                  k7: String?, v7: Int, k8: String?, v8: Int): objI {
             return KL.objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun objI(k1: String?, v1: Int, k2: String?, v2: Int, k3: String?,
@@ -13927,21 +13932,21 @@ class KL() {
                  k7: String?, v7: Long, k8: String?, v8: Long, k9: String?, v9: Long,
                  k10: String?, v10: Long): objL {
             return KL.objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun objL(k1: String?, v1: Long, k2: String?, v2: Long, k3: String?,
                  v3: Long, k4: String?, v4: Long, k5: String?, v5: Long, k6: String?, v6: Long,
                  k7: String?, v7: Long, k8: String?, v8: Long, k9: String?, v9: Long): objL {
             return KL.objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun objL(k1: String?, v1: Long, k2: String?, v2: Long, k3: String?,
                  v3: Long, k4: String?, v4: Long, k5: String?, v5: Long, k6: String?, v6: Long,
                  k7: String?, v7: Long, k8: String?, v8: Long): objL {
             return KL.objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun objL(k1: String?, v1: Long, k2: String?, v2: Long, k3: String?,
@@ -13984,7 +13989,7 @@ class KL() {
                  v6: Float, k7: String?, v7: Float, k8: String?, v8: Float, k9: String?,
                  v9: Float, k10: String?, v10: Float): objF {
             return KL.objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun objF(k1: String?, v1: Float, k2: String?, v2: Float, k3: String?,
@@ -13992,14 +13997,14 @@ class KL() {
                  v6: Float, k7: String?, v7: Float, k8: String?, v8: Float, k9: String?,
                  v9: Float): objF {
             return KL.objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun objF(k1: String?, v1: Float, k2: String?, v2: Float, k3: String?,
                  v3: Float, k4: String?, v4: Float, k5: String?, v5: Float, k6: String?,
                  v6: Float, k7: String?, v7: Float, k8: String?, v8: Float): objF {
             return KL.objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun objF(k1: String?, v1: Float, k2: String?, v2: Float, k3: String?,
@@ -14042,7 +14047,7 @@ class KL() {
                  k6: String?, v6: Double, k7: String?, v7: Double, k8: String?, v8: Double,
                  k9: String?, v9: Double, k10: String?, v10: Double): objD {
             return KL.objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun objD(k1: String?, v1: Double, k2: String?, v2: Double,
@@ -14050,14 +14055,14 @@ class KL() {
                  k6: String?, v6: Double, k7: String?, v7: Double, k8: String?, v8: Double,
                  k9: String?, v9: Double): objD {
             return KL.objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun objD(k1: String?, v1: Double, k2: String?, v2: Double,
                  k3: String?, v3: Double, k4: String?, v4: Double, k5: String?, v5: Double,
                  k6: String?, v6: Double, k7: String?, v7: Double, k8: String?, v8: Double): objD {
             return KL.objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun objD(k1: String?, v1: Double, k2: String?, v2: Double,
@@ -14100,7 +14105,7 @@ class KL() {
                  k6: String?, v6: Boolean, k7: String?, v7: Boolean, k8: String?, v8: Boolean,
                  k9: String?, v9: Boolean, k10: String?, v10: Boolean): objB {
             return KL.objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun objB(k1: String?, v1: Boolean, k2: String?, v2: Boolean,
@@ -14108,7 +14113,7 @@ class KL() {
                  k6: String?, v6: Boolean, k7: String?, v7: Boolean, k8: String?, v8: Boolean,
                  k9: String?, v9: Boolean): objB {
             return KL.objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun objB(k1: String?, v1: Boolean, k2: String?, v2: Boolean,
@@ -14116,7 +14121,7 @@ class KL() {
                  k6: String?, v6: Boolean, k7: String?, v7: Boolean, k8: String?,
                  v8: Boolean): objB {
             return KL.objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun objB(k1: String?, v1: Boolean, k2: String?, v2: Boolean,
@@ -14160,7 +14165,7 @@ class KL() {
                 v6: Any?, k7: String?, v7: Any?, k8: String?, v8: Any?, k9: String?,
                 v9: Any?, k10: String?, v10: Any?): obj {
             return KL.obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun obj(k1: String?, v1: Any?, k2: String?, v2: Any?, k3: String?,
@@ -14168,14 +14173,14 @@ class KL() {
                 v6: Any?, k7: String?, v7: Any?, k8: String?, v8: Any?, k9: String?,
                 v9: Any?): obj {
             return KL.obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun obj(k1: String?, v1: Any?, k2: String?, v2: Any?, k3: String?,
                 v3: Any?, k4: String?, v4: Any?, k5: String?, v5: Any?, k6: String?,
                 v6: Any?, k7: String?, v7: Any?, k8: String?, v8: Any?): obj {
             return KL.obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun obj(k1: String?, v1: Any?, k2: String?, v2: Any?, k3: String?,
@@ -14218,28 +14223,28 @@ class KL() {
                   k7: Int, v7: String, k8: Int, v8: String, k9: Int, v9: String, k10: Int,
                   v10: String): treeI {
             return KL.treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun treeI(k1: Int, v1: String, k2: Int, v2: String, k3: Int,
                   v3: String, k4: Int, v4: String, k5: Int, v5: String, k6: Int, v6: String,
                   k7: Int, v7: String, k8: Int, v8: String, k9: Int, v9: String): treeI {
             return KL.treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun treeI(k1: Int, v1: String, k2: Int, v2: String, k3: Int,
                   v3: String, k4: Int, v4: String, k5: Int, v5: String, k6: Int, v6: String,
                   k7: Int, v7: String, k8: Int, v8: String): treeI {
             return KL.treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun treeI(k1: Int, v1: String, k2: Int, v2: String, k3: Int,
                   v3: String, k4: Int, v4: String, k5: Int, v5: String, k6: Int, v6: String,
                   k7: Int, v7: String): treeI {
             return KL.treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeI(k1: Int, v1: String, k2: Int, v2: String, k3: Int,
@@ -14275,28 +14280,28 @@ class KL() {
                   k4: Int, v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                   k8: Int, v8: Long, k9: Int, v9: Long, k10: Int, v10: Long): treeL {
             return KL.treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun treeL(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long,
                   k4: Int, v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                   k8: Int, v8: Long, k9: Int, v9: Long): treeL {
             return KL.treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun treeL(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long,
                   k4: Int, v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                   k8: Int, v8: Long): treeL {
             return KL.treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun treeL(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long,
                   k4: Int, v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int,
                   v7: Long): treeL {
             return KL.treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeL(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long,
@@ -14332,28 +14337,28 @@ class KL() {
                   k7: Int, v7: Float, k8: Int, v8: Float, k9: Int, v9: Float, k10: Int,
                   v10: Float): treeF {
             return KL.treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun treeF(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int,
                   v3: Float, k4: Int, v4: Float, k5: Int, v5: Float, k6: Int, v6: Float,
                   k7: Int, v7: Float, k8: Int, v8: Float, k9: Int, v9: Float): treeF {
             return KL.treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun treeF(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int,
                   v3: Float, k4: Int, v4: Float, k5: Int, v5: Float, k6: Int, v6: Float,
                   k7: Int, v7: Float, k8: Int, v8: Float): treeF {
             return KL.treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun treeF(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int,
                   v3: Float, k4: Int, v4: Float, k5: Int, v5: Float, k6: Int, v6: Float,
                   k7: Int, v7: Float): treeF {
             return KL.treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeF(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int,
@@ -14389,28 +14394,28 @@ class KL() {
                   k7: Int, v7: Double, k8: Int, v8: Double, k9: Int, v9: Double, k10: Int,
                   v10: Double): treeD {
             return KL.treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun treeD(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int,
                   v3: Double, k4: Int, v4: Double, k5: Int, v5: Double, k6: Int, v6: Double,
                   k7: Int, v7: Double, k8: Int, v8: Double, k9: Int, v9: Double): treeD {
             return KL.treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun treeD(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int,
                   v3: Double, k4: Int, v4: Double, k5: Int, v5: Double, k6: Int, v6: Double,
                   k7: Int, v7: Double, k8: Int, v8: Double): treeD {
             return KL.treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun treeD(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int,
                   v3: Double, k4: Int, v4: Double, k5: Int, v5: Double, k6: Int, v6: Double,
                   k7: Int, v7: Double): treeD {
             return KL.treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeD(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int,
@@ -14447,7 +14452,7 @@ class KL() {
                   v6: Boolean, k7: Int, v7: Boolean, k8: Int, v8: Boolean, k9: Int,
                   v9: Boolean, k10: Int, v10: Boolean): treeB {
             return KL.treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun treeB(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int,
@@ -14455,21 +14460,21 @@ class KL() {
                   v6: Boolean, k7: Int, v7: Boolean, k8: Int, v8: Boolean, k9: Int,
                   v9: Boolean): treeB {
             return KL.treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun treeB(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int,
                   v3: Boolean, k4: Int, v4: Boolean, k5: Int, v5: Boolean, k6: Int,
                   v6: Boolean, k7: Int, v7: Boolean, k8: Int, v8: Boolean): treeB {
             return KL.treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun treeB(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int,
                   v3: Boolean, k4: Int, v4: Boolean, k5: Int, v5: Boolean, k6: Int,
                   v6: Boolean, k7: Int, v7: Boolean): treeB {
             return KL.treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeB(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int,
@@ -14506,7 +14511,7 @@ class KL() {
                    k6: Double, v6: String, k7: Double, v7: String, k8: Double, v8: String,
                    k9: Double, v9: String, k10: Double, v10: String): treeDS {
             return KL.treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9, k10, v10)
+                v7, k8, v8, k9, v9, k10, v10)
         }
 
         fun treeDS(k1: Double, v1: String, k2: Double, v2: String,
@@ -14514,21 +14519,21 @@ class KL() {
                    k6: Double, v6: String, k7: Double, v7: String, k8: Double, v8: String,
                    k9: Double, v9: String): treeDS {
             return KL.treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9)
+                v7, k8, v8, k9, v9)
         }
 
         fun treeDS(k1: Double, v1: String, k2: Double, v2: String,
                    k3: Double, v3: String, k4: Double, v4: String, k5: Double, v5: String,
                    k6: Double, v6: String, k7: Double, v7: String, k8: Double, v8: String): treeDS {
             return KL.treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8)
+                v7, k8, v8)
         }
 
         fun treeDS(k1: Double, v1: String, k2: Double, v2: String,
                    k3: Double, v3: String, k4: Double, v4: String, k5: Double, v5: String,
                    k6: Double, v6: String, k7: Double, v7: String): treeDS {
             return KL.treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeDS(k1: Double, v1: String, k2: Double, v2: String,
@@ -14565,7 +14570,7 @@ class KL() {
                    k6: Double, v6: Long, k7: Double, v7: Long, k8: Double, v8: Long,
                    k9: Double, v9: Long, k10: Double, v10: Long): treeDL {
             return KL.treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9, k10, v10)
+                v7, k8, v8, k9, v9, k10, v10)
         }
 
         fun treeDL(k1: Double, v1: Long, k2: Double, v2: Long,
@@ -14573,21 +14578,21 @@ class KL() {
                    k6: Double, v6: Long, k7: Double, v7: Long, k8: Double, v8: Long,
                    k9: Double, v9: Long): treeDL {
             return KL.treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9)
+                v7, k8, v8, k9, v9)
         }
 
         fun treeDL(k1: Double, v1: Long, k2: Double, v2: Long,
                    k3: Double, v3: Long, k4: Double, v4: Long, k5: Double, v5: Long,
                    k6: Double, v6: Long, k7: Double, v7: Long, k8: Double, v8: Long): treeDL {
             return KL.treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8)
+                v7, k8, v8)
         }
 
         fun treeDL(k1: Double, v1: Long, k2: Double, v2: Long,
                    k3: Double, v3: Long, k4: Double, v4: Long, k5: Double, v5: Long,
                    k6: Double, v6: Long, k7: Double, v7: Long): treeDL {
             return KL.treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeDL(k1: Double, v1: Long, k2: Double, v2: Long,
@@ -14624,7 +14629,7 @@ class KL() {
                    k6: Double, v6: Float, k7: Double, v7: Float, k8: Double, v8: Float,
                    k9: Double, v9: Float, k10: Double, v10: Float): treeDF {
             return KL.treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9, k10, v10)
+                v7, k8, v8, k9, v9, k10, v10)
         }
 
         fun treeDF(k1: Double, v1: Float, k2: Double, v2: Float,
@@ -14632,21 +14637,21 @@ class KL() {
                    k6: Double, v6: Float, k7: Double, v7: Float, k8: Double, v8: Float,
                    k9: Double, v9: Float): treeDF {
             return KL.treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9)
+                v7, k8, v8, k9, v9)
         }
 
         fun treeDF(k1: Double, v1: Float, k2: Double, v2: Float,
                    k3: Double, v3: Float, k4: Double, v4: Float, k5: Double, v5: Float,
                    k6: Double, v6: Float, k7: Double, v7: Float, k8: Double, v8: Float): treeDF {
             return KL.treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8)
+                v7, k8, v8)
         }
 
         fun treeDF(k1: Double, v1: Float, k2: Double, v2: Float,
                    k3: Double, v3: Float, k4: Double, v4: Float, k5: Double, v5: Float,
                    k6: Double, v6: Float, k7: Double, v7: Float): treeDF {
             return KL.treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeDF(k1: Double, v1: Float, k2: Double, v2: Float,
@@ -14683,7 +14688,7 @@ class KL() {
                    k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double, v8: Boolean,
                    k9: Double, v9: Boolean, k10: Double, v10: Boolean): treeDB {
             return KL.treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9, k10, v10)
+                v7, k8, v8, k9, v9, k10, v10)
         }
 
         fun treeDB(k1: Double, v1: Boolean, k2: Double, v2: Boolean,
@@ -14691,7 +14696,7 @@ class KL() {
                    k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double, v8: Boolean,
                    k9: Double, v9: Boolean): treeDB {
             return KL.treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9)
+                v7, k8, v8, k9, v9)
         }
 
         fun treeDB(k1: Double, v1: Boolean, k2: Double, v2: Boolean,
@@ -14699,14 +14704,14 @@ class KL() {
                    k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double,
                    v8: Boolean): treeDB {
             return KL.treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8)
+                v7, k8, v8)
         }
 
         fun treeDB(k1: Double, v1: Boolean, k2: Double, v2: Boolean,
                    k3: Double, v3: Boolean, k4: Double, v4: Boolean, k5: Double, v5: Boolean,
                    k6: Double, v6: Boolean, k7: Double, v7: Boolean): treeDB {
             return KL.treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun treeDB(k1: Double, v1: Boolean, k2: Double, v2: Boolean,
@@ -14808,7 +14813,7 @@ class KL() {
         private var intervalId = 0
         fun setInterval(fn: Runnable, interval: Int): Int {
             if (isNull<Runnable>(fn) || isNull<Int>(interval) || isInf(interval.toDouble())
-                    || isNeg(interval)) return -1
+                || isNeg(interval)) return -1
             intervalId++
             val thread: java.lang.Thread = java.lang.Thread(Runnable {
                 while (!java.lang.Thread.currentThread().isInterrupted()) {
@@ -14829,16 +14834,16 @@ class KL() {
         fun setInterval(fn: Runnable, interval: Int,
                         maxIterations: Int): Int {
             if (isNull<Runnable>(fn) || isNull<Int>(interval) || isInf(interval.toDouble()) || isNeg(interval)
-                    || isNull<Int>(maxIterations) || isInf(maxIterations.toDouble())
-                    || isNeg(maxIterations) || not(maxIterations)) return -1
+                || isNull<Int>(maxIterations) || isInf(maxIterations.toDouble())
+                || isNeg(maxIterations) || not(maxIterations)) return -1
             intervalId++
             val thread: java.lang.Thread = java.lang.Thread(Runnable {
                 while (!java.lang.Thread.currentThread().isInterrupted()) {
                     try {
                         if (iterationsDone < maxIterations) {
                             java.lang.Thread.sleep(
-                                    (
-                                            if (interval < 1000) interval * 1000 else interval).toLong())
+                                (
+                                        if (interval < 1000) interval * 1000 else interval).toLong())
                             iterationsDone++
                         } else clearInterval(intervalId)
                     } catch (e: InterruptedException) {
@@ -14864,21 +14869,21 @@ class KL() {
         fun sw(src: Any?, cond1: Any?, sol1: Runnable,
                cond2: Any? = null, sol2: Runnable? = null, cond3: Any? = null, sol3: Runnable? = null,
                cond4: Any? = null, sol4: Runnable? = null, cond5: Any? = null, sol5: Runnable? =
-                       null,
+                   null,
                cond6: Any? = null, sol6: Runnable? = null, cond7: Any? = null, sol7: Runnable? = null,
                cond8: Any? = null, sol8: Runnable? = null, cond9: Any? = null, sol9: Runnable? = null,
                cond10: Any? =
-                       null, sol10: Runnable? = null): Boolean {
-            var cond1 = cond1
-            var cond2 = cond2
-            var cond3 = cond3
-            var cond4 = cond4
-            var cond5 = cond5
-            var cond6 = cond6
-            var cond7 = cond7
-            var cond8 = cond8
-            var cond9 = cond9
-            var cond10 = cond10
+                   null, sol10: Runnable? = null): Boolean {
+
+
+
+
+
+
+
+
+
+
             if (src is Number || src is Char) {
                 val srcDbl = if (src is Char) src.code.toDouble() else Dbl(Str(src))
                 if (cond1 is String) {
@@ -14890,7 +14895,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond1),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
                         val op: String = Str(cond1).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond1).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -14898,9 +14903,9 @@ class KL() {
                         cond1B = parts[1]
                     }
                     val middleware: Double = Dbl(
-                            Str(cond1).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond1).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middlewareB: Double = Dbl(
-                            Str(cond1B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond1B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond1 = String(cond1).replace("[^<>=]".toRegex(), "")
                     cond1B = String(cond1B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -15232,7 +15237,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond2),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
                         val op: String = Str(cond2).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond2).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -15240,9 +15245,9 @@ class KL() {
                         cond2B = parts[1]
                     }
                     val middleware2: Double = Dbl(
-                            Str(cond2).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond2).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware2B: Double = Dbl(
-                            Str(cond2B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond2B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond2 = String(cond2).replace("[^<>=else]".toRegex(), "")
                     cond2B = String(cond2B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -15254,7 +15259,7 @@ class KL() {
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl > middleware2
-                                        || srcDbl >= middleware2B) {
+                                    || srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15265,13 +15270,13 @@ class KL() {
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl > middleware2
-                                        || srcDbl <= middleware2B) {
+                                    || srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl > middleware2
-                                        || srcDbl == middleware2B) {
+                                    || srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15279,31 +15284,31 @@ class KL() {
                         } else if (eq(cond2, ">=")) {
                             if (eq(cond2B, ">")) {
                                 if (srcDbl >= middleware2
-                                        || srcDbl > middleware2B) {
+                                    || srcDbl > middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl >= middleware2
-                                        || srcDbl >= middleware2B) {
+                                    || srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<")) {
                                 if (srcDbl >= middleware2
-                                        || srcDbl < middleware2B) {
+                                    || srcDbl < middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl >= middleware2
-                                        || srcDbl <= middleware2B) {
+                                    || srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl >= middleware2
-                                        || srcDbl == middleware2B) {
+                                    || srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15316,7 +15321,7 @@ class KL() {
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl < middleware2
-                                        || srcDbl >= middleware2B) {
+                                    || srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15327,13 +15332,13 @@ class KL() {
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl < middleware2
-                                        || srcDbl <= middleware2B) {
+                                    || srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl < middleware2
-                                        || srcDbl == middleware2B) {
+                                    || srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15341,31 +15346,31 @@ class KL() {
                         } else if (eq(cond2, "<=")) {
                             if (eq(cond2B, ">")) {
                                 if (srcDbl <= middleware2
-                                        || srcDbl > middleware2B) {
+                                    || srcDbl > middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl <= middleware2
-                                        || srcDbl >= middleware2B) {
+                                    || srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<")) {
                                 if (srcDbl <= middleware2
-                                        || srcDbl < middleware2B) {
+                                    || srcDbl < middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl <= middleware2
-                                        || srcDbl <= middleware2B) {
+                                    || srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl <= middleware2
-                                        || srcDbl == middleware2B) {
+                                    || srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15373,31 +15378,31 @@ class KL() {
                         } else if (eq(cond2, "==")) {
                             if (eq(cond2B, ">")) {
                                 if (srcDbl == middleware2
-                                        || srcDbl > middleware2B) {
+                                    || srcDbl > middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl == middleware2
-                                        || srcDbl >= middleware2B) {
+                                    || srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<")) {
                                 if (srcDbl == middleware2
-                                        || srcDbl < middleware2B) {
+                                    || srcDbl < middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl == middleware2
-                                        || srcDbl <= middleware2B) {
+                                    || srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl == middleware2
-                                        || srcDbl == middleware2B) {
+                                    || srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15412,7 +15417,7 @@ class KL() {
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl > middleware2
-                                        && srcDbl >= middleware2B) {
+                                    && srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15423,13 +15428,13 @@ class KL() {
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl > middleware2
-                                        && srcDbl <= middleware2B) {
+                                    && srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl > middleware2
-                                        && srcDbl == middleware2B) {
+                                    && srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15437,31 +15442,31 @@ class KL() {
                         } else if (eq(cond2, ">=")) {
                             if (eq(cond2B, ">")) {
                                 if (srcDbl >= middleware2
-                                        && srcDbl > middleware2B) {
+                                    && srcDbl > middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl >= middleware2
-                                        && srcDbl >= middleware2B) {
+                                    && srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<")) {
                                 if (srcDbl >= middleware2
-                                        && srcDbl < middleware2B) {
+                                    && srcDbl < middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl >= middleware2
-                                        && srcDbl <= middleware2B) {
+                                    && srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl >= middleware2
-                                        && srcDbl == middleware2B) {
+                                    && srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15474,7 +15479,7 @@ class KL() {
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl < middleware2
-                                        && srcDbl >= middleware2B) {
+                                    && srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15485,13 +15490,13 @@ class KL() {
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl < middleware2
-                                        && srcDbl <= middleware2B) {
+                                    && srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl < middleware2
-                                        && srcDbl == middleware2B) {
+                                    && srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15499,31 +15504,31 @@ class KL() {
                         } else if (eq(cond2, "<=")) {
                             if (eq(cond2B, ">")) {
                                 if (srcDbl <= middleware2
-                                        && srcDbl > middleware2B) {
+                                    && srcDbl > middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl <= middleware2
-                                        && srcDbl >= middleware2B) {
+                                    && srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<")) {
                                 if (srcDbl <= middleware2
-                                        && srcDbl < middleware2B) {
+                                    && srcDbl < middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl <= middleware2
-                                        && srcDbl <= middleware2B) {
+                                    && srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl <= middleware2
-                                        && srcDbl == middleware2B) {
+                                    && srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15531,31 +15536,31 @@ class KL() {
                         } else if (eq(cond2, "==")) {
                             if (eq(cond2B, ">")) {
                                 if (srcDbl == middleware2
-                                        && srcDbl > middleware2B) {
+                                    && srcDbl > middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, ">=")) {
                                 if (srcDbl == middleware2
-                                        && srcDbl >= middleware2B) {
+                                    && srcDbl >= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<")) {
                                 if (srcDbl == middleware2
-                                        && srcDbl < middleware2B) {
+                                    && srcDbl < middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "<=")) {
                                 if (srcDbl == middleware2
-                                        && srcDbl <= middleware2B) {
+                                    && srcDbl <= middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
                             } else if (eq(cond2B, "==")) {
                                 if (srcDbl == middleware2
-                                        && srcDbl == middleware2B) {
+                                    && srcDbl == middleware2B) {
                                     if (!isNull<Runnable?>(sol2)) java.lang.Thread(sol2).run()
                                     return true
                                 }
@@ -15619,7 +15624,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond3),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
                         val op: String = Str(cond3).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond3).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -15627,9 +15632,9 @@ class KL() {
                         cond3B = parts[1]
                     }
                     val middleware3: Double = Dbl(
-                            Str(cond3).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond3).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware3B: Double = Dbl(
-                            Str(cond3B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond3B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond3 = String(cond3).replace("[^<>=else]".toRegex(), "")
                     cond3B = String(cond3B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -15641,7 +15646,7 @@ class KL() {
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl > middleware3
-                                        || srcDbl >= middleware3B) {
+                                    || srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15652,13 +15657,13 @@ class KL() {
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl > middleware3
-                                        || srcDbl <= middleware3B) {
+                                    || srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl > middleware3
-                                        || srcDbl == middleware3B) {
+                                    || srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15666,31 +15671,31 @@ class KL() {
                         } else if (eq(cond3, ">=")) {
                             if (eq(cond3B, ">")) {
                                 if (srcDbl >= middleware3
-                                        || srcDbl > middleware3B) {
+                                    || srcDbl > middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl >= middleware3
-                                        || srcDbl >= middleware3B) {
+                                    || srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<")) {
                                 if (srcDbl >= middleware3
-                                        || srcDbl < middleware3B) {
+                                    || srcDbl < middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl >= middleware3
-                                        || srcDbl <= middleware3B) {
+                                    || srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl >= middleware3
-                                        || srcDbl == middleware3B) {
+                                    || srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15703,7 +15708,7 @@ class KL() {
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl < middleware3
-                                        || srcDbl >= middleware3B) {
+                                    || srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15714,13 +15719,13 @@ class KL() {
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl < middleware3
-                                        || srcDbl <= middleware3B) {
+                                    || srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl < middleware3
-                                        || srcDbl == middleware3B) {
+                                    || srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15728,31 +15733,31 @@ class KL() {
                         } else if (eq(cond3, "<=")) {
                             if (eq(cond3B, ">")) {
                                 if (srcDbl <= middleware3
-                                        || srcDbl > middleware3B) {
+                                    || srcDbl > middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl <= middleware3
-                                        || srcDbl >= middleware3B) {
+                                    || srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<")) {
                                 if (srcDbl <= middleware3
-                                        || srcDbl < middleware3B) {
+                                    || srcDbl < middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl <= middleware3
-                                        || srcDbl <= middleware3B) {
+                                    || srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl <= middleware3
-                                        || srcDbl == middleware3B) {
+                                    || srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15760,31 +15765,31 @@ class KL() {
                         } else if (eq(cond3, "==")) {
                             if (eq(cond3B, ">")) {
                                 if (srcDbl == middleware3
-                                        || srcDbl > middleware3B) {
+                                    || srcDbl > middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl == middleware3
-                                        || srcDbl >= middleware3B) {
+                                    || srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<")) {
                                 if (srcDbl == middleware3
-                                        || srcDbl < middleware3B) {
+                                    || srcDbl < middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl == middleware3
-                                        || srcDbl <= middleware3B) {
+                                    || srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl == middleware3
-                                        || srcDbl == middleware3B) {
+                                    || srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15799,7 +15804,7 @@ class KL() {
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl > middleware3
-                                        && srcDbl >= middleware3B) {
+                                    && srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15810,13 +15815,13 @@ class KL() {
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl > middleware3
-                                        && srcDbl <= middleware3B) {
+                                    && srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl > middleware3
-                                        && srcDbl == middleware3B) {
+                                    && srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15824,31 +15829,31 @@ class KL() {
                         } else if (eq(cond3, ">=")) {
                             if (eq(cond3B, ">")) {
                                 if (srcDbl >= middleware3
-                                        && srcDbl > middleware3B) {
+                                    && srcDbl > middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl >= middleware3
-                                        && srcDbl >= middleware3B) {
+                                    && srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<")) {
                                 if (srcDbl >= middleware3
-                                        && srcDbl < middleware3B) {
+                                    && srcDbl < middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl >= middleware3
-                                        && srcDbl <= middleware3B) {
+                                    && srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl >= middleware3
-                                        && srcDbl == middleware3B) {
+                                    && srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15861,7 +15866,7 @@ class KL() {
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl < middleware3
-                                        && srcDbl >= middleware3B) {
+                                    && srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15872,13 +15877,13 @@ class KL() {
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl < middleware3
-                                        && srcDbl <= middleware3B) {
+                                    && srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl < middleware3
-                                        && srcDbl == middleware3B) {
+                                    && srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15886,31 +15891,31 @@ class KL() {
                         } else if (eq(cond3, "<=")) {
                             if (eq(cond3B, ">")) {
                                 if (srcDbl <= middleware3
-                                        && srcDbl > middleware3B) {
+                                    && srcDbl > middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl <= middleware3
-                                        && srcDbl >= middleware3B) {
+                                    && srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<")) {
                                 if (srcDbl <= middleware3
-                                        && srcDbl < middleware3B) {
+                                    && srcDbl < middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl <= middleware3
-                                        && srcDbl <= middleware3B) {
+                                    && srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl <= middleware3
-                                        && srcDbl == middleware3B) {
+                                    && srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -15918,31 +15923,31 @@ class KL() {
                         } else if (eq(cond3, "==")) {
                             if (eq(cond3B, ">")) {
                                 if (srcDbl == middleware3
-                                        && srcDbl > middleware3B) {
+                                    && srcDbl > middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, ">=")) {
                                 if (srcDbl == middleware3
-                                        && srcDbl >= middleware3B) {
+                                    && srcDbl >= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<")) {
                                 if (srcDbl == middleware3
-                                        && srcDbl < middleware3B) {
+                                    && srcDbl < middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "<=")) {
                                 if (srcDbl == middleware3
-                                        && srcDbl <= middleware3B) {
+                                    && srcDbl <= middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
                             } else if (eq(cond3B, "==")) {
                                 if (srcDbl == middleware3
-                                        && srcDbl == middleware3B) {
+                                    && srcDbl == middleware3B) {
                                     if (!isNull<Runnable?>(sol3)) java.lang.Thread(sol3).run()
                                     return true
                                 }
@@ -16010,7 +16015,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond4),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
                         val op: String = Str(cond4).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond4).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -16018,9 +16023,9 @@ class KL() {
                         cond4B = parts[1]
                     }
                     val middleware4: Double = Dbl(
-                            Str(cond4).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond4).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware4B: Double = Dbl(
-                            Str(cond4B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond4B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond4 = String(cond4).replace("[^<>=else]".toRegex(), "")
                     cond4B = String(cond4B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -16032,7 +16037,7 @@ class KL() {
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl > middleware4
-                                        || srcDbl >= middleware4B) {
+                                    || srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16043,13 +16048,13 @@ class KL() {
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl > middleware4
-                                        || srcDbl <= middleware4B) {
+                                    || srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl > middleware4
-                                        || srcDbl == middleware4B) {
+                                    || srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16057,31 +16062,31 @@ class KL() {
                         } else if (eq(cond4, ">=")) {
                             if (eq(cond4B, ">")) {
                                 if (srcDbl >= middleware4
-                                        || srcDbl > middleware4B) {
+                                    || srcDbl > middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl >= middleware4
-                                        || srcDbl >= middleware4B) {
+                                    || srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<")) {
                                 if (srcDbl >= middleware4
-                                        || srcDbl < middleware4B) {
+                                    || srcDbl < middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl >= middleware4
-                                        || srcDbl <= middleware4B) {
+                                    || srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl >= middleware4
-                                        || srcDbl == middleware4B) {
+                                    || srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16094,7 +16099,7 @@ class KL() {
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl < middleware4
-                                        || srcDbl >= middleware4B) {
+                                    || srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16105,13 +16110,13 @@ class KL() {
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl < middleware4
-                                        || srcDbl <= middleware4B) {
+                                    || srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl < middleware4
-                                        || srcDbl == middleware4B) {
+                                    || srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16119,31 +16124,31 @@ class KL() {
                         } else if (eq(cond4, "<=")) {
                             if (eq(cond4B, ">")) {
                                 if (srcDbl <= middleware4
-                                        || srcDbl > middleware4B) {
+                                    || srcDbl > middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl <= middleware4
-                                        || srcDbl >= middleware4B) {
+                                    || srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<")) {
                                 if (srcDbl <= middleware4
-                                        || srcDbl < middleware4B) {
+                                    || srcDbl < middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl <= middleware4
-                                        || srcDbl <= middleware4B) {
+                                    || srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl <= middleware4
-                                        || srcDbl == middleware4B) {
+                                    || srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16151,31 +16156,31 @@ class KL() {
                         } else if (eq(cond4, "==")) {
                             if (eq(cond4B, ">")) {
                                 if (srcDbl == middleware4
-                                        || srcDbl > middleware4B) {
+                                    || srcDbl > middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl == middleware4
-                                        || srcDbl >= middleware4B) {
+                                    || srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<")) {
                                 if (srcDbl == middleware4
-                                        || srcDbl < middleware4B) {
+                                    || srcDbl < middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl == middleware4
-                                        || srcDbl <= middleware4B) {
+                                    || srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl == middleware4
-                                        || srcDbl == middleware4B) {
+                                    || srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16190,7 +16195,7 @@ class KL() {
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl > middleware4
-                                        && srcDbl >= middleware4B) {
+                                    && srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16201,13 +16206,13 @@ class KL() {
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl > middleware4
-                                        && srcDbl <= middleware4B) {
+                                    && srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl > middleware4
-                                        && srcDbl == middleware4B) {
+                                    && srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16215,31 +16220,31 @@ class KL() {
                         } else if (eq(cond4, ">=")) {
                             if (eq(cond4B, ">")) {
                                 if (srcDbl >= middleware4
-                                        && srcDbl > middleware4B) {
+                                    && srcDbl > middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl >= middleware4
-                                        && srcDbl >= middleware4B) {
+                                    && srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<")) {
                                 if (srcDbl >= middleware4
-                                        && srcDbl < middleware4B) {
+                                    && srcDbl < middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl >= middleware4
-                                        && srcDbl <= middleware4B) {
+                                    && srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl >= middleware4
-                                        && srcDbl == middleware4B) {
+                                    && srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16252,7 +16257,7 @@ class KL() {
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl < middleware4
-                                        && srcDbl >= middleware4B) {
+                                    && srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16263,13 +16268,13 @@ class KL() {
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl < middleware4
-                                        && srcDbl <= middleware4B) {
+                                    && srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl < middleware4
-                                        && srcDbl == middleware4B) {
+                                    && srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16277,31 +16282,31 @@ class KL() {
                         } else if (eq(cond4, "<=")) {
                             if (eq(cond4B, ">")) {
                                 if (srcDbl <= middleware4
-                                        && srcDbl > middleware4B) {
+                                    && srcDbl > middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl <= middleware4
-                                        && srcDbl >= middleware4B) {
+                                    && srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<")) {
                                 if (srcDbl <= middleware4
-                                        && srcDbl < middleware4B) {
+                                    && srcDbl < middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl <= middleware4
-                                        && srcDbl <= middleware4B) {
+                                    && srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl <= middleware4
-                                        && srcDbl == middleware4B) {
+                                    && srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16309,31 +16314,31 @@ class KL() {
                         } else if (eq(cond4, "==")) {
                             if (eq(cond4B, ">")) {
                                 if (srcDbl == middleware4
-                                        && srcDbl > middleware4B) {
+                                    && srcDbl > middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, ">=")) {
                                 if (srcDbl == middleware4
-                                        && srcDbl >= middleware4B) {
+                                    && srcDbl >= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<")) {
                                 if (srcDbl == middleware4
-                                        && srcDbl < middleware4B) {
+                                    && srcDbl < middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "<=")) {
                                 if (srcDbl == middleware4
-                                        && srcDbl <= middleware4B) {
+                                    && srcDbl <= middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
                             } else if (eq(cond4B, "==")) {
                                 if (srcDbl == middleware4
-                                        && srcDbl == middleware4B) {
+                                    && srcDbl == middleware4B) {
                                     if (!isNull<Runnable?>(sol4)) java.lang.Thread(sol4).run()
                                     return true
                                 }
@@ -16397,7 +16402,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond5),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
                         val op: String = Str(cond5).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond5).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -16405,9 +16410,9 @@ class KL() {
                         cond5B = parts[1]
                     }
                     val middleware5: Double = Dbl(
-                            Str(cond5).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond5).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware5B: Double = Dbl(
-                            Str(cond5B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond5B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond5 = String(cond5).replace("[^<>=else]".toRegex(), "")
                     cond5B = String(cond5B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -16419,7 +16424,7 @@ class KL() {
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl > middleware5
-                                        || srcDbl >= middleware5B) {
+                                    || srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16430,13 +16435,13 @@ class KL() {
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl > middleware5
-                                        || srcDbl <= middleware5B) {
+                                    || srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl > middleware5
-                                        || srcDbl == middleware5B) {
+                                    || srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16444,31 +16449,31 @@ class KL() {
                         } else if (eq(cond5, ">=")) {
                             if (eq(cond5B, ">")) {
                                 if (srcDbl >= middleware5
-                                        || srcDbl > middleware5B) {
+                                    || srcDbl > middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl >= middleware5
-                                        || srcDbl >= middleware5B) {
+                                    || srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<")) {
                                 if (srcDbl >= middleware5
-                                        || srcDbl < middleware5B) {
+                                    || srcDbl < middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl >= middleware5
-                                        || srcDbl <= middleware5B) {
+                                    || srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl >= middleware5
-                                        || srcDbl == middleware5B) {
+                                    || srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16481,7 +16486,7 @@ class KL() {
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl < middleware5
-                                        || srcDbl >= middleware5B) {
+                                    || srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16492,13 +16497,13 @@ class KL() {
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl < middleware5
-                                        || srcDbl <= middleware5B) {
+                                    || srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl < middleware5
-                                        || srcDbl == middleware5B) {
+                                    || srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16506,31 +16511,31 @@ class KL() {
                         } else if (eq(cond5, "<=")) {
                             if (eq(cond5B, ">")) {
                                 if (srcDbl <= middleware5
-                                        || srcDbl > middleware5B) {
+                                    || srcDbl > middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl <= middleware5
-                                        || srcDbl >= middleware5B) {
+                                    || srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<")) {
                                 if (srcDbl <= middleware5
-                                        || srcDbl < middleware5B) {
+                                    || srcDbl < middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl <= middleware5
-                                        || srcDbl <= middleware5B) {
+                                    || srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl <= middleware5
-                                        || srcDbl == middleware5B) {
+                                    || srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16538,31 +16543,31 @@ class KL() {
                         } else if (eq(cond5, "==")) {
                             if (eq(cond5B, ">")) {
                                 if (srcDbl == middleware5
-                                        || srcDbl > middleware5B) {
+                                    || srcDbl > middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl == middleware5
-                                        || srcDbl >= middleware5B) {
+                                    || srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<")) {
                                 if (srcDbl == middleware5
-                                        || srcDbl < middleware5B) {
+                                    || srcDbl < middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl == middleware5
-                                        || srcDbl <= middleware5B) {
+                                    || srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl == middleware5
-                                        || srcDbl == middleware5B) {
+                                    || srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16577,7 +16582,7 @@ class KL() {
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl > middleware5
-                                        && srcDbl >= middleware5B) {
+                                    && srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16588,13 +16593,13 @@ class KL() {
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl > middleware5
-                                        && srcDbl <= middleware5B) {
+                                    && srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl > middleware5
-                                        && srcDbl == middleware5B) {
+                                    && srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16602,31 +16607,31 @@ class KL() {
                         } else if (eq(cond5, ">=")) {
                             if (eq(cond5B, ">")) {
                                 if (srcDbl >= middleware5
-                                        && srcDbl > middleware5B) {
+                                    && srcDbl > middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl >= middleware5
-                                        && srcDbl >= middleware5B) {
+                                    && srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<")) {
                                 if (srcDbl >= middleware5
-                                        && srcDbl < middleware5B) {
+                                    && srcDbl < middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl >= middleware5
-                                        && srcDbl <= middleware5B) {
+                                    && srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl >= middleware5
-                                        && srcDbl == middleware5B) {
+                                    && srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16639,7 +16644,7 @@ class KL() {
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl < middleware5
-                                        && srcDbl >= middleware5B) {
+                                    && srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16650,13 +16655,13 @@ class KL() {
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl < middleware5
-                                        && srcDbl <= middleware5B) {
+                                    && srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl < middleware5
-                                        && srcDbl == middleware5B) {
+                                    && srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16664,31 +16669,31 @@ class KL() {
                         } else if (eq(cond5, "<=")) {
                             if (eq(cond5B, ">")) {
                                 if (srcDbl <= middleware5
-                                        && srcDbl > middleware5B) {
+                                    && srcDbl > middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl <= middleware5
-                                        && srcDbl >= middleware5B) {
+                                    && srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<")) {
                                 if (srcDbl <= middleware5
-                                        && srcDbl < middleware5B) {
+                                    && srcDbl < middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl <= middleware5
-                                        && srcDbl <= middleware5B) {
+                                    && srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl <= middleware5
-                                        && srcDbl == middleware5B) {
+                                    && srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16696,31 +16701,31 @@ class KL() {
                         } else if (eq(cond5, "==")) {
                             if (eq(cond5B, ">")) {
                                 if (srcDbl == middleware5
-                                        && srcDbl > middleware5B) {
+                                    && srcDbl > middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, ">=")) {
                                 if (srcDbl == middleware5
-                                        && srcDbl >= middleware5B) {
+                                    && srcDbl >= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<")) {
                                 if (srcDbl == middleware5
-                                        && srcDbl < middleware5B) {
+                                    && srcDbl < middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "<=")) {
                                 if (srcDbl == middleware5
-                                        && srcDbl <= middleware5B) {
+                                    && srcDbl <= middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
                             } else if (eq(cond5B, "==")) {
                                 if (srcDbl == middleware5
-                                        && srcDbl == middleware5B) {
+                                    && srcDbl == middleware5B) {
                                     if (!isNull<Runnable?>(sol5)) java.lang.Thread(sol5).run()
                                     return true
                                 }
@@ -16784,7 +16789,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond6),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
                         val op: String = Str(cond6).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond6).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -16792,9 +16797,9 @@ class KL() {
                         cond6B = parts[1]
                     }
                     val middleware6: Double = Dbl(
-                            Str(cond6).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond6).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware6B: Double = Dbl(
-                            Str(cond6B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond6B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond6 = String(cond6).replace("[^<>=else]".toRegex(), "")
                     cond6B = String(cond6B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -16806,7 +16811,7 @@ class KL() {
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl > middleware6
-                                        || srcDbl >= middleware6B) {
+                                    || srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16817,13 +16822,13 @@ class KL() {
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl > middleware6
-                                        || srcDbl <= middleware6B) {
+                                    || srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl > middleware6
-                                        || srcDbl == middleware6B) {
+                                    || srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16831,31 +16836,31 @@ class KL() {
                         } else if (eq(cond6, ">=")) {
                             if (eq(cond6B, ">")) {
                                 if (srcDbl >= middleware6
-                                        || srcDbl > middleware6B) {
+                                    || srcDbl > middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl >= middleware6
-                                        || srcDbl >= middleware6B) {
+                                    || srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<")) {
                                 if (srcDbl >= middleware6
-                                        || srcDbl < middleware6B) {
+                                    || srcDbl < middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl >= middleware6
-                                        || srcDbl <= middleware6B) {
+                                    || srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl >= middleware6
-                                        || srcDbl == middleware6B) {
+                                    || srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16868,7 +16873,7 @@ class KL() {
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl < middleware6
-                                        || srcDbl >= middleware6B) {
+                                    || srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16879,13 +16884,13 @@ class KL() {
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl < middleware6
-                                        || srcDbl <= middleware6B) {
+                                    || srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl < middleware6
-                                        || srcDbl == middleware6B) {
+                                    || srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16893,31 +16898,31 @@ class KL() {
                         } else if (eq(cond6, "<=")) {
                             if (eq(cond6B, ">")) {
                                 if (srcDbl <= middleware6
-                                        || srcDbl > middleware6B) {
+                                    || srcDbl > middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl <= middleware6
-                                        || srcDbl >= middleware6B) {
+                                    || srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<")) {
                                 if (srcDbl <= middleware6
-                                        || srcDbl < middleware6B) {
+                                    || srcDbl < middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl <= middleware6
-                                        || srcDbl <= middleware6B) {
+                                    || srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl <= middleware6
-                                        || srcDbl == middleware6B) {
+                                    || srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16925,31 +16930,31 @@ class KL() {
                         } else if (eq(cond6, "==")) {
                             if (eq(cond6B, ">")) {
                                 if (srcDbl == middleware6
-                                        || srcDbl > middleware6B) {
+                                    || srcDbl > middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl == middleware6
-                                        || srcDbl >= middleware6B) {
+                                    || srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<")) {
                                 if (srcDbl == middleware6
-                                        || srcDbl < middleware6B) {
+                                    || srcDbl < middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl == middleware6
-                                        || srcDbl <= middleware6B) {
+                                    || srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl == middleware6
-                                        || srcDbl == middleware6B) {
+                                    || srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16964,7 +16969,7 @@ class KL() {
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl > middleware6
-                                        && srcDbl >= middleware6B) {
+                                    && srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16975,13 +16980,13 @@ class KL() {
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl > middleware6
-                                        && srcDbl <= middleware6B) {
+                                    && srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl > middleware6
-                                        && srcDbl == middleware6B) {
+                                    && srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -16989,31 +16994,31 @@ class KL() {
                         } else if (eq(cond6, ">=")) {
                             if (eq(cond6B, ">")) {
                                 if (srcDbl >= middleware6
-                                        && srcDbl > middleware6B) {
+                                    && srcDbl > middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl >= middleware6
-                                        && srcDbl >= middleware6B) {
+                                    && srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<")) {
                                 if (srcDbl >= middleware6
-                                        && srcDbl < middleware6B) {
+                                    && srcDbl < middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl >= middleware6
-                                        && srcDbl <= middleware6B) {
+                                    && srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl >= middleware6
-                                        && srcDbl == middleware6B) {
+                                    && srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -17026,7 +17031,7 @@ class KL() {
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl < middleware6
-                                        && srcDbl >= middleware6B) {
+                                    && srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -17037,13 +17042,13 @@ class KL() {
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl < middleware6
-                                        && srcDbl <= middleware6B) {
+                                    && srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl < middleware6
-                                        && srcDbl == middleware6B) {
+                                    && srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -17051,31 +17056,31 @@ class KL() {
                         } else if (eq(cond6, "<=")) {
                             if (eq(cond6B, ">")) {
                                 if (srcDbl <= middleware6
-                                        && srcDbl > middleware6B) {
+                                    && srcDbl > middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl <= middleware6
-                                        && srcDbl >= middleware6B) {
+                                    && srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<")) {
                                 if (srcDbl <= middleware6
-                                        && srcDbl < middleware6B) {
+                                    && srcDbl < middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl <= middleware6
-                                        && srcDbl <= middleware6B) {
+                                    && srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl <= middleware6
-                                        && srcDbl == middleware6B) {
+                                    && srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -17083,31 +17088,31 @@ class KL() {
                         } else if (eq(cond6, "==")) {
                             if (eq(cond6B, ">")) {
                                 if (srcDbl == middleware6
-                                        && srcDbl > middleware6B) {
+                                    && srcDbl > middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, ">=")) {
                                 if (srcDbl == middleware6
-                                        && srcDbl >= middleware6B) {
+                                    && srcDbl >= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<")) {
                                 if (srcDbl == middleware6
-                                        && srcDbl < middleware6B) {
+                                    && srcDbl < middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "<=")) {
                                 if (srcDbl == middleware6
-                                        && srcDbl <= middleware6B) {
+                                    && srcDbl <= middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
                             } else if (eq(cond6B, "==")) {
                                 if (srcDbl == middleware6
-                                        && srcDbl == middleware6B) {
+                                    && srcDbl == middleware6B) {
                                     if (!isNull<Runnable?>(sol6)) java.lang.Thread(sol6).run()
                                     return true
                                 }
@@ -17171,7 +17176,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond7),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
                         val op: String = Str(cond7).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond7).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -17179,9 +17184,9 @@ class KL() {
                         cond7B = parts[1]
                     }
                     val middleware7: Double = Dbl(
-                            Str(cond7).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond7).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware7B: Double = Dbl(
-                            Str(cond7B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond7B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond7 = String(cond7).replace("[^<>=else]".toRegex(), "")
                     cond7B = String(cond7B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -17193,7 +17198,7 @@ class KL() {
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl > middleware7
-                                        || srcDbl >= middleware7B) {
+                                    || srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17204,13 +17209,13 @@ class KL() {
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl > middleware7
-                                        || srcDbl <= middleware7B) {
+                                    || srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl > middleware7
-                                        || srcDbl == middleware7B) {
+                                    || srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17218,31 +17223,31 @@ class KL() {
                         } else if (eq(cond7, ">=")) {
                             if (eq(cond7B, ">")) {
                                 if (srcDbl >= middleware7
-                                        || srcDbl > middleware7B) {
+                                    || srcDbl > middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl >= middleware7
-                                        || srcDbl >= middleware7B) {
+                                    || srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<")) {
                                 if (srcDbl >= middleware7
-                                        || srcDbl < middleware7B) {
+                                    || srcDbl < middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl >= middleware7
-                                        || srcDbl <= middleware7B) {
+                                    || srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl >= middleware7
-                                        || srcDbl == middleware7B) {
+                                    || srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17255,7 +17260,7 @@ class KL() {
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl < middleware7
-                                        || srcDbl >= middleware7B) {
+                                    || srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17266,13 +17271,13 @@ class KL() {
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl < middleware7
-                                        || srcDbl <= middleware7B) {
+                                    || srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl < middleware7
-                                        || srcDbl == middleware7B) {
+                                    || srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17280,31 +17285,31 @@ class KL() {
                         } else if (eq(cond7, "<=")) {
                             if (eq(cond7B, ">")) {
                                 if (srcDbl <= middleware7
-                                        || srcDbl > middleware7B) {
+                                    || srcDbl > middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl <= middleware7
-                                        || srcDbl >= middleware7B) {
+                                    || srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<")) {
                                 if (srcDbl <= middleware7
-                                        || srcDbl < middleware7B) {
+                                    || srcDbl < middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl <= middleware7
-                                        || srcDbl <= middleware7B) {
+                                    || srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl <= middleware7
-                                        || srcDbl == middleware7B) {
+                                    || srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17312,31 +17317,31 @@ class KL() {
                         } else if (eq(cond7, "==")) {
                             if (eq(cond7B, ">")) {
                                 if (srcDbl == middleware7
-                                        || srcDbl > middleware7B) {
+                                    || srcDbl > middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl == middleware7
-                                        || srcDbl >= middleware7B) {
+                                    || srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<")) {
                                 if (srcDbl == middleware7
-                                        || srcDbl < middleware7B) {
+                                    || srcDbl < middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl == middleware7
-                                        || srcDbl <= middleware7B) {
+                                    || srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl == middleware7
-                                        || srcDbl == middleware7B) {
+                                    || srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17351,7 +17356,7 @@ class KL() {
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl > middleware7
-                                        && srcDbl >= middleware7B) {
+                                    && srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17362,13 +17367,13 @@ class KL() {
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl > middleware7
-                                        && srcDbl <= middleware7B) {
+                                    && srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl > middleware7
-                                        && srcDbl == middleware7B) {
+                                    && srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17376,31 +17381,31 @@ class KL() {
                         } else if (eq(cond7, ">=")) {
                             if (eq(cond7B, ">")) {
                                 if (srcDbl >= middleware7
-                                        && srcDbl > middleware7B) {
+                                    && srcDbl > middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl >= middleware7
-                                        && srcDbl >= middleware7B) {
+                                    && srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<")) {
                                 if (srcDbl >= middleware7
-                                        && srcDbl < middleware7B) {
+                                    && srcDbl < middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl >= middleware7
-                                        && srcDbl <= middleware7B) {
+                                    && srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl >= middleware7
-                                        && srcDbl == middleware7B) {
+                                    && srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17413,7 +17418,7 @@ class KL() {
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl < middleware7
-                                        && srcDbl >= middleware7B) {
+                                    && srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17424,13 +17429,13 @@ class KL() {
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl < middleware7
-                                        && srcDbl <= middleware7B) {
+                                    && srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl < middleware7
-                                        && srcDbl == middleware7B) {
+                                    && srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17438,31 +17443,31 @@ class KL() {
                         } else if (eq(cond7, "<=")) {
                             if (eq(cond7B, ">")) {
                                 if (srcDbl <= middleware7
-                                        && srcDbl > middleware7B) {
+                                    && srcDbl > middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl <= middleware7
-                                        && srcDbl >= middleware7B) {
+                                    && srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<")) {
                                 if (srcDbl <= middleware7
-                                        && srcDbl < middleware7B) {
+                                    && srcDbl < middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl <= middleware7
-                                        && srcDbl <= middleware7B) {
+                                    && srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl <= middleware7
-                                        && srcDbl == middleware7B) {
+                                    && srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17470,31 +17475,31 @@ class KL() {
                         } else if (eq(cond7, "==")) {
                             if (eq(cond7B, ">")) {
                                 if (srcDbl == middleware7
-                                        && srcDbl > middleware7B) {
+                                    && srcDbl > middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, ">=")) {
                                 if (srcDbl == middleware7
-                                        && srcDbl >= middleware7B) {
+                                    && srcDbl >= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<")) {
                                 if (srcDbl == middleware7
-                                        && srcDbl < middleware7B) {
+                                    && srcDbl < middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "<=")) {
                                 if (srcDbl == middleware7
-                                        && srcDbl <= middleware7B) {
+                                    && srcDbl <= middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
                             } else if (eq(cond7B, "==")) {
                                 if (srcDbl == middleware7
-                                        && srcDbl == middleware7B) {
+                                    && srcDbl == middleware7B) {
                                     if (!isNull<Runnable?>(sol7)) java.lang.Thread(sol7).run()
                                     return true
                                 }
@@ -17558,7 +17563,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond8),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
                         val op: String = Str(cond8).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond8).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -17566,9 +17571,9 @@ class KL() {
                         cond8B = parts[1]
                     }
                     val middleware8: Double = Dbl(
-                            Str(cond8).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond8).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware8B: Double = Dbl(
-                            Str(cond8B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond8B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond8 = String(cond8).replace("[^<>=else]".toRegex(), "")
                     cond8B = String(cond8B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -17580,7 +17585,7 @@ class KL() {
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl > middleware8
-                                        || srcDbl >= middleware8B) {
+                                    || srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17591,13 +17596,13 @@ class KL() {
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl > middleware8
-                                        || srcDbl <= middleware8B) {
+                                    || srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl > middleware8
-                                        || srcDbl == middleware8B) {
+                                    || srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17605,31 +17610,31 @@ class KL() {
                         } else if (eq(cond8, ">=")) {
                             if (eq(cond8B, ">")) {
                                 if (srcDbl >= middleware8
-                                        || srcDbl > middleware8B) {
+                                    || srcDbl > middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl >= middleware8
-                                        || srcDbl >= middleware8B) {
+                                    || srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<")) {
                                 if (srcDbl >= middleware8
-                                        || srcDbl < middleware8B) {
+                                    || srcDbl < middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl >= middleware8
-                                        || srcDbl <= middleware8B) {
+                                    || srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl >= middleware8
-                                        || srcDbl == middleware8B) {
+                                    || srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17642,7 +17647,7 @@ class KL() {
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl < middleware8
-                                        || srcDbl >= middleware8B) {
+                                    || srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17653,13 +17658,13 @@ class KL() {
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl < middleware8
-                                        || srcDbl <= middleware8B) {
+                                    || srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl < middleware8
-                                        || srcDbl == middleware8B) {
+                                    || srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17667,31 +17672,31 @@ class KL() {
                         } else if (eq(cond8, "<=")) {
                             if (eq(cond8B, ">")) {
                                 if (srcDbl <= middleware8
-                                        || srcDbl > middleware8B) {
+                                    || srcDbl > middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl <= middleware8
-                                        || srcDbl >= middleware8B) {
+                                    || srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<")) {
                                 if (srcDbl <= middleware8
-                                        || srcDbl < middleware8B) {
+                                    || srcDbl < middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl <= middleware8
-                                        || srcDbl <= middleware8B) {
+                                    || srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl <= middleware8
-                                        || srcDbl == middleware8B) {
+                                    || srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17699,31 +17704,31 @@ class KL() {
                         } else if (eq(cond8, "==")) {
                             if (eq(cond8B, ">")) {
                                 if (srcDbl == middleware8
-                                        || srcDbl > middleware8B) {
+                                    || srcDbl > middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl == middleware8
-                                        || srcDbl >= middleware8B) {
+                                    || srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<")) {
                                 if (srcDbl == middleware8
-                                        || srcDbl < middleware8B) {
+                                    || srcDbl < middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl == middleware8
-                                        || srcDbl <= middleware8B) {
+                                    || srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl == middleware8
-                                        || srcDbl == middleware8B) {
+                                    || srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17738,7 +17743,7 @@ class KL() {
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl > middleware8
-                                        && srcDbl >= middleware8B) {
+                                    && srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17749,13 +17754,13 @@ class KL() {
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl > middleware8
-                                        && srcDbl <= middleware8B) {
+                                    && srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl > middleware8
-                                        && srcDbl == middleware8B) {
+                                    && srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17763,31 +17768,31 @@ class KL() {
                         } else if (eq(cond8, ">=")) {
                             if (eq(cond8B, ">")) {
                                 if (srcDbl >= middleware8
-                                        && srcDbl > middleware8B) {
+                                    && srcDbl > middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl >= middleware8
-                                        && srcDbl >= middleware8B) {
+                                    && srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<")) {
                                 if (srcDbl >= middleware8
-                                        && srcDbl < middleware8B) {
+                                    && srcDbl < middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl >= middleware8
-                                        && srcDbl <= middleware8B) {
+                                    && srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl >= middleware8
-                                        && srcDbl == middleware8B) {
+                                    && srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17800,7 +17805,7 @@ class KL() {
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl < middleware8
-                                        && srcDbl >= middleware8B) {
+                                    && srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17811,13 +17816,13 @@ class KL() {
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl < middleware8
-                                        && srcDbl <= middleware8B) {
+                                    && srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl < middleware8
-                                        && srcDbl == middleware8B) {
+                                    && srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17825,31 +17830,31 @@ class KL() {
                         } else if (eq(cond8, "<=")) {
                             if (eq(cond8B, ">")) {
                                 if (srcDbl <= middleware8
-                                        && srcDbl > middleware8B) {
+                                    && srcDbl > middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl <= middleware8
-                                        && srcDbl >= middleware8B) {
+                                    && srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<")) {
                                 if (srcDbl <= middleware8
-                                        && srcDbl < middleware8B) {
+                                    && srcDbl < middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl <= middleware8
-                                        && srcDbl <= middleware8B) {
+                                    && srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl <= middleware8
-                                        && srcDbl == middleware8B) {
+                                    && srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17857,31 +17862,31 @@ class KL() {
                         } else if (eq(cond8, "==")) {
                             if (eq(cond8B, ">")) {
                                 if (srcDbl == middleware8
-                                        && srcDbl > middleware8B) {
+                                    && srcDbl > middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, ">=")) {
                                 if (srcDbl == middleware8
-                                        && srcDbl >= middleware8B) {
+                                    && srcDbl >= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<")) {
                                 if (srcDbl == middleware8
-                                        && srcDbl < middleware8B) {
+                                    && srcDbl < middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "<=")) {
                                 if (srcDbl == middleware8
-                                        && srcDbl <= middleware8B) {
+                                    && srcDbl <= middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
                             } else if (eq(cond8B, "==")) {
                                 if (srcDbl == middleware8
-                                        && srcDbl == middleware8B) {
+                                    && srcDbl == middleware8B) {
                                     if (!isNull<Runnable?>(sol8)) java.lang.Thread(sol8).run()
                                     return true
                                 }
@@ -17945,7 +17950,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond9),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
                         val op: String = Str(cond9).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond9).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -17953,9 +17958,9 @@ class KL() {
                         cond9B = parts[1]
                     }
                     val middleware9: Double = Dbl(
-                            Str(cond9).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond9).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware9B: Double = Dbl(
-                            Str(cond9B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond9B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond9 = String(cond9).replace("[^<>=else]".toRegex(), "")
                     cond9B = String(cond9B).replace("[^<>=]".toRegex(), "")
                     if (either) {
@@ -17967,7 +17972,7 @@ class KL() {
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl > middleware9
-                                        || srcDbl >= middleware9B) {
+                                    || srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -17978,13 +17983,13 @@ class KL() {
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl > middleware9
-                                        || srcDbl <= middleware9B) {
+                                    || srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl > middleware9
-                                        || srcDbl == middleware9B) {
+                                    || srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -17992,31 +17997,31 @@ class KL() {
                         } else if (eq(cond9, ">=")) {
                             if (eq(cond9B, ">")) {
                                 if (srcDbl >= middleware9
-                                        || srcDbl > middleware9B) {
+                                    || srcDbl > middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl >= middleware9
-                                        || srcDbl >= middleware9B) {
+                                    || srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<")) {
                                 if (srcDbl >= middleware9
-                                        || srcDbl < middleware9B) {
+                                    || srcDbl < middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl >= middleware9
-                                        || srcDbl <= middleware9B) {
+                                    || srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl >= middleware9
-                                        || srcDbl == middleware9B) {
+                                    || srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18029,7 +18034,7 @@ class KL() {
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl < middleware9
-                                        || srcDbl >= middleware9B) {
+                                    || srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18040,13 +18045,13 @@ class KL() {
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl < middleware9
-                                        || srcDbl <= middleware9B) {
+                                    || srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl < middleware9
-                                        || srcDbl == middleware9B) {
+                                    || srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18054,31 +18059,31 @@ class KL() {
                         } else if (eq(cond9, "<=")) {
                             if (eq(cond9B, ">")) {
                                 if (srcDbl <= middleware9
-                                        || srcDbl > middleware9B) {
+                                    || srcDbl > middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl <= middleware9
-                                        || srcDbl >= middleware9B) {
+                                    || srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<")) {
                                 if (srcDbl <= middleware9
-                                        || srcDbl < middleware9B) {
+                                    || srcDbl < middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl <= middleware9
-                                        || srcDbl <= middleware9B) {
+                                    || srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl <= middleware9
-                                        || srcDbl == middleware9B) {
+                                    || srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18086,31 +18091,31 @@ class KL() {
                         } else if (eq(cond9, "==")) {
                             if (eq(cond9B, ">")) {
                                 if (srcDbl == middleware9
-                                        || srcDbl > middleware9B) {
+                                    || srcDbl > middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl == middleware9
-                                        || srcDbl >= middleware9B) {
+                                    || srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<")) {
                                 if (srcDbl == middleware9
-                                        || srcDbl < middleware9B) {
+                                    || srcDbl < middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl == middleware9
-                                        || srcDbl <= middleware9B) {
+                                    || srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl == middleware9
-                                        || srcDbl == middleware9B) {
+                                    || srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18125,7 +18130,7 @@ class KL() {
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl > middleware9
-                                        && srcDbl >= middleware9B) {
+                                    && srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18136,13 +18141,13 @@ class KL() {
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl > middleware9
-                                        && srcDbl <= middleware9B) {
+                                    && srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl > middleware9
-                                        && srcDbl == middleware9B) {
+                                    && srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18150,31 +18155,31 @@ class KL() {
                         } else if (eq(cond9, ">=")) {
                             if (eq(cond9B, ">")) {
                                 if (srcDbl >= middleware9
-                                        && srcDbl > middleware9B) {
+                                    && srcDbl > middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl >= middleware9
-                                        && srcDbl >= middleware9B) {
+                                    && srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<")) {
                                 if (srcDbl >= middleware9
-                                        && srcDbl < middleware9B) {
+                                    && srcDbl < middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl >= middleware9
-                                        && srcDbl <= middleware9B) {
+                                    && srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl >= middleware9
-                                        && srcDbl == middleware9B) {
+                                    && srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18187,7 +18192,7 @@ class KL() {
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl < middleware9
-                                        && srcDbl >= middleware9B) {
+                                    && srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18198,13 +18203,13 @@ class KL() {
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl < middleware9
-                                        && srcDbl <= middleware9B) {
+                                    && srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl < middleware9
-                                        && srcDbl == middleware9B) {
+                                    && srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18212,31 +18217,31 @@ class KL() {
                         } else if (eq(cond9, "<=")) {
                             if (eq(cond9B, ">")) {
                                 if (srcDbl <= middleware9
-                                        && srcDbl > middleware9B) {
+                                    && srcDbl > middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl <= middleware9
-                                        && srcDbl >= middleware9B) {
+                                    && srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<")) {
                                 if (srcDbl <= middleware9
-                                        && srcDbl < middleware9B) {
+                                    && srcDbl < middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl <= middleware9
-                                        && srcDbl <= middleware9B) {
+                                    && srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl <= middleware9
-                                        && srcDbl == middleware9B) {
+                                    && srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18244,31 +18249,31 @@ class KL() {
                         } else if (eq(cond9, "==")) {
                             if (eq(cond9B, ">")) {
                                 if (srcDbl == middleware9
-                                        && srcDbl > middleware9B) {
+                                    && srcDbl > middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, ">=")) {
                                 if (srcDbl == middleware9
-                                        && srcDbl >= middleware9B) {
+                                    && srcDbl >= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<")) {
                                 if (srcDbl == middleware9
-                                        && srcDbl < middleware9B) {
+                                    && srcDbl < middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "<=")) {
                                 if (srcDbl == middleware9
-                                        && srcDbl <= middleware9B) {
+                                    && srcDbl <= middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
                             } else if (eq(cond9B, "==")) {
                                 if (srcDbl == middleware9
-                                        && srcDbl == middleware9B) {
+                                    && srcDbl == middleware9B) {
                                     if (!isNull<Runnable?>(sol9)) java.lang.Thread(sol9).run()
                                     return true
                                 }
@@ -18332,7 +18337,7 @@ class KL() {
                     var either = false
                     var both = false
                     if (`in`(Str(cond10),
-                                    "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+                            "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
                         val op: String = Str(cond10).replace("[^\\&\\|]".toRegex(), "")
                         if (`in`(op.replace("[\\&]".toRegex(), ""), "\\|")) either = true else both = true
                         val parts: Array<String> = Str(cond10).split("\\s*[\\&\\|]+\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -18340,40 +18345,40 @@ class KL() {
                         cond10B = parts[1]
                     }
                     val middleware10: Double = Dbl(
-                            Str(cond10).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond10).replace("[^\\-\\d\\.]".toRegex(), ""))
                     val middleware10B: Double = Dbl(
-                            Str(cond10B).replace("[^\\-\\d\\.]".toRegex(), ""))
+                        Str(cond10B).replace("[^\\-\\d\\.]".toRegex(), ""))
                     cond10 = String(cond10).replace("[^<>=else]".toRegex(), "")
                     cond10B = String(cond10B).replace("[^<>=]".toRegex(), "")
                     if (either) {
                         if (eq(cond10, ">")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl > middleware10
-                                        || srcDbl > middleware10B) {
+                                    || srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl > middleware10
-                                        || srcDbl >= middleware10B) {
+                                    || srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl > middleware10
-                                        || srcDbl < middleware10B) {
+                                    || srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl > middleware10
-                                        || srcDbl <= middleware10B) {
+                                    || srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl > middleware10
-                                        || srcDbl == middleware10B) {
+                                    || srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18381,31 +18386,31 @@ class KL() {
                         } else if (eq(cond10, ">=")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl >= middleware10
-                                        || srcDbl > middleware10B) {
+                                    || srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl >= middleware10
-                                        || srcDbl >= middleware10B) {
+                                    || srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl >= middleware10
-                                        || srcDbl < middleware10B) {
+                                    || srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl >= middleware10
-                                        || srcDbl <= middleware10B) {
+                                    || srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl >= middleware10
-                                        || srcDbl == middleware10B) {
+                                    || srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18413,31 +18418,31 @@ class KL() {
                         } else if (eq(cond10, "<")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl < middleware10
-                                        || srcDbl > middleware10B) {
+                                    || srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl < middleware10
-                                        || srcDbl >= middleware10B) {
+                                    || srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl < middleware10
-                                        || srcDbl < middleware10B) {
+                                    || srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl < middleware10
-                                        || srcDbl <= middleware10B) {
+                                    || srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl < middleware10
-                                        || srcDbl == middleware10B) {
+                                    || srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18445,31 +18450,31 @@ class KL() {
                         } else if (eq(cond10, "<=")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl <= middleware10
-                                        || srcDbl > middleware10B) {
+                                    || srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl <= middleware10
-                                        || srcDbl >= middleware10B) {
+                                    || srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl <= middleware10
-                                        || srcDbl < middleware10B) {
+                                    || srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl <= middleware10
-                                        || srcDbl <= middleware10B) {
+                                    || srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl <= middleware10
-                                        || srcDbl == middleware10B) {
+                                    || srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18477,31 +18482,31 @@ class KL() {
                         } else if (eq(cond10, "==")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl == middleware10
-                                        || srcDbl > middleware10B) {
+                                    || srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl == middleware10
-                                        || srcDbl >= middleware10B) {
+                                    || srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl == middleware10
-                                        || srcDbl < middleware10B) {
+                                    || srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl == middleware10
-                                        || srcDbl <= middleware10B) {
+                                    || srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl == middleware10
-                                        || srcDbl == middleware10B) {
+                                    || srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18511,31 +18516,31 @@ class KL() {
                         if (eq(cond10, ">")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl > middleware10
-                                        && srcDbl > middleware10B) {
+                                    && srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl > middleware10
-                                        && srcDbl >= middleware10B) {
+                                    && srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl > middleware10
-                                        && srcDbl < middleware10B) {
+                                    && srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl > middleware10
-                                        && srcDbl <= middleware10B) {
+                                    && srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl > middleware10
-                                        && srcDbl == middleware10B) {
+                                    && srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18543,31 +18548,31 @@ class KL() {
                         } else if (eq(cond10, ">=")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl >= middleware10
-                                        && srcDbl > middleware10B) {
+                                    && srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl >= middleware10
-                                        && srcDbl >= middleware10B) {
+                                    && srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl >= middleware10
-                                        && srcDbl < middleware10B) {
+                                    && srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl >= middleware10
-                                        && srcDbl <= middleware10B) {
+                                    && srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl >= middleware10
-                                        && srcDbl == middleware10B) {
+                                    && srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18575,31 +18580,31 @@ class KL() {
                         } else if (eq(cond10, "<")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl < middleware10
-                                        && srcDbl > middleware10B) {
+                                    && srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl < middleware10
-                                        && srcDbl >= middleware10B) {
+                                    && srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl < middleware10
-                                        && srcDbl < middleware10B) {
+                                    && srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl < middleware10
-                                        && srcDbl <= middleware10B) {
+                                    && srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl < middleware10
-                                        && srcDbl == middleware10B) {
+                                    && srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18607,31 +18612,31 @@ class KL() {
                         } else if (eq(cond10, "<=")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl <= middleware10
-                                        && srcDbl > middleware10B) {
+                                    && srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl <= middleware10
-                                        && srcDbl >= middleware10B) {
+                                    && srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl <= middleware10
-                                        && srcDbl < middleware10B) {
+                                    && srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl <= middleware10
-                                        && srcDbl <= middleware10B) {
+                                    && srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl <= middleware10
-                                        && srcDbl == middleware10B) {
+                                    && srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -18639,31 +18644,31 @@ class KL() {
                         } else if (eq(cond10, "==")) {
                             if (eq(cond10B, ">")) {
                                 if (srcDbl == middleware10
-                                        && srcDbl > middleware10B) {
+                                    && srcDbl > middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, ">=")) {
                                 if (srcDbl == middleware10
-                                        && srcDbl >= middleware10B) {
+                                    && srcDbl >= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<")) {
                                 if (srcDbl == middleware10
-                                        && srcDbl < middleware10B) {
+                                    && srcDbl < middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "<=")) {
                                 if (srcDbl == middleware10
-                                        && srcDbl <= middleware10B) {
+                                    && srcDbl <= middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
                             } else if (eq(cond10B, "==")) {
                                 if (srcDbl == middleware10
-                                        && srcDbl == middleware10B) {
+                                    && srcDbl == middleware10B) {
                                     if (!isNull<Runnable?>(sol10)) java.lang.Thread(sol10).run()
                                     return true
                                 }
@@ -19074,8 +19079,8 @@ class KL() {
                    cond8: Any?, sol8: Runnable?, cond9: Any?, sol9: Runnable?,
                    cond10: Any?, sol10: Runnable?): Boolean {
             return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
-                    cond10, sol10)
+                cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+                cond10, sol10)
         }
 
         fun `when`(src: Any?, cond1: Any?, sol1: Runnable,
@@ -19084,8 +19089,8 @@ class KL() {
                    cond6: Any?, sol6: Runnable?, cond7: Any?, sol7: Runnable?,
                    cond8: Any?, sol8: Runnable?, cond9: Any?, sol9: Runnable?): Boolean {
             return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
-                    sol9)
+                cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+                sol9)
         }
 
         fun `when`(src: Any?, cond1: Any?, sol1: Runnable,
@@ -19094,7 +19099,7 @@ class KL() {
                    cond6: Any?, sol6: Runnable?, cond7: Any?, sol7: Runnable?,
                    cond8: Any?, sol8: Runnable?): Boolean {
             return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8)
+                cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8)
         }
 
         fun `when`(src: Any?, cond1: Any?, sol1: Runnable,
@@ -19102,7 +19107,7 @@ class KL() {
                    cond4: Any?, sol4: Runnable?, cond5: Any?, sol5: Runnable?,
                    cond6: Any?, sol6: Runnable?, cond7: Any?, sol7: Runnable?): Boolean {
             return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6, cond7, sol7)
+                cond5, sol5, cond6, sol6, cond7, sol7)
         }
 
         fun `when`(src: Any?, cond1: Any?, sol1: Runnable,
@@ -19110,14 +19115,14 @@ class KL() {
                    cond4: Any?, sol4: Runnable?, cond5: Any?, sol5: Runnable?,
                    cond6: Any?, sol6: Runnable?): Boolean {
             return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6)
+                cond5, sol5, cond6, sol6)
         }
 
         fun `when`(src: Any?, cond1: Any?, sol1: Runnable,
                    cond2: Any?, sol2: Runnable?, cond3: Any?, sol3: Runnable?,
                    cond4: Any?, sol4: Runnable?, cond5: Any?, sol5: Runnable?): Boolean {
             return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5)
+                cond5, sol5)
         }
 
         fun `when`(src: Any?, cond1: Any?, sol1: Runnable,
@@ -19144,11 +19149,11 @@ class KL() {
         fun sw(cond1: Boolean, sol1: Runnable?, cond2: Boolean = false,
                sol2: Runnable? = null, cond3: Boolean = false, sol3: Runnable? = null, cond4: Boolean = false,
                sol4: Runnable? = null, cond5: Boolean = false, sol5: Runnable? = null, cond6: Boolean =
-                       false,
+                   false,
                sol6: Runnable? = null, cond7: Boolean = false, sol7: Runnable? = null, cond8: Boolean = false,
                sol8: Runnable? = null, cond9: Boolean = false, sol9: Runnable? = null, cond10: Boolean = false,
                sol10: Runnable? =
-                       null) {
+                   null) {
             if (`is`(cond1)) java.lang.Thread(sol1).run() else if (`is`(cond2)) java.lang.Thread(sol2).run() else if (`is`(cond3)) java.lang.Thread(sol3).run() else if (`is`(cond4)) java.lang.Thread(sol4).run() else if (`is`(cond5)) java.lang.Thread(sol5).run() else if (`is`(cond6)) java.lang.Thread(sol6).run() else if (`is`(cond7)) java.lang.Thread(sol7).run() else if (`is`(cond8)) java.lang.Thread(sol8).run() else if (`is`(cond9)) java.lang.Thread(sol9).run() else if (`is`(cond10)) java.lang.Thread(sol10).run()
             return
         }
@@ -19216,7 +19221,7 @@ class KL() {
         fun range(m: String, n: String, vararg optional: Int): Array<String?> {
             val arr = KL.strArr()
             if (isNull(m) || isNull(n) || eq(m, n) || !eq(m, "[A-Za-z]")
-                    || !eq(n, "[A-Za-z]")) return arr.array()
+                || !eq(n, "[A-Za-z]")) return arr.array()
             var step = 1
             if (`is`(optional) && len(optional) == 1) {
                 step = if (`is`(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0].toDouble())) optional[0] else 1
@@ -19663,7 +19668,7 @@ class KL() {
         // handling Object arrays
         // DON'T remove
         fun repeat(fn: Runnable?, times: Int) {
-            var times = times
+
             while (times > 0) {
                 java.lang.Thread(fn).run()
                 times--
@@ -19672,8 +19677,8 @@ class KL() {
 
         @kotlin.jvm.JvmOverloads
         fun repeat(s: String?, times: Int = 2): String? {
-            var s = s
-            var times = times
+
+
             if (not(s) || not(times) || isNeg(times)) return s
             val org = s
             while (-1 + times > 0) {
@@ -20052,14 +20057,14 @@ class KL() {
         // Date functions
         fun nthDay(n: Int): String {
             val days = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-                    "Friday", "Saturday")
+                "Friday", "Saturday")
             return days[n]
         }
 
         fun nthMonth(n: Int): String {
             val months = arrayOf("January", "February", "March", "April", "May",
-                    "June", "July", "August", "September", "October", "November",
-                    "December")
+                "June", "July", "August", "September", "October", "November",
+                "December")
             return months[n]
         }
 
@@ -20213,7 +20218,7 @@ class KL() {
         }
 
         fun lastMonthOf(date: String): String {
-            var date = date
+
             val dt: java.util.Date = java.util.Date(date)
             dt.setTime(dt.getTime() + 5 * 36e5.toInt()) // fix 5-hour bug
             dt.setMonth(dt.getMonth() - 1) // decrement a month
@@ -20233,7 +20238,7 @@ class KL() {
         }
 
         fun nextMonthOf(date: String): String {
-            var date = date
+
             val dt: java.util.Date = java.util.Date(date)
             dt.setTime(dt.getTime() + 5 * 36e5.toInt()) // fix 5-hour bug
             dt.setMonth(dt.getMonth() + 1) // increment a month
@@ -20254,7 +20259,7 @@ class KL() {
         }
 
         fun lastYearOf(date: String): String {
-            var date = date
+
             val dt: java.util.Date = java.util.Date(date)
             dt.setTime(dt.getTime() + 5 * 36e5.toInt()) // fix 5-hour bug
             dt.setYear(dt.getYear() - 1) // decrement a year
@@ -20273,7 +20278,7 @@ class KL() {
         }
 
         fun nextYear(date: String): String {
-            var date = date
+
             val dt: java.util.Date = java.util.Date(date)
             dt.setTime(dt.getTime() + 5 * 36e5.toInt()) // fix 5-hour bug
             dt.setYear(dt.getYear() + 1) // increment a year
@@ -20296,7 +20301,7 @@ class KL() {
         }
 
         fun date2day(date: String): String {
-            var date = date
+
             val dt: java.util.Date = java.util.Date(date)
             dt.setTime(dt.getTime() + 5 * 36e5.toInt()) // fix 5-hour bug
             date = formattedDate(dt)
@@ -20305,7 +20310,7 @@ class KL() {
         }
 
         fun date2month(date: String): String {
-            var date = date
+
             val dt: java.util.Date = java.util.Date(date)
             dt.setTime(dt.getTime() + 5 * 36e5.toInt()) // fix 5-hour bug
             date = formattedDate(dt)
@@ -20413,7 +20418,7 @@ class KL() {
             val dt: java.util.Date = java.util.Date()
             dt.setTime(dt.getTime() + 5 * 36e5.toInt()) // fix 5-hour bug
             dt.setTime(
-                    dt.getTime() - 36e5.toInt() * dt.getHours() + n * 36e5.toInt())
+                dt.getTime() - 36e5.toInt() * dt.getHours() + n * 36e5.toInt())
             var time = formattedDate(dt)
             time = time.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().get(3)
             return time
@@ -20427,7 +20432,7 @@ class KL() {
         fun println(vararg args: Any) {
             if (isNull(*args) || not(args.size)) return
             if (!isNull(args[0]) && args[0] is String
-                    && `in`(Str(args[0]), "[\\%\\$\\&\\{\\}]")) {
+                && `in`(Str(args[0]), "[\\%\\$\\&\\{\\}]")) {
                 if (len(args) >= 2) {
                     KL().printf(args[0] as String, *slice(args, 1))
                     return
@@ -20771,7 +20776,7 @@ class KL() {
 
         @kotlin.jvm.JvmOverloads
         fun br(n: Int = 1) {
-            var n = n
+
             while (n > 0) {
                 print("\n")
                 n--
@@ -21308,7 +21313,7 @@ class KL() {
                 k6: String?, v6: String?, k7: String?, v7: String?, k8: String?, v8: String?,
                 k9: String?, v9: String?, k10: String?, v10: String?): objS {
             return KL.objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun obj(k1: String?, v1: String?, k2: String?, v2: String?,
@@ -21316,14 +21321,14 @@ class KL() {
                 k6: String?, v6: String?, k7: String?, v7: String?, k8: String?, v8: String?,
                 k9: String?, v9: String?): objS {
             return KL.objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun obj(k1: String?, v1: String?, k2: String?, v2: String?,
                 k3: String?, v3: String?, k4: String?, v4: String?, k5: String?, v5: String?,
                 k6: String?, v6: String?, k7: String?, v7: String?, k8: String?, v8: String?): objS {
             return KL.objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun obj(k1: String?, v1: String?, k2: String?, v2: String?,
@@ -21366,21 +21371,21 @@ class KL() {
                 k7: String?, v7: Int, k8: String?, v8: Int, k9: String?, v9: Int, k10: String?,
                 v10: Int): objI {
             return KL.objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun obj(k1: String?, v1: Int, k2: String?, v2: Int, k3: String?,
                 v3: Int, k4: String?, v4: Int, k5: String?, v5: Int, k6: String?, v6: Int,
                 k7: String?, v7: Int, k8: String?, v8: Int, k9: String?, v9: Int): objI {
             return KL.objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun obj(k1: String?, v1: Int, k2: String?, v2: Int, k3: String?,
                 v3: Int, k4: String?, v4: Int, k5: String?, v5: Int, k6: String?, v6: Int,
                 k7: String?, v7: Int, k8: String?, v8: Int): objI {
             return KL.objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun obj(k1: String?, v1: Int, k2: String?, v2: Int, k3: String?,
@@ -21422,21 +21427,21 @@ class KL() {
                 k7: String?, v7: Long, k8: String?, v8: Long, k9: String?, v9: Long,
                 k10: String?, v10: Long): objL {
             return KL.objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun obj(k1: String?, v1: Long, k2: String?, v2: Long, k3: String?,
                 v3: Long, k4: String?, v4: Long, k5: String?, v5: Long, k6: String?, v6: Long,
                 k7: String?, v7: Long, k8: String?, v8: Long, k9: String?, v9: Long): objL {
             return KL.objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun obj(k1: String?, v1: Long, k2: String?, v2: Long, k3: String?,
                 v3: Long, k4: String?, v4: Long, k5: String?, v5: Long, k6: String?, v6: Long,
                 k7: String?, v7: Long, k8: String?, v8: Long): objL {
             return KL.objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun obj(k1: String?, v1: Long, k2: String?, v2: Long, k3: String?,
@@ -21479,7 +21484,7 @@ class KL() {
                 v6: Float, k7: String?, v7: Float, k8: String?, v8: Float, k9: String?,
                 v9: Float, k10: String?, v10: Float): objF {
             return KL.objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun obj(k1: String?, v1: Float, k2: String?, v2: Float, k3: String?,
@@ -21487,14 +21492,14 @@ class KL() {
                 v6: Float, k7: String?, v7: Float, k8: String?, v8: Float, k9: String?,
                 v9: Float): objF {
             return KL.objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun obj(k1: String?, v1: Float, k2: String?, v2: Float, k3: String?,
                 v3: Float, k4: String?, v4: Float, k5: String?, v5: Float, k6: String?,
                 v6: Float, k7: String?, v7: Float, k8: String?, v8: Float): objF {
             return KL.objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun obj(k1: String?, v1: Float, k2: String?, v2: Float, k3: String?,
@@ -21537,7 +21542,7 @@ class KL() {
                 k6: String?, v6: Double, k7: String?, v7: Double, k8: String?, v8: Double,
                 k9: String?, v9: Double, k10: String?, v10: Double): objD {
             return KL.objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun obj(k1: String?, v1: Double, k2: String?, v2: Double,
@@ -21545,14 +21550,14 @@ class KL() {
                 k6: String?, v6: Double, k7: String?, v7: Double, k8: String?, v8: Double,
                 k9: String?, v9: Double): objD {
             return KL.objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun obj(k1: String?, v1: Double, k2: String?, v2: Double,
                 k3: String?, v3: Double, k4: String?, v4: Double, k5: String?, v5: Double,
                 k6: String?, v6: Double, k7: String?, v7: Double, k8: String?, v8: Double): objD {
             return KL.objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun obj(k1: String?, v1: Double, k2: String?, v2: Double,
@@ -21595,7 +21600,7 @@ class KL() {
                 k6: String?, v6: Boolean, k7: String?, v7: Boolean, k8: String?, v8: Boolean,
                 k9: String?, v9: Boolean, k10: String?, v10: Boolean): objB {
             return KL.objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun obj(k1: String?, v1: Boolean, k2: String?, v2: Boolean,
@@ -21603,7 +21608,7 @@ class KL() {
                 k6: String?, v6: Boolean, k7: String?, v7: Boolean, k8: String?, v8: Boolean,
                 k9: String?, v9: Boolean): objB {
             return KL.objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun obj(k1: String?, v1: Boolean, k2: String?, v2: Boolean,
@@ -21611,7 +21616,7 @@ class KL() {
                 k6: String?, v6: Boolean, k7: String?, v7: Boolean, k8: String?,
                 v8: Boolean): objB {
             return KL.objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun obj(k1: String?, v1: Boolean, k2: String?, v2: Boolean,
@@ -21656,28 +21661,28 @@ class KL() {
                  k7: Int, v7: String, k8: Int, v8: String, k9: Int, v9: String, k10: Int,
                  v10: String): treeI {
             return KL.treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Int, v1: String, k2: Int, v2: String, k3: Int,
                  v3: String, k4: Int, v4: String, k5: Int, v5: String, k6: Int, v6: String,
                  k7: Int, v7: String, k8: Int, v8: String, k9: Int, v9: String): treeI {
             return KL.treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun tree(k1: Int, v1: String, k2: Int, v2: String, k3: Int,
                  v3: String, k4: Int, v4: String, k5: Int, v5: String, k6: Int, v6: String,
                  k7: Int, v7: String, k8: Int, v8: String): treeI {
             return KL.treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun tree(k1: Int, v1: String, k2: Int, v2: String, k3: Int,
                  v3: String, k4: Int, v4: String, k5: Int, v5: String, k6: Int, v6: String,
                  k7: Int, v7: String): treeI {
             return KL.treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Int, v1: String, k2: Int, v2: String, k3: Int,
@@ -21715,7 +21720,7 @@ class KL() {
                  k6: Double, v6: String, k7: Double, v7: String, k8: Double, v8: String,
                  k9: Double, v9: String, k10: Double, v10: String): treeDS {
             return KL.treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9, k10, v10)
+                v7, k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Double, v1: String, k2: Double, v2: String,
@@ -21723,21 +21728,21 @@ class KL() {
                  k6: Double, v6: String, k7: Double, v7: String, k8: Double, v8: String,
                  k9: Double, v9: String): treeDS {
             return KL.treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9)
+                v7, k8, v8, k9, v9)
         }
 
         fun tree(k1: Double, v1: String, k2: Double, v2: String,
                  k3: Double, v3: String, k4: Double, v4: String, k5: Double, v5: String,
                  k6: Double, v6: String, k7: Double, v7: String, k8: Double, v8: String): treeDS {
             return KL.treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8)
+                v7, k8, v8)
         }
 
         fun tree(k1: Double, v1: String, k2: Double, v2: String,
                  k3: Double, v3: String, k4: Double, v4: String, k5: Double, v5: String,
                  k6: Double, v6: String, k7: Double, v7: String): treeDS {
             return KL.treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Double, v1: String, k2: Double, v2: String,
@@ -21774,28 +21779,28 @@ class KL() {
                  k4: Int, v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                  k8: Int, v8: Long, k9: Int, v9: Long, k10: Int, v10: Long): treeL {
             return KL.treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long,
                  k4: Int, v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                  k8: Int, v8: Long, k9: Int, v9: Long): treeL {
             return KL.treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun tree(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long,
                  k4: Int, v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int, v7: Long,
                  k8: Int, v8: Long): treeL {
             return KL.treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun tree(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long,
                  k4: Int, v4: Long, k5: Int, v5: Long, k6: Int, v6: Long, k7: Int,
                  v7: Long): treeL {
             return KL.treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Int, v1: Long, k2: Int, v2: Long, k3: Int, v3: Long,
@@ -21832,28 +21837,28 @@ class KL() {
                  k7: Double, v7: Long, k8: Double, v8: Long, k9: Double, v9: Long,
                  k10: Double, v10: Long): treeDL {
             return KL.treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9, k10, v10)
+                v7, k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Double, v1: Long, k2: Double, v2: Long, k3: Double,
                  v3: Long, k4: Double, v4: Long, k5: Double, v5: Long, k6: Double, v6: Long,
                  k7: Double, v7: Long, k8: Double, v8: Long, k9: Double, v9: Long): treeDL {
             return KL.treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9)
+                v7, k8, v8, k9, v9)
         }
 
         fun tree(k1: Double, v1: Long, k2: Double, v2: Long, k3: Double,
                  v3: Long, k4: Double, v4: Long, k5: Double, v5: Long, k6: Double, v6: Long,
                  k7: Double, v7: Long, k8: Double, v8: Long): treeDL {
             return KL.treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8)
+                v7, k8, v8)
         }
 
         fun tree(k1: Double, v1: Long, k2: Double, v2: Long, k3: Double,
                  v3: Long, k4: Double, v4: Long, k5: Double, v5: Long, k6: Double, v6: Long,
                  k7: Double, v7: Long): treeDL {
             return KL.treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Double, v1: Long, k2: Double, v2: Long, k3: Double,
@@ -21891,28 +21896,28 @@ class KL() {
                  k7: Int, v7: Float, k8: Int, v8: Float, k9: Int, v9: Float, k10: Int,
                  v10: Float): treeF {
             return KL.treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int,
                  v3: Float, k4: Int, v4: Float, k5: Int, v5: Float, k6: Int, v6: Float,
                  k7: Int, v7: Float, k8: Int, v8: Float, k9: Int, v9: Float): treeF {
             return KL.treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun tree(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int,
                  v3: Float, k4: Int, v4: Float, k5: Int, v5: Float, k6: Int, v6: Float,
                  k7: Int, v7: Float, k8: Int, v8: Float): treeF {
             return KL.treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun tree(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int,
                  v3: Float, k4: Int, v4: Float, k5: Int, v5: Float, k6: Int, v6: Float,
                  k7: Int, v7: Float): treeF {
             return KL.treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Int, v1: Float, k2: Int, v2: Float, k3: Int,
@@ -21949,7 +21954,7 @@ class KL() {
                  k6: Double, v6: Float, k7: Double, v7: Float, k8: Double, v8: Float,
                  k9: Double, v9: Float, k10: Double, v10: Float): treeDF {
             return KL.treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9, k10, v10)
+                v7, k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Double, v1: Float, k2: Double, v2: Float,
@@ -21957,21 +21962,21 @@ class KL() {
                  k6: Double, v6: Float, k7: Double, v7: Float, k8: Double, v8: Float,
                  k9: Double, v9: Float): treeDF {
             return KL.treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9)
+                v7, k8, v8, k9, v9)
         }
 
         fun tree(k1: Double, v1: Float, k2: Double, v2: Float,
                  k3: Double, v3: Float, k4: Double, v4: Float, k5: Double, v5: Float,
                  k6: Double, v6: Float, k7: Double, v7: Float, k8: Double, v8: Float): treeDF {
             return KL.treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8)
+                v7, k8, v8)
         }
 
         fun tree(k1: Double, v1: Float, k2: Double, v2: Float,
                  k3: Double, v3: Float, k4: Double, v4: Float, k5: Double, v5: Float,
                  k6: Double, v6: Float, k7: Double, v7: Float): treeDF {
             return KL.treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Double, v1: Float, k2: Double, v2: Float,
@@ -22009,28 +22014,28 @@ class KL() {
                  k7: Int, v7: Double, k8: Int, v8: Double, k9: Int, v9: Double, k10: Int,
                  v10: Double): treeD {
             return KL.treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int,
                  v3: Double, k4: Int, v4: Double, k5: Int, v5: Double, k6: Int, v6: Double,
                  k7: Int, v7: Double, k8: Int, v8: Double, k9: Int, v9: Double): treeD {
             return KL.treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun tree(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int,
                  v3: Double, k4: Int, v4: Double, k5: Int, v5: Double, k6: Int, v6: Double,
                  k7: Int, v7: Double, k8: Int, v8: Double): treeD {
             return KL.treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun tree(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int,
                  v3: Double, k4: Int, v4: Double, k5: Int, v5: Double, k6: Int, v6: Double,
                  k7: Int, v7: Double): treeD {
             return KL.treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Int, v1: Double, k2: Int, v2: Double, k3: Int,
@@ -22068,7 +22073,7 @@ class KL() {
                  v6: Boolean, k7: Int, v7: Boolean, k8: Int, v8: Boolean, k9: Int,
                  v9: Boolean, k10: Int, v10: Boolean): treeB {
             return KL.treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9, k10, v10)
+                k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int,
@@ -22076,21 +22081,21 @@ class KL() {
                  v6: Boolean, k7: Int, v7: Boolean, k8: Int, v8: Boolean, k9: Int,
                  v9: Boolean): treeB {
             return KL.treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8, k9, v9)
+                k8, v8, k9, v9)
         }
 
         fun tree(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int,
                  v3: Boolean, k4: Int, v4: Boolean, k5: Int, v5: Boolean, k6: Int,
                  v6: Boolean, k7: Int, v7: Boolean, k8: Int, v8: Boolean): treeB {
             return KL.treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-                    k8, v8)
+                k8, v8)
         }
 
         fun tree(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int,
                  v3: Boolean, k4: Int, v4: Boolean, k5: Int, v5: Boolean, k6: Int,
                  v6: Boolean, k7: Int, v7: Boolean): treeB {
             return KL.treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Int, v1: Boolean, k2: Int, v2: Boolean, k3: Int,
@@ -22128,7 +22133,7 @@ class KL() {
                  k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double, v8: Boolean,
                  k9: Double, v9: Boolean, k10: Double, v10: Boolean): treeDB {
             return KL.treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9, k10, v10)
+                v7, k8, v8, k9, v9, k10, v10)
         }
 
         fun tree(k1: Double, v1: Boolean, k2: Double, v2: Boolean,
@@ -22136,7 +22141,7 @@ class KL() {
                  k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double, v8: Boolean,
                  k9: Double, v9: Boolean): treeDB {
             return KL.treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8, k9, v9)
+                v7, k8, v8, k9, v9)
         }
 
         fun tree(k1: Double, v1: Boolean, k2: Double, v2: Boolean,
@@ -22144,14 +22149,14 @@ class KL() {
                  k6: Double, v6: Boolean, k7: Double, v7: Boolean, k8: Double,
                  v8: Boolean): treeDB {
             return KL.treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7, k8, v8)
+                v7, k8, v8)
         }
 
         fun tree(k1: Double, v1: Boolean, k2: Double, v2: Boolean,
                  k3: Double, v3: Boolean, k4: Double, v4: Boolean, k5: Double, v5: Boolean,
                  k6: Double, v6: Boolean, k7: Double, v7: Boolean): treeDB {
             return KL.treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
-                    v7)
+                v7)
         }
 
         fun tree(k1: Double, v1: Boolean, k2: Double, v2: Boolean,
@@ -22405,7 +22410,7 @@ class KL() {
             if (not(array)) return ""
             val halfProcessed = join(array, ", ")
             var returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-                    "$1and$1")
+                "$1and$1")
             // helps return a string in the American format of joining: a, b, and c
             // for
             // three items
@@ -22417,7 +22422,7 @@ class KL() {
             if (not(array)) return ""
             val halfProcessed = join(array, ", ")
             var returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-                    "$1and$1")
+                "$1and$1")
             // helps return a string in the American format of joining: a, b, and c
             // for
             // three items
@@ -22429,7 +22434,7 @@ class KL() {
             if (not(array)) return ""
             val halfProcessed = join(array, ", ")
             var returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-                    "$1and$1")
+                "$1and$1")
             // helps return a string in the American format of joining: a, b, and c
             // for
             // three items
@@ -22441,7 +22446,7 @@ class KL() {
             if (not(array)) return ""
             val halfProcessed = join(array, ", ")
             var returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-                    "$1and$1")
+                "$1and$1")
             // helps return a string in the American format of joining: a, b, and c
             // for
             // three items
@@ -22453,7 +22458,7 @@ class KL() {
             if (not(array)) return ""
             val halfProcessed = join(array, ", ")
             var returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-                    "$1and$1")
+                "$1and$1")
             // helps return a string in the American format of joining: a, b, and c
             // for
             // three items
@@ -22465,7 +22470,7 @@ class KL() {
             if (not(array)) return ""
             val halfProcessed = join(array, ", ")
             var returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-                    "$1and$1")
+                "$1and$1")
             // helps return a string in the American format of joining: a, b, and c
             // for
             // three items
@@ -22477,7 +22482,7 @@ class KL() {
             if (not(array)) return ""
             val halfProcessed = join(array, ", ")
             var returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-                    "$1and$1")
+                "$1and$1")
             // helps return a string in the American format of joining: a, b, and c
             // for
             // three items
@@ -22489,7 +22494,7 @@ class KL() {
             if (not(array)) return ""
             val halfProcessed = join(array, ", ")
             var returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-                    "$1and$1")
+                "$1and$1")
             // helps return a string in the American format of joining: a, b, and c
             // for
             // three items
@@ -22586,14 +22591,14 @@ class KL() {
         }
 
         fun eq(x: String?, y: String): Boolean {
-            var y = y
+
             if (not(x) || not(y)) return false
             y = y.replace("^\\^|\\$$".toRegex(), "")
             return match(x, "^($y)$")
         }
 
         fun eq(x: String, y: String, strict: Boolean): Boolean {
-            var y = y
+
             if (not(x) || not(y)) return false
             if (!strict) return eq(x, y) else {
                 y = y.replace("^\\^|\\$$".toRegex(), "")
@@ -22614,7 +22619,7 @@ class KL() {
         fun Int(arg: String?, base: Int = 10): Int {
             try {
                 return arg.replace("(?<=\\d)\\.\\d+".toRegex(), "").toInt(
-                        base)
+                    base)
             } catch (err: java.lang.Exception) {
                 return 0
             }
@@ -23594,61 +23599,61 @@ class KL() {
 
         fun min(nums: intArr): Int {
             val stat: IntSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: longArr): Long {
             val stat: LongSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: dblArr): Double {
             val stat: DoubleSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: objI): Int {
             val stat: IntSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: objL): Long {
             val stat: LongSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: objD): Double {
             val stat: DoubleSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: treeDI): Int {
             val stat: IntSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: treeDL): Long {
             val stat: LongSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: treeL): Long {
             val stat: LongSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
         fun min(nums: treeD): Double {
             val stat: DoubleSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMin()
         }
 
@@ -23669,67 +23674,67 @@ class KL() {
 
         fun max(nums: intArr): Int {
             val stat: IntSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: longArr): Long {
             val stat: LongSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: dblArr): Double {
             val stat: DoubleSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: objI): Int {
             val stat: IntSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: objL): Long {
             val stat: LongSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: objD): Double {
             val stat: DoubleSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: treeDI): Int {
             val stat: IntSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: treeDL): Long {
             val stat: LongSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: treeL): Long {
             val stat: LongSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun max(nums: treeD): Double {
             val stat: DoubleSummaryStatistics = Arrays.stream(nums.array())
-                    .summaryStatistics()
+                .summaryStatistics()
             return stat.getMax()
         }
 
         fun mod(n1: Double, n2: Double): Double {
-            var n1 = n1
-            var n2 = n2
+
+
             if (n2 > n1) {
                 // swap
                 n1 += n2
@@ -23888,9 +23893,9 @@ class KL() {
                 }
             }
             return replace(
-                    stringBuilder.reverse().toString() + "."
-                            + sliceToAfter(Str(floats), "."),
-                    "(?<=\\.\\d{2})\\d+", "")
+                stringBuilder.reverse().toString() + "."
+                        + sliceToAfter(Str(floats), "."),
+                "(?<=\\.\\d{2})\\d+", "")
         }
 
         fun fpkr(amount: Long): String {
@@ -23917,9 +23922,9 @@ class KL() {
                 }
             }
             return replace(
-                    (stringBuilder.reverse().toString() + "."
-                            + sliceToAfter(Str(floats), ".")),
-                    "(?<=\\.\\d{2})\\d+", "")
+                (stringBuilder.reverse().toString() + "."
+                        + sliceToAfter(Str(floats), ".")),
+                "(?<=\\.\\d{2})\\d+", "")
         }
 
         fun fpkr(amount: Float): String {
@@ -23946,9 +23951,9 @@ class KL() {
                 }
             }
             return replace(
-                    (stringBuilder.reverse().toString() + "."
-                            + sliceToAfter(Str(floats), ".")),
-                    "(?<=\\.\\d{2})\\d+", "")
+                (stringBuilder.reverse().toString() + "."
+                        + sliceToAfter(Str(floats), ".")),
+                "(?<=\\.\\d{2})\\d+", "")
         }
 
         fun fpkr(amount: Double): String {
@@ -23975,37 +23980,37 @@ class KL() {
                 }
             }
             return replace(
-                    (stringBuilder.reverse().toString() + "."
-                            + sliceToAfter(Str(floats), ".")),
-                    "(?<=\\.\\d{2})\\d+", "")
+                (stringBuilder.reverse().toString() + "."
+                        + sliceToAfter(Str(floats), ".")),
+                "(?<=\\.\\d{2})\\d+", "")
         }
 
         fun fus(n: Int): String {
             return if (isNull<Int>(n)) "" else NumberFormat
-                    .getCurrencyInstance(Locale.Builder().setLanguage("en")
-                            .setRegion("US").build())
-                    .format(n.toLong()).replace("[^\\d\\,\\.]".toRegex(), "")
+                .getCurrencyInstance(Locale.Builder().setLanguage("en")
+                    .setRegion("US").build())
+                .format(n.toLong()).replace("[^\\d\\,\\.]".toRegex(), "")
         }
 
         fun fus(n: Long): String {
             return if (isNull<Long>(n)) "" else NumberFormat
-                    .getCurrencyInstance(Locale.Builder().setLanguage("en")
-                            .setRegion("US").build())
-                    .format(n).replace("[^\\d\\,\\.]".toRegex(), "")
+                .getCurrencyInstance(Locale.Builder().setLanguage("en")
+                    .setRegion("US").build())
+                .format(n).replace("[^\\d\\,\\.]".toRegex(), "")
         }
 
         fun fus(n: Float): String {
             return if (isNull<Float>(n)) "" else NumberFormat
-                    .getCurrencyInstance(Locale.Builder().setLanguage("en")
-                            .setRegion("US").build())
-                    .format(n.toDouble()).replace("[^\\d\\,\\.]".toRegex(), "")
+                .getCurrencyInstance(Locale.Builder().setLanguage("en")
+                    .setRegion("US").build())
+                .format(n.toDouble()).replace("[^\\d\\,\\.]".toRegex(), "")
         }
 
         fun fus(n: Double): String {
             return if (isNull<Double>(n)) "" else NumberFormat
-                    .getCurrencyInstance(Locale.Builder().setLanguage("en")
-                            .setRegion("US").build())
-                    .format(n).replace("[^\\d\\,\\.]".toRegex(), "")
+                .getCurrencyInstance(Locale.Builder().setLanguage("en")
+                    .setRegion("US").build())
+                .format(n).replace("[^\\d\\,\\.]".toRegex(), "")
         }
 
         fun f(n: Int): String {
@@ -24089,7 +24094,7 @@ class KL() {
         }
 
         fun pksuffix(n: Int): String {
-            var n = n
+
             n -= n % 1
             val formattedN = fpkr(n)
             val parts = split(formattedN, ",")
@@ -24107,7 +24112,7 @@ class KL() {
         }
 
         fun pksuffix(n: Long): String {
-            var n = n
+
             n -= n % 1
             val formattedN = fpkr(n)
             val parts = split(formattedN, ",")
@@ -24125,7 +24130,7 @@ class KL() {
         }
 
         fun pksuffix(n: Float): String {
-            var n = n
+
             n -= n % 1
             val formattedN = fpkr(n)
             val parts = split(formattedN, ",")
@@ -24143,7 +24148,7 @@ class KL() {
         }
 
         fun pksuffix(n: Double): String {
-            var n = n
+
             n -= n % 1
             val formattedN = fpkr(n)
             val parts = split(formattedN, ",")
@@ -24161,7 +24166,7 @@ class KL() {
         }
 
         fun ussuffix(n: Int): String {
-            var n = n
+
             n -= n % 1
             val formattedN = fus(n)
             val parts = split(formattedN, ",")
@@ -24185,7 +24190,7 @@ class KL() {
         }
 
         fun ussuffix(n: Long): String {
-            var n = n
+
             n -= n % 1
             val formattedN = fus(n)
             val parts = split(formattedN, ",")
@@ -24209,7 +24214,7 @@ class KL() {
         }
 
         fun ussuffix(n: Float): String {
-            var n = n
+
             n -= n % 1
             val formattedN = fus(n)
             val parts = split(formattedN, ",")
@@ -24233,7 +24238,7 @@ class KL() {
         }
 
         fun ussuffix(n: Double): String {
-            var n = n
+
             n -= n % 1
             val formattedN = fus(n)
             val parts = split(formattedN, ",")
@@ -24259,9 +24264,9 @@ class KL() {
         fun toRoman(n: Int): String {
             val tree = treeI()
             tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X")
-                    .add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
-                    .add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
-                    .add(4000, "M_V").add(9000, "I_X").add(10000, "_X")
+                .add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
+                .add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
+                .add(4000, "M_V").add(9000, "I_X").add(10000, "_X")
             val x: Int = tree.floorKey(n)
             return if (n != x) tree.get(x) + toRoman(n - x) else tree.get(n)
         }
@@ -24287,7 +24292,7 @@ class KL() {
             var count = 0
             for (o: Any? in objs) {
                 if ((o == null
-                                || (if (o is Double) isInfinity(o) else false))) {
+                            || (if (o is Double) isInfinity(o) else false))) {
                     // tested: the else false clause stays, as it gets ignored; if o
                     // is a non-double, only the first condition is tested, the RHS
                     // will just be ignored
@@ -25210,13 +25215,13 @@ class KL() {
 
         fun randInt(start: Int, end: Int): Int {
             if (isNull(start) || not(end) || eq(start, end) || (start > end
-                            ) || isNeg(end)) return 0
+                        ) || isNeg(end)) return 0
             return ThreadLocalRandom.current().nextInt(start, end)
         }
 
         @kotlin.jvm.JvmOverloads
         fun randPin(len: Int = 4): Int {
-            var len = len
+
             var str: String = ""
             if (not(len) || len < 4) len = 4
             if (isInf(len.toDouble()) || len > 8) len = 8
@@ -25248,7 +25253,7 @@ class KL() {
 
         fun randFlt(start: Int, end: Int): Double {
             if (isNull(start) || not(end) || eq(start, end) || (start > end
-                            ) || isNeg(end)) return 0
+                        ) || isNeg(end)) return 0
             val number = randInt(start, end) * .3
             return toPrecision(number, 1)
         }
@@ -25263,7 +25268,7 @@ class KL() {
 
         fun randDbl(start: Int, end: Int): Double {
             return if (isNull(start) || not(end) || eq(start, end) || (start > end
-                            ) || isNeg(end)) 0 else randFlt(start, end)
+                        ) || isNeg(end)) 0 else randFlt(start, end)
         }
 
         fun randPct(): String {
@@ -25283,8 +25288,8 @@ class KL() {
 
         @kotlin.jvm.JvmOverloads
         fun randChar(low: Int = 47, high: Int = 127): Char {
-            var low = low
-            var high = high
+
+
             if (low < 0) low = 0
             if (high > 127) high = 127
             return randInt(low, high).toChar()
@@ -25345,11 +25350,11 @@ class KL() {
         }
 
         fun randItem(arr: fltArr): Float {
-            return if (not(arr)) 0 else arr.i(randInt(arr.length()))
+            return if (not(arr)) 0.0f else arr.i(randInt(arr.length()))
         }
 
         fun randItem(arr: dblArr): Double {
-            return if (not(arr)) 0 else arr.i(randInt(arr.length()))
+            return if (not(arr)) 0.0 else arr.i(randInt(arr.length()))
         }
 
         fun randItem(arr: boolArr): Boolean {
@@ -25783,7 +25788,7 @@ class KL() {
         fun slice(oldArr: Array<String?>, start: Int): Array<String?> {
             if (not(oldArr) || not(start) || isNeg(start) || (start >= len(oldArr))) return slice(oldArr)
             return Arrays.copyOfRange<String>(oldArr.clone(), start,
-                    len(oldArr))
+                len(oldArr))
         }
 
         fun slice(oldArr: IntArray, start: Int): IntArray {
@@ -25804,19 +25809,19 @@ class KL() {
         fun slice(oldArr: DoubleArray, start: Int): DoubleArray {
             if (not(oldArr) || not(start) || isNeg(start) || (start >= len(oldArr))) return slice(oldArr)
             return Arrays.copyOfRange(oldArr.clone(), start,
-                    len(oldArr))
+                len(oldArr))
         }
 
         fun slice(oldArr: BooleanArray, start: Int): BooleanArray {
             if (not(oldArr) || not(start) || isNeg(start) || (start >= len(oldArr))) return slice(oldArr)
             return Arrays.copyOfRange(oldArr.clone(), start,
-                    len(oldArr))
+                len(oldArr))
         }
 
         fun slice(oldArr: Array<Any>, start: Int): Array<Any> {
             if (not(oldArr) || not(start) || isNeg(start) || (start >= len(oldArr))) return slice(oldArr)
             return Arrays.copyOfRange<Any>(oldArr.clone(), start,
-                    len(oldArr))
+                len(oldArr))
         }
 
         fun slice(arr: strArr, start: Int): strArr {
@@ -25845,93 +25850,93 @@ class KL() {
 
         fun slice(str: String, start: Int, end: Int): String {
             return if ((not(str) || isNull<Int>(start) || (start >= len(str)) || eq(start, end)
-                            || (end < start) || not(end) || isNeg(start) || isNeg(end)
-                            || (end >= len(str)))) slice(str) else str.substring(start, end)
+                        || (end < start) || not(end) || isNeg(start) || isNeg(end)
+                        || (end >= len(str)))) slice(str) else str.substring(start, end)
         }
 
         fun slice(oldArr: Array<String?>, start: Int, end: Int): Array<String?> {
             if ((not(oldArr) || isNull(start) || (start >= len(oldArr)
-                            ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
-                            || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
+                        ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
+                        || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
             return Arrays.copyOfRange<String>(oldArr.clone(), start, end)
         }
 
         fun slice(oldArr: IntArray, start: Int, end: Int): IntArray {
             if ((not(oldArr) || isNull(start) || (start >= len(oldArr)
-                            ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
-                            || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
+                        ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
+                        || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
             return Arrays.copyOfRange(oldArr.clone(), start, end)
         }
 
         fun slice(oldArr: LongArray, start: Int, end: Int): LongArray {
             if ((not(oldArr) || isNull(start) || (start >= len(oldArr)
-                            ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
-                            || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
+                        ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
+                        || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
             return Arrays.copyOfRange(oldArr.clone(), start, end)
         }
 
         fun slice(oldArr: FloatArray, start: Int, end: Int): FloatArray {
             if ((not(oldArr) || isNull(start) || (start >= len(oldArr)
-                            ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
-                            || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
+                        ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
+                        || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
             return Arrays.copyOfRange(oldArr.clone(), start, end)
         }
 
         fun slice(oldArr: DoubleArray, start: Int, end: Int): DoubleArray {
             if ((not(oldArr) || isNull(start) || (start >= len(oldArr)
-                            ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
-                            || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
+                        ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
+                        || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
             return Arrays.copyOfRange(oldArr.clone(), start, end)
         }
 
         fun slice(oldArr: BooleanArray, start: Int, end: Int): BooleanArray {
             if ((not(oldArr) || isNull(start) || (start >= len(oldArr)
-                            ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
-                            || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
+                        ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
+                        || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
             return Arrays.copyOfRange(oldArr.clone(), start, end)
         }
 
         fun slice(oldArr: Array<Any>, start: Int, end: Int): Array<Any> {
             if ((not(oldArr) || isNull(start) || (start >= len(oldArr)
-                            ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
-                            || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
+                        ) || eq(start, end) || (end < start) || not(end) || isNeg(start)
+                        || isNeg(end) || (end >= len(oldArr)))) return slice(oldArr)
             return Arrays.copyOfRange<Any>(oldArr.clone(), start, end)
         }
 
         fun slice(arr: strArr, start: Int, end: Int): strArr {
             return if ((not(arr) || isNull(start) || (start >= len(arr)) || eq(start, end)
-                            || (end < start) || not(end) || isNeg(start) || isNeg(end)
-                            || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
+                        || (end < start) || not(end) || isNeg(start) || isNeg(end)
+                        || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
         }
 
         fun slice(arr: intArr, start: Int, end: Int): intArr {
             return if ((not(arr) || isNull(start) || (start >= len(arr)) || eq(start, end)
-                            || (end < start) || not(end) || isNeg(start) || isNeg(end)
-                            || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
+                        || (end < start) || not(end) || isNeg(start) || isNeg(end)
+                        || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
         }
 
         fun slice(arr: longArr, start: Int, end: Int): longArr {
             return if ((not(arr) || isNull(start) || (start >= len(arr)) || eq(start, end)
-                            || (end < start) || not(end) || isNeg(start) || isNeg(end)
-                            || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
+                        || (end < start) || not(end) || isNeg(start) || isNeg(end)
+                        || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
         }
 
         fun slice(arr: fltArr, start: Int, end: Int): fltArr {
             return if ((not(arr) || isNull(start) || (start >= len(arr)) || eq(start, end)
-                            || (end < start) || not(end) || isNeg(start) || isNeg(end)
-                            || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
+                        || (end < start) || not(end) || isNeg(start) || isNeg(end)
+                        || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
         }
 
         fun slice(arr: dblArr, start: Int, end: Int): dblArr {
             return if ((not(arr) || isNull(start) || (start >= len(arr)) || eq(start, end)
-                            || (end < start) || not(end) || isNeg(start) || isNeg(end)
-                            || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
+                        || (end < start) || not(end) || isNeg(start) || isNeg(end)
+                        || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
         }
 
         fun slice(arr: boolArr, start: Int, end: Int): boolArr {
             return if ((not(arr) || isNull(start) || (start >= len(arr)) || eq(start, end)
-                            || (end < start) || not(end) || isNeg(start) || isNeg(end)
-                            || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
+                        || (end < start) || not(end) || isNeg(start) || isNeg(end)
+                        || (end >= len(arr)))) slice(arr) else arr.slice(start, end)
         }
 
         fun sliceRight(str: String, start: Int): String {
@@ -25992,72 +25997,72 @@ class KL() {
 
         fun sliceEnd(str: String, earlyEnd: Int): String {
             return if ((not(str) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(str)))) slice(str) else slice(str, 0, len(str) - earlyEnd)
+                        || (earlyEnd >= len(str)))) slice(str) else slice(str, 0, len(str) - earlyEnd)
         }
 
         fun sliceEnd(arr: Array<String?>, earlyEnd: Int): Array<String?> {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: IntArray, earlyEnd: Int): IntArray {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: LongArray, earlyEnd: Int): LongArray {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: FloatArray, earlyEnd: Int): FloatArray {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: DoubleArray, earlyEnd: Int): DoubleArray {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: BooleanArray, earlyEnd: Int): BooleanArray {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: Array<Any>, earlyEnd: Int): Array<Any> {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: strArr, earlyEnd: Int): strArr {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: intArr, earlyEnd: Int): intArr {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: longArr, earlyEnd: Int): longArr {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: fltArr, earlyEnd: Int): fltArr {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: dblArr, earlyEnd: Int): dblArr {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceEnd(arr: boolArr, earlyEnd: Int): boolArr {
             return if ((not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-                            || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
+                        || (earlyEnd >= len(arr)))) slice(arr) else slice(arr, 0, len(arr) - earlyEnd)
         }
 
         fun sliceOff(str: String, earlyEnd: Int): String {
@@ -26371,7 +26376,6 @@ class KL() {
         fun trim(arr: strArr, start: Int, end: Int): strArr {
             return slice(arr, start, end)
         }
-
         fun trim(arr: intArr, start: Int, end: Int): intArr {
             return slice(arr, start, end)
         }
@@ -26666,14 +26670,14 @@ class KL() {
 
         fun startsWith(str: String?, re: String): Boolean {
             val pattern: java.util.regex.Pattern = java.util.regex.Pattern.compile("^($re)",
-                    java.util.regex.Pattern.CASE_INSENSITIVE)
+                java.util.regex.Pattern.CASE_INSENSITIVE)
             val matcher: java.util.regex.Matcher = pattern.matcher(str)
             return !!matcher.find()
         }
 
         fun endsWith(str: String?, re: String): Boolean {
             val pattern: java.util.regex.Pattern = java.util.regex.Pattern.compile("($re)$",
-                    java.util.regex.Pattern.CASE_INSENSITIVE)
+                java.util.regex.Pattern.CASE_INSENSITIVE)
             val matcher: java.util.regex.Matcher = pattern.matcher(str)
             return !!matcher.find()
         }
@@ -27134,7 +27138,7 @@ class KL() {
         @kotlin.jvm.JvmOverloads
         fun indexOf(inStr: String, lookupCh: Char, startIndex: Int = 0): Int {
             if ((not(inStr) || not(lookupCh) || isNull(startIndex)
-                            || isNeg(startIndex))) return -1
+                        || isNeg(startIndex))) return -1
             for (i: Int in range(inStr)) {
                 if (slice(inStr, startIndex).toCharArray().get(i) == lookupCh) return i
             }
@@ -27432,7 +27436,7 @@ class KL() {
         }
 
         fun match(str: String?, re: String, vararg bools: Boolean): Boolean {
-            var re = re
+
             if (isNull<String>(str) || isNull(re)) return false
             // these null checks have to stay NULL checks, not entire `not` checks,
             // as not(re) would trim whitespace " ", which we sometimes DO need to
@@ -27441,14 +27445,14 @@ class KL() {
             if (((re == ".") || (re == "*") || (re == "+") || (re == "?"))) re = "\\" + re
             try {
                 re = re.replace("(?<![\\.\\\\])\\.(?![*+])".toRegex(), "\\\\.")
-                        .replace("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])".toRegex(),
-                                "\\\\$1")
-                        .replace("%%".toRegex(), "%").replace("(?<!\\\\)%c".toRegex(), "[A-Za-z]")
-                        .replace("(?<!\\\\)(%[sw]|\\{\\})".toRegex(), "[A-Za-z][\\\\w]+")
-                        .replace("(?<!\\\\)%b".toRegex(), "(true|false)")
-                        .replace("(?<!\\\\)%[di]".toRegex(), "(?<!\\.)\\\\d+(?!\\.)")
-                        .replace("(?<!\\\\)%[\\.\\\\d]*f".toRegex(), "\\\\d*\\.\\\\d+")
-                        .replace("(?<!\\\\)%n".toRegex(), "\\\\d+")
+                    .replace("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])".toRegex(),
+                        "\\\\$1")
+                    .replace("%%".toRegex(), "%").replace("(?<!\\\\)%c".toRegex(), "[A-Za-z]")
+                    .replace("(?<!\\\\)(%[sw]|\\{\\})".toRegex(), "[A-Za-z][\\\\w]+")
+                    .replace("(?<!\\\\)%b".toRegex(), "(true|false)")
+                    .replace("(?<!\\\\)%[di]".toRegex(), "(?<!\\.)\\\\d+(?!\\.)")
+                    .replace("(?<!\\\\)%[\\.\\\\d]*f".toRegex(), "\\\\d*\\.\\\\d+")
+                    .replace("(?<!\\\\)%n".toRegex(), "\\\\d+")
             } catch (e: java.lang.Exception) {
             }
             // modification precaution: it has been tested, and hence learned,
@@ -27464,27 +27468,27 @@ class KL() {
             var strict = false
             if (`is`(bools)) strict = bools[0] == true
             val pattern: java.util.regex.Pattern = java.util.regex.Pattern.compile(re,
-                    if (strict) 0 else java.util.regex.Pattern.CASE_INSENSITIVE)
+                if (strict) 0 else java.util.regex.Pattern.CASE_INSENSITIVE)
             val matcher: java.util.regex.Matcher = pattern.matcher(str.trim { it <= ' ' })
             return !!matcher.find()
         }
 
         fun findMatch(str: String?, re: String, vararg bools: Boolean): String {
-            var re = re
+
             if (not(str) || not(re)) return ""
             if (((re == ".") || (re == "*") || (re == "+") || (re == "?"))) {
                 re = "\\" + re
             }
             try {
                 re = re.replace("(?<![\\.\\\\])\\.(?![*+])".toRegex(), "\\\\.")
-                        .replace("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])".toRegex(),
-                                "\\\\$1")
-                        .replace("%%".toRegex(), "%").replace("(?<!\\\\)%c".toRegex(), "[A-Za-z]")
-                        .replace("(?<!\\\\)(%[sw]|\\{\\})".toRegex(), "[A-Za-z][\\\\w]+")
-                        .replace("(?<!\\\\)%b".toRegex(), "(true|false)")
-                        .replace("(?<!\\\\)%[di]".toRegex(), "(?<!\\.)\\\\d+(?!\\.)")
-                        .replace("(?<!\\\\)%[\\.\\\\d]*f".toRegex(), "\\\\d*\\.\\\\d+")
-                        .replace("(?<!\\\\)%n".toRegex(), "\\\\d+")
+                    .replace("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])".toRegex(),
+                        "\\\\$1")
+                    .replace("%%".toRegex(), "%").replace("(?<!\\\\)%c".toRegex(), "[A-Za-z]")
+                    .replace("(?<!\\\\)(%[sw]|\\{\\})".toRegex(), "[A-Za-z][\\\\w]+")
+                    .replace("(?<!\\\\)%b".toRegex(), "(true|false)")
+                    .replace("(?<!\\\\)%[di]".toRegex(), "(?<!\\.)\\\\d+(?!\\.)")
+                    .replace("(?<!\\\\)%[\\.\\\\d]*f".toRegex(), "\\\\d*\\.\\\\d+")
+                    .replace("(?<!\\\\)%n".toRegex(), "\\\\d+")
             } catch (e: java.lang.Exception) {
             }
             // modification precaution: it has been tested, and hence learned,
@@ -27502,14 +27506,14 @@ class KL() {
                 strict = bools[0] == true
             }
             val pattern: java.util.regex.Pattern = java.util.regex.Pattern.compile("($re)",
-                    if (strict) 0 else java.util.regex.Pattern.CASE_INSENSITIVE)
+                if (strict) 0 else java.util.regex.Pattern.CASE_INSENSITIVE)
             val matcher: java.util.regex.Matcher = pattern.matcher(str.trim { it <= ' ' })
             return if (!matcher.find()) "" else matcher.group()
         }
 
         fun findMatches(str: String, re: String,
                         vararg bools: Boolean): Array<String?> {
-            var re = re
+
             if (not(str) || not(re)) return blank.Str
             // blank.Str actually refers to new String[]{}. I know it could have
             // been blank.strArr, but that would have been too long, and would be
@@ -27520,14 +27524,14 @@ class KL() {
             }
             try {
                 re = re.replace("(?<![\\.\\\\])\\.(?![*+])".toRegex(), "\\\\.")
-                        .replace("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])".toRegex(),
-                                "\\\\$1")
-                        .replace("%%".toRegex(), "%").replace("(?<!\\\\)%c".toRegex(), "[A-Za-z]")
-                        .replace("(?<!\\\\)(%[sw]|\\{\\})".toRegex(), "[A-Za-z][\\\\w]+")
-                        .replace("(?<!\\\\)%b".toRegex(), "(true|false)")
-                        .replace("(?<!\\\\)%[di]".toRegex(), "(?<!\\.)\\\\d+(?!\\.)")
-                        .replace("(?<!\\\\)%[\\.\\\\d]*f".toRegex(), "\\\\d*\\.\\\\d+")
-                        .replace("(?<!\\\\)%n".toRegex(), "\\\\d+")
+                    .replace("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])".toRegex(),
+                        "\\\\$1")
+                    .replace("%%".toRegex(), "%").replace("(?<!\\\\)%c".toRegex(), "[A-Za-z]")
+                    .replace("(?<!\\\\)(%[sw]|\\{\\})".toRegex(), "[A-Za-z][\\\\w]+")
+                    .replace("(?<!\\\\)%b".toRegex(), "(true|false)")
+                    .replace("(?<!\\\\)%[di]".toRegex(), "(?<!\\.)\\\\d+(?!\\.)")
+                    .replace("(?<!\\\\)%[\\.\\\\d]*f".toRegex(), "\\\\d*\\.\\\\d+")
+                    .replace("(?<!\\\\)%n".toRegex(), "\\\\d+")
             } catch (e: java.lang.Exception) {
             }
             // modification precaution: it has been tested, and hence learned,
@@ -27545,7 +27549,7 @@ class KL() {
                 strict = bools[0] == true
             }
             val pattern: java.util.regex.Pattern = java.util.regex.Pattern.compile("($re)",
-                    if (strict) 0 else java.util.regex.Pattern.CASE_INSENSITIVE)
+                if (strict) 0 else java.util.regex.Pattern.CASE_INSENSITIVE)
             val matcher: java.util.regex.Matcher = pattern.matcher(str.trim { it <= ' ' })
             val arr = KL.strArr()
             while (matcher.find()) {
@@ -27650,7 +27654,7 @@ class KL() {
             if (not(s)) return arrayOf()
             val arr = KL.strArr()
             val matches = findMatches(s,
-                    "[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}")
+                "[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}")
             for (i: Int in range(matches)) arr.push(matches[i])
             return arr.array()
         }
@@ -27659,7 +27663,7 @@ class KL() {
             if (not(s)) return arrayOf()
             val arr = KL.strArr()
             val matches = findMatches(s,
-                    "(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?")
+                "(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?")
             for (i: Int in range(matches)) arr.push(matches[i])
             return arr.array()
         }
@@ -27668,7 +27672,7 @@ class KL() {
             if (not(s)) return arrayOf()
             val arr = KL.strArr()
             val matches = findMatches(s,
-                    "((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))")
+                "((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))")
             for (i: Int in range(matches)) arr.push(matches[i])
             return arr.array()
         }
@@ -27682,19 +27686,19 @@ class KL() {
 
         fun isEmail(s: String): Boolean {
             return if (not(s)) false else eq(trim(s),
-                    "[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}")
+                "[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}")
             // apparently, Java is stupid when it comes to regular expression.
             // Learned: neither "\\s"
         }
 
         fun isUrl(s: String): Boolean {
             return if (not(s)) false else eq(trim(s),
-                    "(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?")
+                "(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?")
         }
 
         fun isPhone(s: String): Boolean {
             return if (not(s)) false else eq(trim(s),
-                    "((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))")
+                "((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))")
         }
 
         fun findInts(s: String): IntArray {
@@ -29039,46 +29043,46 @@ class KL() {
         }
 
         fun upper(s: String): String {
-            var s = s
+
             s = s.uppercase(Locale.getDefault())
             return s
         }
 
         fun upper(vararg arr: String?): Array<String?> {
-            var arr = arr
+
             if (not(arr)) return arr
             arr = map(arr, java.util.function.Function<String, String> { s: String -> upper(s) })
             return arr
         }
 
         fun upper(c: Char): Char {
-            var c = c
+
             c = Str(c).uppercase(Locale.getDefault()).get(0)
             return c
         }
 
         fun upper(vararg arr: Char): CharArray {
-            var arr = arr
+
             if (not(arr)) return arr
             arr = map(arr, java.util.function.Function<Char, Char> { c: Char -> upper(c) })
             return arr
         }
 
         fun lower(s: String?): String? {
-            var s = s
+
             s = s.lowercase(Locale.getDefault())
             return s
         }
 
         fun lower(vararg arr: String?): Array<String?> {
-            var arr = arr
+
             if (not(arr)) return arr
             arr = map(arr, java.util.function.Function<String, String> { s: String? -> lower(s) })
             return arr
         }
 
         fun lower(c: Char): Char {
-            var c = c
+
             c = Str(c).lowercase(Locale.getDefault()).get(0)
             return c
         }
@@ -29116,17 +29120,17 @@ class KL() {
         }
 
         fun sentCase(input: String): String {
-            var input = input
+
             if (not(input)) return ""
             input = ((input.uppercase(Locale.getDefault()).substring(0, 1)
                     + (if (!`in`(input, "[A-Z]{2,}")) input.lowercase(Locale.getDefault()) else input)
-                    .substring(1)))
-                    .replace("(?<!\\w)i(?!\\w)".toRegex(), "I")
+                .substring(1)))
+                .replace("(?<!\\w)i(?!\\w)".toRegex(), "I")
             return input
         }
 
         fun sentCase(vararg inputs: String?): Array<String?> {
-            var inputs = inputs
+
             if (not(inputs)) return blank.Str
             inputs = map(inputs, java.util.function.Function<String, String> { input: String -> sentCase(input) })
             return inputs
@@ -29150,7 +29154,7 @@ class KL() {
         }
 
         fun titleCase(vararg inputs: String?): Array<String?> {
-            var inputs = inputs
+
             if (not(inputs)) return blank.Str
             inputs = map(inputs, java.util.function.Function<String, String> { input: String -> titleCase(input) })
             return inputs
@@ -29165,7 +29169,7 @@ class KL() {
         }
 
         fun len(n: Int): Int {
-            var n = n
+
             var result = 0
             while (n > 0) {
                 n /= 10
@@ -29175,7 +29179,7 @@ class KL() {
         }
 
         fun len(n: Long): Int {
-            var n = n
+
             var result = 0
             while (n > 0) {
                 n /= 10
@@ -29827,14 +29831,14 @@ class KL() {
             if (`in`(middleware, "\\s")) {
                 middleware = middleware.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().get(1)
                 return if (`in`(middleware, "\\[")) replace(middleware.replace("\\[".toRegex(), "array\\."), "\\w$",
-                        java.util.function.Function<String, String> { m: String? ->
-                            if (eq(m, "C")) return@replace "char" else if (eq(m, "I")) return@replace "int" else if (eq(m, "J")) return@replace "long" else if (eq(m, "F")) return@replace "flt" else if (eq(m, "D")) return@replace "dbl" else if (eq(m, "Z")) return@replace "bool"
-                            "arr"
-                        }).replace("Ljava\\.lang\\.|\\;".toRegex(), "")
-                        .replace("String".toRegex(), "str").replace("Number".toRegex(), "num")
-                        .replace("Object".toRegex(), "obj") else middleware.lowercase(Locale.getDefault())
-                        .replace("(?<=\\w{3,4})arr".toRegex(), "Arr")
-                        .replace("\\$".toRegex(), "\\.").replace("\\w+\\.".toRegex(), "")
+                    java.util.function.Function<String, String> { m: String? ->
+                        if (eq(m, "C")) return@replace "char" else if (eq(m, "I")) return@replace "int" else if (eq(m, "J")) return@replace "long" else if (eq(m, "F")) return@replace "flt" else if (eq(m, "D")) return@replace "dbl" else if (eq(m, "Z")) return@replace "bool"
+                        "arr"
+                    }).replace("Ljava\\.lang\\.|\\;".toRegex(), "")
+                    .replace("String".toRegex(), "str").replace("Number".toRegex(), "num")
+                    .replace("Object".toRegex(), "obj") else middleware.lowercase(Locale.getDefault())
+                    .replace("(?<=\\w{3,4})arr".toRegex(), "Arr")
+                    .replace("\\$".toRegex(), "\\.").replace("\\w+\\.".toRegex(), "")
             }
             // arrays that belong to a class, for instance, Number[], Object[],
             // instead leave a trailing semicolon at the end
@@ -29854,8 +29858,8 @@ class KL() {
                  cond8: Any?, sol8: Runnable?, cond9: Any?, sol9: Runnable?,
                  cond10: Any?, sol10: Runnable?): Boolean {
             return if (not(src)) false else sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
-                    cond10, sol10)
+                cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+                cond10, sol10)
         }
 
         fun type(src: Any?, cond1: Any?, sol1: Runnable,
@@ -29864,8 +29868,8 @@ class KL() {
                  cond6: Any?, sol6: Runnable?, cond7: Any?, sol7: Runnable?,
                  cond8: Any?, sol8: Runnable?, cond9: Any?, sol9: Runnable?): Boolean {
             return if (not(src)) false else sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
-                    sol9)
+                cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+                sol9)
         }
 
         fun type(src: Any?, cond1: Any?, sol1: Runnable,
@@ -29874,7 +29878,7 @@ class KL() {
                  cond6: Any?, sol6: Runnable?, cond7: Any?, sol7: Runnable?,
                  cond8: Any?, sol8: Runnable?): Boolean {
             return if (not(src)) false else sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8)
+                cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8)
         }
 
         fun type(src: Any?, cond1: Any?, sol1: Runnable,
@@ -29882,7 +29886,7 @@ class KL() {
                  cond4: Any?, sol4: Runnable?, cond5: Any?, sol5: Runnable?,
                  cond6: Any?, sol6: Runnable?, cond7: Any?, sol7: Runnable?): Boolean {
             return if (not(src)) false else sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6, cond7, sol7)
+                cond5, sol5, cond6, sol6, cond7, sol7)
         }
 
         fun type(src: Any?, cond1: Any?, sol1: Runnable,
@@ -29890,21 +29894,21 @@ class KL() {
                  cond4: Any?, sol4: Runnable?, cond5: Any?, sol5: Runnable?,
                  cond6: Any?, sol6: Runnable?): Boolean {
             return if (not(src)) false else sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5, cond6, sol6)
+                cond5, sol5, cond6, sol6)
         }
 
         fun type(src: Any?, cond1: Any?, sol1: Runnable,
                  cond2: Any?, sol2: Runnable?, cond3: Any?, sol3: Runnable?,
                  cond4: Any?, sol4: Runnable?, cond5: Any?, sol5: Runnable?): Boolean {
             return if (not(src)) false else sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
-                    cond5, sol5)
+                cond5, sol5)
         }
 
         fun type(src: Any?, cond1: Any?, sol1: Runnable,
                  cond2: Any?, sol2: Runnable?, cond3: Any?, sol3: Runnable?,
                  cond4: Any?, sol4: Runnable?): Boolean {
             return if (not(src)) false else sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4,
-                    sol4)
+                sol4)
         }
 
         fun type(src: Any?, cond1: Any?, sol1: Runnable,
@@ -30366,708 +30370,708 @@ class KL() {
         }
 
         private val ctss = arrayOf<String?>("Abbottabad", "Adilpur", "Ahmadpur East",
-                "Ahmadpur Sial", "Akora", "Aliabad", "Alik Ghund", "Alipur",
-                "Alizai", "Alpurai", "Aman Garh", "Amirabad", "Arifwala",
-                "Ashanagro Koto", "Athmuqam", "Attock City", "Awaran", "Baddomalhi",
-                "Badin", "Baffa", "Bagarji", "Bagh", "Bahawalnagar", "Bahawalnagar",
-                "Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal",
-                "Barkhan", "Basirpur", "Basti Dosa", "Bat Khela", "Battagram",
-                "Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan",
-                "Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala",
-                "Bozdar Wada", "Bulri", "Burewala", "Chak", "Chak Azam Sahu",
-                "Chak Five Hundred Seventy-five", "Chak Jhumra",
-                "Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left",
-                "Chak Two Hundred Forty-nine Thal Development Authority", "Chakwal",
-                "Chaman", "Chamber", "Charsadda", "Chawinda", "Chenab Nagar",
-                "Cherat Cantonement", "Chhor", "Chichawatni", "Chilas", "Chiniot",
-                "Chishtian", "Chitral", "Choa Saidan Shah", "Chowki Jamali",
-                "Chuchar-kana Mandi", "Chuhar Jamali", "Chunian", "Dadhar", "Dadu",
-                "Daggar", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS",
-                "Daromehar", "Darya Khan", "Darya Khan Marri", "Daska Kalan",
-                "Dasu", "Daud Khel", "Daulatpur", "Daultala", "Daur",
-                "Dera Alahyar", "Dera Bugti", "Dera Ghazi Khan", "Dera Ismail Khan",
-                "Dera Murad Jamali", "Dhanot", "Dhaunkal", "Dhoro Naro", "Digri",
-                "Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo",
-                "Doaba", "Dokri", "Duki", "Dullewala", "Dunga Bunga", "Dunyapur",
-                "Eidgah", "Eminabad", "Faisalabad", "Faqirwali", "Faruka",
-                "Fazilpur", "Fort Abbas", "Gadani", "Gakuch", "Gambat", "Gandava",
-                "Garh Maharaja", "Garhi Khairo", "Garhiyasin", "Ghauspur", "Ghotki",
-                "Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan",
-                "Gujar Khan", "Gujranwala", "Gujrat", "Gulishah Kach", "Gwadar",
-                "Hadali", "Hafizabad", "Hala", "Hangu", "Haripur", "Harnai",
-                "Harnoli", "Harunabad", "Hasilpur", "Hattian Bala", "Haveli Lakha",
-                "Havelian", "Hazro City", "Hingorja", "Hujra Shah Muqim",
-                "Hyderabad", "Islamabad", "Islamkot", "Jacobabad", "Jahanian Shah",
-                "Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand",
-                "Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali",
-                "Jauharabad", "Jhang City", "Jhang Sadr", "Jhawarian", "Jhelum",
-                "Jhol", "Jiwani", "Johi", "Jam Sahib", "Kabirwala", "Kadhan",
-                "Kahna Nau", "Kahror Pakka", "Kahuta", "Kakad Wari Dir Upper",
-                "Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar",
-                "Kalur Kot", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke",
-                "Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi",
-                "Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur",
-                "Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur",
-                "Khairpur Mir\'s", "Khairpur Nathan Shah", "Khairpur Tamewah",
-                "Khalabat", "Khandowa", "Khanewal", "Khangah Dogran", "Khangarh",
-                "Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra",
-                "Khurrianwala", "Khushab", "Khuzdar", "Kohat", "Kohlu", "Kot Addu",
-                "Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar",
-                "Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba",
-                "Kot Sultan", "Kotli", "Kotli Loharan", "Kotri", "Kulachi",
-                "Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich",
-                "Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal",
-                "Larkana", "Layyah", "Liliani", "Lodhran", "Loralai", "Mach",
-                "Madeji", "Mailsi", "Malakand", "Malakwal", "Malakwal City",
-                "Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin",
-                "Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Matiari",
-                "Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun",
-                "Mianke Mor", "Mianwali", "Minchianabad", "Mingora", "Miran Shah",
-                "Miro Khan", "Mirpur Bhtoro", "Mirpur Khas", "Mirpur Mathelo",
-                "Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro",
-                "Moza Shahwala", "Multan", "Muridke", "Murree", "Musa Khel Bazar",
-                "Mustafabad", "Muzaffargarh", "Muzaffarabad", "Nabisar",
-                "Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Naudero",
-                "Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah",
-                "Nazir Town", "New Badah", "New Mirpur", "Noorabad", "Nowshera",
-                "Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi",
-                "Pad Idan", "Paharpur", "Pakpattan", "Panjgur", "Pano Aqil",
-                "Parachinar", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia",
-                "Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth",
-                "Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Abdullah",
-                "Qila Saifullah", "Quetta", "Rahim Yar Khan", "Raiwind",
-                "Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar",
-                "Ratodero", "Rawala Kot", "Rawalpindi", "Renala Khurd",
-                "Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Saddiqabad",
-                "Sahiwal", "Sahiwal", "Saidu Sharif", "Sakrand", "Samaro",
-                "Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann",
-                "Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha",
-                "Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur",
-                "Shahkot", "Shahpur", "Shahpur Chakar", "Shahr Sultan",
-                "Shakargarh", "Sharqpur Sharif", "Shekhupura", "Shikarpur",
-                "Shingli Bala", "Shinpokh", "Shorkot", "Shujaabad", "Sialkot",
-                "Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhri",
-                "Sohbatpur", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur",
-                "Swabi", "Sita Road", "Talagang", "Talamba", "Talhar",
-                "Tandlianwala", "Tando Adam", "Tando Alahyar", "Tando Bago",
-                "Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi",
-                "Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta",
-                "Thul", "Timargara", "Toba Tek Singh", "Topi", "Turbat", "Ubauro",
-                "Umarkot", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai",
-                "Vihari", "Wana", "Warah", "Wazirabad", "Yazman", "Zafarwal",
-                "Zahir Pir", "Zaida", "Zhob", "Ziarat")
+            "Ahmadpur Sial", "Akora", "Aliabad", "Alik Ghund", "Alipur",
+            "Alizai", "Alpurai", "Aman Garh", "Amirabad", "Arifwala",
+            "Ashanagro Koto", "Athmuqam", "Attock City", "Awaran", "Baddomalhi",
+            "Badin", "Baffa", "Bagarji", "Bagh", "Bahawalnagar", "Bahawalnagar",
+            "Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal",
+            "Barkhan", "Basirpur", "Basti Dosa", "Bat Khela", "Battagram",
+            "Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan",
+            "Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala",
+            "Bozdar Wada", "Bulri", "Burewala", "Chak", "Chak Azam Sahu",
+            "Chak Five Hundred Seventy-five", "Chak Jhumra",
+            "Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left",
+            "Chak Two Hundred Forty-nine Thal Development Authority", "Chakwal",
+            "Chaman", "Chamber", "Charsadda", "Chawinda", "Chenab Nagar",
+            "Cherat Cantonement", "Chhor", "Chichawatni", "Chilas", "Chiniot",
+            "Chishtian", "Chitral", "Choa Saidan Shah", "Chowki Jamali",
+            "Chuchar-kana Mandi", "Chuhar Jamali", "Chunian", "Dadhar", "Dadu",
+            "Daggar", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS",
+            "Daromehar", "Darya Khan", "Darya Khan Marri", "Daska Kalan",
+            "Dasu", "Daud Khel", "Daulatpur", "Daultala", "Daur",
+            "Dera Alahyar", "Dera Bugti", "Dera Ghazi Khan", "Dera Ismail Khan",
+            "Dera Murad Jamali", "Dhanot", "Dhaunkal", "Dhoro Naro", "Digri",
+            "Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo",
+            "Doaba", "Dokri", "Duki", "Dullewala", "Dunga Bunga", "Dunyapur",
+            "Eidgah", "Eminabad", "Faisalabad", "Faqirwali", "Faruka",
+            "Fazilpur", "Fort Abbas", "Gadani", "Gakuch", "Gambat", "Gandava",
+            "Garh Maharaja", "Garhi Khairo", "Garhiyasin", "Ghauspur", "Ghotki",
+            "Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan",
+            "Gujar Khan", "Gujranwala", "Gujrat", "Gulishah Kach", "Gwadar",
+            "Hadali", "Hafizabad", "Hala", "Hangu", "Haripur", "Harnai",
+            "Harnoli", "Harunabad", "Hasilpur", "Hattian Bala", "Haveli Lakha",
+            "Havelian", "Hazro City", "Hingorja", "Hujra Shah Muqim",
+            "Hyderabad", "Islamabad", "Islamkot", "Jacobabad", "Jahanian Shah",
+            "Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand",
+            "Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali",
+            "Jauharabad", "Jhang City", "Jhang Sadr", "Jhawarian", "Jhelum",
+            "Jhol", "Jiwani", "Johi", "Jam Sahib", "Kabirwala", "Kadhan",
+            "Kahna Nau", "Kahror Pakka", "Kahuta", "Kakad Wari Dir Upper",
+            "Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar",
+            "Kalur Kot", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke",
+            "Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi",
+            "Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur",
+            "Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur",
+            "Khairpur Mir\'s", "Khairpur Nathan Shah", "Khairpur Tamewah",
+            "Khalabat", "Khandowa", "Khanewal", "Khangah Dogran", "Khangarh",
+            "Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra",
+            "Khurrianwala", "Khushab", "Khuzdar", "Kohat", "Kohlu", "Kot Addu",
+            "Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar",
+            "Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba",
+            "Kot Sultan", "Kotli", "Kotli Loharan", "Kotri", "Kulachi",
+            "Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich",
+            "Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal",
+            "Larkana", "Layyah", "Liliani", "Lodhran", "Loralai", "Mach",
+            "Madeji", "Mailsi", "Malakand", "Malakwal", "Malakwal City",
+            "Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin",
+            "Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Matiari",
+            "Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun",
+            "Mianke Mor", "Mianwali", "Minchianabad", "Mingora", "Miran Shah",
+            "Miro Khan", "Mirpur Bhtoro", "Mirpur Khas", "Mirpur Mathelo",
+            "Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro",
+            "Moza Shahwala", "Multan", "Muridke", "Murree", "Musa Khel Bazar",
+            "Mustafabad", "Muzaffargarh", "Muzaffarabad", "Nabisar",
+            "Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Naudero",
+            "Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah",
+            "Nazir Town", "New Badah", "New Mirpur", "Noorabad", "Nowshera",
+            "Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi",
+            "Pad Idan", "Paharpur", "Pakpattan", "Panjgur", "Pano Aqil",
+            "Parachinar", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia",
+            "Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth",
+            "Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Abdullah",
+            "Qila Saifullah", "Quetta", "Rahim Yar Khan", "Raiwind",
+            "Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar",
+            "Ratodero", "Rawala Kot", "Rawalpindi", "Renala Khurd",
+            "Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Saddiqabad",
+            "Sahiwal", "Sahiwal", "Saidu Sharif", "Sakrand", "Samaro",
+            "Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann",
+            "Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha",
+            "Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur",
+            "Shahkot", "Shahpur", "Shahpur Chakar", "Shahr Sultan",
+            "Shakargarh", "Sharqpur Sharif", "Shekhupura", "Shikarpur",
+            "Shingli Bala", "Shinpokh", "Shorkot", "Shujaabad", "Sialkot",
+            "Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhri",
+            "Sohbatpur", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur",
+            "Swabi", "Sita Road", "Talagang", "Talamba", "Talhar",
+            "Tandlianwala", "Tando Adam", "Tando Alahyar", "Tando Bago",
+            "Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi",
+            "Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta",
+            "Thul", "Timargara", "Toba Tek Singh", "Topi", "Turbat", "Ubauro",
+            "Umarkot", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai",
+            "Vihari", "Wana", "Warah", "Wazirabad", "Yazman", "Zafarwal",
+            "Zahir Pir", "Zaida", "Zhob", "Ziarat")
         private val wdss = arrayOf<String?>("documentary", "compliment", "insult", "vocalist",
-                "pianist", "violinist", "thirst", "hunger", "brevity",
-                "longevity", "sanity", "insanity", "bikini", "panty",
-                "hymen", "synthesis", "dementia", "amnesia", "blood sugar",
-                "fever", "flu", "diarrhea", "glucose", "Latino", "Latina",
-                "anesthetics", "anesthesia", "Cannabis", "oasis", "desert",
-                "dessert", "hemoglobin", "cardiographer", "carpenter",
-                "oceanic", "terran", "abroad", "absorbing", "abstract",
-                "academic", "accelerated", "accented", "accountant",
-                "acquainted", "acute", "obtuse", "protective", "possessive",
-                "real", "unreal", "realistic", "unrealistic", "imagined",
-                "delusional", "addicting", "addictive", "adjustable",
-                "admired", "adult", "adverse", "advised", "aerosol",
-                "afraid", "creeped out", "horrified", "horrific",
-                "terrified", "terrific", "devastated", "frustrated",
-                "aggravated", "aggressive", "agreeable", "alienate",
-                "aligned", "all-round", "alleged", "almond", "alright",
-                "altruistic", "ambient", "ambivalent", "amiable", "amino",
-                "amorphous", "amused", "anatomical", "ancestral", "angelic",
-                "angrier", "answerable", "antiquarian", "antiretroviral",
-                "appellate", "applicable", "apportioned", "approachable",
-                "appropriated", "archer", "aroused", "arrested",
-                "assertive", "assigned", "athletic", "atrocious",
-                "attained", "authoritarian", "autobiographical",
-                "avaricious", "avocado", "awake", "awesome", "backstage",
-                "backwoods", "balding", "bandaged", "banded", "banned",
-                "barreled", "battle", "beaten", "begotten", "beguiled",
-                "bellied", "belted", "beneficent", "besieged", "betting",
-                "big-money", "biggest", "biochemical", "bipolar",
-                "blackened", "blame", "blessed", "blindfolded", "bloat",
-                "blocked", "blooded", "decrepit", "dedicated", "defaced",
-                "defective", "defenseless", "deluded", "deodorant",
-                "departed", "depress", "fretted", "frugal",
-                "indiscriminate", "indomitable", "inert", "inflate",
-                "inform", "inheriting", "injured", "injurious", "inking",
-                "inoffensive", "insane", "insensible", "insidious",
-                "insincere", "insistent", "insolent", "insufferable",
-                "intemperate", "interdependent", "interesting",
-                "interfering", "intern", "interpreted", "intersecting",
-                "intolerable", "intolerant", "intuitive", "irresolute",
-                "irritate", "jealous", "jerking", "joining", "joint",
-                "journalistic", "joyful", "keyed", "knowing", "lacklustre",
-                "laden", "lagging", "lamented", "laughable", "layered",
-                "leather", "leathern", "leery", "left-footed", "legible",
-                "leisure", "lessening", "liberating", "life-size", "lifted",
-                "lightest", "limitless", "listening", "literary", "liver",
-                "livid", "lobster", "locked", "long-held", "long-lasting",
-                "long-running", "oversize", "overworked", "oyster", "paced",
-                "panting", "paralyzed", "paramount", "parental", "parted",
-                "partisan", "passive", "edible", "eatable", "kissable",
-                "palette")
+            "pianist", "violinist", "thirst", "hunger", "brevity",
+            "longevity", "sanity", "insanity", "bikini", "panty",
+            "hymen", "synthesis", "dementia", "amnesia", "blood sugar",
+            "fever", "flu", "diarrhea", "glucose", "Latino", "Latina",
+            "anesthetics", "anesthesia", "Cannabis", "oasis", "desert",
+            "dessert", "hemoglobin", "cardiographer", "carpenter",
+            "oceanic", "terran", "abroad", "absorbing", "abstract",
+            "academic", "accelerated", "accented", "accountant",
+            "acquainted", "acute", "obtuse", "protective", "possessive",
+            "real", "unreal", "realistic", "unrealistic", "imagined",
+            "delusional", "addicting", "addictive", "adjustable",
+            "admired", "adult", "adverse", "advised", "aerosol",
+            "afraid", "creeped out", "horrified", "horrific",
+            "terrified", "terrific", "devastated", "frustrated",
+            "aggravated", "aggressive", "agreeable", "alienate",
+            "aligned", "all-round", "alleged", "almond", "alright",
+            "altruistic", "ambient", "ambivalent", "amiable", "amino",
+            "amorphous", "amused", "anatomical", "ancestral", "angelic",
+            "angrier", "answerable", "antiquarian", "antiretroviral",
+            "appellate", "applicable", "apportioned", "approachable",
+            "appropriated", "archer", "aroused", "arrested",
+            "assertive", "assigned", "athletic", "atrocious",
+            "attained", "authoritarian", "autobiographical",
+            "avaricious", "avocado", "awake", "awesome", "backstage",
+            "backwoods", "balding", "bandaged", "banded", "banned",
+            "barreled", "battle", "beaten", "begotten", "beguiled",
+            "bellied", "belted", "beneficent", "besieged", "betting",
+            "big-money", "biggest", "biochemical", "bipolar",
+            "blackened", "blame", "blessed", "blindfolded", "bloat",
+            "blocked", "blooded", "decrepit", "dedicated", "defaced",
+            "defective", "defenseless", "deluded", "deodorant",
+            "departed", "depress", "fretted", "frugal",
+            "indiscriminate", "indomitable", "inert", "inflate",
+            "inform", "inheriting", "injured", "injurious", "inking",
+            "inoffensive", "insane", "insensible", "insidious",
+            "insincere", "insistent", "insolent", "insufferable",
+            "intemperate", "interdependent", "interesting",
+            "interfering", "intern", "interpreted", "intersecting",
+            "intolerable", "intolerant", "intuitive", "irresolute",
+            "irritate", "jealous", "jerking", "joining", "joint",
+            "journalistic", "joyful", "keyed", "knowing", "lacklustre",
+            "laden", "lagging", "lamented", "laughable", "layered",
+            "leather", "leathern", "leery", "left-footed", "legible",
+            "leisure", "lessening", "liberating", "life-size", "lifted",
+            "lightest", "limitless", "listening", "literary", "liver",
+            "livid", "lobster", "locked", "long-held", "long-lasting",
+            "long-running", "oversize", "overworked", "oyster", "paced",
+            "panting", "paralyzed", "paramount", "parental", "parted",
+            "partisan", "passive", "edible", "eatable", "kissable",
+            "palette")
         private val ntltss = arrayOf<String?>("Afghan", "Egyptian", "Alantic", "Albanian", "Algerian",
-                "Virgin Islander", "American Samoan", "Andorran", "Angolan",
-                "Anguillan", "Antarctic", "Antiguan and Barbudan",
-                "Equatorial Guinean", "Argentine; Argentinian", "Armenian",
-                "Aruban", "Azerbaijani", "Ethiopian", "Australian",
-                "Bahamian", "Bahraini", "Bangladeshi", "Barbadian",
-                "Belarusian", "Belgian", "Belizean", "Beninese",
-                "Bermudian", "Bhutanese", "Bolivian", "Bosnian",
-                "Botswanan", "of Bouvet Island", "Brazilian",
-                "of the British Indian Ocean Territory",
-                "British Virgin Islander", "Bruneian", "Bulgarian",
-                "Burkinabe", "Burundian", "Cape Verdean", "Chilean",
-                "Chinese", "of Clipperton Island", "Cook Islander",
-                "Costa Rican", "Ivorian", "Curacaoan", "Danish", "German",
-                "Dominican", "Djiboutian", "Ecuadorian",
-                "Salvadorian; Salvadoran", "Eritrean", "Estonian",
-                "Falklander", "Faroese", "Fijian", "Finnish", "French",
-                "of the French Southern and Antarctic Lands", "Guianese",
-                "Polynesian", "Gabonese", "Gambian", "Georgian", "Ghanaian",
-                "Gibraltarian", "Grenadian", "Greek", "Greenlandic",
-                "Guadeloupean", "Guamanian", "Guatemalan", "Guernsey",
-                "Guinean", "Bissau-Guinean", "Guyanese", "Haitian",
-                "of the Heard Island and McDonald Islands",
-                "of the Holy See/of the Vatican", "Honduran",
-                "Hong Kong Chinese", "Indian", "Indonesian", "Manx",
-                "Iraqi", "Iranian", "Irish", "Icelandic", "Israeli",
-                "Italian", "Jamaican", "Japanese", "Yemeni", "Jersey",
-                "Jordanian", "Caymanian", "Cambodian", "Cameroonian",
-                "Canadian", "Kazakh", "Qatari", "Kenyan", "Kyrgyz",
-                "Kiribatian", "of the Cocos (Keeling) Islands", "Colombian",
-                "Comorian", "Congolese", "Croatian", "Cuban", "Kuwaiti",
-                "Lao; Laotian", "Mesotho", "Latvian", "Lebanese",
-                "Liberian", "Libyan", "Liechtensteiners", "Lithuanian",
-                "Luxembourgish", "Macanese", "Malagasy", "Malawian",
-                "Malaysian", "Maldivian", "Malian", "Maltese", "Moroccan",
-                "Marshallese", "Martinican", "Mauritanian", "Mauritian",
-                "Mahoran", "Mexican", "Micronesian", "Moldovan",
-                "Monegasque", "Mongolian", "Montenegrin", "Montserratian",
-                "Mozambican", "Burmese", "Namibian", "Nauruan", "Nepalese",
-                "New Caledonian", "New Zealander", "Nicaraguan", "Dutch",
-                "Nigerien", "Nigerian", "Niuean", "North Korean",
-                "Marian Islander", "Norfolk Islander", "Norwegian", "Omani",
-                "Austrian", "Pakistani", "Palauan", "Panamanian",
-                "Papua New Guinean", "Paraguayan", "Peruvian", "Filipino",
-                "Pitcairner", "Polish", "Portuguese", "Puerto Rican",
-                "Reunionese", "Rwandan; Rwandese", "Romanian", "Russian",
-                "Solomon Islander", "Zambian", "Samoan", "Sammarinese",
-                "Sao Tomean", "Saudi Arabian", "Swedish", "Swiss",
-                "Senegalese", "Serbian", "Seychellois", "Sierra Leonean",
-                "Zimbabwean", "Singaporean", "Slovak", "Slovenian",
-                "Somali; Somalian", "Spanish", "Sri Lankan",
-                "Saint Barthelemian",
-                "of Saint Helena, Ascension and Tristan da Cunha",
-                "of Saint Kitts and Nevis", "Saint Lucian",
-                "of Saint Martin", "of Sint Maarten",
-                "of Saint Pierre and Miquelon",
-                "Vincentian; of Saint Vincent and the Grenadines",
-                "South African", "Sudanese",
-                "of South Georgia and the South Sandwich Islands",
-                "South Korean", "South Sudanese", "Surinamese",
-                "of Svalbard, of Jan Mayen", "Swazi", "Syrian", "Tajik",
-                "Taiwanese", "Tanzanian", "Thai", "East Timorese",
-                "Togolese", "Tokelauan", "Tongan", "of Trinidad and Tobago",
-                "Chadian", "Czech", "Tunisian", "Turkish", "Turkmen",
-                "of the Turks and Caicos Islands", "Tuvaluan", "Ugandan",
-                "Ukrainian", "Hungarian", "Uruguayan", "Uzbek", "Vanuatuan",
-                "Venezuelan", "Emirian",
-                "American; The United States of America", "British",
-                "Vietnamese", "of the Wallis and Futuna Islands",
-                "of Christmas Island", "Sahrawi", "Central African",
-                "Cypriot")
+            "Virgin Islander", "American Samoan", "Andorran", "Angolan",
+            "Anguillan", "Antarctic", "Antiguan and Barbudan",
+            "Equatorial Guinean", "Argentine; Argentinian", "Armenian",
+            "Aruban", "Azerbaijani", "Ethiopian", "Australian",
+            "Bahamian", "Bahraini", "Bangladeshi", "Barbadian",
+            "Belarusian", "Belgian", "Belizean", "Beninese",
+            "Bermudian", "Bhutanese", "Bolivian", "Bosnian",
+            "Botswanan", "of Bouvet Island", "Brazilian",
+            "of the British Indian Ocean Territory",
+            "British Virgin Islander", "Bruneian", "Bulgarian",
+            "Burkinabe", "Burundian", "Cape Verdean", "Chilean",
+            "Chinese", "of Clipperton Island", "Cook Islander",
+            "Costa Rican", "Ivorian", "Curacaoan", "Danish", "German",
+            "Dominican", "Djiboutian", "Ecuadorian",
+            "Salvadorian; Salvadoran", "Eritrean", "Estonian",
+            "Falklander", "Faroese", "Fijian", "Finnish", "French",
+            "of the French Southern and Antarctic Lands", "Guianese",
+            "Polynesian", "Gabonese", "Gambian", "Georgian", "Ghanaian",
+            "Gibraltarian", "Grenadian", "Greek", "Greenlandic",
+            "Guadeloupean", "Guamanian", "Guatemalan", "Guernsey",
+            "Guinean", "Bissau-Guinean", "Guyanese", "Haitian",
+            "of the Heard Island and McDonald Islands",
+            "of the Holy See/of the Vatican", "Honduran",
+            "Hong Kong Chinese", "Indian", "Indonesian", "Manx",
+            "Iraqi", "Iranian", "Irish", "Icelandic", "Israeli",
+            "Italian", "Jamaican", "Japanese", "Yemeni", "Jersey",
+            "Jordanian", "Caymanian", "Cambodian", "Cameroonian",
+            "Canadian", "Kazakh", "Qatari", "Kenyan", "Kyrgyz",
+            "Kiribatian", "of the Cocos (Keeling) Islands", "Colombian",
+            "Comorian", "Congolese", "Croatian", "Cuban", "Kuwaiti",
+            "Lao; Laotian", "Mesotho", "Latvian", "Lebanese",
+            "Liberian", "Libyan", "Liechtensteiners", "Lithuanian",
+            "Luxembourgish", "Macanese", "Malagasy", "Malawian",
+            "Malaysian", "Maldivian", "Malian", "Maltese", "Moroccan",
+            "Marshallese", "Martinican", "Mauritanian", "Mauritian",
+            "Mahoran", "Mexican", "Micronesian", "Moldovan",
+            "Monegasque", "Mongolian", "Montenegrin", "Montserratian",
+            "Mozambican", "Burmese", "Namibian", "Nauruan", "Nepalese",
+            "New Caledonian", "New Zealander", "Nicaraguan", "Dutch",
+            "Nigerien", "Nigerian", "Niuean", "North Korean",
+            "Marian Islander", "Norfolk Islander", "Norwegian", "Omani",
+            "Austrian", "Pakistani", "Palauan", "Panamanian",
+            "Papua New Guinean", "Paraguayan", "Peruvian", "Filipino",
+            "Pitcairner", "Polish", "Portuguese", "Puerto Rican",
+            "Reunionese", "Rwandan; Rwandese", "Romanian", "Russian",
+            "Solomon Islander", "Zambian", "Samoan", "Sammarinese",
+            "Sao Tomean", "Saudi Arabian", "Swedish", "Swiss",
+            "Senegalese", "Serbian", "Seychellois", "Sierra Leonean",
+            "Zimbabwean", "Singaporean", "Slovak", "Slovenian",
+            "Somali; Somalian", "Spanish", "Sri Lankan",
+            "Saint Barthelemian",
+            "of Saint Helena, Ascension and Tristan da Cunha",
+            "of Saint Kitts and Nevis", "Saint Lucian",
+            "of Saint Martin", "of Sint Maarten",
+            "of Saint Pierre and Miquelon",
+            "Vincentian; of Saint Vincent and the Grenadines",
+            "South African", "Sudanese",
+            "of South Georgia and the South Sandwich Islands",
+            "South Korean", "South Sudanese", "Surinamese",
+            "of Svalbard, of Jan Mayen", "Swazi", "Syrian", "Tajik",
+            "Taiwanese", "Tanzanian", "Thai", "East Timorese",
+            "Togolese", "Tokelauan", "Tongan", "of Trinidad and Tobago",
+            "Chadian", "Czech", "Tunisian", "Turkish", "Turkmen",
+            "of the Turks and Caicos Islands", "Tuvaluan", "Ugandan",
+            "Ukrainian", "Hungarian", "Uruguayan", "Uzbek", "Vanuatuan",
+            "Venezuelan", "Emirian",
+            "American; The United States of America", "British",
+            "Vietnamese", "of the Wallis and Futuna Islands",
+            "of Christmas Island", "Sahrawi", "Central African",
+            "Cypriot")
         private val rfnss = arrayOf<String?>("+92 (308) 215 2441", "+92 (305) 205 3250",
-                "+92 (314) 763 2228", "+92 (323) 267 3234",
-                "+92 (320) 005 8284", "+92 (312) 486 1408",
-                "+92 (313) 556 6782", "+92 (312) 188 8504",
-                "+92 (321) 517 0564", "+92 (300) 215 0018",
-                "+92 (331) 066 8182", "+92 (305) 621 8357",
-                "+92 (312) 303 6683", "+92 (330) 315 6554",
-                "+92 (318) 702 7462", "+92 (307) 083 6477",
-                "+92 (333) 585 3443", "+92 (315) 547 0136",
-                "+92 (327) 660 2848", "+92 (330) 144 4028",
-                "+92 (323) 276 4840", "+92 (327) 738 8321",
-                "+92 (305) 812 7050", "+92 (324) 620 5556",
-                "+92 (310) 681 7606", "+92 (336) 286 8600",
-                "+92 (333) 241 8207", "+92 (322) 527 1520",
-                "+92 (303) 510 4857", "+92 (337) 650 1744",
-                "+92 (321) 331 4144", "+92 (301) 515 4836",
-                "+92 (332) 460 3760", "+92 (333) 168 2174",
-                "+92 (304) 272 1350", "+92 (320) 375 3538",
-                "+92 (336) 516 5606", "+92 (330) 088 7340",
-                "+92 (317) 523 7275", "+92 (314) 128 3831",
-                "+92 (326) 825 7157", "+92 (302) 115 2032",
-                "+92 (336) 362 6505", "+92 (313) 627 6536",
-                "+92 (302) 832 5304", "+92 (300) 131 4753",
-                "+92 (311) 588 0281", "+92 (337) 412 0180",
-                "+92 (321) 601 7236", "+92 (306) 075 0548",
-                "+92 (336) 744 6742", "+92 (335) 684 5677",
-                "+92 (323) 753 4302", "+92 (322) 864 6866",
-                "+92 (301) 077 0316", "+92 (320) 080 7036",
-                "+92 (327) 613 3783", "+92 (334) 138 2771",
-                "+92 (330) 343 8104", "+92 (325) 201 0684",
-                "+92 (337) 775 7221", "+92 (311) 857 5310",
-                "+92 (322) 615 5255", "+92 (310) 731 2176",
-                "+92 (323) 412 7433", "+92 (323) 180 3238",
-                "+92 (318) 704 5111", "+92 (321) 485 2814",
-                "+92 (334) 611 2074", "+92 (314) 343 0881",
-                "+92 (300) 537 3177", "+92 (310) 187 8100",
-                "+92 (320) 878 2262", "+92 (324) 785 1028",
-                "+92 (313) 070 1354", "+92 (318) 204 0637",
-                "+92 (328) 877 2626", "+92 (318) 018 4006",
-                "+92 (306) 104 1463", "+92 (313) 862 3726",
-                "+92 (318) 388 7683", "+92 (330) 738 5730",
-                "+92 (316) 166 6803", "+92 (313) 271 3641",
-                "+92 (307) 718 8285", "+92 (306) 256 2360",
-                "+92 (321) 104 8067", "+92 (300) 884 5048",
-                "+92 (307) 085 3035", "+92 (335) 446 3531",
-                "+92 (322) 647 3410", "+92 (328) 760 2861",
-                "+92 (327) 772 6701", "+92 (300) 211 6834",
-                "+92 (333) 515 7716", "+92 (314) 534 3700",
-                "+92 (330) 078 1205", "+92 (304) 316 1564",
-                "+92 (338) 782 0723", "+92 (318) 250 1765",
-                "+92 (300) 125 7551", "+92 (330) 715 6381",
-                "+92 (306) 366 6305", "+92 (330) 548 0703",
-                "+92 (324) 818 1781", "+92 (334) 057 4635",
-                "+92 (327) 646 3800")
+            "+92 (314) 763 2228", "+92 (323) 267 3234",
+            "+92 (320) 005 8284", "+92 (312) 486 1408",
+            "+92 (313) 556 6782", "+92 (312) 188 8504",
+            "+92 (321) 517 0564", "+92 (300) 215 0018",
+            "+92 (331) 066 8182", "+92 (305) 621 8357",
+            "+92 (312) 303 6683", "+92 (330) 315 6554",
+            "+92 (318) 702 7462", "+92 (307) 083 6477",
+            "+92 (333) 585 3443", "+92 (315) 547 0136",
+            "+92 (327) 660 2848", "+92 (330) 144 4028",
+            "+92 (323) 276 4840", "+92 (327) 738 8321",
+            "+92 (305) 812 7050", "+92 (324) 620 5556",
+            "+92 (310) 681 7606", "+92 (336) 286 8600",
+            "+92 (333) 241 8207", "+92 (322) 527 1520",
+            "+92 (303) 510 4857", "+92 (337) 650 1744",
+            "+92 (321) 331 4144", "+92 (301) 515 4836",
+            "+92 (332) 460 3760", "+92 (333) 168 2174",
+            "+92 (304) 272 1350", "+92 (320) 375 3538",
+            "+92 (336) 516 5606", "+92 (330) 088 7340",
+            "+92 (317) 523 7275", "+92 (314) 128 3831",
+            "+92 (326) 825 7157", "+92 (302) 115 2032",
+            "+92 (336) 362 6505", "+92 (313) 627 6536",
+            "+92 (302) 832 5304", "+92 (300) 131 4753",
+            "+92 (311) 588 0281", "+92 (337) 412 0180",
+            "+92 (321) 601 7236", "+92 (306) 075 0548",
+            "+92 (336) 744 6742", "+92 (335) 684 5677",
+            "+92 (323) 753 4302", "+92 (322) 864 6866",
+            "+92 (301) 077 0316", "+92 (320) 080 7036",
+            "+92 (327) 613 3783", "+92 (334) 138 2771",
+            "+92 (330) 343 8104", "+92 (325) 201 0684",
+            "+92 (337) 775 7221", "+92 (311) 857 5310",
+            "+92 (322) 615 5255", "+92 (310) 731 2176",
+            "+92 (323) 412 7433", "+92 (323) 180 3238",
+            "+92 (318) 704 5111", "+92 (321) 485 2814",
+            "+92 (334) 611 2074", "+92 (314) 343 0881",
+            "+92 (300) 537 3177", "+92 (310) 187 8100",
+            "+92 (320) 878 2262", "+92 (324) 785 1028",
+            "+92 (313) 070 1354", "+92 (318) 204 0637",
+            "+92 (328) 877 2626", "+92 (318) 018 4006",
+            "+92 (306) 104 1463", "+92 (313) 862 3726",
+            "+92 (318) 388 7683", "+92 (330) 738 5730",
+            "+92 (316) 166 6803", "+92 (313) 271 3641",
+            "+92 (307) 718 8285", "+92 (306) 256 2360",
+            "+92 (321) 104 8067", "+92 (300) 884 5048",
+            "+92 (307) 085 3035", "+92 (335) 446 3531",
+            "+92 (322) 647 3410", "+92 (328) 760 2861",
+            "+92 (327) 772 6701", "+92 (300) 211 6834",
+            "+92 (333) 515 7716", "+92 (314) 534 3700",
+            "+92 (330) 078 1205", "+92 (304) 316 1564",
+            "+92 (338) 782 0723", "+92 (318) 250 1765",
+            "+92 (300) 125 7551", "+92 (330) 715 6381",
+            "+92 (306) 366 6305", "+92 (330) 548 0703",
+            "+92 (324) 818 1781", "+92 (334) 057 4635",
+            "+92 (327) 646 3800")
         private val rgynss = arrayOf<String?>("Ahmed Raza", "Bilal Tariq", "Usman Siddiqi",
-                "Omar Farooq", "Waleed Kamal", "Talha Iqbal",
-                "Faisal Latif", "Hassan Jameel", "Adnan Bashir",
-                "Kashif Rauf", "Imran Saeed", "Adeel Qureshi",
-                "Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid",
-                "Faizan Khalid", "Hammad Zubair", "Naveed Aslam",
-                "Waqar Mehmood", "Sarmad Sheikh", "Tariq Anwar",
-                "Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain",
-                "Mudassir Younas", "Jawad Hamid", "Ammar Khalil",
-                "Rizwan Waheed", "Hasnain Saleem", "Basit Jamal",
-                "Sheraz Ahmed", "Umer Shahbaz", "Arsalan Hashim",
-                "Raheel Sultan", "Fahad Zaman", "Sajid Irfan", "Owais Rauf",
-                "Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem",
-                "Tauseef Haroon", "Murtaza Shah", "Maaz Asif",
-                "Samiullah Arif", "Nabeel Qamar", "Taimoor Rauf",
-                "Atif Nawaz", "Hashir Siddiqui", "Zubair Imran",
-                "Abrar Hussain", "Farhan Waseem", "Umair Tariq", "Arif Ali",
-                "Shayan Latif", "Irfan Khalid", "Hamza Masood",
-                "Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed",
-                "Mudassir Kamal", "Haris Younas", "Noman Waqar",
-                "Waseem Abbas", "Faizan Rauf", "Mubashir Jamil",
-                "Sohail Shahzad", "Ubaid Latif", "Sikandar Saeed",
-                "Hasham Khalid", "Farrukh Hussain", "Zain Qureshi",
-                "Arslan Abbas", "Muzammil Tariq", "Usama Rasheed",
-                "Adeel Sultan", "Taha Iqbal", "Kamil Arshad", "Danish Rauf",
-                "Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar",
-                "Omer Siddiqi", "Dawood Mushtaq", "Ammar Waheed",
-                "Fasih Shah", "Adnan Khalil", "Imran Waseem",
-                "Waleed Anwar", "Yasir Rauf", "Arham Bashir",
-                "Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain",
-                "Hassan Qamar", "Usman Kamal", "Tariq Yousaf",
-                "Owais Farooq", "Raheel Bashir", "Waqas Khalid",
-                "Faisal Shah", "Bilal Latif", "Zeeshan Abbas",
-                "Faizan Hussain", "Mudassir Farooq", "Kashif Khalid",
-                "Abrar Tariq", "Umair Siddiqi", "Hamza Jameel",
-                "Nabeel Usman", "Khalil Laghari", "Murtaza Waseem",
-                "Sajid Waheed", "Noman Riaz", "Hashir Hussain",
-                "Sheraz Rauf", "Ahmed Tariq", "Atif Bashir",
-                "Omar Siddiqui", "Irfan Khalil", "Raheel Jamil",
-                "Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran",
-                "Waleed Hussain", "Taimoor Abbas", "Mudassir Waheed",
-                "Umer Khalid", "Azeem Munawar", "Junaid Bashir",
-                "Shayan Rauf", "Ahmed Hanif", "Bilal Hussain", "Umair Riaz",
-                "Zubair Khalid", "Adeel Haroon", "Sajid Qamar",
-                "Faizan Latif", "Hammad Saleem", "Shoaib Tariq",
-                "Noman Anwar", "Fahad Hussain", "Hashim Waseem",
-                "Hamza Abbas", "Arsalan Khalid", "Taha Rasheed",
-                "Usama Farooq", "Sarim Bashir", "Khizar Waheed",
-                "Mudassir Khalid", "Waqas Rauf", "Tariq Hussain",
-                "Jawad Siddiqui", "Shehryar Abbas", "Naveed Tariq",
-                "Muzammil Jamil", "Zeeshan Khalid", "Atif Hussain",
-                "Sarmad Waqar", "Shoaib Khalid", "Ahmed Qureshi",
-                "Raheel Abbas", "Hammad Riaz", "Sheraz Bashir",
-                "Danish Khalid", "Adil Waheed", "Hashir Tariq",
-                "Faizan Waseem", "Usman Abbas", "Khurram Latif",
-                "Owais Siddiqui", "Mudassir Hussain", "Tauseef Khalid",
-                "Farrukh Waseem", "Umer Saleem", "Hamza Rauf",
-                "Shoaib Kamran", "Bilal Abbas", "Sajid Tariq",
-                "Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid",
-                "Ahmed Farooq", "Atif Khalid", "Irfan Waseem",
-                "Junaid Tariq", "Umair Saleem", "Arsalan Hussain",
-                "Waleed Abbas", "Adnan Waseem", "Sheraz Khalid",
-                "Mudassir Abbas", "Shoaib Rauf", "Omar Hussain",
-                "Raheel Khalid", "Hammad Waseem", "Waseem Farooq",
-                "Hasham Tariq", "Faisal Khalid", "Kashif Abbas",
-                "Tauseef Abbas", "Hamza Saleem", "Zeeshan Waseem",
-                "Sarmad Hussain", "Bilal Khalid", "Umair Abbas",
-                "Mudassir Riaz", "Adil Khalid", "Ahmed Abbas",
-                "Owais Hussain")
+            "Omar Farooq", "Waleed Kamal", "Talha Iqbal",
+            "Faisal Latif", "Hassan Jameel", "Adnan Bashir",
+            "Kashif Rauf", "Imran Saeed", "Adeel Qureshi",
+            "Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid",
+            "Faizan Khalid", "Hammad Zubair", "Naveed Aslam",
+            "Waqar Mehmood", "Sarmad Sheikh", "Tariq Anwar",
+            "Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain",
+            "Mudassir Younas", "Jawad Hamid", "Ammar Khalil",
+            "Rizwan Waheed", "Hasnain Saleem", "Basit Jamal",
+            "Sheraz Ahmed", "Umer Shahbaz", "Arsalan Hashim",
+            "Raheel Sultan", "Fahad Zaman", "Sajid Irfan", "Owais Rauf",
+            "Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem",
+            "Tauseef Haroon", "Murtaza Shah", "Maaz Asif",
+            "Samiullah Arif", "Nabeel Qamar", "Taimoor Rauf",
+            "Atif Nawaz", "Hashir Siddiqui", "Zubair Imran",
+            "Abrar Hussain", "Farhan Waseem", "Umair Tariq", "Arif Ali",
+            "Shayan Latif", "Irfan Khalid", "Hamza Masood",
+            "Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed",
+            "Mudassir Kamal", "Haris Younas", "Noman Waqar",
+            "Waseem Abbas", "Faizan Rauf", "Mubashir Jamil",
+            "Sohail Shahzad", "Ubaid Latif", "Sikandar Saeed",
+            "Hasham Khalid", "Farrukh Hussain", "Zain Qureshi",
+            "Arslan Abbas", "Muzammil Tariq", "Usama Rasheed",
+            "Adeel Sultan", "Taha Iqbal", "Kamil Arshad", "Danish Rauf",
+            "Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar",
+            "Omer Siddiqi", "Dawood Mushtaq", "Ammar Waheed",
+            "Fasih Shah", "Adnan Khalil", "Imran Waseem",
+            "Waleed Anwar", "Yasir Rauf", "Arham Bashir",
+            "Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain",
+            "Hassan Qamar", "Usman Kamal", "Tariq Yousaf",
+            "Owais Farooq", "Raheel Bashir", "Waqas Khalid",
+            "Faisal Shah", "Bilal Latif", "Zeeshan Abbas",
+            "Faizan Hussain", "Mudassir Farooq", "Kashif Khalid",
+            "Abrar Tariq", "Umair Siddiqi", "Hamza Jameel",
+            "Nabeel Usman", "Khalil Laghari", "Murtaza Waseem",
+            "Sajid Waheed", "Noman Riaz", "Hashir Hussain",
+            "Sheraz Rauf", "Ahmed Tariq", "Atif Bashir",
+            "Omar Siddiqui", "Irfan Khalil", "Raheel Jamil",
+            "Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran",
+            "Waleed Hussain", "Taimoor Abbas", "Mudassir Waheed",
+            "Umer Khalid", "Azeem Munawar", "Junaid Bashir",
+            "Shayan Rauf", "Ahmed Hanif", "Bilal Hussain", "Umair Riaz",
+            "Zubair Khalid", "Adeel Haroon", "Sajid Qamar",
+            "Faizan Latif", "Hammad Saleem", "Shoaib Tariq",
+            "Noman Anwar", "Fahad Hussain", "Hashim Waseem",
+            "Hamza Abbas", "Arsalan Khalid", "Taha Rasheed",
+            "Usama Farooq", "Sarim Bashir", "Khizar Waheed",
+            "Mudassir Khalid", "Waqas Rauf", "Tariq Hussain",
+            "Jawad Siddiqui", "Shehryar Abbas", "Naveed Tariq",
+            "Muzammil Jamil", "Zeeshan Khalid", "Atif Hussain",
+            "Sarmad Waqar", "Shoaib Khalid", "Ahmed Qureshi",
+            "Raheel Abbas", "Hammad Riaz", "Sheraz Bashir",
+            "Danish Khalid", "Adil Waheed", "Hashir Tariq",
+            "Faizan Waseem", "Usman Abbas", "Khurram Latif",
+            "Owais Siddiqui", "Mudassir Hussain", "Tauseef Khalid",
+            "Farrukh Waseem", "Umer Saleem", "Hamza Rauf",
+            "Shoaib Kamran", "Bilal Abbas", "Sajid Tariq",
+            "Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid",
+            "Ahmed Farooq", "Atif Khalid", "Irfan Waseem",
+            "Junaid Tariq", "Umair Saleem", "Arsalan Hussain",
+            "Waleed Abbas", "Adnan Waseem", "Sheraz Khalid",
+            "Mudassir Abbas", "Shoaib Rauf", "Omar Hussain",
+            "Raheel Khalid", "Hammad Waseem", "Waseem Farooq",
+            "Hasham Tariq", "Faisal Khalid", "Kashif Abbas",
+            "Tauseef Abbas", "Hamza Saleem", "Zeeshan Waseem",
+            "Sarmad Hussain", "Bilal Khalid", "Umair Abbas",
+            "Mudassir Riaz", "Adil Khalid", "Ahmed Abbas",
+            "Owais Hussain")
         private val rglnss = arrayOf<String?>("Ayesha Waleed", "Fatima Kamal", "Hira Latif",
-                "Sana Farooq", "Mahnoor Tariq", "Faiza Tehseem",
-                "Fozia Mehshar", "Iqra Siddiqui", "Laiba Aslam",
-                "Anum Riaz", "Saba Kiani", "Hafsa Saeed", "Sidra Hashmi",
-                "Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel",
-                "Rida qAbbas", "Nimra Waseem", "Huma Tariq",
-                "Samina Khalid", "Zeenat Rauf", "Amna Waheed",
-                "Neelam Hashmi", "Aiman Qamar", "Romaisa Hussain",
-                "Fareeda Asif", "Sania Anwar", "Humaisa Khalil",
-                "Asma Riaz", "Sadia Kamran", "Sehrish Waseem", "Uzma Tariq",
-                "Mehwish Latif", "Hina Abbas", "Areeba Waqar",
-                "Tanzeela Jafar", "Anila Saleem", "Mahira Umer",
-                "Bushra Nadeem", "Zoya Mehmood", "Nida Hashim",
-                "Sumaira Yasir", "Mahnoor Hussain", "Komal Saeed",
-                "Laiba Waseem", "Amina Abbas", "Rida Jameel",
-                "Saeeka Haroon", "Zainab Farooq", "Fatima Hussain",
-                "Hafsa Mehmood", "Minal Khawar", "Yumna Tariq",
-                "Ayeza Barkat", "Asia Farhan", "Kinza Jamal",
-                "Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed",
-                "Hira Khalid", "Amna Riaz", "Iqra Farooq", "Anum Abbas",
-                "Mehwish Iqrar", "Sumaiya Tariq", "Romaisa Khalil",
-                "Faiza Waseem", "Bushra Farooq", "Sadia Abbas",
-                "Hiba Hussain", "Afshan Siddiqui", "Sana Basit",
-                "Areeba Khalid", "Maira Waseem", "Nimra Hussain",
-                "Sehrish Saleem", "Amna Jameel", "Zoya Khalid",
-                "Mehreen Tariq", "Aiman Abbas", "Komal Riaz", "Hira Saleem",
-                "Palwasha Moazzam", "Laiba Nayyar", "Minahal Tahir",
-                "Mehwish Shuja", "Javeria Feroze", "Zara Munawwar",
-                "Fiza Jatoi", "Fatima Riaz", "Zainab Alvi",
-                "Tanzeela Abbas", "Kiran Waseem", "Ayesha Khalid",
-                "Samina Hussain", "Sadia Waseem", "Bisma Majeed",
-                "Areeba Latif", "Sehrish Tariq", "Hafsa Waseem",
-                "Hina Tariq", "Zoya Saleem", "Maham Khalid", "Muneera Rauf",
-                "Bushra Tariq", "Zeenat Hussain", "Areeba Saleem",
-                "Kainat Rizvi", "Sumaiya Hussain", "Sadia Khalid",
-                "Mahnoor Irshad", "Fatima Jameel", "Sakina Hilaj",
-                "Iqra Danyal", "Hina Riaz", "Neha Saleem", "Mehwish Khalid",
-                "Asma Waseem", "Romaisa Tariq", "Laiba Khalid",
-                "Komal Noor", "Bushra Waseem", "Zainab Tariq",
-                "Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad",
-                "Komal Hussain", "Maryam Raza", "Romaisa Haroon",
-                "Mehwish Abbas", "Maham Riaz", "Sumaiya Khalid",
-                "Anila Anjum", "Areeba Hussain")
+            "Sana Farooq", "Mahnoor Tariq", "Faiza Tehseem",
+            "Fozia Mehshar", "Iqra Siddiqui", "Laiba Aslam",
+            "Anum Riaz", "Saba Kiani", "Hafsa Saeed", "Sidra Hashmi",
+            "Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel",
+            "Rida qAbbas", "Nimra Waseem", "Huma Tariq",
+            "Samina Khalid", "Zeenat Rauf", "Amna Waheed",
+            "Neelam Hashmi", "Aiman Qamar", "Romaisa Hussain",
+            "Fareeda Asif", "Sania Anwar", "Humaisa Khalil",
+            "Asma Riaz", "Sadia Kamran", "Sehrish Waseem", "Uzma Tariq",
+            "Mehwish Latif", "Hina Abbas", "Areeba Waqar",
+            "Tanzeela Jafar", "Anila Saleem", "Mahira Umer",
+            "Bushra Nadeem", "Zoya Mehmood", "Nida Hashim",
+            "Sumaira Yasir", "Mahnoor Hussain", "Komal Saeed",
+            "Laiba Waseem", "Amina Abbas", "Rida Jameel",
+            "Saeeka Haroon", "Zainab Farooq", "Fatima Hussain",
+            "Hafsa Mehmood", "Minal Khawar", "Yumna Tariq",
+            "Ayeza Barkat", "Asia Farhan", "Kinza Jamal",
+            "Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed",
+            "Hira Khalid", "Amna Riaz", "Iqra Farooq", "Anum Abbas",
+            "Mehwish Iqrar", "Sumaiya Tariq", "Romaisa Khalil",
+            "Faiza Waseem", "Bushra Farooq", "Sadia Abbas",
+            "Hiba Hussain", "Afshan Siddiqui", "Sana Basit",
+            "Areeba Khalid", "Maira Waseem", "Nimra Hussain",
+            "Sehrish Saleem", "Amna Jameel", "Zoya Khalid",
+            "Mehreen Tariq", "Aiman Abbas", "Komal Riaz", "Hira Saleem",
+            "Palwasha Moazzam", "Laiba Nayyar", "Minahal Tahir",
+            "Mehwish Shuja", "Javeria Feroze", "Zara Munawwar",
+            "Fiza Jatoi", "Fatima Riaz", "Zainab Alvi",
+            "Tanzeela Abbas", "Kiran Waseem", "Ayesha Khalid",
+            "Samina Hussain", "Sadia Waseem", "Bisma Majeed",
+            "Areeba Latif", "Sehrish Tariq", "Hafsa Waseem",
+            "Hina Tariq", "Zoya Saleem", "Maham Khalid", "Muneera Rauf",
+            "Bushra Tariq", "Zeenat Hussain", "Areeba Saleem",
+            "Kainat Rizvi", "Sumaiya Hussain", "Sadia Khalid",
+            "Mahnoor Irshad", "Fatima Jameel", "Sakina Hilaj",
+            "Iqra Danyal", "Hina Riaz", "Neha Saleem", "Mehwish Khalid",
+            "Asma Waseem", "Romaisa Tariq", "Laiba Khalid",
+            "Komal Noor", "Bushra Waseem", "Zainab Tariq",
+            "Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad",
+            "Komal Hussain", "Maryam Raza", "Romaisa Haroon",
+            "Mehwish Abbas", "Maham Riaz", "Sumaiya Khalid",
+            "Anila Anjum", "Areeba Hussain")
         private val areas_in_karachi = arrayOf<String?>("Askari 1", "Askari 2", "Askari 3", "Askari 4",
-                "Askari 5", "Bahria Town - Precinct 1",
-                "Bahria Town - Precinct 10", "Bahria Town - Precinct 11",
-                "Bahria Town - Precinct 12", "Bahria Town - Precinct 13",
-                "Bahria Town - Precinct 14", "Bahria Town - Precinct 15",
-                "Bahria Town - Precinct 16", "Bahria Town - Precinct 17",
-                "Bahria Town - Precinct 18", "Bahria Town - Precinct 19",
-                "Bahria Town - Precinct 2", "Bahria Town - Precinct 20",
-                "Bahria Town - Precinct 21", "Bahria Town - Precinct 22",
-                "Bahria Town - Precinct 23", "Bahria Town - Precinct 24",
-                "Bahria Town - Precinct 25", "Bahria Town - Precinct 26",
-                "Bahria Town - Precinct 27", "Bahria Town - Precinct 28",
-                "Bahria Town - Precinct 29", "Bahria Town - Precinct 3",
-                "Bahria Town - Precinct 30", "Bahria Town - Precinct 31",
-                "Bahria Town - Precinct 32", "Bahria Town - Precinct 33",
-                "Bahria Town - Precinct 4", "Bahria Town - Precinct 5",
-                "Bahria Town - Precinct 6", "Bahria Town - Precinct 7",
-                "Bahria Town - Precinct 8", "Bahria Town - Precinct 9",
-                "BufferZone - Sector 15 A 1", "BufferZone - Sector 15 A 2",
-                "BufferZone - Sector 15 A 3", "BufferZone - Sector 15 A 4",
-                "BufferZone - Sector 15 A 5", "BufferZone - Sector 15 B",
-                "BufferZone - Sector 16 A", "BufferZone - Sector 16 B",
-                "Cantonment", "Clifton - Block 1", "Clifton - Block 2",
-                "Clifton - Block 3", "Clifton - Block 4",
-                "Clifton - Block 5", "Clifton - Block 6",
-                "Clifton - Block 7", "Clifton - Block 8",
-                "Clifton - Block 9", "Clifton - Kehkashan", "DHA - Phase 1",
-                "DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4",
-                "DHA - Phase 5", "DHA - Phase 6", "DHA - Phase 7",
-                "DHA - Phase 8", "DHA - Phase 9", "F.B Area - Azizabad",
-                "F.B Area - B1 Area", "F.B Area - B Area",
-                "F.B Area - Block 1", "F.B Area - Block 10",
-                "F.B Area - Block 11", "F.B Area - Block 12",
-                "F.B Area - Block 13", "F.B Area - Block 14",
-                "F.B Area - Block 15", "F.B Area - Block 16",
-                "F.B Area - Block 17", "F.B Area - Block 18",
-                "F.B Area - Block 19", "F.B Area - Block 2",
-                "F.B Area - Block 20", "F.B Area - Block 21",
-                "F.B Area - Block 22", "F.B Area - Block 3",
-                "F.B Area - Block 4", "F.B Area - Block 5",
-                "F.B Area - Block 6", "F.C Area - C1 Area",
-                "F.C Area - C Area", "Garden - Garden East",
-                "Garden - Garden West", "Garden - Soldier Bazaar",
-                "Gulistan-e-Johar - Block 1", "Gulistan-e-Johar - Block 10",
-                "Gulistan-e-Johar - Block 11",
-                "Gulistan-e-Johar - Block 12",
-                "Gulistan-e-Johar - Block 13",
-                "Gulistan-e-Johar - Block 14",
-                "Gulistan-e-Johar - Block 15",
-                "Gulistan-e-Johar - Block 16",
-                "Gulistan-e-Johar - Block 17",
-                "Gulistan-e-Johar - Block 18",
-                "Gulistan-e-Johar - Block 19", "Gulistan-e-Johar - Block 2",
-                "Gulistan-e-Johar - Block 20", "Gulistan-e-Johar - Block 3",
-                "Gulistan-e-Johar - Block 4", "Gulistan-e-Johar - Block 5",
-                "Gulistan-e-Johar - Block 6", "Gulistan-e-Johar - Block 7",
-                "Gulistan-e-Johar - Block 8", "Gulistan-e-Johar - Block 9",
-                "Gulshan-e-Hadeed - Data Nagar",
-                "Gulshan-e-Hadeed - EIDU Goth",
-                "Gulshan-e-Hadeed - Gulshan-e-Mauzzam",
-                "Gulshan-e-Hadeed - Gulshan-e-Rehman",
-                "Gulshan-e-Hadeed - Mehran Road",
-                "Gulshan-e-Hadeed - Phase 1", "Gulshan-e-Hadeed - Phase 2",
-                "Gulshan-e-Hadeed - Phase 3",
-                "Gulshan-e-Hadeed - PTCL Satellite Station",
-                "Gulshan-e-Hadeed - Shah Latif Town",
-                "Gulshan-e-Hadeed - Shahnawaz Goth",
-                "Gulshan-e-Hadeed - Shah Town",
-                "Gulshan-e-Hadeed - Steel Town",
-                "Gulshan-e-Iqbal - Adamjee Nagar",
-                "Gulshan-e-Iqbal - Block 1", "Gulshan-e-Iqbal - Block 10",
-                "Gulshan-e-Iqbal - Block 11", "Gulshan-e-Iqbal - Block 12",
-                "Gulshan-e-Iqbal - Block 13", "Gulshan-e-Iqbal - Block 14",
-                "Gulshan-e-Iqbal - Block 15", "Gulshan-e-Iqbal - Block 16",
-                "Gulshan-e-Iqbal - Block 17", "Gulshan-e-Iqbal - Block 18",
-                "Gulshan-e-Iqbal - Block 19", "Gulshan-e-Iqbal - Block 2",
-                "Gulshan-e-Iqbal - Block 3", "Gulshan-e-Iqbal - Block 4",
-                "Gulshan-e-Iqbal - Block 5", "Gulshan-e-Iqbal - Block 6",
-                "Gulshan-e-Iqbal - Block 7", "Gulshan-e-Iqbal - Block 8",
-                "Gulshan-e-Iqbal - Block 9",
-                "Gulshan-e-Iqbal - Civic Center",
-                "Gulshan-e-Iqbal - Dhoraji",
-                "Korangi - Abdullah Shah Noorani Pahari Colony",
-                "Korangi - Korangi Industrial Area",
-                "Korangi - Nasir Colony",
-                "Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town",
-                "Korangi - Zia Colony", "Landhi - Alflah Housing Society",
-                "Landhi - Awami Colony", "Landhi - Bagh-e-Korangi",
-                "Landhi - Bakhtawar Goth", "Landhi - Barmi Colony",
-                "Landhi - Bhutto Nagar", "Landhi - Future Colony",
-                "Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth",
-                "Landhi - Labour Colony", "Landhi - Landhi Industrial Area",
-                "Landhi - Muslimabad Colony",
-                "Landhi - Muzaffarabad Colony", "Landhi - Punjab Town",
-                "Landhi - Qasim Town", "Landhi - Sadat Colony",
-                "Landhi - Shah Khalid Colony", "Landhi - Sharafi Goth",
-                "Landhi - Zamanabad", "Liaquatabad - Block 1",
-                "Liaquatabad - Block 10", "Liaquatabad - Block 2",
-                "Liaquatabad - Block 3", "Liaquatabad - Block 4",
-                "Liaquatabad - Block 5", "Liaquatabad - Block 6",
-                "Liaquatabad - Block 7", "Liaquatabad - Block 8",
-                "Liaquatabad - Block 9", "Malir - Malir Halt",
-                "Malir - Malir Cantt", "Nazimabad - Block 1",
-                "Nazimabad - Block 2", "Nazimabad - Block 3",
-                "Nazimabad - Block 4", "Nazimabad - Block 5",
-                "North Karachi - Sector 10",
-                "North Karachi - Sector 11 - A",
-                "North Karachi - Sector 11 - B",
-                "North Karachi - Sector 11 - C 1",
-                "North Karachi - Sector 11 - C 2",
-                "North Karachi - Sector 11 - C 3",
-                "North Karachi - Sector 11 - E",
-                "North Karachi - Sector 11 - H",
-                "North Karachi - Sector 11 - I",
-                "North Karachi - Sector 11 - K",
-                "North Karachi - Sector 11 - L", "North Karachi - Sector 2",
-                "North Karachi - Sector 3", "North Karachi - Sector 4",
-                "North Karachi - Sector 5 - A 1",
-                "North Karachi - Sector 5 - A 2",
-                "North Karachi - Sector 5 - A 3",
-                "North Karachi - Sector 5 - A 4",
-                "North Karachi - Sector 5 - B 1",
-                "North Karachi - Sector 5 - B 2",
-                "North Karachi - Sector 5 - B 3",
-                "North Karachi - Sector 5 - B 4",
-                "North Karachi - Sector 5 - C 1",
-                "North Karachi - Sector 5 - C 2",
-                "North Karachi - Sector 5 - C 3",
-                "North Karachi - Sector 5 - C 4",
-                "North Karachi - Sector 5 - I",
-                "North Karachi - Sector 5 - J",
-                "North Karachi - Sector 5 - K",
-                "North Karachi - Sector 5 - L",
-                "North Karachi - Sector 5 - M", "North Karachi - Sector 6",
-                "North Karachi - Sector 7 - D 1",
-                "North Karachi - Sector 7 - D 2",
-                "North Karachi - Sector 7 - D 3",
-                "North Karachi - Sector 7 - D 4",
-                "North Karachi - Sector 8", "North Karachi - Sector 9",
-                "North Nazimabad - Block A", "North Nazimabad - Block B",
-                "North Nazimabad - Block C", "North Nazimabad - Block D",
-                "North Nazimabad - Block E", "North Nazimabad - Block F",
-                "North Nazimabad - Block G", "North Nazimabad - Block H",
-                "North Nazimabad - Block I", "North Nazimabad - Block J",
-                "North Nazimabad - Block K", "North Nazimabad - Block L",
-                "North Nazimabad - Block M", "North Nazimabad - Block N",
-                "North Nazimabad - Block O", "North Nazimabad - Block P",
-                "North Nazimabad - Block Q", "North Nazimabad - Block R",
-                "North Nazimabad - Block S", "North Nazimabad - Block T",
-                "Old Town - Bhimpora", "Old Town - Bohra Pir",
-                "Old Town - Bombay Bazar", "Old Town - Jodia Bazar",
-                "Old Town - Kagzi Bazar", "Old Town - Kakri Ground",
-                "Old Town - Kamil Gali", "Old Town - Khada Market",
-                "Old Town - Kharadar", "Old Town - Lee Market",
-                "Old Town - Mithadar", "Old Town - Nanwara",
-                "Old Town - Nishter Road", "Old Town - Pan Mandi",
-                "Old Town - Ramswami", "Old Town - Ranchorline",
-                "Orangi Town - Banaras Town", "Orangi Town - Bangla Bazaar",
-                "Orangi Town - Bilal Colony", "Orangi Town - Katti Pahari",
-                "Orangi Town - Moria Goth Orangi", "Orangi Town - Orangi",
-                "Orangi Town - Sector 14 - A",
-                "Orangi Town - Sector 14 - C", "Orangi Town - Thorani Goth",
-                "Baldiya Town", "Baloch Colony", "Civil Line", "FC Area",
-                "Firdous Colony", "Gulshan-e-Maymar", "Hawksbay",
-                "I.I Chundrigar", "Jamshed Road", "K.D.A Officers",
-                "Kemari", "Liyari", "M.A Jinnah Rd", "Manora",
-                "New Karachi", "New Surjani", "PIB Colony", "Pipri Goth",
-                "Rizvia Society", "Saddar", "Scheme 33", "Shabbirabad",
-                "P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2",
-                "P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4",
-                "P.E.C.H.S - Block 5", "P.E.C.H.S - Block 6",
-                "P.E.C.H.S - Khalid Bin Walid", "P.E.C.H.S - Tariq Road",
-                "S.I.T.E - Golimar", "S.I.T.E - S.I.T.E",
-                "Shah Faisal Colony - Aswan Town",
-                "Shah Faisal Colony - Gulshan-e-Asghar",
-                "Shah Faisal Colony - Shah Faisal Colony 1",
-                "Shah Faisal Colony - Shah Faisal Colony 5",
-                "F.B Area - Block 7", "F.B Area - Block 9",
-                "P.E.C.H.S - Block 7", "Aram Bagh", "Bath Island",
-                "University Road", "Bahadurabad", "Shah Faisal Colony - 4",
-                "Banglore Town", "Fowler Lines",
-                "Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal",
-                "Shah Faisal Colony - 3", "Shah Faisal Colony - Green Town",
-                "Darwaish Colony", "Korangi - Sector 31 B",
-                "Firdous Colony", "North Nazimabad - Block W",
-                "K.A.E.C.H.S", "Mehmoodabad", "Korangi - Mehran Town",
-                "Landhi Town - 36 B", "Karachi Memon Society",
-                "Madras Cooperative Housing Society", "Shahrah-e-Faisal",
-                "Korangi - Sector 41 B", "Clifton - Delhi Colony",
-                "Korangi - Sector 32 B", "Dhoraji - Adamjee Nagar",
-                "Bhimpura", "Dhoraji - CP& Berar Society",
-                "Shahra-e-Faisal - Umar Colony", "Model Colony",
-                "Gulshan-e-Shamim", "Clifton - Shah Rasool Colony",
-                "North Karachi - Sector 12 C",
-                "Jail Road - Hyderabad Colony", "Napier Quarter",
-                "Gulzar-e-Hijri", "North Karachi - Sector 12 A",
-                "Shahra-e-Faisal - Jinnah Housing Society",
-                "K.D.A Scheme 1", "Clifton - Punjab Colony",
-                "Korangi - Sector 31 D", "Clifton - Zamzama",
-                "Parsi Colony", "Qayyumabad", "Khokrapar",
-                "Shah Faisal Colony - Muslimabad Malir City",
-                "F.B Area - Block 8", "Nanak Wara", "Mohammad Ali Society",
-                "Manzoor Colony", "Dalmia", "Defence View - Phase 1",
-                "Defence View - Phase 2", "KDA Officers Housing Society",
-                "Karimabad", "Soldier Bazar", "Hussainabad",
-                "Sharfabad Society", "Gharibabad",
-                "Sindhi Muslim Cooperative Housing Society")
+            "Askari 5", "Bahria Town - Precinct 1",
+            "Bahria Town - Precinct 10", "Bahria Town - Precinct 11",
+            "Bahria Town - Precinct 12", "Bahria Town - Precinct 13",
+            "Bahria Town - Precinct 14", "Bahria Town - Precinct 15",
+            "Bahria Town - Precinct 16", "Bahria Town - Precinct 17",
+            "Bahria Town - Precinct 18", "Bahria Town - Precinct 19",
+            "Bahria Town - Precinct 2", "Bahria Town - Precinct 20",
+            "Bahria Town - Precinct 21", "Bahria Town - Precinct 22",
+            "Bahria Town - Precinct 23", "Bahria Town - Precinct 24",
+            "Bahria Town - Precinct 25", "Bahria Town - Precinct 26",
+            "Bahria Town - Precinct 27", "Bahria Town - Precinct 28",
+            "Bahria Town - Precinct 29", "Bahria Town - Precinct 3",
+            "Bahria Town - Precinct 30", "Bahria Town - Precinct 31",
+            "Bahria Town - Precinct 32", "Bahria Town - Precinct 33",
+            "Bahria Town - Precinct 4", "Bahria Town - Precinct 5",
+            "Bahria Town - Precinct 6", "Bahria Town - Precinct 7",
+            "Bahria Town - Precinct 8", "Bahria Town - Precinct 9",
+            "BufferZone - Sector 15 A 1", "BufferZone - Sector 15 A 2",
+            "BufferZone - Sector 15 A 3", "BufferZone - Sector 15 A 4",
+            "BufferZone - Sector 15 A 5", "BufferZone - Sector 15 B",
+            "BufferZone - Sector 16 A", "BufferZone - Sector 16 B",
+            "Cantonment", "Clifton - Block 1", "Clifton - Block 2",
+            "Clifton - Block 3", "Clifton - Block 4",
+            "Clifton - Block 5", "Clifton - Block 6",
+            "Clifton - Block 7", "Clifton - Block 8",
+            "Clifton - Block 9", "Clifton - Kehkashan", "DHA - Phase 1",
+            "DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4",
+            "DHA - Phase 5", "DHA - Phase 6", "DHA - Phase 7",
+            "DHA - Phase 8", "DHA - Phase 9", "F.B Area - Azizabad",
+            "F.B Area - B1 Area", "F.B Area - B Area",
+            "F.B Area - Block 1", "F.B Area - Block 10",
+            "F.B Area - Block 11", "F.B Area - Block 12",
+            "F.B Area - Block 13", "F.B Area - Block 14",
+            "F.B Area - Block 15", "F.B Area - Block 16",
+            "F.B Area - Block 17", "F.B Area - Block 18",
+            "F.B Area - Block 19", "F.B Area - Block 2",
+            "F.B Area - Block 20", "F.B Area - Block 21",
+            "F.B Area - Block 22", "F.B Area - Block 3",
+            "F.B Area - Block 4", "F.B Area - Block 5",
+            "F.B Area - Block 6", "F.C Area - C1 Area",
+            "F.C Area - C Area", "Garden - Garden East",
+            "Garden - Garden West", "Garden - Soldier Bazaar",
+            "Gulistan-e-Johar - Block 1", "Gulistan-e-Johar - Block 10",
+            "Gulistan-e-Johar - Block 11",
+            "Gulistan-e-Johar - Block 12",
+            "Gulistan-e-Johar - Block 13",
+            "Gulistan-e-Johar - Block 14",
+            "Gulistan-e-Johar - Block 15",
+            "Gulistan-e-Johar - Block 16",
+            "Gulistan-e-Johar - Block 17",
+            "Gulistan-e-Johar - Block 18",
+            "Gulistan-e-Johar - Block 19", "Gulistan-e-Johar - Block 2",
+            "Gulistan-e-Johar - Block 20", "Gulistan-e-Johar - Block 3",
+            "Gulistan-e-Johar - Block 4", "Gulistan-e-Johar - Block 5",
+            "Gulistan-e-Johar - Block 6", "Gulistan-e-Johar - Block 7",
+            "Gulistan-e-Johar - Block 8", "Gulistan-e-Johar - Block 9",
+            "Gulshan-e-Hadeed - Data Nagar",
+            "Gulshan-e-Hadeed - EIDU Goth",
+            "Gulshan-e-Hadeed - Gulshan-e-Mauzzam",
+            "Gulshan-e-Hadeed - Gulshan-e-Rehman",
+            "Gulshan-e-Hadeed - Mehran Road",
+            "Gulshan-e-Hadeed - Phase 1", "Gulshan-e-Hadeed - Phase 2",
+            "Gulshan-e-Hadeed - Phase 3",
+            "Gulshan-e-Hadeed - PTCL Satellite Station",
+            "Gulshan-e-Hadeed - Shah Latif Town",
+            "Gulshan-e-Hadeed - Shahnawaz Goth",
+            "Gulshan-e-Hadeed - Shah Town",
+            "Gulshan-e-Hadeed - Steel Town",
+            "Gulshan-e-Iqbal - Adamjee Nagar",
+            "Gulshan-e-Iqbal - Block 1", "Gulshan-e-Iqbal - Block 10",
+            "Gulshan-e-Iqbal - Block 11", "Gulshan-e-Iqbal - Block 12",
+            "Gulshan-e-Iqbal - Block 13", "Gulshan-e-Iqbal - Block 14",
+            "Gulshan-e-Iqbal - Block 15", "Gulshan-e-Iqbal - Block 16",
+            "Gulshan-e-Iqbal - Block 17", "Gulshan-e-Iqbal - Block 18",
+            "Gulshan-e-Iqbal - Block 19", "Gulshan-e-Iqbal - Block 2",
+            "Gulshan-e-Iqbal - Block 3", "Gulshan-e-Iqbal - Block 4",
+            "Gulshan-e-Iqbal - Block 5", "Gulshan-e-Iqbal - Block 6",
+            "Gulshan-e-Iqbal - Block 7", "Gulshan-e-Iqbal - Block 8",
+            "Gulshan-e-Iqbal - Block 9",
+            "Gulshan-e-Iqbal - Civic Center",
+            "Gulshan-e-Iqbal - Dhoraji",
+            "Korangi - Abdullah Shah Noorani Pahari Colony",
+            "Korangi - Korangi Industrial Area",
+            "Korangi - Nasir Colony",
+            "Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town",
+            "Korangi - Zia Colony", "Landhi - Alflah Housing Society",
+            "Landhi - Awami Colony", "Landhi - Bagh-e-Korangi",
+            "Landhi - Bakhtawar Goth", "Landhi - Barmi Colony",
+            "Landhi - Bhutto Nagar", "Landhi - Future Colony",
+            "Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth",
+            "Landhi - Labour Colony", "Landhi - Landhi Industrial Area",
+            "Landhi - Muslimabad Colony",
+            "Landhi - Muzaffarabad Colony", "Landhi - Punjab Town",
+            "Landhi - Qasim Town", "Landhi - Sadat Colony",
+            "Landhi - Shah Khalid Colony", "Landhi - Sharafi Goth",
+            "Landhi - Zamanabad", "Liaquatabad - Block 1",
+            "Liaquatabad - Block 10", "Liaquatabad - Block 2",
+            "Liaquatabad - Block 3", "Liaquatabad - Block 4",
+            "Liaquatabad - Block 5", "Liaquatabad - Block 6",
+            "Liaquatabad - Block 7", "Liaquatabad - Block 8",
+            "Liaquatabad - Block 9", "Malir - Malir Halt",
+            "Malir - Malir Cantt", "Nazimabad - Block 1",
+            "Nazimabad - Block 2", "Nazimabad - Block 3",
+            "Nazimabad - Block 4", "Nazimabad - Block 5",
+            "North Karachi - Sector 10",
+            "North Karachi - Sector 11 - A",
+            "North Karachi - Sector 11 - B",
+            "North Karachi - Sector 11 - C 1",
+            "North Karachi - Sector 11 - C 2",
+            "North Karachi - Sector 11 - C 3",
+            "North Karachi - Sector 11 - E",
+            "North Karachi - Sector 11 - H",
+            "North Karachi - Sector 11 - I",
+            "North Karachi - Sector 11 - K",
+            "North Karachi - Sector 11 - L", "North Karachi - Sector 2",
+            "North Karachi - Sector 3", "North Karachi - Sector 4",
+            "North Karachi - Sector 5 - A 1",
+            "North Karachi - Sector 5 - A 2",
+            "North Karachi - Sector 5 - A 3",
+            "North Karachi - Sector 5 - A 4",
+            "North Karachi - Sector 5 - B 1",
+            "North Karachi - Sector 5 - B 2",
+            "North Karachi - Sector 5 - B 3",
+            "North Karachi - Sector 5 - B 4",
+            "North Karachi - Sector 5 - C 1",
+            "North Karachi - Sector 5 - C 2",
+            "North Karachi - Sector 5 - C 3",
+            "North Karachi - Sector 5 - C 4",
+            "North Karachi - Sector 5 - I",
+            "North Karachi - Sector 5 - J",
+            "North Karachi - Sector 5 - K",
+            "North Karachi - Sector 5 - L",
+            "North Karachi - Sector 5 - M", "North Karachi - Sector 6",
+            "North Karachi - Sector 7 - D 1",
+            "North Karachi - Sector 7 - D 2",
+            "North Karachi - Sector 7 - D 3",
+            "North Karachi - Sector 7 - D 4",
+            "North Karachi - Sector 8", "North Karachi - Sector 9",
+            "North Nazimabad - Block A", "North Nazimabad - Block B",
+            "North Nazimabad - Block C", "North Nazimabad - Block D",
+            "North Nazimabad - Block E", "North Nazimabad - Block F",
+            "North Nazimabad - Block G", "North Nazimabad - Block H",
+            "North Nazimabad - Block I", "North Nazimabad - Block J",
+            "North Nazimabad - Block K", "North Nazimabad - Block L",
+            "North Nazimabad - Block M", "North Nazimabad - Block N",
+            "North Nazimabad - Block O", "North Nazimabad - Block P",
+            "North Nazimabad - Block Q", "North Nazimabad - Block R",
+            "North Nazimabad - Block S", "North Nazimabad - Block T",
+            "Old Town - Bhimpora", "Old Town - Bohra Pir",
+            "Old Town - Bombay Bazar", "Old Town - Jodia Bazar",
+            "Old Town - Kagzi Bazar", "Old Town - Kakri Ground",
+            "Old Town - Kamil Gali", "Old Town - Khada Market",
+            "Old Town - Kharadar", "Old Town - Lee Market",
+            "Old Town - Mithadar", "Old Town - Nanwara",
+            "Old Town - Nishter Road", "Old Town - Pan Mandi",
+            "Old Town - Ramswami", "Old Town - Ranchorline",
+            "Orangi Town - Banaras Town", "Orangi Town - Bangla Bazaar",
+            "Orangi Town - Bilal Colony", "Orangi Town - Katti Pahari",
+            "Orangi Town - Moria Goth Orangi", "Orangi Town - Orangi",
+            "Orangi Town - Sector 14 - A",
+            "Orangi Town - Sector 14 - C", "Orangi Town - Thorani Goth",
+            "Baldiya Town", "Baloch Colony", "Civil Line", "FC Area",
+            "Firdous Colony", "Gulshan-e-Maymar", "Hawksbay",
+            "I.I Chundrigar", "Jamshed Road", "K.D.A Officers",
+            "Kemari", "Liyari", "M.A Jinnah Rd", "Manora",
+            "New Karachi", "New Surjani", "PIB Colony", "Pipri Goth",
+            "Rizvia Society", "Saddar", "Scheme 33", "Shabbirabad",
+            "P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2",
+            "P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4",
+            "P.E.C.H.S - Block 5", "P.E.C.H.S - Block 6",
+            "P.E.C.H.S - Khalid Bin Walid", "P.E.C.H.S - Tariq Road",
+            "S.I.T.E - Golimar", "S.I.T.E - S.I.T.E",
+            "Shah Faisal Colony - Aswan Town",
+            "Shah Faisal Colony - Gulshan-e-Asghar",
+            "Shah Faisal Colony - Shah Faisal Colony 1",
+            "Shah Faisal Colony - Shah Faisal Colony 5",
+            "F.B Area - Block 7", "F.B Area - Block 9",
+            "P.E.C.H.S - Block 7", "Aram Bagh", "Bath Island",
+            "University Road", "Bahadurabad", "Shah Faisal Colony - 4",
+            "Banglore Town", "Fowler Lines",
+            "Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal",
+            "Shah Faisal Colony - 3", "Shah Faisal Colony - Green Town",
+            "Darwaish Colony", "Korangi - Sector 31 B",
+            "Firdous Colony", "North Nazimabad - Block W",
+            "K.A.E.C.H.S", "Mehmoodabad", "Korangi - Mehran Town",
+            "Landhi Town - 36 B", "Karachi Memon Society",
+            "Madras Cooperative Housing Society", "Shahrah-e-Faisal",
+            "Korangi - Sector 41 B", "Clifton - Delhi Colony",
+            "Korangi - Sector 32 B", "Dhoraji - Adamjee Nagar",
+            "Bhimpura", "Dhoraji - CP& Berar Society",
+            "Shahra-e-Faisal - Umar Colony", "Model Colony",
+            "Gulshan-e-Shamim", "Clifton - Shah Rasool Colony",
+            "North Karachi - Sector 12 C",
+            "Jail Road - Hyderabad Colony", "Napier Quarter",
+            "Gulzar-e-Hijri", "North Karachi - Sector 12 A",
+            "Shahra-e-Faisal - Jinnah Housing Society",
+            "K.D.A Scheme 1", "Clifton - Punjab Colony",
+            "Korangi - Sector 31 D", "Clifton - Zamzama",
+            "Parsi Colony", "Qayyumabad", "Khokrapar",
+            "Shah Faisal Colony - Muslimabad Malir City",
+            "F.B Area - Block 8", "Nanak Wara", "Mohammad Ali Society",
+            "Manzoor Colony", "Dalmia", "Defence View - Phase 1",
+            "Defence View - Phase 2", "KDA Officers Housing Society",
+            "Karimabad", "Soldier Bazar", "Hussainabad",
+            "Sharfabad Society", "Gharibabad",
+            "Sindhi Muslim Cooperative Housing Society")
         private val rndcts = arrayOf<String?>(
-                "Your heart is the size of an ocean. Go find yourself in its hidden depths.",
-                "Thinking is the capital, enterprise is the way, hard work is the solution.",
-                "If you can't make it good, at least make it look good.",
-                "Heart be brave. If you cannot be brave, just go. Love's glory is not a small thing.",
-                "If you are out to describe the truth, leave elegance to the tailor.",
-                "O man you are busy working for the world, and the world is busy trying to turn you out.",
-                "While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.",
-                "These capitalists generally act harmoniously and in concert, to fleece the people.",
-                "I don't believe in failure. It is not failure if you enjoyed the process.",
-                "Wear gratitude like a cloak and it will feed every corner of your life.",
-                "If you even dream of beating me you'd better wake up and apologize.",
-                "I will praise any man that will praise me.",
-                "One of the greatest diseases is to be nobody to anybody.",
-                "I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.",
-                "People must learn to hate and if they can learn to hate, they can be taught to love.",
-                "Everyone has been made for some particular work, and the desire for that work has been put in every heart.",
-                "The less of the world, the freer you live.",
-                "Respond to every call that excites your spirit.",
-                "The way to get started is to quit talking and begin doing.",
-                "Speak any language, turkish, greek, persian, arabic, but always speak with love.",
-                "Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.",
-                "When I am silent, I have thunder hidden inside.",
-                "Technological progress is like an axe in the hands of a pathological criminal.",
-                "No one would choose a friendless existence on condition of having all the other things in the world.",
-                "Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don't let yourself believe it will happen to you.",
-                "Let us sacrifice our today so that our children can have a better tomorrow.",
-                "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.",
-                "Everything in the universe is within you. Ask all from yourself.",
-                "I'm not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.",
-                "A good head and a good heart are always a formidable combination.",
-                "The soul never thinks without a picture.",
-                "Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.",
-                "Success is dependent upon the glands - sweat glands.")
+            "Your heart is the size of an ocean. Go find yourself in its hidden depths.",
+            "Thinking is the capital, enterprise is the way, hard work is the solution.",
+            "If you can't make it good, at least make it look good.",
+            "Heart be brave. If you cannot be brave, just go. Love's glory is not a small thing.",
+            "If you are out to describe the truth, leave elegance to the tailor.",
+            "O man you are busy working for the world, and the world is busy trying to turn you out.",
+            "While children are struggling to be unique, the world around them is trying all means to make them look like everybody else.",
+            "These capitalists generally act harmoniously and in concert, to fleece the people.",
+            "I don't believe in failure. It is not failure if you enjoyed the process.",
+            "Wear gratitude like a cloak and it will feed every corner of your life.",
+            "If you even dream of beating me you'd better wake up and apologize.",
+            "I will praise any man that will praise me.",
+            "One of the greatest diseases is to be nobody to anybody.",
+            "I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.",
+            "People must learn to hate and if they can learn to hate, they can be taught to love.",
+            "Everyone has been made for some particular work, and the desire for that work has been put in every heart.",
+            "The less of the world, the freer you live.",
+            "Respond to every call that excites your spirit.",
+            "The way to get started is to quit talking and begin doing.",
+            "Speak any language, turkish, greek, persian, arabic, but always speak with love.",
+            "Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.",
+            "When I am silent, I have thunder hidden inside.",
+            "Technological progress is like an axe in the hands of a pathological criminal.",
+            "No one would choose a friendless existence on condition of having all the other things in the world.",
+            "Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don't let yourself believe it will happen to you.",
+            "Let us sacrifice our today so that our children can have a better tomorrow.",
+            "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.",
+            "Everything in the universe is within you. Ask all from yourself.",
+            "I'm not a handsome guy, but I can give my hand to someone who needs help. Beauty is in the heart, not in the face.",
+            "A good head and a good heart are always a formidable combination.",
+            "The soul never thinks without a picture.",
+            "Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.",
+            "Success is dependent upon the glands - sweat glands.")
         private val rkuniss = arrayOf<String?>("Aga Khan University",
-                "Air War College Institute, Karachi",
-                "Baqai Medical University",
-                "Benazir Bhutto Shaheed University Lyari",
-                "Commecs Institute of Business & Emerging Sciences",
-                "Dadabhoy Institute of Higher Education",
-                "Dawood University of Engineering & Technology",
-                "DHA Suffa University", "DOW University of Health Sciences",
-                "Emaan Institute of Management & Sciences, Karachi",
-                "Greenwich University", "Habib University",
-                "Hamdard University", "ILMA University", "Indus University",
-                "Indus Valley School of Art & Architecture",
-                "Institute of Business Administration",
-                "Institute of Business Management", "Iqra University",
-                "Jinnah Sindh Medical University",
-                "Jinnah University for Women",
-                "Karachi Institute of Economics & Technology", (
-                "Karachi Institute of Technology and Entrepreneurship (KITE), "
-                        + "Karachi"),
-                "Karachi School of Business and Leadership",
-                "KASB Institute of Technology",
-                "Malir University of Science & Technology, Karachi",
-                "Metropolitan University Karachi",
-                "Millennium Institute of Technology and Entrepreneurship, Karachi",
-                "Muhammad Ali Jinnah University",
-                "NED University of Engineering & Technology",
-                "Newport Institute of Communications & Economics",
-                "Pakistan Naval Academy",
-                "Preston Institute of Management, Science & Technology",
-                "Preston University", (
-                "Salim Habib University (Former Barret Hodgson University), "
-                        + "Karachi"),
-                "Shaheed Benazir Bhutto City University",
-                "Shaheed Benazir Bhutto Dewan University",
-                "Shaheed Zulfikar Ali Bhutto Institute of Science & Technology",
-                "Shaheed Zulfiqar Ali Bhutto University of Law",
-                "Sindh Institute of Management & Technology",
-                "Sindh Institute of Medical Sciences",
-                "Sindh Madresatul Islam University",
-                "Sir Syed University of Engineering & Technology",
-                "Sohail University, Karachi",
-                "Textile Institute of Pakistan",
-                "The Nazeer Hussain University", "UIT University, Karachi",
-                "University of Karachi", "Zia-ud-Din University")
+            "Air War College Institute, Karachi",
+            "Baqai Medical University",
+            "Benazir Bhutto Shaheed University Lyari",
+            "Commecs Institute of Business & Emerging Sciences",
+            "Dadabhoy Institute of Higher Education",
+            "Dawood University of Engineering & Technology",
+            "DHA Suffa University", "DOW University of Health Sciences",
+            "Emaan Institute of Management & Sciences, Karachi",
+            "Greenwich University", "Habib University",
+            "Hamdard University", "ILMA University", "Indus University",
+            "Indus Valley School of Art & Architecture",
+            "Institute of Business Administration",
+            "Institute of Business Management", "Iqra University",
+            "Jinnah Sindh Medical University",
+            "Jinnah University for Women",
+            "Karachi Institute of Economics & Technology", (
+                    "Karachi Institute of Technology and Entrepreneurship (KITE), "
+                            + "Karachi"),
+            "Karachi School of Business and Leadership",
+            "KASB Institute of Technology",
+            "Malir University of Science & Technology, Karachi",
+            "Metropolitan University Karachi",
+            "Millennium Institute of Technology and Entrepreneurship, Karachi",
+            "Muhammad Ali Jinnah University",
+            "NED University of Engineering & Technology",
+            "Newport Institute of Communications & Economics",
+            "Pakistan Naval Academy",
+            "Preston Institute of Management, Science & Technology",
+            "Preston University", (
+                    "Salim Habib University (Former Barret Hodgson University), "
+                            + "Karachi"),
+            "Shaheed Benazir Bhutto City University",
+            "Shaheed Benazir Bhutto Dewan University",
+            "Shaheed Zulfikar Ali Bhutto Institute of Science & Technology",
+            "Shaheed Zulfiqar Ali Bhutto University of Law",
+            "Sindh Institute of Management & Technology",
+            "Sindh Institute of Medical Sciences",
+            "Sindh Madresatul Islam University",
+            "Sir Syed University of Engineering & Technology",
+            "Sohail University, Karachi",
+            "Textile Institute of Pakistan",
+            "The Nazeer Hussain University", "UIT University, Karachi",
+            "University of Karachi", "Zia-ud-Din University")
         private val rjbss = arrayOf<String?>("Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor",
-                "Nurse", "Physician", "Laboratorian",
-                "Psychiatrist/Psychologist", "Dermatologist",
-                "Gynecologist", "Cardiologist", "Surgeon",
-                "Ophthalmologist", "Pediatrician", "Watchman", "Tailor",
-                "Designer", "Photographer", "Model", "Fashion Designer",
-                "Makeup Artist", "Dressmaker", "Content Writer",
-                "Police Officer", "Undercover Police Officer",
-                "Prison Officer/Jailer", "Reporter", "Journalist",
-                "Investigator", "Laborer", "Data Analyst", "Data Scientist",
-                "Saleswo/man", "Tele-saleswo/man", "Developer", "Engineer",
-                "Plumber", "Human Resources Manager", "Legal Counsel",
-                "Judge", "Lawyer", "Travel Guide", "Scientist", "Goldsmith",
-                "Blacksmith", "Lumberjack", "White-hat hacker",
-                "Black-hat hacker", "Caretaker", "Nanny", "Fisher",
-                "Architect", "Software Architect", "Farmer",
-                "Agriculture Engineer", "Software Engineer",
-                "Support Specialist", "Systems Analyst",
-                "Technical Support Engineer", "Web Developer",
-                "Web Designer", "Animator", "Filmmaker", "Actor",
-                "Comedian", "Director", "Vocalist", "Musician",
-                "Bedroom Musician/DJ", "Songwriter", "Screenwriter",
-                "Barber", "Barista/Bartender", "Tattooist", "Electrician",
-                "Vehicle Technician", "Cartoonist", "Cook",
-                "Travel Advisor", "Translator", "Relationship Counselor",
-                "accountant", "actor", "actuary",
-                "adhesive bonding machine tender", "adjudicator",
-                "administrative assistant",
-                "administrative services manager", "trapper",
-                "travel agent", "travel clerk", "travel guide",
-                "tree pruner", "tree trimmer", "trimmer", "truck loader",
-                "truck mechanic", "tuner", "turning machine tool operator",
-                "tutor", "typist", "umpire", "undertaker", "urban planner",
-                "usher", "UX designer", "waiter/ess", "watch repairer",
-                "water treatment plant operator", "weaving machine setter",
-                "web developer", "weigher", "welder", "wellhead pumper",
-                "wholesale buyer", "wildlife photographer",
-                "window trimmer", "wood patternmaker", "woodworker",
-                "word processor", "writer")
+            "Nurse", "Physician", "Laboratorian",
+            "Psychiatrist/Psychologist", "Dermatologist",
+            "Gynecologist", "Cardiologist", "Surgeon",
+            "Ophthalmologist", "Pediatrician", "Watchman", "Tailor",
+            "Designer", "Photographer", "Model", "Fashion Designer",
+            "Makeup Artist", "Dressmaker", "Content Writer",
+            "Police Officer", "Undercover Police Officer",
+            "Prison Officer/Jailer", "Reporter", "Journalist",
+            "Investigator", "Laborer", "Data Analyst", "Data Scientist",
+            "Saleswo/man", "Tele-saleswo/man", "Developer", "Engineer",
+            "Plumber", "Human Resources Manager", "Legal Counsel",
+            "Judge", "Lawyer", "Travel Guide", "Scientist", "Goldsmith",
+            "Blacksmith", "Lumberjack", "White-hat hacker",
+            "Black-hat hacker", "Caretaker", "Nanny", "Fisher",
+            "Architect", "Software Architect", "Farmer",
+            "Agriculture Engineer", "Software Engineer",
+            "Support Specialist", "Systems Analyst",
+            "Technical Support Engineer", "Web Developer",
+            "Web Designer", "Animator", "Filmmaker", "Actor",
+            "Comedian", "Director", "Vocalist", "Musician",
+            "Bedroom Musician/DJ", "Songwriter", "Screenwriter",
+            "Barber", "Barista/Bartender", "Tattooist", "Electrician",
+            "Vehicle Technician", "Cartoonist", "Cook",
+            "Travel Advisor", "Translator", "Relationship Counselor",
+            "accountant", "actor", "actuary",
+            "adhesive bonding machine tender", "adjudicator",
+            "administrative assistant",
+            "administrative services manager", "trapper",
+            "travel agent", "travel clerk", "travel guide",
+            "tree pruner", "tree trimmer", "trimmer", "truck loader",
+            "truck mechanic", "tuner", "turning machine tool operator",
+            "tutor", "typist", "umpire", "undertaker", "urban planner",
+            "usher", "UX designer", "waiter/ess", "watch repairer",
+            "water treatment plant operator", "weaving machine setter",
+            "web developer", "weigher", "welder", "wellhead pumper",
+            "wholesale buyer", "wildlife photographer",
+            "window trimmer", "wood patternmaker", "woodworker",
+            "word processor", "writer")
 
         fun randNationality(): String? {
             return randFrom(ntltss)
@@ -31110,7 +31114,7 @@ class KL() {
             val processedName: String = (lower(randName).replace("\\s".toRegex(), addonA)
                     + addonB)
             val mailProviders = arrayOf<String?>("gmail", "yahoo", "hotmail", "outlook",
-                    "icloud")
+                "icloud")
             val provider = randFrom(mailProviders)
             return "$processedName@$provider.com"
         }
