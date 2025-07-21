@@ -366,9 +366,6 @@ public class KL {
 				workDirectory = KL.workDirectory;
 	}
 	// gui
-	/**
-	 * @wbp.parser.entryPoint
-	 */
 	public static class gui extends JFrame {
 		private static final long serialVersionUID = 1L;
 		gui() {
