@@ -105,13 +105,18 @@ class gui:
         self.root.title(title)
         self.size(width, height)
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+        
+    def icon(self, iconString):
+     	try:
+     		self.root.iconbitmap(iconString)
+     	except:
+     		pass
 
     def size(self, width:int, height:int):
-        if width < 100 or height < 100 or width > 10000 or height > 10000:
+        if width < 100 or height < 100 or width > 10_000 or height > 10_000:
             width, height = 400, 600
         self.root.geometry(f"{width}x{height}")
         self.root.update_idletasks()
-
 
     def center(self):
         self.root.eval('tk::PlaceWindow . center')
@@ -127,7 +132,7 @@ class gui:
         self.root.deiconify()
 
     def on_close(self):
-        if messagebox.askyesno("Close", "Are you sure you want to exit?"):
+        if messagebox.askyesno("Close", "Are you sure you want to exit?s"):
             self.root.destroy()
 
     def resizable(self, resizable):
@@ -321,6 +326,7 @@ class panel(tk.Frame):
             
 def main():
     ui:gui = gui("My GUI")
+    ui.size(600, 400)
     ui.start()
     
 if __name__ == "__main__":
