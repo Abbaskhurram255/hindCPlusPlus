@@ -1,5 +1,6 @@
+package jcalculator;
 import java.util.Arrays;
-import java.util.regex.*;
+import java.util.regex.PatternSyntaxException;
 
 class lafz {
 	String str = "";
@@ -10,15 +11,18 @@ class lafz {
 	lafz(Object... objs) {
 		this.str = "";
 		for (Object o : objs) {
-			if (o != null) this.str += " "+o;
+			if (o != null)
+				this.str += " " + o;
 		}
 		trim();
 		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 	}
 	lafz concat(Object... objs) {
 		for (Object o : objs) {
-			if (o == null) continue;
-			if (o != null) this.str += " "+o;
+			if (o == null)
+				continue;
+			if (o != null)
+				this.str += " " + o;
 		}
 		trim();
 		return this;
@@ -36,14 +40,16 @@ class lafz {
 		return this;
 	}
 	String sentCase() {
-		if (isEmpty()) return "";
+		if (isEmpty())
+			return "";
 		String result = (str.toUpperCase().substring(0, 1)
-				 + str.toLowerCase().substring(1))
+				+ str.toLowerCase().substring(1))
 				.replaceAll("(?<!\\w)i(?!\\w)", "I");
 		return result;
 	}
 	String titleCase() {
-		if (isEmpty()) return "";
+		if (isEmpty())
+			return "";
 		StringBuilder titleCased = new StringBuilder(str.length());
 		boolean nextTitleCase = true;
 		for (char c : str.toCharArray()) {
@@ -89,83 +95,105 @@ class lafz {
 		return reverse();
 	}
 	String[] split(String _with, int maxSplits) {
-		if (_with == null) _with = "";
+		if (_with == null)
+			_with = "";
 		String[] splitted = str.split(_with, maxSplits);
-		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals(""))) splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
+		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals("")))
+			splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
 		return splitted;
 	}
 	String[] split(String _with) {
-		if (_with == null) _with = "";
+		if (_with == null)
+			_with = "";
 		String[] splitted = str.split(_with);
-		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals(""))) splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
+		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals("")))
+			splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
 		return splitted;
 	}
 	String i(int i) {
-		if (isEmpty()) return "";
-		if (i >= length()) return split()[length() - 1];
+		if (isEmpty())
+			return "";
+		if (i >= length())
+			return split()[length() - 1];
 		if (i < 0) {
 			i = Math.abs(i);
 			if (i > 0 && i <= length())
-                return lasti(i);
-            return split()[0];
-        }
+				return lasti(i);
+			return split()[0];
+		}
 		return split()[i];
 	}
 	String lasti(int i) {
-		if (isEmpty()) return "";
-		if (i <= 0) return split()[0];
-		if (i > length()) return split()[length()-1];
-		return split()[length()-i];
+		if (isEmpty())
+			return "";
+		if (i <= 0)
+			return split()[0];
+		if (i > length())
+			return split()[length() - 1];
+		return split()[length() - i];
 	}
 	String[] splitIntoWords() {
 		return words;
 	}
 	String firstWord() {
-		if (length() == 0 || words.length == 0) return "";
+		if (length() == 0 || words.length == 0)
+			return "";
 		return words[0];
 	}
 	String secWord() {
-		if (length() == 0 || words.length == 0) return "";
-		if (words.length < 2) return words[0];
+		if (length() == 0 || words.length == 0)
+			return "";
+		if (words.length < 2)
+			return words[0];
 		return words[1];
 	}
 	String secondWord() {
 		return secWord();
 	}
 	String secLastWord() {
-		if (length() == 0 || words.length == 0) return "";
-		if (words.length < 3) return words[0];
-		return words[words.length-2];
+		if (length() == 0 || words.length == 0)
+			return "";
+		if (words.length < 3)
+			return words[0];
+		return words[words.length - 2];
 	}
 	String secondLastWord() {
 		return secLastWord();
 	}
 	String lastWord() {
-		if (length() == 0 || words.length == 0) return "";
-		return words[words.length-1];
+		if (length() == 0 || words.length == 0)
+			return "";
+		return words[words.length - 1];
 	}
 	String nthWord(int i) {
-		if (length() == 0 || words.length == 0 || i >= words.length) return "";
-		if (i >= length()) return words[words.length - 1];
+		if (length() == 0 || words.length == 0 || i >= words.length)
+			return "";
+		if (i >= length())
+			return words[words.length - 1];
 		if (i < 0) {
 			i = Math.abs(i);
 			if (i > 0 && i <= words.length)
-                return lasti(i);
-            return words[0];
-        }
+				return lasti(i);
+			return words[0];
+		}
 		return words[i];
 	}
 	String nthLastWord(int i) {
-		if (length() == 0 || words.length == 0) return "";
-		if (i <= 0) return words[0];
-		if (i > words.length) return words[words.length-1];
-		return words[words.length-i];
+		if (length() == 0 || words.length == 0)
+			return "";
+		if (i <= 0)
+			return words[0];
+		if (i > words.length)
+			return words[words.length - 1];
+		return words[words.length - i];
 	}
 	String[] split() {
 		String[] splitted = str.split("");
 		splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
 		return splitted;
-		//TESTED, AND CONCLUDED: java split(""), unlike JavaScript's, returns an extra empty string at the beginning of the array, we need to kill it
+		// TESTED, AND CONCLUDED: java split(""), unlike JavaScript's, returns
+		// an extra empty string at the beginning of the array, we need to kill
+		// it
 	}
 	String[] array() {
 		return split();
@@ -177,8 +205,8 @@ class lafz {
 		return split();
 	}
 	Object[] toStrArr() {
-		return (Object[])splitIntoWords();
-		//replace the `Object[]` part with `new StrArr($rest)`
+		return (Object[]) splitIntoWords();
+		// replace the `Object[]` part with `new StrArr($rest)`
 	}
 	char[] toCharArray() {
 		return str.toCharArray();
@@ -191,7 +219,8 @@ class lafz {
 	}
 	char charAt(int i) {
 		String charInStringForm = i(i);
-		if (charInStringForm.equals("")) return '\0';
+		if (charInStringForm.equals(""))
+			return '\0';
 		char character = charInStringForm.toCharArray()[0];
 		return character;
 	}
@@ -202,7 +231,8 @@ class lafz {
 		return charAt(i);
 	}
 	String join() {
-		if (isEmpty()) return "";
+		if (isEmpty())
+			return "";
 		if (words.length < 2)
 			return nthWord(0);
 		String halfProcessed = String.join(", ", words);
@@ -211,24 +241,25 @@ class lafz {
 		returnValue = new lafz(returnValue).sentCase();
 		return returnValue;
 	}
-    String replace(String re, String _with) {
-    	try {
-    		return str.replaceAll(re, _with);
-    	} catch (PatternSyntaxException|StackOverflowError e) {
-    		return str;
-    	}
-    }
-    String replaceAll(String re, String _with) {
-    	return replace(re, _with);
-    }
-    String remove(String re) {
-    	return replace(re, "");
-    }
-    String removeAll(String re) {
-    	return remove(re);
-    }
+	String replace(String re, String _with) {
+		try {
+			return str.replaceAll(re, _with);
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return str;
+		}
+	}
+	String replaceAll(String re, String _with) {
+		return replace(re, _with);
+	}
+	String remove(String re) {
+		return replace(re, "");
+	}
+	String removeAll(String re) {
+		return remove(re);
+	}
 	int length() {
-		if (str == null) str = "";
+		if (str == null)
+			str = "";
 		return str.trim().length();
 	}
 	int len() {
@@ -241,7 +272,8 @@ class lafz {
 		return str.isEmpty();
 	}
 	public String toString() {
-		if (str == null) return "";
+		if (str == null)
+			return "";
 		return str;
 	}
 	public String string() {
@@ -258,7 +290,8 @@ class str extends lafz {
 	str(Object... objs) {
 		this.str = "";
 		for (Object o : objs) {
-			if (o != null) this.str += " "+o;
+			if (o != null)
+				this.str += " " + o;
 		}
 		trim();
 		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
@@ -271,27 +304,27 @@ class Str extends str {
 	Str(Object... objs) {
 		this.str = "";
 		for (Object o : objs) {
-			if (o != null) this.str += " "+o;
+			if (o != null)
+				this.str += " " + o;
 		}
 		trim();
 		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 	}
 }
 
-
-public class Main {
+class Main {
 	public static lafz lafz(Object... objs) {
-	    return new lafz(objs);
-    }
-    public static lafz $(Object... objs) {
-	    return new lafz(objs);
-    }
-    public static Str Str(Object... objs) {
-	    return new Str(objs);
-    }
-    public static str str(Object... objs) {
-	    return new str(objs);
-    }
+		return new lafz(objs);
+	}
+	public static lafz $(Object... objs) {
+		return new lafz(objs);
+	}
+	public static Str Str(Object... objs) {
+		return new Str(objs);
+	}
+	public static str str(Object... objs) {
+		return new str(objs);
+	}
 	public static void main(String[] args) {
 		lafz salaam = $("  hi", "there", "love!", "I'm", 23);
 		lafz greeting2 = $("hi", " boyfriends");
