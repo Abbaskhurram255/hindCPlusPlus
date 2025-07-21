@@ -132,7 +132,7 @@ class gui:
         self.root.deiconify()
 
     def on_close(self):
-        if messagebox.askyesno("Close", "Are you sure you want to exit?s"):
+        if messagebox.askyesno("Close", "Are you sure you want to exit?"):
             self.root.destroy()
 
     def resizable(self, resizable):
