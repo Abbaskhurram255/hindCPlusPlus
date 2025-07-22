@@ -404,8 +404,31 @@ public class KL {
 			super.setLocationRelativeTo(null);
 			return this;
 		}
+		gui size(int[] widthAndHeight) {
+			if (not(widthAndHeight) || len(widthAndHeight) != 2)
+				return this;
+			int w = widthAndHeight[0], h = widthAndHeight[1];
+			size(w, h);
+			return this;
+		}
+		gui size(obj resolution) {
+			if (not(resolution) || !resolution.hasKey("width")
+					|| !resolution.hasKey("height"))
+				return this;
+			int w = resolution.k("width", 0), h = resolution.k("height", 0);
+			size(w, h);
+			return this;
+		}
+		gui size(objI resolution) {
+			if (not(resolution) || !resolution.hasKey("width")
+					|| !resolution.hasKey("height"))
+				return this;
+			int w = resolution.k("width"), h = resolution.k("height");
+			size(w, h);
+			return this;
+		}
 		gui size(String WxH) {
-			if (not(WxH) || !eq(WxH, "\\d{3,4}+[Xx]\\d{3,4}"))
+			if (not(WxH) || !eq(WxH, "\\d{3,4}[Xx]\\d{3,4}"))
 				return this;
 			String[] parts = WxH.split("[Xx]");
 			int w = Int(parts[0]), h = Int(parts[1]);
@@ -418,6 +441,14 @@ public class KL {
 		}
 		gui kiSize(String WxH) {
 			size(WxH);
+			return this;
+		}
+		gui kiSize(obj resolution) {
+			size(resolution);
+			return this;
+		}
+		gui kiSize(objI resolution) {
+			size(resolution);
 			return this;
 		}
 		gui start() {
@@ -510,6 +541,10 @@ public class KL {
 					continue;
 				super.add(c);
 			}
+			return this;
+		}
+		gui addAll(Component... components) {
+			this.add(components);
 			return this;
 		}
 		gui opacity(double o) {
@@ -607,145 +642,146 @@ public class KL {
 			return this;
 		}
 		gui on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
-				String[] keys = k.split("\\|");
+			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (var key : keys) {
 					on(key, action);
 				}
 			}
-			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						char keyCharCaptured = e.getKeyChar();
-						int keyCodeCaptured = e.getKeyCode();
-						String keyCaptured = "" + keyCharCaptured;
-						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
-						}
-						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();
-						}
+			if (not(k) || not(action))
+				return this;
+			super.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					char keyCharCaptured = e.getKeyChar();
+					int keyCodeCaptured = e.getKeyCode();
+					String keyCaptured = "" + keyCharCaptured;
+					switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
-				});
-				super.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						int button = -1;
-						if (KL.eq(k, "(m(ouse)?)?\\W?click")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
-							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
-							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
-							button = MouseEvent.BUTTON3;
-						if (e.getButton() == button) {
-							new Thread(action).run();
-						}
+					if (KL.eq(k, keyCaptured)) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int button = -1;
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+						button = MouseEvent.BUTTON1;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+						button = MouseEvent.BUTTON2;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+						button = MouseEvent.BUTTON3;
+					if (e.getButton() == button) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseMotionListener(new MouseMotionAdapter() {
-					@Override
-					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseWheelListener(new MouseWheelListener() {
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
+						new Thread(action).run();
 					}
-				});
-				super.addWindowListener(new WindowAdapter() {
-					@Override
-					public void windowOpened(WindowEvent e) {
-						if (KL.eq(k, "launch|start")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void windowClosing(WindowEvent e) {
-						if (KL.eq(k, "exit|close")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowOpened(WindowEvent e) {
+					if (KL.eq(k, "launch|start")) {
+						new Thread(action).run();
 					}
-					// there's a difference between these two
-					@Override
-					public void windowClosed(WindowEvent e) {
-						if (KL.eq(k, "exited|closed|(after|post)\\W?close")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void windowClosing(WindowEvent e) {
+					if (KL.eq(k, "(exit|close)(ing)?")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void windowIconified(WindowEvent e) {
-						if (KL.startsWith(k, "min")) {
-							new Thread(action).run();
-						}
+				}
+				// there's a difference between these two
+				@Override
+				public void windowClosed(WindowEvent e) {
+					if (KL.eq(k,
+							"exited|closed|(after|post)\\W?(exit|close)")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void windowDeiconified(WindowEvent e) {
+				}
+				@Override
+				public void windowIconified(WindowEvent e) {
+					if (KL.startsWith(k, "min")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void windowActivated(WindowEvent e) {
-						if (KL.startsWith(k, "focus")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+				}
+				@Override
+				public void windowActivated(WindowEvent e) {
+					if (KL.startsWith(k, "focus")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void windowDeactivated(WindowEvent e) {
-						if (KL.startsWith(k, "defocus")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					if (KL.startsWith(k, "defocus")) {
+						new Thread(action).run();
 					}
-				});
-			}
+				}
+			});
 			return this;
 		}
 		gui state(String newState) {
@@ -809,6 +845,22 @@ public class KL {
 				offTop();
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE, ico);
+			return this;
+		}
+		gui msg(String message) {
+			this.message(message);
+			return this;
+		}
+		gui msg(String title, String message) {
+			this.message(title, message);
+			return this;
+		}
+		gui msg(String title, String message, String iconAddress) {
+			this.message(title, message, iconAddress);
+			return this;
+		}
+		gui msg(String title, String message, Icon ico) {
+			this.message(title, message, ico);
 			return this;
 		}
 		gui error(String message) {
@@ -1074,103 +1126,103 @@ public class KL {
 			return this;
 		}
 		label on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
-				String[] keys = k.split("\\|");
+			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (var key : keys) {
 					on(key, action);
 				}
 			}
-			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						char keyCharCaptured = e.getKeyChar();
-						int keyCodeCaptured = e.getKeyCode();
-						String keyCaptured = "" + keyCharCaptured;
-						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
-						}
-						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();
-						}
+			if (not(k) || not(action))
+				return this;
+			super.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					char keyCharCaptured = e.getKeyChar();
+					int keyCodeCaptured = e.getKeyCode();
+					String keyCaptured = "" + keyCharCaptured;
+					switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
-				});
-				super.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						int button = -1;
-						if (KL.eq(k, "(m(ouse)?)?\\W?click")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
-							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
-							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
-							button = MouseEvent.BUTTON3;
-						if (e.getButton() == button) {
-							new Thread(action).run();
-						}
+					if (KL.eq(k, keyCaptured)) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int button = -1;
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+						button = MouseEvent.BUTTON1;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+						button = MouseEvent.BUTTON2;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+						button = MouseEvent.BUTTON3;
+					if (e.getButton() == button) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseMotionListener(new MouseMotionAdapter() {
-					@Override
-					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseWheelListener(new MouseWheelListener() {
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
+						new Thread(action).run();
 					}
-				});
-			}
+				}
+			});
+			super.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
+						new Thread(action).run();
+					}
+				}
+			});
 			return this;
 		}
 		label addToolTip(String textToDisplayOnHover) {
@@ -1353,103 +1405,103 @@ public class KL {
 			return this;
 		}
 		panel on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
-				String[] keys = k.split("\\|");
+			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (var key : keys) {
 					on(key, action);
 				}
 			}
-			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						char keyCharCaptured = e.getKeyChar();
-						int keyCodeCaptured = e.getKeyCode();
-						String keyCaptured = "" + keyCharCaptured;
-						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
-						}
-						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();
-						}
+			if (not(k) || not(action))
+				return this;
+			super.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					char keyCharCaptured = e.getKeyChar();
+					int keyCodeCaptured = e.getKeyCode();
+					String keyCaptured = "" + keyCharCaptured;
+					switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
-				});
-				super.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						int button = -1;
-						if (KL.eq(k, "(m(ouse)?)?\\W?click")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
-							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
-							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
-							button = MouseEvent.BUTTON3;
-						if (e.getButton() == button) {
-							new Thread(action).run();
-						}
+					if (KL.eq(k, keyCaptured)) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int button = -1;
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+						button = MouseEvent.BUTTON1;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+						button = MouseEvent.BUTTON2;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+						button = MouseEvent.BUTTON3;
+					if (e.getButton() == button) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseMotionListener(new MouseMotionAdapter() {
-					@Override
-					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseWheelListener(new MouseWheelListener() {
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
+						new Thread(action).run();
 					}
-				});
-			}
+				}
+			});
+			super.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
+						new Thread(action).run();
+					}
+				}
+			});
 			return this;
 		}
 		panel addToolTip(String textToDisplayOnHover) {
@@ -3229,103 +3281,103 @@ public class KL {
 			return this;
 		}
 		txtField on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
-				String[] keys = k.split("\\|");
+			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (var key : keys) {
 					on(key, action);
 				}
 			}
-			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						char keyCharCaptured = e.getKeyChar();
-						int keyCodeCaptured = e.getKeyCode();
-						String keyCaptured = "" + keyCharCaptured;
-						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
-						}
-						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();
-						}
+			if (not(k) || not(action))
+				return this;
+			super.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					char keyCharCaptured = e.getKeyChar();
+					int keyCodeCaptured = e.getKeyCode();
+					String keyCaptured = "" + keyCharCaptured;
+					switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
-				});
-				super.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						int button = -1;
-						if (KL.eq(k, "(m(ouse)?)?\\W?click")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
-							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
-							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
-							button = MouseEvent.BUTTON3;
-						if (e.getButton() == button) {
-							new Thread(action).run();
-						}
+					if (KL.eq(k, keyCaptured)) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int button = -1;
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+						button = MouseEvent.BUTTON1;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+						button = MouseEvent.BUTTON2;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+						button = MouseEvent.BUTTON3;
+					if (e.getButton() == button) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseMotionListener(new MouseMotionAdapter() {
-					@Override
-					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseWheelListener(new MouseWheelListener() {
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
+						new Thread(action).run();
 					}
-				});
-			}
+				}
+			});
+			super.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
+						new Thread(action).run();
+					}
+				}
+			});
 			return this;
 		}
 		txtField addToolTip(String textToDisplayOnHover) {
@@ -3399,103 +3451,103 @@ public class KL {
 			return this;
 		}
 		txtArea on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
-				String[] keys = k.split("\\|");
+			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (var key : keys) {
 					on(key, action);
 				}
 			}
-			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						char keyCharCaptured = e.getKeyChar();
-						int keyCodeCaptured = e.getKeyCode();
-						String keyCaptured = "" + keyCharCaptured;
-						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
-						}
-						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();
-						}
+			if (not(k) || not(action))
+				return this;
+			super.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					char keyCharCaptured = e.getKeyChar();
+					int keyCodeCaptured = e.getKeyCode();
+					String keyCaptured = "" + keyCharCaptured;
+					switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
-				});
-				super.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						int button = -1;
-						if (KL.eq(k, "(m(ouse)?)?\\W?click")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
-							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
-							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
-							button = MouseEvent.BUTTON3;
-						if (e.getButton() == button) {
-							new Thread(action).run();
-						}
+					if (KL.eq(k, keyCaptured)) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int button = -1;
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+						button = MouseEvent.BUTTON1;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+						button = MouseEvent.BUTTON2;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+						button = MouseEvent.BUTTON3;
+					if (e.getButton() == button) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseMotionListener(new MouseMotionAdapter() {
-					@Override
-					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseWheelListener(new MouseWheelListener() {
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
+						new Thread(action).run();
 					}
-				});
-			}
+				}
+			});
+			super.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
+						new Thread(action).run();
+					}
+				}
+			});
 			return this;
 		}
 		txtArea addToolTip(String textToDisplayOnHover) {
@@ -3560,103 +3612,103 @@ public class KL {
 			return this;
 		}
 		txtPane on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
-				String[] keys = k.split("\\|");
+			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (var key : keys) {
 					on(key, action);
 				}
 			}
-			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						char keyCharCaptured = e.getKeyChar();
-						int keyCodeCaptured = e.getKeyCode();
-						String keyCaptured = "" + keyCharCaptured;
-						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
-						}
-						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();
-						}
+			if (not(k) || not(action))
+				return this;
+			super.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					char keyCharCaptured = e.getKeyChar();
+					int keyCodeCaptured = e.getKeyCode();
+					String keyCaptured = "" + keyCharCaptured;
+					switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
-				});
-				super.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						int button = -1;
-						if (KL.eq(k, "(m(ouse)?)?\\W?click")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
-							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
-							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
-							button = MouseEvent.BUTTON3;
-						if (e.getButton() == button) {
-							new Thread(action).run();
-						}
+					if (KL.eq(k, keyCaptured)) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int button = -1;
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+						button = MouseEvent.BUTTON1;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+						button = MouseEvent.BUTTON2;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+						button = MouseEvent.BUTTON3;
+					if (e.getButton() == button) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseMotionListener(new MouseMotionAdapter() {
-					@Override
-					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseWheelListener(new MouseWheelListener() {
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
+						new Thread(action).run();
 					}
-				});
-			}
+				}
+			});
+			super.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
+						new Thread(action).run();
+					}
+				}
+			});
 			return this;
 		}
 		txtPane addToolTip(String textToDisplayOnHover) {
@@ -3730,103 +3782,103 @@ public class KL {
 			return this;
 		}
 		pwdField on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\|\\w{3,}")) {
-				String[] keys = k.split("\\|");
+			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (var key : keys) {
 					on(key, action);
 				}
 			}
-			if (KL.is(k) && KL.is(action)) {
-				super.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						char keyCharCaptured = e.getKeyChar();
-						int keyCodeCaptured = e.getKeyCode();
-						String keyCaptured = "" + keyCharCaptured;
-						switch (keyCodeCaptured) {
-							case KeyEvent.VK_UP :
-								keyCaptured = "up";
-								break;
-							case KeyEvent.VK_DOWN :
-								keyCaptured = "down";
-								break;
-							case KeyEvent.VK_LEFT :
-								keyCaptured = "left";
-								break;
-							case KeyEvent.VK_RIGHT :
-								keyCaptured = "right";
-								break;
-							case KeyEvent.VK_CONTROL :
-								keyCaptured = "ctrl";
-								break;
-						}
-						if (KL.eq(k, keyCaptured)) {
-							new Thread(action).run();
-						}
+			if (not(k) || not(action))
+				return this;
+			super.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					char keyCharCaptured = e.getKeyChar();
+					int keyCodeCaptured = e.getKeyCode();
+					String keyCaptured = "" + keyCharCaptured;
+					switch (keyCodeCaptured) {
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
-				});
-				super.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						int button = -1;
-						if (KL.eq(k, "(m(ouse)?)?\\W?click")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-								|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
-							button = MouseEvent.BUTTON1;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-								|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-								|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-								|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
-							button = MouseEvent.BUTTON2;
-						else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-								|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
-							button = MouseEvent.BUTTON3;
-						if (e.getButton() == button) {
-							new Thread(action).run();
-						}
+					if (KL.eq(k, keyCaptured)) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int button = -1;
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+						button = MouseEvent.BUTTON1;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+						button = MouseEvent.BUTTON2;
+					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+						button = MouseEvent.BUTTON3;
+					if (e.getButton() == button) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseMotionListener(new MouseMotionAdapter() {
-					@Override
-					public void mouseDragged(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
+						new Thread(action).run();
 					}
-					@Override
-					public void mouseMoved(MouseEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-							new Thread(action).run();
-						}
+				}
+			});
+			super.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
+						new Thread(action).run();
 					}
-				});
-				super.addMouseWheelListener(new MouseWheelListener() {
-					@Override
-					public void mouseWheelMoved(MouseWheelEvent e) {
-						if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-							new Thread(action).run();
-						}
+				}
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
+						new Thread(action).run();
 					}
-				});
-			}
+				}
+			});
+			super.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
+						new Thread(action).run();
+					}
+				}
+			});
 			return this;
 		}
 		pwdField addToolTip(String textToDisplayOnHover) {
@@ -24711,200 +24763,281 @@ public class KL {
 		return fpkr(n);
 	}
 	public String f(String s, Object... args) {
-		if (not(s) || args.length == 0)
+		if (s == null || s.isEmpty() || args.length == 0)
 			return s;
-		// for specifiers
-		s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
-				.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
-		// handling exponentials
-		String[] exponentialMatches = findMatches(s,
-				"\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
-		if (hasLen(exponentialMatches)) {
-			double[] parsedNumsWithoutPowers = new double[exponentialMatches.length];
-			int[] parsedExponentialPowers = new int[exponentialMatches.length];
-			for (int i : range(exponentialMatches)) {
-				parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i]
-						.replaceAll("[Ee][\\+\\-]?\\d+$", ""));
-				parsedExponentialPowers[i] = Int(findMatch(
-						exponentialMatches[i], "(?<=\\d[Ee])[\\+\\-]?\\d+"));
-				double[] parsedNumsWithPowers = parsedNumsWithoutPowers;
-				// temporarily
-				int power = parsedExponentialPowers[i];
-				if (isNeg(power)) {
-					while (power < 0) {
-						parsedNumsWithPowers[i] /= 10;
-						parsedNumsWithPowers[i] = setPrecision(
-								parsedNumsWithPowers[i], 14);
-						power++;
-					}
-				} else {
-					while (power > 0) {
-						parsedNumsWithPowers[i] *= 10;
-						parsedNumsWithPowers[i] = setPrecision(
-								parsedNumsWithPowers[i], 14);
-						power--;
-					}
-				}
-				s = s.replaceFirst(exponentialMatches[i].replaceAll(
-						"([\\+\\-])", "\\\\$1"), Str(parsedNumsWithPowers[i]));
-			}
-		}
-		String[] matches = findMatches(s,
-				"%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d*f)?\\}");
-		// printArr(matches.length > 0 ? matches : blank.Str);
-		for (String m : matches) {
-			for (Object arg : args) {
-				if (arg instanceof Character && eq(m, "%[\\%c]|\\$*\\{\\}")) {
-					s = replaceFirst(s, m, Str(arg));
-				} else if (arg instanceof String
-						&& eq(m, "%[\\%sw]|\\$*\\{\\}")) {
-					s = replaceFirst(s, m, Str(arg));
-				} else if ((arg instanceof Integer || arg instanceof Long)
-						&& (in(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}"))) {
-					if (eq(m, "%[\\%din](?!th|uc?|c)|\\$*\\{\\}")) {
-						s = replaceFirst(s, m,
-								Str(f(arg instanceof Integer
-										? (int) arg
-										: (long) arg))
-										.replaceAll("\\.[0]+(?!\\d)$", ""));
-					} else if (in(m, "%[din]u")) {
-						if (eq(m, "%[din]uc")) {
-							s = replaceFirst(s, m,
-									Str(usd(arg instanceof Integer
-											? (int) arg
-											: (long) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", ""));
-						} else {
-							s = replaceFirst(s, "%[din]u",
-									Str(fus(arg instanceof Integer
-											? (int) arg
-											: (long) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", ""));
+		try {
+			// for specifiers
+			s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
+					.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
+			// handling exponentials
+			String[] exponentialMatches = findMatches(s,
+					"\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
+			if (hasLen(exponentialMatches)) {
+				double[] parsedNumsWithoutPowers = new double[exponentialMatches.length];
+				int[] parsedExponentialPowers = new int[exponentialMatches.length];
+				for (int i : range(exponentialMatches)) {
+					parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i]
+							.replaceAll("[Ee][\\+\\-]?\\d+$", ""));
+					parsedExponentialPowers[i] = Int(
+							findMatch(exponentialMatches[i],
+									"(?<=\\d[Ee])[\\+\\-]?\\d+"));
+					double[] parsedNumsWithPowers = parsedNumsWithoutPowers;
+					// temporarily
+					int power = parsedExponentialPowers[i];
+					if (isNeg(power)) {
+						while (power < 0) {
+							parsedNumsWithPowers[i] /= 10;
+							parsedNumsWithPowers[i] = setPrecision(
+									parsedNumsWithPowers[i], 14);
+							power++;
 						}
-					} else if (eq(m, "%[din]th")) {
-						s = replaceFirst(s, m,
-								Str(th(arg instanceof Integer
-										? (int) arg
-										: (long) arg)));
-					} else if (eq(m, "%[din]r")) {
-						s = replaceFirst(s, m, Str(toRoman((int) arg)));
 					} else {
-						if (in(m, "%[din]c([\\:\\.][A-Za-z]{3,4})?")) {
-							if (eq(m, "%[din]c([\\:\\.][A-Za-z]{3,4})")) {
-								String currency = m.split("[\\:\\.]")[1];
+						while (power > 0) {
+							parsedNumsWithPowers[i] *= 10;
+							parsedNumsWithPowers[i] = setPrecision(
+									parsedNumsWithPowers[i], 14);
+							power--;
+						}
+					}
+					s = s.replaceFirst(exponentialMatches[i]
+							.replaceAll("([\\+\\-])", "\\\\$1"),
+							Str(parsedNumsWithPowers[i]));
+				}
+			}
+			String[] matches = findMatches(s,
+					"%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d{0,3}f)?\\}");
+			// printArr(matches.length > 0 ? matches : blank.Str);
+			for (String m : matches) {
+				for (Object arg : args) {
+					if (arg instanceof Character
+							&& eq(m, "%[\\%c]|\\$*\\{\\}")) {
+						s = replaceFirst(s, m, Str(arg));
+					} else if (arg instanceof String
+							&& eq(m, "%[\\%sw]|\\$*\\{\\}")) {
+						s = replaceFirst(s, m, Str(arg));
+					} else if ((arg instanceof Integer || arg instanceof Long)
+							&& (in(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}"))) {
+						if (eq(m, "%[\\%din](?!th|uc?|c)|\\$*\\{\\}")) {
+							s = replaceFirst(s, m,
+									Str(f(arg instanceof Integer
+											? (int) arg
+											: (long) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", ""));
+						} else if (in(m, "%[din]u")) {
+							if (eq(m, "%[din]uc")) {
 								s = replaceFirst(s, m,
-										Str(curr(arg instanceof Integer
+										Str(usd(arg instanceof Integer
 												? (int) arg
-												: (long) arg, currency))
-												.replaceAll("\\.[0]+(?!\\d)$",
-														""));
+												: (long) arg)).replaceAll(
+														"\\.[0]+(?!\\d)$", ""));
 							} else {
-								s = replaceFirst(s, m,
-										Str(pkr(arg instanceof Integer
+								s = replaceFirst(s, "%[din]u",
+										Str(fus(arg instanceof Integer
 												? (int) arg
 												: (long) arg)).replaceAll(
 														"\\.[0]+(?!\\d)$", ""));
 							}
-						}
-					}
-				} else if (arg instanceof Float || arg instanceof Double) {
-					if (in(m, "%[\\%fn]u|\\$*\\{(\\.\\d*f)?\\}")) {
-						// DOESN'T work IF the % is not escaped
-						if (eq(m, "%[\\%fn]uc")) {
+						} else if (eq(m, "%[din]th")) {
 							s = replaceFirst(s, m,
-									Str(usd(setPrecision(arg instanceof Float
-											? (float) arg
-											: (double) arg)).replaceAll(
-													"\\.[0]+(?!\\d)$", "")));
+									Str(th(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
+						} else if (eq(m, "%[din]r")) {
+							s = replaceFirst(s, m, Str(toRoman((int) arg)));
 						} else {
-							s = replaceFirst(s, "%[%fn]u|\\$*\\{(\\.\\d*f)?\\}",
-									Str(fus(setPrecision(arg instanceof Float
-											? (float) arg
-											: (double) arg)).replaceAll(
-													"\\.[0]+(?!\\d)$", "")));
+							if (in(m, "%[din]c([\\:\\.][A-Za-z]{3,4})?")) {
+								if (eq(m, "%[din]c([\\:\\.][A-Za-z]{3,4})")) {
+									String currency = m.split("[\\:\\.]")[1];
+									s = replaceFirst(s, m,
+											Str(curr(
+													arg instanceof Integer
+															? (int) arg
+															: (long) arg,
+													currency)).replaceAll(
+															"\\.[0]+(?!\\d)$",
+															""));
+								} else {
+									s = replaceFirst(s, m,
+											Str(pkr(arg instanceof Integer
+													? (int) arg
+													: (long) arg)).replaceAll(
+															"\\.[0]+(?!\\d)$",
+															""));
+								}
+							}
 						}
-					} else if (in(m, "%[\\%fn]c?(?!u)|\\$*\\{(\\.\\d*f)?\\}")) {
-						if (in(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})?")) {
-							if (eq(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})")) {
-								String currency = m.split("[\\:\\.]")[1];
-								s = replaceFirst(s, m,
-										Str(curr(
+					} else if (arg instanceof Float || arg instanceof Double) {
+						if (in(m, "%[\\%fn]u|\\$*\\{(\\.\\d*f)?\\}")) {
+							// DOESN'T work IF the % is not escaped
+							if (eq(m, "%[\\%fn]uc")) {
+								s = replaceFirst(s, m, Str(
+										usd(setPrecision(arg instanceof Float
+												? (float) arg
+												: (double) arg))
+												.replaceAll("\\.[0]+(?!\\d)$",
+														"")));
+							} else {
+								s = replaceFirst(s,
+										"%[%fn]u|\\$*\\{(\\.\\d*f)?\\}",
+										Str(fus(setPrecision(
 												arg instanceof Float
 														? (float) arg
-														: (double) arg,
-												currency)).replaceAll(
-														"\\.[0]+(?!\\d)$", ""));
-							} else {
-								s = replaceFirst(s, m,
-										Str(pkr(arg instanceof Float
-												? (float) arg
-												: (double) arg)).replaceAll(
-														"\\.[0]+(?!\\d)$", ""));
+														: (double) arg))
+												.replaceAll("\\.[0]+(?!\\d)$",
+														"")));
 							}
-						} else {
-							s = replaceFirst(s, "%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
-									Str(f(setPrecision(arg instanceof Float
-											? (float) arg
-											: (double) arg)).replaceAll(
-													"\\.[0]+(?!\\d)$", "")));
+						} else if (in(m,
+								"%[\\%fn]c?(?!u)|\\$*\\{(\\.\\d*f)?\\}")) {
+							if (in(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})?")) {
+								if (eq(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})")) {
+									String currency = m.split("[\\:\\.]")[1];
+									s = replaceFirst(s, m,
+											Str(curr(
+													arg instanceof Float
+															? (float) arg
+															: (double) arg,
+													currency)).replaceAll(
+															"\\.[0]+(?!\\d)$",
+															""));
+								} else {
+									s = replaceFirst(s, m,
+											Str(pkr(arg instanceof Float
+													? (float) arg
+													: (double) arg)).replaceAll(
+															"\\.[0]+(?!\\d)$",
+															""));
+								}
+							} else {
+								s = replaceFirst(s,
+										"%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
+										Str(f(setPrecision(arg instanceof Float
+												? (float) arg
+												: (double) arg))
+												.replaceAll("\\.[0]+(?!\\d)$",
+														"")));
+							}
 						}
+					} else if (arg instanceof Boolean
+							&& eq(m, "%[\\%b]|\\$*\\{\\}")) {
+						s = replaceFirst(s, m, Str((boolean) arg));
 					}
-				} else if (arg instanceof Boolean
-						&& eq(m, "%[\\%b]|\\$*\\{\\}")) {
-					s = replaceFirst(s, m, Str((boolean) arg));
+					// replaceFirst is really what we need here, as replacing
+					// "all"
+					// %b's, for instance, in the case of booleans, with the
+					// args
+					// array,
+					// just wouldn't work, as the first argument would get to be
+					// the
+					// one
+					// to replace all %b's with itself, rendering all other
+					// <typename>
+					// args useless
 				}
-				// replaceFirst is really what we need here, as replacing "all"
-				// %b's, for instance, in the case of booleans, with the args
-				// array,
-				// just wouldn't work, as the first argument would get to be the
-				// one
-				// to replace all %b's with itself, rendering all other
-				// <typename>
-				// args useless
 			}
-		}
-		// post processing...
-		// for methods
-		if (in(s,
-				"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")) {
-			try {
-				Class<?> cls = this.getClass();
-				Object valueFromMethod = new Object();
-				boolean hasParams = false;
-				String[] methodicalMatches = findMatches(s,
-						"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*");
-				for (String m : methodicalMatches) {
-					String toGet = m.replaceAll(
-							"(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
-							"");
-					if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)"))
-						hasParams = true;
-					if (!hasParams)
-						valueFromMethod = cls.getMethod(toGet).invoke(this);
-					else {
-						boolean multiParam = false;
-						String unprocessedParamString = m.replaceAll(
-								"^[\\$\\w]+[:\\(](?=\\w+)|\\)*$", "");
-						if (in(unprocessedParamString, "\\s*,\\s*")) {
-							multiParam = true;
-							String[] paramMatches = unprocessedParamString
-									.split("\\s*,\\s*");
-							Object[] finalParams = new Object[paramMatches.length];
-							Class<?>[] paramTypes = new Class<?>[paramMatches.length];
-							for (int i : range(paramMatches)) {
-								String param = paramMatches[i];
-								paramTypes[i] = isIntLike(param)
-										? (!in(param, "(?<=\\d)[Ll]$")
-												? int.class
-												: long.class)
-										: isFltLike(param)
-												? (!in(param, "(?<=\\d)[Ff]$")
-														? double.class
-														: float.class)
-												: eq(param, "true|false")
-														? boolean.class
-														: String.class;
-								param = param.replaceAll("(?<=\\d)[LlFf]$", "");
+			// post processing...
+			// for methods
+			if (in(s,
+					"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")) {
+				try {
+					Class<?> cls = this.getClass();
+					Object valueFromMethod = new Object();
+					boolean hasParams = false;
+					String[] methodicalMatches = findMatches(s,
+							"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*");
+					for (String m : methodicalMatches) {
+						String toGet = m.replaceAll(
+								"(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
+								"");
+						if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)"))
+							hasParams = true;
+						if (!hasParams)
+							valueFromMethod = cls.getMethod(toGet).invoke(this);
+						else {
+							boolean multiParam = false;
+							String unprocessedParamString = m.replaceAll(
+									"^[\\$\\w]+[:\\(](?=\\w+)|\\)*$", "");
+							if (in(unprocessedParamString, "\\s*,\\s*")) {
+								multiParam = true;
+								String[] paramMatches = unprocessedParamString
+										.split("\\s*,\\s*");
+								Object[] finalParams = new Object[paramMatches.length];
+								Class<?>[] paramTypes = new Class<?>[paramMatches.length];
+								for (int i : range(paramMatches)) {
+									String param = paramMatches[i];
+									paramTypes[i] = isIntLike(param)
+											? (!in(param, "(?<=\\d)[Ll]$")
+													? int.class
+													: long.class)
+											: isFltLike(param)
+													? (!in(param,
+															"(?<=\\d)[Ff]$")
+																	? double.class
+																	: float.class)
+													: eq(param, "true|false")
+															? boolean.class
+															: String.class;
+									param = param.replaceAll("(?<=\\d)[LlFf]$",
+											"");
+									// ----------------------- NOTE
+									// -----------------------------
+									// Since longs can hold both ints, and
+									// longs,
+									// and
+									// are literally just LONG integers,
+									// LONG.CLASS
+									// DOES
+									// THE JOB!!
+									// Same goes for floats, and doubles. A
+									// double
+									// is
+									// literally just a float, except with
+									// extra, or
+									// double, precision.
+									// ----------------------------------------------------------
+									finalParams[i] = isIntLike(param)
+											? Int(param)
+											: isDblLike(param)
+													? Dbl(param)
+													: eq(param, "true|false")
+															? (eq(param, "true")
+																	? true
+																	: false)
+															: Str(param);
+								}
+								for (String param : paramMatches) {
+									valueFromMethod = cls
+											.getMethod(toGet, paramTypes)
+											.invoke(this, finalParams);
+
+									m = m.replaceAll("([\\$\\{\\(\\)\\}])",
+											"\\\\$1");
+									s = s.replaceFirst(m,
+											valueFromMethod instanceof Character
+													|| valueFromMethod instanceof String
+													|| valueFromMethod instanceof Number
+													|| valueFromMethod instanceof Boolean
+															? Str(valueFromMethod)
+															: m);
+								}
+							} else {
+								Class<?> type = isIntLike(
+										unprocessedParamString)
+												? (!in(unprocessedParamString,
+														"(?<=\\d)[Ll]$")
+																? int.class
+																: long.class)
+												: isFltLike(
+														unprocessedParamString)
+																? (!in(unprocessedParamString,
+																		"(?<=\\d)[Ff]$")
+																				? double.class
+																				: float.class)
+																: eq(unprocessedParamString,
+																		"true|false")
+																				? boolean.class
+																				: String.class;
+								unprocessedParamString = unprocessedParamString
+										.replaceAll("(?<=\\d)[LlFf]$", "");
 								// ----------------------- NOTE
 								// -----------------------------
 								// Since longs can hold both ints, and longs,
@@ -24917,149 +25050,104 @@ public class KL {
 								// literally just a float, except with extra, or
 								// double, precision.
 								// ----------------------------------------------------------
-								finalParams[i] = isIntLike(param)
-										? Int(param)
-										: isDblLike(param)
-												? Dbl(param)
-												: eq(param, "true|false")
-														? (eq(param, "true")
-																? true
-																: false)
-														: Str(param);
+								valueFromMethod = cls.getMethod(toGet, type)
+										.invoke(this, isIntLike(
+												unprocessedParamString)
+														? Int(unprocessedParamString)
+														: isDblLike(
+																unprocessedParamString)
+																		? Dbl(unprocessedParamString)
+																		: eq(unprocessedParamString,
+																				"true|false")
+																						? (eq(unprocessedParamString,
+																								"true")
+																										? true
+																										: false)
+																						: unprocessedParamString);
 							}
-							for (String param : paramMatches) {
-								valueFromMethod = cls
-										.getMethod(toGet, paramTypes)
-										.invoke(this, finalParams);
-
-								m = m.replaceAll("([\\$\\{\\(\\)\\}])",
-										"\\\\$1");
-								s = s.replaceFirst(m,
-										valueFromMethod instanceof Character
-												|| valueFromMethod instanceof String
-												|| valueFromMethod instanceof Number
-												|| valueFromMethod instanceof Boolean
-														? Str(valueFromMethod)
-														: m);
-							}
-						} else {
-							Class<?> type = isIntLike(unprocessedParamString)
-									? (!in(unprocessedParamString,
-											"(?<=\\d)[Ll]$")
-													? int.class
-													: long.class)
-									: isFltLike(unprocessedParamString)
-											? (!in(unprocessedParamString,
-													"(?<=\\d)[Ff]$")
-															? double.class
-															: float.class)
-											: eq(unprocessedParamString,
-													"true|false")
-															? boolean.class
-															: String.class;
-							unprocessedParamString = unprocessedParamString
-									.replaceAll("(?<=\\d)[LlFf]$", "");
-							// ----------------------- NOTE
-							// -----------------------------
-							// Since longs can hold both ints, and longs, and
-							// are literally just LONG integers, LONG.CLASS DOES
-							// THE JOB!!
-							// Same goes for floats, and doubles. A double is
-							// literally just a float, except with extra, or
-							// double, precision.
-							// ----------------------------------------------------------
-							valueFromMethod = cls.getMethod(toGet, type).invoke(
-									this,
-									isIntLike(unprocessedParamString)
-											? Int(unprocessedParamString)
-											: isDblLike(unprocessedParamString)
-													? Dbl(unprocessedParamString)
-													: eq(unprocessedParamString,
-															"true|false")
-																	? (eq(unprocessedParamString,
-																			"true")
-																					? true
-																					: false)
-																	: unprocessedParamString);
 						}
+						m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
+						s = s.replaceFirst(m,
+								valueFromMethod instanceof Character
+										|| valueFromMethod instanceof String
+										|| valueFromMethod instanceof Number
+										|| valueFromMethod instanceof Boolean
+												? Str(valueFromMethod)
+												: m);
 					}
-					m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
-					s = s.replaceFirst(m,
-							valueFromMethod instanceof Character
-									|| valueFromMethod instanceof String
-									|| valueFromMethod instanceof Number
-									|| valueFromMethod instanceof Boolean
-											? Str(valueFromMethod)
-											: m);
-				}
-			} catch (NoSuchMethodException | IllegalAccessException
-					| IllegalArgumentException | InvocationTargetException
-					| SecurityException e) {
+				} catch (NoSuchMethodException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException
+						| SecurityException e) {
 
-			}
-		}
-		// FOR FIELDS
-		if (in(s, "\\$*\\{\\w+\\}|\\$+\\w+(?!\\(\\w*\\))")) {
-			try {
-				Class<?> cls = this.getClass();
-				Object field;
-				String[] fieldMatches = findMatches(s,
-						"\\$*\\{\\w+\\}|\\$+\\w+");
-				for (String m : fieldMatches) {
-					String toGet = m.replaceAll("[\\$\\{\\}]", "");
-					field = cls.getField(toGet).get(this);
-					m = m.replaceAll("([\\$\\{\\}])", "\\\\$1");
-					s = s.replaceFirst(m,
-							field instanceof Character
-									|| field instanceof String
-									|| field instanceof Number
-									|| field instanceof Boolean
-											? Str(field)
-											: m);
 				}
-			} catch (NoSuchFieldException | IllegalAccessException
-					| SecurityException e) {
-
 			}
-		}
-		// for numeric operations
-		String catchNumericValuesWithOperator = "(?<=\\&)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)";
-		while (in(s, catchNumericValuesWithOperator)) {
-			String[] numericMatchesWithOperators = findMatches(s,
-					catchNumericValuesWithOperator);
-			if (in(s, catchNumericValuesWithOperator)) {
-				for (String m : numericMatchesWithOperators) {
-					String[] parts = m
-							.split("(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=[\\.\\d]+)");
-					double operandA = Dbl(parts[0]), operandB = Dbl(parts[1]);
-					String op = m.replaceAll(
-							"[^\\+\\-\\*\\×\\/\\÷]|^[\\+\\-\\*\\×\\/\\÷]", "");
-					double result = 0;
-					switch (op) {
-						case "+" :
-							result = setPrecision(operandA + operandB);
-							break;
-						case "-" :
-							result = setPrecision(operandA - operandB);
-							break;
-						case "*" :
-						case "×" :
-							result = setPrecision(operandA * operandB);
-							break;
-						case "/" :
-						case "÷" :
-							result = setPrecision(operandA / operandB);
-							break;
+			// FOR FIELDS
+			if (in(s, "\\$*\\{\\w+\\}|\\$+\\w+(?!\\(\\w*\\))")) {
+				try {
+					Class<?> cls = this.getClass();
+					Object field;
+					String[] fieldMatches = findMatches(s,
+							"\\$*\\{\\w+\\}|\\$+\\w+");
+					for (String m : fieldMatches) {
+						String toGet = m.replaceAll("[\\$\\{\\}]", "");
+						field = cls.getField(toGet).get(this);
+						m = m.replaceAll("([\\$\\{\\}])", "\\\\$1");
+						s = s.replaceFirst(m,
+								field instanceof Character
+										|| field instanceof String
+										|| field instanceof Number
+										|| field instanceof Boolean
+												? Str(field)
+												: m);
 					}
-					s = replaceFirst(s, catchNumericValuesWithOperator,
-							Str(result).replaceAll("\\.0(?!\\d)$", ""));
+				} catch (NoSuchFieldException | IllegalAccessException
+						| SecurityException e) {
+
 				}
 			}
+			// for numeric operations
+			String catchNumericValuesWithOperator = "(?<=\\&)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)";
+			while (in(s, catchNumericValuesWithOperator)) {
+				String[] numericMatchesWithOperators = findMatches(s,
+						catchNumericValuesWithOperator);
+				if (in(s, catchNumericValuesWithOperator)) {
+					for (String m : numericMatchesWithOperators) {
+						String[] parts = m.split(
+								"(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=[\\.\\d]+)");
+						double operandA = Dbl(parts[0]),
+								operandB = Dbl(parts[1]);
+						String op = m.replaceAll(
+								"[^\\+\\-\\*\\×\\/\\÷]|^[\\+\\-\\*\\×\\/\\÷]",
+								"");
+						double result = 0;
+						switch (op) {
+							case "+" :
+								result = setPrecision(operandA + operandB);
+								break;
+							case "-" :
+								result = setPrecision(operandA - operandB);
+								break;
+							case "*" :
+							case "×" :
+								result = setPrecision(operandA * operandB);
+								break;
+							case "/" :
+							case "÷" :
+								result = setPrecision(operandA / operandB);
+								break;
+						}
+						s = replaceFirst(s, catchNumericValuesWithOperator,
+								Str(result).replaceAll("\\.0(?!\\d)$", ""));
+					}
+				}
+			}
+			s = s.replaceAll("&(?=\\-?\\d*\\.?\\d+)", "");
+			// cleaning up to make up for the numeric results, removing the &
+			// operator
+			s = sentCase(s);
+		} catch (PatternSyntaxException | StackOverflowError e) {
+
 		}
-		s = s.replaceAll("&(?=\\-?\\d*\\.?\\d+)", "");
-		// cleaning up to make up for the numeric results, removing the &
-		// operator
-		s = sentCase(s);
 		return s;
 	}
 	public static String pkr(int n) {
@@ -28335,26 +28423,28 @@ public class KL {
 					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
 					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
 					.replaceAll("(?<!\\\\)%n", "\\\\d+");
-		} catch (Exception e) {
 
+			// modification precaution: it has been tested, and hence learned,
+			// the
+			// double-escaping remains AS-IS
+			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
+			// escaping tricky characters, if they're the only content: helps
+			// avoid
+			// false positives as a "." or a "*" alone, can match just anything.
+			// Needless to say, these quantifiers, along with a "+" and an
+			// optionality quantifier, i.e. a "?" quantifier, might also cause
+			// memory heap to exceed
+			// plus, handling both, standard and custom, format specifiers
+			boolean strict = false;
+			if (is(bools))
+				strict = bools[0] == true;
+			Pattern pattern = Pattern.compile(re,
+					strict ? 0 : Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(str.trim());
+			return !!matcher.find();
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return false;
 		}
-		// modification precaution: it has been tested, and hence learned,
-		// the
-		// double-escaping remains AS-IS
-		// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
-		// escaping tricky characters, if they're the only content: helps avoid
-		// false positives as a "." or a "*" alone, can match just anything.
-		// Needless to say, these quantifiers, along with a "+" and an
-		// optionality quantifier, i.e. a "?" quantifier, might also cause
-		// memory heap to exceed
-		// plus, handling both, standard and custom, format specifiers
-		boolean strict = false;
-		if (is(bools))
-			strict = bools[0] == true;
-		Pattern pattern = Pattern.compile(re,
-				strict ? 0 : Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(str.trim());
-		return !!matcher.find();
 	}
 	public static String findMatch(String str, String re, boolean... bools) {
 		if (not(str) || not(re))
@@ -28373,29 +28463,30 @@ public class KL {
 					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
 					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
 					.replaceAll("(?<!\\\\)%n", "\\\\d+");
-		} catch (Exception e) {
-
-		}
-		// modification precaution: it has been tested, and hence learned,
-		// the
-		// double-escaping remains AS-IS
-		// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
-		// escaping tricky characters, if they're the only content: helps avoid
-		// false positives as a "." or a "*" alone, can match just anything.
-		// Needless to say, these quantifiers, along with a "+" and an
-		// optionality quantifier, i.e. a "?" quantifier, might also cause
-		// memory heap to exceed
-		// plus, handling both, standard and custom, format specifiers
-		boolean strict = false;
-		if (is(bools)) {
-			strict = bools[0] == true;
-		}
-		Pattern pattern = Pattern.compile("(" + re + ")",
-				strict ? 0 : Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(str.trim());
-		if (!matcher.find())
+			// modification precaution: it has been tested, and hence learned,
+			// the
+			// double-escaping remains AS-IS
+			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
+			// escaping tricky characters, if they're the only content: helps
+			// avoid
+			// false positives as a "." or a "*" alone, can match just anything.
+			// Needless to say, these quantifiers, along with a "+" and an
+			// optionality quantifier, i.e. a "?" quantifier, might also cause
+			// memory heap to exceed
+			// plus, handling both, standard and custom, format specifiers
+			boolean strict = false;
+			if (is(bools)) {
+				strict = bools[0] == true;
+			}
+			Pattern pattern = Pattern.compile("(" + re + ")",
+					strict ? 0 : Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(str.trim());
+			if (!matcher.find())
+				return "";
+			return matcher.group();
+		} catch (PatternSyntaxException | StackOverflowError e) {
 			return "";
-		return matcher.group();
+		}
 	}
 	public static String[] findMatches(String str, String re,
 			boolean... bools) {
@@ -28419,33 +28510,34 @@ public class KL {
 					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
 					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
 					.replaceAll("(?<!\\\\)%n", "\\\\d+");
-		} catch (Exception e) {
-
+			// modification precaution: it has been tested, and hence learned,
+			// the
+			// double-escaping remains AS-IS
+			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
+			// escaping tricky characters, if they're the only content: helps
+			// avoid
+			// false positives as a "." or a "*" alone, can match just anything.
+			// Needless to say, these quantifiers, along with a "+" and an
+			// optionality quantifier, i.e. a "?" quantifier, might also cause
+			// memory heap to exceed
+			// plus, handling both, standard and custom, format specifiers
+			boolean strict = false;
+			if (is(bools)) {
+				strict = bools[0] == true;
+			}
+			Pattern pattern = Pattern.compile("(" + re + ")",
+					strict ? 0 : Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(str.trim());
+			strArr arr = new strArr();
+			while (matcher.find()) {
+				if (!isEmpty(matcher.group()))
+					arr.push(trim(matcher.group()));
+				// the isEmpty check has proven to be helpful
+			}
+			return arr.array();
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return blank.Str;
 		}
-		// modification precaution: it has been tested, and hence learned,
-		// the
-		// double-escaping remains AS-IS
-		// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
-		// escaping tricky characters, if they're the only content: helps avoid
-		// false positives as a "." or a "*" alone, can match just anything.
-		// Needless to say, these quantifiers, along with a "+" and an
-		// optionality quantifier, i.e. a "?" quantifier, might also cause
-		// memory heap to exceed
-		// plus, handling both, standard and custom, format specifiers
-		boolean strict = false;
-		if (is(bools)) {
-			strict = bools[0] == true;
-		}
-		Pattern pattern = Pattern.compile("(" + re + ")",
-				strict ? 0 : Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(str.trim());
-		strArr arr = new strArr();
-		while (matcher.find()) {
-			if (!isEmpty(matcher.group()))
-				arr.push(trim(matcher.group()));
-			// the isEmpty check has proven to be helpful
-		}
-		return arr.array();
 	}
 	public static int[] intsOf(String s) {
 		if (not(s))
