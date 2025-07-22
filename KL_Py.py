@@ -1,6 +1,6 @@
 import os, sys, base64, requests, math, re
 import tkinter as tk
-from tkinter import font as tkFont, messagebox, simpledialog
+from tkinter import font as tkFont, messagebox, simpledialog, Frame, Button, Menu, Checkbutton, Radiobutton, Entry, Text, StringVar
 from collections import defaultdict
 from functools import reduce
 from typing import List, Callable
@@ -281,7 +281,7 @@ class label(tk.Label):
         if self.tooltip_window:
             self.tooltip_window.destroy()
             self.tooltip_window = None
-
+            
 class panel(tk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
@@ -323,6 +323,241 @@ class panel(tk.Frame):
         if self.tooltip_window:
             self.tooltip_window.destroy()
             self.tooltip_window = None
+            
+class BordLay(Frame):
+    def __init__(self, master=None, hgap=0, vgap=0):
+        super().__init__(master)
+        self.hgap = hgap
+        self.vgap = vgap
+
+class GridLay(Frame):
+    def __init__(self, master=None, rows=1, columns=1, hgap=0, vgap=0):
+        super().__init__(master)
+        self.rows = rows
+        self.columns = columns
+        self.hgap = hgap
+        self.vgap = vgap
+
+class FlowLay(Frame):
+    def __init__(self, master=None, align=0, hgap=0, vgap=0):
+        super().__init__(master)
+        self.align = align
+        self.hgap = hgap
+        self.vgap = vgap
+
+class Panel(Frame):
+    def __init__(self, master=None, layout=None):
+        super().__init__(master)
+        if layout:
+            self.configure(layout)
+
+    def set_bg(self, color):
+        self.configure(bg=color)
+
+    def set_fg(self, color):
+        self.configure(fg=color)
+
+    def add_component(self, *components):
+        for component in components:
+            if component:
+                component.pack()
+
+class Btn(Button):
+    def __init__(self, master=None, text="", command=None):
+        super().__init__(master, text=text, command=command)
+        self.config(focusable=False)
+
+    def set_bg(self, color):
+        self.configure(bg=color)
+
+    def set_fg(self, color):
+        self.configure(fg=color)
+
+class ToggleBtn(Button):
+    def __init__(self, master=None, text="", command=None):
+        super().__init__(master, text=text, command=command)
+        self.config(focusable=False)
+
+class RadioBtn(Button):
+    def __init__(self, master=None, text="", command=None):
+        super().__init__(master, text=text, command=command)
+        self.config(focusable=False)
+
+class RadioButtonItem(Radiobutton):
+    def __init__(self, master=None, text="", variable=None, value=None, command=None, **kwargs):
+        super().__init__(master, text=text, variable=variable, value=value, command=command, **kwargs)
+        self.config(focus=False)
+
+class CheckBox(Checkbutton):
+    def __init__(self, master=None, text="", variable=None, command=None, **kwargs):
+        super().__init__(master, text=text, variable=variable, command=command, **kwargs)
+        self.config(focus=False)
+
+class CheckBoxItem(Checkbutton):
+    def __init__(self, master=None, text="", variable=None, command=None, **kwargs):
+        super().__init__(master, text=text, variable=variable, command=command, **kwargs)
+        self.config(focus=False)
+
+class MenuBar(Menu):
+    def __init__(self, master=None, *menus):
+        super().__init__(master)
+        for menu in menus:
+            if menu is not None:
+                self.add_cascade(menu=menu)
+
+class MenuItem(Menu):
+    def __init__(self, master=None, text="", command=None, **kwargs):
+        super().__init__(master, tearoff=0, **kwargs)
+        self.add_command(label=text, command=command)
+
+class CustomMenu(Menu):
+    def __init__(self, master=None, text="", **kwargs):
+        super().__init__(master, tearoff=0, **kwargs)
+        self.add_command(label=text)
+        
+class ContextMenu(Menu):
+    def __init__(self, master=None, text=None, bg=None):
+        super().__init__(master, tearoff=0)
+        self.configure(fg='black', bg=bg if bg else 'white')
+        if text:
+            self.add_command(label=text)
+
+    def add_item(self, label, command):
+        self.add_command(label=label, command=command)
+
+class DropDown(Menu):
+    def __init__(self, master=None, items=None):
+        super().__init__(master, tearoff=0)
+        self.items = items if items else []
+        for item in self.items:
+            self.add_command(label=item)
+
+class TextField(Entry):
+    def __init__(self, master=None, text='', width=20):
+        super().__init__(master, width=width)
+        self.insert(0, text)
+
+    def get_text(self):
+        return self.get()
+
+    def set_text(self, text):
+        self.delete(0, 'end')
+        self.insert(0, text)
+
+class TextArea(Text):
+    def __init__(self, master=None, width=40, height=10):
+        super().__init__(master, width=width, height=height)
+
+    def get_text(self):
+        return self.get("1.0", 'end-1c')
+
+    def set_text(self, text):
+        self.delete("1.0", 'end')
+        self.insert("1.0", text)
+
+class TextPane(Text):
+    def __init__(self, master=None):
+        super().__init__(master)
+
+    def get_text(self):
+        return self.get("1.0", 'end-1c')
+
+    def set_text(self, text):
+        self.delete("1.0", 'end')
+        self.insert("1.0", text)
+        
+class PwdField(Entry):
+    def __init__(self, master=None, text='', columns=20, **kwargs):
+        super().__init__(master, show='*', width=columns, **kwargs)
+        self._text_var = StringVar(value=text)
+        self.config(textvariable=self._text_var)
+
+    def cursor(self, cursor_type):
+        self.config(cursor=cursor_type)
+        return self
+
+    def border(self, border_width):
+        self.config(borderwidth=border_width)
+        return self
+
+    def text(self):
+        return self._text_var.get()
+
+    def set_text(self, text):
+        self._text_var.set(text)
+        return self
+
+    def val(self):
+        return self.text()
+
+    def set_val(self, value):
+        self.set_text(value)
+        return self
+
+    def value(self):
+        return self.text()
+
+    def set_value(self, value):
+        self.set_text(value)
+        return self
+
+    def on_key(self, key, action):
+        self.bind('<KeyPress>', lambda e: action() if e.keysym == key else None)
+        return self
+
+    def on_click(self, button, action):
+        self.bind('<Button-{}>'.format(button), lambda e: action())
+        return self
+
+    def add_tooltip(self, text):
+        self.tooltip = text
+        return self
+
+    def remove_tooltip(self):
+        self.tooltip = ''
+        return self
+
+    def tool_tip_text(self):
+        return self.tooltip if hasattr(self, 'tooltip') else ''
+       
+from PIL import Image, ImageDraw, ImageColor
+import io
+class Icon:
+    def __init__(self, image_data=None, filename=None, image=None, url=None):
+        if image_data is not None:
+            self.image = Image.open(io.BytesIO(image_data))
+        elif filename is not None:
+            self.image = Image.open(filename)
+        elif image is not None:
+            self.image = image
+        elif url is not None:
+            self.image = Image.open(requests.get(url, stream=True).raw)
+        else:
+            self.image = None
+
+class ImageClass(Icon):
+    def __init__(self, image_data=None, filename=None, image=None, url=None):
+        super().__init__(image_data, filename, image, url)
+
+class Img(ImageClass):
+    def __init__(self, image_data=None, filename=None, image=None, url=None):
+        super().__init__(image_data, filename, image, url)
+
+class LineBorder:
+    def __init__(self, color, thickness=1, rounded_corners=False):
+        self.color = ImageColor.getrgb(color)
+        self.thickness = thickness
+        self.rounded_corners = rounded_corners
+
+    def draw(self, image):
+        draw = ImageDraw.Draw(image)
+        width, height = image.size
+        if self.rounded_corners:
+            draw.rectangle([0, 0, width, height], outline=self.color, width=self.thickness, fill=None)
+        else:
+            draw.rectangle([0, 0, width, height], outline=self.color, width=self.thickness)
+            
+
             
 def main():
     ui:gui = gui("My GUI")
