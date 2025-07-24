@@ -21430,7 +21430,7 @@ public class KL {
 		if (isNull(args) || not(args.length))
 			return;
 		if (!isNull(args[0]) && args[0] instanceof String
-				&& in(Str(args[0]), "[\\%\\$\\&\\{\\}]")) {
+				&& in(Str(args[0]), "(?<=[\\%\\$\\&\\{\\}])\\w+")) {
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
 				return;
@@ -24771,7 +24771,7 @@ public class KL {
 					.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
 			// handling exponentials
 			String[] exponentialMatches = findMatches(s,
-					"\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
+					"(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
 			if (hasLen(exponentialMatches)) {
 				double[] parsedNumsWithoutPowers = new double[exponentialMatches.length];
 				int[] parsedExponentialPowers = new int[exponentialMatches.length];
@@ -24805,7 +24805,7 @@ public class KL {
 				}
 			}
 			String[] matches = findMatches(s,
-					"%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d{0,3}f)?\\}");
+					"(?<!\\\\)%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d{0,3}f)?\\}");
 			// printArr(matches.length > 0 ? matches : blank.Str);
 			for (String m : matches) {
 				for (Object arg : args) {
@@ -24937,7 +24937,7 @@ public class KL {
 			// post processing...
 			// for methods
 			if (in(s,
-					"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*")) {
+					"(?<!\\\\)(\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*)")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object valueFromMethod = new Object();
@@ -25082,22 +25082,40 @@ public class KL {
 				}
 			}
 			// FOR FIELDS
-			if (in(s, "\\$*\\{\\w+\\}|\\$+\\w+(?!\\(\\w*\\))")) {
+			if (in(s, "(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+\\}|\\$+\\w+");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?");
+					String label = "";
+					int decimalPlaces = 1;
 					for (String m : fieldMatches) {
-						String toGet = m.replaceAll("[\\$\\{\\}]", "");
+						String toGet = m.replaceAll("[\\$\\{:=\\\\\\}]|(?<=[:=])\\.\\d(f|db)", "");
+						if (in(m, "[:=]")) {
+							label = m.replaceAll("[\\$\\{\\\\\\}]|(?<=[:=])\\.\\d(f|db)", "");
+							//allows following behavior:
+							//{amount:.1f} returns the double or floating-point value WITHOUT a label
+							//floats, and doubles with effort (i.e. ones seen with a decimal-place specifier after the colon) make an exception to the label: they get rid of it
+							//to have a label --- somewhat like you would with {pi:}, or {amount:}; except, they use automatic one-decimal precision by default --- while still being able to set custom precision: use {amount<:, or \\>:.1f} (with 2 colons, or a colon preceded by two backlashes to escape it) to return the double or floating-point value both with custom precision, and label `amount: `
+							//replace everything, but keep [:=]
+							if (in(label, "(?<=\\w):$"))
+								label += " ";
+					    	if (in(m, ("(?<=[:=]\\.)\\d(?=f|db)"))) decimalPlaces = Int(findMatch(m, "(?<=[:=]\\.)\\d(?=f|db)"));
+						}
 						field = cls.getField(toGet).get(this);
-						m = m.replaceAll("([\\$\\{\\}])", "\\\\$1");
+						if (field instanceof Float || field instanceof Double) {
+							if (field instanceof Float) field = setPrecision((float)field, decimalPlaces);
+							else field = setPrecision((double)field, decimalPlaces);
+						}
+						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
+						//replace special characters, so s.replaceFirst doesn't confuse them with an ending character ($), or a quantifier ({,})
 						s = s.replaceFirst(m,
 								field instanceof Character
 										|| field instanceof String
 										|| field instanceof Number
 										|| field instanceof Boolean
-												? Str(field)
+												? (label.length() > 0 ? label + Str(field) : Str(field))
 												: m);
 					}
 				} catch (NoSuchFieldException | IllegalAccessException
@@ -25106,7 +25124,7 @@ public class KL {
 				}
 			}
 			// for numeric operations
-			String catchNumericValuesWithOperator = "(?<=\\&)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)";
+			String catchNumericValuesWithOperator = "(?<=(?<!\\\\)\\&)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)";
 			while (in(s, catchNumericValuesWithOperator)) {
 				String[] numericMatchesWithOperators = findMatches(s,
 						catchNumericValuesWithOperator);
@@ -31796,12 +31814,14 @@ public class KL {
 			randEmail = randEmail(), randGirlName = randGirlName(),
 			randGuyName = randGuyName(), randWord = randWord(),
 			randSentence = randSentence();
+	public static int randAge = randInt(16, 40);
+	public static String __dev = "https://github.com/abbaskhurram255";
+	
 	public static String name = "Ayesha";
 	public static int age = 23;
-	public static String _dev = "https://github.com/abbaskhurram255";
-	public static obj obj = obj("name", "someone", "age", 23);
+	public static float score = 3.1415f;
 
 	public static void main(String[] args) {
-
+        print("{name:}\n{age:}\n{score:.2f}\nInt: $name");
 	}
 }
