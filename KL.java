@@ -101,23 +101,28 @@ public class KL {
 		public String suffix(boolean... bools) {
 			boolean forceInternational = bools.length > 0 ? bools[0] : false;
 			this.curr = trim(this.curr) + " ";
-			if (in(this.curr, "pk|in|rs"))
+			if (in(this.curr, "pk|in|rs")) {
 				return "Rs. " + (forceInternational
 						? ussuffix(amnt)
 						: pksuffix(amnt));
-			if (in(this.curr, "us"))
+			}
+			if (in(this.curr, "us")) {
 				return "USD " + ussuffix(amnt);
+			}
 			return this.curr + (forceInternational
 					|| (is(this.curr) && !in(this.curr, "pk|in|rs"))
 							? ussuffix(amnt)
 							: pksuffix(amnt));
 		}
+		@Override
 		public String toString() {
 			this.curr = trim(this.curr) + " ";
-			if (not(this.curr) || in(this.curr, "pk|in|rs"))
+			if (not(this.curr) || in(this.curr, "pk|in|rs")) {
 				return pkr(amnt);
-			if (in(this.curr, "us"))
+			}
+			if (in(this.curr, "us")) {
 				return usd(amnt);
+			}
 			return this.curr + f(amnt);
 		}
 		public String toString(boolean suffixMode) {
@@ -243,8 +248,9 @@ public class KL {
 	}
 	public static objS parseJson(String jsonString) {
 		objS map = new objS();
-		if (not(jsonString))
+		if (not(jsonString)) {
 			return map;
+		}
 		jsonString = jsonString.trim();;
 		if (!jsonString.startsWith("{") || !jsonString.endsWith("}")) {
 			map.add("status", "notok").add("error", "yes");
@@ -260,8 +266,9 @@ public class KL {
 				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}]+", "")
 						.replaceAll("\\w+:\\s*", "").trim();
 				if (key.length() != 0 && in(key, "[a-zA-Z]+")
-						&& value.length() != 0 && in(value, "[a-zA-Z]+"))
+						&& value.length() != 0 && in(value, "[a-zA-Z]+")) {
 					map.add(key, value);
+				}
 			}
 		}
 		map.add("status", "ok").add("error", "no");
@@ -337,8 +344,9 @@ public class KL {
 		return map;
 	}
 	public String getPath(String to) {
-		if (not(to))
+		if (not(to)) {
 			return "";
+		}
 		return getClass().getResource(to).toString();
 	}
 	public String filePath(String filename) {
@@ -397,39 +405,44 @@ public class KL {
 			return this;
 		}
 		gui size(int w, int h) {
-			if (w < 100 || h < 100 || w > 10e3 || h > 10e3)
+			if (w < 100 || h < 100 || w > 10e3 || h > 10e3) {
 				super.setSize(400, 600);
-			else
+			} else {
 				super.setSize(w, h);
+			}
 			super.setLocationRelativeTo(null);
 			return this;
 		}
 		gui size(int[] widthAndHeight) {
-			if (not(widthAndHeight) || len(widthAndHeight) != 2)
+			if (not(widthAndHeight) || len(widthAndHeight) != 2) {
 				return this;
+			}
 			int w = widthAndHeight[0], h = widthAndHeight[1];
 			size(w, h);
 			return this;
 		}
 		gui size(obj resolution) {
 			if (not(resolution) || !resolution.hasKey("width")
-					|| !resolution.hasKey("height"))
+					|| !resolution.hasKey("height")) {
 				return this;
+			}
 			int w = resolution.k("width", 0), h = resolution.k("height", 0);
 			size(w, h);
 			return this;
 		}
 		gui size(objI resolution) {
 			if (not(resolution) || !resolution.hasKey("width")
-					|| !resolution.hasKey("height"))
+					|| !resolution.hasKey("height")) {
 				return this;
+			}
 			int w = resolution.k("width"), h = resolution.k("height");
 			size(w, h);
 			return this;
 		}
 		gui size(String WxH) {
-			if (not(WxH) || !eq(WxH, "\\d{3,4}[Xx]\\d{3,4}"))
+			if (not(WxH) || !eq(WxH, "\\d{3,4}[Xx]\\d{3,4}")) {
 				return this;
+			}
 			String[] parts = WxH.split("[Xx]");
 			int w = Int(parts[0]), h = Int(parts[1]);
 			size(w, h);
@@ -454,8 +467,9 @@ public class KL {
 		gui start() {
 			Dimension res = super.getSize();
 			int width = res.width, height = res.height;
-			if (width < 100 || height < 100 || width > 10e3 || height > 10e3)
+			if (width < 100 || height < 100 || width > 10e3 || height > 10e3) {
 				size(400, 600);
+			}
 			super.setVisible(true);
 			return this;
 		}
@@ -537,8 +551,9 @@ public class KL {
 		}
 		gui add(Component... components) {
 			for (Component c : components) {
-				if (c == null)
+				if (c == null) {
 					continue;
+				}
 				super.add(c);
 			}
 			return this;
@@ -548,12 +563,14 @@ public class KL {
 			return this;
 		}
 		gui opacity(double o) {
-			if (o < 0 || o > 100)
+			if (o < 0 || o > 100) {
 				return this;
-			if (o > 1)
+			}
+			if (o > 1) {
 				super.setOpacity((float) o / 100);
-			else if (o >= 0 && o <= 1)
+			} else if (o >= 0 && o <= 1) {
 				super.setOpacity((float) o);
+			}
 			return this;
 		}
 		gui cursor(int c) {
@@ -617,8 +634,9 @@ public class KL {
 		}
 		boolean openUrl(String urlString) {
 			try {
-				if (!isUrl(urlString))
+				if (!isUrl(urlString)) {
 					return false;
+				}
 				Desktop.getDesktop().browse(new URI(urlString));
 				return true;
 			} catch (Exception e) {
@@ -636,8 +654,9 @@ public class KL {
 			this.on("close", () -> {
 				boolean confirmed = this
 						.confirm("Are you sure you want to close?");
-				if (confirmed)
+				if (confirmed) {
 					super.dispose();
+				}
 			});
 			return this;
 		}
@@ -648,8 +667,9 @@ public class KL {
 					on(key, action);
 				}
 			}
-			if (not(k) || not(action))
+			if (not(k) || not(action)) {
 				return this;
+			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -684,16 +704,17 @@ public class KL {
 					int button = -1;
 					if (KL.eq(k, "(m(ouse)?)?\\W?click")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
+					}
 					if (e.getButton() == button) {
 						new Thread(action).run();
 					}
@@ -820,29 +841,33 @@ public class KL {
 			return this;
 		}
 		gui message(String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, "Message",
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 		gui message(String title, String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 		gui message(String title, String message, String iconAddress) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui message(String title, String message, Icon ico) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.INFORMATION_MESSAGE, ico);
 			return this;
@@ -864,127 +889,145 @@ public class KL {
 			return this;
 		}
 		gui error(String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 		gui error(String title, String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 		gui error(String title, String message, String iconAddress) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui error(String title, String message, Icon ico) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.ERROR_MESSAGE, ico);
 			return this;
 		}
 		gui warn(String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, "Warning",
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 		gui warn(String title, String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 		gui warn(String title, String message, String iconAddress) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 		gui warn(String title, String message, Icon ico) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			JOptionPane.showMessageDialog(null, message, title,
 					JOptionPane.WARNING_MESSAGE, ico);
 			return this;
 		}
 		boolean confirm(String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirm(String title, String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirm(String title, String message, String iconAddress) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					new icon(iconAddress)) == 0);
 		}
 		boolean confirm(String title, String message, Icon ico) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					ico) == 0);
 		}
 		boolean confirmCancellable(String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirmCancellable(String title, String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 		boolean confirmCancellable(String title, String message,
 				String iconAddress) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
 		}
 		boolean confirmCancellable(String title, String message, Icon ico) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return (JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, ico) == 0);
 		}
 		String ask(String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return JOptionPane.showInputDialog(null, message, "Input",
 					JOptionPane.QUESTION_MESSAGE);
 		}
 		String ask(String title, String message) {
-			if (this.isOnTop())
+			if (this.isOnTop()) {
 				offTop();
+			}
 			return JOptionPane.showInputDialog(null, message, title,
 					JOptionPane.QUESTION_MESSAGE);
 		}
@@ -1062,8 +1105,9 @@ public class KL {
 		}
 		label add(Component... components) {
 			for (Component c : components) {
-				if (c == null)
+				if (c == null) {
 					continue;
+				}
 				super.add(c);
 			}
 			return this;
@@ -1132,8 +1176,9 @@ public class KL {
 					on(key, action);
 				}
 			}
-			if (not(k) || not(action))
+			if (not(k) || not(action)) {
 				return this;
+			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -1168,16 +1213,17 @@ public class KL {
 					int button = -1;
 					if (KL.eq(k, "(m(ouse)?)?\\W?click")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
+					}
 					if (e.getButton() == button) {
 						new Thread(action).run();
 					}
@@ -1352,8 +1398,9 @@ public class KL {
 		}
 		panel add(Component... components) {
 			for (Component c : components) {
-				if (c == null)
+				if (c == null) {
 					continue;
+				}
 				super.add(c);
 			}
 			return this;
@@ -1411,8 +1458,9 @@ public class KL {
 					on(key, action);
 				}
 			}
-			if (not(k) || not(action))
+			if (not(k) || not(action)) {
 				return this;
+			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -1447,16 +1495,17 @@ public class KL {
 					int button = -1;
 					if (KL.eq(k, "(m(ouse)?)?\\W?click")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
+					}
 					if (e.getButton() == button) {
 						new Thread(action).run();
 					}
@@ -1666,8 +1715,9 @@ public class KL {
 			return this;
 		}
 		btn on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
+			}
 			return this;
 		}
 		btn addToolTip(String textToDisplayOnHover) {
@@ -1842,8 +1892,9 @@ public class KL {
 			return this;
 		}
 		toggleBtn on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
+			}
 			return this;
 		}
 		toggleBtn addToolTip(String textToDisplayOnHover) {
@@ -2018,8 +2069,9 @@ public class KL {
 			return this;
 		}
 		radioBtn on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
+			}
 			return this;
 		}
 		radioBtn addToolTip(String textToDisplayOnHover) {
@@ -2195,8 +2247,9 @@ public class KL {
 			return this;
 		}
 		radioBtnItem on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
+			}
 			return this;
 		}
 		radioBtnItem addToolTip(String textToDisplayOnHover) {
@@ -2371,8 +2424,9 @@ public class KL {
 			return this;
 		}
 		checkBox on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
+			}
 			return this;
 		}
 		checkBox addToolTip(String textToDisplayOnHover) {
@@ -2545,8 +2599,9 @@ public class KL {
 			return this;
 		}
 		checkBoxItem on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
+			}
 			return this;
 		}
 		checkBoxItem addToolTip(String textToDisplayOnHover) {
@@ -2577,11 +2632,13 @@ public class KL {
 		}
 		menuBar(JMenu... menus) {
 			this();
-			if (menus == null)
+			if (menus == null) {
 				return;
+			}
 			for (JMenu item : menus) {
-				if (item == null)
+				if (item == null) {
 					continue;
+				}
 				super.add(item);
 			}
 		}
@@ -2697,11 +2754,13 @@ public class KL {
 		}
 		menu(JMenuItem... menuItems) {
 			super();
-			if (menuItems == null)
+			if (menuItems == null) {
 				return;
+			}
 			for (JMenuItem item : menuItems) {
-				if (item == null)
+				if (item == null) {
 					continue;
+				}
 				super.add(item);
 			}
 		}
@@ -2815,8 +2874,9 @@ public class KL {
 			return this;
 		}
 		menu on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
+			}
 			return this;
 		}
 		menu addToolTip(String textToDisplayOnHover) {
@@ -2985,8 +3045,9 @@ public class KL {
 			return this;
 		}
 		menuItem on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click"))
+			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
+			}
 			return this;
 		}
 		menuItem addToolTip(String textToDisplayOnHover) {
@@ -3025,11 +3086,13 @@ public class KL {
 		}
 		contextMenu(String... items) {
 			super();
-			if (items == null)
+			if (items == null) {
 				return;
+			}
 			for (String item : items) {
-				if (item == null)
+				if (item == null) {
 					continue;
+				}
 				super.add(item);
 			}
 		}
@@ -3136,14 +3199,16 @@ public class KL {
 			size = model.getSize();
 		}
 		dropDown add(int i) {
-			if (i < 0 || i >= size)
+			if (i < 0 || i >= size) {
 				return this;
+			}
 			super.setSelectedIndex(i);
 			return this;
 		}
 		dropDown select(int i) {
-			if (i < 0 || i >= size)
+			if (i < 0 || i >= size) {
 				return this;
+			}
 			super.setSelectedIndex(i);
 			return this;
 		}
@@ -3287,8 +3352,9 @@ public class KL {
 					on(key, action);
 				}
 			}
-			if (not(k) || not(action))
+			if (not(k) || not(action)) {
 				return this;
+			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -3323,16 +3389,17 @@ public class KL {
 					int button = -1;
 					if (KL.eq(k, "(m(ouse)?)?\\W?click")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
+					}
 					if (e.getButton() == button) {
 						new Thread(action).run();
 					}
@@ -3457,8 +3524,9 @@ public class KL {
 					on(key, action);
 				}
 			}
-			if (not(k) || not(action))
+			if (not(k) || not(action)) {
 				return this;
+			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -3493,16 +3561,17 @@ public class KL {
 					int button = -1;
 					if (KL.eq(k, "(m(ouse)?)?\\W?click")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
+					}
 					if (e.getButton() == button) {
 						new Thread(action).run();
 					}
@@ -3618,8 +3687,9 @@ public class KL {
 					on(key, action);
 				}
 			}
-			if (not(k) || not(action))
+			if (not(k) || not(action)) {
 				return this;
+			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -3654,16 +3724,17 @@ public class KL {
 					int button = -1;
 					if (KL.eq(k, "(m(ouse)?)?\\W?click")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
+					}
 					if (e.getButton() == button) {
 						new Thread(action).run();
 					}
@@ -3788,8 +3859,9 @@ public class KL {
 					on(key, action);
 				}
 			}
-			if (not(k) || not(action))
+			if (not(k) || not(action)) {
 				return this;
+			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -3824,16 +3896,17 @@ public class KL {
 					int button = -1;
 					if (KL.eq(k, "(m(ouse)?)?\\W?click")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-							|| KL.eq(k, "(m(ouse)?)?\\W?wclick"))
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
-							|| KL.eq(k, "(m(ouse)?)?\\W?rclick"))
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
+					}
 					if (e.getButton() == button) {
 						new Thread(action).run();
 					}
@@ -4023,8 +4096,9 @@ public class KL {
 		public static int from(String hex) {
 			hex = hex.replaceAll("^(0x|#)", "");
 			if (not(hex) || !eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5
-					|| len(hex) == 7)
+					|| len(hex) == 7) {
 				return 0;
+			}
 			int len = len(hex);
 			int r, g, b, a = 255;
 			if (len == 8) {
@@ -4657,8 +4731,9 @@ public class KL {
 		}
 		// @static methods
 		public static boolean create(String fname, String content) {
-			if (not(fname) || not(content))
+			if (not(fname) || not(content)) {
 				return false;
+			}
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
 				for (String subFileName : fname
 						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
@@ -4687,14 +4762,16 @@ public class KL {
 			return false;
 		}
 		public static boolean create(String fname) {
-			if (not(fname))
+			if (not(fname)) {
 				return false;
+			}
 			return create(fname, "");
 			// creates a blank file
 		}
 		public static boolean createFolder(String folderName) {
-			if (not(folderName))
+			if (not(folderName)) {
 				return false;
+			}
 			if (in(folderName, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
 				for (String folder : folderName
 						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
@@ -4727,16 +4804,19 @@ public class KL {
 			return createFolder(folderName);
 		}
 		public static String read(String fname) {
-			if (not(fname))
+			if (not(fname)) {
 				return "";
+			}
 			try {
 				File myFile = new File(fname);
-				if (!myFile.exists())
+				if (!myFile.exists()) {
 					return "";
+				}
 				Scanner myReader = new Scanner(myFile);
 				String data = "";
-				while (myReader.hasNextLine())
+				while (myReader.hasNextLine()) {
 					data += myReader.nextLine();
+				}
 				myReader.close();
 				return data;
 			} catch (IOException e) {
@@ -4748,8 +4828,9 @@ public class KL {
 			return parseJson(read(fname));
 		}
 		public static boolean append(String fname, String content) {
-			if (not(fname) || not(content))
+			if (not(fname) || not(content)) {
 				return false;
+			}
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
 				for (String subFileName : fname
 						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
@@ -4765,8 +4846,9 @@ public class KL {
 			}
 			// order matters
 			File file = new File(fname);
-			if (file == null || !file.exists())
+			if (file == null || !file.exists()) {
 				return false;
+			}
 			try (FileWriter writer = new FileWriter(fname, true)) {
 				writer.write(content);
 				writer.flush();
@@ -4793,8 +4875,9 @@ public class KL {
 			return append(fname, content);
 		}
 		public static boolean delete(String fname) {
-			if (not(fname))
+			if (not(fname)) {
 				return false;
+			}
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
 				for (String subFileName : fname
 						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
@@ -4821,8 +4904,9 @@ public class KL {
 				return false;
 			}
 			if (myFile.isDirectory()) {
-				for (File f : myFile.listFiles())
+				for (File f : myFile.listFiles()) {
 					delete(f.toString());
+				}
 			}
 			myFile.delete();
 			// NOTICE: this delete method refers to the delete METHOD OF THE
@@ -4844,8 +4928,9 @@ public class KL {
 			return delete(fname);
 		}
 		public static boolean rename(String fname, String destinationString) {
-			if (not(fname) || not(destinationString))
+			if (not(fname) || not(destinationString)) {
 				return false;
+			}
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")
 					&& in(destinationString, "[\\\\\\/]")) {
 				for (String subFileName : fname
@@ -4868,8 +4953,9 @@ public class KL {
 			}
 			try {
 				File myFile = new File(fname);
-				if (myFile == null || !myFile.exists())
+				if (myFile == null || !myFile.exists()) {
 					throw new FileNotFoundException();
+				}
 				File destinationFile = new File(destinationString);
 				if (myFile.renameTo(destinationFile)) {
 					print("\n[KL.file.JobSuccess]:\nFile " + myFile.getName()
@@ -4888,8 +4974,9 @@ public class KL {
 			return rename(from, to);
 		}
 		public static boolean copy(String from, String to, boolean overwrite) {
-			if (not(from) || not(to))
+			if (not(from) || not(to)) {
 				return false;
+			}
 			// order matters, this check always comes first
 			if (in(from, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
 				for (String subFileName : from
@@ -4907,8 +4994,9 @@ public class KL {
 			File fileToCopy = new File(from);
 			File destination = new File(to);
 			// order matter, this check SHOULD come after
-			if (isNull(fileToCopy) || !fileToCopy.exists())
+			if (isNull(fileToCopy) || !fileToCopy.exists()) {
 				return false;
+			}
 			try {
 				if (!overwrite) {
 					Files.copy(fileToCopy.toPath(), destination.toPath());
@@ -5448,8 +5536,9 @@ public class KL {
 	public static clr clr(String hexString) {
 		hexString = hexString.replaceAll("^(0x|#)", "");
 		int len = len(hexString);
-		if (len == 8 || len == 4)
+		if (len == 8 || len == 4) {
 			return new clr(hexString, true);
+		}
 		return new clr(hexString, false);
 		/*
 		 * @params all in the hex range: (0x|#)?000 thru (0x|#)?ffffffff
@@ -5482,8 +5571,9 @@ public class KL {
 	public static clr nayaClr(String hexString) {
 		hexString = hexString.replaceAll("^(0x|#)", "");
 		int len = len(hexString);
-		if (len == 8 || len == 4)
+		if (len == 8 || len == 4) {
 			return new clr(hexString, true);
+		}
 		return new clr(hexString, false);
 		/*
 		 * @params all in the hex range: (0x|#)?000 thru (0x|#)?ffffffff
@@ -5655,8 +5745,9 @@ public class KL {
 			return copy();
 		}
 		String random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return "";
+			}
 			return i(randInt(length()));
 		}
 		String rand() {
@@ -5703,28 +5794,30 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return "";
 		}
 		String nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return "";
 		}
@@ -5766,10 +5859,11 @@ public class KL {
 			return nthlast(1);
 		}
 		objS set(String k, String v) {
-			if (!super.containsKey(k))
+			if (!super.containsKey(k)) {
 				super.put(k, v);
-			else
+			} else {
 				super.replace(k, v);
+			}
 			return this;
 		}
 		objS add(String k, String v) {
@@ -5951,15 +6045,17 @@ public class KL {
 			return subMap;
 		}
 		objS mapIfPresent(String key, Function<String, String> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
 		objS mapIfPresent(String key,
 				BiFunction<? super String, ? super String, ? extends String> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, fn);
 			return this;
 		}
@@ -6020,11 +6116,13 @@ public class KL {
 			return this;
 		}
 		objS combine(objS... others) {
-			if (not(others))
+			if (not(others)) {
 				return this;
+			}
 			for (objS other : others) {
-				if (not(other))
+				if (not(other)) {
 					continue;
+				}
 				super.putAll(other);
 			}
 			return this;
@@ -6049,8 +6147,9 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		String string() {
@@ -6219,8 +6318,9 @@ public class KL {
 			return copy();
 		}
 		int random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		int rand() {
@@ -6248,10 +6348,11 @@ public class KL {
 			return super.containsValue(v);
 		}
 		boolean has(Object o) {
-			if (o instanceof String)
+			if (o instanceof String) {
 				return hasKey((String) o);
-			else if (o instanceof Integer)
+			} else if (o instanceof Integer) {
 				return hasValue((Integer) o);
+			}
 			return false;
 		}
 		String[] keyArray() {
@@ -6271,28 +6372,30 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return "";
 		}
 		int nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -6334,10 +6437,11 @@ public class KL {
 			return nthlast(1);
 		}
 		objI set(String k, Integer v) {
-			if (!super.containsKey(k))
+			if (!super.containsKey(k)) {
 				super.put(k, v);
-			else
+			} else {
 				super.replace(k, v);
+			}
 			return this;
 		}
 		objI add(String k, Integer v) {
@@ -6519,8 +6623,9 @@ public class KL {
 			return subMap;
 		}
 		objI mapIfPresent(String key, Function<Integer, Integer> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
@@ -6529,8 +6634,9 @@ public class KL {
 		}
 		objI mapIfPresent(String key,
 				BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, fn);
 			return this;
 		}
@@ -6591,11 +6697,13 @@ public class KL {
 			return this;
 		}
 		objI combine(objI... others) {
-			if (not(others))
+			if (not(others)) {
 				return this;
+			}
 			for (objI other : others) {
-				if (not(other))
+				if (not(other)) {
 					continue;
+				}
 				super.putAll(other);
 			}
 			return this;
@@ -6620,8 +6728,9 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		String string() {
@@ -6784,8 +6893,9 @@ public class KL {
 			return copy();
 		}
 		long random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		long rand() {
@@ -6823,28 +6933,30 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return "";
 		}
 		long nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -6892,17 +7004,19 @@ public class KL {
 			return super.containsValue(v);
 		}
 		boolean has(Object o) {
-			if (o instanceof String)
+			if (o instanceof String) {
 				return hasKey((String) o);
-			else if (o instanceof Long)
+			} else if (o instanceof Long) {
 				return hasValue((Long) o);
+			}
 			return false;
 		}
 		objL set(String k, Long v) {
-			if (!super.containsKey(k))
+			if (!super.containsKey(k)) {
 				super.put(k, v);
-			else
+			} else {
 				super.replace(k, v);
+			}
 			return this;
 		}
 		objL add(String k, Long v) {
@@ -7082,8 +7196,9 @@ public class KL {
 			return subMap;
 		}
 		objL mapIfPresent(String key, Function<Long, Long> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
@@ -7092,8 +7207,9 @@ public class KL {
 		}
 		objL mapIfPresent(String key,
 				BiFunction<? super String, ? super Long, ? extends Long> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, fn);
 			return this;
 		}
@@ -7153,11 +7269,13 @@ public class KL {
 			return this;
 		}
 		objL combine(objL... others) {
-			if (not(others))
+			if (not(others)) {
 				return this;
+			}
 			for (objL other : others) {
-				if (not(other))
+				if (not(other)) {
 					continue;
+				}
 				super.putAll(other);
 			}
 			return this;
@@ -7182,8 +7300,9 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		String string() {
@@ -7347,8 +7466,9 @@ public class KL {
 			return copy();
 		}
 		float random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		float rand() {
@@ -7386,28 +7506,30 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return "";
 		}
 		float nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -7455,17 +7577,19 @@ public class KL {
 			return super.containsValue(v);
 		}
 		boolean has(Object o) {
-			if (o instanceof String)
+			if (o instanceof String) {
 				return hasKey((String) o);
-			else if (o instanceof Float)
+			} else if (o instanceof Float) {
 				return hasValue((Float) o);
+			}
 			return false;
 		}
 		objF set(String k, Float v) {
-			if (!super.containsKey(k))
+			if (!super.containsKey(k)) {
 				super.put(k, v);
-			else
+			} else {
 				super.replace(k, v);
+			}
 			return this;
 		}
 		objF add(String k, Float v) {
@@ -7645,8 +7769,9 @@ public class KL {
 			return subMap;
 		}
 		objF mapIfPresent(String key, Function<Float, Float> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
@@ -7655,8 +7780,9 @@ public class KL {
 		}
 		objF mapIfPresent(String key,
 				BiFunction<? super String, ? super Float, ? extends Float> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, fn);
 			return this;
 		}
@@ -7717,11 +7843,13 @@ public class KL {
 			return this;
 		}
 		objF combine(objF... others) {
-			if (not(others))
+			if (not(others)) {
 				return this;
+			}
 			for (objF other : others) {
-				if (not(other))
+				if (not(other)) {
 					continue;
+				}
 				super.putAll(other);
 			}
 			return this;
@@ -7746,8 +7874,9 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		String string() {
@@ -7914,8 +8043,9 @@ public class KL {
 			return copy();
 		}
 		double random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		double rand() {
@@ -7953,28 +8083,30 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return "";
 		}
 		double nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -8022,17 +8154,19 @@ public class KL {
 			return super.containsValue(v);
 		}
 		boolean has(Object o) {
-			if (o instanceof String)
+			if (o instanceof String) {
 				return hasKey((String) o);
-			else if (o instanceof Double)
+			} else if (o instanceof Double) {
 				return hasValue((Double) o);
+			}
 			return false;
 		}
 		objD set(String k, Double v) {
-			if (!super.containsKey(k))
+			if (!super.containsKey(k)) {
 				super.put(k, v);
-			else
+			} else {
 				super.replace(k, v);
+			}
 			return this;
 		}
 		objD add(String k, Double v) {
@@ -8212,8 +8346,9 @@ public class KL {
 			return subMap;
 		}
 		objD mapIfPresent(String key, Function<Double, Double> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
@@ -8222,8 +8357,9 @@ public class KL {
 		}
 		objD mapIfPresent(String key,
 				BiFunction<? super String, ? super Double, ? extends Double> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, fn);
 			return this;
 		}
@@ -8284,11 +8420,13 @@ public class KL {
 			return this;
 		}
 		objD combine(objD... others) {
-			if (not(others))
+			if (not(others)) {
 				return this;
+			}
 			for (objD other : others) {
-				if (not(other))
+				if (not(other)) {
 					continue;
+				}
 				super.putAll(other);
 			}
 			return this;
@@ -8313,8 +8451,9 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		String string() {
@@ -8483,8 +8622,9 @@ public class KL {
 			return copy();
 		}
 		boolean random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return false;
+			}
 			return i(randInt(length()));
 		}
 		boolean rand() {
@@ -8522,28 +8662,30 @@ public class KL {
 			return resultantArr;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return "";
 		}
 		boolean nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return false;
 		}
@@ -8591,17 +8733,19 @@ public class KL {
 			return super.containsValue(v);
 		}
 		boolean has(Object o) {
-			if (o instanceof String)
+			if (o instanceof String) {
 				return hasKey((String) o);
-			else if (o instanceof Boolean)
+			} else if (o instanceof Boolean) {
 				return hasValue((Boolean) o);
+			}
 			return false;
 		}
 		objB set(String k, Boolean v) {
-			if (!super.containsKey(k))
+			if (!super.containsKey(k)) {
 				super.put(k, v);
-			else
+			} else {
 				super.replace(k, v);
+			}
 			return this;
 		}
 		objB add(String k, Boolean v) {
@@ -8781,8 +8925,9 @@ public class KL {
 			return subMap;
 		}
 		objB mapIfPresent(String key, Function<Boolean, Boolean> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
@@ -8791,8 +8936,9 @@ public class KL {
 		}
 		objB mapIfPresent(String key,
 				BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, fn);
 			return this;
 		}
@@ -8853,11 +8999,13 @@ public class KL {
 			return this;
 		}
 		objB combine(objB... others) {
-			if (not(others))
+			if (not(others)) {
 				return this;
+			}
 			for (objB other : others) {
-				if (not(other))
+				if (not(other)) {
 					continue;
+				}
 				super.putAll(other);
 			}
 			return this;
@@ -8882,8 +9030,9 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		String string() {
@@ -9052,38 +9201,45 @@ public class KL {
 			return copy();
 		}
 		Object random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return false;
+			}
 			return i(randInt(length()));
 		}
 		String random(String type) {
-			if (not(isStr(random())))
+			if (not(isStr(random()))) {
 				return "";
+			}
 			return (String) random();
 		}
 		int random(int type) {
-			if (not(isInt(random())))
+			if (not(isInt(random()))) {
 				return 0;
+			}
 			return (int) random();
 		}
 		long random(long type) {
-			if (not(isLong(random())))
+			if (not(isLong(random()))) {
 				return 0;
+			}
 			return (long) random();
 		}
 		float random(float type) {
-			if (not(isFlt(random())))
+			if (not(isFlt(random()))) {
 				return 0;
+			}
 			return (float) random();
 		}
 		double random(double type) {
-			if (not(isDbl(random())))
+			if (not(isDbl(random()))) {
 				return 0;
+			}
 			return (double) random();
 		}
 		boolean random(boolean type) {
-			if (not(isBool(random())))
+			if (not(isBool(random()))) {
 				return false;
+			}
 			return (boolean) random();
 		}
 		Object rand() {
@@ -9133,33 +9289,39 @@ public class KL {
 			// will take a key in the form of a string, but RETURN AN OBJECT
 		}
 		String key(String k, String type) {
-			if (not(isStr(key(k))))
+			if (not(isStr(key(k)))) {
 				return "";
+			}
 			return (String) key(k);
 		}
 		int key(String k, int type) {
-			if (not(isInt(key(k))))
+			if (not(isInt(key(k)))) {
 				return 0;
+			}
 			return (int) key(k);
 		}
 		long key(String k, long type) {
-			if (not(isLong(key(k))))
+			if (not(isLong(key(k)))) {
 				return 0;
+			}
 			return (long) key(k);
 		}
 		float key(String k, float type) {
-			if (not(isFlt(key(k))))
+			if (not(isFlt(key(k)))) {
 				return 0;
+			}
 			return (float) key(k);
 		}
 		double key(String k, double type) {
-			if (not(isDbl(key(k))))
+			if (not(isDbl(key(k)))) {
 				return 0;
+			}
 			return (double) key(k);
 		}
 		boolean key(String k, boolean type) {
-			if (not(isBool(key(k))))
+			if (not(isBool(key(k)))) {
 				return false;
+			}
 			return (boolean) key(k);
 		}
 		Object k(String k) {
@@ -9228,8 +9390,9 @@ public class KL {
 		String[] keyArray() {
 			Object[] keysObj = super.keySet().toArray();
 			String[] keys = new String[keysObj.length];
-			for (int i : range(keysObj))
+			for (int i : range(keysObj)) {
 				keys[i] = (String) keysObj[i];
+			}
 			return keys;
 		}
 		Object[] array() {
@@ -9237,59 +9400,67 @@ public class KL {
 			return values;
 		}
 		String nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return "";
 		}
 		Object nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return none;
 		}
 		String nthValue(int n, String type) {
-			if (not(isStr(nthValue(n))))
+			if (not(isStr(nthValue(n)))) {
 				return "";
+			}
 			return (String) nthValue(n);
 		}
 		int nthValue(int n, int type) {
-			if (not(isInt(nthValue(n))))
+			if (not(isInt(nthValue(n)))) {
 				return 0;
+			}
 			return (int) nthValue(n);
 		}
 		long nthValue(int n, long type) {
-			if (not(isLong(nthValue(n))))
+			if (not(isLong(nthValue(n)))) {
 				return 0;
+			}
 			return (long) nthValue(n);
 		}
 		float nthValue(int n, float type) {
-			if (not(isFlt(nthValue(n))))
+			if (not(isFlt(nthValue(n)))) {
 				return 0;
+			}
 			return (float) nthValue(n);
 		}
 		double nthValue(int n, double type) {
-			if (not(isDbl(nthValue(n))))
+			if (not(isDbl(nthValue(n)))) {
 				return 0;
+			}
 			return (double) nthValue(n);
 		}
 		boolean nthValue(int n, boolean type) {
-			if (not(isBool(nthValue(n))))
+			if (not(isBool(nthValue(n)))) {
 				return false;
+			}
 			return (boolean) nthValue(n);
 		}
 		String nthLastKey(int n) {
@@ -9303,99 +9474,117 @@ public class KL {
 			// exception
 		}
 		String nthLastValue(int n, String type) {
-			if (not(isStr(nthLastValue(n))))
+			if (not(isStr(nthLastValue(n)))) {
 				return "";
+			}
 			return (String) nthLastValue(n);
 		}
 		int nthLastValue(int n, int type) {
-			if (not(isInt(nthLastValue(n))))
+			if (not(isInt(nthLastValue(n)))) {
 				return 0;
+			}
 			return (int) nthLastValue(n);
 		}
 		long nthLastValue(int n, long type) {
-			if (not(isLong(nthLastValue(n))))
+			if (not(isLong(nthLastValue(n)))) {
 				return 0;
+			}
 			return (long) nthLastValue(n);
 		}
 		float nthLastValue(int n, float type) {
-			if (not(isFlt(nthLastValue(n))))
+			if (not(isFlt(nthLastValue(n)))) {
 				return 0;
+			}
 			return (float) nthLastValue(n);
 		}
 		double nthLastValue(int n, double type) {
-			if (not(isDbl(nthLastValue(n))))
+			if (not(isDbl(nthLastValue(n)))) {
 				return 0;
+			}
 			return (double) nthLastValue(n);
 		}
 		boolean nthLastValue(int n, boolean type) {
-			if (not(isBool(nthLastValue(n))))
+			if (not(isBool(nthLastValue(n)))) {
 				return false;
+			}
 			return (boolean) nthLastValue(n);
 		}
 		Object i(int n) {
 			return nthValue(n);
 		}
 		String i(int n, String type) {
-			if (not(isStr(i(n))))
+			if (not(isStr(i(n)))) {
 				return "";
+			}
 			return (String) i(n);
 		}
 		int i(int n, int type) {
-			if (not(isInt(i(n))))
+			if (not(isInt(i(n)))) {
 				return 0;
+			}
 			return (int) i(n);
 		}
 		long i(int n, long type) {
-			if (not(isLong(i(n))))
+			if (not(isLong(i(n)))) {
 				return 0;
+			}
 			return (long) i(n);
 		}
 		float i(int n, float type) {
-			if (not(isFlt(i(n))))
+			if (not(isFlt(i(n)))) {
 				return 0;
+			}
 			return (float) i(n);
 		}
 		double i(int n, double type) {
-			if (not(isDbl(i(n))))
+			if (not(isDbl(i(n)))) {
 				return 0;
+			}
 			return (double) i(n);
 		}
 		boolean i(int n, boolean type) {
-			if (not(isBool(i(n))))
+			if (not(isBool(i(n)))) {
 				return false;
+			}
 			return (boolean) i(n);
 		}
 		Object lasti(int n) {
 			return nthLastValue(n);
 		}
 		String lasti(int n, String type) {
-			if (not(isStr(lasti(n))))
+			if (not(isStr(lasti(n)))) {
 				return "";
+			}
 			return (String) lasti(n);
 		}
 		int lasti(int n, int type) {
-			if (not(isInt(lasti(n))))
+			if (not(isInt(lasti(n)))) {
 				return 0;
+			}
 			return (int) lasti(n);
 		}
 		long lasti(int n, long type) {
-			if (not(isLong(lasti(n))))
+			if (not(isLong(lasti(n)))) {
 				return 0;
+			}
 			return (long) lasti(n);
 		}
 		float lasti(int n, float type) {
-			if (not(isFlt(lasti(n))))
+			if (not(isFlt(lasti(n)))) {
 				return 0;
+			}
 			return (float) lasti(n);
 		}
 		double lasti(int n, double type) {
-			if (not(isDbl(lasti(n))))
+			if (not(isDbl(lasti(n)))) {
 				return 0;
+			}
 			return (double) lasti(n);
 		}
 		boolean lasti(int n, boolean type) {
-			if (not(isBool(lasti(n))))
+			if (not(isBool(lasti(n)))) {
 				return false;
+			}
 			return (boolean) lasti(n);
 		}
 		Object ilast(int n) {
@@ -9465,132 +9654,156 @@ public class KL {
 			return nth(0);
 		}
 		String first(String type) {
-			if (not(isStr(first())))
+			if (not(isStr(first()))) {
 				return "";
+			}
 			return (String) first();
 		}
 		int first(int type) {
-			if (not(isInt(first())))
+			if (not(isInt(first()))) {
 				return 0;
+			}
 			return (int) first();
 		}
 		long first(long type) {
-			if (not(isLong(first())))
+			if (not(isLong(first()))) {
 				return 0;
+			}
 			return (long) first();
 		}
 		float first(float type) {
-			if (not(isFlt(first())))
+			if (not(isFlt(first()))) {
 				return 0;
+			}
 			return (float) first();
 		}
 		double first(double type) {
-			if (not(isDbl(first())))
+			if (not(isDbl(first()))) {
 				return 0;
+			}
 			return (double) first();
 		}
 		boolean first(boolean type) {
-			if (not(isBool(first())))
+			if (not(isBool(first()))) {
 				return false;
+			}
 			return (boolean) first();
 		}
 		Object second() {
 			return nth(1);
 		}
 		String second(String type) {
-			if (not(isStr(second())))
+			if (not(isStr(second()))) {
 				return "";
+			}
 			return (String) second();
 		}
 		int second(int type) {
-			if (not(isInt(second())))
+			if (not(isInt(second()))) {
 				return 0;
+			}
 			return (int) second();
 		}
 		long second(long type) {
-			if (not(isLong(second())))
+			if (not(isLong(second()))) {
 				return 0;
+			}
 			return (long) second();
 		}
 		float second(float type) {
-			if (not(isFlt(second())))
+			if (not(isFlt(second()))) {
 				return 0;
+			}
 			return (float) second();
 		}
 		double second(double type) {
-			if (not(isDbl(second())))
+			if (not(isDbl(second()))) {
 				return 0;
+			}
 			return (double) second();
 		}
 		boolean second(boolean type) {
-			if (not(isBool(second())))
+			if (not(isBool(second()))) {
 				return false;
+			}
 			return (boolean) second();
 		}
 		Object seclast() {
 			return nthlast(2);
 		}
 		String seclast(String type) {
-			if (not(isStr(seclast())))
+			if (not(isStr(seclast()))) {
 				return "";
+			}
 			return (String) seclast();
 		}
 		int seclast(int type) {
-			if (not(isInt(seclast())))
+			if (not(isInt(seclast()))) {
 				return 0;
+			}
 			return (int) seclast();
 		}
 		long seclast(long type) {
-			if (not(isLong(seclast())))
+			if (not(isLong(seclast()))) {
 				return 0;
+			}
 			return (long) seclast();
 		}
 		float seclast(float type) {
-			if (not(isFlt(seclast())))
+			if (not(isFlt(seclast()))) {
 				return 0;
+			}
 			return (float) seclast();
 		}
 		double seclast(double type) {
-			if (not(isDbl(seclast())))
+			if (not(isDbl(seclast()))) {
 				return 0;
+			}
 			return (double) seclast();
 		}
 		boolean seclast(boolean type) {
-			if (not(isBool(seclast())))
+			if (not(isBool(seclast()))) {
 				return false;
+			}
 			return (boolean) seclast();
 		}
 		Object last() {
 			return nthlast(1);
 		}
 		String last(String type) {
-			if (not(isStr(last())))
+			if (not(isStr(last()))) {
 				return "";
+			}
 			return (String) last();
 		}
 		int last(int type) {
-			if (not(isInt(last())))
+			if (not(isInt(last()))) {
 				return 0;
+			}
 			return (int) last();
 		}
 		long last(long type) {
-			if (not(isLong(last())))
+			if (not(isLong(last()))) {
 				return 0;
+			}
 			return (long) last();
 		}
 		float last(float type) {
-			if (not(isFlt(last())))
+			if (not(isFlt(last()))) {
 				return 0;
+			}
 			return (float) last();
 		}
 		double last(double type) {
-			if (not(isDbl(last())))
+			if (not(isDbl(last()))) {
 				return 0;
+			}
 			return (double) last();
 		}
 		boolean last(boolean type) {
-			if (not(isBool(last())))
+			if (not(isBool(last()))) {
 				return false;
+			}
 			return (boolean) last();
 		}
 		boolean hasKey(String k) {
@@ -9600,15 +9813,17 @@ public class KL {
 			return super.containsValue(v);
 		}
 		boolean has(Object o) {
-			if (o instanceof String)
+			if (o instanceof String) {
 				return hasKey((String) o);
+			}
 			return hasValue(o);
 		}
 		obj set(String k, Object v) {
-			if (!super.containsKey(k))
+			if (!super.containsKey(k)) {
 				super.put(k, v);
-			else
+			} else {
 				super.replace(k, v);
+			}
 			return this;
 		}
 		obj add(String k, Object v) {
@@ -9792,8 +10007,9 @@ public class KL {
 		}
 		obj mapIfPresent(String key,
 				BiFunction<? super String, ? super Object, ? extends Object> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, fn);
 			return this;
 		}
@@ -9853,11 +10069,13 @@ public class KL {
 			return this;
 		}
 		obj combine(obj... others) {
-			if (not(others))
+			if (not(others)) {
 				return this;
+			}
 			for (obj other : others) {
-				if (not(other))
+				if (not(other)) {
 					continue;
+				}
 				super.putAll(other);
 			}
 			return this;
@@ -9882,8 +10100,9 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		String string() {
@@ -10060,10 +10279,11 @@ public class KL {
 			return super.containsValue(v);
 		}
 		tree<Key, Value> set(Key k, Value v) {
-			if (!super.containsKey(k))
+			if (!super.containsKey(k)) {
 				super.put(k, v);
-			else
+			} else {
 				super.replace(k, v);
+			}
 			return this;
 		}
 		tree<Key, Value> add(Key k, Value v) {
@@ -10093,15 +10313,17 @@ public class KL {
 			return super.entrySet();
 		}
 		tree<Key, Value> mapIfPresent(Key key, Function<Value, Value> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
 		tree<Key, Value> mapIfPresent(Key key,
 				BiFunction<? super Key, ? super Value, ? extends Value> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.computeIfPresent(key, fn);
 			return this;
 		}
@@ -10385,8 +10607,9 @@ public class KL {
 			return copy();
 		}
 		String random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return "";
+			}
 			return i(randInt(length()));
 		}
 		String rand() {
@@ -10412,28 +10635,30 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		String nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return "";
 		}
@@ -10476,11 +10701,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeI combine(treeI... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeI tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -10505,15 +10732,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Integer)
+			if (o instanceof Integer) {
 				return super.hasKey((Integer) o);
-			else if (o instanceof String)
+			} else if (o instanceof String) {
 				return super.hasValue((String) o);
+			}
 			return false;
 		}
 	}
@@ -10620,8 +10849,9 @@ public class KL {
 			return copy();
 		}
 		long random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		long rand() {
@@ -10647,28 +10877,30 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		long nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -10711,11 +10943,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeL combine(treeL... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeL tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -10740,15 +10974,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Integer)
+			if (o instanceof Integer) {
 				return super.hasKey((Integer) o);
-			else if (o instanceof Long)
+			} else if (o instanceof Long) {
 				return super.hasValue((Long) o);
+			}
 			return false;
 		}
 	}
@@ -10854,8 +11090,9 @@ public class KL {
 			return copy();
 		}
 		float random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		float rand() {
@@ -10881,28 +11118,30 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		float nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -10945,11 +11184,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeF combine(treeF... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeF tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -10974,15 +11215,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Integer)
+			if (o instanceof Integer) {
 				return super.hasKey((Integer) o);
-			else if (o instanceof Float)
+			} else if (o instanceof Float) {
 				return super.hasValue((Float) o);
+			}
 			return false;
 		}
 	}
@@ -11090,8 +11333,9 @@ public class KL {
 			return copy();
 		}
 		double random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		double rand() {
@@ -11117,28 +11361,30 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		double nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -11181,11 +11427,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeD combine(treeD... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeD tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -11210,15 +11458,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Integer)
+			if (o instanceof Integer) {
 				return super.hasKey((Integer) o);
-			else if (o instanceof Double)
+			} else if (o instanceof Double) {
 				return super.hasValue((Double) o);
+			}
 			return false;
 		}
 	}
@@ -11327,8 +11577,9 @@ public class KL {
 			return copy();
 		}
 		boolean random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return false;
+			}
 			return i(randInt(length()));
 		}
 		boolean rand() {
@@ -11354,28 +11605,30 @@ public class KL {
 			return resultantArr;
 		}
 		int nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		boolean nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return false;
 		}
@@ -11418,11 +11671,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeB combine(treeB... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeB tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -11447,15 +11702,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Integer)
+			if (o instanceof Integer) {
 				return super.hasKey((Integer) o);
-			else if (o instanceof Boolean)
+			} else if (o instanceof Boolean) {
 				return super.hasValue((Boolean) o);
+			}
 			return false;
 		}
 	}
@@ -11568,8 +11825,9 @@ public class KL {
 			return copy();
 		}
 		String random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return "";
+			}
 			return i(randInt(length()));
 		}
 		String rand() {
@@ -11595,28 +11853,30 @@ public class KL {
 			return resultantArr;
 		}
 		double nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		String nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return "";
 		}
@@ -11659,11 +11919,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeDS combine(treeDS... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeDS tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -11688,15 +11950,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Double)
+			if (o instanceof Double) {
 				return super.hasKey((double) o);
-			else if (o instanceof String)
+			} else if (o instanceof String) {
 				return super.hasValue((String) o);
+			}
 			return false;
 		}
 	}
@@ -11806,8 +12070,9 @@ public class KL {
 			return copy();
 		}
 		int random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		int rand() {
@@ -11833,28 +12098,30 @@ public class KL {
 			return resultantArr;
 		}
 		double nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		int nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -11896,11 +12163,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeDI combine(treeDI... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeDI tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -11925,15 +12194,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Double)
+			if (o instanceof Double) {
 				return super.hasKey((double) o);
-			else if (o instanceof Integer)
+			} else if (o instanceof Integer) {
 				return super.hasValue((Integer) o);
+			}
 			return false;
 		}
 	}
@@ -11994,8 +12265,9 @@ public class KL {
 			return copy();
 		}
 		long random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		long rand() {
@@ -12021,28 +12293,30 @@ public class KL {
 			return resultantArr;
 		}
 		double nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		long nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -12085,11 +12359,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeDL combine(treeDL... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeDL tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -12114,15 +12390,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Double)
+			if (o instanceof Double) {
 				return super.hasKey((double) o);
-			else if (o instanceof Long)
+			} else if (o instanceof Long) {
 				return super.hasValue((Long) o);
+			}
 			return false;
 		}
 	}
@@ -12232,8 +12510,9 @@ public class KL {
 			return copy();
 		}
 		float random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		float rand() {
@@ -12259,28 +12538,30 @@ public class KL {
 			return resultantArr;
 		}
 		double nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		float nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return 0;
 		}
@@ -12323,11 +12604,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeDF combine(treeDF... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeDF tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -12352,15 +12635,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Double)
+			if (o instanceof Double) {
 				return super.hasKey((double) o);
-			else if (o instanceof Float)
+			} else if (o instanceof Float) {
 				return super.hasValue((Float) o);
+			}
 			return false;
 		}
 	}
@@ -12474,8 +12759,9 @@ public class KL {
 			return copy();
 		}
 		boolean random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return false;
+			}
 			return i(randInt(length()));
 		}
 		boolean rand() {
@@ -12501,28 +12787,30 @@ public class KL {
 			return resultantArr;
 		}
 		double nthKey(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return keyArray()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastKey(n);
+				}
 			}
 			return 0;
 		}
 		boolean nthValue(int n) {
-			if (n >= 0 && n < length())
+			if (n >= 0 && n < length()) {
 				return array()[n];
-			else if (n < 0) {
+			} else if (n < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				n = Pos(n);
-				if (n <= length())
+				if (n <= length()) {
 					return nthLastValue(n);
+				}
 			}
 			return false;
 		}
@@ -12565,11 +12853,13 @@ public class KL {
 			return nthlast(1);
 		}
 		treeDB combine(treeDB... trees) {
-			if (not(trees))
+			if (not(trees)) {
 				return this;
+			}
 			for (treeDB tree : trees) {
-				if (not(tree))
+				if (not(tree)) {
 					continue;
+				}
 				super.putAll(tree);
 			}
 			return this;
@@ -12594,15 +12884,17 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolean has(Object o) {
-			if (o instanceof Double)
+			if (o instanceof Double) {
 				return super.hasKey((double) o);
-			else if (o instanceof Boolean)
+			} else if (o instanceof Boolean) {
 				return super.hasValue((Boolean) o);
+			}
 			return false;
 		}
 	}
@@ -12663,35 +12955,41 @@ public class KL {
 		}
 		strArr(String... strings) {
 			super();
-			for (String s : strings)
+			for (String s : strings) {
 				super.add(s);
+			}
 		}
 		strArr pushAt(int i, String... strings) {
 			if (i >= 0 && i <= super.size() && 0 != len(strings)) {
 				for (String s : strings) {
-					if (!KL.isEmpty(s))
+					if (!KL.isEmpty(s)) {
 						super.add(i, s);
+					}
 				}
 			}
 			return this;
 		}
 		strArr pushStart(String... strings) {
-			if (0 != len(strings))
+			if (0 != len(strings)) {
 				pushAt(0, strings);
+			}
 			return this;
 		}
 		strArr push(String... strings) {
-			if (0 != len(strings))
+			if (0 != len(strings)) {
 				pushAt(super.size(), strings);
+			}
 			return this;
 		}
 		strArr push(String[]... stringArrays) {
 			// this one's for appending entire arrays, for ease of pushing
-			if (not(stringArrays))
+			if (not(stringArrays)) {
 				return this;
+			}
 			for (int i : range(stringArrays)) {
-				if (!KL.isNull(stringArrays[i]))
+				if (!KL.isNull(stringArrays[i])) {
 					pushAt(super.size(), stringArrays[i]);
+				}
 			}
 			return this;
 		}
@@ -12705,15 +13003,17 @@ public class KL {
 			return negativeIntersection(arrays);
 		}
 		String shift() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return "";
+			}
 			String removed = super.get(0);
 			super.remove(0);
 			return removed;
 		}
 		String pop(int... indexes) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return "";
+			}
 			for (int i : indexes) {
 				if (i >= 0 && i < length()) {
 					super.remove(i);
@@ -12723,11 +13023,13 @@ public class KL {
 			return "";
 		}
 		String pop(String... strings) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return "";
+			}
 			for (String s : strings) {
-				if (has(s))
+				if (has(s)) {
 					super.remove(String.valueOf(s));
+				}
 			}
 			return strings[0];
 		}
@@ -12756,8 +13058,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<String> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				uniqueSet.add((String) el);
+			}
 			super.clear();
 			super.addAll(uniqueSet);
 			return this;
@@ -12766,15 +13069,16 @@ public class KL {
 			return super.contains(x);
 		}
 		String i(int i) {
-			if (i >= 0 && i < length())
+			if (i >= 0 && i < length()) {
 				return array()[i];
-			else if (i < 0) {
+			} else if (i < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				i = Pos(i);
-				if (i <= length())
+				if (i <= length()) {
 					return lasti(i);
+				}
 			}
 			return "";
 		}
@@ -12807,13 +13111,15 @@ public class KL {
 			return nthlast(1);
 		}
 		strArr update(int i, String x) {
-			if (isNull(i) || isNull(x))
+			if (isNull(i) || isNull(x)) {
 				return this;
-			if (!has(x))
+			}
+			if (!has(x)) {
 				super.add(x);
-			else {
-				if (i < 0 || i >= super.size())
+			} else {
+				if (i < 0 || i >= super.size()) {
 					return this;
+				}
 				super.set(i, x);
 			}
 			return this;
@@ -12823,8 +13129,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<String> set2 = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				set2.add((String) el);
+			}
 			ArrayList<String> list = new ArrayList<>(set2);
 			Collections.shuffle(list, new Random(System.nanoTime()));
 			super.clear();
@@ -12839,8 +13146,9 @@ public class KL {
 			return this;
 		}
 		strArr sort(String condition) {
-			if (not(condition))
+			if (not(condition)) {
 				return this;
+			}
 			if (condition.matches("^len(gth)?(:asc)?$")) {
 				super.sort((s1, s2) -> len(s1) - len(s2));
 			} else if (condition
@@ -12877,8 +13185,9 @@ public class KL {
 		ArrayList<String> list() {
 			ArrayList<String> result = new ArrayList<>();
 			strArr clone = copy();
-			for (int i : range(clone))
+			for (int i : range(clone)) {
 				result.add(clone.i(i));
+			}
 			return result;
 		}
 		String string() {
@@ -12889,46 +13198,54 @@ public class KL {
 		}
 		strArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
-					|| y <= 0 || y >= length())
+					|| y <= 0 || y >= length()) {
 				return copy();
+			}
 			return new strArr(KL.slice(array(), x, y));
 		}
 		strArr slice(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(x, length());
 		}
 		strArr slice() {
 			return copy();
 		}
 		strArr sliceKeep(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, x);
 		}
 		strArr sliceRight(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(length() - x);
 		}
 		strArr sliceEnd(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, length() - x);
 		}
 		strArr sliceOff(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		strArr sliceOut(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		String random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return "";
+			}
 			return i(randInt(length()));
 		}
 		String rand() {
@@ -12942,8 +13259,9 @@ public class KL {
 			return this;
 		}
 		boolean eq(strArr arrB) {
-			if (not(arrB))
+			if (not(arrB)) {
 				return false;
+			}
 			strArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
@@ -12955,21 +13273,25 @@ public class KL {
 		}
 		strArr combine(strArr... arrays) {
 			strArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
+			}
 			for (strArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					continue;
+				}
 				super.addAll(arrB);
 			}
 			return this;
 		}
 		strArr combine(String[]... arrays) {
 			strArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
-			for (String[] arrB : arrays)
+			}
+			for (String[] arrB : arrays) {
 				combine(new strArr(arrB));
+			}
 			return this;
 		}
 		strArr union(strArr... arrays) {
@@ -13008,48 +13330,58 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		strArr intersection(strArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (strArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.retainAll(arrB);
 			}
 			return this;
 		}
 		strArr intersection(String[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (String[] arrB : arrays)
+			}
+			for (String[] arrB : arrays) {
 				intersection(new strArr(arrB));
+			}
 			return this;
 		}
 		strArr negativeIntersection(strArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (strArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.removeAll(arrB);
 			}
 			return this;
 		}
 		strArr negativeIntersection(String[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (String[] arrB : arrays)
+			}
+			for (String[] arrB : arrays) {
 				negativeIntersection(new strArr(arrB));
+			}
 			return this;
 		}
 		strArr map(String oldVal, String newVal) {
 			int index = super.indexOf(oldVal);
-			if (not(oldVal) || not(newVal) || isNeg(index))
+			if (not(oldVal) || not(newVal) || isNeg(index)) {
 				return this;
+			}
 			super.set(index, newVal);
 			return this;
 		}
@@ -13060,8 +13392,9 @@ public class KL {
 			return (strArr) super.clone();
 		}
 		strArr each(Consumer<? super String> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.forEach(fn);
 			return this;
 		}
@@ -13084,33 +13417,39 @@ public class KL {
 		}
 		intArr(int... nums) {
 			super();
-			for (int n : nums)
+			for (int n : nums) {
 				super.add(n);
+			}
 		}
 		intArr pushAt(int i, int... ints) {
 			if (i >= 0 && i <= super.size() && 0 != len(ints)) {
-				for (int n : ints)
+				for (int n : ints) {
 					super.add(i, n);
+				}
 			}
 			return this;
 		}
 		intArr pushStart(int... ints) {
-			if (0 != len(ints))
+			if (0 != len(ints)) {
 				pushAt(0, ints);
+			}
 			return this;
 		}
 		intArr push(int... ints) {
-			if (0 != len(ints))
+			if (0 != len(ints)) {
 				pushAt(super.size(), ints);
+			}
 			return this;
 		}
 		intArr push(int[]... intArrays) {
 			// this one's for appending entire arrays, for ease of pushing
-			if (not(intArrays))
+			if (not(intArrays)) {
 				return this;
+			}
 			for (int i : range(intArrays)) {
-				if (!KL.isNull(intArrays[i]))
+				if (!KL.isNull(intArrays[i])) {
 					pushAt(super.size(), intArrays[i]);
+				}
 			}
 			return this;
 		}
@@ -13124,18 +13463,21 @@ public class KL {
 			return negativeIntersection(arrays);
 		}
 		int shift() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			int removed = super.get(0);
 			super.remove(0);
 			return removed;
 		}
 		int pop(int... ints) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			for (int n : ints) {
-				if (has(n))
+				if (has(n)) {
 					super.remove(Integer.valueOf(n));
+				}
 			}
 			return ints[0];
 		}
@@ -13164,8 +13506,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Integer> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				uniqueSet.add((Integer) el);
+			}
 			super.clear();
 			super.addAll(uniqueSet);
 			return this;
@@ -13174,15 +13517,16 @@ public class KL {
 			return super.contains(x);
 		}
 		int i(int i) {
-			if (i >= 0 && i < length())
+			if (i >= 0 && i < length()) {
 				return array()[i];
-			else if (i < 0) {
+			} else if (i < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				i = Pos(i);
-				if (i <= length())
+				if (i <= length()) {
 					return lasti(i);
+				}
 			}
 			return 0;
 		}
@@ -13219,8 +13563,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Integer> set2 = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				set2.add((Integer) el);
+			}
 			ArrayList<Integer> list = new ArrayList<>(set2);
 			Collections.shuffle(list, new Random(System.nanoTime()));
 			super.clear();
@@ -13232,8 +13577,9 @@ public class KL {
 			return this;
 		}
 		intArr sort(String condition) {
-			if (not(condition))
+			if (not(condition)) {
 				return this;
+			}
 			if (condition.matches("^len(gth)?(:asc)?$")) {
 				super.sort((s1, s2) -> len(s1) - len(s2));
 			} else if (condition
@@ -13272,8 +13618,9 @@ public class KL {
 		ArrayList<Integer> list() {
 			ArrayList<Integer> result = new ArrayList<>();
 			intArr clone = copy();
-			for (int i : range(clone))
+			for (int i : range(clone)) {
 				result.add(clone.i(i));
+			}
 			return result;
 		}
 		String string() {
@@ -13284,46 +13631,54 @@ public class KL {
 		}
 		intArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
-					|| y <= 0 || y >= length())
+					|| y <= 0 || y >= length()) {
 				return copy();
+			}
 			return new intArr(KL.slice(array(), x, y));
 		}
 		intArr slice(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(x, length());
 		}
 		intArr slice() {
 			return copy();
 		}
 		intArr sliceKeep(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, x);
 		}
 		intArr sliceRight(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(length() - x);
 		}
 		intArr sliceEnd(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, length() - x);
 		}
 		intArr sliceOff(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		intArr sliceOut(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		int random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		int rand() {
@@ -13337,8 +13692,9 @@ public class KL {
 			return this;
 		}
 		boolean eq(intArr arrB) {
-			if (not(arrB))
+			if (not(arrB)) {
 				return false;
+			}
 			intArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
@@ -13350,21 +13706,25 @@ public class KL {
 		}
 		intArr combine(intArr... arrays) {
 			intArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
+			}
 			for (intArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					continue;
+				}
 				super.addAll(arrB);
 			}
 			return this;
 		}
 		intArr combine(int[]... arrays) {
 			intArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
-			for (int[] arrB : arrays)
+			}
+			for (int[] arrB : arrays) {
 				combine(new intArr(arrB));
+			}
 			return this;
 		}
 		intArr union(intArr... arrays) {
@@ -13403,48 +13763,58 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		intArr intersection(intArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (intArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.retainAll(arrB);
 			}
 			return this;
 		}
 		intArr intersection(int[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (int[] arrB : arrays)
+			}
+			for (int[] arrB : arrays) {
 				intersection(new intArr(arrB));
+			}
 			return this;
 		}
 		intArr negativeIntersection(intArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (intArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.removeAll(arrB);
 			}
 			return this;
 		}
 		intArr negativeIntersection(int[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (int[] arrB : arrays)
+			}
+			for (int[] arrB : arrays) {
 				negativeIntersection(new intArr(arrB));
+			}
 			return this;
 		}
 		intArr map(int oldVal, int newVal) {
 			int index = super.indexOf(oldVal);
-			if (not(oldVal) || not(newVal) || isNeg(index))
+			if (not(oldVal) || not(newVal) || isNeg(index)) {
 				return this;
+			}
 			super.set(index, newVal);
 			return this;
 		}
@@ -13452,8 +13822,9 @@ public class KL {
 			return (intArr) super.clone();
 		}
 		intArr each(Consumer<? super Integer> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.forEach(fn);
 			return this;
 		}
@@ -13476,33 +13847,39 @@ public class KL {
 		}
 		longArr(long... nums) {
 			super();
-			for (long n : nums)
+			for (long n : nums) {
 				super.add(n);
+			}
 		}
 		longArr pushAt(int i, long... longs) {
 			if (i >= 0 && i <= super.size() && 0 != len(longs)) {
-				for (long l : longs)
+				for (long l : longs) {
 					super.add(i, l);
+				}
 			}
 			return this;
 		}
 		longArr pushStart(long... longs) {
-			if (0 != len(longs))
+			if (0 != len(longs)) {
 				pushAt(0, longs);
+			}
 			return this;
 		}
 		longArr push(long... longs) {
-			if (0 != len(longs))
+			if (0 != len(longs)) {
 				pushAt(super.size(), longs);
+			}
 			return this;
 		}
 		longArr push(long[]... longArrays) {
 			// this one's for appending entire arrays, for ease of pushing
-			if (not(longArrays))
+			if (not(longArrays)) {
 				return this;
+			}
 			for (int i : range(longArrays)) {
-				if (!KL.isNull(longArrays[i]))
+				if (!KL.isNull(longArrays[i])) {
 					pushAt(super.size(), longArrays[i]);
+				}
 			}
 			return this;
 		}
@@ -13516,15 +13893,17 @@ public class KL {
 			return negativeIntersection(arrays);
 		}
 		long shift() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			long removed = super.get(0);
 			super.remove(0);
 			return removed;
 		}
 		long pop(int... indexes) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			for (int i : indexes) {
 				if (i >= 0 && i < length()) {
 					super.remove(i);
@@ -13534,11 +13913,13 @@ public class KL {
 			return 0;
 		}
 		long pop(long... longs) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			for (long l : longs) {
-				if (has(l))
+				if (has(l)) {
 					super.remove(Long.valueOf(l));
+				}
 			}
 			return longs[0];
 		}
@@ -13567,8 +13948,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Long> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				uniqueSet.add((Long) el);
+			}
 			super.clear();
 			super.addAll(uniqueSet);
 			return this;
@@ -13577,15 +13959,16 @@ public class KL {
 			return super.contains(x);
 		}
 		long i(int i) {
-			if (i >= 0 && i < length())
+			if (i >= 0 && i < length()) {
 				return array()[i];
-			else if (i < 0) {
+			} else if (i < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				i = Pos(i);
-				if (i <= length())
+				if (i <= length()) {
 					return lasti(i);
+				}
 			}
 			return 0;
 		}
@@ -13618,13 +14001,15 @@ public class KL {
 			return nthlast(1);
 		}
 		longArr update(int i, long x) {
-			if (isNull(i) || isNull(x))
+			if (isNull(i) || isNull(x)) {
 				return this;
-			if (!has(x))
+			}
+			if (!has(x)) {
 				super.add(x);
-			else {
-				if (i < 0 || i >= super.size())
+			} else {
+				if (i < 0 || i >= super.size()) {
 					return this;
+				}
 				super.set(i, x);
 			}
 			return this;
@@ -13634,8 +14019,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Long> set2 = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				set2.add((Long) el);
+			}
 			ArrayList<Long> list = new ArrayList<>(set2);
 			Collections.shuffle(list, new Random(System.nanoTime()));
 			super.clear();
@@ -13647,8 +14033,9 @@ public class KL {
 			return this;
 		}
 		longArr sort(String condition) {
-			if (not(condition))
+			if (not(condition)) {
 				return this;
+			}
 			if (condition.matches("^len(gth)?(:asc)?$")) {
 				super.sort((s1, s2) -> len(s1) - len(s2));
 			} else if (condition
@@ -13687,8 +14074,9 @@ public class KL {
 		ArrayList<Long> list() {
 			ArrayList<Long> result = new ArrayList<>();
 			longArr clone = copy();
-			for (int i : range(clone))
+			for (int i : range(clone)) {
 				result.add(clone.i(i));
+			}
 			return result;
 		}
 		String string() {
@@ -13699,46 +14087,54 @@ public class KL {
 		}
 		longArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
-					|| y <= 0 || y >= length())
+					|| y <= 0 || y >= length()) {
 				return copy();
+			}
 			return new longArr(KL.slice(array(), x, y));
 		}
 		longArr slice(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(x, length());
 		}
 		longArr slice() {
 			return copy();
 		}
 		longArr sliceKeep(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, x);
 		}
 		longArr sliceRight(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(length() - x);
 		}
 		longArr sliceEnd(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, length() - x);
 		}
 		longArr sliceOff(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		longArr sliceOut(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		long random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		long rand() {
@@ -13752,8 +14148,9 @@ public class KL {
 			return this;
 		}
 		boolean eq(longArr arrB) {
-			if (not(arrB))
+			if (not(arrB)) {
 				return false;
+			}
 			longArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
@@ -13765,21 +14162,25 @@ public class KL {
 		}
 		longArr combine(longArr... arrays) {
 			longArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
+			}
 			for (longArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					continue;
+				}
 				super.addAll(arrB);
 			}
 			return this;
 		}
 		longArr combine(long[]... arrays) {
 			longArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
-			for (long[] arrB : arrays)
+			}
+			for (long[] arrB : arrays) {
 				combine(new longArr(arrB));
+			}
 			return this;
 		}
 		longArr union(longArr... arrays) {
@@ -13818,48 +14219,58 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		longArr intersection(longArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (longArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.retainAll(arrB);
 			}
 			return this;
 		}
 		longArr intersection(long[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (long[] arrB : arrays)
+			}
+			for (long[] arrB : arrays) {
 				intersection(new longArr(arrB));
+			}
 			return this;
 		}
 		longArr negativeIntersection(longArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (longArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.removeAll(arrB);
 			}
 			return this;
 		}
 		longArr negativeIntersection(long[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (long[] arrB : arrays)
+			}
+			for (long[] arrB : arrays) {
 				negativeIntersection(new longArr(arrB));
+			}
 			return this;
 		}
 		longArr map(long oldVal, long newVal) {
 			int index = super.indexOf(oldVal);
-			if (not(oldVal) || not(newVal) || isNeg(index))
+			if (not(oldVal) || not(newVal) || isNeg(index)) {
 				return this;
+			}
 			super.set(index, newVal);
 			return this;
 		}
@@ -13870,8 +14281,9 @@ public class KL {
 			return (longArr) super.clone();
 		}
 		longArr each(Consumer<? super Long> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.forEach(fn);
 			return this;
 		}
@@ -13894,33 +14306,39 @@ public class KL {
 		}
 		fltArr(float... nums) {
 			super();
-			for (float n : nums)
+			for (float n : nums) {
 				super.add(n);
+			}
 		}
 		fltArr pushAt(int i, float... floats) {
 			if (i >= 0 && i <= super.size() && 0 != len(floats)) {
-				for (float f : floats)
+				for (float f : floats) {
 					super.add(i, f);
+				}
 			}
 			return this;
 		}
 		fltArr pushStart(float... floats) {
-			if (0 != len(floats))
+			if (0 != len(floats)) {
 				pushAt(0, floats);
+			}
 			return this;
 		}
 		fltArr push(float... floats) {
-			if (0 != len(floats))
+			if (0 != len(floats)) {
 				pushAt(super.size(), floats);
+			}
 			return this;
 		}
 		fltArr push(float[]... fltArrays) {
 			// this one's for appending entire arrays, for ease of pushing
-			if (not(fltArrays))
+			if (not(fltArrays)) {
 				return this;
+			}
 			for (int i : range(fltArrays)) {
-				if (!KL.isNull(fltArrays[i]))
+				if (!KL.isNull(fltArrays[i])) {
 					pushAt(super.size(), fltArrays[i]);
+				}
 			}
 			return this;
 		}
@@ -13934,15 +14352,17 @@ public class KL {
 			return negativeIntersection(arrays);
 		}
 		float shift() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			float removed = super.get(0);
 			super.remove(0);
 			return removed;
 		}
 		float pop(int... indexes) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			for (int i : indexes) {
 				if (i >= 0 && i < length()) {
 					super.remove(i);
@@ -13952,11 +14372,13 @@ public class KL {
 			return 0;
 		}
 		float pop(float... floats) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			for (float f : floats) {
-				if (has(f))
+				if (has(f)) {
 					super.remove(Float.valueOf(f));
+				}
 			}
 			return floats[0];
 		}
@@ -13985,8 +14407,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Float> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				uniqueSet.add((Float) el);
+			}
 			super.clear();
 			super.addAll(uniqueSet);
 			return this;
@@ -13995,15 +14418,16 @@ public class KL {
 			return super.contains(x);
 		}
 		float i(int i) {
-			if (i >= 0 && i < length())
+			if (i >= 0 && i < length()) {
 				return array()[i];
-			else if (i < 0) {
+			} else if (i < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				i = Pos(i);
-				if (i <= length())
+				if (i <= length()) {
 					return lasti(i);
+				}
 			}
 			return 0;
 		}
@@ -14036,13 +14460,15 @@ public class KL {
 			return nthlast(1);
 		}
 		fltArr update(int i, float x) {
-			if (isNull(i) || isNull(x))
+			if (isNull(i) || isNull(x)) {
 				return this;
-			if (!has(x))
+			}
+			if (!has(x)) {
 				super.add(x);
-			else {
-				if (i < 0 || i >= super.size())
+			} else {
+				if (i < 0 || i >= super.size()) {
 					return this;
+				}
 				super.set(i, x);
 			}
 			return this;
@@ -14052,8 +14478,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Float> set2 = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				set2.add((Float) el);
+			}
 			ArrayList<Float> list = new ArrayList<>(set2);
 			Collections.shuffle(list, new Random(System.nanoTime()));
 			super.clear();
@@ -14065,8 +14492,9 @@ public class KL {
 			return this;
 		}
 		fltArr sort(String condition) {
-			if (not(condition))
+			if (not(condition)) {
 				return this;
+			}
 			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
 				sortReverse();
 			} else {
@@ -14100,8 +14528,9 @@ public class KL {
 		ArrayList<Float> list() {
 			ArrayList<Float> result = new ArrayList<>();
 			fltArr clone = copy();
-			for (int i : range(clone))
+			for (int i : range(clone)) {
 				result.add(clone.i(i));
+			}
 			return result;
 		}
 		String string() {
@@ -14112,46 +14541,54 @@ public class KL {
 		}
 		fltArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
-					|| y <= 0 || y >= length())
+					|| y <= 0 || y >= length()) {
 				return copy();
+			}
 			return new fltArr(KL.slice(array(), x, y));
 		}
 		fltArr slice(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(x, length());
 		}
 		fltArr slice() {
 			return copy();
 		}
 		fltArr sliceKeep(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, x);
 		}
 		fltArr sliceRight(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(length() - x);
 		}
 		fltArr sliceEnd(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, length() - x);
 		}
 		fltArr sliceOff(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		fltArr sliceOut(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		float random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		float rand() {
@@ -14165,8 +14602,9 @@ public class KL {
 			return this;
 		}
 		boolean eq(fltArr arrB) {
-			if (not(arrB))
+			if (not(arrB)) {
 				return false;
+			}
 			fltArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
@@ -14178,21 +14616,25 @@ public class KL {
 		}
 		fltArr combine(fltArr... arrays) {
 			fltArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
+			}
 			for (fltArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					continue;
+				}
 				super.addAll(arrB);
 			}
 			return this;
 		}
 		fltArr combine(float[]... arrays) {
 			fltArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
-			for (float[] arrB : arrays)
+			}
+			for (float[] arrB : arrays) {
 				combine(new fltArr(arrB));
+			}
 			return this;
 		}
 		fltArr union(fltArr... arrays) {
@@ -14231,48 +14673,58 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		fltArr intersection(fltArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (fltArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.retainAll(arrB);
 			}
 			return this;
 		}
 		fltArr intersection(float[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (float[] arrB : arrays)
+			}
+			for (float[] arrB : arrays) {
 				intersection(new fltArr(arrB));
+			}
 			return this;
 		}
 		fltArr negativeIntersection(fltArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (fltArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.removeAll(arrB);
 			}
 			return this;
 		}
 		fltArr negativeIntersection(float[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (float[] arrB : arrays)
+			}
+			for (float[] arrB : arrays) {
 				negativeIntersection(new fltArr(arrB));
+			}
 			return this;
 		}
 		fltArr map(float oldVal, float newVal) {
 			int index = super.indexOf(oldVal);
-			if (not(oldVal) || not(newVal) || isNeg(index))
+			if (not(oldVal) || not(newVal) || isNeg(index)) {
 				return this;
+			}
 			super.set(index, newVal);
 			return this;
 		}
@@ -14283,8 +14735,9 @@ public class KL {
 			return (fltArr) super.clone();
 		}
 		fltArr each(Consumer<? super Float> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.forEach(fn);
 			return this;
 		}
@@ -14307,33 +14760,39 @@ public class KL {
 		}
 		dblArr(double... doubles) {
 			super();
-			for (double d : doubles)
+			for (double d : doubles) {
 				super.add(d);
+			}
 		}
 		dblArr pushAt(int i, double... doubles) {
 			if (i >= 0 && i <= super.size() && 0 != len(doubles)) {
-				for (double d : doubles)
+				for (double d : doubles) {
 					super.add(i, d);
+				}
 			}
 			return this;
 		}
 		dblArr pushStart(double... doubles) {
-			if (0 != len(doubles))
+			if (0 != len(doubles)) {
 				pushAt(0, doubles);
+			}
 			return this;
 		}
 		dblArr push(double... doubles) {
-			if (0 != len(doubles))
+			if (0 != len(doubles)) {
 				pushAt(super.size(), doubles);
+			}
 			return this;
 		}
 		dblArr push(double[]... dblArrays) {
 			// this one's for appending entire arrays, for ease of pushing
-			if (not(dblArrays))
+			if (not(dblArrays)) {
 				return this;
+			}
 			for (int i : range(dblArrays)) {
-				if (!KL.isNull(dblArrays[i]))
+				if (!KL.isNull(dblArrays[i])) {
 					pushAt(super.size(), dblArrays[i]);
+				}
 			}
 			return this;
 		}
@@ -14347,15 +14806,17 @@ public class KL {
 			return negativeIntersection(arrays);
 		}
 		double shift() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			double removed = super.get(0);
 			super.remove(0);
 			return removed;
 		}
 		double pop(int... indexes) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			for (int i : indexes) {
 				if (i >= 0 && i < length()) {
 					super.remove(i);
@@ -14365,11 +14826,13 @@ public class KL {
 			return 0;
 		}
 		double pop(double... doubles) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			for (double d : doubles) {
-				if (has(d))
+				if (has(d)) {
 					super.remove(Double.valueOf(d));
+				}
 			}
 			return doubles[0];
 		}
@@ -14398,8 +14861,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Double> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				uniqueSet.add((Double) el);
+			}
 			super.clear();
 			super.addAll(uniqueSet);
 			return this;
@@ -14408,15 +14872,16 @@ public class KL {
 			return super.contains(x);
 		}
 		double i(int i) {
-			if (i >= 0 && i < length())
+			if (i >= 0 && i < length()) {
 				return array()[i];
-			else if (i < 0) {
+			} else if (i < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				i = Pos(i);
-				if (i <= length())
+				if (i <= length()) {
 					return lasti(i);
+				}
 			}
 			return 0;
 		}
@@ -14449,13 +14914,15 @@ public class KL {
 			return nthlast(1);
 		}
 		dblArr update(int i, double x) {
-			if (isNull(i) || isNull(x))
+			if (isNull(i) || isNull(x)) {
 				return this;
-			if (!has(x))
+			}
+			if (!has(x)) {
 				super.add(x);
-			else {
-				if (i < 0 || i >= super.size())
+			} else {
+				if (i < 0 || i >= super.size()) {
 					return this;
+				}
 				super.set(i, x);
 			}
 			return this;
@@ -14465,8 +14932,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Double> set2 = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				set2.add((Double) el);
+			}
 			ArrayList<Double> list = new ArrayList<>(set2);
 			Collections.shuffle(list, new Random(System.nanoTime()));
 			super.clear();
@@ -14478,8 +14946,9 @@ public class KL {
 			return this;
 		}
 		dblArr sort(String condition) {
-			if (not(condition))
+			if (not(condition)) {
 				return this;
+			}
 			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
 				sortReverse();
 			} else {
@@ -14513,8 +14982,9 @@ public class KL {
 		ArrayList<Double> list() {
 			ArrayList<Double> result = new ArrayList<>();
 			dblArr clone = copy();
-			for (int i : range(clone))
+			for (int i : range(clone)) {
 				result.add(clone.i(i));
+			}
 			return result;
 		}
 		String string() {
@@ -14525,46 +14995,54 @@ public class KL {
 		}
 		dblArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
-					|| y <= 0 || y >= length())
+					|| y <= 0 || y >= length()) {
 				return copy();
+			}
 			return new dblArr(KL.slice(array(), x, y));
 		}
 		dblArr slice(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(x, length());
 		}
 		dblArr slice() {
 			return copy();
 		}
 		dblArr sliceKeep(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, x);
 		}
 		dblArr sliceRight(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(length() - x);
 		}
 		dblArr sliceEnd(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, length() - x);
 		}
 		dblArr sliceOff(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		dblArr sliceOut(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		double random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return 0;
+			}
 			return i(randInt(length()));
 		}
 		double rand() {
@@ -14578,8 +15056,9 @@ public class KL {
 			return this;
 		}
 		boolean eq(dblArr arrB) {
-			if (not(arrB))
+			if (not(arrB)) {
 				return false;
+			}
 			dblArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
@@ -14591,21 +15070,25 @@ public class KL {
 		}
 		dblArr combine(dblArr... arrays) {
 			dblArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
+			}
 			for (dblArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					continue;
+				}
 				super.addAll(arrB);
 			}
 			return this;
 		}
 		dblArr combine(double[]... arrays) {
 			dblArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
-			for (double[] arrB : arrays)
+			}
+			for (double[] arrB : arrays) {
 				combine(new dblArr(arrB));
+			}
 			return this;
 		}
 		dblArr union(dblArr... arrays) {
@@ -14644,48 +15127,58 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		dblArr intersection(dblArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (dblArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.retainAll(arrB);
 			}
 			return this;
 		}
 		dblArr intersection(double[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (double[] arrB : arrays)
+			}
+			for (double[] arrB : arrays) {
 				intersection(new dblArr(arrB));
+			}
 			return this;
 		}
 		dblArr negativeIntersection(dblArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (dblArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.removeAll(arrB);
 			}
 			return this;
 		}
 		dblArr negativeIntersection(double[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (double[] arrB : arrays)
+			}
+			for (double[] arrB : arrays) {
 				negativeIntersection(new dblArr(arrB));
+			}
 			return this;
 		}
 		dblArr map(double oldVal, double newVal) {
 			int index = super.indexOf(oldVal);
-			if (not(oldVal) || not(newVal) || isNeg(index))
+			if (not(oldVal) || not(newVal) || isNeg(index)) {
 				return this;
+			}
 			super.set(index, newVal);
 			return this;
 		}
@@ -14696,8 +15189,9 @@ public class KL {
 			return (dblArr) super.clone();
 		}
 		dblArr each(Consumer<? super Double> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.forEach(fn);
 			return this;
 		}
@@ -14720,33 +15214,39 @@ public class KL {
 		}
 		boolArr(boolean... bools) {
 			super();
-			for (boolean b : bools)
+			for (boolean b : bools) {
 				super.add(b);
+			}
 		}
 		boolArr pushAt(int i, boolean... bools) {
 			if (i >= 0 && i <= super.size() && 0 != len(bools)) {
-				for (boolean b : bools)
+				for (boolean b : bools) {
 					super.add(i, b);
+				}
 			}
 			return this;
 		}
 		boolArr pushStart(boolean... bools) {
-			if (0 != len(bools))
+			if (0 != len(bools)) {
 				pushAt(0, bools);
+			}
 			return this;
 		}
 		boolArr push(boolean... bools) {
-			if (0 != len(bools))
+			if (0 != len(bools)) {
 				pushAt(super.size(), bools);
+			}
 			return this;
 		}
 		boolArr push(boolean[]... boolArrays) {
 			// this one's for appending entire arrays, for ease of pushing
-			if (not(boolArrays))
+			if (not(boolArrays)) {
 				return this;
+			}
 			for (int i : range(boolArrays)) {
-				if (!KL.isNull(boolArrays[i]))
+				if (!KL.isNull(boolArrays[i])) {
 					pushAt(super.size(), boolArrays[i]);
+				}
 			}
 			return this;
 		}
@@ -14760,15 +15260,17 @@ public class KL {
 			return negativeIntersection(arrays);
 		}
 		boolean shift() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return false;
+			}
 			boolean removed = super.get(0);
 			super.remove(0);
 			return removed;
 		}
 		boolean pop(int... indexes) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return false;
+			}
 			for (int i : indexes) {
 				if (i >= 0 && i < length()) {
 					super.remove(i);
@@ -14778,11 +15280,13 @@ public class KL {
 			return false;
 		}
 		boolean pop(boolean... bools) {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return false;
+			}
 			for (boolean b : bools) {
-				if (has(b))
+				if (has(b)) {
 					super.remove(Boolean.valueOf(b));
+				}
 			}
 			return bools[0];
 		}
@@ -14811,8 +15315,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Boolean> uniqueSet = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				uniqueSet.add((Boolean) el);
+			}
 			super.clear();
 			super.addAll(uniqueSet);
 			return this;
@@ -14821,15 +15326,16 @@ public class KL {
 			return super.contains(x);
 		}
 		boolean i(int i) {
-			if (i >= 0 && i < length())
+			if (i >= 0 && i < length()) {
 				return array()[i];
-			else if (i < 0) {
+			} else if (i < 0) {
 				// Shorter than 0, huh? Let's posi-tize the number, and see if
 				// it's under the size of the array. If it is, we'll try and
 				// fetch the elements in reverse order
 				i = Pos(i);
-				if (i <= length())
+				if (i <= length()) {
 					return lasti(i);
+				}
 			}
 			return false;
 		}
@@ -14862,13 +15368,15 @@ public class KL {
 			return nthlast(1);
 		}
 		boolArr update(int i, boolean x) {
-			if (isNull(i) || isNull(x))
+			if (isNull(i) || isNull(x)) {
 				return this;
-			if (!has(x))
+			}
+			if (!has(x)) {
 				super.add(x);
-			else {
-				if (i < 0 || i >= super.size())
+			} else {
+				if (i < 0 || i >= super.size()) {
 					return this;
+				}
 				super.set(i, x);
 			}
 			return this;
@@ -14878,8 +15386,9 @@ public class KL {
 			Collection<?> collection = (Collection<?>) obj;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Boolean> set2 = new LinkedHashSet<>();
-			for (Object el : set)
+			for (Object el : set) {
 				set2.add((Boolean) el);
+			}
 			ArrayList<Boolean> list = new ArrayList<>(set2);
 			Collections.shuffle(list, new Random(System.nanoTime()));
 			super.clear();
@@ -14891,8 +15400,9 @@ public class KL {
 			return this;
 		}
 		boolArr sort(String condition) {
-			if (not(condition))
+			if (not(condition)) {
 				return this;
+			}
 			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
 				sortReverse();
 			} else {
@@ -14926,8 +15436,9 @@ public class KL {
 		ArrayList<Boolean> list() {
 			ArrayList<Boolean> result = new ArrayList<>();
 			boolArr clone = copy();
-			for (int i : range(clone))
+			for (int i : range(clone)) {
 				result.add(clone.i(i));
+			}
 			return result;
 		}
 		String string() {
@@ -14938,46 +15449,54 @@ public class KL {
 		}
 		boolArr slice(int x, int y) {
 			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
-					|| y <= 0 || y >= length())
+					|| y <= 0 || y >= length()) {
 				return copy();
+			}
 			return new boolArr(KL.slice(array(), x, y));
 		}
 		boolArr slice(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(x, length());
 		}
 		boolArr slice() {
 			return copy();
 		}
 		boolArr sliceKeep(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, x);
 		}
 		boolArr sliceRight(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(length() - x);
 		}
 		boolArr sliceEnd(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return slice(0, length() - x);
 		}
 		boolArr sliceOff(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		boolArr sliceOut(int x) {
-			if (super.isEmpty() || not(x) || x < 0 || x >= length())
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
 				return copy();
+			}
 			return sliceEnd(x);
 		}
 		boolean random() {
-			if (super.isEmpty())
+			if (super.isEmpty()) {
 				return false;
+			}
 			return i(randInt(length()));
 		}
 		boolean rand() {
@@ -14991,8 +15510,9 @@ public class KL {
 			return this;
 		}
 		boolean eq(boolArr arrB) {
-			if (not(arrB))
+			if (not(arrB)) {
 				return false;
+			}
 			boolArr arrA = copy();
 			arrA.sort();
 			arrB.sort();
@@ -15004,21 +15524,25 @@ public class KL {
 		}
 		boolArr combine(boolArr... arrays) {
 			boolArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
+			}
 			for (boolArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					continue;
+				}
 				super.addAll(arrB);
 			}
 			return this;
 		}
 		boolArr combine(boolean[]... arrays) {
 			boolArr arrA = copy();
-			if (not(arrays))
+			if (not(arrays)) {
 				return arrA;
-			for (boolean[] arrB : arrays)
+			}
+			for (boolean[] arrB : arrays) {
 				combine(new boolArr(arrB));
+			}
 			return this;
 		}
 		boolArr union(boolArr... arrays) {
@@ -15057,48 +15581,58 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length()))
+			if (not(s) || not(length())) {
 				return string();
+			}
 			return KL.join(array(), s);
 		}
 		boolArr intersection(boolArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (boolArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.retainAll(arrB);
 			}
 			return this;
 		}
 		boolArr intersection(boolean[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (boolean[] arrB : arrays)
+			}
+			for (boolean[] arrB : arrays) {
 				intersection(new boolArr(arrB));
+			}
 			return this;
 		}
 		boolArr negativeIntersection(boolArr... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
+			}
 			for (boolArr arrB : arrays) {
-				if (not(arrB))
+				if (not(arrB)) {
 					return this;
+				}
 				super.removeAll(arrB);
 			}
 			return this;
 		}
 		boolArr negativeIntersection(boolean[]... arrays) {
-			if (not(arrays))
+			if (not(arrays)) {
 				return this;
-			for (boolean[] arrB : arrays)
+			}
+			for (boolean[] arrB : arrays) {
 				negativeIntersection(new boolArr(arrB));
+			}
 			return this;
 		}
 		boolArr map(boolean oldVal, boolean newVal) {
 			int index = super.indexOf(oldVal);
-			if (not(oldVal) || not(newVal) || isNeg(index))
+			if (not(oldVal) || not(newVal) || isNeg(index)) {
 				return this;
+			}
 			super.set(index, newVal);
 			return this;
 		}
@@ -15109,8 +15643,9 @@ public class KL {
 			return (boolArr) super.clone();
 		}
 		boolArr each(Consumer<? super Boolean> fn) {
-			if (not(fn))
+			if (not(fn)) {
 				return this;
+			}
 			super.forEach(fn);
 			return this;
 		}
@@ -15128,16 +15663,18 @@ public class KL {
 		return new boolArr(bools);
 	}
 	public static boolean runTask(Runnable fn) {
-		if (not(fn))
+		if (not(fn)) {
 			return false;
+		}
 		new Thread(fn).run();
 		return true;
 	}
 	private static final Map<Integer, Thread> timeoutThreads = new ConcurrentHashMap<>();
 	private static int timeoutId = 0, iterationsDone = 0;
 	public static int setTimeout(Runnable fn, int delay) {
-		if (isNull(fn) || isNull(delay) || isInf(delay) || isNeg(delay))
+		if (isNull(fn) || isNull(delay) || isInf(delay) || isNeg(delay)) {
 			return -1;
+		}
 		timeoutId++;
 		Thread thread = new Thread(() -> {
 			try {
@@ -15168,8 +15705,9 @@ public class KL {
 	private static int intervalId = 0;
 	public static int setInterval(Runnable fn, int interval) {
 		if (isNull(fn) || isNull(interval) || isInf(interval)
-				|| isNeg(interval))
+				|| isNeg(interval)) {
 			return -1;
+		}
 		intervalId++;
 		Thread thread = new Thread(() -> {
 			while (!Thread.currentThread().isInterrupted()) {
@@ -15190,8 +15728,9 @@ public class KL {
 			int maxIterations) {
 		if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval)
 				|| isNull(maxIterations) || isInf(maxIterations)
-				|| isNeg(maxIterations) || not(maxIterations))
+				|| isNeg(maxIterations) || not(maxIterations)) {
 			return -1;
+		}
 		intervalId++;
 		Thread thread = new Thread(() -> {
 			while (!Thread.currentThread().isInterrupted()) {
@@ -15200,8 +15739,9 @@ public class KL {
 						Thread.sleep(
 								interval < 1000 ? interval * 1000 : interval);
 						iterationsDone++;
-					} else
+					} else {
 						clearInterval(intervalId);
+					}
 				} catch (InterruptedException e) {
 					print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a background task.");
 					break;
@@ -15239,10 +15779,11 @@ public class KL {
 				if (in(Str(cond1),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
 					String op = Str(cond1).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond1).split("\\s*[\\&\\|]+\\s*");
 					cond1 = parts[0];
 					cond1B = parts[1];
@@ -15258,161 +15799,186 @@ public class KL {
 					if (eq(cond1, ">")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl > middleware || srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl > middleware || srcDbl >= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl > middleware || srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl > middleware || srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl > middleware || srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond1, ">=")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl >= middleware || srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl >= middleware || srcDbl >= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl >= middleware || srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl >= middleware || srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl >= middleware || srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond1, "<")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl < middleware || srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl < middleware || srcDbl >= middlewareB) {
 
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl < middleware || srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl < middleware || srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl < middleware || srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond1, "<=")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl <= middleware || srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl <= middleware || srcDbl >= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl <= middleware || srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl <= middleware || srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl <= middleware || srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond1, "==")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl == middleware || srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl == middleware || srcDbl >= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl == middleware || srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl == middleware || srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl == middleware || srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
@@ -15421,161 +15987,186 @@ public class KL {
 					if (eq(cond1, ">")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl > middleware && srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl > middleware && srcDbl >= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl > middleware && srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl > middleware && srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl > middleware && srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond1, ">=")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl >= middleware && srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl >= middleware && srcDbl >= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl >= middleware && srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl >= middleware && srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl >= middleware && srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond1, "<")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl < middleware && srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl < middleware && srcDbl >= middlewareB) {
 
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl < middleware && srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl < middleware && srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl < middleware && srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond1, "<=")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl <= middleware && srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl <= middleware && srcDbl >= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl <= middleware && srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl <= middleware && srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl <= middleware && srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond1, "==")) {
 						if (eq(cond1B, ">")) {
 							if (srcDbl == middleware && srcDbl > middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl == middleware && srcDbl >= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl == middleware && srcDbl < middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl == middleware && srcDbl <= middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl == middleware && srcDbl == middlewareB) {
-								if (!isNull(sol1))
+								if (!isNull(sol1)) {
 									new Thread(sol1).run();
+								}
 								return true;
 							}
 						}
@@ -15583,46 +16174,53 @@ public class KL {
 				} else {
 					if (eq(cond1, ">")) {
 						if (srcDbl > middleware) {
-							if (!isNull(sol1))
+							if (!isNull(sol1)) {
 								new Thread(sol1).run();
+							}
 							return true;
 						}
 					} else if (eq(cond1, ">=")) {
 						if (srcDbl >= middleware) {
-							if (!isNull(sol1))
+							if (!isNull(sol1)) {
 								new Thread(sol1).run();
+							}
 							return true;
 						}
 					} else if (eq(cond1, "<")) {
 						if (srcDbl < middleware) {
-							if (!isNull(sol1))
+							if (!isNull(sol1)) {
 								new Thread(sol1).run();
+							}
 							return true;
 						}
 					} else if (eq(cond1, "<=")) {
 						if (srcDbl <= middleware) {
-							if (!isNull(sol1))
+							if (!isNull(sol1)) {
 								new Thread(sol1).run();
+							}
 							return true;
 						}
 					} else if (eq(cond1, "==")) {
 						if (srcDbl == middleware) {
-							if (!isNull(sol1))
+							if (!isNull(sol1)) {
 								new Thread(sol1).run();
+							}
 							return true;
 						}
 					}
 				}
 			} else if (cond1 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond1)))) {
-					if (!isNull(sol1))
+					if (!isNull(sol1)) {
 						new Thread(sol1).run();
+					}
 					return true;
 				}
 			} else if (cond1 instanceof Character) {
 				if (eq((char) src, (char) cond1)) {
-					if (!isNull(sol1))
+					if (!isNull(sol1)) {
 						new Thread(sol1).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond1)) {
@@ -15643,10 +16241,11 @@ public class KL {
 				if (in(Str(cond2),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
 					String op = Str(cond2).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond2).split("\\s*[\\&\\|]+\\s*");
 					cond2 = parts[0];
 					cond2B = parts[1];
@@ -15661,35 +16260,40 @@ public class KL {
 					if (eq(cond2, ">")) {
 						if (eq(cond2B, ">")) {
 							if (srcDbl > middleware2 || srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl > middleware2
 									|| srcDbl >= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl > middleware2 || srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl > middleware2
 									|| srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl > middleware2
 									|| srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
@@ -15697,72 +16301,82 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl >= middleware2
 									|| srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl >= middleware2
 									|| srcDbl >= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl >= middleware2
 									|| srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl >= middleware2
 									|| srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl >= middleware2
 									|| srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond2, "<")) {
 						if (eq(cond2B, ">")) {
 							if (srcDbl < middleware2 || srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl < middleware2
 									|| srcDbl >= middleware2B) {
 
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl < middleware2 || srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl < middleware2
 									|| srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl < middleware2
 									|| srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
@@ -15770,36 +16384,41 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl <= middleware2
 									|| srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl <= middleware2
 									|| srcDbl >= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl <= middleware2
 									|| srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl <= middleware2
 									|| srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl <= middleware2
 									|| srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
@@ -15807,36 +16426,41 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl == middleware2
 									|| srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl == middleware2
 									|| srcDbl >= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl == middleware2
 									|| srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl == middleware2
 									|| srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl == middleware2
 									|| srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
@@ -15845,35 +16469,40 @@ public class KL {
 					if (eq(cond2, ">")) {
 						if (eq(cond2B, ">")) {
 							if (srcDbl > middleware2 && srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl > middleware2
 									&& srcDbl >= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl > middleware2 && srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl > middleware2
 									&& srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl > middleware2
 									&& srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
@@ -15881,72 +16510,82 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl >= middleware2
 									&& srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl >= middleware2
 									&& srcDbl >= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl >= middleware2
 									&& srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl >= middleware2
 									&& srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl >= middleware2
 									&& srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond2, "<")) {
 						if (eq(cond2B, ">")) {
 							if (srcDbl < middleware2 && srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl < middleware2
 									&& srcDbl >= middleware2B) {
 
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl < middleware2 && srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl < middleware2
 									&& srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl < middleware2
 									&& srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
@@ -15954,36 +16593,41 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl <= middleware2
 									&& srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl <= middleware2
 									&& srcDbl >= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl <= middleware2
 									&& srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl <= middleware2
 									&& srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl <= middleware2
 									&& srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
@@ -15991,36 +16635,41 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl == middleware2
 									&& srcDbl > middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
 							if (srcDbl == middleware2
 									&& srcDbl >= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl == middleware2
 									&& srcDbl < middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
 							if (srcDbl == middleware2
 									&& srcDbl <= middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
 							if (srcDbl == middleware2
 									&& srcDbl == middleware2B) {
-								if (!isNull(sol2))
+								if (!isNull(sol2)) {
 									new Thread(sol2).run();
+								}
 								return true;
 							}
 						}
@@ -16028,50 +16677,58 @@ public class KL {
 				} else {
 					if (eq(cond2, ">")) {
 						if (srcDbl > middleware2) {
-							if (!isNull(sol2))
+							if (!isNull(sol2)) {
 								new Thread(sol2).run();
+							}
 							return true;
 						}
 					} else if (eq(cond2, ">=")) {
 						if (srcDbl >= middleware2) {
-							if (!isNull(sol2))
+							if (!isNull(sol2)) {
 								new Thread(sol2).run();
+							}
 							return true;
 						}
 					} else if (eq(cond2, "<")) {
 						if (srcDbl < middleware2) {
-							if (!isNull(sol2))
+							if (!isNull(sol2)) {
 								new Thread(sol2).run();
+							}
 							return true;
 						}
 					} else if (eq(cond2, "<=")) {
 						if (srcDbl <= middleware2) {
-							if (!isNull(sol2))
+							if (!isNull(sol2)) {
 								new Thread(sol2).run();
+							}
 							return true;
 						}
 					} else if (eq(cond2, "==")) {
 						if (srcDbl == middleware2) {
-							if (!isNull(sol2))
+							if (!isNull(sol2)) {
 								new Thread(sol2).run();
+							}
 							return true;
 						}
 					} else if (eq(cond2, "else")) {
-						if (!isNull(sol2))
+						if (!isNull(sol2)) {
 							new Thread(sol2).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond2 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond2)))) {
-					if (!isNull(sol2))
+					if (!isNull(sol2)) {
 						new Thread(sol2).run();
+					}
 					return true;
 				}
 			} else if (cond2 instanceof Character) {
 				if (eq((char) src, (char) cond2)) {
-					if (!isNull(sol2))
+					if (!isNull(sol2)) {
 						new Thread(sol2).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond2)) {
@@ -16092,10 +16749,11 @@ public class KL {
 				if (in(Str(cond3),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond3).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond3).split("\\s*[\\&\\|]+\\s*");
 					cond3 = parts[0];
 					cond3B = parts[1];
@@ -16111,35 +16769,40 @@ public class KL {
 					if (eq(cond3, ">")) {
 						if (eq(cond3B, ">")) {
 							if (srcDbl > middleware3 || srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl > middleware3
 									|| srcDbl >= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl > middleware3 || srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl > middleware3
 									|| srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl > middleware3
 									|| srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
@@ -16147,72 +16810,82 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl >= middleware3
 									|| srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl >= middleware3
 									|| srcDbl >= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl >= middleware3
 									|| srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl >= middleware3
 									|| srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl >= middleware3
 									|| srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond3, "<")) {
 						if (eq(cond3B, ">")) {
 							if (srcDbl < middleware3 || srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl < middleware3
 									|| srcDbl >= middleware3B) {
 
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl < middleware3 || srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl < middleware3
 									|| srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl < middleware3
 									|| srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
@@ -16220,36 +16893,41 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl <= middleware3
 									|| srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl <= middleware3
 									|| srcDbl >= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl <= middleware3
 									|| srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl <= middleware3
 									|| srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl <= middleware3
 									|| srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
@@ -16257,36 +16935,41 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl == middleware3
 									|| srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl == middleware3
 									|| srcDbl >= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl == middleware3
 									|| srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl == middleware3
 									|| srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl == middleware3
 									|| srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
@@ -16295,35 +16978,40 @@ public class KL {
 					if (eq(cond3, ">")) {
 						if (eq(cond3B, ">")) {
 							if (srcDbl > middleware3 && srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl > middleware3
 									&& srcDbl >= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl > middleware3 && srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl > middleware3
 									&& srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl > middleware3
 									&& srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
@@ -16331,72 +17019,82 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl >= middleware3
 									&& srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl >= middleware3
 									&& srcDbl >= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl >= middleware3
 									&& srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl >= middleware3
 									&& srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl >= middleware3
 									&& srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond3, "<")) {
 						if (eq(cond3B, ">")) {
 							if (srcDbl < middleware3 && srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl < middleware3
 									&& srcDbl >= middleware3B) {
 
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl < middleware3 && srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl < middleware3
 									&& srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl < middleware3
 									&& srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
@@ -16404,36 +17102,41 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl <= middleware3
 									&& srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl <= middleware3
 									&& srcDbl >= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl <= middleware3
 									&& srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl <= middleware3
 									&& srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl <= middleware3
 									&& srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
@@ -16441,36 +17144,41 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl == middleware3
 									&& srcDbl > middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
 							if (srcDbl == middleware3
 									&& srcDbl >= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl == middleware3
 									&& srcDbl < middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
 							if (srcDbl == middleware3
 									&& srcDbl <= middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
 							if (srcDbl == middleware3
 									&& srcDbl == middleware3B) {
-								if (!isNull(sol3))
+								if (!isNull(sol3)) {
 									new Thread(sol3).run();
+								}
 								return true;
 							}
 						}
@@ -16478,50 +17186,58 @@ public class KL {
 				} else {
 					if (eq(cond3, ">")) {
 						if (srcDbl > middleware3) {
-							if (!isNull(sol3))
+							if (!isNull(sol3)) {
 								new Thread(sol3).run();
+							}
 							return true;
 						}
 					} else if (eq(cond3, ">=")) {
 						if (srcDbl >= middleware3) {
-							if (!isNull(sol3))
+							if (!isNull(sol3)) {
 								new Thread(sol3).run();
+							}
 							return true;
 						}
 					} else if (eq(cond3, "<")) {
 						if (srcDbl < middleware3) {
-							if (!isNull(sol3))
+							if (!isNull(sol3)) {
 								new Thread(sol3).run();
+							}
 							return true;
 						}
 					} else if (eq(cond3, "<=")) {
 						if (srcDbl <= middleware3) {
-							if (!isNull(sol3))
+							if (!isNull(sol3)) {
 								new Thread(sol3).run();
+							}
 							return true;
 						}
 					} else if (eq(cond3, "==")) {
 						if (srcDbl == middleware3) {
-							if (!isNull(sol3))
+							if (!isNull(sol3)) {
 								new Thread(sol3).run();
+							}
 							return true;
 						}
 					} else if (eq(cond3, "else")) {
-						if (!isNull(sol3))
+						if (!isNull(sol3)) {
 							new Thread(sol3).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond3 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond3)))) {
-					if (!isNull(sol3))
+					if (!isNull(sol3)) {
 						new Thread(sol3).run();
+					}
 					return true;
 				}
 			} else if (cond3 instanceof Character) {
 				if (eq((char) src, (char) cond3)) {
-					if (!isNull(sol3))
+					if (!isNull(sol3)) {
 						new Thread(sol3).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond3)) {
@@ -16546,10 +17262,11 @@ public class KL {
 				if (in(Str(cond4),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond4).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond4).split("\\s*[\\&\\|]+\\s*");
 					cond4 = parts[0];
 					cond4B = parts[1];
@@ -16565,35 +17282,40 @@ public class KL {
 					if (eq(cond4, ">")) {
 						if (eq(cond4B, ">")) {
 							if (srcDbl > middleware4 || srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl > middleware4
 									|| srcDbl >= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl > middleware4 || srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl > middleware4
 									|| srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl > middleware4
 									|| srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
@@ -16601,72 +17323,82 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl >= middleware4
 									|| srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl >= middleware4
 									|| srcDbl >= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl >= middleware4
 									|| srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl >= middleware4
 									|| srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl >= middleware4
 									|| srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond4, "<")) {
 						if (eq(cond4B, ">")) {
 							if (srcDbl < middleware4 || srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl < middleware4
 									|| srcDbl >= middleware4B) {
 
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl < middleware4 || srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl < middleware4
 									|| srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl < middleware4
 									|| srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
@@ -16674,36 +17406,41 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl <= middleware4
 									|| srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl <= middleware4
 									|| srcDbl >= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl <= middleware4
 									|| srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl <= middleware4
 									|| srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl <= middleware4
 									|| srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
@@ -16711,36 +17448,41 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl == middleware4
 									|| srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl == middleware4
 									|| srcDbl >= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl == middleware4
 									|| srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl == middleware4
 									|| srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl == middleware4
 									|| srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
@@ -16749,35 +17491,40 @@ public class KL {
 					if (eq(cond4, ">")) {
 						if (eq(cond4B, ">")) {
 							if (srcDbl > middleware4 && srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl > middleware4
 									&& srcDbl >= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl > middleware4 && srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl > middleware4
 									&& srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl > middleware4
 									&& srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
@@ -16785,72 +17532,82 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl >= middleware4
 									&& srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl >= middleware4
 									&& srcDbl >= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl >= middleware4
 									&& srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl >= middleware4
 									&& srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl >= middleware4
 									&& srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond4, "<")) {
 						if (eq(cond4B, ">")) {
 							if (srcDbl < middleware4 && srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl < middleware4
 									&& srcDbl >= middleware4B) {
 
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl < middleware4 && srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl < middleware4
 									&& srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl < middleware4
 									&& srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
@@ -16858,36 +17615,41 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl <= middleware4
 									&& srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl <= middleware4
 									&& srcDbl >= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl <= middleware4
 									&& srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl <= middleware4
 									&& srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl <= middleware4
 									&& srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
@@ -16895,36 +17657,41 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl == middleware4
 									&& srcDbl > middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
 							if (srcDbl == middleware4
 									&& srcDbl >= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl == middleware4
 									&& srcDbl < middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
 							if (srcDbl == middleware4
 									&& srcDbl <= middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
 							if (srcDbl == middleware4
 									&& srcDbl == middleware4B) {
-								if (!isNull(sol4))
+								if (!isNull(sol4)) {
 									new Thread(sol4).run();
+								}
 								return true;
 							}
 						}
@@ -16932,50 +17699,58 @@ public class KL {
 				} else {
 					if (eq(cond4, ">")) {
 						if (srcDbl > middleware4) {
-							if (!isNull(sol4))
+							if (!isNull(sol4)) {
 								new Thread(sol4).run();
+							}
 							return true;
 						}
 					} else if (eq(cond4, ">=")) {
 						if (srcDbl >= middleware4) {
-							if (!isNull(sol4))
+							if (!isNull(sol4)) {
 								new Thread(sol4).run();
+							}
 							return true;
 						}
 					} else if (eq(cond4, "<")) {
 						if (srcDbl < middleware4) {
-							if (!isNull(sol4))
+							if (!isNull(sol4)) {
 								new Thread(sol4).run();
+							}
 							return true;
 						}
 					} else if (eq(cond4, "<=")) {
 						if (srcDbl <= middleware4) {
-							if (!isNull(sol4))
+							if (!isNull(sol4)) {
 								new Thread(sol4).run();
+							}
 							return true;
 						}
 					} else if (eq(cond4, "==")) {
 						if (srcDbl == middleware4) {
-							if (!isNull(sol4))
+							if (!isNull(sol4)) {
 								new Thread(sol4).run();
+							}
 							return true;
 						}
 					} else if (eq(cond4, "else")) {
-						if (!isNull(sol4))
+						if (!isNull(sol4)) {
 							new Thread(sol4).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond4 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond4)))) {
-					if (!isNull(sol4))
+					if (!isNull(sol4)) {
 						new Thread(sol4).run();
+					}
 					return true;
 				}
 			} else if (cond4 instanceof Character) {
 				if (eq((char) src, (char) cond4)) {
-					if (!isNull(sol4))
+					if (!isNull(sol4)) {
 						new Thread(sol4).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond4)) {
@@ -16996,10 +17771,11 @@ public class KL {
 				if (in(Str(cond5),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond5).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond5).split("\\s*[\\&\\|]+\\s*");
 					cond5 = parts[0];
 					cond5B = parts[1];
@@ -17015,35 +17791,40 @@ public class KL {
 					if (eq(cond5, ">")) {
 						if (eq(cond5B, ">")) {
 							if (srcDbl > middleware5 || srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl > middleware5
 									|| srcDbl >= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl > middleware5 || srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl > middleware5
 									|| srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl > middleware5
 									|| srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
@@ -17051,72 +17832,82 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl >= middleware5
 									|| srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl >= middleware5
 									|| srcDbl >= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl >= middleware5
 									|| srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl >= middleware5
 									|| srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl >= middleware5
 									|| srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond5, "<")) {
 						if (eq(cond5B, ">")) {
 							if (srcDbl < middleware5 || srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl < middleware5
 									|| srcDbl >= middleware5B) {
 
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl < middleware5 || srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl < middleware5
 									|| srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl < middleware5
 									|| srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
@@ -17124,36 +17915,41 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl <= middleware5
 									|| srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl <= middleware5
 									|| srcDbl >= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl <= middleware5
 									|| srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl <= middleware5
 									|| srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl <= middleware5
 									|| srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
@@ -17161,36 +17957,41 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl == middleware5
 									|| srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl == middleware5
 									|| srcDbl >= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl == middleware5
 									|| srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl == middleware5
 									|| srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl == middleware5
 									|| srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
@@ -17199,35 +18000,40 @@ public class KL {
 					if (eq(cond5, ">")) {
 						if (eq(cond5B, ">")) {
 							if (srcDbl > middleware5 && srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl > middleware5
 									&& srcDbl >= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl > middleware5 && srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl > middleware5
 									&& srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl > middleware5
 									&& srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
@@ -17235,72 +18041,82 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl >= middleware5
 									&& srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl >= middleware5
 									&& srcDbl >= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl >= middleware5
 									&& srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl >= middleware5
 									&& srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl >= middleware5
 									&& srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond5, "<")) {
 						if (eq(cond5B, ">")) {
 							if (srcDbl < middleware5 && srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl < middleware5
 									&& srcDbl >= middleware5B) {
 
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl < middleware5 && srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl < middleware5
 									&& srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl < middleware5
 									&& srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
@@ -17308,36 +18124,41 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl <= middleware5
 									&& srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl <= middleware5
 									&& srcDbl >= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl <= middleware5
 									&& srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl <= middleware5
 									&& srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl <= middleware5
 									&& srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
@@ -17345,36 +18166,41 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl == middleware5
 									&& srcDbl > middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
 							if (srcDbl == middleware5
 									&& srcDbl >= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl == middleware5
 									&& srcDbl < middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
 							if (srcDbl == middleware5
 									&& srcDbl <= middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
 							if (srcDbl == middleware5
 									&& srcDbl == middleware5B) {
-								if (!isNull(sol5))
+								if (!isNull(sol5)) {
 									new Thread(sol5).run();
+								}
 								return true;
 							}
 						}
@@ -17382,50 +18208,58 @@ public class KL {
 				} else {
 					if (eq(cond5, ">")) {
 						if (srcDbl > middleware5) {
-							if (!isNull(sol5))
+							if (!isNull(sol5)) {
 								new Thread(sol5).run();
+							}
 							return true;
 						}
 					} else if (eq(cond5, ">=")) {
 						if (srcDbl >= middleware5) {
-							if (!isNull(sol5))
+							if (!isNull(sol5)) {
 								new Thread(sol5).run();
+							}
 							return true;
 						}
 					} else if (eq(cond5, "<")) {
 						if (srcDbl < middleware5) {
-							if (!isNull(sol5))
+							if (!isNull(sol5)) {
 								new Thread(sol5).run();
+							}
 							return true;
 						}
 					} else if (eq(cond5, "<=")) {
 						if (srcDbl <= middleware5) {
-							if (!isNull(sol5))
+							if (!isNull(sol5)) {
 								new Thread(sol5).run();
+							}
 							return true;
 						}
 					} else if (eq(cond5, "==")) {
 						if (srcDbl == middleware5) {
-							if (!isNull(sol5))
+							if (!isNull(sol5)) {
 								new Thread(sol5).run();
+							}
 							return true;
 						}
 					} else if (eq(cond5, "else")) {
-						if (!isNull(sol5))
+						if (!isNull(sol5)) {
 							new Thread(sol5).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond5 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond5)))) {
-					if (!isNull(sol5))
+					if (!isNull(sol5)) {
 						new Thread(sol5).run();
+					}
 					return true;
 				}
 			} else if (cond5 instanceof Character) {
 				if (eq((char) src, (char) cond5)) {
-					if (!isNull(sol5))
+					if (!isNull(sol5)) {
 						new Thread(sol5).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond5)) {
@@ -17446,10 +18280,11 @@ public class KL {
 				if (in(Str(cond6),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond6).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond6).split("\\s*[\\&\\|]+\\s*");
 					cond6 = parts[0];
 					cond6B = parts[1];
@@ -17465,35 +18300,40 @@ public class KL {
 					if (eq(cond6, ">")) {
 						if (eq(cond6B, ">")) {
 							if (srcDbl > middleware6 || srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl > middleware6
 									|| srcDbl >= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl > middleware6 || srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl > middleware6
 									|| srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl > middleware6
 									|| srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
@@ -17501,72 +18341,82 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl >= middleware6
 									|| srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl >= middleware6
 									|| srcDbl >= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl >= middleware6
 									|| srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl >= middleware6
 									|| srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl >= middleware6
 									|| srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond6, "<")) {
 						if (eq(cond6B, ">")) {
 							if (srcDbl < middleware6 || srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl < middleware6
 									|| srcDbl >= middleware6B) {
 
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl < middleware6 || srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl < middleware6
 									|| srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl < middleware6
 									|| srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
@@ -17574,36 +18424,41 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl <= middleware6
 									|| srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl <= middleware6
 									|| srcDbl >= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl <= middleware6
 									|| srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl <= middleware6
 									|| srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl <= middleware6
 									|| srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
@@ -17611,36 +18466,41 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl == middleware6
 									|| srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl == middleware6
 									|| srcDbl >= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl == middleware6
 									|| srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl == middleware6
 									|| srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl == middleware6
 									|| srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
@@ -17649,35 +18509,40 @@ public class KL {
 					if (eq(cond6, ">")) {
 						if (eq(cond6B, ">")) {
 							if (srcDbl > middleware6 && srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl > middleware6
 									&& srcDbl >= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl > middleware6 && srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl > middleware6
 									&& srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl > middleware6
 									&& srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
@@ -17685,72 +18550,82 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl >= middleware6
 									&& srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl >= middleware6
 									&& srcDbl >= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl >= middleware6
 									&& srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl >= middleware6
 									&& srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl >= middleware6
 									&& srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond6, "<")) {
 						if (eq(cond6B, ">")) {
 							if (srcDbl < middleware6 && srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl < middleware6
 									&& srcDbl >= middleware6B) {
 
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl < middleware6 && srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl < middleware6
 									&& srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl < middleware6
 									&& srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
@@ -17758,36 +18633,41 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl <= middleware6
 									&& srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl <= middleware6
 									&& srcDbl >= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl <= middleware6
 									&& srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl <= middleware6
 									&& srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl <= middleware6
 									&& srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
@@ -17795,36 +18675,41 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl == middleware6
 									&& srcDbl > middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
 							if (srcDbl == middleware6
 									&& srcDbl >= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl == middleware6
 									&& srcDbl < middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
 							if (srcDbl == middleware6
 									&& srcDbl <= middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
 							if (srcDbl == middleware6
 									&& srcDbl == middleware6B) {
-								if (!isNull(sol6))
+								if (!isNull(sol6)) {
 									new Thread(sol6).run();
+								}
 								return true;
 							}
 						}
@@ -17832,50 +18717,58 @@ public class KL {
 				} else {
 					if (eq(cond6, ">")) {
 						if (srcDbl > middleware6) {
-							if (!isNull(sol6))
+							if (!isNull(sol6)) {
 								new Thread(sol6).run();
+							}
 							return true;
 						}
 					} else if (eq(cond6, ">=")) {
 						if (srcDbl >= middleware6) {
-							if (!isNull(sol6))
+							if (!isNull(sol6)) {
 								new Thread(sol6).run();
+							}
 							return true;
 						}
 					} else if (eq(cond6, "<")) {
 						if (srcDbl < middleware6) {
-							if (!isNull(sol6))
+							if (!isNull(sol6)) {
 								new Thread(sol6).run();
+							}
 							return true;
 						}
 					} else if (eq(cond6, "<=")) {
 						if (srcDbl <= middleware6) {
-							if (!isNull(sol6))
+							if (!isNull(sol6)) {
 								new Thread(sol6).run();
+							}
 							return true;
 						}
 					} else if (eq(cond6, "==")) {
 						if (srcDbl == middleware6) {
-							if (!isNull(sol6))
+							if (!isNull(sol6)) {
 								new Thread(sol6).run();
+							}
 							return true;
 						}
 					} else if (eq(cond6, "else")) {
-						if (!isNull(sol6))
+						if (!isNull(sol6)) {
 							new Thread(sol6).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond6 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond6)))) {
-					if (!isNull(sol6))
+					if (!isNull(sol6)) {
 						new Thread(sol6).run();
+					}
 					return true;
 				}
 			} else if (cond6 instanceof Character) {
 				if (eq((char) src, (char) cond6)) {
-					if (!isNull(sol6))
+					if (!isNull(sol6)) {
 						new Thread(sol6).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond6)) {
@@ -17896,10 +18789,11 @@ public class KL {
 				if (in(Str(cond7),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond7).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond7).split("\\s*[\\&\\|]+\\s*");
 					cond7 = parts[0];
 					cond7B = parts[1];
@@ -17915,35 +18809,40 @@ public class KL {
 					if (eq(cond7, ">")) {
 						if (eq(cond7B, ">")) {
 							if (srcDbl > middleware7 || srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl > middleware7
 									|| srcDbl >= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl > middleware7 || srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl > middleware7
 									|| srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl > middleware7
 									|| srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
@@ -17951,72 +18850,82 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl >= middleware7
 									|| srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl >= middleware7
 									|| srcDbl >= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl >= middleware7
 									|| srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl >= middleware7
 									|| srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl >= middleware7
 									|| srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond7, "<")) {
 						if (eq(cond7B, ">")) {
 							if (srcDbl < middleware7 || srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl < middleware7
 									|| srcDbl >= middleware7B) {
 
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl < middleware7 || srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl < middleware7
 									|| srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl < middleware7
 									|| srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
@@ -18024,36 +18933,41 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl <= middleware7
 									|| srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl <= middleware7
 									|| srcDbl >= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl <= middleware7
 									|| srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl <= middleware7
 									|| srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl <= middleware7
 									|| srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
@@ -18061,36 +18975,41 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl == middleware7
 									|| srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl == middleware7
 									|| srcDbl >= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl == middleware7
 									|| srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl == middleware7
 									|| srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl == middleware7
 									|| srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
@@ -18099,35 +19018,40 @@ public class KL {
 					if (eq(cond7, ">")) {
 						if (eq(cond7B, ">")) {
 							if (srcDbl > middleware7 && srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl > middleware7
 									&& srcDbl >= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl > middleware7 && srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl > middleware7
 									&& srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl > middleware7
 									&& srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
@@ -18135,72 +19059,82 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl >= middleware7
 									&& srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl >= middleware7
 									&& srcDbl >= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl >= middleware7
 									&& srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl >= middleware7
 									&& srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl >= middleware7
 									&& srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond7, "<")) {
 						if (eq(cond7B, ">")) {
 							if (srcDbl < middleware7 && srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl < middleware7
 									&& srcDbl >= middleware7B) {
 
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl < middleware7 && srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl < middleware7
 									&& srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl < middleware7
 									&& srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
@@ -18208,36 +19142,41 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl <= middleware7
 									&& srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl <= middleware7
 									&& srcDbl >= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl <= middleware7
 									&& srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl <= middleware7
 									&& srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl <= middleware7
 									&& srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
@@ -18245,36 +19184,41 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl == middleware7
 									&& srcDbl > middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
 							if (srcDbl == middleware7
 									&& srcDbl >= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl == middleware7
 									&& srcDbl < middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
 							if (srcDbl == middleware7
 									&& srcDbl <= middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
 							if (srcDbl == middleware7
 									&& srcDbl == middleware7B) {
-								if (!isNull(sol7))
+								if (!isNull(sol7)) {
 									new Thread(sol7).run();
+								}
 								return true;
 							}
 						}
@@ -18282,50 +19226,58 @@ public class KL {
 				} else {
 					if (eq(cond7, ">")) {
 						if (srcDbl > middleware7) {
-							if (!isNull(sol7))
+							if (!isNull(sol7)) {
 								new Thread(sol7).run();
+							}
 							return true;
 						}
 					} else if (eq(cond7, ">=")) {
 						if (srcDbl >= middleware7) {
-							if (!isNull(sol7))
+							if (!isNull(sol7)) {
 								new Thread(sol7).run();
+							}
 							return true;
 						}
 					} else if (eq(cond7, "<")) {
 						if (srcDbl < middleware7) {
-							if (!isNull(sol7))
+							if (!isNull(sol7)) {
 								new Thread(sol7).run();
+							}
 							return true;
 						}
 					} else if (eq(cond7, "<=")) {
 						if (srcDbl <= middleware7) {
-							if (!isNull(sol7))
+							if (!isNull(sol7)) {
 								new Thread(sol7).run();
+							}
 							return true;
 						}
 					} else if (eq(cond7, "==")) {
 						if (srcDbl == middleware7) {
-							if (!isNull(sol7))
+							if (!isNull(sol7)) {
 								new Thread(sol7).run();
+							}
 							return true;
 						}
 					} else if (eq(cond7, "else")) {
-						if (!isNull(sol7))
+						if (!isNull(sol7)) {
 							new Thread(sol7).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond7 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond7)))) {
-					if (!isNull(sol7))
+					if (!isNull(sol7)) {
 						new Thread(sol7).run();
+					}
 					return true;
 				}
 			} else if (cond7 instanceof Character) {
 				if (eq((char) src, (char) cond7)) {
-					if (!isNull(sol7))
+					if (!isNull(sol7)) {
 						new Thread(sol7).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond7)) {
@@ -18346,10 +19298,11 @@ public class KL {
 				if (in(Str(cond8),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond8).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond8).split("\\s*[\\&\\|]+\\s*");
 					cond8 = parts[0];
 					cond8B = parts[1];
@@ -18365,35 +19318,40 @@ public class KL {
 					if (eq(cond8, ">")) {
 						if (eq(cond8B, ">")) {
 							if (srcDbl > middleware8 || srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl > middleware8
 									|| srcDbl >= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl > middleware8 || srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl > middleware8
 									|| srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl > middleware8
 									|| srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
@@ -18401,72 +19359,82 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl >= middleware8
 									|| srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl >= middleware8
 									|| srcDbl >= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl >= middleware8
 									|| srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl >= middleware8
 									|| srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl >= middleware8
 									|| srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond8, "<")) {
 						if (eq(cond8B, ">")) {
 							if (srcDbl < middleware8 || srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl < middleware8
 									|| srcDbl >= middleware8B) {
 
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl < middleware8 || srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl < middleware8
 									|| srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl < middleware8
 									|| srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
@@ -18474,36 +19442,41 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl <= middleware8
 									|| srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl <= middleware8
 									|| srcDbl >= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl <= middleware8
 									|| srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl <= middleware8
 									|| srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl <= middleware8
 									|| srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
@@ -18511,36 +19484,41 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl == middleware8
 									|| srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl == middleware8
 									|| srcDbl >= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl == middleware8
 									|| srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl == middleware8
 									|| srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl == middleware8
 									|| srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
@@ -18549,35 +19527,40 @@ public class KL {
 					if (eq(cond8, ">")) {
 						if (eq(cond8B, ">")) {
 							if (srcDbl > middleware8 && srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl > middleware8
 									&& srcDbl >= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl > middleware8 && srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl > middleware8
 									&& srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl > middleware8
 									&& srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
@@ -18585,72 +19568,82 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl >= middleware8
 									&& srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl >= middleware8
 									&& srcDbl >= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl >= middleware8
 									&& srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl >= middleware8
 									&& srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl >= middleware8
 									&& srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond8, "<")) {
 						if (eq(cond8B, ">")) {
 							if (srcDbl < middleware8 && srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl < middleware8
 									&& srcDbl >= middleware8B) {
 
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl < middleware8 && srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl < middleware8
 									&& srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl < middleware8
 									&& srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
@@ -18658,36 +19651,41 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl <= middleware8
 									&& srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl <= middleware8
 									&& srcDbl >= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl <= middleware8
 									&& srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl <= middleware8
 									&& srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl <= middleware8
 									&& srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
@@ -18695,36 +19693,41 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl == middleware8
 									&& srcDbl > middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
 							if (srcDbl == middleware8
 									&& srcDbl >= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl == middleware8
 									&& srcDbl < middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
 							if (srcDbl == middleware8
 									&& srcDbl <= middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
 							if (srcDbl == middleware8
 									&& srcDbl == middleware8B) {
-								if (!isNull(sol8))
+								if (!isNull(sol8)) {
 									new Thread(sol8).run();
+								}
 								return true;
 							}
 						}
@@ -18732,50 +19735,58 @@ public class KL {
 				} else {
 					if (eq(cond8, ">")) {
 						if (srcDbl > middleware8) {
-							if (!isNull(sol8))
+							if (!isNull(sol8)) {
 								new Thread(sol8).run();
+							}
 							return true;
 						}
 					} else if (eq(cond8, ">=")) {
 						if (srcDbl >= middleware8) {
-							if (!isNull(sol8))
+							if (!isNull(sol8)) {
 								new Thread(sol8).run();
+							}
 							return true;
 						}
 					} else if (eq(cond8, "<")) {
 						if (srcDbl < middleware8) {
-							if (!isNull(sol8))
+							if (!isNull(sol8)) {
 								new Thread(sol8).run();
+							}
 							return true;
 						}
 					} else if (eq(cond8, "<=")) {
 						if (srcDbl <= middleware8) {
-							if (!isNull(sol8))
+							if (!isNull(sol8)) {
 								new Thread(sol8).run();
+							}
 							return true;
 						}
 					} else if (eq(cond8, "==")) {
 						if (srcDbl == middleware8) {
-							if (!isNull(sol8))
+							if (!isNull(sol8)) {
 								new Thread(sol8).run();
+							}
 							return true;
 						}
 					} else if (eq(cond8, "else")) {
-						if (!isNull(sol8))
+						if (!isNull(sol8)) {
 							new Thread(sol8).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond8 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond8)))) {
-					if (!isNull(sol8))
+					if (!isNull(sol8)) {
 						new Thread(sol8).run();
+					}
 					return true;
 				}
 			} else if (cond8 instanceof Character) {
 				if (eq((char) src, (char) cond8)) {
-					if (!isNull(sol8))
+					if (!isNull(sol8)) {
 						new Thread(sol8).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond8)) {
@@ -18796,10 +19807,11 @@ public class KL {
 				if (in(Str(cond9),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond9).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond9).split("\\s*[\\&\\|]+\\s*");
 					cond9 = parts[0];
 					cond9B = parts[1];
@@ -18815,35 +19827,40 @@ public class KL {
 					if (eq(cond9, ">")) {
 						if (eq(cond9B, ">")) {
 							if (srcDbl > middleware9 || srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl > middleware9
 									|| srcDbl >= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl > middleware9 || srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl > middleware9
 									|| srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl > middleware9
 									|| srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
@@ -18851,72 +19868,82 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl >= middleware9
 									|| srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl >= middleware9
 									|| srcDbl >= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl >= middleware9
 									|| srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl >= middleware9
 									|| srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl >= middleware9
 									|| srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond9, "<")) {
 						if (eq(cond9B, ">")) {
 							if (srcDbl < middleware9 || srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl < middleware9
 									|| srcDbl >= middleware9B) {
 
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl < middleware9 || srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl < middleware9
 									|| srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl < middleware9
 									|| srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
@@ -18924,36 +19951,41 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl <= middleware9
 									|| srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl <= middleware9
 									|| srcDbl >= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl <= middleware9
 									|| srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl <= middleware9
 									|| srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl <= middleware9
 									|| srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
@@ -18961,36 +19993,41 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl == middleware9
 									|| srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl == middleware9
 									|| srcDbl >= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl == middleware9
 									|| srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl == middleware9
 									|| srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl == middleware9
 									|| srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
@@ -18999,35 +20036,40 @@ public class KL {
 					if (eq(cond9, ">")) {
 						if (eq(cond9B, ">")) {
 							if (srcDbl > middleware9 && srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl > middleware9
 									&& srcDbl >= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl > middleware9 && srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl > middleware9
 									&& srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl > middleware9
 									&& srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
@@ -19035,72 +20077,82 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl >= middleware9
 									&& srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl >= middleware9
 									&& srcDbl >= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl >= middleware9
 									&& srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl >= middleware9
 									&& srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl >= middleware9
 									&& srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
 					} else if (eq(cond9, "<")) {
 						if (eq(cond9B, ">")) {
 							if (srcDbl < middleware9 && srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl < middleware9
 									&& srcDbl >= middleware9B) {
 
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl < middleware9 && srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl < middleware9
 									&& srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl < middleware9
 									&& srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
@@ -19108,36 +20160,41 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl <= middleware9
 									&& srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl <= middleware9
 									&& srcDbl >= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl <= middleware9
 									&& srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl <= middleware9
 									&& srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl <= middleware9
 									&& srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
@@ -19145,36 +20202,41 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl == middleware9
 									&& srcDbl > middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
 							if (srcDbl == middleware9
 									&& srcDbl >= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl == middleware9
 									&& srcDbl < middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
 							if (srcDbl == middleware9
 									&& srcDbl <= middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
 							if (srcDbl == middleware9
 									&& srcDbl == middleware9B) {
-								if (!isNull(sol9))
+								if (!isNull(sol9)) {
 									new Thread(sol9).run();
+								}
 								return true;
 							}
 						}
@@ -19182,50 +20244,58 @@ public class KL {
 				} else {
 					if (eq(cond9, ">")) {
 						if (srcDbl > middleware9) {
-							if (!isNull(sol9))
+							if (!isNull(sol9)) {
 								new Thread(sol9).run();
+							}
 							return true;
 						}
 					} else if (eq(cond9, ">=")) {
 						if (srcDbl >= middleware9) {
-							if (!isNull(sol9))
+							if (!isNull(sol9)) {
 								new Thread(sol9).run();
+							}
 							return true;
 						}
 					} else if (eq(cond9, "<")) {
 						if (srcDbl < middleware9) {
-							if (!isNull(sol9))
+							if (!isNull(sol9)) {
 								new Thread(sol9).run();
+							}
 							return true;
 						}
 					} else if (eq(cond9, "<=")) {
 						if (srcDbl <= middleware9) {
-							if (!isNull(sol9))
+							if (!isNull(sol9)) {
 								new Thread(sol9).run();
+							}
 							return true;
 						}
 					} else if (eq(cond9, "==")) {
 						if (srcDbl == middleware9) {
-							if (!isNull(sol9))
+							if (!isNull(sol9)) {
 								new Thread(sol9).run();
+							}
 							return true;
 						}
 					} else if (eq(cond9, "else")) {
-						if (!isNull(sol9))
+						if (!isNull(sol9)) {
 							new Thread(sol9).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond9 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond9)))) {
-					if (!isNull(sol9))
+					if (!isNull(sol9)) {
 						new Thread(sol9).run();
+					}
 					return true;
 				}
 			} else if (cond9 instanceof Character) {
 				if (eq((char) src, (char) cond9)) {
-					if (!isNull(sol9))
+					if (!isNull(sol9)) {
 						new Thread(sol9).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond9)) {
@@ -19246,10 +20316,11 @@ public class KL {
 				if (in(Str(cond10),
 						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond10).replaceAll("[^\\&\\|]", "");
-					if (in(op.replaceAll("[\\&]", ""), "\\|"))
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
-					else
+					} else {
 						both = true;
+					}
 					String[] parts = Str(cond10).split("\\s*[\\&\\|]+\\s*");
 					cond10 = parts[0];
 					cond10B = parts[1];
@@ -19266,36 +20337,41 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl > middleware10
 									|| srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl > middleware10
 									|| srcDbl >= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl > middleware10
 									|| srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl > middleware10
 									|| srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl > middleware10
 									|| srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19303,37 +20379,42 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl >= middleware10
 									|| srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl >= middleware10
 									|| srcDbl >= middleware10B) {
 
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl >= middleware10
 									|| srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl >= middleware10
 									|| srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl >= middleware10
 									|| srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19341,37 +20422,42 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl < middleware10
 									|| srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl < middleware10
 									|| srcDbl >= middleware10B) {
 
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl < middleware10
 									|| srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl < middleware10
 									|| srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl < middleware10
 									|| srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19379,37 +20465,42 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl <= middleware10
 									|| srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl <= middleware10
 									|| srcDbl >= middleware10B) {
 
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl <= middleware10
 									|| srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl <= middleware10
 									|| srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl <= middleware10
 									|| srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19417,37 +20508,42 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl == middleware10
 									|| srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl == middleware10
 									|| srcDbl >= middleware10B) {
 
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl == middleware10
 									|| srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl == middleware10
 									|| srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl == middleware10
 									|| srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19457,36 +20553,41 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl > middleware10
 									&& srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl > middleware10
 									&& srcDbl >= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl > middleware10
 									&& srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl > middleware10
 									&& srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl > middleware10
 									&& srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19494,36 +20595,41 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl >= middleware10
 									&& srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl >= middleware10
 									&& srcDbl >= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl >= middleware10
 									&& srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl >= middleware10
 									&& srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl >= middleware10
 									&& srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19531,37 +20637,42 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl < middleware10
 									&& srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl < middleware10
 									&& srcDbl >= middleware10B) {
 
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl < middleware10
 									&& srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl < middleware10
 									&& srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl < middleware10
 									&& srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19569,36 +20680,41 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl <= middleware10
 									&& srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl <= middleware10
 									&& srcDbl >= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl <= middleware10
 									&& srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl <= middleware10
 									&& srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl <= middleware10
 									&& srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19606,36 +20722,41 @@ public class KL {
 						if (eq(cond10B, ">")) {
 							if (srcDbl == middleware10
 									&& srcDbl > middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
 							if (srcDbl == middleware10
 									&& srcDbl >= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
 							if (srcDbl == middleware10
 									&& srcDbl < middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
 							if (srcDbl == middleware10
 									&& srcDbl <= middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
 							if (srcDbl == middleware10
 									&& srcDbl == middleware10B) {
-								if (!isNull(sol10))
+								if (!isNull(sol10)) {
 									new Thread(sol10).run();
+								}
 								return true;
 							}
 						}
@@ -19643,50 +20764,58 @@ public class KL {
 				} else {
 					if (eq(cond10, ">")) {
 						if (srcDbl > middleware10) {
-							if (!isNull(sol10))
+							if (!isNull(sol10)) {
 								new Thread(sol10).run();
+							}
 							return true;
 						}
 					} else if (eq(cond10, ">=")) {
 						if (srcDbl >= middleware10) {
-							if (!isNull(sol10))
+							if (!isNull(sol10)) {
 								new Thread(sol10).run();
+							}
 							return true;
 						}
 					} else if (eq(cond10, "<")) {
 						if (srcDbl < middleware10) {
-							if (!isNull(sol10))
+							if (!isNull(sol10)) {
 								new Thread(sol10).run();
+							}
 							return true;
 						}
 					} else if (eq(cond10, "<=")) {
 						if (srcDbl <= middleware10) {
-							if (!isNull(sol10))
+							if (!isNull(sol10)) {
 								new Thread(sol10).run();
+							}
 							return true;
 						}
 					} else if (eq(cond10, "==")) {
 						if (srcDbl == middleware10) {
-							if (!isNull(sol10))
+							if (!isNull(sol10)) {
 								new Thread(sol10).run();
+							}
 							return true;
 						}
 					} else if (eq(cond10, "else")) {
-						if (!isNull(sol10))
+						if (!isNull(sol10)) {
 							new Thread(sol10).run();
+						}
 						return false;
 					}
 				}
 			} else if (cond10 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond10)))) {
-					if (!isNull(sol10))
+					if (!isNull(sol10)) {
 						new Thread(sol10).run();
+					}
 					return true;
 				}
 			} else if (cond10 instanceof Character) {
 				if (eq((char) src, (char) cond10)) {
-					if (!isNull(sol10))
+					if (!isNull(sol10)) {
 						new Thread(sol10).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond10)) {
@@ -19700,8 +20829,9 @@ public class KL {
 		} else if (src instanceof String) {
 			if (cond1 instanceof String) {
 				if (eq((String) src, (String) cond1)) {
-					if (!isNull(sol1))
+					if (!isNull(sol1)) {
 						new Thread(sol1).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond1)) {
@@ -19714,12 +20844,14 @@ public class KL {
 			}
 			if (cond2 instanceof String) {
 				if (eq((String) src, (String) cond2)) {
-					if (!isNull(sol2))
+					if (!isNull(sol2)) {
 						new Thread(sol2).run();
+					}
 					return true;
 				} else if (eq((String) cond2, "else")) {
-					if (!isNull(sol2))
+					if (!isNull(sol2)) {
 						new Thread(sol2).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond2)) {
@@ -19732,12 +20864,14 @@ public class KL {
 			}
 			if (cond3 instanceof String) {
 				if (eq((String) src, (String) cond3)) {
-					if (!isNull(sol3))
+					if (!isNull(sol3)) {
 						new Thread(sol3).run();
+					}
 					return true;
 				} else if (eq((String) cond3, "else")) {
-					if (!isNull(sol3))
+					if (!isNull(sol3)) {
 						new Thread(sol3).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond3)) {
@@ -19750,12 +20884,14 @@ public class KL {
 			}
 			if (cond4 instanceof String) {
 				if (eq((String) src, (String) cond4)) {
-					if (!isNull(sol4))
+					if (!isNull(sol4)) {
 						new Thread(sol4).run();
+					}
 					return true;
 				} else if (eq((String) cond4, "else")) {
-					if (!isNull(sol4))
+					if (!isNull(sol4)) {
 						new Thread(sol4).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond4)) {
@@ -19768,12 +20904,14 @@ public class KL {
 			}
 			if (cond5 instanceof String) {
 				if (eq((String) src, (String) cond5)) {
-					if (!isNull(sol5))
+					if (!isNull(sol5)) {
 						new Thread(sol5).run();
+					}
 					return true;
 				} else if (eq((String) cond5, "else")) {
-					if (!isNull(sol5))
+					if (!isNull(sol5)) {
 						new Thread(sol5).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond5)) {
@@ -19786,12 +20924,14 @@ public class KL {
 			}
 			if (cond6 instanceof String) {
 				if (eq((String) src, (String) cond6)) {
-					if (!isNull(sol6))
+					if (!isNull(sol6)) {
 						new Thread(sol6).run();
+					}
 					return true;
 				} else if (eq((String) cond6, "else")) {
-					if (!isNull(sol6))
+					if (!isNull(sol6)) {
 						new Thread(sol6).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond6)) {
@@ -19804,12 +20944,14 @@ public class KL {
 			}
 			if (cond7 instanceof String) {
 				if (eq((String) src, (String) cond7)) {
-					if (!isNull(sol7))
+					if (!isNull(sol7)) {
 						new Thread(sol7).run();
+					}
 					return true;
 				} else if (eq((String) cond7, "else")) {
-					if (!isNull(sol7))
+					if (!isNull(sol7)) {
 						new Thread(sol7).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond7)) {
@@ -19822,12 +20964,14 @@ public class KL {
 			}
 			if (cond8 instanceof String) {
 				if (eq((String) src, (String) cond8)) {
-					if (!isNull(sol8))
+					if (!isNull(sol8)) {
 						new Thread(sol8).run();
+					}
 					return true;
 				} else if (eq((String) cond8, "else")) {
-					if (!isNull(sol8))
+					if (!isNull(sol8)) {
 						new Thread(sol8).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond8)) {
@@ -19840,12 +20984,14 @@ public class KL {
 			}
 			if (cond9 instanceof String) {
 				if (eq((String) src, (String) cond9)) {
-					if (!isNull(sol9))
+					if (!isNull(sol9)) {
 						new Thread(sol9).run();
+					}
 					return true;
 				} else if (eq((String) cond9, "else")) {
-					if (!isNull(sol9))
+					if (!isNull(sol9)) {
 						new Thread(sol9).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond9)) {
@@ -19858,12 +21004,14 @@ public class KL {
 			}
 			if (cond10 instanceof String) {
 				if (eq((String) src, (String) cond10)) {
-					if (!isNull(sol10))
+					if (!isNull(sol10)) {
 						new Thread(sol10).run();
+					}
 					return true;
 				} else if (eq((String) cond10, "else")) {
-					if (!isNull(sol10))
+					if (!isNull(sol10)) {
 						new Thread(sol10).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond10)) {
@@ -19877,8 +21025,9 @@ public class KL {
 		} else if (src instanceof Boolean) {
 			if (cond1 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond1)) {
-					if (!isNull(sol1))
+					if (!isNull(sol1)) {
 						new Thread(sol1).run();
+					}
 					return true;
 				}
 			} else if (isNull(cond1)) {
@@ -19891,15 +21040,17 @@ public class KL {
 			}
 			if (cond2 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond2)) {
-					if (!isNull(sol2))
+					if (!isNull(sol2)) {
 						new Thread(sol2).run();
+					}
 					return true;
 				}
 			} else if (cond2 instanceof String) {
 				cond2 = Str(cond2).replaceAll("[^else]", "");
 				if (eq(cond2, "else")) {
-					if (!isNull(sol2))
+					if (!isNull(sol2)) {
 						new Thread(sol2).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond2)) {
@@ -19912,15 +21063,17 @@ public class KL {
 			}
 			if (cond3 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond3)) {
-					if (!isNull(sol3))
+					if (!isNull(sol3)) {
 						new Thread(sol3).run();
+					}
 					return true;
 				}
 			} else if (cond3 instanceof String) {
 				cond3 = Str(cond3).replaceAll("[^else]", "");
 				if (eq(cond3, "else")) {
-					if (!isNull(sol3))
+					if (!isNull(sol3)) {
 						new Thread(sol3).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond3)) {
@@ -19933,15 +21086,17 @@ public class KL {
 			}
 			if (cond4 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond4)) {
-					if (!isNull(sol4))
+					if (!isNull(sol4)) {
 						new Thread(sol4).run();
+					}
 					return true;
 				}
 			} else if (cond4 instanceof String) {
 				cond4 = Str(cond4).replaceAll("[^else]", "");
 				if (eq(cond4, "else")) {
-					if (!isNull(sol4))
+					if (!isNull(sol4)) {
 						new Thread(sol4).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond4)) {
@@ -19954,15 +21109,17 @@ public class KL {
 			}
 			if (cond5 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond5)) {
-					if (!isNull(sol5))
+					if (!isNull(sol5)) {
 						new Thread(sol5).run();
+					}
 					return true;
 				}
 			} else if (cond5 instanceof String) {
 				cond5 = Str(cond5).replaceAll("[^else]", "");
 				if (eq(cond5, "else")) {
-					if (!isNull(sol5))
+					if (!isNull(sol5)) {
 						new Thread(sol5).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond5)) {
@@ -19975,15 +21132,17 @@ public class KL {
 			}
 			if (cond6 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond6)) {
-					if (!isNull(sol6))
+					if (!isNull(sol6)) {
 						new Thread(sol6).run();
+					}
 					return true;
 				}
 			} else if (cond6 instanceof String) {
 				cond6 = Str(cond6).replaceAll("[^else]", "");
 				if (eq(cond6, "else")) {
-					if (!isNull(sol6))
+					if (!isNull(sol6)) {
 						new Thread(sol6).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond6)) {
@@ -19996,15 +21155,17 @@ public class KL {
 			}
 			if (cond7 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond7)) {
-					if (!isNull(sol7))
+					if (!isNull(sol7)) {
 						new Thread(sol7).run();
+					}
 					return true;
 				}
 			} else if (cond7 instanceof String) {
 				cond7 = Str(cond7).replaceAll("[^else]", "");
 				if (eq(cond7, "else")) {
-					if (!isNull(sol7))
+					if (!isNull(sol7)) {
 						new Thread(sol7).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond7)) {
@@ -20017,15 +21178,17 @@ public class KL {
 			}
 			if (cond8 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond8)) {
-					if (!isNull(sol8))
+					if (!isNull(sol8)) {
 						new Thread(sol8).run();
+					}
 					return true;
 				}
 			} else if (cond8 instanceof String) {
 				cond8 = Str(cond8).replaceAll("[^else]", "");
 				if (eq(cond8, "else")) {
-					if (!isNull(sol8))
+					if (!isNull(sol8)) {
 						new Thread(sol8).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond8)) {
@@ -20038,15 +21201,17 @@ public class KL {
 			}
 			if (cond9 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond9)) {
-					if (!isNull(sol9))
+					if (!isNull(sol9)) {
 						new Thread(sol9).run();
+					}
 					return true;
 				}
 			} else if (cond9 instanceof String) {
 				cond9 = Str(cond9).replaceAll("[^else]", "");
 				if (eq(cond9, "else")) {
-					if (!isNull(sol9))
+					if (!isNull(sol9)) {
 						new Thread(sol9).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond9)) {
@@ -20059,15 +21224,17 @@ public class KL {
 			}
 			if (cond10 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond10)) {
-					if (!isNull(sol10))
+					if (!isNull(sol10)) {
 						new Thread(sol10).run();
+					}
 					return true;
 				}
 			} else if (cond10 instanceof String) {
 				cond10 = Str(cond10).replaceAll("[^else]", "");
 				if (eq(cond10, "else")) {
-					if (!isNull(sol10))
+					if (!isNull(sol10)) {
 						new Thread(sol10).run();
+					}
 					return false;
 				}
 			} else if (isNull(cond10)) {
@@ -20217,26 +21384,27 @@ public class KL {
 			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
 			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
 			Runnable sol10) {
-		if (is(cond1))
+		if (is(cond1)) {
 			new Thread(sol1).run();
-		else if (is(cond2))
+		} else if (is(cond2)) {
 			new Thread(sol2).run();
-		else if (is(cond3))
+		} else if (is(cond3)) {
 			new Thread(sol3).run();
-		else if (is(cond4))
+		} else if (is(cond4)) {
 			new Thread(sol4).run();
-		else if (is(cond5))
+		} else if (is(cond5)) {
 			new Thread(sol5).run();
-		else if (is(cond6))
+		} else if (is(cond6)) {
 			new Thread(sol6).run();
-		else if (is(cond7))
+		} else if (is(cond7)) {
 			new Thread(sol7).run();
-		else if (is(cond8))
+		} else if (is(cond8)) {
 			new Thread(sol8).run();
-		else if (is(cond9))
+		} else if (is(cond9)) {
 			new Thread(sol9).run();
-		else if (is(cond10))
+		} else if (is(cond10)) {
 			new Thread(sol10).run();
+		}
 		return;
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
@@ -20317,24 +21485,29 @@ public class KL {
 	public static boolean _b = false;
 	public static int[] range(int n) {
 		intArr arr = new intArr();
-		if (not(n) || n < 1)
+		if (not(n) || n < 1) {
 			return arr.array();
-		for (int i = 0; i < n; i++)
+		}
+		for (int i = 0; i < n; i++) {
 			arr.add(i);
+		}
 		return arr.array();
 	}
 	public static double[] range(double n) {
 		dblArr arr = new dblArr();
-		if (not(n) || n < 1.1)
+		if (not(n) || n < 1.1) {
 			return arr.array();
-		for (double i = 0; i < n; i += .1)
+		}
+		for (double i = 0; i < n; i += .1) {
 			arr.add(i);
+		}
 		return arr.array();
 	}
 	public static int[] range(int m, int n, int... optional) {
 		intArr arr = new intArr();
-		if (isNull(m) || isNull(n) || eq(m, n))
+		if (isNull(m) || isNull(n) || eq(m, n)) {
 			return arr.array();
+		}
 		int step = 1;
 		if (is(optional) && len(optional) == 1) {
 			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0])
@@ -20342,44 +21515,51 @@ public class KL {
 					: 1;
 		}
 		if (m > n) {
-			for (int i = m; i >= n; i -= step)
+			for (int i = m; i >= n; i -= step) {
 				arr.add(i);
+			}
 		} else {
-			for (int i = m; i <= n; i += step)
+			for (int i = m; i <= n; i += step) {
 				arr.add(i);
+			}
 		}
 		return arr.array();
 	}
 	public static String[] range(String m, String n, int... optional) {
 		strArr arr = new strArr();
 		if (isNull(m) || isNull(n) || eq(m, n) || !eq(m, "[A-Za-z]")
-				|| !eq(n, "[A-Za-z]"))
+				|| !eq(n, "[A-Za-z]")) {
 			return arr.array();
+		}
 		int step = 1;
 		if (is(optional) && len(optional) == 1) {
 			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0])
 					? optional[0]
 					: 1;
 		}
-		int charCodeOfM = (int) m.charAt(0), charCodeOfN = (int) n.charAt(0);
+		int charCodeOfM = m.charAt(0), charCodeOfN = n.charAt(0);
 		if (charCodeOfM > charCodeOfN) {
-			for (int i = charCodeOfM; i >= charCodeOfN; i -= step)
+			for (int i = charCodeOfM; i >= charCodeOfN; i -= step) {
 				arr.add(Str((char) i));
+			}
 		} else {
-			for (int i = charCodeOfM; i <= charCodeOfN; i += step)
+			for (int i = charCodeOfM; i <= charCodeOfN; i += step) {
 				arr.add(Str((char) i));
+			}
 		}
 		return arr.array();
 	}
 	public static char[] range(char m, char n) {
-		if (not(m) || not(n))
+		if (not(m) || not(n)) {
 			return blank.Char;
+		}
 		return join(range(Str(m), Str(n)), "").toCharArray();
 	}
 	public static double[] range(double m, double n, int... optional) {
 		dblArr arr = new dblArr();
-		if (isNull(m) || isNull(n) || eq(m, n))
+		if (isNull(m) || isNull(n) || eq(m, n)) {
 			return arr.array();
+		}
 		int step = 1;
 		if (is(optional) && len(optional) == 1) {
 			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0])
@@ -20387,75 +21567,95 @@ public class KL {
 					: 1;
 		}
 		if (m > n) {
-			for (double i = m; i >= n; i -= .1 * step)
+			for (double i = m; i >= n; i -= .1 * step) {
 				arr.add(Dbl(setPrecision(i)));
+			}
 		} else {
-			for (double i = m; i <= n; i += .1 * step)
+			for (double i = m; i <= n; i += .1 * step) {
 				arr.add(Dbl(setPrecision(i)));
+			}
 		}
 		return arr.array();
 	}
 	public static int[] range(int n, boolean reverse) {
-		if (not(n) || isNeg(n))
+		if (not(n) || isNeg(n)) {
 			return new int[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, 1);
+		}
 		return range(n);
 	}
 	public static int[] range(int m, int n, int gap, boolean reverse) {
-		if (isNull(m) || isNull(n) || eq(m, n))
+		if (isNull(m) || isNull(n) || eq(m, n)) {
 			return new int[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, m, gap);
+		}
 		return range(m, n, gap);
 	}
 	public static int[] range(int m, int n, boolean reverse) {
-		if (isNull(m) || isNull(n) || eq(m, n))
+		if (isNull(m) || isNull(n) || eq(m, n)) {
 			return new int[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, m);
+		}
 		return range(m, n);
 	}
 	public static double[] range(double n, boolean reverse) {
-		if (not(n) || isNeg(n))
+		if (not(n) || isNeg(n)) {
 			return new double[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, 1);
+		}
 		return range(n);
 	}
 	public static double[] range(double m, double n, int gap, boolean reverse) {
-		if (isNull(m) || isNull(n) || eq(m, n))
+		if (isNull(m) || isNull(n) || eq(m, n)) {
 			return new double[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, m, gap);
+		}
 		return range(m, n, gap);
 	}
 	public static double[] range(double m, double n, boolean reverse) {
-		if (isNull(m) || isNull(n) || eq(m, n))
+		if (isNull(m) || isNull(n) || eq(m, n)) {
 			return new double[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, m);
+		}
 		return range(m, n);
 	}
 	public static String[] range(String m, String n, int gap, boolean reverse) {
-		if (not(m) || not(n) || eq(m, n))
+		if (not(m) || not(n) || eq(m, n)) {
 			return new String[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, m, gap);
+		}
 		return range(m, n, gap);
 	}
 	public static String[] range(String m, String n, boolean reverse) {
-		if (not(m) || not(n) || eq(m, n))
+		if (not(m) || not(n) || eq(m, n)) {
 			return new String[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, m);
+		}
 		return range(m, n);
 	}
 	public static char[] range(char m, char n, boolean reverse) {
-		if (not(m) || not(n) || eq(m, n))
+		if (not(m) || not(n) || eq(m, n)) {
 			return new char[]{};
-		if (reverse)
+		}
+		if (reverse) {
 			return range(n, m);
+		}
 		return range(m, n);
 	}
 	public static int[] range(String str) {
@@ -20550,8 +21750,9 @@ public class KL {
 	}
 	public static void each(String[] iterable,
 			ObjIntConsumer<String> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		int i = 0;
 		for (String item : iterable) {
 			consumer.accept(item, i);
@@ -20559,8 +21760,9 @@ public class KL {
 		}
 	}
 	public static void each(String[] iterable, Consumer<String> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		for (String item : iterable) {
 			consumer.accept(item);
 		}
@@ -20572,8 +21774,9 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 	public static void each(int[] iterable, ObjIntConsumer<Integer> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		int i = 0;
 		for (int item : iterable) {
 			consumer.accept(item, i);
@@ -20581,8 +21784,9 @@ public class KL {
 		}
 	}
 	public static void each(int[] iterable, Consumer<Integer> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		for (int item : iterable) {
 			consumer.accept(item);
 		}
@@ -20594,8 +21798,9 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 	public static void each(long[] iterable, ObjIntConsumer<Long> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		int i = 0;
 		for (long item : iterable) {
 			consumer.accept(item, i);
@@ -20603,8 +21808,9 @@ public class KL {
 		}
 	}
 	public static void each(long[] iterable, Consumer<Long> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		for (long item : iterable) {
 			consumer.accept(item);
 		}
@@ -20616,8 +21822,9 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 	public static void each(float[] iterable, ObjIntConsumer<Float> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		int i = 0;
 		for (float item : iterable) {
 			consumer.accept(item, i);
@@ -20625,8 +21832,9 @@ public class KL {
 		}
 	}
 	public static void each(float[] iterable, Consumer<Float> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		for (float item : iterable) {
 			consumer.accept(item);
 		}
@@ -20639,8 +21847,9 @@ public class KL {
 	}
 	public static void each(double[] iterable,
 			ObjIntConsumer<Double> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		int i = 0;
 		for (double item : iterable) {
 			consumer.accept(item, i);
@@ -20648,8 +21857,9 @@ public class KL {
 		}
 	}
 	public static void each(double[] iterable, Consumer<Double> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		for (double item : iterable) {
 			consumer.accept(item);
 		}
@@ -20662,8 +21872,9 @@ public class KL {
 	}
 	public static void each(boolean[] iterable,
 			ObjIntConsumer<Boolean> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		int i = 0;
 		for (boolean item : iterable) {
 			consumer.accept(item, i);
@@ -20671,8 +21882,9 @@ public class KL {
 		}
 	}
 	public static void each(boolean[] iterable, Consumer<Boolean> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		for (boolean item : iterable) {
 			consumer.accept(item);
 		}
@@ -20685,8 +21897,9 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 	public static <T> void each(T[] iterable, ObjIntConsumer<T> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		int i = 0;
 		for (T item : iterable) {
 			consumer.accept(item, i);
@@ -20694,8 +21907,9 @@ public class KL {
 		}
 	}
 	public static <T> void each(T[] iterable, Consumer<T> consumer) {
-		if (not(iterable) || not(consumer))
+		if (not(iterable) || not(consumer)) {
 			return;
+		}
 		for (T item : iterable) {
 			consumer.accept(item);
 		}
@@ -20755,23 +21969,27 @@ public class KL {
 	// handling Object arrays
 	// DON'T remove
 	public static void repeat(Runnable fn, int times) {
-		for (; times > 0; times--)
+		for (; times > 0; times--) {
 			new Thread(fn).run();
+		}
 	}
 	public static String repeat(String s, int times) {
-		if (not(s) || not(times) || isNeg(times))
+		if (not(s) || not(times) || isNeg(times)) {
 			return s;
+		}
 		String org = s;
-		for (; -1 + times > 0; times--)
+		for (; -1 + times > 0; times--) {
 			s += org;
+		}
 		return s;
 	}
 	public static String repeat(String s) {
 		return repeat(s, 2);
 	}
 	public static char[] map(char[] arr, Function<Character, Character> func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return arr;
+		}
 		char[] result = new char[arr.length];
 		for (int i = 0; i < arr.length; i++) {
 			result[i] = func.apply(arr[i]);
@@ -20779,8 +21997,9 @@ public class KL {
 		return result;
 	}
 	public static String[] map(String[] arr, Function<String, String> func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return arr;
+		}
 		String[] result = new String[arr.length];
 		for (int i = 0; i < arr.length; i++) {
 			result[i] = func.apply(arr[i]);
@@ -20788,18 +22007,21 @@ public class KL {
 		return result;
 	}
 	public static int[] map(int[] arr, IntUnaryOperator func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return arr;
+		}
 		return Arrays.stream(arr).map(func).toArray();
 	}
 	public static long[] map(long[] arr, LongUnaryOperator func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return arr;
+		}
 		return Arrays.stream(arr).map(func).toArray();
 	}
 	public static float[] map(float[] arr, Function<Float, Float> func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return arr;
+		}
 		float[] result = new float[arr.length];
 		for (int i = 0; i < arr.length; i++) {
 			result[i] = func.apply(arr[i]);
@@ -20807,14 +22029,16 @@ public class KL {
 		return result;
 	}
 	public static double[] map(double[] arr, DoubleUnaryOperator func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return arr;
+		}
 		return Arrays.stream(arr).map(func).toArray();
 	}
 	public static boolean[] map(boolean[] arr,
 			Function<Boolean, Boolean> func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return arr;
+		}
 		boolean[] result = new boolean[arr.length];
 		for (int i = 0; i < arr.length; i++) {
 			result[i] = func.apply(arr[i]);
@@ -20822,23 +22046,27 @@ public class KL {
 		return result;
 	}
 	public static String reduce(String[] arr, BinaryOperator<String> func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return "";
+		}
 		return Arrays.stream(arr).reduce("", func);
 	}
 	public static int reduce(int[] arr, IntBinaryOperator func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return 0;
+		}
 		return Arrays.stream(arr).reduce(0, func);
 	}
 	public static long reduce(long[] arr, LongBinaryOperator func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return 0;
+		}
 		return Arrays.stream(arr).reduce(0, func);
 	}
 	public static double reduce(double[] arr, DoubleBinaryOperator func) {
-		if (not(arr) || not(func))
+		if (not(arr) || not(func)) {
 			return 0;
+		}
 		return Arrays.stream(arr).reduce(0, func);
 	}
 	public static String[] popIf(String[] array, Predicate<String> condition) {
@@ -21107,8 +22335,9 @@ public class KL {
 		return result;
 	}
 	public static String now(boolean shortened) {
-		if (!shortened)
+		if (!shortened) {
 			return now();
+		}
 		String parts[] = now().split(", ");
 		String time = parts[0], day = sliceKeep(parts[1], 3),
 				dateOfMonth = sliceKeep(parts[2], 3) + " "
@@ -21318,16 +22547,17 @@ public class KL {
 	public static String timeGreet() {
 		String greeting;
 		int h = new Date().getHours() + 5; // fix 5-hour bug along the way
-		if (h >= 20)
+		if (h >= 20) {
 			greeting = "Good night";
-		else if (h >= 16)
+		} else if (h >= 16) {
 			greeting = "Good evening";
-		else if (h >= 12)
+		} else if (h >= 12) {
 			greeting = "Good afternoon";
-		else if (h >= 0 && h <= 4)
+		} else if (h >= 0 && h <= 4) {
 			greeting = "Good new day";
-		else
+		} else {
 			greeting = "Good morning";
+		}
 		return greeting;
 	}
 	public static String lastOfMonth(int m) {
@@ -21352,8 +22582,9 @@ public class KL {
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug for
 		// better accuracy
 		int i = 0;
-		if (dt.getYear() % 4 == 0)
+		if (dt.getYear() % 4 == 0) {
 			dt.setYear(dt.getYear() + 1); // ignore current year, if it's leap
+		}
 		while (dt.getYear() % 4 != 0) {
 			dt.setYear((dt.getYear()) + i);
 			i++;
@@ -21427,10 +22658,11 @@ public class KL {
 	}
 	// utilities
 	public static void println(Object... args) {
-		if (isNull(args) || not(args.length))
+		if (isNull(args) || not(args.length)) {
 			return;
-		if (!isNull(args[0]) && args[0] instanceof String
-				&& in(Str(args[0]), "(?<=[\\%\\$\\&\\{\\}])\\w+")) {
+		}
+		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
+				"(?<=[\\%\\$\\&\\{\\}])\\w+|\\.?\\d+(e[\\+\\-]?\\d)?")) {
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
 				return;
@@ -21444,19 +22676,28 @@ public class KL {
 			return;
 		} else {
 			for (Object arg : args) {
-				if (isNull(arg))
+				if (isNull(arg)) {
 					continue;
+				}
 				if (isArr(arg)) {
 					printArr(arg);
 					System.out.print(" ");
 				}
-				if (arg instanceof Character)
+				if (arg instanceof Character) {
 					arg = "'" + arg + "'";
-				if (arg instanceof Double) {
-					if (in(Str((double) arg), "(?<=\\.)\\d{3,}"))
-						arg = setPrecision((double) arg, 2);
-					else
-						arg = setPrecision((double) arg);
+				}
+				if (arg instanceof Float || arg instanceof Double) {
+					if (in(Str(
+							arg instanceof Float ? (float) arg : (double) arg),
+							"(?<=\\.)\\d{3,}")) {
+						arg = fus(arg instanceof Float
+								? (float) arg
+								: (double) arg);
+					} else {
+						arg = f(arg instanceof Float
+								? (float) arg
+								: (double) arg).replaceAll("\\.?0(?!\\d)$", "");
+					}
 				}
 				System.out.print(arg + " ");
 			}
@@ -21471,24 +22712,25 @@ public class KL {
 		System.out.print("\n");
 	}
 	public void printf(String str, Object... args) {
-		print(f(str, args));
+		System.out.println(f(str, args));
 	}
 	public static void printf(int n) {
-		print(f(n));
+		System.out.println(f(n));
 	}
 	public static void printf(long n) {
-		print(f(n));
+		System.out.println(f(n));
 	}
 	public static void printf(float n) {
-		print(f(n));
+		System.out.println(f(n));
 	}
 	public static void printf(double n) {
-		print(f(n));
+		System.out.print(f(n));
 	}
 	// printing arrays
 	public static void printArr(Object arg) {
-		if (isNull(arg))
+		if (isNull(arg)) {
 			return;
+		}
 		if (arg instanceof Object[]) {
 			// if one it's of those arrays that are based on a class
 			if (isArrOfStr(arg)) {
@@ -21503,7 +22745,7 @@ public class KL {
 		} else {
 			if (isArrOfChar(arg)) {
 				System.out.print("[" + (!isEmpty((char[]) arg)
-						? "\'" + join((char[]) arg, "\', \'") + "\'"
+						? "\'" + join(arg, "\', \'") + "\'"
 						: "") + "]");
 			} else if (isArrOfInt(arg)) {
 				System.out.print("[" + join((int[]) arg) + "]");
@@ -21722,8 +22964,9 @@ public class KL {
 		return askD(s);
 	}
 	public static void br(int n) {
-		for (; n > 0; n--)
+		for (; n > 0; n--) {
 			print("\n");
+		}
 	}
 	public static void br() {
 		br(1);
@@ -21966,12 +23209,14 @@ public class KL {
 		return String(t);
 	}
 	public static String concat(Object... args) {
-		if (not(args))
+		if (not(args)) {
 			return "";
+		}
 		String result = "";
 		for (var arg : args) {
-			if (isNull(arg))
+			if (isNull(arg)) {
 				continue;
+			}
 			result += ("" + arg);
 		}
 		return result;
@@ -21980,38 +23225,44 @@ public class KL {
 		return concat(args);
 	}
 	public static strArr Arr(String... items) {
-		if (isNull(items) || isEmpty(items))
+		if (isNull(items) || isEmpty(items)) {
 			return blank.strArr;
+		}
 		strArr arr = new strArr(items);
 		return arr;
 	}
 	public static intArr Arr(int... items) {
-		if (isNull(items) || isEmpty(items))
+		if (isNull(items) || isEmpty(items)) {
 			return blank.intArr;
+		}
 		intArr arr = new intArr(items);
 		return arr;
 	}
 	public static longArr Arr(long... items) {
-		if (isNull(items) || isEmpty(items))
+		if (isNull(items) || isEmpty(items)) {
 			return blank.longArr;
+		}
 		longArr arr = new longArr(items);
 		return arr;
 	}
 	public static fltArr Arr(float... items) {
-		if (isNull(items) || isEmpty(items))
+		if (isNull(items) || isEmpty(items)) {
 			return blank.fltArr;
+		}
 		fltArr arr = new fltArr(items);
 		return arr;
 	}
 	public static dblArr Arr(double... items) {
-		if (isNull(items) || isEmpty(items))
+		if (isNull(items) || isEmpty(items)) {
 			return blank.dblArr;
+		}
 		dblArr arr = new dblArr(items);
 		return arr;
 	}
 	public static boolArr Arr(boolean... items) {
-		if (isNull(items) || isEmpty(items))
+		if (isNull(items) || isEmpty(items)) {
 			return blank.boolArr;
+		}
 		boolArr arr = new boolArr(items);
 		return arr;
 	}
@@ -22052,83 +23303,99 @@ public class KL {
 		return Arr(items);
 	}
 	public static String[] Arr(objS o) {
-		if (not(o))
+		if (not(o)) {
 			return blank.Str;
+		}
 		return o.array();
 	}
 	public static int[] Arr(objI o) {
-		if (not(o))
+		if (not(o)) {
 			return blank.Int;
+		}
 		return o.array();
 	}
 	public static long[] Arr(objL o) {
-		if (not(o))
+		if (not(o)) {
 			return blank.Long;
+		}
 		return o.array();
 	}
 	public static float[] Arr(objF o) {
-		if (not(o))
+		if (not(o)) {
 			return blank.Flt;
+		}
 		return o.array();
 	}
 	public static double[] Arr(objD o) {
-		if (not(o))
+		if (not(o)) {
 			return blank.Dbl;
+		}
 		return o.array();
 	}
 	public static boolean[] Arr(objB o) {
-		if (not(o))
+		if (not(o)) {
 			return blank.Bool;
+		}
 		return o.array();
 	}
 	public static String[] Arr(treeDS t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Str;
+		}
 		return t.array();
 	}
 	public static int[] Arr(treeDI t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Int;
+		}
 		return t.array();
 	}
 	public static String[] Arr(treeI t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Str;
+		}
 		return t.array();
 	}
 	public static long[] Arr(treeDL t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Long;
+		}
 		return t.array();
 	}
 	public static long[] Arr(treeL t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Long;
+		}
 		return t.array();
 	}
 	public static float[] Arr(treeDF t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Flt;
+		}
 		return t.array();
 	}
 	public static float[] Arr(treeF t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Flt;
+		}
 		return t.array();
 	}
 	public static double[] Arr(treeD t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Dbl;
+		}
 		return t.array();
 	}
 	public static boolean[] Arr(treeDB t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Bool;
+		}
 		return t.array();
 	}
 	public static boolean[] Arr(treeB t) {
-		if (not(t))
+		if (not(t)) {
 			return blank.Bool;
+		}
 		return t.array();
 	}
 	public static String[] arr(objS o) {
@@ -22911,38 +24178,44 @@ public class KL {
 		return new treeDB(k1, v1);
 	}
 	public static char[] Chars(String str) {
-		if (not(str))
+		if (not(str)) {
 			return blank.Char;
+		}
 		char[] result = str.toCharArray();
 		return result;
 	}
 	public static char Char(String str) {
-		if (not(str))
+		if (not(str)) {
 			return '\0';
+		}
 		char result = Chars(str)[0];
 		return result;
 	}
 	public static char Char(int n) {
-		if (isNull(n))
+		if (isNull(n)) {
 			return '\0';
+		}
 		char result = (char) n;
 		return result;
 	}
 	public static char Char(String str, int n) {
-		if (not(str) || n < 0 || n >= len(str))
+		if (not(str) || n < 0 || n >= len(str)) {
 			return '\0';
+		}
 		char result = Chars(str)[n];
 		return result;
 	}
 	public static char nthCharOf(String str, int n) {
-		if (not(str) || n < 0 || n >= len(str))
+		if (not(str) || n < 0 || n >= len(str)) {
 			return '\0';
+		}
 		char result = Chars(str)[n];
 		return result;
 	}
 	public static char nthLastCharOf(String str, int n) {
-		if (not(str) || n <= 0 || n > len(str))
+		if (not(str) || n <= 0 || n > len(str)) {
 			return '\0';
+		}
 		// tested, NO EDITS please; in the case of reverse indexes, this IS the
 		// way the
 		// "if" condition is meant to be, i.e. the 'n <= 0' part stays as found
@@ -22958,8 +24231,9 @@ public class KL {
 		return result;
 	}
 	public static String[] split(String str) {
-		if (not(str))
+		if (not(str)) {
 			return blank.Str;
+		}
 		String[] returnValue = slice(str.split(""), 1);
 		// TESTED AND LEARNED: Java split(""), unlike in JavaScript , adds an
 		// extra "" character at the beginning, i.e. at index 0, of the array
@@ -22968,13 +24242,15 @@ public class KL {
 		return returnValue;
 	}
 	public static String[] split(String str, String delimiting_str_or_regex) {
-		if (not(str) || isNull(delimiting_str_or_regex))
+		if (not(str) || isNull(delimiting_str_or_regex)) {
 			return blank.Str;
+		}
 		// the null check was needed here
 		String[] returnValue = str.split(delimiting_str_or_regex);
 		if (eq(delimiting_str_or_regex, "")
-				|| (len(returnValue) > 0 && eq(returnValue[0], "")))
+				|| (len(returnValue) > 0 && eq(returnValue[0], ""))) {
 			returnValue = slice(returnValue, 1);
+		}
 		// TESTED AND LEARNED: Java split(""), unlike in JavaScript , adds an
 		// extra "" character at the beginning, i.e. at index 0, of the array
 		// the string has been split into. JavaScript is way better in this
@@ -22982,8 +24258,9 @@ public class KL {
 		return returnValue;
 	}
 	public static String[] splitIntoWords(String str) {
-		if (not(str))
+		if (not(str)) {
 			return blank.Str;
+		}
 		String[] returnValue = split(str, "[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 		return returnValue;
 	}
@@ -22994,187 +24271,225 @@ public class KL {
 		return splitIntoWords(str).length > 0;
 	}
 	public static String join(String[] arr, String with) {
-		if (not(arr) || isNull(with))
+		if (not(arr) || isNull(with)) {
 			return "";
+		}
 		String returnValue = String.join(with, arr);
 		return returnValue;
 	}
 	public static String join(int[] arr, String with) {
-		if (not(arr) || isNull(with))
+		if (not(arr) || isNull(with)) {
 			return "";
+		}
 		String[] midProcessedArray = new String[arr.length];
-		for (int i : range(arr))
+		for (int i : range(arr)) {
 			midProcessedArray[i] = "" + arr[i];
+		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
 	public static String join(long[] arr, String with) {
-		if (not(arr) || isNull(with))
+		if (not(arr) || isNull(with)) {
 			return "";
+		}
 		String[] midProcessedArray = new String[arr.length];
-		for (int i : range(arr))
+		for (int i : range(arr)) {
 			midProcessedArray[i] = "" + arr[i];
+		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
 	public static String join(float[] arr, String with) {
-		if (not(arr) || isNull(with))
+		if (not(arr) || isNull(with)) {
 			return "";
+		}
 		String[] midProcessedArray = new String[arr.length];
-		for (int i : range(arr))
+		for (int i : range(arr)) {
 			midProcessedArray[i] = "" + arr[i];
+		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
 	public static String join(double[] arr, String with) {
-		if (not(arr) || isNull(with))
+		if (not(arr) || isNull(with)) {
 			return "";
+		}
 		String[] midProcessedArray = new String[arr.length];
-		for (int i : range(arr))
+		for (int i : range(arr)) {
 			midProcessedArray[i] = "" + arr[i];
+		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
 	public static String join(boolean[] arr, String with) {
-		if (not(arr) || isNull(with))
+		if (not(arr) || isNull(with)) {
 			return "";
+		}
 		String[] midProcessedArray = new String[arr.length];
-		for (int i : range(arr))
+		for (int i : range(arr)) {
 			midProcessedArray[i] = "" + arr[i];
+		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
 	public static String join(Number[] arr, String with) {
-		if (not(arr) || isNull(with))
+		if (not(arr) || isNull(with)) {
 			return "";
+		}
 		String[] midProcessedArray = new String[arr.length];
-		for (int i : range(arr))
+		for (int i : range(arr)) {
 			midProcessedArray[i] = "" + arr[i];
+		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
 	public static String join(Object[] arr, String with) {
-		if (not(arr) || isNull(with))
+		if (not(arr) || isNull(with)) {
 			return "";
+		}
 		String[] midProcessedArray = new String[arr.length];
-		for (int i : range(arr))
+		for (int i : range(arr)) {
 			midProcessedArray[i] = "" + arr[i];
+		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
 	}
 	public static String join(strArr arr, String with) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array(), with);
 	}
 	public static String join(intArr arr, String with) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array(), with);
 	}
 	public static String join(longArr arr, String with) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array(), with);
 	}
 	public static String join(fltArr arr, String with) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array(), with);
 	}
 	public static String join(dblArr arr, String with) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array(), with);
 	}
 	public static String join(boolArr arr, String with) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array(), with);
 	}
 	public static String join(objS o, String with) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array(), with);
 	}
 	public static String join(objI o, String with) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array(), with);
 	}
 	public static String join(objL o, String with) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array(), with);
 	}
 	public static String join(objF o, String with) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array(), with);
 	}
 	public static String join(objD o, String with) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array(), with);
 	}
 	public static String join(objB o, String with) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array(), with);
 	}
 	public static String join(treeDI t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeI t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeDL t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeL t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeDF t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeF t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeDS t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeD t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeDB t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(treeB t, String with) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array(), with);
 	}
 	public static String join(String... array) {
-		if (not(array))
+		if (not(array)) {
 			return "";
+		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
@@ -23185,8 +24500,9 @@ public class KL {
 		return returnValue;
 	}
 	public static String join(int... array) {
-		if (not(array))
+		if (not(array)) {
 			return "";
+		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
@@ -23197,8 +24513,9 @@ public class KL {
 		return returnValue;
 	}
 	public static String join(long... array) {
-		if (not(array))
+		if (not(array)) {
 			return "";
+		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
@@ -23209,8 +24526,9 @@ public class KL {
 		return returnValue;
 	}
 	public static String join(float... array) {
-		if (not(array))
+		if (not(array)) {
 			return "";
+		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
@@ -23221,8 +24539,9 @@ public class KL {
 		return returnValue;
 	}
 	public static String join(double... array) {
-		if (not(array))
+		if (not(array)) {
 			return "";
+		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
@@ -23233,8 +24552,9 @@ public class KL {
 		return returnValue;
 	}
 	public static String join(boolean... array) {
-		if (not(array))
+		if (not(array)) {
 			return "";
+		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
@@ -23245,8 +24565,9 @@ public class KL {
 		return returnValue;
 	}
 	public static String join(Number... array) {
-		if (not(array))
+		if (not(array)) {
 			return "";
+		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
@@ -23257,8 +24578,9 @@ public class KL {
 		return returnValue;
 	}
 	public static String join(Object... array) {
-		if (not(array))
+		if (not(array)) {
 			return "";
+		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
 				"$1and$1");
@@ -23269,127 +24591,151 @@ public class KL {
 		return returnValue;
 	}
 	public static String join(strArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array());
 	}
 	public static String join(intArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array());
 	}
 	public static String join(longArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array());
 	}
 	public static String join(fltArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array());
 	}
 	public static String join(dblArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array());
 	}
 	public static String join(boolArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return join(arr.array());
 	}
 	public static String join(objS o) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array());
 	}
 	public static String join(objI o) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array());
 	}
 	public static String join(objL o) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array());
 	}
 	public static String join(objF o) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array());
 	}
 	public static String join(objD o) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array());
 	}
 	public static String join(objB o) {
-		if (not(o))
+		if (not(o)) {
 			return "";
+		}
 		return join(o.array());
 	}
 	public static String join(treeDI t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeI t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeDL t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeL t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeDF t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeF t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeDS t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeD t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeDB t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static String join(treeB t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return join(t.array());
 	}
 	public static boolean eq(String x, String y) {
-		if (not(x) || not(y))
+		if (not(x) || not(y)) {
 			return false;
+		}
 		y = y.replaceAll("^\\^|\\$$", "");
 		return match(x, "^(" + y + ")$");
 	}
 	public static boolean eq(String x, String y, boolean strict) {
-		if (not(x) || not(y))
+		if (not(x) || not(y)) {
 			return false;
-		if (!strict)
+		}
+		if (!strict) {
 			return eq(x, y);
-		else {
+		} else {
 			y = y.replaceAll("^\\^|\\$$", "");
 			return x.equals(y) || match(x, "^(" + y + ")$", true);
 		}
@@ -23431,10 +24777,10 @@ public class KL {
 		return b == true ? 1 : 0;
 	}
 	public static long Long(String arg) {
-		return (long) Int(arg);
+		return Int(arg);
 	}
 	public static long Long(int n) {
-		return (long) n;
+		return n;
 	}
 	public static long Long(long n) {
 		return n;
@@ -23459,10 +24805,10 @@ public class KL {
 		}
 	}
 	public static float Flt(int n) {
-		return (float) n;
+		return n;
 	}
 	public static float Flt(long n) {
-		return (float) n;
+		return n;
 	}
 	public static float Flt(float n) {
 		return n;
@@ -23484,13 +24830,13 @@ public class KL {
 		}
 	}
 	public static double Dbl(int arg) {
-		return (double) arg;
+		return arg;
 	}
 	public static double Dbl(long arg) {
-		return (double) arg;
+		return arg;
 	}
 	public static double Dbl(float arg) {
-		return (double) arg;
+		return arg;
 	}
 	public static double Dbl(double arg) {
 		return arg;
@@ -23523,8 +24869,9 @@ public class KL {
 		return Dbl(arg);
 	}
 	public static double setPrecision(double n, int decimalPlaces) {
-		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces))
+		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces)) {
 			return n;
+		}
 		String formatted = String.format("%." + Str(decimalPlaces) + "f", n);
 		return Dbl(formatted);
 	}
@@ -23538,8 +24885,9 @@ public class KL {
 		return setPrecision(n);
 	}
 	public static float setPrecision(float n, int decimalPlaces) {
-		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces))
+		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces)) {
 			return n;
+		}
 		String formatted = String.format("%." + Str(decimalPlaces) + "f", n);
 		return Flt(formatted);
 	}
@@ -23601,8 +24949,9 @@ public class KL {
 		return List(arg);
 	}
 	public static boolean isIntLike(String s) {
-		if (not(s))
+		if (not(s)) {
 			return false;
+		}
 		try {
 			return Integer.parseInt(s) % 1 == 0;
 		} catch (Exception err) {
@@ -23613,8 +24962,9 @@ public class KL {
 		return isIntLike(s);
 	}
 	public static boolean isFltLike(String s) {
-		if (not(s))
+		if (not(s)) {
 			return false;
+		}
 		try {
 			return Float.parseFloat(s) % 1 != 0;
 		} catch (Exception err) {
@@ -23622,8 +24972,9 @@ public class KL {
 		}
 	}
 	public static boolean isDblLike(String s) {
-		if (not(s))
+		if (not(s)) {
 			return false;
+		}
 		try {
 			return Double.parseDouble(s) % 1 != 0;
 		} catch (Exception err) {
@@ -23748,576 +25099,717 @@ public class KL {
 		return n > 0 ? Neg(n) : Pos(n);
 	}
 	public static int sum(int... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length; next++)
+		for (int next = 0; next < ns.length; next++) {
 			acc += ns[next];
+		}
 		return acc;
 	}
 	public static long sum(long... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length; next++)
+		for (int next = 0; next < ns.length; next++) {
 			acc += ns[next];
+		}
 		return acc;
 	}
 	public static float sum(float... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length; next++)
+		for (int next = 0; next < ns.length; next++) {
 			acc += ns[next];
+		}
 		return acc;
 	}
 	public static double sum(double... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length; next++)
+		for (int next = 0; next < ns.length; next++) {
 			acc += ns[next];
+		}
 		return acc;
 	}
 	public static int sum(intArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static long sum(longArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static float sum(fltArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static double sum(dblArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static int sum(objI ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static long sum(objL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static float sum(objF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static double sum(objD ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static int sum(treeDI ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static long sum(treeDL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static long sum(treeL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static float sum(treeDF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static float sum(treeF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static double sum(treeD ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc += ns.array()[next];
+		}
 		return acc;
 	}
 	public static int difference(int... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc -= ns[next];
+		}
 		return acc;
 	}
 	public static long difference(long... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc -= ns[next];
+		}
 		return acc;
 	}
 	public static float difference(float... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc -= ns[next];
+		}
 		return acc;
 	}
 	public static double difference(double... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc -= ns[next];
+		}
 		return acc;
 	}
 	public static int difference(intArr ns) {
 		int acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long difference(longArr ns) {
 		long acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float difference(fltArr ns) {
 		float acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double difference(dblArr ns) {
 		double acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int difference(objI ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long difference(objL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float difference(objF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double difference(objD ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int difference(treeDI ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long difference(treeDL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long difference(treeL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float difference(treeDF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float difference(treeF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double difference(treeD ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc -= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int product(int... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc *= ns[next];
+		}
 		return acc;
 	}
 	public static long product(long... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc *= ns[next];
+		}
 		return acc;
 	}
 	public static float product(float... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc *= ns[next];
+		}
 		return acc;
 	}
 	public static double product(double... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc *= ns[next];
+		}
 		return acc;
 	}
 	public static int product(intArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long product(longArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float product(fltArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double product(dblArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int product(objI ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long product(objL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float product(objF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double product(objD ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int product(treeDI ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long product(treeDL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long product(treeL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float product(treeDF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float product(treeF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double product(treeD ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc *= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int quotient(int... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc /= ns[next];
+		}
 		return acc;
 	}
 	public static long quotient(long... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc /= ns[next];
+		}
 		return acc;
 	}
 	public static float quotient(float... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc /= ns[next];
+		}
 		return acc;
 	}
 	public static double quotient(double... ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = ns[0];
-		for (int next = 1; next < ns.length; next++)
+		for (int next = 1; next < ns.length; next++) {
 			acc /= ns[next];
+		}
 		return acc;
 	}
 	public static int quotient(intArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long quotient(longArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float quotient(fltArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double quotient(dblArr ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = ns.i(0);
-		for (int next = 1; next < ns.length(); next++)
+		for (int next = 1; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int quotient(objI ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long quotient(objL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float quotient(objF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double quotient(objD ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int quotient(treeDI ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		int acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long quotient(treeDL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static long quotient(treeL ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		long acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float quotient(treeDF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static float quotient(treeF ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		float acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static double quotient(treeD ns) {
-		if (not(ns))
+		if (not(ns)) {
 			return 0;
+		}
 		double acc = 0;
-		for (int next = 0; next < ns.length(); next++)
+		for (int next = 0; next < ns.length(); next++) {
 			acc /= ns.array()[next];
+		}
 		return acc;
 	}
 	public static int pow(int n, int power) {
-		if (isNull(n, power))
+		if (isNull(n, power)) {
 			return 0;
+		}
 		return (int) Math.pow(n, power);
 	}
 	public static double sq(double n) {
@@ -24481,22 +25973,26 @@ public class KL {
 		return isPerfectMod(n1, n2);
 	}
 	public static int[] divisorsOf(int n) {
-		if (not(n))
+		if (not(n)) {
 			return blank.Int;
+		}
 		intArr result = new intArr();
 		for (int i = 2; i < n; i++) {
-			if (isPerfectMod(n, i))
+			if (isPerfectMod(n, i)) {
 				result.add(i);
+			}
 		}
 		return result.array();
 	}
 	public static long[] divisorsOf(long n) {
-		if (not(n))
+		if (not(n)) {
 			return blank.Long;
+		}
 		longArr result = new longArr();
 		for (long i = 2; i < n; i++) {
-			if (isPerfectMod(n, i))
+			if (isPerfectMod(n, i)) {
 				result.add(i);
+			}
 		}
 		return result.array();
 	}
@@ -24514,8 +26010,9 @@ public class KL {
 	}
 	public static boolean isPrime(double n) {
 		for (int i = 2; i <= n / 2; i++) {
-			if (n % i == 0)
+			if (n % i == 0) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -24540,9 +26037,10 @@ public class KL {
 					result += "th";
 			}
 		} else {
-			if (eq(last_two, "11") || eq(last_two, "12") || eq(last_two, "13"))
+			if (eq(last_two, "11") || eq(last_two, "12")
+					|| eq(last_two, "13")) {
 				result += "th";
-			else {
+			} else {
 				switch (last_char) {
 					case '1' :
 						result += "st";
@@ -24581,9 +26079,10 @@ public class KL {
 					result += "th";
 			}
 		} else {
-			if (eq(last_two, "11") || eq(last_two, "12") || eq(last_two, "13"))
+			if (eq(last_two, "11") || eq(last_two, "12")
+					|| eq(last_two, "13")) {
 				result += "th";
-			else {
+			} else {
 				switch (last_char) {
 					case '1' :
 						result += "st";
@@ -24607,10 +26106,11 @@ public class KL {
 	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
 			qt = 1e18, sx = 1e21, sp = 1e24, oc = 1e27, nn = 1e30, dc = 1e33;
 	public static String fpkr(int amount) {
-		if (isNull(amount))
+		if (isNull(amount)) {
 			return "";
-		double floats = amount % 1;
-		long amountFix = Long(amount - floats);
+		}
+		double floats = setPrecision(amount % 1);
+		long amountFix = Long(setPrecision(amount - floats));
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
 		int a = 0, b = 0;
@@ -24635,10 +26135,11 @@ public class KL {
 				"(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(long amount) {
-		if (isNull(amount))
+		if (isNull(amount)) {
 			return "";
-		double floats = amount % 1;
-		long amountFix = Long(amount - floats);
+		}
+		double floats = setPrecision(amount % 1);
+		long amountFix = Long(setPrecision(amount - floats));
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
 		int a = 0, b = 0;
@@ -24663,10 +26164,11 @@ public class KL {
 				"(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(float amount) {
-		if (isNull(amount))
+		if (isNull(amount)) {
 			return "";
+		}
 		double floats = setPrecision(amount % 1);
-		long amountFix = Long(amount - floats);
+		long amountFix = Long(setPrecision(amount - floats));
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
 		int a = 0, b = 0;
@@ -24691,10 +26193,11 @@ public class KL {
 				"(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fpkr(double amount) {
-		if (isNull(amount))
+		if (isNull(amount)) {
 			return "";
+		}
 		double floats = setPrecision(amount % 1);
-		long amountFix = Long(amount - floats);
+		long amountFix = Long(setPrecision(amount - floats));
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
 		int a = 0, b = 0;
@@ -24719,32 +26222,36 @@ public class KL {
 				"(?<=\\.\\d{2})\\d+", "");
 	}
 	public static String fus(int n) {
-		if (isNull(n))
+		if (isNull(n)) {
 			return "";
+		}
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
 				.format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(long n) {
-		if (isNull(n))
+		if (isNull(n)) {
 			return "";
+		}
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
 				.format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(float n) {
-		if (isNull(n))
+		if (isNull(n)) {
 			return "";
+		}
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
 				.format(n).replaceAll("[^\\d\\,\\.]", "");
 	}
 	public static String fus(double n) {
-		if (isNull(n))
+		if (isNull(n)) {
 			return "";
+		}
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
@@ -24763,8 +26270,9 @@ public class KL {
 		return fpkr(n);
 	}
 	public String f(String s, Object... args) {
-		if (s == null || s.isEmpty() || args.length == 0)
+		if (s == null || s.isEmpty() || args.length == 0) {
 			return s;
+		}
 		try {
 			// for specifiers
 			s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
@@ -24806,7 +26314,6 @@ public class KL {
 			}
 			String[] matches = findMatches(s,
 					"(?<!\\\\)%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d{0,3}f)?\\}");
-			// printArr(matches.length > 0 ? matches : blank.Str);
 			for (String m : matches) {
 				for (Object arg : args) {
 					if (arg instanceof Character
@@ -24817,13 +26324,7 @@ public class KL {
 						s = replaceFirst(s, m, Str(arg));
 					} else if ((arg instanceof Integer || arg instanceof Long)
 							&& (in(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}"))) {
-						if (eq(m, "%[\\%din](?!th|uc?|c)|\\$*\\{\\}")) {
-							s = replaceFirst(s, m,
-									Str(f(arg instanceof Integer
-											? (int) arg
-											: (long) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", ""));
-						} else if (in(m, "%[din]u")) {
+						if (in(m, "%[din]u")) {
 							if (eq(m, "%[din]uc")) {
 								s = replaceFirst(s, m,
 										Str(usd(arg instanceof Integer
@@ -24844,6 +26345,15 @@ public class KL {
 											: (long) arg)));
 						} else if (eq(m, "%[din]r")) {
 							s = replaceFirst(s, m, Str(toRoman((int) arg)));
+						} else if (eq(m,
+								"%[\\%din](?!r|th|uc?|c)|\\$*\\{\\}")) {
+							// replacing basic integer format specifiers %d, %i,
+							// %n
+							s = replaceFirst(s, m,
+									Str(f(arg instanceof Integer
+											? (int) arg
+											: (long) arg))
+											.replaceAll("\\.[0]+(?!\\d)$", ""));
 						} else {
 							if (in(m, "%[din]c([\\:\\.][A-Za-z]{3,4})?")) {
 								if (eq(m, "%[din]c([\\:\\.][A-Za-z]{3,4})")) {
@@ -24948,11 +26458,12 @@ public class KL {
 						String toGet = m.replaceAll(
 								"(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
 								"");
-						if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)"))
+						if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)")) {
 							hasParams = true;
-						if (!hasParams)
+						}
+						if (!hasParams) {
 							valueFromMethod = cls.getMethod(toGet).invoke(this);
-						else {
+						} else {
 							boolean multiParam = false;
 							String unprocessedParamString = m.replaceAll(
 									"^[\\$\\w]+[:\\(](?=\\w+)|\\)*$", "");
@@ -25082,40 +26593,135 @@ public class KL {
 				}
 			}
 			// FOR FIELDS
-			if (in(s, "(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?(?!\\(\\w*\\)))")) {
+			if (in(s,
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
 							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?");
-					String label = "";
-					int decimalPlaces = 1;
 					for (String m : fieldMatches) {
-						String toGet = m.replaceAll("[\\$\\{:=\\\\\\}]|(?<=[:=])\\.\\d(f|db)", "");
-						if (in(m, "[:=]")) {
-							label = m.replaceAll("[\\$\\{\\\\\\}]|(?<=[:=])\\.\\d(f|db)", "");
-							//allows following behavior:
-							//{amount:.1f} returns the double or floating-point value WITHOUT a label
-							//floats, and doubles with effort (i.e. ones seen with a decimal-place specifier after the colon) make an exception to the label: they get rid of it
-							//to have a label --- somewhat like you would with {pi:}, or {amount:}; except, they use automatic one-decimal precision by default --- while still being able to set custom precision: use {amount<:, or \\>:.1f} (with 2 colons, or a colon preceded by two backlashes to escape it) to return the double or floating-point value both with custom precision, and label `amount: `
-							//replace everything, but keep [:=]
-							if (in(label, "(?<=\\w):$"))
-								label += " ";
-					    	if (in(m, ("(?<=[:=]\\.)\\d(?=f|db)"))) decimalPlaces = Int(findMatch(m, "(?<=[:=]\\.)\\d(?=f|db)"));
-						}
+						String toGet = m.replaceAll(
+								"[\\$\\{:=\\\\\\}]|(?<=[:=])\\.\\d(f|db)", "");
 						field = cls.getField(toGet).get(this);
+						String label = "";
+						int decimalPlaces = 1;
+						if (in(m, "[:=]")) {
+							if (in(m, "[:=]{1,2}(?=\\.\\d(f|db))")
+									&& (field instanceof Float
+											|| field instanceof Double)) {
+								if (!in(m, "[:=]{2}|\\\\[:=]")) {
+									label = "";
+								} else {
+									label = m
+											.replaceAll("\\\\",
+													findMatch(m,
+															"(?<=\\\\)[:=]"))
+											.replaceAll(
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=]\\.\\d(f|db)",
+													"");
+									// keep one [:=] in this case, but remove
+									// the other, to make up for the label from
+									// the double :|=
+									// one could also use \\[:=] to force labels
+								}
+							} else if (in(m, "(?<=\\w)[:=\\\\]{2}(?!\\.\\d)")) {
+								label = "";
+								// good practice: if double colon (::) or double
+								// equals (==) is not followed by a
+								// precision,
+								// just remove it, so it returns the exact value
+								// of the
+								// field AS-IS
+							} else {
+								label = m.replaceAll("[\\$\\{\\\\\\}]", "");
+							}
+							// allows following behavior:
+							// {amount:.1f} returns the double or floating-point
+							// value WITHOUT a label
+							// floats, and doubles with effort (i.e. ones seen
+							// with a decimal-place specifier after the colon)
+							// make an exception to the label: they get rid of
+							// it
+							// to have a label --- somewhat like you would with
+							// {pi:}, or {amount:}; except, they use automatic
+							// one-decimal precision by default --- while still
+							// being able to set custom precision: use
+							// {amount<:, or \\>:.1f} (with 2 colons, or a colon
+							// preceded by two backlashes to escape it) to
+							// return the double or floating-point value both
+							// with custom precision, and label `amount: `
+							// replace everything, but keep [:=]
+							if (in(label, "(?<=\\w):$")) {
+								label += " ";
+							}
+							if (in(m, ("(?<=[:=]\\.)\\d(?=f|db)"))) {
+								decimalPlaces = Int(findMatch(m,
+										"(?<=[:=]\\.)\\d(?=f|db)"));
+							}
+						}
+						// NOTE
+						// THE GUIDE TO THE ESCAPING BEHAVIOR
+						// ______________________________________________________
+						// To escape a label from appearing in front of a field
+						// that
+						// MIGHT BE A STRING, use {name}, or {name::} instead of
+						// {name:} to get rid of the label.
+						// Label were only added to save a
+						// developer's time by labeling what they were
+						// printing.
+						// Speaking of which, works in REVERSE FOR DOUBLES AND
+						// FLOATS. To escape a label from appearing
+						// in front of a field that
+						// MIGHT BE EITHER A FLOATING-POINT NUMBER OR A DOUBLE,
+						// do nothing. It does that by default. It assumes,
+						// since
+						// you took the time defining a custom decimal
+						// precision, you
+						// might not be needing a label after all. However,
+						// use
+						// \\:, or \\=, or ::, or ==, or :=, or =:, to reverse
+						// this behavior for floats and doubles, and get the
+						// label back
+						// REASON: for doubles, and floats, the escaping works
+						// in
+						// reverse, to get Python-like behavior (e.g.
+						// {amount:.3f} with a single colon @@: or a single
+						// equality sign @@= -> would
+						// return `300.757`, no label by default, unlike with
+						// strings, for which the behavior is in reverse, they
+						// are preceded by a label by default, unless you
+						// manually tell the function to escape them).
+						// On the other hand, to get a labeled
+						// double/floating-point
+						// field, use double colon @@:: or
+						// double equality @@== or backlash with a single colon
+						// @@\\: or backslash with a single equality @@\\= (e.g.
+						// {amount::.3f} for double/floating-point field value
+						// 300.575 would return
+						// `Amount: 300.757`)
+						// ______________________________________________________
 						if (field instanceof Float || field instanceof Double) {
-							if (field instanceof Float) field = setPrecision((float)field, decimalPlaces);
-							else field = setPrecision((double)field, decimalPlaces);
+							if (field instanceof Float) {
+								field = setPrecision((float) field,
+										decimalPlaces);
+							} else {
+								field = setPrecision((double) field,
+										decimalPlaces);
+							}
 						}
 						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
-						//replace special characters, so s.replaceFirst doesn't confuse them with an ending character ($), or a quantifier ({,})
+						// replace special characters, so s.replaceFirst doesn't
+						// confuse them with an ending character ($), or a
+						// quantifier ({,})
 						s = s.replaceFirst(m,
 								field instanceof Character
 										|| field instanceof String
 										|| field instanceof Number
 										|| field instanceof Boolean
-												? (label.length() > 0 ? label + Str(field) : Str(field))
+												? (label.length() > 0
+														? label + Str(field)
+														: Str(field))
 												: m);
 					}
 				} catch (NoSuchFieldException | IllegalAccessException
@@ -25162,6 +26768,10 @@ public class KL {
 			s = s.replaceAll("&(?=\\-?\\d*\\.?\\d+)", "");
 			// cleaning up to make up for the numeric results, removing the &
 			// operator
+			double[] numsToRound = numsOf(s);
+			for (double num : numsToRound) {
+				s = s.replaceFirst(Str(num), fus(num));
+			}
 			s = sentCase(s);
 		} catch (PatternSyntaxException | StackOverflowError e) {
 
@@ -25210,42 +26820,46 @@ public class KL {
 	}
 	public static String curr(int n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|in|rs"))
+		if (startsWith(locale, "pk|in|rs")) {
 			return pkr(n);
-		else if (startsWith(locale, "us"))
+		} else if (startsWith(locale, "us")) {
 			return usd(n);
-		else if (len(locale) >= 1 && len(locale) <= 4)
+		} else if (len(locale) >= 1 && len(locale) <= 4) {
 			return trim(titleCase(locale)) + " " + formattedN;
+		}
 		return formattedN;
 	}
 	public static String curr(long n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|in|rs"))
+		if (startsWith(locale, "pk|in|rs")) {
 			return pkr(n);
-		else if (startsWith(locale, "us"))
+		} else if (startsWith(locale, "us")) {
 			return usd(n);
-		else if (len(locale) >= 1 && len(locale) < 4)
+		} else if (len(locale) >= 1 && len(locale) < 4) {
 			return trim(titleCase(locale)) + " " + formattedN;
+		}
 		return formattedN;
 	}
 	public static String curr(float n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|in|rs"))
+		if (startsWith(locale, "pk|in|rs")) {
 			return pkr(n);
-		else if (startsWith(locale, "us"))
+		} else if (startsWith(locale, "us")) {
 			return usd(n);
-		else if (len(locale) >= 1 && len(locale) < 4)
+		} else if (len(locale) >= 1 && len(locale) < 4) {
 			return trim(titleCase(locale)) + " " + formattedN;
+		}
 		return formattedN;
 	}
 	public static String curr(double n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|in|rs"))
+		if (startsWith(locale, "pk|in|rs")) {
 			return pkr(n);
-		else if (startsWith(locale, "us"))
+		} else if (startsWith(locale, "us")) {
 			return usd(n);
-		else if (len(locale) >= 1 && len(locale) < 4)
+		} else if (len(locale) >= 1 && len(locale) < 4) {
 			return trim(titleCase(locale)) + " " + formattedN;
+		}
 		return formattedN;
 	}
 	public static String pksuffix(int n) {
@@ -25253,8 +26867,9 @@ public class KL {
 		String formattedN = fpkr(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
-		if (n < 800 || n > 99 * kh)
+		if (n < 800 || n > 99 * kh) {
 			return formattedN;
+		}
 		String result = "";
 		switch (size) {
 			case 1 :
@@ -25281,8 +26896,9 @@ public class KL {
 		String formattedN = fpkr(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
-		if (n < 800 || n > 99 * kh)
+		if (n < 800 || n > 99 * kh) {
 			return formattedN;
+		}
 		String result = "";
 		switch (size) {
 			case 1 :
@@ -25309,8 +26925,9 @@ public class KL {
 		String formattedN = fpkr(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
-		if (n < 800 || n > 99 * kh)
+		if (n < 800 || n > 99 * kh) {
 			return formattedN;
+		}
 		String result = "";
 		switch (size) {
 			case 1 :
@@ -25337,8 +26954,9 @@ public class KL {
 		String formattedN = fpkr(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
-		if (n < 800 || n > 99 * kh)
+		if (n < 800 || n > 99 * kh) {
 			return formattedN;
+		}
 		String result = "";
 		switch (size) {
 			case 1 :
@@ -25365,8 +26983,9 @@ public class KL {
 		String formattedN = fus(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
-		if (n < 800 || n > 99 * dc)
+		if (n < 800 || n > 99 * dc) {
 			return formattedN;
+		}
 		String result = "";
 		switch (size) {
 			case 1 :
@@ -25411,8 +27030,9 @@ public class KL {
 		String formattedN = fus(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
-		if (n < 800 || n > 99 * dc)
+		if (n < 800 || n > 99 * dc) {
 			return formattedN;
+		}
 		String result = "";
 		switch (size) {
 			case 1 :
@@ -25457,8 +27077,9 @@ public class KL {
 		String formattedN = fus(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
-		if (n < 800 || n > 99 * dc)
+		if (n < 800 || n > 99 * dc) {
 			return formattedN;
+		}
 		String result = "";
 		switch (size) {
 			case 1 :
@@ -25503,8 +27124,9 @@ public class KL {
 		String formattedN = fus(n);
 		String[] parts = split(formattedN, ",");
 		int size = len(parts);
-		if (n < 800 || n > 99 * dc)
+		if (n < 800 || n > 99 * dc) {
 			return formattedN;
+		}
 		String result = "";
 		switch (size) {
 			case 1 :
@@ -25551,33 +27173,39 @@ public class KL {
 				.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
 				.add(4000, "M_V").add(9000, "I_X").add(10000, "_X");
 		int x = tree.floorKey(n);
-		if (n != x)
+		if (n != x) {
 			return tree.get(x) + toRoman(n - x);
+		}
 		return tree.get(n);
 	}
 	public static int fibonacci(int n) {
-		if (n < 2)
+		if (n < 2) {
 			return n;
+		}
 		return fibonacci(n - 1) + fibonacci(n - 2);
 	}
 	public static int[] fibonacciSequence(int n) {
 		intArr result = new intArr();
-		for (int i : range(n))
+		for (int i : range(n)) {
 			result.push(fibonacci(i + 1));
+		}
 		return result.array();
 	}
 	public static double percentify(double n1, double n2) {
-		if (not(n1) || not(n2))
+		if (not(n1) || not(n2)) {
 			return 0;
-		if (n1 < n2)
+		}
+		if (n1 < n2) {
 			return Math.round(n1 / n2 * 100.0) / 100.0;
-		else
+		} else {
 			return Math.round(n1 * (n2 * .01) * 100.0) / 100.0;
+		}
 	}
 	final static double infinity = Double.POSITIVE_INFINITY;
 	public static <T> boolean isNull(T... objs) {
-		if (objs == null)
+		if (objs == null) {
 			return true;
+		}
 		int count = 0;
 		for (Object o : objs) {
 			if (o == null
@@ -25591,12 +27219,14 @@ public class KL {
 		return count > 0;
 	}
 	public static <T> boolean isNull(T[]... subArrays) {
-		if (subArrays == null)
+		if (subArrays == null) {
 			return true;
+		}
 		int count = 0;
 		for (Object[] arr : subArrays) {
-			if (isNull(arr))
+			if (isNull(arr)) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle null arrays, not just regular objects
@@ -25629,7 +27259,7 @@ public class KL {
 		return n;
 	}
 	public static int round(float n) {
-		return (int) Math.round(n);
+		return Math.round(n);
 	}
 	public static int round(double n) {
 		return (int) Math.round(n);
@@ -25659,10 +27289,10 @@ public class KL {
 		return (int) Math.floor(n);
 	}
 	public static double celciusToFarhenheit(double c) {
-		return (double) round(1.8 * c + 32);
+		return round(1.8 * c + 32);
 	}
 	public static double farhenheitToCelcius(double f) {
-		return (double) round(((f - 32) * 5) / 9);
+		return round(((f - 32) * 5) / 9);
 	}
 	public static double cToF(double c) {
 		return celciusToFarhenheit(c);
@@ -25853,96 +27483,108 @@ public class KL {
 	public static boolean both(String... strings) {
 		int count = 0;
 		for (String s : strings) {
-			if (is(s))
+			if (is(s)) {
 				count += 1;
+			}
 		}
 		return count == len(strings);
 	}
 	public static boolean both(int... ints) {
 		int count = 0;
 		for (int n : ints) {
-			if (is(n))
+			if (is(n)) {
 				count += 1;
+			}
 		}
 		return count == len(ints);
 	}
 	public static boolean both(long... longs) {
 		int count = 0;
 		for (long n : longs) {
-			if (is(n))
+			if (is(n)) {
 				count += 1;
+			}
 		}
 		return count == len(longs);
 	}
 	public static boolean both(float... floats) {
 		int count = 0;
 		for (float n : floats) {
-			if (is(n))
+			if (is(n)) {
 				count += 1;
+			}
 		}
 		return count == len(floats);
 	}
 	public static boolean both(double... doubles) {
 		int count = 0;
 		for (double n : doubles) {
-			if (is(n))
+			if (is(n)) {
 				count += 1;
+			}
 		}
 		return count == len(doubles);
 	}
 	public static boolean both(boolean... bools) {
 		int count = 0;
 		for (boolean bool : bools) {
-			if (is(bool))
+			if (is(bool)) {
 				count += 1;
+			}
 		}
 		return count == len(bools);
 	}
 	public static boolean either(String... strings) {
 		int count = 0;
 		for (String s : strings) {
-			if (is(s))
+			if (is(s)) {
 				count += 1;
+			}
 		}
 		return count > 0;
 	}
 	public static boolean either(int... ints) {
 		int count = 0;
 		for (int n : ints) {
-			if (is(n))
+			if (is(n)) {
 				count += 1;
+			}
 		}
 		return count > 0;
 	}
 	public static boolean either(long... longs) {
 		int count = 0;
 		for (long n : longs) {
-			if (is(n))
+			if (is(n)) {
 				count += 1;
+			}
 		}
 		return count > 0;
 	}
 	public static boolean either(float... floats) {
 		int count = 0;
 		for (float n : floats) {
-			if (is(n))
+			if (is(n)) {
 				count += 1;
+			}
 		}
 		return count > 0;
 	}
 	public static boolean either(double... doubles) {
 		int count = 0;
 		for (double n : doubles) {
-			if (is(n))
+			if (is(n)) {
 				count += 1;
+			}
 		}
 		return count > 0;
 	}
 	public static boolean either(boolean... bools) {
 		int count = 0;
 		for (boolean bool : bools) {
-			if (is(bool))
+			if (is(bool)) {
 				count += 1;
+			}
 		}
 		return count > 0;
 	}
@@ -25967,48 +27609,54 @@ public class KL {
 	public static boolean neither(String... strings) {
 		int count = 0;
 		for (String s : strings) {
-			if (not(s))
+			if (not(s)) {
 				count += 1;
+			}
 		}
 		return count == len(strings);
 	}
 	public static boolean neither(int... ints) {
 		int count = 0;
 		for (int n : ints) {
-			if (not(n))
+			if (not(n)) {
 				count += 1;
+			}
 		}
 		return count == len(ints);
 	}
 	public static boolean neither(long... longs) {
 		int count = 0;
 		for (long n : longs) {
-			if (not(n))
+			if (not(n)) {
 				count += 1;
+			}
 		}
 		return count == len(longs);
 	}
 	public static boolean neither(float... floats) {
 		int count = 0;
 		for (float n : floats) {
-			if (not(n))
+			if (not(n)) {
 				count += 1;
+			}
 		}
 		return count == len(floats);
 	}
 	public static boolean neither(double... doubles) {
 		int count = 0;
 		for (double n : doubles) {
-			if (not(n))
+			if (not(n)) {
 				count += 1;
+			}
 		}
 		return count == len(doubles);
 	}
 	public static boolean neither(boolean... bools) {
 		int count = 0;
 		for (boolean bool : bools) {
-			if (not(bool))
+			if (not(bool)) {
 				count += 1;
+			}
 		}
 		return count == len(bools);
 	}
@@ -26311,24 +27959,28 @@ public class KL {
 		return number;
 	}
 	public static int randInt(int end) {
-		if (not(end) || isNeg(end))
+		if (not(end) || isNeg(end)) {
 			return 0;
+		}
 		int number = ThreadLocalRandom.current().nextInt(0, end);
 		return number;
 	}
 	public static int randInt(int start, int end) {
 		if (isNull(start) || not(end) || eq(start, end) || start > end
-				|| isNeg(end))
+				|| isNeg(end)) {
 			return 0;
+		}
 		int number = ThreadLocalRandom.current().nextInt(start, end);
 		return number;
 	}
 	public static int randPin(int len) {
 		String str = "";
-		if (not(len) || len < 4)
+		if (not(len) || len < 4) {
 			len = 4;
-		if (isInf(len) || len > 8)
+		}
+		if (isInf(len) || len > 8) {
 			len = 8;
+		}
 		while (len > 0) {
 			str += "" + randInt(10);
 			len--;
@@ -26350,31 +28002,35 @@ public class KL {
 		return toPrecision(number, 1);
 	}
 	public static double randFlt(int end) {
-		if (not(end) || isNeg(end))
+		if (not(end) || isNeg(end)) {
 			return 0;
+		}
 		double number = randInt(end) * .3;
 		return toPrecision(number, 1);
 	}
 	public static double randFlt(int start, int end) {
 		if (isNull(start) || not(end) || eq(start, end) || start > end
-				|| isNeg(end))
+				|| isNeg(end)) {
 			return 0;
+		}
 		double number = randInt(start, end) * .3;
 		return toPrecision(number, 1);
 	}
 	public static double randDbl() {
-		return (double) randFlt();
+		return randFlt();
 	}
 	public static double randDbl(int end) {
-		if (not(end) || isNeg(end))
+		if (not(end) || isNeg(end)) {
 			return 0;
-		return (double) randFlt(end);
+		}
+		return randFlt(end);
 	}
 	public static double randDbl(int start, int end) {
 		if (isNull(start) || not(end) || eq(start, end) || start > end
-				|| isNeg(end))
+				|| isNeg(end)) {
 			return 0;
-		return (double) randFlt(start, end);
+		}
+		return randFlt(start, end);
 	}
 	public static String randPct() {
 		Number[] nums = {randInt(100), randDbl()};
@@ -26385,18 +28041,21 @@ public class KL {
 				+ "qrstuvwxyz\\+=";
 		SecureRandom rnd = new SecureRandom();
 		StringBuilder sb = new StringBuilder(len);
-		for (int i = 0; i < len; i++)
+		for (int i = 0; i < len; i++) {
 			sb.append(AB.charAt(rnd.nextInt(AB.length())));
+		}
 		return sb.toString();
 	}
 	public static String randStr() {
 		return randStr(randInt(8, 32));
 	}
 	public static char randChar(int low, int high) {
-		if (low < 0)
+		if (low < 0) {
 			low = 0;
-		if (high > 127)
+		}
+		if (high > 127) {
 			high = 127;
+		}
 		return (char) randInt(low, high);
 	}
 	public static char randChar() {
@@ -26407,8 +28066,9 @@ public class KL {
 	}
 	public static String randId(int len) {
 		String id = randUuid().replaceAll("-", "");
-		if (not(len) || isNeg(len) || len >= len(id))
+		if (not(len) || isNeg(len) || len >= len(id)) {
 			return id;
+		}
 		return id.substring(0, len);
 	}
 	public static String randId() {
@@ -26416,148 +28076,177 @@ public class KL {
 		return id.substring(0, 8);
 	}
 	public static String randItem(String arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return arr[randInt(len(arr))];
 	}
 	public static int randItem(int arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr[randInt(len(arr))];
 	}
 	public static long randItem(long arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr[randInt(len(arr))];
 	}
 	public static float randItem(float arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr[randInt(len(arr))];
 	}
 	public static double randItem(double arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr[randInt(len(arr))];
 	}
 	public static boolean randItem(boolean arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr[randInt(len(arr))];
 	}
 	public static Object randItem(Object arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr[randInt(len(arr))];
 	}
 	public static String randItem(strArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static int randItem(intArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static long randItem(longArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static float randItem(fltArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static double randItem(dblArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static boolean randItem(boolArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static String randItem(objS arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static int randItem(objI arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static long randItem(objL arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static float randItem(objF arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static double randItem(objD arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static boolean randItem(objB arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.i(randInt(arr.length()));
 	}
 	public static String randItem(treeDS t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static int randItem(treeDI t) {
-		if (not(t))
+		if (not(t)) {
 			return 0;
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static String randItem(treeI t) {
-		if (not(t))
+		if (not(t)) {
 			return "";
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static long randItem(treeDL t) {
-		if (not(t))
+		if (not(t)) {
 			return 0;
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static long randItem(treeL t) {
-		if (not(t))
+		if (not(t)) {
 			return 0;
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static float randItem(treeDF t) {
-		if (not(t))
+		if (not(t)) {
 			return 0;
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static float randItem(treeF t) {
-		if (not(t))
+		if (not(t)) {
 			return 0;
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static double randItem(treeD t) {
-		if (not(t))
+		if (not(t)) {
 			return 0;
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static boolean randItem(treeDB t) {
-		if (not(t))
+		if (not(t)) {
 			return false;
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static boolean randItem(treeB t) {
-		if (not(t))
+		if (not(t)) {
 			return false;
+		}
 		return t.i(randInt(t.length()));
 	}
 	public static String randFrom(String arr[]) {
@@ -26735,60 +28424,71 @@ public class KL {
 		return randItem(o);
 	}
 	public static int[] noDuplicates(int[] arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Int;
+		}
 		return IntStream.of(arr).distinct().toArray();
 	}
 	public static long[] noDuplicates(long[] arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Long;
+		}
 		return LongStream.of(arr).distinct().toArray();
 	}
 	public static double[] noDuplicates(double[] arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Dbl;
+		}
 		return DoubleStream.of(arr).distinct().toArray();
 	}
 	public static strArr noDuplicates(strArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new strArr(blank.Str);
+		}
 		return arr.unique();
 	}
 	public static intArr noDuplicates(intArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new intArr(blank.Int);
+		}
 		return arr.unique();
 	}
 	public static longArr noDuplicates(longArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new longArr(blank.Long);
+		}
 		return arr.unique();
 	}
 	public static fltArr noDuplicates(fltArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new fltArr(blank.Flt);
+		}
 		return arr.unique();
 	}
 	public static dblArr noDuplicates(dblArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new dblArr(blank.Dbl);
+		}
 		return arr.unique();
 	}
 	public static boolArr noDuplicates(boolArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new boolArr(blank.Bool);
+		}
 		return arr.unique();
 	}
 	public static String replace(String str, String to_replace,
 			String regex_to_replace_with) {
-		if (not(str) || not(to_replace))
+		if (not(str) || not(to_replace)) {
 			return str;
+		}
 		return str.replaceAll(to_replace, regex_to_replace_with);
 	}
 	public static String replace(String str, String to_replace,
 			Function<String, String> fn) {
-		if (not(str) || not(to_replace) || not(fn))
+		if (not(str) || not(to_replace) || not(fn)) {
 			return str;
+		}
 		StringBuilder s = new StringBuilder(str);
 		Pattern p = Pattern.compile(to_replace);
 		Matcher matcher = p.matcher(s);
@@ -26796,24 +28496,28 @@ public class KL {
 	}
 	public static String replaceFirst(String str, String to_replace,
 			String regex_to_replace_with) {
-		if (not(str) || not(to_replace))
+		if (not(str) || not(to_replace)) {
 			return str;
+		}
 		return str.replaceFirst(to_replace, regex_to_replace_with);
 	}
 	public static String replaceOne(String str, String to_replace,
 			String regex_to_replace_with) {
-		if (not(str) || not(to_replace))
+		if (not(str) || not(to_replace)) {
 			return str;
+		}
 		return replaceFirst(str, to_replace, regex_to_replace_with);
 	}
 	public static String remove(String str, String re) {
-		if (not(str) || not(re))
+		if (not(str) || not(re)) {
 			return str;
+		}
 		return replace(str, re, "");
 	}
 	public static String slice(String str) {
-		if (not(str))
+		if (not(str)) {
 			return "";
+		}
 		return remove(str, "^\\s+|\\s+$");
 		// TESTED, and proven: DOUBLE-ESCAPING WASN'T NEEDED here. As a matter
 		// of fact, for some reason, it's not needed with whitespaces ("\\s") in
@@ -26821,408 +28525,477 @@ public class KL {
 		// better to at least try and create your own implementation.
 	}
 	public static String[] slice(String arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Str;
+		}
 		return arr.clone();
 	}
 	public static int[] slice(int arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Int;
+		}
 		return arr.clone();
 	}
 	public static long[] slice(long arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Long;
+		}
 		return arr.clone();
 	}
 	public static float[] slice(float arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Flt;
+		}
 		return arr.clone();
 	}
 	public static double[] slice(double arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Dbl;
+		}
 		return arr.clone();
 	}
 	public static boolean[] slice(boolean arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Bool;
+		}
 		return arr.clone();
 	}
 	public static Object[] slice(Object arr[]) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Obj;
+		}
 		return arr.clone();
 	}
 	public static strArr slice(strArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new strArr(blank.Str);
+		}
 		return arr.copy();
 	}
 	public static intArr slice(intArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new intArr(blank.Int);
+		}
 		return arr.copy();
 	}
 	public static longArr slice(longArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new longArr(blank.Long);
+		}
 		return arr.copy();
 	}
 	public static fltArr slice(fltArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new fltArr(blank.Flt);
+		}
 		return arr.copy();
 	}
 	public static dblArr slice(dblArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new dblArr(blank.Dbl);
+		}
 		return arr.copy();
 	}
 	public static boolArr slice(boolArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return new boolArr(blank.Bool);
+		}
 		return arr.copy();
 	}
 	public static String slice(String str, int start) {
-		if (not(str) || not(start) || isNeg(start) || start >= len(str))
+		if (not(str) || not(start) || isNeg(start) || start >= len(str)) {
 			return slice(str);
+		}
 		return str.substring(start, len(str));
 	}
 	public static String[] slice(String oldArr[], int start) {
-		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
 				len(oldArr));
 		return newArr;
 	}
 	public static int[] slice(int oldArr[], int start) {
-		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
 		return newArr;
 	}
 	public static long[] slice(long oldArr[], int start) {
-		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
 		return newArr;
 	}
 	public static float[] slice(float oldArr[], int start) {
-		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
 		return newArr;
 	}
 	public static double[] slice(double oldArr[], int start) {
-		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
 				len(oldArr));
 		return newArr;
 	}
 	public static boolean[] slice(boolean oldArr[], int start) {
-		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
 				len(oldArr));
 		return newArr;
 	}
 	public static Object[] slice(Object oldArr[], int start) {
-		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr))
+		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		Object newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
 				len(oldArr));
 		return newArr;
 	}
 	public static strArr slice(strArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, arr.length());
 	}
 	public static intArr slice(intArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, arr.length());
 	}
 	public static longArr slice(longArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, arr.length());
 	}
 	public static fltArr slice(fltArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, arr.length());
 	}
 	public static dblArr slice(dblArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, arr.length());
 	}
 	public static boolArr slice(boolArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, arr.length());
 	}
 	public static String slice(String str, int start, int end) {
 		if (not(str) || isNull(start) || start >= len(str) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(str))
+				|| end >= len(str)) {
 			return slice(str);
+		}
 		return str.substring(start, end);
 	}
 	public static String[] slice(String oldArr[], int start, int end) {
 		if (not(oldArr) || isNull(start) || start >= len(oldArr)
 				|| eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end >= len(oldArr))
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static int[] slice(int oldArr[], int start, int end) {
 		if (not(oldArr) || isNull(start) || start >= len(oldArr)
 				|| eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end >= len(oldArr))
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static long[] slice(long oldArr[], int start, int end) {
 		if (not(oldArr) || isNull(start) || start >= len(oldArr)
 				|| eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end >= len(oldArr))
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static float[] slice(float oldArr[], int start, int end) {
 		if (not(oldArr) || isNull(start) || start >= len(oldArr)
 				|| eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end >= len(oldArr))
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static double[] slice(double oldArr[], int start, int end) {
 		if (not(oldArr) || isNull(start) || start >= len(oldArr)
 				|| eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end >= len(oldArr))
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static boolean[] slice(boolean oldArr[], int start, int end) {
 		if (not(oldArr) || isNull(start) || start >= len(oldArr)
 				|| eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end >= len(oldArr))
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static Object[] slice(Object oldArr[], int start, int end) {
 		if (not(oldArr) || isNull(start) || start >= len(oldArr)
 				|| eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end >= len(oldArr))
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
+		}
 		Object newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
 		return newArr;
 	}
 	public static strArr slice(strArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr))
+				|| end >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, end);
 	}
 	public static intArr slice(intArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr))
+				|| end >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, end);
 	}
 	public static longArr slice(longArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr))
+				|| end >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, end);
 	}
 	public static fltArr slice(fltArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr))
+				|| end >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, end);
 	}
 	public static dblArr slice(dblArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr))
+				|| end >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, end);
 	}
 	public static boolArr slice(boolArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr))
+				|| end >= len(arr)) {
 			return slice(arr);
+		}
 		return arr.slice(start, end);
 	}
 	public static String sliceRight(String str, int start) {
-		if (not(str) || not(start) || isNeg(start) || start >= len(str))
+		if (not(str) || not(start) || isNeg(start) || start >= len(str)) {
 			return slice(str);
+		}
 		return slice(str, len(str) - start, len(str));
 	}
 	public static String[] sliceRight(String[] arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static int[] sliceRight(int[] arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static long[] sliceRight(long[] arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static float[] sliceRight(float[] arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static double[] sliceRight(double[] arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static boolean[] sliceRight(boolean[] arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static Object[] sliceRight(Object[] arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static strArr sliceRight(strArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static intArr sliceRight(intArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static longArr sliceRight(longArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static fltArr sliceRight(fltArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static dblArr sliceRight(dblArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static boolArr sliceRight(boolArr arr, int start) {
-		if (not(arr) || not(start) || isNeg(start) || start >= len(arr))
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static String sliceEnd(String str, int earlyEnd) {
 		if (not(str) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(str))
+				|| earlyEnd >= len(str)) {
 			return slice(str);
+		}
 		return slice(str, 0, len(str) - earlyEnd);
 	}
 	public static String[] sliceEnd(String[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static int[] sliceEnd(int[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static long[] sliceEnd(long[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static float[] sliceEnd(float[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static double[] sliceEnd(double[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static boolean[] sliceEnd(boolean[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static Object[] sliceEnd(Object[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static strArr sliceEnd(strArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static intArr sliceEnd(intArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static longArr sliceEnd(longArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static fltArr sliceEnd(fltArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static dblArr sliceEnd(dblArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static boolArr sliceEnd(boolArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr))
+				|| earlyEnd >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static String sliceOff(String str, int earlyEnd) {
@@ -27310,92 +29083,117 @@ public class KL {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static String sliceKeep(String str, int end) {
-		if (not(str) || not(end) || isNeg(end) || end >= len(str))
+		if (not(str) || not(end) || isNeg(end) || end >= len(str)) {
 			return str;
+		}
 		return slice(str, 0, end);
 	}
 	public static String[] sliceKeep(String[] arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Str;
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static int[] sliceKeep(int[] arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Int;
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static long[] sliceKeep(long[] arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Long;
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static float[] sliceKeep(float[] arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Flt;
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static double[] sliceKeep(double[] arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Dbl;
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static boolean[] sliceKeep(boolean[] arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return blank.Bool;
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static strArr sliceKeep(strArr arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return new strArr(blank.Str);
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static intArr sliceKeep(intArr arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return new intArr(blank.Int);
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static longArr sliceKeep(longArr arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return new longArr(blank.Long);
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static fltArr sliceKeep(fltArr arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return new fltArr(blank.Flt);
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static dblArr sliceKeep(dblArr arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return new dblArr(blank.Dbl);
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static boolArr sliceKeep(boolArr arr, int end) {
-		if (not(arr))
+		if (not(arr)) {
 			return new boolArr(blank.Bool);
-		if (not(end) || isNeg(end) || end >= len(arr))
+		}
+		if (not(end) || isNeg(end) || end >= len(arr)) {
 			return slice(arr);
+		}
 		return slice(arr, 0, end);
 	}
 	public static String trim(String str) {
@@ -27712,14 +29510,16 @@ public class KL {
 	}
 	public static String sliceTo(String str, String thatSpecificPart) {
 		int index = indexOf(str, thatSpecificPart);
-		if (index < 0 || index == -1)
+		if (index < 0 || index == -1) {
 			return str;
+		}
 		return slice(str, index);
 	}
 	public static String sliceToAfter(String str, String thatSpecificPart) {
 		int index = indexOf(str, thatSpecificPart);
-		if (index < 0)
+		if (index < 0) {
 			return str;
+		}
 		String retrievedString = sliceTo(str, thatSpecificPart);
 		return slice(retrievedString, len(thatSpecificPart));
 	}
@@ -27736,113 +29536,135 @@ public class KL {
 		return !!matcher.find();
 	}
 	public static boolean endsWith(String[] arr, String lookupStr) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr[len(arr) - 1].equals(lookupStr);
 	}
 	public static boolean endsWith(int[] arr, int lookupInt) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr[len(arr) - 1] == lookupInt;
 	}
 	public static boolean endsWith(long[] arr, long lookupLong) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr[len(arr) - 1] == lookupLong;
 	}
 	public static boolean endsWith(float[] arr, float lookupFloat) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr[len(arr) - 1] == lookupFloat;
 	}
 	public static boolean endsWith(double[] arr, double lookupDbl) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr[len(arr) - 1] == lookupDbl;
 	}
 	public static boolean endsWith(boolean[] arr, boolean lookupBool) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr[len(arr) - 1] == lookupBool;
 	}
 	public static boolean endsWith(strArr arr, String lookupStr) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.last() == lookupStr;
 	}
 	public static boolean endsWith(intArr arr, int lookupInt) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.last() == lookupInt;
 	}
 	public static boolean endsWith(longArr arr, long lookupLong) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.last() == lookupLong;
 	}
 	public static boolean endsWith(fltArr arr, float lookupFlt) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.last() == lookupFlt;
 	}
 	public static boolean endsWith(dblArr arr, double lookupDbl) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.last() == lookupDbl;
 	}
 	public static boolean endsWith(boolArr arr, boolean lookupBool) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.last() == lookupBool;
 	}
 	public static boolean endsWith(treeDS tree, String lookupString) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return eq(tree.last(), lookupString);
 	}
 	public static boolean endsWith(treeDI tree, int lookupInt) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupInt;
 	}
 	public static boolean endsWith(treeI tree, String lookupStr) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupStr;
 	}
 	public static boolean endsWith(treeDL tree, long lookupLong) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupLong;
 	}
 	public static boolean endsWith(treeL tree, long lookupLong) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupLong;
 	}
 	public static boolean endsWith(treeDF tree, float lookupFloat) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupFloat;
 	}
 	public static boolean endsWith(treeF tree, float lookupFloat) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupFloat;
 	}
 	public static boolean endsWith(treeD tree, double lookupDouble) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupDouble;
 	}
 	public static boolean endsWith(treeDB tree, boolean lookupBool) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupBool;
 	}
 	public static boolean endsWith(treeB tree, boolean lookupBool) {
-		if (not(tree))
+		if (not(tree)) {
 			return false;
+		}
 		return tree.last() == lookupBool;
 	}
 	public static String nth(strArr arr, int n) {
@@ -27864,63 +29686,75 @@ public class KL {
 		return n >= 0 && n < len(arr) ? arr.i(n) : false;
 	}
 	public static String firstOf(strArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return arr.first();
 	}
 	public static String secondOf(strArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return "";
+		}
 		return arr.second();
 	}
 	public static int firstOf(intArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.first();
 	}
 	public static int secondOf(intArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.second();
 	}
 	public static float firstOf(longArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.first();
 	}
 	public static float secondOf(longArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.second();
 	}
 	public static float firstOf(fltArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.first();
 	}
 	public static float secondOf(fltArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.second();
 	}
 	public static double firstOf(dblArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.first();
 	}
 	public static double secondOf(dblArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return 0;
+		}
 		return arr.second();
 	}
 	public static boolean firstOf(boolArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.first();
 	}
 	public static boolean secondOf(boolArr arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return false;
+		}
 		return arr.second();
 	}
 	public static String nthLastOf(String str, int n) {
@@ -28142,8 +29976,9 @@ public class KL {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
 	public static int indexOf(String inStr, String lookupStr, int startIndex) {
-		if (not(inStr) || isNull(startIndex) || isNeg(startIndex))
+		if (not(inStr) || isNull(startIndex) || isNeg(startIndex)) {
 			return -1;
+		}
 		return inStr.indexOf(lookupStr, startIndex);
 	}
 	public static int indexOf(String inStr, String lookupStr) {
@@ -28151,11 +29986,13 @@ public class KL {
 	}
 	public static int indexOf(String inStr, char lookupCh, int startIndex) {
 		if (not(inStr) || not(lookupCh) || isNull(startIndex)
-				|| isNeg(startIndex))
+				|| isNeg(startIndex)) {
 			return -1;
+		}
 		for (int i : range(inStr)) {
-			if (slice(inStr, startIndex).toCharArray()[i] == lookupCh)
+			if (slice(inStr, startIndex).toCharArray()[i] == lookupCh) {
 				return i;
+			}
 		}
 		return -1;
 	}
@@ -28167,92 +30004,105 @@ public class KL {
 	}
 	public static int lastIndexOf(String inStr, char lookupCh) {
 		for (int i = len(inStr) - 1; i >= 0; i--) {
-			if (inStr.toCharArray()[i] == lookupCh)
+			if (inStr.toCharArray()[i] == lookupCh) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int indexOf(String[] inStrArr, String lookupStr) {
 		for (int i = 0; i < len(inStrArr); i++) {
-			if (inStrArr[i].equals(lookupStr))
+			if (inStrArr[i].equals(lookupStr)) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int lastIndexOf(String[] inStrArr, String lookupStr) {
 		for (int i = len(inStrArr) - 1; i >= 0; i--) {
-			if (inStrArr[i].equals(lookupStr))
+			if (inStrArr[i].equals(lookupStr)) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int indexOf(int[] inIntArr, int lookupInt) {
 		for (int i = 0; i < len(inIntArr); i++) {
-			if (inIntArr[i] == lookupInt)
+			if (inIntArr[i] == lookupInt) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int lastIndexOf(int[] inIntArr, int lookupInt) {
 		for (int i = len(inIntArr) - 1; i >= 0; i--) {
-			if (inIntArr[i] == lookupInt)
+			if (inIntArr[i] == lookupInt) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int indexOf(long[] inLongArr, long lookupLong) {
 		for (int i = 0; i < len(inLongArr); i++) {
-			if (inLongArr[i] == lookupLong)
+			if (inLongArr[i] == lookupLong) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int lastIndexOf(long[] inLongArr, long lookupLong) {
 		for (int i = len(inLongArr) - 1; i >= 0; i--) {
-			if (inLongArr[i] == lookupLong)
+			if (inLongArr[i] == lookupLong) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int indexOf(float[] inFltArr, float lookupFlt) {
 		for (int i = 0; i < len(inFltArr); i++) {
-			if (inFltArr[i] == lookupFlt)
+			if (inFltArr[i] == lookupFlt) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int lastIndexOf(float[] inFloatArr, float lookupFloat) {
 		for (int i = len(inFloatArr) - 1; i >= 0; i--) {
-			if (inFloatArr[i] == lookupFloat)
+			if (inFloatArr[i] == lookupFloat) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int indexOf(double[] inDblArr, double lookupDbl) {
 		for (int i = 0; i < len(inDblArr); i++) {
-			if (inDblArr[i] == lookupDbl)
+			if (inDblArr[i] == lookupDbl) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int lastIndexOf(double[] inDblArr, double lookupDbl) {
 		for (int i = len(inDblArr) - 1; i >= 0; i--) {
-			if (inDblArr[i] == lookupDbl)
+			if (inDblArr[i] == lookupDbl) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int indexOf(boolean[] inBoolArr, boolean lookupBool) {
 		for (int i = 0; i < len(inBoolArr); i++) {
-			if (inBoolArr[i] == lookupBool)
+			if (inBoolArr[i] == lookupBool) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	public static int lastIndexOf(boolean[] inBoolArr, boolean lookupBool) {
 		for (int i = len(inBoolArr) - 1; i >= 0; i--) {
-			if (inBoolArr[i] == lookupBool)
+			if (inBoolArr[i] == lookupBool) {
 				return i;
+			}
 		}
 		return -1;
 	}
@@ -28295,16 +30145,18 @@ public class KL {
 	public static int numberOfOccurrencesIn(String inStr, char lookupCh) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inStr); i++) {
-			if (inStr.toCharArray()[i] == lookupCh)
+			if (inStr.toCharArray()[i] == lookupCh) {
 				occurrences++;
+			}
 		}
 		return occurrences;
 	}
 	public static int numberOfOccurrencesIn(String inStr, String lookupStr) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inStr); i++) {
-			if (inStr.toCharArray()[i] == lookupStr.charAt(0))
+			if (inStr.toCharArray()[i] == lookupStr.charAt(0)) {
 				occurrences++;
+			}
 		}
 		return occurrences;
 	}
@@ -28312,32 +30164,36 @@ public class KL {
 			String lookupStr) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inStrArr); i++) {
-			if (inStrArr[i].equals(lookupStr))
+			if (inStrArr[i].equals(lookupStr)) {
 				occurrences++;
+			}
 		}
 		return occurrences;
 	}
 	public static int numberOfOccurrencesIn(int[] inIntArr, int lookupInt) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inIntArr); i++) {
-			if (inIntArr[i] == lookupInt)
+			if (inIntArr[i] == lookupInt) {
 				occurrences++;
+			}
 		}
 		return occurrences;
 	}
 	public static int numberOfOccurrencesIn(long[] inLongArr, long lookupLong) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inLongArr); i++) {
-			if (inLongArr[i] == lookupLong)
+			if (inLongArr[i] == lookupLong) {
 				occurrences++;
+			}
 		}
 		return occurrences;
 	}
 	public static int numberOfOccurrencesIn(float[] inFltArr, float lookupFlt) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inFltArr); i++) {
-			if (inFltArr[i] == lookupFlt)
+			if (inFltArr[i] == lookupFlt) {
 				occurrences++;
+			}
 		}
 		return occurrences;
 	}
@@ -28345,8 +30201,9 @@ public class KL {
 			double lookupDbl) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inDblArr); i++) {
-			if (inDblArr[i] == lookupDbl)
+			if (inDblArr[i] == lookupDbl) {
 				occurrences++;
+			}
 		}
 		return occurrences;
 	}
@@ -28354,8 +30211,9 @@ public class KL {
 			boolean lookupBool) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inBoolArr); i++) {
-			if (inBoolArr[i] == lookupBool)
+			if (inBoolArr[i] == lookupBool) {
 				occurrences++;
+			}
 		}
 		return occurrences;
 	}
@@ -28422,15 +30280,17 @@ public class KL {
 		return in(arr, targetValue);
 	}
 	public static boolean match(String str, String re, boolean... bools) {
-		if (isNull(str) || isNull(re))
+		if (isNull(str) || isNull(re)) {
 			return false;
+		}
 		// these null checks have to stay NULL checks, not entire `not` checks,
 		// as not(re) would trim whitespace " ", which we sometimes DO need to
 		// look up in a string to see if the string is more than one word, down
 		// to ""
 		if (re.equals(".") || re.equals("*") || re.equals("+")
-				|| re.equals("?"))
+				|| re.equals("?")) {
 			re = "\\" + re;
+		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
 					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
@@ -28454,8 +30314,9 @@ public class KL {
 			// memory heap to exceed
 			// plus, handling both, standard and custom, format specifiers
 			boolean strict = false;
-			if (is(bools))
+			if (is(bools)) {
 				strict = bools[0] == true;
+			}
 			Pattern pattern = Pattern.compile(re,
 					strict ? 0 : Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str.trim());
@@ -28465,8 +30326,9 @@ public class KL {
 		}
 	}
 	public static String findMatch(String str, String re, boolean... bools) {
-		if (not(str) || not(re))
+		if (not(str) || not(re)) {
 			return "";
+		}
 		if (re.equals(".") || re.equals("*") || re.equals("+")
 				|| re.equals("?")) {
 			re = "\\" + re;
@@ -28499,8 +30361,9 @@ public class KL {
 			Pattern pattern = Pattern.compile("(" + re + ")",
 					strict ? 0 : Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str.trim());
-			if (!matcher.find())
+			if (!matcher.find()) {
 				return "";
+			}
 			return matcher.group();
 		} catch (PatternSyntaxException | StackOverflowError e) {
 			return "";
@@ -28508,8 +30371,9 @@ public class KL {
 	}
 	public static String[] findMatches(String str, String re,
 			boolean... bools) {
-		if (not(str) || not(re))
+		if (not(str) || not(re)) {
 			return blank.Str;
+		}
 		// blank.Str actually refers to new String[]{}. I know it could have
 		// been blank.strArr, but that would have been too long, and would be
 		// almost the same as typing new String[]{}. Sometimes, we're just
@@ -28548,9 +30412,10 @@ public class KL {
 			Matcher matcher = pattern.matcher(str.trim());
 			strArr arr = new strArr();
 			while (matcher.find()) {
-				if (!isEmpty(matcher.group()))
+				if (!isEmpty(matcher.group())) {
 					arr.push(trim(matcher.group()));
-				// the isEmpty check has proven to be helpful
+					// the isEmpty check has proven to be helpful
+				}
 			}
 			return arr.array();
 		} catch (PatternSyntaxException | StackOverflowError e) {
@@ -28558,157 +30423,186 @@ public class KL {
 		}
 	}
 	public static int[] intsOf(String s) {
-		if (not(s))
+		if (not(s)) {
 			return new int[]{};
+		}
 		intArr arr = new intArr();
 		String[] matches = findMatches(s, "(?<!\\.)(\\d+)(?!\\.)");
-		for (int i : range(matches))
+		for (int i : range(matches)) {
 			arr.push(Int(matches[i]));
+		}
 		return arr.array();
 	}
 	public static int[] intsOf(Number... nums) {
-		if (not(nums))
+		if (not(nums)) {
 			return blank.Int;
+		}
 		intArr resultantArr = new intArr();
 		for (Number n : nums) {
-			if (!isNull(n))
+			if (!isNull(n)) {
 				resultantArr.push(n.intValue());
+			}
 		}
 		return resultantArr.array();
 	}
 	public static int[] intsOf(Object... objs) {
 		intArr resultantArr = new intArr();
 		for (Object obj : objs) {
-			if (obj instanceof Integer)
+			if (obj instanceof Integer) {
 				resultantArr.push((int) obj);
+			}
 		}
 		return resultantArr.array();
 	}
 	public static float[] fltsOf(String s) {
-		if (not(s))
+		if (not(s)) {
 			return new float[]{};
+		}
 		fltArr arr = new fltArr();
-		String[] matches = findMatches(s, "\\d*\\.\\d+");
-		for (int i : range(matches))
-			arr.push(Flt(matches[i]));
+		String[] matches = findMatches(s, "\\-?\\d*\\.\\d+");
+		for (int i : range(matches)) {
+			arr.push(setPrecision(Flt(matches[i]), 2));
+		}
 		return arr.array();
 	}
 	public static float[] fltsOf(Number... nums) {
-		if (not(nums))
+		if (not(nums)) {
 			return blank.Flt;
+		}
 		fltArr resultantArr = new fltArr();
 		for (Number n : nums) {
-			if (!isNull(n))
-				resultantArr.push(n.floatValue());
+			if (!isNull(n)) {
+				resultantArr.push(setPrecision(n.floatValue(), 2));
+			}
 		}
 		return resultantArr.array();
 	}
 	public static float[] fltsOf(Object... objs) {
 		fltArr resultantArr = new fltArr();
 		for (Object obj : objs) {
-			if (obj instanceof Float)
-				resultantArr.push((float) obj);
+			if (obj instanceof Float) {
+				resultantArr.push(setPrecision((float) obj, 2));
+			}
 		}
 		return resultantArr.array();
 	}
 	public static double[] dblsOf(String s) {
-		if (not(s))
+		if (not(s)) {
 			return new double[]{};
+		}
 		dblArr arr = new dblArr();
-		String[] matches = findMatches(s, "[\\d]*\\.\\d+");
-		for (int i : range(matches))
-			arr.push(Dbl(matches[i]));
+		String[] matches = findMatches(s, "\\-?\\d*\\.\\d+");
+		for (int i : range(matches)) {
+			arr.push(setPrecision(Dbl(matches[i]), 2));
+		}
 		return arr.array();
 	}
 	public static double[] dblsOf(Number... nums) {
-		if (not(nums))
+		if (not(nums)) {
 			return blank.Dbl;
+		}
 		dblArr resultantArr = new dblArr();
 		for (Number n : nums) {
-			if (!isNull(n))
-				resultantArr.push(n.doubleValue());
+			if (!isNull(n)) {
+				resultantArr.push(setPrecision(n.doubleValue(), 2));
+			}
 		}
 		return resultantArr.array();
 	}
 	public static double[] dblsOf(Object... objs) {
 		dblArr resultantArr = new dblArr();
 		for (Object obj : objs) {
-			if (obj instanceof Double)
-				resultantArr.push((double) obj);
+			if (obj instanceof Double) {
+				resultantArr.push(setPrecision((double) obj, 2));
+			}
 		}
 		return resultantArr.array();
 	}
 	public static double[] numsOf(String s) {
-		if (not(s))
+		if (not(s)) {
 			return new double[]{};
+		}
 		dblArr arr = new dblArr();
-		String[] matches = findMatches(s, "\\d*\\.?\\d+");
-		for (int i : range(matches))
-			arr.push(Dbl(matches[i]));
+		String[] matches = findMatches(s, "\\-?\\d*\\.?\\d+");
+		for (int i : range(matches)) {
+			arr.push(setPrecision(Dbl(matches[i]), 2));
+		}
 		return arr.array();
 	}
 	public static double[] numsOf(Object... objs) {
 		dblArr resultantArr = new dblArr();
 		for (Object obj : objs) {
-			if (obj instanceof Number)
-				resultantArr.push(setPrecision(((Number) obj).doubleValue()));
+			if (obj instanceof Number) {
+				resultantArr
+						.push(setPrecision(((Number) obj).doubleValue(), 2));
+			}
 		}
 		return resultantArr.array();
 	}
 	public static String[] emailsOf(String s) {
-		if (not(s))
+		if (not(s)) {
 			return new String[]{};
+		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
 				"[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
-		for (int i : range(matches))
+		for (int i : range(matches)) {
 			arr.push(matches[i]);
+		}
 		return arr.array();
 	}
 	public static String[] urlsOf(String s) {
-		if (not(s))
+		if (not(s)) {
 			return new String[]{};
+		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
 				"(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?");
-		for (int i : range(matches))
+		for (int i : range(matches)) {
 			arr.push(matches[i]);
+		}
 		return arr.array();
 	}
 	public static String[] phonesOf(String s) {
-		if (not(s))
+		if (not(s)) {
 			return new String[]{};
+		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
 				"((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))");
-		for (int i : range(matches))
+		for (int i : range(matches)) {
 			arr.push(matches[i]);
+		}
 		return arr.array();
 	}
-	public static String[] findUserData(String s) {
-		if (not(s))
+	public static String[] userDataFromString(String s) {
+		if (not(s)) {
 			return blank.Str;
+		}
 		strArr arr = new strArr();
 		arr.push(emailsOf(s), urlsOf(s), phonesOf(s));
 		return arr.array();
 	}
 	public static boolean isEmail(String s) {
-		if (not(s))
+		if (not(s)) {
 			return false;
+		}
 		return eq(trim(s),
 				"[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
 		// apparently, Java is stupid when it comes to regular expression.
 		// Learned: neither "\\s"
 	}
 	public static boolean isUrl(String s) {
-		if (not(s))
+		if (not(s)) {
 			return false;
+		}
 		return eq(trim(s),
 				"(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?");
 	}
 	public static boolean isPhone(String s) {
-		if (not(s))
+		if (not(s)) {
 			return false;
+		}
 		return eq(trim(s),
 				"((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))");
 	}
@@ -28922,63 +30816,75 @@ public class KL {
 		public static boolArr boolArr = new boolArr();
 	}
 	public static String[] combine(String[] arrA, String[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Str;
+		}
 		return combine(new strArr(arrA), arrays).array();
 	}
 	public static String[] combine(String[] arrA, strArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Str;
+		}
 		return combine(new strArr(arrA), arrays).array();
 	}
 	public static int[] combine(int[] arrA, int[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Int;
+		}
 		return combine(new intArr(arrA), arrays).array();
 	}
 	public static int[] combine(int[] arrA, intArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Int;
+		}
 		return combine(new intArr(arrA), arrays).array();
 	}
 	public static long[] combine(long[] arrA, long[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Long;
+		}
 		return combine(new longArr(arrA), arrays).array();
 	}
 	public static long[] combine(long[] arrA, longArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Long;
+		}
 		return combine(new longArr(arrA), arrays).array();
 	}
 	public static float[] combine(float[] arrA, float[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Flt;
+		}
 		return combine(new fltArr(arrA), arrays).array();
 	}
 	public static float[] combine(float[] arrA, fltArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Flt;
+		}
 		return combine(new fltArr(arrA), arrays).array();
 	}
 	public static double[] combine(double[] arrA, double[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Dbl;
+		}
 		return combine(new dblArr(arrA), arrays).array();
 	}
 	public static double[] combine(double[] arrA, dblArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Dbl;
+		}
 		return combine(new dblArr(arrA), arrays).array();
 	}
 	public static boolean[] combine(boolean[] arrA, boolean[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Bool;
+		}
 		return combine(new boolArr(arrA), arrays).array();
 	}
 	public static boolean[] combine(boolean[] arrA, boolArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Bool;
+		}
 		return combine(new boolArr(arrA), arrays).array();
 	}
 	public static strArr combine(strArr arrA, strArr... arrays) {
@@ -29379,129 +31285,153 @@ public class KL {
 		return combine(arrA, arrays);
 	}
 	public static String[] intersection(String[] arrA, String[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Str;
+		}
 		return new strArr(arrA).intersection(arrays).array();
 	}
 	public static int[] intersection(int[] arrA, int[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Int;
+		}
 		return new intArr(arrA).intersection(arrays).array();
 	}
 	public static long[] intersection(long[] arrA, long[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Long;
+		}
 		return new longArr(arrA).intersection(arrays).array();
 	}
 	public static float[] intersection(float[] arrA, float[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Flt;
+		}
 		return new fltArr(arrA).intersection(arrays).array();
 	}
 	public static double[] intersection(double[] arrA, double[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Dbl;
+		}
 		return new dblArr(arrA).intersection(arrays).array();
 	}
 	public static boolean[] intersection(boolean[] arrA, boolean[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Bool;
+		}
 		return new boolArr(arrA).intersection(arrays).array();
 	}
 	public static strArr intersection(strArr arrA, strArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.strArr;
+		}
 		return arrA.intersection(arrays);
 	}
 	public static intArr intersection(intArr arrA, intArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.intArr;
+		}
 		return arrA.intersection(arrays);
 	}
 	public static longArr intersection(longArr arrA, longArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.longArr;
+		}
 		return arrA.intersection(arrays);
 	}
 	public static fltArr intersection(fltArr arrA, fltArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.fltArr;
+		}
 		return arrA.intersection(arrays);
 	}
 	public static dblArr intersection(dblArr arrA, dblArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.dblArr;
+		}
 		return arrA.intersection(arrays);
 	}
 	public static boolArr intersection(boolArr arrA, boolArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.boolArr;
+		}
 		return arrA.intersection(arrays);
 	}
 	public static String[] negativeIntersection(String[] arrA,
 			String[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Str;
+		}
 		return new strArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static int[] negativeIntersection(int[] arrA, int[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Int;
+		}
 		return new intArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static long[] negativeIntersection(long[] arrA, long[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Long;
+		}
 		return new longArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static float[] negativeIntersection(float[] arrA,
 			float[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Flt;
+		}
 		return new fltArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static double[] negativeIntersection(double[] arrA,
 			double[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Dbl;
+		}
 		return new dblArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static boolean[] negativeIntersection(boolean[] arrA,
 			boolean[]... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.Bool;
+		}
 		return new boolArr(arrA).negativeIntersection(arrays).array();
 	}
 	public static strArr negativeIntersection(strArr arrA, strArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.strArr;
+		}
 		return arrA.negativeIntersection(arrays);
 	}
 	public static intArr negativeIntersection(intArr arrA, intArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.intArr;
+		}
 		return arrA.negativeIntersection(arrays);
 	}
 	public static longArr negativeIntersection(longArr arrA,
 			longArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.longArr;
+		}
 		return arrA.negativeIntersection(arrays);
 	}
 	public static fltArr negativeIntersection(fltArr arrA, fltArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.fltArr;
+		}
 		return arrA.negativeIntersection(arrays);
 	}
 	public static dblArr negativeIntersection(dblArr arrA, dblArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.dblArr;
+		}
 		return arrA.negativeIntersection(arrays);
 	}
 	public static boolArr negativeIntersection(boolArr arrA,
 			boolArr... arrays) {
-		if (not(arrA) || not(arrays))
+		if (not(arrA) || not(arrays)) {
 			return blank.boolArr;
+		}
 		return arrA.negativeIntersection(arrays);
 	}
 	public static String[] keepIfMatch(String[] arrA, String[]... arrays) {
@@ -29577,23 +31507,27 @@ public class KL {
 		return negativeIntersection(arrA, arrays);
 	}
 	public static String[] onlyKeep(String[] arrA, String... arrB) {
-		if (not(arrA) || not(arrB))
+		if (not(arrA) || not(arrB)) {
 			return blank.Str;
+		}
 		return intersection(arrA, arrB);
 	}
 	public static String[] onlyKeep(String[] arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return blank.Str;
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static int[] onlyKeep(int[] arrA, int... arrB) {
-		if (not(arrA) || not(arrB))
+		if (not(arrA) || not(arrB)) {
 			return blank.Int;
+		}
 		// blank.Int is sugar for new int[]{}
 		if (len(arrB) == 1) {
 			int end = arrB[0];
-			if (not(end) || isInf(end) || isNeg(end))
+			if (not(end) || isInf(end) || isNeg(end)) {
 				return blank.Int;
+			}
 			return sliceKeep(arrA, end);
 		}
 		return intersection(arrA, arrB);
@@ -29602,119 +31536,134 @@ public class KL {
 		return intersection(arrA, arrB);
 	}
 	public static long[] onlyKeep(long[] arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return blank.Long;
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static float[] onlyKeep(float[] arrA, float... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static float[] onlyKeep(float[] arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return blank.Flt;
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static double[] onlyKeep(double[] arrA, double... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static double[] onlyKeep(double[] arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return blank.Dbl;
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static boolean[] onlyKeep(boolean[] arrA, boolean... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static boolean[] onlyKeep(boolean[] arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return blank.Bool;
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static strArr onlyKeep(strArr arrA, strArr arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static strArr onlyKeep(strArr arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return new strArr(blank.Str);
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static intArr onlyKeep(intArr arrA, intArr arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static intArr onlyKeep(intArr arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return new intArr(blank.Int);
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static longArr onlyKeep(longArr arrA, longArr arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static longArr onlyKeep(longArr arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return new longArr(blank.Long);
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static fltArr onlyKeep(fltArr arrA, fltArr arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static fltArr onlyKeep(fltArr arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return new fltArr(blank.Flt);
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static dblArr onlyKeep(dblArr arrA, dblArr arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static dblArr onlyKeep(dblArr arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return new dblArr(blank.Dbl);
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static boolArr onlyKeep(boolArr arrA, boolArr arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static boolArr onlyKeep(boolArr arrA, int end) {
-		if (not(arrA) || not(end) || isInf(end) || isNeg(end))
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
 			return new boolArr(blank.Bool);
+		}
 		return sliceKeep(arrA, end);
 	}
 	public static String[] negativeIntersection(String[] arrA, String... arrB) {
 		strArr result = new strArr(arrA);
 		for (int i : range(arrB)) {
-			if (in(arrA, arrB[i]))
+			if (in(arrA, arrB[i])) {
 				result.pop(arrB[i]);
+			}
 		}
 		return result.array();
 	}
 	public static int[] negativeIntersection(int[] arrA, int... arrB) {
 		intArr result = new intArr(arrA);
 		for (int i : range(arrB)) {
-			if (in(arrA, arrB[i]))
+			if (in(arrA, arrB[i])) {
 				result.pop(arrB[i]);
+			}
 		}
 		return result.array();
 	}
 	public static long[] negativeIntersection(long[] arrA, long... arrB) {
 		longArr result = new longArr(arrA);
 		for (int i : range(arrB)) {
-			if (in(arrA, arrB[i]))
+			if (in(arrA, arrB[i])) {
 				result.pop(arrB[i]);
+			}
 		}
 		return result.array();
 	}
 	public static float[] negativeIntersection(float[] arrA, float... arrB) {
 		fltArr result = new fltArr(arrA);
 		for (int i : range(arrB)) {
-			if (in(arrA, arrB[i]))
+			if (in(arrA, arrB[i])) {
 				result.pop(arrB[i]);
+			}
 		}
 		return result.array();
 	}
 	public static double[] negativeIntersection(double[] arrA, double... arrB) {
 		dblArr result = new dblArr(arrA);
 		for (int i : range(arrB)) {
-			if (in(arrA, arrB[i]))
+			if (in(arrA, arrB[i])) {
 				result.pop(arrB[i]);
+			}
 		}
 		return result.array();
 	}
@@ -29722,8 +31671,9 @@ public class KL {
 			boolean... arrB) {
 		boolArr result = new boolArr(arrA);
 		for (int i : range(arrB)) {
-			if (in(arrA, arrB[i]))
+			if (in(arrA, arrB[i])) {
 				result.pop(arrB[i]);
+			}
 		}
 		return result.array();
 	}
@@ -29858,8 +31808,9 @@ public class KL {
 		return s;
 	}
 	public static String[] upper(String... arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return arr;
+		}
 		arr = map(arr, KL::upper);
 		return arr;
 	}
@@ -29868,8 +31819,9 @@ public class KL {
 		return c;
 	}
 	public static char[] upper(char... arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return arr;
+		}
 		arr = map(arr, KL::upper);
 		return arr;
 	}
@@ -29878,8 +31830,9 @@ public class KL {
 		return s;
 	}
 	public static String[] lower(String... arr) {
-		if (not(arr))
+		if (not(arr)) {
 			return arr;
+		}
 		arr = map(arr, KL::lower);
 		return arr;
 	}
@@ -29912,8 +31865,9 @@ public class KL {
 		return !inLower(c);
 	}
 	public static String sentCase(String input) {
-		if (not(input))
+		if (not(input)) {
 			return "";
+		}
 		input = (input.toUpperCase().substring(0, 1)
 				+ (!in(input, "[A-Z]{2,}") ? input.toLowerCase() : input)
 						.substring(1))
@@ -29921,14 +31875,16 @@ public class KL {
 		return input;
 	}
 	public static String[] sentCase(String... inputs) {
-		if (not(inputs))
+		if (not(inputs)) {
 			return blank.Str;
+		}
 		inputs = map(inputs, KL::sentCase);
 		return inputs;
 	}
 	public static String titleCase(String input) {
-		if (not(input))
+		if (not(input)) {
 			return "";
+		}
 		String[] parts = input.split("");
 		String result = "";
 		boolean nextTitleCase = true;
@@ -29944,19 +31900,22 @@ public class KL {
 		return result;
 	}
 	public static String[] titleCase(String... inputs) {
-		if (not(inputs))
+		if (not(inputs)) {
 			return blank.Str;
+		}
 		inputs = map(inputs, KL::titleCase);
 		return inputs;
 	}
 	public static String reverse(String str) {
-		if (not(str))
+		if (not(str)) {
 			return "";
+		}
 		return new StringBuilder(str).reverse().toString();
 	}
 	public static int len(String str) {
-		if (str == null)
+		if (str == null) {
 			return 0;
+		}
 		return str.trim().length();
 	}
 	public static int len(int n) {
@@ -29976,153 +31935,183 @@ public class KL {
 		return result;
 	}
 	public static int len(char[] arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length;
 	}
 	public static int len(String[] arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length;
 	}
 	public static int len(int[] arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length;
 	}
 	public static int len(long[] arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length;
 	}
 	public static int len(float[] arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length;
 	}
 	public static int len(double[] arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length;
 	}
 	public static int len(boolean[] arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length;
 	}
 	public static int len(Object[] arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length;
 	}
 	public static int len(strArr arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length();
 	}
 	public static int len(intArr arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length();
 	}
 	public static int len(longArr arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length();
 	}
 	public static int len(fltArr arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length();
 	}
 	public static int len(dblArr arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length();
 	}
 	public static int len(boolArr arr) {
-		if (arr == null)
+		if (arr == null) {
 			return 0;
+		}
 		return arr.length();
 	}
 	public static int len(objS o) {
-		if (o == null)
+		if (o == null) {
 			return 0;
+		}
 		return o.length();
 	}
 	public static int len(objI o) {
-		if (o == null)
+		if (o == null) {
 			return 0;
+		}
 		return o.length();
 	}
 	public static int len(objL o) {
-		if (o == null)
+		if (o == null) {
 			return 0;
+		}
 		return o.length();
 	}
 	public static int len(objF o) {
-		if (o == null)
+		if (o == null) {
 			return 0;
+		}
 		return o.length();
 	}
 	public static int len(objD o) {
-		if (o == null)
+		if (o == null) {
 			return 0;
+		}
 		return o.length();
 	}
 	public static int len(objB o) {
-		if (o == null)
+		if (o == null) {
 			return 0;
+		}
 		return o.length();
 	}
 	public static int len(treeDI t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeI t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeDL t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeL t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeDF t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeF t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeDS t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeD t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeDB t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int len(treeB t) {
-		if (t == null)
+		if (t == null) {
 			return 0;
+		}
 		return t.length();
 	}
 	public static int size(String str) {
@@ -30242,8 +32231,9 @@ public class KL {
 	public static boolean isEmpty(char[]... subArrays) {
 		int count = 0;
 		for (char[] arr : subArrays) {
-			if (isEmpty((arr)))
+			if (isEmpty((arr))) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle sub arays
@@ -30254,8 +32244,9 @@ public class KL {
 	public static boolean isEmpty(String[]... subArrays) {
 		int count = 0;
 		for (String[] arr : subArrays) {
-			if (isEmpty((arr)))
+			if (isEmpty((arr))) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle sub arays
@@ -30266,8 +32257,9 @@ public class KL {
 	public static boolean isEmpty(int[]... subArrays) {
 		int count = 0;
 		for (int[] arr : subArrays) {
-			if (isEmpty((arr)))
+			if (isEmpty((arr))) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle sub arays
@@ -30278,8 +32270,9 @@ public class KL {
 	public static boolean isEmpty(long[]... subArrays) {
 		int count = 0;
 		for (long[] arr : subArrays) {
-			if (isEmpty((arr)))
+			if (isEmpty((arr))) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle sub arays
@@ -30290,8 +32283,9 @@ public class KL {
 	public static boolean isEmpty(float[]... subArrays) {
 		int count = 0;
 		for (float[] arr : subArrays) {
-			if (isEmpty((arr)))
+			if (isEmpty((arr))) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle sub arays
@@ -30302,8 +32296,9 @@ public class KL {
 	public static boolean isEmpty(double[]... subArrays) {
 		int count = 0;
 		for (double[] arr : subArrays) {
-			if (isEmpty((arr)))
+			if (isEmpty((arr))) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle sub arays
@@ -30314,8 +32309,9 @@ public class KL {
 	public static boolean isEmpty(boolean[]... subArrays) {
 		int count = 0;
 		for (boolean[] arr : subArrays) {
-			if (isEmpty((arr)))
+			if (isEmpty((arr))) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle sub arays
@@ -30326,8 +32322,9 @@ public class KL {
 	public static boolean isEmpty(Object[]... subArrays) {
 		int count = 0;
 		for (Object[] arr : subArrays) {
-			if (0 == len(arr))
+			if (0 == len(arr)) {
 				count++;
+			}
 		}
 		return count > 0;
 		// to handle sub arays
@@ -30532,32 +32529,28 @@ public class KL {
 	}
 	// Arrays
 	public static String type(Object o) {
-		if (isNull(o))
+		if (isNull(o)) {
 			return "null";
+		}
 		String middleware = o.getClass().toString();
 		if (in(middleware, "\\s")) {
 			middleware = middleware.split(" ")[1];
-			if (in(middleware, "\\["))
+			if (in(middleware, "\\[")) {
 				return replace(middleware.replaceAll("\\[", "array\\."), "\\w$",
 						m -> {
-							if (eq(m, "C"))
+							if (eq(m, "C")) {
 								return "char";
-							// we'll fix string arrays later
-							else if (eq(m, "I"))
+							} else if (eq(m, "I")) {
 								return "int";
-							else if (eq(m, "J"))
+							} else if (eq(m, "J")) {
 								return "long";
-							// BE CAUTIOUS: For some reason, the long arrays
-							// fall under group J memory addresses. Catching I
-							// just couldn't work <beware that it's been tested,
-							// and failed>. Just so you know, WITH J... IT DOES
-							// WORK.
-							else if (eq(m, "F"))
+							} else if (eq(m, "F")) {
 								return "flt";
-							else if (eq(m, "D"))
+							} else if (eq(m, "D")) {
 								return "dbl";
-							else if (eq(m, "Z"))
+							} else if (eq(m, "Z")) {
 								return "bool";
+							}
 							// BE CAUTIOUS: For some reason, the bool arrays
 							// fall under group Z memory addresses. Catching I
 							// just couldn't work <beware that it's been tested,
@@ -30567,6 +32560,7 @@ public class KL {
 						}).replaceAll("Ljava\\.lang\\.|\\;", "")
 						.replaceAll("String", "str").replaceAll("Number", "num")
 						.replaceAll("Object", "obj");
+			}
 			return middleware.toLowerCase()
 					.replaceAll("(?<=\\w{3,4})arr", "Arr")
 					.replaceAll("\\$", "\\.").replaceAll("\\w+\\.", "");
@@ -30577,8 +32571,9 @@ public class KL {
 		return result;
 	}
 	public static boolean type(Object obj, String guessedType) {
-		if (not(guessedType))
+		if (not(guessedType)) {
 			return false;
+		}
 		return len(guessedType) < 3
 				? startsWith(type(obj), guessedType)
 				: in(type(obj), guessedType);
@@ -30590,8 +32585,9 @@ public class KL {
 			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
 			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
 			Object cond10, Runnable sol10) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
 				cond10, sol10);
@@ -30601,8 +32597,9 @@ public class KL {
 			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
 			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
 			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
 				sol9);
@@ -30612,8 +32609,9 @@ public class KL {
 			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
 			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
 			Object cond8, Runnable sol8) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
 	}
@@ -30621,8 +32619,9 @@ public class KL {
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
 			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
 			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7);
 	}
@@ -30630,42 +32629,48 @@ public class KL {
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
 			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
 			Object cond6, Runnable sol6) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6);
 	}
 	public static boolean type(Object src, Object cond1, Runnable sol1,
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
 			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5);
 	}
 	public static boolean type(Object src, Object cond1, Runnable sol1,
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
 			Object cond4, Runnable sol4) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4,
 				sol4);
 	}
 	public static boolean type(Object src, Object cond1, Runnable sol1,
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3);
 	}
 	public static boolean type(Object src, Object cond1, Runnable sol1,
 			Object cond2, Runnable sol2) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1, cond2, sol2);
 	}
 	public static boolean type(Object src, Object cond1, Runnable sol1) {
-		if (not(src))
+		if (not(src)) {
 			return false;
+		}
 		return sw(type(src), cond1, sol1);
 	}
 	// let's set up some "type"-helpers for the function
@@ -30680,60 +32685,72 @@ public class KL {
 			longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
 			boolArr = "boolArr";
 	public static char[] charArrToCharArr(Character[] inputArr) {
-		if (not(inputArr))
+		if (not(inputArr)) {
 			return blank.Char;
+		}
 		int length = inputArr.length;
 		char resultingArr[] = new char[length];
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			resultingArr[i] = inputArr[i];
+		}
 		return resultingArr;
 	}
 	public static int[] intArrToIntArr(Integer[] inputArr) {
-		if (not(inputArr))
+		if (not(inputArr)) {
 			return blank.Int;
+		}
 		int length = inputArr.length;
 		int resultingArr[] = new int[length];
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			resultingArr[i] = inputArr[i];
+		}
 		return resultingArr;
 	}
 	public static long[] longArrToLongArr(Long[] inputArr) {
-		if (not(inputArr))
+		if (not(inputArr)) {
 			return blank.Long;
+		}
 		int length = inputArr.length;
 		long resultingArr[] = new long[length];
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			resultingArr[i] = inputArr[i];
+		}
 		return resultingArr;
 	}
 	public static float[] floatArrToFloatArr(Float[] inputArr) {
-		if (not(inputArr))
+		if (not(inputArr)) {
 			return blank.Flt;
+		}
 		int length = inputArr.length;
 		float resultingArr[] = new float[length];
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			resultingArr[i] = inputArr[i];
+		}
 		return resultingArr;
 	}
 	public static float[] fltArrToFltArr(Float[] inputArr) {
 		return floatArrToFloatArr(inputArr);
 	}
 	public static double[] dblArrToDblArr(Double[] inputArr) {
-		if (not(inputArr))
+		if (not(inputArr)) {
 			return blank.Dbl;
+		}
 		int length = inputArr.length;
 		double resultingArr[] = new double[length];
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			resultingArr[i] = inputArr[i];
+		}
 		return resultingArr;
 	}
 	public static boolean[] boolArrToBoolArr(Boolean[] inputArr) {
-		if (not(inputArr))
+		if (not(inputArr)) {
 			return blank.Bool;
+		}
 		int length = inputArr.length;
 		boolean resultingArr[] = new boolean[length];
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i < length; i++) {
 			resultingArr[i] = inputArr[i];
+		}
 		return resultingArr;
 	}
 	public static char[] untangle(Character[] inputArr) {
@@ -30794,48 +32811,54 @@ public class KL {
 		return new strArr(arr).sort().array();
 	}
 	public static String[] sort(String[] arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return new strArr(arr).sort(condition).array();
 	}
 	public static int[] sort(int[] arr) {
 		return new intArr(arr).sort().array();
 	}
 	public static int[] sort(int[] arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return new intArr(arr).sort(condition).array();
 	}
 	public static long[] sort(long[] arr) {
 		return new longArr(arr).sort().array();
 	}
 	public static long[] sort(long[] arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return new longArr(arr).sort(condition).array();
 	}
 	public static float[] sort(float[] arr) {
 		return new fltArr(arr).sort().array();
 	}
 	public static float[] sort(float[] arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return new fltArr(arr).sort(condition).array();
 	}
 	public static double[] sort(double[] arr) {
 		return new dblArr(arr).sort().array();
 	}
 	public static double[] sort(double[] arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return new dblArr(arr).sort(condition).array();
 	}
 	public static boolean[] sort(boolean[] arr) {
 		return new boolArr(arr).sort().array();
 	}
 	public static boolean[] sort(boolean[] arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return new boolArr(arr).sort(condition).array();
 	}
 	public static strArr sort(strArr arr) {
@@ -30848,40 +32871,45 @@ public class KL {
 		return arr.sort();
 	}
 	public static intArr sort(intArr arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return arr.sort(condition);
 	}
 	public static longArr sort(longArr arr) {
 		return arr.sort();
 	}
 	public static longArr sort(longArr arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return arr.sort(condition);
 	}
 	public static fltArr sort(fltArr arr) {
 		return arr.sort();
 	}
 	public static fltArr sort(fltArr arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return arr.sort(condition);
 	}
 	public static dblArr sort(dblArr arr) {
 		return arr.sort();
 	}
 	public static dblArr sort(dblArr arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return arr.sort(condition);
 	}
 	public static boolArr sort(boolArr arr) {
 		return arr.sort();
 	}
 	public static boolArr sort(boolArr arr, String condition) {
-		if (not(arr) || not(condition))
+		if (not(arr) || not(condition)) {
 			return arr;
+		}
 		return arr.sort(condition);
 	}
 	public static String[] sortReverse(String[] arr) {
@@ -31773,8 +33801,9 @@ public class KL {
 	public static String randEmail(String name) {
 		// @params
 		// @@name means a chosen name from either array rgynss, or rglnss
-		if (not(name) || not(eq(name, "[a-zA-Z]{2,}\\s[a-zA-Z]{2,}")))
+		if (not(name) || not(eq(name, "[a-zA-Z]{2,}\\s[a-zA-Z]{2,}"))) {
 			return "";
+		}
 		String[] names = combine(rgynss, rglnss);
 		String randName = randFrom(names);
 		String addonA = randFrom(new String[]{".", "_", "-"});
@@ -31816,12 +33845,12 @@ public class KL {
 			randSentence = randSentence();
 	public static int randAge = randInt(16, 40);
 	public static String __dev = "https://github.com/abbaskhurram255";
-	
+
 	public static String name = "Ayesha";
 	public static int age = 23;
 	public static float score = 3.1415f;
 
 	public static void main(String[] args) {
-        print("{name:}\n{age:}\n{score:.2f}\nInt: $name");
+		print(score);
 	}
 }
