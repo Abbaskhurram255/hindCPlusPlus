@@ -1,10 +1,6 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+
+//core
 import java.lang.reflect.*;
-import java.net.*;
-import java.nio.charset.*;
-import java.nio.file.*;
 import java.security.*;
 import java.text.*;
 import java.util.*;
@@ -12,9 +8,18 @@ import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
-
+//IO
+import java.io.*;
+import java.nio.charset.*;
+import java.nio.file.*;
+import static java.lang.System.out;
+//networking, and crypto
 import javax.crypto.*;
 import javax.crypto.spec.*;
+import java.net.*;
+//gui
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.text.*;
@@ -22661,8 +22666,8 @@ public class KL {
 		if (isNull(args) || not(args.length)) {
 			return;
 		}
-		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
-				"(?<=[\\%\\$\\&\\{\\}])\\w+|\\.?\\d+(e[\\+\\-]?\\d)?")) {
+		if (!isNull(args[0]) && args[0] instanceof String
+				&& in(Str(args[0]), "[\\%\\$\\&\\{\\}\\.\\d]")) {
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
 				return;
@@ -26275,17 +26280,19 @@ public class KL {
 		}
 		try {
 			// refactoring alike specifiers by grouping them together
-			s = s.replaceAll("%l", "%d")
-					.replaceAll("%(\\.\\d)?db", "%$1f");
-			s = s.replaceAll("%([dinf]),2", "%$1").replaceAll("%([dinf]),3", "%$1u").replaceAll("%([dinf])(?=[:\\.][A-Za-z\\s\\.]{3,4})", "%$1c");
-           /*to allow the following:
-           {%d,2}
-           {%d,3}
-           {%n,2}
-           {%n,3}
-           {%d:pkr}
-            {%f:inr}
-            */
+			s = s.replaceAll("%l", "%d").replaceAll("[%\\{](\\.\\d)?db\\}?",
+					"%$1f");
+			s = s.replaceAll("[%\\{]([dinf])[\\:\\.],2\\}?", "%$1")
+					.replaceAll("[%\\{]([dinf])[\\:\\.],3\\}?", "%$1u")
+					.replaceAll(
+							"[%\\{]([dinf])c?([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})\\}?",
+							"%$1c$2");
+			/*
+			 * to allow the following: {%d,2} {%d,3} {%n,2} {%n,3} {%d:pkr}
+			 * {%f:inr}
+			 */
+			s = s.replaceAll("[%\\{]([dinf])c?[\\:\\.]\\$\\}?", "%$1c:USD");
+			// kills a bug
 			// handling exponentials
 			String[] exponentialMatches = findMatches(s,
 					"(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
@@ -26322,15 +26329,15 @@ public class KL {
 				}
 			}
 			String[] matches = findMatches(s,
-					"(?<!\\\\)%[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z]{3,4})?|th|r)?|\\$*\\{(\\.\\d{0,3}f)?\\}");
+					"(?<!\\\\)%(\\.\\d)?[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?|th|r)?|\\$*\\{(\\.\\df)?\\}");
 			for (String m : matches) {
 				for (Object arg : args) {
 					if (arg instanceof Character
 							&& eq(m, "%[\\%c]|\\$*\\{\\}")) {
-						s = replaceFirst(s, m, Str(arg));
+						s = replaceFirst(s, "%[\\%c]|\\$*\\{\\}", Str(arg));
 					} else if (arg instanceof String
 							&& eq(m, "%[\\%sw]|\\$*\\{\\}")) {
-						s = replaceFirst(s, m, Str(arg));
+						s = replaceFirst(s, "%[\\%sw]|\\$*\\{\\}", Str(arg));
 					} else if ((arg instanceof Integer || arg instanceof Long)
 							&& (in(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}"))) {
 						if (in(m, "%[din]u")) {
@@ -26355,19 +26362,23 @@ public class KL {
 						} else if (eq(m, "%[din]r")) {
 							s = replaceFirst(s, m, Str(toRoman((int) arg)));
 						} else if (eq(m,
-								"%[\\%din](?!r|th|uc?|c)|\\$*\\{\\}")) {
+								"%[\\%din](?!r|th|uc?|c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)|\\$*\\{\\}")) {
 							// replacing basic integer format specifiers %d, %i,
 							// %n
-							s = replaceFirst(s, m,
+							s = replaceFirst(s,
+									"%[\\%din](?!r|th|uc?|c)|\\$*\\{\\}",
 									Str(f(arg instanceof Integer
 											? (int) arg
 											: (long) arg))
 											.replaceAll("\\.[0]+(?!\\d)$", ""));
 						} else {
-							if (in(m, "%[din]c([\\:\\.][A-Za-z]{3,4})?")) {
-								if (eq(m, "%[din]c([\\:\\.][A-Za-z]{3,4})")) {
+							if (in(m,
+									"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
+								if (eq(m,
+										"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})")) {
 									String currency = m.split("[\\:\\.]")[1];
-									s = replaceFirst(s, m,
+									s = replaceFirst(s,
+											"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})",
 											Str(curr(
 													arg instanceof Integer
 															? (int) arg
@@ -26386,8 +26397,13 @@ public class KL {
 							}
 						}
 					} else if (arg instanceof Float || arg instanceof Double) {
-						if (in(m, "%[\\%fn]u|\\$*\\{(\\.\\d*f)?\\}")) {
-							// DOESN'T work IF the % before f is not escaped, reason being that it gets misinterpreted as `catch anything that's a float`. That kind of syntax was supposed to be a flavor for functions `in`, `eq`, `findMatch`, and `findMatches` for quicker caching through format specifiers
+						if (in(m, "%[\\%fn]u")) {
+							// DOESN'T work IF the % before f is not escaped,
+							// reason being that it gets misinterpreted as
+							// `catch anything that's a float`. That kind of
+							// syntax was supposed to be a flavor for functions
+							// `in`, `eq`, `findMatch`, and `findMatches` for
+							// quicker caching through format specifiers
 							if (eq(m, "%[\\%fn]uc")) {
 								s = replaceFirst(s, m, Str(
 										usd(setPrecision(arg instanceof Float
@@ -26396,21 +26412,22 @@ public class KL {
 												.replaceAll("\\.[0]+(?!\\d)$",
 														"")));
 							} else {
-								s = replaceFirst(s,
-										"%[%fn]u|\\$*\\{(\\.\\d*f)?\\}",
-										Str(fus(setPrecision(
-												arg instanceof Float
-														? (float) arg
-														: (double) arg))
+								s = replaceFirst(s, "%[%fn]u", Str(
+										fus(setPrecision(arg instanceof Float
+												? (float) arg
+												: (double) arg))
 												.replaceAll("\\.[0]+(?!\\d)$",
 														"")));
 							}
 						} else if (in(m,
-								"%[\\%fn]c?(?!u)|\\$*\\{(\\.\\d*f)?\\}")) {
-							if (in(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})?")) {
-								if (eq(m, "%[fn]c([\\:\\.][A-Za-z]{3,4})")) {
+								"%(\\.\\d)?[\\%fn]c?(?!u)|\\$*\\{(\\.\\df)?\\}")) {
+							if (in(m,
+									"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
+								if (eq(m,
+										"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})")) {
 									String currency = m.split("[\\:\\.]")[1];
-									s = replaceFirst(s, m,
+									s = replaceFirst(s,
+											"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})",
 											Str(curr(
 													arg instanceof Float
 															? (float) arg
@@ -26426,26 +26443,31 @@ public class KL {
 															"\\.[0]+(?!\\d)$",
 															""));
 								}
-							} else if (eq(m, "%\\.\\df|\\$*\\{\\.\\df\\}")) {
-								int decimalPlaces  = Int(findMatch(m, "(?<=\\.)\\d(?=f)"));
-								s = replaceFirst(s, m, Str(f(setPrecision(arg instanceof Float
-												? (float) arg
-												: (double) arg, decimalPlaces))
-												.replaceAll("\\.[0]+(?!\\d)$",
-														"")));
+							} else if (eq(m, "\\$*[%\\{]\\.\\df\\}?")) {
+								int decimalPlaces = Int(
+										findMatch(m, "(?<=\\.)\\d(?=f)"));
+								s = replaceFirst(s, "\\$*[%\\{]\\.\\df\\}?",
+										Str(setPrecision(
+												arg instanceof Float
+														? (float) arg
+														: (double) arg,
+												decimalPlaces)).replaceAll(
+														"(?<=\\.\\d)[0]+|\\.[0]+(?!\\d)$",
+														""));
 							} else {
 								s = replaceFirst(s,
-										"%[%fn]|\\$*\\{\\}",
+										"(%[%fn]|\\$*\\{f?\\})(?!u|u?c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)",
 										Str(f(setPrecision(arg instanceof Float
 												? (float) arg
-												: (double) arg))
-												.replaceAll("\\.[0]+(?!\\d)$",
+												: (double) arg)).replaceAll(
+														"(?<=\\.\\d)[0]+|\\.[0]+(?!\\d)$",
 														"")));
 							}
 						}
 					} else if (arg instanceof Boolean
 							&& eq(m, "%[\\%b]|\\$*\\{\\}")) {
-						s = replaceFirst(s, m, Str((boolean) arg));
+						s = replaceFirst(s, "%[\\%b]|\\$*\\{\\}",
+								Str((boolean) arg));
 					}
 					// replaceFirst is really what we need here, as replacing
 					// "all"
@@ -26719,15 +26741,21 @@ public class KL {
 						// ______________________________________________________
 						if (field instanceof Float || field instanceof Double) {
 							if (field instanceof Float) {
-								if (decimalPlaces <= 1) field = f((float) field);
-								else if (decimalPlaces == 2) field = fus((float) field);
-								else field = setPrecision((float) field,
-										decimalPlaces);
+								if (decimalPlaces <= 1)
+									field = f((float) field);
+								else if (decimalPlaces == 2)
+									field = fus((float) field);
+								else
+									field = setPrecision((float) field,
+											decimalPlaces);
 							} else {
-								if (decimalPlaces <= 1) field = f((double) field);
-								else if (decimalPlaces == 2) field = fus((double) field);
-								else field = setPrecision((double) field,
-										decimalPlaces);
+								if (decimalPlaces <= 1)
+									field = f((double) field);
+								else if (decimalPlaces == 2)
+									field = fus((double) field);
+								else
+									field = setPrecision((double) field,
+											decimalPlaces);
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
@@ -26836,10 +26864,14 @@ public class KL {
 	}
 	public static String curr(int n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|in|rs")) {
+		if (not(locale))
+			return formattedN;
+		if (startsWith(locale, "pk|rs")) {
 			return pkr(n);
 		} else if (startsWith(locale, "us")) {
 			return usd(n);
+		} else if (eq(locale, "inr")) {
+			return "Indian " + pkr(n);
 		} else if (len(locale) >= 1 && len(locale) <= 4) {
 			return trim(titleCase(locale)) + " " + formattedN;
 		}
@@ -26847,33 +26879,45 @@ public class KL {
 	}
 	public static String curr(long n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|in|rs")) {
+		if (not(locale))
+			return formattedN;
+		if (startsWith(locale, "pk|rs")) {
 			return pkr(n);
 		} else if (startsWith(locale, "us")) {
 			return usd(n);
-		} else if (len(locale) >= 1 && len(locale) < 4) {
+		} else if (eq(locale, "inr")) {
+			return "Indian " + pkr(n);
+		} else if (len(locale) >= 1 && len(locale) <= 4) {
 			return trim(titleCase(locale)) + " " + formattedN;
 		}
 		return formattedN;
 	}
 	public static String curr(float n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|in|rs")) {
+		if (not(locale))
+			return formattedN;
+		if (startsWith(locale, "pk|rs")) {
 			return pkr(n);
 		} else if (startsWith(locale, "us")) {
 			return usd(n);
-		} else if (len(locale) >= 1 && len(locale) < 4) {
+		} else if (eq(locale, "inr")) {
+			return "Indian " + pkr(n);
+		} else if (len(locale) >= 1 && len(locale) <= 4) {
 			return trim(titleCase(locale)) + " " + formattedN;
 		}
 		return formattedN;
 	}
 	public static String curr(double n, String locale) {
 		String formattedN = fus(n);
-		if (startsWith(locale, "pk|in|rs")) {
+		if (not(locale))
+			return formattedN;
+		if (startsWith(locale, "pk|rs")) {
 			return pkr(n);
 		} else if (startsWith(locale, "us")) {
 			return usd(n);
-		} else if (len(locale) >= 1 && len(locale) < 4) {
+		} else if (eq(locale, "inr")) {
+			return "Indian " + pkr(n);
+		} else if (len(locale) >= 1 && len(locale) <= 4) {
 			return trim(titleCase(locale)) + " " + formattedN;
 		}
 		return formattedN;
@@ -30308,7 +30352,7 @@ public class KL {
 			re = "\\" + re;
 		}
 		try {
-			re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
+			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
 					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
 							"\\\\$1")
 					.replaceAll("%%", "%").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
@@ -30350,7 +30394,7 @@ public class KL {
 			re = "\\" + re;
 		}
 		try {
-			re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
+			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
 					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
 							"\\\\$1")
 					.replaceAll("%%", "%").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
@@ -30399,7 +30443,7 @@ public class KL {
 			re = "\\" + re;
 		}
 		try {
-			re = re.replaceAll("(?<![\\.\\\\])\\.(?![*+])", "\\\\.")
+			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
 					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
 							"\\\\$1")
 					.replaceAll("%%", "%").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
@@ -33833,7 +33877,8 @@ public class KL {
 		return processedName + "@" + provider + ".com";
 	}
 	public static String randEmail() {
-		return randEmail(randFrom(join(rgynss, rglnss)));
+		String[] names = join(rgynss, rglnss);
+		return randEmail(randFrom(names));
 	}
 	public static String randJob() {
 		return randFrom(rjbss);
@@ -33867,6 +33912,6 @@ public class KL {
 	public static float score = 3.1415f;
 
 	public static void main(String[] args) {
-		print("%.3f", score);
+		print("%f:pkr", score);
 	}
 }
