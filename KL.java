@@ -26741,21 +26741,21 @@ public class KL {
 						// ______________________________________________________
 						if (field instanceof Float || field instanceof Double) {
 							if (field instanceof Float) {
-								if (decimalPlaces <= 1)
-									field = f((float) field);
-								else if (decimalPlaces == 2)
-									field = fus((float) field);
-								else
-									field = setPrecision((float) field,
-											decimalPlaces);
+								/*
+								 * if (decimalPlaces <= 1) field = f((float)
+								 * field); else if (decimalPlaces == 2) field =
+								 * fus((float) field); else
+								 */
+								field = setPrecision((float) field,
+										decimalPlaces);
 							} else {
-								if (decimalPlaces <= 1)
-									field = f((double) field);
-								else if (decimalPlaces == 2)
-									field = fus((double) field);
-								else
-									field = setPrecision((double) field,
-											decimalPlaces);
+								/*
+								 * if (decimalPlaces <= 1) field = f((double)
+								 * field); else if (decimalPlaces == 2) field =
+								 * fus((double) field); else
+								 */
+								field = setPrecision((double) field,
+										decimalPlaces);
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
@@ -26778,7 +26778,7 @@ public class KL {
 				}
 			}
 			// for numeric operations
-			String catchNumericValuesWithOperator = "(?<=(?<!\\\\)\\&)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)";
+			String catchNumericValuesWithOperator = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)\\}?";
 			while (in(s, catchNumericValuesWithOperator)) {
 				String[] numericMatchesWithOperators = findMatches(s,
 						catchNumericValuesWithOperator);
@@ -26789,7 +26789,7 @@ public class KL {
 						double operandA = Dbl(parts[0]),
 								operandB = Dbl(parts[1]);
 						String op = m.replaceAll(
-								"[^\\+\\-\\*\\×\\/\\÷]|^[\\+\\-\\*\\×\\/\\÷]",
+								"[^\\+\\-\\*\\×\\/\\÷]|^\\{?[\\+\\-\\*\\×\\/\\÷]",
 								"");
 						double result = 0;
 						switch (op) {
@@ -26809,11 +26809,11 @@ public class KL {
 								break;
 						}
 						s = replaceFirst(s, catchNumericValuesWithOperator,
-								Str(result).replaceAll("\\.0(?!\\d)$", ""));
+								Str(result).replaceAll("\\.[0]+(?!\\d)$", ""));
 					}
 				}
 			}
-			s = s.replaceAll("&(?=\\-?\\d*\\.?\\d+)", "");
+			s = s.replaceAll("[&\\{](?=\\-?\\d*\\.?\\d+)\\}?", "");
 			// cleaning up to make up for the numeric results, removing the &
 			// operator
 			s = sentCase(s);
@@ -33912,6 +33912,14 @@ public class KL {
 	public static float score = 3.1415f;
 
 	public static void main(String[] args) {
-		print("%f:pkr", score);
+		print("{sentCase:hello}");
+		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
+		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
+		// 736660.2);
+		// print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and
+		// I'm the %ith happiest person in the room. $randInt(5, 50).",
+		// "love", 9, 19, 6);
+		// print("$randInt(50, 500). $th(4). $upper:string. $xor:true, true");
+
 	}
 }
