@@ -26657,21 +26657,22 @@ public class KL {
 			}
 			// FOR FIELDS
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?)?(?!\\(\\w*\\)))")) {
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?)?");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
-								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|,\\d?)",
+								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})",
 								"");
 						field = cls.getField(toGet).get(this);
 						String label = "";
 						int decimalPlaces = 2;
 						if (in(m, "[:=]")) {
-							if (in(m, "[:=]{1,2}(?=\\.\\d(f|db)|,\\d?)")
+							if (in(m,
+									"[:=]{1,2}(?=\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})")
 									&& (field instanceof Float
 											|| field instanceof Double)) {
 								if (!in(m, "[:=]{2}|\\\\[:=]")) {
@@ -26682,7 +26683,7 @@ public class KL {
 													findMatch(m,
 															"(?<=\\\\)[:=]"))
 											.replaceAll(
-													"[\\$\\{\\\\\\}]|(?<=[:=])[:=]\\.\\d(f|db)",
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})",
 													"");
 									// keep one [:=] in this case, but remove
 									// the other, to make up for the label from
@@ -26725,14 +26726,81 @@ public class KL {
 										"(?<=[:=]\\.)\\d(?=f|db)"));
 							}
 							// some tweaks
-							if (in(m, ("(?<=[:=]),3"))) {
-								field = fus(field instanceof Float
-										? (float) field
-										: (double) field);
-							} else if (in(m, ("(?<=[:=]),2?"))) {
-								field = f(field instanceof Float
-										? (float) field
-										: (double) field);
+							if (field instanceof Number) {
+								if (in(m, ("(?<=[:=]),3"))) {
+									// NOTE: can't use `eq` here, instead of
+									// `in`, for
+									// obvious reasons
+									field = fus(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
+								} else if (in(m, ("(?<=[:=]),2?"))) {
+									field = f(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
+								} else if (in(m, ("(?<=[:=])(pkr|rs)"))) {
+									field = pkr(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
+								} else if (in(m, ("(?<=[:=])usd"))) {
+									field = usd(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
+								} else if (in(m, ("(?<=[:=])th"))) {
+									if (field instanceof Integer
+											|| field instanceof Long) {
+										field = th(field instanceof Integer
+												? (int) field
+												: (long) field);
+									}
+								} else if (in(m, ("(?<=[:=])r"))) {
+									if (field instanceof Integer) {
+										field = toRoman((int) field);
+									}
+								} else if (in(m, ("(?<=[:=])px"))) {
+									field = pksuffix(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
+								} else if (in(m, ("(?<=[:=])x"))) {
+									field = ussuffix(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
+								} else if (in(m, "(?<=[:=])[A-Za-z]{3,4}")) {
+									String currency = findMatch(m,
+											"(?<=[:=])[A-Za-z]{3,4}");
+									field = curr(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field,
+											currency);
+								}
 							}
 						}
 						// NOTE
@@ -33950,7 +34018,7 @@ public class KL {
 
 	public static void main(String[] args) {
 		print("{sentCase:hello} %dpx", 835000);
-		print("{score:,}");
+		print("{f:inr}", score);
 		print(f(500000.215));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
