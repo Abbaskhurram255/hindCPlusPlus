@@ -26329,7 +26329,7 @@ public class KL {
 				}
 			}
 			String[] matches = findMatches(s,
-					"(?<!\\\\)%(\\.\\d)?[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?|th|r)?|\\$*\\{(\\.\\df)?\\}");
+					"(?<!\\\\)%(\\.\\d)?[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?|th|r|p?x)?|\\$*\\{(\\.\\df)?\\}");
 			for (String m : matches) {
 				for (Object arg : args) {
 					if (arg instanceof Character
@@ -26361,12 +26361,22 @@ public class KL {
 											: (long) arg)));
 						} else if (eq(m, "%[din]r")) {
 							s = replaceFirst(s, m, Str(toRoman((int) arg)));
+						} else if (eq(m, "%[din]px")) {
+							s = replaceFirst(s, m,
+									Str(pksuffix(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
+						} else if (eq(m, "%[din]x")) {
+							s = replaceFirst(s, m,
+									Str(ussuffix(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
 						} else if (eq(m,
-								"%[\\%din](?!r|th|uc?|c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)|\\$*\\{\\}")) {
+								"%[\\%din](?!p?x|r|th|uc?|c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)|\\$*\\{\\}")) {
 							// replacing basic integer format specifiers %d, %i,
 							// %n
 							s = replaceFirst(s,
-									"%[\\%din](?!r|th|uc?|c)|\\$*\\{\\}",
+									"%[\\%din](?!p?x|r|th|uc?|c)|\\$*\\{\\}",
 									Str(f(arg instanceof Integer
 											? (int) arg
 											: (long) arg))
@@ -26419,6 +26429,18 @@ public class KL {
 												.replaceAll("\\.[0]+(?!\\d)$",
 														"")));
 							}
+						} else if (in(m, "%[\\%fn]p?x")) {
+							if (eq(m, "%[\\%fn]px")) {
+								s = replaceFirst(s, m,
+										Str(pksuffix(arg instanceof Float
+												? (float) arg
+												: (double) arg)));
+							} else {
+								s = replaceFirst(s, m,
+										Str(ussuffix(arg instanceof Float
+												? (float) arg
+												: (double) arg)));
+							}
 						} else if (in(m,
 								"%(\\.\\d)?[\\%fn]c?(?!u)|\\$*\\{(\\.\\df)?\\}")) {
 							if (in(m,
@@ -26456,7 +26478,7 @@ public class KL {
 														""));
 							} else {
 								s = replaceFirst(s,
-										"(%[%fn]|\\$*\\{f?\\})(?!u|u?c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)",
+										"(%[%fn]|\\$*\\{f?\\})(?!p?x|u|u?c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)",
 										Str(f(setPrecision(arg instanceof Float
 												? (float) arg
 												: (double) arg)).replaceAll(
@@ -26949,7 +26971,7 @@ public class KL {
 				result = Str(n / kh) + "kh";
 				break;
 		}
-		return result;
+		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 	public static String pksuffix(long n) {
 		n -= n % 1;
@@ -26978,7 +27000,7 @@ public class KL {
 				result = Str(n / kh) + "kh";
 				break;
 		}
-		return result;
+		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 	public static String pksuffix(float n) {
 		n -= n % 1;
@@ -27007,7 +27029,7 @@ public class KL {
 				result = Str(n / kh) + "kh";
 				break;
 		}
-		return result;
+		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 	public static String pksuffix(double n) {
 		n -= n % 1;
@@ -27036,7 +27058,7 @@ public class KL {
 				result = Str(n / kh) + "kh";
 				break;
 		}
-		return result;
+		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 	public static String ussuffix(int n) {
 		n -= n % 1;
@@ -27083,7 +27105,7 @@ public class KL {
 				result = Str(n / dc) + "dc";
 				break;
 		}
-		return result;
+		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 	public static String ussuffix(long n) {
 		n -= n % 1;
@@ -27130,7 +27152,7 @@ public class KL {
 				result = Str(n / dc) + "dc";
 				break;
 		}
-		return result;
+		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 	public static String ussuffix(float n) {
 		n -= n % 1;
@@ -27177,7 +27199,7 @@ public class KL {
 				result = Str(n / dc) + "dc";
 				break;
 		}
-		return result;
+		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 	public static String ussuffix(double n) {
 		n -= n % 1;
@@ -27224,7 +27246,7 @@ public class KL {
 				result = Str(n / dc) + "dc";
 				break;
 		}
-		return result;
+		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 	public static String toRoman(int n) {
 		treeI tree = new treeI();
@@ -33912,7 +33934,7 @@ public class KL {
 	public static float score = 3.1415f;
 
 	public static void main(String[] args) {
-		print("{sentCase:hello}");
+		print("{sentCase:hello} %dpx", 835000);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
