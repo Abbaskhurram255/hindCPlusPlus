@@ -22696,7 +22696,7 @@ public class KL {
 					} else {
 						arg = f(arg instanceof Float
 								? (float) arg
-								: (double) arg).replaceAll("\\.?0(?!\\d)$", "");
+								: (double) arg).replaceAll("\\.?[0]+$", "");
 					}
 				}
 				System.out.print(arg + " ");
@@ -26274,9 +26274,18 @@ public class KL {
 			return s;
 		}
 		try {
-			// for specifiers
-			s = s.replaceAll("%l", "%d").replaceAll("%[\\.\\d]*f", "%f")
-					.replaceAll("%[\\.\\d]*db(u)?", "%n$1");
+			// refactoring alike specifiers by grouping them together
+			s = s.replaceAll("%l", "%d")
+					.replaceAll("%(\\.\\d)?db", "%$1f");
+			s = s.replaceAll("%([dinf]),2", "%$1").replaceAll("%([dinf]),3", "%$1u").replaceAll("%([dinf])(?=[:\\.][A-Za-z\\s\\.]{3,4})", "%$1c");
+           /*to allow the following:
+           {%d,2}
+           {%d,3}
+           {%n,2}
+           {%n,3}
+           {%d:pkr}
+            {%f:inr}
+            */
 			// handling exponentials
 			String[] exponentialMatches = findMatches(s,
 					"(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
@@ -26378,7 +26387,7 @@ public class KL {
 						}
 					} else if (arg instanceof Float || arg instanceof Double) {
 						if (in(m, "%[\\%fn]u|\\$*\\{(\\.\\d*f)?\\}")) {
-							// DOESN'T work IF the % is not escaped
+							// DOESN'T work IF the % before f is not escaped, reason being that it gets misinterpreted as `catch anything that's a float`. That kind of syntax was supposed to be a flavor for functions `in`, `eq`, `findMatch`, and `findMatches` for quicker caching through format specifiers
 							if (eq(m, "%[\\%fn]uc")) {
 								s = replaceFirst(s, m, Str(
 										usd(setPrecision(arg instanceof Float
@@ -26417,9 +26426,16 @@ public class KL {
 															"\\.[0]+(?!\\d)$",
 															""));
 								}
+							} else if (eq(m, "%\\.\\df|\\$*\\{\\.\\df\\}")) {
+								int decimalPlaces  = Int(findMatch(m, "(?<=\\.)\\d(?=f)"));
+								s = replaceFirst(s, m, Str(f(setPrecision(arg instanceof Float
+												? (float) arg
+												: (double) arg, decimalPlaces))
+												.replaceAll("\\.[0]+(?!\\d)$",
+														"")));
 							} else {
 								s = replaceFirst(s,
-										"%[%fn]|\\$*\\{(\\.\\d*f)?\\}",
+										"%[%fn]|\\$*\\{\\}",
 										Str(f(setPrecision(arg instanceof Float
 												? (float) arg
 												: (double) arg))
@@ -26605,7 +26621,7 @@ public class KL {
 								"[\\$\\{:=\\\\\\}]|(?<=[:=])\\.\\d(f|db)", "");
 						field = cls.getField(toGet).get(this);
 						String label = "";
-						int decimalPlaces = 1;
+						int decimalPlaces = 2;
 						if (in(m, "[:=]")) {
 							if (in(m, "[:=]{1,2}(?=\\.\\d(f|db))")
 									&& (field instanceof Float
@@ -26703,10 +26719,14 @@ public class KL {
 						// ______________________________________________________
 						if (field instanceof Float || field instanceof Double) {
 							if (field instanceof Float) {
-								field = setPrecision((float) field,
+								if (decimalPlaces <= 1) field = f((float) field);
+								else if (decimalPlaces == 2) field = fus((float) field);
+								else field = setPrecision((float) field,
 										decimalPlaces);
 							} else {
-								field = setPrecision((double) field,
+								if (decimalPlaces <= 1) field = f((double) field);
+								else if (decimalPlaces == 2) field = fus((double) field);
+								else field = setPrecision((double) field,
 										decimalPlaces);
 							}
 						}
@@ -26768,10 +26788,6 @@ public class KL {
 			s = s.replaceAll("&(?=\\-?\\d*\\.?\\d+)", "");
 			// cleaning up to make up for the numeric results, removing the &
 			// operator
-			double[] numsToRound = numsOf(s);
-			for (double num : numsToRound) {
-				s = s.replaceFirst(Str(num), fus(num));
-			}
 			s = sentCase(s);
 		} catch (PatternSyntaxException | StackOverflowError e) {
 
@@ -33851,6 +33867,6 @@ public class KL {
 	public static float score = 3.1415f;
 
 	public static void main(String[] args) {
-		print(score);
+		print("%.3f", score);
 	}
 }
