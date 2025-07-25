@@ -26172,7 +26172,7 @@ public class KL {
 		if (isNull(amount)) {
 			return "";
 		}
-		double floats = setPrecision(amount % 1);
+		double floats = amount % 1;
 		long amountFix = Long(setPrecision(amount - floats));
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
@@ -26192,6 +26192,7 @@ public class KL {
 				}
 			}
 		}
+
 		return replace(
 				stringBuilder.reverse().toString() + "."
 						+ sliceToAfter(Str(floats), "."),
@@ -26201,7 +26202,7 @@ public class KL {
 		if (isNull(amount)) {
 			return "";
 		}
-		double floats = setPrecision(amount % 1);
+		double floats = amount % 1;
 		long amountFix = Long(setPrecision(amount - floats));
 		StringBuilder stringBuilder = new StringBuilder();
 		char[] amountArray = Str(amountFix).toCharArray();
@@ -26248,6 +26249,7 @@ public class KL {
 		if (isNull(n)) {
 			return "";
 		}
+		double floats = n % 1;
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
@@ -26257,6 +26259,7 @@ public class KL {
 		if (isNull(n)) {
 			return "";
 		}
+		double floats = n % 1;
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
@@ -26654,20 +26657,21 @@ public class KL {
 			}
 			// FOR FIELDS
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?(?!\\(\\w*\\)))")) {
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?)?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db))?");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?)?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
-								"[\\$\\{:=\\\\\\}]|(?<=[:=])\\.\\d(f|db)", "");
+								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|,\\d?)",
+								"");
 						field = cls.getField(toGet).get(this);
 						String label = "";
 						int decimalPlaces = 2;
 						if (in(m, "[:=]")) {
-							if (in(m, "[:=]{1,2}(?=\\.\\d(f|db))")
+							if (in(m, "[:=]{1,2}(?=\\.\\d(f|db)|,\\d?)")
 									&& (field instanceof Float
 											|| field instanceof Double)) {
 								if (!in(m, "[:=]{2}|\\\\[:=]")) {
@@ -26683,7 +26687,8 @@ public class KL {
 									// keep one [:=] in this case, but remove
 									// the other, to make up for the label from
 									// the double :|=
-									// one could also use \\[:=] to force labels
+									// One could also use \\[:=] to force
+									// labels.
 								}
 							} else if (in(m, "(?<=\\w)[:=\\\\]{2}(?!\\.\\d)")) {
 								label = "";
@@ -26718,6 +26723,16 @@ public class KL {
 							if (in(m, ("(?<=[:=]\\.)\\d(?=f|db)"))) {
 								decimalPlaces = Int(findMatch(m,
 										"(?<=[:=]\\.)\\d(?=f|db)"));
+							}
+							// some tweaks
+							if (in(m, ("(?<=[:=]),3"))) {
+								field = fus(field instanceof Float
+										? (float) field
+										: (double) field);
+							} else if (in(m, ("(?<=[:=]),2?"))) {
+								field = f(field instanceof Float
+										? (float) field
+										: (double) field);
 							}
 						}
 						// NOTE
@@ -33931,10 +33946,12 @@ public class KL {
 
 	public static String name = "Ayesha";
 	public static int age = 23;
-	public static float score = 3.1415f;
+	public static float score = 300500.255f;
 
 	public static void main(String[] args) {
 		print("{sentCase:hello} %dpx", 835000);
+		print("{score:,}");
+		print(f(500000.215));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
