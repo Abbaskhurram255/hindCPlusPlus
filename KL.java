@@ -29085,7 +29085,7 @@ public class KL {
 	public static String slice(String str, int start, int end) {
 		if (not(str) || isNull(start) || start >= len(str) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(str)) {
+				|| end > len(str)) {
 			return slice(str);
 		}
 		return str.substring(start, end);
@@ -29156,7 +29156,7 @@ public class KL {
 	public static strArr slice(strArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr)) {
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
@@ -29164,7 +29164,7 @@ public class KL {
 	public static intArr slice(intArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr)) {
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
@@ -29172,7 +29172,7 @@ public class KL {
 	public static longArr slice(longArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr)) {
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
@@ -29180,7 +29180,7 @@ public class KL {
 	public static fltArr slice(fltArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr)) {
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
@@ -29188,7 +29188,7 @@ public class KL {
 	public static dblArr slice(dblArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr)) {
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
@@ -29196,7 +29196,7 @@ public class KL {
 	public static boolArr slice(boolArr arr, int start, int end) {
 		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
 				|| end < start || not(end) || isNeg(start) || isNeg(end)
-				|| end >= len(arr)) {
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
@@ -29287,98 +29287,98 @@ public class KL {
 	}
 	public static String sliceEnd(String str, int earlyEnd) {
 		if (not(str) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(str)) {
+				|| earlyEnd > len(str)) {
 			return slice(str);
 		}
 		return slice(str, 0, len(str) - earlyEnd);
 	}
 	public static String[] sliceEnd(String[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static int[] sliceEnd(int[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static long[] sliceEnd(long[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static float[] sliceEnd(float[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static double[] sliceEnd(double[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static boolean[] sliceEnd(boolean[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static Object[] sliceEnd(Object[] arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static strArr sliceEnd(strArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static intArr sliceEnd(intArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static longArr sliceEnd(longArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static fltArr sliceEnd(fltArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static dblArr sliceEnd(dblArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 	public static boolArr sliceEnd(boolArr arr, int earlyEnd) {
 		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
-				|| earlyEnd >= len(arr)) {
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
@@ -29468,7 +29468,7 @@ public class KL {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static String sliceKeep(String str, int end) {
-		if (not(str) || not(end) || isNeg(end) || end >= len(str)) {
+		if (not(str) || not(end) || isNeg(end) || end > len(str)) {
 			return str;
 		}
 		return slice(str, 0, end);
@@ -29477,7 +29477,7 @@ public class KL {
 		if (not(arr)) {
 			return blank.Str;
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29486,7 +29486,7 @@ public class KL {
 		if (not(arr)) {
 			return blank.Int;
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29495,7 +29495,7 @@ public class KL {
 		if (not(arr)) {
 			return blank.Long;
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29504,7 +29504,7 @@ public class KL {
 		if (not(arr)) {
 			return blank.Flt;
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29513,7 +29513,7 @@ public class KL {
 		if (not(arr)) {
 			return blank.Dbl;
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29522,7 +29522,7 @@ public class KL {
 		if (not(arr)) {
 			return blank.Bool;
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29531,7 +29531,7 @@ public class KL {
 		if (not(arr)) {
 			return new strArr(blank.Str);
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29540,7 +29540,7 @@ public class KL {
 		if (not(arr)) {
 			return new intArr(blank.Int);
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29549,7 +29549,7 @@ public class KL {
 		if (not(arr)) {
 			return new longArr(blank.Long);
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29558,7 +29558,7 @@ public class KL {
 		if (not(arr)) {
 			return new fltArr(blank.Flt);
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29567,7 +29567,7 @@ public class KL {
 		if (not(arr)) {
 			return new dblArr(blank.Dbl);
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -29576,7 +29576,7 @@ public class KL {
 		if (not(arr)) {
 			return new boolArr(blank.Bool);
 		}
-		if (not(end) || isNeg(end) || end >= len(arr)) {
+		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, end);
@@ -34261,7 +34261,11 @@ public class KL {
 		print("{f:,3}", score);
 		print("PK: {score:,3.1f}");
 		print("{score:px}");
-		print("{name:,1}");
+		print("{name:3}");
+		print("{name:1,}");
+		print("{name:,2}");
+		print("{name:1,3}");
+		
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
