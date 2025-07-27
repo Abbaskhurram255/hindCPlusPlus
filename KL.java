@@ -1,4 +1,5 @@
 
+
 //core
 import java.lang.reflect.*;
 import java.security.*;
@@ -26137,7 +26138,8 @@ public class KL {
 		return replace(
 				stringBuilder.reverse().toString() + "."
 						+ sliceToAfter(Str(floats), "."),
-				"(?<=\\.\\d{2})\\d+", "");
+				"(?<=\\.\\d{2})\\d+", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 	public static String fpkr(long amount) {
 		if (isNull(amount)) {
@@ -26166,7 +26168,8 @@ public class KL {
 		return replace(
 				stringBuilder.reverse().toString() + "."
 						+ sliceToAfter(Str(floats), "."),
-				"(?<=\\.\\d{2})\\d+", "");
+				"(?<=\\.\\d{2})\\d+", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 	public static String fpkr(float amount) {
 		if (isNull(amount)) {
@@ -26196,7 +26199,29 @@ public class KL {
 		return replace(
 				stringBuilder.reverse().toString() + "."
 						+ sliceToAfter(Str(floats), "."),
-				"(?<=\\.\\d{2})\\d+", "");
+				"(?<=\\.\\d{2})\\d+", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+	}
+	public static String fpkr(float amount, int decimalPlaces) {
+		String formattedN = fpkr(amount);
+		if (isNull(decimalPlaces) || isNeg(decimalPlaces)
+				|| !in(formattedN, "(?<=\\.)\\d+")) {
+			return formattedN;
+		}
+		String[] parts = formattedN.split("\\.");
+		String formattedNumberWithFloats = parts[0];
+		String floats = parts[1];
+		String separator = "", slicedFloats = "";
+		if (decimalPlaces > 0) {
+			separator = ".";
+			slicedFloats = sliceKeep(floats, decimalPlaces);
+			// no changes, please
+		}
+		String result = (len(floats) >= decimalPlaces
+				? formattedNumberWithFloats + separator + slicedFloats
+				: formattedN)
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return result;
 	}
 	public static String fpkr(double amount) {
 		if (isNull(amount)) {
@@ -26225,7 +26250,29 @@ public class KL {
 		return replace(
 				stringBuilder.reverse().toString() + "."
 						+ sliceToAfter(Str(floats), "."),
-				"(?<=\\.\\d{2})\\d+", "");
+				"(?<=\\.\\d{2})\\d+", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+	}
+	public static String fpkr(double amount, int decimalPlaces) {
+		String formattedN = fpkr(amount);
+		if (isNull(decimalPlaces) || isNeg(decimalPlaces)
+				|| !in(formattedN, "(?<=\\.)\\d+")) {
+			return formattedN;
+		}
+		String[] parts = formattedN.split("\\.");
+		String formattedNumberWithFloats = parts[0];
+		String floats = parts[1];
+		String separator = "", slicedFloats = "";
+		if (decimalPlaces > 0) {
+			separator = ".";
+			slicedFloats = sliceKeep(floats, decimalPlaces);
+			// no changes, please
+		}
+		String result = (len(floats) >= decimalPlaces
+				? formattedNumberWithFloats + separator + slicedFloats
+				: formattedN)
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return result;
 	}
 	public static String fus(int n) {
 		if (isNull(n)) {
@@ -26234,7 +26281,8 @@ public class KL {
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "");
+				.format(n).replaceAll("[^\\d\\,\\.]", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 	public static String fus(long n) {
 		if (isNull(n)) {
@@ -26243,7 +26291,8 @@ public class KL {
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "");
+				.format(n).replaceAll("[^\\d\\,\\.]", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 	public static String fus(float n) {
 		if (isNull(n)) {
@@ -26253,7 +26302,29 @@ public class KL {
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "");
+				.format(n).replaceAll("[^\\d\\,\\.]", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+	}
+	public static String fus(float amount, int decimalPlaces) {
+		String formattedN = fus(amount);
+		if (isNull(decimalPlaces) || isNeg(decimalPlaces)
+				|| !in(formattedN, "(?<=\\.)\\d+")) {
+			return formattedN;
+		}
+		String[] parts = formattedN.split("\\.");
+		String formattedNumberWithFloats = parts[0];
+		String floats = parts[1];
+		String separator = "", slicedFloats = "";
+		if (decimalPlaces > 0) {
+			separator = ".";
+			slicedFloats = sliceKeep(floats, decimalPlaces);
+			// no changes, please
+		}
+		String result = (len(floats) >= decimalPlaces
+				? formattedNumberWithFloats + separator + slicedFloats
+				: formattedN)
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return result;
 	}
 	public static String fus(double n) {
 		if (isNull(n)) {
@@ -26263,7 +26334,29 @@ public class KL {
 		return NumberFormat
 				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
 						.setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "");
+				.format(n).replaceAll("[^\\d\\,\\.]", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+	}
+	public static String fus(double amount, int decimalPlaces) {
+		String formattedN = fus(amount);
+		if (isNull(decimalPlaces) || isNeg(decimalPlaces)
+				|| !in(formattedN, "(?<=\\.)\\d+")) {
+			return formattedN;
+		}
+		String[] parts = formattedN.split("\\.");
+		String formattedNumberWithFloats = parts[0];
+		String floats = parts[1];
+		String separator = "", slicedFloats = "";
+		if (decimalPlaces > 0) {
+			separator = ".";
+			slicedFloats = sliceKeep(floats, decimalPlaces);
+			// no changes, please
+		}
+		String result = (len(floats) >= decimalPlaces
+				? formattedNumberWithFloats + separator + slicedFloats
+				: formattedN)
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return result;
 	}
 	public static String f(int n) {
 		return fpkr(n);
@@ -26274,8 +26367,14 @@ public class KL {
 	public static String f(float n) {
 		return fpkr(n);
 	}
+	public static String f(float n, int places) {
+		return fpkr(n, places);
+	}
 	public static String f(double n) {
 		return fpkr(n);
+	}
+	public static String f(double n, int places) {
+		return fpkr(n, places);
 	}
 	public String f(String s, Object... args) {
 		if (s == null || s.isEmpty() || args.length == 0) {
@@ -26348,17 +26447,21 @@ public class KL {
 							&& (in(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}"))) {
 						if (in(m, "%[din]u")) {
 							if (eq(m, "%[din]uc")) {
-								s = replaceFirst(s, m,
-										Str(usd(arg instanceof Integer
+								s = replaceFirst(s, m, Str(
+										usd(arg instanceof Integer
 												? (int) arg
-												: (long) arg)).replaceAll(
-														"\\.[0]+(?!\\d)$", ""));
+												: (long) arg))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												""));
 							} else {
-								s = replaceFirst(s, "%[din]u",
-										Str(fus(arg instanceof Integer
+								s = replaceFirst(s, "%[din]u", Str(
+										fus(arg instanceof Integer
 												? (int) arg
-												: (long) arg)).replaceAll(
-														"\\.[0]+(?!\\d)$", ""));
+												: (long) arg))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												""));
 							}
 						} else if (eq(m, "%[din]th")) {
 							s = replaceFirst(s, m,
@@ -26385,8 +26488,9 @@ public class KL {
 									"%[\\%din](?!p?x|r|th|uc?|c)|\\$*\\{\\}",
 									Str(f(arg instanceof Integer
 											? (int) arg
-											: (long) arg))
-											.replaceAll("\\.[0]+(?!\\d)$", ""));
+											: (long) arg)).replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
 						} else {
 							if (in(m,
 									"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
@@ -26400,15 +26504,16 @@ public class KL {
 															? (int) arg
 															: (long) arg,
 													currency)).replaceAll(
-															"\\.[0]+(?!\\d)$",
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
 															""));
 								} else {
-									s = replaceFirst(s, m,
-											Str(pkr(arg instanceof Integer
+									s = replaceFirst(s, m, Str(
+											pkr(arg instanceof Integer
 													? (int) arg
-													: (long) arg)).replaceAll(
-															"\\.[0]+(?!\\d)$",
-															""));
+													: (long) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
 								}
 							}
 						}
@@ -26421,19 +26526,21 @@ public class KL {
 							// `in`, `eq`, `findMatch`, and `findMatches` for
 							// quicker caching through format specifiers
 							if (eq(m, "%[\\%fn]uc")) {
-								s = replaceFirst(s, m, Str(
-										usd(setPrecision(arg instanceof Float
+								s = replaceFirst(s, m, Str(usd(
+										setPrecision(arg instanceof Float
 												? (float) arg
 												: (double) arg))
-												.replaceAll("\\.[0]+(?!\\d)$",
-														"")));
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												"")));
 							} else {
-								s = replaceFirst(s, "%[%fn]u", Str(
-										fus(setPrecision(arg instanceof Float
+								s = replaceFirst(s, "%[%fn]u", Str(fus(
+										setPrecision(arg instanceof Float
 												? (float) arg
 												: (double) arg))
-												.replaceAll("\\.[0]+(?!\\d)$",
-														"")));
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												"")));
 							}
 						} else if (in(m, "%[\\%fn]p?x")) {
 							if (eq(m, "%[\\%fn]px")) {
@@ -26461,34 +26568,34 @@ public class KL {
 															? (float) arg
 															: (double) arg,
 													currency)).replaceAll(
-															"\\.[0]+(?!\\d)$",
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
 															""));
 								} else {
-									s = replaceFirst(s, m,
-											Str(pkr(arg instanceof Float
+									s = replaceFirst(s, m, Str(
+											pkr(arg instanceof Float
 													? (float) arg
-													: (double) arg)).replaceAll(
-															"\\.[0]+(?!\\d)$",
-															""));
+													: (double) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
 								}
 							} else if (eq(m, "\\$*[%\\{]\\.\\df\\}?")) {
 								int decimalPlaces = Int(
 										findMatch(m, "(?<=\\.)\\d(?=f)"));
 								s = replaceFirst(s, "\\$*[%\\{]\\.\\df\\}?",
-										Str(setPrecision(
-												arg instanceof Float
-														? (float) arg
-														: (double) arg,
-												decimalPlaces)).replaceAll(
-														"(?<=\\.\\d)[0]+|\\.[0]+(?!\\d)$",
-														""));
+										f(arg instanceof Float
+												? (float) arg
+												: (double) arg, decimalPlaces))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												"");
 							} else {
 								s = replaceFirst(s,
 										"(%[%fn]|\\$*\\{f?\\})(?!p?x|u|u?c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)",
 										Str(f(setPrecision(arg instanceof Float
 												? (float) arg
 												: (double) arg)).replaceAll(
-														"(?<=\\.\\d)[0]+|\\.[0]+(?!\\d)$",
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
 														"")));
 							}
 						}
@@ -26661,22 +26768,22 @@ public class KL {
 			}
 			// FOR FIELDS
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})?");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
-								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})",
+								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
 								"");
 						field = cls.getField(toGet).get(this);
 						String label = "";
 						int decimalPlaces = 2;
 						if (in(m, "[:=]")) {
 							if (in(m,
-									"[:=]{1,2}(?=\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})")
+									"[:=]{1,2}(?=\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})")
 									&& (field instanceof Integer
 											|| field instanceof Long
 											|| field instanceof Float
@@ -26689,7 +26796,7 @@ public class KL {
 													findMatch(m,
 															"(?<=\\\\)[:=]"))
 											.replaceAll(
-													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})",
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
 													"");
 									// keep one [:=] in this case, but remove
 									// the other, to make up for the label from
@@ -26734,7 +26841,7 @@ public class KL {
 							}
 							// some tweaks
 							if (field instanceof Number) {
-								if (in(m, ("(?<=[:=]),3"))) {
+								if (in(m, ("(?<=[:=]),3|u(?!sd)"))) {
 									// NOTE: can't use `eq` here, instead of
 									// `in`, for
 									// obvious reasons
@@ -26744,7 +26851,10 @@ public class KL {
 													? (long) field
 													: field instanceof Float
 															? (float) field
-															: (double) field);
+															: (double) field)
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
 								} else if (in(m, ("(?<=[:=]),2?"))) {
 									field = f(field instanceof Integer
 											? (int) field
@@ -26752,7 +26862,10 @@ public class KL {
 													? (long) field
 													: field instanceof Float
 															? (float) field
-															: (double) field);
+															: (double) field)
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
 								} else if (in(m, ("(?<=[:=])(pkr|rs)"))) {
 									field = pkr(field instanceof Integer
 											? (int) field
@@ -26760,7 +26873,10 @@ public class KL {
 													? (long) field
 													: field instanceof Float
 															? (float) field
-															: (double) field);
+															: (double) field)
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
 								} else if (in(m, ("(?<=[:=])usd"))) {
 									field = usd(field instanceof Integer
 											? (int) field
@@ -26768,7 +26884,10 @@ public class KL {
 													? (long) field
 													: field instanceof Float
 															? (float) field
-															: (double) field);
+															: (double) field)
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
 								} else if (in(m, ("(?<=[:=])th"))) {
 									if (field instanceof Integer
 											|| field instanceof Long) {
@@ -26806,7 +26925,9 @@ public class KL {
 													: field instanceof Float
 															? (float) field
 															: (double) field,
-											currency);
+											currency).replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
 								}
 							}
 						}
@@ -26853,21 +26974,9 @@ public class KL {
 						// ______________________________________________________
 						if (field instanceof Float || field instanceof Double) {
 							if (field instanceof Float) {
-								/*
-								 * if (decimalPlaces <= 1) field = f((float)
-								 * field); else if (decimalPlaces == 2) field =
-								 * fus((float) field); else
-								 */
-								field = setPrecision((float) field,
-										decimalPlaces);
+								field = fus((float) field, decimalPlaces);
 							} else {
-								/*
-								 * if (decimalPlaces <= 1) field = f((double)
-								 * field); else if (decimalPlaces == 2) field =
-								 * fus((double) field); else
-								 */
-								field = setPrecision((double) field,
-										decimalPlaces);
+								field = f((double) field, decimalPlaces);
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
@@ -26921,7 +27030,8 @@ public class KL {
 								break;
 						}
 						s = replaceFirst(s, catchNumericValuesWithOperator,
-								Str(result).replaceAll("\\.[0]+(?!\\d)$", ""));
+								Str(result).replaceAll(
+										"((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
 					}
 				}
 			}
@@ -26949,8 +27059,18 @@ public class KL {
 		String result = "Rs. " + formattedN;
 		return result;
 	}
+	public static String pkr(float n, int places) {
+		String formattedN = fpkr(n, places);
+		String result = "Rs. " + formattedN;
+		return result;
+	}
 	public static String pkr(double n) {
 		String formattedN = fpkr(n);
+		String result = "Rs. " + formattedN;
+		return result;
+	}
+	public static String pkr(double n, int places) {
+		String formattedN = fpkr(n, places);
 		String result = "Rs. " + formattedN;
 		return result;
 	}
@@ -26969,8 +27089,18 @@ public class KL {
 		String result = "USD " + formattedN;
 		return result;
 	}
+	public static String usd(float n, int places) {
+		String formattedN = fus(n, places);
+		String result = "USD " + formattedN;
+		return result;
+	}
 	public static String usd(double n) {
 		String formattedN = fus(n);
+		String result = "USD " + formattedN;
+		return result;
+	}
+	public static String usd(double n, int places) {
+		String formattedN = fus(n, places);
 		String result = "USD " + formattedN;
 		return result;
 	}
@@ -27019,8 +27149,38 @@ public class KL {
 		}
 		return formattedN;
 	}
+	public static String curr(float n, String locale, int places) {
+		String formattedN = fus(n, places);
+		if (not(locale))
+			return formattedN;
+		if (startsWith(locale, "pk|rs")) {
+			return pkr(n);
+		} else if (startsWith(locale, "us")) {
+			return usd(n);
+		} else if (eq(locale, "inr")) {
+			return "Indian " + pkr(n);
+		} else if (len(locale) >= 1 && len(locale) <= 4) {
+			return trim(titleCase(locale)) + " " + formattedN;
+		}
+		return formattedN;
+	}
 	public static String curr(double n, String locale) {
 		String formattedN = fus(n);
+		if (not(locale))
+			return formattedN;
+		if (startsWith(locale, "pk|rs")) {
+			return pkr(n);
+		} else if (startsWith(locale, "us")) {
+			return usd(n);
+		} else if (eq(locale, "inr")) {
+			return "Indian " + pkr(n);
+		} else if (len(locale) >= 1 && len(locale) <= 4) {
+			return trim(titleCase(locale)) + " " + formattedN;
+		}
+		return formattedN;
+	}
+	public static String curr(double n, String locale, int places) {
+		String formattedN = fus(n, places);
 		if (not(locale))
 			return formattedN;
 		if (startsWith(locale, "pk|rs")) {
@@ -34021,10 +34181,10 @@ public class KL {
 
 	public static String name = "Ayesha";
 	public static int age = 23;
-	public static double score = 300500D;
+	public static double score = 300500.856D;
 
 	public static void main(String[] args) {
-		print("{sentCase:hello} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
+		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
 		print(f(500000.215));
 		print("{age\\:rs}");
@@ -34044,10 +34204,11 @@ public class KL {
 		print("{score::rs}");
 		print("{score::}");
 		print("{score}");
-		print("Intl: {f:rs}", score);
+		print("Intl: {score:.1f}");
 		print("{f:,3}", score);
 		print("PK: {score:,2}");
 		print("{score:px}");
+		print(fpkr(score, 3));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
