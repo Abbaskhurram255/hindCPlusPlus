@@ -26532,7 +26532,8 @@ public class KL {
 						} else {
 							boolean multiParam = false;
 							String unprocessedParamString = m.replaceAll(
-									"^[\\$\\w]+[:\\(](?=\\w+)|\\)*$", "");
+									"^[\\$\\{]\\w+[:\\(](?=\\w+)|[\\)\\}]*$",
+									"");
 							if (in(unprocessedParamString, "\\s*,\\s*")) {
 								multiParam = true;
 								String[] paramMatches = unprocessedParamString
@@ -34023,7 +34024,7 @@ public class KL {
 	public static double score = 300500D;
 
 	public static void main(String[] args) {
-		print("$sentCase:hello {{age}+3-9} {d:inr} {d:r}", 835000, 13);
+		print("{sentCase:hello} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
 		print(f(500000.215));
 		print("{age\\:rs}");
@@ -34043,7 +34044,7 @@ public class KL {
 		print("{score::rs}");
 		print("{score::}");
 		print("{score}");
-		print("Intl: {d:r}", score);
+		print("Intl: {f:rs}", score);
 		print("{f:,3}", score);
 		print("PK: {score:,2}");
 		print("{score:px}");
