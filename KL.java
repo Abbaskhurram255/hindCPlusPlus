@@ -26283,10 +26283,13 @@ public class KL {
 		}
 		try {
 			// refactoring alike specifiers by grouping them together
-			s = s.replaceAll("%l", "%d").replaceAll("[%\\{](\\.\\d)?db\\}?",
-					"%$1f").replaceAll("[%\\{]([dinf]):(th|r|p?x|uc?|c)\\}?", "%$1$2");
-			s = s.replaceAll("[%\\{]([dinf])\\:,2\\}?", "%$1")
-					.replaceAll("[%\\{]([dinf])\\:,3\\}?", "%$1u")
+			s = s.replaceAll("%l", "%d")
+					.replaceAll("[%\\{](\\.\\d)?db\\}?", "%$1f").replaceAll(
+							"[%\\{]([dinf]):(th|r(?!s)|p?x|uc?(?!sd)|c)\\}?",
+							"%$1$2");
+			s = s.replaceAll("[%\\{]([dinf])\\:,3\\}?", "%$1u")
+					.replaceAll("[%\\{]([dinf])\\:,2?\\}?", "%$1")
+					.replaceAll("[%\\{]([dinf])([\\:\\.]usd)\\}?", "%$1$2")
 					.replaceAll(
 							"[%\\{]([dinf])c?([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})\\}?",
 							"%$1c$2");
@@ -26673,7 +26676,9 @@ public class KL {
 						if (in(m, "[:=]")) {
 							if (in(m,
 									"[:=]{1,2}(?=\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|usd|p?x|th|r|[A-Za-z]{3,4})")
-									&& (field instanceof Integer || field instanceof Long || field instanceof Float
+									&& (field instanceof Integer
+											|| field instanceof Long
+											|| field instanceof Float
 											|| field instanceof Double)) {
 								if (!in(m, "[:=]{2}|\\\\[:=]")) {
 									label = "";
@@ -26700,7 +26705,8 @@ public class KL {
 								// of the
 								// field AS-IS
 							} else {
-								label = m.replaceAll("[\\$\\{\\\\\\}]|(?<=[:=])\\w+", "");
+								label = m.replaceAll(
+										"[\\$\\{\\\\\\}]|(?<=[:=])\\w+", "");
 							}
 							// allows following behavior:
 							// {amount:.1f} returns the double or floating-point
@@ -34037,8 +34043,10 @@ public class KL {
 		print("{score::rs}");
 		print("{score::}");
 		print("{score}");
-		print("Intl: {score:,3}");
-		print("PK:{score:,2}");
+		print("Intl: {d:r}", score);
+		print("{f:,3}", score);
+		print("PK: {score:,2}");
+		print("{score:px}");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
