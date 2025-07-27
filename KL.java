@@ -26768,22 +26768,22 @@ public class KL {
 			}
 			// FOR FIELDS
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
-								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
+								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
 								"");
 						field = cls.getField(toGet).get(this);
 						String label = "";
 						int decimalPlaces = 2;
 						if (in(m, "[:=]")) {
 							if (in(m,
-									"[:=]{1,2}(?=\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})")
+									"[:=]{1,2}(?=\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})")
 									&& (field instanceof Integer
 											|| field instanceof Long
 											|| field instanceof Float
@@ -26796,7 +26796,7 @@ public class KL {
 													findMatch(m,
 															"(?<=\\\\)[:=]"))
 											.replaceAll(
-													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|,\\d?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
 													"");
 									// keep one [:=] in this case, but remove
 									// the other, to make up for the label from
@@ -26835,37 +26835,63 @@ public class KL {
 							if (in(label, "(?<=\\w):$")) {
 								label += " ";
 							}
-							if (in(m, ("(?<=[:=]\\.)\\d(?=f|db)"))) {
+							if (in(m, ("(?<=[:=](,\\d?)?\\.)\\d(?=f|db)"))) {
 								decimalPlaces = Int(findMatch(m,
-										"(?<=[:=]\\.)\\d(?=f|db)"));
+										"(?<=[:=](,\\d?)?\\.)\\d(?=f|db)"));
 							}
 							// some tweaks
 							if (field instanceof Number) {
-								if (in(m, ("(?<=[:=]),3|u(?!sd)"))) {
-									// NOTE: can't use `eq` here, instead of
-									// `in`, for
-									// obvious reasons
-									field = fus(field instanceof Integer
-											? (int) field
-											: field instanceof Long
-													? (long) field
-													: field instanceof Float
-															? (float) field
-															: (double) field)
-											.replaceAll(
-													"((?<=\\.\\d)[0]+|\\.[0]+)$",
-													"");
-								} else if (in(m, ("(?<=[:=]),2?"))) {
-									field = f(field instanceof Integer
-											? (int) field
-											: field instanceof Long
-													? (long) field
-													: field instanceof Float
-															? (float) field
-															: (double) field)
-											.replaceAll(
-													"((?<=\\.\\d)[0]+|\\.[0]+)$",
-													"");
+								if (in(m, ("(?<=[:=])(,3)(\\.\\d(f|db))?"))) {
+									if (in(m,
+											"(?<=[:=])(,3)(?=\\.\\d(f|db))")) {
+										field = fus(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field,
+												decimalPlaces).replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
+									} else {
+										field = fus(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field)
+												.replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
+									}
+								} else if (in(m,
+										("(?<=[:=])(,2?)(\\.\\d(f|db))?"))) {
+									if (in(m,
+											"(?<=[:=])(,2?)(?=\\.\\d(f|db))")) {
+										field = f(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field,
+												decimalPlaces).replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
+									} else {
+										field = f(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field)
+												.replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
+									}
 								} else if (in(m, ("(?<=[:=])(pkr|rs)"))) {
 									field = pkr(field instanceof Integer
 											? (int) field
@@ -26974,7 +27000,7 @@ public class KL {
 						// ______________________________________________________
 						if (field instanceof Float || field instanceof Double) {
 							if (field instanceof Float) {
-								field = fus((float) field, decimalPlaces);
+								field = f((float) field, decimalPlaces);
 							} else {
 								field = f((double) field, decimalPlaces);
 							}
@@ -34204,7 +34230,7 @@ public class KL {
 		print("{score::rs}");
 		print("{score::}");
 		print("{score}");
-		print("Intl: {score:.1f}");
+		print("Intl: {f:,3}", score);
 		print("{f:,3}", score);
 		print("PK: {score:,2}");
 		print("{score:px}");
