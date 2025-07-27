@@ -26768,23 +26768,24 @@ public class KL {
 			}
 			// FOR FIELDS
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
-								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
+								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
 								"");
 						field = cls.getField(toGet).get(this);
 						String label = "";
 						int decimalPlaces = 2;
 						if (in(m, "[:=]")) {
 							if (in(m,
-									"[:=]{1,2}(?=\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})")
-									&& (field instanceof Integer
+									"[:=]{1,2}(?=\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})")
+									&& (field instanceof String
+											|| field instanceof Integer
 											|| field instanceof Long
 											|| field instanceof Float
 											|| field instanceof Double)) {
@@ -26796,7 +26797,7 @@ public class KL {
 													findMatch(m,
 															"(?<=\\\\)[:=]"))
 											.replaceAll(
-													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|,\\d?(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
 													"");
 									// keep one [:=] in this case, but remove
 									// the other, to make up for the label from
@@ -26814,7 +26815,7 @@ public class KL {
 								// field AS-IS
 							} else {
 								label = m.replaceAll(
-										"[\\$\\{\\\\\\}]|(?<=[:=])\\w+", "");
+										"[\\$\\{\\\\\\}]|(?<=[:=])[\\w,]+", "");
 							}
 							// allows following behavior:
 							// {amount:.1f} returns the double or floating-point
@@ -26835,11 +26836,37 @@ public class KL {
 							if (in(label, "(?<=\\w):$")) {
 								label += " ";
 							}
-							if (in(m, ("(?<=[:=](,\\d?)?\\.)\\d(?=f|db)"))) {
+							if (in(m,
+									("(?<=[:=]\\.)\\d(?=f|db)|(?<=[:=],\\.)\\d(?=f|db)|(?<=[:=],\\d\\.)\\d(?=f|db)"))) {
 								decimalPlaces = Int(findMatch(m,
-										"(?<=[:=](,\\d?)?\\.)\\d(?=f|db)"));
+										"(?<=[:=]\\.)\\d(?=f|db)|(?<=[:=],\\.)\\d(?=f|db)|(?<=[:=],\\d\\.)\\d(?=f|db)"));
 							}
 							// some tweaks
+							if (field instanceof String) {
+								if (in(m, ("(?<=[:=]),?\\d+(,?\\d+)?"))) {
+									if (in(m, ("(?<=[:=])\\d+,\\d+"))) {
+										int a = Int(findMatch(m,
+												"(?<=[:=])\\d+(?=,\\d+)")),
+												b = Int(findMatch(m,
+														"(?<=[:=]\\d+,)\\d+"));
+										field = slice(Str(field), a, b);
+									} else if (in(m, ("(?<=[:=])\\d+,"))) {
+										int a = Int(findMatch(m,
+												"(?<=[:=])\\d+(?=,)"));
+										field = slice(Str(field), a);
+									} else if (in(m, ("(?<=[:=]),\\d+"))) {
+										int a = Int(
+												findMatch(m, "(?<=[:=],)\\d+"));
+										field = sliceRight(Str(field), a);
+									} else {
+										int b = Int(
+												findMatch(m, "(?<=[:=])\\d+"));
+										field = sliceKeep(Str(field), b);
+									}
+								} else if (in(m, ("(?<=[:=])_"))) {
+									field = reverse(Str(field));
+								}
+							}
 							if (field instanceof Number) {
 								if (in(m, ("(?<=[:=])(,3)(\\.\\d(f|db))?"))) {
 									if (in(m,
@@ -34232,9 +34259,9 @@ public class KL {
 		print("{score}");
 		print("Intl: {f:,3}", score);
 		print("{f:,3}", score);
-		print("PK: {score:,2}");
+		print("PK: {score:,3.1f}");
 		print("{score:px}");
-		print(fpkr(score, 3));
+		print("{name:,1}");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
