@@ -15776,9 +15776,26 @@ public class KL {
 					? (char) src
 					: Dbl(Str(src));
 			if (cond1 instanceof String) {
-				if (!in(Str(cond1), "(?<=[<>=])\\-?\\d*\\.?\\d")) {
+				if (!in(Str(cond1),
+						"(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond1), rangeRegEx);
+				boolean exclusive = in(Str(cond1), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond1),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond1),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond1 = ">=" + a + "&<=" + b;
 				}
 				String cond1B = "";
 				boolean either = false, both = false;
@@ -16238,9 +16255,26 @@ public class KL {
 				return false;
 			}
 			if (cond2 instanceof String) {
-				if (!in(Str(cond2), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
+				if (!in(Str(cond2),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond2), rangeRegEx);
+				boolean exclusive = in(Str(cond2), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond2),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond2),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond2 = ">=" + a + "&<=" + b;
 				}
 				String cond2B = "";
 				boolean either = false, both = false;
@@ -16746,9 +16780,26 @@ public class KL {
 				return false;
 			}
 			if (cond3 instanceof String) {
-				if (!in(Str(cond3), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
+				if (!in(Str(cond3),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond3), rangeRegEx);
+				boolean exclusive = in(Str(cond3), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond3),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond3),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond3 = ">=" + a + "&<=" + b;
 				}
 				String cond3B = "";
 				boolean either = false, both = false;
@@ -17255,13 +17306,26 @@ public class KL {
 				return false;
 			}
 			if (cond4 instanceof String) {
-				if (!in(Str(cond4), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond4),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
-				if (!in(Str(cond4), "(?<=[<>=])\\-?\\d*\\.?\\d")) {
-					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
-					return false;
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond4), rangeRegEx);
+				boolean exclusive = in(Str(cond4), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond4),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond4),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond4 = ">=" + a + "&<=" + b;
 				}
 				String cond4B = "";
 				boolean either = false, both = false;
@@ -17768,9 +17832,26 @@ public class KL {
 				return false;
 			}
 			if (cond5 instanceof String) {
-				if (!in(Str(cond5), "(?<=[<>=])\\-?\\d|else")) {
+				if (!in(Str(cond5),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond5), rangeRegEx);
+				boolean exclusive = in(Str(cond5), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond5),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond5),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond5 = ">=" + a + "&<=" + b;
 				}
 				String cond5B = "";
 				boolean either = false, both = false;
@@ -18277,9 +18358,26 @@ public class KL {
 				return false;
 			}
 			if (cond6 instanceof String) {
-				if (!in(Str(cond6), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
+				if (!in(Str(cond6),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond6), rangeRegEx);
+				boolean exclusive = in(Str(cond6), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond6),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond6),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond6 = ">=" + a + "&<=" + b;
 				}
 				String cond6B = "";
 				boolean either = false, both = false;
@@ -18786,9 +18884,26 @@ public class KL {
 				return false;
 			}
 			if (cond7 instanceof String) {
-				if (!in(Str(cond7), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
+				if (!in(Str(cond7),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond7), rangeRegEx);
+				boolean exclusive = in(Str(cond7), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond7),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond7),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond7 = ">=" + a + "&<=" + b;
 				}
 				String cond7B = "";
 				boolean either = false, both = false;
@@ -19295,9 +19410,26 @@ public class KL {
 				return false;
 			}
 			if (cond8 instanceof String) {
-				if (!in(Str(cond8), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
+				if (!in(Str(cond8),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond8), rangeRegEx);
+				boolean exclusive = in(Str(cond8), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond8),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond8),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond8 = ">=" + a + "&<=" + b;
 				}
 				String cond8B = "";
 				boolean either = false, both = false;
@@ -19804,9 +19936,26 @@ public class KL {
 				return false;
 			}
 			if (cond9 instanceof String) {
-				if (!in(Str(cond9), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
+				if (!in(Str(cond9),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond9), rangeRegEx);
+				boolean exclusive = in(Str(cond9), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond9),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond9),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond9 = ">=" + a + "&<=" + b;
 				}
 				String cond9B = "";
 				boolean either = false, both = false;
@@ -20313,9 +20462,26 @@ public class KL {
 				return false;
 			}
 			if (cond10 instanceof String) {
-				if (!in(Str(cond10), "(?<=[<>=])\\-?\\d*\\.?\\d|else")) {
+				if (!in(Str(cond10),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond10), rangeRegEx);
+				boolean exclusive = in(Str(cond10), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond10),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond10),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond10 = ">=" + a + "&<=" + b;
 				}
 				String cond10B = "";
 				boolean either = false, both = false;
@@ -31200,6 +31366,88 @@ public class KL {
 		public static dblArr dblArr = new dblArr();
 		public static boolArr boolArr = new boolArr();
 	}
+	public static final class binary {
+		public static int indexOf(int[] src, int target) {
+			if (src == null || src.length == 0)
+				return -1;
+			int[] arr = src.clone();
+			java.util.Arrays.sort(arr);
+			int low = 0, high = src.length - 1;
+			while (low <= high) {
+				int mid = low + (high - low) / 2;
+				if (arr[mid] == target)
+					return mid;
+				else if (arr[mid] < target)
+					low = mid + 1;
+				else
+					high = mid - 1;
+			}
+			return -1;
+		}
+		public static boolean in(int[] src, int target) {
+			return indexOf(src, target) != -1;
+		}
+		public static int indexOf(long[] src, long target) {
+			if (src == null || src.length == 0)
+				return -1;
+			long[] arr = src.clone();
+			java.util.Arrays.sort(arr);
+			int low = 0, high = src.length - 1;
+			while (low <= high) {
+				int mid = low + (high - low) / 2;
+				if (arr[mid] == target)
+					return mid;
+				else if (arr[mid] < target)
+					low = mid + 1;
+				else
+					high = mid - 1;
+			}
+			return -1;
+		}
+		public static boolean in(long[] src, long target) {
+			return indexOf(src, target) != -1;
+		}
+		public static int indexOf(float[] src, float target) {
+			if (src == null || src.length == 0)
+				return -1;
+			float[] arr = src.clone();
+			java.util.Arrays.sort(arr);
+			int low = 0, high = src.length - 1;
+			while (low <= high) {
+				int mid = low + (high - low) / 2;
+				if (arr[mid] == target)
+					return mid;
+				else if (arr[mid] < target)
+					low = mid + 1;
+				else
+					high = mid - 1;
+			}
+			return -1;
+		}
+		public static boolean in(float[] src, float target) {
+			return indexOf(src, target) != -1;
+		}
+		public static int indexOf(double[] src, double target) {
+			if (src == null || src.length == 0)
+				return -1;
+			double[] arr = src.clone();
+			java.util.Arrays.sort(arr);
+			int low = 0, high = src.length - 1;
+			while (low <= high) {
+				int mid = low + (high - low) / 2;
+				if (arr[mid] == target)
+					return mid;
+				else if (arr[mid] < target)
+					low = mid + 1;
+				else
+					high = mid - 1;
+			}
+			return -1;
+		}
+		public static boolean in(double[] src, double target) {
+			return indexOf(src, target) != -1;
+		}
+	}
 	public static String[] combine(String[] arrA, String[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Str;
@@ -34265,6 +34513,11 @@ public class KL {
 		print("{name:1,}");
 		print("{name:,2}");
 		print("{name:1,3}");
+		int n = 10;
+		when(n, "0..6x", () -> print(
+				"between but exclusive of 0, and 6: so basically, around 1 through 5"),
+				"6..10", () -> print("between and inclusive of 6, and 10"),
+				Else, () -> print("neither"));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
