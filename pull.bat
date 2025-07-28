@@ -1,0 +1,3 @@
+@echo off
+echo Pulling commits from main...
+git pull
