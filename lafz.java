@@ -263,6 +263,7 @@ class lafz {
 	}
 	static String format(String stringWithFormatSpecifiers, Object... args) {
 		if (stringWithFormatSpecifiers == null || args == null) return "";
+		if (args.length() == 0) return stringWithFormatSpecifiers;
 		try {
 			return String.format(stringWithFormatSpecifiers, args);
 		}
@@ -279,6 +280,54 @@ class lafz {
 			return str;
 		}
 	}
+	byte[] getBytes() {
+		try {
+			return str.getBytes();
+		}
+		catch (Exception e) {
+			return new byte[];
+		} 
+	}
+	byte[] getBytes(Charset c) {
+		try {
+			return str.getBytes(c);
+		}
+		catch (Exception e) {
+			return new byte[];
+		} 
+	}
+	byte[] getBytes(String charsetName) {
+		try {
+			return str.getBytes(charsetName);
+		}
+		catch (Exception e) {
+			return new byte[];
+		} 
+	}
+	void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) {
+		try {
+			str.getChars(srcBegin, srcEnd, dst, dstBegin);
+		}
+		catch (Exception e) {
+		}
+	}
+	int hashCode() {
+		try {
+			return str.hashCode();
+		}
+		catch (Exception e) {
+			return "";
+		}
+	}
+	String intern() {
+		try {
+			return str.intern();
+		}
+		catch (Exception e) {
+			return "";
+		}
+	}
+	//continue by searching KL for RegEx: String \w+\(String \w+
 	String join() {
 		if (isEmpty()) return "";
 		if (words.length < 2)
@@ -290,8 +339,9 @@ class lafz {
 		return returnValue;
 	}
     String replace(String re, String _with) {
-    	if (re == null || _with == null || isEmpty() || re.length() == 0) return "";
-    	//leave check for _with, let it be blank sometimes, to allow replacement of the looked up re with a blank string
+    	if (isEmpty()) return "";
+    	if (re == null || re.length() == 0 || _with == null) return str;
+    	//leave the check of _with, let it be blank sometimes, to allow replacement of the looked up re with a blank string
     	try {
     		return str.replaceAll(re, _with);
     	} catch (PatternSyntaxException|StackOverflowError e) {

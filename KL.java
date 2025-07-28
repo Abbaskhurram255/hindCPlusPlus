@@ -15765,6 +15765,102 @@ public class KL {
 			thread.interrupt();
 		}
 	}
+	//@@deprecated sw version 0.0.0.0: the most basic on-the-fly implementation
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
+			Runnable sol10) {
+		if (is(cond1)) {
+			new Thread(sol1).run();
+		} else if (is(cond2)) {
+			new Thread(sol2).run();
+		} else if (is(cond3)) {
+			new Thread(sol3).run();
+		} else if (is(cond4)) {
+			new Thread(sol4).run();
+		} else if (is(cond5)) {
+			new Thread(sol5).run();
+		} else if (is(cond6)) {
+			new Thread(sol6).run();
+		} else if (is(cond7)) {
+			new Thread(sol7).run();
+		} else if (is(cond8)) {
+			new Thread(sol8).run();
+		} else if (is(cond9)) {
+			new Thread(sol9).run();
+		} else if (is(cond10)) {
+			new Thread(sol10).run();
+		}
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8, boolean cond9, Runnable sol9) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, false,
+				null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, cond8, sol8, false, null, false,
+				null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, false, null, false, null, false,
+				null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, false, null, false, null, false, null, false,
+				null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				false, null, false, null, false, null, false, null, false,
+				null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, false, null,
+				false, null, false, null, false, null, false, null, false,
+				null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, false, null, false, null,
+				false, null, false, null, false, null, false, null, false,
+				null);
+	}
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2) {
+		sw(cond1, sol1, cond2, sol2, false, null, false, null, false, null,
+				false, null, false, null, false, null, false, null, false,
+				null);
+	}
+	public static void sw(boolean cond1, Runnable sol1) {
+		sw(cond1, sol1, false, null, false, null, false, null, false, null,
+				false, null, false, null, false, null, false, null, false,
+				null);
+	}
+	//sw/when version 1: runs Runnable solution x matching with condition x
+	//@returns `true` if any of the non-Else conditions are met, else `false`
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
 			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
@@ -21550,99 +21646,3940 @@ public class KL {
 	public static boolean when(Object src, Object cond1, Runnable sol1) {
 		return sw(src, cond1, sol1);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
-			Runnable sol10) {
-		if (is(cond1)) {
-			new Thread(sol1).run();
-		} else if (is(cond2)) {
-			new Thread(sol2).run();
-		} else if (is(cond3)) {
-			new Thread(sol3).run();
-		} else if (is(cond4)) {
-			new Thread(sol4).run();
-		} else if (is(cond5)) {
-			new Thread(sol5).run();
-		} else if (is(cond6)) {
-			new Thread(sol6).run();
-		} else if (is(cond7)) {
-			new Thread(sol7).run();
-		} else if (is(cond8)) {
-			new Thread(sol8).run();
-		} else if (is(cond9)) {
-			new Thread(sol9).run();
-		} else if (is(cond10)) {
-			new Thread(sol10).run();
+	//sw/when version 1.1: when a condition meets, return its direct respective solution (of @type ::solutions.sol1.T)
+public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6, Object cond7, T sol7,
+			Object cond8, T sol8, Object cond9, T sol9,
+			Object cond10, T sol10) {
+		if (src instanceof Number || src instanceof Character) {
+			double srcDbl = src instanceof Character
+					? (char) src
+					: Dbl(Str(src));
+			if (cond1 instanceof String) {
+				if (!in(Str(cond1),
+						"(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond1), rangeRegEx);
+				boolean exclusive = in(Str(cond1), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond1),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond1),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond1 = ">=" + a + "&<=" + b;
+				}
+				String cond1B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond1),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+					String op = Str(cond1).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond1).split("\\s*[\\&\\|]+\\s*");
+					cond1 = parts[0];
+					cond1B = parts[1];
+				}
+				double middleware = Dbl(
+						Str(cond1).replaceAll("[^\\-\\d\\.]", "")),
+						middlewareB = Dbl(
+								Str(cond1B).replaceAll("[^\\-\\d\\.]", ""));
+				cond1 = String(cond1).replaceAll("[^<>=]", "");
+				cond1B = String(cond1B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond1, ">")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl > middleware || srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl > middleware || srcDbl >= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl > middleware || srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl > middleware || srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl > middleware || srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					} else if (eq(cond1, ">=")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl >= middleware || srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl >= middleware || srcDbl >= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl >= middleware || srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl >= middleware || srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl >= middleware || srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					} else if (eq(cond1, "<")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl < middleware || srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl < middleware || srcDbl >= middlewareB) {
+
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl < middleware || srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl < middleware || srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl < middleware || srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					} else if (eq(cond1, "<=")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl <= middleware || srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl <= middleware || srcDbl >= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl <= middleware || srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl <= middleware || srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl <= middleware || srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					} else if (eq(cond1, "==")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl == middleware || srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl == middleware || srcDbl >= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl == middleware || srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl == middleware || srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl == middleware || srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond1, ">")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl > middleware && srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl > middleware && srcDbl >= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl > middleware && srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl > middleware && srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl > middleware && srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					} else if (eq(cond1, ">=")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl >= middleware && srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl >= middleware && srcDbl >= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl >= middleware && srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl >= middleware && srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl >= middleware && srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					} else if (eq(cond1, "<")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl < middleware && srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl < middleware && srcDbl >= middlewareB) {
+
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl < middleware && srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl < middleware && srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl < middleware && srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					} else if (eq(cond1, "<=")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl <= middleware && srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl <= middleware && srcDbl >= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl <= middleware && srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl <= middleware && srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl <= middleware && srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					} else if (eq(cond1, "==")) {
+						if (eq(cond1B, ">")) {
+							if (srcDbl == middleware && srcDbl > middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, ">=")) {
+							if (srcDbl == middleware && srcDbl >= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<")) {
+							if (srcDbl == middleware && srcDbl < middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "<=")) {
+							if (srcDbl == middleware && srcDbl <= middlewareB) {
+								return sol1;
+							}
+						} else if (eq(cond1B, "==")) {
+							if (srcDbl == middleware && srcDbl == middlewareB) {
+								return sol1;
+							}
+						}
+					}
+				} else {
+					if (eq(cond1, ">")) {
+						if (srcDbl > middleware) {
+							return sol1;
+						}
+					} else if (eq(cond1, ">=")) {
+						if (srcDbl >= middleware) {
+							return sol1;
+						}
+					} else if (eq(cond1, "<")) {
+						if (srcDbl < middleware) {
+							return sol1;
+						}
+					} else if (eq(cond1, "<=")) {
+						if (srcDbl <= middleware) {
+							return sol1;
+						}
+					} else if (eq(cond1, "==")) {
+						if (srcDbl == middleware) {
+							return sol1;
+						}
+					}
+				}
+			} else if (cond1 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond1)))) {
+					return sol1;
+				}
+			} else if (cond1 instanceof Character) {
+				if (eq((char) src, (char) cond1)) {
+					return sol1;
+				}
+			} else if (isNull(cond1)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond2 instanceof String) {
+				if (!in(Str(cond2),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond2), rangeRegEx);
+				boolean exclusive = in(Str(cond2), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond2),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond2),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond2 = ">=" + a + "&<=" + b;
+				}
+				String cond2B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond2),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+					String op = Str(cond2).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond2).split("\\s*[\\&\\|]+\\s*");
+					cond2 = parts[0];
+					cond2B = parts[1];
+				}
+				double middleware2 = Dbl(
+						Str(cond2).replaceAll("[^\\-\\d\\.]", "")),
+						middleware2B = Dbl(
+								Str(cond2B).replaceAll("[^\\-\\d\\.]", ""));
+				cond2 = String(cond2).replaceAll("[^<>=else]", "");
+				cond2B = String(cond2B).replaceAll("[^<>=]", "");
+				if (either) {
+					if (eq(cond2, ">")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl > middleware2 || srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl > middleware2
+									|| srcDbl >= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl > middleware2 || srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl > middleware2
+									|| srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl > middleware2
+									|| srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					} else if (eq(cond2, ">=")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl >= middleware2
+									|| srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl >= middleware2
+									|| srcDbl >= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl >= middleware2
+									|| srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl >= middleware2
+									|| srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl >= middleware2
+									|| srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					} else if (eq(cond2, "<")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl < middleware2 || srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl < middleware2
+									|| srcDbl >= middleware2B) {
+
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl < middleware2 || srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl < middleware2
+									|| srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl < middleware2
+									|| srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					} else if (eq(cond2, "<=")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl <= middleware2
+									|| srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl <= middleware2
+									|| srcDbl >= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl <= middleware2
+									|| srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl <= middleware2
+									|| srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl <= middleware2
+									|| srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					} else if (eq(cond2, "==")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl == middleware2
+									|| srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl == middleware2
+									|| srcDbl >= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl == middleware2
+									|| srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl == middleware2
+									|| srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl == middleware2
+									|| srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond2, ">")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl > middleware2 && srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl > middleware2
+									&& srcDbl >= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl > middleware2 && srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl > middleware2
+									&& srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl > middleware2
+									&& srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					} else if (eq(cond2, ">=")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl >= middleware2
+									&& srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl >= middleware2
+									&& srcDbl >= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl >= middleware2
+									&& srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl >= middleware2
+									&& srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl >= middleware2
+									&& srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					} else if (eq(cond2, "<")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl < middleware2 && srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl < middleware2
+									&& srcDbl >= middleware2B) {
+
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl < middleware2 && srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl < middleware2
+									&& srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl < middleware2
+									&& srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					} else if (eq(cond2, "<=")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl <= middleware2
+									&& srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl <= middleware2
+									&& srcDbl >= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl <= middleware2
+									&& srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl <= middleware2
+									&& srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl <= middleware2
+									&& srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					} else if (eq(cond2, "==")) {
+						if (eq(cond2B, ">")) {
+							if (srcDbl == middleware2
+									&& srcDbl > middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, ">=")) {
+							if (srcDbl == middleware2
+									&& srcDbl >= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<")) {
+							if (srcDbl == middleware2
+									&& srcDbl < middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "<=")) {
+							if (srcDbl == middleware2
+									&& srcDbl <= middleware2B) {
+								return sol2;
+							}
+						} else if (eq(cond2B, "==")) {
+							if (srcDbl == middleware2
+									&& srcDbl == middleware2B) {
+								return sol2;
+							}
+						}
+					}
+				} else {
+					if (eq(cond2, ">")) {
+						if (srcDbl > middleware2) {
+							return sol2;
+						}
+					} else if (eq(cond2, ">=")) {
+						if (srcDbl >= middleware2) {
+							return sol2;
+						}
+					} else if (eq(cond2, "<")) {
+						if (srcDbl < middleware2) {
+							return sol2;
+						}
+					} else if (eq(cond2, "<=")) {
+						if (srcDbl <= middleware2) {
+							return sol2;
+						}
+					} else if (eq(cond2, "==")) {
+						if (srcDbl == middleware2) {
+							return sol2;
+						}
+					} else if (eq(cond2, "else")) {
+						return sol2;
+					}
+				}
+			} else if (cond2 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond2)))) {
+					return sol2;
+				}
+			} else if (cond2 instanceof Character) {
+				if (eq((char) src, (char) cond2)) {
+					return sol2;
+				}
+			} else if (isNull(cond2)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond3 instanceof String) {
+				if (!in(Str(cond3),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond3), rangeRegEx);
+				boolean exclusive = in(Str(cond3), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond3),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond3),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond3 = ">=" + a + "&<=" + b;
+				}
+				String cond3B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond3),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond3).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond3).split("\\s*[\\&\\|]+\\s*");
+					cond3 = parts[0];
+					cond3B = parts[1];
+				}
+				double middleware3 = Dbl(
+						Str(cond3).replaceAll("[^\\-\\d\\.]", "")),
+						middleware3B = Dbl(
+								Str(cond3B).replaceAll("[^\\-\\d\\.]", ""));
+				cond3 = String(cond3).replaceAll("[^<>=else]", "");
+				cond3B = String(cond3B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond3, ">")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl > middleware3 || srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl > middleware3
+									|| srcDbl >= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl > middleware3 || srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl > middleware3
+									|| srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl > middleware3
+									|| srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					} else if (eq(cond3, ">=")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl >= middleware3
+									|| srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl >= middleware3
+									|| srcDbl >= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl >= middleware3
+									|| srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl >= middleware3
+									|| srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl >= middleware3
+									|| srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					} else if (eq(cond3, "<")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl < middleware3 || srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl < middleware3
+									|| srcDbl >= middleware3B) {
+
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl < middleware3 || srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl < middleware3
+									|| srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl < middleware3
+									|| srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					} else if (eq(cond3, "<=")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl <= middleware3
+									|| srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl <= middleware3
+									|| srcDbl >= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl <= middleware3
+									|| srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl <= middleware3
+									|| srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl <= middleware3
+									|| srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					} else if (eq(cond3, "==")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl == middleware3
+									|| srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl == middleware3
+									|| srcDbl >= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl == middleware3
+									|| srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl == middleware3
+									|| srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl == middleware3
+									|| srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond3, ">")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl > middleware3 && srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl > middleware3
+									&& srcDbl >= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl > middleware3 && srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl > middleware3
+									&& srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl > middleware3
+									&& srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					} else if (eq(cond3, ">=")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl >= middleware3
+									&& srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl >= middleware3
+									&& srcDbl >= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl >= middleware3
+									&& srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl >= middleware3
+									&& srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl >= middleware3
+									&& srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					} else if (eq(cond3, "<")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl < middleware3 && srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl < middleware3
+									&& srcDbl >= middleware3B) {
+
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl < middleware3 && srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl < middleware3
+									&& srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl < middleware3
+									&& srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					} else if (eq(cond3, "<=")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl <= middleware3
+									&& srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl <= middleware3
+									&& srcDbl >= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl <= middleware3
+									&& srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl <= middleware3
+									&& srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl <= middleware3
+									&& srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					} else if (eq(cond3, "==")) {
+						if (eq(cond3B, ">")) {
+							if (srcDbl == middleware3
+									&& srcDbl > middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, ">=")) {
+							if (srcDbl == middleware3
+									&& srcDbl >= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<")) {
+							if (srcDbl == middleware3
+									&& srcDbl < middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "<=")) {
+							if (srcDbl == middleware3
+									&& srcDbl <= middleware3B) {
+								return sol3;
+							}
+						} else if (eq(cond3B, "==")) {
+							if (srcDbl == middleware3
+									&& srcDbl == middleware3B) {
+								return sol3;
+							}
+						}
+					}
+				} else {
+					if (eq(cond3, ">")) {
+						if (srcDbl > middleware3) {
+							return sol3;
+						}
+					} else if (eq(cond3, ">=")) {
+						if (srcDbl >= middleware3) {
+							return sol3;
+						}
+					} else if (eq(cond3, "<")) {
+						if (srcDbl < middleware3) {
+							return sol3;
+						}
+					} else if (eq(cond3, "<=")) {
+						if (srcDbl <= middleware3) {
+							return sol3;
+						}
+					} else if (eq(cond3, "==")) {
+						if (srcDbl == middleware3) {
+							return sol3;
+						}
+					} else if (eq(cond3, "else")) {
+						return sol3;
+					}
+				}
+			} else if (cond3 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond3)))) {
+					return sol3;
+				}
+			} else if (cond3 instanceof Character) {
+				if (eq((char) src, (char) cond3)) {
+					return sol3;
+				}
+			} else if (isNull(cond3)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond4 instanceof String) {
+				if (!in(Str(cond4),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond4), rangeRegEx);
+				boolean exclusive = in(Str(cond4), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond4),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond4),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond4 = ">=" + a + "&<=" + b;
+				}
+				String cond4B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond4),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond4).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond4).split("\\s*[\\&\\|]+\\s*");
+					cond4 = parts[0];
+					cond4B = parts[1];
+				}
+				double middleware4 = Dbl(
+						Str(cond4).replaceAll("[^\\-\\d\\.]", "")),
+						middleware4B = Dbl(
+								Str(cond4B).replaceAll("[^\\-\\d\\.]", ""));
+				cond4 = String(cond4).replaceAll("[^<>=else]", "");
+				cond4B = String(cond4B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond4, ">")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl > middleware4 || srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl > middleware4
+									|| srcDbl >= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl > middleware4 || srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl > middleware4
+									|| srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl > middleware4
+									|| srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					} else if (eq(cond4, ">=")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl >= middleware4
+									|| srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl >= middleware4
+									|| srcDbl >= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl >= middleware4
+									|| srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl >= middleware4
+									|| srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl >= middleware4
+									|| srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					} else if (eq(cond4, "<")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl < middleware4 || srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl < middleware4
+									|| srcDbl >= middleware4B) {
+
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl < middleware4 || srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl < middleware4
+									|| srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl < middleware4
+									|| srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					} else if (eq(cond4, "<=")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl <= middleware4
+									|| srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl <= middleware4
+									|| srcDbl >= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl <= middleware4
+									|| srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl <= middleware4
+									|| srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl <= middleware4
+									|| srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					} else if (eq(cond4, "==")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl == middleware4
+									|| srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl == middleware4
+									|| srcDbl >= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl == middleware4
+									|| srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl == middleware4
+									|| srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl == middleware4
+									|| srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond4, ">")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl > middleware4 && srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl > middleware4
+									&& srcDbl >= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl > middleware4 && srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl > middleware4
+									&& srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl > middleware4
+									&& srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					} else if (eq(cond4, ">=")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl >= middleware4
+									&& srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl >= middleware4
+									&& srcDbl >= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl >= middleware4
+									&& srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl >= middleware4
+									&& srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl >= middleware4
+									&& srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					} else if (eq(cond4, "<")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl < middleware4 && srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl < middleware4
+									&& srcDbl >= middleware4B) {
+
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl < middleware4 && srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl < middleware4
+									&& srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl < middleware4
+									&& srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					} else if (eq(cond4, "<=")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl <= middleware4
+									&& srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl <= middleware4
+									&& srcDbl >= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl <= middleware4
+									&& srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl <= middleware4
+									&& srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl <= middleware4
+									&& srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					} else if (eq(cond4, "==")) {
+						if (eq(cond4B, ">")) {
+							if (srcDbl == middleware4
+									&& srcDbl > middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, ">=")) {
+							if (srcDbl == middleware4
+									&& srcDbl >= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<")) {
+							if (srcDbl == middleware4
+									&& srcDbl < middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "<=")) {
+							if (srcDbl == middleware4
+									&& srcDbl <= middleware4B) {
+								return sol4;
+							}
+						} else if (eq(cond4B, "==")) {
+							if (srcDbl == middleware4
+									&& srcDbl == middleware4B) {
+								return sol4;
+							}
+						}
+					}
+				} else {
+					if (eq(cond4, ">")) {
+						if (srcDbl > middleware4) {
+							return sol4;
+						}
+					} else if (eq(cond4, ">=")) {
+						if (srcDbl >= middleware4) {
+							return sol4;
+						}
+					} else if (eq(cond4, "<")) {
+						if (srcDbl < middleware4) {
+							return sol4;
+						}
+					} else if (eq(cond4, "<=")) {
+						if (srcDbl <= middleware4) {
+							return sol4;
+						}
+					} else if (eq(cond4, "==")) {
+						if (srcDbl == middleware4) {
+							return sol4;
+						}
+					} else if (eq(cond4, "else")) {
+						return sol4;
+					}
+				}
+			} else if (cond4 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond4)))) {
+					return sol4;
+				}
+			} else if (cond4 instanceof Character) {
+				if (eq((char) src, (char) cond4)) {
+					return sol4;
+				}
+			} else if (isNull(cond4)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond5 instanceof String) {
+				if (!in(Str(cond5),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond5), rangeRegEx);
+				boolean exclusive = in(Str(cond5), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond5),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond5),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond5 = ">=" + a + "&<=" + b;
+				}
+				String cond5B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond5),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond5).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond5).split("\\s*[\\&\\|]+\\s*");
+					cond5 = parts[0];
+					cond5B = parts[1];
+				}
+				double middleware5 = Dbl(
+						Str(cond5).replaceAll("[^\\-\\d\\.]", "")),
+						middleware5B = Dbl(
+								Str(cond5B).replaceAll("[^\\-\\d\\.]", ""));
+				cond5 = String(cond5).replaceAll("[^<>=else]", "");
+				cond5B = String(cond5B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond5, ">")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl > middleware5 || srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl > middleware5
+									|| srcDbl >= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl > middleware5 || srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl > middleware5
+									|| srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl > middleware5
+									|| srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					} else if (eq(cond5, ">=")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl >= middleware5
+									|| srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl >= middleware5
+									|| srcDbl >= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl >= middleware5
+									|| srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl >= middleware5
+									|| srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl >= middleware5
+									|| srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					} else if (eq(cond5, "<")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl < middleware5 || srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl < middleware5
+									|| srcDbl >= middleware5B) {
+
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl < middleware5 || srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl < middleware5
+									|| srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl < middleware5
+									|| srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					} else if (eq(cond5, "<=")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl <= middleware5
+									|| srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl <= middleware5
+									|| srcDbl >= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl <= middleware5
+									|| srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl <= middleware5
+									|| srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl <= middleware5
+									|| srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					} else if (eq(cond5, "==")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl == middleware5
+									|| srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl == middleware5
+									|| srcDbl >= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl == middleware5
+									|| srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl == middleware5
+									|| srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl == middleware5
+									|| srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond5, ">")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl > middleware5 && srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl > middleware5
+									&& srcDbl >= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl > middleware5 && srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl > middleware5
+									&& srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl > middleware5
+									&& srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					} else if (eq(cond5, ">=")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl >= middleware5
+									&& srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl >= middleware5
+									&& srcDbl >= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl >= middleware5
+									&& srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl >= middleware5
+									&& srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl >= middleware5
+									&& srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					} else if (eq(cond5, "<")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl < middleware5 && srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl < middleware5
+									&& srcDbl >= middleware5B) {
+
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl < middleware5 && srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl < middleware5
+									&& srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl < middleware5
+									&& srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					} else if (eq(cond5, "<=")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl <= middleware5
+									&& srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl <= middleware5
+									&& srcDbl >= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl <= middleware5
+									&& srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl <= middleware5
+									&& srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl <= middleware5
+									&& srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					} else if (eq(cond5, "==")) {
+						if (eq(cond5B, ">")) {
+							if (srcDbl == middleware5
+									&& srcDbl > middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, ">=")) {
+							if (srcDbl == middleware5
+									&& srcDbl >= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<")) {
+							if (srcDbl == middleware5
+									&& srcDbl < middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "<=")) {
+							if (srcDbl == middleware5
+									&& srcDbl <= middleware5B) {
+								return sol5;
+							}
+						} else if (eq(cond5B, "==")) {
+							if (srcDbl == middleware5
+									&& srcDbl == middleware5B) {
+								return sol5;
+							}
+						}
+					}
+				} else {
+					if (eq(cond5, ">")) {
+						if (srcDbl > middleware5) {
+							return sol5;
+						}
+					} else if (eq(cond5, ">=")) {
+						if (srcDbl >= middleware5) {
+							return sol5;
+						}
+					} else if (eq(cond5, "<")) {
+						if (srcDbl < middleware5) {
+							return sol5;
+						}
+					} else if (eq(cond5, "<=")) {
+						if (srcDbl <= middleware5) {
+							return sol5;
+						}
+					} else if (eq(cond5, "==")) {
+						if (srcDbl == middleware5) {
+							return sol5;
+						}
+					} else if (eq(cond5, "else")) {
+						return sol5;
+					}
+				}
+			} else if (cond5 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond5)))) {
+					return sol5;
+				}
+			} else if (cond5 instanceof Character) {
+				if (eq((char) src, (char) cond5)) {
+					return sol5;
+				}
+			} else if (isNull(cond5)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond6 instanceof String) {
+				if (!in(Str(cond6),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond6), rangeRegEx);
+				boolean exclusive = in(Str(cond6), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond6),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond6),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond6 = ">=" + a + "&<=" + b;
+				}
+				String cond6B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond6),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond6).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond6).split("\\s*[\\&\\|]+\\s*");
+					cond6 = parts[0];
+					cond6B = parts[1];
+				}
+				double middleware6 = Dbl(
+						Str(cond6).replaceAll("[^\\-\\d\\.]", "")),
+						middleware6B = Dbl(
+								Str(cond6B).replaceAll("[^\\-\\d\\.]", ""));
+				cond6 = String(cond6).replaceAll("[^<>=else]", "");
+				cond6B = String(cond6B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond6, ">")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl > middleware6 || srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl > middleware6
+									|| srcDbl >= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl > middleware6 || srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl > middleware6
+									|| srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl > middleware6
+									|| srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					} else if (eq(cond6, ">=")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl >= middleware6
+									|| srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl >= middleware6
+									|| srcDbl >= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl >= middleware6
+									|| srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl >= middleware6
+									|| srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl >= middleware6
+									|| srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					} else if (eq(cond6, "<")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl < middleware6 || srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl < middleware6
+									|| srcDbl >= middleware6B) {
+
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl < middleware6 || srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl < middleware6
+									|| srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl < middleware6
+									|| srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					} else if (eq(cond6, "<=")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl <= middleware6
+									|| srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl <= middleware6
+									|| srcDbl >= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl <= middleware6
+									|| srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl <= middleware6
+									|| srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl <= middleware6
+									|| srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					} else if (eq(cond6, "==")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl == middleware6
+									|| srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl == middleware6
+									|| srcDbl >= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl == middleware6
+									|| srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl == middleware6
+									|| srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl == middleware6
+									|| srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond6, ">")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl > middleware6 && srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl > middleware6
+									&& srcDbl >= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl > middleware6 && srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl > middleware6
+									&& srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl > middleware6
+									&& srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					} else if (eq(cond6, ">=")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl >= middleware6
+									&& srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl >= middleware6
+									&& srcDbl >= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl >= middleware6
+									&& srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl >= middleware6
+									&& srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl >= middleware6
+									&& srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					} else if (eq(cond6, "<")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl < middleware6 && srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl < middleware6
+									&& srcDbl >= middleware6B) {
+
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl < middleware6 && srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl < middleware6
+									&& srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl < middleware6
+									&& srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					} else if (eq(cond6, "<=")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl <= middleware6
+									&& srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl <= middleware6
+									&& srcDbl >= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl <= middleware6
+									&& srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl <= middleware6
+									&& srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl <= middleware6
+									&& srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					} else if (eq(cond6, "==")) {
+						if (eq(cond6B, ">")) {
+							if (srcDbl == middleware6
+									&& srcDbl > middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, ">=")) {
+							if (srcDbl == middleware6
+									&& srcDbl >= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<")) {
+							if (srcDbl == middleware6
+									&& srcDbl < middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "<=")) {
+							if (srcDbl == middleware6
+									&& srcDbl <= middleware6B) {
+								return sol6;
+							}
+						} else if (eq(cond6B, "==")) {
+							if (srcDbl == middleware6
+									&& srcDbl == middleware6B) {
+								return sol6;
+							}
+						}
+					}
+				} else {
+					if (eq(cond6, ">")) {
+						if (srcDbl > middleware6) {
+							return sol6;
+						}
+					} else if (eq(cond6, ">=")) {
+						if (srcDbl >= middleware6) {
+							return sol6;
+						}
+					} else if (eq(cond6, "<")) {
+						if (srcDbl < middleware6) {
+							return sol6;
+						}
+					} else if (eq(cond6, "<=")) {
+						if (srcDbl <= middleware6) {
+							return sol6;
+						}
+					} else if (eq(cond6, "==")) {
+						if (srcDbl == middleware6) {
+							return sol6;
+						}
+					} else if (eq(cond6, "else")) {
+						return sol6;
+					}
+				}
+			} else if (cond6 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond6)))) {
+					return sol6;
+				}
+			} else if (cond6 instanceof Character) {
+				if (eq((char) src, (char) cond6)) {
+					return sol6;
+				}
+			} else if (isNull(cond6)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond7 instanceof String) {
+				if (!in(Str(cond7),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond7), rangeRegEx);
+				boolean exclusive = in(Str(cond7), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond7),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond7),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond7 = ">=" + a + "&<=" + b;
+				}
+				String cond7B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond7),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond7).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond7).split("\\s*[\\&\\|]+\\s*");
+					cond7 = parts[0];
+					cond7B = parts[1];
+				}
+				double middleware7 = Dbl(
+						Str(cond7).replaceAll("[^\\-\\d\\.]", "")),
+						middleware7B = Dbl(
+								Str(cond7B).replaceAll("[^\\-\\d\\.]", ""));
+				cond7 = String(cond7).replaceAll("[^<>=else]", "");
+				cond7B = String(cond7B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond7, ">")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl > middleware7 || srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl > middleware7
+									|| srcDbl >= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl > middleware7 || srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl > middleware7
+									|| srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl > middleware7
+									|| srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					} else if (eq(cond7, ">=")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl >= middleware7
+									|| srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl >= middleware7
+									|| srcDbl >= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl >= middleware7
+									|| srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl >= middleware7
+									|| srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl >= middleware7
+									|| srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					} else if (eq(cond7, "<")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl < middleware7 || srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl < middleware7
+									|| srcDbl >= middleware7B) {
+
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl < middleware7 || srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl < middleware7
+									|| srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl < middleware7
+									|| srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					} else if (eq(cond7, "<=")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl <= middleware7
+									|| srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl <= middleware7
+									|| srcDbl >= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl <= middleware7
+									|| srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl <= middleware7
+									|| srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl <= middleware7
+									|| srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					} else if (eq(cond7, "==")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl == middleware7
+									|| srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl == middleware7
+									|| srcDbl >= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl == middleware7
+									|| srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl == middleware7
+									|| srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl == middleware7
+									|| srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond7, ">")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl > middleware7 && srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl > middleware7
+									&& srcDbl >= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl > middleware7 && srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl > middleware7
+									&& srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl > middleware7
+									&& srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					} else if (eq(cond7, ">=")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl >= middleware7
+									&& srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl >= middleware7
+									&& srcDbl >= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl >= middleware7
+									&& srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl >= middleware7
+									&& srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl >= middleware7
+									&& srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					} else if (eq(cond7, "<")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl < middleware7 && srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl < middleware7
+									&& srcDbl >= middleware7B) {
+
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl < middleware7 && srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl < middleware7
+									&& srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl < middleware7
+									&& srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					} else if (eq(cond7, "<=")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl <= middleware7
+									&& srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl <= middleware7
+									&& srcDbl >= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl <= middleware7
+									&& srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl <= middleware7
+									&& srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl <= middleware7
+									&& srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					} else if (eq(cond7, "==")) {
+						if (eq(cond7B, ">")) {
+							if (srcDbl == middleware7
+									&& srcDbl > middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, ">=")) {
+							if (srcDbl == middleware7
+									&& srcDbl >= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<")) {
+							if (srcDbl == middleware7
+									&& srcDbl < middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "<=")) {
+							if (srcDbl == middleware7
+									&& srcDbl <= middleware7B) {
+								return sol7;
+							}
+						} else if (eq(cond7B, "==")) {
+							if (srcDbl == middleware7
+									&& srcDbl == middleware7B) {
+								return sol7;
+							}
+						}
+					}
+				} else {
+					if (eq(cond7, ">")) {
+						if (srcDbl > middleware7) {
+							return sol7;
+						}
+					} else if (eq(cond7, ">=")) {
+						if (srcDbl >= middleware7) {
+							return sol7;
+						}
+					} else if (eq(cond7, "<")) {
+						if (srcDbl < middleware7) {
+							return sol7;
+						}
+					} else if (eq(cond7, "<=")) {
+						if (srcDbl <= middleware7) {
+							return sol7;
+						}
+					} else if (eq(cond7, "==")) {
+						if (srcDbl == middleware7) {
+							return sol7;
+						}
+					} else if (eq(cond7, "else")) {
+						return sol7;
+					}
+				}
+			} else if (cond7 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond7)))) {
+					return sol7;
+				}
+			} else if (cond7 instanceof Character) {
+				if (eq((char) src, (char) cond7)) {
+					return sol7;
+				}
+			} else if (isNull(cond7)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond8 instanceof String) {
+				if (!in(Str(cond8),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond8), rangeRegEx);
+				boolean exclusive = in(Str(cond8), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond8),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond8),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond8 = ">=" + a + "&<=" + b;
+				}
+				String cond8B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond8),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond8).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond8).split("\\s*[\\&\\|]+\\s*");
+					cond8 = parts[0];
+					cond8B = parts[1];
+				}
+				double middleware8 = Dbl(
+						Str(cond8).replaceAll("[^\\-\\d\\.]", "")),
+						middleware8B = Dbl(
+								Str(cond8B).replaceAll("[^\\-\\d\\.]", ""));
+				cond8 = String(cond8).replaceAll("[^<>=else]", "");
+				cond8B = String(cond8B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond8, ">")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl > middleware8 || srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl > middleware8
+									|| srcDbl >= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl > middleware8 || srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl > middleware8
+									|| srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl > middleware8
+									|| srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					} else if (eq(cond8, ">=")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl >= middleware8
+									|| srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl >= middleware8
+									|| srcDbl >= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl >= middleware8
+									|| srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl >= middleware8
+									|| srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl >= middleware8
+									|| srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					} else if (eq(cond8, "<")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl < middleware8 || srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl < middleware8
+									|| srcDbl >= middleware8B) {
+
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl < middleware8 || srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl < middleware8
+									|| srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl < middleware8
+									|| srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					} else if (eq(cond8, "<=")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl <= middleware8
+									|| srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl <= middleware8
+									|| srcDbl >= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl <= middleware8
+									|| srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl <= middleware8
+									|| srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl <= middleware8
+									|| srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					} else if (eq(cond8, "==")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl == middleware8
+									|| srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl == middleware8
+									|| srcDbl >= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl == middleware8
+									|| srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl == middleware8
+									|| srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl == middleware8
+									|| srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond8, ">")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl > middleware8 && srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl > middleware8
+									&& srcDbl >= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl > middleware8 && srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl > middleware8
+									&& srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl > middleware8
+									&& srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					} else if (eq(cond8, ">=")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl >= middleware8
+									&& srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl >= middleware8
+									&& srcDbl >= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl >= middleware8
+									&& srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl >= middleware8
+									&& srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl >= middleware8
+									&& srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					} else if (eq(cond8, "<")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl < middleware8 && srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl < middleware8
+									&& srcDbl >= middleware8B) {
+
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl < middleware8 && srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl < middleware8
+									&& srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl < middleware8
+									&& srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					} else if (eq(cond8, "<=")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl <= middleware8
+									&& srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl <= middleware8
+									&& srcDbl >= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl <= middleware8
+									&& srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl <= middleware8
+									&& srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl <= middleware8
+									&& srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					} else if (eq(cond8, "==")) {
+						if (eq(cond8B, ">")) {
+							if (srcDbl == middleware8
+									&& srcDbl > middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, ">=")) {
+							if (srcDbl == middleware8
+									&& srcDbl >= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<")) {
+							if (srcDbl == middleware8
+									&& srcDbl < middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "<=")) {
+							if (srcDbl == middleware8
+									&& srcDbl <= middleware8B) {
+								return sol8;
+							}
+						} else if (eq(cond8B, "==")) {
+							if (srcDbl == middleware8
+									&& srcDbl == middleware8B) {
+								return sol8;
+							}
+						}
+					}
+				} else {
+					if (eq(cond8, ">")) {
+						if (srcDbl > middleware8) {
+							return sol8;
+						}
+					} else if (eq(cond8, ">=")) {
+						if (srcDbl >= middleware8) {
+							return sol8;
+						}
+					} else if (eq(cond8, "<")) {
+						if (srcDbl < middleware8) {
+							return sol8;
+						}
+					} else if (eq(cond8, "<=")) {
+						if (srcDbl <= middleware8) {
+							return sol8;
+						}
+					} else if (eq(cond8, "==")) {
+						if (srcDbl == middleware8) {
+							return sol8;
+						}
+					} else if (eq(cond8, "else")) {
+						return sol8;
+					}
+				}
+			} else if (cond8 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond8)))) {
+					return sol8;
+				}
+			} else if (cond8 instanceof Character) {
+				if (eq((char) src, (char) cond8)) {
+					return sol8;
+				}
+			} else if (isNull(cond8)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond9 instanceof String) {
+				if (!in(Str(cond9),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond9), rangeRegEx);
+				boolean exclusive = in(Str(cond9), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond9),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond9),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond9 = ">=" + a + "&<=" + b;
+				}
+				String cond9B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond9),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond9).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond9).split("\\s*[\\&\\|]+\\s*");
+					cond9 = parts[0];
+					cond9B = parts[1];
+				}
+				double middleware9 = Dbl(
+						Str(cond9).replaceAll("[^\\-\\d\\.]", "")),
+						middleware9B = Dbl(
+								Str(cond9B).replaceAll("[^\\-\\d\\.]", ""));
+				cond9 = String(cond9).replaceAll("[^<>=else]", "");
+				cond9B = String(cond9B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond9, ">")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl > middleware9 || srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl > middleware9
+									|| srcDbl >= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl > middleware9 || srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl > middleware9
+									|| srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl > middleware9
+									|| srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					} else if (eq(cond9, ">=")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl >= middleware9
+									|| srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl >= middleware9
+									|| srcDbl >= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl >= middleware9
+									|| srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl >= middleware9
+									|| srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl >= middleware9
+									|| srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					} else if (eq(cond9, "<")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl < middleware9 || srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl < middleware9
+									|| srcDbl >= middleware9B) {
+
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl < middleware9 || srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl < middleware9
+									|| srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl < middleware9
+									|| srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					} else if (eq(cond9, "<=")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl <= middleware9
+									|| srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl <= middleware9
+									|| srcDbl >= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl <= middleware9
+									|| srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl <= middleware9
+									|| srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl <= middleware9
+									|| srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					} else if (eq(cond9, "==")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl == middleware9
+									|| srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl == middleware9
+									|| srcDbl >= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl == middleware9
+									|| srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl == middleware9
+									|| srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl == middleware9
+									|| srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond9, ">")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl > middleware9 && srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl > middleware9
+									&& srcDbl >= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl > middleware9 && srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl > middleware9
+									&& srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl > middleware9
+									&& srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					} else if (eq(cond9, ">=")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl >= middleware9
+									&& srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl >= middleware9
+									&& srcDbl >= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl >= middleware9
+									&& srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl >= middleware9
+									&& srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl >= middleware9
+									&& srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					} else if (eq(cond9, "<")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl < middleware9 && srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl < middleware9
+									&& srcDbl >= middleware9B) {
+
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl < middleware9 && srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl < middleware9
+									&& srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl < middleware9
+									&& srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					} else if (eq(cond9, "<=")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl <= middleware9
+									&& srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl <= middleware9
+									&& srcDbl >= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl <= middleware9
+									&& srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl <= middleware9
+									&& srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl <= middleware9
+									&& srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					} else if (eq(cond9, "==")) {
+						if (eq(cond9B, ">")) {
+							if (srcDbl == middleware9
+									&& srcDbl > middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, ">=")) {
+							if (srcDbl == middleware9
+									&& srcDbl >= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<")) {
+							if (srcDbl == middleware9
+									&& srcDbl < middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "<=")) {
+							if (srcDbl == middleware9
+									&& srcDbl <= middleware9B) {
+								return sol9;
+							}
+						} else if (eq(cond9B, "==")) {
+							if (srcDbl == middleware9
+									&& srcDbl == middleware9B) {
+								return sol9;
+							}
+						}
+					}
+				} else {
+					if (eq(cond9, ">")) {
+						if (srcDbl > middleware9) {
+							return sol9;
+						}
+					} else if (eq(cond9, ">=")) {
+						if (srcDbl >= middleware9) {
+							return sol9;
+						}
+					} else if (eq(cond9, "<")) {
+						if (srcDbl < middleware9) {
+							return sol9;
+						}
+					} else if (eq(cond9, "<=")) {
+						if (srcDbl <= middleware9) {
+							return sol9;
+						}
+					} else if (eq(cond9, "==")) {
+						if (srcDbl == middleware9) {
+							return sol9;
+						}
+					} else if (eq(cond9, "else")) {
+						return sol9;
+					}
+				}
+			} else if (cond9 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond9)))) {
+					return sol9;
+				}
+			} else if (cond9 instanceof Character) {
+				if (eq((char) src, (char) cond9)) {
+					return sol9;
+				}
+			} else if (isNull(cond9)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond10 instanceof String) {
+				if (!in(Str(cond10),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+					return null;
+				}
+				String rangeRegEx = "(?<n1>\\-?\\d*\\.?\\d+)(?<rangeSeparator>[\\.\\-]{2})(?<n2>\\-?\\d*\\.?\\d+)x?";
+				boolean hasRangeShorthand = eq(Str(cond10), rangeRegEx);
+				boolean exclusive = in(Str(cond10), "x$");
+				if (hasRangeShorthand) {
+					// provides following Kotlin-like behavior:
+					// when(...x, "n1..n2", () -> {}...)
+					double a = Dbl(findMatch(Str(cond10),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond10),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					if (exclusive) {
+						a = round(a + 1);
+						b = round(b >= 0 ? b - 1 : b + 1);
+					}
+					cond10 = ">=" + a + "&<=" + b;
+				}
+				String cond10B = "";
+				boolean either = false, both = false;
+				if (in(Str(cond10),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+					String op = Str(cond10).replaceAll("[^\\&\\|]", "");
+					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
+						either = true;
+					} else {
+						both = true;
+					}
+					String[] parts = Str(cond10).split("\\s*[\\&\\|]+\\s*");
+					cond10 = parts[0];
+					cond10B = parts[1];
+				}
+				double middleware10 = Dbl(
+						Str(cond10).replaceAll("[^\\-\\d\\.]", "")),
+						middleware10B = Dbl(
+								Str(cond10B).replaceAll("[^\\-\\d\\.]", ""));
+				cond10 = String(cond10).replaceAll("[^<>=else]", "");
+				cond10B = String(cond10B).replaceAll("[^<>=]", "");
+
+				if (either) {
+					if (eq(cond10, ">")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl > middleware10
+									|| srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl > middleware10
+									|| srcDbl >= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl > middleware10
+									|| srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl > middleware10
+									|| srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl > middleware10
+									|| srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					} else if (eq(cond10, ">=")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl >= middleware10
+									|| srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl >= middleware10
+									|| srcDbl >= middleware10B) {
+
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl >= middleware10
+									|| srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl >= middleware10
+									|| srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl >= middleware10
+									|| srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					} else if (eq(cond10, "<")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl < middleware10
+									|| srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl < middleware10
+									|| srcDbl >= middleware10B) {
+
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl < middleware10
+									|| srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl < middleware10
+									|| srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl < middleware10
+									|| srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					} else if (eq(cond10, "<=")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl <= middleware10
+									|| srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl <= middleware10
+									|| srcDbl >= middleware10B) {
+
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl <= middleware10
+									|| srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl <= middleware10
+									|| srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl <= middleware10
+									|| srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					} else if (eq(cond10, "==")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl == middleware10
+									|| srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl == middleware10
+									|| srcDbl >= middleware10B) {
+
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl == middleware10
+									|| srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl == middleware10
+									|| srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl == middleware10
+									|| srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					}
+				} else if (both) {
+					if (eq(cond10, ">")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl > middleware10
+									&& srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl > middleware10
+									&& srcDbl >= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl > middleware10
+									&& srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl > middleware10
+									&& srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl > middleware10
+									&& srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					} else if (eq(cond10, ">=")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl >= middleware10
+									&& srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl >= middleware10
+									&& srcDbl >= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl >= middleware10
+									&& srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl >= middleware10
+									&& srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl >= middleware10
+									&& srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					} else if (eq(cond10, "<")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl < middleware10
+									&& srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl < middleware10
+									&& srcDbl >= middleware10B) {
+
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl < middleware10
+									&& srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl < middleware10
+									&& srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl < middleware10
+									&& srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					} else if (eq(cond10, "<=")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl <= middleware10
+									&& srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl <= middleware10
+									&& srcDbl >= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl <= middleware10
+									&& srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl <= middleware10
+									&& srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl <= middleware10
+									&& srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					} else if (eq(cond10, "==")) {
+						if (eq(cond10B, ">")) {
+							if (srcDbl == middleware10
+									&& srcDbl > middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, ">=")) {
+							if (srcDbl == middleware10
+									&& srcDbl >= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<")) {
+							if (srcDbl == middleware10
+									&& srcDbl < middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "<=")) {
+							if (srcDbl == middleware10
+									&& srcDbl <= middleware10B) {
+								return sol10;
+							}
+						} else if (eq(cond10B, "==")) {
+							if (srcDbl == middleware10
+									&& srcDbl == middleware10B) {
+								return sol10;
+							}
+						}
+					}
+				} else {
+					if (eq(cond10, ">")) {
+						if (srcDbl > middleware10) {
+							return sol10;
+						}
+					} else if (eq(cond10, ">=")) {
+						if (srcDbl >= middleware10) {
+							return sol10;
+						}
+					} else if (eq(cond10, "<")) {
+						if (srcDbl < middleware10) {
+							return sol10;
+						}
+					} else if (eq(cond10, "<=")) {
+						if (srcDbl <= middleware10) {
+							return sol10;
+						}
+					} else if (eq(cond10, "==")) {
+						if (srcDbl == middleware10) {
+							return sol10;
+						}
+					} else if (eq(cond10, "else")) {
+						return sol10;
+					}
+				}
+			} else if (cond10 instanceof Number) {
+				if (eq(srcDbl, Dbl(Str(cond10)))) {
+					return sol10;
+				}
+			} else if (cond10 instanceof Character) {
+				if (eq((char) src, (char) cond10)) {
+					return sol10;
+				}
+			} else if (isNull(cond10)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+		} else if (src instanceof String) {
+			if (cond1 instanceof String) {
+				if (eq((String) src, (String) cond1)) {
+					return sol1;
+				}
+			} else if (isNull(cond1)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond2 instanceof String) {
+				if (eq((String) src, (String) cond2)) {
+					return sol2;
+				} else if (eq((String) cond2, "else")) {
+					return sol2;
+				}
+			} else if (isNull(cond2)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond3 instanceof String) {
+				if (eq((String) src, (String) cond3)) {
+					return sol3;
+				} else if (eq((String) cond3, "else")) {
+					return sol3;
+				}
+			} else if (isNull(cond3)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond4 instanceof String) {
+				if (eq((String) src, (String) cond4)) {
+					return sol4;
+				} else if (eq((String) cond4, "else")) {
+					return sol4;
+				}
+			} else if (isNull(cond4)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond5 instanceof String) {
+				if (eq((String) src, (String) cond5)) {
+					return sol5;
+				} else if (eq((String) cond5, "else")) {
+					return sol5;
+				}
+			} else if (isNull(cond5)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond6 instanceof String) {
+				if (eq((String) src, (String) cond6)) {
+					return sol6;
+				} else if (eq((String) cond6, "else")) {
+					return sol6;
+				}
+			} else if (isNull(cond6)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond7 instanceof String) {
+				if (eq((String) src, (String) cond7)) {
+					return sol7;
+				} else if (eq((String) cond7, "else")) {
+					return sol7;
+				}
+			} else if (isNull(cond7)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond8 instanceof String) {
+				if (eq((String) src, (String) cond8)) {
+					return sol8;
+				} else if (eq((String) cond8, "else")) {
+					return sol8;
+				}
+			} else if (isNull(cond8)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond9 instanceof String) {
+				if (eq((String) src, (String) cond9)) {
+					return sol9;
+				} else if (eq((String) cond9, "else")) {
+					return sol9;
+				}
+			} else if (isNull(cond9)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond10 instanceof String) {
+				if (eq((String) src, (String) cond10)) {
+					return sol10;
+				} else if (eq((String) cond10, "else")) {
+					return sol10;
+				}
+			} else if (isNull(cond10)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+		} else if (src instanceof Boolean) {
+			if (cond1 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond1)) {
+					return sol1;
+				}
+			} else if (isNull(cond1)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond2 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond2)) {
+					return sol2;
+				}
+			} else if (cond2 instanceof String) {
+				cond2 = Str(cond2).replaceAll("[^else]", "");
+				if (eq(cond2, "else")) {
+					return sol2;
+				}
+			} else if (isNull(cond2)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond3 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond3)) {
+					return sol3;
+				}
+			} else if (cond3 instanceof String) {
+				cond3 = Str(cond3).replaceAll("[^else]", "");
+				if (eq(cond3, "else")) {
+					return sol3;
+				}
+			} else if (isNull(cond3)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond4 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond4)) {
+					return sol4;
+				}
+			} else if (cond4 instanceof String) {
+				cond4 = Str(cond4).replaceAll("[^else]", "");
+				if (eq(cond4, "else")) {
+					return sol4;
+				}
+			} else if (isNull(cond4)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond5 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond5)) {
+					return sol5;
+				}
+			} else if (cond5 instanceof String) {
+				cond5 = Str(cond5).replaceAll("[^else]", "");
+				if (eq(cond5, "else")) {
+					return sol5;
+				}
+			} else if (isNull(cond5)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond6 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond6)) {
+					return sol6;
+				}
+			} else if (cond6 instanceof String) {
+				cond6 = Str(cond6).replaceAll("[^else]", "");
+				if (eq(cond6, "else")) {
+					return sol6;
+				}
+			} else if (isNull(cond6)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond7 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond7)) {
+					return sol7;
+				}
+			} else if (cond7 instanceof String) {
+				cond7 = Str(cond7).replaceAll("[^else]", "");
+				if (eq(cond7, "else")) {
+					return sol7;
+				}
+			} else if (isNull(cond7)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond8 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond8)) {
+					return sol8;
+				}
+			} else if (cond8 instanceof String) {
+				cond8 = Str(cond8).replaceAll("[^else]", "");
+				if (eq(cond8, "else")) {
+					return sol8;
+				}
+			} else if (isNull(cond8)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond9 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond9)) {
+					return sol9;
+				}
+			} else if (cond9 instanceof String) {
+				cond9 = Str(cond9).replaceAll("[^else]", "");
+				if (eq(cond9, "else")) {
+					return sol9;
+				}
+			} else if (isNull(cond9)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+			if (cond10 instanceof Boolean) {
+				if (eq((boolean) src, (boolean) cond10)) {
+					return sol10;
+				}
+			} else if (cond10 instanceof String) {
+				cond10 = Str(cond10).replaceAll("[^else]", "");
+				if (eq(cond10, "else")) {
+					return sol10;
+				}
+			} else if (isNull(cond10)) {
+				// NEEDED TO HANDLE NULL CASES: do nothing in this case, this
+				// block only exists to BLOCK AWAY NULL references, and MUST
+				// STAY!!
+			} else {
+				print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
+				return null;
+			}
+		} else {
+			print("[KL.LogicalError.UnlikelyTypesSeen]\nThe source can either only be a string, number, or boolean.");
 		}
-		return;
+		return null;
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8, boolean cond9, Runnable sol9) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, false,
+	public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6, Object cond7, T sol7,
+			Object cond8, T sol8, Object cond9, T sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				null, null);
+	}
+	public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6, Object cond7, T sol7,
+			Object cond8, T sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, null, null,
+				null, null);
+	}
+	public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, null, null, null, null,
+				null, null);
+	}
+	public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, null, null, null, null, null, null,
+				null, null);
+	}
+	public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, null, null, null, null, null, null, null, null,
+				null, null);
+	}
+	public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null,
+				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				cond6, sol6, cond7, sol7, cond8, sol8, false, null, false,
+	public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				cond6, sol6, cond7, sol7, false, null, false, null, false,
+	public static <T> T sw(Object src, Object cond1, T sol1,
+			Object cond2, T sol2) {
+		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				cond6, sol6, false, null, false, null, false, null, false,
+	public static <T> T sw(Object src, Object cond1, T sol1) {
+		return sw(src, cond1, sol1, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
-				false, null, false, null, false, null, false, null, false,
-				null);
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6, Object cond7, T sol7,
+			Object cond8, T sol8, Object cond9, T sol9,
+			Object cond10, T sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, false, null,
-				false, null, false, null, false, null, false, null, false,
-				null);
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6, Object cond7, T sol7,
+			Object cond8, T sol8, Object cond9, T sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, false, null, false, null,
-				false, null, false, null, false, null, false, null, false,
-				null);
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6, Object cond7, T sol7,
+			Object cond8, T sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2) {
-		sw(cond1, sol1, cond2, sol2, false, null, false, null, false, null,
-				false, null, false, null, false, null, false, null, false,
-				null);
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
 	}
-	public static void sw(boolean cond1, Runnable sol1) {
-		sw(cond1, sol1, false, null, false, null, false, null, false, null,
-				false, null, false, null, false, null, false, null, false,
-				null);
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5,
+			Object cond6, T sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4, Object cond5, T sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3,
+			Object cond4, T sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2, Object cond3, T sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static <T> T when(Object src, Object cond1, T sol1,
+			Object cond2, T sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static <T> T when(Object src, Object cond1, T sol1) {
+		return sw(src, cond1, sol1);
 	}
 	public static final boolean Yes = true, No = !Yes, On = Yes, Off = No,
 			Ok = Yes, NotOk = !Ok, Fail = NotOk;
@@ -26784,154 +30721,6 @@ public class KL {
 				}
 			}
 			// post processing...
-			// for methods
-			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*)")) {
-				try {
-					Class<?> cls = this.getClass();
-					Object valueFromMethod = new Object();
-					boolean hasParams = false;
-					String[] methodicalMatches = findMatches(s,
-							"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*");
-					for (String m : methodicalMatches) {
-						String toGet = m.replaceAll(
-								"(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
-								"");
-						if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)")) {
-							hasParams = true;
-						}
-						if (!hasParams) {
-							valueFromMethod = cls.getMethod(toGet).invoke(this);
-						} else {
-							boolean multiParam = false;
-							String unprocessedParamString = m.replaceAll(
-									"^[\\$\\{]\\w+[:\\(](?=\\w+)|[\\)\\}]*$",
-									"");
-							if (in(unprocessedParamString, "\\s*,\\s*")) {
-								multiParam = true;
-								String[] paramMatches = unprocessedParamString
-										.split("\\s*,\\s*");
-								Object[] finalParams = new Object[paramMatches.length];
-								Class<?>[] paramTypes = new Class<?>[paramMatches.length];
-								for (int i : range(paramMatches)) {
-									String param = paramMatches[i];
-									paramTypes[i] = isIntLike(param)
-											? (!in(param, "(?<=\\d)[Ll]$")
-													? int.class
-													: long.class)
-											: isFltLike(param)
-													? (!in(param,
-															"(?<=\\d)[Ff]$")
-																	? double.class
-																	: float.class)
-													: eq(param, "true|false")
-															? boolean.class
-															: String.class;
-									param = param.replaceAll("(?<=\\d)[LlFf]$",
-											"");
-									// ----------------------- NOTE
-									// -----------------------------
-									// Since longs can hold both ints, and
-									// longs,
-									// and
-									// are literally just LONG integers,
-									// LONG.CLASS
-									// DOES
-									// THE JOB!!
-									// Same goes for floats, and doubles. A
-									// double
-									// is
-									// literally just a float, except with
-									// extra, or
-									// double, precision.
-									// ----------------------------------------------------------
-									finalParams[i] = isIntLike(param)
-											? Int(param)
-											: isDblLike(param)
-													? Dbl(param)
-													: eq(param, "true|false")
-															? (eq(param, "true")
-																	? true
-																	: false)
-															: Str(param);
-								}
-								for (String param : paramMatches) {
-									valueFromMethod = cls
-											.getMethod(toGet, paramTypes)
-											.invoke(this, finalParams);
-
-									m = m.replaceAll("([\\$\\{\\(\\)\\}])",
-											"\\\\$1");
-									s = s.replaceFirst(m,
-											valueFromMethod instanceof Character
-													|| valueFromMethod instanceof String
-													|| valueFromMethod instanceof Number
-													|| valueFromMethod instanceof Boolean
-															? Str(valueFromMethod)
-															: m);
-								}
-							} else {
-								Class<?> type = isIntLike(
-										unprocessedParamString)
-												? (!in(unprocessedParamString,
-														"(?<=\\d)[Ll]$")
-																? int.class
-																: long.class)
-												: isFltLike(
-														unprocessedParamString)
-																? (!in(unprocessedParamString,
-																		"(?<=\\d)[Ff]$")
-																				? double.class
-																				: float.class)
-																: eq(unprocessedParamString,
-																		"true|false")
-																				? boolean.class
-																				: String.class;
-								unprocessedParamString = unprocessedParamString
-										.replaceAll("(?<=\\d)[LlFf]$", "");
-								// ----------------------- NOTE
-								// -----------------------------
-								// Since longs can hold both ints, and longs,
-								// and
-								// are literally just LONG integers, LONG.CLASS
-								// DOES
-								// THE JOB!!
-								// Same goes for floats, and doubles. A double
-								// is
-								// literally just a float, except with extra, or
-								// double, precision.
-								// ----------------------------------------------------------
-								valueFromMethod = cls.getMethod(toGet, type)
-										.invoke(this, isIntLike(
-												unprocessedParamString)
-														? Int(unprocessedParamString)
-														: isDblLike(
-																unprocessedParamString)
-																		? Dbl(unprocessedParamString)
-																		: eq(unprocessedParamString,
-																				"true|false")
-																						? (eq(unprocessedParamString,
-																								"true")
-																										? true
-																										: false)
-																						: unprocessedParamString);
-							}
-						}
-						m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
-						s = s.replaceFirst(m,
-								valueFromMethod instanceof Character
-										|| valueFromMethod instanceof String
-										|| valueFromMethod instanceof Number
-										|| valueFromMethod instanceof Boolean
-												? Str(valueFromMethod)
-												: m);
-					}
-				} catch (NoSuchMethodException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException
-						| SecurityException e) {
-
-				}
-			}
 			// FOR FIELDS
 			if (in(s,
 					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
@@ -27213,6 +31002,154 @@ public class KL {
 												: m);
 					}
 				} catch (NoSuchFieldException | IllegalAccessException
+						| SecurityException e) {
+
+				}
+			}
+			// for methods
+			if (in(s,
+					"(?<!\\\\)(\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*)")) {
+				try {
+					Class<?> cls = this.getClass();
+					Object valueFromMethod = new Object();
+					boolean hasParams = false;
+					String[] methodicalMatches = findMatches(s,
+							"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*");
+					for (String m : methodicalMatches) {
+						String toGet = m.replaceAll(
+								"(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
+								"");
+						if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)")) {
+							hasParams = true;
+						}
+						if (!hasParams) {
+							valueFromMethod = cls.getMethod(toGet).invoke(this);
+						} else {
+							boolean multiParam = false;
+							String unprocessedParamString = m.replaceAll(
+									"^[\\$\\{]\\w+[:\\(](?=\\w+)|[\\)\\}]*$",
+									"");
+							if (in(unprocessedParamString, "\\s*,\\s*")) {
+								multiParam = true;
+								String[] paramMatches = unprocessedParamString
+										.split("\\s*,\\s*");
+								Object[] finalParams = new Object[paramMatches.length];
+								Class<?>[] paramTypes = new Class<?>[paramMatches.length];
+								for (int i : range(paramMatches)) {
+									String param = paramMatches[i];
+									paramTypes[i] = isIntLike(param)
+											? (!in(param, "(?<=\\d)[Ll]$")
+													? int.class
+													: long.class)
+											: isFltLike(param)
+													? (!in(param,
+															"(?<=\\d)[Ff]$")
+																	? double.class
+																	: float.class)
+													: eq(param, "true|false")
+															? boolean.class
+															: String.class;
+									param = param.replaceAll("(?<=\\d)[LlFf]$",
+											"");
+									// ----------------------- NOTE
+									// -----------------------------
+									// Since longs can hold both ints, and
+									// longs,
+									// and
+									// are literally just LONG integers,
+									// LONG.CLASS
+									// DOES
+									// THE JOB!!
+									// Same goes for floats, and doubles. A
+									// double
+									// is
+									// literally just a float, except with
+									// extra, or
+									// double, precision.
+									// ----------------------------------------------------------
+									finalParams[i] = isIntLike(param)
+											? Int(param)
+											: isDblLike(param)
+													? Dbl(param)
+													: eq(param, "true|false")
+															? (eq(param, "true")
+																	? true
+																	: false)
+															: Str(param);
+								}
+								for (String param : paramMatches) {
+									valueFromMethod = cls
+											.getMethod(toGet, paramTypes)
+											.invoke(this, finalParams);
+
+									m = m.replaceAll("([\\$\\{\\(\\)\\}])",
+											"\\\\$1");
+									s = s.replaceFirst(m,
+											valueFromMethod instanceof Character
+													|| valueFromMethod instanceof String
+													|| valueFromMethod instanceof Number
+													|| valueFromMethod instanceof Boolean
+															? Str(valueFromMethod)
+															: m);
+								}
+							} else {
+								Class<?> type = isIntLike(
+										unprocessedParamString)
+												? (!in(unprocessedParamString,
+														"(?<=\\d)[Ll]$")
+																? int.class
+																: long.class)
+												: isFltLike(
+														unprocessedParamString)
+																? (!in(unprocessedParamString,
+																		"(?<=\\d)[Ff]$")
+																				? double.class
+																				: float.class)
+																: eq(unprocessedParamString,
+																		"true|false")
+																				? boolean.class
+																				: String.class;
+								unprocessedParamString = unprocessedParamString
+										.replaceAll("(?<=\\d)[LlFf]$", "");
+								// ----------------------- NOTE
+								// -----------------------------
+								// Since longs can hold both ints, and longs,
+								// and
+								// are literally just LONG integers, LONG.CLASS
+								// DOES
+								// THE JOB!!
+								// Same goes for floats, and doubles. A double
+								// is
+								// literally just a float, except with extra, or
+								// double, precision.
+								// ----------------------------------------------------------
+								valueFromMethod = cls.getMethod(toGet, type)
+										.invoke(this, isIntLike(
+												unprocessedParamString)
+														? Int(unprocessedParamString)
+														: isDblLike(
+																unprocessedParamString)
+																		? Dbl(unprocessedParamString)
+																		: eq(unprocessedParamString,
+																				"true|false")
+																						? (eq(unprocessedParamString,
+																								"true")
+																										? true
+																										: false)
+																						: unprocessedParamString);
+							}
+						}
+						m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
+						s = s.replaceFirst(m,
+								valueFromMethod instanceof Character
+										|| valueFromMethod instanceof String
+										|| valueFromMethod instanceof Number
+										|| valueFromMethod instanceof Boolean
+												? Str(valueFromMethod)
+												: m);
+					}
+				} catch (NoSuchMethodException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException
 						| SecurityException e) {
 
 				}
@@ -34514,10 +38451,15 @@ public class KL {
 		print("{name:,2}");
 		print("{name:1,3}");
 		int n = 10;
-		when(n, "0..6x", () -> print(
-				"between but exclusive of 0, and 6: so basically, around 1 through 5"),
-				"6..10", () -> print("between and inclusive of 6, and 10"),
-				Else, () -> print("neither"));
+		String result = when(n, "0..6x","between but exclusive of 0, and 6: so basically, around 1 through 5",
+				"6..10", "between and inclusive of 6, and 10",
+				Else, "neither");
+		int result2 = when("hey world", "hello world", 1, Else, 0);
+		boolean result3 = when('c', "97..123", Yes, Else, No);
+		print(result);
+		print(result2);
+		print(result3);
+		print("$upper:$name");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
