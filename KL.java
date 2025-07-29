@@ -25,6 +25,10 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 @SuppressWarnings("all")
 public class KL {
+	//to shorten new KL() calls into just KL()
+	public static KL KL() {
+		return new KL();
+	}
 	public static class money {
 		private double amnt;
 		private String curr;
@@ -31094,7 +31098,8 @@ public class KL {
 								|| field instanceof objF
 								|| field instanceof objD
 								|| field instanceof objB
-								|| field instanceof tree) {
+								|| field instanceof HashMap
+                                || field instanceof tree) {
 							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+") && in(
 									Str(field),
 									m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
@@ -31106,7 +31111,7 @@ public class KL {
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
 												"(?<=\\=)([A-Za-z\\s]+)",
-												"\"$1\"").replaceAll("=", ": ");
+												"\"$1\"").replaceAll("\"(true|false)\"", "$1").replaceAll("=", ": ");
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
@@ -31316,6 +31321,24 @@ public class KL {
 
 		}
 		return s;
+	}
+	public static String with(String nameOfObj, String format) {
+		if (not(nameOfObj) || not(format) || !in(format, "(?<=[\\{\\$])\\w+")) return "";
+		String labelSeparator = "";
+		boolean labeling = false;
+		nameOfObj = nameOfObj.trim();
+		if (in(nameOfObj, "(?<=\\w)[:=]")) {
+			labeling = true;
+			labelSeparator = findMatch(nameOfObj, "(?<=\\w)([:=])");
+			labelSeparator = eq(labelSeparator, "=") ? " " + labelSeparator + " " : labelSeparator + " ";
+		    nameOfObj = nameOfObj.replaceAll("[:=]", "");
+	    }
+	    format = format.replaceAll("[\\{\\$](\\w+)\\}?", (labeling ? "$1" + labelSeparator : "") + "\\$"+nameOfObj+"\\.$1");
+	    String newFormat = KL().f(format);
+	    return newFormat;
+	}
+	public static void printw(String nameOfObj, String format) {
+		print(with(nameOfObj, format));
 	}
 	public static String pkr(int n) {
 		String formattedN = fpkr(n);
@@ -33693,6 +33716,12 @@ public class KL {
 		}
 		return slice(str, 0, end);
 	}
+	public static String sliceKeep(String str, String target) {
+		if (not(str) || not(target) || indexOf(str, target) == -1) {
+			return "";
+		}
+		return slice(str, 0, indexOf(str, target));
+	}
 	public static String[] sliceKeep(String[] arr, int end) {
 		if (not(arr)) {
 			return blank.Str;
@@ -34136,8 +34165,8 @@ public class KL {
 			return false;
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
-					|| re.equals("?")) {
-				re = "\\" + re;
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
+				re = "\\" + re; //escape special characters IF they're the only content
 			}
 			Pattern pattern = Pattern.compile("^(" + re + ")",
 					Pattern.CASE_INSENSITIVE);
@@ -34157,8 +34186,8 @@ public class KL {
 			return false;
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
-					|| re.equals("?")) {
-				re = "\\" + re;
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
+				re = "\\" + re; //escape special characters IF they're the only content
 			}
 			Pattern pattern = Pattern.compile("(" + re + ")$",
 					Pattern.CASE_INSENSITIVE);
@@ -34632,8 +34661,8 @@ public class KL {
 			return -1;
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
-					|| re.equals("?")) {
-				re = "\\" + re;
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
+				re = "\\" + re; //escape special characters IF they're the only content
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -34650,8 +34679,8 @@ public class KL {
 			return -1;
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
-					|| re.equals("?")) {
-				re = "\\" + re;
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
+				re = "\\" + re; //escape special characters IF they're the only content
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -34688,8 +34717,8 @@ public class KL {
 			return -1;
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
-					|| re.equals("?")) {
-				re = "\\" + re;
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
+				re = "\\" + re; //escape special characters IF they're the only content
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -35014,8 +35043,8 @@ public class KL {
 		// look up in a string to see if the string is more than one word, down
 		// to ""
 		if (re.equals(".") || re.equals("*") || re.equals("+")
-				|| re.equals("?")) {
-			re = "\\" + re;
+				|| re.equals("?") || re.equals("^") || re.equals("$")) {
+			re = "\\" + re; //escape special characters IF they're the only content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -35056,8 +35085,8 @@ public class KL {
 			return "";
 		}
 		if (re.equals(".") || re.equals("*") || re.equals("+")
-				|| re.equals("?")) {
-			re = "\\" + re;
+				|| re.equals("?") || re.equals("^") || re.equals("$")) {
+			re = "\\" + re; //escape special characters IF they're the only content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -35105,8 +35134,8 @@ public class KL {
 		// almost the same as typing new String[]{}. Sometimes, we're just
 		// looking for conciseness.
 		if (re.equals(".") || re.equals("*") || re.equals("+")
-				|| re.equals("?")) {
-			re = "\\" + re;
+				|| re.equals("?") || re.equals("^") || re.equals("$")) {
+			re = "\\" + re; //escape special characters IF they're the only content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -38659,7 +38688,7 @@ public class KL {
 	public static int age = 23;
 	public static double score = 300500.856D;
 	obj user = obj("name", "Mike", "age", 22, "state", "Illinois", "country",
-			"United States", "height", 5.1);
+			"United States", "height", 5.1, "veteran", Yes);
 	String[] arr = {"hi", "hey"};
 	intArr arr2 = intArr(range(1, 5));
 
@@ -38704,6 +38733,8 @@ public class KL {
 		print(result3);
 		print("$user");
 		print("$user.name $user.age $user.country $user.height");
+		print(with("user", "Name: $name\nAge: $age"));
+	    print(with("user:", "$name\n$age"));
 		print("$arr $arr2");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
