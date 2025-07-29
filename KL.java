@@ -1,5 +1,4 @@
 
-
 //core
 import java.lang.reflect.*;
 import java.security.*;
@@ -26827,8 +26826,32 @@ public class KL {
 		if (isNull(arg)) {
 			return;
 		}
+		if (isStrArr(arg) || isIntArr(arg) || isLongArr(arg) || isFltArr(arg)
+				|| isDblArr(arg) || isBoolArr(arg)) {
+			if (isStrArr(arg)) {
+				strArr helper = (strArr) arg;
+				arg = helper.array();
+			} else if (isIntArr(arg)) {
+				intArr helper = (intArr) arg;
+				arg = helper.array();
+			} else if (isLongArr(arg)) {
+				longArr helper = (longArr) arg;
+				arg = helper.array();
+			} else if (isFltArr(arg)) {
+				fltArr helper = (fltArr) arg;
+				arg = helper.array();
+			} else if (isDblArr(arg)) {
+				dblArr helper = (dblArr) arg;
+				arg = helper.array();
+			} else {
+				boolArr helper = (boolArr) arg;
+				arg = helper.array();
+			}
+		}
 		if (arg instanceof Object[]) {
-			// if one it's of those arrays that are based on a class
+			// if it's not a primitive array and is one of of those arrays that
+			// are based on a
+			// Object wrapper, like String[], Number[], Object[]
 			if (isArrOfStr(arg)) {
 				System.out.print("[" + (!isEmpty((String[]) arg)
 						? "\"" + join((String[]) arg, "\", \"") + "\""
@@ -29107,20 +29130,38 @@ public class KL {
 	public static boolean isArrOfStr(Object o) {
 		return type(o, ArrOfStr);
 	}
+	public static boolean isStrArr(Object o) {
+		return o instanceof strArr || type(o, strArr);
+	}
 	public static boolean isArrOfInt(Object o) {
 		return type(o, ArrOfInt);
+	}
+	public static boolean isIntArr(Object o) {
+		return o instanceof intArr || type(o, intArr);
 	}
 	public static boolean isArrOfLong(Object o) {
 		return type(o, ArrOfLong);
 	}
+	public static boolean isLongArr(Object o) {
+		return o instanceof longArr || type(o, longArr);
+	}
 	public static boolean isArrOfFlt(Object o) {
 		return type(o, ArrOfFlt);
+	}
+	public static boolean isFltArr(Object o) {
+		return o instanceof fltArr || type(o, fltArr);
 	}
 	public static boolean isArrOfDbl(Object o) {
 		return type(o, ArrOfDbl);
 	}
+	public static boolean isDblArr(Object o) {
+		return o instanceof dblArr || type(o, dblArr);
+	}
 	public static boolean isArrOfBool(Object o) {
 		return type(o, ArrOfBool);
+	}
+	public static boolean isBoolArr(Object o) {
+		return o instanceof boolArr || type(o, boolArr);
 	}
 	public static boolean isArrOfNum(Object o) {
 		return type(o, ArrOfNum);
@@ -30723,22 +30764,22 @@ public class KL {
 			// post processing...
 			// FOR FIELDS
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?(?!\\(\\w*\\)))")) {
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})?");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
-								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
+								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)|(?<=[\\w])\\.[\\w]+",
 								"");
-						field = cls.getField(toGet).get(this);
+						field = cls.getDeclaredField(toGet).get(this);
 						String label = "";
 						int decimalPlaces = 2;
 						if (in(m, "[:=]")) {
 							if (in(m,
-									"[:=]{1,2}(?=\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})")
+									"[:=]{1,2}(?=\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)")
 									&& (field instanceof String
 											|| field instanceof Integer
 											|| field instanceof Long
@@ -30752,7 +30793,7 @@ public class KL {
 													findMatch(m,
 															"(?<=\\\\)[:=]"))
 											.replaceAll(
-													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[A-Za-z]{3,4})",
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)",
 													"");
 									// keep one [:=] in this case, but remove
 									// the other, to make up for the label from
@@ -30987,19 +31028,95 @@ public class KL {
 								field = f((double) field, decimalPlaces);
 							}
 						}
+						if (isStrArr(field) || isIntArr(field)
+								|| isLongArr(field) || isFltArr(field)
+								|| isDblArr(field) || isBoolArr(field)) {
+							if (isStrArr(field)) {
+								strArr helper = (strArr) field;
+								field = helper.array();
+							} else if (isIntArr(field)) {
+								intArr helper = (intArr) field;
+								field = helper.array();
+							} else if (isLongArr(field)) {
+								longArr helper = (longArr) field;
+								field = helper.array();
+							} else if (isFltArr(field)) {
+								fltArr helper = (fltArr) field;
+								field = helper.array();
+							} else if (isDblArr(field)) {
+								dblArr helper = (dblArr) field;
+								field = helper.array();
+							} else {
+								boolArr helper = (boolArr) field;
+								field = helper.array();
+							}
+						}
+						if (isArr(field)) {
+							if (field instanceof Object[]) {
+								// if it's not a primitive array and is one of
+								// of those arrays that
+								// are based on a
+								// Object wrapper, like String[], Number[],
+								// Object[]
+								if (isArrOfStr(field)) {
+									field = "[" + (!isEmpty((String[]) field)
+											? "\"" + join((String[]) field,
+													"\", \"") + "\""
+											: "") + "]";
+								} else if (isArrOfNum(field)) {
+									field = "[" + join((Number[]) field) + "]";
+								} else if (isArrOfObj(field)) {
+									field = "[" + join((Object[]) field, ", ")
+											+ "]";
+								}
+							} else {
+								if (isArrOfChar(field)) {
+									field = "[" + (!isEmpty((char[]) field)
+											? "\'" + join(field, "\', \'")
+													+ "\'"
+											: "") + "]";
+								} else if (isArrOfInt(field)) {
+									field = "[" + join((int[]) field) + "]";
+								} else if (isArrOfLong(field)) {
+									field = "[" + join((long[]) field) + "]";
+								} else if (isArrOfFlt(field)) {
+									field = "[" + join((float[]) field) + "]";
+								} else if (isArrOfDbl(field)) {
+									field = "[" + join((double[]) field) + "]";
+								} else if (isArrOfBool(field)) {
+									field = "[" + join((boolean[]) field) + "]";
+								}
+							}
+						}
+						if (field instanceof obj || field instanceof objS
+								|| field instanceof objI
+								|| field instanceof objL
+								|| field instanceof objF
+								|| field instanceof objD
+								|| field instanceof objB
+								|| field instanceof tree) {
+							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+") && in(
+									Str(field),
+									m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
+								String key = m.split("(?<=\\w)\\.")[1];
+								field = Str(field).split(key + "=")[1]
+										.split(",")[0]
+										.replaceAll("[\\{\\}]", "");
+							} else {
+								field = m.replaceAll("[\\$\\{\\}]", "") + " "
+										+ Str(field).replaceAll(
+												"(?<=\\=)([A-Za-z\\s]+)",
+												"\"$1\"").replaceAll("=", ": ");
+							}
+						}
 						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
 						// replace special characters, so s.replaceFirst doesn't
 						// confuse them with an ending character ($), or a
 						// quantifier ({,})
 						s = s.replaceFirst(m,
-								field instanceof Character
-										|| field instanceof String
-										|| field instanceof Number
-										|| field instanceof Boolean
-												? (label.length() > 0
-														? label + Str(field)
-														: Str(field))
-												: m);
+								label.length() > 0
+										? label + Str(field)
+										: Str(field));
 					}
 				} catch (NoSuchFieldException | IllegalAccessException
 						| SecurityException e) {
@@ -38541,6 +38658,10 @@ public class KL {
 	public static String name = "Ayesha";
 	public static int age = 23;
 	public static double score = 300500.856D;
+	obj user = obj("name", "Mike", "age", 22, "state", "Illinois", "country",
+			"United States", "height", 5.1);
+	String[] arr = {"hi", "hey"};
+	intArr arr2 = intArr(range(1, 5));
 
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
@@ -38572,6 +38693,7 @@ public class KL {
 		print("{name:,2}");
 		print("{name:1,3}");
 		int n = 10;
+
 		String result = when(n, "0..6x",
 				"between but exclusive of 0, and 6: so basically, around 1 through 5",
 				"6..10", "between and inclusive of 6, and 10", Else, "neither");
@@ -38580,6 +38702,9 @@ public class KL {
 		print(result);
 		print(result2);
 		print(result3);
+		print("$user");
+		print("$user.name $user.age $user.country $user.height");
+		print("$arr $arr2");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
