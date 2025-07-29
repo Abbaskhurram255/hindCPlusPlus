@@ -1,3 +1,4 @@
+
 import java.util.*;
 import java.util.regex.*;
 
@@ -10,15 +11,18 @@ class lafz {
 	lafz(Object... objs) {
 		this.str = "";
 		for (Object o : objs) {
-			if (o != null) this.str += " "+o;
+			if (o != null)
+				this.str += " " + o;
 		}
 		trim();
 		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 	}
 	lafz concat(Object... objs) {
 		for (Object o : objs) {
-			if (o == null) continue;
-			if (o != null) this.str += " "+o;
+			if (o == null)
+				continue;
+			if (o != null)
+				this.str += " " + o;
 		}
 		trim();
 		return this;
@@ -36,14 +40,16 @@ class lafz {
 		return this;
 	}
 	String sentCase() {
-		if (isEmpty()) return "";
+		if (isEmpty())
+			return "";
 		String result = (str.toUpperCase().substring(0, 1)
-				 + str.toLowerCase().substring(1))
+				+ str.toLowerCase().substring(1))
 				.replaceAll("(?<!\\w)i(?!\\w)", "I");
 		return result;
 	}
 	String titleCase() {
-		if (isEmpty()) return "";
+		if (isEmpty())
+			return "";
 		StringBuilder titleCased = new StringBuilder(str.length());
 		boolean nextTitleCase = true;
 		for (char c : str.toCharArray()) {
@@ -66,8 +72,22 @@ class lafz {
 	String toUpperCase() {
 		return str.toUpperCase();
 	}
+	String toUpperCase(Locale locale) {
+		try {
+			return str.toUpperCase(locale);
+		} catch (Exception e) {
+			return "";
+		}
+	}
 	String toLowerCase() {
 		return str.toLowerCase();
+	}
+	String toLowerCase(Locale locale) {
+		try {
+			return str.toLowerCase(locale);
+		} catch (Exception e) {
+			return "";
+		}
 	}
 	String toUpper() {
 		return toUpperCase();
@@ -89,83 +109,114 @@ class lafz {
 		return reverse();
 	}
 	String[] split(String _with, int maxSplits) {
-		if (_with == null) _with = "";
+		if (_with == null)
+			_with = "";
 		String[] splitted = str.split(_with, maxSplits);
-		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals(""))) splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
+		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals("")))
+			splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
 		return splitted;
 	}
 	String[] split(String _with) {
-		if (_with == null) _with = "";
+		if (_with == null)
+			_with = "";
 		String[] splitted = str.split(_with);
-		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals(""))) splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
+		if (_with.equals("") && (splitted.length > 0 && splitted[0].equals("")))
+			splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
 		return splitted;
 	}
 	String i(int i) {
-		if (isEmpty()) return "";
-		if (i >= length()) return split()[length() - 1];
+		if (isEmpty())
+			return "";
+		if (i >= length())
+			return split()[length() - 1];
 		if (i < 0) {
 			i = Math.abs(i);
 			if (i > 0 && i <= length())
-                return lasti(i);
-            return split()[0];
-        }
+				return lasti(i);
+			return split()[0];
+		}
 		return split()[i];
 	}
 	String lasti(int i) {
-		if (isEmpty()) return "";
-		if (i <= 0) return split()[0];
-		if (i > length()) return split()[length()-1];
-		return split()[length()-i];
+		if (isEmpty())
+			return "";
+		if (i <= 0)
+			return split()[0];
+		if (i > length())
+			return split()[length() - 1];
+		return split()[length() - i];
+	}
+	int wordCount() {
+		return words.length;
+	}
+	boolean hasWords() {
+		return wordCount() > 0;
+	}
+	boolean noWords() {
+		return !hasWords();
 	}
 	String[] splitIntoWords() {
 		return words;
 	}
 	String firstWord() {
-		if (length() == 0 || words.length == 0) return "";
+		if (length() == 0 || words.length == 0)
+			return "";
 		return words[0];
 	}
 	String secWord() {
-		if (length() == 0 || words.length == 0) return "";
-		if (words.length < 2) return words[0];
+		if (length() == 0 || words.length == 0)
+			return "";
+		if (words.length < 2)
+			return words[0];
 		return words[1];
 	}
 	String secondWord() {
 		return secWord();
 	}
 	String secLastWord() {
-		if (length() == 0 || words.length == 0) return "";
-		if (words.length < 3) return words[0];
-		return words[words.length-2];
+		if (length() == 0 || words.length == 0)
+			return "";
+		if (words.length < 3)
+			return words[0];
+		return words[words.length - 2];
 	}
 	String secondLastWord() {
 		return secLastWord();
 	}
 	String lastWord() {
-		if (length() == 0 || words.length == 0) return "";
-		return words[words.length-1];
+		if (length() == 0 || words.length == 0)
+			return "";
+		return words[words.length - 1];
 	}
 	String nthWord(int i) {
-		if (length() == 0 || words.length == 0 || i >= words.length) return "";
-		if (i >= length()) return words[words.length - 1];
+		if (length() == 0 || words.length == 0 || i >= words.length)
+			return "";
+		if (i >= length())
+			return words[words.length - 1];
 		if (i < 0) {
 			i = Math.abs(i);
 			if (i > 0 && i <= words.length)
-                return lasti(i);
-            return words[0];
-        }
+				return lasti(i);
+			return words[0];
+		}
 		return words[i];
 	}
 	String nthLastWord(int i) {
-		if (length() == 0 || words.length == 0) return "";
-		if (i <= 0) return words[0];
-		if (i > words.length) return words[words.length-1];
-		return words[words.length-i];
+		if (length() == 0 || words.length == 0)
+			return "";
+		if (i <= 0)
+			return words[0];
+		if (i > words.length)
+			return words[words.length - 1];
+		return words[words.length - i];
 	}
 	String[] split() {
 		String[] splitted = str.split("");
 		splitted = Arrays.copyOfRange(splitted.clone(), 1, splitted.length);
 		return splitted;
-		//TESTED, AND CONCLUDED: java split(""), unlike JavaScript's, returns an extra empty string at the beginning of the array returned after the split, we don't need that
+		// TESTED, AND CONCLUDED: java split(""), unlike JavaScript's, returns
+		// an extra empty string at the beginning of the array returned after
+		// the split, we don't need that
 	}
 	String[] array() {
 		return split();
@@ -177,8 +228,8 @@ class lafz {
 		return split();
 	}
 	Object[] toStrArr() {
-		return (Object[])splitIntoWords();
-		//replace the `Object[]` part with `new StrArr($rest)`
+		return (Object[]) splitIntoWords();
+		// replace the `Object[]` part with `new StrArr($rest)`
 	}
 	char[] toCharArray() {
 		return str.toCharArray();
@@ -191,7 +242,8 @@ class lafz {
 	}
 	char charAt(int i) {
 		String charInStringForm = i(i);
-		if (charInStringForm.equals("")) return '\0';
+		if (charInStringForm.equals(""))
+			return '\0';
 		char character = charInStringForm.toCharArray()[0];
 		return character;
 	}
@@ -202,134 +254,273 @@ class lafz {
 		return charAt(i);
 	}
 	int codePointAt(int i) {
-		if (i< 0 || i >= length()) return 0;
+		if (i < 0 || i >= length())
+			return 0;
 		return str.codePointAt(i);
 	}
 	int codePointBefore(int i) {
-		if (i< 0 || i >= length()) return 0;
+		if (i < 0 || i >= length())
+			return 0;
 		return str.codePointBefore(i);
 	}
 	int codePointCount(int begin, int end) {
-		if (begin < 0 || begin >= length() || end < 0 || end >= length() || begin >= end) return 0;
+		if (begin < 0 || begin >= length() || end < 0 || end >= length()
+				|| begin >= end)
+			return 0;
 		return str.codePointCount(begin, end);
 	}
 	int compareTo(String s) {
-		if (s == null) return -1;
+		if (s == null)
+			return -1;
 		return str.compareTo(s);
 	}
 	int compareToIgnoreCase(String s) {
-		if (s == null) return -1;
+		if (s == null)
+			return -1;
 		return str.compareToIgnoreCase(s);
 	}
 	boolean contains(CharSequence s) {
-		if (s == null) return false;
+		if (s == null)
+			return false;
 		return str.contains(s);
 	}
 	boolean contentEquals(CharSequence s) {
-		if (s == null) return false;
+		if (s == null)
+			return false;
 		return str.contentEquals(s);
 	}
 	boolean contentEquals(StringBuilder s) {
-		if (s == null) return false;
+		if (s == null)
+			return false;
 		return str.contentEquals(s);
 	}
 	static String copyValueOf(char[] data) {
-		if (data == null) return "";
+		if (data == null)
+			return "";
 		return String.copyValueOf(data);
 	}
 	static String copyValueOf(char[] data, int offset, int count) {
-		if (data == null) return "";
+		if (data == null)
+			return "";
 		return String.copyValueOf(data, offset, count);
 	}
 	static String valueOf(char[] data) {
-		if (data == null) return "";
+		if (data == null)
+			return "";
 		return String.valueOf(data);
 	}
 	static String valueOf(char[] data, int offset, int count) {
-		if (data == null) return "";
+		if (data == null)
+			return "";
 		return String.valueOf(data, offset, count);
 	}
 	static String valueOf(Object o) {
-		return ""+o;
+		return "" + o;
 	}
-	static String format(Locale locale, String stringWithFormatSpecifiers, Object... args) {
-		if (locale == null || stringWithFormatSpecifiers == null || args == null) return "";
+	static String format(Locale locale, String stringWithFormatSpecifiers,
+			Object... args) {
+		if (locale == null || stringWithFormatSpecifiers == null
+				|| args == null)
+			return "";
 		try {
 			return String.format(locale, stringWithFormatSpecifiers, args);
-		}
-		catch (IllegalFormatException e) {
+		} catch (IllegalFormatException e) {
 			return "";
 		}
 	}
 	static String format(String stringWithFormatSpecifiers, Object... args) {
-		if (stringWithFormatSpecifiers == null || args == null) return "";
-		if (args.length() == 0) return stringWithFormatSpecifiers;
+		if (stringWithFormatSpecifiers == null || args == null)
+			return "";
+		if (args.length == 0)
+			return stringWithFormatSpecifiers;
 		try {
 			return String.format(stringWithFormatSpecifiers, args);
-		}
-		catch (IllegalFormatException e) {
+		} catch (IllegalFormatException e) {
 			return "";
 		}
 	}
 	String format(Object... args) {
-		if (!str.contains("%") || args == null) return str;
+		if (!str.contains("%") || args == null)
+			return str;
 		try {
 			return String.format(str, args);
-		}
-		catch (IllegalFormatException e) {
+		} catch (IllegalFormatException e) {
 			return str;
 		}
 	}
 	byte[] getBytes() {
 		try {
 			return str.getBytes();
+		} catch (Exception e) {
+			return new byte[0];
 		}
-		catch (Exception e) {
-			return new byte[];
-		} 
 	}
-	byte[] getBytes(Charset c) {
+	byte[] getBytes(java.nio.charset.Charset c) {
 		try {
 			return str.getBytes(c);
+		} catch (Exception e) {
+			return new byte[0];
 		}
-		catch (Exception e) {
-			return new byte[];
-		} 
 	}
 	byte[] getBytes(String charsetName) {
 		try {
 			return str.getBytes(charsetName);
+		} catch (Exception e) {
+			return new byte[0];
 		}
-		catch (Exception e) {
-			return new byte[];
-		} 
 	}
 	void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) {
 		try {
 			str.getChars(srcBegin, srcEnd, dst, dstBegin);
-		}
-		catch (Exception e) {
-		}
-	}
-	int hashCode() {
-		try {
-			return str.hashCode();
-		}
-		catch (Exception e) {
-			return "";
+		} catch (Exception e) {
 		}
 	}
 	String intern() {
 		try {
 			return str.intern();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return "";
 		}
 	}
-	//continue by searching KL for RegEx: String \w+\(String \w+
+	int indexOf(char ch) {
+		if (str == null || str.isEmpty() || ch == '\0')
+			return -1;
+		try {
+			return str.indexOf(ch);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	int indexOf(int ch, int start) {
+		if (str == null || str.isEmpty() || ch == '\0' || start < 0
+				|| start >= str.length())
+			return -1;
+		try {
+			return str.indexOf(ch, start);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	int indexOf(String re) {
+		if (str == null || str.isEmpty())
+			return -1;
+		try {
+			Pattern p = Pattern.compile(re);
+			Matcher m = p.matcher(str);
+			if (!m.find())
+				return -1;
+			return m.start();
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return -1;
+		}
+	}
+	int indexOf(String re, int start) {
+		if (re == null || str.isEmpty() || re.isEmpty() || start < 0
+				|| start >= str.length())
+			return -1;
+		try {
+			Pattern p = Pattern.compile(re);
+			Matcher m = p.matcher(this.str);
+			m.region(start, this.length());
+			if (!m.find())
+				return -1;
+			return m.start();
+		} catch (PatternSyntaxException | StackOverflowError
+				| IndexOutOfBoundsException e) {
+			return -1;
+		}
+	}
+	int lastIndexOf(char ch) {
+		try {
+			return str.lastIndexOf(ch);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	int lastIndexOf(int ch, int start) {
+		if (ch == '\0' || start < 0 || start >= length())
+			return -1;
+		try {
+			return str.lastIndexOf(ch, start);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	int lastIndexOf(String re) {
+		if (str == null || str.isEmpty() || re == null || re.isEmpty())
+			return -1;
+		try {
+			Pattern p = Pattern.compile(re);
+			Matcher m = p.matcher(str);
+			int lastIndex = -1;
+			while (m.find())
+				lastIndex = m.start();
+			return lastIndex;
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return -1;
+		}
+	}
+	int lastIndexOf(String re, int start) {
+		if (str == null || str.isEmpty() || start < 0 || start >= str.length())
+			return -1;
+		try {
+			return str.lastIndexOf(re, start);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	CharSequence subSequence(int start, int end) {
+		if (start < 0 || end > length() || start >= length() || start >= end)
+			return "";
+		try {
+			return str.subSequence(start, end);
+		} catch (Exception e) {
+			return "";
+		}
+	}
+	// @TODO: match, matches, slice, substring
+	// continue by searching KL for RegEx: String \w+\(String \w+
+	int offsetByCodePoints(int index, int codePointOffset) {
+		try {
+			return str.offsetByCodePoints(index, codePointOffset);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	boolean regionMatches(boolean ignoreCase, int toffset, String other,
+			int ooffset, int len) {
+		try {
+			return str.regionMatches(ignoreCase, toffset, other, ooffset, len);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	boolean regionMatches(int toffset, String other, int ooffset, int len) {
+		try {
+			return str.regionMatches(toffset, other, ooffset, len);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	public static String join(CharSequence delimiter,
+			CharSequence... elements) {
+		try {
+			return String.join(delimiter, elements);
+		} catch (Exception e) {
+			return "";
+		}
+	}
+	public static String join(CharSequence delimiter,
+			Iterable<? extends CharSequence> elements) {
+		try {
+			return String.join(delimiter, elements);
+		} catch (Exception e) {
+			return "";
+		}
+	}
 	String join() {
-		if (isEmpty()) return "";
+		if (isEmpty())
+			return "";
 		if (words.length < 2)
 			return nthWord(0);
 		String halfProcessed = String.join(", ", words);
@@ -338,27 +529,85 @@ class lafz {
 		returnValue = new lafz(returnValue).sentCase();
 		return returnValue;
 	}
-    String replace(String re, String _with) {
-    	if (isEmpty()) return "";
-    	if (re == null || re.length() == 0 || _with == null) return str;
-    	//leave the check of _with, let it be blank sometimes, to allow replacement of the looked up re with a blank string
-    	try {
-    		return str.replaceAll(re, _with);
-    	} catch (PatternSyntaxException|StackOverflowError e) {
-    		return str;
-    	}
-    }
-    String replaceAll(String re, String _with) {
-    	return replace(re, _with);
-    }
-    String remove(String re) {
-    	return replace(re, "");
-    }
-    String removeAll(String re) {
-    	return remove(re);
-    }
+	String replace(String re, String _with) {
+		if (isEmpty())
+			return "";
+		if (re == null || re.length() == 0 || _with == null)
+			return str;
+		// leave the check of _with, let it be blank sometimes, to allow
+		// replacement of the looked up re with a blank string
+		try {
+			return str.replaceAll(re, _with);
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return str;
+		}
+	}
+	String replace(CharSequence re, CharSequence _with) {
+		return replace(re.toString(), _with.toString());
+	}
+	String replace(char oldChar, char newChar) {
+		return replace("" + oldChar, "" + newChar);
+	}
+	String replaceFirst(String re, String _with) {
+		if (isEmpty())
+			return "";
+		if (re == null || re.length() == 0 || _with == null)
+			return str;
+		// leave the check of _with, let it be blank sometimes, to allow
+		// replacement of the looked up re with a blank string
+		try {
+			return str.replaceFirst(re, _with);
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return str;
+		}
+	}
+	String replaceAll(String re, String _with) {
+		return replace(re, _with);
+	}
+	String remove(String re) {
+		return replace(re, "");
+	}
+	String removeAll(String re) {
+		return remove(re);
+	}
+	String replaceFirstWord(String _with) {
+		if (isEmpty())
+			return "";
+		if (noWords() || _with == null)
+			return str;
+		return replace(firstWord(), _with);
+	}
+	String replaceSecondWord(String _with) {
+		if (isEmpty())
+			return "";
+		if (noWords() || _with == null)
+			return str;
+		return replace(secondWord(), _with);
+	}
+	String replaceSecondLastWord(String _with) {
+		if (isEmpty())
+			return "";
+		if (noWords() || _with == null)
+			return str;
+		return replace(secondLastWord(), _with);
+	}
+	String replaceLastWord(String _with) {
+		if (isEmpty())
+			return "";
+		if (noWords() || _with == null)
+			return str;
+		return replace(lastWord(), _with);
+	}
+	String replaceNthWord(String _with, int n) {
+		if (isEmpty())
+			return "";
+		if (noWords() || _with == null || n < 0 || n >= wordCount())
+			return str;
+		return replace(nthWord(n), _with);
+	}
 	int length() {
-		if (str == null) str = "";
+		if (str == null)
+			str = "";
 		return str.trim().length();
 	}
 	int len() {
@@ -371,7 +620,8 @@ class lafz {
 		return str.isEmpty();
 	}
 	public String toString() {
-		if (str == null) return "";
+		if (str == null)
+			return "";
 		return str;
 	}
 	public String string() {
@@ -388,24 +638,24 @@ class str extends lafz {
 	str(Object... objs) {
 		this.str = "";
 		for (Object o : objs) {
-			if (o != null) this.str += " "+o;
+			if (o != null)
+				this.str += " " + o;
 		}
 		trim();
 		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 	}
 }
 
-
 class Main {
 	public static lafz lafz(Object... objs) {
-	    return new lafz(objs);
-    }
-    public static lafz $(Object... objs) {
-	    return new lafz(objs);
-    }
-    public static str str(Object... objs) {
-	    return new str(objs);
-    }
+		return new lafz(objs);
+	}
+	public static lafz $(Object... objs) {
+		return new lafz(objs);
+	}
+	public static str str(Object... objs) {
+		return new str(objs);
+	}
 	public static void main(String[] args) {
 		lafz salaam = $("  hi", "there", "love!", "I'm", 23);
 		lafz greeting2 = $("hi", " boyfriends");
@@ -413,6 +663,7 @@ class Main {
 		System.out.println(salaam.sentCase());
 		System.out.println(name.i(-12));
 		System.out.println(name.lastWord());
+		System.out.println(lafz("boyfriends", "love", "money").join());
 		System.out.println(lafz("boyfriends", "love", "money").join());
 	}
 }

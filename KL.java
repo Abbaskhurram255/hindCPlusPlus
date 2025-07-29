@@ -15765,7 +15765,7 @@ public class KL {
 			thread.interrupt();
 		}
 	}
-	//@@deprecated sw version 0.0.0.0: the most basic on-the-fly implementation
+	// @@deprecated sw version 0.0.0.0: the most basic on-the-fly implementation
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
 			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
 			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
@@ -15859,8 +15859,8 @@ public class KL {
 				false, null, false, null, false, null, false, null, false,
 				null);
 	}
-	//sw/when version 1: runs Runnable solution x matching with condition x
-	//@returns `true` if any of the non-Else conditions are met, else `false`
+	// sw/when version 1: runs Runnable solution x matching with condition x
+	// @returns `true` if any of the non-Else conditions are met, else `false`
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
 			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
@@ -21646,13 +21646,12 @@ public class KL {
 	public static boolean when(Object src, Object cond1, Runnable sol1) {
 		return sw(src, cond1, sol1);
 	}
-	//sw/when version 1.1: when a condition meets, return its direct respective solution (of @type ::solutions.sol1.T)
-public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6, Object cond7, T sol7,
-			Object cond8, T sol8, Object cond9, T sol9,
-			Object cond10, T sol10) {
+	// sw/when version 1.1: when a condition meets, return its direct respective
+	// solution (of @type ::solutions.sol1.T)
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
 		if (src instanceof Number || src instanceof Character) {
 			double srcDbl = src instanceof Character
 					? (char) src
@@ -25453,62 +25452,57 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		}
 		return null;
 	}
-	public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6, Object cond7, T sol7,
-			Object cond8, T sol8, Object cond9, T sol9) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
 				null, null);
 	}
-	public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6, Object cond7, T sol7,
-			Object cond8, T sol8) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, null, null,
 				null, null);
 	}
-	public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6, Object cond7, T sol7) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, null, null, null, null,
 				null, null);
 	}
-	public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, null, null, null, null, null, null,
 				null, null);
 	}
-	public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, null, null, null, null, null, null, null, null,
 				null, null);
 	}
-	public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
-	public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
-	public static <T> T sw(Object src, Object cond1, T sol1,
-			Object cond2, T sol2) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
 		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null);
@@ -25518,64 +25512,57 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6, Object cond7, T sol7,
-			Object cond8, T sol8, Object cond9, T sol9,
-			Object cond10, T sol10) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
 				cond10, sol10);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6, Object cond7, T sol7,
-			Object cond8, T sol8, Object cond9, T sol9) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
 				sol9);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6, Object cond7, T sol7,
-			Object cond8, T sol8) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6, Object cond7, T sol7) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6, cond7, sol7);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5,
-			Object cond6, T sol6) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5, cond6, sol6);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4, Object cond5, T sol5) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
 				cond5, sol5);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3,
-			Object cond4, T sol4) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2, Object cond3, T sol3) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
 	}
-	public static <T> T when(Object src, Object cond1, T sol1,
-			Object cond2, T sol2) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
 		return sw(src, cond1, sol1, cond2, sol2);
 	}
 	public static <T> T when(Object src, Object cond1, T sol1) {
@@ -30489,14 +30476,15 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 					.replaceAll("[%\\{](\\.\\d)?db\\}?", "%$1f").replaceAll(
 							"[%\\{]([dinf]):(th|r(?!s)|p?x|uc?(?!sd)|c)\\}?",
 							"%$1$2");
-			s = s.replaceAll("[%\\{]([dinf])\\:,3\\}?", "%$1u")
+			s = s.replaceAll("[%\\{]([dinf])\\:,3(\\.\\d(f|db))?\\}?", "%$1u$2")
+					.replaceAll("[%\\{][dinf]\\:,2?(\\.\\d)(f|db)\\}?", "%$1f")
 					.replaceAll("[%\\{]([dinf])\\:,2?\\}?", "%$1")
 					.replaceAll("[%\\{]([dinf])([\\:\\.]usd)\\}?", "%$1$2")
 					.replaceAll(
 							"[%\\{]([dinf])c?([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})\\}?",
 							"%$1c$2");
 			/*
-			 * to allow the following: {%d,2} {%d,3} {%n,2} {%n,3} {%d:pkr}
+			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr}
 			 * {%f:inr}
 			 */
 			s = s.replaceAll("[%\\{]([dinf])c?[\\:\\.]\\$\\}?", "%$1c:USD");
@@ -30537,7 +30525,7 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 				}
 			}
 			String[] matches = findMatches(s,
-					"(?<!\\\\)%(\\.\\d)?[\\%cswdifnb]((c|uc?)([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?|th|r|p?x)?|\\$*\\{(\\.\\df)?\\}");
+					"(?<!\\\\)%(\\.\\d)?[\\%cswdifnb](((c|uc?)(\\.\\d(f|db))?)([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?|th|r|p?x)?|\\$*\\{(\\.\\df)?\\}");
 			for (String m : matches) {
 				for (Object arg : args) {
 					if (arg instanceof Character
@@ -30637,13 +30625,25 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 												"((?<=\\.\\d)[0]+|\\.[0]+)$",
 												"")));
 							} else {
-								s = replaceFirst(s, "%[%fn]u", Str(fus(
-										setPrecision(arg instanceof Float
-												? (float) arg
-												: (double) arg))
-										.replaceAll(
-												"((?<=\\.\\d)[0]+|\\.[0]+)$",
-												"")));
+								if (in(m, "(?<=%[\\%fn]u)(\\.\\d(f|db))")) {
+									int decimalPlaces = Int(findMatch(m,
+											"(?<=%[\\%fn]u\\.)(\\d)(?=f|db)"));
+									s = replaceFirst(s, "%[\\%fn]u\\.\\d(f|db)",
+											Str(fus(arg instanceof Float
+													? (float) arg
+													: (double) arg,
+													decimalPlaces).replaceAll(
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
+															"")));
+								} else {
+									s = replaceFirst(s, "%[%fn]u", Str(fus(
+											setPrecision(arg instanceof Float
+													? (float) arg
+													: (double) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"")));
+								}
 							}
 						} else if (in(m, "%[\\%fn]p?x")) {
 							if (eq(m, "%[\\%fn]px")) {
@@ -34004,24 +34004,52 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return slice(str, index);
 	}
 	public static String sliceToAfter(String str, String thatSpecificPart) {
-		int index = indexOf(str, thatSpecificPart);
-		if (index < 0) {
+		if (not(str) || not(thatSpecificPart))
+			return "";
+		if (!in(str, thatSpecificPart))
 			return str;
-		}
+		int index = indexOf(str, thatSpecificPart);
+		if (index == -1)
+			return str;
 		String retrievedString = sliceTo(str, thatSpecificPart);
 		return slice(retrievedString, len(thatSpecificPart));
 	}
 	public static boolean startsWith(String str, String re) {
-		Pattern pattern = Pattern.compile("^(" + re + ")",
-				Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(str);
-		return !!matcher.find();
+		if (not(str) || not(re))
+			return false;
+		try {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?")) {
+				re = "\\" + re;
+			}
+			Pattern pattern = Pattern.compile("^(" + re + ")",
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(str);
+			return !!matcher.find();
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return false;
+		}
+	}
+	public static boolean startsWith(String str, String re, int offset) {
+		if (not(str) || not(re))
+			return false;
+		return startsWith(slice(str, offset), re);
 	}
 	public static boolean endsWith(String str, String re) {
-		Pattern pattern = Pattern.compile("(" + re + ")$",
-				Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(str);
-		return !!matcher.find();
+		if (not(str) || not(re))
+			return false;
+		try {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?")) {
+				re = "\\" + re;
+			}
+			Pattern pattern = Pattern.compile("(" + re + ")$",
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(str);
+			return !!matcher.find();
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return false;
+		}
 	}
 	public static boolean endsWith(String[] arr, String lookupStr) {
 		if (not(arr)) {
@@ -34463,42 +34491,112 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 	public static boolean lastOf(treeB arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
-	public static int indexOf(String inStr, String lookupStr, int startIndex) {
-		if (not(inStr) || isNull(startIndex) || isNeg(startIndex)) {
+	public static int indexOf(String str, char ch) {
+		if (str == null || str.isEmpty() || ch == '\0')
+			return -1;
+		try {
+			return str.indexOf(ch);
+		} catch (Exception e) {
 			return -1;
 		}
-		return inStr.indexOf(lookupStr, startIndex);
 	}
-	public static int indexOf(String inStr, String lookupStr) {
-		return indexOf(inStr, lookupStr, 0);
-	}
-	public static int indexOf(String inStr, char lookupCh, int startIndex) {
-		if (not(inStr) || not(lookupCh) || isNull(startIndex)
-				|| isNeg(startIndex)) {
+	public static int indexOf(String str, int ch, int start) {
+		if (str == null || str.isEmpty() || ch == '\0' || start < 0
+				|| start >= str.length())
+			return -1;
+		try {
+			return str.indexOf(ch, start);
+		} catch (Exception e) {
 			return -1;
 		}
-		for (int i : range(inStr)) {
-			if (slice(inStr, startIndex).toCharArray()[i] == lookupCh) {
-				return i;
+	}
+	public static int indexOf(String str, String re) {
+		if (str == null || str.isEmpty())
+			return -1;
+		try {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?")) {
+				re = "\\" + re;
 			}
+			Pattern p = Pattern.compile(re);
+			Matcher m = p.matcher(str);
+			if (!m.find())
+				return -1;
+			return m.start();
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return -1;
 		}
-		return -1;
 	}
-	public static int indexOf(String inStr, char lookupCh) {
-		return indexOf(inStr, lookupCh, 0);
-	}
-	public static int lastIndexOf(String inStr, String lookupStr) {
-		return inStr.lastIndexOf(lookupStr);
-	}
-	public static int lastIndexOf(String inStr, char lookupCh) {
-		for (int i = len(inStr) - 1; i >= 0; i--) {
-			if (inStr.toCharArray()[i] == lookupCh) {
-				return i;
+	public static int indexOf(String str, String re, int start) {
+		if (re == null || str.isEmpty() || re.isEmpty() || start < 0
+				|| start >= str.length())
+			return -1;
+		try {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?")) {
+				re = "\\" + re;
 			}
+			Pattern p = Pattern.compile(re);
+			Matcher m = p.matcher(str);
+			m.region(start, str.length());
+			if (!m.find())
+				return -1;
+			return m.start();
+		} catch (PatternSyntaxException | StackOverflowError
+				| IndexOutOfBoundsException e) {
+			return -1;
 		}
-		return -1;
+	}
+	public static int lastIndexOf(String str, char ch) {
+		if (str == null || str.isEmpty() || ch == '\0')
+			return -1;
+		try {
+			return str.lastIndexOf(ch);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	public static int lastIndexOf(String str, int ch, int start) {
+		if (str == null || str.isEmpty() || ch == '\0' || start < 0
+				|| start >= str.length())
+			return -1;
+		try {
+			return str.lastIndexOf(ch, start);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	public static int lastIndexOf(String str, String re) {
+		if (str == null || str.isEmpty() || re == null || re.isEmpty())
+			return -1;
+		try {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?")) {
+				re = "\\" + re;
+			}
+			Pattern p = Pattern.compile(re);
+			Matcher m = p.matcher(str);
+			int lastIndex = -1;
+			while (m.find())
+				lastIndex = m.start();
+			return lastIndex;
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return -1;
+		}
+	}
+	public static int lastIndexOf(String str, String re, int start) {
+		if (str == null || str.isEmpty() || start < 0 || start >= str.length())
+			return -1;
+		try {
+			return str.lastIndexOf(re, start);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 	public static int indexOf(String[] inStrArr, String lookupStr) {
+		if (inStrArr == null || inStrArr.length == 0 || lookupStr == null
+				|| lookupStr.isEmpty())
+			return -1;
 		for (int i = 0; i < len(inStrArr); i++) {
 			if (inStrArr[i].equals(lookupStr)) {
 				return i;
@@ -34507,6 +34605,9 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int lastIndexOf(String[] inStrArr, String lookupStr) {
+		if (inStrArr == null || inStrArr.length == 0 || lookupStr == null
+				|| lookupStr.isEmpty())
+			return -1;
 		for (int i = len(inStrArr) - 1; i >= 0; i--) {
 			if (inStrArr[i].equals(lookupStr)) {
 				return i;
@@ -34515,6 +34616,8 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int indexOf(int[] inIntArr, int lookupInt) {
+		if (inIntArr == null || inIntArr.length == 0)
+			return -1;
 		for (int i = 0; i < len(inIntArr); i++) {
 			if (inIntArr[i] == lookupInt) {
 				return i;
@@ -34523,6 +34626,8 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int lastIndexOf(int[] inIntArr, int lookupInt) {
+		if (inIntArr == null || inIntArr.length == 0)
+			return -1;
 		for (int i = len(inIntArr) - 1; i >= 0; i--) {
 			if (inIntArr[i] == lookupInt) {
 				return i;
@@ -34531,6 +34636,8 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int indexOf(long[] inLongArr, long lookupLong) {
+		if (inLongArr == null || inLongArr.length == 0)
+			return -1;
 		for (int i = 0; i < len(inLongArr); i++) {
 			if (inLongArr[i] == lookupLong) {
 				return i;
@@ -34539,6 +34646,8 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int lastIndexOf(long[] inLongArr, long lookupLong) {
+		if (inLongArr == null || inLongArr.length == 0)
+			return -1;
 		for (int i = len(inLongArr) - 1; i >= 0; i--) {
 			if (inLongArr[i] == lookupLong) {
 				return i;
@@ -34547,6 +34656,8 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int indexOf(float[] inFltArr, float lookupFlt) {
+		if (inFltArr == null || inFltArr.length == 0)
+			return -1;
 		for (int i = 0; i < len(inFltArr); i++) {
 			if (inFltArr[i] == lookupFlt) {
 				return i;
@@ -34554,15 +34665,19 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		}
 		return -1;
 	}
-	public static int lastIndexOf(float[] inFloatArr, float lookupFloat) {
-		for (int i = len(inFloatArr) - 1; i >= 0; i--) {
-			if (inFloatArr[i] == lookupFloat) {
+	public static int lastIndexOf(float[] inFltArr, float lookupFlt) {
+		if (inFltArr == null || inFltArr.length == 0)
+			return -1;
+		for (int i = len(inFltArr) - 1; i >= 0; i--) {
+			if (inFltArr[i] == lookupFlt) {
 				return i;
 			}
 		}
 		return -1;
 	}
 	public static int indexOf(double[] inDblArr, double lookupDbl) {
+		if (inDblArr == null || inDblArr.length == 0)
+			return -1;
 		for (int i = 0; i < len(inDblArr); i++) {
 			if (inDblArr[i] == lookupDbl) {
 				return i;
@@ -34571,6 +34686,8 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int lastIndexOf(double[] inDblArr, double lookupDbl) {
+		if (inDblArr == null || inDblArr.length == 0)
+			return -1;
 		for (int i = len(inDblArr) - 1; i >= 0; i--) {
 			if (inDblArr[i] == lookupDbl) {
 				return i;
@@ -34579,6 +34696,8 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int indexOf(boolean[] inBoolArr, boolean lookupBool) {
+		if (inBoolArr == null || inBoolArr.length == 0)
+			return -1;
 		for (int i = 0; i < len(inBoolArr); i++) {
 			if (inBoolArr[i] == lookupBool) {
 				return i;
@@ -34587,6 +34706,8 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		return -1;
 	}
 	public static int lastIndexOf(boolean[] inBoolArr, boolean lookupBool) {
+		if (inBoolArr == null || inBoolArr.length == 0)
+			return -1;
 		for (int i = len(inBoolArr) - 1; i >= 0; i--) {
 			if (inBoolArr[i] == lookupBool) {
 				return i;
@@ -34783,7 +34904,7 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
 					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
 							"\\\\$1")
-					.replaceAll("%%", "%").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+					.replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 					.replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
 					.replaceAll("(?<!\\\\)%b", "(true|false)")
 					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
@@ -34825,7 +34946,7 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
 					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
 							"\\\\$1")
-					.replaceAll("%%", "%").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+					.replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 					.replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
 					.replaceAll("(?<!\\\\)%b", "(true|false)")
 					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
@@ -34874,7 +34995,7 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
 					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
 							"\\\\$1")
-					.replaceAll("%%", "%").replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+					.replaceAll("(?<!\\\\)%c", "[A-Za-z]")
 					.replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
 					.replaceAll("(?<!\\\\)%b", "(true|false)")
 					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
@@ -38442,24 +38563,23 @@ public static <T> T sw(Object src, Object cond1, T sol1,
 		print("{score::rs}");
 		print("{score::}");
 		print("{score}");
-		print("Intl: {f:,3}", score);
+		print("Intl: %f:,3.0db", score);
 		print("{f:,3}", score);
-		print("PK: {score:,3.1f}");
+		print("PK: {score:,2.0f}");
 		print("{score:px}");
 		print("{name:3}");
 		print("{name:1,}");
 		print("{name:,2}");
 		print("{name:1,3}");
 		int n = 10;
-		String result = when(n, "0..6x","between but exclusive of 0, and 6: so basically, around 1 through 5",
-				"6..10", "between and inclusive of 6, and 10",
-				Else, "neither");
+		String result = when(n, "0..6x",
+				"between but exclusive of 0, and 6: so basically, around 1 through 5",
+				"6..10", "between and inclusive of 6, and 10", Else, "neither");
 		int result2 = when("hey world", "hello world", 1, Else, 0);
 		boolean result3 = when('c', "97..123", Yes, Else, No);
 		print(result);
 		print(result2);
 		print(result3);
-		print("$upper:$name");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
