@@ -1,6 +1,6 @@
 import os, sys, base64, requests, math, re
 import tkinter as tk
-from tkinter import font as tkFont, messagebox, simpledialog, Frame, Button, Menu, Checkbutton, Radiobutton, Entry, Text, StringVar
+from tkinter import font as tkFont, messagebox, simpledialog, Frame, Button, Menu, Checkbutton, Radiobutton, Entry, Text, StringVar, colorchooser
 from collections import defaultdict
 from functools import reduce
 from typing import List, Callable
