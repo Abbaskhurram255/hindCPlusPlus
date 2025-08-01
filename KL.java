@@ -25,8 +25,8 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 @SuppressWarnings("all")
 public class KL {
-	//to shorten new KL() calls into just KL()
-	public static KL KL() {
+	// to shorten new KL() instance calls into just KL()
+	public static KL kl() {
 		return new KL();
 	}
 	public static class money {
@@ -190,3032 +190,3067 @@ public class KL {
 		public static String cUnit = "m/s", earthsGravityUnit = "m/s^2",
 				earthsMassUnit = "km", earthsRadiusUnit = "km";
 		public static final class c {
-		    //temperature::c
-		    public static int f(int n) {
-		        return(int) (1.8 * n + 32);
-		    }
-		    public static long f(long n) {
-		        return(long) (1.8 * n + 32);
-		    }
-		    public static float f(float n) {
-		        return(float) (setPrecision(1.8 * n + 32));
-		    }
-		    public static double f(double n) {
-		        return setPrecision(1.8 * n + 32);
-		    }
-		    //time::c
-		    public static int ns(int n) {
-		        return(int) (n * 3.154e18);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 3.154e18);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 3.154e18));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 3.154e18);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 3.154e15);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 3.154e15);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 3.154e15));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 3.154e15);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 3.154e12);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 3.154e12);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 3.154e12));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 3.154e12);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 3.154e9);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 3.154e9);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 3.154e9));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 3.154e9);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 5.256e7);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 5.256e7);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 5.256e7));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 5.256e7);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 8.76e5);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 8.76e5);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 8.76e5));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 8.76e5);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 3.65e4);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 3.65e4);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 3.65e4));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 3.65e4);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 5.214e3);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 5.214e3);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 5.214e3));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 5.214e3);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 1.2e3);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 1.2e3);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 1.2e3));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 1.2e3);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 1e2);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 1e2);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 1e2));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 1e2);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 1e1);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 1e1);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 1e1));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 1e1);
-		    }
+			// temperature::c
+			public static int f(int n) {
+				return (int) (1.8 * n + 32);
+			}
+			public static long f(long n) {
+				return (long) (1.8 * n + 32);
+			}
+			public static float f(float n) {
+				return (float) (setPrecision(1.8 * n + 32));
+			}
+			public static double f(double n) {
+				return setPrecision(1.8 * n + 32);
+			}
+			// time::c
+			public static int ns(int n) {
+				return (int) (n * 3.154e18);
+			}
+			public static long ns(long n) {
+				return (long) (n * 3.154e18);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 3.154e18));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 3.154e18);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 3.154e15);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 3.154e15);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 3.154e15));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 3.154e15);
+			}
+			public static int ms(int n) {
+				return (int) (n * 3.154e12);
+			}
+			public static long ms(long n) {
+				return (long) (n * 3.154e12);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 3.154e12));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 3.154e12);
+			}
+			public static int s(int n) {
+				return (int) (n * 3.154e9);
+			}
+			public static long s(long n) {
+				return (long) (n * 3.154e9);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 3.154e9));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 3.154e9);
+			}
+			public static int m(int n) {
+				return (int) (n * 5.256e7);
+			}
+			public static long m(long n) {
+				return (long) (n * 5.256e7);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 5.256e7));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 5.256e7);
+			}
+			public static int h(int n) {
+				return (int) (n * 8.76e5);
+			}
+			public static long h(long n) {
+				return (long) (n * 8.76e5);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 8.76e5));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 8.76e5);
+			}
+			public static int d(int n) {
+				return (int) (n * 3.65e4);
+			}
+			public static long d(long n) {
+				return (long) (n * 3.65e4);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 3.65e4));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 3.65e4);
+			}
+			public static int wk(int n) {
+				return (int) (n * 5.214e3);
+			}
+			public static long wk(long n) {
+				return (long) (n * 5.214e3);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 5.214e3));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 5.214e3);
+			}
+			public static int mn(int n) {
+				return (int) (n * 1.2e3);
+			}
+			public static long mn(long n) {
+				return (long) (n * 1.2e3);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 1.2e3));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 1.2e3);
+			}
+			public static int yr(int n) {
+				return (int) (n * 1e2);
+			}
+			public static long yr(long n) {
+				return (long) (n * 1e2);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 1e2));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 1e2);
+			}
+			public static int dc(int n) {
+				return (int) (n * 1e1);
+			}
+			public static long dc(long n) {
+				return (long) (n * 1e1);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 1e1));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 1e1);
+			}
 		}
 		public static final class f {
-		    public static int c(int n) {
-		        return(int) (((n - 32) * 5) / 9);
-		    }
-		    public static long c(long n) {
-		        return(long) (((n - 32) * 5) / 9);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(((n - 32) * 5) / 9));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(((n - 32) * 5) / 9);
-		    }
+			public static int c(int n) {
+				return (int) (((n - 32) * 5) / 9);
+			}
+			public static long c(long n) {
+				return (long) (((n - 32) * 5) / 9);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(((n - 32) * 5) / 9));
+			}
+			public static double c(double n) {
+				return setPrecision(((n - 32) * 5) / 9);
+			}
 		}
 		public static final class m {
-		    //distance::m
-		    public static int km(int n) {
-		        return(int) (n * 1e-3);
-		    }
-		    public static long km(long n) {
-		        return(long) (n * 1e-3);
-		    }
-		    public static float km(float n) {
-		        return(float) (setPrecision(n * 1e-3));
-		    }
-		    public static double km(double n) {
-		        return setPrecision(n * 1e-3);
-		    }
-		    public static int mi(int n) {
-		        return(int) (n * 6.21371e-4);
-		    }
-		    public static long mi(long n) {
-		        return(long) (n * 6.21371e-4);
-		    }
-		    public static float mi(float n) {
-		        return(float) (setPrecision(n * 6.21371e-4));
-		    }
-		    public static double mi(double n) {
-		        return setPrecision(n * 6.21371e-4);
-		    }
-		    public static int ft(int n) {
-		        return(int) (n * 3.28084);
-		    }
-		    public static long ft(long n) {
-		        return(long) (n * 3.28084);
-		    }
-		    public static float ft(float n) {
-		        return(float) (setPrecision(n * 3.28084));
-		    }
-		    public static double ft(double n) {
-		        return setPrecision(n * 3.28084);
-		    }
-		    public static int in(int n) {
-		        return(int) (n * 3.93701e+1);
-		    }
-		    public static long in(long n) {
-		        return(long) (n * 3.93701e+1);
-		    }
-		    public static float in(float n) {
-		        return(float) (setPrecision(n * 3.93701e+1));
-		    }
-		    public static double in(double n) {
-		        return setPrecision(n * 3.93701e+1);
-		    }
-		    public static int cm(int n) {
-		        return(int) (n * 1e2);
-		    }
-		    public static long cm(long n) {
-		        return(long) (n * 1e2);
-		    }
-		    public static float cm(float n) {
-		        return(float) (setPrecision(n * 1e2));
-		    }
-		    public static double cm(double n) {
-		        return setPrecision(n * 1e2);
-		    }
-		    public static int mm(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long mm(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float mm(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double mm(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int yd(int n) {
-		        return(int) (n * 1.0936);
-		    }
-		    public static long yd(long n) {
-		        return(long) (n * 1.0936);
-		    }
-		    public static float yd(float n) {
-		        return(float) (setPrecision(n * 1.0936));
-		    }
-		    public static double yd(double n) {
-		        return setPrecision(n * 1.0936);
-		    }
-		    //time::m
-		    public static int ns(int n) {
-		        return(int) (n * 6e10);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 6e10);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 6e10));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 6e10);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 6e7);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 6e7);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 6e7));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 6e7);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 6e4);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 6e4);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 6e4));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 6e4);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 6e1);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 6e1);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 6e1));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 6e1);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 1.66665e-2);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 1.66665e-2);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 1.66665e-2));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 1.66665e-2);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 6.94e-4);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 6.94e-4);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 6.94e-4));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 6.94e-4);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 9.92e-5);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 9.92e-5);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 9.92e-5));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 9.92e-5);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 2.283e-5);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 2.283e-5);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 2.283e-5));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 2.283e-5);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 1.902e-6);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 1.902e-6);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 1.902e-6));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 1.902e-6);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 1.902e-7);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 1.902e-7);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 1.902e-7));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 1.902e-7);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 1.902e-8);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 1.902e-8);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 1.902e-8));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 1.902e-8);
-		    }
+			// distance::m
+			public static int km(int n) {
+				return (int) (n * 1e-3);
+			}
+			public static long km(long n) {
+				return (long) (n * 1e-3);
+			}
+			public static float km(float n) {
+				return (float) (setPrecision(n * 1e-3));
+			}
+			public static double km(double n) {
+				return setPrecision(n * 1e-3);
+			}
+			public static int mi(int n) {
+				return (int) (n * 6.21371e-4);
+			}
+			public static long mi(long n) {
+				return (long) (n * 6.21371e-4);
+			}
+			public static float mi(float n) {
+				return (float) (setPrecision(n * 6.21371e-4));
+			}
+			public static double mi(double n) {
+				return setPrecision(n * 6.21371e-4);
+			}
+			public static int ft(int n) {
+				return (int) (n * 3.28084);
+			}
+			public static long ft(long n) {
+				return (long) (n * 3.28084);
+			}
+			public static float ft(float n) {
+				return (float) (setPrecision(n * 3.28084));
+			}
+			public static double ft(double n) {
+				return setPrecision(n * 3.28084);
+			}
+			public static int in(int n) {
+				return (int) (n * 3.93701e+1);
+			}
+			public static long in(long n) {
+				return (long) (n * 3.93701e+1);
+			}
+			public static float in(float n) {
+				return (float) (setPrecision(n * 3.93701e+1));
+			}
+			public static double in(double n) {
+				return setPrecision(n * 3.93701e+1);
+			}
+			public static int cm(int n) {
+				return (int) (n * 1e2);
+			}
+			public static long cm(long n) {
+				return (long) (n * 1e2);
+			}
+			public static float cm(float n) {
+				return (float) (setPrecision(n * 1e2));
+			}
+			public static double cm(double n) {
+				return setPrecision(n * 1e2);
+			}
+			public static int mm(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long mm(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float mm(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double mm(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int yd(int n) {
+				return (int) (n * 1.0936);
+			}
+			public static long yd(long n) {
+				return (long) (n * 1.0936);
+			}
+			public static float yd(float n) {
+				return (float) (setPrecision(n * 1.0936));
+			}
+			public static double yd(double n) {
+				return setPrecision(n * 1.0936);
+			}
+			// time::m
+			public static int ns(int n) {
+				return (int) (n * 6e10);
+			}
+			public static long ns(long n) {
+				return (long) (n * 6e10);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 6e10));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 6e10);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 6e7);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 6e7);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 6e7));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 6e7);
+			}
+			public static int ms(int n) {
+				return (int) (n * 6e4);
+			}
+			public static long ms(long n) {
+				return (long) (n * 6e4);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 6e4));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 6e4);
+			}
+			public static int s(int n) {
+				return (int) (n * 6e1);
+			}
+			public static long s(long n) {
+				return (long) (n * 6e1);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 6e1));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 6e1);
+			}
+			public static int h(int n) {
+				return (int) (n * 1.66665e-2);
+			}
+			public static long h(long n) {
+				return (long) (n * 1.66665e-2);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 1.66665e-2));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 1.66665e-2);
+			}
+			public static int d(int n) {
+				return (int) (n * 6.94e-4);
+			}
+			public static long d(long n) {
+				return (long) (n * 6.94e-4);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 6.94e-4));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 6.94e-4);
+			}
+			public static int wk(int n) {
+				return (int) (n * 9.92e-5);
+			}
+			public static long wk(long n) {
+				return (long) (n * 9.92e-5);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 9.92e-5));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 9.92e-5);
+			}
+			public static int mn(int n) {
+				return (int) (n * 2.283e-5);
+			}
+			public static long mn(long n) {
+				return (long) (n * 2.283e-5);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 2.283e-5));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 2.283e-5);
+			}
+			public static int yr(int n) {
+				return (int) (n * 1.902e-6);
+			}
+			public static long yr(long n) {
+				return (long) (n * 1.902e-6);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 1.902e-6));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 1.902e-6);
+			}
+			public static int dc(int n) {
+				return (int) (n * 1.902e-7);
+			}
+			public static long dc(long n) {
+				return (long) (n * 1.902e-7);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 1.902e-7));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 1.902e-7);
+			}
+			public static int c(int n) {
+				return (int) (n * 1.902e-8);
+			}
+			public static long c(long n) {
+				return (long) (n * 1.902e-8);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 1.902e-8));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 1.902e-8);
+			}
 		}
 		public static final class km {
-		    public static int m(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int mi(int n) {
-		        return(int) (n * 6.21371e-1);
-		    }
-		    public static long mi(long n) {
-		        return(long) (n * 6.21371e-1);
-		    }
-		    public static float mi(float n) {
-		        return(float) (setPrecision(n * 6.21371e-1));
-		    }
-		    public static double mi(double n) {
-		        return setPrecision(n * 6.21371e-1);
-		    }
-		    public static int ft(int n) {
-		        return(int) (n * 3.28084e+3);
-		    }
-		    public static long ft(long n) {
-		        return(long) (n * 3.28084e+3);
-		    }
-		    public static float ft(float n) {
-		        return(float) (setPrecision(n * 3.28084e+3));
-		    }
-		    public static double ft(double n) {
-		        return setPrecision(n * 3.28084e+3);
-		    }
-		    public static int in(int n) {
-		        return(int) (n * 3.93701e+4);
-		    }
-		    public static long in(long n) {
-		        return(long) (n * 3.93701e+4);
-		    }
-		    public static float in(float n) {
-		        return(float) (setPrecision(n * 3.93701e+4));
-		    }
-		    public static double in(double n) {
-		        return setPrecision(3.93701e+4);
-		    }
-		    public static int cm(int n) {
-		        return(int) (n * 1e+5);
-		    }
-		    public static long cm(long n) {
-		        return(long) (n * 1e+5);
-		    }
-		    public static float cm(float n) {
-		        return(float) (setPrecision(n * 1e+5));
-		    }
-		    public static double cm(double n) {
-		        return setPrecision(n * 1e+5);
-		    }
-		    public static int mm(int n) {
-		        return(int) (n * 1e+6);
-		    }
-		    public static long mm(long n) {
-		        return(long) (n * 1e+6);
-		    }
-		    public static float mm(float n) {
-		        return(float) (setPrecision(n * 1e+6));
-		    }
-		    public static double mm(double n) {
-		        return setPrecision(n * 1e+6);
-		    }
-		    public static int yd(int n) {
-		        return(int) (n * 1.09361e+3);
-		    }
-		    public static long yd(long n) {
-		        return(long) (n * 1.09361e+3);
-		    }
-		    public static float yd(float n) {
-		        return(float) (setPrecision(n * 1.09361e+3));
-		    }
-		    public static double yd(double n) {
-		        return setPrecision(n * 1.09361e+3);
-		    }
+			public static int m(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long m(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int mi(int n) {
+				return (int) (n * 6.21371e-1);
+			}
+			public static long mi(long n) {
+				return (long) (n * 6.21371e-1);
+			}
+			public static float mi(float n) {
+				return (float) (setPrecision(n * 6.21371e-1));
+			}
+			public static double mi(double n) {
+				return setPrecision(n * 6.21371e-1);
+			}
+			public static int ft(int n) {
+				return (int) (n * 3.28084e+3);
+			}
+			public static long ft(long n) {
+				return (long) (n * 3.28084e+3);
+			}
+			public static float ft(float n) {
+				return (float) (setPrecision(n * 3.28084e+3));
+			}
+			public static double ft(double n) {
+				return setPrecision(n * 3.28084e+3);
+			}
+			public static int in(int n) {
+				return (int) (n * 3.93701e+4);
+			}
+			public static long in(long n) {
+				return (long) (n * 3.93701e+4);
+			}
+			public static float in(float n) {
+				return (float) (setPrecision(n * 3.93701e+4));
+			}
+			public static double in(double n) {
+				return setPrecision(3.93701e+4);
+			}
+			public static int cm(int n) {
+				return (int) (n * 1e+5);
+			}
+			public static long cm(long n) {
+				return (long) (n * 1e+5);
+			}
+			public static float cm(float n) {
+				return (float) (setPrecision(n * 1e+5));
+			}
+			public static double cm(double n) {
+				return setPrecision(n * 1e+5);
+			}
+			public static int mm(int n) {
+				return (int) (n * 1e+6);
+			}
+			public static long mm(long n) {
+				return (long) (n * 1e+6);
+			}
+			public static float mm(float n) {
+				return (float) (setPrecision(n * 1e+6));
+			}
+			public static double mm(double n) {
+				return setPrecision(n * 1e+6);
+			}
+			public static int yd(int n) {
+				return (int) (n * 1.09361e+3);
+			}
+			public static long yd(long n) {
+				return (long) (n * 1.09361e+3);
+			}
+			public static float yd(float n) {
+				return (float) (setPrecision(n * 1.09361e+3));
+			}
+			public static double yd(double n) {
+				return setPrecision(n * 1.09361e+3);
+			}
 		}
 		public static final class mi {
-		    public static int m(int n) {
-		        return(int) (n * 1.60934e+3);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1.60934e+3);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1.60934e+3));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1.60934e+3);
-		    }
-		    public static int km(int n) {
-		        return(int) (n * 1.60934);
-		    }
-		    public static long km(long n) {
-		        return(long) (n * 1.60934);
-		    }
-		    public static float km(float n) {
-		        return(float) (setPrecision(n * 1.60934));
-		    }
-		    public static double km(double n) {
-		        return setPrecision(n * 1.60934);
-		    }
-		    public static int ft(int n) {
-		        return(int) (n * 5.280e+3);
-		    }
-		    public static long ft(long n) {
-		        return(long) (n * 5.280e+3);
-		    }
-		    public static float ft(float n) {
-		        return(float) (setPrecision(n * 5.280e+3));
-		    }
-		    public static double ft(double n) {
-		        return setPrecision(n * 5.280e+3);
-		    }
-		    public static int in(int n) {
-		        return(int) (n * 6.3360e+4);
-		    }
-		    public static long in(long n) {
-		        return(long) (n * 6.3360e+4);
-		    }
-		    public static float in(float n) {
-		        return(float) (setPrecision(n * 6.3360e+4));
-		    }
-		    public static double in(double n) {
-		        return setPrecision(n * 6.3360e+4);
-		    }
-		    public static int cm(int n) {
-		        return(int) (n * 1.60934e+5);
-		    }
-		    public static long cm(long n) {
-		        return(long) (n * 1.60934e+5);
-		    }
-		    public static float cm(float n) {
-		        return(float) (setPrecision(n * 1.60934e+5));
-		    }
-		    public static double cm(double n) {
-		        return setPrecision(n * 1.60934e+5);
-		    }
-		    public static int mm(int n) {
-		        return(int) (n * 1.609340e+6);
-		    }
-		    public static long mm(long n) {
-		        return(long) (n * 1.609340e+6);
-		    }
-		    public static float mm(float n) {
-		        return(float) (setPrecision(n * 1.609340e+6));
-		    }
-		    public static double mm(double n) {
-		        return setPrecision(n * 1.609340e+6);
-		    }
-		    public static int yd(int n) {
-		        return(int) (n * 1.76e+3);
-		    }
-		    public static long yd(long n) {
-		        return(long) (n * 1.76e+3);
-		    }
-		    public static float yd(float n) {
-		        return(float) (setPrecision(n * 1.76e+3));
-		    }
-		    public static double yd(double n) {
-		        return setPrecision(n * 1.76e+3);
-		    }
+			public static int m(int n) {
+				return (int) (n * 1.60934e+3);
+			}
+			public static long m(long n) {
+				return (long) (n * 1.60934e+3);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1.60934e+3));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1.60934e+3);
+			}
+			public static int km(int n) {
+				return (int) (n * 1.60934);
+			}
+			public static long km(long n) {
+				return (long) (n * 1.60934);
+			}
+			public static float km(float n) {
+				return (float) (setPrecision(n * 1.60934));
+			}
+			public static double km(double n) {
+				return setPrecision(n * 1.60934);
+			}
+			public static int ft(int n) {
+				return (int) (n * 5.280e+3);
+			}
+			public static long ft(long n) {
+				return (long) (n * 5.280e+3);
+			}
+			public static float ft(float n) {
+				return (float) (setPrecision(n * 5.280e+3));
+			}
+			public static double ft(double n) {
+				return setPrecision(n * 5.280e+3);
+			}
+			public static int in(int n) {
+				return (int) (n * 6.3360e+4);
+			}
+			public static long in(long n) {
+				return (long) (n * 6.3360e+4);
+			}
+			public static float in(float n) {
+				return (float) (setPrecision(n * 6.3360e+4));
+			}
+			public static double in(double n) {
+				return setPrecision(n * 6.3360e+4);
+			}
+			public static int cm(int n) {
+				return (int) (n * 1.60934e+5);
+			}
+			public static long cm(long n) {
+				return (long) (n * 1.60934e+5);
+			}
+			public static float cm(float n) {
+				return (float) (setPrecision(n * 1.60934e+5));
+			}
+			public static double cm(double n) {
+				return setPrecision(n * 1.60934e+5);
+			}
+			public static int mm(int n) {
+				return (int) (n * 1.609340e+6);
+			}
+			public static long mm(long n) {
+				return (long) (n * 1.609340e+6);
+			}
+			public static float mm(float n) {
+				return (float) (setPrecision(n * 1.609340e+6));
+			}
+			public static double mm(double n) {
+				return setPrecision(n * 1.609340e+6);
+			}
+			public static int yd(int n) {
+				return (int) (n * 1.76e+3);
+			}
+			public static long yd(long n) {
+				return (long) (n * 1.76e+3);
+			}
+			public static float yd(float n) {
+				return (float) (setPrecision(n * 1.76e+3));
+			}
+			public static double yd(double n) {
+				return setPrecision(n * 1.76e+3);
+			}
 		}
 		public static final class ft {
-		    public static int m(int n) {
-		        return(int) (n * 3.048e-1);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 3.048e-1);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 3.048e-1));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 3.048e-1);
-		    }
-		    public static int km(int n) {
-		        return(int) (n * 3.048e-4);
-		    }
-		    public static long km(long n) {
-		        return(long) (n * 3.048e-4);
-		    }
-		    public static float km(float n) {
-		        return(float) (setPrecision(n * 3.048e-4));
-		    }
-		    public static double km(double n) {
-		        return setPrecision(n * 3.048e-4);
-		    }
-		    public static int mi(int n) {
-		        return(int) (n * 1.89394e-4);
-		    }
-		    public static long mi(long n) {
-		        return(long) (n * 1.89394e-4);
-		    }
-		    public static float mi(float n) {
-		        return(float) (setPrecision(n * 1.89394e-4));
-		    }
-		    public static double mi(double n) {
-		        return setPrecision(n * 1.89394e-4);
-		    }
-		    public static int in(int n) {
-		        return(int) (n * 1.2e1);
-		    }
-		    public static long in(long n) {
-		        return(long) (n * 1.2e1);
-		    }
-		    public static float in(float n) {
-		        return(float) (setPrecision(n * 1.2e1));
-		    }
-		    public static double in(double n) {
-		        return setPrecision(n * 1.2e1);
-		    }
-		    public static int cm(int n) {
-		        return(int) (n * 3.48e+1);
-		    }
-		    public static long cm(long n) {
-		        return(long) (n * 3.48e+1);
-		    }
-		    public static float cm(float n) {
-		        return(float) (setPrecision(n * 3.48e+1));
-		    }
-		    public static double cm(double n) {
-		        return setPrecision(n * 3.48e+1);
-		    }
-		    public static int mm(int n) {
-		        return(int) (n * 3.048e+2);
-		    }
-		    public static long mm(long n) {
-		        return(long) (n * 3.048e+2);
-		    }
-		    public static float mm(float n) {
-		        return(float) (setPrecision(n * 3.048e+2));
-		    }
-		    public static double mm(double n) {
-		        return setPrecision(n * 3.048e+2);
-		    }
-		    public static int yd(int n) {
-		        return(int) (n * 3.33333e-1);
-		    }
-		    public static long yd(long n) {
-		        return(long) (n * 3.33333e-1);
-		    }
-		    public static float yd(float n) {
-		        return(float) (setPrecision(n * 3.33333e-1));
-		    }
-		    public static double yd(double n) {
-		        return setPrecision(n * 3.33333e-1);
-		    }
+			public static int m(int n) {
+				return (int) (n * 3.048e-1);
+			}
+			public static long m(long n) {
+				return (long) (n * 3.048e-1);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 3.048e-1));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 3.048e-1);
+			}
+			public static int km(int n) {
+				return (int) (n * 3.048e-4);
+			}
+			public static long km(long n) {
+				return (long) (n * 3.048e-4);
+			}
+			public static float km(float n) {
+				return (float) (setPrecision(n * 3.048e-4));
+			}
+			public static double km(double n) {
+				return setPrecision(n * 3.048e-4);
+			}
+			public static int mi(int n) {
+				return (int) (n * 1.89394e-4);
+			}
+			public static long mi(long n) {
+				return (long) (n * 1.89394e-4);
+			}
+			public static float mi(float n) {
+				return (float) (setPrecision(n * 1.89394e-4));
+			}
+			public static double mi(double n) {
+				return setPrecision(n * 1.89394e-4);
+			}
+			public static int in(int n) {
+				return (int) (n * 1.2e1);
+			}
+			public static long in(long n) {
+				return (long) (n * 1.2e1);
+			}
+			public static float in(float n) {
+				return (float) (setPrecision(n * 1.2e1));
+			}
+			public static double in(double n) {
+				return setPrecision(n * 1.2e1);
+			}
+			public static int cm(int n) {
+				return (int) (n * 3.48e+1);
+			}
+			public static long cm(long n) {
+				return (long) (n * 3.48e+1);
+			}
+			public static float cm(float n) {
+				return (float) (setPrecision(n * 3.48e+1));
+			}
+			public static double cm(double n) {
+				return setPrecision(n * 3.48e+1);
+			}
+			public static int mm(int n) {
+				return (int) (n * 3.048e+2);
+			}
+			public static long mm(long n) {
+				return (long) (n * 3.048e+2);
+			}
+			public static float mm(float n) {
+				return (float) (setPrecision(n * 3.048e+2));
+			}
+			public static double mm(double n) {
+				return setPrecision(n * 3.048e+2);
+			}
+			public static int yd(int n) {
+				return (int) (n * 3.33333e-1);
+			}
+			public static long yd(long n) {
+				return (long) (n * 3.33333e-1);
+			}
+			public static float yd(float n) {
+				return (float) (setPrecision(n * 3.33333e-1));
+			}
+			public static double yd(double n) {
+				return setPrecision(n * 3.33333e-1);
+			}
 		}
 		public static final class in {
-		    public static int m(int n) {
-		        return(int) (n * 2.54e-2);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 2.54e-2);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 2.54e-2));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 2.54e-2);
-		    }
-		    public static int km(int n) {
-		        return(int) (n * 2.54e-5);
-		    }
-		    public static long km(long n) {
-		        return(long) (n * 2.54e-5);
-		    }
-		    public static float km(float n) {
-		        return(float) (setPrecision(n * 2.54e-5));
-		    }
-		    public static double km(double n) {
-		        return setPrecision(n * 2.54e-5);
-		    }
-		    public static int mi(int n) {
-		        return(int) (n * 1.57828e-5);
-		    }
-		    public static long mi(long n) {
-		        return(long) (n * 1.57828e-5);
-		    }
-		    public static float mi(float n) {
-		        return(float) (setPrecision(n * 1.57828e-5));
-		    }
-		    public static double mi(double n) {
-		        return setPrecision(n * 1.57828e-5);
-		    }
-		    public static int ft(int n) {
-		        return(int) (n * 8.333e-2);
-		    }
-		    public static long ft(long n) {
-		        return(long) (n * 8.333e-2);
-		    }
-		    public static float ft(float n) {
-		        return(float) (setPrecision(n * 8.333e-2));
-		    }
-		    public static double ft(double n) {
-		        return setPrecision(n * 8.333e-2);
-		    }
-		    public static int cm(int n) {
-		        return(int) (n * 2.54);
-		    }
-		    public static long cm(long n) {
-		        return(long) (n * 2.54);
-		    }
-		    public static float cm(float n) {
-		        return(float) (setPrecision(n * 2.54));
-		    }
-		    public static double cm(double n) {
-		        return setPrecision(n * 2.54);
-		    }
-		    public static int mm(int n) {
-		        return(int) (n * 2.54e+1);
-		    }
-		    public static long mm(long n) {
-		        return(long) (n * 2.54e+1);
-		    }
-		    public static float mm(float n) {
-		        return(float) (setPrecision(n * 2.54e+1));
-		    }
-		    public static double mm(double n) {
-		        return setPrecision(n * 2.54e+1);
-		    }
-		    public static int yd(int n) {
-		        return(int) (n * 2.77778e-2);
-		    }
-		    public static long yd(long n) {
-		        return(long) (n * 2.77778e-2);
-		    }
-		    public static float yd(float n) {
-		        return(float) (setPrecision(n * 2.77778e-2));
-		    }
-		    public static double yd(double n) {
-		        return setPrecision(n * 2.77778e-2);
-		    }
+			public static int m(int n) {
+				return (int) (n * 2.54e-2);
+			}
+			public static long m(long n) {
+				return (long) (n * 2.54e-2);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 2.54e-2));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 2.54e-2);
+			}
+			public static int km(int n) {
+				return (int) (n * 2.54e-5);
+			}
+			public static long km(long n) {
+				return (long) (n * 2.54e-5);
+			}
+			public static float km(float n) {
+				return (float) (setPrecision(n * 2.54e-5));
+			}
+			public static double km(double n) {
+				return setPrecision(n * 2.54e-5);
+			}
+			public static int mi(int n) {
+				return (int) (n * 1.57828e-5);
+			}
+			public static long mi(long n) {
+				return (long) (n * 1.57828e-5);
+			}
+			public static float mi(float n) {
+				return (float) (setPrecision(n * 1.57828e-5));
+			}
+			public static double mi(double n) {
+				return setPrecision(n * 1.57828e-5);
+			}
+			public static int ft(int n) {
+				return (int) (n * 8.333e-2);
+			}
+			public static long ft(long n) {
+				return (long) (n * 8.333e-2);
+			}
+			public static float ft(float n) {
+				return (float) (setPrecision(n * 8.333e-2));
+			}
+			public static double ft(double n) {
+				return setPrecision(n * 8.333e-2);
+			}
+			public static int cm(int n) {
+				return (int) (n * 2.54);
+			}
+			public static long cm(long n) {
+				return (long) (n * 2.54);
+			}
+			public static float cm(float n) {
+				return (float) (setPrecision(n * 2.54));
+			}
+			public static double cm(double n) {
+				return setPrecision(n * 2.54);
+			}
+			public static int mm(int n) {
+				return (int) (n * 2.54e+1);
+			}
+			public static long mm(long n) {
+				return (long) (n * 2.54e+1);
+			}
+			public static float mm(float n) {
+				return (float) (setPrecision(n * 2.54e+1));
+			}
+			public static double mm(double n) {
+				return setPrecision(n * 2.54e+1);
+			}
+			public static int yd(int n) {
+				return (int) (n * 2.77778e-2);
+			}
+			public static long yd(long n) {
+				return (long) (n * 2.77778e-2);
+			}
+			public static float yd(float n) {
+				return (float) (setPrecision(n * 2.77778e-2));
+			}
+			public static double yd(double n) {
+				return setPrecision(n * 2.77778e-2);
+			}
 		}
 		public static final class cm {
-		    public static int m(int n) {
-		        return(int) (n * 1e-2);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1e-2);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1e-2));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1e-2);
-		    }
-		    public static int km(int n) {
-		        return(int) (n * 1e-5);
-		    }
-		    public static long km(long n) {
-		        return(long) (n * 1e-5);
-		    }
-		    public static float km(float n) {
-		        return(float) (setPrecision(n * 1e-5));
-		    }
-		    public static double km(double n) {
-		        return setPrecision(n * 1e-5);
-		    }
-		    public static int mi(int n) {
-		        return(int) (n * 621371e-6);
-		    }
-		    public static long mi(long n) {
-		        return(long) (n * 621371e-6);
-		    }
-		    public static float mi(float n) {
-		        return(float) (setPrecision(n * 621371e-6));
-		    }
-		    public static double mi(double n) {
-		        return setPrecision(n * 621371e-6);
-		    }
-		    public static int ft(int n) {
-		        return(int) (n * 3.28084e-2);
-		    }
-		    public static long ft(long n) {
-		        return(long) (n * 3.28084e-2);
-		    }
-		    public static float ft(float n) {
-		        return(float) (setPrecision(n * 3.28084e-2));
-		    }
-		    public static double ft(double n) {
-		        return setPrecision(n * 3.28084e-2);
-		    }
-		    public static int in(int n) {
-		        return(int) (n * 3.93701e-1);
-		    }
-		    public static long in(long n) {
-		        return(long) (n * 3.93701e-1);
-		    }
-		    public static float in(float n) {
-		        return(float) (setPrecision(n * 3.93701e-1));
-		    }
-		    public static double in(double n) {
-		        return setPrecision(n * 3.93701e-1);
-		    }
-		    public static int mm(int n) {
-		        return(int) (n * 1e1);
-		    }
-		    public static long mm(long n) {
-		        return(long) (n * 1e1);
-		    }
-		    public static float mm(float n) {
-		        return(float) (setPrecision(n * 1e1));
-		    }
-		    public static double mm(double n) {
-		        return setPrecision(n * 1e1);
-		    }
-		    public static int yd(int n) {
-		        return(int) (n * 1.09361e-2);
-		    }
-		    public static long yd(long n) {
-		        return(long) (n * 1.09361e-2);
-		    }
-		    public static float yd(float n) {
-		        return(float) (setPrecision(n * 1.09361e-2));
-		    }
-		    public static double yd(double n) {
-		        return setPrecision(n * 1.09361e-2);
-		    }
+			public static int m(int n) {
+				return (int) (n * 1e-2);
+			}
+			public static long m(long n) {
+				return (long) (n * 1e-2);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1e-2));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1e-2);
+			}
+			public static int km(int n) {
+				return (int) (n * 1e-5);
+			}
+			public static long km(long n) {
+				return (long) (n * 1e-5);
+			}
+			public static float km(float n) {
+				return (float) (setPrecision(n * 1e-5));
+			}
+			public static double km(double n) {
+				return setPrecision(n * 1e-5);
+			}
+			public static int mi(int n) {
+				return (int) (n * 621371e-6);
+			}
+			public static long mi(long n) {
+				return (long) (n * 621371e-6);
+			}
+			public static float mi(float n) {
+				return (float) (setPrecision(n * 621371e-6));
+			}
+			public static double mi(double n) {
+				return setPrecision(n * 621371e-6);
+			}
+			public static int ft(int n) {
+				return (int) (n * 3.28084e-2);
+			}
+			public static long ft(long n) {
+				return (long) (n * 3.28084e-2);
+			}
+			public static float ft(float n) {
+				return (float) (setPrecision(n * 3.28084e-2));
+			}
+			public static double ft(double n) {
+				return setPrecision(n * 3.28084e-2);
+			}
+			public static int in(int n) {
+				return (int) (n * 3.93701e-1);
+			}
+			public static long in(long n) {
+				return (long) (n * 3.93701e-1);
+			}
+			public static float in(float n) {
+				return (float) (setPrecision(n * 3.93701e-1));
+			}
+			public static double in(double n) {
+				return setPrecision(n * 3.93701e-1);
+			}
+			public static int mm(int n) {
+				return (int) (n * 1e1);
+			}
+			public static long mm(long n) {
+				return (long) (n * 1e1);
+			}
+			public static float mm(float n) {
+				return (float) (setPrecision(n * 1e1));
+			}
+			public static double mm(double n) {
+				return setPrecision(n * 1e1);
+			}
+			public static int yd(int n) {
+				return (int) (n * 1.09361e-2);
+			}
+			public static long yd(long n) {
+				return (long) (n * 1.09361e-2);
+			}
+			public static float yd(float n) {
+				return (float) (setPrecision(n * 1.09361e-2));
+			}
+			public static double yd(double n) {
+				return setPrecision(n * 1.09361e-2);
+			}
 		}
 		public static final class mm {
-		    public static int m(int n) {
-		        return(int) (n * 1e-3);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1e-3);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1e-3));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1e-3);
-		    }
-		    public static int km(int n) {
-		        return(int) (n * 1e-6);
-		    }
-		    public static long km(long n) {
-		        return(long) (n * 1e-6);
-		    }
-		    public static float km(float n) {
-		        return(float) (setPrecision(n * 1e-6));
-		    }
-		    public static double km(double n) {
-		        return setPrecision(n * 1e-6);
-		    }
-		    public static int mi(int n) {
-		        return(int) (n * 6.21371e-7);
-		    }
-		    public static long mi(long n) {
-		        return(long) (n * 6.21371e-7);
-		    }
-		    public static float mi(float n) {
-		        return(float) (setPrecision(n * 6.21371e-7));
-		    }
-		    public static double mi(double n) {
-		        return setPrecision(n * 6.21371e-7);
-		    }
-		    public static int ft(int n) {
-		        return(int) (n * 3.28084e-3);
-		    }
-		    public static long ft(long n) {
-		        return(long) (n * 3.28084e-3);
-		    }
-		    public static float ft(float n) {
-		        return(float) (setPrecision(n * 3.28084e-3));
-		    }
-		    public static double ft(double n) {
-		        return setPrecision(n * 3.28084e-3);
-		    }
-		    public static int in(int n) {
-		        return(int) (n * 3.93701e-2);
-		    }
-		    public static long in(long n) {
-		        return(long) (n * 3.93701e-2);
-		    }
-		    public static float in(float n) {
-		        return(float) (setPrecision(n * 3.93701e-2));
-		    }
-		    public static double in(double n) {
-		        return setPrecision(n * 3.93701e-2);
-		    }
-		    public static int cm(int n) {
-		        return(int) (n * 1e-1);
-		    }
-		    public static long cm(long n) {
-		        return(long) (n * 1e-1);
-		    }
-		    public static float cm(float n) {
-		        return(float) (setPrecision(n * 1e-1));
-		    }
-		    public static double cm(double n) {
-		        return setPrecision(n * 1e-1);
-		    }
-		    public static int yd(int n) {
-		        return(int) (n * 1.09361e-3);
-		    }
-		    public static long yd(long n) {
-		        return(long) (n * 1.09361e-3);
-		    }
-		    public static float yd(float n) {
-		        return(float) (setPrecision(n * 1.09361e-3));
-		    }
-		    public static double yd(double n) {
-		        return setPrecision(n * 1.09361e-3);
-		    }
+			public static int m(int n) {
+				return (int) (n * 1e-3);
+			}
+			public static long m(long n) {
+				return (long) (n * 1e-3);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1e-3));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1e-3);
+			}
+			public static int km(int n) {
+				return (int) (n * 1e-6);
+			}
+			public static long km(long n) {
+				return (long) (n * 1e-6);
+			}
+			public static float km(float n) {
+				return (float) (setPrecision(n * 1e-6));
+			}
+			public static double km(double n) {
+				return setPrecision(n * 1e-6);
+			}
+			public static int mi(int n) {
+				return (int) (n * 6.21371e-7);
+			}
+			public static long mi(long n) {
+				return (long) (n * 6.21371e-7);
+			}
+			public static float mi(float n) {
+				return (float) (setPrecision(n * 6.21371e-7));
+			}
+			public static double mi(double n) {
+				return setPrecision(n * 6.21371e-7);
+			}
+			public static int ft(int n) {
+				return (int) (n * 3.28084e-3);
+			}
+			public static long ft(long n) {
+				return (long) (n * 3.28084e-3);
+			}
+			public static float ft(float n) {
+				return (float) (setPrecision(n * 3.28084e-3));
+			}
+			public static double ft(double n) {
+				return setPrecision(n * 3.28084e-3);
+			}
+			public static int in(int n) {
+				return (int) (n * 3.93701e-2);
+			}
+			public static long in(long n) {
+				return (long) (n * 3.93701e-2);
+			}
+			public static float in(float n) {
+				return (float) (setPrecision(n * 3.93701e-2));
+			}
+			public static double in(double n) {
+				return setPrecision(n * 3.93701e-2);
+			}
+			public static int cm(int n) {
+				return (int) (n * 1e-1);
+			}
+			public static long cm(long n) {
+				return (long) (n * 1e-1);
+			}
+			public static float cm(float n) {
+				return (float) (setPrecision(n * 1e-1));
+			}
+			public static double cm(double n) {
+				return setPrecision(n * 1e-1);
+			}
+			public static int yd(int n) {
+				return (int) (n * 1.09361e-3);
+			}
+			public static long yd(long n) {
+				return (long) (n * 1.09361e-3);
+			}
+			public static float yd(float n) {
+				return (float) (setPrecision(n * 1.09361e-3));
+			}
+			public static double yd(double n) {
+				return setPrecision(n * 1.09361e-3);
+			}
 		}
 		public static final class yd {
-		    public static int m(int n) {
-		        return(int) (n * 9.144e-1);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 9.144e-1);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 9.144e-1));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 9.144e-1);
-		    }
-		    public static int km(int n) {
-		        return(int) (n * 9.144e-4);
-		    }
-		    public static long km(long n) {
-		        return(long) (n * 9.144e-4);
-		    }
-		    public static float km(float n) {
-		        return(float) (setPrecision(n * 9.144e-4));
-		    }
-		    public static double km(double n) {
-		        return setPrecision(n * 9.144e-4);
-		    }
-		    public static int mi(int n) {
-		        return(int) (n * 5.68182e-4);
-		    }
-		    public static long mi(long n) {
-		        return(long) (n * 5.68182e-4);
-		    }
-		    public static float mi(float n) {
-		        return(float) (setPrecision(n * 5.68182e-4));
-		    }
-		    public static double mi(double n) {
-		        return setPrecision(n * 5.68182e-4);
-		    }
-		    public static int ft(int n) {
-		        return(int) (n * 3);
-		    }
-		    public static long ft(long n) {
-		        return(long) (n * 3);
-		    }
-		    public static float ft(float n) {
-		        return(float) (setPrecision(n * 3));
-		    }
-		    public static double ft(double n) {
-		        return setPrecision(n * 3);
-		    }
-		    public static int in(int n) {
-		        return(int) (n * 3.6e1);
-		    }
-		    public static long in(long n) {
-		        return(long) (n * 3.6e1);
-		    }
-		    public static float in(float n) {
-		        return(float) (setPrecision(n * 3.6e1));
-		    }
-		    public static double in(double n) {
-		        return setPrecision(n * 3.6e1);
-		    }
-		    public static int cm(int n) {
-		        return(int) (n * 9.144e+1);
-		    }
-		    public static long cm(long n) {
-		        return(long) (n * 9.144e+1);
-		    }
-		    public static float cm(float n) {
-		        return(float) (setPrecision(n * 9.144e+1));
-		    }
-		    public static double cm(double n) {
-		        return setPrecision(n * 9.144e+1);
-		    }
-		    public static int mm(int n) {
-		        return(int) (n * 9.144e+2);
-		    }
-		    public static long mm(long n) {
-		        return(long) (n * 9.144e+2);
-		    }
-		    public static float mm(float n) {
-		        return(float) (setPrecision(n * 9.144e+2));
-		    }
-		    public static double mm(double n) {
-		        return setPrecision(n * 9.144e+2);
-		    }
+			public static int m(int n) {
+				return (int) (n * 9.144e-1);
+			}
+			public static long m(long n) {
+				return (long) (n * 9.144e-1);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 9.144e-1));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 9.144e-1);
+			}
+			public static int km(int n) {
+				return (int) (n * 9.144e-4);
+			}
+			public static long km(long n) {
+				return (long) (n * 9.144e-4);
+			}
+			public static float km(float n) {
+				return (float) (setPrecision(n * 9.144e-4));
+			}
+			public static double km(double n) {
+				return setPrecision(n * 9.144e-4);
+			}
+			public static int mi(int n) {
+				return (int) (n * 5.68182e-4);
+			}
+			public static long mi(long n) {
+				return (long) (n * 5.68182e-4);
+			}
+			public static float mi(float n) {
+				return (float) (setPrecision(n * 5.68182e-4));
+			}
+			public static double mi(double n) {
+				return setPrecision(n * 5.68182e-4);
+			}
+			public static int ft(int n) {
+				return (int) (n * 3);
+			}
+			public static long ft(long n) {
+				return (long) (n * 3);
+			}
+			public static float ft(float n) {
+				return (float) (setPrecision(n * 3));
+			}
+			public static double ft(double n) {
+				return setPrecision(n * 3);
+			}
+			public static int in(int n) {
+				return (int) (n * 3.6e1);
+			}
+			public static long in(long n) {
+				return (long) (n * 3.6e1);
+			}
+			public static float in(float n) {
+				return (float) (setPrecision(n * 3.6e1));
+			}
+			public static double in(double n) {
+				return setPrecision(n * 3.6e1);
+			}
+			public static int cm(int n) {
+				return (int) (n * 9.144e+1);
+			}
+			public static long cm(long n) {
+				return (long) (n * 9.144e+1);
+			}
+			public static float cm(float n) {
+				return (float) (setPrecision(n * 9.144e+1));
+			}
+			public static double cm(double n) {
+				return setPrecision(n * 9.144e+1);
+			}
+			public static int mm(int n) {
+				return (int) (n * 9.144e+2);
+			}
+			public static long mm(long n) {
+				return (long) (n * 9.144e+2);
+			}
+			public static float mm(float n) {
+				return (float) (setPrecision(n * 9.144e+2));
+			}
+			public static double mm(double n) {
+				return setPrecision(n * 9.144e+2);
+			}
 		}
-		
-		
-		
+
 		public static final class mcg {
-		    public static int mg(int n) {
-		        return(int) (n * 1e-3);
-		    }
-		    public static long mg(long n) {
-		        return(long) (n * 1e-3);
-		    }
-		    public static float mg(float n) {
-		        return(float) (setPrecision(n * 1e-3));
-		    }
-		    public static double mg(double n) {
-		        return setPrecision(n * 1e-3);
-		    }
-		    public static int g(int n) {
-		        return(int) (n * 1e-6);
-		    }
-		    public static long g(long n) {
-		        return(long) (n * 1e-6);
-		    }
-		    public static float g(float n) {
-		        return(float) (setPrecision(n * 1e-6));
-		    }
-		    public static double g(double n) {
-		        return setPrecision(n * 1e-6);
-		    }
-		    public static int kg(int n) {
-		        return(int) (n * 1e-9);
-		    }
-		    public static long kg(long n) {
-		        return(long) (n * 1e-9);
-		    }
-		    public static float kg(float n) {
-		        return(float) (setPrecision(n * 1e-9));
-		    }
-		    public static double kg(double n) {
-		        return setPrecision(n * 1e-9);
-		    }
-		    public static int ton(int n) {
-		        return(int) (n * 1e-12);
-		    }
-		    public static long ton(long n) {
-		        return(long) (n * 1e-12);
-		    }
-		    public static float ton(float n) {
-		        return(float) (setPrecision(n * 1e-12));
-		    }
-		    public static double ton(double n) {
-		        return setPrecision(n * 1e-12);
-		    }
-		    public static int kiloton(int n) {
-		        return(int) (n * 1e-15);
-		    }
-		    public static long kiloton(long n) {
-		        return(long) (n * 1e-15);
-		    }
-		    public static float kiloton(float n) {
-		        return(float) (setPrecision(n * 1e-15));
-		    }
-		    public static double kiloton(double n) {
-		        return setPrecision(n * 1e-15);
-		    }
-		    public static int oz(int n) {
-		        return(int) (n * 3.527e-8);
-		    }
-		    public static long oz(long n) {
-		        return(long) (n * 3.527e-8);
-		    }
-		    public static float oz(float n) {
-		        return(float) (setPrecision(n * 3.527e-8));
-		    }
-		    public static double oz(double n) {
-		        return setPrecision(n * 3.527e-8);
-		    }
-		    public static int p(int n) {
-		        return(int) (n * 2.205e-9);
-		    }
-		    public static long p(long n) {
-		        return(long) (n * 2.205e-9);
-		    }
-		    public static float p(float n) {
-		        return(float) (setPrecision(n * 2.205e-9));
-		    }
-		    public static double p(double n) {
-		        return setPrecision(n * 2.205e-9);
-		    }
+			public static int mg(int n) {
+				return (int) (n * 1e-3);
+			}
+			public static long mg(long n) {
+				return (long) (n * 1e-3);
+			}
+			public static float mg(float n) {
+				return (float) (setPrecision(n * 1e-3));
+			}
+			public static double mg(double n) {
+				return setPrecision(n * 1e-3);
+			}
+			public static int g(int n) {
+				return (int) (n * 1e-6);
+			}
+			public static long g(long n) {
+				return (long) (n * 1e-6);
+			}
+			public static float g(float n) {
+				return (float) (setPrecision(n * 1e-6));
+			}
+			public static double g(double n) {
+				return setPrecision(n * 1e-6);
+			}
+			public static int kg(int n) {
+				return (int) (n * 1e-9);
+			}
+			public static long kg(long n) {
+				return (long) (n * 1e-9);
+			}
+			public static float kg(float n) {
+				return (float) (setPrecision(n * 1e-9));
+			}
+			public static double kg(double n) {
+				return setPrecision(n * 1e-9);
+			}
+			public static int ton(int n) {
+				return (int) (n * 1e-12);
+			}
+			public static long ton(long n) {
+				return (long) (n * 1e-12);
+			}
+			public static float ton(float n) {
+				return (float) (setPrecision(n * 1e-12));
+			}
+			public static double ton(double n) {
+				return setPrecision(n * 1e-12);
+			}
+			public static int kiloton(int n) {
+				return (int) (n * 1e-15);
+			}
+			public static long kiloton(long n) {
+				return (long) (n * 1e-15);
+			}
+			public static float kiloton(float n) {
+				return (float) (setPrecision(n * 1e-15));
+			}
+			public static double kiloton(double n) {
+				return setPrecision(n * 1e-15);
+			}
+			public static int oz(int n) {
+				return (int) (n * 3.527e-8);
+			}
+			public static long oz(long n) {
+				return (long) (n * 3.527e-8);
+			}
+			public static float oz(float n) {
+				return (float) (setPrecision(n * 3.527e-8));
+			}
+			public static double oz(double n) {
+				return setPrecision(n * 3.527e-8);
+			}
+			public static int p(int n) {
+				return (int) (n * 2.205e-9);
+			}
+			public static long p(long n) {
+				return (long) (n * 2.205e-9);
+			}
+			public static float p(float n) {
+				return (float) (setPrecision(n * 2.205e-9));
+			}
+			public static double p(double n) {
+				return setPrecision(n * 2.205e-9);
+			}
 		}
 		public static final class mg {
-		    public static int mcg(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long mcg(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float mcg(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double mcg(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int g(int n) {
-		        return(int) (n * 1e-3);
-		    }
-		    public static long g(long n) {
-		        return(long) (n * 1e-3);
-		    }
-		    public static float g(float n) {
-		        return(float) (setPrecision(n * 1e-3));
-		    }
-		    public static double g(double n) {
-		        return setPrecision(n * 1e-3);
-		    }
-		    public static int kg(int n) {
-		        return(int) (n * 1e-6);
-		    }
-		    public static long kg(long n) {
-		        return(long) (n * 1e-6);
-		    }
-		    public static float kg(float n) {
-		        return(float) (setPrecision(n * 1e-6));
-		    }
-		    public static double kg(double n) {
-		        return setPrecision(n * 1e-6);
-		    }
-		    public static int ton(int n) {
-		        return(int) (n * 1e-9);
-		    }
-		    public static long ton(long n) {
-		        return(long) (n * 1e-9);
-		    }
-		    public static float ton(float n) {
-		        return(float) (setPrecision(n * 1e-9));
-		    }
-		    public static double ton(double n) {
-		        return setPrecision(n * 1e-9);
-		    }
-		    public static int kiloton(int n) {
-		        return(int) (n * 1e-12);
-		    }
-		    public static long kiloton(long n) {
-		        return(long) (n * 1e-12);
-		    }
-		    public static float kiloton(float n) {
-		        return(float) (setPrecision(n * 1e-12));
-		    }
-		    public static double kiloton(double n) {
-		        return setPrecision(n * 1e-12);
-		    }
-		    public static int oz(int n) {
-		        return(int) (n * 3.527e-5);
-		    }
-		    public static long oz(long n) {
-		        return(long) (n * 3.527e-5);
-		    }
-		    public static float oz(float n) {
-		        return(float) (setPrecision(n * 3.527e-5));
-		    }
-		    public static double oz(double n) {
-		        return setPrecision(n * 3.527e-5);
-		    }
-		    public static int p(int n) {
-		        return(int) (n * 2.205e-6);
-		    }
-		    public static long p(long n) {
-		        return(long) (n * 2.205e-6);
-		    }
-		    public static float p(float n) {
-		        return(float) (setPrecision(n * 2.205e-6));
-		    }
-		    public static double p(double n) {
-		        return setPrecision(n * 2.205e-6);
-		    }
+			public static int mcg(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long mcg(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float mcg(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double mcg(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int g(int n) {
+				return (int) (n * 1e-3);
+			}
+			public static long g(long n) {
+				return (long) (n * 1e-3);
+			}
+			public static float g(float n) {
+				return (float) (setPrecision(n * 1e-3));
+			}
+			public static double g(double n) {
+				return setPrecision(n * 1e-3);
+			}
+			public static int kg(int n) {
+				return (int) (n * 1e-6);
+			}
+			public static long kg(long n) {
+				return (long) (n * 1e-6);
+			}
+			public static float kg(float n) {
+				return (float) (setPrecision(n * 1e-6));
+			}
+			public static double kg(double n) {
+				return setPrecision(n * 1e-6);
+			}
+			public static int ton(int n) {
+				return (int) (n * 1e-9);
+			}
+			public static long ton(long n) {
+				return (long) (n * 1e-9);
+			}
+			public static float ton(float n) {
+				return (float) (setPrecision(n * 1e-9));
+			}
+			public static double ton(double n) {
+				return setPrecision(n * 1e-9);
+			}
+			public static int kiloton(int n) {
+				return (int) (n * 1e-12);
+			}
+			public static long kiloton(long n) {
+				return (long) (n * 1e-12);
+			}
+			public static float kiloton(float n) {
+				return (float) (setPrecision(n * 1e-12));
+			}
+			public static double kiloton(double n) {
+				return setPrecision(n * 1e-12);
+			}
+			public static int oz(int n) {
+				return (int) (n * 3.527e-5);
+			}
+			public static long oz(long n) {
+				return (long) (n * 3.527e-5);
+			}
+			public static float oz(float n) {
+				return (float) (setPrecision(n * 3.527e-5));
+			}
+			public static double oz(double n) {
+				return setPrecision(n * 3.527e-5);
+			}
+			public static int p(int n) {
+				return (int) (n * 2.205e-6);
+			}
+			public static long p(long n) {
+				return (long) (n * 2.205e-6);
+			}
+			public static float p(float n) {
+				return (float) (setPrecision(n * 2.205e-6));
+			}
+			public static double p(double n) {
+				return setPrecision(n * 2.205e-6);
+			}
 		}
 		public static final class g {
-		    public static int mcg(int n) {
-		        return(int) (n * 1e6);
-		    }
-		    public static long mcg(long n) {
-		        return(long) (n * 1e6);
-		    }
-		    public static float mcg(float n) {
-		        return(float) (setPrecision(n * 1e6));
-		    }
-		    public static double mcg(double n) {
-		        return setPrecision(n * 1e6);
-		    }
-		    public static int mg(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long mg(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float mg(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double mg(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int kg(int n) {
-		        return(int) (n / 1e3);
-		    }
-		    public static long kg(long n) {
-		        return(long) (n / 1e3);
-		    }
-		    public static float kg(float n) {
-		        return(float) (setPrecision(n / 1e3));
-		    }
-		    public static double kg(double n) {
-		        return setPrecision(n / 1e3);
-		    }
-		    public static int ton(int n) {
-		        return(int) (n / 1e6);
-		    }
-		    public static long ton(long n) {
-		        return(long) (n / 1e6);
-		    }
-		    public static float ton(float n) {
-		        return(float) (setPrecision(n / 1e6));
-		    }
-		    public static double ton(double n) {
-		        return setPrecision(n / 1e6);
-		    }
-		    public static int kiloton(int n) {
-		        return(int) (n / 1e9);
-		    }
-		    public static long kiloton(long n) {
-		        return(long) (n / 1e9);
-		    }
-		    public static float kiloton(float n) {
-		        return(float) (setPrecision(n / 1e9));
-		    }
-		    public static double kiloton(double n) {
-		        return setPrecision(n / 1e9);
-		    }
-		    public static int oz(int n) {
-		        return(int) (n * 3.5e-2);
-		    }
-		    public static long oz(long n) {
-		        return(long) (n * 3.5e-2);
-		    }
-		    public static float oz(float n) {
-		        return(float) (setPrecision(n * 3.5e-2));
-		    }
-		    public static double oz(double n) {
-		        return setPrecision(n * 3.5e-2);
-		    }
-		    public static int p(int n) {
-		        return(int) (n * 2e-3);
-		    }
-		    public static long p(long n) {
-		        return(long) (n * 2e-3);
-		    }
-		    public static float p(float n) {
-		        return(float) (setPrecision(n * 2e-3));
-		    }
-		    public static double p(double n) {
-		        return setPrecision(n * 2e-3);
-		    }
+			public static int mcg(int n) {
+				return (int) (n * 1e6);
+			}
+			public static long mcg(long n) {
+				return (long) (n * 1e6);
+			}
+			public static float mcg(float n) {
+				return (float) (setPrecision(n * 1e6));
+			}
+			public static double mcg(double n) {
+				return setPrecision(n * 1e6);
+			}
+			public static int mg(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long mg(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float mg(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double mg(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int kg(int n) {
+				return (int) (n / 1e3);
+			}
+			public static long kg(long n) {
+				return (long) (n / 1e3);
+			}
+			public static float kg(float n) {
+				return (float) (setPrecision(n / 1e3));
+			}
+			public static double kg(double n) {
+				return setPrecision(n / 1e3);
+			}
+			public static int ton(int n) {
+				return (int) (n / 1e6);
+			}
+			public static long ton(long n) {
+				return (long) (n / 1e6);
+			}
+			public static float ton(float n) {
+				return (float) (setPrecision(n / 1e6));
+			}
+			public static double ton(double n) {
+				return setPrecision(n / 1e6);
+			}
+			public static int kiloton(int n) {
+				return (int) (n / 1e9);
+			}
+			public static long kiloton(long n) {
+				return (long) (n / 1e9);
+			}
+			public static float kiloton(float n) {
+				return (float) (setPrecision(n / 1e9));
+			}
+			public static double kiloton(double n) {
+				return setPrecision(n / 1e9);
+			}
+			public static int oz(int n) {
+				return (int) (n * 3.5e-2);
+			}
+			public static long oz(long n) {
+				return (long) (n * 3.5e-2);
+			}
+			public static float oz(float n) {
+				return (float) (setPrecision(n * 3.5e-2));
+			}
+			public static double oz(double n) {
+				return setPrecision(n * 3.5e-2);
+			}
+			public static int p(int n) {
+				return (int) (n * 2e-3);
+			}
+			public static long p(long n) {
+				return (long) (n * 2e-3);
+			}
+			public static float p(float n) {
+				return (float) (setPrecision(n * 2e-3));
+			}
+			public static double p(double n) {
+				return setPrecision(n * 2e-3);
+			}
 		}
 		public static final class kg {
-		    public static int mcg(int n) {
-		        return(int) (n * 1e9);
-		    }
-		    public static long mcg(long n) {
-		        return(long) (n * 1e9);
-		    }
-		    public static float mcg(float n) {
-		        return(float) (setPrecision(n * 1e9));
-		    }
-		    public static double mcg(double n) {
-		        return setPrecision(n * 1e9);
-		    }
-		    public static int mg(int n) {
-		        return(int) (n * 1e6);
-		    }
-		    public static long mg(long n) {
-		        return(long) (n * 1e6);
-		    }
-		    public static float mg(float n) {
-		        return(float) (setPrecision(n * 1e6));
-		    }
-		    public static double mg(double n) {
-		        return setPrecision(n * 1e6);
-		    }
-		    public static int g(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long g(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float g(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double g(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int ton(int n) {
-		        return(int) (n / 1e3);
-		    }
-		    public static long ton(long n) {
-		        return(long) (n / 1e3);
-		    }
-		    public static float ton(float n) {
-		        return(float) (setPrecision(n / 1e3));
-		    }
-		    public static double ton(double n) {
-		        return setPrecision(n / 1e3);
-		    }
-		    public static int kiloton(int n) {
-		        return(int) (n / 1e6);
-		    }
-		    public static long kiloton(long n) {
-		        return(long) (n / 1e6);
-		    }
-		    public static float kiloton(float n) {
-		        return(float) (setPrecision(n / 1e6));
-		    }
-		    public static double kiloton(double n) {
-		        return setPrecision(n / 1e6);
-		    }
-		    public static int oz(int n) {
-		        return(int) (n * 3.5274e1);
-		    }
-		    public static long oz(long n) {
-		        return(long) (n * 3.5274e1);
-		    }
-		    public static float oz(float n) {
-		        return(float) (setPrecision(n * 3.5274e1));
-		    }
-		    public static double oz(double n) {
-		        return setPrecision(n * 3.5274e1);
-		    }
-		    public static int p(int n) {
-		        return(int) (n * 2.204);
-		    }
-		    public static long p(long n) {
-		        return(long) (n * 2.204);
-		    }
-		    public static float p(float n) {
-		        return(float) (setPrecision(n * 2.204));
-		    }
-		    public static double p(double n) {
-		        return setPrecision(n * 2.204);
-		    }
+			public static int mcg(int n) {
+				return (int) (n * 1e9);
+			}
+			public static long mcg(long n) {
+				return (long) (n * 1e9);
+			}
+			public static float mcg(float n) {
+				return (float) (setPrecision(n * 1e9));
+			}
+			public static double mcg(double n) {
+				return setPrecision(n * 1e9);
+			}
+			public static int mg(int n) {
+				return (int) (n * 1e6);
+			}
+			public static long mg(long n) {
+				return (long) (n * 1e6);
+			}
+			public static float mg(float n) {
+				return (float) (setPrecision(n * 1e6));
+			}
+			public static double mg(double n) {
+				return setPrecision(n * 1e6);
+			}
+			public static int g(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long g(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float g(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double g(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int ton(int n) {
+				return (int) (n / 1e3);
+			}
+			public static long ton(long n) {
+				return (long) (n / 1e3);
+			}
+			public static float ton(float n) {
+				return (float) (setPrecision(n / 1e3));
+			}
+			public static double ton(double n) {
+				return setPrecision(n / 1e3);
+			}
+			public static int kiloton(int n) {
+				return (int) (n / 1e6);
+			}
+			public static long kiloton(long n) {
+				return (long) (n / 1e6);
+			}
+			public static float kiloton(float n) {
+				return (float) (setPrecision(n / 1e6));
+			}
+			public static double kiloton(double n) {
+				return setPrecision(n / 1e6);
+			}
+			public static int oz(int n) {
+				return (int) (n * 3.5274e1);
+			}
+			public static long oz(long n) {
+				return (long) (n * 3.5274e1);
+			}
+			public static float oz(float n) {
+				return (float) (setPrecision(n * 3.5274e1));
+			}
+			public static double oz(double n) {
+				return setPrecision(n * 3.5274e1);
+			}
+			public static int p(int n) {
+				return (int) (n * 2.204);
+			}
+			public static long p(long n) {
+				return (long) (n * 2.204);
+			}
+			public static float p(float n) {
+				return (float) (setPrecision(n * 2.204));
+			}
+			public static double p(double n) {
+				return setPrecision(n * 2.204);
+			}
 		}
 		public static final class ton {
-		    public static int mcg(int n) {
-		        return(int) (n * 1e12);
-		    }
-		    public static long mcg(long n) {
-		        return(long) (n * 1e12);
-		    }
-		    public static float mcg(float n) {
-		        return(float) (setPrecision(n * 1e12));
-		    }
-		    public static double mcg(double n) {
-		        return setPrecision(n * 1e12);
-		    }
-		    public static int mg(int n) {
-		        return(int) (n * 1e9);
-		    }
-		    public static long mg(long n) {
-		        return(long) (n * 1e9);
-		    }
-		    public static float mg(float n) {
-		        return(float) (setPrecision(n * 1e9));
-		    }
-		    public static double mg(double n) {
-		        return setPrecision(n * 1e9);
-		    }
-		    public static int g(int n) {
-		        return(int) (n * 1e6);
-		    }
-		    public static long g(long n) {
-		        return(long) (n * 1e6);
-		    }
-		    public static float g(float n) {
-		        return(float) (setPrecision(n * 1e6));
-		    }
-		    public static double g(double n) {
-		        return setPrecision(n * 1e6);
-		    }
-		    public static int kg(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long kg(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float kg(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double kg(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int kiloton(int n) {
-		        return(int) (n * 1e-3);
-		    }
-		    public static long kiloton(long n) {
-		        return(long) (n * 1e-3);
-		    }
-		    public static float kiloton(float n) {
-		        return(float) (setPrecision(n * 1e-3));
-		    }
-		    public static double kiloton(double n) {
-		        return setPrecision(n * 1e-3);
-		    }
-		    public static int oz(int n) {
-		        return(int) (n * 3.5274e4);
-		    }
-		    public static long oz(long n) {
-		        return(long) (n * 3.5274e4);
-		    }
-		    public static float oz(float n) {
-		        return(float) (setPrecision(n * 3.5274e4));
-		    }
-		    public static double oz(double n) {
-		        return setPrecision(n * 3.5274e4);
-		    }
-		    public static int p(int n) {
-		        return(int) (n * 2.204e3);
-		    }
-		    public static long p(long n) {
-		        return(long) (n * 2.204e3);
-		    }
-		    public static float p(float n) {
-		        return(float) (setPrecision(n * 2.204e3));
-		    }
-		    public static double p(double n) {
-		        return setPrecision(n * 2.204e3);
-		    }
+			public static int mcg(int n) {
+				return (int) (n * 1e12);
+			}
+			public static long mcg(long n) {
+				return (long) (n * 1e12);
+			}
+			public static float mcg(float n) {
+				return (float) (setPrecision(n * 1e12));
+			}
+			public static double mcg(double n) {
+				return setPrecision(n * 1e12);
+			}
+			public static int mg(int n) {
+				return (int) (n * 1e9);
+			}
+			public static long mg(long n) {
+				return (long) (n * 1e9);
+			}
+			public static float mg(float n) {
+				return (float) (setPrecision(n * 1e9));
+			}
+			public static double mg(double n) {
+				return setPrecision(n * 1e9);
+			}
+			public static int g(int n) {
+				return (int) (n * 1e6);
+			}
+			public static long g(long n) {
+				return (long) (n * 1e6);
+			}
+			public static float g(float n) {
+				return (float) (setPrecision(n * 1e6));
+			}
+			public static double g(double n) {
+				return setPrecision(n * 1e6);
+			}
+			public static int kg(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long kg(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float kg(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double kg(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int kiloton(int n) {
+				return (int) (n * 1e-3);
+			}
+			public static long kiloton(long n) {
+				return (long) (n * 1e-3);
+			}
+			public static float kiloton(float n) {
+				return (float) (setPrecision(n * 1e-3));
+			}
+			public static double kiloton(double n) {
+				return setPrecision(n * 1e-3);
+			}
+			public static int oz(int n) {
+				return (int) (n * 3.5274e4);
+			}
+			public static long oz(long n) {
+				return (long) (n * 3.5274e4);
+			}
+			public static float oz(float n) {
+				return (float) (setPrecision(n * 3.5274e4));
+			}
+			public static double oz(double n) {
+				return setPrecision(n * 3.5274e4);
+			}
+			public static int p(int n) {
+				return (int) (n * 2.204e3);
+			}
+			public static long p(long n) {
+				return (long) (n * 2.204e3);
+			}
+			public static float p(float n) {
+				return (float) (setPrecision(n * 2.204e3));
+			}
+			public static double p(double n) {
+				return setPrecision(n * 2.204e3);
+			}
 		}
 		public static final class kiloton {
-		    public static int mcg(int n) {
-		        return(int) (n * 1e15);
-		    }
-		    public static long mcg(long n) {
-		        return(long) (n * 1e15);
-		    }
-		    public static float mcg(float n) {
-		        return(float) (setPrecision(n * 1e15));
-		    }
-		    public static double mcg(double n) {
-		        return setPrecision(n * 1e15);
-		    }
-		    public static int mg(int n) {
-		        return(int) (n * 1e12);
-		    }
-		    public static long mg(long n) {
-		        return(long) (n * 1e12);
-		    }
-		    public static float mg(float n) {
-		        return(float) (setPrecision(n * 1e12));
-		    }
-		    public static double mg(double n) {
-		        return setPrecision(n * 1e12);
-		    }
-		    public static int g(int n) {
-		        return(int) (n * 1e9);
-		    }
-		    public static long g(long n) {
-		        return(long) (n * 1e9);
-		    }
-		    public static float g(float n) {
-		        return(float) (setPrecision(n * 1e9));
-		    }
-		    public static double g(double n) {
-		        return setPrecision(n * 1e9);
-		    }
-		    public static int kg(int n) {
-		        return(int) (n * 1e6);
-		    }
-		    public static long kg(long n) {
-		        return(long) (n * 1e6);
-		    }
-		    public static float kg(float n) {
-		        return(float) (setPrecision(n * 1e6));
-		    }
-		    public static double kg(double n) {
-		        return setPrecision(n * 1e6);
-		    }
-		    public static int ton(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long ton(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float ton(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double ton(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int oz(int n) {
-		        return(int) (n * 3.5274e7);
-		    }
-		    public static long oz(long n) {
-		        return(long) (n * 3.5274e7);
-		    }
-		    public static float oz(float n) {
-		        return(float) (setPrecision(n * 3.5274e7));
-		    }
-		    public static double oz(double n) {
-		        return setPrecision(n * 3.5274e7);
-		    }
-		    public static int p(int n) {
-		        return(int) (n * 2.204e6);
-		    }
-		    public static long p(long n) {
-		        return(long) (n * 2.204e6);
-		    }
-		    public static float p(float n) {
-		        return(float) (setPrecision(n * 2.204e6));
-		    }
-		    public static double p(double n) {
-		        return setPrecision(n * 2.204e6);
-		    }
+			public static int mcg(int n) {
+				return (int) (n * 1e15);
+			}
+			public static long mcg(long n) {
+				return (long) (n * 1e15);
+			}
+			public static float mcg(float n) {
+				return (float) (setPrecision(n * 1e15));
+			}
+			public static double mcg(double n) {
+				return setPrecision(n * 1e15);
+			}
+			public static int mg(int n) {
+				return (int) (n * 1e12);
+			}
+			public static long mg(long n) {
+				return (long) (n * 1e12);
+			}
+			public static float mg(float n) {
+				return (float) (setPrecision(n * 1e12));
+			}
+			public static double mg(double n) {
+				return setPrecision(n * 1e12);
+			}
+			public static int g(int n) {
+				return (int) (n * 1e9);
+			}
+			public static long g(long n) {
+				return (long) (n * 1e9);
+			}
+			public static float g(float n) {
+				return (float) (setPrecision(n * 1e9));
+			}
+			public static double g(double n) {
+				return setPrecision(n * 1e9);
+			}
+			public static int kg(int n) {
+				return (int) (n * 1e6);
+			}
+			public static long kg(long n) {
+				return (long) (n * 1e6);
+			}
+			public static float kg(float n) {
+				return (float) (setPrecision(n * 1e6));
+			}
+			public static double kg(double n) {
+				return setPrecision(n * 1e6);
+			}
+			public static int ton(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long ton(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float ton(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double ton(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int oz(int n) {
+				return (int) (n * 3.5274e7);
+			}
+			public static long oz(long n) {
+				return (long) (n * 3.5274e7);
+			}
+			public static float oz(float n) {
+				return (float) (setPrecision(n * 3.5274e7));
+			}
+			public static double oz(double n) {
+				return setPrecision(n * 3.5274e7);
+			}
+			public static int p(int n) {
+				return (int) (n * 2.204e6);
+			}
+			public static long p(long n) {
+				return (long) (n * 2.204e6);
+			}
+			public static float p(float n) {
+				return (float) (setPrecision(n * 2.204e6));
+			}
+			public static double p(double n) {
+				return setPrecision(n * 2.204e6);
+			}
 		}
 		public static final class oz {
-		    public static int mcg(int n) {
-		        return(int) (n * 2.835e7);
-		    }
-		    public static long mcg(long n) {
-		        return(long) (n * 2.835e7);
-		    }
-		    public static float mcg(float n) {
-		        return(float) (setPrecision(n * 2.835e7));
-		    }
-		    public static double mcg(double n) {
-		        return setPrecision(n * 2.835e7);
-		    }
-		    public static int mg(int n) {
-		        return(int) (n * 2.835e4);
-		    }
-		    public static long mg(long n) {
-		        return(long) (n * 2.835e4);
-		    }
-		    public static float mg(float n) {
-		        return(float) (setPrecision(n * 2.835e4));
-		    }
-		    public static double mg(double n) {
-		        return setPrecision(n * 2.835e4);
-		    }
-		    public static int g(int n) {
-		        return(int) (n * 2.835e1);
-		    }
-		    public static long g(long n) {
-		        return(long) (n * 2.835e1);
-		    }
-		    public static float g(float n) {
-		        return(float) (setPrecision(n * 2.835e1));
-		    }
-		    public static double g(double n) {
-		        return setPrecision(n * 2.835e1);
-		    }
-		    public static int kg(int n) {
-		        return(int) (n * 2.8e-2);
-		    }
-		    public static long kg(long n) {
-		        return(long) (n * 2.8e-2);
-		    }
-		    public static float kg(float n) {
-		        return(float) (setPrecision(n * 2.8e-2));
-		    }
-		    public static double kg(double n) {
-		        return setPrecision(n * 2.8e-2);
-		    }
-		    public static int ton(int n) {
-		        return(int) (n * 2.8e-5);
-		    }
-		    public static long ton(long n) {
-		        return(long) (n * 2.8e-5);
-		    }
-		    public static float ton(float n) {
-		        return(float) (setPrecision(n * 2.8e-5));
-		    }
-		    public static double ton(double n) {
-		        return setPrecision(n * 2.8e-5);
-		    }
-		    public static int kiloton(int n) {
-		        return(int) (n * 2.8e-8);
-		    }
-		    public static long kiloton(long n) {
-		        return(long) (n * 2.8e-8);
-		    }
-		    public static float kiloton(float n) {
-		        return(float) (setPrecision(n * 2.8e-8));
-		    }
-		    public static double kiloton(double n) {
-		        return setPrecision(n * 2.8e-8);
-		    }
-		    public static int p(int n) {
-		        return(int) (n * 6.3e-2);
-		    }
-		    public static long p(long n) {
-		        return(long) (n * 6.3e-2);
-		    }
-		    public static float p(float n) {
-		        return(float) (setPrecision(n * 6.3e-2));
-		    }
-		    public static double p(double n) {
-		        return setPrecision(n * 6.3e-2);
-		    }
+			public static int mcg(int n) {
+				return (int) (n * 2.835e7);
+			}
+			public static long mcg(long n) {
+				return (long) (n * 2.835e7);
+			}
+			public static float mcg(float n) {
+				return (float) (setPrecision(n * 2.835e7));
+			}
+			public static double mcg(double n) {
+				return setPrecision(n * 2.835e7);
+			}
+			public static int mg(int n) {
+				return (int) (n * 2.835e4);
+			}
+			public static long mg(long n) {
+				return (long) (n * 2.835e4);
+			}
+			public static float mg(float n) {
+				return (float) (setPrecision(n * 2.835e4));
+			}
+			public static double mg(double n) {
+				return setPrecision(n * 2.835e4);
+			}
+			public static int g(int n) {
+				return (int) (n * 2.835e1);
+			}
+			public static long g(long n) {
+				return (long) (n * 2.835e1);
+			}
+			public static float g(float n) {
+				return (float) (setPrecision(n * 2.835e1));
+			}
+			public static double g(double n) {
+				return setPrecision(n * 2.835e1);
+			}
+			public static int kg(int n) {
+				return (int) (n * 2.8e-2);
+			}
+			public static long kg(long n) {
+				return (long) (n * 2.8e-2);
+			}
+			public static float kg(float n) {
+				return (float) (setPrecision(n * 2.8e-2));
+			}
+			public static double kg(double n) {
+				return setPrecision(n * 2.8e-2);
+			}
+			public static int ton(int n) {
+				return (int) (n * 2.8e-5);
+			}
+			public static long ton(long n) {
+				return (long) (n * 2.8e-5);
+			}
+			public static float ton(float n) {
+				return (float) (setPrecision(n * 2.8e-5));
+			}
+			public static double ton(double n) {
+				return setPrecision(n * 2.8e-5);
+			}
+			public static int kiloton(int n) {
+				return (int) (n * 2.8e-8);
+			}
+			public static long kiloton(long n) {
+				return (long) (n * 2.8e-8);
+			}
+			public static float kiloton(float n) {
+				return (float) (setPrecision(n * 2.8e-8));
+			}
+			public static double kiloton(double n) {
+				return setPrecision(n * 2.8e-8);
+			}
+			public static int p(int n) {
+				return (int) (n * 6.3e-2);
+			}
+			public static long p(long n) {
+				return (long) (n * 6.3e-2);
+			}
+			public static float p(float n) {
+				return (float) (setPrecision(n * 6.3e-2));
+			}
+			public static double p(double n) {
+				return setPrecision(n * 6.3e-2);
+			}
 		}
 		public static final class p {
-		    public static int mcg(int n) {
-		        return(int) (n * 4.536e8);
-		    }
-		    public static long mcg(long n) {
-		        return(long) (n * 4.536e8);
-		    }
-		    public static float mcg(float n) {
-		        return(float) (setPrecision(n * 4.536e8));
-		    }
-		    public static double mcg(double n) {
-		        return setPrecision(n * 4.536e8);
-		    }
-		    public static int mg(int n) {
-		        return(int) (n * 4.536e5);
-		    }
-		    public static long mg(long n) {
-		        return(long) (n * 4.536e5);
-		    }
-		    public static float mg(float n) {
-		        return(float) (setPrecision(n * 4.536e5));
-		    }
-		    public static double mg(double n) {
-		        return setPrecision(n * 4.536e5);
-		    }
-		    public static int g(int n) {
-		        return(int) (n * 4.536e2);
-		    }
-		    public static long g(long n) {
-		        return(long) (n * 4.536e2);
-		    }
-		    public static float g(float n) {
-		        return(float) (setPrecision(n * 4.536e2));
-		    }
-		    public static double g(double n) {
-		        return setPrecision(n * 4.536e2);
-		    }
-		    public static int kg(int n) {
-		        return(int) (n * 4.53e-1);
-		    }
-		    public static long kg(long n) {
-		        return(long) (n * 4.53e-1);
-		    }
-		    public static float kg(float n) {
-		        return(float) (setPrecision(n * 4.53e-1));
-		    }
-		    public static double kg(double n) {
-		        return setPrecision(n * 4.53e-1);
-		    }
-		    public static int ton(int n) {
-		        return(int) (n * 4.53e-4);
-		    }
-		    public static long ton(long n) {
-		        return(long) (n * 4.53e-4);
-		    }
-		    public static float ton(float n) {
-		        return(float) (setPrecision(n * 4.53e-4));
-		    }
-		    public static double ton(double n) {
-		        return setPrecision(n * 4.53e-4);
-		    }
-		    public static int kiloton(int n) {
-		        return(int) (n * 4.53e-7);
-		    }
-		    public static long kiloton(long n) {
-		        return(long) (n * 4.53e-7);
-		    }
-		    public static float kiloton(float n) {
-		        return(float) (setPrecision(n * 4.53e-7));
-		    }
-		    public static double kiloton(double n) {
-		        return setPrecision(n * 4.53e-7);
-		    }
-		    public static int oz(int n) {
-		        return(int) (n * 1.6e1);
-		    }
-		    public static long oz(long n) {
-		        return(long) (n * 1.6e1);
-		    }
-		    public static float oz(float n) {
-		        return(float) (setPrecision(n * 1.6e1));
-		    }
-		    public static double oz(double n) {
-		        return setPrecision(n * 1.6e1);
-		    }
+			public static int mcg(int n) {
+				return (int) (n * 4.536e8);
+			}
+			public static long mcg(long n) {
+				return (long) (n * 4.536e8);
+			}
+			public static float mcg(float n) {
+				return (float) (setPrecision(n * 4.536e8));
+			}
+			public static double mcg(double n) {
+				return setPrecision(n * 4.536e8);
+			}
+			public static int mg(int n) {
+				return (int) (n * 4.536e5);
+			}
+			public static long mg(long n) {
+				return (long) (n * 4.536e5);
+			}
+			public static float mg(float n) {
+				return (float) (setPrecision(n * 4.536e5));
+			}
+			public static double mg(double n) {
+				return setPrecision(n * 4.536e5);
+			}
+			public static int g(int n) {
+				return (int) (n * 4.536e2);
+			}
+			public static long g(long n) {
+				return (long) (n * 4.536e2);
+			}
+			public static float g(float n) {
+				return (float) (setPrecision(n * 4.536e2));
+			}
+			public static double g(double n) {
+				return setPrecision(n * 4.536e2);
+			}
+			public static int kg(int n) {
+				return (int) (n * 4.53e-1);
+			}
+			public static long kg(long n) {
+				return (long) (n * 4.53e-1);
+			}
+			public static float kg(float n) {
+				return (float) (setPrecision(n * 4.53e-1));
+			}
+			public static double kg(double n) {
+				return setPrecision(n * 4.53e-1);
+			}
+			public static int ton(int n) {
+				return (int) (n * 4.53e-4);
+			}
+			public static long ton(long n) {
+				return (long) (n * 4.53e-4);
+			}
+			public static float ton(float n) {
+				return (float) (setPrecision(n * 4.53e-4));
+			}
+			public static double ton(double n) {
+				return setPrecision(n * 4.53e-4);
+			}
+			public static int kiloton(int n) {
+				return (int) (n * 4.53e-7);
+			}
+			public static long kiloton(long n) {
+				return (long) (n * 4.53e-7);
+			}
+			public static float kiloton(float n) {
+				return (float) (setPrecision(n * 4.53e-7));
+			}
+			public static double kiloton(double n) {
+				return setPrecision(n * 4.53e-7);
+			}
+			public static int oz(int n) {
+				return (int) (n * 1.6e1);
+			}
+			public static long oz(long n) {
+				return (long) (n * 1.6e1);
+			}
+			public static float oz(float n) {
+				return (float) (setPrecision(n * 1.6e1));
+			}
+			public static double oz(double n) {
+				return setPrecision(n * 1.6e1);
+			}
 		}
-		
-		
-		
-		
+
 		public static final class ns {
-		    public static int mcs(int n) {
-		        return(int) (n * 1e-3);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 1e-3);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 1e-3));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 1e-3);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 1e-6);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 1e-6);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 1e-6));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 1e-6);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 1e-9);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 1e-9);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 1e-9));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 1e-9);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 1.6665e-11);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1.6665e-11);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1.6665e-11));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1.6665e-11);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 2.7775e-13);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 2.7775e-13);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 2.7775e-13));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 2.7775e-13);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 1.157e-14);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 1.157e-14);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 1.157e-14));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 1.157e-14);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 1.653e-15);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 1.653e-15);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 1.653e-15));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 1.653e-15);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 3.805e-16);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 3.805e-16);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 3.805e-16));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 3.805e-16);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 3.17e-17);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 3.17e-17);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 3.17e-17));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 3.17e-17);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 3.17e-18);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 3.17e-18);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 3.17e-18));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 3.17e-18);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 3.17e-19);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 3.17e-19);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 3.17e-19));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 3.17e-19);
-		    }
+			public static int mcs(int n) {
+				return (int) (n * 1e-3);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 1e-3);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 1e-3));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 1e-3);
+			}
+			public static int ms(int n) {
+				return (int) (n * 1e-6);
+			}
+			public static long ms(long n) {
+				return (long) (n * 1e-6);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 1e-6));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 1e-6);
+			}
+			public static int s(int n) {
+				return (int) (n * 1e-9);
+			}
+			public static long s(long n) {
+				return (long) (n * 1e-9);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 1e-9));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 1e-9);
+			}
+			public static int m(int n) {
+				return (int) (n * 1.6665e-11);
+			}
+			public static long m(long n) {
+				return (long) (n * 1.6665e-11);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1.6665e-11));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1.6665e-11);
+			}
+			public static int h(int n) {
+				return (int) (n * 2.7775e-13);
+			}
+			public static long h(long n) {
+				return (long) (n * 2.7775e-13);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 2.7775e-13));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 2.7775e-13);
+			}
+			public static int d(int n) {
+				return (int) (n * 1.157e-14);
+			}
+			public static long d(long n) {
+				return (long) (n * 1.157e-14);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 1.157e-14));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 1.157e-14);
+			}
+			public static int wk(int n) {
+				return (int) (n * 1.653e-15);
+			}
+			public static long wk(long n) {
+				return (long) (n * 1.653e-15);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 1.653e-15));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 1.653e-15);
+			}
+			public static int mn(int n) {
+				return (int) (n * 3.805e-16);
+			}
+			public static long mn(long n) {
+				return (long) (n * 3.805e-16);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 3.805e-16));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 3.805e-16);
+			}
+			public static int yr(int n) {
+				return (int) (n * 3.17e-17);
+			}
+			public static long yr(long n) {
+				return (long) (n * 3.17e-17);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 3.17e-17));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 3.17e-17);
+			}
+			public static int dc(int n) {
+				return (int) (n * 3.17e-18);
+			}
+			public static long dc(long n) {
+				return (long) (n * 3.17e-18);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 3.17e-18));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 3.17e-18);
+			}
+			public static int c(int n) {
+				return (int) (n * 3.17e-19);
+			}
+			public static long c(long n) {
+				return (long) (n * 3.17e-19);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 3.17e-19));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 3.17e-19);
+			}
 		}
 		public static final class mcs {
-		    public static int ns(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 1e-3);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 1e-3);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 1e-3));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 1e-3);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 1e-6);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 1e-6);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 1e-6));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 1e-6);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 1.6665e-8);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1.6665e-8);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1.6665e-8));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1.6665e-8);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 2.7775e-10);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 2.7775e-10);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 2.7775e-10));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 2.7775e-10);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 1.157e-11);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 1.157e-11);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 1.157e-11));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 1.157e-11);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 1.653e-12);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 1.653e-12);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 1.653e-12));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 1.653e-12);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 3.805e-13);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 3.805e-13);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 3.805e-13));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 3.805e-13);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 3.17e-14);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 3.17e-14);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 3.17e-14));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 3.17e-14);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 3.17e-15);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 3.17e-15);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 3.17e-15));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 3.17e-15);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 3.17e-16);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 3.17e-16);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 3.17e-16));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 3.17e-16);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long ns(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int ms(int n) {
+				return (int) (n * 1e-3);
+			}
+			public static long ms(long n) {
+				return (long) (n * 1e-3);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 1e-3));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 1e-3);
+			}
+			public static int s(int n) {
+				return (int) (n * 1e-6);
+			}
+			public static long s(long n) {
+				return (long) (n * 1e-6);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 1e-6));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 1e-6);
+			}
+			public static int m(int n) {
+				return (int) (n * 1.6665e-8);
+			}
+			public static long m(long n) {
+				return (long) (n * 1.6665e-8);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1.6665e-8));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1.6665e-8);
+			}
+			public static int h(int n) {
+				return (int) (n * 2.7775e-10);
+			}
+			public static long h(long n) {
+				return (long) (n * 2.7775e-10);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 2.7775e-10));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 2.7775e-10);
+			}
+			public static int d(int n) {
+				return (int) (n * 1.157e-11);
+			}
+			public static long d(long n) {
+				return (long) (n * 1.157e-11);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 1.157e-11));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 1.157e-11);
+			}
+			public static int wk(int n) {
+				return (int) (n * 1.653e-12);
+			}
+			public static long wk(long n) {
+				return (long) (n * 1.653e-12);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 1.653e-12));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 1.653e-12);
+			}
+			public static int mn(int n) {
+				return (int) (n * 3.805e-13);
+			}
+			public static long mn(long n) {
+				return (long) (n * 3.805e-13);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 3.805e-13));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 3.805e-13);
+			}
+			public static int yr(int n) {
+				return (int) (n * 3.17e-14);
+			}
+			public static long yr(long n) {
+				return (long) (n * 3.17e-14);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 3.17e-14));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 3.17e-14);
+			}
+			public static int dc(int n) {
+				return (int) (n * 3.17e-15);
+			}
+			public static long dc(long n) {
+				return (long) (n * 3.17e-15);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 3.17e-15));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 3.17e-15);
+			}
+			public static int c(int n) {
+				return (int) (n * 3.17e-16);
+			}
+			public static long c(long n) {
+				return (long) (n * 3.17e-16);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 3.17e-16));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 3.17e-16);
+			}
 		}
 		public static final class ms {
-		    public static int ns(int n) {
-		        return(int) (n * 1e6);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 1e6);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 1e6));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 1e6);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 1e-3);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 1e-3);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 1e-3));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 1e-3);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 1.6665e-5);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1.6665e-5);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1.6665e-5));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1.6665e-5);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 2.7775e-7);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 2.7775e-7);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 2.7775e-7));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 2.7775e-7);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 1.157e-8);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 1.157e-8);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 1.157e-8));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 1.157e-8);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 1.653e-9);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 1.653e-9);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 1.653e-9));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 1.653e-9);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 3.805e-10);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 3.805e-10);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 3.805e-10));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 3.805e-10);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 3.17e-11);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 3.17e-11);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 3.17e-11));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 3.17e-11);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 3.17e-12);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 3.17e-12);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 3.17e-12));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 3.17e-12);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 3.17e-13);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 3.17e-13);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 3.17e-13));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 3.17e-13);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 1e6);
+			}
+			public static long ns(long n) {
+				return (long) (n * 1e6);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 1e6));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 1e6);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int s(int n) {
+				return (int) (n * 1e-3);
+			}
+			public static long s(long n) {
+				return (long) (n * 1e-3);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 1e-3));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 1e-3);
+			}
+			public static int m(int n) {
+				return (int) (n * 1.6665e-5);
+			}
+			public static long m(long n) {
+				return (long) (n * 1.6665e-5);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1.6665e-5));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1.6665e-5);
+			}
+			public static int h(int n) {
+				return (int) (n * 2.7775e-7);
+			}
+			public static long h(long n) {
+				return (long) (n * 2.7775e-7);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 2.7775e-7));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 2.7775e-7);
+			}
+			public static int d(int n) {
+				return (int) (n * 1.157e-8);
+			}
+			public static long d(long n) {
+				return (long) (n * 1.157e-8);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 1.157e-8));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 1.157e-8);
+			}
+			public static int wk(int n) {
+				return (int) (n * 1.653e-9);
+			}
+			public static long wk(long n) {
+				return (long) (n * 1.653e-9);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 1.653e-9));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 1.653e-9);
+			}
+			public static int mn(int n) {
+				return (int) (n * 3.805e-10);
+			}
+			public static long mn(long n) {
+				return (long) (n * 3.805e-10);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 3.805e-10));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 3.805e-10);
+			}
+			public static int yr(int n) {
+				return (int) (n * 3.17e-11);
+			}
+			public static long yr(long n) {
+				return (long) (n * 3.17e-11);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 3.17e-11));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 3.17e-11);
+			}
+			public static int dc(int n) {
+				return (int) (n * 3.17e-12);
+			}
+			public static long dc(long n) {
+				return (long) (n * 3.17e-12);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 3.17e-12));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 3.17e-12);
+			}
+			public static int c(int n) {
+				return (int) (n * 3.17e-13);
+			}
+			public static long c(long n) {
+				return (long) (n * 3.17e-13);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 3.17e-13));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 3.17e-13);
+			}
 		}
 		public static final class s {
-		    public static int ns(int n) {
-		        return(int) (n * 1e9);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 1e9);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 1e9));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 1e9);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 1e6);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 1e6);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 1e6));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 1e6);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 1e3);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 1e3);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 1e3));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 1e3);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 1.66665e-2);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1.66665e-2);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1.66665e-2));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1.66665e-2);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 2.7775e-4);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 2.7775e-4);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 2.7775e-4));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 2.7775e-4);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 1.157e-5);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 1.157e-5);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 1.157e-5));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 1.157e-5);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 1.653e-6);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 1.653e-6);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 1.653e-6));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 1.653e-6);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 3.805e-7);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 3.805e-7);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 3.805e-7));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 3.805e-7);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 3.17e-8);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 3.17e-8);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 3.17e-8));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 3.17e-8);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 3.17e-9);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 3.17e-9);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 3.17e-9));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 3.17e-9);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 3.17e-10);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 3.17e-10);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 3.17e-10));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 3.17e-10);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 1e9);
+			}
+			public static long ns(long n) {
+				return (long) (n * 1e9);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 1e9));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 1e9);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 1e6);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 1e6);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 1e6));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 1e6);
+			}
+			public static int ms(int n) {
+				return (int) (n * 1e3);
+			}
+			public static long ms(long n) {
+				return (long) (n * 1e3);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 1e3));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 1e3);
+			}
+			public static int m(int n) {
+				return (int) (n * 1.66665e-2);
+			}
+			public static long m(long n) {
+				return (long) (n * 1.66665e-2);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1.66665e-2));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1.66665e-2);
+			}
+			public static int h(int n) {
+				return (int) (n * 2.7775e-4);
+			}
+			public static long h(long n) {
+				return (long) (n * 2.7775e-4);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 2.7775e-4));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 2.7775e-4);
+			}
+			public static int d(int n) {
+				return (int) (n * 1.157e-5);
+			}
+			public static long d(long n) {
+				return (long) (n * 1.157e-5);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 1.157e-5));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 1.157e-5);
+			}
+			public static int wk(int n) {
+				return (int) (n * 1.653e-6);
+			}
+			public static long wk(long n) {
+				return (long) (n * 1.653e-6);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 1.653e-6));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 1.653e-6);
+			}
+			public static int mn(int n) {
+				return (int) (n * 3.805e-7);
+			}
+			public static long mn(long n) {
+				return (long) (n * 3.805e-7);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 3.805e-7));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 3.805e-7);
+			}
+			public static int yr(int n) {
+				return (int) (n * 3.17e-8);
+			}
+			public static long yr(long n) {
+				return (long) (n * 3.17e-8);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 3.17e-8));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 3.17e-8);
+			}
+			public static int dc(int n) {
+				return (int) (n * 3.17e-9);
+			}
+			public static long dc(long n) {
+				return (long) (n * 3.17e-9);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 3.17e-9));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 3.17e-9);
+			}
+			public static int c(int n) {
+				return (int) (n * 3.17e-10);
+			}
+			public static long c(long n) {
+				return (long) (n * 3.17e-10);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 3.17e-10));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 3.17e-10);
+			}
 		}
 		public static final class h {
-		    public static int ns(int n) {
-		        return(int) (n * 3.6e12);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 3.6e12);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 3.6e12));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 3.6e12);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 3.6e9);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 3.6e9);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 3.6e9));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 3.6e9);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 3.6e6);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 3.6e6);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 3.6e6));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 3.6e6);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 3.6e3);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 3.6e3);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 3.6e3));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 3.6e3);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 60);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 60);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 60));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 60);
-		    }
-		    public static int d(int n) {
-		        return(int) (n / 24);
-		    }
-		    public static long d(long n) {
-		        return(long) (n / 24);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n / 24));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n / 24);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n / 168);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n / 168);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n / 168));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n / 168);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n / 730);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n / 730);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n / 730));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n / 730);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n / 876e1);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n / 876e1);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n / 876e1));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n / 876e1);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n / 876e2);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n / 876e2);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n / 876e2));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n / 876e2);
-		    }
-		    public static int c(int n) {
-		        return(int) (n / 876e3);
-		    }
-		    public static long c(long n) {
-		        return(long) (n / 876e3);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n / 876e3));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n / 876e3);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 3.6e12);
+			}
+			public static long ns(long n) {
+				return (long) (n * 3.6e12);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 3.6e12));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 3.6e12);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 3.6e9);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 3.6e9);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 3.6e9));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 3.6e9);
+			}
+			public static int ms(int n) {
+				return (int) (n * 3.6e6);
+			}
+			public static long ms(long n) {
+				return (long) (n * 3.6e6);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 3.6e6));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 3.6e6);
+			}
+			public static int s(int n) {
+				return (int) (n * 3.6e3);
+			}
+			public static long s(long n) {
+				return (long) (n * 3.6e3);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 3.6e3));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 3.6e3);
+			}
+			public static int m(int n) {
+				return (int) (n * 60);
+			}
+			public static long m(long n) {
+				return (long) (n * 60);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 60));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 60);
+			}
+			public static int d(int n) {
+				return (int) (n / 24);
+			}
+			public static long d(long n) {
+				return (long) (n / 24);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n / 24));
+			}
+			public static double d(double n) {
+				return setPrecision(n / 24);
+			}
+			public static int wk(int n) {
+				return (int) (n / 168);
+			}
+			public static long wk(long n) {
+				return (long) (n / 168);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n / 168));
+			}
+			public static double wk(double n) {
+				return setPrecision(n / 168);
+			}
+			public static int mn(int n) {
+				return (int) (n / 730);
+			}
+			public static long mn(long n) {
+				return (long) (n / 730);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n / 730));
+			}
+			public static double mn(double n) {
+				return setPrecision(n / 730);
+			}
+			public static int yr(int n) {
+				return (int) (n / 876e1);
+			}
+			public static long yr(long n) {
+				return (long) (n / 876e1);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n / 876e1));
+			}
+			public static double yr(double n) {
+				return setPrecision(n / 876e1);
+			}
+			public static int dc(int n) {
+				return (int) (n / 876e2);
+			}
+			public static long dc(long n) {
+				return (long) (n / 876e2);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n / 876e2));
+			}
+			public static double dc(double n) {
+				return setPrecision(n / 876e2);
+			}
+			public static int c(int n) {
+				return (int) (n / 876e3);
+			}
+			public static long c(long n) {
+				return (long) (n / 876e3);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n / 876e3));
+			}
+			public static double c(double n) {
+				return setPrecision(n / 876e3);
+			}
 		}
 		public static final class d {
-		    public static int ns(int n) {
-		        return(int) (n * 8.64e13);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 8.64e13);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 8.64e13));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 8.64e13);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 8.64e10);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 8.64e10);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 8.64e10));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 8.64e10);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 8.64e7);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 8.64e7);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 8.64e7));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 8.64e7);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 8.64e4);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 8.64e4);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 8.64e4));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 8.64e4);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 1.44e3);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1.44e3);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1.44e3));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1.44e3);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 24);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 24);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 24));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 24);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n / 7);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n / 7);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n / 7));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n / 7);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n / 3.417e1);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n / 3.417e1);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n / 3.417e1));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n / 3.417e1);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 365);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 365);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 365));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 365);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 365e1);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 365e1);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 365e1));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 365e1);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 365e2);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 365e2);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 365e2));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 365e2);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 8.64e13);
+			}
+			public static long ns(long n) {
+				return (long) (n * 8.64e13);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 8.64e13));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 8.64e13);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 8.64e10);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 8.64e10);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 8.64e10));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 8.64e10);
+			}
+			public static int ms(int n) {
+				return (int) (n * 8.64e7);
+			}
+			public static long ms(long n) {
+				return (long) (n * 8.64e7);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 8.64e7));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 8.64e7);
+			}
+			public static int s(int n) {
+				return (int) (n * 8.64e4);
+			}
+			public static long s(long n) {
+				return (long) (n * 8.64e4);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 8.64e4));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 8.64e4);
+			}
+			public static int m(int n) {
+				return (int) (n * 1.44e3);
+			}
+			public static long m(long n) {
+				return (long) (n * 1.44e3);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1.44e3));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1.44e3);
+			}
+			public static int h(int n) {
+				return (int) (n * 24);
+			}
+			public static long h(long n) {
+				return (long) (n * 24);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 24));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 24);
+			}
+			public static int wk(int n) {
+				return (int) (n / 7);
+			}
+			public static long wk(long n) {
+				return (long) (n / 7);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n / 7));
+			}
+			public static double wk(double n) {
+				return setPrecision(n / 7);
+			}
+			public static int mn(int n) {
+				return (int) (n / 3.417e1);
+			}
+			public static long mn(long n) {
+				return (long) (n / 3.417e1);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n / 3.417e1));
+			}
+			public static double mn(double n) {
+				return setPrecision(n / 3.417e1);
+			}
+			public static int yr(int n) {
+				return (int) (n * 365);
+			}
+			public static long yr(long n) {
+				return (long) (n * 365);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 365));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 365);
+			}
+			public static int dc(int n) {
+				return (int) (n * 365e1);
+			}
+			public static long dc(long n) {
+				return (long) (n * 365e1);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 365e1));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 365e1);
+			}
+			public static int c(int n) {
+				return (int) (n * 365e2);
+			}
+			public static long c(long n) {
+				return (long) (n * 365e2);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 365e2));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 365e2);
+			}
 		}
 		public static final class wk {
-		    public static int ns(int n) {
-		        return(int) (n * 6.048e14);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 6.048e14);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 6.048e14));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 6.048e14);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 6.048e11);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 6.048e11);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 6.048e11));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 6.048e11);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 6.048e8);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 6.048e8);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 6.048e8));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 6.048e8);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 6.048e5);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 6.048e5);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 6.048e5));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 6.048e5);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 1.008e4);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 1.008e4);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 1.008e4));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 1.008e4);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 1.68e2);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 1.68e2);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 1.68e2));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 1.68e2);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 7);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 7);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 7));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 7);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 2.3e-1);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 2.3e-1);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 2.3e-1));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 2.3e-1);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 1.917e-2);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 1.917e-2);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 1.917e-2));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 1.917e-2);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 1.917e-3);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 1.917e-3);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 1.917e-3));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 1.917e-3);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 1.917e-4);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 1.917e-4);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 1.917e-4));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 1.917e-4);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 6.048e14);
+			}
+			public static long ns(long n) {
+				return (long) (n * 6.048e14);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 6.048e14));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 6.048e14);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 6.048e11);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 6.048e11);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 6.048e11));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 6.048e11);
+			}
+			public static int ms(int n) {
+				return (int) (n * 6.048e8);
+			}
+			public static long ms(long n) {
+				return (long) (n * 6.048e8);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 6.048e8));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 6.048e8);
+			}
+			public static int s(int n) {
+				return (int) (n * 6.048e5);
+			}
+			public static long s(long n) {
+				return (long) (n * 6.048e5);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 6.048e5));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 6.048e5);
+			}
+			public static int m(int n) {
+				return (int) (n * 1.008e4);
+			}
+			public static long m(long n) {
+				return (long) (n * 1.008e4);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 1.008e4));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 1.008e4);
+			}
+			public static int h(int n) {
+				return (int) (n * 1.68e2);
+			}
+			public static long h(long n) {
+				return (long) (n * 1.68e2);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 1.68e2));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 1.68e2);
+			}
+			public static int d(int n) {
+				return (int) (n * 7);
+			}
+			public static long d(long n) {
+				return (long) (n * 7);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 7));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 7);
+			}
+			public static int mn(int n) {
+				return (int) (n * 2.3e-1);
+			}
+			public static long mn(long n) {
+				return (long) (n * 2.3e-1);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 2.3e-1));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 2.3e-1);
+			}
+			public static int yr(int n) {
+				return (int) (n * 1.917e-2);
+			}
+			public static long yr(long n) {
+				return (long) (n * 1.917e-2);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 1.917e-2));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 1.917e-2);
+			}
+			public static int dc(int n) {
+				return (int) (n * 1.917e-3);
+			}
+			public static long dc(long n) {
+				return (long) (n * 1.917e-3);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 1.917e-3));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 1.917e-3);
+			}
+			public static int c(int n) {
+				return (int) (n * 1.917e-4);
+			}
+			public static long c(long n) {
+				return (long) (n * 1.917e-4);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 1.917e-4));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 1.917e-4);
+			}
 		}
 		public static final class mn {
-		    public static int ns(int n) {
-		        return(int) (n * 2.628e15);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 2.628e15);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 2.628e15));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 2.628e15);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 2.628e12);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 2.628e12);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 2.628e12));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 2.628e12);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 2.628e9);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 2.628e9);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 2.628e9));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 2.628e9);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 2.628e6);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 2.628e6);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 2.628e6));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 2.628e6);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 4.38e4);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 4.38e4);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 4.38e4));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 4.38e4);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 730);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 730);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 730));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 730);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 3.044e1);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 3.044e1);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 3.044e1));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 3.044e1);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 4.348);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 4.348);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 4.348));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 4.348);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n / 12);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n / 12);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n / 12));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n / 12);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n / 12e1);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n / 12e1);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n / 12e1));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n / 12e1);
-		    }
-		    public static int c(int n) {
-		        return(int) (n / 12e2);
-		    }
-		    public static long c(long n) {
-		        return(long) (n / 12e2);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n / 12e2));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n / 12e2);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 2.628e15);
+			}
+			public static long ns(long n) {
+				return (long) (n * 2.628e15);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 2.628e15));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 2.628e15);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 2.628e12);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 2.628e12);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 2.628e12));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 2.628e12);
+			}
+			public static int ms(int n) {
+				return (int) (n * 2.628e9);
+			}
+			public static long ms(long n) {
+				return (long) (n * 2.628e9);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 2.628e9));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 2.628e9);
+			}
+			public static int s(int n) {
+				return (int) (n * 2.628e6);
+			}
+			public static long s(long n) {
+				return (long) (n * 2.628e6);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 2.628e6));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 2.628e6);
+			}
+			public static int m(int n) {
+				return (int) (n * 4.38e4);
+			}
+			public static long m(long n) {
+				return (long) (n * 4.38e4);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 4.38e4));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 4.38e4);
+			}
+			public static int h(int n) {
+				return (int) (n * 730);
+			}
+			public static long h(long n) {
+				return (long) (n * 730);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 730));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 730);
+			}
+			public static int d(int n) {
+				return (int) (n * 3.044e1);
+			}
+			public static long d(long n) {
+				return (long) (n * 3.044e1);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 3.044e1));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 3.044e1);
+			}
+			public static int wk(int n) {
+				return (int) (n * 4.348);
+			}
+			public static long wk(long n) {
+				return (long) (n * 4.348);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 4.348));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 4.348);
+			}
+			public static int yr(int n) {
+				return (int) (n / 12);
+			}
+			public static long yr(long n) {
+				return (long) (n / 12);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n / 12));
+			}
+			public static double yr(double n) {
+				return setPrecision(n / 12);
+			}
+			public static int dc(int n) {
+				return (int) (n / 12e1);
+			}
+			public static long dc(long n) {
+				return (long) (n / 12e1);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n / 12e1));
+			}
+			public static double dc(double n) {
+				return setPrecision(n / 12e1);
+			}
+			public static int c(int n) {
+				return (int) (n / 12e2);
+			}
+			public static long c(long n) {
+				return (long) (n / 12e2);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n / 12e2));
+			}
+			public static double c(double n) {
+				return setPrecision(n / 12e2);
+			}
 		}
 		public static final class yr {
-		    public static int ns(int n) {
-		        return(int) (n * 3.154e16);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 3.154e16);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 3.154e16));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 3.154e16);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 3.154e13);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 3.154e13);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 3.154e13));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 3.154e13);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 3.154e10);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 3.154e10);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 3.154e10));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 3.154e10);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 3.154e7);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 3.154e7);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 3.154e7));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 3.154e7);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 5.256e5);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 5.256e5);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 5.256e5));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 5.256e5);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 8.76e3);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 8.76e3);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 8.76e3));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 8.76e3);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 365);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 365);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 365));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 365);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 5.214e1);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 5.214e1);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 5.214e1));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 5.214e1);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 12);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 12);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 12));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 12);
-		    }
-		    public static int dc(int n) {
-		        return(int) (n * 1e-1);
-		    }
-		    public static long dc(long n) {
-		        return(long) (n * 1e-1);
-		    }
-		    public static float dc(float n) {
-		        return(float) (setPrecision(n * 1e-1));
-		    }
-		    public static double dc(double n) {
-		        return setPrecision(n * 1e-1);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 1e-2);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 1e-2);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 1e-2));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 1e-2);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 3.154e16);
+			}
+			public static long ns(long n) {
+				return (long) (n * 3.154e16);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 3.154e16));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 3.154e16);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 3.154e13);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 3.154e13);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 3.154e13));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 3.154e13);
+			}
+			public static int ms(int n) {
+				return (int) (n * 3.154e10);
+			}
+			public static long ms(long n) {
+				return (long) (n * 3.154e10);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 3.154e10));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 3.154e10);
+			}
+			public static int s(int n) {
+				return (int) (n * 3.154e7);
+			}
+			public static long s(long n) {
+				return (long) (n * 3.154e7);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 3.154e7));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 3.154e7);
+			}
+			public static int m(int n) {
+				return (int) (n * 5.256e5);
+			}
+			public static long m(long n) {
+				return (long) (n * 5.256e5);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 5.256e5));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 5.256e5);
+			}
+			public static int h(int n) {
+				return (int) (n * 8.76e3);
+			}
+			public static long h(long n) {
+				return (long) (n * 8.76e3);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 8.76e3));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 8.76e3);
+			}
+			public static int d(int n) {
+				return (int) (n * 365);
+			}
+			public static long d(long n) {
+				return (long) (n * 365);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 365));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 365);
+			}
+			public static int wk(int n) {
+				return (int) (n * 5.214e1);
+			}
+			public static long wk(long n) {
+				return (long) (n * 5.214e1);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 5.214e1));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 5.214e1);
+			}
+			public static int mn(int n) {
+				return (int) (n * 12);
+			}
+			public static long mn(long n) {
+				return (long) (n * 12);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 12));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 12);
+			}
+			public static int dc(int n) {
+				return (int) (n * 1e-1);
+			}
+			public static long dc(long n) {
+				return (long) (n * 1e-1);
+			}
+			public static float dc(float n) {
+				return (float) (setPrecision(n * 1e-1));
+			}
+			public static double dc(double n) {
+				return setPrecision(n * 1e-1);
+			}
+			public static int c(int n) {
+				return (int) (n * 1e-2);
+			}
+			public static long c(long n) {
+				return (long) (n * 1e-2);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 1e-2));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 1e-2);
+			}
 		}
 		public static final class dc {
-		    public static int ns(int n) {
-		        return(int) (n * 3.154e17);
-		    }
-		    public static long ns(long n) {
-		        return(long) (n * 3.154e17);
-		    }
-		    public static float ns(float n) {
-		        return(float) (setPrecision(n * 3.154e17));
-		    }
-		    public static double ns(double n) {
-		        return setPrecision(n * 3.154e17);
-		    }
-		    public static int mcs(int n) {
-		        return(int) (n * 3.154e14);
-		    }
-		    public static long mcs(long n) {
-		        return(long) (n * 3.154e14);
-		    }
-		    public static float mcs(float n) {
-		        return(float) (setPrecision(n * 3.154e14));
-		    }
-		    public static double mcs(double n) {
-		        return setPrecision(n * 3.154e14);
-		    }
-		    public static int ms(int n) {
-		        return(int) (n * 3.154e11);
-		    }
-		    public static long ms(long n) {
-		        return(long) (n * 3.154e11);
-		    }
-		    public static float ms(float n) {
-		        return(float) (setPrecision(n * 3.154e11));
-		    }
-		    public static double ms(double n) {
-		        return setPrecision(n * 3.154e11);
-		    }
-		    public static int s(int n) {
-		        return(int) (n * 3.154e8);
-		    }
-		    public static long s(long n) {
-		        return(long) (n * 3.154e8);
-		    }
-		    public static float s(float n) {
-		        return(float) (setPrecision(n * 3.154e8));
-		    }
-		    public static double s(double n) {
-		        return setPrecision(n * 3.154e8);
-		    }
-		    public static int m(int n) {
-		        return(int) (n * 5.256e6);
-		    }
-		    public static long m(long n) {
-		        return(long) (n * 5.256e6);
-		    }
-		    public static float m(float n) {
-		        return(float) (setPrecision(n * 5.256e6));
-		    }
-		    public static double m(double n) {
-		        return setPrecision(n * 5.256e6);
-		    }
-		    public static int h(int n) {
-		        return(int) (n * 8.76e4);
-		    }
-		    public static long h(long n) {
-		        return(long) (n * 8.76e4);
-		    }
-		    public static float h(float n) {
-		        return(float) (setPrecision(n * 8.76e4));
-		    }
-		    public static double h(double n) {
-		        return setPrecision(n * 8.76e4);
-		    }
-		    public static int d(int n) {
-		        return(int) (n * 3.65e3);
-		    }
-		    public static long d(long n) {
-		        return(long) (n * 3.65e3);
-		    }
-		    public static float d(float n) {
-		        return(float) (setPrecision(n * 3.65e3));
-		    }
-		    public static double d(double n) {
-		        return setPrecision(n * 3.65e3);
-		    }
-		    public static int wk(int n) {
-		        return(int) (n * 5.214e2);
-		    }
-		    public static long wk(long n) {
-		        return(long) (n * 5.214e2);
-		    }
-		    public static float wk(float n) {
-		        return(float) (setPrecision(n * 5.214e2));
-		    }
-		    public static double wk(double n) {
-		        return setPrecision(n * 5.214e2);
-		    }
-		    public static int mn(int n) {
-		        return(int) (n * 1.2e2);
-		    }
-		    public static long mn(long n) {
-		        return(long) (n * 1.2e2);
-		    }
-		    public static float mn(float n) {
-		        return(float) (setPrecision(n * 1.2e2));
-		    }
-		    public static double mn(double n) {
-		        return setPrecision(n * 1.2e2);
-		    }
-		    public static int yr(int n) {
-		        return(int) (n * 1e1);
-		    }
-		    public static long yr(long n) {
-		        return(long) (n * 1e1);
-		    }
-		    public static float yr(float n) {
-		        return(float) (setPrecision(n * 1e1));
-		    }
-		    public static double yr(double n) {
-		        return setPrecision(n * 1e1);
-		    }
-		    public static int c(int n) {
-		        return(int) (n * 1e-1);
-		    }
-		    public static long c(long n) {
-		        return(long) (n * 1e-1);
-		    }
-		    public static float c(float n) {
-		        return(float) (setPrecision(n * 1e-1));
-		    }
-		    public static double c(double n) {
-		        return setPrecision(n * 1e-1);
-		    }
+			public static int ns(int n) {
+				return (int) (n * 3.154e17);
+			}
+			public static long ns(long n) {
+				return (long) (n * 3.154e17);
+			}
+			public static float ns(float n) {
+				return (float) (setPrecision(n * 3.154e17));
+			}
+			public static double ns(double n) {
+				return setPrecision(n * 3.154e17);
+			}
+			public static int mcs(int n) {
+				return (int) (n * 3.154e14);
+			}
+			public static long mcs(long n) {
+				return (long) (n * 3.154e14);
+			}
+			public static float mcs(float n) {
+				return (float) (setPrecision(n * 3.154e14));
+			}
+			public static double mcs(double n) {
+				return setPrecision(n * 3.154e14);
+			}
+			public static int ms(int n) {
+				return (int) (n * 3.154e11);
+			}
+			public static long ms(long n) {
+				return (long) (n * 3.154e11);
+			}
+			public static float ms(float n) {
+				return (float) (setPrecision(n * 3.154e11));
+			}
+			public static double ms(double n) {
+				return setPrecision(n * 3.154e11);
+			}
+			public static int s(int n) {
+				return (int) (n * 3.154e8);
+			}
+			public static long s(long n) {
+				return (long) (n * 3.154e8);
+			}
+			public static float s(float n) {
+				return (float) (setPrecision(n * 3.154e8));
+			}
+			public static double s(double n) {
+				return setPrecision(n * 3.154e8);
+			}
+			public static int m(int n) {
+				return (int) (n * 5.256e6);
+			}
+			public static long m(long n) {
+				return (long) (n * 5.256e6);
+			}
+			public static float m(float n) {
+				return (float) (setPrecision(n * 5.256e6));
+			}
+			public static double m(double n) {
+				return setPrecision(n * 5.256e6);
+			}
+			public static int h(int n) {
+				return (int) (n * 8.76e4);
+			}
+			public static long h(long n) {
+				return (long) (n * 8.76e4);
+			}
+			public static float h(float n) {
+				return (float) (setPrecision(n * 8.76e4));
+			}
+			public static double h(double n) {
+				return setPrecision(n * 8.76e4);
+			}
+			public static int d(int n) {
+				return (int) (n * 3.65e3);
+			}
+			public static long d(long n) {
+				return (long) (n * 3.65e3);
+			}
+			public static float d(float n) {
+				return (float) (setPrecision(n * 3.65e3));
+			}
+			public static double d(double n) {
+				return setPrecision(n * 3.65e3);
+			}
+			public static int wk(int n) {
+				return (int) (n * 5.214e2);
+			}
+			public static long wk(long n) {
+				return (long) (n * 5.214e2);
+			}
+			public static float wk(float n) {
+				return (float) (setPrecision(n * 5.214e2));
+			}
+			public static double wk(double n) {
+				return setPrecision(n * 5.214e2);
+			}
+			public static int mn(int n) {
+				return (int) (n * 1.2e2);
+			}
+			public static long mn(long n) {
+				return (long) (n * 1.2e2);
+			}
+			public static float mn(float n) {
+				return (float) (setPrecision(n * 1.2e2));
+			}
+			public static double mn(double n) {
+				return setPrecision(n * 1.2e2);
+			}
+			public static int yr(int n) {
+				return (int) (n * 1e1);
+			}
+			public static long yr(long n) {
+				return (long) (n * 1e1);
+			}
+			public static float yr(float n) {
+				return (float) (setPrecision(n * 1e1));
+			}
+			public static double yr(double n) {
+				return setPrecision(n * 1e1);
+			}
+			public static int c(int n) {
+				return (int) (n * 1e-1);
+			}
+			public static long c(long n) {
+				return (long) (n * 1e-1);
+			}
+			public static float c(float n) {
+				return (float) (setPrecision(n * 1e-1));
+			}
+			public static double c(double n) {
+				return setPrecision(n * 1e-1);
+			}
 		}
 	}
 	public static String encode(String s) {
-		return Base64.getEncoder().encodeToString(s.getBytes());
+		try {
+			return Base64.getEncoder().encodeToString(s.getBytes());
+		} catch (Exception e) {
+			return "";
+		}
+	}
+	public static String cypher(String s) {
+		return encode(s);
+	}
+	public static String lock(String s) {
+		return encode(s);
+	}
+	public static String encode(String s, Object salt) {
+		return encrypt(s, salt);
+	}
+	public static String cypher(String s, Object salt) {
+		return encrypt(s, salt);
+	}
+	public static String lock(String s, Object salt) {
+		return encrypt(s, salt);
 	}
 	public static String decode(String s) {
-		return new String(Base64.getDecoder().decode(s));
+		try {
+			return new String(Base64.getDecoder().decode(s));
+		} catch (Exception e) {
+			return "";
+		}
+	}
+	public static String decypher(String s) {
+		return decode(s);
+	}
+	public static String unlock(String s) {
+		return decode(s);
+	}
+	public static String decode(String s, Object salt) {
+		return decrypt(s, salt);
+	}
+	public static String decypher(String s, Object salt) {
+		return decrypt(s, salt);
+	}
+	public static String unlock(String s, Object salt) {
+		return decrypt(s, salt);
 	}
 	public static String encodeUrl(String s) {
+		if (not(s))
+			return "";
 		String encoded = s.replace("%", "%25").replace(" ", "%20")
 				.replace("!", "%21").replace("#", "%23").replace("$", "%24")
 				.replace("&", "%26").replace("'", "%27").replace("(", "%28")
@@ -3226,6 +3261,8 @@ public class KL {
 		return encoded;
 	}
 	public static String decodeUrl(String s) {
+		if (not(s))
+			return "";
 		String decoded = s.replace("%21", "!").replace("%20", " ")
 				.replace("%23", "#").replace("%24", "$").replace("%26", "&")
 				.replace("%27", "'").replace("%28", "(").replace("%29", ")")
@@ -3235,7 +3272,10 @@ public class KL {
 				.replace("%5B", "[").replace("%5D", "]").replace("%25", "%");
 		return decoded;
 	}
-	public static String encrypt(String data, String key) {
+	public static String encrypt(String data, Object salt) {
+		if (not(data) || isNull(salt))
+			return "";
+		String key = Str(salt);
 		final String ofXAlgo = "AES";
 		try {
 			SecretKeySpec secretKey = new SecretKeySpec(
@@ -3249,7 +3289,10 @@ public class KL {
 			return data;
 		}
 	}
-	public static String decrypt(String encryptedData, String key) {
+	public static String decrypt(String encryptedData, Object salt) {
+		if (not(encryptedData) || isNull(salt))
+			return "";
+		String key = Str(salt);
 		final String ofXAlgo = "AES";
 		try {
 			SecretKeySpec secretKey = new SecretKeySpec(
@@ -33787,22 +33830,22 @@ public class KL {
 			// post processing...
 			// FOR FIELDS
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?(?!\\(\\w*\\)))")) {
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
-								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)|(?<=[\\w])\\.[\\w]+",
+								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)|(?<=[\\w])\\.[\\w]+",
 								"");
 						field = cls.getDeclaredField(toGet).get(this);
 						String label = "";
 						int decimalPlaces = 2;
 						if (in(m, "[:=]")) {
 							if (in(m,
-									"[:=]{1,2}(?=\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)")
+									"[:=]{1,2}(?=\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)")
 									&& (field instanceof String
 											|| field instanceof Integer
 											|| field instanceof Long
@@ -33816,7 +33859,7 @@ public class KL {
 													findMatch(m,
 															"(?<=\\\\)[:=]"))
 											.replaceAll(
-													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|_|\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)",
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)",
 													"");
 									// keep one [:=] in this case, but remove
 									// the other, to make up for the label from
@@ -34118,8 +34161,8 @@ public class KL {
 								|| field instanceof objD
 								|| field instanceof objB
 								|| field instanceof HashMap
-                                || field instanceof tree
-                                || field instanceof TreeMap) {
+								|| field instanceof tree
+								|| field instanceof TreeMap) {
 							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+") && in(
 									Str(field),
 									m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
@@ -34130,8 +34173,11 @@ public class KL {
 							} else {
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
-												"(?<=\\=)([A-Za-z\\s]+)",
-												"\"$1\"").replaceAll("\"(true|false)\"", "$1").replaceAll("=", ": ");
+												"(?<=\\=)([A-Za-z]+\\s*)",
+												"\"$1\"")
+												.replaceAll("\"(true|false)\"",
+														"$1")
+												.replaceAll("=", ": ");
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
@@ -34333,7 +34379,7 @@ public class KL {
 					}
 				}
 			}
-			s = s.replaceAll("[&\\{](?=\\-?\\d*\\.?\\d+)\\}?", "");
+			s = s.replaceAll("[&\\{](?=\\-?\\d*\\.?\\d+(?![:=]))\\}?", "");
 			// cleaning up to make up for the numeric results, removing the &
 			// operator
 			s = sentCase(s);
@@ -34343,19 +34389,24 @@ public class KL {
 		return s;
 	}
 	public static String with(String nameOfObj, String format) {
-		if (not(nameOfObj) || not(format) || !in(format, "(?<=[\\{\\$])\\w+")) return "";
+		if (not(nameOfObj) || not(format) || !in(format, "(?<=[\\{\\$])\\w+"))
+			return "";
 		String labelSeparator = "";
 		boolean labeling = false;
 		nameOfObj = nameOfObj.trim();
 		if (in(nameOfObj, "(?<=\\w)[:=]")) {
 			labeling = true;
 			labelSeparator = findMatch(nameOfObj, "(?<=\\w)([:=])");
-			labelSeparator = eq(labelSeparator, "=") ? " " + labelSeparator + " " : labelSeparator + " ";
-		    nameOfObj = nameOfObj.replaceAll("[:=]", "");
-	    }
-	    format = format.replaceAll("[\\{\\$](\\w+)\\}?", (labeling ? "$1" + labelSeparator : "") + "\\$"+nameOfObj+"\\.$1");
-	    String newFormat = KL().f(format);
-	    return newFormat;
+			labelSeparator = eq(labelSeparator, "=")
+					? " " + labelSeparator + " "
+					: labelSeparator + " ";
+			nameOfObj = nameOfObj.replaceAll("[:=]", "");
+		}
+		format = format.replaceAll("[\\{\\$](\\w+)\\}?",
+				(labeling ? "$1" + labelSeparator : "") + "\\$" + nameOfObj
+						+ "\\.$1");
+		String newFormat = kl().f(format);
+		return newFormat;
 	}
 	public static void printw(String nameOfObj, String format) {
 		print(with(nameOfObj, format));
@@ -36142,6 +36193,134 @@ public class KL {
 		Matcher matcher = p.matcher(s);
 		return matcher.replaceAll(m -> fn.apply(m.group()));
 	}
+	public static String replace(String str, obj object) {
+		if (not(str)) {
+			return "";
+		}
+		if (not(object)) {
+			return str;
+		}
+		String output = str;
+		// for now
+		for (String key : object.keys()) {
+			if (!in(str, key))
+				continue;
+			output = output.replaceAll(key, Str(object.val(key)));
+		}
+		return output;
+	}
+	public static String replace(String str, objS object) {
+		if (not(str)) {
+			return "";
+		}
+		if (not(object)) {
+			return str;
+		}
+		String output = str;
+		// for now
+		for (String key : object.keys()) {
+			if (!in(str, key))
+				continue;
+			output = output.replaceAll(key, Str(object.val(key)));
+		}
+		return output;
+	}
+	public static String replace(String str, objI object) {
+		if (not(str)) {
+			return "";
+		}
+		if (not(object)) {
+			return str;
+		}
+		String output = str;
+		// for now
+		for (String key : object.keys()) {
+			if (!in(str, key))
+				continue;
+			output = output.replaceAll(key, Str(object.val(key)));
+		}
+		return output;
+	}
+	public static String replace(String str, objL object) {
+		if (not(str)) {
+			return "";
+		}
+		if (not(object)) {
+			return str;
+		}
+		String output = str;
+		// for now
+		for (String key : object.keys()) {
+			if (!in(str, key))
+				continue;
+			output = output.replaceAll(key, Str(object.val(key)));
+		}
+		return output;
+	}
+	public static String replace(String str, objF object) {
+		if (not(str)) {
+			return "";
+		}
+		if (not(object)) {
+			return str;
+		}
+		String output = str;
+		// for now
+		for (String key : object.keys()) {
+			if (!in(str, key))
+				continue;
+			output = output.replaceAll(key, Str(object.val(key)));
+		}
+		return output;
+	}
+	public static String replace(String str, objD object) {
+		if (not(str)) {
+			return "";
+		}
+		if (not(object)) {
+			return str;
+		}
+		String output = str;
+		// for now
+		for (String key : object.keys()) {
+			if (!in(str, key))
+				continue;
+			output = output.replaceAll(key, Str(object.val(key)));
+		}
+		return output;
+	}
+	public static String replace(String str, objB object) {
+		if (not(str)) {
+			return "";
+		}
+		if (not(object)) {
+			return str;
+		}
+		String output = str;
+		// for now
+		for (String key : object.keys()) {
+			if (!in(str, key))
+				continue;
+			output = output.replaceAll(key, Str(object.val(key)));
+		}
+		return output;
+	}
+	public static String replace(String str, tree object) {
+		if (not(str)) {
+			return "";
+		}
+		if (not(object)) {
+			return str;
+		}
+		String output = str;
+		// for now
+		for (Object key : object.keys()) {
+			if (!in(str, Str(key)))
+				continue;
+			output = output.replaceAll(Str(key), Str(object.val(key)));
+		}
+		return output;
+	}
 	public static String replaceFirst(String str, String to_replace,
 			String regex_to_replace_with) {
 		if (not(str) || not(to_replace)) {
@@ -37186,7 +37365,8 @@ public class KL {
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
-				re = "\\" + re; //escape special characters IF they're the only content
+				re = "\\" + re; // escape special characters IF they're the only
+								// content
 			}
 			Pattern pattern = Pattern.compile("^(" + re + ")",
 					Pattern.CASE_INSENSITIVE);
@@ -37207,7 +37387,8 @@ public class KL {
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
-				re = "\\" + re; //escape special characters IF they're the only content
+				re = "\\" + re; // escape special characters IF they're the only
+								// content
 			}
 			Pattern pattern = Pattern.compile("(" + re + ")$",
 					Pattern.CASE_INSENSITIVE);
@@ -37666,7 +37847,7 @@ public class KL {
 			return -1;
 		}
 	}
-	public static int indexOf(String str, int ch, int start) {
+	public static int indexOf(String str, char ch, int start) {
 		if (str == null || str.isEmpty() || ch == '\0' || start < 0
 				|| start >= str.length())
 			return -1;
@@ -37682,7 +37863,8 @@ public class KL {
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
-				re = "\\" + re; //escape special characters IF they're the only content
+				re = "\\" + re; // escape special characters IF they're the only
+								// content
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -37700,7 +37882,8 @@ public class KL {
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
-				re = "\\" + re; //escape special characters IF they're the only content
+				re = "\\" + re; // escape special characters IF they're the only
+								// content
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -37738,7 +37921,8 @@ public class KL {
 		try {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
-				re = "\\" + re; //escape special characters IF they're the only content
+				re = "\\" + re; // escape special characters IF they're the only
+								// content
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -38062,9 +38246,10 @@ public class KL {
 		// as not(re) would trim whitespace " ", which we sometimes DO need to
 		// look up in a string to see if the string is more than one word, down
 		// to ""
-		if (re.equals(".") || re.equals("*") || re.equals("+")
-				|| re.equals("?") || re.equals("^") || re.equals("$")) {
-			re = "\\" + re; //escape special characters IF they're the only content
+		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
+				|| re.equals("^") || re.equals("$")) {
+			re = "\\" + re; // escape special characters IF they're the only
+							// content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -38104,9 +38289,10 @@ public class KL {
 		if (not(str) || not(re)) {
 			return "";
 		}
-		if (re.equals(".") || re.equals("*") || re.equals("+")
-				|| re.equals("?") || re.equals("^") || re.equals("$")) {
-			re = "\\" + re; //escape special characters IF they're the only content
+		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
+				|| re.equals("^") || re.equals("$")) {
+			re = "\\" + re; // escape special characters IF they're the only
+							// content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -38153,9 +38339,10 @@ public class KL {
 		// been blank.strArr, but that would have been too long, and would be
 		// almost the same as typing new String[]{}. Sometimes, we're just
 		// looking for conciseness.
-		if (re.equals(".") || re.equals("*") || re.equals("+")
-				|| re.equals("?") || re.equals("^") || re.equals("$")) {
-			re = "\\" + re; //escape special characters IF they're the only content
+		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
+				|| re.equals("^") || re.equals("$")) {
+			re = "\\" + re; // escape special characters IF they're the only
+							// content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -41707,10 +41894,13 @@ public class KL {
 	public static String name = "Ayesha";
 	public static int age = 23;
 	public static double score = 300500.856D;
-	obj user = obj("name", "Mike", "age", 22, "state", "Illinois", "country",
-			"United States", "height", 5.1, "veteran", Yes);
+	public static obj user = obj("name", "Mike", "age", 22, "state", "Illinois",
+			"country", "United States", "height", 5.1, "veteran", Yes);
 	String[] arr = {"hi", "hey"};
 	intArr arr2 = intArr(range(1, 5));
+	public static treeI myTree = treeI(1, "uno", 2, "dos", 3, "tres", 4,
+			"cuatro", 5, "cinco", 6, "seis", 7, "siete", 8, "ocho", 9, "nueve",
+			10, "diez");
 
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
@@ -41741,7 +41931,7 @@ public class KL {
 		print("{name:1,}");
 		print("{name:,2}");
 		print("{name:1,3}");
-		
+
 		int n = 10;
 		String result = when(n, "0..6x",
 				"between but exclusive of 0, and 6: so basically, around 1 through 5",
@@ -41754,8 +41944,12 @@ public class KL {
 		print("$user");
 		print("$user.name $user.age $user.country $user.height");
 		print(with("user", "Name: $name\nAge: $age"));
-	    print(with("user:", "$name\n$age"));
-		print("$arr $arr2");
+		print(with("user:", "$name\n$age"));
+		print(with("myTree", "1: $1\n2: $2\n3: $3"));
+		print(replace("1.. 2.. 3.. 4.. 5.. 6.. 7.. 8.. 9. ", myTree));
+		print(replace(
+				"Name: name\nAge: age\nState: state\nCountry: country\nVeteran: veteran",
+				user));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);

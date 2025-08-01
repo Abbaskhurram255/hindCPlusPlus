@@ -383,91 +383,28 @@ class lafz {
 		}
 	}
 	int indexOf(char ch) {
-		if (str == null || str.isEmpty() || ch == '\0')
-			return -1;
-		try {
-			return str.indexOf(ch);
-		} catch (Exception e) {
-			return -1;
-		}
+		return KL.indexOf(str, ch);
 	}
-	int indexOf(int ch, int start) {
-		if (str == null || str.isEmpty() || ch == '\0' || start < 0
-				|| start >= str.length())
-			return -1;
-		try {
-			return str.indexOf(ch, start);
-		} catch (Exception e) {
-			return -1;
-		}
+	int indexOf(char ch, int start) {
+		return KL.indexOf(str, ch, start);
 	}
 	int indexOf(String re) {
-		if (str == null || str.isEmpty())
-			return -1;
-		try {
-			Pattern p = Pattern.compile(re);
-			Matcher m = p.matcher(str);
-			if (!m.find())
-				return -1;
-			return m.start();
-		} catch (PatternSyntaxException | StackOverflowError e) {
-			return -1;
-		}
+		return KL.indexOf(str, re);
 	}
 	int indexOf(String re, int start) {
-		if (re == null || str.isEmpty() || re.isEmpty() || start < 0
-				|| start >= str.length())
-			return -1;
-		try {
-			Pattern p = Pattern.compile(re);
-			Matcher m = p.matcher(this.str);
-			m.region(start, this.length());
-			if (!m.find())
-				return -1;
-			return m.start();
-		} catch (PatternSyntaxException | StackOverflowError
-				| IndexOutOfBoundsException e) {
-			return -1;
-		}
+		return KL.indexOf(str, re, start);
 	}
 	int lastIndexOf(char ch) {
-		try {
-			return str.lastIndexOf(ch);
-		} catch (Exception e) {
-			return -1;
-		}
+		return KL.lastIndexOf(str, ch);
 	}
 	int lastIndexOf(int ch, int start) {
-		if (ch == '\0' || start < 0 || start >= length())
-			return -1;
-		try {
-			return str.lastIndexOf(ch, start);
-		} catch (Exception e) {
-			return -1;
-		}
+		return KL.lastIndexOf(str, ch, start);
 	}
 	int lastIndexOf(String re) {
-		if (str == null || str.isEmpty() || re == null || re.isEmpty())
-			return -1;
-		try {
-			Pattern p = Pattern.compile(re);
-			Matcher m = p.matcher(str);
-			int lastIndex = -1;
-			while (m.find())
-				lastIndex = m.start();
-			return lastIndex;
-		} catch (PatternSyntaxException | StackOverflowError e) {
-			return -1;
-		}
+		return KL.lastIndexOf(str, re);
 	}
 	int lastIndexOf(String re, int start) {
-		if (str == null || str.isEmpty() || start < 0 || start >= str.length())
-			return -1;
-		try {
-			return str.lastIndexOf(re, start);
-		} catch (Exception e) {
-			return -1;
-		}
+		return KL.lastIndexOf(str, re, start);
 	}
 	CharSequence subSequence(int start, int end) {
 		if (start < 0 || end > length() || start >= length() || start >= end)
@@ -605,6 +542,50 @@ class lafz {
 			return str;
 		return replace(nthWord(n), _with);
 	}
+
+	String encode() {
+		return KL.encode(str);
+	}
+	String cypher() {
+		return KL.cypher(str);
+	}
+	String lock() {
+		return KL.lock(str);
+	}
+	String encode(Object salt) {
+		return KL.encode(str, salt);
+	}
+	String cypher(Object salt) {
+		return KL.cypher(str, salt);
+	}
+	String lock(Object salt) {
+		return KL.lock(str, salt);
+	}
+	String decode() {
+		return KL.decode(str);
+	}
+	String decypher() {
+		return KL.decypher(str);
+	}
+	String unlock() {
+		return KL.unlock(str);
+	}
+	String decode(Object salt) {
+		return KL.decode(str, salt);
+	}
+	String decypher(Object salt) {
+		return KL.decypher(str, salt);
+	}
+	String unlock(Object salt) {
+		return KL.unlock(str, salt);
+	}
+	String encodeUrl(String s) {
+		return KL.encodeUrl(s);
+	}
+	String decodeUrl(String s) {
+		return KL.decodeUrl(s);
+	}
+
 	int length() {
 		if (str == null)
 			str = "";
