@@ -3317,8 +3317,8 @@ public class KL {
 			return false;
 		}
 	}
-	public static objS parseJson(String jsonString) {
-		objS map = new objS();
+	public static oS parseJson(String jsonString) {
+		oS map = new oS();
 		if (not(jsonString)) {
 			return map;
 		}
@@ -3345,8 +3345,8 @@ public class KL {
 		map.add("status", "ok").add("error", "no");
 		return map;
 	}
-	public static objS fetch(String url) {
-		objS map = new objS();
+	public static oS fetch(String url) {
+		oS map = new oS();
 		try {
 			URL urlString = url(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
@@ -3381,8 +3381,8 @@ public class KL {
 		}
 		return map;
 	}
-	public static objS silentFetch(String url) {
-		objS map = new objS();
+	public static oS silentFetch(String url) {
+		oS map = new oS();
 		try {
 			URL urlString = url(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
@@ -3428,7 +3428,7 @@ public class KL {
 	}
 	public static String fileSeparator = System.getProperty("file.separator"),
 			workDirectory = System.getProperty("user.dir").toLowerCase();
-	public static class os {
+	public static class sys {
 		public static String name = System.getProperty("os.name").toLowerCase()
 				.split(" ")[0],
 				version = System.getProperty("os.version").toLowerCase(),
@@ -3492,7 +3492,7 @@ public class KL {
 			size(w, h);
 			return this;
 		}
-		gui size(obj resolution) {
+		gui size(o resolution) {
 			if (not(resolution) || !resolution.hasKey("width")
 					|| !resolution.hasKey("height")) {
 				return this;
@@ -3501,7 +3501,7 @@ public class KL {
 			size(w, h);
 			return this;
 		}
-		gui size(objI resolution) {
+		gui size(oI resolution) {
 			if (not(resolution) || !resolution.hasKey("width")
 					|| !resolution.hasKey("height")) {
 				return this;
@@ -3527,11 +3527,11 @@ public class KL {
 			size(WxH);
 			return this;
 		}
-		gui kiSize(obj resolution) {
+		gui kiSize(o resolution) {
 			size(resolution);
 			return this;
 		}
-		gui kiSize(objI resolution) {
+		gui kiSize(oI resolution) {
 			size(resolution);
 			return this;
 		}
@@ -3765,7 +3765,7 @@ public class KL {
 							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -3787,25 +3787,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -3813,13 +3813,13 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -3827,7 +3827,7 @@ public class KL {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -3835,13 +3835,13 @@ public class KL {
 				@Override
 				public void windowOpened(WindowEvent e) {
 					if (KL.eq(k, "launch|start")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void windowClosing(WindowEvent e) {
 					if (KL.eq(k, "(exit|close)(ing)?")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				// there's a difference between these two
@@ -3849,13 +3849,13 @@ public class KL {
 				public void windowClosed(WindowEvent e) {
 					if (KL.eq(k,
 							"exited|closed|(after|post)\\W?(exit|close)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void windowIconified(WindowEvent e) {
 					if (KL.startsWith(k, "min")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
@@ -3864,13 +3864,13 @@ public class KL {
 				@Override
 				public void windowActivated(WindowEvent e) {
 					if (KL.startsWith(k, "focus")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void windowDeactivated(WindowEvent e) {
 					if (KL.startsWith(k, "defocus")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -4274,7 +4274,7 @@ public class KL {
 							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -4296,25 +4296,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -4322,13 +4322,13 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -4336,7 +4336,7 @@ public class KL {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -4556,7 +4556,7 @@ public class KL {
 							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -4578,25 +4578,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -4604,13 +4604,13 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -4618,7 +4618,7 @@ public class KL {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6450,7 +6450,7 @@ public class KL {
 							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6472,25 +6472,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6498,13 +6498,13 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6512,7 +6512,7 @@ public class KL {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6622,7 +6622,7 @@ public class KL {
 							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6644,25 +6644,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6670,13 +6670,13 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6684,7 +6684,7 @@ public class KL {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6785,7 +6785,7 @@ public class KL {
 							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6807,25 +6807,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6833,13 +6833,13 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6847,7 +6847,7 @@ public class KL {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6957,7 +6957,7 @@ public class KL {
 							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -6979,25 +6979,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -7005,13 +7005,13 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -7019,7 +7019,7 @@ public class KL {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).run();
+						new Thread(action).start();
 					}
 				}
 			});
@@ -7895,7 +7895,7 @@ public class KL {
 				return "";
 			}
 		}
-		public static objS readJson(String fname) {
+		public static oS readJson(String fname) {
 			return parseJson(read(fname));
 		}
 		public static boolean append(String fname, String content) {
@@ -8716,11 +8716,11 @@ public class KL {
 		return url(address);
 	}
 	// general
-	public static final class objS extends HashMap<String, String> {
-		objS() {
+	public static final class oS extends HashMap<String, String> {
+		oS() {
 			super();
 		}
-		objS(String k1, String v1, String k2, String v2, String k3, String v3,
+		oS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6, String k7, String v7, String k8, String v8,
 				String k9, String v9, String k10, String v10) {
@@ -8735,7 +8735,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		objS(String k1, String v1, String k2, String v2, String k3, String v3,
+		oS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6, String k7, String v7, String k8, String v8,
 				String k9, String v9) {
@@ -8749,7 +8749,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		objS(String k1, String v1, String k2, String v2, String k3, String v3,
+		oS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6, String k7, String v7, String k8, String v8) {
 			super.put(k1, v1);
@@ -8761,7 +8761,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		objS(String k1, String v1, String k2, String v2, String k3, String v3,
+		oS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6, String k7, String v7) {
 			super.put(k1, v1);
@@ -8772,7 +8772,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		objS(String k1, String v1, String k2, String v2, String k3, String v3,
+		oS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5, String k6,
 				String v6) {
 			super.put(k1, v1);
@@ -8782,7 +8782,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		objS(String k1, String v1, String k2, String v2, String k3, String v3,
+		oS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4, String k5, String v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -8790,29 +8790,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		objS(String k1, String v1, String k2, String v2, String k3, String v3,
+		oS(String k1, String v1, String k2, String v2, String k3, String v3,
 				String k4, String v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		objS(String k1, String v1, String k2, String v2, String k3, String v3) {
+		oS(String k1, String v1, String k2, String v2, String k3, String v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		objS(String k1, String v1, String k2, String v2) {
+		oS(String k1, String v1, String k2, String v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		objS(String k1, String v1) {
+		oS(String k1, String v1) {
 			super.put(k1, v1);
 		}
-		objS copy() {
-			return (objS) super.clone();
+		oS copy() {
+			return (oS) super.clone();
 		}
-		objS slice() {
+		oS slice() {
 			return copy();
 		}
 		String random() {
@@ -8929,7 +8929,7 @@ public class KL {
 		String last() {
 			return nthlast(1);
 		}
-		objS set(String k, String v) {
+		oS set(String k, String v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
 			} else {
@@ -8937,7 +8937,7 @@ public class KL {
 			}
 			return this;
 		}
-		objS add(String k, String v) {
+		oS add(String k, String v) {
 			set(k, v);
 			return this;
 		}
@@ -8946,14 +8946,14 @@ public class KL {
 			super.remove(k);
 			return v;
 		}
-		objS push(String k, String v) {
+		oS push(String k, String v) {
 			add(k, v);
 			return this;
 		}
 		String pop(String k) {
 			return delete(k);
 		}
-		objS update(String k, String v) {
+		oS update(String k, String v) {
 			set(k, v);
 			return this;
 		}
@@ -8963,15 +8963,15 @@ public class KL {
 		Set<Map.Entry<String, String>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(objS arrB) {
+		boolean compare(oS arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		objS intersection(objS other) {
+		oS intersection(oS other) {
 			if (other == null) {
-				return new objS();
+				return new oS();
 			}
-			objS result = new objS();
+			oS result = new oS();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -8980,19 +8980,19 @@ public class KL {
 			}
 			return result;
 		}
-		objS negativeIntersection(objS other) {
+		oS negativeIntersection(oS other) {
 			if (other == null) {
 				return copy();
 			}
-			objS result = copy();
+			oS result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		objS keyIntersection(objS other) {
+		oS keyIntersection(oS other) {
 			if (other == null) {
-				return new objS();
+				return new oS();
 			}
-			objS result = new objS();
+			oS result = new oS();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -9000,19 +9000,19 @@ public class KL {
 			}
 			return result;
 		}
-		objS negativeKeyIntersection(objS other) {
+		oS negativeKeyIntersection(oS other) {
 			if (other == null) {
 				return copy();
 			}
-			objS result = copy();
+			oS result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		objS valueIntersection(objS other) {
+		oS valueIntersection(oS other) {
 			if (other == null) {
-				return new objS();
+				return new oS();
 			}
-			objS result = new objS();
+			oS result = new oS();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -9022,26 +9022,26 @@ public class KL {
 			}
 			return result;
 		}
-		objS negativeValueIntersection(objS other) {
+		oS negativeValueIntersection(oS other) {
 			if (other == null) {
 				return copy();
 			}
-			objS result = copy();
+			oS result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		objS slice(int start) {
+		oS slice(int start) {
 			if (super.isEmpty()) {
-				return new objS();
+				return new oS();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new objS();
+				return new oS();
 			}
-			objS subMap = new objS();
+			oS subMap = new oS();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -9051,9 +9051,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		objS slice(int start, int end) {
+		oS slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new objS();
+				return new oS();
 			}
 			if (start < 0) {
 				start = 0;
@@ -9066,7 +9066,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			objS subMap = new objS();
+			oS subMap = new oS();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -9076,17 +9076,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objS sliceKeep(int end) {
+		oS sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new objS();
+				return new oS();
 			}
 			if (not(end) || isNeg(end)) {
-				return new objS();
+				return new oS();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			objS subMap = new objS();
+			oS subMap = new oS();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -9096,16 +9096,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		objS sliceEnd(int earlyEnd) {
+		oS sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (objS) super.clone();
+					return (oS) super.clone();
 				} else {
-					return new objS();
+					return new oS();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			objS subMap = new objS();
+			oS subMap = new oS();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -9115,14 +9115,14 @@ public class KL {
 			}
 			return subMap;
 		}
-		objS mapIfPresent(String key, Function<String, String> fn) {
+		oS mapIfPresent(String key, Function<String, String> fn) {
 			if (not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		objS mapIfPresent(String key,
+		oS mapIfPresent(String key,
 				BiFunction<? super String, ? super String, ? extends String> fn) {
 			if (not(fn)) {
 				return this;
@@ -9130,7 +9130,7 @@ public class KL {
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		objS map(String value, Function<String, String> fn) {
+		oS map(String value, Function<String, String> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -9146,7 +9146,7 @@ public class KL {
 			}
 			return this;
 		}
-		objS mapKey(String key, Function<String, String> fn) {
+		oS mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -9158,39 +9158,38 @@ public class KL {
 			}
 			return this;
 		}
-		objS mapKey(Function<String, String> fn) {
+		oS mapKey(Function<String, String> fn) {
 			HashMap<String, String> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		objS map(Function<String, String> fn) {
+		oS map(Function<String, String> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		objS map(
-				BiFunction<? super String, ? super String, ? extends String> fn) {
+		oS map(BiFunction<? super String, ? super String, ? extends String> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		objS eachKey(Consumer<String> fn) {
+		oS eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		objS each(Consumer<String> fn) {
+		oS each(Consumer<String> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		objS each(BiConsumer<? super String, ? super String> fn) {
+		oS each(BiConsumer<? super String, ? super String> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		objS combine(objS... others) {
+		oS combine(oS... others) {
 			if (not(others)) {
 				return this;
 			}
-			for (objS other : others) {
+			for (oS other : others) {
 				if (not(other)) {
 					continue;
 				}
@@ -9198,19 +9197,19 @@ public class KL {
 			}
 			return this;
 		}
-		objS union(objS... others) {
+		oS union(oS... others) {
 			combine(others);
 			return this;
 		}
-		objS cat(objS... others) {
+		oS cat(oS... others) {
 			combine(others);
 			return this;
 		}
-		objS concat(objS... others) {
+		oS concat(oS... others) {
 			combine(others);
 			return this;
 		}
-		objS join(objS... others) {
+		oS join(oS... others) {
 			combine(others);
 			return this;
 		}
@@ -9239,62 +9238,62 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objS objS(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6, String k7, String v7, String k8, String v8,
-			String k9, String v9, String k10, String v10) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oS oS(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6, String k7, String v7, String k8, String v8, String k9,
+			String v9, String k10, String v10) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6, String k7, String v7, String k8, String v8,
-			String k9, String v9) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oS oS(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6, String k7, String v7, String k8, String v8, String k9,
+			String v9) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6, String k7, String v7, String k8, String v8) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oS oS(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6, String k7, String v7, String k8, String v8) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6, String k7, String v7) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static oS oS(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6, String k7, String v7) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static oS oS(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static oS oS(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static oS oS(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2,
-			String k3, String v3) {
-		return new objS(k1, v1, k2, v2, k3, v3);
+	public static oS oS(String k1, String v1, String k2, String v2, String k3,
+			String v3) {
+		return new oS(k1, v1, k2, v2, k3, v3);
 	}
-	public static objS objS(String k1, String v1, String k2, String v2) {
-		return new objS(k1, v1, k2, v2);
+	public static oS oS(String k1, String v1, String k2, String v2) {
+		return new oS(k1, v1, k2, v2);
 	}
-	public static objS objS(String k1, String v1) {
-		return new objS(k1, v1);
+	public static oS oS(String k1, String v1) {
+		return new oS(k1, v1);
 	}
-	public static final class objI extends HashMap<String, Integer> {
-		objI() {
+	public static final class oI extends HashMap<String, Integer> {
+		oI() {
 			super();
 		}
-		objI(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6, String k7, Integer v7, String k8,
-				Integer v8, String k9, Integer v9, String k10, Integer v10) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6, String k7, Integer v7, String k8, Integer v8,
+				String k9, Integer v9, String k10, Integer v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -9306,10 +9305,10 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		objI(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6, String k7, Integer v7, String k8,
-				Integer v8, String k9, Integer v9) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6, String k7, Integer v7, String k8, Integer v8,
+				String k9, Integer v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -9320,10 +9319,9 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		objI(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6, String k7, Integer v7, String k8,
-				Integer v8) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6, String k7, Integer v7, String k8, Integer v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -9333,9 +9331,9 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		objI(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6, String k7, Integer v7) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6, String k7, Integer v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -9344,9 +9342,9 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		objI(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5,
-				String k6, Integer v6) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -9354,38 +9352,38 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		objI(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4, String k5, Integer v5) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		objI(String k1, Integer v1, String k2, Integer v2, String k3,
-				Integer v3, String k4, Integer v4) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		objI(String k1, Integer v1, String k2, Integer v2, String k3,
+		oI(String k1, Integer v1, String k2, Integer v2, String k3,
 				Integer v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		objI(String k1, Integer v1, String k2, Integer v2) {
+		oI(String k1, Integer v1, String k2, Integer v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		objI(String k, Integer v) {
+		oI(String k, Integer v) {
 			super.put(k, v);
 		}
-		objI copy() {
-			return (objI) super.clone();
+		oI copy() {
+			return (oI) super.clone();
 		}
-		objI slice() {
+		oI slice() {
 			return copy();
 		}
 		int random() {
@@ -9507,7 +9505,7 @@ public class KL {
 		int last() {
 			return nthlast(1);
 		}
-		objI set(String k, Integer v) {
+		oI set(String k, Integer v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
 			} else {
@@ -9515,7 +9513,7 @@ public class KL {
 			}
 			return this;
 		}
-		objI add(String k, Integer v) {
+		oI add(String k, Integer v) {
 			set(k, v);
 			return this;
 		}
@@ -9524,14 +9522,14 @@ public class KL {
 			super.remove(k);
 			return v;
 		}
-		objI push(String k, int v) {
+		oI push(String k, int v) {
 			add(k, v);
 			return this;
 		}
 		int pop(String k) {
 			return delete(k);
 		}
-		objI update(String k, Integer v) {
+		oI update(String k, Integer v) {
 			set(k, v);
 			return this;
 		}
@@ -9541,15 +9539,15 @@ public class KL {
 		Set<Map.Entry<String, Integer>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(objI arrB) {
+		boolean compare(oI arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		objI intersection(objI other) {
+		oI intersection(oI other) {
 			if (other == null) {
-				return new objI();
+				return new oI();
 			}
-			objI result = new objI();
+			oI result = new oI();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -9558,19 +9556,19 @@ public class KL {
 			}
 			return result;
 		}
-		objI negativeIntersection(objI other) {
+		oI negativeIntersection(oI other) {
 			if (other == null) {
 				return copy();
 			}
-			objI result = copy();
+			oI result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		objI keyIntersection(objI other) {
+		oI keyIntersection(oI other) {
 			if (other == null) {
-				return new objI();
+				return new oI();
 			}
-			objI result = new objI();
+			oI result = new oI();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -9578,19 +9576,19 @@ public class KL {
 			}
 			return result;
 		}
-		objI negativeKeyIntersection(objI other) {
+		oI negativeKeyIntersection(oI other) {
 			if (other == null) {
 				return copy();
 			}
-			objI result = copy();
+			oI result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		objI valueIntersection(objI other) {
+		oI valueIntersection(oI other) {
 			if (other == null) {
-				return new objI();
+				return new oI();
 			}
-			objI result = new objI();
+			oI result = new oI();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -9600,26 +9598,26 @@ public class KL {
 			}
 			return result;
 		}
-		objI negativeValueIntersection(objI other) {
+		oI negativeValueIntersection(oI other) {
 			if (other == null) {
 				return copy();
 			}
-			objI result = copy();
+			oI result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		objI slice(int start) {
+		oI slice(int start) {
 			if (super.isEmpty()) {
-				return new objI();
+				return new oI();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new objI();
+				return new oI();
 			}
-			objI subMap = new objI();
+			oI subMap = new oI();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -9629,9 +9627,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		objI slice(int start, int end) {
+		oI slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new objI();
+				return new oI();
 			}
 			if (start < 0) {
 				start = 0;
@@ -9644,7 +9642,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			objI subMap = new objI();
+			oI subMap = new oI();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -9654,17 +9652,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objI sliceKeep(int end) {
+		oI sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new objI();
+				return new oI();
 			}
 			if (not(end) || isNeg(end)) {
-				return new objI();
+				return new oI();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			objI subMap = new objI();
+			oI subMap = new oI();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -9674,16 +9672,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		objI sliceEnd(int earlyEnd) {
+		oI sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (objI) super.clone();
+					return (oI) super.clone();
 				} else {
-					return new objI();
+					return new oI();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			objI subMap = new objI();
+			oI subMap = new oI();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -9693,17 +9691,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objI mapIfPresent(String key, Function<Integer, Integer> fn) {
+		oI mapIfPresent(String key, Function<Integer, Integer> fn) {
 			if (not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		objI mapIfPresent(int value, Function<Integer, Integer> fn) {
+		oI mapIfPresent(int value, Function<Integer, Integer> fn) {
 			return map(value, fn);
 		}
-		objI mapIfPresent(String key,
+		oI mapIfPresent(String key,
 				BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
 			if (not(fn)) {
 				return this;
@@ -9711,7 +9709,7 @@ public class KL {
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		objI map(int value, Function<Integer, Integer> fn) {
+		oI map(int value, Function<Integer, Integer> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -9727,7 +9725,7 @@ public class KL {
 			}
 			return this;
 		}
-		objI mapKey(String key, Function<String, String> fn) {
+		oI mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -9739,39 +9737,38 @@ public class KL {
 			}
 			return this;
 		}
-		objI mapKey(Function<String, String> fn) {
+		oI mapKey(Function<String, String> fn) {
 			HashMap<String, Integer> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		objI map(Function<Integer, Integer> fn) {
+		oI map(Function<Integer, Integer> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		objI map(
-				BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
+		oI map(BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		objI eachKey(Consumer<String> fn) {
+		oI eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		objI each(Consumer<Integer> fn) {
+		oI each(Consumer<Integer> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		objI each(BiConsumer<? super String, ? super Integer> fn) {
+		oI each(BiConsumer<? super String, ? super Integer> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		objI combine(objI... others) {
+		oI combine(oI... others) {
 			if (not(others)) {
 				return this;
 			}
-			for (objI other : others) {
+			for (oI other : others) {
 				if (not(other)) {
 					continue;
 				}
@@ -9779,19 +9776,19 @@ public class KL {
 			}
 			return this;
 		}
-		objI union(objI... others) {
+		oI union(oI... others) {
 			combine(others);
 			return this;
 		}
-		objI cat(objI... others) {
+		oI cat(oI... others) {
 			combine(others);
 			return this;
 		}
-		objI concat(objI... others) {
+		oI concat(oI... others) {
 			combine(others);
 			return this;
 		}
-		objI join(objI... others) {
+		oI join(oI... others) {
 			combine(others);
 			return this;
 		}
@@ -9820,57 +9817,56 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
-			String k7, int v7, String k8, int v8, String k9, int v9, String k10,
-			int v10) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
-			String k7, int v7, String k8, int v8, String k9, int v9) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8, String k9, int v9) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
-			String k7, int v7, String k8, int v8) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
-			String k7, int v7) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2, String k3,
+	public static oI oI(String k1, int v1, String k2, int v2, String k3,
 			int v3) {
-		return new objI(k1, v1, k2, v2, k3, v3);
+		return new oI(k1, v1, k2, v2, k3, v3);
 	}
-	public static objI objI(String k1, int v1, String k2, int v2) {
-		return new objI(k1, v1, k2, v2);
+	public static oI oI(String k1, int v1, String k2, int v2) {
+		return new oI(k1, v1, k2, v2);
 	}
-	public static objI objI(String k1, int v1) {
-		return new objI(k1, v1);
+	public static oI oI(String k1, int v1) {
+		return new oI(k1, v1);
 	}
-	public static final class objL extends HashMap<String, Long> {
-		objL() {
+	public static final class oL extends HashMap<String, Long> {
+		oL() {
 			super();
 		}
-		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6,
 				String k7, Long v7, String k8, Long v8, String k9, Long v9,
 				String k10, Long v10) {
@@ -9885,7 +9881,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6,
 				String k7, Long v7, String k8, Long v8, String k9, Long v9) {
 			super.put(k1, v1);
@@ -9898,7 +9894,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6,
 				String k7, Long v7, String k8, Long v8) {
 			super.put(k1, v1);
@@ -9910,7 +9906,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6,
 				String k7, Long v7) {
 			super.put(k1, v1);
@@ -9921,7 +9917,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5, String k6, Long v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -9930,7 +9926,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4, String k5, Long v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -9938,29 +9934,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
 				String k4, Long v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		objL(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		objL(String k1, Long v1, String k2, Long v2) {
+		oL(String k1, Long v1, String k2, Long v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		objL(String k, Long v) {
+		oL(String k, Long v) {
 			super.put(k, v);
 		}
-		objL copy() {
-			return (objL) super.clone();
+		oL copy() {
+			return (oL) super.clone();
 		}
-		objL slice() {
+		oL slice() {
 			return copy();
 		}
 		long random() {
@@ -10082,7 +10078,7 @@ public class KL {
 			}
 			return false;
 		}
-		objL set(String k, Long v) {
+		oL set(String k, Long v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
 			} else {
@@ -10090,21 +10086,21 @@ public class KL {
 			}
 			return this;
 		}
-		objL add(String k, Long v) {
+		oL add(String k, Long v) {
 			set(k, v);
 			return this;
 		}
 		long delete(String k) {
 			return super.remove(k);
 		}
-		objL push(String k, long v) {
+		oL push(String k, long v) {
 			add(k, v);
 			return this;
 		}
 		long pop(String k) {
 			return delete(k);
 		}
-		objL update(String k, Long v) {
+		oL update(String k, Long v) {
 			set(k, v);
 			return this;
 		}
@@ -10114,15 +10110,15 @@ public class KL {
 		Set<Map.Entry<String, Long>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(objL arrB) {
+		boolean compare(oL arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		objL intersection(objL other) {
+		oL intersection(oL other) {
 			if (other == null) {
-				return new objL();
+				return new oL();
 			}
-			objL result = new objL();
+			oL result = new oL();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -10131,19 +10127,19 @@ public class KL {
 			}
 			return result;
 		}
-		objL negativeIntersection(objL other) {
+		oL negativeIntersection(oL other) {
 			if (other == null) {
 				return copy();
 			}
-			objL result = copy();
+			oL result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		objL keyIntersection(objL other) {
+		oL keyIntersection(oL other) {
 			if (other == null) {
-				return new objL();
+				return new oL();
 			}
-			objL result = new objL();
+			oL result = new oL();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -10151,19 +10147,19 @@ public class KL {
 			}
 			return result;
 		}
-		objL negativeKeyIntersection(objL other) {
+		oL negativeKeyIntersection(oL other) {
 			if (other == null) {
 				return copy();
 			}
-			objL result = copy();
+			oL result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		objL valueIntersection(objL other) {
+		oL valueIntersection(oL other) {
 			if (other == null) {
-				return new objL();
+				return new oL();
 			}
-			objL result = new objL();
+			oL result = new oL();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -10173,26 +10169,26 @@ public class KL {
 			}
 			return result;
 		}
-		objL negativeValueIntersection(objL other) {
+		oL negativeValueIntersection(oL other) {
 			if (other == null) {
 				return copy();
 			}
-			objL result = copy();
+			oL result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		objL slice(int start) {
+		oL slice(int start) {
 			if (super.isEmpty()) {
-				return new objL();
+				return new oL();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new objL();
+				return new oL();
 			}
-			objL subMap = new objL();
+			oL subMap = new oL();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -10202,9 +10198,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		objL slice(int start, int end) {
+		oL slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new objL();
+				return new oL();
 			}
 			if (start < 0) {
 				start = 0;
@@ -10217,7 +10213,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			objL subMap = new objL();
+			oL subMap = new oL();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -10227,17 +10223,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objL sliceKeep(int end) {
+		oL sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new objL();
+				return new oL();
 			}
 			if (not(end) || isNeg(end)) {
-				return new objL();
+				return new oL();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			objL subMap = new objL();
+			oL subMap = new oL();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -10247,16 +10243,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		objL sliceEnd(int earlyEnd) {
+		oL sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (objL) super.clone();
+					return (oL) super.clone();
 				} else {
-					return new objL();
+					return new oL();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			objL subMap = new objL();
+			oL subMap = new oL();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -10266,17 +10262,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objL mapIfPresent(String key, Function<Long, Long> fn) {
+		oL mapIfPresent(String key, Function<Long, Long> fn) {
 			if (not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		objL mapIfPresent(long value, Function<Long, Long> fn) {
+		oL mapIfPresent(long value, Function<Long, Long> fn) {
 			return map(value, fn);
 		}
-		objL mapIfPresent(String key,
+		oL mapIfPresent(String key,
 				BiFunction<? super String, ? super Long, ? extends Long> fn) {
 			if (not(fn)) {
 				return this;
@@ -10284,7 +10280,7 @@ public class KL {
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		objL map(long value, Function<Long, Long> fn) {
+		oL map(long value, Function<Long, Long> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -10300,7 +10296,7 @@ public class KL {
 			}
 			return this;
 		}
-		objL mapKey(String key, Function<String, String> fn) {
+		oL mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -10312,38 +10308,38 @@ public class KL {
 			}
 			return this;
 		}
-		objL mapKey(Function<String, String> fn) {
+		oL mapKey(Function<String, String> fn) {
 			HashMap<String, Long> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		objL map(Function<Long, Long> fn) {
+		oL map(Function<Long, Long> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		objL map(BiFunction<? super String, ? super Long, ? extends Long> fn) {
+		oL map(BiFunction<? super String, ? super Long, ? extends Long> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		objL eachKey(Consumer<String> fn) {
+		oL eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		objL each(Consumer<Long> fn) {
+		oL each(Consumer<Long> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		objL each(BiConsumer<? super String, ? super Long> fn) {
+		oL each(BiConsumer<? super String, ? super Long> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		objL combine(objL... others) {
+		oL combine(oL... others) {
 			if (not(others)) {
 				return this;
 			}
-			for (objL other : others) {
+			for (oL other : others) {
 				if (not(other)) {
 					continue;
 				}
@@ -10351,19 +10347,19 @@ public class KL {
 			}
 			return this;
 		}
-		objL union(objL... others) {
+		oL union(oL... others) {
 			combine(others);
 			return this;
 		}
-		objL cat(objL... others) {
+		oL cat(oL... others) {
 			combine(others);
 			return this;
 		}
-		objL concat(objL... others) {
+		oL concat(oL... others) {
 			combine(others);
 			return this;
 		}
-		objL join(objL... others) {
+		oL join(oL... others) {
 			combine(others);
 			return this;
 		}
@@ -10392,58 +10388,58 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
 			String k7, long v7, String k8, long v8, String k9, long v9,
 			String k10, long v10) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
 			String k7, long v7, String k8, long v8, String k9, long v9) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
 			String k7, long v7, String k8, long v8) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
 			String k7, long v7) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6,
 			long v6) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4);
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2, String k3,
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
 			long v3) {
-		return new objL(k1, v1, k2, v2, k3, v3);
+		return new oL(k1, v1, k2, v2, k3, v3);
 	}
-	public static objL objL(String k1, long v1, String k2, long v2) {
-		return new objL(k1, v1, k2, v2);
+	public static oL oL(String k1, long v1, String k2, long v2) {
+		return new oL(k1, v1, k2, v2);
 	}
-	public static objL objL(String k1, long v1) {
-		return new objL(k1, v1);
+	public static oL oL(String k1, long v1) {
+		return new oL(k1, v1);
 	}
-	public static final class objF extends HashMap<String, Float> {
-		objF() {
+	public static final class oF extends HashMap<String, Float> {
+		oF() {
 			super();
 		}
-		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6,
 				String k7, Float v7, String k8, Float v8, String k9, Float v9,
 				String k10, Float v10) {
@@ -10458,7 +10454,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6,
 				String k7, Float v7, String k8, Float v8, String k9, Float v9) {
 			super.put(k1, v1);
@@ -10471,7 +10467,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6,
 				String k7, Float v7, String k8, Float v8) {
 			super.put(k1, v1);
@@ -10483,7 +10479,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6,
 				String k7, Float v7) {
 			super.put(k1, v1);
@@ -10494,7 +10490,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5, String k6, Float v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -10503,7 +10499,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4, String k5, Float v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -10511,29 +10507,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
 				String k4, Float v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		objF(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		objF(String k1, Float v1, String k2, Float v2) {
+		oF(String k1, Float v1, String k2, Float v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		objF(String k1, Float v1) {
+		oF(String k1, Float v1) {
 			super.put(k1, v1);
 		}
-		objF copy() {
-			return (objF) super.clone();
+		oF copy() {
+			return (oF) super.clone();
 		}
-		objF slice() {
+		oF slice() {
 			return copy();
 		}
 		float random() {
@@ -10655,7 +10651,7 @@ public class KL {
 			}
 			return false;
 		}
-		objF set(String k, Float v) {
+		oF set(String k, Float v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
 			} else {
@@ -10663,21 +10659,21 @@ public class KL {
 			}
 			return this;
 		}
-		objF add(String k, Float v) {
+		oF add(String k, Float v) {
 			set(k, v);
 			return this;
 		}
 		float delete(String k) {
 			return super.remove(k);
 		}
-		objF push(String k, float v) {
+		oF push(String k, float v) {
 			add(k, v);
 			return this;
 		}
 		float pop(String k) {
 			return delete(k);
 		}
-		objF update(String k, Float v) {
+		oF update(String k, Float v) {
 			set(k, v);
 			return this;
 		}
@@ -10687,15 +10683,15 @@ public class KL {
 		Set<Map.Entry<String, Float>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(objF arrB) {
+		boolean compare(oF arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		objF intersection(objF other) {
+		oF intersection(oF other) {
 			if (other == null) {
-				return new objF();
+				return new oF();
 			}
-			objF result = new objF();
+			oF result = new oF();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -10704,19 +10700,19 @@ public class KL {
 			}
 			return result;
 		}
-		objF negativeIntersection(objF other) {
+		oF negativeIntersection(oF other) {
 			if (other == null) {
 				return copy();
 			}
-			objF result = copy();
+			oF result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		objF keyIntersection(objF other) {
+		oF keyIntersection(oF other) {
 			if (other == null) {
-				return new objF();
+				return new oF();
 			}
-			objF result = new objF();
+			oF result = new oF();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -10724,19 +10720,19 @@ public class KL {
 			}
 			return result;
 		}
-		objF negativeKeyIntersection(objF other) {
+		oF negativeKeyIntersection(oF other) {
 			if (other == null) {
 				return copy();
 			}
-			objF result = copy();
+			oF result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		objF valueIntersection(objF other) {
+		oF valueIntersection(oF other) {
 			if (other == null) {
-				return new objF();
+				return new oF();
 			}
-			objF result = new objF();
+			oF result = new oF();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -10746,26 +10742,26 @@ public class KL {
 			}
 			return result;
 		}
-		objF negativeValueIntersection(objF other) {
+		oF negativeValueIntersection(oF other) {
 			if (other == null) {
 				return copy();
 			}
-			objF result = copy();
+			oF result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		objF slice(int start) {
+		oF slice(int start) {
 			if (super.isEmpty()) {
-				return new objF();
+				return new oF();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new objF();
+				return new oF();
 			}
-			objF subMap = new objF();
+			oF subMap = new oF();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -10775,9 +10771,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		objF slice(int start, int end) {
+		oF slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new objF();
+				return new oF();
 			}
 			if (start < 0) {
 				start = 0;
@@ -10790,7 +10786,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			objF subMap = new objF();
+			oF subMap = new oF();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -10800,17 +10796,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objF sliceKeep(int end) {
+		oF sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new objF();
+				return new oF();
 			}
 			if (not(end) || isNeg(end)) {
-				return new objF();
+				return new oF();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			objF subMap = new objF();
+			oF subMap = new oF();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -10820,16 +10816,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		objF sliceEnd(int earlyEnd) {
+		oF sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (objF) super.clone();
+					return (oF) super.clone();
 				} else {
-					return new objF();
+					return new oF();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			objF subMap = new objF();
+			oF subMap = new oF();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -10839,17 +10835,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objF mapIfPresent(String key, Function<Float, Float> fn) {
+		oF mapIfPresent(String key, Function<Float, Float> fn) {
 			if (not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		objF mapIfPresent(float value, Function<Float, Float> fn) {
+		oF mapIfPresent(float value, Function<Float, Float> fn) {
 			return map(value, fn);
 		}
-		objF mapIfPresent(String key,
+		oF mapIfPresent(String key,
 				BiFunction<? super String, ? super Float, ? extends Float> fn) {
 			if (not(fn)) {
 				return this;
@@ -10857,7 +10853,7 @@ public class KL {
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		objF map(float value, Function<Float, Float> fn) {
+		oF map(float value, Function<Float, Float> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -10873,7 +10869,7 @@ public class KL {
 			}
 			return this;
 		}
-		objF mapKey(String key, Function<String, String> fn) {
+		oF mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -10885,39 +10881,38 @@ public class KL {
 			}
 			return this;
 		}
-		objF mapKey(Function<String, String> fn) {
+		oF mapKey(Function<String, String> fn) {
 			HashMap<String, Float> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		objF map(Function<Float, Float> fn) {
+		oF map(Function<Float, Float> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		objF map(
-				BiFunction<? super String, ? super Float, ? extends Float> fn) {
+		oF map(BiFunction<? super String, ? super Float, ? extends Float> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		objF eachKey(Consumer<String> fn) {
+		oF eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		objF each(Consumer<Float> fn) {
+		oF each(Consumer<Float> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		objF each(BiConsumer<? super String, ? super Float> fn) {
+		oF each(BiConsumer<? super String, ? super Float> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		objF combine(objF... others) {
+		oF combine(oF... others) {
 			if (not(others)) {
 				return this;
 			}
-			for (objF other : others) {
+			for (oF other : others) {
 				if (not(other)) {
 					continue;
 				}
@@ -10925,19 +10920,19 @@ public class KL {
 			}
 			return this;
 		}
-		objF union(objF... others) {
+		oF union(oF... others) {
 			combine(others);
 			return this;
 		}
-		objF cat(objF... others) {
+		oF cat(oF... others) {
 			combine(others);
 			return this;
 		}
-		objF concat(objF... others) {
+		oF concat(oF... others) {
 			combine(others);
 			return this;
 		}
-		objF join(objF... others) {
+		oF join(oF... others) {
 			combine(others);
 			return this;
 		}
@@ -10966,59 +10961,59 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6, String k7, float v7, String k8, float v8, String k9,
 			float v9, String k10, float v10) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6, String k7, float v7, String k8, float v8, String k9,
 			float v9) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6, String k7, float v7, String k8, float v8) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6, String k7, float v7) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4);
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2, String k3,
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
 			float v3) {
-		return new objF(k1, v1, k2, v2, k3, v3);
+		return new oF(k1, v1, k2, v2, k3, v3);
 	}
-	public static objF objF(String k1, float v1, String k2, float v2) {
-		return new objF(k1, v1, k2, v2);
+	public static oF oF(String k1, float v1, String k2, float v2) {
+		return new oF(k1, v1, k2, v2);
 	}
-	public static objF objF(String k1, float v1) {
-		return new objF(k1, v1);
+	public static oF oF(String k1, float v1) {
+		return new oF(k1, v1);
 	}
-	public static final class objD extends HashMap<String, Double> {
-		objD() {
+	public static final class oD extends HashMap<String, Double> {
+		oD() {
 			super();
 		}
-		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6, String k7, Double v7, String k8, Double v8,
 				String k9, Double v9, String k10, Double v10) {
@@ -11033,7 +11028,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6, String k7, Double v7, String k8, Double v8,
 				String k9, Double v9) {
@@ -11047,7 +11042,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6, String k7, Double v7, String k8, Double v8) {
 			super.put(k1, v1);
@@ -11059,7 +11054,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6, String k7, Double v7) {
 			super.put(k1, v1);
@@ -11070,7 +11065,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5, String k6,
 				Double v6) {
 			super.put(k1, v1);
@@ -11080,7 +11075,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4, String k5, Double v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -11088,29 +11083,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
 				String k4, Double v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		objD(String k1, Double v1, String k2, Double v2, String k3, Double v3) {
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		objD(String k1, Double v1, String k2, Double v2) {
+		oD(String k1, Double v1, String k2, Double v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		objD(String k, Double v) {
+		oD(String k, Double v) {
 			super.put(k, v);
 		}
-		objD copy() {
-			return (objD) super.clone();
+		oD copy() {
+			return (oD) super.clone();
 		}
-		objD slice() {
+		oD slice() {
 			return copy();
 		}
 		double random() {
@@ -11232,7 +11227,7 @@ public class KL {
 			}
 			return false;
 		}
-		objD set(String k, Double v) {
+		oD set(String k, Double v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
 			} else {
@@ -11240,21 +11235,21 @@ public class KL {
 			}
 			return this;
 		}
-		objD add(String k, Double v) {
+		oD add(String k, Double v) {
 			set(k, v);
 			return this;
 		}
 		double delete(String k) {
 			return super.remove(k);
 		}
-		objD push(String k, double v) {
+		oD push(String k, double v) {
 			add(k, v);
 			return this;
 		}
 		double pop(String k) {
 			return delete(k);
 		}
-		objD update(String k, Double v) {
+		oD update(String k, Double v) {
 			set(k, v);
 			return this;
 		}
@@ -11264,15 +11259,15 @@ public class KL {
 		Set<Map.Entry<String, Double>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(objD arrB) {
+		boolean compare(oD arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		objD intersection(objD other) {
+		oD intersection(oD other) {
 			if (other == null) {
-				return new objD();
+				return new oD();
 			}
-			objD result = new objD();
+			oD result = new oD();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -11281,19 +11276,19 @@ public class KL {
 			}
 			return result;
 		}
-		objD negativeIntersection(objD other) {
+		oD negativeIntersection(oD other) {
 			if (other == null) {
 				return copy();
 			}
-			objD result = copy();
+			oD result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		objD keyIntersection(objD other) {
+		oD keyIntersection(oD other) {
 			if (other == null) {
-				return new objD();
+				return new oD();
 			}
-			objD result = new objD();
+			oD result = new oD();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -11301,19 +11296,19 @@ public class KL {
 			}
 			return result;
 		}
-		objD negativeKeyIntersection(objD other) {
+		oD negativeKeyIntersection(oD other) {
 			if (other == null) {
 				return copy();
 			}
-			objD result = copy();
+			oD result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		objD valueIntersection(objD other) {
+		oD valueIntersection(oD other) {
 			if (other == null) {
-				return new objD();
+				return new oD();
 			}
-			objD result = new objD();
+			oD result = new oD();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -11323,26 +11318,26 @@ public class KL {
 			}
 			return result;
 		}
-		objD negativeValueIntersection(objD other) {
+		oD negativeValueIntersection(oD other) {
 			if (other == null) {
 				return copy();
 			}
-			objD result = copy();
+			oD result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		objD slice(int start) {
+		oD slice(int start) {
 			if (super.isEmpty()) {
-				return new objD();
+				return new oD();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new objD();
+				return new oD();
 			}
-			objD subMap = new objD();
+			oD subMap = new oD();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -11352,9 +11347,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		objD slice(int start, int end) {
+		oD slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new objD();
+				return new oD();
 			}
 			if (start < 0) {
 				start = 0;
@@ -11367,7 +11362,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			objD subMap = new objD();
+			oD subMap = new oD();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -11377,17 +11372,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objD sliceKeep(int end) {
+		oD sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new objD();
+				return new oD();
 			}
 			if (not(end) || isNeg(end)) {
-				return new objD();
+				return new oD();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			objD subMap = new objD();
+			oD subMap = new oD();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -11397,16 +11392,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		objD sliceEnd(int earlyEnd) {
+		oD sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (objD) super.clone();
+					return (oD) super.clone();
 				} else {
-					return new objD();
+					return new oD();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			objD subMap = new objD();
+			oD subMap = new oD();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -11416,17 +11411,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objD mapIfPresent(String key, Function<Double, Double> fn) {
+		oD mapIfPresent(String key, Function<Double, Double> fn) {
 			if (not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		objD mapIfPresent(double value, Function<Double, Double> fn) {
+		oD mapIfPresent(double value, Function<Double, Double> fn) {
 			return map(value, fn);
 		}
-		objD mapIfPresent(String key,
+		oD mapIfPresent(String key,
 				BiFunction<? super String, ? super Double, ? extends Double> fn) {
 			if (not(fn)) {
 				return this;
@@ -11434,7 +11429,7 @@ public class KL {
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		objD map(double value, Function<Double, Double> fn) {
+		oD map(double value, Function<Double, Double> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -11450,7 +11445,7 @@ public class KL {
 			}
 			return this;
 		}
-		objD mapKey(String key, Function<String, String> fn) {
+		oD mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -11462,39 +11457,38 @@ public class KL {
 			}
 			return this;
 		}
-		objD mapKey(Function<String, String> fn) {
+		oD mapKey(Function<String, String> fn) {
 			HashMap<String, Double> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		objD map(Function<Double, Double> fn) {
+		oD map(Function<Double, Double> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		objD map(
-				BiFunction<? super String, ? super Double, ? extends Double> fn) {
+		oD map(BiFunction<? super String, ? super Double, ? extends Double> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		objD eachKey(Consumer<String> fn) {
+		oD eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		objD each(Consumer<Double> fn) {
+		oD each(Consumer<Double> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		objD each(BiConsumer<? super String, ? super Double> fn) {
+		oD each(BiConsumer<? super String, ? super Double> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		objD combine(objD... others) {
+		oD combine(oD... others) {
 			if (not(others)) {
 				return this;
 			}
-			for (objD other : others) {
+			for (oD other : others) {
 				if (not(other)) {
 					continue;
 				}
@@ -11502,19 +11496,19 @@ public class KL {
 			}
 			return this;
 		}
-		objD union(objD... others) {
+		oD union(oD... others) {
 			combine(others);
 			return this;
 		}
-		objD cat(objD... others) {
+		oD cat(oD... others) {
 			combine(others);
 			return this;
 		}
-		objD concat(objD... others) {
+		oD concat(oD... others) {
 			combine(others);
 			return this;
 		}
-		objD join(objD... others) {
+		oD join(oD... others) {
 			combine(others);
 			return this;
 		}
@@ -11543,62 +11537,62 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objD objD(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6, String k7, double v7, String k8, double v8,
-			String k9, double v9, String k10, double v10) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8, String k9,
+			double v9, String k10, double v10) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6, String k7, double v7, String k8, double v8,
-			String k9, double v9) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8, String k9,
+			double v9) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6, String k7, double v7, String k8, double v8) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6, String k7, double v7) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2,
-			String k3, double v3) {
-		return new objD(k1, v1, k2, v2, k3, v3);
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3) {
+		return new oD(k1, v1, k2, v2, k3, v3);
 	}
-	public static objD objD(String k1, double v1, String k2, double v2) {
-		return new objD(k1, v1, k2, v2);
+	public static oD oD(String k1, double v1, String k2, double v2) {
+		return new oD(k1, v1, k2, v2);
 	}
-	public static objD objD(String k1, double v1) {
-		return new objD(k1, v1);
+	public static oD oD(String k1, double v1) {
+		return new oD(k1, v1);
 	}
-	public static final class objB extends HashMap<String, Boolean> {
-		objB() {
+	public static final class oB extends HashMap<String, Boolean> {
+		oB() {
 			super();
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6, String k7, Boolean v7, String k8,
-				Boolean v8, String k9, Boolean v9, String k10, Boolean v10) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6, String k7, Boolean v7, String k8, Boolean v8,
+				String k9, Boolean v9, String k10, Boolean v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11610,10 +11604,10 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6, String k7, Boolean v7, String k8,
-				Boolean v8, String k9, Boolean v9) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6, String k7, Boolean v7, String k8, Boolean v8,
+				String k9, Boolean v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11624,10 +11618,9 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6, String k7, Boolean v7, String k8,
-				Boolean v8) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6, String k7, Boolean v7, String k8, Boolean v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11637,9 +11630,9 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6, String k7, Boolean v7) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6, String k7, Boolean v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11648,9 +11641,9 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5,
-				String k6, Boolean v6) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11658,38 +11651,38 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4, String k5, Boolean v5) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
-				Boolean v3, String k4, Boolean v4) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3,
 				Boolean v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		objB(String k1, Boolean v1, String k2, Boolean v2) {
+		oB(String k1, Boolean v1, String k2, Boolean v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		objB(String k, Boolean v) {
+		oB(String k, Boolean v) {
 			super.put(k, v);
 		}
-		objB copy() {
-			return (objB) super.clone();
+		oB copy() {
+			return (oB) super.clone();
 		}
-		objB slice() {
+		oB slice() {
 			return copy();
 		}
 		boolean random() {
@@ -11811,7 +11804,7 @@ public class KL {
 			}
 			return false;
 		}
-		objB set(String k, Boolean v) {
+		oB set(String k, Boolean v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
 			} else {
@@ -11819,21 +11812,21 @@ public class KL {
 			}
 			return this;
 		}
-		objB add(String k, Boolean v) {
+		oB add(String k, Boolean v) {
 			set(k, v);
 			return this;
 		}
 		boolean delete(String k) {
 			return super.remove(k);
 		}
-		objB push(String k, Boolean v) {
+		oB push(String k, Boolean v) {
 			add(k, v);
 			return this;
 		}
 		boolean pop(String k) {
 			return delete(k);
 		}
-		objB update(String k, Boolean v) {
+		oB update(String k, Boolean v) {
 			set(k, v);
 			return this;
 		}
@@ -11843,15 +11836,15 @@ public class KL {
 		Set<Map.Entry<String, Boolean>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(objB arrB) {
+		boolean compare(oB arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		objB intersection(objB other) {
+		oB intersection(oB other) {
 			if (other == null) {
-				return new objB();
+				return new oB();
 			}
-			objB result = new objB();
+			oB result = new oB();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -11860,19 +11853,19 @@ public class KL {
 			}
 			return result;
 		}
-		objB negativeIntersection(objB other) {
+		oB negativeIntersection(oB other) {
 			if (other == null) {
 				return copy();
 			}
-			objB result = copy();
+			oB result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		objB keyIntersection(objB other) {
+		oB keyIntersection(oB other) {
 			if (other == null) {
-				return new objB();
+				return new oB();
 			}
-			objB result = new objB();
+			oB result = new oB();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -11880,19 +11873,19 @@ public class KL {
 			}
 			return result;
 		}
-		objB negativeKeyIntersection(objB other) {
+		oB negativeKeyIntersection(oB other) {
 			if (other == null) {
 				return copy();
 			}
-			objB result = copy();
+			oB result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		objB valueIntersection(objB other) {
+		oB valueIntersection(oB other) {
 			if (other == null) {
-				return new objB();
+				return new oB();
 			}
-			objB result = new objB();
+			oB result = new oB();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -11902,26 +11895,26 @@ public class KL {
 			}
 			return result;
 		}
-		objB negativeValueIntersection(objB other) {
+		oB negativeValueIntersection(oB other) {
 			if (other == null) {
 				return copy();
 			}
-			objB result = copy();
+			oB result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		objB slice(int start) {
+		oB slice(int start) {
 			if (super.isEmpty()) {
-				return new objB();
+				return new oB();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new objB();
+				return new oB();
 			}
-			objB subMap = new objB();
+			oB subMap = new oB();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -11931,9 +11924,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		objB slice(int start, int end) {
+		oB slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new objB();
+				return new oB();
 			}
 			if (start < 0) {
 				start = 0;
@@ -11946,7 +11939,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			objB subMap = new objB();
+			oB subMap = new oB();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -11956,17 +11949,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objB sliceKeep(int end) {
+		oB sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new objB();
+				return new oB();
 			}
 			if (not(end) || isNeg(end)) {
-				return new objB();
+				return new oB();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			objB subMap = new objB();
+			oB subMap = new oB();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -11976,16 +11969,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		objB sliceEnd(int earlyEnd) {
+		oB sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (objB) super.clone();
+					return (oB) super.clone();
 				} else {
-					return new objB();
+					return new oB();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			objB subMap = new objB();
+			oB subMap = new oB();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -11995,17 +11988,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		objB mapIfPresent(String key, Function<Boolean, Boolean> fn) {
+		oB mapIfPresent(String key, Function<Boolean, Boolean> fn) {
 			if (not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
 			return this;
 		}
-		objB mapIfPresent(boolean value, Function<Boolean, Boolean> fn) {
+		oB mapIfPresent(boolean value, Function<Boolean, Boolean> fn) {
 			return map(value, fn);
 		}
-		objB mapIfPresent(String key,
+		oB mapIfPresent(String key,
 				BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
 			if (not(fn)) {
 				return this;
@@ -12013,7 +12006,7 @@ public class KL {
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		objB map(boolean value, Function<Boolean, Boolean> fn) {
+		oB map(boolean value, Function<Boolean, Boolean> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -12029,7 +12022,7 @@ public class KL {
 			}
 			return this;
 		}
-		objB mapKey(String key, Function<String, String> fn) {
+		oB mapKey(String key, Function<String, String> fn) {
 			if (key == null || fn == null || !this.containsKey(key)) {
 				return this;
 			}
@@ -12041,39 +12034,38 @@ public class KL {
 			}
 			return this;
 		}
-		objB mapKey(Function<String, String> fn) {
+		oB mapKey(Function<String, String> fn) {
 			HashMap<String, Boolean> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		objB map(Function<Boolean, Boolean> fn) {
+		oB map(Function<Boolean, Boolean> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		objB map(
-				BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
+		oB map(BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		objB eachKey(Consumer<String> fn) {
+		oB eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		objB each(Consumer<Boolean> fn) {
+		oB each(Consumer<Boolean> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		objB each(BiConsumer<? super String, ? super Boolean> fn) {
+		oB each(BiConsumer<? super String, ? super Boolean> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		objB combine(objB... others) {
+		oB combine(oB... others) {
 			if (not(others)) {
 				return this;
 			}
-			for (objB other : others) {
+			for (oB other : others) {
 				if (not(other)) {
 					continue;
 				}
@@ -12081,19 +12073,19 @@ public class KL {
 			}
 			return this;
 		}
-		objB union(objB... others) {
+		oB union(oB... others) {
 			combine(others);
 			return this;
 		}
-		objB cat(objB... others) {
+		oB cat(oB... others) {
 			combine(others);
 			return this;
 		}
-		objB concat(objB... others) {
+		oB concat(oB... others) {
 			combine(others);
 			return this;
 		}
-		objB join(objB... others) {
+		oB join(oB... others) {
 			combine(others);
 			return this;
 		}
@@ -12122,61 +12114,59 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
-			String k9, boolean v9, String k10, boolean v10) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
+			boolean v9, String k10, boolean v10) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
-			String k9, boolean v9) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
+			boolean v9) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6, String k7, boolean v7, String k8,
-			boolean v8) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6, String k7, boolean v7) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5,
-			boolean v5) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3) {
-		return new objB(k1, v1, k2, v2, k3, v3);
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3) {
+		return new oB(k1, v1, k2, v2, k3, v3);
 	}
-	public static objB objB(String k1, boolean v1, String k2, boolean v2) {
-		return new objB(k1, v1, k2, v2);
+	public static oB oB(String k1, boolean v1, String k2, boolean v2) {
+		return new oB(k1, v1, k2, v2);
 	}
-	public static objB objB(String k1, boolean v1) {
-		return new objB(k1, v1);
+	public static oB oB(String k1, boolean v1) {
+		return new oB(k1, v1);
 	}
-	public static final class obj extends HashMap<String, Object> {
-		obj() {
+	public static final class o extends HashMap<String, Object> {
+		o() {
 			super();
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+		o(String k1, Object v1, String k2, Object v2, String k3, Object v3,
 				String k4, Object v4, String k5, Object v5, String k6,
 				Object v6, String k7, Object v7, String k8, Object v8,
 				String k9, Object v9, String k10, Object v10) {
@@ -12191,7 +12181,7 @@ public class KL {
 			super.put(k9, v9);
 			super.put(k10, v10);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+		o(String k1, Object v1, String k2, Object v2, String k3, Object v3,
 				String k4, Object v4, String k5, Object v5, String k6,
 				Object v6, String k7, Object v7, String k8, Object v8,
 				String k9, Object v9) {
@@ -12205,7 +12195,7 @@ public class KL {
 			super.put(k8, v8);
 			super.put(k9, v9);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+		o(String k1, Object v1, String k2, Object v2, String k3, Object v3,
 				String k4, Object v4, String k5, Object v5, String k6,
 				Object v6, String k7, Object v7, String k8, Object v8) {
 			super.put(k1, v1);
@@ -12217,7 +12207,7 @@ public class KL {
 			super.put(k7, v7);
 			super.put(k8, v8);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+		o(String k1, Object v1, String k2, Object v2, String k3, Object v3,
 				String k4, Object v4, String k5, Object v5, String k6,
 				Object v6, String k7, Object v7) {
 			super.put(k1, v1);
@@ -12228,7 +12218,7 @@ public class KL {
 			super.put(k6, v6);
 			super.put(k7, v7);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+		o(String k1, Object v1, String k2, Object v2, String k3, Object v3,
 				String k4, Object v4, String k5, Object v5, String k6,
 				Object v6) {
 			super.put(k1, v1);
@@ -12238,7 +12228,7 @@ public class KL {
 			super.put(k5, v5);
 			super.put(k6, v6);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+		o(String k1, Object v1, String k2, Object v2, String k3, Object v3,
 				String k4, Object v4, String k5, Object v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
@@ -12246,29 +12236,29 @@ public class KL {
 			super.put(k4, v4);
 			super.put(k5, v5);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3,
+		o(String k1, Object v1, String k2, Object v2, String k3, Object v3,
 				String k4, Object v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
-		obj(String k1, Object v1, String k2, Object v2, String k3, Object v3) {
+		o(String k1, Object v1, String k2, Object v2, String k3, Object v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 		}
-		obj(String k1, Object v1, String k2, Object v2) {
+		o(String k1, Object v1, String k2, Object v2) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 		}
-		obj(String k, Object v) {
+		o(String k, Object v) {
 			super.put(k, v);
 		}
-		obj copy() {
-			return (obj) super.clone();
+		o copy() {
+			return (o) super.clone();
 		}
-		obj slice() {
+		o slice() {
 			return copy();
 		}
 		Object random() {
@@ -12889,7 +12879,7 @@ public class KL {
 			}
 			return hasValue(o);
 		}
-		obj set(String k, Object v) {
+		o set(String k, Object v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
 			} else {
@@ -12897,21 +12887,21 @@ public class KL {
 			}
 			return this;
 		}
-		obj add(String k, Object v) {
+		o add(String k, Object v) {
 			set(k, v);
 			return this;
 		}
 		Object delete(String k) {
 			return super.remove(k);
 		}
-		obj push(String k, Object v) {
+		o push(String k, Object v) {
 			add(k, v);
 			return this;
 		}
 		Object pop(String k) {
 			return delete(k);
 		}
-		obj update(String k, Object v) {
+		o update(String k, Object v) {
 			set(k, v);
 			return this;
 		}
@@ -12921,15 +12911,15 @@ public class KL {
 		Set<Map.Entry<String, Object>> entries() {
 			return super.entrySet();
 		}
-		boolean compare(obj arrB) {
+		boolean compare(o arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
 			return newLen > oldLen / 2;
 		}
-		obj intersection(obj other) {
+		o intersection(o other) {
 			if (other == null) {
-				return new obj();
+				return new o();
 			}
-			obj result = new obj();
+			o result = new o();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)
 						&& other.get(key).equals(super.get(key))) {
@@ -12938,19 +12928,19 @@ public class KL {
 			}
 			return result;
 		}
-		obj negativeIntersection(obj other) {
+		o negativeIntersection(o other) {
 			if (other == null) {
 				return copy();
 			}
-			obj result = copy();
+			o result = copy();
 			result.keySet().removeAll(other.intersection(copy()).keySet());
 			return result;
 		}
-		obj keyIntersection(obj other) {
+		o keyIntersection(o other) {
 			if (other == null) {
-				return new obj();
+				return new o();
 			}
-			obj result = new obj();
+			o result = new o();
 			for (String key : super.keySet()) {
 				if (other.containsKey(key)) {
 					result.put(key, super.get(key));
@@ -12958,19 +12948,19 @@ public class KL {
 			}
 			return result;
 		}
-		obj negativeKeyIntersection(obj other) {
+		o negativeKeyIntersection(o other) {
 			if (other == null) {
 				return copy();
 			}
-			obj result = copy();
+			o result = copy();
 			result.keySet().removeAll(other.keySet());
 			return result;
 		}
-		obj valueIntersection(obj other) {
+		o valueIntersection(o other) {
 			if (other == null) {
-				return new obj();
+				return new o();
 			}
-			obj result = new obj();
+			o result = new o();
 			for (String key1 : super.keySet()) {
 				for (String key2 : other.keySet()) {
 					if (super.get(key1).equals(other.get(key2))) {
@@ -12980,26 +12970,26 @@ public class KL {
 			}
 			return result;
 		}
-		obj negativeValueIntersection(obj other) {
+		o negativeValueIntersection(o other) {
 			if (other == null) {
 				return copy();
 			}
-			obj result = copy();
+			o result = copy();
 			result.entrySet()
 					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
-		obj slice(int start) {
+		o slice(int start) {
 			if (super.isEmpty()) {
-				return new obj();
+				return new o();
 			}
 			if (start < 0) {
 				start = 0;
 			}
 			if (start >= super.size()) {
-				return new obj();
+				return new o();
 			}
-			obj subMap = new obj();
+			o subMap = new o();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -13009,9 +12999,9 @@ public class KL {
 			}
 			return subMap;
 		}
-		obj slice(int start, int end) {
+		o slice(int start, int end) {
 			if (super.isEmpty()) {
-				return new obj();
+				return new o();
 			}
 			if (start < 0) {
 				start = 0;
@@ -13024,7 +13014,7 @@ public class KL {
 				start = end;
 				end = temp;
 			}
-			obj subMap = new obj();
+			o subMap = new o();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start && index < end) {
@@ -13034,17 +13024,17 @@ public class KL {
 			}
 			return subMap;
 		}
-		obj sliceKeep(int end) {
+		o sliceKeep(int end) {
 			if (super.isEmpty()) {
-				return new obj();
+				return new o();
 			}
 			if (not(end) || isNeg(end)) {
-				return new obj();
+				return new o();
 			}
 			if (end > super.size()) {
 				end = super.size();
 			}
-			obj subMap = new obj();
+			o subMap = new o();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index < end) {
@@ -13054,16 +13044,16 @@ public class KL {
 			}
 			return subMap;
 		}
-		obj sliceEnd(int earlyEnd) {
+		o sliceEnd(int earlyEnd) {
 			if (super.isEmpty() || earlyEnd <= 0 || earlyEnd > super.size()) {
 				if (earlyEnd <= 0) {
-					return (obj) super.clone();
+					return (o) super.clone();
 				} else {
-					return new obj();
+					return new o();
 				}
 			}
 			int start = super.size() - earlyEnd;
-			obj subMap = new obj();
+			o subMap = new o();
 			int index = 0;
 			for (String key : super.keySet()) {
 				if (index >= start) {
@@ -13073,10 +13063,10 @@ public class KL {
 			}
 			return subMap;
 		}
-		obj mapIfPresent(Object value, Function<Object, Object> fn) {
+		o mapIfPresent(Object value, Function<Object, Object> fn) {
 			return map(value, fn);
 		}
-		obj mapIfPresent(String key,
+		o mapIfPresent(String key,
 				BiFunction<? super String, ? super Object, ? extends Object> fn) {
 			if (not(fn)) {
 				return this;
@@ -13084,7 +13074,7 @@ public class KL {
 			super.computeIfPresent(key, fn);
 			return this;
 		}
-		obj map(Object value, Function<Object, Object> fn) {
+		o map(Object value, Function<Object, Object> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
@@ -13100,7 +13090,7 @@ public class KL {
 			}
 			return this;
 		}
-		obj mapKey(String key, Function<String, String> fn) {
+		o mapKey(String key, Function<String, String> fn) {
 			if (not(key) || not(fn) || !this.containsKey(key)) {
 				return this;
 			}
@@ -13112,38 +13102,38 @@ public class KL {
 			}
 			return this;
 		}
-		obj mapKey(Function<String, String> fn) {
+		o mapKey(Function<String, String> fn) {
 			HashMap<String, Object> newMap = new HashMap<>();
 			super.forEach((k, v) -> newMap.put(fn.apply(k), v));
 			super.clear();
 			super.putAll(newMap);
 			return this;
 		}
-		obj map(Function<Object, Object> fn) {
+		o map(Function<Object, Object> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
 		}
-		obj map(BiFunction<? super String, ? super Object, ? extends Object> fn) {
+		o map(BiFunction<? super String, ? super Object, ? extends Object> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
-		obj eachKey(Consumer<String> fn) {
+		o eachKey(Consumer<String> fn) {
 			super.keySet().forEach(fn);
 			return this;
 		}
-		obj each(Consumer<Object> fn) {
+		o each(Consumer<Object> fn) {
 			super.values().forEach(fn);
 			return this;
 		}
-		obj each(BiConsumer<? super String, ? super Object> fn) {
+		o each(BiConsumer<? super String, ? super Object> fn) {
 			super.forEach(fn);
 			return this;
 		}
-		obj combine(obj... others) {
+		o combine(o... others) {
 			if (not(others)) {
 				return this;
 			}
-			for (obj other : others) {
+			for (o other : others) {
 				if (not(other)) {
 					continue;
 				}
@@ -13151,19 +13141,19 @@ public class KL {
 			}
 			return this;
 		}
-		obj union(obj... others) {
+		o union(o... others) {
 			combine(others);
 			return this;
 		}
-		obj cat(obj... others) {
+		o cat(o... others) {
 			combine(others);
 			return this;
 		}
-		obj concat(obj... others) {
+		o concat(o... others) {
 			combine(others);
 			return this;
 		}
-		obj join(obj... others) {
+		o join(o... others) {
 			combine(others);
 			return this;
 		}
@@ -13192,53 +13182,53 @@ public class KL {
 			return super.size();
 		}
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
 			Object v3, String k4, Object v4, String k5, Object v5, String k6,
 			Object v6, String k7, Object v7, String k8, Object v8, String k9,
 			Object v9, String k10, Object v10) {
-		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-				k8, v8, k9, v9, k10, v10);
+		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+				v8, k9, v9, k10, v10);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
 			Object v3, String k4, Object v4, String k5, Object v5, String k6,
 			Object v6, String k7, Object v7, String k8, Object v8, String k9,
 			Object v9) {
-		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-				k8, v8, k9, v9);
+		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+				v8, k9, v9);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
 			Object v3, String k4, Object v4, String k5, Object v5, String k6,
 			Object v6, String k7, Object v7, String k8, Object v8) {
-		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-				k8, v8);
+		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+				v8);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
 			Object v3, String k4, Object v4, String k5, Object v5, String k6,
 			Object v6, String k7, Object v7) {
-		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
 			Object v3, String k4, Object v4, String k5, Object v5, String k6,
 			Object v6) {
-		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
 			Object v3, String k4, Object v4, String k5, Object v5) {
-		return new obj(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
 			Object v3, String k4, Object v4) {
-		return new obj(k1, v1, k2, v2, k3, v3, k4, v4);
+		return new o(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2, String k3,
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
 			Object v3) {
-		return new obj(k1, v1, k2, v2, k3, v3);
+		return new o(k1, v1, k2, v2, k3, v3);
 	}
-	public static obj obj(String k1, Object v1, String k2, Object v2) {
-		return new obj(k1, v1, k2, v2);
+	public static o o(String k1, Object v1, String k2, Object v2) {
+		return new o(k1, v1, k2, v2);
 	}
-	public static obj obj(String k1, Object v1) {
-		return new obj(k1, v1);
+	public static o o(String k1, Object v1) {
+		return new o(k1, v1);
 	}
 	public static class tree<Key, Value> extends TreeMap<Key, Value> {
 		public static final long serialVersionUID = 1L;
@@ -16125,8 +16115,8 @@ public class KL {
 			return this;
 		}
 		strArr unique() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<String> uniqueSet = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -16196,8 +16186,8 @@ public class KL {
 			return this;
 		}
 		strArr shuffle() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<String> set2 = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -16573,8 +16563,8 @@ public class KL {
 			return this;
 		}
 		intArr unique() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Integer> uniqueSet = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -16630,8 +16620,8 @@ public class KL {
 			return nthlast(1);
 		}
 		intArr shuffle() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Integer> set2 = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -17015,8 +17005,8 @@ public class KL {
 			return this;
 		}
 		longArr unique() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Long> uniqueSet = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -17086,8 +17076,8 @@ public class KL {
 			return this;
 		}
 		longArr shuffle() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Long> set2 = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -17474,8 +17464,8 @@ public class KL {
 			return this;
 		}
 		fltArr unique() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Float> uniqueSet = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -17545,8 +17535,8 @@ public class KL {
 			return this;
 		}
 		fltArr shuffle() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Float> set2 = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -17928,8 +17918,8 @@ public class KL {
 			return this;
 		}
 		dblArr unique() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Double> uniqueSet = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -17999,8 +17989,8 @@ public class KL {
 			return this;
 		}
 		dblArr shuffle() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Double> set2 = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -18382,8 +18372,8 @@ public class KL {
 			return this;
 		}
 		boolArr unique() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Boolean> uniqueSet = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -18453,8 +18443,8 @@ public class KL {
 			return this;
 		}
 		boolArr shuffle() {
-			Object obj = super.clone();
-			Collection<?> collection = (Collection<?>) obj;
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
 			Set<Object> set = new LinkedHashSet<>(collection);
 			Set<Boolean> set2 = new LinkedHashSet<>();
 			for (Object el : set) {
@@ -18737,7 +18727,7 @@ public class KL {
 		if (not(fn)) {
 			return false;
 		}
-		new Thread(fn).run();
+		new Thread(fn).start();
 		return true;
 	}
 	private static final Map<Integer, Thread> timeoutThreads = new ConcurrentHashMap<>();
@@ -18838,25 +18828,25 @@ public class KL {
 			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
 			Runnable sol10) {
 		if (is(cond1)) {
-			new Thread(sol1).run();
+			new Thread(sol1).start();
 		} else if (is(cond2)) {
-			new Thread(sol2).run();
+			new Thread(sol2).start();
 		} else if (is(cond3)) {
-			new Thread(sol3).run();
+			new Thread(sol3).start();
 		} else if (is(cond4)) {
-			new Thread(sol4).run();
+			new Thread(sol4).start();
 		} else if (is(cond5)) {
-			new Thread(sol5).run();
+			new Thread(sol5).start();
 		} else if (is(cond6)) {
-			new Thread(sol6).run();
+			new Thread(sol6).start();
 		} else if (is(cond7)) {
-			new Thread(sol7).run();
+			new Thread(sol7).start();
 		} else if (is(cond8)) {
-			new Thread(sol8).run();
+			new Thread(sol8).start();
 		} else if (is(cond9)) {
-			new Thread(sol9).run();
+			new Thread(sol9).start();
 		} else if (is(cond10)) {
-			new Thread(sol10).run();
+			new Thread(sol10).start();
 		}
 	}
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
@@ -18984,35 +18974,35 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl > middleware || srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl > middleware || srcDbl >= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl > middleware || srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl > middleware || srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl > middleware || srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19021,35 +19011,35 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl >= middleware || srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl >= middleware || srcDbl >= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl >= middleware || srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl >= middleware || srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl >= middleware || srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19058,7 +19048,7 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl < middleware || srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19066,28 +19056,28 @@ public class KL {
 							if (srcDbl < middleware || srcDbl >= middlewareB) {
 
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl < middleware || srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl < middleware || srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl < middleware || srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19096,35 +19086,35 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl <= middleware || srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl <= middleware || srcDbl >= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl <= middleware || srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl <= middleware || srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl <= middleware || srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19133,35 +19123,35 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl == middleware || srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl == middleware || srcDbl >= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl == middleware || srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl == middleware || srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl == middleware || srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19172,35 +19162,35 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl > middleware && srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl > middleware && srcDbl >= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl > middleware && srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl > middleware && srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl > middleware && srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19209,35 +19199,35 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl >= middleware && srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl >= middleware && srcDbl >= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl >= middleware && srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl >= middleware && srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl >= middleware && srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19246,7 +19236,7 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl < middleware && srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19254,28 +19244,28 @@ public class KL {
 							if (srcDbl < middleware && srcDbl >= middlewareB) {
 
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl < middleware && srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl < middleware && srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl < middleware && srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19284,35 +19274,35 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl <= middleware && srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl <= middleware && srcDbl >= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl <= middleware && srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl <= middleware && srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl <= middleware && srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19321,35 +19311,35 @@ public class KL {
 						if (eq(cond1B, ">")) {
 							if (srcDbl == middleware && srcDbl > middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, ">=")) {
 							if (srcDbl == middleware && srcDbl >= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<")) {
 							if (srcDbl == middleware && srcDbl < middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "<=")) {
 							if (srcDbl == middleware && srcDbl <= middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
 						} else if (eq(cond1B, "==")) {
 							if (srcDbl == middleware && srcDbl == middlewareB) {
 								if (!isNull(sol1)) {
-									new Thread(sol1).run();
+									new Thread(sol1).start();
 								}
 								return true;
 							}
@@ -19359,35 +19349,35 @@ public class KL {
 					if (eq(cond1, ">")) {
 						if (srcDbl > middleware) {
 							if (!isNull(sol1)) {
-								new Thread(sol1).run();
+								new Thread(sol1).start();
 							}
 							return true;
 						}
 					} else if (eq(cond1, ">=")) {
 						if (srcDbl >= middleware) {
 							if (!isNull(sol1)) {
-								new Thread(sol1).run();
+								new Thread(sol1).start();
 							}
 							return true;
 						}
 					} else if (eq(cond1, "<")) {
 						if (srcDbl < middleware) {
 							if (!isNull(sol1)) {
-								new Thread(sol1).run();
+								new Thread(sol1).start();
 							}
 							return true;
 						}
 					} else if (eq(cond1, "<=")) {
 						if (srcDbl <= middleware) {
 							if (!isNull(sol1)) {
-								new Thread(sol1).run();
+								new Thread(sol1).start();
 							}
 							return true;
 						}
 					} else if (eq(cond1, "==")) {
 						if (srcDbl == middleware) {
 							if (!isNull(sol1)) {
-								new Thread(sol1).run();
+								new Thread(sol1).start();
 							}
 							return true;
 						}
@@ -19396,14 +19386,14 @@ public class KL {
 			} else if (cond1 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond1)))) {
 					if (!isNull(sol1)) {
-						new Thread(sol1).run();
+						new Thread(sol1).start();
 					}
 					return true;
 				}
 			} else if (cond1 instanceof Character) {
 				if (eq((char) src, (char) cond1)) {
 					if (!isNull(sol1)) {
-						new Thread(sol1).run();
+						new Thread(sol1).start();
 					}
 					return true;
 				}
@@ -19462,7 +19452,7 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl > middleware2 || srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19470,14 +19460,14 @@ public class KL {
 							if (srcDbl > middleware2
 									|| srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl > middleware2 || srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19485,7 +19475,7 @@ public class KL {
 							if (srcDbl > middleware2
 									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19493,7 +19483,7 @@ public class KL {
 							if (srcDbl > middleware2
 									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19503,7 +19493,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									|| srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19511,7 +19501,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									|| srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19519,7 +19509,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									|| srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19527,7 +19517,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19535,7 +19525,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19544,7 +19534,7 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl < middleware2 || srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19553,14 +19543,14 @@ public class KL {
 									|| srcDbl >= middleware2B) {
 
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl < middleware2 || srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19568,7 +19558,7 @@ public class KL {
 							if (srcDbl < middleware2
 									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19576,7 +19566,7 @@ public class KL {
 							if (srcDbl < middleware2
 									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19586,7 +19576,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									|| srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19594,7 +19584,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									|| srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19602,7 +19592,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									|| srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19610,7 +19600,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19618,7 +19608,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19628,7 +19618,7 @@ public class KL {
 							if (srcDbl == middleware2
 									|| srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19636,7 +19626,7 @@ public class KL {
 							if (srcDbl == middleware2
 									|| srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19644,7 +19634,7 @@ public class KL {
 							if (srcDbl == middleware2
 									|| srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19652,7 +19642,7 @@ public class KL {
 							if (srcDbl == middleware2
 									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19660,7 +19650,7 @@ public class KL {
 							if (srcDbl == middleware2
 									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19671,7 +19661,7 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl > middleware2 && srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19679,14 +19669,14 @@ public class KL {
 							if (srcDbl > middleware2
 									&& srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl > middleware2 && srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19694,7 +19684,7 @@ public class KL {
 							if (srcDbl > middleware2
 									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19702,7 +19692,7 @@ public class KL {
 							if (srcDbl > middleware2
 									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19712,7 +19702,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									&& srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19720,7 +19710,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									&& srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19728,7 +19718,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									&& srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19736,7 +19726,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19744,7 +19734,7 @@ public class KL {
 							if (srcDbl >= middleware2
 									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19753,7 +19743,7 @@ public class KL {
 						if (eq(cond2B, ">")) {
 							if (srcDbl < middleware2 && srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19762,14 +19752,14 @@ public class KL {
 									&& srcDbl >= middleware2B) {
 
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
 							if (srcDbl < middleware2 && srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19777,7 +19767,7 @@ public class KL {
 							if (srcDbl < middleware2
 									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19785,7 +19775,7 @@ public class KL {
 							if (srcDbl < middleware2
 									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19795,7 +19785,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									&& srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19803,7 +19793,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									&& srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19811,7 +19801,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									&& srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19819,7 +19809,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19827,7 +19817,7 @@ public class KL {
 							if (srcDbl <= middleware2
 									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19837,7 +19827,7 @@ public class KL {
 							if (srcDbl == middleware2
 									&& srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19845,7 +19835,7 @@ public class KL {
 							if (srcDbl == middleware2
 									&& srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19853,7 +19843,7 @@ public class KL {
 							if (srcDbl == middleware2
 									&& srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19861,7 +19851,7 @@ public class KL {
 							if (srcDbl == middleware2
 									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19869,7 +19859,7 @@ public class KL {
 							if (srcDbl == middleware2
 									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
-									new Thread(sol2).run();
+									new Thread(sol2).start();
 								}
 								return true;
 							}
@@ -19879,41 +19869,41 @@ public class KL {
 					if (eq(cond2, ">")) {
 						if (srcDbl > middleware2) {
 							if (!isNull(sol2)) {
-								new Thread(sol2).run();
+								new Thread(sol2).start();
 							}
 							return true;
 						}
 					} else if (eq(cond2, ">=")) {
 						if (srcDbl >= middleware2) {
 							if (!isNull(sol2)) {
-								new Thread(sol2).run();
+								new Thread(sol2).start();
 							}
 							return true;
 						}
 					} else if (eq(cond2, "<")) {
 						if (srcDbl < middleware2) {
 							if (!isNull(sol2)) {
-								new Thread(sol2).run();
+								new Thread(sol2).start();
 							}
 							return true;
 						}
 					} else if (eq(cond2, "<=")) {
 						if (srcDbl <= middleware2) {
 							if (!isNull(sol2)) {
-								new Thread(sol2).run();
+								new Thread(sol2).start();
 							}
 							return true;
 						}
 					} else if (eq(cond2, "==")) {
 						if (srcDbl == middleware2) {
 							if (!isNull(sol2)) {
-								new Thread(sol2).run();
+								new Thread(sol2).start();
 							}
 							return true;
 						}
 					} else if (eq(cond2, "else")) {
 						if (!isNull(sol2)) {
-							new Thread(sol2).run();
+							new Thread(sol2).start();
 						}
 						return false;
 					}
@@ -19921,14 +19911,14 @@ public class KL {
 			} else if (cond2 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond2)))) {
 					if (!isNull(sol2)) {
-						new Thread(sol2).run();
+						new Thread(sol2).start();
 					}
 					return true;
 				}
 			} else if (cond2 instanceof Character) {
 				if (eq((char) src, (char) cond2)) {
 					if (!isNull(sol2)) {
-						new Thread(sol2).run();
+						new Thread(sol2).start();
 					}
 					return true;
 				}
@@ -19988,7 +19978,7 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl > middleware3 || srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -19996,14 +19986,14 @@ public class KL {
 							if (srcDbl > middleware3
 									|| srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl > middleware3 || srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20011,7 +20001,7 @@ public class KL {
 							if (srcDbl > middleware3
 									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20019,7 +20009,7 @@ public class KL {
 							if (srcDbl > middleware3
 									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20029,7 +20019,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									|| srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20037,7 +20027,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									|| srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20045,7 +20035,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									|| srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20053,7 +20043,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20061,7 +20051,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20070,7 +20060,7 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl < middleware3 || srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20079,14 +20069,14 @@ public class KL {
 									|| srcDbl >= middleware3B) {
 
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl < middleware3 || srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20094,7 +20084,7 @@ public class KL {
 							if (srcDbl < middleware3
 									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20102,7 +20092,7 @@ public class KL {
 							if (srcDbl < middleware3
 									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20112,7 +20102,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									|| srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20120,7 +20110,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									|| srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20128,7 +20118,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									|| srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20136,7 +20126,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20144,7 +20134,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20154,7 +20144,7 @@ public class KL {
 							if (srcDbl == middleware3
 									|| srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20162,7 +20152,7 @@ public class KL {
 							if (srcDbl == middleware3
 									|| srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20170,7 +20160,7 @@ public class KL {
 							if (srcDbl == middleware3
 									|| srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20178,7 +20168,7 @@ public class KL {
 							if (srcDbl == middleware3
 									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20186,7 +20176,7 @@ public class KL {
 							if (srcDbl == middleware3
 									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20197,7 +20187,7 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl > middleware3 && srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20205,14 +20195,14 @@ public class KL {
 							if (srcDbl > middleware3
 									&& srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl > middleware3 && srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20220,7 +20210,7 @@ public class KL {
 							if (srcDbl > middleware3
 									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20228,7 +20218,7 @@ public class KL {
 							if (srcDbl > middleware3
 									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20238,7 +20228,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									&& srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20246,7 +20236,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									&& srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20254,7 +20244,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									&& srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20262,7 +20252,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20270,7 +20260,7 @@ public class KL {
 							if (srcDbl >= middleware3
 									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20279,7 +20269,7 @@ public class KL {
 						if (eq(cond3B, ">")) {
 							if (srcDbl < middleware3 && srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20288,14 +20278,14 @@ public class KL {
 									&& srcDbl >= middleware3B) {
 
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
 							if (srcDbl < middleware3 && srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20303,7 +20293,7 @@ public class KL {
 							if (srcDbl < middleware3
 									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20311,7 +20301,7 @@ public class KL {
 							if (srcDbl < middleware3
 									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20321,7 +20311,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									&& srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20329,7 +20319,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									&& srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20337,7 +20327,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									&& srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20345,7 +20335,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20353,7 +20343,7 @@ public class KL {
 							if (srcDbl <= middleware3
 									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20363,7 +20353,7 @@ public class KL {
 							if (srcDbl == middleware3
 									&& srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20371,7 +20361,7 @@ public class KL {
 							if (srcDbl == middleware3
 									&& srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20379,7 +20369,7 @@ public class KL {
 							if (srcDbl == middleware3
 									&& srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20387,7 +20377,7 @@ public class KL {
 							if (srcDbl == middleware3
 									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20395,7 +20385,7 @@ public class KL {
 							if (srcDbl == middleware3
 									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
-									new Thread(sol3).run();
+									new Thread(sol3).start();
 								}
 								return true;
 							}
@@ -20405,41 +20395,41 @@ public class KL {
 					if (eq(cond3, ">")) {
 						if (srcDbl > middleware3) {
 							if (!isNull(sol3)) {
-								new Thread(sol3).run();
+								new Thread(sol3).start();
 							}
 							return true;
 						}
 					} else if (eq(cond3, ">=")) {
 						if (srcDbl >= middleware3) {
 							if (!isNull(sol3)) {
-								new Thread(sol3).run();
+								new Thread(sol3).start();
 							}
 							return true;
 						}
 					} else if (eq(cond3, "<")) {
 						if (srcDbl < middleware3) {
 							if (!isNull(sol3)) {
-								new Thread(sol3).run();
+								new Thread(sol3).start();
 							}
 							return true;
 						}
 					} else if (eq(cond3, "<=")) {
 						if (srcDbl <= middleware3) {
 							if (!isNull(sol3)) {
-								new Thread(sol3).run();
+								new Thread(sol3).start();
 							}
 							return true;
 						}
 					} else if (eq(cond3, "==")) {
 						if (srcDbl == middleware3) {
 							if (!isNull(sol3)) {
-								new Thread(sol3).run();
+								new Thread(sol3).start();
 							}
 							return true;
 						}
 					} else if (eq(cond3, "else")) {
 						if (!isNull(sol3)) {
-							new Thread(sol3).run();
+							new Thread(sol3).start();
 						}
 						return false;
 					}
@@ -20447,14 +20437,14 @@ public class KL {
 			} else if (cond3 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond3)))) {
 					if (!isNull(sol3)) {
-						new Thread(sol3).run();
+						new Thread(sol3).start();
 					}
 					return true;
 				}
 			} else if (cond3 instanceof Character) {
 				if (eq((char) src, (char) cond3)) {
 					if (!isNull(sol3)) {
-						new Thread(sol3).run();
+						new Thread(sol3).start();
 					}
 					return true;
 				}
@@ -20514,7 +20504,7 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl > middleware4 || srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20522,14 +20512,14 @@ public class KL {
 							if (srcDbl > middleware4
 									|| srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl > middleware4 || srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20537,7 +20527,7 @@ public class KL {
 							if (srcDbl > middleware4
 									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20545,7 +20535,7 @@ public class KL {
 							if (srcDbl > middleware4
 									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20555,7 +20545,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									|| srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20563,7 +20553,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									|| srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20571,7 +20561,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									|| srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20579,7 +20569,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20587,7 +20577,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20596,7 +20586,7 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl < middleware4 || srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20605,14 +20595,14 @@ public class KL {
 									|| srcDbl >= middleware4B) {
 
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl < middleware4 || srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20620,7 +20610,7 @@ public class KL {
 							if (srcDbl < middleware4
 									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20628,7 +20618,7 @@ public class KL {
 							if (srcDbl < middleware4
 									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20638,7 +20628,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									|| srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20646,7 +20636,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									|| srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20654,7 +20644,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									|| srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20662,7 +20652,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20670,7 +20660,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20680,7 +20670,7 @@ public class KL {
 							if (srcDbl == middleware4
 									|| srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20688,7 +20678,7 @@ public class KL {
 							if (srcDbl == middleware4
 									|| srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20696,7 +20686,7 @@ public class KL {
 							if (srcDbl == middleware4
 									|| srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20704,7 +20694,7 @@ public class KL {
 							if (srcDbl == middleware4
 									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20712,7 +20702,7 @@ public class KL {
 							if (srcDbl == middleware4
 									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20723,7 +20713,7 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl > middleware4 && srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20731,14 +20721,14 @@ public class KL {
 							if (srcDbl > middleware4
 									&& srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl > middleware4 && srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20746,7 +20736,7 @@ public class KL {
 							if (srcDbl > middleware4
 									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20754,7 +20744,7 @@ public class KL {
 							if (srcDbl > middleware4
 									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20764,7 +20754,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									&& srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20772,7 +20762,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									&& srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20780,7 +20770,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									&& srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20788,7 +20778,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20796,7 +20786,7 @@ public class KL {
 							if (srcDbl >= middleware4
 									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20805,7 +20795,7 @@ public class KL {
 						if (eq(cond4B, ">")) {
 							if (srcDbl < middleware4 && srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20814,14 +20804,14 @@ public class KL {
 									&& srcDbl >= middleware4B) {
 
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
 							if (srcDbl < middleware4 && srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20829,7 +20819,7 @@ public class KL {
 							if (srcDbl < middleware4
 									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20837,7 +20827,7 @@ public class KL {
 							if (srcDbl < middleware4
 									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20847,7 +20837,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									&& srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20855,7 +20845,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									&& srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20863,7 +20853,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									&& srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20871,7 +20861,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20879,7 +20869,7 @@ public class KL {
 							if (srcDbl <= middleware4
 									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20889,7 +20879,7 @@ public class KL {
 							if (srcDbl == middleware4
 									&& srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20897,7 +20887,7 @@ public class KL {
 							if (srcDbl == middleware4
 									&& srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20905,7 +20895,7 @@ public class KL {
 							if (srcDbl == middleware4
 									&& srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20913,7 +20903,7 @@ public class KL {
 							if (srcDbl == middleware4
 									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20921,7 +20911,7 @@ public class KL {
 							if (srcDbl == middleware4
 									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
-									new Thread(sol4).run();
+									new Thread(sol4).start();
 								}
 								return true;
 							}
@@ -20931,41 +20921,41 @@ public class KL {
 					if (eq(cond4, ">")) {
 						if (srcDbl > middleware4) {
 							if (!isNull(sol4)) {
-								new Thread(sol4).run();
+								new Thread(sol4).start();
 							}
 							return true;
 						}
 					} else if (eq(cond4, ">=")) {
 						if (srcDbl >= middleware4) {
 							if (!isNull(sol4)) {
-								new Thread(sol4).run();
+								new Thread(sol4).start();
 							}
 							return true;
 						}
 					} else if (eq(cond4, "<")) {
 						if (srcDbl < middleware4) {
 							if (!isNull(sol4)) {
-								new Thread(sol4).run();
+								new Thread(sol4).start();
 							}
 							return true;
 						}
 					} else if (eq(cond4, "<=")) {
 						if (srcDbl <= middleware4) {
 							if (!isNull(sol4)) {
-								new Thread(sol4).run();
+								new Thread(sol4).start();
 							}
 							return true;
 						}
 					} else if (eq(cond4, "==")) {
 						if (srcDbl == middleware4) {
 							if (!isNull(sol4)) {
-								new Thread(sol4).run();
+								new Thread(sol4).start();
 							}
 							return true;
 						}
 					} else if (eq(cond4, "else")) {
 						if (!isNull(sol4)) {
-							new Thread(sol4).run();
+							new Thread(sol4).start();
 						}
 						return false;
 					}
@@ -20973,14 +20963,14 @@ public class KL {
 			} else if (cond4 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond4)))) {
 					if (!isNull(sol4)) {
-						new Thread(sol4).run();
+						new Thread(sol4).start();
 					}
 					return true;
 				}
 			} else if (cond4 instanceof Character) {
 				if (eq((char) src, (char) cond4)) {
 					if (!isNull(sol4)) {
-						new Thread(sol4).run();
+						new Thread(sol4).start();
 					}
 					return true;
 				}
@@ -21040,7 +21030,7 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl > middleware5 || srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21048,14 +21038,14 @@ public class KL {
 							if (srcDbl > middleware5
 									|| srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl > middleware5 || srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21063,7 +21053,7 @@ public class KL {
 							if (srcDbl > middleware5
 									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21071,7 +21061,7 @@ public class KL {
 							if (srcDbl > middleware5
 									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21081,7 +21071,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									|| srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21089,7 +21079,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									|| srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21097,7 +21087,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									|| srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21105,7 +21095,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21113,7 +21103,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21122,7 +21112,7 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl < middleware5 || srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21131,14 +21121,14 @@ public class KL {
 									|| srcDbl >= middleware5B) {
 
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl < middleware5 || srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21146,7 +21136,7 @@ public class KL {
 							if (srcDbl < middleware5
 									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21154,7 +21144,7 @@ public class KL {
 							if (srcDbl < middleware5
 									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21164,7 +21154,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									|| srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21172,7 +21162,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									|| srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21180,7 +21170,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									|| srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21188,7 +21178,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21196,7 +21186,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21206,7 +21196,7 @@ public class KL {
 							if (srcDbl == middleware5
 									|| srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21214,7 +21204,7 @@ public class KL {
 							if (srcDbl == middleware5
 									|| srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21222,7 +21212,7 @@ public class KL {
 							if (srcDbl == middleware5
 									|| srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21230,7 +21220,7 @@ public class KL {
 							if (srcDbl == middleware5
 									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21238,7 +21228,7 @@ public class KL {
 							if (srcDbl == middleware5
 									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21249,7 +21239,7 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl > middleware5 && srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21257,14 +21247,14 @@ public class KL {
 							if (srcDbl > middleware5
 									&& srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl > middleware5 && srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21272,7 +21262,7 @@ public class KL {
 							if (srcDbl > middleware5
 									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21280,7 +21270,7 @@ public class KL {
 							if (srcDbl > middleware5
 									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21290,7 +21280,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									&& srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21298,7 +21288,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									&& srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21306,7 +21296,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									&& srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21314,7 +21304,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21322,7 +21312,7 @@ public class KL {
 							if (srcDbl >= middleware5
 									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21331,7 +21321,7 @@ public class KL {
 						if (eq(cond5B, ">")) {
 							if (srcDbl < middleware5 && srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21340,14 +21330,14 @@ public class KL {
 									&& srcDbl >= middleware5B) {
 
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
 							if (srcDbl < middleware5 && srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21355,7 +21345,7 @@ public class KL {
 							if (srcDbl < middleware5
 									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21363,7 +21353,7 @@ public class KL {
 							if (srcDbl < middleware5
 									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21373,7 +21363,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									&& srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21381,7 +21371,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									&& srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21389,7 +21379,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									&& srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21397,7 +21387,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21405,7 +21395,7 @@ public class KL {
 							if (srcDbl <= middleware5
 									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21415,7 +21405,7 @@ public class KL {
 							if (srcDbl == middleware5
 									&& srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21423,7 +21413,7 @@ public class KL {
 							if (srcDbl == middleware5
 									&& srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21431,7 +21421,7 @@ public class KL {
 							if (srcDbl == middleware5
 									&& srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21439,7 +21429,7 @@ public class KL {
 							if (srcDbl == middleware5
 									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21447,7 +21437,7 @@ public class KL {
 							if (srcDbl == middleware5
 									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
-									new Thread(sol5).run();
+									new Thread(sol5).start();
 								}
 								return true;
 							}
@@ -21457,41 +21447,41 @@ public class KL {
 					if (eq(cond5, ">")) {
 						if (srcDbl > middleware5) {
 							if (!isNull(sol5)) {
-								new Thread(sol5).run();
+								new Thread(sol5).start();
 							}
 							return true;
 						}
 					} else if (eq(cond5, ">=")) {
 						if (srcDbl >= middleware5) {
 							if (!isNull(sol5)) {
-								new Thread(sol5).run();
+								new Thread(sol5).start();
 							}
 							return true;
 						}
 					} else if (eq(cond5, "<")) {
 						if (srcDbl < middleware5) {
 							if (!isNull(sol5)) {
-								new Thread(sol5).run();
+								new Thread(sol5).start();
 							}
 							return true;
 						}
 					} else if (eq(cond5, "<=")) {
 						if (srcDbl <= middleware5) {
 							if (!isNull(sol5)) {
-								new Thread(sol5).run();
+								new Thread(sol5).start();
 							}
 							return true;
 						}
 					} else if (eq(cond5, "==")) {
 						if (srcDbl == middleware5) {
 							if (!isNull(sol5)) {
-								new Thread(sol5).run();
+								new Thread(sol5).start();
 							}
 							return true;
 						}
 					} else if (eq(cond5, "else")) {
 						if (!isNull(sol5)) {
-							new Thread(sol5).run();
+							new Thread(sol5).start();
 						}
 						return false;
 					}
@@ -21499,14 +21489,14 @@ public class KL {
 			} else if (cond5 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond5)))) {
 					if (!isNull(sol5)) {
-						new Thread(sol5).run();
+						new Thread(sol5).start();
 					}
 					return true;
 				}
 			} else if (cond5 instanceof Character) {
 				if (eq((char) src, (char) cond5)) {
 					if (!isNull(sol5)) {
-						new Thread(sol5).run();
+						new Thread(sol5).start();
 					}
 					return true;
 				}
@@ -21566,7 +21556,7 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl > middleware6 || srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21574,14 +21564,14 @@ public class KL {
 							if (srcDbl > middleware6
 									|| srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl > middleware6 || srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21589,7 +21579,7 @@ public class KL {
 							if (srcDbl > middleware6
 									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21597,7 +21587,7 @@ public class KL {
 							if (srcDbl > middleware6
 									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21607,7 +21597,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									|| srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21615,7 +21605,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									|| srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21623,7 +21613,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									|| srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21631,7 +21621,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21639,7 +21629,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21648,7 +21638,7 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl < middleware6 || srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21657,14 +21647,14 @@ public class KL {
 									|| srcDbl >= middleware6B) {
 
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl < middleware6 || srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21672,7 +21662,7 @@ public class KL {
 							if (srcDbl < middleware6
 									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21680,7 +21670,7 @@ public class KL {
 							if (srcDbl < middleware6
 									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21690,7 +21680,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									|| srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21698,7 +21688,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									|| srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21706,7 +21696,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									|| srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21714,7 +21704,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21722,7 +21712,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21732,7 +21722,7 @@ public class KL {
 							if (srcDbl == middleware6
 									|| srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21740,7 +21730,7 @@ public class KL {
 							if (srcDbl == middleware6
 									|| srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21748,7 +21738,7 @@ public class KL {
 							if (srcDbl == middleware6
 									|| srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21756,7 +21746,7 @@ public class KL {
 							if (srcDbl == middleware6
 									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21764,7 +21754,7 @@ public class KL {
 							if (srcDbl == middleware6
 									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21775,7 +21765,7 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl > middleware6 && srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21783,14 +21773,14 @@ public class KL {
 							if (srcDbl > middleware6
 									&& srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl > middleware6 && srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21798,7 +21788,7 @@ public class KL {
 							if (srcDbl > middleware6
 									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21806,7 +21796,7 @@ public class KL {
 							if (srcDbl > middleware6
 									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21816,7 +21806,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									&& srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21824,7 +21814,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									&& srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21832,7 +21822,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									&& srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21840,7 +21830,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21848,7 +21838,7 @@ public class KL {
 							if (srcDbl >= middleware6
 									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21857,7 +21847,7 @@ public class KL {
 						if (eq(cond6B, ">")) {
 							if (srcDbl < middleware6 && srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21866,14 +21856,14 @@ public class KL {
 									&& srcDbl >= middleware6B) {
 
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
 							if (srcDbl < middleware6 && srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21881,7 +21871,7 @@ public class KL {
 							if (srcDbl < middleware6
 									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21889,7 +21879,7 @@ public class KL {
 							if (srcDbl < middleware6
 									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21899,7 +21889,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									&& srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21907,7 +21897,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									&& srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21915,7 +21905,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									&& srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21923,7 +21913,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21931,7 +21921,7 @@ public class KL {
 							if (srcDbl <= middleware6
 									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21941,7 +21931,7 @@ public class KL {
 							if (srcDbl == middleware6
 									&& srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21949,7 +21939,7 @@ public class KL {
 							if (srcDbl == middleware6
 									&& srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21957,7 +21947,7 @@ public class KL {
 							if (srcDbl == middleware6
 									&& srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21965,7 +21955,7 @@ public class KL {
 							if (srcDbl == middleware6
 									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21973,7 +21963,7 @@ public class KL {
 							if (srcDbl == middleware6
 									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
-									new Thread(sol6).run();
+									new Thread(sol6).start();
 								}
 								return true;
 							}
@@ -21983,41 +21973,41 @@ public class KL {
 					if (eq(cond6, ">")) {
 						if (srcDbl > middleware6) {
 							if (!isNull(sol6)) {
-								new Thread(sol6).run();
+								new Thread(sol6).start();
 							}
 							return true;
 						}
 					} else if (eq(cond6, ">=")) {
 						if (srcDbl >= middleware6) {
 							if (!isNull(sol6)) {
-								new Thread(sol6).run();
+								new Thread(sol6).start();
 							}
 							return true;
 						}
 					} else if (eq(cond6, "<")) {
 						if (srcDbl < middleware6) {
 							if (!isNull(sol6)) {
-								new Thread(sol6).run();
+								new Thread(sol6).start();
 							}
 							return true;
 						}
 					} else if (eq(cond6, "<=")) {
 						if (srcDbl <= middleware6) {
 							if (!isNull(sol6)) {
-								new Thread(sol6).run();
+								new Thread(sol6).start();
 							}
 							return true;
 						}
 					} else if (eq(cond6, "==")) {
 						if (srcDbl == middleware6) {
 							if (!isNull(sol6)) {
-								new Thread(sol6).run();
+								new Thread(sol6).start();
 							}
 							return true;
 						}
 					} else if (eq(cond6, "else")) {
 						if (!isNull(sol6)) {
-							new Thread(sol6).run();
+							new Thread(sol6).start();
 						}
 						return false;
 					}
@@ -22025,14 +22015,14 @@ public class KL {
 			} else if (cond6 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond6)))) {
 					if (!isNull(sol6)) {
-						new Thread(sol6).run();
+						new Thread(sol6).start();
 					}
 					return true;
 				}
 			} else if (cond6 instanceof Character) {
 				if (eq((char) src, (char) cond6)) {
 					if (!isNull(sol6)) {
-						new Thread(sol6).run();
+						new Thread(sol6).start();
 					}
 					return true;
 				}
@@ -22092,7 +22082,7 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl > middleware7 || srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22100,14 +22090,14 @@ public class KL {
 							if (srcDbl > middleware7
 									|| srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl > middleware7 || srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22115,7 +22105,7 @@ public class KL {
 							if (srcDbl > middleware7
 									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22123,7 +22113,7 @@ public class KL {
 							if (srcDbl > middleware7
 									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22133,7 +22123,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									|| srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22141,7 +22131,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									|| srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22149,7 +22139,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									|| srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22157,7 +22147,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22165,7 +22155,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22174,7 +22164,7 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl < middleware7 || srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22183,14 +22173,14 @@ public class KL {
 									|| srcDbl >= middleware7B) {
 
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl < middleware7 || srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22198,7 +22188,7 @@ public class KL {
 							if (srcDbl < middleware7
 									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22206,7 +22196,7 @@ public class KL {
 							if (srcDbl < middleware7
 									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22216,7 +22206,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									|| srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22224,7 +22214,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									|| srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22232,7 +22222,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									|| srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22240,7 +22230,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22248,7 +22238,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22258,7 +22248,7 @@ public class KL {
 							if (srcDbl == middleware7
 									|| srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22266,7 +22256,7 @@ public class KL {
 							if (srcDbl == middleware7
 									|| srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22274,7 +22264,7 @@ public class KL {
 							if (srcDbl == middleware7
 									|| srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22282,7 +22272,7 @@ public class KL {
 							if (srcDbl == middleware7
 									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22290,7 +22280,7 @@ public class KL {
 							if (srcDbl == middleware7
 									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22301,7 +22291,7 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl > middleware7 && srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22309,14 +22299,14 @@ public class KL {
 							if (srcDbl > middleware7
 									&& srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl > middleware7 && srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22324,7 +22314,7 @@ public class KL {
 							if (srcDbl > middleware7
 									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22332,7 +22322,7 @@ public class KL {
 							if (srcDbl > middleware7
 									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22342,7 +22332,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									&& srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22350,7 +22340,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									&& srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22358,7 +22348,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									&& srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22366,7 +22356,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22374,7 +22364,7 @@ public class KL {
 							if (srcDbl >= middleware7
 									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22383,7 +22373,7 @@ public class KL {
 						if (eq(cond7B, ">")) {
 							if (srcDbl < middleware7 && srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22392,14 +22382,14 @@ public class KL {
 									&& srcDbl >= middleware7B) {
 
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
 							if (srcDbl < middleware7 && srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22407,7 +22397,7 @@ public class KL {
 							if (srcDbl < middleware7
 									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22415,7 +22405,7 @@ public class KL {
 							if (srcDbl < middleware7
 									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22425,7 +22415,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									&& srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22433,7 +22423,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									&& srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22441,7 +22431,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									&& srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22449,7 +22439,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22457,7 +22447,7 @@ public class KL {
 							if (srcDbl <= middleware7
 									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22467,7 +22457,7 @@ public class KL {
 							if (srcDbl == middleware7
 									&& srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22475,7 +22465,7 @@ public class KL {
 							if (srcDbl == middleware7
 									&& srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22483,7 +22473,7 @@ public class KL {
 							if (srcDbl == middleware7
 									&& srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22491,7 +22481,7 @@ public class KL {
 							if (srcDbl == middleware7
 									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22499,7 +22489,7 @@ public class KL {
 							if (srcDbl == middleware7
 									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
-									new Thread(sol7).run();
+									new Thread(sol7).start();
 								}
 								return true;
 							}
@@ -22509,41 +22499,41 @@ public class KL {
 					if (eq(cond7, ">")) {
 						if (srcDbl > middleware7) {
 							if (!isNull(sol7)) {
-								new Thread(sol7).run();
+								new Thread(sol7).start();
 							}
 							return true;
 						}
 					} else if (eq(cond7, ">=")) {
 						if (srcDbl >= middleware7) {
 							if (!isNull(sol7)) {
-								new Thread(sol7).run();
+								new Thread(sol7).start();
 							}
 							return true;
 						}
 					} else if (eq(cond7, "<")) {
 						if (srcDbl < middleware7) {
 							if (!isNull(sol7)) {
-								new Thread(sol7).run();
+								new Thread(sol7).start();
 							}
 							return true;
 						}
 					} else if (eq(cond7, "<=")) {
 						if (srcDbl <= middleware7) {
 							if (!isNull(sol7)) {
-								new Thread(sol7).run();
+								new Thread(sol7).start();
 							}
 							return true;
 						}
 					} else if (eq(cond7, "==")) {
 						if (srcDbl == middleware7) {
 							if (!isNull(sol7)) {
-								new Thread(sol7).run();
+								new Thread(sol7).start();
 							}
 							return true;
 						}
 					} else if (eq(cond7, "else")) {
 						if (!isNull(sol7)) {
-							new Thread(sol7).run();
+							new Thread(sol7).start();
 						}
 						return false;
 					}
@@ -22551,14 +22541,14 @@ public class KL {
 			} else if (cond7 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond7)))) {
 					if (!isNull(sol7)) {
-						new Thread(sol7).run();
+						new Thread(sol7).start();
 					}
 					return true;
 				}
 			} else if (cond7 instanceof Character) {
 				if (eq((char) src, (char) cond7)) {
 					if (!isNull(sol7)) {
-						new Thread(sol7).run();
+						new Thread(sol7).start();
 					}
 					return true;
 				}
@@ -22618,7 +22608,7 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl > middleware8 || srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22626,14 +22616,14 @@ public class KL {
 							if (srcDbl > middleware8
 									|| srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl > middleware8 || srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22641,7 +22631,7 @@ public class KL {
 							if (srcDbl > middleware8
 									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22649,7 +22639,7 @@ public class KL {
 							if (srcDbl > middleware8
 									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22659,7 +22649,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									|| srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22667,7 +22657,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									|| srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22675,7 +22665,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									|| srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22683,7 +22673,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22691,7 +22681,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22700,7 +22690,7 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl < middleware8 || srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22709,14 +22699,14 @@ public class KL {
 									|| srcDbl >= middleware8B) {
 
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl < middleware8 || srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22724,7 +22714,7 @@ public class KL {
 							if (srcDbl < middleware8
 									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22732,7 +22722,7 @@ public class KL {
 							if (srcDbl < middleware8
 									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22742,7 +22732,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									|| srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22750,7 +22740,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									|| srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22758,7 +22748,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									|| srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22766,7 +22756,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22774,7 +22764,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22784,7 +22774,7 @@ public class KL {
 							if (srcDbl == middleware8
 									|| srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22792,7 +22782,7 @@ public class KL {
 							if (srcDbl == middleware8
 									|| srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22800,7 +22790,7 @@ public class KL {
 							if (srcDbl == middleware8
 									|| srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22808,7 +22798,7 @@ public class KL {
 							if (srcDbl == middleware8
 									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22816,7 +22806,7 @@ public class KL {
 							if (srcDbl == middleware8
 									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22827,7 +22817,7 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl > middleware8 && srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22835,14 +22825,14 @@ public class KL {
 							if (srcDbl > middleware8
 									&& srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl > middleware8 && srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22850,7 +22840,7 @@ public class KL {
 							if (srcDbl > middleware8
 									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22858,7 +22848,7 @@ public class KL {
 							if (srcDbl > middleware8
 									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22868,7 +22858,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									&& srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22876,7 +22866,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									&& srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22884,7 +22874,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									&& srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22892,7 +22882,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22900,7 +22890,7 @@ public class KL {
 							if (srcDbl >= middleware8
 									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22909,7 +22899,7 @@ public class KL {
 						if (eq(cond8B, ">")) {
 							if (srcDbl < middleware8 && srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22918,14 +22908,14 @@ public class KL {
 									&& srcDbl >= middleware8B) {
 
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
 							if (srcDbl < middleware8 && srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22933,7 +22923,7 @@ public class KL {
 							if (srcDbl < middleware8
 									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22941,7 +22931,7 @@ public class KL {
 							if (srcDbl < middleware8
 									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22951,7 +22941,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									&& srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22959,7 +22949,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									&& srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22967,7 +22957,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									&& srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22975,7 +22965,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22983,7 +22973,7 @@ public class KL {
 							if (srcDbl <= middleware8
 									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -22993,7 +22983,7 @@ public class KL {
 							if (srcDbl == middleware8
 									&& srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -23001,7 +22991,7 @@ public class KL {
 							if (srcDbl == middleware8
 									&& srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -23009,7 +22999,7 @@ public class KL {
 							if (srcDbl == middleware8
 									&& srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -23017,7 +23007,7 @@ public class KL {
 							if (srcDbl == middleware8
 									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -23025,7 +23015,7 @@ public class KL {
 							if (srcDbl == middleware8
 									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
-									new Thread(sol8).run();
+									new Thread(sol8).start();
 								}
 								return true;
 							}
@@ -23035,41 +23025,41 @@ public class KL {
 					if (eq(cond8, ">")) {
 						if (srcDbl > middleware8) {
 							if (!isNull(sol8)) {
-								new Thread(sol8).run();
+								new Thread(sol8).start();
 							}
 							return true;
 						}
 					} else if (eq(cond8, ">=")) {
 						if (srcDbl >= middleware8) {
 							if (!isNull(sol8)) {
-								new Thread(sol8).run();
+								new Thread(sol8).start();
 							}
 							return true;
 						}
 					} else if (eq(cond8, "<")) {
 						if (srcDbl < middleware8) {
 							if (!isNull(sol8)) {
-								new Thread(sol8).run();
+								new Thread(sol8).start();
 							}
 							return true;
 						}
 					} else if (eq(cond8, "<=")) {
 						if (srcDbl <= middleware8) {
 							if (!isNull(sol8)) {
-								new Thread(sol8).run();
+								new Thread(sol8).start();
 							}
 							return true;
 						}
 					} else if (eq(cond8, "==")) {
 						if (srcDbl == middleware8) {
 							if (!isNull(sol8)) {
-								new Thread(sol8).run();
+								new Thread(sol8).start();
 							}
 							return true;
 						}
 					} else if (eq(cond8, "else")) {
 						if (!isNull(sol8)) {
-							new Thread(sol8).run();
+							new Thread(sol8).start();
 						}
 						return false;
 					}
@@ -23077,14 +23067,14 @@ public class KL {
 			} else if (cond8 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond8)))) {
 					if (!isNull(sol8)) {
-						new Thread(sol8).run();
+						new Thread(sol8).start();
 					}
 					return true;
 				}
 			} else if (cond8 instanceof Character) {
 				if (eq((char) src, (char) cond8)) {
 					if (!isNull(sol8)) {
-						new Thread(sol8).run();
+						new Thread(sol8).start();
 					}
 					return true;
 				}
@@ -23144,7 +23134,7 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl > middleware9 || srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23152,14 +23142,14 @@ public class KL {
 							if (srcDbl > middleware9
 									|| srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl > middleware9 || srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23167,7 +23157,7 @@ public class KL {
 							if (srcDbl > middleware9
 									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23175,7 +23165,7 @@ public class KL {
 							if (srcDbl > middleware9
 									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23185,7 +23175,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									|| srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23193,7 +23183,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									|| srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23201,7 +23191,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									|| srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23209,7 +23199,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23217,7 +23207,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23226,7 +23216,7 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl < middleware9 || srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23235,14 +23225,14 @@ public class KL {
 									|| srcDbl >= middleware9B) {
 
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl < middleware9 || srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23250,7 +23240,7 @@ public class KL {
 							if (srcDbl < middleware9
 									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23258,7 +23248,7 @@ public class KL {
 							if (srcDbl < middleware9
 									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23268,7 +23258,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									|| srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23276,7 +23266,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									|| srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23284,7 +23274,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									|| srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23292,7 +23282,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23300,7 +23290,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23310,7 +23300,7 @@ public class KL {
 							if (srcDbl == middleware9
 									|| srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23318,7 +23308,7 @@ public class KL {
 							if (srcDbl == middleware9
 									|| srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23326,7 +23316,7 @@ public class KL {
 							if (srcDbl == middleware9
 									|| srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23334,7 +23324,7 @@ public class KL {
 							if (srcDbl == middleware9
 									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23342,7 +23332,7 @@ public class KL {
 							if (srcDbl == middleware9
 									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23353,7 +23343,7 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl > middleware9 && srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23361,14 +23351,14 @@ public class KL {
 							if (srcDbl > middleware9
 									&& srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl > middleware9 && srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23376,7 +23366,7 @@ public class KL {
 							if (srcDbl > middleware9
 									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23384,7 +23374,7 @@ public class KL {
 							if (srcDbl > middleware9
 									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23394,7 +23384,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									&& srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23402,7 +23392,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									&& srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23410,7 +23400,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									&& srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23418,7 +23408,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23426,7 +23416,7 @@ public class KL {
 							if (srcDbl >= middleware9
 									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23435,7 +23425,7 @@ public class KL {
 						if (eq(cond9B, ">")) {
 							if (srcDbl < middleware9 && srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23444,14 +23434,14 @@ public class KL {
 									&& srcDbl >= middleware9B) {
 
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
 							if (srcDbl < middleware9 && srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23459,7 +23449,7 @@ public class KL {
 							if (srcDbl < middleware9
 									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23467,7 +23457,7 @@ public class KL {
 							if (srcDbl < middleware9
 									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23477,7 +23467,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									&& srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23485,7 +23475,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									&& srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23493,7 +23483,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									&& srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23501,7 +23491,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23509,7 +23499,7 @@ public class KL {
 							if (srcDbl <= middleware9
 									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23519,7 +23509,7 @@ public class KL {
 							if (srcDbl == middleware9
 									&& srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23527,7 +23517,7 @@ public class KL {
 							if (srcDbl == middleware9
 									&& srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23535,7 +23525,7 @@ public class KL {
 							if (srcDbl == middleware9
 									&& srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23543,7 +23533,7 @@ public class KL {
 							if (srcDbl == middleware9
 									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23551,7 +23541,7 @@ public class KL {
 							if (srcDbl == middleware9
 									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
-									new Thread(sol9).run();
+									new Thread(sol9).start();
 								}
 								return true;
 							}
@@ -23561,41 +23551,41 @@ public class KL {
 					if (eq(cond9, ">")) {
 						if (srcDbl > middleware9) {
 							if (!isNull(sol9)) {
-								new Thread(sol9).run();
+								new Thread(sol9).start();
 							}
 							return true;
 						}
 					} else if (eq(cond9, ">=")) {
 						if (srcDbl >= middleware9) {
 							if (!isNull(sol9)) {
-								new Thread(sol9).run();
+								new Thread(sol9).start();
 							}
 							return true;
 						}
 					} else if (eq(cond9, "<")) {
 						if (srcDbl < middleware9) {
 							if (!isNull(sol9)) {
-								new Thread(sol9).run();
+								new Thread(sol9).start();
 							}
 							return true;
 						}
 					} else if (eq(cond9, "<=")) {
 						if (srcDbl <= middleware9) {
 							if (!isNull(sol9)) {
-								new Thread(sol9).run();
+								new Thread(sol9).start();
 							}
 							return true;
 						}
 					} else if (eq(cond9, "==")) {
 						if (srcDbl == middleware9) {
 							if (!isNull(sol9)) {
-								new Thread(sol9).run();
+								new Thread(sol9).start();
 							}
 							return true;
 						}
 					} else if (eq(cond9, "else")) {
 						if (!isNull(sol9)) {
-							new Thread(sol9).run();
+							new Thread(sol9).start();
 						}
 						return false;
 					}
@@ -23603,14 +23593,14 @@ public class KL {
 			} else if (cond9 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond9)))) {
 					if (!isNull(sol9)) {
-						new Thread(sol9).run();
+						new Thread(sol9).start();
 					}
 					return true;
 				}
 			} else if (cond9 instanceof Character) {
 				if (eq((char) src, (char) cond9)) {
 					if (!isNull(sol9)) {
-						new Thread(sol9).run();
+						new Thread(sol9).start();
 					}
 					return true;
 				}
@@ -23671,7 +23661,7 @@ public class KL {
 							if (srcDbl > middleware10
 									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23679,7 +23669,7 @@ public class KL {
 							if (srcDbl > middleware10
 									|| srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23687,7 +23677,7 @@ public class KL {
 							if (srcDbl > middleware10
 									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23695,7 +23685,7 @@ public class KL {
 							if (srcDbl > middleware10
 									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23703,7 +23693,7 @@ public class KL {
 							if (srcDbl > middleware10
 									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23713,7 +23703,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23722,7 +23712,7 @@ public class KL {
 									|| srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23730,7 +23720,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23738,7 +23728,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23746,7 +23736,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23756,7 +23746,7 @@ public class KL {
 							if (srcDbl < middleware10
 									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23765,7 +23755,7 @@ public class KL {
 									|| srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23773,7 +23763,7 @@ public class KL {
 							if (srcDbl < middleware10
 									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23781,7 +23771,7 @@ public class KL {
 							if (srcDbl < middleware10
 									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23789,7 +23779,7 @@ public class KL {
 							if (srcDbl < middleware10
 									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23799,7 +23789,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23808,7 +23798,7 @@ public class KL {
 									|| srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23816,7 +23806,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23824,7 +23814,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23832,7 +23822,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23842,7 +23832,7 @@ public class KL {
 							if (srcDbl == middleware10
 									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23851,7 +23841,7 @@ public class KL {
 									|| srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23859,7 +23849,7 @@ public class KL {
 							if (srcDbl == middleware10
 									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23867,7 +23857,7 @@ public class KL {
 							if (srcDbl == middleware10
 									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23875,7 +23865,7 @@ public class KL {
 							if (srcDbl == middleware10
 									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23887,7 +23877,7 @@ public class KL {
 							if (srcDbl > middleware10
 									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23895,7 +23885,7 @@ public class KL {
 							if (srcDbl > middleware10
 									&& srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23903,7 +23893,7 @@ public class KL {
 							if (srcDbl > middleware10
 									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23911,7 +23901,7 @@ public class KL {
 							if (srcDbl > middleware10
 									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23919,7 +23909,7 @@ public class KL {
 							if (srcDbl > middleware10
 									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23929,7 +23919,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23937,7 +23927,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									&& srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23945,7 +23935,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23953,7 +23943,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23961,7 +23951,7 @@ public class KL {
 							if (srcDbl >= middleware10
 									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23971,7 +23961,7 @@ public class KL {
 							if (srcDbl < middleware10
 									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23980,7 +23970,7 @@ public class KL {
 									&& srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23988,7 +23978,7 @@ public class KL {
 							if (srcDbl < middleware10
 									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -23996,7 +23986,7 @@ public class KL {
 							if (srcDbl < middleware10
 									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24004,7 +23994,7 @@ public class KL {
 							if (srcDbl < middleware10
 									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24014,7 +24004,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24022,7 +24012,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									&& srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24030,7 +24020,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24038,7 +24028,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24046,7 +24036,7 @@ public class KL {
 							if (srcDbl <= middleware10
 									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24056,7 +24046,7 @@ public class KL {
 							if (srcDbl == middleware10
 									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24064,7 +24054,7 @@ public class KL {
 							if (srcDbl == middleware10
 									&& srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24072,7 +24062,7 @@ public class KL {
 							if (srcDbl == middleware10
 									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24080,7 +24070,7 @@ public class KL {
 							if (srcDbl == middleware10
 									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24088,7 +24078,7 @@ public class KL {
 							if (srcDbl == middleware10
 									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
-									new Thread(sol10).run();
+									new Thread(sol10).start();
 								}
 								return true;
 							}
@@ -24098,41 +24088,41 @@ public class KL {
 					if (eq(cond10, ">")) {
 						if (srcDbl > middleware10) {
 							if (!isNull(sol10)) {
-								new Thread(sol10).run();
+								new Thread(sol10).start();
 							}
 							return true;
 						}
 					} else if (eq(cond10, ">=")) {
 						if (srcDbl >= middleware10) {
 							if (!isNull(sol10)) {
-								new Thread(sol10).run();
+								new Thread(sol10).start();
 							}
 							return true;
 						}
 					} else if (eq(cond10, "<")) {
 						if (srcDbl < middleware10) {
 							if (!isNull(sol10)) {
-								new Thread(sol10).run();
+								new Thread(sol10).start();
 							}
 							return true;
 						}
 					} else if (eq(cond10, "<=")) {
 						if (srcDbl <= middleware10) {
 							if (!isNull(sol10)) {
-								new Thread(sol10).run();
+								new Thread(sol10).start();
 							}
 							return true;
 						}
 					} else if (eq(cond10, "==")) {
 						if (srcDbl == middleware10) {
 							if (!isNull(sol10)) {
-								new Thread(sol10).run();
+								new Thread(sol10).start();
 							}
 							return true;
 						}
 					} else if (eq(cond10, "else")) {
 						if (!isNull(sol10)) {
-							new Thread(sol10).run();
+							new Thread(sol10).start();
 						}
 						return false;
 					}
@@ -24140,14 +24130,14 @@ public class KL {
 			} else if (cond10 instanceof Number) {
 				if (eq(srcDbl, Dbl(Str(cond10)))) {
 					if (!isNull(sol10)) {
-						new Thread(sol10).run();
+						new Thread(sol10).start();
 					}
 					return true;
 				}
 			} else if (cond10 instanceof Character) {
 				if (eq((char) src, (char) cond10)) {
 					if (!isNull(sol10)) {
-						new Thread(sol10).run();
+						new Thread(sol10).start();
 					}
 					return true;
 				}
@@ -24163,7 +24153,7 @@ public class KL {
 			if (cond1 instanceof String) {
 				if (eq((String) src, (String) cond1)) {
 					if (!isNull(sol1)) {
-						new Thread(sol1).run();
+						new Thread(sol1).start();
 					}
 					return true;
 				}
@@ -24178,12 +24168,12 @@ public class KL {
 			if (cond2 instanceof String) {
 				if (eq((String) src, (String) cond2)) {
 					if (!isNull(sol2)) {
-						new Thread(sol2).run();
+						new Thread(sol2).start();
 					}
 					return true;
 				} else if (eq((String) cond2, "else")) {
 					if (!isNull(sol2)) {
-						new Thread(sol2).run();
+						new Thread(sol2).start();
 					}
 					return false;
 				}
@@ -24198,12 +24188,12 @@ public class KL {
 			if (cond3 instanceof String) {
 				if (eq((String) src, (String) cond3)) {
 					if (!isNull(sol3)) {
-						new Thread(sol3).run();
+						new Thread(sol3).start();
 					}
 					return true;
 				} else if (eq((String) cond3, "else")) {
 					if (!isNull(sol3)) {
-						new Thread(sol3).run();
+						new Thread(sol3).start();
 					}
 					return false;
 				}
@@ -24218,12 +24208,12 @@ public class KL {
 			if (cond4 instanceof String) {
 				if (eq((String) src, (String) cond4)) {
 					if (!isNull(sol4)) {
-						new Thread(sol4).run();
+						new Thread(sol4).start();
 					}
 					return true;
 				} else if (eq((String) cond4, "else")) {
 					if (!isNull(sol4)) {
-						new Thread(sol4).run();
+						new Thread(sol4).start();
 					}
 					return false;
 				}
@@ -24238,12 +24228,12 @@ public class KL {
 			if (cond5 instanceof String) {
 				if (eq((String) src, (String) cond5)) {
 					if (!isNull(sol5)) {
-						new Thread(sol5).run();
+						new Thread(sol5).start();
 					}
 					return true;
 				} else if (eq((String) cond5, "else")) {
 					if (!isNull(sol5)) {
-						new Thread(sol5).run();
+						new Thread(sol5).start();
 					}
 					return false;
 				}
@@ -24258,12 +24248,12 @@ public class KL {
 			if (cond6 instanceof String) {
 				if (eq((String) src, (String) cond6)) {
 					if (!isNull(sol6)) {
-						new Thread(sol6).run();
+						new Thread(sol6).start();
 					}
 					return true;
 				} else if (eq((String) cond6, "else")) {
 					if (!isNull(sol6)) {
-						new Thread(sol6).run();
+						new Thread(sol6).start();
 					}
 					return false;
 				}
@@ -24278,12 +24268,12 @@ public class KL {
 			if (cond7 instanceof String) {
 				if (eq((String) src, (String) cond7)) {
 					if (!isNull(sol7)) {
-						new Thread(sol7).run();
+						new Thread(sol7).start();
 					}
 					return true;
 				} else if (eq((String) cond7, "else")) {
 					if (!isNull(sol7)) {
-						new Thread(sol7).run();
+						new Thread(sol7).start();
 					}
 					return false;
 				}
@@ -24298,12 +24288,12 @@ public class KL {
 			if (cond8 instanceof String) {
 				if (eq((String) src, (String) cond8)) {
 					if (!isNull(sol8)) {
-						new Thread(sol8).run();
+						new Thread(sol8).start();
 					}
 					return true;
 				} else if (eq((String) cond8, "else")) {
 					if (!isNull(sol8)) {
-						new Thread(sol8).run();
+						new Thread(sol8).start();
 					}
 					return false;
 				}
@@ -24318,12 +24308,12 @@ public class KL {
 			if (cond9 instanceof String) {
 				if (eq((String) src, (String) cond9)) {
 					if (!isNull(sol9)) {
-						new Thread(sol9).run();
+						new Thread(sol9).start();
 					}
 					return true;
 				} else if (eq((String) cond9, "else")) {
 					if (!isNull(sol9)) {
-						new Thread(sol9).run();
+						new Thread(sol9).start();
 					}
 					return false;
 				}
@@ -24338,12 +24328,12 @@ public class KL {
 			if (cond10 instanceof String) {
 				if (eq((String) src, (String) cond10)) {
 					if (!isNull(sol10)) {
-						new Thread(sol10).run();
+						new Thread(sol10).start();
 					}
 					return true;
 				} else if (eq((String) cond10, "else")) {
 					if (!isNull(sol10)) {
-						new Thread(sol10).run();
+						new Thread(sol10).start();
 					}
 					return false;
 				}
@@ -24359,7 +24349,7 @@ public class KL {
 			if (cond1 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond1)) {
 					if (!isNull(sol1)) {
-						new Thread(sol1).run();
+						new Thread(sol1).start();
 					}
 					return true;
 				}
@@ -24374,7 +24364,7 @@ public class KL {
 			if (cond2 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond2)) {
 					if (!isNull(sol2)) {
-						new Thread(sol2).run();
+						new Thread(sol2).start();
 					}
 					return true;
 				}
@@ -24382,7 +24372,7 @@ public class KL {
 				cond2 = Str(cond2).replaceAll("[^else]", "");
 				if (eq(cond2, "else")) {
 					if (!isNull(sol2)) {
-						new Thread(sol2).run();
+						new Thread(sol2).start();
 					}
 					return false;
 				}
@@ -24397,7 +24387,7 @@ public class KL {
 			if (cond3 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond3)) {
 					if (!isNull(sol3)) {
-						new Thread(sol3).run();
+						new Thread(sol3).start();
 					}
 					return true;
 				}
@@ -24405,7 +24395,7 @@ public class KL {
 				cond3 = Str(cond3).replaceAll("[^else]", "");
 				if (eq(cond3, "else")) {
 					if (!isNull(sol3)) {
-						new Thread(sol3).run();
+						new Thread(sol3).start();
 					}
 					return false;
 				}
@@ -24420,7 +24410,7 @@ public class KL {
 			if (cond4 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond4)) {
 					if (!isNull(sol4)) {
-						new Thread(sol4).run();
+						new Thread(sol4).start();
 					}
 					return true;
 				}
@@ -24428,7 +24418,7 @@ public class KL {
 				cond4 = Str(cond4).replaceAll("[^else]", "");
 				if (eq(cond4, "else")) {
 					if (!isNull(sol4)) {
-						new Thread(sol4).run();
+						new Thread(sol4).start();
 					}
 					return false;
 				}
@@ -24443,7 +24433,7 @@ public class KL {
 			if (cond5 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond5)) {
 					if (!isNull(sol5)) {
-						new Thread(sol5).run();
+						new Thread(sol5).start();
 					}
 					return true;
 				}
@@ -24451,7 +24441,7 @@ public class KL {
 				cond5 = Str(cond5).replaceAll("[^else]", "");
 				if (eq(cond5, "else")) {
 					if (!isNull(sol5)) {
-						new Thread(sol5).run();
+						new Thread(sol5).start();
 					}
 					return false;
 				}
@@ -24466,7 +24456,7 @@ public class KL {
 			if (cond6 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond6)) {
 					if (!isNull(sol6)) {
-						new Thread(sol6).run();
+						new Thread(sol6).start();
 					}
 					return true;
 				}
@@ -24474,7 +24464,7 @@ public class KL {
 				cond6 = Str(cond6).replaceAll("[^else]", "");
 				if (eq(cond6, "else")) {
 					if (!isNull(sol6)) {
-						new Thread(sol6).run();
+						new Thread(sol6).start();
 					}
 					return false;
 				}
@@ -24489,7 +24479,7 @@ public class KL {
 			if (cond7 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond7)) {
 					if (!isNull(sol7)) {
-						new Thread(sol7).run();
+						new Thread(sol7).start();
 					}
 					return true;
 				}
@@ -24497,7 +24487,7 @@ public class KL {
 				cond7 = Str(cond7).replaceAll("[^else]", "");
 				if (eq(cond7, "else")) {
 					if (!isNull(sol7)) {
-						new Thread(sol7).run();
+						new Thread(sol7).start();
 					}
 					return false;
 				}
@@ -24512,7 +24502,7 @@ public class KL {
 			if (cond8 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond8)) {
 					if (!isNull(sol8)) {
-						new Thread(sol8).run();
+						new Thread(sol8).start();
 					}
 					return true;
 				}
@@ -24520,7 +24510,7 @@ public class KL {
 				cond8 = Str(cond8).replaceAll("[^else]", "");
 				if (eq(cond8, "else")) {
 					if (!isNull(sol8)) {
-						new Thread(sol8).run();
+						new Thread(sol8).start();
 					}
 					return false;
 				}
@@ -24535,7 +24525,7 @@ public class KL {
 			if (cond9 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond9)) {
 					if (!isNull(sol9)) {
-						new Thread(sol9).run();
+						new Thread(sol9).start();
 					}
 					return true;
 				}
@@ -24543,7 +24533,7 @@ public class KL {
 				cond9 = Str(cond9).replaceAll("[^else]", "");
 				if (eq(cond9, "else")) {
 					if (!isNull(sol9)) {
-						new Thread(sol9).run();
+						new Thread(sol9).start();
 					}
 					return false;
 				}
@@ -24558,7 +24548,7 @@ public class KL {
 			if (cond10 instanceof Boolean) {
 				if (eq((boolean) src, (boolean) cond10)) {
 					if (!isNull(sol10)) {
-						new Thread(sol10).run();
+						new Thread(sol10).start();
 					}
 					return true;
 				}
@@ -24566,7 +24556,7 @@ public class KL {
 				cond10 = Str(cond10).replaceAll("[^else]", "");
 				if (eq(cond10, "else")) {
 					if (!isNull(sol10)) {
-						new Thread(sol10).run();
+						new Thread(sol10).start();
 					}
 					return false;
 				}
@@ -28638,6 +28628,7 @@ public class KL {
 	public static Object none = null, ignore = none, pass = ignore;
 	public static String Else = "else";
 	// helps method sw handle default/else cases
+	public static char _c = '\0';
 	public static String _s = "";
 	public static int _i = 0;
 	public static long _l = 0;
@@ -29131,7 +29122,7 @@ public class KL {
 	// DON'T remove
 	public static void repeat(Runnable fn, int times) {
 		for (; times > 0; times--) {
-			new Thread(fn).run();
+			new Thread(fn).start();
 		}
 	}
 	public static String repeat(String s, int times) {
@@ -29964,22 +29955,22 @@ public class KL {
 	public static void printArr(boolArr arr) {
 		print(arr.toString());
 	}
-	public static void printArr(objS o) {
+	public static void printArr(oS o) {
 		print(o.toString());
 	}
-	public static void printArr(objI o) {
+	public static void printArr(oI o) {
 		print(o.toString());
 	}
-	public static void printArr(objL o) {
+	public static void printArr(oL o) {
 		print(o.toString());
 	}
-	public static void printArr(objF o) {
+	public static void printArr(oF o) {
 		print(o.toString());
 	}
-	public static void printArr(objD o) {
+	public static void printArr(oD o) {
 		print(o.toString());
 	}
-	public static void printArr(objB o) {
+	public static void printArr(oB o) {
 		print(o.toString());
 	}
 	public static void printArr(treeDS t) {
@@ -30048,22 +30039,22 @@ public class KL {
 	public static void printAll(boolArr arr) {
 		printArr(arr);
 	}
-	public static void printAll(objS o) {
+	public static void printAll(oS o) {
 		printArr(o);
 	}
-	public static void printAll(objI o) {
+	public static void printAll(oI o) {
 		printArr(o);
 	}
-	public static void printAll(objL o) {
+	public static void printAll(oL o) {
 		printArr(o);
 	}
-	public static void printAll(objF o) {
+	public static void printAll(oF o) {
 		printArr(o);
 	}
-	public static void printAll(objD o) {
+	public static void printAll(oD o) {
 		printArr(o);
 	}
-	public static void printAll(objB o) {
+	public static void printAll(oB o) {
 		printArr(o);
 	}
 	public static void printAll(treeDI t) {
@@ -30230,22 +30221,22 @@ public class KL {
 	public static String String(boolArr arr) {
 		return arr.toString();
 	}
-	public static String String(objS o) {
+	public static String String(oS o) {
 		return o.toString();
 	}
-	public static String String(objI o) {
+	public static String String(oI o) {
 		return o.toString();
 	}
-	public static String String(objL o) {
+	public static String String(oL o) {
 		return o.toString();
 	}
-	public static String String(objF o) {
+	public static String String(oF o) {
 		return o.toString();
 	}
-	public static String String(objD o) {
+	public static String String(oD o) {
 		return o.toString();
 	}
-	public static String String(objB o) {
+	public static String String(oB o) {
 		return o.toString();
 	}
 	public static String String(treeDI t) {
@@ -30345,22 +30336,22 @@ public class KL {
 	public static String Str(boolArr arr) {
 		return String(arr);
 	}
-	public static String Str(objS o) {
+	public static String Str(oS o) {
 		return String(o);
 	}
-	public static String Str(objI o) {
+	public static String Str(oI o) {
 		return String(o);
 	}
-	public static String Str(objL o) {
+	public static String Str(oL o) {
 		return String(o);
 	}
-	public static String Str(objF o) {
+	public static String Str(oF o) {
 		return String(o);
 	}
-	public static String Str(objD o) {
+	public static String Str(oD o) {
 		return String(o);
 	}
-	public static String Str(objB o) {
+	public static String Str(oB o) {
 		return String(o);
 	}
 	public static String Str(treeDI t) {
@@ -30487,37 +30478,37 @@ public class KL {
 	public static boolArr naiArr(boolean... items) {
 		return Arr(items);
 	}
-	public static String[] Arr(objS o) {
+	public static String[] Arr(oS o) {
 		if (not(o)) {
 			return blank.Str;
 		}
 		return o.array();
 	}
-	public static int[] Arr(objI o) {
+	public static int[] Arr(oI o) {
 		if (not(o)) {
 			return blank.Int;
 		}
 		return o.array();
 	}
-	public static long[] Arr(objL o) {
+	public static long[] Arr(oL o) {
 		if (not(o)) {
 			return blank.Long;
 		}
 		return o.array();
 	}
-	public static float[] Arr(objF o) {
+	public static float[] Arr(oF o) {
 		if (not(o)) {
 			return blank.Flt;
 		}
 		return o.array();
 	}
-	public static double[] Arr(objD o) {
+	public static double[] Arr(oD o) {
 		if (not(o)) {
 			return blank.Dbl;
 		}
 		return o.array();
 	}
-	public static boolean[] Arr(objB o) {
+	public static boolean[] Arr(oB o) {
 		if (not(o)) {
 			return blank.Bool;
 		}
@@ -30583,22 +30574,22 @@ public class KL {
 		}
 		return t.array();
 	}
-	public static String[] arr(objS o) {
+	public static String[] arr(oS o) {
 		return Arr(o);
 	}
-	public static int[] arr(objI o) {
+	public static int[] arr(oI o) {
 		return Arr(o);
 	}
-	public static long[] arr(objL o) {
+	public static long[] arr(oL o) {
 		return Arr(o);
 	}
-	public static float[] arr(objF o) {
+	public static float[] arr(oF o) {
 		return Arr(o);
 	}
-	public static double[] arr(objD o) {
+	public static double[] arr(oD o) {
 		return Arr(o);
 	}
-	public static boolean[] arr(objB o) {
+	public static boolean[] arr(oB o) {
 		return Arr(o);
 	}
 	public static String[] arr(treeDS t) {
@@ -30631,292 +30622,289 @@ public class KL {
 	public static boolean[] arr(treeB t) {
 		return Arr(t);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6, String k7, String v7, String k8, String v8,
-			String k9, String v9, String k10, String v10) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oS o(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6, String k7, String v7, String k8, String v8, String k9,
+			String v9, String k10, String v10) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6, String k7, String v7, String k8, String v8,
-			String k9, String v9) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oS o(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6, String k7, String v7, String k8, String v8, String k9,
+			String v9) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6, String k7, String v7, String k8, String v8) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oS o(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6, String k7, String v7, String k8, String v8) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6, String k7, String v7) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static oS o(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6, String k7, String v7) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5,
-			String k6, String v6) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static oS o(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5, String k6,
+			String v6) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4, String k5, String v5) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static oS o(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4, String k5, String v5) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2,
-			String k3, String v3, String k4, String v4) {
-		return new objS(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static oS o(String k1, String v1, String k2, String v2, String k3,
+			String v3, String k4, String v4) {
+		return new oS(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2,
-			String k3, String v3) {
-		return new objS(k1, v1, k2, v2, k3, v3);
+	public static oS o(String k1, String v1, String k2, String v2, String k3,
+			String v3) {
+		return new oS(k1, v1, k2, v2, k3, v3);
 	}
-	public static objS obj(String k1, String v1, String k2, String v2) {
-		return new objS(k1, v1, k2, v2);
+	public static oS o(String k1, String v1, String k2, String v2) {
+		return new oS(k1, v1, k2, v2);
 	}
-	public static objS obj(String k1, String v1) {
-		return new objS(k1, v1);
+	public static oS o(String k1, String v1) {
+		return new oS(k1, v1);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
-			String k7, int v7, String k8, int v8, String k9, int v9, String k10,
-			int v10) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
-			String k7, int v7, String k8, int v8, String k9, int v9) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8, String k9, int v9) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
-			String k7, int v7, String k8, int v8) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6,
-			String k7, int v7) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5, String k6, int v6) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4, String k5, int v5) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3,
-			int v3, String k4, int v4) {
-		return new objI(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2, String k3,
+	public static oI o(String k1, int v1, String k2, int v2, String k3,
 			int v3) {
-		return new objI(k1, v1, k2, v2, k3, v3);
+		return new oI(k1, v1, k2, v2, k3, v3);
 	}
-	public static objI obj(String k1, int v1, String k2, int v2) {
-		return new objI(k1, v1, k2, v2);
+	public static oI o(String k1, int v1, String k2, int v2) {
+		return new oI(k1, v1, k2, v2);
 	}
-	public static objI obj(String k1, int v1) {
-		return new objI(k1, v1);
+	public static oI o(String k1, int v1) {
+		return new oI(k1, v1);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
 			String k7, long v7, String k8, long v8, String k9, long v9,
 			String k10, long v10) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
 			String k7, long v7, String k8, long v8, String k9, long v9) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
 			String k7, long v7, String k8, long v8) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
 			String k7, long v7) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5, String k6,
 			long v6) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4, String k5, long v5) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
 			long v3, String k4, long v4) {
-		return new objL(k1, v1, k2, v2, k3, v3, k4, v4);
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2, String k3,
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
 			long v3) {
-		return new objL(k1, v1, k2, v2, k3, v3);
+		return new oL(k1, v1, k2, v2, k3, v3);
 	}
-	public static objL obj(String k1, long v1, String k2, long v2) {
-		return new objL(k1, v1, k2, v2);
+	public static oL o(String k1, long v1, String k2, long v2) {
+		return new oL(k1, v1, k2, v2);
 	}
-	public static objL obj(String k1, long v1) {
-		return new objL(k1, v1);
+	public static oL o(String k1, long v1) {
+		return new oL(k1, v1);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6, String k7, float v7, String k8, float v8, String k9,
 			float v9, String k10, float v10) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6, String k7, float v7, String k8, float v8, String k9,
 			float v9) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6, String k7, float v7, String k8, float v8) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6, String k7, float v7) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5, String k6,
 			float v6) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4, String k5, float v5) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
 			float v3, String k4, float v4) {
-		return new objF(k1, v1, k2, v2, k3, v3, k4, v4);
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2, String k3,
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
 			float v3) {
-		return new objF(k1, v1, k2, v2, k3, v3);
+		return new oF(k1, v1, k2, v2, k3, v3);
 	}
-	public static objF obj(String k1, float v1, String k2, float v2) {
-		return new objF(k1, v1, k2, v2);
+	public static oF o(String k1, float v1, String k2, float v2) {
+		return new oF(k1, v1, k2, v2);
 	}
-	public static objF obj(String k1, float v1) {
-		return new objF(k1, v1);
+	public static oF o(String k1, float v1) {
+		return new oF(k1, v1);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6, String k7, double v7, String k8, double v8,
-			String k9, double v9, String k10, double v10) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8, String k9,
+			double v9, String k10, double v10) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6, String k7, double v7, String k8, double v8,
-			String k9, double v9) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8, String k9,
+			double v9) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6, String k7, double v7, String k8, double v8) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6, String k7, double v7) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5,
-			String k6, double v6) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4, String k5, double v5) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2,
-			String k3, double v3, String k4, double v4) {
-		return new objD(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2,
-			String k3, double v3) {
-		return new objD(k1, v1, k2, v2, k3, v3);
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3) {
+		return new oD(k1, v1, k2, v2, k3, v3);
 	}
-	public static objD obj(String k1, double v1, String k2, double v2) {
-		return new objD(k1, v1, k2, v2);
+	public static oD o(String k1, double v1, String k2, double v2) {
+		return new oD(k1, v1, k2, v2);
 	}
-	public static objD obj(String k1, double v1) {
-		return new objD(k1, v1);
+	public static oD o(String k1, double v1) {
+		return new oD(k1, v1);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
-			String k9, boolean v9, String k10, boolean v10) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
+			boolean v9, String k10, boolean v10) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9, k10, v10);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6, String k7, boolean v7, String k8, boolean v8,
-			String k9, boolean v9) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
+			boolean v9) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8, k9, v9);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6, String k7, boolean v7, String k8,
-			boolean v8) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
 				k8, v8);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6, String k7, boolean v7) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5, boolean v5,
-			String k6, boolean v6) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4, String k5,
-			boolean v5) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3, String k4, boolean v4) {
-		return new objB(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2,
-			String k3, boolean v3) {
-		return new objB(k1, v1, k2, v2, k3, v3);
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3) {
+		return new oB(k1, v1, k2, v2, k3, v3);
 	}
-	public static objB obj(String k1, boolean v1, String k2, boolean v2) {
-		return new objB(k1, v1, k2, v2);
+	public static oB o(String k1, boolean v1, String k2, boolean v2) {
+		return new oB(k1, v1, k2, v2);
 	}
-	public static objB obj(String k1, boolean v1) {
-		return new objB(k1, v1);
+	public static oB o(String k1, boolean v1) {
+		return new oB(k1, v1);
 	}
 	// treeI
 	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
@@ -31575,37 +31563,37 @@ public class KL {
 		}
 		return join(arr.array(), with);
 	}
-	public static String join(objS o, String with) {
+	public static String join(oS o, String with) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array(), with);
 	}
-	public static String join(objI o, String with) {
+	public static String join(oI o, String with) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array(), with);
 	}
-	public static String join(objL o, String with) {
+	public static String join(oL o, String with) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array(), with);
 	}
-	public static String join(objF o, String with) {
+	public static String join(oF o, String with) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array(), with);
 	}
-	public static String join(objD o, String with) {
+	public static String join(oD o, String with) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array(), with);
 	}
-	public static String join(objB o, String with) {
+	public static String join(oB o, String with) {
 		if (not(o)) {
 			return "";
 		}
@@ -31811,37 +31799,37 @@ public class KL {
 		}
 		return join(arr.array());
 	}
-	public static String join(objS o) {
+	public static String join(oS o) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array());
 	}
-	public static String join(objI o) {
+	public static String join(oI o) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array());
 	}
-	public static String join(objL o) {
+	public static String join(oL o) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array());
 	}
-	public static String join(objF o) {
+	public static String join(oF o) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array());
 	}
-	public static String join(objD o) {
+	public static String join(oD o) {
 		if (not(o)) {
 			return "";
 		}
 		return join(o.array());
 	}
-	public static String join(objB o) {
+	public static String join(oB o) {
 		if (not(o)) {
 			return "";
 		}
@@ -32381,7 +32369,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static int sum(objI ns) {
+	public static int sum(oI ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32391,7 +32379,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static long sum(objL ns) {
+	public static long sum(oL ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32401,7 +32389,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static float sum(objF ns) {
+	public static float sum(oF ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32411,7 +32399,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static double sum(objD ns) {
+	public static double sum(oD ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32549,7 +32537,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static int difference(objI ns) {
+	public static int difference(oI ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32559,7 +32547,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static long difference(objL ns) {
+	public static long difference(oL ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32569,7 +32557,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static float difference(objF ns) {
+	public static float difference(oF ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32579,7 +32567,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static double difference(objD ns) {
+	public static double difference(oD ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32729,7 +32717,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static int product(objI ns) {
+	public static int product(oI ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32739,7 +32727,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static long product(objL ns) {
+	public static long product(oL ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32749,7 +32737,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static float product(objF ns) {
+	public static float product(oF ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32759,7 +32747,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static double product(objD ns) {
+	public static double product(oD ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32909,7 +32897,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static int quotient(objI ns) {
+	public static int quotient(oI ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32919,7 +32907,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static long quotient(objL ns) {
+	public static long quotient(oL ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32929,7 +32917,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static float quotient(objF ns) {
+	public static float quotient(oF ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -32939,7 +32927,7 @@ public class KL {
 		}
 		return acc;
 	}
-	public static double quotient(objD ns) {
+	public static double quotient(oD ns) {
 		if (not(ns)) {
 			return 0;
 		}
@@ -33060,17 +33048,17 @@ public class KL {
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static int min(objI nums) {
+	public static int min(oI nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static long min(objL nums) {
+	public static long min(oL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
-	public static double min(objD nums) {
+	public static double min(oD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
@@ -33122,17 +33110,17 @@ public class KL {
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static int max(objI nums) {
+	public static int max(oI nums) {
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static long max(objL nums) {
+	public static long max(oL nums) {
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
-	public static double max(objD nums) {
+	public static double max(oD nums) {
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
@@ -33830,22 +33818,22 @@ public class KL {
 			// post processing...
 			// FOR FIELDS
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?(?!\\(\\w*\\)))")) {
+					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\[\\]\\.]+)?(?!\\(\\w*\\)))")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\.]+)?");
+							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
-								"[\\$\\{:=\\\\\\}]|(?<=[:=])(\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)|(?<=[\\w])\\.[\\w]+",
+								"[\\$\\{:=\\\\\\}]|\\[\\-?\\d+\\]|(?<=[:=])(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)|(?<=[\\w])\\.[\\w]+",
 								"");
 						field = cls.getDeclaredField(toGet).get(this);
 						String label = "";
 						int decimalPlaces = 2;
-						if (in(m, "[:=]")) {
+						if (in(m, "[:=\\[\\]]")) {
 							if (in(m,
-									"[:=]{1,2}(?=\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)")
+									"[:=]{1,2}(?=\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)")
 									&& (field instanceof String
 											|| field instanceof Integer
 											|| field instanceof Long
@@ -33867,12 +33855,16 @@ public class KL {
 									// One could also use \\[:=] to force
 									// labels.
 								}
-							} else if (in(m, "(?<=\\w)[:=\\\\]{2}(?!\\.\\d)")) {
+							} else if (in(m,
+									"(?<=\\w)[:=\\\\]{2}(?!\\.\\d)|(?<=\\w)\\[\\-?\\d+\\]")) {
 								label = "";
 								// good practice: if double colon (::) or double
 								// equals (==) is not followed by a
-								// precision,
-								// just remove it, so it returns the exact value
+								// precision, OR IF the user is trying to get
+								// element at a specific index of a string or an
+								// array,
+								// just drop the label, so it returns the exact
+								// value
 								// of the
 								// field AS-IS
 							} else {
@@ -33905,7 +33897,8 @@ public class KL {
 							}
 							// some tweaks
 							if (field instanceof String) {
-								if (in(m, ("(?<=[:=]),?\\d+(,?\\d+)?"))) {
+								if (in(m,
+										("(?<=[:=\\[]),?\\-?\\d+(,?\\d+)?\\]?"))) {
 									if (in(m, ("(?<=[:=])\\d+,\\d+"))) {
 										int a = Int(findMatch(m,
 												"(?<=[:=])\\d+(?=,\\d+)")),
@@ -33920,6 +33913,11 @@ public class KL {
 										int a = Int(
 												findMatch(m, "(?<=[:=],)\\d+"));
 										field = sliceRight(Str(field), a);
+									} else if (in(m,
+											("(?<=[\\[])\\-?\\d+(?=\\])"))) {
+										int i = Int(findMatch(m,
+												"(?<=\\[)\\-?\\d+(?=\\])"));
+										field = nth(Str(field), i);
 									} else {
 										int b = Int(
 												findMatch(m, "(?<=[:=])\\d+"));
@@ -34118,48 +34116,84 @@ public class KL {
 							}
 						}
 						if (isArr(field)) {
-							if (field instanceof Object[]) {
-								// if it's not a primitive array and is one of
-								// of those arrays that
-								// are based on a
-								// Object wrapper, like String[], Number[],
-								// Object[]
-								if (isArrOfStr(field)) {
-									field = "[" + (!isEmpty((String[]) field)
-											? "\"" + join((String[]) field,
-													"\", \"") + "\""
-											: "") + "]";
-								} else if (isArrOfNum(field)) {
-									field = "[" + join((Number[]) field) + "]";
-								} else if (isArrOfObj(field)) {
-									field = "[" + join((Object[]) field, ", ")
-											+ "]";
+							if (in(m, "(?<=[\\[])\\-?\\d+(?=\\])")) {
+								int i = Int(findMatch(m,
+										"(?<=\\[)\\-?\\d+(?=\\])"));
+								if (field instanceof Object[]) {
+									if (isArrOfStr(field)) {
+										field = nth((String[]) field, i);
+									} else if (isArrOfNum(field)) {
+										field = nth((Number[]) field, i);
+									} else if (isArrOfObj(field)) {
+										field = nth((Object[]) field, i);
+									}
+								} else {
+									if (isArrOfChar(field)) {
+										field = nth((char[]) field, i);
+									} else if (isArrOfInt(field)) {
+										field = nth((int[]) field, i);
+									} else if (isArrOfLong(field)) {
+										field = nth((long[]) field, i);
+									} else if (isArrOfFlt(field)) {
+										field = nth((float[]) field, i);
+									} else if (isArrOfDbl(field)) {
+										field = nth((double[]) field, i);
+									} else if (isArrOfBool(field)) {
+										field = nth((boolean[]) field, i);
+									}
 								}
 							} else {
-								if (isArrOfChar(field)) {
-									field = "[" + (!isEmpty((char[]) field)
-											? "\'" + join(field, "\', \'")
-													+ "\'"
-											: "") + "]";
-								} else if (isArrOfInt(field)) {
-									field = "[" + join((int[]) field) + "]";
-								} else if (isArrOfLong(field)) {
-									field = "[" + join((long[]) field) + "]";
-								} else if (isArrOfFlt(field)) {
-									field = "[" + join((float[]) field) + "]";
-								} else if (isArrOfDbl(field)) {
-									field = "[" + join((double[]) field) + "]";
-								} else if (isArrOfBool(field)) {
-									field = "[" + join((boolean[]) field) + "]";
+								if (field instanceof Object[]) {
+									// if it's not a primitive array and is one
+									// of
+									// of those arrays that
+									// are based on an
+									// Object wrapper, like String[], Number[],
+									// Object[]
+									if (isArrOfStr(field)) {
+										field = "["
+												+ (!isEmpty((String[]) field)
+														? "\"" + join(
+																(String[]) field,
+																"\", \"") + "\""
+														: "")
+												+ "]";
+									} else if (isArrOfNum(field)) {
+										field = "[" + join((Number[]) field)
+												+ "]";
+									} else if (isArrOfObj(field)) {
+										field = "["
+												+ join((Object[]) field, ", ")
+												+ "]";
+									}
+								} else {
+									if (isArrOfChar(field)) {
+										field = "[" + (!isEmpty((char[]) field)
+												? "\'" + join(field, "\', \'")
+														+ "\'"
+												: "") + "]";
+									} else if (isArrOfInt(field)) {
+										field = "[" + join((int[]) field) + "]";
+									} else if (isArrOfLong(field)) {
+										field = "[" + join((long[]) field)
+												+ "]";
+									} else if (isArrOfFlt(field)) {
+										field = "[" + join((float[]) field)
+												+ "]";
+									} else if (isArrOfDbl(field)) {
+										field = "[" + join((double[]) field)
+												+ "]";
+									} else if (isArrOfBool(field)) {
+										field = "[" + join((boolean[]) field)
+												+ "]";
+									}
 								}
 							}
 						}
-						if (field instanceof obj || field instanceof objS
-								|| field instanceof objI
-								|| field instanceof objL
-								|| field instanceof objF
-								|| field instanceof objD
-								|| field instanceof objB
+						if (field instanceof o || field instanceof oS
+								|| field instanceof oI || field instanceof oL
+								|| field instanceof oF || field instanceof oD
+								|| field instanceof oB
 								|| field instanceof HashMap
 								|| field instanceof tree
 								|| field instanceof TreeMap) {
@@ -34170,6 +34204,39 @@ public class KL {
 								field = Str(field).split(key + "=")[1]
 										.split(",")[0]
 										.replaceAll("[\\{\\}]", "");
+							} else if (in(m, ("(?<=[\\[])\\-?\\d+(?=\\])"))) {
+								int i = Int(findMatch(m,
+										"(?<=\\[)\\-?\\d+(?=\\])"));
+								field = switch (field) {
+									case o __ -> field = nth((o) field, i);
+									case oS __ -> field = nth((oS) field, i);
+									case oI __ -> field = nth((oI) field, i);
+									case oL __ -> field = nth((oL) field, i);
+									case oF __ -> field = nth((oF) field, i);
+									case oD __ -> field = nth((oD) field, i);
+									case oB __ -> field = nth((oB) field, i);
+									case treeI __ ->
+										field = nth((treeI) field, i);
+									case treeL __ ->
+										field = nth((treeL) field, i);
+									case treeF __ ->
+										field = nth((treeF) field, i);
+									case treeD __ ->
+										field = nth((treeD) field, i);
+									case treeB __ ->
+										field = nth((treeB) field, i);
+									case treeDS __ ->
+										field = nth((treeDS) field, i);
+									case treeDI __ ->
+										field = nth((treeDI) field, i);
+									case treeDL __ ->
+										field = nth((treeDL) field, i);
+									case treeDF __ ->
+										field = nth((treeDF) field, i);
+									case treeDB __ ->
+										field = nth((treeDB) field, i);
+									default -> field;
+								};
 							} else {
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
@@ -34180,7 +34247,7 @@ public class KL {
 												.replaceAll("=", ": ");
 							}
 						}
-						m = m.replaceAll("([\\$\\{\\\\\\}])", "\\\\$1");
+						m = m.replaceAll("([\\$\\{\\[\\\\\\]\\}])", "\\\\$1");
 						// replace special characters, so s.replaceFirst doesn't
 						// confuse them with an ending character ($), or a
 						// quantifier ({,})
@@ -34191,7 +34258,6 @@ public class KL {
 					}
 				} catch (NoSuchFieldException | IllegalAccessException
 						| SecurityException e) {
-
 				}
 			}
 			// for methods
@@ -35446,22 +35512,22 @@ public class KL {
 	public static boolean not(boolArr arr) {
 		return isnl(arr) || isEmpty(arr);
 	}
-	public static boolean not(objS o) {
+	public static boolean not(oS o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(objI o) {
+	public static boolean not(oI o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(objL o) {
+	public static boolean not(oL o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(objF o) {
+	public static boolean not(oF o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(objD o) {
+	public static boolean not(oD o) {
 		return isnl(o) || isEmpty(o);
 	}
-	public static boolean not(objB o) {
+	public static boolean not(oB o) {
 		return isnl(o) || isEmpty(o);
 	}
 	public static boolean not(treeDI t) {
@@ -35584,22 +35650,22 @@ public class KL {
 	public static boolean is(boolArr arr) {
 		return !not(arr);
 	}
-	public static boolean is(objS o) {
+	public static boolean is(oS o) {
 		return !not(o);
 	}
-	public static boolean is(objI o) {
+	public static boolean is(oI o) {
 		return !not(o);
 	}
-	public static boolean is(objL o) {
+	public static boolean is(oL o) {
 		return !not(o);
 	}
-	public static boolean is(objF o) {
+	public static boolean is(oF o) {
 		return !not(o);
 	}
-	public static boolean is(objD o) {
+	public static boolean is(oD o) {
 		return !not(o);
 	}
-	public static boolean is(objB o) {
+	public static boolean is(oB o) {
 		return !not(o);
 	}
 	public static boolean is(treeDI t) {
@@ -35852,37 +35918,37 @@ public class KL {
 		}
 		return arr.i(randInt(arr.length()));
 	}
-	public static String randItem(objS arr) {
+	public static String randItem(oS arr) {
 		if (not(arr)) {
 			return "";
 		}
 		return arr.i(randInt(arr.length()));
 	}
-	public static int randItem(objI arr) {
+	public static int randItem(oI arr) {
 		if (not(arr)) {
 			return 0;
 		}
 		return arr.i(randInt(arr.length()));
 	}
-	public static long randItem(objL arr) {
+	public static long randItem(oL arr) {
 		if (not(arr)) {
 			return 0;
 		}
 		return arr.i(randInt(arr.length()));
 	}
-	public static float randItem(objF arr) {
+	public static float randItem(oF arr) {
 		if (not(arr)) {
 			return 0;
 		}
 		return arr.i(randInt(arr.length()));
 	}
-	public static double randItem(objD arr) {
+	public static double randItem(oD arr) {
 		if (not(arr)) {
 			return 0;
 		}
 		return arr.i(randInt(arr.length()));
 	}
-	public static boolean randItem(objB arr) {
+	public static boolean randItem(oB arr) {
 		if (not(arr)) {
 			return false;
 		}
@@ -36017,22 +36083,22 @@ public class KL {
 	public static boolean randFrom(treeB t) {
 		return randItem(t);
 	}
-	public static String randFrom(objS o) {
+	public static String randFrom(oS o) {
 		return randItem(o);
 	}
-	public static int randFrom(objI o) {
+	public static int randFrom(oI o) {
 		return randItem(o);
 	}
-	public static long randFrom(objL o) {
+	public static long randFrom(oL o) {
 		return randItem(o);
 	}
-	public static float randFrom(objF o) {
+	public static float randFrom(oF o) {
 		return randItem(o);
 	}
-	public static double randFrom(objD o) {
+	public static double randFrom(oD o) {
 		return randItem(o);
 	}
-	public static boolean randFrom(objB o) {
+	public static boolean randFrom(oB o) {
 		return randItem(o);
 	}
 	public static String anyOf(String arr[]) {
@@ -36104,22 +36170,22 @@ public class KL {
 	public static boolean anyOf(treeB t) {
 		return randItem(t);
 	}
-	public static String anyOf(objS o) {
+	public static String anyOf(oS o) {
 		return randItem(o);
 	}
-	public static int anyOf(objI o) {
+	public static int anyOf(oI o) {
 		return randItem(o);
 	}
-	public static long anyOf(objL o) {
+	public static long anyOf(oL o) {
 		return randItem(o);
 	}
-	public static float anyOf(objF o) {
+	public static float anyOf(oF o) {
 		return randItem(o);
 	}
-	public static double anyOf(objD o) {
+	public static double anyOf(oD o) {
 		return randItem(o);
 	}
-	public static boolean anyOf(objB o) {
+	public static boolean anyOf(oB o) {
 		return randItem(o);
 	}
 	public static int[] noDuplicates(int[] arr) {
@@ -36193,7 +36259,7 @@ public class KL {
 		Matcher matcher = p.matcher(s);
 		return matcher.replaceAll(m -> fn.apply(m.group()));
 	}
-	public static String replace(String str, obj object) {
+	public static String replace(String str, o object) {
 		if (not(str)) {
 			return "";
 		}
@@ -36209,7 +36275,7 @@ public class KL {
 		}
 		return output;
 	}
-	public static String replace(String str, objS object) {
+	public static String replace(String str, oS object) {
 		if (not(str)) {
 			return "";
 		}
@@ -36225,7 +36291,7 @@ public class KL {
 		}
 		return output;
 	}
-	public static String replace(String str, objI object) {
+	public static String replace(String str, oI object) {
 		if (not(str)) {
 			return "";
 		}
@@ -36241,7 +36307,7 @@ public class KL {
 		}
 		return output;
 	}
-	public static String replace(String str, objL object) {
+	public static String replace(String str, oL object) {
 		if (not(str)) {
 			return "";
 		}
@@ -36257,7 +36323,7 @@ public class KL {
 		}
 		return output;
 	}
-	public static String replace(String str, objF object) {
+	public static String replace(String str, oF object) {
 		if (not(str)) {
 			return "";
 		}
@@ -36273,7 +36339,7 @@ public class KL {
 		}
 		return output;
 	}
-	public static String replace(String str, objD object) {
+	public static String replace(String str, oD object) {
 		if (not(str)) {
 			return "";
 		}
@@ -36289,7 +36355,7 @@ public class KL {
 		}
 		return output;
 	}
-	public static String replace(String str, objB object) {
+	public static String replace(String str, oB object) {
 		if (not(str)) {
 			return "";
 		}
@@ -37530,23 +37596,170 @@ public class KL {
 		}
 		return tree.last() == lookupBool;
 	}
+	public static char nth(char[] arr, int n) {
+		return n >= 0 && n < len(arr) ? arr[n] : '\0';
+	}
+	public static String nth(String str, int n) {
+		return n >= 0 && n < len(str)
+				? Str(str.toCharArray()[n])
+				: nthLastOf(str, Pos(n));
+	}
+	public static String nth(String[] arr, int n) {
+		if (isNull(arr))
+			return "";
+		return new strArr(arr).i(n);
+	}
+	public static int nth(int[] arr, int n) {
+		if (isNull(arr))
+			return 0;
+		return new intArr(arr).i(n);
+	}
+	public static long nth(long[] arr, int n) {
+		if (isNull(arr))
+			return 0;
+		return new longArr(arr).i(n);
+	}
+	public static float nth(float[] arr, int n) {
+		if (isNull(arr))
+			return 0;
+		return new fltArr(arr).i(n);
+	}
+	public static double nth(double[] arr, int n) {
+		if (isNull(arr))
+			return 0;
+		return new dblArr(arr).i(n);
+	}
+	public static boolean nth(boolean[] arr, int n) {
+		if (isNull(arr))
+			return false;
+		return new boolArr(arr).i(n);
+	}
+	public static Object nth(Object[] arr, int n) {
+		if (isNull(arr))
+			return none;
+		return n >= 0 && n < len(arr) ? arr[n] : none;
+	}
 	public static String nth(strArr arr, int n) {
-		return n >= 0 && n < len(arr) ? arr.i(n) : "";
+		if (isNull(arr))
+			return "";
+		return arr.i(n);
 	}
 	public static int nth(intArr arr, int n) {
-		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
+		if (isNull(arr))
+			return 0;
+		return arr.i(n);
 	}
 	public static long nth(longArr arr, int n) {
-		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
-	}
-	public static float nth(fltArr arr, int n) {
-		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
+		if (isNull(arr))
+			return 0;
+		return arr.i(n);
 	}
 	public static double nth(dblArr arr, int n) {
-		return n >= 0 && n < len(arr) ? arr.i(n) : 0;
+		if (isNull(arr))
+			return 0;
+		return arr.i(n);
 	}
 	public static boolean nth(boolArr arr, int n) {
-		return n >= 0 && n < len(arr) ? arr.i(n) : false;
+		if (isNull(arr))
+			return false;
+		return arr.i(n);
+	}
+	public static Object nth(o object, int n) {
+		if (isNull(object))
+			return none;
+		return object.i(n);
+	}
+	public static String nth(oS object, int n) {
+		if (isNull(object))
+			return "";
+		return object.i(n);
+	}
+	public static int nth(oI object, int n) {
+		if (isNull(object))
+			return 0;
+		return object.i(n);
+	}
+	public static long nth(oL object, int n) {
+		if (isNull(object))
+			return 0;
+		return object.i(n);
+	}
+	public static float nth(oF object, int n) {
+		if (isNull(object))
+			return 0;
+		return object.i(n);
+	}
+	public static double nth(oD object, int n) {
+		if (isNull(object))
+			return 0;
+		return object.i(n);
+	}
+	public static boolean nth(oB object, int n) {
+		if (isNull(object))
+			return false;
+		return object.i(n);
+	}
+	public static String nth(treeI tree, int n) {
+		if (isNull(tree))
+			return "";
+		return tree.i(n);
+	}
+	public static long nth(treeL tree, int n) {
+		if (isNull(tree))
+			return 0;
+		return tree.i(n);
+	}
+	public static float nth(treeF tree, int n) {
+		if (isNull(tree))
+			return 0;
+		return tree.i(n);
+	}
+	public static double nth(treeD tree, int n) {
+		if (isNull(tree))
+			return 0;
+		return tree.i(n);
+	}
+	public static boolean nth(treeB tree, int n) {
+		if (isNull(tree))
+			return false;
+		return tree.i(n);
+	}
+	public static String nth(treeDS tree, int n) {
+		if (isNull(tree))
+			return "";
+		return tree.i(n);
+	}
+	public static int nth(treeDI tree, int n) {
+		if (isNull(tree))
+			return 0;
+		return tree.i(n);
+	}
+	public static long nth(treeDL tree, int n) {
+		if (isNull(tree))
+			return 0;
+		return tree.i(n);
+	}
+	public static float nth(treeDF tree, int n) {
+		if (isNull(tree))
+			return 0;
+		return tree.i(n);
+	}
+	public static boolean nth(treeDB tree, int n) {
+		if (isNull(tree))
+			return false;
+		return tree.i(n);
+	}
+	public static String firstOf(String[] arr) {
+		if (not(arr)) {
+			return "";
+		}
+		return new strArr(arr).first();
+	}
+	public static String secondOf(String[] arr) {
+		if (not(arr)) {
+			return "";
+		}
+		return new strArr(arr).second();
 	}
 	public static String firstOf(strArr arr) {
 		if (not(arr)) {
@@ -37560,6 +37773,18 @@ public class KL {
 		}
 		return arr.second();
 	}
+	public static int firstOf(int[] arr) {
+		if (not(arr)) {
+			return 0;
+		}
+		return new intArr(arr).first();
+	}
+	public static int secondOf(int[] arr) {
+		if (not(arr)) {
+			return 0;
+		}
+		return new intArr(arr).second();
+	}
 	public static int firstOf(intArr arr) {
 		if (not(arr)) {
 			return 0;
@@ -37571,6 +37796,18 @@ public class KL {
 			return 0;
 		}
 		return arr.second();
+	}
+	public static long firstOf(long[] arr) {
+		if (not(arr)) {
+			return 0;
+		}
+		return new longArr(arr).first();
+	}
+	public static long secondOf(long[] arr) {
+		if (not(arr)) {
+			return 0;
+		}
+		return new longArr(arr).second();
 	}
 	public static float firstOf(longArr arr) {
 		if (not(arr)) {
@@ -37621,47 +37858,75 @@ public class KL {
 		return arr.second();
 	}
 	public static String nthLastOf(String str, int n) {
+		if (isNull(str))
+			return "";
 		return n > 0 && n <= len(str)
 				? ("" + str.toCharArray()[len(str) - n])
 				: "";
 	}
 	public static char nthLastOf(char[] arr, int n) {
+		if (isNull(arr))
+			return '\0';
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : '\0';
 	}
 	public static String nthLastOf(String[] arr, int n) {
+		if (isNull(arr))
+			return "";
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : "";
 	}
 	public static int nthLastOf(int[] arr, int n) {
+		if (isNull(arr))
+			return 0;
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
 	}
 	public static long nthLastOf(long[] arr, int n) {
+		if (isNull(arr))
+			return 0;
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
 	}
 	public static float nthLastOf(float[] arr, int n) {
+		if (isNull(arr))
+			return 0;
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
 	}
 	public static double nthLastOf(double[] arr, int n) {
+		if (isNull(arr))
+			return 0;
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
 	}
 	public static boolean nthLastOf(boolean[] arr, int n) {
+		if (isNull(arr))
+			return false;
 		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : false;
 	}
 	public static String nthLastOf(strArr arr, int n) {
+		if (isNull(arr))
+			return "";
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : "";
 	}
 	public static int nthLastOf(intArr arr, int n) {
+		if (isNull(arr))
+			return 0;
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
 	}
 	public static long nthLastOf(longArr arr, int n) {
+		if (isNull(arr))
+			return 0;
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
 	}
 	public static float nthLastOf(fltArr arr, int n) {
+		if (isNull(arr))
+			return 0;
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
 	}
 	public static double nthLastOf(dblArr arr, int n) {
+		if (isNull(arr))
+			return 0;
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
 	}
 	public static boolean nthLastOf(boolArr arr, int n) {
+		if (isNull(arr))
+			return false;
 		return n > 0 && n <= len(arr) ? arr.lasti(n) : false;
 	}
 	public static String secondLastOf(String str) {
@@ -37742,40 +38007,40 @@ public class KL {
 	public static boolean lastOf(boolArr arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
-	public static String secondLastOf(objS arr) {
+	public static String secondLastOf(oS arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : "";
 	}
-	public static String lastOf(objS arr) {
+	public static String lastOf(oS arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : "";
 	}
-	public static int secondLastOf(objI arr) {
+	public static int secondLastOf(oI arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static int lastOf(objI arr) {
+	public static int lastOf(oI arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static long secondLastOf(objL arr) {
+	public static long secondLastOf(oL arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static long lastOf(objL arr) {
+	public static long lastOf(oL arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static float secondLastOf(objF arr) {
+	public static float secondLastOf(oF arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static float lastOf(objF arr) {
+	public static float lastOf(oF arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static double secondLastOf(objD arr) {
+	public static double secondLastOf(oD arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : 0;
 	}
-	public static double lastOf(objD arr) {
+	public static double lastOf(oD arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : 0;
 	}
-	public static boolean secondLastOf(objB arr) {
+	public static boolean secondLastOf(oB arr) {
 		return len(arr) - 2 >= 0 ? arr.seclast() : false;
 	}
-	public static boolean lastOf(objB arr) {
+	public static boolean lastOf(oB arr) {
 		return len(arr) - 1 >= 0 ? arr.last() : false;
 	}
 	public static String secondLastOf(treeDS arr) {
@@ -38409,9 +38674,9 @@ public class KL {
 	}
 	public static int[] intsOf(Object... objs) {
 		intArr resultantArr = new intArr();
-		for (Object obj : objs) {
-			if (obj instanceof Integer) {
-				resultantArr.push((int) obj);
+		for (Object o : objs) {
+			if (o instanceof Integer) {
+				resultantArr.push((int) o);
 			}
 		}
 		return resultantArr.array();
@@ -38441,9 +38706,9 @@ public class KL {
 	}
 	public static float[] fltsOf(Object... objs) {
 		fltArr resultantArr = new fltArr();
-		for (Object obj : objs) {
-			if (obj instanceof Float) {
-				resultantArr.push(setPrecision((float) obj, 2));
+		for (Object o : objs) {
+			if (o instanceof Float) {
+				resultantArr.push(setPrecision((float) o, 2));
 			}
 		}
 		return resultantArr.array();
@@ -38473,9 +38738,9 @@ public class KL {
 	}
 	public static double[] dblsOf(Object... objs) {
 		dblArr resultantArr = new dblArr();
-		for (Object obj : objs) {
-			if (obj instanceof Double) {
-				resultantArr.push(setPrecision((double) obj, 2));
+		for (Object o : objs) {
+			if (o instanceof Double) {
+				resultantArr.push(setPrecision((double) o, 2));
 			}
 		}
 		return resultantArr.array();
@@ -38493,10 +38758,9 @@ public class KL {
 	}
 	public static double[] numsOf(Object... objs) {
 		dblArr resultantArr = new dblArr();
-		for (Object obj : objs) {
-			if (obj instanceof Number) {
-				resultantArr
-						.push(setPrecision(((Number) obj).doubleValue(), 2));
+		for (Object o : objs) {
+			if (o instanceof Number) {
+				resultantArr.push(setPrecision(((Number) o).doubleValue(), 2));
 			}
 		}
 		return resultantArr.array();
@@ -40062,37 +40326,43 @@ public class KL {
 		}
 		return arr.length();
 	}
-	public static int len(objS o) {
+	public static int len(o o) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(objI o) {
+	public static int len(oS o) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(objL o) {
+	public static int len(oI o) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(objF o) {
+	public static int len(oL o) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(objD o) {
+	public static int len(oF o) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(objB o) {
+	public static int len(oD o) {
+		if (o == null) {
+			return 0;
+		}
+		return o.length();
+	}
+	public static int len(oB o) {
 		if (o == null) {
 			return 0;
 		}
@@ -40203,22 +40473,22 @@ public class KL {
 	public static int size(boolArr arr) {
 		return len(arr);
 	}
-	public static int size(objS o) {
+	public static int size(oS o) {
 		return len(o);
 	}
-	public static int size(objI o) {
+	public static int size(oI o) {
 		return len(o);
 	}
-	public static int size(objL o) {
+	public static int size(oL o) {
 		return len(o);
 	}
-	public static int size(objF o) {
+	public static int size(oF o) {
 		return len(o);
 	}
-	public static int size(objD o) {
+	public static int size(oD o) {
 		return len(o);
 	}
-	public static int size(objB o) {
+	public static int size(oB o) {
 		return len(o);
 	}
 	public static int size(treeDI t) {
@@ -40391,22 +40661,22 @@ public class KL {
 	public static boolean isEmpty(boolArr arr) {
 		return 0 == len(arr) || arr.isEmpty();
 	}
-	public static boolean isEmpty(objS o) {
+	public static boolean isEmpty(oS o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(objI o) {
+	public static boolean isEmpty(oI o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(objL o) {
+	public static boolean isEmpty(oL o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(objF o) {
+	public static boolean isEmpty(oF o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(objD o) {
+	public static boolean isEmpty(oD o) {
 		return 0 == len(o) || o.isEmpty();
 	}
-	public static boolean isEmpty(objB o) {
+	public static boolean isEmpty(oB o) {
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(treeDI t) {
@@ -40523,22 +40793,22 @@ public class KL {
 	public static boolean hasLen(boolArr arr) {
 		return !isEmpty(arr);
 	}
-	public static boolean hasLen(objS o) {
+	public static boolean hasLen(oS o) {
 		return !isEmpty(o);
 	}
-	public static boolean hasLen(objI o) {
+	public static boolean hasLen(oI o) {
 		return !isEmpty(o);
 	}
-	public static boolean hasLen(objL o) {
+	public static boolean hasLen(oL o) {
 		return !isEmpty(o);
 	}
-	public static boolean hasLen(objF o) {
+	public static boolean hasLen(oF o) {
 		return !isEmpty(o);
 	}
-	public static boolean hasLen(objD o) {
+	public static boolean hasLen(oD o) {
 		return !isEmpty(o);
 	}
-	public static boolean hasLen(objB o) {
+	public static boolean hasLen(oB o) {
 		return !isEmpty(o);
 	}
 	public static boolean hasLen(treeDI t) {
@@ -40603,7 +40873,7 @@ public class KL {
 							return "arr";
 						}).replaceAll("Ljava\\.lang\\.|\\;", "")
 						.replaceAll("String", "str").replaceAll("Number", "num")
-						.replaceAll("Object", "obj");
+						.replaceAll("Object", "o");
 			}
 			return middleware.toLowerCase()
 					.replaceAll("(?<=\\w{3,4})arr", "Arr")
@@ -40614,13 +40884,13 @@ public class KL {
 		// instead leave a trailing semicolon at the end
 		return result;
 	}
-	public static boolean type(Object obj, String guessedType) {
+	public static boolean type(Object o, String guessedType) {
 		if (not(guessedType)) {
 			return false;
 		}
 		return len(guessedType) < 3
-				? startsWith(type(obj), guessedType)
-				: in(type(obj), guessedType);
+				? startsWith(type(o), guessedType)
+				: in(type(o), guessedType);
 	}
 	// ^this one stays too
 	public static boolean type(Object src, Object cond1, Runnable sol1,
@@ -40717,6 +40987,64 @@ public class KL {
 		}
 		return sw(type(src), cond1, sol1);
 	}
+	// type version 2
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4,
+				sol4);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
+		return sw(type(src), cond1, sol1, cond2, sol2);
+	}
+	public static <T> T type(Object src, Object cond1, T sol1) {
+		return sw(type(src), cond1, sol1);
+	}
 	// let's set up some "type"-helpers for the function
 	public static String None = "null", Ch, Str = "string", Int = "integer",
 			Char = Ch = "character", Long = "long", Flt = "float",
@@ -40725,7 +41053,7 @@ public class KL {
 			ArrOfInt = "array\\.int", ArrOfLong = "array\\.long",
 			ArrOfFlt = "array\\.flt", ArrOfDbl = "array\\.dbl",
 			ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num",
-			ArrOfObj = "array\\.obj", strArr = "strArr", intArr = "intArr",
+			ArrOfObj = "array\\.o", strArr = "strArr", intArr = "intArr",
 			longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
 			boolArr = "boolArr";
 	public static char[] charArrToCharArr(Character[] inputArr) {
@@ -41894,10 +42222,10 @@ public class KL {
 	public static String name = "Ayesha";
 	public static int age = 23;
 	public static double score = 300500.856D;
-	public static obj user = obj("name", "Mike", "age", 22, "state", "Illinois",
+	public static o user = o("name", "Mike", "age", 22, "state", "Illinois",
 			"country", "United States", "height", 5.1, "veteran", Yes);
 	String[] arr = {"hi", "hey"};
-	intArr arr2 = intArr(range(1, 5));
+	intArr arr2 = arr(range(1, 5));
 	public static treeI myTree = treeI(1, "uno", 2, "dos", 3, "tres", 4,
 			"cuatro", 5, "cinco", 6, "seis", 7, "siete", 8, "ocho", 9, "nueve",
 			10, "diez");
@@ -41946,10 +42274,11 @@ public class KL {
 		print(with("user", "Name: $name\nAge: $age"));
 		print(with("user:", "$name\n$age"));
 		print(with("myTree", "1: $1\n2: $2\n3: $3"));
-		print(replace("1.. 2.. 3.. 4.. 5.. 6.. 7.. 8.. 9. ", myTree));
+		print(replace("1.. 2.. 3.. 4.. 5.. 6.. 7.. 8.. 9.. ", myTree));
 		print(replace(
 				"Name: name\nAge: age\nState: state\nCountry: country\nVeteran: veteran",
 				user));
+		print("$name[-3] $arr2[1] $myTree[-1]");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
