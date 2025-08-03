@@ -15,7 +15,9 @@ class lafz {
 				this.str += " " + o;
 		}
 		trim();
-		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
+		this.str = KL.sentCase(this.str);
+		if (KL.in(this.str, "[A-Za-z]"))
+			words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 	}
 	lafz concat(Object... objs) {
 		for (Object o : objs) {
@@ -25,6 +27,9 @@ class lafz {
 				this.str += " " + o;
 		}
 		trim();
+		this.str = KL.sentCase(this.str);
+		if (KL.in(this.str, "[A-Za-z]"))
+			words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 		return this;
 	}
 	lafz cat(Object... objs) {
@@ -158,6 +163,9 @@ class lafz {
 	String[] splitIntoWords() {
 		return words;
 	}
+	String[] toWords() {
+		return splitIntoWords();
+	}
 	String firstWord() {
 		if (length() == 0 || words.length == 0)
 			return "";
@@ -227,9 +235,15 @@ class lafz {
 	String[] toArray() {
 		return split();
 	}
-	Object[] toStrArr() {
-		return (Object[]) splitIntoWords();
-		// replace the `Object[]` part with `new StrArr($rest)`
+	KL.strArr toStrArrWords() {
+		if (this.str == null || this.str.isEmpty() || !this.hasWords())
+			return KL.blank.strArr;
+		return KL.strArr(words);
+	}
+	KL.strArr toWordsAsStrArr() {
+		if (this.str == null || this.str.isEmpty() || !this.hasWords())
+			return KL.blank.strArr;
+		return KL.strArr(words);
 	}
 	char[] toCharArray() {
 		return str.toCharArray();
@@ -614,16 +628,18 @@ class lafz {
 }
 class str extends lafz {
 	str() {
-		this.str = "";
+		super.str = "";
 	}
 	str(Object... objs) {
-		this.str = "";
+		super.str = "";
 		for (Object o : objs) {
 			if (o != null)
-				this.str += " " + o;
+				super.str += " " + o;
 		}
 		trim();
-		words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
+		this.str = KL.sentCase(super.str);
+		if (KL.in(super.str, "[A-Za-z]"))
+			super.words = split("[^a-zA-Z'\\-]+|\\-(?![a-zA-Z]{2,})");
 	}
 }
 
@@ -641,10 +657,11 @@ class Main {
 		lafz salaam = $("  hi", "there", "love!", "I'm", 23);
 		lafz greeting2 = $("hi", " boyfriends");
 		str name = str("mehrunisa ji");
+		System.out.println(name.replaceSecondWord("Ayatullah"));
 		System.out.println(salaam.sentCase());
 		System.out.println(name.i(-12));
 		System.out.println(name.lastWord());
-		System.out.println(lafz("boyfriends", "love", "money").join());
+		KL.printArr(greeting2.toStrArrWords());
 		System.out.println(lafz("boyfriends", "love", "money").join());
 	}
 }

@@ -3434,7 +3434,7 @@ public class KL {
 				version = System.getProperty("os.version").toLowerCase(),
 				arch = System.getProperty("os.arch").toLowerCase();
 		public static boolean is(String s) {
-			return in(name, s);
+			return startsWith(name, s);
 		}
 	}
 	public static class user {
@@ -9286,6 +9286,9 @@ public class KL {
 	public static oS oS(String k1, String v1) {
 		return new oS(k1, v1);
 	}
+	public static oS oS() {
+		return new oS();
+	}
 	public static final class oI extends HashMap<String, Integer> {
 		oI() {
 			super();
@@ -9862,6 +9865,9 @@ public class KL {
 	public static oI oI(String k1, int v1) {
 		return new oI(k1, v1);
 	}
+	public static oI oI() {
+		return new oI();
+	}
 	public static final class oL extends HashMap<String, Long> {
 		oL() {
 			super();
@@ -10434,6 +10440,9 @@ public class KL {
 	}
 	public static oL oL(String k1, long v1) {
 		return new oL(k1, v1);
+	}
+	public static oL oL() {
+		return new oL();
 	}
 	public static final class oF extends HashMap<String, Float> {
 		oF() {
@@ -11008,6 +11017,9 @@ public class KL {
 	}
 	public static oF oF(String k1, float v1) {
 		return new oF(k1, v1);
+	}
+	public static oF oF() {
+		return new oF();
 	}
 	public static final class oD extends HashMap<String, Double> {
 		oD() {
@@ -11585,6 +11597,9 @@ public class KL {
 	public static oD oD(String k1, double v1) {
 		return new oD(k1, v1);
 	}
+	public static oD oD() {
+		return new oD();
+	}
 	public static final class oB extends HashMap<String, Boolean> {
 		oB() {
 			super();
@@ -12161,6 +12176,9 @@ public class KL {
 	}
 	public static oB oB(String k1, boolean v1) {
 		return new oB(k1, v1);
+	}
+	public static oB oB() {
+		return new oB();
 	}
 	public static final class o extends HashMap<String, Object> {
 		o() {
@@ -13186,49 +13204,212 @@ public class KL {
 			Object v3, String k4, Object v4, String k5, Object v5, String k6,
 			Object v6, String k7, Object v7, String k8, Object v8, String k9,
 			Object v9, String k10, Object v10) {
-		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-				v8, k9, v9, k10, v10);
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5,
+				Str(v5), k6, Str(v6), k7, Str(v7), k8, Str(v8), k9, Str(v9),
+				k10, Str(v10)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5,
+					Str(v5), k6, Str(v6), k7, Str(v7), k8, Str(v8), k9, Str(v9),
+					k10, Str(v10));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
-	public static o o(String k1, Object v1, String k2, Object v2, String k3,
-			Object v3, String k4, Object v4, String k5, Object v5, String k6,
-			Object v6, String k7, Object v7, String k8, Object v8, String k9,
-			Object v9) {
-		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-				v8, k9, v9);
+	public static o o(String k1,
+	Object Str(v1), String k2, Object Str(v2), String k3,
+	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5), String k6,
+	Object Str(v6), String k7, Object Str(v7), String k8, Object Str(v8), String k9,
+	Object Str(v9)) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6), k7, Str(v7),
+				k8, Str(v8), k9, Str(v9)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6), k7, Str(v7),
+					k8, Str(v8), k9, Str(v9));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
-	public static o o(String k1, Object v1, String k2, Object v2, String k3,
-			Object v3, String k4, Object v4, String k5, Object v5, String k6,
-			Object v6, String k7, Object v7, String k8, Object v8) {
-		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
-				v8);
+	public static o o(String k1,
+	Object Str(v1), String k2, Object Str(v2), String k3,
+	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5), String k6,
+	Object Str(v6),String k7,Object Str(v7),String k8,Object Str(v8)) {
+		String[]keys={k1,Str(v1),k2,Str(v2),k3,Str(v3),k4,Str(v4),k5,Str(v5),k6,Str(v6),k7,Str(v7),k8,Str(v8)};if(!in(k1,"="))return new o(k1,Str(v1),k2,Str(v2),k3,Str(v3),k4,Str(v4),k5,Str(v5),k6,Str(v6),k7,Str(v7),k8,Str(v8));
+		// to handle k=v cases
+		o obj=o();for(String key:keys){if(is(key)&&in(key,"(?<=\\w)=(?=\\w)")){String k,v;String[]pairs=key.split("=",1);if(len(pairs)==2){k=pairs[0];v=pairs[1];obj.add(k,v);}}}return obj;
 	}
-	public static o o(String k1, Object v1, String k2, Object v2, String k3,
-			Object v3, String k4, Object v4, String k5, Object v5, String k6,
-			Object v6, String k7, Object v7) {
-		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static o o(String k1,
+	Object Str(v1), String k2, Object Str(v2), String k3,
+	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5), String k6,
+	Object Str(v6), String k7, Object Str(v7)) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6), k7,
+				Str(v7)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6), k7,
+					Str(v7));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
-	public static o o(String k1, Object v1, String k2, Object v2, String k3,
-			Object v3, String k4, Object v4, String k5, Object v5, String k6,
-			Object v6) {
-		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+	public static o o(String k1,
+	Object Str(v1), String k2, Object Str(v2), String k3,
+	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5), String k6,
+	Object Str(v6)) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
-	public static o o(String k1, Object v1, String k2, Object v2, String k3,
-			Object v3, String k4, Object v4, String k5, Object v5) {
-		return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+	public static o o(String k1,
+	Object Str(v1), String k2, Object Str(v2), String k3,
+	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5)) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
-	public static o o(String k1, Object v1, String k2, Object v2, String k3,
-			Object v3, String k4, Object v4) {
-		return new o(k1, v1, k2, v2, k3, v3, k4, v4);
+	public static o o(String k1,
+	Object Str(v1), String k2, Object Str(v2), String k3,
+	Object Str(v3), String k4, Object Str(v4)) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
-	public static o o(String k1, Object v1, String k2, Object v2, String k3,
-			Object v3) {
-		return new o(k1, v1, k2, v2, k3, v3);
+	public static o o(String k1,
+	Object Str(v1), String k2, Object Str(v2), String k3,
+	Object Str(v3)) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
-	public static o o(String k1, Object v1, String k2, Object v2) {
-		return new o(k1, v1, k2, v2);
+	public static o o(String k1,
+	Object Str(v1), String k2, Object Str(v2)) {
+		String[] keys = {k1, Str(v1), k2, Str(v2)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1), k2, Str(v2));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
-	public static o o(String k1, Object v1) {
-		return new o(k1, v1);
+	public static o o(String k1,
+	Object Str(v1)) {
+		String[] keys = {k1, Str(v1)};
+		if (!in(k1, "="))
+			return new o(k1, Str(v1));
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
+	}
+	public static o o() {
+		return new o();
 	}
 	public static class tree<Key, Value> extends TreeMap<Key, Value> {
 		public static final long serialVersionUID = 1L;
@@ -13855,6 +14036,9 @@ public class KL {
 	public static treeI treeI(int k1, String v1) {
 		return new treeI(k1, v1);
 	}
+	public static treeI treeI() {
+		return new treeI();
+	}
 	public static class treeL extends tree<Integer, Long> {
 		public static final long serialVersionUID = 1L;
 		treeL() {
@@ -14094,6 +14278,9 @@ public class KL {
 	}
 	public static treeL treeL(int k1, long v1) {
 		return new treeL(k1, v1);
+	}
+	public static treeL treeL() {
+		return new treeL();
 	}
 	public static class treeF extends tree<Integer, Float> {
 		public static final long serialVersionUID = 1L;
@@ -14336,6 +14523,9 @@ public class KL {
 	}
 	public static treeF treeF(int k1, float v1) {
 		return new treeF(k1, v1);
+	}
+	public static treeF treeF() {
+		return new treeF();
 	}
 	public static class treeD extends tree<Integer, Double> {
 		public static final long serialVersionUID = 1L;
@@ -14581,6 +14771,9 @@ public class KL {
 	public static treeD treeD(int k1, double v1) {
 		return new treeD(k1, v1);
 	}
+	public static treeD treeD() {
+		return new treeD();
+	}
 	public static class treeB extends tree<Integer, Boolean> {
 		public static final long serialVersionUID = 1L;
 		treeB() {
@@ -14825,6 +15018,9 @@ public class KL {
 	}
 	public static treeB treeB(int k1, boolean v1) {
 		return new treeB(k1, v1);
+	}
+	public static treeB treeB() {
+		return new treeB();
 	}
 	public static class treeDS extends tree<Double, String> {
 		public static final long serialVersionUID = 1L;
@@ -15073,6 +15269,9 @@ public class KL {
 	}
 	public static treeDS treeDS(double k1, String v1) {
 		return new treeDS(k1, v1);
+	}
+	public static treeDS treeDS() {
+		return new treeDS();
 	}
 	public static class treeDI extends tree<Double, Integer> {
 		public static final long serialVersionUID = 1L;
@@ -15514,6 +15713,9 @@ public class KL {
 	public static treeDL treeDL(double k1, long v1) {
 		return new treeDL(k1, v1);
 	}
+	public static treeDL treeDL() {
+		return new treeDL();
+	}
 	public static class treeDF extends tree<Double, Float> {
 		public static final long serialVersionUID = 1L;
 		treeDF() {
@@ -15758,6 +15960,9 @@ public class KL {
 	}
 	public static treeDF treeDF(double k1, float v1) {
 		return new treeDF(k1, v1);
+	}
+	public static treeDF treeDF() {
+		return new treeDF();
 	}
 	public static class treeDB extends tree<Double, Boolean> {
 		public static final long serialVersionUID = 1L;
@@ -16009,6 +16214,9 @@ public class KL {
 	}
 	public static treeDB treeDB(double k1, boolean v1) {
 		return new treeDB(k1, v1);
+	}
+	public static treeDB treeDB() {
+		return new treeDB();
 	}
 	public static final class strArr extends ArrayList<String> {
 		strArr() {
@@ -29883,6 +30091,31 @@ public class KL {
 		if (isNull(arg)) {
 			return;
 		}
+		if (arg instanceof o || arg instanceof oS || arg instanceof oI
+				|| arg instanceof oL || arg instanceof oF || arg instanceof oD
+				|| arg instanceof oB || arg instanceof HashMap
+				|| arg instanceof tree || arg instanceof TreeMap) {
+			arg = switch (arg) {
+				case o __ -> arg = arr((o) arg);
+				case oS __ -> arg = arr((oS) arg);
+				case oI __ -> arg = arr((oI) arg);
+				case oL __ -> arg = arr((oL) arg);
+				case oF __ -> arg = arr((oF) arg);
+				case oD __ -> arg = arr((oD) arg);
+				case oB __ -> arg = arr((oB) arg);
+				case treeI __ -> arg = arr((treeI) arg);
+				case treeL __ -> arg = arr((treeL) arg);
+				case treeF __ -> arg = arr((treeF) arg);
+				case treeD __ -> arg = arr((treeD) arg);
+				case treeB __ -> arg = arr((treeB) arg);
+				case treeDS __ -> arg = arr((treeDS) arg);
+				case treeDI __ -> arg = arr((treeDI) arg);
+				case treeDL __ -> arg = arr((treeDL) arg);
+				case treeDF __ -> arg = arr((treeDF) arg);
+				case treeDB __ -> arg = arr((treeDB) arg);
+				default -> arg;
+			};
+		}
 		if (isStrArr(arg) || isIntArr(arg) || isLongArr(arg) || isFltArr(arg)
 				|| isDblArr(arg) || isBoolArr(arg)) {
 			if (isStrArr(arg)) {
@@ -29936,72 +30169,6 @@ public class KL {
 			}
 		}
 		System.out.print("\n");
-	}
-	public static void printArr(strArr arr) {
-		print(arr.toString());
-	}
-	public static void printArr(intArr arr) {
-		print(arr.toString());
-	}
-	public static void printArr(longArr arr) {
-		print(arr.toString());
-	}
-	public static void printArr(fltArr arr) {
-		print(arr.toString());
-	}
-	public static void printArr(dblArr arr) {
-		print(arr.toString());
-	}
-	public static void printArr(boolArr arr) {
-		print(arr.toString());
-	}
-	public static void printArr(oS o) {
-		print(o.toString());
-	}
-	public static void printArr(oI o) {
-		print(o.toString());
-	}
-	public static void printArr(oL o) {
-		print(o.toString());
-	}
-	public static void printArr(oF o) {
-		print(o.toString());
-	}
-	public static void printArr(oD o) {
-		print(o.toString());
-	}
-	public static void printArr(oB o) {
-		print(o.toString());
-	}
-	public static void printArr(treeDS t) {
-		print(t.toString());
-	}
-	public static void printArr(treeDI t) {
-		print(t.toString());
-	}
-	public static void printArr(treeI t) {
-		print(t.toString());
-	}
-	public static void printArr(treeDL t) {
-		print(t.toString());
-	}
-	public static void printArr(treeL t) {
-		print(t.toString());
-	}
-	public static void printArr(treeDF t) {
-		print(t.toString());
-	}
-	public static void printArr(treeF t) {
-		print(t.toString());
-	}
-	public static void printArr(treeD t) {
-		print(t.toString());
-	}
-	public static void printArr(treeDB t) {
-		print(t.toString());
-	}
-	public static void printArr(treeB t) {
-		print(t.toString());
 	}
 	public static void printAll(String arr[]) {
 		printArr(arr);
@@ -30442,6 +30609,36 @@ public class KL {
 		boolArr arr = new boolArr(items);
 		return arr;
 	}
+	public static String[] Arr(strArr arr) {
+		if (arr == null || arr.isEmpty())
+			return blank.Str;
+		return arr.array();
+	}
+	public static int[] Arr(intArr arr) {
+		if (arr == null || arr.isEmpty())
+			return blank.Int;
+		return arr.array();
+	}
+	public static long[] Arr(longArr arr) {
+		if (arr == null || arr.isEmpty())
+			return blank.Long;
+		return arr.array();
+	}
+	public static float[] Arr(fltArr arr) {
+		if (arr == null || arr.isEmpty())
+			return blank.Flt;
+		return arr.array();
+	}
+	public static double[] Arr(dblArr arr) {
+		if (arr == null || arr.isEmpty())
+			return blank.Dbl;
+		return arr.array();
+	}
+	public static boolean[] Arr(boolArr arr) {
+		if (arr == null || arr.isEmpty())
+			return blank.Bool;
+		return arr.array();
+	}
 	public static strArr arr(String... items) {
 		return Arr(items);
 	}
@@ -30477,6 +30674,12 @@ public class KL {
 	}
 	public static boolArr naiArr(boolean... items) {
 		return Arr(items);
+	}
+	public static Object[] Arr(o o) {
+		if (not(o)) {
+			return blank.Str;
+		}
+		return o.array();
 	}
 	public static String[] Arr(oS o) {
 		if (not(o)) {
@@ -30574,6 +30777,27 @@ public class KL {
 		}
 		return t.array();
 	}
+	public static String[] arr(strArr array) {
+		return Arr(array);
+	}
+	public static int[] arr(intArr array) {
+		return Arr(array);
+	}
+	public static long[] arr(longArr array) {
+		return Arr(array);
+	}
+	public static float[] arr(fltArr array) {
+		return Arr(array);
+	}
+	public static double[] arr(dblArr array) {
+		return Arr(array);
+	}
+	public static boolean[] arr(boolArr array) {
+		return Arr(array);
+	}
+	public static Object[] arr(o o) {
+		return Arr(o);
+	}
 	public static String[] arr(oS o) {
 		return Arr(o);
 	}
@@ -30622,53 +30846,389 @@ public class KL {
 	public static boolean[] arr(treeB t) {
 		return Arr(t);
 	}
+	public static String[] keys(o o) {
+		if (not(o)) {
+			return blank.Str;
+		}
+		return o.keyArray();
+	}
+	public static String[] keys(oS o) {
+		if (not(o)) {
+			return blank.Str;
+		}
+		return o.keyArray();
+	}
+	public static String[] keys(oI o) {
+		if (not(o)) {
+			return blank.Str;
+		}
+		return o.keyArray();
+	}
+	public static String[] keys(oL o) {
+		if (not(o)) {
+			return blank.Str;
+		}
+		return o.keyArray();
+	}
+	public static String[] keys(oF o) {
+		if (not(o)) {
+			return blank.Str;
+		}
+		return o.keyArray();
+	}
+	public static String[] keys(oD o) {
+		if (not(o)) {
+			return blank.Str;
+		}
+		return o.keyArray();
+	}
+	public static String[] keys(oB o) {
+		if (not(o)) {
+			return blank.Str;
+		}
+		return o.keyArray();
+	}
+	public static int[] keys(treeI t) {
+		if (not(t)) {
+			return blank.Int;
+		}
+		return t.keyArray();
+	}
+	public static int[] keys(treeL t) {
+		if (not(t)) {
+			return blank.Int;
+		}
+		return t.keyArray();
+	}
+	public static int[] keys(treeF t) {
+		if (not(t)) {
+			return blank.Int;
+		}
+		return t.keyArray();
+	}
+	public static int[] keys(treeD t) {
+		if (not(t)) {
+			return blank.Int;
+		}
+		return t.keyArray();
+	}
+	public static int[] keys(treeB t) {
+		if (not(t)) {
+			return blank.Int;
+		}
+		return t.keyArray();
+	}
+	public static double[] keys(treeDS t) {
+		if (not(t)) {
+			return blank.Dbl;
+		}
+		return t.keyArray();
+	}
+	public static double[] keys(treeDI t) {
+		if (not(t)) {
+			return blank.Dbl;
+		}
+		return t.keyArray();
+	}
+	public static double[] keys(treeDL t) {
+		if (not(t)) {
+			return blank.Dbl;
+		}
+		return t.keyArray();
+	}
+	public static double[] keys(treeDF t) {
+		if (not(t)) {
+			return blank.Dbl;
+		}
+		return t.keyArray();
+	}
+	public static double[] keys(treeDB t) {
+		if (not(t)) {
+			return blank.Dbl;
+		}
+		return t.keyArray();
+	}
+	public static String[] values(strArr array) {
+		return Arr(array);
+	}
+	public static int[] values(intArr array) {
+		return Arr(array);
+	}
+	public static long[] values(longArr array) {
+		return Arr(array);
+	}
+	public static float[] values(fltArr array) {
+		return Arr(array);
+	}
+	public static double[] values(dblArr array) {
+		return Arr(array);
+	}
+	public static boolean[] values(boolArr array) {
+		return Arr(array);
+	}
+	public static Object[] values(o o) {
+		return Arr(o);
+	}
+	public static String[] values(oS o) {
+		return Arr(o);
+	}
+	public static int[] values(oI o) {
+		return Arr(o);
+	}
+	public static long[] values(oL o) {
+		return Arr(o);
+	}
+	public static float[] values(oF o) {
+		return Arr(o);
+	}
+	public static double[] values(oD o) {
+		return Arr(o);
+	}
+	public static boolean[] values(oB o) {
+		return Arr(o);
+	}
+	public static String[] values(treeDS t) {
+		return Arr(t);
+	}
+	public static int[] values(treeDI t) {
+		return Arr(t);
+	}
+	public static String[] values(treeI t) {
+		return Arr(t);
+	}
+	public static long[] values(treeDL t) {
+		return Arr(t);
+	}
+	public static long[] values(treeL t) {
+		return Arr(t);
+	}
+	public static float[] values(treeDF t) {
+		return Arr(t);
+	}
+	public static float[] values(treeF t) {
+		return Arr(t);
+	}
+	public static double[] values(treeD t) {
+		return Arr(t);
+	}
+	public static boolean[] values(treeDB t) {
+		return Arr(t);
+	}
+	public static boolean[] values(treeB t) {
+		return Arr(t);
+	}
 	public static oS o(String k1, String v1, String k2, String v2, String k3,
 			String v3, String k4, String v4, String k5, String v5, String k6,
 			String v6, String k7, String v7, String k8, String v8, String k9,
 			String v9, String k10, String v10) {
-		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-				k8, v8, k9, v9, k10, v10);
+		String[] keys = {k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+					v7, k8, v8, k9, v9, k10, v10);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1, String k2, String v2, String k3,
 			String v3, String k4, String v4, String k5, String v5, String k6,
 			String v6, String k7, String v7, String k8, String v8, String k9,
 			String v9) {
-		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-				k8, v8, k9, v9);
+		String[] keys = {k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+					v7, k8, v8, k9, v9);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1, String k2, String v2, String k3,
 			String v3, String k4, String v4, String k5, String v5, String k6,
 			String v6, String k7, String v7, String k8, String v8) {
-		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
-				k8, v8);
+		String[] keys = {k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+					v7, k8, v8);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1, String k2, String v2, String k3,
 			String v3, String k4, String v4, String k5, String v5, String k6,
 			String v6, String k7, String v7) {
-		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+		String[] keys = {k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+					v7);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1, String k2, String v2, String k3,
 			String v3, String k4, String v4, String k5, String v5, String k6,
 			String v6) {
-		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		String[] keys = {k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1, String k2, String v2, String k3,
 			String v3, String k4, String v4, String k5, String v5) {
-		return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		String[] keys = {k1, v1, k2, v2, k3, v3, k4, v4, k5, v5};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1, String k2, String v2, String k3,
 			String v3, String k4, String v4) {
-		return new oS(k1, v1, k2, v2, k3, v3, k4, v4);
+		String[] keys = {k1, v1, k2, v2, k3, v3, k4, v4};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2, k3, v3, k4, v4);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1, String k2, String v2, String k3,
 			String v3) {
-		return new oS(k1, v1, k2, v2, k3, v3);
+		String[] keys = {k1, v1, k2, v2, k3, v3};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2, k3, v3);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1, String k2, String v2) {
-		return new oS(k1, v1, k2, v2);
+		String[] keys = {k1, v1, k2, v2};
+		if (!in(k1, "="))
+			return new oS(k1, v1, k2, v2);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oS o(String k1, String v1) {
-		return new oS(k1, v1);
+		String[] keys = {k1, v1};
+		if (!in(k1, "="))
+			return new oS(k1, v1);
+		// to handle k=v cases
+		oS obj = oS();
+		for (String key : keys) {
+			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
+				String k, v;
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					v = pairs[1];
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
 	}
 	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
 			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
@@ -42279,6 +42839,7 @@ public class KL {
 				"Name: name\nAge: age\nState: state\nCountry: country\nVeteran: veteran",
 				user));
 		print("$name[-3] $arr2[1] $myTree[-1]");
+		printArr(myTree);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
