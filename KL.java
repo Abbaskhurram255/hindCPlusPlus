@@ -13208,43 +13208,72 @@ public class KL {
 				Str(v5), k6, Str(v6), k7, Str(v7), k8, Str(v8), k9, Str(v9),
 				k10, Str(v10)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5,
-					Str(v5), k6, Str(v6), k7, Str(v7), k8, Str(v8), k9, Str(v9),
-					k10, Str(v10));
+			return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5,
+					v5, k6, v6, k7, v7, k8, v8, k9, v9,
+					k10, v10);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
 		}
 		return obj;
 	}
-	public static o o(String k1,
-	Object Str(v1), String k2, Object Str(v2), String k3,
-	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5), String k6,
-	Object Str(v6), String k7, Object Str(v7), String k8, Object Str(v8), String k9,
-	Object Str(v9)) {
-		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6), k7, Str(v7),
-				k8, Str(v8), k9, Str(v9)};
+	public static o o(String k1, Object v1, String k2, Object v2, String k3,
+			Object v3, String k4, Object v4, String k5, Object v5, String k6,
+			Object v6, String k7, Object v7, String k8, Object v8, String k9,
+			Object v9) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5,
+				Str(v5), k6, Str(v6), k7, Str(v7), k8, Str(v8), k9, Str(v9)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6), k7, Str(v7),
-					k8, Str(v8), k9, Str(v9));
+			return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5,
+					v5, k6, v6, k7, v7, k8, v8, k9, v9);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13252,31 +13281,38 @@ public class KL {
 		return obj;
 	}
 	public static o o(String k1,
-	Object Str(v1), String k2, Object Str(v2), String k3,
-	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5), String k6,
-	Object Str(v6),String k7,Object Str(v7),String k8,Object Str(v8)) {
-		String[]keys={k1,Str(v1),k2,Str(v2),k3,Str(v3),k4,Str(v4),k5,Str(v5),k6,Str(v6),k7,Str(v7),k8,Str(v8)};if(!in(k1,"="))return new o(k1,Str(v1),k2,Str(v2),k3,Str(v3),k4,Str(v4),k5,Str(v5),k6,Str(v6),k7,Str(v7),k8,Str(v8));
-		// to handle k=v cases
-		o obj=o();for(String key:keys){if(is(key)&&in(key,"(?<=\\w)=(?=\\w)")){String k,v;String[]pairs=key.split("=",1);if(len(pairs)==2){k=pairs[0];v=pairs[1];obj.add(k,v);}}}return obj;
-	}
-	public static o o(String k1,
-	Object Str(v1), String k2, Object Str(v2), String k3,
-	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5), String k6,
-	Object Str(v6), String k7, Object Str(v7)) {
-		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6), k7,
-				Str(v7)};
+	Object v1, String k2, Object v2, String k3,
+	Object v3, String k4, Object v4, String k5, Object v5, String k6,
+	Object v6, String k7, Object v7, String k8, Object v8) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5,
+				Str(v5), k6, Str(v6), k7, Str(v7), k8, Str(v8)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6), k7,
-					Str(v7));
+			return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5,
+					v5, k6, v6, k7, v7, k8, v8);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13284,21 +13320,38 @@ public class KL {
 		return obj;
 	}
 	public static o o(String k1,
-	Object Str(v1), String k2, Object Str(v2), String k3,
-	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5), String k6,
-	Object Str(v6)) {
-		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6)};
+	Object v1, String k2, Object v2, String k3,
+	Object v3, String k4, Object v4, String k5, Object v5, String k6,
+	Object v6, String k7, Object v7) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5,
+				Str(v5), k6, Str(v6), k7, Str(v7)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5), k6, Str(v6));
+			return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5,
+					v5, k6, v6, k7, v7);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13306,20 +13359,74 @@ public class KL {
 		return obj;
 	}
 	public static o o(String k1,
-	Object Str(v1), String k2, Object Str(v2), String k3,
-	Object Str(v3), String k4, Object Str(v4), String k5, Object Str(v5)) {
+	Object v1, String k2, Object v2, String k3,
+	Object v3, String k4, Object v4, String k5, Object v5, String k6,
+	Object v6) {
+		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5,
+				Str(v5), k6, Str(v6)};
+		if (!in(k1, "="))
+			return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5,
+					v5, k6, v6);
+		// to handle k=v cases
+		o obj = o();
+		for (String key : keys) {
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
+				String[] pairs = key.split("=", 1);
+				if (len(pairs) == 2) {
+					k = pairs[0];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					obj.add(k, v);
+				}
+			}
+		}
+		return obj;
+	}
+	public static o o(String k1,
+	Object v1, String k2, Object v2, String k3,
+	Object v3, String k4, Object v4, String k5, Object v5) {
 		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4), k5, Str(v5));
+			return new o(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13327,20 +13434,35 @@ public class KL {
 		return obj;
 	}
 	public static o o(String k1,
-	Object Str(v1), String k2, Object Str(v2), String k3,
-	Object Str(v3), String k4, Object Str(v4)) {
+	Object v1, String k2, Object v2, String k3,
+	Object v3, String k4, Object v4) {
 		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3), k4, Str(v4));
+			return new o(k1, v1, k2, v2, k3, v3, k4, v4);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13348,20 +13470,35 @@ public class KL {
 		return obj;
 	}
 	public static o o(String k1,
-	Object Str(v1), String k2, Object Str(v2), String k3,
-	Object Str(v3)) {
+	Object v1, String k2, Object v2, String k3,
+	Object v3) {
 		String[] keys = {k1, Str(v1), k2, Str(v2), k3, Str(v3)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1), k2, Str(v2), k3, Str(v3));
+			return new o(k1, v1, k2, v2, k3, v3);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13369,19 +13506,34 @@ public class KL {
 		return obj;
 	}
 	public static o o(String k1,
-	Object Str(v1), String k2, Object Str(v2)) {
+	Object v1, String k2, Object v2) {
 		String[] keys = {k1, Str(v1), k2, Str(v2)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1), k2, Str(v2));
+			return new o(k1, v1, k2, v2);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13389,19 +13541,37 @@ public class KL {
 		return obj;
 	}
 	public static o o(String k1,
-	Object Str(v1)) {
+	Object v1) {
 		String[] keys = {k1, Str(v1)};
 		if (!in(k1, "="))
-			return new o(k1, Str(v1));
+			return new o(k1, v1);
 		// to handle k=v cases
 		o obj = o();
 		for (String key : keys) {
-			if (is(key) && in(key, "(?<=\\w)=(?=\\w)")) {
-				String k, v;
+			if (is(key) && eq(key, "(?<k>\\w+)=(?<v>'?\\w+'?)")) {
+				String k;
+				Object v = new Object();
 				String[] pairs = key.split("=", 1);
 				if (len(pairs) == 2) {
 					k = pairs[0];
-					v = pairs[1];
+					String unprocessedV = pairs[1];
+					if (isIntLike(unprocessedV))
+					    v = Int(unprocessedV);
+					else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
+					    v = Long(unprocessedV.replaceAll("[Ll]$", ""));
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
+						// the F in here should be mandatory to recognize the value as a float, and not a double
+					    v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
+					}
+					else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
+						//the D in here should be optional
+					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
+					}
+					else if (eq(unprocessedV, "(true|false)"))
+					    v = eq(unprocessedV, "true") ? true : false;
+                    else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')"))
+                        v = unprocessedV.replaceAll("\'", "").toCharArray[0];
+                    //else it's a string, no need to process it, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -30095,26 +30265,41 @@ public class KL {
 				|| arg instanceof oL || arg instanceof oF || arg instanceof oD
 				|| arg instanceof oB || arg instanceof HashMap
 				|| arg instanceof tree || arg instanceof TreeMap) {
-			arg = switch (arg) {
-				case o __ -> arg = arr((o) arg);
-				case oS __ -> arg = arr((oS) arg);
-				case oI __ -> arg = arr((oI) arg);
-				case oL __ -> arg = arr((oL) arg);
-				case oF __ -> arg = arr((oF) arg);
-				case oD __ -> arg = arr((oD) arg);
-				case oB __ -> arg = arr((oB) arg);
-				case treeI __ -> arg = arr((treeI) arg);
-				case treeL __ -> arg = arr((treeL) arg);
-				case treeF __ -> arg = arr((treeF) arg);
-				case treeD __ -> arg = arr((treeD) arg);
-				case treeB __ -> arg = arr((treeB) arg);
-				case treeDS __ -> arg = arr((treeDS) arg);
-				case treeDI __ -> arg = arr((treeDI) arg);
-				case treeDL __ -> arg = arr((treeDL) arg);
-				case treeDF __ -> arg = arr((treeDF) arg);
-				case treeDB __ -> arg = arr((treeDB) arg);
-				default -> arg;
-			};
+			if (arg instanceof o) {
+					arg = arr((o) arg);
+			} else if (arg instanceof oS) {
+				arg = arr((oS) arg);
+			} else if (arg instanceof oI) {
+				arg = arr((oI) arg);
+			} else if (arg instanceof oL) {
+				arg = arr((oL) arg);
+			} else if (arg instanceof oF) {
+				arg = arr((oF) arg);
+			} else if (arg instanceof oD) {
+				arg = arr((oD) arg);
+			} else if (arg instanceof oB) {
+				arg = arr((oB) arg);
+			} else if (arg instanceof treeI) {
+				arg = arr((treeI) arg);
+			} else if (arg instanceof treeL) {
+				arg = arr((treeL) arg);
+			} else if (arg instanceof treeF) {
+				arg = arr((treeF) arg);
+			} else if (arg instanceof tree) {
+				arg = arr((treeD) arg);
+			} else if (arg instanceof treeB) {
+				arg = arr((treeB) arg);
+			} else if (arg instanceof treeDS) {
+				arg = arr((treeDS) arg);
+			} else if (arg instanceof treeDI) {
+				arg = arr((treeDI) arg);
+			} else if (arg instanceof treeDL) {
+				arg = arr((treeDL) arg);
+			} else if (arg instanceof treeDF) {
+				arg = arr((treeDF) arg);
+			} else if (arg instanceof treeDB) {
+				arg = arr((treeDB) arg);
+			}
 		}
 		if (isStrArr(arg) || isIntArr(arg) || isLongArr(arg) || isFltArr(arg)
 				|| isDblArr(arg) || isBoolArr(arg)) {
@@ -34767,36 +34952,41 @@ public class KL {
 							} else if (in(m, ("(?<=[\\[])\\-?\\d+(?=\\])"))) {
 								int i = Int(findMatch(m,
 										"(?<=\\[)\\-?\\d+(?=\\])"));
-								field = switch (field) {
-									case o __ -> field = nth((o) field, i);
-									case oS __ -> field = nth((oS) field, i);
-									case oI __ -> field = nth((oI) field, i);
-									case oL __ -> field = nth((oL) field, i);
-									case oF __ -> field = nth((oF) field, i);
-									case oD __ -> field = nth((oD) field, i);
-									case oB __ -> field = nth((oB) field, i);
-									case treeI __ ->
-										field = nth((treeI) field, i);
-									case treeL __ ->
-										field = nth((treeL) field, i);
-									case treeF __ ->
-										field = nth((treeF) field, i);
-									case treeD __ ->
-										field = nth((treeD) field, i);
-									case treeB __ ->
-										field = nth((treeB) field, i);
-									case treeDS __ ->
-										field = nth((treeDS) field, i);
-									case treeDI __ ->
-										field = nth((treeDI) field, i);
-									case treeDL __ ->
-										field = nth((treeDL) field, i);
-									case treeDF __ ->
-										field = nth((treeDF) field, i);
-									case treeDB __ ->
-										field = nth((treeDB) field, i);
-									default -> field;
-								};
+								if (field instanceof o) {
+									field = nth((o) field, i);
+								} else if (field instanceof oS) {
+									field = nth((oS) field, i);
+								} else if (field instanceof oI) {
+									field = nth((oI) field, i);
+								} else if (field instanceof oL) {
+									field = nth((oL) field, i);
+								} else if (field instanceof oF) {
+									field = nth((oF) field, i);
+								} else if (field instanceof oD) {
+									field = nth((oD) field, i);
+								} else if (field instanceof oB) {
+									field = nth((oB) field, i);
+								} else if (field instanceof treeI) {
+									field = nth((treeI) field, i);
+								} else if (field instanceof treeL) {
+									field = nth((treeL) field, i);
+								} else if (field instanceof treeF) {
+									field = nth((treeF) field, i);
+								} else if (field instanceof treeD) {
+									field = nth((treeD) field, i);
+								} else if (field instanceof treeB) {
+									field = nth((treeB) field, i);
+								} else if (field instanceof treeDS) {
+									field = nth((treeDS) field, i);
+								} else if (field instanceof treeDI) {
+									field = nth((treeDI) field, i);
+								} else if (field instanceof treeDL) {
+									field = nth((treeDL) field, i);
+								} else if (field instanceof treeDF) {
+									field = nth((treeDF) field, i);
+								} else if (field instanceof treeDB) {
+									field = nth((treeDB) field, i);
+								}
 							} else {
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
