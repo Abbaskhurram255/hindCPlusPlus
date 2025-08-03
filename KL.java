@@ -13234,7 +13234,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13273,7 +13273,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13312,7 +13312,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13351,7 +13351,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13390,7 +13390,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13426,7 +13426,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13462,7 +13462,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13498,7 +13498,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13533,7 +13533,7 @@ public class KL {
 					    v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
 					}
 					else if (eq(unprocessedV, "(true|false)"))
-					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray[0];//else it's a string, keep it AS-IS
+					    v = eq(unprocessedV, "true") ? true : false;else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')")) v = unprocessedV.replaceAll("\'", "").toCharArray()[0];//else it's a string, keep it AS-IS
 					obj.add(k, v);
 				}
 			}
@@ -13570,7 +13570,7 @@ public class KL {
 					else if (eq(unprocessedV, "(true|false)"))
 					    v = eq(unprocessedV, "true") ? true : false;
                     else if(in(unprocessedV, "(?<=')[a-zA-Z](?=')"))
-                        v = unprocessedV.replaceAll("\'", "").toCharArray[0];
+                        v = unprocessedV.replaceAll("\'", "").toCharArray()[0];
                     //else it's a string, no need to process it, keep it AS-IS
 					obj.add(k, v);
 				}
