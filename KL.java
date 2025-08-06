@@ -33753,10 +33753,10 @@ public class KL {
 							} else {
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
-												"(?<=\\=)([A-Za-z]{1})",
+												"(?<=\\=)([A-Za-z]{1}(?!\\w))",
 												"\'$1\'")
 												        .replaceAll(
-												"(?<=\\=)(\\d*[A-Za-z]{2,}\\d*\\s*)",
+												"(?<=\\=)((\\d*[A-Za-z]{2,}\\d*)(\\s*[A-Za-z]+\\d*){0,})",
 												"\"$1\"")
 												.replaceAll("\"(true|false)\"",
 														"$1")
@@ -41715,7 +41715,7 @@ public class KL {
 	public static int age = 23;
 	public static double score = 300500.856D;
 	public static o user = o("name=Mike", "age=22l", "state=Illinois",
-					"country=2United States2", "height=5.1f", "veteran=" + !Yes,
+					"country=United States", "height=5.1f", "veteran=" + !Yes,
 					"favorite_key='c'", "x=.5");
 	String[] arr = {"hi", "hey"};
 	intArr arr2 = arr(range(1, 5));
@@ -41773,7 +41773,6 @@ public class KL {
 				user));
 		print("$name[-3] $arr2[1] $myTree[-1]");
 		printArr(myTree);
-		print(user);
 
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
