@@ -29207,14 +29207,12 @@ public class KL {
 				if (isNull(arg)) {
 					continue;
 				}
-				if (isArr(arg)) {
+				if (isArr(arg) || type(arg, "(str|int|long|flt|dbl|bool)Arr")) {
 					printArr(arg);
 					System.out.print(" ");
-				}
-				if (arg instanceof Character) {
-					arg = "'" + arg + "'";
-				}
-				if (arg instanceof Float || arg instanceof Double) {
+				} else if (arg instanceof Character) {
+					arg = "\'" + arg + "\'";
+				} else if (arg instanceof Float || arg instanceof Double) {
 					if (in(Str(
 							arg instanceof Float ? (float) arg : (double) arg),
 							"(?<=\\.)\\d{3,}")) {
@@ -29226,6 +29224,15 @@ public class KL {
 								? (float) arg
 								: (double) arg).replaceAll("\\.?[0]+$", "");
 					}
+				} else if (type(arg, "(o|tree)[A-Z]*")) {
+					arg = Str(arg)
+							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!\\w))",
+									"\'$1\'")
+							.replaceAll(
+									"(?<=\\=)((\\d*[A-Za-z]{2,}\\d*)(\\s*[A-Za-z]+\\d*){0,})",
+									"\"$1\"")
+							.replaceAll("\"(true|false)\"", "$1")
+							.replaceAll("=", ": ");
 				}
 				System.out.print(arg + " ");
 			}
