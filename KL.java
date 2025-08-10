@@ -1,4 +1,4 @@
-
+package jcalculator;
 
 //core
 import java.lang.reflect.*;
