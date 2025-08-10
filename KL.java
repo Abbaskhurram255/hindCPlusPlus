@@ -1,4 +1,4 @@
-package jcalculator;
+
 
 //core
 import java.lang.reflect.*;
@@ -15552,7 +15552,7 @@ public class KL {
 				return this;
 			}
 			if (!has(x)) {
-				super.add(x);
+				pushAt(i, x);
 			} else {
 				if (i < 0 || i >= super.size()) {
 					return this;
@@ -15994,6 +15994,20 @@ public class KL {
 		}
 		int last() {
 			return nthlast(1);
+		}
+		intArr update(int i, int x) {
+			if (isNull(i) || isNull(x)) {
+				return this;
+			}
+			if (!has(x)) {
+				pushAt(i, x);
+			} else {
+				if (i < 0 || i >= super.size()) {
+					return this;
+				}
+				super.set(i, x);
+			}
+			return this;
 		}
 		intArr shuffle() {
 			Object o = super.clone();
@@ -16442,7 +16456,7 @@ public class KL {
 				return this;
 			}
 			if (!has(x)) {
-				super.add(x);
+				pushAt(i, x);
 			} else {
 				if (i < 0 || i >= super.size()) {
 					return this;
@@ -16901,7 +16915,7 @@ public class KL {
 				return this;
 			}
 			if (!has(x)) {
-				super.add(x);
+				pushAt(i, x);
 			} else {
 				if (i < 0 || i >= super.size()) {
 					return this;
@@ -17355,7 +17369,7 @@ public class KL {
 				return this;
 			}
 			if (!has(x)) {
-				super.add(x);
+				pushAt(i, x);
 			} else {
 				if (i < 0 || i >= super.size()) {
 					return this;
@@ -17809,7 +17823,7 @@ public class KL {
 				return this;
 			}
 			if (!has(x)) {
-				super.add(x);
+				pushAt(i, x);
 			} else {
 				if (i < 0 || i >= super.size()) {
 					return this;
@@ -33415,7 +33429,7 @@ public class KL {
 							// some tweaks
 							if (field instanceof String) {
 								if (in(m,
-										("(?<=[:=\\[]),?\\-?\\d+(,?\\d+)?\\]?"))) {
+										("(?<=[:=\\[])[,\\-]?\\d+(,?\\d+)?\\]?"))) {
 									if (in(m, ("(?<=[:=])\\d+,\\d+"))) {
 										int a = Int(findMatch(m,
 												"(?<=[:=])\\d+(?=,\\d+)")),
@@ -33426,9 +33440,9 @@ public class KL {
 										int a = Int(findMatch(m,
 												"(?<=[:=])\\d+(?=,)"));
 										field = slice(Str(field), a);
-									} else if (in(m, ("(?<=[:=]),\\d+"))) {
+									} else if (in(m, ("(?<=[:=])[,\\-]\\d+"))) {
 										int a = Int(
-												findMatch(m, "(?<=[:=],)\\d+"));
+												findMatch(m, "(?<=[:=][,\\-])\\d+"));
 										field = sliceRight(Str(field), a);
 									} else if (in(m,
 											("(?<=[\\[])\\-?\\d+(?=\\])"))) {
@@ -41758,6 +41772,7 @@ public class KL {
 		print("{name:3}");
 		print("{name:1,}");
 		print("{name:,2}");
+		print("{name:-2}");
 		print("{name:1,3}");
 
 		int n = 10;
