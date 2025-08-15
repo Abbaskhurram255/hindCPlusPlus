@@ -27,7 +27,7 @@ import javax.swing.text.*;
 
 @SuppressWarnings("all")
 public class KL {
-	// to shorten new KL() instance calls into just KL()
+	// to shorten new KL() instance calls into just kl()
 	public static KL kl() {
 		return new KL();
 	}
@@ -5820,6 +5820,11 @@ public class KL {
 			fg(fg);
 		}
 
+        btn click() {
+        	super.doClick();
+            return this;
+        }
+
 		btn click(ActionListener listener) {
 			super.addActionListener(listener);
 			return this;
@@ -10203,7 +10208,7 @@ public class KL {
 				control = 0x11, alt = 0x12, pause = 0x13, capslock = 0x14, escape = 0x1b, space = 0x20, pageup = 0x21,
 				pagedown = 0x22, end = 0x23, home = 0x24, left = 0x25, up = 0x26, right = 0x27, down = 0x28,
 				comma = 0x2c, minus = 0x2d, period = 0x2e, slash = 0x2f, zero = 0x30, one = 0x31, two = 0x32,
-				three = 0x33, four = 0x34, five = 0x35, six = 0x36, sever = 0x37, eight = 0x38, nine = 0x39,
+				three = 0x33, four = 0x34, five = 0x35, six = 0x36, seven = 0x37, eight = 0x38, nine = 0x39,
 				semicolon = 0x3b, equals = 0x3d, A = 0x41, B = 0x42, C = 0x43, D = 0x44, E = 0x45, F = 0x46, G = 0x47,
 				H = 0x48, I = 0x49, J = 0x4a, K = 0x4b, L = 0x4c, M = 0x4d, N = 0x4e, O = 0x4f, P = 0x50, Q = 0x51,
 				R = 0x52, S = 0x53, T = 0x54, U = 0x55, V = 0x56, W = 0x57, X = 0x58, Y = 0x59, Z = 0x5a, a = 'a',
@@ -17838,11 +17843,7 @@ public class KL {
 		}
 
 		strArr unshift(String... strings) {
-			for (String s : strings) {
-				if (s == null)
-					continue;
-				pushStart(s);
-			}
+			pushStart(strings);
 			return this;
 		}
 
@@ -18398,9 +18399,7 @@ public class KL {
 		}
 
 		intArr unshift(int... ints) {
-			for (int n : ints) {
-				pushStart(n);
-			}
+			pushStart(ints);
 			return this;
 		}
 
@@ -18935,9 +18934,7 @@ public class KL {
 		}
 
 		longArr unshift(long... longs) {
-			for (long n : longs) {
-				pushStart(n);
-			}
+			pushStart(longs);
 			return this;
 		}
 
@@ -19492,9 +19489,7 @@ public class KL {
 		}
 
 		fltArr unshift(float... floats) {
-			for (float n : floats) {
-				pushStart(n);
-			}
+			pushStart(floats);
 			return this;
 		}
 
@@ -20045,9 +20040,7 @@ public class KL {
 		}
 
 		dblArr unshift(double... doubles) {
-			for (double n : doubles) {
-				pushStart(n);
-			}
+			pushStart(doubles);
 			return this;
 		}
 
@@ -20598,9 +20591,7 @@ public class KL {
 		}
 
 		boolArr unshift(boolean... bools) {
-			for (boolean b : bools) {
-				pushStart(b);
-			}
+			pushStart(bools);
 			return this;
 		}
 
@@ -30742,6 +30733,10 @@ public class KL {
 		}
 		return s;
 	}
+	
+	public static String times(String s, int n) {
+		return repeat(s, n);
+	}
 
 	public static String repeat(String s) {
 		return repeat(s, 2);
@@ -31553,7 +31548,7 @@ public class KL {
 				if (isArr(arg) || type(arg, "(str|int|long|flt|dbl|bool)Arr")) {
 					printArr(arg);
 					System.out.print(" ");
-					return;
+					continue;
 				} else if (arg instanceof Character) {
 					arg = "\'" + arg + "\'";
 				} else if (arg instanceof Float || arg instanceof Double) {
@@ -33512,7 +33507,93 @@ public class KL {
 	public static boolean wordsIn(String str) {
 		return splitIntoWords(str).length > 0;
 	}
-
+	public static String[] toWords(String str) {
+		return wordsOf(str);
+	}
+	public static int wordCount(String str) {
+		return wordsOf(str).length;
+	}
+	public static boolean hasWords(String str) {
+		return wordCount(str) > 0;
+	}
+	public static String firstWord(String str) {
+		String[] words = splitIntoWords(str);
+		if (not(str) || words.length == 0)
+			return "";
+		return words[0];
+	}
+	public static String secWord(String str) {
+		String[] words = splitIntoWords(str);
+		if (not(str) || words.length == 0)
+			return "";
+		if (words.length < 2)
+			return words[0];
+		return words[1];
+	}
+	public static String secondWord(String str) {
+		return secWord(str);
+	}
+	public static String secLastWord(String str) {
+		String[] words = splitIntoWords(str);
+		if (not(str) || words.length == 0)
+			return "";
+		if (words.length < 3)
+			return words[0];
+		return words[words.length - 2];
+	}
+	public static String secondLastWord(String str) {
+		return secLastWord(str);
+	}
+	public static String lastWord(String str) {
+		String[] words = splitIntoWords(str);
+		if (not(str) || words.length == 0)
+			return "";
+		return words[words.length - 1];
+	}
+	public static String nthWord(String str, int i) {
+		String[] words = splitIntoWords(str);
+		if (not(str) || words.length == 0)
+			return "";
+		if (i >= str.length())
+			return words[words.length - 1];
+		if (i < 0) {
+			i = Math.abs(i);
+			if (i > 0 && i <= words.length)
+				return nthLastWord(str, i);
+			return words[0];
+		}
+		return words[i];
+	}
+	public static String nthLastWord(String str, int i) {
+		String[] words = splitIntoWords(str);
+		if (not(str) || words.length == 0)
+			return "";
+		if (i <= 0)
+			return words[0];
+		if (i > words.length)
+			return words[words.length - 1];
+		return words[words.length - i];
+	}
+	public static String shortestWord(String str) {
+		String[] words = wordsOf(str);
+		if (not(str) || words.length == 0)
+			return "";
+		String shortest = words[0];
+		for (String currentWord : words) {
+			if (currentWord.length() < shortest.length()) shortest = currentWord;
+		}
+		return shortest;
+	}
+	public static String longestWord(String str) {
+		String[] words = wordsOf(str);
+		if (not(str) || words.length == 0)
+			return "";
+		String longest = words[0];
+		for (String currentWord : words) {
+			if (currentWord.length() > longest.length()) longest = currentWord;
+		}
+		return longest;
+	}
 	public static String join(String[] arr, String with) {
 		if (not(arr) || isNull(with)) {
 			return "";
@@ -36530,7 +36611,8 @@ public class KL {
 			return "";
 		String labelSeparator = "";
 		boolean labeling = false;
-		nameOfObj = nameOfObj.trim();
+		nameOfObj = nameOfObj.trim().replaceAll("^\\$", "");
+		//make the $ sign at the start of nameOfObj optional
 		if (in(nameOfObj, "(?<=\\w)[:=]")) {
 			labeling = true;
 			labelSeparator = findMatch(nameOfObj, "(?<=\\w)([:=])");
@@ -36542,9 +36624,17 @@ public class KL {
 		String newFormat = kl().f(format);
 		return newFormat;
 	}
-
+    
+    public static String as(String nameOfObj, String format) {
+		return with(nameOfObj, format);
+	}
+    
 	public static void printw(String nameOfObj, String format) {
 		print(with(nameOfObj, format));
+	}
+	
+	public static void printAs(String nameOfObj, String format) {
+		printw(nameOfObj, format);
 	}
 
 	public static String pkr(int n) {
@@ -38656,18 +38746,87 @@ public class KL {
 
 	public static boolArr noDuplicates(boolArr arr) {
 		if (not(arr)) {
-			return new boolArr(blank.Bool);
+			return boolArr(blank.Bool);
 		}
 		return arr.unique();
 	}
 
-	public static String replace(String str, String to_replace, String regex_to_replace_with) {
-		if (not(str) || not(to_replace)) {
+	public static String replace(String str, String re, String _with) {
+		if (not(str))
+			return "";
+		if (re == null || re.length() == 0 || _with == null)
+			return str;
+		// leave the check of _with, let it be blank sometimes, to allow
+		// replacement of the looked up re with a blank string
+		try {
+			return str.replaceAll(re, _with);
+		} catch (PatternSyntaxException | StackOverflowError e) {
 			return str;
 		}
-		return str.replaceAll(to_replace, regex_to_replace_with);
 	}
-
+	public static String replace(String str, CharSequence re, CharSequence _with) {
+		return replace(str, re.toString(), _with.toString());
+	}
+	public static String replace(String str, char oldChar, char newChar) {
+		return replace(str, "" + oldChar, "" + newChar);
+	}
+	public static String replaceFirst(String str, String re, String _with) {
+		if (not(str))
+			return "";
+		if (re == null || re.length() == 0 || _with == null)
+			return str;
+		// leave the check of _with, let it be blank sometimes, to allow
+		// replacement of the looked up re with a blank string
+		try {
+			return str.replaceFirst(re, _with);
+		} catch (PatternSyntaxException | StackOverflowError e) {
+			return str;
+		}
+	}
+	public static String replaceAll(String str, String re, String _with) {
+		return replace(str, re, _with);
+	}
+	public static String remove(String str, String re) {
+		return replace(str, re, "");
+	}
+	public static String removeAll(String str, String re) {
+		return remove(str, re);
+	}
+	public static String replaceFirstWord(String str, String _with) {
+		if (not(str))
+			return "";
+		if (!wordsIn(str) || _with == null)
+			return str;
+		return replace(str, firstWord(str), _with);
+	}
+	public static String replaceSecondWord(String str, String _with) {
+		if (not(str))
+			return "";
+		if (!wordsIn(str) || _with == null)
+			return str;
+		return replace(str, secondWord(str), _with);
+	}
+	public static String replaceSecondLastWord(String str,String _with) {
+		if (not(str))
+			return "";
+		if (!wordsIn(str) || _with == null)
+			return str;
+		return replace(str, secondLastWord(str), _with);
+	}
+	public static String replaceLastWord(String str, String _with) {
+		if (not(str))
+			return "";
+		if (!wordsIn(str) || _with == null)
+			return str;
+		return replace(str, lastWord(str), _with);
+	}
+	public static String replaceNthWord(String str, String _with, int n) {
+		if (not(str))
+			return "";
+		if (!wordsIn(str) || _with == null || n < 0 || n >= wordCount(str))
+			return str;
+		return replace(str, nthWord(str, n), _with);
+	}	
 	public static String replace(String str, String to_replace, Function<String, String> fn) {
 		if (not(str) || not(to_replace) || not(fn)) {
 			return str;
@@ -38797,25 +38956,11 @@ public class KL {
 		return output;
 	}
 
-	public static String replaceFirst(String str, String to_replace, String regex_to_replace_with) {
-		if (not(str) || not(to_replace)) {
-			return str;
-		}
-		return str.replaceFirst(to_replace, regex_to_replace_with);
-	}
-
 	public static String replaceOne(String str, String to_replace, String regex_to_replace_with) {
 		if (not(str) || not(to_replace)) {
 			return str;
 		}
 		return replaceFirst(str, to_replace, regex_to_replace_with);
-	}
-
-	public static String remove(String str, String re) {
-		if (not(str) || not(re)) {
-			return str;
-		}
-		return replace(str, re, "");
 	}
 
 	public static String slice(String str) {

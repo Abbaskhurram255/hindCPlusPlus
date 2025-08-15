@@ -142,7 +142,7 @@ class lafz {
 		}
 		return split()[i];
 	}
-	String lasti(int i) {
+	String ilast(int i) {
 		if (isEmpty())
 			return "";
 		if (i <= 0)
@@ -150,6 +150,9 @@ class lafz {
 		if (i > length())
 			return split()[length() - 1];
 		return split()[length() - i];
+	}
+	String lasti(int i) {
+		return ilast(i);
 	}
 	int wordCount() {
 		return words.length;
@@ -204,7 +207,7 @@ class lafz {
 		if (i < 0) {
 			i = Math.abs(i);
 			if (i > 0 && i <= words.length)
-				return lasti(i);
+				return nthLastWord(i);
 			return words[0];
 		}
 		return words[i];
@@ -217,6 +220,24 @@ class lafz {
 		if (i > words.length)
 			return words[words.length - 1];
 		return words[words.length - i];
+	}
+	String shortestWord() {
+		if (not(str) || words.length == 0)
+			return "";
+		String shortest = words[0];
+		for (String currentWord : words) {
+			if (currentWord.length() < shortest.length()) shortest = currentWord;
+		}
+		return shortest;
+	}
+	String longestWord() {
+		if (not(str) || words.length == 0)
+			return "";
+		String longest = words[0];
+		for (String currentWord : words) {
+			if (currentWord.length() > longest.length()) longest = currentWord;
+		}
+		return longest;
 	}
 	String[] split() {
 		String[] splitted = str.split("");
@@ -593,13 +614,37 @@ class lafz {
 	String unlock(Object salt) {
 		return KL.unlock(str, salt);
 	}
-	String encodeUrl(String s) {
-		return KL.encodeUrl(s);
+	String encodeUrl() {
+		return KL.encodeUrl(this.str);
 	}
-	String decodeUrl(String s) {
-		return KL.decodeUrl(s);
+	String decodeUrl() {
+		return KL.decodeUrl(this.str);
 	}
-
+	public static String encrypt(Object salt) {
+		return KL.encrypt(this.str, salt);
+	}
+	public static String decrypt(String encryptedData, Object salt) {
+		return KL.decrypt(this.str, salt);
+	}
+	public static String repeat(int n) {
+		return KL.repeat(this.str, n);
+	}
+	public static String repeat() {
+		return KL.repeat(this.str);
+	}
+	public static String times(int n) {
+		return KL.times(this.str, n);
+	}
+	public static String f(Object... args) {
+		return KL.f(this.str, args);
+	}
+	public static String with(String format) {
+		return KL.with(this.str, format);
+	}
+	public static String as(String format) {
+		return KL.as(this.str, format);
+	}
+	
 	int length() {
 		if (str == null)
 			str = "";
