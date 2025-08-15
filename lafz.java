@@ -1,4 +1,5 @@
 
+
 import java.util.*;
 import java.util.regex.*;
 
@@ -222,20 +223,22 @@ class lafz {
 		return words[words.length - i];
 	}
 	String shortestWord() {
-		if (not(str) || words.length == 0)
+		if (isEmpty() || words.length == 0)
 			return "";
 		String shortest = words[0];
 		for (String currentWord : words) {
-			if (currentWord.length() < shortest.length()) shortest = currentWord;
+			if (currentWord.length() < shortest.length())
+				shortest = currentWord;
 		}
 		return shortest;
 	}
 	String longestWord() {
-		if (not(str) || words.length == 0)
+		if (isEmpty() || words.length == 0)
 			return "";
 		String longest = words[0];
 		for (String currentWord : words) {
-			if (currentWord.length() > longest.length()) longest = currentWord;
+			if (currentWord.length() > longest.length())
+				longest = currentWord;
 		}
 		return longest;
 	}
@@ -620,31 +623,31 @@ class lafz {
 	String decodeUrl() {
 		return KL.decodeUrl(this.str);
 	}
-	public static String encrypt(Object salt) {
+	String encrypt(Object salt) {
 		return KL.encrypt(this.str, salt);
 	}
-	public static String decrypt(String encryptedData, Object salt) {
+	String decrypt(String encryptedData, Object salt) {
 		return KL.decrypt(this.str, salt);
 	}
-	public static String repeat(int n) {
+	String repeat(int n) {
 		return KL.repeat(this.str, n);
 	}
-	public static String repeat() {
+	String repeat() {
 		return KL.repeat(this.str);
 	}
-	public static String times(int n) {
+	String times(int n) {
 		return KL.times(this.str, n);
 	}
-	public static String f(Object... args) {
-		return KL.f(this.str, args);
+	String f(Object... args) {
+		return new KL().f(this.str, args);
 	}
-	public static String with(String format) {
+	String with(String format) {
 		return KL.with(this.str, format);
 	}
-	public static String as(String format) {
+	String as(String format) {
 		return KL.as(this.str, format);
 	}
-	
+
 	int length() {
 		if (str == null)
 			str = "";

@@ -48,11 +48,14 @@ public class KL {
 
 		money(double amnt, String curr) {
 			this.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
-			this.curr = not(this.curr) || len(this.curr) < 1 || len(this.curr) > 4 ? "Rs. " : titleCase(curr);
+			this.curr = not(this.curr) || len(this.curr) < 1
+					|| len(this.curr) > 4 ? "Rs. " : titleCase(curr);
 		}
 
 		money curr(String curr) {
-			this.curr = not(curr) || len(curr) < 1 || len(curr) > 4 ? "Rs. " : titleCase(curr);
+			this.curr = not(curr) || len(curr) < 1 || len(curr) > 4
+					? "Rs. "
+					: titleCase(curr);
 			return this;
 		}
 
@@ -130,13 +133,17 @@ public class KL {
 			boolean forceInternational = bools.length > 0 ? bools[0] : false;
 			this.curr = trim(this.curr) + " ";
 			if (in(this.curr, "pk|in|rs")) {
-				return "Rs. " + (forceInternational ? ussuffix(amnt) : pksuffix(amnt));
+				return "Rs. " + (forceInternational
+						? ussuffix(amnt)
+						: pksuffix(amnt));
 			}
 			if (in(this.curr, "us")) {
 				return "USD " + ussuffix(amnt);
 			}
-			return this.curr + (forceInternational || (is(this.curr) && !in(this.curr, "pk|in|rs")) ? ussuffix(amnt)
-					: pksuffix(amnt));
+			return this.curr + (forceInternational
+					|| (is(this.curr) && !in(this.curr, "pk|in|rs"))
+							? ussuffix(amnt)
+							: pksuffix(amnt));
 		}
 
 		@Override
@@ -209,14 +216,17 @@ public class KL {
 
 		pesa(double amnt, String curr) {
 			super.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
-			super.curr = not(super.curr) || len(super.curr) < 1 || len(super.curr) > 4 ? "Rs. " : titleCase(curr);
+			super.curr = not(super.curr) || len(super.curr) < 1
+					|| len(super.curr) > 4 ? "Rs. " : titleCase(curr);
 		}
 	}
 
 	public static final class math {
-		public static double pi = 3.141592653589793, c = 2.99792e8, earthsGravity = 9.80665, earthsMass = 5.9722e24,
+		public static double pi = 3.141592653589793, c = 2.99792e8,
+				earthsGravity = 9.80665, earthsMass = 5.9722e24,
 				earthsRadius = 6.378137e3;
-		public static String cUnit = "m/s", earthsGravityUnit = "m/s^2", earthsMassUnit = "km", earthsRadiusUnit = "km";
+		public static String cUnit = "m/s", earthsGravityUnit = "m/s^2",
+				earthsMassUnit = "km", earthsRadiusUnit = "km";
 
 		public static final class c {
 			// temperature::c
@@ -4274,22 +4284,26 @@ public class KL {
 	public static String encodeUrl(String s) {
 		if (not(s))
 			return "";
-		String encoded = s.replace("%", "%25").replace(" ", "%20").replace("!", "%21").replace("#", "%23")
-				.replace("$", "%24").replace("&", "%26").replace("'", "%27").replace("(", "%28").replace(")", "%29")
-				.replace("*", "%2A").replace("+", "%2B").replace(",", "%2C").replace("/", "%2F").replace(":", "%3A")
-				.replace(";", "%3B").replace("=", "%3D").replace("?", "%3F").replace("@", "%40").replace("[", "%5B")
-				.replace("]", "%5D");
+		String encoded = s.replace("%", "%25").replace(" ", "%20")
+				.replace("!", "%21").replace("#", "%23").replace("$", "%24")
+				.replace("&", "%26").replace("'", "%27").replace("(", "%28")
+				.replace(")", "%29").replace("*", "%2A").replace("+", "%2B")
+				.replace(",", "%2C").replace("/", "%2F").replace(":", "%3A")
+				.replace(";", "%3B").replace("=", "%3D").replace("?", "%3F")
+				.replace("@", "%40").replace("[", "%5B").replace("]", "%5D");
 		return encoded;
 	}
 
 	public static String decodeUrl(String s) {
 		if (not(s))
 			return "";
-		String decoded = s.replace("%21", "!").replace("%20", " ").replace("%23", "#").replace("%24", "$")
-				.replace("%26", "&").replace("%27", "'").replace("%28", "(").replace("%29", ")").replace("%2A", "*")
-				.replace("%2B", "+").replace("%2C", ",").replace("%2F", "/").replace("%3A", ":").replace("%3B", ";")
-				.replace("%3D", "=").replace("%3F", "?").replace("%40", "@").replace("%5B", "[").replace("%5D", "]")
-				.replace("%25", "%");
+		String decoded = s.replace("%21", "!").replace("%20", " ")
+				.replace("%23", "#").replace("%24", "$").replace("%26", "&")
+				.replace("%27", "'").replace("%28", "(").replace("%29", ")")
+				.replace("%2A", "*").replace("%2B", "+").replace("%2C", ",")
+				.replace("%2F", "/").replace("%3A", ":").replace("%3B", ";")
+				.replace("%3D", "=").replace("%3F", "?").replace("%40", "@")
+				.replace("%5B", "[").replace("%5D", "]").replace("%25", "%");
 		return decoded;
 	}
 
@@ -4299,10 +4313,12 @@ public class KL {
 		String key = Str(salt);
 		final String ofXAlgo = "AES";
 		try {
-			SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), ofXAlgo);
+			SecretKeySpec secretKey = new SecretKeySpec(
+					key.getBytes(StandardCharsets.UTF_8), ofXAlgo);
 			Cipher cipher = Cipher.getInstance(ofXAlgo);
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-			byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+			byte[] encryptedBytes = cipher
+					.doFinal(data.getBytes(StandardCharsets.UTF_8));
 			return Base64.getEncoder().encodeToString(encryptedBytes);
 		} catch (Exception err) {
 			return data;
@@ -4315,10 +4331,12 @@ public class KL {
 		String key = Str(salt);
 		final String ofXAlgo = "AES";
 		try {
-			SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), ofXAlgo);
+			SecretKeySpec secretKey = new SecretKeySpec(
+					key.getBytes(StandardCharsets.UTF_8), ofXAlgo);
 			Cipher cipher = Cipher.getInstance(ofXAlgo);
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
-			byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
+			byte[] decryptedBytes = cipher
+					.doFinal(Base64.getDecoder().decode(encryptedData));
 			return new String(decryptedBytes, StandardCharsets.UTF_8);
 		} catch (Exception err) {
 			print("[KL.Decryptor.BadArguments]:\nFailed to decrypt the message.");
@@ -4342,8 +4360,7 @@ public class KL {
 		if (not(jsonString)) {
 			return map;
 		}
-		jsonString = jsonString.trim();
-		;
+		jsonString = jsonString.trim();;
 		if (!jsonString.startsWith("{") || !jsonString.endsWith("}")) {
 			map.add("status", "notok").add("error", "yes");
 			return map;
@@ -4353,9 +4370,12 @@ public class KL {
 		for (String pair : keyValuePairs) {
 			String[] parts = pair.split("[\\[\\]\\s\\w]*:[\\[\\]\\s\\w]*", 2);
 			if (parts.length == 2) {
-				String key = parts[0].replaceAll("[\"\\{\\[\\]\\}]+", "").trim();
-				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}]+", "").replaceAll("\\w+:\\s*", "").trim();
-				if (key.length() != 0 && in(key, "[a-zA-Z]+") && value.length() != 0 && in(value, "[a-zA-Z]+")) {
+				String key = parts[0].replaceAll("[\"\\{\\[\\]\\}]+", "")
+						.trim();
+				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}]+", "")
+						.replaceAll("\\w+:\\s*", "").trim();
+				if (key.length() != 0 && in(key, "[a-zA-Z]+")
+						&& value.length() != 0 && in(value, "[a-zA-Z]+")) {
 					map.add(key, value);
 				}
 			}
@@ -4368,11 +4388,13 @@ public class KL {
 		o map = new o();
 		try {
 			URL urlString = url(url);
-			HttpURLConnection connection = (HttpURLConnection) urlString.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) urlString
+					.openConnection();
 			connection.setRequestMethod("GET");
 			int statusCode = connection.getResponseCode();
 			if (statusCode == HttpURLConnection.HTTP_OK) {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(connection.getInputStream()));
 				String line;
 				StringBuilder respBuilder = new StringBuilder();
 				while ((line = reader.readLine()) != null) {
@@ -4381,15 +4403,19 @@ public class KL {
 				reader.close();
 				String jsonString = respBuilder.toString().trim();
 				map = parseJson(jsonString);
-				map.add("response", "200").add("status", "ok").add("error", "no");
+				map.add("response", "200").add("status", "ok").add("error",
+						"no");
 				return map;
 			} else {
-				map.add("response", Str(statusCode)).add("status", "notok").add("error", "yes");
-				print("[KLFetch.Status.NotOK]:\nMessage: GET request failed with status code", statusCode);
+				map.add("response", Str(statusCode)).add("status", "notok")
+						.add("error", "yes");
+				print("[KLFetch.Status.NotOK]:\nMessage: GET request failed with status code",
+						statusCode);
 			}
 			connection.disconnect();
 		} catch (IOException e) {
-			map.add("response", "404").add("status", "notok").add("error", "yes");
+			map.add("response", "404").add("status", "notok").add("error",
+					"yes");
 			print("[KLFetch.Status.Offline]:\nMessage: Failed to fetch. It appears, you might be offline.");
 		}
 		return map;
@@ -4399,11 +4425,13 @@ public class KL {
 		o map = new o();
 		try {
 			URL urlString = url(url);
-			HttpURLConnection connection = (HttpURLConnection) urlString.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) urlString
+					.openConnection();
 			connection.setRequestMethod("GET");
 			int statusCode = connection.getResponseCode();
 			if (statusCode == HttpURLConnection.HTTP_OK) {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(connection.getInputStream()));
 				String line;
 				StringBuilder respBuilder = new StringBuilder();
 				while ((line = reader.readLine()) != null) {
@@ -4412,14 +4440,17 @@ public class KL {
 				reader.close();
 				String jsonString = respBuilder.toString().trim();
 				map = parseJson(jsonString);
-				map.add("response", "200").add("status", "ok").add("error", "no");
+				map.add("response", "200").add("status", "ok").add("error",
+						"no");
 				return map;
 			} else {
-				map.add("response", Str(statusCode)).add("status", "notok").add("error", "yes");
+				map.add("response", Str(statusCode)).add("status", "notok")
+						.add("error", "yes");
 			}
 			connection.disconnect();
 		} catch (IOException e) {
-			map.add("response", "404").add("status", "notok").add("error", "yes");
+			map.add("response", "404").add("status", "notok").add("error",
+					"yes");
 		}
 		return map;
 	}
@@ -4443,7 +4474,8 @@ public class KL {
 			workDirectory = System.getProperty("user.dir").toLowerCase();
 
 	public static class sys {
-		public static String name = System.getProperty("os.name").toLowerCase().split(" ")[0],
+		public static String name = System.getProperty("os.name").toLowerCase()
+				.split(" ")[0],
 				version = System.getProperty("os.version").toLowerCase(),
 				arch = System.getProperty("os.arch").toLowerCase();
 
@@ -4455,7 +4487,8 @@ public class KL {
 	public static class user {
 		public static String name = System.getProperty("user.name"),
 				language = System.getProperty("user.language").toLowerCase(),
-				homeDirectory = System.getProperty("user.home"), workDirectory = KL.workDirectory;
+				homeDirectory = System.getProperty("user.home"),
+				workDirectory = KL.workDirectory;
 	}
 
 	// gui
@@ -4516,7 +4549,8 @@ public class KL {
 		}
 
 		gui size(o resolution) {
-			if (not(resolution) || !resolution.hasKey("width") || !resolution.hasKey("height")) {
+			if (not(resolution) || !resolution.hasKey("width")
+					|| !resolution.hasKey("height")) {
 				return this;
 			}
 			int w = resolution.k("width", 0), h = resolution.k("height", 0);
@@ -4525,7 +4559,8 @@ public class KL {
 		}
 
 		gui size(oI resolution) {
-			if (not(resolution) || !resolution.hasKey("width") || !resolution.hasKey("height")) {
+			if (not(resolution) || !resolution.hasKey("width")
+					|| !resolution.hasKey("height")) {
 				return this;
 			}
 			int w = resolution.k("width"), h = resolution.k("height");
@@ -4735,9 +4770,11 @@ public class KL {
 			return this;
 		}
 
-		gui font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		gui font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -4748,8 +4785,13 @@ public class KL {
 		}
 
 		gui font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -4781,7 +4823,8 @@ public class KL {
 		gui exitOnClose() {
 			super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			this.on("close", () -> {
-				boolean confirmed = this.confirm("Are you sure you want to close?");
+				boolean confirmed = this
+						.confirm("Are you sure you want to close?");
 				if (confirmed) {
 					super.dispose();
 				}
@@ -4806,21 +4849,21 @@ public class KL {
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
 					switch (keyCodeCaptured) {
-					case KeyEvent.VK_UP:
-						keyCaptured = "up";
-						break;
-					case KeyEvent.VK_DOWN:
-						keyCaptured = "down";
-						break;
-					case KeyEvent.VK_LEFT:
-						keyCaptured = "left";
-						break;
-					case KeyEvent.VK_RIGHT:
-						keyCaptured = "right";
-						break;
-					case KeyEvent.VK_CONTROL:
-						keyCaptured = "ctrl";
-						break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -4831,13 +4874,17 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click") || KL.eq(k, "(m(ouse)?)?\\W?clickl")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm") || KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick") || KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr") || KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
@@ -4907,7 +4954,8 @@ public class KL {
 				// there's a difference between these two
 				@Override
 				public void windowClosed(WindowEvent e) {
-					if (KL.eq(k, "exited|closed|(after|post)\\W?(exit|close)")) {
+					if (KL.eq(k,
+							"exited|closed|(after|post)\\W?(exit|close)")) {
 						new Thread(action).start();
 					}
 				}
@@ -4942,25 +4990,30 @@ public class KL {
 
 		gui state(String newState) {
 			switch (newState) {
-			case "min":
-				super.setExtendedState(super.ICONIFIED);
-				break;
-			case "max":
-				super.setExtendedState(super.MAXIMIZED_BOTH);
-				break;
-			case "none":
-			case "regular":
-			case "normal":
-				super.setExtendedState(super.NORMAL);
-				break;
+				case "min" :
+					super.setExtendedState(super.ICONIFIED);
+					break;
+				case "max" :
+					super.setExtendedState(super.MAXIMIZED_BOTH);
+					break;
+				case "none" :
+				case "regular" :
+				case "normal" :
+					super.setExtendedState(super.NORMAL);
+					break;
 			}
 			return this;
 		}
 
 		String state() {
 			int x = super.getExtendedState();
-			String state = x == super.NORMAL ? "normal"
-					: x == super.ICONIFIED ? "minimized" : x == super.MAXIMIZED_BOTH ? "maximized" : "unknown";
+			String state = x == super.NORMAL
+					? "normal"
+					: x == super.ICONIFIED
+							? "minimized"
+							: x == super.MAXIMIZED_BOTH
+									? "maximized"
+									: "unknown";
 			return state;
 		}
 
@@ -4978,7 +5031,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, message, "Message",
+					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 
@@ -4986,7 +5040,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
 
@@ -4994,7 +5049,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, new icon(iconAddress));
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.INFORMATION_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 
@@ -5002,7 +5058,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, ico);
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.INFORMATION_MESSAGE, ico);
 			return this;
 		}
 
@@ -5030,7 +5087,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, message, "Error",
+					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 
@@ -5038,7 +5096,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
 
@@ -5046,7 +5105,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE, new icon(iconAddress));
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.ERROR_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 
@@ -5054,7 +5114,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE, ico);
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.ERROR_MESSAGE, ico);
 			return this;
 		}
 
@@ -5062,7 +5123,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, "Warning", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, message, "Warning",
+					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 
@@ -5070,7 +5132,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
 
@@ -5078,7 +5141,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE, new icon(iconAddress));
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.WARNING_MESSAGE, new icon(iconAddress));
 			return this;
 		}
 
@@ -5086,7 +5150,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE, ico);
+			JOptionPane.showMessageDialog(null, message, title,
+					JOptionPane.WARNING_MESSAGE, ico);
 			return this;
 		}
 
@@ -5094,7 +5159,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, "Confirmation", JOptionPane.YES_NO_OPTION,
+			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
+					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 
@@ -5102,7 +5168,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION,
+			return (JOptionPane.showConfirmDialog(null, message, title,
+					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 
@@ -5110,23 +5177,26 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
+			return (JOptionPane.showConfirmDialog(null, message, title,
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+					new icon(iconAddress)) == 0);
 		}
 
 		boolean confirm(String title, String message, Icon ico) {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE, ico) == 0);
+			return (JOptionPane.showConfirmDialog(null, message, title,
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+					ico) == 0);
 		}
 
 		boolean confirmCancellable(String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION,
+			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
+					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 
@@ -5134,15 +5204,18 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
+			return (JOptionPane.showConfirmDialog(null, message, title,
+					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
 
-		boolean confirmCancellable(String title, String message, String iconAddress) {
+		boolean confirmCancellable(String title, String message,
+				String iconAddress) {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
+			return (JOptionPane.showConfirmDialog(null, message, title,
+					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
 		}
 
@@ -5150,7 +5223,8 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION,
+			return (JOptionPane.showConfirmDialog(null, message, title,
+					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, ico) == 0);
 		}
 
@@ -5158,14 +5232,16 @@ public class KL {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return JOptionPane.showInputDialog(null, message, "Input", JOptionPane.QUESTION_MESSAGE);
+			return JOptionPane.showInputDialog(null, message, "Input",
+					JOptionPane.QUESTION_MESSAGE);
 		}
 
 		String ask(String title, String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
+			return JOptionPane.showInputDialog(null, message, title,
+					JOptionPane.QUESTION_MESSAGE);
 		}
 
 		int askInt(String message) {
@@ -5203,9 +5279,11 @@ public class KL {
 
 	public static class label extends JLabel {
 		private static final long serialVersionUID = 1L;
-		public static int top = TOP, left = LEFT, bottom = BOTTOM, right = RIGHT, center = CENTER, east = EAST,
-				west = WEST, north = NORTH, south = SOUTH, northeast = NORTH_EAST, northwest = NORTH_WEST,
-				southeast = SOUTH_EAST, southwest = SOUTH_WEST, y = VERTICAL, x = HORIZONTAL;
+		public static int top = TOP, left = LEFT, bottom = BOTTOM,
+				right = RIGHT, center = CENTER, east = EAST, west = WEST,
+				north = NORTH, south = SOUTH, northeast = NORTH_EAST,
+				northwest = NORTH_WEST, southeast = SOUTH_EAST,
+				southwest = SOUTH_WEST, y = VERTICAL, x = HORIZONTAL;
 
 		label() {
 			super();
@@ -5287,9 +5365,11 @@ public class KL {
 			return this;
 		}
 
-		label font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		label font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -5300,8 +5380,13 @@ public class KL {
 		}
 
 		label font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -5346,21 +5431,21 @@ public class KL {
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
 					switch (keyCodeCaptured) {
-					case KeyEvent.VK_UP:
-						keyCaptured = "up";
-						break;
-					case KeyEvent.VK_DOWN:
-						keyCaptured = "down";
-						break;
-					case KeyEvent.VK_LEFT:
-						keyCaptured = "left";
-						break;
-					case KeyEvent.VK_RIGHT:
-						keyCaptured = "right";
-						break;
-					case KeyEvent.VK_CONTROL:
-						keyCaptured = "ctrl";
-						break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -5371,13 +5456,17 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click") || KL.eq(k, "(m(ouse)?)?\\W?clickl")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm") || KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick") || KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr") || KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
@@ -5468,8 +5557,9 @@ public class KL {
 			super(hgap, vgap);
 		}
 
-		public static String center = CENTER, east = EAST, right = east, west = WEST, left = west, north = NORTH,
-				top = north, south = SOUTH, bottom = south;
+		public static String center = CENTER, east = EAST, right = east,
+				west = WEST, left = west, north = NORTH, top = north,
+				south = SOUTH, bottom = south;
 	}
 
 	public static class gridLay extends GridLayout {
@@ -5624,9 +5714,11 @@ public class KL {
 			return this;
 		}
 
-		panel font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		panel font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -5637,8 +5729,13 @@ public class KL {
 		}
 
 		panel font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -5669,21 +5766,21 @@ public class KL {
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
 					switch (keyCodeCaptured) {
-					case KeyEvent.VK_UP:
-						keyCaptured = "up";
-						break;
-					case KeyEvent.VK_DOWN:
-						keyCaptured = "down";
-						break;
-					case KeyEvent.VK_LEFT:
-						keyCaptured = "left";
-						break;
-					case KeyEvent.VK_RIGHT:
-						keyCaptured = "right";
-						break;
-					case KeyEvent.VK_CONTROL:
-						keyCaptured = "ctrl";
-						break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -5694,13 +5791,17 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click") || KL.eq(k, "(m(ouse)?)?\\W?clickl")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm") || KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick") || KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr") || KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
@@ -5820,10 +5921,10 @@ public class KL {
 			fg(fg);
 		}
 
-        btn click() {
-        	super.doClick();
-            return this;
-        }
+		btn click() {
+			super.doClick();
+			return this;
+		}
 
 		btn click(ActionListener listener) {
 			super.addActionListener(listener);
@@ -5905,9 +6006,11 @@ public class KL {
 			return this;
 		}
 
-		btn font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		btn font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -5918,8 +6021,13 @@ public class KL {
 		}
 
 		btn font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -6117,9 +6225,11 @@ public class KL {
 			return this;
 		}
 
-		toggleBtn font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		toggleBtn font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -6130,8 +6240,13 @@ public class KL {
 		}
 
 		toggleBtn font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -6329,9 +6444,11 @@ public class KL {
 			return this;
 		}
 
-		radioBtn font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		radioBtn font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -6342,8 +6459,13 @@ public class KL {
 		}
 
 		radioBtn font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -6541,9 +6663,11 @@ public class KL {
 			return this;
 		}
 
-		radioBtnItem font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		radioBtnItem font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -6553,9 +6677,15 @@ public class KL {
 			return this;
 		}
 
-		radioBtnItem font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+		radioBtnItem font(String fontFamily, int fontSize, int bold,
+				int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -6753,9 +6883,11 @@ public class KL {
 			return this;
 		}
 
-		checkBox font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		checkBox font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -6766,8 +6898,13 @@ public class KL {
 		}
 
 		checkBox font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -6961,9 +7098,11 @@ public class KL {
 			return this;
 		}
 
-		checkBoxItem font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		checkBoxItem font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -6973,9 +7112,15 @@ public class KL {
 			return this;
 		}
 
-		checkBoxItem font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+		checkBoxItem font(String fontFamily, int fontSize, int bold,
+				int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -7101,9 +7246,11 @@ public class KL {
 			return this;
 		}
 
-		menuBar font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		menuBar font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -7114,8 +7261,13 @@ public class KL {
 		}
 
 		menuBar font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -7282,9 +7434,11 @@ public class KL {
 			return this;
 		}
 
-		menu font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		menu font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -7295,8 +7449,13 @@ public class KL {
 		}
 
 		menu font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -7486,9 +7645,11 @@ public class KL {
 			return this;
 		}
 
-		menuItem font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		menuItem font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -7499,8 +7660,13 @@ public class KL {
 		}
 
 		menuItem font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -7636,9 +7802,11 @@ public class KL {
 			return this;
 		}
 
-		contextMenu font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		contextMenu font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -7648,9 +7816,15 @@ public class KL {
 			return this;
 		}
 
-		contextMenu font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+		contextMenu font(String fontFamily, int fontSize, int bold,
+				int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -7769,9 +7943,11 @@ public class KL {
 			return this;
 		}
 
-		dropDown font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super.setFont(new Font(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+		dropDown font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize));
 			return this;
 		}
@@ -7782,8 +7958,13 @@ public class KL {
 		}
 
 		dropDown font(String fontFamily, int fontSize, int bold, int italic) {
-			super.setFont(new Font(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize));
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
 			return this;
 		}
 
@@ -7904,21 +8085,21 @@ public class KL {
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
 					switch (keyCodeCaptured) {
-					case KeyEvent.VK_UP:
-						keyCaptured = "up";
-						break;
-					case KeyEvent.VK_DOWN:
-						keyCaptured = "down";
-						break;
-					case KeyEvent.VK_LEFT:
-						keyCaptured = "left";
-						break;
-					case KeyEvent.VK_RIGHT:
-						keyCaptured = "right";
-						break;
-					case KeyEvent.VK_CONTROL:
-						keyCaptured = "ctrl";
-						break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -7929,13 +8110,17 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click") || KL.eq(k, "(m(ouse)?)?\\W?clickl")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm") || KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick") || KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr") || KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
@@ -8097,21 +8282,21 @@ public class KL {
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
 					switch (keyCodeCaptured) {
-					case KeyEvent.VK_UP:
-						keyCaptured = "up";
-						break;
-					case KeyEvent.VK_DOWN:
-						keyCaptured = "down";
-						break;
-					case KeyEvent.VK_LEFT:
-						keyCaptured = "left";
-						break;
-					case KeyEvent.VK_RIGHT:
-						keyCaptured = "right";
-						break;
-					case KeyEvent.VK_CONTROL:
-						keyCaptured = "ctrl";
-						break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -8122,13 +8307,17 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click") || KL.eq(k, "(m(ouse)?)?\\W?clickl")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm") || KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick") || KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr") || KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
@@ -8278,21 +8467,21 @@ public class KL {
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
 					switch (keyCodeCaptured) {
-					case KeyEvent.VK_UP:
-						keyCaptured = "up";
-						break;
-					case KeyEvent.VK_DOWN:
-						keyCaptured = "down";
-						break;
-					case KeyEvent.VK_LEFT:
-						keyCaptured = "left";
-						break;
-					case KeyEvent.VK_RIGHT:
-						keyCaptured = "right";
-						break;
-					case KeyEvent.VK_CONTROL:
-						keyCaptured = "ctrl";
-						break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -8303,13 +8492,17 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click") || KL.eq(k, "(m(ouse)?)?\\W?clickl")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm") || KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick") || KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr") || KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
@@ -8471,21 +8664,21 @@ public class KL {
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
 					switch (keyCodeCaptured) {
-					case KeyEvent.VK_UP:
-						keyCaptured = "up";
-						break;
-					case KeyEvent.VK_DOWN:
-						keyCaptured = "down";
-						break;
-					case KeyEvent.VK_LEFT:
-						keyCaptured = "left";
-						break;
-					case KeyEvent.VK_RIGHT:
-						keyCaptured = "right";
-						break;
-					case KeyEvent.VK_CONTROL:
-						keyCaptured = "ctrl";
-						break;
+						case KeyEvent.VK_UP :
+							keyCaptured = "up";
+							break;
+						case KeyEvent.VK_DOWN :
+							keyCaptured = "down";
+							break;
+						case KeyEvent.VK_LEFT :
+							keyCaptured = "left";
+							break;
+						case KeyEvent.VK_RIGHT :
+							keyCaptured = "right";
+							break;
+						case KeyEvent.VK_CONTROL :
+							keyCaptured = "ctrl";
+							break;
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -8496,13 +8689,17 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click") || KL.eq(k, "(m(ouse)?)?\\W?clickl")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm") || KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick") || KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
+							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr") || KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
+							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
@@ -8739,7 +8936,8 @@ public class KL {
 		clr(String hexStringWithOrWithoutAlpha, boolean hasApha) {
 			this(from(hexStringWithOrWithoutAlpha), hasApha);
 			/*
-			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff clr red = clr("red
+			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff clr
+			 * red = clr("red
 			 */
 		}
 
@@ -8752,7 +8950,8 @@ public class KL {
 
 		public static int from(String hex) {
 			hex = hex.replaceAll("^(0x|#)", "");
-			if (not(hex) || !eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5 || len(hex) == 7) {
+			if (not(hex) || !eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5
+					|| len(hex) == 7) {
 				return 0;
 			}
 			int len = len(hex);
@@ -8785,281 +8984,549 @@ public class KL {
 			// the order stays as-is
 		}
 
-		public static final clr apple = new clr("#6ecb3c"), applegreen = new clr("#76cd26"),
-				apricot = new clr("#ffb16d"), aqua = new clr("#13eac9"), aquablue = new clr("#02d8e9"),
-				aquagreen = new clr("#12e193"), aquamarine = new clr("#04d8b2"), armygreen = new clr("#4b5d16"),
-				asparagus = new clr("#77ab56"), aubergine = new clr("#3d0734"), auburn = new clr("#9a3001"),
-				avocado = new clr("#90b134"), avocadogreen = new clr("#87a922"), azul = new clr("#1d5dec"),
-				azure = new clr("#069af3"), babyblue = new clr("#a2cffe"), babygreen = new clr("#8cff9e"),
-				babypink = new clr("#ffb7ce"), babypoo = new clr("#ab9004"), babypurple = new clr("#ca9bf7"),
-				barbiepink = new clr("#fe46a5"), beige = new clr("#e6daa6"), black = new clr("#000000"),
-				blood = new clr("#770001"), bloodorange = new clr("#fe4b03"), bloodred = new clr("#980002"),
-				blue = new clr("#0343df"), blue100 = new clr("#bbdefb"), blue200 = new clr("#90caf9"),
-				blue300 = new clr("#64b5f6"), blue400 = new clr("#42a5f5"), blue50 = new clr("#e3f2fd"),
-				blue500 = new clr("#2196f3"), blue600 = new clr("#1e88e5"), blue700 = new clr("#1976d2"),
-				blue800 = new clr("#1565c0"), blue900 = new clr("#0d47a1"), blueblue = new clr("#2242c7"),
-				blueextra1 = new clr("#82b1ff"), blueextra2 = new clr("#448aff"), blueextra3 = new clr("#2979ff"),
-				blueextra4 = new clr("#2962ff"), bluegray = new clr("#85a3b2"), bluegreen = new clr("#017a79"),
-				bluepurple = new clr("#5a06ef"), blueviolet = new clr("#5d06e9"),
-				bluewithahintofpurple = new clr("#533cc6"), blueberry = new clr("#464196"),
-				bluegray100 = new clr("#cfd8dc"), bluegray200 = new clr("#b0bec5"), bluegray300 = new clr("#90a4ae"),
-				bluegray400 = new clr("#78909c"), bluegray50 = new clr("#eceff1"), bluegray500 = new clr("#607d8b"),
-				bluegray600 = new clr("#546e7a"), bluegray700 = new clr("#455a64"), bluegray800 = new clr("#37474f"),
-				bluegray900 = new clr("#263238"), blueygray = new clr("#89a0b0"), blueygreen = new clr("#2bb179"),
-				blueypurple = new clr("#6241c7"), bluish = new clr("#2976bb"), bluishgray = new clr("#748b97"),
-				bluishgreen = new clr("#10a674"), bluishpurple = new clr("#703be7"), blurple = new clr("#5539cc"),
-				blush = new clr("#f29e8e"), blushpink = new clr("#fe828c"), brick = new clr("#a03623"),
-				brickorange = new clr("#c14a09"), brickred = new clr("#8f1402"), bronze = new clr("#a87900"),
-				brown = new clr("#653700"), brown100 = new clr("#d7ccc8"), brown200 = new clr("#bcaaa4"),
-				brown300 = new clr("#a1887f"), brown400 = new clr("#8d6e63"), brown50 = new clr("#efebe9"),
-				brown500 = new clr("#795548"), brown600 = new clr("#6d4c41"), brown700 = new clr("#5d4037"),
-				brown800 = new clr("#4e342e"), brown900 = new clr("#3e2723"), browngray = new clr("#8d8468"),
-				browngreen = new clr("#706c11"), brownorange = new clr("#b96902"), brownred = new clr("#922b05"),
-				brownyellow = new clr("#b29705"), brownish = new clr("#9c6d57"), brownishgray = new clr("#86775f"),
-				brownishgreen = new clr("#6a6e09"), brownishorange = new clr("#cb7723"),
-				brownishpink = new clr("#c27e79"), brownishpurple = new clr("#76424e"),
-				brownishred = new clr("#9e3623"), brownishyellow = new clr("#c9b003"), brownygreen = new clr("#6f6c0a"),
-				brownyorange = new clr("#ca6b02"), bruise = new clr("#7e4071"), bubblegumpink = new clr("#fe83cc"),
-				bubblegum = new clr("#ff6cb5"), burgundy = new clr("#610023"), butter = new clr("#ffff81"),
-				cadetblue = new clr("#4e7496"), camel = new clr("#c69f59"), candypink = new clr("#ff63e9"),
-				caramel = new clr("#af6f09"), cherry = new clr("#cf0234"), cherryred = new clr("#f7022a"),
-				chestnut = new clr("#742802"), chocolate = new clr("#3d1c02"), chocolatebrown = new clr("#411900"),
-				cinnamon = new clr("#ac4f06"), cocoa = new clr("#875f42"), coffee = new clr("#a6814c"),
-				copper = new clr("#b66325"), coral = new clr("#fc5a50"), coralpink = new clr("#ff6163"),
-				cornflower = new clr("#6a79f7"), cornflowerblue = new clr("#5170d7"), cranberry = new clr("#9e003a"),
-				cream = new clr("#ffffc2"), custard = new clr("#fffd78"), cyan = new clr("#00ffff"),
-				cyan100 = new clr("#b2ebf2"), cyan200 = new clr("#80deea"), cyan300 = new clr("#4dd0e1"),
-				cyan400 = new clr("#26c6da"), cyan50 = new clr("#e0f7fa"), cyan500 = new clr("#00bcd4"),
-				cyan600 = new clr("#00acc1"), cyan700 = new clr("#0097a7"), cyan800 = new clr("#00838f"),
-				cyan900 = new clr("#006064"), cyanextra1 = new clr("#84ffff"), cyanextra2 = new clr("#18ffff"),
-				cyanextra3 = new clr("#00e5ff"), cyanextra4 = new clr("#00b8d4"), dandelion = new clr("#fedf08"),
-				dark = new clr("#1b2431"), darkaqua = new clr("#05696b"), darkaquamarine = new clr("#017371"),
-				darkbeige = new clr("#ac9362"), darkblue = new clr("#030764"), darkbluegray = new clr("#1f3b4d"),
-				darkbluegreen = new clr("#005249"), darkbrown = new clr("#341c02"), darkcoral = new clr("#cf524e"),
-				darkcream = new clr("#fff39a"), darkcyan = new clr("#0a888a"), darkforestgreen = new clr("#002d04"),
-				darkfuchsia = new clr("#9d0759"), darkgold = new clr("#b59410"), darkgrassgreen = new clr("#388004"),
-				darkgray = new clr("#363737"), darkgrayblue = new clr("#29465b"), darkgreen = new clr("#054907"),
-				darkgreenblue = new clr("#1f6357"), darkhotpink = new clr("#d90166"), darkindigo = new clr("#1f0954"),
-				darkkhaki = new clr("#9b8f55"), darklavender = new clr("#856798"), darklilac = new clr("#9c6da5"),
-				darklime = new clr("#84b701"), darklimegreen = new clr("#7ebd01"), darkmagenta = new clr("#960056"),
-				darkmaroon = new clr("#3c0008"), darkmauve = new clr("#874c62"), darkmint = new clr("#48c072"),
-				darkmintgreen = new clr("#20c073"), darkmustard = new clr("#a88905"), darknavy = new clr("#000435"),
-				darknavyblue = new clr("#00022e"), darkolive = new clr("#373e02"), darkolivegreen = new clr("#3c4d03"),
-				darkorange = new clr("#c65102"), darkpastelgreen = new clr("#56ae57"), darkpeach = new clr("#de7e5d"),
-				darkperiwinkle = new clr("#665fd1"), darkpink = new clr("#cb416b"), darkplum = new clr("#3f012c"),
-				darkpurple = new clr("#35063e"), darkred = new clr("#840000"), darkrose = new clr("#b5485d"),
-				darkroyalblue = new clr("#02066f"), darkseagreen = new clr("#11875d"), darkskyblue = new clr("#448ee4"),
-				darkslateblue = new clr("#214761"), darktan = new clr("#af884a"), darktaupe = new clr("#7f684e"),
-				darkteal = new clr("#014d4e"), darkturquoise = new clr("#045c5a"), darkviolet = new clr("#34013f"),
-				darkyellow = new clr("#d5b60a"), darkyellowgreen = new clr("#728f02"), darkerblue = new clr("#011288"),
-				darkergreen = new clr("#087804"), darkerpink = new clr("#c4387f"), darkerpurple = new clr("#5f1b6b"),
-				darkishblue = new clr("#014182"), darkishgreen = new clr("#287c37"), darkishpink = new clr("#da467d"),
-				darkishpurple = new clr("#751973"), darkishred = new clr("#a90308"), deepaqua = new clr("#08787f"),
-				deepblue = new clr("#040273"), deepbrown = new clr("#410200"), deepgreen = new clr("#02590f"),
-				deeplavender = new clr("#8d5eb7"), deepmagenta = new clr("#a0025c"), deeporange = new clr("#dc4d01"),
-				deeppink = new clr("#cb0162"), deeppurple = new clr("#36013f"), deepred = new clr("#9a0200"),
-				deeprose = new clr("#c74767"), deepseablue = new clr("#015482"), deepskyblue = new clr("#0d75f8"),
-				deepteal = new clr("#00555a"), deepturquoise = new clr("#017374"), deepviolet = new clr("#490648"),
-				deeporange100 = new clr("#ffccbc"), deeporange200 = new clr("#ffab91"),
-				deeporange300 = new clr("#ff8a65"), deeporange400 = new clr("#ff7043"),
-				deeporange50 = new clr("#fbe9e7"), deeporange500 = new clr("#ff5722"),
-				deeporange600 = new clr("#f4511e"), deeporange700 = new clr("#e64a19"),
-				deeporange800 = new clr("#d84315"), deeporange900 = new clr("#bf360c"),
-				deeporangeextra1 = new clr("#ff9e80"), deeporangeextra2 = new clr("#ff6e40"),
-				deeporangeextra3 = new clr("#ff3d00"), deeporangeextra4 = new clr("#dd2c00"),
-				deeppurple100 = new clr("#d1c4e9"), deeppurple200 = new clr("#b39ddb"),
-				deeppurple300 = new clr("#9575cd"), deeppurple400 = new clr("#7e57c2"),
-				deeppurple50 = new clr("#ede7f6"), deeppurple500 = new clr("#673ab7"),
-				deeppurple600 = new clr("#5e35b1"), deeppurple700 = new clr("#512da8"),
-				deeppurple800 = new clr("#4527a0"), deeppurple900 = new clr("#311b92"),
-				deeppurpleextra1 = new clr("#b388ff"), deeppurpleextra2 = new clr("#7c4dff"),
-				deeppurpleextra3 = new clr("#651fff"), deeppurpleextra4 = new clr("#6200ea"),
-				fuchsia = new clr("#ed0dd9"), gold = new clr("#dbb40c"), golden = new clr("#f5bf03"),
-				goldenbrown = new clr("#b27a01"), goldenrod = new clr("#fac205"), goldenyellow = new clr("#fec615"),
-				grape = new clr("#6c3461"), grapepurple = new clr("#5d1451"), grapefruit = new clr("#fd5956"),
-				grass = new clr("#5cac2d"), grassgreen = new clr("#3f9b0b"), gray = new clr("#929591"),
-				gray100 = new clr("#f5f5f5"), gray200 = new clr("#eeeeee"), gray300 = new clr("#e0e0e0"),
-				gray400 = new clr("#bdbdbd"), gray50 = new clr("#fafafa"), gray500 = new clr("#9e9e9e"),
-				gray600 = new clr("#757575"), gray700 = new clr("#616161"), gray800 = new clr("#424242"),
-				gray900 = new clr("#212121"), grayblue = new clr("#77a1b5"), graybrown = new clr("#7f7053"),
-				graygreen = new clr("#86a17d"), graypink = new clr("#c3909b"), graypurple = new clr("#826d8c"),
-				grayteal = new clr("#5e9b8a"), grayish = new clr("#a8a495"), grayishblue = new clr("#5e819d"),
-				grayishbrown = new clr("#7a6a4f"), grayishgreen = new clr("#82a67d"), grayishpink = new clr("#c88d94"),
-				grayishpurple = new clr("#887191"), grayishteal = new clr("#719f91"), green = new clr("#15b01a"),
-				green100 = new clr("#c8e6c9"), green200 = new clr("#a5d6a7"), green300 = new clr("#81c784"),
-				green400 = new clr("#66bb6a"), green50 = new clr("#e8f5e9"), green500 = new clr("#4caf50"),
-				green600 = new clr("#43a047"), green700 = new clr("#388e3c"), green800 = new clr("#2e7d32"),
-				green900 = new clr("#1b5e20"), greenagain = new clr("#16d43f"), greenapple = new clr("#5edc1f"),
-				greenblue = new clr("#23c48b"), greenbrown = new clr("#544e03"), greenextra1 = new clr("#b9f6ca"),
-				greenextra2 = new clr("#69f0ae"), greenextra3 = new clr("#00e676"), greenextra4 = new clr("#00c853"),
-				greengray = new clr("#77926f"), greenteal = new clr("#0cb577"), greenyellow = new clr("#b5ce08"),
-				greenish = new clr("#40a368"), greenishbeige = new clr("#c9d179"), greenishblue = new clr("#0b8b87"),
-				greenishbrown = new clr("#696112"), greenishcyan = new clr("#2afeb7"),
-				greenishgray = new clr("#96ae8d"), greenishtan = new clr("#bccb7a"), greenishteal = new clr("#32bf84"),
-				greenishturquoise = new clr("#00fbb0"), greenishyellow = new clr("#cdfd02"),
-				greenyblue = new clr("#42b395"), greenybrown = new clr("#696006"), greenygray = new clr("#7ea07a"),
-				greenyyellow = new clr("#c6f808"), hotgreen = new clr("#25ff29"), hotmagenta = new clr("#f504c9"),
-				hotpink = new clr("#ff028d"), hotpurple = new clr("#cb00f5"), ice = new clr("#d6fffa"),
-				iceblue = new clr("#d7fffe"), ickygreen = new clr("#8fae22"), indianred = new clr("#850e04"),
-				indigo = new clr("#380282"), indigo100 = new clr("#c5cae9"), indigo200 = new clr("#9fa8da"),
-				indigo300 = new clr("#7986cb"), indigo400 = new clr("#5c6bc0"), indigo50 = new clr("#e8eaf6"),
-				indigo500 = new clr("#3f51b5"), indigo600 = new clr("#3949ab"), indigo700 = new clr("#303f9f"),
-				indigo800 = new clr("#283593"), indigo900 = new clr("#1a237e"), indigoblue = new clr("#3a18b1"),
-				indigoextra1 = new clr("#8c9eff"), indigoextra2 = new clr("#536dfe"), indigoextra3 = new clr("#3d5afe"),
-				indigoextra4 = new clr("#304ffe"), iris = new clr("#6258c4"), irishgreen = new clr("#019529"),
-				junglegreen = new clr("#048243"), khaki = new clr("#aaa662"), khakigreen = new clr("#728639"),
-				kiwi = new clr("#9cef43"), kiwigreen = new clr("#8ee53f"), lavender = new clr("#c79fef"),
-				lavenderblue = new clr("#8b88f8"), lavenderpink = new clr("#dd85d7"), lawngreen = new clr("#4da409"),
-				leaf = new clr("#71aa34"), leafgreen = new clr("#5ca904"), leafygreen = new clr("#51b73b"),
-				leather = new clr("#ac7434"), lemon = new clr("#fdff52"), lemongreen = new clr("#adf802"),
-				lemonlime = new clr("#bffe28"), lemonyellow = new clr("#fdff38"), lichen = new clr("#8fb67b"),
-				lightaqua = new clr("#8cffdb"), lightaquamarine = new clr("#7bfdc7"), lightbeige = new clr("#fffeb6"),
-				lightblue = new clr("#7bc8f6"), lightbluegray = new clr("#b7c9e2"), lightbluegreen = new clr("#7efbb3"),
-				lightbluishgreen = new clr("#76fda8"), lightbrightgreen = new clr("#53fe5c"),
-				lightbrown = new clr("#ad8150"), lightburgundy = new clr("#a8415b"), lightcyan = new clr("#acfffc"),
-				lighteggplant = new clr("#894585"), lightforestgreen = new clr("#4f9153"),
-				lightgold = new clr("#fddc5c"), lightgrassgreen = new clr("#9af764"), lightgray = new clr("#d8dcd6"),
-				lightgrayblue = new clr("#9dbcd4"), lightgraygreen = new clr("#b7e1a1"),
-				lightgreen = new clr("#76ff7b"), lightgreenblue = new clr("#56fca2"),
-				lightgreenishblue = new clr("#63f7b4"), lightindigo = new clr("#6d5acf"),
-				lightkhaki = new clr("#e6f2a2"), lightlavendar = new clr("#efc0fe"), lightlavender = new clr("#dfc5fe"),
-				lightlightblue = new clr("#cafffb"), lightlightgreen = new clr("#c8ffb0"),
-				lightlime = new clr("#aefd6c"), lightlimegreen = new clr("#b9ff66"), lightmagenta = new clr("#fa5ff7"),
-				lightmaroon = new clr("#a24857"), lightmauve = new clr("#c292a1"), lightmint = new clr("#b6ffbb"),
-				lightmintgreen = new clr("#a6fbb2"), lightmustard = new clr("#f7d560"), lightnavy = new clr("#155084"),
-				lightnavyblue = new clr("#2e5a88"), lightneongreen = new clr("#4efd54"),
-				lightolive = new clr("#acbf69"), lightolivegreen = new clr("#a4be5c"), lightorange = new clr("#fdaa48"),
-				lightpastelgreen = new clr("#b2fba5"), lightpeagreen = new clr("#c4fe82"),
-				lightpeach = new clr("#ffd8b1"), lightperiwinkle = new clr("#c1c6fc"), lightpink = new clr("#ffd1df"),
-				lightplum = new clr("#9d5783"), lightpurple = new clr("#bf77f6"), lightred = new clr("#ff474c"),
-				lightrose = new clr("#ffc5cb"), lightroyalblue = new clr("#3a2efe"), lightsage = new clr("#bcecac"),
-				lightsalmon = new clr("#fea993"), lightseagreen = new clr("#98f6b0"), lightseafoam = new clr("#a0febf"),
-				lightseafoamgreen = new clr("#a7ffb5"), lightskyblue = new clr("#c6fcff"),
-				lighttan = new clr("#fbeeac"), lightteal = new clr("#90e4c1"), lightturquoise = new clr("#7ef4cc"),
-				lighturple = new clr("#b36ff6"), lightviolet = new clr("#d6b4fc"), lightyellow = new clr("#fffe7a"),
-				lightyellowgreen = new clr("#ccfd7f"), lightyellowishgreen = new clr("#c2ff89"),
-				lightblue100 = new clr("#b3e5fc"), lightblue200 = new clr("#81d4fa"), lightblue300 = new clr("#4fc3f7"),
-				lightblue400 = new clr("#29b6f6"), lightblue50 = new clr("#e1f5fe"), lightblue500 = new clr("#03a9f4"),
-				lightblue600 = new clr("#039be5"), lightblue700 = new clr("#0288d1"), lightblue800 = new clr("#0277bd"),
-				lightblue900 = new clr("#01579b"), lightblueextra1 = new clr("#80d8ff"),
-				lightblueextra2 = new clr("#40c4ff"), lightblueextra3 = new clr("#00b0ff"),
-				lightblueextra4 = new clr("#0091ea"), lightergreen = new clr("#75fd63"),
-				lighterpurple = new clr("#a55af4"), lightgreen100 = new clr("#dcedc8"),
-				lightgreen200 = new clr("#c5e1a5"), lightgreen300 = new clr("#aed581"),
-				lightgreen400 = new clr("#9ccc65"), lightgreen50 = new clr("#f1f8e9"),
-				lightgreen500 = new clr("#8bc34a"), lightgreen600 = new clr("#7cb342"),
-				lightgreen700 = new clr("#689f38"), lightgreen800 = new clr("#558b2f"),
-				lightgreen900 = new clr("#33691e"), lightgreenextra1 = new clr("#ccff90"),
-				lightgreenextra2 = new clr("#b2ff59"), lightgreenextra3 = new clr("#76ff03"),
-				lightgreenextra4 = new clr("#64dd17"), lightishblue = new clr("#3d7afd"),
-				lightishgreen = new clr("#61e160"), lightishpurple = new clr("#a552e6"),
-				lightishred = new clr("#fe2f4a"), lime = new clr("#aaff32"), lime100 = new clr("#f0f4c3"),
-				lime200 = new clr("#e6ee9c"), lime300 = new clr("#dce775"), lime400 = new clr("#d4e157"),
-				lime50 = new clr("#f9fbe7"), lime500 = new clr("#cddc39"), lime600 = new clr("#c0ca33"),
-				lime700 = new clr("#afb42b"), lime800 = new clr("#9e9d24"), lime900 = new clr("#827717"),
-				limeextra1 = new clr("#f4ff81"), limeextra2 = new clr("#eeff41"), limeextra3 = new clr("#c6ff00"),
-				limeextra4 = new clr("#aeea00"), limegreen = new clr("#89fe05"), limeyellow = new clr("#d0fe1d"),
-				lipstick = new clr("#d5174e"), lipstickred = new clr("#c0022f"), magenta = new clr("#c20078"),
-				mahogany = new clr("#4a0100"), maize = new clr("#f4d054"), mango = new clr("#ffa62b"),
-				manilla = new clr("#fffa86"), marigold = new clr("#fcc006"), marine = new clr("#042e60"),
-				marineblue = new clr("#01386a"), maroon = new clr("#650021"), mediumblue = new clr("#2c6fbb"),
-				mediumbrown = new clr("#7f5112"), mediumgray = new clr("#7d7f7c"), mediumgreen = new clr("#39ad48"),
-				mediumpink = new clr("#f36196"), mediumpurple = new clr("#9e43a2"), melon = new clr("#ff7855"),
-				merlot = new clr("#730039"), metallicblue = new clr("#4f738e"), midblue = new clr("#276ab3"),
-				midgreen = new clr("#50a747"), midnight = new clr("#03012d"), midnightblue = new clr("#020035"),
-				midnightpurple = new clr("#280137"), militarygreen = new clr("#667c3e"),
-				milkchocolate = new clr("#7f4e1e"), mint = new clr("#9ffeb0"), mintgreen = new clr("#8fff9f"),
-				mintygreen = new clr("#0bf77d"), mushroom = new clr("#ba9e88"), mustard = new clr("#ceb301"),
-				mustardbrown = new clr("#ac7e04"), mustardgreen = new clr("#a8b504"),
-				mustardyellow = new clr("#d2bd0a"), mutedblue = new clr("#3b719f"), mutedgreen = new clr("#5fa052"),
-				mutedpink = new clr("#d1768f"), mutedpurple = new clr("#805b87"), nastygreen = new clr("#70b23f"),
-				navy = new clr("#01153e"), navyblue = new clr("#001146"), navygreen = new clr("#35530a"),
-				neonblue = new clr("#04d9ff"), neongreen = new clr("#0cff0c"), neonpink = new clr("#fe019a"),
-				neonpurple = new clr("#bc13fe"), neonred = new clr("#ff073a"), neonyellow = new clr("#cfff04"),
-				niceblue = new clr("#107ab0"), nightblue = new clr("#040348"), ocean = new clr("#017b92"),
-				oceanblue = new clr("#03719c"), oceangreen = new clr("#3d9973"), ocre = new clr("#c69c04"),
-				offblue = new clr("#5684ae"), offgreen = new clr("#6ba353"), offwhite = new clr("#ffffe4"),
-				offyellow = new clr("#f1f33f"), oldpink = new clr("#c77986"), oldrose = new clr("#c87f89"),
-				olive = new clr("#6e750e"), orange = new clr("#f97306"), orange100 = new clr("#ffe0b2"),
-				orange200 = new clr("#ffcc80"), orange300 = new clr("#ffb74d"), orange400 = new clr("#ffa726"),
-				orange50 = new clr("#fff3e0"), orange500 = new clr("#ff9800"), orange600 = new clr("#fb8c00"),
-				orange700 = new clr("#f57c00"), orange800 = new clr("#ef6c00"), orange900 = new clr("#e65100"),
-				orangebrown = new clr("#be6400"), orangeextra1 = new clr("#ffd180"), orangeextra2 = new clr("#ffab40"),
-				orangeextra3 = new clr("#ff9100"), orangeextra4 = new clr("#ff6d00"), orangepink = new clr("#ff6f52"),
-				orangered = new clr("#fe420f"), orangeyellow = new clr("#ffad01"), orangeish = new clr("#fd8d49"),
-				orangeybrown = new clr("#b16002"), orangeyred = new clr("#fa4224"), orangeyyellow = new clr("#fdb915"),
-				orangish = new clr("#fc824a"), orangishbrown = new clr("#b25f03"), orangishred = new clr("#f43605"),
-				orchid = new clr("#c875c4"), peach = new clr("#ffb07c"), peachypink = new clr("#ff9a8a"),
-				peacockblue = new clr("#016795"), pear = new clr("#cbf85f"), pink = new clr("#ff81c0"),
-				pink100 = new clr("#f8bbd0"), pink200 = new clr("#f48fb1"), pink300 = new clr("#f06292"),
-				pink400 = new clr("#ec407a"), pink50 = new clr("#fce4ec"), pink500 = new clr("#e91e63"),
-				pink600 = new clr("#d81b60"), pink700 = new clr("#c2185b"), pink800 = new clr("#ad1457"),
-				pink900 = new clr("#880e4f"), pinkextra1 = new clr("#ff80ab"), pinkextra2 = new clr("#ff4081"),
-				pinkextra3 = new clr("#f50057"), pinkextra4 = new clr("#c51162"), pinkpurple = new clr("#ef1de7"),
-				pinkred = new clr("#f5054f"), pinkish = new clr("#d46a7e"), pinkishbrown = new clr("#b17261"),
-				pinkishgray = new clr("#c8aca9"), pinkishorange = new clr("#ff724c"),
-				pinkishpurple = new clr("#d648d7"), pinkishred = new clr("#f10c45"), pinky = new clr("#fc86aa"),
-				pinkypurple = new clr("#c94cbe"), pinkyred = new clr("#fc2647"), pissyellow = new clr("#ddd618"),
-				pistachio = new clr("#c0fa8b"), plum = new clr("#580f41"), plumpurple = new clr("#4e0550"),
-				purple = new clr("#7e1e9c"), purple100 = new clr("#e1bee7"), purple200 = new clr("#ce93d8"),
-				purple300 = new clr("#ba68c8"), purple400 = new clr("#ab47bc"), purple50 = new clr("#f3e5f5"),
-				purple500 = new clr("#9c27b0"), purple600 = new clr("#8e24aa"), purple700 = new clr("#7b1fa2"),
-				purple800 = new clr("#6a1b9a"), purple900 = new clr("#4a148c"), purpleblue = new clr("#5d21d0"),
-				purplebrown = new clr("#673a3f"), purpleextra1 = new clr("#ea80fc"), purpleextra2 = new clr("#e040fb"),
-				purpleextra3 = new clr("#d500f9"), purpleextra4 = new clr("#aa00ff"), purplegray = new clr("#866f85"),
-				purplepink = new clr("#d725de"), purplered = new clr("#990147"), purpleish = new clr("#98568d"),
-				purpleishblue = new clr("#6140ef"), purpleishpink = new clr("#df4ec8"), purpley = new clr("#8756e4"),
-				purpleyblue = new clr("#5f34e7"), purpleygray = new clr("#947e94"), purpleypink = new clr("#c83cb9"),
-				purplish = new clr("#94568c"), purplishblue = new clr("#601ef9"), purplishbrown = new clr("#6b4247"),
-				purplishgray = new clr("#7a687f"), purplishpink = new clr("#ce5dae"), purplishred = new clr("#b0054b"),
-				purply = new clr("#983fb2"), purplyblue = new clr("#661aee"), purplypink = new clr("#f075e6"),
-				red = new clr("#e50000"), red100 = new clr("#ffcdd2"), red200 = new clr("#ef9a9a"),
-				red300 = new clr("#e57373"), red400 = new clr("#ef5350"), red50 = new clr("#ffebee"),
-				red500 = new clr("#f44336"), red600 = new clr("#e53935"), red700 = new clr("#d32f2f"),
-				red800 = new clr("#c62828"), red900 = new clr("#b71c1c"), redbrown = new clr("#8b2e16"),
-				redextra1 = new clr("#ff8a80"), redextra2 = new clr("#ff5252"), redextra3 = new clr("#ff1744"),
-				redextra4 = new clr("#d50000"), redorange = new clr("#fd3c06"), redpink = new clr("#fa2a55"),
-				redpurple = new clr("#820747"), redviolet = new clr("#9e0168"), redwine = new clr("#8c0034"),
-				reddish = new clr("#c44240"), reddishbrown = new clr("#7f2b0a"), reddishgray = new clr("#997570"),
-				reddishorange = new clr("#f8481c"), reddishpink = new clr("#fe2c54"),
-				reddishpurple = new clr("#910951"), rosa = new clr("#fe86a4"), rose = new clr("#cf6275"),
-				rosepink = new clr("#f7879a"), rosered = new clr("#be013c"), rosypink = new clr("#f6688e"),
-				rouge = new clr("#ab1239"), saffron = new clr("#feb209"), sand = new clr("#e2ca76"),
-				sandbrown = new clr("#cba560"), sandyellow = new clr("#fce166"), sea = new clr("#3c9992"),
-				seablue = new clr("#047495"), seagreen = new clr("#53fca1"), sepia = new clr("#985e2b"),
-				shockingpink = new clr("#fe02a2"), silver = new clr("#c5c9c7"), sky = new clr("#82cafc"),
-				skyblue = new clr("#75bbfd"), slate = new clr("#516572"), slateblue = new clr("#5b7c99"),
-				slategray = new clr("#59656d"), slategreen = new clr("#658d6d"), steel = new clr("#738595"),
-				steelblue = new clr("#5a7d9a"), steelgray = new clr("#6f828a"), stone = new clr("#ada587"),
-				stormyblue = new clr("#507b9c"), straw = new clr("#fcf679"), strawberry = new clr("#fb2943"),
-				sunflower = new clr("#ffc512"), sunfloweryellow = new clr("#ffda03"), tan = new clr("#d1b26f"),
-				tanbrown = new clr("#ab7e4c"), tangreen = new clr("#a9be70"), tangerine = new clr("#ff9408"),
-				taupe = new clr("#b9a281"), teal = new clr("#029386"), teal100 = new clr("#b2dfdb"),
-				teal200 = new clr("#80cbc4"), teal300 = new clr("#4db6ac"), teal400 = new clr("#26a69a"),
-				teal50 = new clr("#e0f2f1"), teal500 = new clr("#009688"), teal600 = new clr("#00897b"),
-				teal700 = new clr("#00796b"), teal800 = new clr("#00695c"), teal900 = new clr("#004d40"),
-				tealblue = new clr("#01889f"), tealextra1 = new clr("#a7ffeb"), tealextra2 = new clr("#64ffda"),
-				tealextra3 = new clr("#1de9b6"), tealextra4 = new clr("#00bfa5"), tealgreen = new clr("#25a36f"),
-				tealish = new clr("#24bca8"), tealishgreen = new clr("#0cdc73"), tomato = new clr("#ef4026"),
-				tomatored = new clr("#ec2d01"), turquoise = new clr("#06c2ac"), turquoiseblue = new clr("#06b1c4"),
-				turquoisegreen = new clr("#04f489"), umber = new clr("#b26400"), verydarkblue = new clr("#000133"),
-				verydarkbrown = new clr("#1d0200"), verydarkgreen = new clr("#062e03"),
-				verydarkpurple = new clr("#2a0134"), verylightblue = new clr("#d5ffff"),
-				verylightbrown = new clr("#d3b683"), verylightgreen = new clr("#d1ffbd"),
-				verylightpink = new clr("#fff4f2"), verylightpurple = new clr("#f6cefc"), violet = new clr("#9a0eea"),
-				violetblue = new clr("#510ac9"), violetpink = new clr("#fb5ffc"), violetred = new clr("#a50055"),
-				viridian = new clr("#1e9167"), vividblue = new clr("#152eff"), vividgreen = new clr("#2fef10"),
-				vividpurple = new clr("#9900fa"), wheat = new clr("#fbdd7e"), white = new clr("#ffffff"),
-				wine = new clr("#80013f"), winered = new clr("#7b0323"), yellow = new clr("#ffff14"),
-				yellow100 = new clr("#fff9c4"), yellow200 = new clr("#fff59d"), yellow300 = new clr("#fff176"),
-				yellow400 = new clr("#ffee58"), yellow50 = new clr("#fffde7"), yellow500 = new clr("#ffeb3b"),
-				yellow600 = new clr("#fdd835"), yellow700 = new clr("#fbc02d"), yellow800 = new clr("#f9a825"),
-				yellow900 = new clr("#f57f17"), yellowbrown = new clr("#b79400"), yellowextra1 = new clr("#ffff8d"),
-				yellowextra2 = new clr("#ffff00"), yellowextra3 = new clr("#ffea00"), yellowextra4 = new clr("#ffd600"),
-				yellowgreen = new clr("#bbf90f"), yellowochre = new clr("#cb9d06"), yelloworange = new clr("#fcb001"),
-				yellowtan = new clr("#ffe36e"), yellowish = new clr("#faee66"), yellowishbrown = new clr("#9b7a01"),
-				yellowishgreen = new clr("#b0dd16"), yellowishorange = new clr("#ffab0f"),
-				yellowishtan = new clr("#fcfc81"), yellowybrown = new clr("#ae8b0c"), yellowygreen = new clr("#bff128");
+		public static final clr apple = new clr("#6ecb3c"),
+				applegreen = new clr("#76cd26"), apricot = new clr("#ffb16d"),
+				aqua = new clr("#13eac9"), aquablue = new clr("#02d8e9"),
+				aquagreen = new clr("#12e193"), aquamarine = new clr("#04d8b2"),
+				armygreen = new clr("#4b5d16"), asparagus = new clr("#77ab56"),
+				aubergine = new clr("#3d0734"), auburn = new clr("#9a3001"),
+				avocado = new clr("#90b134"), avocadogreen = new clr("#87a922"),
+				azul = new clr("#1d5dec"), azure = new clr("#069af3"),
+				babyblue = new clr("#a2cffe"), babygreen = new clr("#8cff9e"),
+				babypink = new clr("#ffb7ce"), babypoo = new clr("#ab9004"),
+				babypurple = new clr("#ca9bf7"),
+				barbiepink = new clr("#fe46a5"), beige = new clr("#e6daa6"),
+				black = new clr("#000000"), blood = new clr("#770001"),
+				bloodorange = new clr("#fe4b03"), bloodred = new clr("#980002"),
+				blue = new clr("#0343df"), blue100 = new clr("#bbdefb"),
+				blue200 = new clr("#90caf9"), blue300 = new clr("#64b5f6"),
+				blue400 = new clr("#42a5f5"), blue50 = new clr("#e3f2fd"),
+				blue500 = new clr("#2196f3"), blue600 = new clr("#1e88e5"),
+				blue700 = new clr("#1976d2"), blue800 = new clr("#1565c0"),
+				blue900 = new clr("#0d47a1"), blueblue = new clr("#2242c7"),
+				blueextra1 = new clr("#82b1ff"),
+				blueextra2 = new clr("#448aff"),
+				blueextra3 = new clr("#2979ff"),
+				blueextra4 = new clr("#2962ff"), bluegray = new clr("#85a3b2"),
+				bluegreen = new clr("#017a79"), bluepurple = new clr("#5a06ef"),
+				blueviolet = new clr("#5d06e9"),
+				bluewithahintofpurple = new clr("#533cc6"),
+				blueberry = new clr("#464196"),
+				bluegray100 = new clr("#cfd8dc"),
+				bluegray200 = new clr("#b0bec5"),
+				bluegray300 = new clr("#90a4ae"),
+				bluegray400 = new clr("#78909c"),
+				bluegray50 = new clr("#eceff1"),
+				bluegray500 = new clr("#607d8b"),
+				bluegray600 = new clr("#546e7a"),
+				bluegray700 = new clr("#455a64"),
+				bluegray800 = new clr("#37474f"),
+				bluegray900 = new clr("#263238"),
+				blueygray = new clr("#89a0b0"), blueygreen = new clr("#2bb179"),
+				blueypurple = new clr("#6241c7"), bluish = new clr("#2976bb"),
+				bluishgray = new clr("#748b97"),
+				bluishgreen = new clr("#10a674"),
+				bluishpurple = new clr("#703be7"), blurple = new clr("#5539cc"),
+				blush = new clr("#f29e8e"), blushpink = new clr("#fe828c"),
+				brick = new clr("#a03623"), brickorange = new clr("#c14a09"),
+				brickred = new clr("#8f1402"), bronze = new clr("#a87900"),
+				brown = new clr("#653700"), brown100 = new clr("#d7ccc8"),
+				brown200 = new clr("#bcaaa4"), brown300 = new clr("#a1887f"),
+				brown400 = new clr("#8d6e63"), brown50 = new clr("#efebe9"),
+				brown500 = new clr("#795548"), brown600 = new clr("#6d4c41"),
+				brown700 = new clr("#5d4037"), brown800 = new clr("#4e342e"),
+				brown900 = new clr("#3e2723"), browngray = new clr("#8d8468"),
+				browngreen = new clr("#706c11"),
+				brownorange = new clr("#b96902"), brownred = new clr("#922b05"),
+				brownyellow = new clr("#b29705"), brownish = new clr("#9c6d57"),
+				brownishgray = new clr("#86775f"),
+				brownishgreen = new clr("#6a6e09"),
+				brownishorange = new clr("#cb7723"),
+				brownishpink = new clr("#c27e79"),
+				brownishpurple = new clr("#76424e"),
+				brownishred = new clr("#9e3623"),
+				brownishyellow = new clr("#c9b003"),
+				brownygreen = new clr("#6f6c0a"),
+				brownyorange = new clr("#ca6b02"), bruise = new clr("#7e4071"),
+				bubblegumpink = new clr("#fe83cc"),
+				bubblegum = new clr("#ff6cb5"), burgundy = new clr("#610023"),
+				butter = new clr("#ffff81"), cadetblue = new clr("#4e7496"),
+				camel = new clr("#c69f59"), candypink = new clr("#ff63e9"),
+				caramel = new clr("#af6f09"), cherry = new clr("#cf0234"),
+				cherryred = new clr("#f7022a"), chestnut = new clr("#742802"),
+				chocolate = new clr("#3d1c02"),
+				chocolatebrown = new clr("#411900"),
+				cinnamon = new clr("#ac4f06"), cocoa = new clr("#875f42"),
+				coffee = new clr("#a6814c"), copper = new clr("#b66325"),
+				coral = new clr("#fc5a50"), coralpink = new clr("#ff6163"),
+				cornflower = new clr("#6a79f7"),
+				cornflowerblue = new clr("#5170d7"),
+				cranberry = new clr("#9e003a"), cream = new clr("#ffffc2"),
+				custard = new clr("#fffd78"), cyan = new clr("#00ffff"),
+				cyan100 = new clr("#b2ebf2"), cyan200 = new clr("#80deea"),
+				cyan300 = new clr("#4dd0e1"), cyan400 = new clr("#26c6da"),
+				cyan50 = new clr("#e0f7fa"), cyan500 = new clr("#00bcd4"),
+				cyan600 = new clr("#00acc1"), cyan700 = new clr("#0097a7"),
+				cyan800 = new clr("#00838f"), cyan900 = new clr("#006064"),
+				cyanextra1 = new clr("#84ffff"),
+				cyanextra2 = new clr("#18ffff"),
+				cyanextra3 = new clr("#00e5ff"),
+				cyanextra4 = new clr("#00b8d4"), dandelion = new clr("#fedf08"),
+				dark = new clr("#1b2431"), darkaqua = new clr("#05696b"),
+				darkaquamarine = new clr("#017371"),
+				darkbeige = new clr("#ac9362"), darkblue = new clr("#030764"),
+				darkbluegray = new clr("#1f3b4d"),
+				darkbluegreen = new clr("#005249"),
+				darkbrown = new clr("#341c02"), darkcoral = new clr("#cf524e"),
+				darkcream = new clr("#fff39a"), darkcyan = new clr("#0a888a"),
+				darkforestgreen = new clr("#002d04"),
+				darkfuchsia = new clr("#9d0759"), darkgold = new clr("#b59410"),
+				darkgrassgreen = new clr("#388004"),
+				darkgray = new clr("#363737"),
+				darkgrayblue = new clr("#29465b"),
+				darkgreen = new clr("#054907"),
+				darkgreenblue = new clr("#1f6357"),
+				darkhotpink = new clr("#d90166"),
+				darkindigo = new clr("#1f0954"), darkkhaki = new clr("#9b8f55"),
+				darklavender = new clr("#856798"),
+				darklilac = new clr("#9c6da5"), darklime = new clr("#84b701"),
+				darklimegreen = new clr("#7ebd01"),
+				darkmagenta = new clr("#960056"),
+				darkmaroon = new clr("#3c0008"), darkmauve = new clr("#874c62"),
+				darkmint = new clr("#48c072"),
+				darkmintgreen = new clr("#20c073"),
+				darkmustard = new clr("#a88905"), darknavy = new clr("#000435"),
+				darknavyblue = new clr("#00022e"),
+				darkolive = new clr("#373e02"),
+				darkolivegreen = new clr("#3c4d03"),
+				darkorange = new clr("#c65102"),
+				darkpastelgreen = new clr("#56ae57"),
+				darkpeach = new clr("#de7e5d"),
+				darkperiwinkle = new clr("#665fd1"),
+				darkpink = new clr("#cb416b"), darkplum = new clr("#3f012c"),
+				darkpurple = new clr("#35063e"), darkred = new clr("#840000"),
+				darkrose = new clr("#b5485d"),
+				darkroyalblue = new clr("#02066f"),
+				darkseagreen = new clr("#11875d"),
+				darkskyblue = new clr("#448ee4"),
+				darkslateblue = new clr("#214761"),
+				darktan = new clr("#af884a"), darktaupe = new clr("#7f684e"),
+				darkteal = new clr("#014d4e"),
+				darkturquoise = new clr("#045c5a"),
+				darkviolet = new clr("#34013f"),
+				darkyellow = new clr("#d5b60a"),
+				darkyellowgreen = new clr("#728f02"),
+				darkerblue = new clr("#011288"),
+				darkergreen = new clr("#087804"),
+				darkerpink = new clr("#c4387f"),
+				darkerpurple = new clr("#5f1b6b"),
+				darkishblue = new clr("#014182"),
+				darkishgreen = new clr("#287c37"),
+				darkishpink = new clr("#da467d"),
+				darkishpurple = new clr("#751973"),
+				darkishred = new clr("#a90308"), deepaqua = new clr("#08787f"),
+				deepblue = new clr("#040273"), deepbrown = new clr("#410200"),
+				deepgreen = new clr("#02590f"),
+				deeplavender = new clr("#8d5eb7"),
+				deepmagenta = new clr("#a0025c"),
+				deeporange = new clr("#dc4d01"), deeppink = new clr("#cb0162"),
+				deeppurple = new clr("#36013f"), deepred = new clr("#9a0200"),
+				deeprose = new clr("#c74767"), deepseablue = new clr("#015482"),
+				deepskyblue = new clr("#0d75f8"), deepteal = new clr("#00555a"),
+				deepturquoise = new clr("#017374"),
+				deepviolet = new clr("#490648"),
+				deeporange100 = new clr("#ffccbc"),
+				deeporange200 = new clr("#ffab91"),
+				deeporange300 = new clr("#ff8a65"),
+				deeporange400 = new clr("#ff7043"),
+				deeporange50 = new clr("#fbe9e7"),
+				deeporange500 = new clr("#ff5722"),
+				deeporange600 = new clr("#f4511e"),
+				deeporange700 = new clr("#e64a19"),
+				deeporange800 = new clr("#d84315"),
+				deeporange900 = new clr("#bf360c"),
+				deeporangeextra1 = new clr("#ff9e80"),
+				deeporangeextra2 = new clr("#ff6e40"),
+				deeporangeextra3 = new clr("#ff3d00"),
+				deeporangeextra4 = new clr("#dd2c00"),
+				deeppurple100 = new clr("#d1c4e9"),
+				deeppurple200 = new clr("#b39ddb"),
+				deeppurple300 = new clr("#9575cd"),
+				deeppurple400 = new clr("#7e57c2"),
+				deeppurple50 = new clr("#ede7f6"),
+				deeppurple500 = new clr("#673ab7"),
+				deeppurple600 = new clr("#5e35b1"),
+				deeppurple700 = new clr("#512da8"),
+				deeppurple800 = new clr("#4527a0"),
+				deeppurple900 = new clr("#311b92"),
+				deeppurpleextra1 = new clr("#b388ff"),
+				deeppurpleextra2 = new clr("#7c4dff"),
+				deeppurpleextra3 = new clr("#651fff"),
+				deeppurpleextra4 = new clr("#6200ea"),
+				fuchsia = new clr("#ed0dd9"), gold = new clr("#dbb40c"),
+				golden = new clr("#f5bf03"), goldenbrown = new clr("#b27a01"),
+				goldenrod = new clr("#fac205"),
+				goldenyellow = new clr("#fec615"), grape = new clr("#6c3461"),
+				grapepurple = new clr("#5d1451"),
+				grapefruit = new clr("#fd5956"), grass = new clr("#5cac2d"),
+				grassgreen = new clr("#3f9b0b"), gray = new clr("#929591"),
+				gray100 = new clr("#f5f5f5"), gray200 = new clr("#eeeeee"),
+				gray300 = new clr("#e0e0e0"), gray400 = new clr("#bdbdbd"),
+				gray50 = new clr("#fafafa"), gray500 = new clr("#9e9e9e"),
+				gray600 = new clr("#757575"), gray700 = new clr("#616161"),
+				gray800 = new clr("#424242"), gray900 = new clr("#212121"),
+				grayblue = new clr("#77a1b5"), graybrown = new clr("#7f7053"),
+				graygreen = new clr("#86a17d"), graypink = new clr("#c3909b"),
+				graypurple = new clr("#826d8c"), grayteal = new clr("#5e9b8a"),
+				grayish = new clr("#a8a495"), grayishblue = new clr("#5e819d"),
+				grayishbrown = new clr("#7a6a4f"),
+				grayishgreen = new clr("#82a67d"),
+				grayishpink = new clr("#c88d94"),
+				grayishpurple = new clr("#887191"),
+				grayishteal = new clr("#719f91"), green = new clr("#15b01a"),
+				green100 = new clr("#c8e6c9"), green200 = new clr("#a5d6a7"),
+				green300 = new clr("#81c784"), green400 = new clr("#66bb6a"),
+				green50 = new clr("#e8f5e9"), green500 = new clr("#4caf50"),
+				green600 = new clr("#43a047"), green700 = new clr("#388e3c"),
+				green800 = new clr("#2e7d32"), green900 = new clr("#1b5e20"),
+				greenagain = new clr("#16d43f"),
+				greenapple = new clr("#5edc1f"), greenblue = new clr("#23c48b"),
+				greenbrown = new clr("#544e03"),
+				greenextra1 = new clr("#b9f6ca"),
+				greenextra2 = new clr("#69f0ae"),
+				greenextra3 = new clr("#00e676"),
+				greenextra4 = new clr("#00c853"),
+				greengray = new clr("#77926f"), greenteal = new clr("#0cb577"),
+				greenyellow = new clr("#b5ce08"), greenish = new clr("#40a368"),
+				greenishbeige = new clr("#c9d179"),
+				greenishblue = new clr("#0b8b87"),
+				greenishbrown = new clr("#696112"),
+				greenishcyan = new clr("#2afeb7"),
+				greenishgray = new clr("#96ae8d"),
+				greenishtan = new clr("#bccb7a"),
+				greenishteal = new clr("#32bf84"),
+				greenishturquoise = new clr("#00fbb0"),
+				greenishyellow = new clr("#cdfd02"),
+				greenyblue = new clr("#42b395"),
+				greenybrown = new clr("#696006"),
+				greenygray = new clr("#7ea07a"),
+				greenyyellow = new clr("#c6f808"),
+				hotgreen = new clr("#25ff29"), hotmagenta = new clr("#f504c9"),
+				hotpink = new clr("#ff028d"), hotpurple = new clr("#cb00f5"),
+				ice = new clr("#d6fffa"), iceblue = new clr("#d7fffe"),
+				ickygreen = new clr("#8fae22"), indianred = new clr("#850e04"),
+				indigo = new clr("#380282"), indigo100 = new clr("#c5cae9"),
+				indigo200 = new clr("#9fa8da"), indigo300 = new clr("#7986cb"),
+				indigo400 = new clr("#5c6bc0"), indigo50 = new clr("#e8eaf6"),
+				indigo500 = new clr("#3f51b5"), indigo600 = new clr("#3949ab"),
+				indigo700 = new clr("#303f9f"), indigo800 = new clr("#283593"),
+				indigo900 = new clr("#1a237e"), indigoblue = new clr("#3a18b1"),
+				indigoextra1 = new clr("#8c9eff"),
+				indigoextra2 = new clr("#536dfe"),
+				indigoextra3 = new clr("#3d5afe"),
+				indigoextra4 = new clr("#304ffe"), iris = new clr("#6258c4"),
+				irishgreen = new clr("#019529"),
+				junglegreen = new clr("#048243"), khaki = new clr("#aaa662"),
+				khakigreen = new clr("#728639"), kiwi = new clr("#9cef43"),
+				kiwigreen = new clr("#8ee53f"), lavender = new clr("#c79fef"),
+				lavenderblue = new clr("#8b88f8"),
+				lavenderpink = new clr("#dd85d7"),
+				lawngreen = new clr("#4da409"), leaf = new clr("#71aa34"),
+				leafgreen = new clr("#5ca904"), leafygreen = new clr("#51b73b"),
+				leather = new clr("#ac7434"), lemon = new clr("#fdff52"),
+				lemongreen = new clr("#adf802"), lemonlime = new clr("#bffe28"),
+				lemonyellow = new clr("#fdff38"), lichen = new clr("#8fb67b"),
+				lightaqua = new clr("#8cffdb"),
+				lightaquamarine = new clr("#7bfdc7"),
+				lightbeige = new clr("#fffeb6"), lightblue = new clr("#7bc8f6"),
+				lightbluegray = new clr("#b7c9e2"),
+				lightbluegreen = new clr("#7efbb3"),
+				lightbluishgreen = new clr("#76fda8"),
+				lightbrightgreen = new clr("#53fe5c"),
+				lightbrown = new clr("#ad8150"),
+				lightburgundy = new clr("#a8415b"),
+				lightcyan = new clr("#acfffc"),
+				lighteggplant = new clr("#894585"),
+				lightforestgreen = new clr("#4f9153"),
+				lightgold = new clr("#fddc5c"),
+				lightgrassgreen = new clr("#9af764"),
+				lightgray = new clr("#d8dcd6"),
+				lightgrayblue = new clr("#9dbcd4"),
+				lightgraygreen = new clr("#b7e1a1"),
+				lightgreen = new clr("#76ff7b"),
+				lightgreenblue = new clr("#56fca2"),
+				lightgreenishblue = new clr("#63f7b4"),
+				lightindigo = new clr("#6d5acf"),
+				lightkhaki = new clr("#e6f2a2"),
+				lightlavendar = new clr("#efc0fe"),
+				lightlavender = new clr("#dfc5fe"),
+				lightlightblue = new clr("#cafffb"),
+				lightlightgreen = new clr("#c8ffb0"),
+				lightlime = new clr("#aefd6c"),
+				lightlimegreen = new clr("#b9ff66"),
+				lightmagenta = new clr("#fa5ff7"),
+				lightmaroon = new clr("#a24857"),
+				lightmauve = new clr("#c292a1"), lightmint = new clr("#b6ffbb"),
+				lightmintgreen = new clr("#a6fbb2"),
+				lightmustard = new clr("#f7d560"),
+				lightnavy = new clr("#155084"),
+				lightnavyblue = new clr("#2e5a88"),
+				lightneongreen = new clr("#4efd54"),
+				lightolive = new clr("#acbf69"),
+				lightolivegreen = new clr("#a4be5c"),
+				lightorange = new clr("#fdaa48"),
+				lightpastelgreen = new clr("#b2fba5"),
+				lightpeagreen = new clr("#c4fe82"),
+				lightpeach = new clr("#ffd8b1"),
+				lightperiwinkle = new clr("#c1c6fc"),
+				lightpink = new clr("#ffd1df"), lightplum = new clr("#9d5783"),
+				lightpurple = new clr("#bf77f6"), lightred = new clr("#ff474c"),
+				lightrose = new clr("#ffc5cb"),
+				lightroyalblue = new clr("#3a2efe"),
+				lightsage = new clr("#bcecac"),
+				lightsalmon = new clr("#fea993"),
+				lightseagreen = new clr("#98f6b0"),
+				lightseafoam = new clr("#a0febf"),
+				lightseafoamgreen = new clr("#a7ffb5"),
+				lightskyblue = new clr("#c6fcff"),
+				lighttan = new clr("#fbeeac"), lightteal = new clr("#90e4c1"),
+				lightturquoise = new clr("#7ef4cc"),
+				lighturple = new clr("#b36ff6"),
+				lightviolet = new clr("#d6b4fc"),
+				lightyellow = new clr("#fffe7a"),
+				lightyellowgreen = new clr("#ccfd7f"),
+				lightyellowishgreen = new clr("#c2ff89"),
+				lightblue100 = new clr("#b3e5fc"),
+				lightblue200 = new clr("#81d4fa"),
+				lightblue300 = new clr("#4fc3f7"),
+				lightblue400 = new clr("#29b6f6"),
+				lightblue50 = new clr("#e1f5fe"),
+				lightblue500 = new clr("#03a9f4"),
+				lightblue600 = new clr("#039be5"),
+				lightblue700 = new clr("#0288d1"),
+				lightblue800 = new clr("#0277bd"),
+				lightblue900 = new clr("#01579b"),
+				lightblueextra1 = new clr("#80d8ff"),
+				lightblueextra2 = new clr("#40c4ff"),
+				lightblueextra3 = new clr("#00b0ff"),
+				lightblueextra4 = new clr("#0091ea"),
+				lightergreen = new clr("#75fd63"),
+				lighterpurple = new clr("#a55af4"),
+				lightgreen100 = new clr("#dcedc8"),
+				lightgreen200 = new clr("#c5e1a5"),
+				lightgreen300 = new clr("#aed581"),
+				lightgreen400 = new clr("#9ccc65"),
+				lightgreen50 = new clr("#f1f8e9"),
+				lightgreen500 = new clr("#8bc34a"),
+				lightgreen600 = new clr("#7cb342"),
+				lightgreen700 = new clr("#689f38"),
+				lightgreen800 = new clr("#558b2f"),
+				lightgreen900 = new clr("#33691e"),
+				lightgreenextra1 = new clr("#ccff90"),
+				lightgreenextra2 = new clr("#b2ff59"),
+				lightgreenextra3 = new clr("#76ff03"),
+				lightgreenextra4 = new clr("#64dd17"),
+				lightishblue = new clr("#3d7afd"),
+				lightishgreen = new clr("#61e160"),
+				lightishpurple = new clr("#a552e6"),
+				lightishred = new clr("#fe2f4a"), lime = new clr("#aaff32"),
+				lime100 = new clr("#f0f4c3"), lime200 = new clr("#e6ee9c"),
+				lime300 = new clr("#dce775"), lime400 = new clr("#d4e157"),
+				lime50 = new clr("#f9fbe7"), lime500 = new clr("#cddc39"),
+				lime600 = new clr("#c0ca33"), lime700 = new clr("#afb42b"),
+				lime800 = new clr("#9e9d24"), lime900 = new clr("#827717"),
+				limeextra1 = new clr("#f4ff81"),
+				limeextra2 = new clr("#eeff41"),
+				limeextra3 = new clr("#c6ff00"),
+				limeextra4 = new clr("#aeea00"), limegreen = new clr("#89fe05"),
+				limeyellow = new clr("#d0fe1d"), lipstick = new clr("#d5174e"),
+				lipstickred = new clr("#c0022f"), magenta = new clr("#c20078"),
+				mahogany = new clr("#4a0100"), maize = new clr("#f4d054"),
+				mango = new clr("#ffa62b"), manilla = new clr("#fffa86"),
+				marigold = new clr("#fcc006"), marine = new clr("#042e60"),
+				marineblue = new clr("#01386a"), maroon = new clr("#650021"),
+				mediumblue = new clr("#2c6fbb"),
+				mediumbrown = new clr("#7f5112"),
+				mediumgray = new clr("#7d7f7c"),
+				mediumgreen = new clr("#39ad48"),
+				mediumpink = new clr("#f36196"),
+				mediumpurple = new clr("#9e43a2"), melon = new clr("#ff7855"),
+				merlot = new clr("#730039"), metallicblue = new clr("#4f738e"),
+				midblue = new clr("#276ab3"), midgreen = new clr("#50a747"),
+				midnight = new clr("#03012d"),
+				midnightblue = new clr("#020035"),
+				midnightpurple = new clr("#280137"),
+				militarygreen = new clr("#667c3e"),
+				milkchocolate = new clr("#7f4e1e"), mint = new clr("#9ffeb0"),
+				mintgreen = new clr("#8fff9f"), mintygreen = new clr("#0bf77d"),
+				mushroom = new clr("#ba9e88"), mustard = new clr("#ceb301"),
+				mustardbrown = new clr("#ac7e04"),
+				mustardgreen = new clr("#a8b504"),
+				mustardyellow = new clr("#d2bd0a"),
+				mutedblue = new clr("#3b719f"), mutedgreen = new clr("#5fa052"),
+				mutedpink = new clr("#d1768f"),
+				mutedpurple = new clr("#805b87"),
+				nastygreen = new clr("#70b23f"), navy = new clr("#01153e"),
+				navyblue = new clr("#001146"), navygreen = new clr("#35530a"),
+				neonblue = new clr("#04d9ff"), neongreen = new clr("#0cff0c"),
+				neonpink = new clr("#fe019a"), neonpurple = new clr("#bc13fe"),
+				neonred = new clr("#ff073a"), neonyellow = new clr("#cfff04"),
+				niceblue = new clr("#107ab0"), nightblue = new clr("#040348"),
+				ocean = new clr("#017b92"), oceanblue = new clr("#03719c"),
+				oceangreen = new clr("#3d9973"), ocre = new clr("#c69c04"),
+				offblue = new clr("#5684ae"), offgreen = new clr("#6ba353"),
+				offwhite = new clr("#ffffe4"), offyellow = new clr("#f1f33f"),
+				oldpink = new clr("#c77986"), oldrose = new clr("#c87f89"),
+				olive = new clr("#6e750e"), orange = new clr("#f97306"),
+				orange100 = new clr("#ffe0b2"), orange200 = new clr("#ffcc80"),
+				orange300 = new clr("#ffb74d"), orange400 = new clr("#ffa726"),
+				orange50 = new clr("#fff3e0"), orange500 = new clr("#ff9800"),
+				orange600 = new clr("#fb8c00"), orange700 = new clr("#f57c00"),
+				orange800 = new clr("#ef6c00"), orange900 = new clr("#e65100"),
+				orangebrown = new clr("#be6400"),
+				orangeextra1 = new clr("#ffd180"),
+				orangeextra2 = new clr("#ffab40"),
+				orangeextra3 = new clr("#ff9100"),
+				orangeextra4 = new clr("#ff6d00"),
+				orangepink = new clr("#ff6f52"), orangered = new clr("#fe420f"),
+				orangeyellow = new clr("#ffad01"),
+				orangeish = new clr("#fd8d49"),
+				orangeybrown = new clr("#b16002"),
+				orangeyred = new clr("#fa4224"),
+				orangeyyellow = new clr("#fdb915"),
+				orangish = new clr("#fc824a"),
+				orangishbrown = new clr("#b25f03"),
+				orangishred = new clr("#f43605"), orchid = new clr("#c875c4"),
+				peach = new clr("#ffb07c"), peachypink = new clr("#ff9a8a"),
+				peacockblue = new clr("#016795"), pear = new clr("#cbf85f"),
+				pink = new clr("#ff81c0"), pink100 = new clr("#f8bbd0"),
+				pink200 = new clr("#f48fb1"), pink300 = new clr("#f06292"),
+				pink400 = new clr("#ec407a"), pink50 = new clr("#fce4ec"),
+				pink500 = new clr("#e91e63"), pink600 = new clr("#d81b60"),
+				pink700 = new clr("#c2185b"), pink800 = new clr("#ad1457"),
+				pink900 = new clr("#880e4f"), pinkextra1 = new clr("#ff80ab"),
+				pinkextra2 = new clr("#ff4081"),
+				pinkextra3 = new clr("#f50057"),
+				pinkextra4 = new clr("#c51162"),
+				pinkpurple = new clr("#ef1de7"), pinkred = new clr("#f5054f"),
+				pinkish = new clr("#d46a7e"), pinkishbrown = new clr("#b17261"),
+				pinkishgray = new clr("#c8aca9"),
+				pinkishorange = new clr("#ff724c"),
+				pinkishpurple = new clr("#d648d7"),
+				pinkishred = new clr("#f10c45"), pinky = new clr("#fc86aa"),
+				pinkypurple = new clr("#c94cbe"), pinkyred = new clr("#fc2647"),
+				pissyellow = new clr("#ddd618"), pistachio = new clr("#c0fa8b"),
+				plum = new clr("#580f41"), plumpurple = new clr("#4e0550"),
+				purple = new clr("#7e1e9c"), purple100 = new clr("#e1bee7"),
+				purple200 = new clr("#ce93d8"), purple300 = new clr("#ba68c8"),
+				purple400 = new clr("#ab47bc"), purple50 = new clr("#f3e5f5"),
+				purple500 = new clr("#9c27b0"), purple600 = new clr("#8e24aa"),
+				purple700 = new clr("#7b1fa2"), purple800 = new clr("#6a1b9a"),
+				purple900 = new clr("#4a148c"), purpleblue = new clr("#5d21d0"),
+				purplebrown = new clr("#673a3f"),
+				purpleextra1 = new clr("#ea80fc"),
+				purpleextra2 = new clr("#e040fb"),
+				purpleextra3 = new clr("#d500f9"),
+				purpleextra4 = new clr("#aa00ff"),
+				purplegray = new clr("#866f85"),
+				purplepink = new clr("#d725de"), purplered = new clr("#990147"),
+				purpleish = new clr("#98568d"),
+				purpleishblue = new clr("#6140ef"),
+				purpleishpink = new clr("#df4ec8"),
+				purpley = new clr("#8756e4"), purpleyblue = new clr("#5f34e7"),
+				purpleygray = new clr("#947e94"),
+				purpleypink = new clr("#c83cb9"), purplish = new clr("#94568c"),
+				purplishblue = new clr("#601ef9"),
+				purplishbrown = new clr("#6b4247"),
+				purplishgray = new clr("#7a687f"),
+				purplishpink = new clr("#ce5dae"),
+				purplishred = new clr("#b0054b"), purply = new clr("#983fb2"),
+				purplyblue = new clr("#661aee"),
+				purplypink = new clr("#f075e6"), red = new clr("#e50000"),
+				red100 = new clr("#ffcdd2"), red200 = new clr("#ef9a9a"),
+				red300 = new clr("#e57373"), red400 = new clr("#ef5350"),
+				red50 = new clr("#ffebee"), red500 = new clr("#f44336"),
+				red600 = new clr("#e53935"), red700 = new clr("#d32f2f"),
+				red800 = new clr("#c62828"), red900 = new clr("#b71c1c"),
+				redbrown = new clr("#8b2e16"), redextra1 = new clr("#ff8a80"),
+				redextra2 = new clr("#ff5252"), redextra3 = new clr("#ff1744"),
+				redextra4 = new clr("#d50000"), redorange = new clr("#fd3c06"),
+				redpink = new clr("#fa2a55"), redpurple = new clr("#820747"),
+				redviolet = new clr("#9e0168"), redwine = new clr("#8c0034"),
+				reddish = new clr("#c44240"), reddishbrown = new clr("#7f2b0a"),
+				reddishgray = new clr("#997570"),
+				reddishorange = new clr("#f8481c"),
+				reddishpink = new clr("#fe2c54"),
+				reddishpurple = new clr("#910951"), rosa = new clr("#fe86a4"),
+				rose = new clr("#cf6275"), rosepink = new clr("#f7879a"),
+				rosered = new clr("#be013c"), rosypink = new clr("#f6688e"),
+				rouge = new clr("#ab1239"), saffron = new clr("#feb209"),
+				sand = new clr("#e2ca76"), sandbrown = new clr("#cba560"),
+				sandyellow = new clr("#fce166"), sea = new clr("#3c9992"),
+				seablue = new clr("#047495"), seagreen = new clr("#53fca1"),
+				sepia = new clr("#985e2b"), shockingpink = new clr("#fe02a2"),
+				silver = new clr("#c5c9c7"), sky = new clr("#82cafc"),
+				skyblue = new clr("#75bbfd"), slate = new clr("#516572"),
+				slateblue = new clr("#5b7c99"), slategray = new clr("#59656d"),
+				slategreen = new clr("#658d6d"), steel = new clr("#738595"),
+				steelblue = new clr("#5a7d9a"), steelgray = new clr("#6f828a"),
+				stone = new clr("#ada587"), stormyblue = new clr("#507b9c"),
+				straw = new clr("#fcf679"), strawberry = new clr("#fb2943"),
+				sunflower = new clr("#ffc512"),
+				sunfloweryellow = new clr("#ffda03"), tan = new clr("#d1b26f"),
+				tanbrown = new clr("#ab7e4c"), tangreen = new clr("#a9be70"),
+				tangerine = new clr("#ff9408"), taupe = new clr("#b9a281"),
+				teal = new clr("#029386"), teal100 = new clr("#b2dfdb"),
+				teal200 = new clr("#80cbc4"), teal300 = new clr("#4db6ac"),
+				teal400 = new clr("#26a69a"), teal50 = new clr("#e0f2f1"),
+				teal500 = new clr("#009688"), teal600 = new clr("#00897b"),
+				teal700 = new clr("#00796b"), teal800 = new clr("#00695c"),
+				teal900 = new clr("#004d40"), tealblue = new clr("#01889f"),
+				tealextra1 = new clr("#a7ffeb"),
+				tealextra2 = new clr("#64ffda"),
+				tealextra3 = new clr("#1de9b6"),
+				tealextra4 = new clr("#00bfa5"), tealgreen = new clr("#25a36f"),
+				tealish = new clr("#24bca8"), tealishgreen = new clr("#0cdc73"),
+				tomato = new clr("#ef4026"), tomatored = new clr("#ec2d01"),
+				turquoise = new clr("#06c2ac"),
+				turquoiseblue = new clr("#06b1c4"),
+				turquoisegreen = new clr("#04f489"), umber = new clr("#b26400"),
+				verydarkblue = new clr("#000133"),
+				verydarkbrown = new clr("#1d0200"),
+				verydarkgreen = new clr("#062e03"),
+				verydarkpurple = new clr("#2a0134"),
+				verylightblue = new clr("#d5ffff"),
+				verylightbrown = new clr("#d3b683"),
+				verylightgreen = new clr("#d1ffbd"),
+				verylightpink = new clr("#fff4f2"),
+				verylightpurple = new clr("#f6cefc"),
+				violet = new clr("#9a0eea"), violetblue = new clr("#510ac9"),
+				violetpink = new clr("#fb5ffc"), violetred = new clr("#a50055"),
+				viridian = new clr("#1e9167"), vividblue = new clr("#152eff"),
+				vividgreen = new clr("#2fef10"),
+				vividpurple = new clr("#9900fa"), wheat = new clr("#fbdd7e"),
+				white = new clr("#ffffff"), wine = new clr("#80013f"),
+				winered = new clr("#7b0323"), yellow = new clr("#ffff14"),
+				yellow100 = new clr("#fff9c4"), yellow200 = new clr("#fff59d"),
+				yellow300 = new clr("#fff176"), yellow400 = new clr("#ffee58"),
+				yellow50 = new clr("#fffde7"), yellow500 = new clr("#ffeb3b"),
+				yellow600 = new clr("#fdd835"), yellow700 = new clr("#fbc02d"),
+				yellow800 = new clr("#f9a825"), yellow900 = new clr("#f57f17"),
+				yellowbrown = new clr("#b79400"),
+				yellowextra1 = new clr("#ffff8d"),
+				yellowextra2 = new clr("#ffff00"),
+				yellowextra3 = new clr("#ffea00"),
+				yellowextra4 = new clr("#ffd600"),
+				yellowgreen = new clr("#bbf90f"),
+				yellowochre = new clr("#cb9d06"),
+				yelloworange = new clr("#fcb001"),
+				yellowtan = new clr("#ffe36e"), yellowish = new clr("#faee66"),
+				yellowishbrown = new clr("#9b7a01"),
+				yellowishgreen = new clr("#b0dd16"),
+				yellowishorange = new clr("#ffab0f"),
+				yellowishtan = new clr("#fcfc81"),
+				yellowybrown = new clr("#ae8b0c"),
+				yellowygreen = new clr("#bff128");
 	}
 
 	public static final class font extends Font {
@@ -9072,8 +9539,9 @@ public class KL {
 		}
 
 		font(String fontFamily, int fontSize, boolean bold, boolean italic) {
-			super(fontFamily,
-					bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+			super(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
 					fontSize);
 		}
 
@@ -9082,8 +9550,13 @@ public class KL {
 		}
 
 		font(String fontFamily, int fontSize, int bold, int italic) {
-			super(fontFamily, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-					: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN, fontSize);
+			super(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize);
 		}
 	}
 
@@ -9134,7 +9607,8 @@ public class KL {
 				return false;
 			}
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String subFileName : fname
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					create(subFileName, content);
 				}
 				return true;
@@ -9149,11 +9623,13 @@ public class KL {
 				File myFile = new File(fname);
 				FileWriter fr = new FileWriter(fname);
 				fr.write(content);
-				print("[KL.file.JobSuccess]:\nFile \"" + myFile.getName() + "\" created successfully.");
+				print("[KL.file.JobSuccess]:\nFile \"" + myFile.getName()
+						+ "\" created successfully.");
 				fr.close();
 				return true;
 			} catch (IOException e) {
-				print("[KL.file.JobFailed]: Something went wrong. File creation " + "failed.");
+				print("[KL.file.JobFailed]: Something went wrong. File creation "
+						+ "failed.");
 			}
 			return false;
 		}
@@ -9171,7 +9647,8 @@ public class KL {
 				return false;
 			}
 			if (in(folderName, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String folder : folderName.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String folder : folderName
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					createFolder(folder);
 				}
 				return true;
@@ -9235,7 +9712,8 @@ public class KL {
 				return false;
 			}
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String subFileName : fname
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					append(subFileName, content);
 				}
 				return true;
@@ -9254,10 +9732,12 @@ public class KL {
 			try (FileWriter writer = new FileWriter(fname, true)) {
 				writer.write(content);
 				writer.flush();
-				print("[KL.file.JobSuccess]:\nAppending to file \"%s\" was successful.", fname);
+				print("[KL.file.JobSuccess]:\nAppending to file \"%s\" was successful.",
+						fname);
 				return true;
 			} catch (Exception e) {
-				print("[KL.file.JobFailed]:\nFailed to append to file \"%s\"", fname);
+				print("[KL.file.JobFailed]:\nFailed to append to file \"%s\"",
+						fname);
 			}
 			return false;
 			// this method is different than createFile, and unlike the former,
@@ -9283,7 +9763,8 @@ public class KL {
 				return false;
 			}
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String subFileName : fname
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					delete(subFileName);
 					// refers to the delete method that belongs to this class,
 					// not the delete that belonged to the original File class
@@ -9297,9 +9778,11 @@ public class KL {
 				// either a false negative, or a false positive.
 			}
 			File myFile = new File(fname);
-			String msgOnSuccess = "[KL.file.JobSuccess]:\nFile \"" + myFile.getPath() + "\" deleted successfully.",
-					msgOnFailure = new KL()
-							.f("[KL.file.JobFailed]:\nFile \"%s\" failed to delete. No such file, or folder!", fname);
+			String msgOnSuccess = "[KL.file.JobSuccess]:\nFile \""
+					+ myFile.getPath() + "\" deleted successfully.",
+					msgOnFailure = new KL().f(
+							"[KL.file.JobFailed]:\nFile \"%s\" failed to delete. No such file, or folder!",
+							fname);
 			if (myFile == null || !myFile.exists()) {
 				print(msgOnFailure);
 				return false;
@@ -9336,8 +9819,10 @@ public class KL {
 			if (not(fname) || not(destinationString)) {
 				return false;
 			}
-			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)") && in(destinationString, "[\\\\\\/]")) {
-				for (String subFileName : fname.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")
+					&& in(destinationString, "[\\\\\\/]")) {
+				for (String subFileName : fname
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					rename(subFileName, destinationString);
 					// makes no sense in the form of a file-renaming function
 					// anymore, but in the case of a file mover (that's quite
@@ -9361,11 +9846,13 @@ public class KL {
 				}
 				File destinationFile = new File(destinationString);
 				if (myFile.renameTo(destinationFile)) {
-					print("\n[KL.file.JobSuccess]:\nFile " + myFile.getName() + " was successfully moved/renamed to "
+					print("\n[KL.file.JobSuccess]:\nFile " + myFile.getName()
+							+ " was successfully moved/renamed to "
 							+ destinationFile.getPath());
 					return true;
 				}
-				print("[KL.file.JobFailed]:\nYou do not have enough permissions " + "to move/rename this file.");
+				print("[KL.file.JobFailed]:\nYou do not have enough permissions "
+						+ "to move/rename this file.");
 			} catch (FileNotFoundException e) {
 				print("[KL.file.JobFailed]:\nNothing to rename.");
 			}
@@ -9382,7 +9869,8 @@ public class KL {
 			}
 			// order matters, this check always comes first
 			if (in(from, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
-				for (String subFileName : from.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
+				for (String subFileName : from
+						.split("\\s*[\\|\\+\\&\\,\\;]\\s*")) {
 					copy(subFileName, to, overwrite);
 				}
 				return true;
@@ -9403,7 +9891,8 @@ public class KL {
 				if (!overwrite) {
 					Files.copy(fileToCopy.toPath(), destination.toPath());
 				} else {
-					Files.copy(fileToCopy.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+					Files.copy(fileToCopy.toPath(), destination.toPath(),
+							StandardCopyOption.REPLACE_EXISTING);
 				}
 				return true;
 			} catch (IOException e) {
@@ -9420,15 +9909,19 @@ public class KL {
 	// some global font variables for the ease of access, only handy if you
 	// extend
 	// the library class with your own
-	public static int Bold, Italic, BoldItalic, Plain, BOLD, ITALIC, BOLDITALIC, PLAIN, bold = Bold = BOLD = Font.BOLD,
-			plain = Plain = PLAIN = Font.PLAIN, italic = Italic = ITALIC = Font.ITALIC,
+	public static int Bold, Italic, BoldItalic, Plain, BOLD, ITALIC, BOLDITALIC,
+			PLAIN, bold = Bold = BOLD = Font.BOLD,
+			plain = Plain = PLAIN = Font.PLAIN,
+			italic = Italic = ITALIC = Font.ITALIC,
 			bolditalic = BoldItalic = BOLDITALIC = Bold | Italic;
 	// making some colors globally accessible, for ease
 	// standard
-	public static clr red = new clr(clr.red), green = new clr(clr.green), blue = new clr(clr.blue),
-			pink = new clr(clr.pink), magenta = new clr(clr.magenta), orange = new clr(clr.orange),
-			lightgray = new clr(clr.lightGray), gray = new clr(clr.gray), darkgray = new clr(clr.darkGray),
-			cyan = new clr(clr.cyan), yellow = new clr(clr.yellow), white = new clr(clr.white),
+	public static clr red = new clr(clr.red), green = new clr(clr.green),
+			blue = new clr(clr.blue), pink = new clr(clr.pink),
+			magenta = new clr(clr.magenta), orange = new clr(clr.orange),
+			lightgray = new clr(clr.lightGray), gray = new clr(clr.gray),
+			darkgray = new clr(clr.darkGray), cyan = new clr(clr.cyan),
+			yellow = new clr(clr.yellow), white = new clr(clr.white),
 			black = new clr(clr.black);
 
 	public static class colors extends clr {
@@ -9512,7 +10005,8 @@ public class KL {
 		return new gridLay(rows, columns);
 	}
 
-	public static gridLay nayaGridLay(int rows, int columns, int hgap, int vgap) {
+	public static gridLay nayaGridLay(int rows, int columns, int hgap,
+			int vgap) {
 		return new gridLay(rows, columns, hgap, vgap);
 	}
 
@@ -9588,7 +10082,8 @@ public class KL {
 		return new lineBorder(color, thickness);
 	}
 
-	public static lineBorder lineBorder(Color color, int thickness, boolean roundedCorners) {
+	public static lineBorder lineBorder(Color color, int thickness,
+			boolean roundedCorners) {
 		return new lineBorder(color, thickness, roundedCorners);
 	}
 
@@ -9600,7 +10095,8 @@ public class KL {
 		return new lineBorder(color, thickness);
 	}
 
-	public static lineBorder nayaLineBorder(Color color, int thickness, boolean roundedCorners) {
+	public static lineBorder nayaLineBorder(Color color, int thickness,
+			boolean roundedCorners) {
 		return new lineBorder(color, thickness, roundedCorners);
 	}
 
@@ -9616,7 +10112,8 @@ public class KL {
 		return new etchedBorder(highlight, shadow);
 	}
 
-	public static etchedBorder etchedBorder(int etchType, Color highlight, Color shadow) {
+	public static etchedBorder etchedBorder(int etchType, Color highlight,
+			Color shadow) {
 		return new etchedBorder(etchType, highlight, shadow);
 	}
 
@@ -9628,18 +10125,26 @@ public class KL {
 		return new font(fontFamily, fontSize, fontWidth);
 	}
 
-	public static font font(String fontFamily, int fontSize, boolean bold, boolean italic) {
+	public static font font(String fontFamily, int fontSize, boolean bold,
+			boolean italic) {
 		return new font(fontFamily, fontSize,
-				bold && italic ? Font.BOLD | Font.ITALIC : bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN);
+				bold && italic
+						? Font.BOLD | Font.ITALIC
+						: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN);
 	}
 
 	public static font font(String fontFamily, int fontSize, boolean bold) {
 		return new font(fontFamily, fontSize, bold, false);
 	}
 
-	public static font font(String fontFamily, int fontSize, int bold, int italic) {
-		return new font(fontFamily, fontSize, bold == 1 && italic == 1 ? Font.BOLD | Font.ITALIC
-				: bold == 1 ? Font.BOLD : italic == 1 ? Font.ITALIC : Font.PLAIN);
+	public static font font(String fontFamily, int fontSize, int bold,
+			int italic) {
+		return new font(fontFamily, fontSize,
+				bold == 1 && italic == 1
+						? Font.BOLD | Font.ITALIC
+						: bold == 1
+								? Font.BOLD
+								: italic == 1 ? Font.ITALIC : Font.PLAIN);
 	}
 
 	public static file file(File parent, String child) {
@@ -9686,7 +10191,8 @@ public class KL {
 		return new panel(isDoubleBuffered);
 	}
 
-	public static panel nayaPanel(LayoutManager layout, boolean isDoubleBuffered) {
+	public static panel nayaPanel(LayoutManager layout,
+			boolean isDoubleBuffered) {
 		return new panel(layout, isDoubleBuffered);
 	}
 
@@ -10204,33 +10710,50 @@ public class KL {
 	}
 
 	public static final class key {
-		public static int enter = '\n', backspace = '\b', tab = '\t', cancel = 0x03, clear = 0x0c, shift = 0x10,
-				control = 0x11, alt = 0x12, pause = 0x13, capslock = 0x14, escape = 0x1b, space = 0x20, pageup = 0x21,
-				pagedown = 0x22, end = 0x23, home = 0x24, left = 0x25, up = 0x26, right = 0x27, down = 0x28,
-				comma = 0x2c, minus = 0x2d, period = 0x2e, slash = 0x2f, zero = 0x30, one = 0x31, two = 0x32,
-				three = 0x33, four = 0x34, five = 0x35, six = 0x36, seven = 0x37, eight = 0x38, nine = 0x39,
-				semicolon = 0x3b, equals = 0x3d, A = 0x41, B = 0x42, C = 0x43, D = 0x44, E = 0x45, F = 0x46, G = 0x47,
-				H = 0x48, I = 0x49, J = 0x4a, K = 0x4b, L = 0x4c, M = 0x4d, N = 0x4e, O = 0x4f, P = 0x50, Q = 0x51,
-				R = 0x52, S = 0x53, T = 0x54, U = 0x55, V = 0x56, W = 0x57, X = 0x58, Y = 0x59, Z = 0x5a, a = 'a',
-				b = 'b', c = 'c', d = 'd', e = 'e', f = 'f', g = 'g', h = 'h', i = 'i', j = 'j', k = 'k', l = 'l',
-				m = 'm', n = 'n', o = 'o', p = 'p', q = 'q', r = 'r', s = 's', t = 't', u = 'u', v = 'v', w = 'w',
-				x = 'x', y = 'y', z = 'z', openbracket = 0x5b, backslash = 0x5c, closebracket = 0x5d, numpad0 = 0x60,
-				numpad1 = 0x61, numpad2 = 0x62, numpad3 = 0x63, numpad4 = 0x64, numpad5 = 0x65, numpad6 = 0x66,
-				numpad7 = 0x67, numpad8 = 0x68, numpad9 = 0x69, multiply = 0x6a, add = 0x6b, separater = 0x6c,
-				subtract = 0x6d, decimal = 0x6e, divide = 0x6f, delete = 0x7f, numlock = 0x90, scrolllock = 0x91,
-				f1 = 0x70, f2 = 0x71, f3 = 0x72, f4 = 0x73, f5 = 0x74, f6 = 0x75, f7 = 0x76, f8 = 0x77, f9 = 0x78,
-				f10 = 0x79, f11 = 0x7a, f12 = 0x7b, f13 = 0xf000, f14 = 0xf001, f15 = 0xf002, f16 = 0xf003,
-				f17 = 0xf004, f18 = 0xf005, f19 = 0xf006, f20 = 0xf007, f21 = 0xf008, f22 = 0xf009, f23 = 0xf00a,
-				f24 = 0xf00b, printscreen = 0x9a, insert = 0x9b, help = 0x9c, meta = 0x9d, backquote = 0xc0,
-				quote = 0xde, kpup = 0xe0, kpdown = 0xe1, kpleft = 0xe2, kpright = 0xe3, deadgrave = 0x80,
-				deadacute = 0x81, deadcircumflex = 0x82, deadtilde = 0x83, deadmacron = 0x84, deadbreve = 0x85,
-				deadabovedot = 0x86, deaddiaeresis = 0x87, deadabovering = 0x88, deaddoubleacute = 0x89,
-				deadcaron = 0x8a, deadcedilla = 0x8b, deadogonek = 0x8c, deadiota = 0x8d, deadvoicedsound = 0x8e,
-				deadsemivoicedsound = 0x8f, ampersand = 0x96, asterisk = 0x97, quotedbl = 0x98, less = 0x99,
-				greater = 0xa0, braceleft = 0xa1, braceright = 0xa2, at = 0x0200, colon = 0x0201, circumflex = 0x0202,
-				dollar = 0x0203, eurosign = 0x0204, exclamationmark = 0x0205, invertedexclamationmark = 0x0206,
-				leftparenthesis = 0x0207, numbersign = 0x0208, plus = 0x0209, rightparenthesis = 0x020a,
-				underscore = 0x020b, windows = 0x020c;
+		public static int enter = '\n', backspace = '\b', tab = '\t',
+				cancel = 0x03, clear = 0x0c, shift = 0x10, control = 0x11,
+				alt = 0x12, pause = 0x13, capslock = 0x14, escape = 0x1b,
+				space = 0x20, pageup = 0x21, pagedown = 0x22, end = 0x23,
+				home = 0x24, left = 0x25, up = 0x26, right = 0x27, down = 0x28,
+				comma = 0x2c, minus = 0x2d, period = 0x2e, slash = 0x2f,
+				zero = 0x30, one = 0x31, two = 0x32, three = 0x33, four = 0x34,
+				five = 0x35, six = 0x36, seven = 0x37, eight = 0x38,
+				nine = 0x39, semicolon = 0x3b, equals = 0x3d, A = 0x41,
+				B = 0x42, C = 0x43, D = 0x44, E = 0x45, F = 0x46, G = 0x47,
+				H = 0x48, I = 0x49, J = 0x4a, K = 0x4b, L = 0x4c, M = 0x4d,
+				N = 0x4e, O = 0x4f, P = 0x50, Q = 0x51, R = 0x52, S = 0x53,
+				T = 0x54, U = 0x55, V = 0x56, W = 0x57, X = 0x58, Y = 0x59,
+				Z = 0x5a, a = 'a', b = 'b', c = 'c', d = 'd', e = 'e', f = 'f',
+				g = 'g', h = 'h', i = 'i', j = 'j', k = 'k', l = 'l', m = 'm',
+				n = 'n', o = 'o', p = 'p', q = 'q', r = 'r', s = 's', t = 't',
+				u = 'u', v = 'v', w = 'w', x = 'x', y = 'y', z = 'z',
+				openbracket = 0x5b, backslash = 0x5c, closebracket = 0x5d,
+				numpad0 = 0x60, numpad1 = 0x61, numpad2 = 0x62, numpad3 = 0x63,
+				numpad4 = 0x64, numpad5 = 0x65, numpad6 = 0x66, numpad7 = 0x67,
+				numpad8 = 0x68, numpad9 = 0x69, multiply = 0x6a, add = 0x6b,
+				separater = 0x6c, subtract = 0x6d, decimal = 0x6e,
+				divide = 0x6f, delete = 0x7f, numlock = 0x90, scrolllock = 0x91,
+				f1 = 0x70, f2 = 0x71, f3 = 0x72, f4 = 0x73, f5 = 0x74,
+				f6 = 0x75, f7 = 0x76, f8 = 0x77, f9 = 0x78, f10 = 0x79,
+				f11 = 0x7a, f12 = 0x7b, f13 = 0xf000, f14 = 0xf001,
+				f15 = 0xf002, f16 = 0xf003, f17 = 0xf004, f18 = 0xf005,
+				f19 = 0xf006, f20 = 0xf007, f21 = 0xf008, f22 = 0xf009,
+				f23 = 0xf00a, f24 = 0xf00b, printscreen = 0x9a, insert = 0x9b,
+				help = 0x9c, meta = 0x9d, backquote = 0xc0, quote = 0xde,
+				kpup = 0xe0, kpdown = 0xe1, kpleft = 0xe2, kpright = 0xe3,
+				deadgrave = 0x80, deadacute = 0x81, deadcircumflex = 0x82,
+				deadtilde = 0x83, deadmacron = 0x84, deadbreve = 0x85,
+				deadabovedot = 0x86, deaddiaeresis = 0x87, deadabovering = 0x88,
+				deaddoubleacute = 0x89, deadcaron = 0x8a, deadcedilla = 0x8b,
+				deadogonek = 0x8c, deadiota = 0x8d, deadvoicedsound = 0x8e,
+				deadsemivoicedsound = 0x8f, ampersand = 0x96, asterisk = 0x97,
+				quotedbl = 0x98, less = 0x99, greater = 0xa0, braceleft = 0xa1,
+				braceright = 0xa2, at = 0x0200, colon = 0x0201,
+				circumflex = 0x0202, dollar = 0x0203, eurosign = 0x0204,
+				exclamationmark = 0x0205, invertedexclamationmark = 0x0206,
+				leftparenthesis = 0x0207, numbersign = 0x0208, plus = 0x0209,
+				rightparenthesis = 0x020a, underscore = 0x020b,
+				windows = 0x020c;
 	}
 
 	public static final class o extends HashMap<String, Object> {
@@ -10242,18 +10765,26 @@ public class KL {
 			strArr collectedKeyValuePairs = strArr(keyValuePairs);
 			for (String eqSignSeparatedPair : keyValuePairs) {
 				if (in(eqSignSeparatedPair, ",\\s*")) {
-					String[] subEqSeparatedPairsSplitByAComma = eqSignSeparatedPair.split(",\\s*");
-					collectedKeyValuePairs.pop();
+					String[] subEqSeparatedPairsSplitByAComma = eqSignSeparatedPair
+							.split(",\\s*");
+					collectedKeyValuePairs = filterOut(collectedKeyValuePairs,
+							v -> in(v, ", "));
+					// now that we have processed our sub pairs (saved in
+					// array subEqSeparatedPairsSplitByComma)
+					// let's kick out all the pairs that have a ", " in them
+					// and when we're done, we'll make up for them by pushing
+					// all the elements from array
+					// subEqSeparatedPairsSplitByAComma to the collected
+					// key-value pairs
 					for (String subEqSeparatedPair : subEqSeparatedPairsSplitByAComma)
 						collectedKeyValuePairs.push(subEqSeparatedPair);
-					return;
 				}
 			}
-			print(collectedKeyValuePairs);
 			for (String eqSignSeparatedPair : collectedKeyValuePairs) {
 				if (eqSignSeparatedPair == null)
 					continue;
-				if (in(eqSignSeparatedPair, "(?<k>\\w+)=(?<v>['\\.]?\\w+['\\.]?)")) {
+				if (in(eqSignSeparatedPair,
+						"(?<k>\\w+)=(?<v>['\\.]?\\w+['\\.]?)")) {
 					String k;
 					Object v = new Object();
 					String[] pairs = eqSignSeparatedPair.split("=");
@@ -10265,7 +10796,8 @@ public class KL {
 						else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
 							v = Long(unprocessedV.replaceAll("[Ll]$", ""));
 						else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Ff]")) {
-							// the `[Ff]` check in here is mandatory to recognize
+							// the `[Ff]` check in here is mandatory to
+							// recognize
 							// the
 							// value as a float, and not a double
 							v = Flt(unprocessedV.replaceAll("[Ff]$", ""));
@@ -10275,7 +10807,8 @@ public class KL {
 						} else if (eq(unprocessedV, "(true|false)"))
 							v = eq(unprocessedV, "true") ? true : false;
 						else if (in(unprocessedV, "(?<=')[a-zA-Z](?=')"))
-							v = unprocessedV.replaceAll("\'", "").toCharArray()[0];
+							v = unprocessedV.replaceAll("\'", "")
+									.toCharArray()[0];
 						else
 							v = Str(unprocessedV);
 
@@ -10300,233 +10833,308 @@ public class KL {
 			return i(randInt(length()));
 		}
 
-		String random(String type) {
+		String random(String tryCastingAs) {
 			if (not(isStr(random()))) {
 				return "";
 			}
-			return (String) random();
+			try {
+				return (String) random();
+			} catch (ClassCastException e) {
+				return "";
+			}
 		}
 
-		int random(int type) {
+		int random(int tryCastingAs) {
 			if (not(isInt(random()))) {
 				return 0;
 			}
-			return (int) random();
+			try {
+				return (int) random();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		long random(long type) {
+		long random(long tryCastingAs) {
 			if (not(isLong(random()))) {
 				return 0;
 			}
-			return (long) random();
+			try {
+				return (long) random();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		float random(float type) {
+		float random(float tryCastingAs) {
 			if (not(isFlt(random()))) {
 				return 0;
 			}
-			return (float) random();
+			try {
+				return (float) random();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		double random(double type) {
+		double random(double tryCastingAs) {
 			if (not(isDbl(random()))) {
 				return 0;
 			}
-			return (double) random();
+			try {
+				return (double) random();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		boolean random(boolean type) {
+		boolean random(boolean tryCastingAs) {
 			if (not(isBool(random()))) {
 				return false;
 			}
-			return (boolean) random();
+			try {
+				return (boolean) random();
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		Object rand() {
 			return random();
 		}
 
-		String rand(String type) {
-			return random(type);
+		String rand(String tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		int rand(int type) {
-			return random(type);
+		int rand(int tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		long rand(long type) {
-			return random(type);
+		long rand(long tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		float rand(float type) {
-			return random(type);
+		float rand(float tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		double rand(double type) {
-			return random(type);
+		double rand(double tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		boolean rand(boolean type) {
-			return random(type);
+		boolean rand(boolean tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
 		Object any() {
 			return random();
 		}
 
-		String any(String type) {
-			return random(type);
+		String any(String tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		int any(int type) {
-			return random(type);
+		int any(int tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		long any(long type) {
-			return random(type);
+		long any(long tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		float any(float type) {
-			return random(type);
+		float any(float tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		double any(double type) {
-			return random(type);
+		double any(double tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
-		boolean any(boolean type) {
-			return random(type);
+		boolean any(boolean tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
 		Object key(String k) {
-			return hasKey(k) ? super.get(k) : null;
+			if (not(k))
+				return none;
+			k = lower(k);
+			return hasKey(k) ? super.get(k) : none;
 			// will take a key in the form of a string, but RETURN AN OBJECT
 		}
 
-		String key(String k, String type) {
+		String key(String k, String tryCastingAs) {
 			if (not(isStr(key(k)))) {
 				return "";
 			}
-			return (String) key(k);
+			try {
+				return (String) key(k);
+			} catch (ClassCastException e) {
+				return "";
+			}
 		}
 
-		int key(String k, int type) {
+		int key(String k, int tryCastingAs) {
 			if (not(isInt(key(k)))) {
 				return 0;
 			}
-			return (int) key(k);
+			try {
+				return (int) key(k);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		long key(String k, long type) {
+		long key(String k, long tryCastingAs) {
 			if (not(isLong(key(k)))) {
 				return 0;
 			}
-			return (long) key(k);
+			try {
+				return (long) key(k);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		float key(String k, float type) {
+		float key(String k, float tryCastingAs) {
 			if (not(isFlt(key(k)))) {
 				return 0;
 			}
-			return (float) key(k);
+			try {
+				return (float) key(k);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		double key(String k, double type) {
+		double key(String k, double tryCastingAs) {
 			if (not(isDbl(key(k)))) {
 				return 0;
 			}
-			return (double) key(k);
+			try {
+				return (double) key(k);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		boolean key(String k, boolean type) {
+		boolean key(String k, boolean tryCastingAs) {
 			if (not(isBool(key(k)))) {
 				return false;
 			}
-			return (boolean) key(k);
+			try {
+				return (boolean) key(k);
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		Object k(String k) {
 			return key(k);
 		}
 
-		String k(String k, String type) {
-			return key(k, type);
+		String k(String k, String tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		int k(String k, int type) {
-			return key(k, type);
+		int k(String k, int tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		long k(String k, long type) {
-			return key(k, type);
+		long k(String k, long tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		float k(String k, float type) {
-			return key(k, type);
+		float k(String k, float tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		double k(String k, double type) {
-			return key(k, type);
+		double k(String k, double tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		boolean k(String k, boolean type) {
-			return key(k, type);
+		boolean k(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
 		Object val(String k) {
 			return key(k);
 		}
 
-		String val(String k, String type) {
-			return key(k, type);
+		String val(String k, String tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		int val(String k, int type) {
-			return key(k, type);
+		int val(String k, int tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		long val(String k, long type) {
-			return key(k, type);
+		long val(String k, long tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		float val(String k, float type) {
-			return key(k, type);
+		float val(String k, float tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		double val(String k, double type) {
-			return key(k, type);
+		double val(String k, double tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		boolean val(String k, boolean type) {
-			return key(k, type);
+		boolean val(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
 		Object v(String k) {
 			return key(k);
 		}
 
-		String v(String k, String type) {
-			return key(k, type);
+		String v(String k, String tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		int v(String k, int type) {
-			return key(k, type);
+		int v(String k, int tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		long v(String k, long type) {
-			return key(k, type);
+		long v(String k, long tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		float v(String k, float type) {
-			return key(k, type);
+		float v(String k, float tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		double v(String k, double type) {
-			return key(k, type);
+		double v(String k, double tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
-		boolean v(String k, boolean type) {
-			return key(k, type);
+		boolean v(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+
+		String get(String k, String tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+
+		int get(String k, int tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+
+		long get(String k, long tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+
+		float get(String k, float tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+
+		double get(String k, double tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+
+		boolean get(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 
 		String[] keyArray() {
@@ -10573,46 +11181,70 @@ public class KL {
 			return none;
 		}
 
-		String nthValue(int n, String type) {
+		String nthValue(int n, String tryCastingAs) {
 			if (not(isStr(nthValue(n)))) {
 				return "";
 			}
-			return (String) nthValue(n);
+			try {
+				return (String) nthValue(n);
+			} catch (ClassCastException e) {
+				return "";
+			}
 		}
 
-		int nthValue(int n, int type) {
+		int nthValue(int n, int tryCastingAs) {
 			if (not(isInt(nthValue(n)))) {
 				return 0;
 			}
-			return (int) nthValue(n);
+			try {
+				return (int) nthValue(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		long nthValue(int n, long type) {
+		long nthValue(int n, long tryCastingAs) {
 			if (not(isLong(nthValue(n)))) {
 				return 0;
 			}
-			return (long) nthValue(n);
+			try {
+				return (long) nthValue(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		float nthValue(int n, float type) {
+		float nthValue(int n, float tryCastingAs) {
 			if (not(isFlt(nthValue(n)))) {
 				return 0;
 			}
-			return (float) nthValue(n);
+			try {
+				return (float) nthValue(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		double nthValue(int n, double type) {
+		double nthValue(int n, double tryCastingAs) {
 			if (not(isDbl(nthValue(n)))) {
 				return 0;
 			}
-			return (double) nthValue(n);
+			try {
+				return (double) nthValue(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		boolean nthValue(int n, boolean type) {
+		boolean nthValue(int n, boolean tryCastingAs) {
 			if (not(isBool(nthValue(n)))) {
 				return false;
 			}
-			return (boolean) nthValue(n);
+			try {
+				return (boolean) nthValue(n);
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		String nthLastKey(int n) {
@@ -10627,264 +11259,336 @@ public class KL {
 			// exception
 		}
 
-		String nthLastValue(int n, String type) {
+		String nthLastValue(int n, String tryCastingAs) {
 			if (not(isStr(nthLastValue(n)))) {
 				return "";
 			}
-			return (String) nthLastValue(n);
+			try {
+				return (String) nthLastValue(n);
+			} catch (ClassCastException e) {
+				return "";
+			}
 		}
 
-		int nthLastValue(int n, int type) {
+		int nthLastValue(int n, int tryCastingAs) {
 			if (not(isInt(nthLastValue(n)))) {
 				return 0;
 			}
-			return (int) nthLastValue(n);
+			try {
+				return (int) nthLastValue(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		long nthLastValue(int n, long type) {
+		long nthLastValue(int n, long tryCastingAs) {
 			if (not(isLong(nthLastValue(n)))) {
 				return 0;
 			}
-			return (long) nthLastValue(n);
+			try {
+				return (long) nthLastValue(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		float nthLastValue(int n, float type) {
+		float nthLastValue(int n, float tryCastingAs) {
 			if (not(isFlt(nthLastValue(n)))) {
 				return 0;
 			}
-			return (float) nthLastValue(n);
+			try {
+				return (float) nthLastValue(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		double nthLastValue(int n, double type) {
+		double nthLastValue(int n, double tryCastingAs) {
 			if (not(isDbl(nthLastValue(n)))) {
 				return 0;
 			}
-			return (double) nthLastValue(n);
+			try {
+				return (double) nthLastValue(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		boolean nthLastValue(int n, boolean type) {
+		boolean nthLastValue(int n, boolean tryCastingAs) {
 			if (not(isBool(nthLastValue(n)))) {
 				return false;
 			}
-			return (boolean) nthLastValue(n);
+			try {
+				return (boolean) nthLastValue(n);
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		Object i(int n) {
 			return nthValue(n);
 		}
 
-		String i(int n, String type) {
+		String i(int n, String tryCastingAs) {
 			if (not(isStr(i(n)))) {
 				return "";
 			}
-			return (String) i(n);
+			try {
+				return (String) i(n);
+			} catch (ClassCastException e) {
+				return "";
+			}
 		}
 
-		int i(int n, int type) {
+		int i(int n, int tryCastingAs) {
 			if (not(isInt(i(n)))) {
 				return 0;
 			}
-			return (int) i(n);
+			try {
+				return (int) i(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		long i(int n, long type) {
+		long i(int n, long tryCastingAs) {
 			if (not(isLong(i(n)))) {
 				return 0;
 			}
-			return (long) i(n);
+			try {
+				return (long) i(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		float i(int n, float type) {
+		float i(int n, float tryCastingAs) {
 			if (not(isFlt(i(n)))) {
 				return 0;
 			}
-			return (float) i(n);
+			try {
+				return (float) i(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		double i(int n, double type) {
+		double i(int n, double tryCastingAs) {
 			if (not(isDbl(i(n)))) {
 				return 0;
 			}
-			return (double) i(n);
+			try {
+				return (double) i(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		boolean i(int n, boolean type) {
+		boolean i(int n, boolean tryCastingAs) {
 			if (not(isBool(i(n)))) {
 				return false;
 			}
-			return (boolean) i(n);
+			try {
+				return (boolean) i(n);
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		Object lasti(int n) {
 			return nthLastValue(n);
 		}
 
-		String lasti(int n, String type) {
+		String lasti(int n, String tryCastingAs) {
 			if (not(isStr(lasti(n)))) {
 				return "";
 			}
-			return (String) lasti(n);
+			try {
+				return (String) lasti(n);
+			} catch (ClassCastException e) {
+				return "";
+			}
 		}
 
-		int lasti(int n, int type) {
+		int lasti(int n, int tryCastingAs) {
 			if (not(isInt(lasti(n)))) {
 				return 0;
 			}
-			return (int) lasti(n);
+			try {
+				return (int) lasti(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		long lasti(int n, long type) {
+		long lasti(int n, long tryCastingAs) {
 			if (not(isLong(lasti(n)))) {
 				return 0;
 			}
-			return (long) lasti(n);
+			try {
+				return (long) lasti(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		float lasti(int n, float type) {
+		float lasti(int n, float tryCastingAs) {
 			if (not(isFlt(lasti(n)))) {
 				return 0;
 			}
-			return (float) lasti(n);
+			try {
+				return (float) lasti(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		double lasti(int n, double type) {
+		double lasti(int n, double tryCastingAs) {
 			if (not(isDbl(lasti(n)))) {
 				return 0;
 			}
-			return (double) lasti(n);
+			try {
+				return (double) lasti(n);
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		boolean lasti(int n, boolean type) {
+		boolean lasti(int n, boolean tryCastingAs) {
 			if (not(isBool(lasti(n)))) {
 				return false;
 			}
-			return (boolean) lasti(n);
+			try {
+				return (boolean) lasti(n);
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		Object ilast(int n) {
 			return lasti(n);
 		}
 
-		String ilast(int n, String type) {
-			return lasti(n, type);
+		String ilast(int n, String tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		int ilast(int n, int type) {
-			return lasti(n, type);
+		int ilast(int n, int tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		long ilast(int n, long type) {
-			return lasti(n, type);
+		long ilast(int n, long tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		float ilast(int n, float type) {
-			return lasti(n, type);
+		float ilast(int n, float tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		double ilast(int n, double type) {
-			return lasti(n, type);
+		double ilast(int n, double tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		boolean ilast(int n, boolean type) {
-			return lasti(n, type);
+		boolean ilast(int n, boolean tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
 		Object nth(int n) {
 			return i(n);
 		}
 
-		String nth(int n, String type) {
-			return i(n, type);
+		String nth(int n, String tryCastingAs) {
+			return i(n, tryCastingAs);
 		}
 
-		int nth(int n, int type) {
-			return i(n, type);
+		int nth(int n, int tryCastingAs) {
+			return i(n, tryCastingAs);
 		}
 
-		long nth(int n, long type) {
-			return i(n, type);
+		long nth(int n, long tryCastingAs) {
+			return i(n, tryCastingAs);
 		}
 
-		float nth(int n, float type) {
-			return i(n, type);
+		float nth(int n, float tryCastingAs) {
+			return i(n, tryCastingAs);
 		}
 
-		double nth(int n, double type) {
-			return i(n, type);
+		double nth(int n, double tryCastingAs) {
+			return i(n, tryCastingAs);
 		}
 
-		boolean nth(int n, boolean type) {
-			return i(n, type);
+		boolean nth(int n, boolean tryCastingAs) {
+			return i(n, tryCastingAs);
 		}
 
 		Object nthlast(int n) {
 			return lasti(n);
 		}
 
-		String nthlast(int n, String type) {
-			return lasti(n, type);
+		String nthlast(int n, String tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		int nthlast(int n, int type) {
-			return lasti(n, type);
+		int nthlast(int n, int tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		long nthlast(int n, long type) {
-			return lasti(n, type);
+		long nthlast(int n, long tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		float nthlast(int n, float type) {
-			return lasti(n, type);
+		float nthlast(int n, float tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		double nthlast(int n, double type) {
-			return lasti(n, type);
+		double nthlast(int n, double tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
-		boolean nthlast(int n, boolean type) {
-			return lasti(n, type);
+		boolean nthlast(int n, boolean tryCastingAs) {
+			return lasti(n, tryCastingAs);
 		}
 
 		Object first() {
 			return nth(0);
 		}
 
-		String first(String type) {
+		String first(String tryCastingAs) {
 			if (not(isStr(first()))) {
 				return "";
 			}
 			return (String) first();
 		}
 
-		int first(int type) {
+		int first(int tryCastingAs) {
 			if (not(isInt(first()))) {
 				return 0;
 			}
 			return (int) first();
 		}
 
-		long first(long type) {
+		long first(long tryCastingAs) {
 			if (not(isLong(first()))) {
 				return 0;
 			}
 			return (long) first();
 		}
 
-		float first(float type) {
+		float first(float tryCastingAs) {
 			if (not(isFlt(first()))) {
 				return 0;
 			}
 			return (float) first();
 		}
 
-		double first(double type) {
+		double first(double tryCastingAs) {
 			if (not(isDbl(first()))) {
 				return 0;
 			}
 			return (double) first();
 		}
 
-		boolean first(boolean type) {
+		boolean first(boolean tryCastingAs) {
 			if (not(isBool(first()))) {
 				return false;
 			}
@@ -10895,42 +11599,42 @@ public class KL {
 			return nth(1);
 		}
 
-		String second(String type) {
+		String second(String tryCastingAs) {
 			if (not(isStr(second()))) {
 				return "";
 			}
 			return (String) second();
 		}
 
-		int second(int type) {
+		int second(int tryCastingAs) {
 			if (not(isInt(second()))) {
 				return 0;
 			}
 			return (int) second();
 		}
 
-		long second(long type) {
+		long second(long tryCastingAs) {
 			if (not(isLong(second()))) {
 				return 0;
 			}
 			return (long) second();
 		}
 
-		float second(float type) {
+		float second(float tryCastingAs) {
 			if (not(isFlt(second()))) {
 				return 0;
 			}
 			return (float) second();
 		}
 
-		double second(double type) {
+		double second(double tryCastingAs) {
 			if (not(isDbl(second()))) {
 				return 0;
 			}
 			return (double) second();
 		}
 
-		boolean second(boolean type) {
+		boolean second(boolean tryCastingAs) {
 			if (not(isBool(second()))) {
 				return false;
 			}
@@ -10941,92 +11645,140 @@ public class KL {
 			return nthlast(2);
 		}
 
-		String seclast(String type) {
+		String seclast(String tryCastingAs) {
 			if (not(isStr(seclast()))) {
 				return "";
 			}
-			return (String) seclast();
+			try {
+				return (String) seclast();
+			} catch (ClassCastException e) {
+				return "";
+			}
 		}
 
-		int seclast(int type) {
+		int seclast(int tryCastingAs) {
 			if (not(isInt(seclast()))) {
 				return 0;
 			}
-			return (int) seclast();
+			try {
+				return (int) seclast();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		long seclast(long type) {
+		long seclast(long tryCastingAs) {
 			if (not(isLong(seclast()))) {
 				return 0;
 			}
-			return (long) seclast();
+			try {
+				return (long) seclast();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		float seclast(float type) {
+		float seclast(float tryCastingAs) {
 			if (not(isFlt(seclast()))) {
 				return 0;
 			}
-			return (float) seclast();
+			try {
+				return (float) seclast();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		double seclast(double type) {
+		double seclast(double tryCastingAs) {
 			if (not(isDbl(seclast()))) {
 				return 0;
 			}
-			return (double) seclast();
+			try {
+				return (double) seclast();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		boolean seclast(boolean type) {
+		boolean seclast(boolean tryCastingAs) {
 			if (not(isBool(seclast()))) {
 				return false;
 			}
-			return (boolean) seclast();
+			try {
+				return (boolean) seclast();
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		Object last() {
 			return nthlast(1);
 		}
 
-		String last(String type) {
+		String last(String tryCastingAs) {
 			if (not(isStr(last()))) {
 				return "";
 			}
-			return (String) last();
+			try {
+				return (String) last();
+			} catch (ClassCastException e) {
+				return "";
+			}
 		}
 
-		int last(int type) {
+		int last(int tryCastingAs) {
 			if (not(isInt(last()))) {
 				return 0;
 			}
-			return (int) last();
+			try {
+				return (int) last();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		long last(long type) {
+		long last(long tryCastingAs) {
 			if (not(isLong(last()))) {
 				return 0;
 			}
-			return (long) last();
+			try {
+				return (long) last();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		float last(float type) {
+		float last(float tryCastingAs) {
 			if (not(isFlt(last()))) {
 				return 0;
 			}
-			return (float) last();
+			try {
+				return (float) last();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		double last(double type) {
+		double last(double tryCastingAs) {
 			if (not(isDbl(last()))) {
 				return 0;
 			}
-			return (double) last();
+			try {
+				return (double) last();
+			} catch (ClassCastException e) {
+				return 0;
+			}
 		}
 
-		boolean last(boolean type) {
+		boolean last(boolean tryCastingAs) {
 			if (not(isBool(last()))) {
 				return false;
 			}
-			return (boolean) last();
+			try {
+				return (boolean) last();
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		boolean hasKey(String k) {
@@ -11095,7 +11847,8 @@ public class KL {
 			}
 			o result = new o();
 			for (String key : super.keySet()) {
-				if (other.containsKey(key) && other.get(key).equals(super.get(key))) {
+				if (other.containsKey(key)
+						&& other.get(key).equals(super.get(key))) {
 					result.put(key, super.get(key));
 				}
 			}
@@ -11153,7 +11906,8 @@ public class KL {
 				return copy();
 			}
 			o result = copy();
-			result.entrySet().removeIf(entry -> other.containsValue(entry.getValue()));
+			result.entrySet()
+					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
 
@@ -11249,7 +12003,8 @@ public class KL {
 			return map(value, fn);
 		}
 
-		o mapIfPresent(String key, BiFunction<? super String, ? super Object, ? extends Object> fn) {
+		o mapIfPresent(String key,
+				BiFunction<? super String, ? super Object, ? extends Object> fn) {
 			if (not(fn)) {
 				return this;
 			}
@@ -11399,9 +12154,10 @@ public class KL {
 			super();
 		}
 
-		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5,
-				Integer v5, String k6, Integer v6, String k7, Integer v7, String k8, Integer v8, String k9, Integer v9,
-				String k10, Integer v10) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6, String k7, Integer v7, String k8, Integer v8,
+				String k9, Integer v9, String k10, Integer v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11414,9 +12170,10 @@ public class KL {
 			super.put(k10, v10);
 		}
 
-		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5,
-				Integer v5, String k6, Integer v6, String k7, Integer v7, String k8, Integer v8, String k9,
-				Integer v9) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6, String k7, Integer v7, String k8, Integer v8,
+				String k9, Integer v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11428,8 +12185,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 
-		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5,
-				Integer v5, String k6, Integer v6, String k7, Integer v7, String k8, Integer v8) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6, String k7, Integer v7, String k8, Integer v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11440,8 +12198,9 @@ public class KL {
 			super.put(k8, v8);
 		}
 
-		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5,
-				Integer v5, String k6, Integer v6, String k7, Integer v7) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6, String k7, Integer v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11451,8 +12210,9 @@ public class KL {
 			super.put(k7, v7);
 		}
 
-		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5,
-				Integer v5, String k6, Integer v6) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5, String k6,
+				Integer v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11461,8 +12221,8 @@ public class KL {
 			super.put(k6, v6);
 		}
 
-		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4, String k5,
-				Integer v5) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4, String k5, Integer v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11470,14 +12230,16 @@ public class KL {
 			super.put(k5, v5);
 		}
 
-		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3, String k4, Integer v4) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3,
+				String k4, Integer v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 
-		oI(String k1, Integer v1, String k2, Integer v2, String k3, Integer v3) {
+		oI(String k1, Integer v1, String k2, Integer v2, String k3,
+				Integer v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -11697,7 +12459,8 @@ public class KL {
 			}
 			oI result = new oI();
 			for (String key : super.keySet()) {
-				if (other.containsKey(key) && other.get(key).equals(super.get(key))) {
+				if (other.containsKey(key)
+						&& other.get(key).equals(super.get(key))) {
 					result.put(key, super.get(key));
 				}
 			}
@@ -11755,7 +12518,8 @@ public class KL {
 				return copy();
 			}
 			oI result = copy();
-			result.entrySet().removeIf(entry -> other.containsValue(entry.getValue()));
+			result.entrySet()
+					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
 
@@ -11859,7 +12623,8 @@ public class KL {
 			return map(value, fn);
 		}
 
-		oI mapIfPresent(String key, BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
+		oI mapIfPresent(String key,
+				BiFunction<? super String, ? super Integer, ? extends Integer> fn) {
 			if (not(fn)) {
 				return this;
 			}
@@ -11995,40 +12760,50 @@ public class KL {
 		}
 	}
 
-	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
-		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9) {
-		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8, String k9, int v9) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6, String k7, int v7, String k8, int v8) {
-		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6, String k7, int v7) {
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7) {
 		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6) {
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6) {
 		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5) {
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5) {
 		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4) {
+	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4) {
 		return new oI(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oI oI(String k1, int v1, String k2, int v2, String k3, int v3) {
+	public static oI oI(String k1, int v1, String k2, int v2, String k3,
+			int v3) {
 		return new oI(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -12049,8 +12824,10 @@ public class KL {
 			super();
 		}
 
-		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5,
-				String k6, Long v6, String k7, Long v7, String k8, Long v8, String k9, Long v9, String k10, Long v10) {
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+				String k4, Long v4, String k5, Long v5, String k6, Long v6,
+				String k7, Long v7, String k8, Long v8, String k9, Long v9,
+				String k10, Long v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12063,8 +12840,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 
-		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5,
-				String k6, Long v6, String k7, Long v7, String k8, Long v8, String k9, Long v9) {
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+				String k4, Long v4, String k5, Long v5, String k6, Long v6,
+				String k7, Long v7, String k8, Long v8, String k9, Long v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12076,8 +12854,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 
-		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5,
-				String k6, Long v6, String k7, Long v7, String k8, Long v8) {
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+				String k4, Long v4, String k5, Long v5, String k6, Long v6,
+				String k7, Long v7, String k8, Long v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12088,8 +12867,9 @@ public class KL {
 			super.put(k8, v8);
 		}
 
-		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5,
-				String k6, Long v6, String k7, Long v7) {
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+				String k4, Long v4, String k5, Long v5, String k6, Long v6,
+				String k7, Long v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12099,8 +12879,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 
-		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5,
-				String k6, Long v6) {
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+				String k4, Long v4, String k5, Long v5, String k6, Long v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12109,7 +12889,8 @@ public class KL {
 			super.put(k6, v6);
 		}
 
-		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4, String k5, Long v5) {
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+				String k4, Long v4, String k5, Long v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12117,7 +12898,8 @@ public class KL {
 			super.put(k5, v5);
 		}
 
-		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3, String k4, Long v4) {
+		oL(String k1, Long v1, String k2, Long v2, String k3, Long v3,
+				String k4, Long v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12342,7 +13124,8 @@ public class KL {
 			}
 			oL result = new oL();
 			for (String key : super.keySet()) {
-				if (other.containsKey(key) && other.get(key).equals(super.get(key))) {
+				if (other.containsKey(key)
+						&& other.get(key).equals(super.get(key))) {
 					result.put(key, super.get(key));
 				}
 			}
@@ -12400,7 +13183,8 @@ public class KL {
 				return copy();
 			}
 			oL result = copy();
-			result.entrySet().removeIf(entry -> other.containsValue(entry.getValue()));
+			result.entrySet()
+					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
 
@@ -12504,7 +13288,8 @@ public class KL {
 			return map(value, fn);
 		}
 
-		oL mapIfPresent(String key, BiFunction<? super String, ? super Long, ? extends Long> fn) {
+		oL mapIfPresent(String key,
+				BiFunction<? super String, ? super Long, ? extends Long> fn) {
 			if (not(fn)) {
 				return this;
 			}
@@ -12640,42 +13425,52 @@ public class KL {
 		}
 	}
 
-	public static oL oL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9, String k10,
-			long v10) {
-		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8, String k9, long v9,
+			String k10, long v10) {
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oL oL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9) {
-		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8, String k9, long v9) {
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oL oL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6, String k7, long v7, String k8, long v8) {
-		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8) {
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oL oL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6, String k7, long v7) {
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7) {
 		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oL oL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6) {
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6,
+			long v6) {
 		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oL oL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5) {
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5) {
 		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oL oL(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4) {
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4) {
 		return new oL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oL oL(String k1, long v1, String k2, long v2, String k3, long v3) {
+	public static oL oL(String k1, long v1, String k2, long v2, String k3,
+			long v3) {
 		return new oL(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -12696,9 +13491,10 @@ public class KL {
 			super();
 		}
 
-		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5,
-				String k6, Float v6, String k7, Float v7, String k8, Float v8, String k9, Float v9, String k10,
-				Float v10) {
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+				String k4, Float v4, String k5, Float v5, String k6, Float v6,
+				String k7, Float v7, String k8, Float v8, String k9, Float v9,
+				String k10, Float v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12711,8 +13507,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 
-		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5,
-				String k6, Float v6, String k7, Float v7, String k8, Float v8, String k9, Float v9) {
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+				String k4, Float v4, String k5, Float v5, String k6, Float v6,
+				String k7, Float v7, String k8, Float v8, String k9, Float v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12724,8 +13521,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 
-		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5,
-				String k6, Float v6, String k7, Float v7, String k8, Float v8) {
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+				String k4, Float v4, String k5, Float v5, String k6, Float v6,
+				String k7, Float v7, String k8, Float v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12736,8 +13534,9 @@ public class KL {
 			super.put(k8, v8);
 		}
 
-		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5,
-				String k6, Float v6, String k7, Float v7) {
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+				String k4, Float v4, String k5, Float v5, String k6, Float v6,
+				String k7, Float v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12747,8 +13546,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 
-		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5,
-				String k6, Float v6) {
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+				String k4, Float v4, String k5, Float v5, String k6, Float v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12757,7 +13556,8 @@ public class KL {
 			super.put(k6, v6);
 		}
 
-		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4, String k5, Float v5) {
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+				String k4, Float v4, String k5, Float v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12765,7 +13565,8 @@ public class KL {
 			super.put(k5, v5);
 		}
 
-		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3, String k4, Float v4) {
+		oF(String k1, Float v1, String k2, Float v2, String k3, Float v3,
+				String k4, Float v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -12990,7 +13791,8 @@ public class KL {
 			}
 			oF result = new oF();
 			for (String key : super.keySet()) {
-				if (other.containsKey(key) && other.get(key).equals(super.get(key))) {
+				if (other.containsKey(key)
+						&& other.get(key).equals(super.get(key))) {
 					result.put(key, super.get(key));
 				}
 			}
@@ -13048,7 +13850,8 @@ public class KL {
 				return copy();
 			}
 			oF result = copy();
-			result.entrySet().removeIf(entry -> other.containsValue(entry.getValue()));
+			result.entrySet()
+					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
 
@@ -13152,7 +13955,8 @@ public class KL {
 			return map(value, fn);
 		}
 
-		oF mapIfPresent(String key, BiFunction<? super String, ? super Float, ? extends Float> fn) {
+		oF mapIfPresent(String key,
+				BiFunction<? super String, ? super Float, ? extends Float> fn) {
 			if (not(fn)) {
 				return this;
 			}
@@ -13288,42 +14092,53 @@ public class KL {
 		}
 	}
 
-	public static oF oF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9, String k10,
-			float v10) {
-		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8, String k9,
+			float v9, String k10, float v10) {
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oF oF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9) {
-		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8, String k9,
+			float v9) {
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oF oF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6, String k7, float v7, String k8, float v8) {
-		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8) {
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oF oF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6, String k7, float v7) {
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7) {
 		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oF oF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6) {
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6) {
 		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oF oF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5) {
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5) {
 		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oF oF(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4) {
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4) {
 		return new oF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oF oF(String k1, float v1, String k2, float v2, String k3, float v3) {
+	public static oF oF(String k1, float v1, String k2, float v2, String k3,
+			float v3) {
 		return new oF(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -13344,9 +14159,10 @@ public class KL {
 			super();
 		}
 
-		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5,
-				String k6, Double v6, String k7, Double v7, String k8, Double v8, String k9, Double v9, String k10,
-				Double v10) {
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+				String k4, Double v4, String k5, Double v5, String k6,
+				Double v6, String k7, Double v7, String k8, Double v8,
+				String k9, Double v9, String k10, Double v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -13359,8 +14175,10 @@ public class KL {
 			super.put(k10, v10);
 		}
 
-		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5,
-				String k6, Double v6, String k7, Double v7, String k8, Double v8, String k9, Double v9) {
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+				String k4, Double v4, String k5, Double v5, String k6,
+				Double v6, String k7, Double v7, String k8, Double v8,
+				String k9, Double v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -13372,8 +14190,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 
-		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5,
-				String k6, Double v6, String k7, Double v7, String k8, Double v8) {
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+				String k4, Double v4, String k5, Double v5, String k6,
+				Double v6, String k7, Double v7, String k8, Double v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -13384,8 +14203,9 @@ public class KL {
 			super.put(k8, v8);
 		}
 
-		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5,
-				String k6, Double v6, String k7, Double v7) {
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+				String k4, Double v4, String k5, Double v5, String k6,
+				Double v6, String k7, Double v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -13395,8 +14215,9 @@ public class KL {
 			super.put(k7, v7);
 		}
 
-		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5, Double v5,
-				String k6, Double v6) {
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+				String k4, Double v4, String k5, Double v5, String k6,
+				Double v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -13405,8 +14226,8 @@ public class KL {
 			super.put(k6, v6);
 		}
 
-		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4, String k5,
-				Double v5) {
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+				String k4, Double v4, String k5, Double v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -13414,7 +14235,8 @@ public class KL {
 			super.put(k5, v5);
 		}
 
-		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3, String k4, Double v4) {
+		oD(String k1, Double v1, String k2, Double v2, String k3, Double v3,
+				String k4, Double v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -13639,7 +14461,8 @@ public class KL {
 			}
 			oD result = new oD();
 			for (String key : super.keySet()) {
-				if (other.containsKey(key) && other.get(key).equals(super.get(key))) {
+				if (other.containsKey(key)
+						&& other.get(key).equals(super.get(key))) {
 					result.put(key, super.get(key));
 				}
 			}
@@ -13697,7 +14520,8 @@ public class KL {
 				return copy();
 			}
 			oD result = copy();
-			result.entrySet().removeIf(entry -> other.containsValue(entry.getValue()));
+			result.entrySet()
+					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
 
@@ -13801,7 +14625,8 @@ public class KL {
 			return map(value, fn);
 		}
 
-		oD mapIfPresent(String key, BiFunction<? super String, ? super Double, ? extends Double> fn) {
+		oD mapIfPresent(String key,
+				BiFunction<? super String, ? super Double, ? extends Double> fn) {
 			if (not(fn)) {
 				return this;
 			}
@@ -13937,43 +14762,53 @@ public class KL {
 		}
 	}
 
-	public static oD oD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9,
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8, String k9,
 			double v9, String k10, double v10) {
-		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oD oD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9,
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8, String k9,
 			double v9) {
-		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oD oD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8) {
-		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oD oD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6, String k7, double v7) {
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7) {
 		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oD oD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6) {
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6) {
 		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oD oD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5) {
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5) {
 		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oD oD(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4) {
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4) {
 		return new oD(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oD oD(String k1, double v1, String k2, double v2, String k3, double v3) {
+	public static oD oD(String k1, double v1, String k2, double v2, String k3,
+			double v3) {
 		return new oD(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -13994,9 +14829,10 @@ public class KL {
 			super();
 		}
 
-		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5,
-				Boolean v5, String k6, Boolean v6, String k7, Boolean v7, String k8, Boolean v8, String k9, Boolean v9,
-				String k10, Boolean v10) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6, String k7, Boolean v7, String k8, Boolean v8,
+				String k9, Boolean v9, String k10, Boolean v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14009,9 +14845,10 @@ public class KL {
 			super.put(k10, v10);
 		}
 
-		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5,
-				Boolean v5, String k6, Boolean v6, String k7, Boolean v7, String k8, Boolean v8, String k9,
-				Boolean v9) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6, String k7, Boolean v7, String k8, Boolean v8,
+				String k9, Boolean v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14023,8 +14860,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 
-		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5,
-				Boolean v5, String k6, Boolean v6, String k7, Boolean v7, String k8, Boolean v8) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6, String k7, Boolean v7, String k8, Boolean v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14035,8 +14873,9 @@ public class KL {
 			super.put(k8, v8);
 		}
 
-		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5,
-				Boolean v5, String k6, Boolean v6, String k7, Boolean v7) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6, String k7, Boolean v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14046,8 +14885,9 @@ public class KL {
 			super.put(k7, v7);
 		}
 
-		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5,
-				Boolean v5, String k6, Boolean v6) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5, String k6,
+				Boolean v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14056,8 +14896,8 @@ public class KL {
 			super.put(k6, v6);
 		}
 
-		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4, String k5,
-				Boolean v5) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4, String k5, Boolean v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14065,14 +14905,16 @@ public class KL {
 			super.put(k5, v5);
 		}
 
-		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3, String k4, Boolean v4) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3,
+				String k4, Boolean v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
 			super.put(k4, v4);
 		}
 
-		oB(String k1, Boolean v1, String k2, Boolean v2, String k3, Boolean v3) {
+		oB(String k1, Boolean v1, String k2, Boolean v2, String k3,
+				Boolean v3) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14290,7 +15132,8 @@ public class KL {
 			}
 			oB result = new oB();
 			for (String key : super.keySet()) {
-				if (other.containsKey(key) && other.get(key).equals(super.get(key))) {
+				if (other.containsKey(key)
+						&& other.get(key).equals(super.get(key))) {
 					result.put(key, super.get(key));
 				}
 			}
@@ -14348,7 +15191,8 @@ public class KL {
 				return copy();
 			}
 			oB result = copy();
-			result.entrySet().removeIf(entry -> other.containsValue(entry.getValue()));
+			result.entrySet()
+					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
 
@@ -14452,7 +15296,8 @@ public class KL {
 			return map(value, fn);
 		}
 
-		oB mapIfPresent(String key, BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
+		oB mapIfPresent(String key,
+				BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
 			if (not(fn)) {
 				return this;
 			}
@@ -14588,43 +15433,53 @@ public class KL {
 		}
 	}
 
-	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
 			boolean v9, String k10, boolean v10) {
-		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
 			boolean v9) {
-		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8) {
-		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6, String k7, boolean v7) {
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7) {
 		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6) {
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6) {
 		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5) {
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5) {
 		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4) {
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4) {
 		return new oB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3) {
+	public static oB oB(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3) {
 		return new oB(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -14647,8 +15502,9 @@ public class KL {
 			super();
 		}
 
-		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4, Key k5, Value v5, Key k6, Value v6,
-				Key k7, Value v7, Key k8, Value v8, Key k9, Value v9, Key k10, Value v10) {
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
+				Key k8, Value v8, Key k9, Value v9, Key k10, Value v10) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14661,8 +15517,9 @@ public class KL {
 			super.put(k10, v10);
 		}
 
-		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4, Key k5, Value v5, Key k6, Value v6,
-				Key k7, Value v7, Key k8, Value v8, Key k9, Value v9) {
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
+				Key k8, Value v8, Key k9, Value v9) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14674,8 +15531,9 @@ public class KL {
 			super.put(k9, v9);
 		}
 
-		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4, Key k5, Value v5, Key k6, Value v6,
-				Key k7, Value v7, Key k8, Value v8) {
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7, Value v7,
+				Key k8, Value v8) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14686,8 +15544,9 @@ public class KL {
 			super.put(k8, v8);
 		}
 
-		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4, Key k5, Value v5, Key k6, Value v6,
-				Key k7, Value v7) {
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+				Value v4, Key k5, Value v5, Key k6, Value v6, Key k7,
+				Value v7) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14697,8 +15556,8 @@ public class KL {
 			super.put(k7, v7);
 		}
 
-		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4, Key k5, Value v5, Key k6,
-				Value v6) {
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+				Value v4, Key k5, Value v5, Key k6, Value v6) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14707,7 +15566,8 @@ public class KL {
 			super.put(k6, v6);
 		}
 
-		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4, Key k5, Value v5) {
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+				Value v4, Key k5, Value v5) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14715,7 +15575,8 @@ public class KL {
 			super.put(k5, v5);
 		}
 
-		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4, Value v4) {
+		tree(Key k1, Value v1, Key k2, Value v2, Key k3, Value v3, Key k4,
+				Value v4) {
 			super.put(k1, v1);
 			super.put(k2, v2);
 			super.put(k3, v3);
@@ -14811,7 +15672,8 @@ public class KL {
 			return this;
 		}
 
-		tree<Key, Value> mapIfPresent(Key key, BiFunction<? super Key, ? super Value, ? extends Value> fn) {
+		tree<Key, Value> mapIfPresent(Key key,
+				BiFunction<? super Key, ? super Value, ? extends Value> fn) {
 			if (not(fn)) {
 				return this;
 			}
@@ -14864,7 +15726,8 @@ public class KL {
 			return this;
 		}
 
-		tree<Key, Value> map(BiFunction<? super Key, ? super Value, ? extends Value> fn) {
+		tree<Key, Value> map(
+				BiFunction<? super Key, ? super Value, ? extends Value> fn) {
 			super.replaceAll(fn);
 			return this;
 		}
@@ -14979,7 +15842,8 @@ public class KL {
 			}
 			tree<Key, Value> result = new tree<>();
 			for (Key key : super.keySet()) {
-				if (other.containsKey(key) && other.get(key).equals(super.get(key))) {
+				if (other.containsKey(key)
+						&& other.get(key).equals(super.get(key))) {
 					result.put(key, super.get(key));
 				}
 			}
@@ -14991,7 +15855,8 @@ public class KL {
 				return (tree<Key, Value>) super.clone();
 			}
 			tree<Key, Value> result = (tree<Key, Value>) super.clone();
-			result.keySet().removeAll(other.intersection((tree<Key, Value>) super.clone()).keySet());
+			result.keySet().removeAll(other
+					.intersection((tree<Key, Value>) super.clone()).keySet());
 			return result;
 		}
 
@@ -15037,7 +15902,8 @@ public class KL {
 				return (tree<Key, Value>) super.clone();
 			}
 			tree<Key, Value> result = (tree<Key, Value>) super.clone();
-			result.entrySet().removeIf(entry -> other.containsValue(entry.getValue()));
+			result.entrySet()
+					.removeIf(entry -> other.containsValue(entry.getValue()));
 			return result;
 		}
 
@@ -15069,36 +15935,46 @@ public class KL {
 			super();
 		}
 
-		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5, String v5, int k6,
-				String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10, String v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6, int k7,
+				String v7, int k8, String v8, int k9, String v9, int k10,
+				String v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5, String v5, int k6,
-				String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6, int k7,
+				String v7, int k8, String v8, int k9, String v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5, String v5, int k6,
-				String v6, int k7, String v7, int k8, String v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6, int k7,
+				String v7, int k8, String v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5, String v5, int k6,
-				String v6, int k7, String v7) {
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6, int k7,
+				String v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5, String v5, int k6,
-				String v6) {
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5, int k6, String v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5, String v5) {
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4, int k5, String v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4) {
+		treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4,
+				String v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
@@ -15191,7 +16067,9 @@ public class KL {
 		}
 
 		String nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : "";
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: "";
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -15286,42 +16164,53 @@ public class KL {
 		}
 	}
 
-	public static treeI treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10,
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8, int k9, String v9, int k10,
 			String v10) {
-		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeI treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
-		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8, int k9, String v9) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeI treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6, int k7, String v7, int k8, String v8) {
-		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeI treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6, int k7, String v7) {
-		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeI treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6) {
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6,
+			String v6) {
 		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeI treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5) {
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5) {
 		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeI treeI(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4) {
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4) {
 		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeI treeI(int k1, String v1, int k2, String v2, int k3, String v3) {
+	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
+			String v3) {
 		return new treeI(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -15344,35 +16233,44 @@ public class KL {
 			super();
 		}
 
-		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6,
-				int k7, long v7, int k8, long v8, int k9, long v9, int k10, long v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+				int k8, long v8, int k9, long v9, int k10, long v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6,
-				int k7, long v7, int k8, long v8, int k9, long v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+				int k8, long v8, int k9, long v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6,
-				int k7, long v7, int k8, long v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+				long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+				int k8, long v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6,
-				int k7, long v7) {
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+				long v4, int k5, long v5, int k6, long v6, int k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5, int k6, long v6) {
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+				long v4, int k5, long v5, int k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5) {
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+				long v4, int k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4) {
+		treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4,
+				long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
@@ -15465,7 +16363,9 @@ public class KL {
 		}
 
 		long nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : 0;
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -15560,40 +16460,51 @@ public class KL {
 		}
 	}
 
-	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6, int k7, long v7, int k8, long v8, int k9, long v9, int k10, long v10) {
-		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8, int k9, long v9, int k10, long v10) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6, int k7, long v7, int k8, long v8, int k9, long v9) {
-		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8, int k9, long v9) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6, int k7, long v7, int k8, long v8) {
-		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6, int k7, long v7) {
-		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7,
+			long v7) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6) {
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6) {
 		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5) {
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5) {
 		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4) {
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4) {
 		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3) {
+	public static treeL treeL(int k1, long v1, int k2, long v2, int k3,
+			long v3) {
 		return new treeL(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -15616,36 +16527,45 @@ public class KL {
 			super();
 		}
 
-		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5, int k6,
-				float v6, int k7, float v7, int k8, float v8, int k9, float v9, int k10, float v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+				int k8, float v8, int k9, float v9, int k10, float v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5, int k6,
-				float v6, int k7, float v7, int k8, float v8, int k9, float v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+				int k8, float v8, int k9, float v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5, int k6,
-				float v6, int k7, float v7, int k8, float v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6, int k7, float v7,
+				int k8, float v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5, int k6,
-				float v6, int k7, float v7) {
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6, int k7,
+				float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5, int k6,
-				float v6) {
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5, int k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5) {
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4, int k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4) {
+		treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4,
+				float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
@@ -15738,7 +16658,9 @@ public class KL {
 		}
 
 		float nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : 0;
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -15833,41 +16755,52 @@ public class KL {
 		}
 	}
 
-	public static treeF treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6, int k7, float v7, int k8, float v8, int k9, float v9, int k10, float v10) {
-		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8, int k9, float v9, int k10,
+			float v10) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeF treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6, int k7, float v7, int k8, float v8, int k9, float v9) {
-		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8, int k9, float v9) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeF treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6, int k7, float v7, int k8, float v8) {
-		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeF treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6, int k7, float v7) {
-		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeF treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6) {
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6) {
 		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeF treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5,
-			float v5) {
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5) {
 		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeF treeF(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4) {
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4) {
 		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeF treeF(int k1, float v1, int k2, float v2, int k3, float v3) {
+	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
+			float v3) {
 		return new treeF(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -15890,36 +16823,46 @@ public class KL {
 			super();
 		}
 
-		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5, double v5, int k6,
-				double v6, int k7, double v7, int k8, double v8, int k9, double v9, int k10, double v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6, int k7,
+				double v7, int k8, double v8, int k9, double v9, int k10,
+				double v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5, double v5, int k6,
-				double v6, int k7, double v7, int k8, double v8, int k9, double v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6, int k7,
+				double v7, int k8, double v8, int k9, double v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5, double v5, int k6,
-				double v6, int k7, double v7, int k8, double v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6, int k7,
+				double v7, int k8, double v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5, double v5, int k6,
-				double v6, int k7, double v7) {
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6, int k7,
+				double v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5, double v5, int k6,
-				double v6) {
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5, int k6, double v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5, double v5) {
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4, int k5, double v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4) {
+		treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4,
+				double v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
@@ -16012,7 +16955,9 @@ public class KL {
 		}
 
 		double nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : 0;
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -16107,42 +17052,53 @@ public class KL {
 		}
 	}
 
-	public static treeD treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6, int k7, double v7, int k8, double v8, int k9, double v9, int k10,
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8, int k9, double v9, int k10,
 			double v10) {
-		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeD treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6, int k7, double v7, int k8, double v8, int k9, double v9) {
-		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8, int k9, double v9) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeD treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6, int k7, double v7, int k8, double v8) {
-		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeD treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6, int k7, double v7) {
-		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeD treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6) {
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6,
+			double v6) {
 		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeD treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5) {
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5) {
 		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeD treeD(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4) {
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4) {
 		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeD treeD(int k1, double v1, int k2, double v2, int k3, double v3) {
+	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
+			double v3) {
 		return new treeD(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -16165,36 +17121,46 @@ public class KL {
 			super();
 		}
 
-		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5, boolean v5,
-				int k6, boolean v6, int k7, boolean v7, int k8, boolean v8, int k9, boolean v9, int k10, boolean v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6,
+				int k7, boolean v7, int k8, boolean v8, int k9, boolean v9,
+				int k10, boolean v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5, boolean v5,
-				int k6, boolean v6, int k7, boolean v7, int k8, boolean v8, int k9, boolean v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6,
+				int k7, boolean v7, int k8, boolean v8, int k9, boolean v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5, boolean v5,
-				int k6, boolean v6, int k7, boolean v7, int k8, boolean v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6,
+				int k7, boolean v7, int k8, boolean v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5, boolean v5,
-				int k6, boolean v6, int k7, boolean v7) {
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6,
+				int k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5, boolean v5,
-				int k6, boolean v6) {
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+				int k4, boolean v4, int k5, boolean v5, int k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5, boolean v5) {
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+				int k4, boolean v4, int k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4) {
+		treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3,
+				int k4, boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
@@ -16287,7 +17253,9 @@ public class KL {
 		}
 
 		boolean nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : false;
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: false;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -16382,42 +17350,54 @@ public class KL {
 		}
 	}
 
-	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6, int k7, boolean v7, int k8, boolean v8, int k9, boolean v9, int k10,
-			boolean v10) {
-		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8, int k9,
+			boolean v9, int k10, boolean v10) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6, int k7, boolean v7, int k8, boolean v8, int k9, boolean v9) {
-		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8, int k9,
+			boolean v9) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6, int k7, boolean v7, int k8, boolean v8) {
-		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6, int k7, boolean v7) {
-		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6) {
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6) {
 		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5) {
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5) {
 		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4) {
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4) {
 		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
+	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3) {
 		return new treeB(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -16440,42 +17420,53 @@ public class KL {
 			super();
 		}
 
-		treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4, double k5,
-				String v5, double k6, String v6, double k7, String v7, double k8, String v8, double k9, String v9,
-				double k10, String v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6, double k7, String v7, double k8, String v8,
+				double k9, String v9, double k10, String v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4, double k5,
-				String v5, double k6, String v6, double k7, String v7, double k8, String v8, double k9, String v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6, double k7, String v7, double k8, String v8,
+				double k9, String v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4, double k5,
-				String v5, double k6, String v6, double k7, String v7, double k8, String v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6, double k7, String v7, double k8, String v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4, double k5,
-				String v5, double k6, String v6, double k7, String v7) {
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6, double k7, String v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4, double k5,
-				String v5, double k6, String v6) {
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5, double k6,
+				String v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4, double k5,
-				String v5) {
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4, double k5, String v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4) {
+		treeDS(double k1, String v1, double k2, String v2, double k3, String v3,
+				double k4, String v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
-		treeDS(double k1, String v1, double k2, String v2, double k3, String v3) {
+		treeDS(double k1, String v1, double k2, String v2, double k3,
+				String v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
 
@@ -16564,7 +17555,9 @@ public class KL {
 		}
 
 		String nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : "";
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: "";
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -16659,44 +17652,54 @@ public class KL {
 		}
 	}
 
-	public static treeDS treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6, double k7, String v7, double k8, String v8, double k9,
-			String v9, double k10, String v10) {
-		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8,
+			double k9, String v9, double k10, String v10) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeDS treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6, double k7, String v7, double k8, String v8, double k9,
-			String v9) {
-		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8,
+			double k9, String v9) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
 	}
 
-	public static treeDS treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6, double k7, String v7, double k8, String v8) {
-		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
 	}
 
-	public static treeDS treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6, double k7, String v7) {
-		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeDS treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6) {
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6) {
 		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeDS treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5) {
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5) {
 		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeDS treeDS(double k1, String v1, double k2, String v2, double k3, String v3, double k4,
-			String v4) {
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4) {
 		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeDS treeDS(double k1, String v1, double k2, String v2, double k3, String v3) {
+	public static treeDS treeDS(double k1, String v1, double k2, String v2,
+			double k3, String v3) {
 		return new treeDS(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -16719,36 +17722,46 @@ public class KL {
 			super();
 		}
 
-		treeDI(double k1, int v1, double k2, int v2, double k3, int v3, double k4, int v4, double k5, int v5, double k6,
-				int v6, double k7, int v7, double k8, int v8, double k9, int v9, double k10, int v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6,
+				double k7, int v7, double k8, int v8, double k9, int v9,
+				double k10, int v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeDI(double k1, int v1, double k2, int v2, double k3, int v3, double k4, int v4, double k5, int v5, double k6,
-				int v6, double k7, int v7, double k8, int v8, double k9, int v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6,
+				double k7, int v7, double k8, int v8, double k9, int v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeDI(double k1, int v1, double k2, int v2, double k3, int v3, double k4, int v4, double k5, int v5, double k6,
-				int v6, double k7, int v7, double k8, int v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6,
+				double k7, int v7, double k8, int v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeDI(double k1, int v1, double k2, int v2, double k3, int v3, double k4, int v4, double k5, int v5, double k6,
-				int v6, double k7, int v7) {
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6,
+				double k7, int v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeDI(double k1, int v1, double k2, int v2, double k3, int v3, double k4, int v4, double k5, int v5, double k6,
-				int v6) {
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5, double k6, int v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeDI(double k1, int v1, double k2, int v2, double k3, int v3, double k4, int v4, double k5, int v5) {
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4, double k5, int v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeDI(double k1, int v1, double k2, int v2, double k3, int v3, double k4, int v4) {
+		treeDI(double k1, int v1, double k2, int v2, double k3, int v3,
+				double k4, int v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
@@ -16841,7 +17854,9 @@ public class KL {
 		}
 
 		int nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : 0;
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
 			// bugfixed
 		}
 
@@ -16942,36 +17957,46 @@ public class KL {
 			super();
 		}
 
-		treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5, long v5,
-				double k6, long v6, double k7, long v7, double k8, long v8, double k9, long v9, double k10, long v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6,
+				double k7, long v7, double k8, long v8, double k9, long v9,
+				double k10, long v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5, long v5,
-				double k6, long v6, double k7, long v7, double k8, long v8, double k9, long v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6,
+				double k7, long v7, double k8, long v8, double k9, long v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5, long v5,
-				double k6, long v6, double k7, long v7, double k8, long v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6,
+				double k7, long v7, double k8, long v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5, long v5,
-				double k6, long v6, double k7, long v7) {
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6,
+				double k7, long v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5, long v5,
-				double k6, long v6) {
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5, double k6, long v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5, long v5) {
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4, double k5, long v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4) {
+		treeDL(double k1, long v1, double k2, long v2, double k3, long v3,
+				double k4, long v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
@@ -17064,7 +18089,9 @@ public class KL {
 		}
 
 		long nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : 0;
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -17159,42 +18186,54 @@ public class KL {
 		}
 	}
 
-	public static treeDL treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4,
-			double k5, long v5, double k6, long v6, double k7, long v7, double k8, long v8, double k9, long v9,
-			double k10, long v10) {
-		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6, double k7, long v7, double k8, long v8,
+			double k9, long v9, double k10, long v10) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeDL treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4,
-			double k5, long v5, double k6, long v6, double k7, long v7, double k8, long v8, double k9, long v9) {
-		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6, double k7, long v7, double k8, long v8,
+			double k9, long v9) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
 	}
 
-	public static treeDL treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4,
-			double k5, long v5, double k6, long v6, double k7, long v7, double k8, long v8) {
-		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6, double k7, long v7, double k8, long v8) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
 	}
 
-	public static treeDL treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4,
-			double k5, long v5, double k6, long v6, double k7, long v7) {
-		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6, double k7, long v7) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeDL treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4,
-			double k5, long v5, double k6, long v6) {
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5,
+			double k6, long v6) {
 		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeDL treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4,
-			double k5, long v5) {
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4, double k5, long v5) {
 		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeDL treeDL(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4) {
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3, double k4, long v4) {
 		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeDL treeDL(double k1, long v1, double k2, long v2, double k3, long v3) {
+	public static treeDL treeDL(double k1, long v1, double k2, long v2,
+			double k3, long v3) {
 		return new treeDL(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -17217,38 +18256,46 @@ public class KL {
 			super();
 		}
 
-		treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4, double k5, float v5,
-				double k6, float v6, double k7, float v7, double k8, float v8, double k9, float v9, double k10,
-				float v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6,
+				double k7, float v7, double k8, float v8, double k9, float v9,
+				double k10, float v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4, double k5, float v5,
-				double k6, float v6, double k7, float v7, double k8, float v8, double k9, float v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6,
+				double k7, float v7, double k8, float v8, double k9, float v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4, double k5, float v5,
-				double k6, float v6, double k7, float v7, double k8, float v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6,
+				double k7, float v7, double k8, float v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4, double k5, float v5,
-				double k6, float v6, double k7, float v7) {
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6,
+				double k7, float v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4, double k5, float v5,
-				double k6, float v6) {
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5, double k6, float v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4, double k5,
-				float v5) {
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4, double k5, float v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4) {
+		treeDF(double k1, float v1, double k2, float v2, double k3, float v3,
+				double k4, float v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
@@ -17341,7 +18388,9 @@ public class KL {
 		}
 
 		float nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : 0;
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -17436,42 +18485,54 @@ public class KL {
 		}
 	}
 
-	public static treeDF treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6, double k7, float v7, double k8, float v8, double k9, float v9,
-			double k10, float v10) {
-		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8,
+			double k9, float v9, double k10, float v10) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeDF treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6, double k7, float v7, double k8, float v8, double k9, float v9) {
-		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8,
+			double k9, float v9) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
 	}
 
-	public static treeDF treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6, double k7, float v7, double k8, float v8) {
-		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
 	}
 
-	public static treeDF treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6, double k7, float v7) {
-		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeDF treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6) {
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6) {
 		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeDF treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5) {
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5) {
 		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeDF treeDF(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4) {
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4) {
 		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeDF treeDF(double k1, float v1, double k2, float v2, double k3, float v3) {
+	public static treeDF treeDF(double k1, float v1, double k2, float v2,
+			double k3, float v3) {
 		return new treeDF(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -17494,43 +18555,54 @@ public class KL {
 			super();
 		}
 
-		treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4, boolean v4, double k5,
-				boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8, double k9, boolean v9,
-				double k10, boolean v10) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6, double k7, boolean v7, double k8,
+				boolean v8, double k9, boolean v9, double k10, boolean v10) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9, k10, v10);
 		}
 
-		treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4, boolean v4, double k5,
-				boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8, double k9,
-				boolean v9) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6, double k7, boolean v7, double k8,
+				boolean v8, double k9, boolean v9) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8, k9, v9);
 		}
 
-		treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4, boolean v4, double k5,
-				boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8) {
-			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6, double k7, boolean v7, double k8,
+				boolean v8) {
+			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8,
+					v8);
 		}
 
-		treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4, boolean v4, double k5,
-				boolean v5, double k6, boolean v6, double k7, boolean v7) {
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6, double k7, boolean v7) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 		}
 
-		treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4, boolean v4, double k5,
-				boolean v5, double k6, boolean v6) {
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5,
+				double k6, boolean v6) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 		}
 
-		treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4, boolean v4, double k5,
-				boolean v5) {
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4, double k5, boolean v5) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 		}
 
-		treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4, boolean v4) {
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3, double k4, boolean v4) {
 			super(k1, v1, k2, v2, k3, v3, k4, v4);
 		}
 
-		treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3) {
+		treeDB(double k1, boolean v1, double k2, boolean v2, double k3,
+				boolean v3) {
 			super(k1, v1, k2, v2, k3, v3);
 		}
 
@@ -17619,7 +18691,9 @@ public class KL {
 		}
 
 		boolean nthLastValue(int n) {
-			return n > 0 && n <= super.length() ? array()[super.length() - n] : false;
+			return n > 0 && n <= super.length()
+					? array()[super.length() - n]
+					: false;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -17714,44 +18788,56 @@ public class KL {
 		}
 	}
 
-	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
 			double k9, boolean v9, double k10, boolean v10) {
-		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
 			double k9, boolean v9) {
-		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
 	}
 
-	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8) {
-		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8,
+			boolean v8) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
 	}
 
-	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6, double k7, boolean v7) {
-		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6) {
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6) {
 		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5) {
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5,
+			boolean v5) {
 		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4) {
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4) {
 		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3) {
+	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3) {
 		return new treeDB(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -17938,7 +19024,9 @@ public class KL {
 		}
 
 		String lasti(int n) {
-			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : "";
+			return !isNull(n) && n > 0 && n <= super.size()
+					? super.get(super.size() - n)
+					: "";
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -18019,7 +19107,8 @@ public class KL {
 			}
 			if (condition.matches("^len(gth)?(:asc)?$")) {
 				super.sort((s1, s2) -> len(s1) - len(s2));
-			} else if (condition.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
+			} else if (condition
+					.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
 				super.sort((s1, s2) -> len(s2) - len(s1));
 			} else if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
 				sortReverse();
@@ -18072,7 +19161,8 @@ public class KL {
 		}
 
 		strArr slice(int x, int y) {
-			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length()) {
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
+					|| y <= 0 || y >= length()) {
 				return copy();
 			}
 			return new strArr(KL.slice(array(), x, y));
@@ -18482,7 +19572,9 @@ public class KL {
 		}
 
 		int lasti(int n) {
-			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			return !isNull(n) && n > 0 && n <= super.size()
+					? super.get(super.size() - n)
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -18560,7 +19652,8 @@ public class KL {
 			}
 			if (condition.matches("^len(gth)?(:asc)?$")) {
 				super.sort((s1, s2) -> len(s1) - len(s2));
-			} else if (condition.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
+			} else if (condition
+					.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
 				super.sort((s1, s2) -> len(s2) - len(s1));
 			} else if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
 				sortReverse();
@@ -18615,7 +19708,8 @@ public class KL {
 		}
 
 		intArr slice(int x, int y) {
-			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length()) {
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
+					|| y <= 0 || y >= length()) {
 				return copy();
 			}
 			return new intArr(KL.slice(array(), x, y));
@@ -19029,7 +20123,9 @@ public class KL {
 		}
 
 		long lasti(int n) {
-			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			return !isNull(n) && n > 0 && n <= super.size()
+					? super.get(super.size() - n)
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -19107,7 +20203,8 @@ public class KL {
 			}
 			if (condition.matches("^len(gth)?(:asc)?$")) {
 				super.sort((s1, s2) -> len(s1) - len(s2));
-			} else if (condition.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
+			} else if (condition
+					.matches("^len(gth)?:(desc|r(ev)?(ersed?)?)$")) {
 				super.sort((s1, s2) -> len(s2) - len(s1));
 			} else if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
 				sortReverse();
@@ -19162,7 +20259,8 @@ public class KL {
 		}
 
 		longArr slice(int x, int y) {
-			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length()) {
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
+					|| y <= 0 || y >= length()) {
 				return copy();
 			}
 			return new longArr(KL.slice(array(), x, y));
@@ -19584,7 +20682,9 @@ public class KL {
 		}
 
 		float lasti(int n) {
-			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			return !isNull(n) && n > 0 && n <= super.size()
+					? super.get(super.size() - n)
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -19713,7 +20813,8 @@ public class KL {
 		}
 
 		fltArr slice(int x, int y) {
-			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length()) {
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
+					|| y <= 0 || y >= length()) {
 				return copy();
 			}
 			return new fltArr(KL.slice(array(), x, y));
@@ -20135,7 +21236,9 @@ public class KL {
 		}
 
 		double lasti(int n) {
-			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : 0;
+			return !isNull(n) && n > 0 && n <= super.size()
+					? super.get(super.size() - n)
+					: 0;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -20264,7 +21367,8 @@ public class KL {
 		}
 
 		dblArr slice(int x, int y) {
-			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length()) {
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
+					|| y <= 0 || y >= length()) {
 				return copy();
 			}
 			return new dblArr(KL.slice(array(), x, y));
@@ -20686,7 +21790,9 @@ public class KL {
 		}
 
 		boolean lasti(int n) {
-			return !isNull(n) && n > 0 && n <= super.size() ? super.get(super.size() - n) : false;
+			return !isNull(n) && n > 0 && n <= super.size()
+					? super.get(super.size() - n)
+					: false;
 			// resolved bugfix: some changes helped avoid an index-out-of-bound
 			// exception
 		}
@@ -20815,7 +21921,8 @@ public class KL {
 		}
 
 		boolArr slice(int x, int y) {
-			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length() || y <= 0 || y >= length()) {
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
+					|| y <= 0 || y >= length()) {
 				return copy();
 			}
 			return new boolArr(KL.slice(array(), x, y));
@@ -21070,6 +22177,546 @@ public class KL {
 		return new boolArr(bools);
 	}
 
+	public static final class arr extends ArrayList<Object> {
+		arr() {
+			super();
+		}
+
+		arr(Object... objs) {
+			super();
+			for (Object o : objs) {
+				if (o == none)
+					continue;
+				super.add(o);
+			}
+		}
+
+		arr pushAt(int i, Object... objs) {
+			if (i >= 0 && i <= super.size() && 0 != len(objs)) {
+				for (Object o : objs) {
+					super.add(i, o);
+				}
+			}
+			return this;
+		}
+
+		arr pushStart(Object... objs) {
+			if (0 != len(objs)) {
+				pushAt(0, objs);
+			}
+			return this;
+		}
+
+		arr push(Object... objs) {
+			if (0 != len(objs)) {
+				pushAt(super.size(), objs);
+			}
+			return this;
+		}
+
+		arr push(Object[]... arrays) {
+			// this one's for appending entire arrays, for ease of pushing
+			if (not(arrays)) {
+				return this;
+			}
+			for (int i : range(arrays)) {
+				if (!KL.isNull(arrays[i])) {
+					pushAt(super.size(), arrays[i]);
+				}
+			}
+			return this;
+		}
+
+		arr push(arr... arrays) {
+			return combine(arrays);
+		}
+
+		arr pop(Object[]... arrays) {
+			return negativeIntersection(arrays);
+		}
+
+		arr pop(arr... arrays) {
+			return negativeIntersection(arrays);
+		}
+
+		Object shift() {
+			if (super.isEmpty()) {
+				return false;
+			}
+			return super.remove(0);
+		}
+
+		Object popFirst() {
+			return shift();
+		}
+
+		arr unshift(Object... objs) {
+			pushStart(objs);
+			return this;
+		}
+
+		Object pop(int... indexes) {
+			if (super.isEmpty() || length() == 0) {
+				return false;
+			}
+			if (indexes.length == 0)
+				return super.remove(length() - 1);
+			for (int i : indexes) {
+				if (i < 0 && i >= length())
+					continue;
+				else
+					super.remove(i);
+			}
+			return last();
+		}
+
+		Object pop() {
+			if (isEmpty() || length() == 0)
+				return false;
+			return pop(length() - 1);
+		}
+
+		arr popIf(Predicate<? super Object> fn) {
+			super.removeIf(fn);
+			return this;
+		}
+
+		arr filterOut(Predicate<? super Object> fn) {
+			super.removeIf(fn);
+			return this;
+		}
+
+		arr keepIf(Predicate<? super Object> fn) {
+			super.removeIf(fn.negate());
+			return this;
+		}
+
+		arr filter(Predicate<? super Object> fn) {
+			super.removeIf(fn.negate());
+			return this;
+		}
+
+		arr map(UnaryOperator<Object> fn) {
+			super.replaceAll(fn);
+			return this;
+		}
+
+		arr unique() {
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Object> uniqueSet = new LinkedHashSet<>();
+			for (Object el : set) {
+				uniqueSet.add((Object) el);
+			}
+			super.clear();
+			super.addAll(uniqueSet);
+			return this;
+		}
+
+		boolean has(Object x) {
+			return super.contains(x);
+		}
+
+		Object i(int i) {
+			if (i >= 0 && i < length()) {
+				return array()[i];
+			} else if (i < 0) {
+				// Shorter than 0, huh? Let's posi-tize the number, and see if
+				// it's under the size of the array. If it is, we'll try and
+				// fetch the elements in reverse order
+				i = Pos(i);
+				if (i <= length()) {
+					return lasti(i);
+				}
+			}
+			return false;
+		}
+
+		Object lasti(int n) {
+			return !isNull(n) && n > 0 && n <= super.size()
+					? super.get(super.size() - n)
+					: false;
+			// resolved bugfix: some changes helped avoid an index-out-of-bound
+			// exception
+		}
+
+		Object ilast(int n) {
+			return lasti(n);
+		}
+
+		Object nth(int n) {
+			return i(n);
+		}
+
+		Object nthlast(int n) {
+			return lasti(n);
+		}
+
+		Object first() {
+			return nth(0);
+		}
+
+		Object second() {
+			return nth(1);
+		}
+
+		Object seclast() {
+			return nthlast(2);
+		}
+
+		Object last() {
+			return nthlast(1);
+		}
+
+		arr update(int i, Object x) {
+			if (isNull(i) || isNull(x)) {
+				return this;
+			}
+			if (!has(x)) {
+				pushAt(i, x);
+			} else {
+				if (i < 0 || i >= super.size()) {
+					return this;
+				}
+				super.set(i, x);
+			}
+			return this;
+		}
+
+		arr replace(int i, Object x) {
+			return update(i, x);
+		}
+
+		arr shuffle() {
+			Object o = super.clone();
+			Collection<?> collection = (Collection<?>) o;
+			Set<Object> set = new LinkedHashSet<>(collection);
+			Set<Object> set2 = new LinkedHashSet<>();
+			for (Object el : set) {
+				set2.add((Object) el);
+			}
+			ArrayList<Object> list = new ArrayList<>(set2);
+			Collections.shuffle(list, new Random(System.nanoTime()));
+			super.clear();
+			super.addAll(list);
+			return this;
+		}
+
+		arr sort() {
+			super.sort(null);
+			return this;
+		}
+
+		arr sort(String condition) {
+			if (not(condition)) {
+				return this;
+			}
+			if (condition.matches("^(desc|r(ev)?(ersed?)?)$")) {
+				sortReverse();
+			} else {
+				sort();
+			}
+			return this;
+		}
+
+		arr sortReverse() {
+			super.sort(Collections.reverseOrder());
+			return this;
+		}
+
+		arr reverseSort() {
+			sortReverse();
+			return this;
+		}
+
+		arr reverse() {
+			java.util.List newList = list();
+			Collections.reverse(newList);
+			empty();
+			super.addAll(newList);
+			return this;
+		}
+
+		Object[] array() {
+			Object[] partA = super.toArray(new Object[0]);
+			Object[] resultantArr = new Object[partA.length];
+			for (int i = 0; i < partA.length; i++) {
+				resultantArr[i] = partA[i];
+			}
+			return resultantArr;
+		}
+
+		ArrayList<Object> list() {
+			ArrayList<Object> result = new ArrayList<>();
+			arr clone = copy();
+			for (int i : range(clone)) {
+				result.add(clone.i(i));
+			}
+			return result;
+		}
+
+		String string() {
+			return super.toString();
+		}
+
+		String str() {
+			return string();
+		}
+
+		arr slice(int x, int y) {
+			if (isNull(x) || not(y) || y < x || x == y || x < 0 || x >= length()
+					|| y <= 0 || y >= length()) {
+				return copy();
+			}
+			return new arr(KL.slice(array(), x, y));
+		}
+
+		arr slice(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
+				return copy();
+			}
+			return slice(x, length());
+		}
+
+		arr slice() {
+			return copy();
+		}
+
+		arr sliceKeep(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
+				return copy();
+			}
+			return slice(0, x);
+		}
+
+		arr sliceRight(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
+				return copy();
+			}
+			return slice(length() - x);
+		}
+
+		arr sliceEnd(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
+				return copy();
+			}
+			return slice(0, length() - x);
+		}
+
+		arr sliceOff(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
+				return copy();
+			}
+			return sliceEnd(x);
+		}
+
+		arr sliceOut(int x) {
+			if (super.isEmpty() || not(x) || x < 0 || x >= length()) {
+				return copy();
+			}
+			return sliceEnd(x);
+		}
+
+		Object random() {
+			if (super.isEmpty()) {
+				return false;
+			}
+			return i(randInt(length()));
+		}
+
+		Object rand() {
+			return random();
+		}
+
+		Object any() {
+			return random();
+		}
+
+		arr empty() {
+			super.clear();
+			return this;
+		}
+
+		boolean eq(arr arrB) {
+			if (not(arrB)) {
+				return false;
+			}
+			arr arrA = copy();
+			arrA.sort();
+			arrB.sort();
+			return arrA.equals(arrB);
+		}
+
+		boolean compare(arr arrB) {
+			int oldLen = length(), newLen = intersection(arrB).length();
+			return newLen > oldLen / 2;
+		}
+
+		arr combine(arr... arrays) {
+			arr arrA = copy();
+			if (not(arrays)) {
+				return arrA;
+			}
+			for (arr arrB : arrays) {
+				if (not(arrB)) {
+					continue;
+				}
+				super.addAll(arrB);
+			}
+			return this;
+		}
+
+		arr combine(Object[]... arrays) {
+			arr arrA = copy();
+			if (not(arrays)) {
+				return arrA;
+			}
+			for (Object[] arrB : arrays) {
+				combine(new arr(arrB));
+			}
+			return this;
+		}
+
+		arr union(arr... arrays) {
+			combine(arrays);
+			return this;
+		}
+
+		arr union(Object[]... arrays) {
+			combine(arrays);
+			return this;
+		}
+
+		arr cat(arr... arrays) {
+			combine(arrays);
+			return this;
+		}
+
+		arr cat(Object[]... arrays) {
+			combine(arrays);
+			return this;
+		}
+
+		arr concat(arr... arrays) {
+			combine(arrays);
+			return this;
+		}
+
+		arr concat(Object[]... arrays) {
+			combine(arrays);
+			return this;
+		}
+
+		arr join(arr... arrays) {
+			combine(arrays);
+			return this;
+		}
+
+		arr join(Object[]... arrays) {
+			combine(arrays);
+			return this;
+		}
+
+		String join() {
+			return string();
+		}
+
+		String join(String s) {
+			if (not(s) || not(length())) {
+				return string();
+			}
+			return KL.join(array(), s);
+		}
+
+		arr intersection(arr... arrays) {
+			if (not(arrays)) {
+				return this;
+			}
+			for (arr arrB : arrays) {
+				if (not(arrB)) {
+					return this;
+				}
+				super.retainAll(arrB);
+			}
+			return this;
+		}
+
+		arr intersection(Object[]... arrays) {
+			if (not(arrays)) {
+				return this;
+			}
+			for (Object[] arrB : arrays) {
+				intersection(new arr(arrB));
+			}
+			return this;
+		}
+
+		arr negativeIntersection(arr... arrays) {
+			if (not(arrays)) {
+				return this;
+			}
+			for (arr arrB : arrays) {
+				if (not(arrB)) {
+					return this;
+				}
+				super.removeAll(arrB);
+			}
+			return this;
+		}
+
+		arr negativeIntersection(Object[]... arrays) {
+			if (not(arrays)) {
+				return this;
+			}
+			for (Object[] arrB : arrays) {
+				negativeIntersection(new arr(arrB));
+			}
+			return this;
+		}
+
+		arr map(Object oldVal, Object newVal) {
+			int index = super.indexOf(oldVal);
+			if (not(oldVal) || not(newVal) || isNeg(index)) {
+				return this;
+			}
+			super.set(index, newVal);
+			return this;
+		}
+
+		arr update(Object oldVal, Object newVal) {
+			return map(oldVal, newVal);
+		}
+
+		arr replace(Object oldVal, Object newVal) {
+			return update(oldVal, newVal);
+		}
+
+		arr copy() {
+			return (arr) super.clone();
+		}
+
+		arr each(Consumer<? super Object> fn) {
+			if (not(fn)) {
+				return this;
+			}
+			super.forEach(fn);
+			return this;
+		}
+
+		void printMap() {
+			System.out.println(copy());
+		}
+
+		void printAll() {
+			printMap();
+		}
+
+		int length() {
+			return super.size();
+		}
+	}
+
 	public static boolean runTask(Runnable fn) {
 		if (not(fn)) {
 			return false;
@@ -21119,7 +22766,8 @@ public class KL {
 	private static int intervalId = 0;
 
 	public static int setInterval(Runnable fn, int interval) {
-		if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval)) {
+		if (isNull(fn) || isNull(interval) || isInf(interval)
+				|| isNeg(interval)) {
 			return -1;
 		}
 		intervalId++;
@@ -21139,9 +22787,11 @@ public class KL {
 		return intervalId;
 	}
 
-	public static int setInterval(Runnable fn, int interval, int maxIterations) {
-		if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval) || isNull(maxIterations)
-				|| isInf(maxIterations) || isNeg(maxIterations) || not(maxIterations)) {
+	public static int setInterval(Runnable fn, int interval,
+			int maxIterations) {
+		if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval)
+				|| isNull(maxIterations) || isInf(maxIterations)
+				|| isNeg(maxIterations) || not(maxIterations)) {
 			return -1;
 		}
 		intervalId++;
@@ -21149,7 +22799,8 @@ public class KL {
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
 					if (iterationsDone < maxIterations) {
-						Thread.sleep(interval < 1000 ? interval * 1000 : interval);
+						Thread.sleep(
+								interval < 1000 ? interval * 1000 : interval);
 						iterationsDone++;
 					} else {
 						clearInterval(intervalId);
@@ -21174,9 +22825,12 @@ public class KL {
 	}
 
 	// @@deprecated sw version 0.0.0.0: the most basic on-the-fly implementation
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3,
-			boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6, Runnable sol6, boolean cond7,
-			Runnable sol7, boolean cond8, Runnable sol8, boolean cond9, Runnable sol9, boolean cond10, Runnable sol10) {
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
+			Runnable sol10) {
 		if (is(cond1)) {
 			new Thread(sol1).start();
 		} else if (is(cond2)) {
@@ -21200,70 +22854,95 @@ public class KL {
 		}
 	}
 
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3,
-			boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6, Runnable sol6, boolean cond7,
-			Runnable sol7, boolean cond8, Runnable sol8, boolean cond9, Runnable sol9) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8,
-				cond9, sol9, false, null);
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8, boolean cond9, Runnable sol9) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, false,
+				null);
 	}
 
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3,
-			boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6, Runnable sol6, boolean cond7,
-			Runnable sol7, boolean cond8, Runnable sol8) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8,
-				false, null, false, null);
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, cond8, sol8, false, null, false,
+				null);
 	}
 
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3,
-			boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6, Runnable sol6, boolean cond7,
-			Runnable sol7) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, false, null,
-				false, null, false, null);
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, false, null, false, null, false,
+				null);
 	}
 
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3,
-			boolean cond4, Runnable sol4, boolean cond5, Runnable sol5, boolean cond6, Runnable sol6) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, false, null, false, null,
-				false, null, false, null);
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, false, null, false, null, false, null, false,
+				null);
 	}
 
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3,
-			boolean cond4, Runnable sol4, boolean cond5, Runnable sol5) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, false, null, false, null, false, null,
-				false, null, false, null);
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				false, null, false, null, false, null, false, null, false,
+				null);
 	}
 
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3,
-			boolean cond4, Runnable sol4) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, false, null, false, null, false, null, false, null,
-				false, null, false, null);
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, false, null,
+				false, null, false, null, false, null, false, null, false,
+				null);
 	}
 
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2, boolean cond3, Runnable sol3) {
-		sw(cond1, sol1, cond2, sol2, cond3, sol3, false, null, false, null, false, null, false, null, false, null,
-				false, null, false, null);
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, false, null, false, null,
+				false, null, false, null, false, null, false, null, false,
+				null);
 	}
 
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2, Runnable sol2) {
-		sw(cond1, sol1, cond2, sol2, false, null, false, null, false, null, false, null, false, null, false, null,
-				false, null, false, null);
+	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2) {
+		sw(cond1, sol1, cond2, sol2, false, null, false, null, false, null,
+				false, null, false, null, false, null, false, null, false,
+				null);
 	}
 
 	public static void sw(boolean cond1, Runnable sol1) {
-		sw(cond1, sol1, false, null, false, null, false, null, false, null, false, null, false, null, false, null,
-				false, null, false, null);
+		sw(cond1, sol1, false, null, false, null, false, null, false, null,
+				false, null, false, null, false, null, false, null, false,
+				null);
 	}
 
 	// sw/when version 1: runs Runnable solution x matching with condition x
 	// @returns `true` if any of the non-Else conditions are met, else `false`
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8, Object cond9, Runnable sol9, Object cond10,
-			Runnable sol10) {
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
 		if (src instanceof Number || src instanceof Character) {
-			double srcDbl = src instanceof Character ? (char) src : Dbl(Str(src));
+			double srcDbl = src instanceof Character
+					? (char) src
+					: Dbl(Str(src));
 			if (cond1 instanceof String) {
-				if (!in(Str(cond1), "(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")) {
+				if (!in(Str(cond1),
+						"(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -21273,8 +22952,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond1), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond1), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond1),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond1),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -21283,7 +22964,8 @@ public class KL {
 				}
 				String cond1B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond1), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+				if (in(Str(cond1),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
 					String op = Str(cond1).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -21294,8 +22976,10 @@ public class KL {
 					cond1 = parts[0];
 					cond1B = parts[1];
 				}
-				double middleware = Dbl(Str(cond1).replaceAll("[^\\-\\d\\.]", "")),
-						middlewareB = Dbl(Str(cond1B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware = Dbl(
+						Str(cond1).replaceAll("[^\\-\\d\\.]", "")),
+						middlewareB = Dbl(
+								Str(cond1B).replaceAll("[^\\-\\d\\.]", ""));
 				cond1 = String(cond1).replaceAll("[^<>=]", "");
 				cond1B = String(cond1B).replaceAll("[^<>=]", "");
 
@@ -21736,7 +23420,8 @@ public class KL {
 				return false;
 			}
 			if (cond2 instanceof String) {
-				if (!in(Str(cond2), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond2),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -21746,8 +23431,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond2), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond2), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond2),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond2),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -21756,7 +23443,8 @@ public class KL {
 				}
 				String cond2B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond2), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+				if (in(Str(cond2),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
 					String op = Str(cond2).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -21767,8 +23455,10 @@ public class KL {
 					cond2 = parts[0];
 					cond2B = parts[1];
 				}
-				double middleware2 = Dbl(Str(cond2).replaceAll("[^\\-\\d\\.]", "")),
-						middleware2B = Dbl(Str(cond2B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware2 = Dbl(
+						Str(cond2).replaceAll("[^\\-\\d\\.]", "")),
+						middleware2B = Dbl(
+								Str(cond2B).replaceAll("[^\\-\\d\\.]", ""));
 				cond2 = String(cond2).replaceAll("[^<>=else]", "");
 				cond2B = String(cond2B).replaceAll("[^<>=]", "");
 				if (either) {
@@ -21781,7 +23471,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl > middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl > middleware2
+									|| srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -21795,14 +23486,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl > middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl > middleware2
+									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl > middleware2 || srcDbl == middleware2B) {
+							if (srcDbl > middleware2
+									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -21811,35 +23504,40 @@ public class KL {
 						}
 					} else if (eq(cond2, ">=")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl >= middleware2 || srcDbl > middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl >= middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl >= middleware2 || srcDbl < middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl >= middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl >= middleware2 || srcDbl == middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -21855,7 +23553,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl < middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl < middleware2
+									|| srcDbl >= middleware2B) {
 
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
@@ -21870,14 +23569,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl < middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl < middleware2
+									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl < middleware2 || srcDbl == middleware2B) {
+							if (srcDbl < middleware2
+									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -21886,35 +23587,40 @@ public class KL {
 						}
 					} else if (eq(cond2, "<=")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl <= middleware2 || srcDbl > middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl <= middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl <= middleware2 || srcDbl < middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl <= middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl <= middleware2 || srcDbl == middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -21923,35 +23629,40 @@ public class KL {
 						}
 					} else if (eq(cond2, "==")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl == middleware2 || srcDbl > middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl == middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl == middleware2 || srcDbl < middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl == middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl == middleware2 || srcDbl == middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -21969,7 +23680,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl > middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl > middleware2
+									&& srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -21983,14 +23695,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl > middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl > middleware2
+									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl > middleware2 && srcDbl == middleware2B) {
+							if (srcDbl > middleware2
+									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -21999,35 +23713,40 @@ public class KL {
 						}
 					} else if (eq(cond2, ">=")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl >= middleware2 && srcDbl > middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl >= middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl >= middleware2 && srcDbl < middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl >= middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl >= middleware2 && srcDbl == middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -22043,7 +23762,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl < middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl < middleware2
+									&& srcDbl >= middleware2B) {
 
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
@@ -22058,14 +23778,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl < middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl < middleware2
+									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl < middleware2 && srcDbl == middleware2B) {
+							if (srcDbl < middleware2
+									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -22074,35 +23796,40 @@ public class KL {
 						}
 					} else if (eq(cond2, "<=")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl <= middleware2 && srcDbl > middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl <= middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl <= middleware2 && srcDbl < middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl <= middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl <= middleware2 && srcDbl == middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -22111,35 +23838,40 @@ public class KL {
 						}
 					} else if (eq(cond2, "==")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl == middleware2 && srcDbl > middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl > middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl == middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl >= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl == middleware2 && srcDbl < middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl < middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl == middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl <= middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
 								return true;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl == middleware2 && srcDbl == middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl == middleware2B) {
 								if (!isNull(sol2)) {
 									new Thread(sol2).start();
 								}
@@ -22213,7 +23945,8 @@ public class KL {
 				return false;
 			}
 			if (cond3 instanceof String) {
-				if (!in(Str(cond3), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond3),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -22223,8 +23956,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond3), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond3), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond3),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond3),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -22233,7 +23968,8 @@ public class KL {
 				}
 				String cond3B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond3), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond3),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond3).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -22244,8 +23980,10 @@ public class KL {
 					cond3 = parts[0];
 					cond3B = parts[1];
 				}
-				double middleware3 = Dbl(Str(cond3).replaceAll("[^\\-\\d\\.]", "")),
-						middleware3B = Dbl(Str(cond3B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware3 = Dbl(
+						Str(cond3).replaceAll("[^\\-\\d\\.]", "")),
+						middleware3B = Dbl(
+								Str(cond3B).replaceAll("[^\\-\\d\\.]", ""));
 				cond3 = String(cond3).replaceAll("[^<>=else]", "");
 				cond3B = String(cond3B).replaceAll("[^<>=]", "");
 
@@ -22259,7 +23997,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl > middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl > middleware3
+									|| srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22273,14 +24012,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl > middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl > middleware3
+									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl > middleware3 || srcDbl == middleware3B) {
+							if (srcDbl > middleware3
+									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22289,35 +24030,40 @@ public class KL {
 						}
 					} else if (eq(cond3, ">=")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl >= middleware3 || srcDbl > middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl >= middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl >= middleware3 || srcDbl < middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl >= middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl >= middleware3 || srcDbl == middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22333,7 +24079,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl < middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl < middleware3
+									|| srcDbl >= middleware3B) {
 
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
@@ -22348,14 +24095,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl < middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl < middleware3
+									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl < middleware3 || srcDbl == middleware3B) {
+							if (srcDbl < middleware3
+									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22364,35 +24113,40 @@ public class KL {
 						}
 					} else if (eq(cond3, "<=")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl <= middleware3 || srcDbl > middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl <= middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl <= middleware3 || srcDbl < middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl <= middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl <= middleware3 || srcDbl == middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22401,35 +24155,40 @@ public class KL {
 						}
 					} else if (eq(cond3, "==")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl == middleware3 || srcDbl > middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl == middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl == middleware3 || srcDbl < middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl == middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl == middleware3 || srcDbl == middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22447,7 +24206,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl > middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl > middleware3
+									&& srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22461,14 +24221,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl > middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl > middleware3
+									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl > middleware3 && srcDbl == middleware3B) {
+							if (srcDbl > middleware3
+									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22477,35 +24239,40 @@ public class KL {
 						}
 					} else if (eq(cond3, ">=")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl >= middleware3 && srcDbl > middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl >= middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl >= middleware3 && srcDbl < middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl >= middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl >= middleware3 && srcDbl == middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22521,7 +24288,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl < middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl < middleware3
+									&& srcDbl >= middleware3B) {
 
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
@@ -22536,14 +24304,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl < middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl < middleware3
+									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl < middleware3 && srcDbl == middleware3B) {
+							if (srcDbl < middleware3
+									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22552,35 +24322,40 @@ public class KL {
 						}
 					} else if (eq(cond3, "<=")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl <= middleware3 && srcDbl > middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl <= middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl <= middleware3 && srcDbl < middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl <= middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl <= middleware3 && srcDbl == middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22589,35 +24364,40 @@ public class KL {
 						}
 					} else if (eq(cond3, "==")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl == middleware3 && srcDbl > middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl > middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl == middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl >= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl == middleware3 && srcDbl < middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl < middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl == middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl <= middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
 								return true;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl == middleware3 && srcDbl == middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl == middleware3B) {
 								if (!isNull(sol3)) {
 									new Thread(sol3).start();
 								}
@@ -22691,7 +24471,8 @@ public class KL {
 				return false;
 			}
 			if (cond4 instanceof String) {
-				if (!in(Str(cond4), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond4),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -22701,8 +24482,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond4), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond4), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond4),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond4),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -22711,7 +24494,8 @@ public class KL {
 				}
 				String cond4B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond4), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond4),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond4).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -22722,8 +24506,10 @@ public class KL {
 					cond4 = parts[0];
 					cond4B = parts[1];
 				}
-				double middleware4 = Dbl(Str(cond4).replaceAll("[^\\-\\d\\.]", "")),
-						middleware4B = Dbl(Str(cond4B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware4 = Dbl(
+						Str(cond4).replaceAll("[^\\-\\d\\.]", "")),
+						middleware4B = Dbl(
+								Str(cond4B).replaceAll("[^\\-\\d\\.]", ""));
 				cond4 = String(cond4).replaceAll("[^<>=else]", "");
 				cond4B = String(cond4B).replaceAll("[^<>=]", "");
 
@@ -22737,7 +24523,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl > middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl > middleware4
+									|| srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22751,14 +24538,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl > middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl > middleware4
+									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl > middleware4 || srcDbl == middleware4B) {
+							if (srcDbl > middleware4
+									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22767,35 +24556,40 @@ public class KL {
 						}
 					} else if (eq(cond4, ">=")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl >= middleware4 || srcDbl > middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl >= middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl >= middleware4 || srcDbl < middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl >= middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl >= middleware4 || srcDbl == middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22811,7 +24605,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl < middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl < middleware4
+									|| srcDbl >= middleware4B) {
 
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
@@ -22826,14 +24621,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl < middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl < middleware4
+									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl < middleware4 || srcDbl == middleware4B) {
+							if (srcDbl < middleware4
+									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22842,35 +24639,40 @@ public class KL {
 						}
 					} else if (eq(cond4, "<=")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl <= middleware4 || srcDbl > middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl <= middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl <= middleware4 || srcDbl < middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl <= middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl <= middleware4 || srcDbl == middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22879,35 +24681,40 @@ public class KL {
 						}
 					} else if (eq(cond4, "==")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl == middleware4 || srcDbl > middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl == middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl == middleware4 || srcDbl < middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl == middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl == middleware4 || srcDbl == middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22925,7 +24732,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl > middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl > middleware4
+									&& srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22939,14 +24747,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl > middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl > middleware4
+									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl > middleware4 && srcDbl == middleware4B) {
+							if (srcDbl > middleware4
+									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22955,35 +24765,40 @@ public class KL {
 						}
 					} else if (eq(cond4, ">=")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl >= middleware4 && srcDbl > middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl >= middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl >= middleware4 && srcDbl < middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl >= middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl >= middleware4 && srcDbl == middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -22999,7 +24814,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl < middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl < middleware4
+									&& srcDbl >= middleware4B) {
 
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
@@ -23014,14 +24830,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl < middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl < middleware4
+									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl < middleware4 && srcDbl == middleware4B) {
+							if (srcDbl < middleware4
+									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -23030,35 +24848,40 @@ public class KL {
 						}
 					} else if (eq(cond4, "<=")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl <= middleware4 && srcDbl > middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl <= middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl <= middleware4 && srcDbl < middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl <= middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl <= middleware4 && srcDbl == middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -23067,35 +24890,40 @@ public class KL {
 						}
 					} else if (eq(cond4, "==")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl == middleware4 && srcDbl > middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl > middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl == middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl >= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl == middleware4 && srcDbl < middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl < middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl == middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl <= middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
 								return true;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl == middleware4 && srcDbl == middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl == middleware4B) {
 								if (!isNull(sol4)) {
 									new Thread(sol4).start();
 								}
@@ -23169,7 +24997,8 @@ public class KL {
 				return false;
 			}
 			if (cond5 instanceof String) {
-				if (!in(Str(cond5), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond5),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -23179,8 +25008,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond5), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond5), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond5),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond5),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -23189,7 +25020,8 @@ public class KL {
 				}
 				String cond5B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond5), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond5),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond5).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -23200,8 +25032,10 @@ public class KL {
 					cond5 = parts[0];
 					cond5B = parts[1];
 				}
-				double middleware5 = Dbl(Str(cond5).replaceAll("[^\\-\\d\\.]", "")),
-						middleware5B = Dbl(Str(cond5B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware5 = Dbl(
+						Str(cond5).replaceAll("[^\\-\\d\\.]", "")),
+						middleware5B = Dbl(
+								Str(cond5B).replaceAll("[^\\-\\d\\.]", ""));
 				cond5 = String(cond5).replaceAll("[^<>=else]", "");
 				cond5B = String(cond5B).replaceAll("[^<>=]", "");
 
@@ -23215,7 +25049,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl > middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl > middleware5
+									|| srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23229,14 +25064,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl > middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl > middleware5
+									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl > middleware5 || srcDbl == middleware5B) {
+							if (srcDbl > middleware5
+									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23245,35 +25082,40 @@ public class KL {
 						}
 					} else if (eq(cond5, ">=")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl >= middleware5 || srcDbl > middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl >= middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl >= middleware5 || srcDbl < middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl >= middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl >= middleware5 || srcDbl == middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23289,7 +25131,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl < middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl < middleware5
+									|| srcDbl >= middleware5B) {
 
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
@@ -23304,14 +25147,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl < middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl < middleware5
+									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl < middleware5 || srcDbl == middleware5B) {
+							if (srcDbl < middleware5
+									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23320,35 +25165,40 @@ public class KL {
 						}
 					} else if (eq(cond5, "<=")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl <= middleware5 || srcDbl > middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl <= middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl <= middleware5 || srcDbl < middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl <= middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl <= middleware5 || srcDbl == middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23357,35 +25207,40 @@ public class KL {
 						}
 					} else if (eq(cond5, "==")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl == middleware5 || srcDbl > middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl == middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl == middleware5 || srcDbl < middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl == middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl == middleware5 || srcDbl == middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23403,7 +25258,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl > middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl > middleware5
+									&& srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23417,14 +25273,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl > middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl > middleware5
+									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl > middleware5 && srcDbl == middleware5B) {
+							if (srcDbl > middleware5
+									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23433,35 +25291,40 @@ public class KL {
 						}
 					} else if (eq(cond5, ">=")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl >= middleware5 && srcDbl > middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl >= middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl >= middleware5 && srcDbl < middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl >= middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl >= middleware5 && srcDbl == middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23477,7 +25340,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl < middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl < middleware5
+									&& srcDbl >= middleware5B) {
 
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
@@ -23492,14 +25356,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl < middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl < middleware5
+									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl < middleware5 && srcDbl == middleware5B) {
+							if (srcDbl < middleware5
+									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23508,35 +25374,40 @@ public class KL {
 						}
 					} else if (eq(cond5, "<=")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl <= middleware5 && srcDbl > middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl <= middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl <= middleware5 && srcDbl < middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl <= middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl <= middleware5 && srcDbl == middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23545,35 +25416,40 @@ public class KL {
 						}
 					} else if (eq(cond5, "==")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl == middleware5 && srcDbl > middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl > middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl == middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl >= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl == middleware5 && srcDbl < middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl < middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl == middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl <= middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
 								return true;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl == middleware5 && srcDbl == middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl == middleware5B) {
 								if (!isNull(sol5)) {
 									new Thread(sol5).start();
 								}
@@ -23647,7 +25523,8 @@ public class KL {
 				return false;
 			}
 			if (cond6 instanceof String) {
-				if (!in(Str(cond6), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond6),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -23657,8 +25534,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond6), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond6), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond6),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond6),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -23667,7 +25546,8 @@ public class KL {
 				}
 				String cond6B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond6), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond6),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond6).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -23678,8 +25558,10 @@ public class KL {
 					cond6 = parts[0];
 					cond6B = parts[1];
 				}
-				double middleware6 = Dbl(Str(cond6).replaceAll("[^\\-\\d\\.]", "")),
-						middleware6B = Dbl(Str(cond6B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware6 = Dbl(
+						Str(cond6).replaceAll("[^\\-\\d\\.]", "")),
+						middleware6B = Dbl(
+								Str(cond6B).replaceAll("[^\\-\\d\\.]", ""));
 				cond6 = String(cond6).replaceAll("[^<>=else]", "");
 				cond6B = String(cond6B).replaceAll("[^<>=]", "");
 
@@ -23693,7 +25575,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl > middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl > middleware6
+									|| srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23707,14 +25590,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl > middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl > middleware6
+									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl > middleware6 || srcDbl == middleware6B) {
+							if (srcDbl > middleware6
+									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23723,35 +25608,40 @@ public class KL {
 						}
 					} else if (eq(cond6, ">=")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl >= middleware6 || srcDbl > middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl >= middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl >= middleware6 || srcDbl < middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl >= middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl >= middleware6 || srcDbl == middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23767,7 +25657,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl < middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl < middleware6
+									|| srcDbl >= middleware6B) {
 
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
@@ -23782,14 +25673,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl < middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl < middleware6
+									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl < middleware6 || srcDbl == middleware6B) {
+							if (srcDbl < middleware6
+									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23798,35 +25691,40 @@ public class KL {
 						}
 					} else if (eq(cond6, "<=")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl <= middleware6 || srcDbl > middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl <= middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl <= middleware6 || srcDbl < middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl <= middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl <= middleware6 || srcDbl == middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23835,35 +25733,40 @@ public class KL {
 						}
 					} else if (eq(cond6, "==")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl == middleware6 || srcDbl > middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl == middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl == middleware6 || srcDbl < middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl == middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl == middleware6 || srcDbl == middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23881,7 +25784,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl > middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl > middleware6
+									&& srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23895,14 +25799,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl > middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl > middleware6
+									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl > middleware6 && srcDbl == middleware6B) {
+							if (srcDbl > middleware6
+									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23911,35 +25817,40 @@ public class KL {
 						}
 					} else if (eq(cond6, ">=")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl >= middleware6 && srcDbl > middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl >= middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl >= middleware6 && srcDbl < middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl >= middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl >= middleware6 && srcDbl == middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23955,7 +25866,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl < middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl < middleware6
+									&& srcDbl >= middleware6B) {
 
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
@@ -23970,14 +25882,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl < middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl < middleware6
+									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl < middleware6 && srcDbl == middleware6B) {
+							if (srcDbl < middleware6
+									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -23986,35 +25900,40 @@ public class KL {
 						}
 					} else if (eq(cond6, "<=")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl <= middleware6 && srcDbl > middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl <= middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl <= middleware6 && srcDbl < middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl <= middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl <= middleware6 && srcDbl == middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -24023,35 +25942,40 @@ public class KL {
 						}
 					} else if (eq(cond6, "==")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl == middleware6 && srcDbl > middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl > middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl == middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl >= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl == middleware6 && srcDbl < middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl < middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl == middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl <= middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
 								return true;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl == middleware6 && srcDbl == middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl == middleware6B) {
 								if (!isNull(sol6)) {
 									new Thread(sol6).start();
 								}
@@ -24125,7 +26049,8 @@ public class KL {
 				return false;
 			}
 			if (cond7 instanceof String) {
-				if (!in(Str(cond7), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond7),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -24135,8 +26060,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond7), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond7), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond7),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond7),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -24145,7 +26072,8 @@ public class KL {
 				}
 				String cond7B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond7), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond7),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond7).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -24156,8 +26084,10 @@ public class KL {
 					cond7 = parts[0];
 					cond7B = parts[1];
 				}
-				double middleware7 = Dbl(Str(cond7).replaceAll("[^\\-\\d\\.]", "")),
-						middleware7B = Dbl(Str(cond7B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware7 = Dbl(
+						Str(cond7).replaceAll("[^\\-\\d\\.]", "")),
+						middleware7B = Dbl(
+								Str(cond7B).replaceAll("[^\\-\\d\\.]", ""));
 				cond7 = String(cond7).replaceAll("[^<>=else]", "");
 				cond7B = String(cond7B).replaceAll("[^<>=]", "");
 
@@ -24171,7 +26101,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl > middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl > middleware7
+									|| srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24185,14 +26116,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl > middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl > middleware7
+									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl > middleware7 || srcDbl == middleware7B) {
+							if (srcDbl > middleware7
+									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24201,35 +26134,40 @@ public class KL {
 						}
 					} else if (eq(cond7, ">=")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl >= middleware7 || srcDbl > middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl >= middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl >= middleware7 || srcDbl < middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl >= middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl >= middleware7 || srcDbl == middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24245,7 +26183,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl < middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl < middleware7
+									|| srcDbl >= middleware7B) {
 
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
@@ -24260,14 +26199,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl < middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl < middleware7
+									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl < middleware7 || srcDbl == middleware7B) {
+							if (srcDbl < middleware7
+									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24276,35 +26217,40 @@ public class KL {
 						}
 					} else if (eq(cond7, "<=")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl <= middleware7 || srcDbl > middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl <= middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl <= middleware7 || srcDbl < middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl <= middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl <= middleware7 || srcDbl == middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24313,35 +26259,40 @@ public class KL {
 						}
 					} else if (eq(cond7, "==")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl == middleware7 || srcDbl > middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl == middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl == middleware7 || srcDbl < middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl == middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl == middleware7 || srcDbl == middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24359,7 +26310,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl > middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl > middleware7
+									&& srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24373,14 +26325,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl > middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl > middleware7
+									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl > middleware7 && srcDbl == middleware7B) {
+							if (srcDbl > middleware7
+									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24389,35 +26343,40 @@ public class KL {
 						}
 					} else if (eq(cond7, ">=")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl >= middleware7 && srcDbl > middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl >= middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl >= middleware7 && srcDbl < middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl >= middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl >= middleware7 && srcDbl == middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24433,7 +26392,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl < middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl < middleware7
+									&& srcDbl >= middleware7B) {
 
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
@@ -24448,14 +26408,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl < middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl < middleware7
+									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl < middleware7 && srcDbl == middleware7B) {
+							if (srcDbl < middleware7
+									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24464,35 +26426,40 @@ public class KL {
 						}
 					} else if (eq(cond7, "<=")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl <= middleware7 && srcDbl > middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl <= middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl <= middleware7 && srcDbl < middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl <= middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl <= middleware7 && srcDbl == middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24501,35 +26468,40 @@ public class KL {
 						}
 					} else if (eq(cond7, "==")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl == middleware7 && srcDbl > middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl > middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl == middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl >= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl == middleware7 && srcDbl < middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl < middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl == middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl <= middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
 								return true;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl == middleware7 && srcDbl == middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl == middleware7B) {
 								if (!isNull(sol7)) {
 									new Thread(sol7).start();
 								}
@@ -24603,7 +26575,8 @@ public class KL {
 				return false;
 			}
 			if (cond8 instanceof String) {
-				if (!in(Str(cond8), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond8),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -24613,8 +26586,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond8), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond8), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond8),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond8),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -24623,7 +26598,8 @@ public class KL {
 				}
 				String cond8B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond8), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond8),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond8).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -24634,8 +26610,10 @@ public class KL {
 					cond8 = parts[0];
 					cond8B = parts[1];
 				}
-				double middleware8 = Dbl(Str(cond8).replaceAll("[^\\-\\d\\.]", "")),
-						middleware8B = Dbl(Str(cond8B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware8 = Dbl(
+						Str(cond8).replaceAll("[^\\-\\d\\.]", "")),
+						middleware8B = Dbl(
+								Str(cond8B).replaceAll("[^\\-\\d\\.]", ""));
 				cond8 = String(cond8).replaceAll("[^<>=else]", "");
 				cond8B = String(cond8B).replaceAll("[^<>=]", "");
 
@@ -24649,7 +26627,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl > middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl > middleware8
+									|| srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24663,14 +26642,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl > middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl > middleware8
+									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl > middleware8 || srcDbl == middleware8B) {
+							if (srcDbl > middleware8
+									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24679,35 +26660,40 @@ public class KL {
 						}
 					} else if (eq(cond8, ">=")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl >= middleware8 || srcDbl > middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl >= middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl >= middleware8 || srcDbl < middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl >= middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl >= middleware8 || srcDbl == middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24723,7 +26709,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl < middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl < middleware8
+									|| srcDbl >= middleware8B) {
 
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
@@ -24738,14 +26725,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl < middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl < middleware8
+									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl < middleware8 || srcDbl == middleware8B) {
+							if (srcDbl < middleware8
+									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24754,35 +26743,40 @@ public class KL {
 						}
 					} else if (eq(cond8, "<=")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl <= middleware8 || srcDbl > middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl <= middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl <= middleware8 || srcDbl < middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl <= middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl <= middleware8 || srcDbl == middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24791,35 +26785,40 @@ public class KL {
 						}
 					} else if (eq(cond8, "==")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl == middleware8 || srcDbl > middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl == middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl == middleware8 || srcDbl < middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl == middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl == middleware8 || srcDbl == middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24837,7 +26836,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl > middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl > middleware8
+									&& srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24851,14 +26851,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl > middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl > middleware8
+									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl > middleware8 && srcDbl == middleware8B) {
+							if (srcDbl > middleware8
+									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24867,35 +26869,40 @@ public class KL {
 						}
 					} else if (eq(cond8, ">=")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl >= middleware8 && srcDbl > middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl >= middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl >= middleware8 && srcDbl < middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl >= middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl >= middleware8 && srcDbl == middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24911,7 +26918,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl < middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl < middleware8
+									&& srcDbl >= middleware8B) {
 
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
@@ -24926,14 +26934,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl < middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl < middleware8
+									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl < middleware8 && srcDbl == middleware8B) {
+							if (srcDbl < middleware8
+									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24942,35 +26952,40 @@ public class KL {
 						}
 					} else if (eq(cond8, "<=")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl <= middleware8 && srcDbl > middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl <= middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl <= middleware8 && srcDbl < middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl <= middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl <= middleware8 && srcDbl == middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -24979,35 +26994,40 @@ public class KL {
 						}
 					} else if (eq(cond8, "==")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl == middleware8 && srcDbl > middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl > middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl == middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl >= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl == middleware8 && srcDbl < middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl < middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl == middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl <= middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
 								return true;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl == middleware8 && srcDbl == middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl == middleware8B) {
 								if (!isNull(sol8)) {
 									new Thread(sol8).start();
 								}
@@ -25081,7 +27101,8 @@ public class KL {
 				return false;
 			}
 			if (cond9 instanceof String) {
-				if (!in(Str(cond9), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond9),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -25091,8 +27112,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond9), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond9), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond9),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond9),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -25101,7 +27124,8 @@ public class KL {
 				}
 				String cond9B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond9), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond9),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond9).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -25112,8 +27136,10 @@ public class KL {
 					cond9 = parts[0];
 					cond9B = parts[1];
 				}
-				double middleware9 = Dbl(Str(cond9).replaceAll("[^\\-\\d\\.]", "")),
-						middleware9B = Dbl(Str(cond9B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware9 = Dbl(
+						Str(cond9).replaceAll("[^\\-\\d\\.]", "")),
+						middleware9B = Dbl(
+								Str(cond9B).replaceAll("[^\\-\\d\\.]", ""));
 				cond9 = String(cond9).replaceAll("[^<>=else]", "");
 				cond9B = String(cond9B).replaceAll("[^<>=]", "");
 
@@ -25127,7 +27153,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl > middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl > middleware9
+									|| srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25141,14 +27168,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl > middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl > middleware9
+									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl > middleware9 || srcDbl == middleware9B) {
+							if (srcDbl > middleware9
+									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25157,35 +27186,40 @@ public class KL {
 						}
 					} else if (eq(cond9, ">=")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl >= middleware9 || srcDbl > middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl >= middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl >= middleware9 || srcDbl < middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl >= middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl >= middleware9 || srcDbl == middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25201,7 +27235,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl < middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl < middleware9
+									|| srcDbl >= middleware9B) {
 
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
@@ -25216,14 +27251,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl < middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl < middleware9
+									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl < middleware9 || srcDbl == middleware9B) {
+							if (srcDbl < middleware9
+									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25232,35 +27269,40 @@ public class KL {
 						}
 					} else if (eq(cond9, "<=")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl <= middleware9 || srcDbl > middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl <= middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl <= middleware9 || srcDbl < middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl <= middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl <= middleware9 || srcDbl == middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25269,35 +27311,40 @@ public class KL {
 						}
 					} else if (eq(cond9, "==")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl == middleware9 || srcDbl > middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl == middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl == middleware9 || srcDbl < middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl == middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl == middleware9 || srcDbl == middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25315,7 +27362,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl > middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl > middleware9
+									&& srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25329,14 +27377,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl > middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl > middleware9
+									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl > middleware9 && srcDbl == middleware9B) {
+							if (srcDbl > middleware9
+									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25345,35 +27395,40 @@ public class KL {
 						}
 					} else if (eq(cond9, ">=")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl >= middleware9 && srcDbl > middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl >= middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl >= middleware9 && srcDbl < middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl >= middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl >= middleware9 && srcDbl == middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25389,7 +27444,8 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl < middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl < middleware9
+									&& srcDbl >= middleware9B) {
 
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
@@ -25404,14 +27460,16 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl < middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl < middleware9
+									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl < middleware9 && srcDbl == middleware9B) {
+							if (srcDbl < middleware9
+									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25420,35 +27478,40 @@ public class KL {
 						}
 					} else if (eq(cond9, "<=")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl <= middleware9 && srcDbl > middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl <= middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl <= middleware9 && srcDbl < middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl <= middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl <= middleware9 && srcDbl == middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25457,35 +27520,40 @@ public class KL {
 						}
 					} else if (eq(cond9, "==")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl == middleware9 && srcDbl > middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl > middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl == middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl >= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl == middleware9 && srcDbl < middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl < middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl == middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl <= middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
 								return true;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl == middleware9 && srcDbl == middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl == middleware9B) {
 								if (!isNull(sol9)) {
 									new Thread(sol9).start();
 								}
@@ -25559,7 +27627,8 @@ public class KL {
 				return false;
 			}
 			if (cond10 instanceof String) {
-				if (!in(Str(cond10), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond10),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return false;
 				}
@@ -25569,8 +27638,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond10), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond10), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond10),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond10),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -25579,7 +27650,8 @@ public class KL {
 				}
 				String cond10B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond10), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond10),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond10).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -25590,43 +27662,50 @@ public class KL {
 					cond10 = parts[0];
 					cond10B = parts[1];
 				}
-				double middleware10 = Dbl(Str(cond10).replaceAll("[^\\-\\d\\.]", "")),
-						middleware10B = Dbl(Str(cond10B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware10 = Dbl(
+						Str(cond10).replaceAll("[^\\-\\d\\.]", "")),
+						middleware10B = Dbl(
+								Str(cond10B).replaceAll("[^\\-\\d\\.]", ""));
 				cond10 = String(cond10).replaceAll("[^<>=else]", "");
 				cond10B = String(cond10B).replaceAll("[^<>=]", "");
 
 				if (either) {
 					if (eq(cond10, ">")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl > middleware10 || srcDbl > middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl > middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl > middleware10 || srcDbl < middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl > middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl > middleware10 || srcDbl == middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25635,14 +27714,16 @@ public class KL {
 						}
 					} else if (eq(cond10, ">=")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl >= middleware10 || srcDbl > middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl >= middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
@@ -25650,21 +27731,24 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl >= middleware10 || srcDbl < middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl >= middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl >= middleware10 || srcDbl == middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25673,14 +27757,16 @@ public class KL {
 						}
 					} else if (eq(cond10, "<")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl < middleware10 || srcDbl > middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl < middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
@@ -25688,21 +27774,24 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl < middleware10 || srcDbl < middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl < middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl < middleware10 || srcDbl == middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25711,14 +27800,16 @@ public class KL {
 						}
 					} else if (eq(cond10, "<=")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl <= middleware10 || srcDbl > middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl <= middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
@@ -25726,21 +27817,24 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl <= middleware10 || srcDbl < middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl <= middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl <= middleware10 || srcDbl == middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25749,14 +27843,16 @@ public class KL {
 						}
 					} else if (eq(cond10, "==")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl == middleware10 || srcDbl > middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl == middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
@@ -25764,21 +27860,24 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl == middleware10 || srcDbl < middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl == middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl == middleware10 || srcDbl == middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25789,35 +27888,40 @@ public class KL {
 				} else if (both) {
 					if (eq(cond10, ">")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl > middleware10 && srcDbl > middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl > middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl > middleware10 && srcDbl < middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl > middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl > middleware10 && srcDbl == middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25826,35 +27930,40 @@ public class KL {
 						}
 					} else if (eq(cond10, ">=")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl >= middleware10 && srcDbl > middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl >= middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl >= middleware10 && srcDbl < middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl >= middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl >= middleware10 && srcDbl == middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25863,14 +27972,16 @@ public class KL {
 						}
 					} else if (eq(cond10, "<")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl < middleware10 && srcDbl > middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl < middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl >= middleware10B) {
 
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
@@ -25878,21 +27989,24 @@ public class KL {
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl < middleware10 && srcDbl < middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl < middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl < middleware10 && srcDbl == middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25901,35 +28015,40 @@ public class KL {
 						}
 					} else if (eq(cond10, "<=")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl <= middleware10 && srcDbl > middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl <= middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl <= middleware10 && srcDbl < middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl <= middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl <= middleware10 && srcDbl == middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -25938,35 +28057,40 @@ public class KL {
 						}
 					} else if (eq(cond10, "==")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl == middleware10 && srcDbl > middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl > middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl == middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl >= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl == middleware10 && srcDbl < middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl < middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl == middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl <= middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
 								return true;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl == middleware10 && srcDbl == middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl == middleware10B) {
 								if (!isNull(sol10)) {
 									new Thread(sol10).start();
 								}
@@ -26464,110 +28588,146 @@ public class KL {
 		return false;
 	}
 
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8, cond9, sol9, null, null);
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				null, null);
 	}
 
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8, null, null, null, null);
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, null, null,
+				null, null);
 	}
 
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, null,
-				null, null, null, null, null);
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, null, null, null, null,
+				null, null);
 	}
 
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, null, null, null,
-				null, null, null, null, null);
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, null, null, null, null, null, null,
+				null, null);
 	}
 
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, null, null, null, null, null,
-				null, null, null, null, null);
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, null, null, null, null, null, null, null, null,
+				null, null);
 	}
 
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null, null, null, null, null, null, null,
-				null, null, null, null, null);
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null);
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
-	public static boolean sw(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2) {
-		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null);
+	public static boolean sw(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
+		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
 	public static boolean sw(Object src, Object cond1, Runnable sol1) {
-		return sw(src, cond1, sol1, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null);
+		return sw(src, cond1, sol1, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8, Object cond9, Runnable sol9, Object cond10,
-			Runnable sol10) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8, cond9, sol9, cond10, sol10);
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8, cond9, sol9);
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8);
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7);
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6);
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5);
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4) {
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3) {
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
 	}
 
-	public static boolean when(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2) {
+	public static boolean when(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
 		return sw(src, cond1, sol1, cond2, sol2);
 	}
 
@@ -26577,13 +28737,17 @@ public class KL {
 
 	// sw/when version 1.1: when a condition meets, return its direct respective
 	// solution (of @type ::solutions.sol1.T)
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8,
-			Object cond9, T sol9, Object cond10, T sol10) {
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
 		if (src instanceof Number || src instanceof Character) {
-			double srcDbl = src instanceof Character ? (char) src : Dbl(Str(src));
+			double srcDbl = src instanceof Character
+					? (char) src
+					: Dbl(Str(src));
 			if (cond1 instanceof String) {
-				if (!in(Str(cond1), "(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")) {
+				if (!in(Str(cond1),
+						"(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -26593,8 +28757,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond1), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond1), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond1),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond1),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -26603,7 +28769,8 @@ public class KL {
 				}
 				String cond1B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond1), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+				if (in(Str(cond1),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
 					String op = Str(cond1).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -26614,8 +28781,10 @@ public class KL {
 					cond1 = parts[0];
 					cond1B = parts[1];
 				}
-				double middleware = Dbl(Str(cond1).replaceAll("[^\\-\\d\\.]", "")),
-						middlewareB = Dbl(Str(cond1B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware = Dbl(
+						Str(cond1).replaceAll("[^\\-\\d\\.]", "")),
+						middlewareB = Dbl(
+								Str(cond1B).replaceAll("[^\\-\\d\\.]", ""));
 				cond1 = String(cond1).replaceAll("[^<>=]", "");
 				cond1B = String(cond1B).replaceAll("[^<>=]", "");
 
@@ -26885,7 +29054,8 @@ public class KL {
 				return null;
 			}
 			if (cond2 instanceof String) {
-				if (!in(Str(cond2), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond2),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -26895,8 +29065,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond2), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond2), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond2),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond2),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -26905,7 +29077,8 @@ public class KL {
 				}
 				String cond2B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond2), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
+				if (in(Str(cond2),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]{1,2}\\-?\\d*\\.?\\d+)")) {
 					String op = Str(cond2).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -26916,8 +29089,10 @@ public class KL {
 					cond2 = parts[0];
 					cond2B = parts[1];
 				}
-				double middleware2 = Dbl(Str(cond2).replaceAll("[^\\-\\d\\.]", "")),
-						middleware2B = Dbl(Str(cond2B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware2 = Dbl(
+						Str(cond2).replaceAll("[^\\-\\d\\.]", "")),
+						middleware2B = Dbl(
+								Str(cond2B).replaceAll("[^\\-\\d\\.]", ""));
 				cond2 = String(cond2).replaceAll("[^<>=else]", "");
 				cond2B = String(cond2B).replaceAll("[^<>=]", "");
 				if (either) {
@@ -26927,7 +29102,8 @@ public class KL {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl > middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl > middleware2
+									|| srcDbl >= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<")) {
@@ -26935,33 +29111,40 @@ public class KL {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl > middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl > middleware2
+									|| srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl > middleware2 || srcDbl == middleware2B) {
+							if (srcDbl > middleware2
+									|| srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
 					} else if (eq(cond2, ">=")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl >= middleware2 || srcDbl > middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl > middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl >= middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl >= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl >= middleware2 || srcDbl < middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl < middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl >= middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl >= middleware2 || srcDbl == middleware2B) {
+							if (srcDbl >= middleware2
+									|| srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
@@ -26971,7 +29154,8 @@ public class KL {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl < middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl < middleware2
+									|| srcDbl >= middleware2B) {
 
 								return sol2;
 							}
@@ -26980,55 +29164,67 @@ public class KL {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl < middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl < middleware2
+									|| srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl < middleware2 || srcDbl == middleware2B) {
+							if (srcDbl < middleware2
+									|| srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
 					} else if (eq(cond2, "<=")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl <= middleware2 || srcDbl > middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl > middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl <= middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl >= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl <= middleware2 || srcDbl < middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl < middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl <= middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl <= middleware2 || srcDbl == middleware2B) {
+							if (srcDbl <= middleware2
+									|| srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
 					} else if (eq(cond2, "==")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl == middleware2 || srcDbl > middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl > middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl == middleware2 || srcDbl >= middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl >= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl == middleware2 || srcDbl < middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl < middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl == middleware2 || srcDbl <= middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl == middleware2 || srcDbl == middleware2B) {
+							if (srcDbl == middleware2
+									|| srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
@@ -27040,7 +29236,8 @@ public class KL {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl > middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl > middleware2
+									&& srcDbl >= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<")) {
@@ -27048,33 +29245,40 @@ public class KL {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl > middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl > middleware2
+									&& srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl > middleware2 && srcDbl == middleware2B) {
+							if (srcDbl > middleware2
+									&& srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
 					} else if (eq(cond2, ">=")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl >= middleware2 && srcDbl > middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl > middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl >= middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl >= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl >= middleware2 && srcDbl < middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl < middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl >= middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl >= middleware2 && srcDbl == middleware2B) {
+							if (srcDbl >= middleware2
+									&& srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
@@ -27084,7 +29288,8 @@ public class KL {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl < middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl < middleware2
+									&& srcDbl >= middleware2B) {
 
 								return sol2;
 							}
@@ -27093,55 +29298,67 @@ public class KL {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl < middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl < middleware2
+									&& srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl < middleware2 && srcDbl == middleware2B) {
+							if (srcDbl < middleware2
+									&& srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
 					} else if (eq(cond2, "<=")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl <= middleware2 && srcDbl > middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl > middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl <= middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl >= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl <= middleware2 && srcDbl < middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl < middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl <= middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl <= middleware2 && srcDbl == middleware2B) {
+							if (srcDbl <= middleware2
+									&& srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
 					} else if (eq(cond2, "==")) {
 						if (eq(cond2B, ">")) {
-							if (srcDbl == middleware2 && srcDbl > middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl > middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, ">=")) {
-							if (srcDbl == middleware2 && srcDbl >= middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl >= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<")) {
-							if (srcDbl == middleware2 && srcDbl < middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl < middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "<=")) {
-							if (srcDbl == middleware2 && srcDbl <= middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl <= middleware2B) {
 								return sol2;
 							}
 						} else if (eq(cond2B, "==")) {
-							if (srcDbl == middleware2 && srcDbl == middleware2B) {
+							if (srcDbl == middleware2
+									&& srcDbl == middleware2B) {
 								return sol2;
 							}
 						}
@@ -27188,7 +29405,8 @@ public class KL {
 				return null;
 			}
 			if (cond3 instanceof String) {
-				if (!in(Str(cond3), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond3),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -27198,8 +29416,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond3), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond3), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond3),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond3),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -27208,7 +29428,8 @@ public class KL {
 				}
 				String cond3B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond3), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond3),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond3).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -27219,8 +29440,10 @@ public class KL {
 					cond3 = parts[0];
 					cond3B = parts[1];
 				}
-				double middleware3 = Dbl(Str(cond3).replaceAll("[^\\-\\d\\.]", "")),
-						middleware3B = Dbl(Str(cond3B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware3 = Dbl(
+						Str(cond3).replaceAll("[^\\-\\d\\.]", "")),
+						middleware3B = Dbl(
+								Str(cond3B).replaceAll("[^\\-\\d\\.]", ""));
 				cond3 = String(cond3).replaceAll("[^<>=else]", "");
 				cond3B = String(cond3B).replaceAll("[^<>=]", "");
 
@@ -27231,7 +29454,8 @@ public class KL {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl > middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl > middleware3
+									|| srcDbl >= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<")) {
@@ -27239,33 +29463,40 @@ public class KL {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl > middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl > middleware3
+									|| srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl > middleware3 || srcDbl == middleware3B) {
+							if (srcDbl > middleware3
+									|| srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
 					} else if (eq(cond3, ">=")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl >= middleware3 || srcDbl > middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl > middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl >= middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl >= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl >= middleware3 || srcDbl < middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl < middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl >= middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl >= middleware3 || srcDbl == middleware3B) {
+							if (srcDbl >= middleware3
+									|| srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
@@ -27275,7 +29506,8 @@ public class KL {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl < middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl < middleware3
+									|| srcDbl >= middleware3B) {
 
 								return sol3;
 							}
@@ -27284,55 +29516,67 @@ public class KL {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl < middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl < middleware3
+									|| srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl < middleware3 || srcDbl == middleware3B) {
+							if (srcDbl < middleware3
+									|| srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
 					} else if (eq(cond3, "<=")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl <= middleware3 || srcDbl > middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl > middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl <= middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl >= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl <= middleware3 || srcDbl < middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl < middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl <= middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl <= middleware3 || srcDbl == middleware3B) {
+							if (srcDbl <= middleware3
+									|| srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
 					} else if (eq(cond3, "==")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl == middleware3 || srcDbl > middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl > middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl == middleware3 || srcDbl >= middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl >= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl == middleware3 || srcDbl < middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl < middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl == middleware3 || srcDbl <= middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl == middleware3 || srcDbl == middleware3B) {
+							if (srcDbl == middleware3
+									|| srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
@@ -27344,7 +29588,8 @@ public class KL {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl > middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl > middleware3
+									&& srcDbl >= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<")) {
@@ -27352,33 +29597,40 @@ public class KL {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl > middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl > middleware3
+									&& srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl > middleware3 && srcDbl == middleware3B) {
+							if (srcDbl > middleware3
+									&& srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
 					} else if (eq(cond3, ">=")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl >= middleware3 && srcDbl > middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl > middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl >= middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl >= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl >= middleware3 && srcDbl < middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl < middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl >= middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl >= middleware3 && srcDbl == middleware3B) {
+							if (srcDbl >= middleware3
+									&& srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
@@ -27388,7 +29640,8 @@ public class KL {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl < middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl < middleware3
+									&& srcDbl >= middleware3B) {
 
 								return sol3;
 							}
@@ -27397,55 +29650,67 @@ public class KL {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl < middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl < middleware3
+									&& srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl < middleware3 && srcDbl == middleware3B) {
+							if (srcDbl < middleware3
+									&& srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
 					} else if (eq(cond3, "<=")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl <= middleware3 && srcDbl > middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl > middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl <= middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl >= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl <= middleware3 && srcDbl < middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl < middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl <= middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl <= middleware3 && srcDbl == middleware3B) {
+							if (srcDbl <= middleware3
+									&& srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
 					} else if (eq(cond3, "==")) {
 						if (eq(cond3B, ">")) {
-							if (srcDbl == middleware3 && srcDbl > middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl > middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, ">=")) {
-							if (srcDbl == middleware3 && srcDbl >= middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl >= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<")) {
-							if (srcDbl == middleware3 && srcDbl < middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl < middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "<=")) {
-							if (srcDbl == middleware3 && srcDbl <= middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl <= middleware3B) {
 								return sol3;
 							}
 						} else if (eq(cond3B, "==")) {
-							if (srcDbl == middleware3 && srcDbl == middleware3B) {
+							if (srcDbl == middleware3
+									&& srcDbl == middleware3B) {
 								return sol3;
 							}
 						}
@@ -27492,7 +29757,8 @@ public class KL {
 				return null;
 			}
 			if (cond4 instanceof String) {
-				if (!in(Str(cond4), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond4),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -27502,8 +29768,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond4), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond4), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond4),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond4),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -27512,7 +29780,8 @@ public class KL {
 				}
 				String cond4B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond4), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond4),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond4).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -27523,8 +29792,10 @@ public class KL {
 					cond4 = parts[0];
 					cond4B = parts[1];
 				}
-				double middleware4 = Dbl(Str(cond4).replaceAll("[^\\-\\d\\.]", "")),
-						middleware4B = Dbl(Str(cond4B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware4 = Dbl(
+						Str(cond4).replaceAll("[^\\-\\d\\.]", "")),
+						middleware4B = Dbl(
+								Str(cond4B).replaceAll("[^\\-\\d\\.]", ""));
 				cond4 = String(cond4).replaceAll("[^<>=else]", "");
 				cond4B = String(cond4B).replaceAll("[^<>=]", "");
 
@@ -27535,7 +29806,8 @@ public class KL {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl > middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl > middleware4
+									|| srcDbl >= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<")) {
@@ -27543,33 +29815,40 @@ public class KL {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl > middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl > middleware4
+									|| srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl > middleware4 || srcDbl == middleware4B) {
+							if (srcDbl > middleware4
+									|| srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
 					} else if (eq(cond4, ">=")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl >= middleware4 || srcDbl > middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl > middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl >= middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl >= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl >= middleware4 || srcDbl < middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl < middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl >= middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl >= middleware4 || srcDbl == middleware4B) {
+							if (srcDbl >= middleware4
+									|| srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
@@ -27579,7 +29858,8 @@ public class KL {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl < middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl < middleware4
+									|| srcDbl >= middleware4B) {
 
 								return sol4;
 							}
@@ -27588,55 +29868,67 @@ public class KL {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl < middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl < middleware4
+									|| srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl < middleware4 || srcDbl == middleware4B) {
+							if (srcDbl < middleware4
+									|| srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
 					} else if (eq(cond4, "<=")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl <= middleware4 || srcDbl > middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl > middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl <= middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl >= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl <= middleware4 || srcDbl < middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl < middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl <= middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl <= middleware4 || srcDbl == middleware4B) {
+							if (srcDbl <= middleware4
+									|| srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
 					} else if (eq(cond4, "==")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl == middleware4 || srcDbl > middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl > middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl == middleware4 || srcDbl >= middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl >= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl == middleware4 || srcDbl < middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl < middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl == middleware4 || srcDbl <= middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl == middleware4 || srcDbl == middleware4B) {
+							if (srcDbl == middleware4
+									|| srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
@@ -27648,7 +29940,8 @@ public class KL {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl > middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl > middleware4
+									&& srcDbl >= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<")) {
@@ -27656,33 +29949,40 @@ public class KL {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl > middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl > middleware4
+									&& srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl > middleware4 && srcDbl == middleware4B) {
+							if (srcDbl > middleware4
+									&& srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
 					} else if (eq(cond4, ">=")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl >= middleware4 && srcDbl > middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl > middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl >= middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl >= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl >= middleware4 && srcDbl < middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl < middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl >= middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl >= middleware4 && srcDbl == middleware4B) {
+							if (srcDbl >= middleware4
+									&& srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
@@ -27692,7 +29992,8 @@ public class KL {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl < middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl < middleware4
+									&& srcDbl >= middleware4B) {
 
 								return sol4;
 							}
@@ -27701,55 +30002,67 @@ public class KL {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl < middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl < middleware4
+									&& srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl < middleware4 && srcDbl == middleware4B) {
+							if (srcDbl < middleware4
+									&& srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
 					} else if (eq(cond4, "<=")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl <= middleware4 && srcDbl > middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl > middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl <= middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl >= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl <= middleware4 && srcDbl < middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl < middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl <= middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl <= middleware4 && srcDbl == middleware4B) {
+							if (srcDbl <= middleware4
+									&& srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
 					} else if (eq(cond4, "==")) {
 						if (eq(cond4B, ">")) {
-							if (srcDbl == middleware4 && srcDbl > middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl > middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, ">=")) {
-							if (srcDbl == middleware4 && srcDbl >= middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl >= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<")) {
-							if (srcDbl == middleware4 && srcDbl < middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl < middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "<=")) {
-							if (srcDbl == middleware4 && srcDbl <= middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl <= middleware4B) {
 								return sol4;
 							}
 						} else if (eq(cond4B, "==")) {
-							if (srcDbl == middleware4 && srcDbl == middleware4B) {
+							if (srcDbl == middleware4
+									&& srcDbl == middleware4B) {
 								return sol4;
 							}
 						}
@@ -27796,7 +30109,8 @@ public class KL {
 				return null;
 			}
 			if (cond5 instanceof String) {
-				if (!in(Str(cond5), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond5),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -27806,8 +30120,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond5), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond5), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond5),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond5),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -27816,7 +30132,8 @@ public class KL {
 				}
 				String cond5B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond5), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond5),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond5).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -27827,8 +30144,10 @@ public class KL {
 					cond5 = parts[0];
 					cond5B = parts[1];
 				}
-				double middleware5 = Dbl(Str(cond5).replaceAll("[^\\-\\d\\.]", "")),
-						middleware5B = Dbl(Str(cond5B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware5 = Dbl(
+						Str(cond5).replaceAll("[^\\-\\d\\.]", "")),
+						middleware5B = Dbl(
+								Str(cond5B).replaceAll("[^\\-\\d\\.]", ""));
 				cond5 = String(cond5).replaceAll("[^<>=else]", "");
 				cond5B = String(cond5B).replaceAll("[^<>=]", "");
 
@@ -27839,7 +30158,8 @@ public class KL {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl > middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl > middleware5
+									|| srcDbl >= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<")) {
@@ -27847,33 +30167,40 @@ public class KL {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl > middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl > middleware5
+									|| srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl > middleware5 || srcDbl == middleware5B) {
+							if (srcDbl > middleware5
+									|| srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
 					} else if (eq(cond5, ">=")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl >= middleware5 || srcDbl > middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl > middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl >= middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl >= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl >= middleware5 || srcDbl < middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl < middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl >= middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl >= middleware5 || srcDbl == middleware5B) {
+							if (srcDbl >= middleware5
+									|| srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
@@ -27883,7 +30210,8 @@ public class KL {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl < middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl < middleware5
+									|| srcDbl >= middleware5B) {
 
 								return sol5;
 							}
@@ -27892,55 +30220,67 @@ public class KL {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl < middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl < middleware5
+									|| srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl < middleware5 || srcDbl == middleware5B) {
+							if (srcDbl < middleware5
+									|| srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
 					} else if (eq(cond5, "<=")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl <= middleware5 || srcDbl > middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl > middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl <= middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl >= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl <= middleware5 || srcDbl < middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl < middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl <= middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl <= middleware5 || srcDbl == middleware5B) {
+							if (srcDbl <= middleware5
+									|| srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
 					} else if (eq(cond5, "==")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl == middleware5 || srcDbl > middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl > middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl == middleware5 || srcDbl >= middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl >= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl == middleware5 || srcDbl < middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl < middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl == middleware5 || srcDbl <= middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl == middleware5 || srcDbl == middleware5B) {
+							if (srcDbl == middleware5
+									|| srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
@@ -27952,7 +30292,8 @@ public class KL {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl > middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl > middleware5
+									&& srcDbl >= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<")) {
@@ -27960,33 +30301,40 @@ public class KL {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl > middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl > middleware5
+									&& srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl > middleware5 && srcDbl == middleware5B) {
+							if (srcDbl > middleware5
+									&& srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
 					} else if (eq(cond5, ">=")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl >= middleware5 && srcDbl > middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl > middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl >= middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl >= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl >= middleware5 && srcDbl < middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl < middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl >= middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl >= middleware5 && srcDbl == middleware5B) {
+							if (srcDbl >= middleware5
+									&& srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
@@ -27996,7 +30344,8 @@ public class KL {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl < middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl < middleware5
+									&& srcDbl >= middleware5B) {
 
 								return sol5;
 							}
@@ -28005,55 +30354,67 @@ public class KL {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl < middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl < middleware5
+									&& srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl < middleware5 && srcDbl == middleware5B) {
+							if (srcDbl < middleware5
+									&& srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
 					} else if (eq(cond5, "<=")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl <= middleware5 && srcDbl > middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl > middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl <= middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl >= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl <= middleware5 && srcDbl < middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl < middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl <= middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl <= middleware5 && srcDbl == middleware5B) {
+							if (srcDbl <= middleware5
+									&& srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
 					} else if (eq(cond5, "==")) {
 						if (eq(cond5B, ">")) {
-							if (srcDbl == middleware5 && srcDbl > middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl > middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, ">=")) {
-							if (srcDbl == middleware5 && srcDbl >= middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl >= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<")) {
-							if (srcDbl == middleware5 && srcDbl < middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl < middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "<=")) {
-							if (srcDbl == middleware5 && srcDbl <= middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl <= middleware5B) {
 								return sol5;
 							}
 						} else if (eq(cond5B, "==")) {
-							if (srcDbl == middleware5 && srcDbl == middleware5B) {
+							if (srcDbl == middleware5
+									&& srcDbl == middleware5B) {
 								return sol5;
 							}
 						}
@@ -28100,7 +30461,8 @@ public class KL {
 				return null;
 			}
 			if (cond6 instanceof String) {
-				if (!in(Str(cond6), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond6),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -28110,8 +30472,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond6), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond6), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond6),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond6),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -28120,7 +30484,8 @@ public class KL {
 				}
 				String cond6B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond6), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond6),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond6).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -28131,8 +30496,10 @@ public class KL {
 					cond6 = parts[0];
 					cond6B = parts[1];
 				}
-				double middleware6 = Dbl(Str(cond6).replaceAll("[^\\-\\d\\.]", "")),
-						middleware6B = Dbl(Str(cond6B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware6 = Dbl(
+						Str(cond6).replaceAll("[^\\-\\d\\.]", "")),
+						middleware6B = Dbl(
+								Str(cond6B).replaceAll("[^\\-\\d\\.]", ""));
 				cond6 = String(cond6).replaceAll("[^<>=else]", "");
 				cond6B = String(cond6B).replaceAll("[^<>=]", "");
 
@@ -28143,7 +30510,8 @@ public class KL {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl > middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl > middleware6
+									|| srcDbl >= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<")) {
@@ -28151,33 +30519,40 @@ public class KL {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl > middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl > middleware6
+									|| srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl > middleware6 || srcDbl == middleware6B) {
+							if (srcDbl > middleware6
+									|| srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
 					} else if (eq(cond6, ">=")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl >= middleware6 || srcDbl > middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl > middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl >= middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl >= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl >= middleware6 || srcDbl < middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl < middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl >= middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl >= middleware6 || srcDbl == middleware6B) {
+							if (srcDbl >= middleware6
+									|| srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
@@ -28187,7 +30562,8 @@ public class KL {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl < middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl < middleware6
+									|| srcDbl >= middleware6B) {
 
 								return sol6;
 							}
@@ -28196,55 +30572,67 @@ public class KL {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl < middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl < middleware6
+									|| srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl < middleware6 || srcDbl == middleware6B) {
+							if (srcDbl < middleware6
+									|| srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
 					} else if (eq(cond6, "<=")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl <= middleware6 || srcDbl > middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl > middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl <= middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl >= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl <= middleware6 || srcDbl < middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl < middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl <= middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl <= middleware6 || srcDbl == middleware6B) {
+							if (srcDbl <= middleware6
+									|| srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
 					} else if (eq(cond6, "==")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl == middleware6 || srcDbl > middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl > middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl == middleware6 || srcDbl >= middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl >= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl == middleware6 || srcDbl < middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl < middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl == middleware6 || srcDbl <= middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl == middleware6 || srcDbl == middleware6B) {
+							if (srcDbl == middleware6
+									|| srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
@@ -28256,7 +30644,8 @@ public class KL {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl > middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl > middleware6
+									&& srcDbl >= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<")) {
@@ -28264,33 +30653,40 @@ public class KL {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl > middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl > middleware6
+									&& srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl > middleware6 && srcDbl == middleware6B) {
+							if (srcDbl > middleware6
+									&& srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
 					} else if (eq(cond6, ">=")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl >= middleware6 && srcDbl > middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl > middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl >= middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl >= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl >= middleware6 && srcDbl < middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl < middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl >= middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl >= middleware6 && srcDbl == middleware6B) {
+							if (srcDbl >= middleware6
+									&& srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
@@ -28300,7 +30696,8 @@ public class KL {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl < middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl < middleware6
+									&& srcDbl >= middleware6B) {
 
 								return sol6;
 							}
@@ -28309,55 +30706,67 @@ public class KL {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl < middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl < middleware6
+									&& srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl < middleware6 && srcDbl == middleware6B) {
+							if (srcDbl < middleware6
+									&& srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
 					} else if (eq(cond6, "<=")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl <= middleware6 && srcDbl > middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl > middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl <= middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl >= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl <= middleware6 && srcDbl < middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl < middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl <= middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl <= middleware6 && srcDbl == middleware6B) {
+							if (srcDbl <= middleware6
+									&& srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
 					} else if (eq(cond6, "==")) {
 						if (eq(cond6B, ">")) {
-							if (srcDbl == middleware6 && srcDbl > middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl > middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, ">=")) {
-							if (srcDbl == middleware6 && srcDbl >= middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl >= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<")) {
-							if (srcDbl == middleware6 && srcDbl < middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl < middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "<=")) {
-							if (srcDbl == middleware6 && srcDbl <= middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl <= middleware6B) {
 								return sol6;
 							}
 						} else if (eq(cond6B, "==")) {
-							if (srcDbl == middleware6 && srcDbl == middleware6B) {
+							if (srcDbl == middleware6
+									&& srcDbl == middleware6B) {
 								return sol6;
 							}
 						}
@@ -28404,7 +30813,8 @@ public class KL {
 				return null;
 			}
 			if (cond7 instanceof String) {
-				if (!in(Str(cond7), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond7),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -28414,8 +30824,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond7), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond7), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond7),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond7),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -28424,7 +30836,8 @@ public class KL {
 				}
 				String cond7B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond7), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond7),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond7).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -28435,8 +30848,10 @@ public class KL {
 					cond7 = parts[0];
 					cond7B = parts[1];
 				}
-				double middleware7 = Dbl(Str(cond7).replaceAll("[^\\-\\d\\.]", "")),
-						middleware7B = Dbl(Str(cond7B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware7 = Dbl(
+						Str(cond7).replaceAll("[^\\-\\d\\.]", "")),
+						middleware7B = Dbl(
+								Str(cond7B).replaceAll("[^\\-\\d\\.]", ""));
 				cond7 = String(cond7).replaceAll("[^<>=else]", "");
 				cond7B = String(cond7B).replaceAll("[^<>=]", "");
 
@@ -28447,7 +30862,8 @@ public class KL {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl > middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl > middleware7
+									|| srcDbl >= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<")) {
@@ -28455,33 +30871,40 @@ public class KL {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl > middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl > middleware7
+									|| srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl > middleware7 || srcDbl == middleware7B) {
+							if (srcDbl > middleware7
+									|| srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
 					} else if (eq(cond7, ">=")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl >= middleware7 || srcDbl > middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl > middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl >= middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl >= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl >= middleware7 || srcDbl < middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl < middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl >= middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl >= middleware7 || srcDbl == middleware7B) {
+							if (srcDbl >= middleware7
+									|| srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
@@ -28491,7 +30914,8 @@ public class KL {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl < middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl < middleware7
+									|| srcDbl >= middleware7B) {
 
 								return sol7;
 							}
@@ -28500,55 +30924,67 @@ public class KL {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl < middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl < middleware7
+									|| srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl < middleware7 || srcDbl == middleware7B) {
+							if (srcDbl < middleware7
+									|| srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
 					} else if (eq(cond7, "<=")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl <= middleware7 || srcDbl > middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl > middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl <= middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl >= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl <= middleware7 || srcDbl < middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl < middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl <= middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl <= middleware7 || srcDbl == middleware7B) {
+							if (srcDbl <= middleware7
+									|| srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
 					} else if (eq(cond7, "==")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl == middleware7 || srcDbl > middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl > middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl == middleware7 || srcDbl >= middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl >= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl == middleware7 || srcDbl < middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl < middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl == middleware7 || srcDbl <= middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl == middleware7 || srcDbl == middleware7B) {
+							if (srcDbl == middleware7
+									|| srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
@@ -28560,7 +30996,8 @@ public class KL {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl > middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl > middleware7
+									&& srcDbl >= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<")) {
@@ -28568,33 +31005,40 @@ public class KL {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl > middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl > middleware7
+									&& srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl > middleware7 && srcDbl == middleware7B) {
+							if (srcDbl > middleware7
+									&& srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
 					} else if (eq(cond7, ">=")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl >= middleware7 && srcDbl > middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl > middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl >= middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl >= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl >= middleware7 && srcDbl < middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl < middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl >= middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl >= middleware7 && srcDbl == middleware7B) {
+							if (srcDbl >= middleware7
+									&& srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
@@ -28604,7 +31048,8 @@ public class KL {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl < middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl < middleware7
+									&& srcDbl >= middleware7B) {
 
 								return sol7;
 							}
@@ -28613,55 +31058,67 @@ public class KL {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl < middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl < middleware7
+									&& srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl < middleware7 && srcDbl == middleware7B) {
+							if (srcDbl < middleware7
+									&& srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
 					} else if (eq(cond7, "<=")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl <= middleware7 && srcDbl > middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl > middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl <= middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl >= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl <= middleware7 && srcDbl < middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl < middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl <= middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl <= middleware7 && srcDbl == middleware7B) {
+							if (srcDbl <= middleware7
+									&& srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
 					} else if (eq(cond7, "==")) {
 						if (eq(cond7B, ">")) {
-							if (srcDbl == middleware7 && srcDbl > middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl > middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, ">=")) {
-							if (srcDbl == middleware7 && srcDbl >= middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl >= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<")) {
-							if (srcDbl == middleware7 && srcDbl < middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl < middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "<=")) {
-							if (srcDbl == middleware7 && srcDbl <= middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl <= middleware7B) {
 								return sol7;
 							}
 						} else if (eq(cond7B, "==")) {
-							if (srcDbl == middleware7 && srcDbl == middleware7B) {
+							if (srcDbl == middleware7
+									&& srcDbl == middleware7B) {
 								return sol7;
 							}
 						}
@@ -28708,7 +31165,8 @@ public class KL {
 				return null;
 			}
 			if (cond8 instanceof String) {
-				if (!in(Str(cond8), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond8),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -28718,8 +31176,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond8), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond8), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond8),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond8),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -28728,7 +31188,8 @@ public class KL {
 				}
 				String cond8B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond8), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond8),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond8).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -28739,8 +31200,10 @@ public class KL {
 					cond8 = parts[0];
 					cond8B = parts[1];
 				}
-				double middleware8 = Dbl(Str(cond8).replaceAll("[^\\-\\d\\.]", "")),
-						middleware8B = Dbl(Str(cond8B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware8 = Dbl(
+						Str(cond8).replaceAll("[^\\-\\d\\.]", "")),
+						middleware8B = Dbl(
+								Str(cond8B).replaceAll("[^\\-\\d\\.]", ""));
 				cond8 = String(cond8).replaceAll("[^<>=else]", "");
 				cond8B = String(cond8B).replaceAll("[^<>=]", "");
 
@@ -28751,7 +31214,8 @@ public class KL {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl > middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl > middleware8
+									|| srcDbl >= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<")) {
@@ -28759,33 +31223,40 @@ public class KL {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl > middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl > middleware8
+									|| srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl > middleware8 || srcDbl == middleware8B) {
+							if (srcDbl > middleware8
+									|| srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
 					} else if (eq(cond8, ">=")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl >= middleware8 || srcDbl > middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl > middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl >= middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl >= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl >= middleware8 || srcDbl < middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl < middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl >= middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl >= middleware8 || srcDbl == middleware8B) {
+							if (srcDbl >= middleware8
+									|| srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
@@ -28795,7 +31266,8 @@ public class KL {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl < middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl < middleware8
+									|| srcDbl >= middleware8B) {
 
 								return sol8;
 							}
@@ -28804,55 +31276,67 @@ public class KL {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl < middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl < middleware8
+									|| srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl < middleware8 || srcDbl == middleware8B) {
+							if (srcDbl < middleware8
+									|| srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
 					} else if (eq(cond8, "<=")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl <= middleware8 || srcDbl > middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl > middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl <= middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl >= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl <= middleware8 || srcDbl < middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl < middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl <= middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl <= middleware8 || srcDbl == middleware8B) {
+							if (srcDbl <= middleware8
+									|| srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
 					} else if (eq(cond8, "==")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl == middleware8 || srcDbl > middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl > middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl == middleware8 || srcDbl >= middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl >= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl == middleware8 || srcDbl < middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl < middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl == middleware8 || srcDbl <= middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl == middleware8 || srcDbl == middleware8B) {
+							if (srcDbl == middleware8
+									|| srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
@@ -28864,7 +31348,8 @@ public class KL {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl > middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl > middleware8
+									&& srcDbl >= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<")) {
@@ -28872,33 +31357,40 @@ public class KL {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl > middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl > middleware8
+									&& srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl > middleware8 && srcDbl == middleware8B) {
+							if (srcDbl > middleware8
+									&& srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
 					} else if (eq(cond8, ">=")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl >= middleware8 && srcDbl > middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl > middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl >= middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl >= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl >= middleware8 && srcDbl < middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl < middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl >= middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl >= middleware8 && srcDbl == middleware8B) {
+							if (srcDbl >= middleware8
+									&& srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
@@ -28908,7 +31400,8 @@ public class KL {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl < middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl < middleware8
+									&& srcDbl >= middleware8B) {
 
 								return sol8;
 							}
@@ -28917,55 +31410,67 @@ public class KL {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl < middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl < middleware8
+									&& srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl < middleware8 && srcDbl == middleware8B) {
+							if (srcDbl < middleware8
+									&& srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
 					} else if (eq(cond8, "<=")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl <= middleware8 && srcDbl > middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl > middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl <= middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl >= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl <= middleware8 && srcDbl < middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl < middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl <= middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl <= middleware8 && srcDbl == middleware8B) {
+							if (srcDbl <= middleware8
+									&& srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
 					} else if (eq(cond8, "==")) {
 						if (eq(cond8B, ">")) {
-							if (srcDbl == middleware8 && srcDbl > middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl > middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, ">=")) {
-							if (srcDbl == middleware8 && srcDbl >= middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl >= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<")) {
-							if (srcDbl == middleware8 && srcDbl < middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl < middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "<=")) {
-							if (srcDbl == middleware8 && srcDbl <= middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl <= middleware8B) {
 								return sol8;
 							}
 						} else if (eq(cond8B, "==")) {
-							if (srcDbl == middleware8 && srcDbl == middleware8B) {
+							if (srcDbl == middleware8
+									&& srcDbl == middleware8B) {
 								return sol8;
 							}
 						}
@@ -29012,7 +31517,8 @@ public class KL {
 				return null;
 			}
 			if (cond9 instanceof String) {
-				if (!in(Str(cond9), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond9),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -29022,8 +31528,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond9), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond9), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond9),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond9),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -29032,7 +31540,8 @@ public class KL {
 				}
 				String cond9B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond9), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond9),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond9).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -29043,8 +31552,10 @@ public class KL {
 					cond9 = parts[0];
 					cond9B = parts[1];
 				}
-				double middleware9 = Dbl(Str(cond9).replaceAll("[^\\-\\d\\.]", "")),
-						middleware9B = Dbl(Str(cond9B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware9 = Dbl(
+						Str(cond9).replaceAll("[^\\-\\d\\.]", "")),
+						middleware9B = Dbl(
+								Str(cond9B).replaceAll("[^\\-\\d\\.]", ""));
 				cond9 = String(cond9).replaceAll("[^<>=else]", "");
 				cond9B = String(cond9B).replaceAll("[^<>=]", "");
 
@@ -29055,7 +31566,8 @@ public class KL {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl > middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl > middleware9
+									|| srcDbl >= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<")) {
@@ -29063,33 +31575,40 @@ public class KL {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl > middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl > middleware9
+									|| srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl > middleware9 || srcDbl == middleware9B) {
+							if (srcDbl > middleware9
+									|| srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
 					} else if (eq(cond9, ">=")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl >= middleware9 || srcDbl > middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl > middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl >= middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl >= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl >= middleware9 || srcDbl < middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl < middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl >= middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl >= middleware9 || srcDbl == middleware9B) {
+							if (srcDbl >= middleware9
+									|| srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
@@ -29099,7 +31618,8 @@ public class KL {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl < middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl < middleware9
+									|| srcDbl >= middleware9B) {
 
 								return sol9;
 							}
@@ -29108,55 +31628,67 @@ public class KL {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl < middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl < middleware9
+									|| srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl < middleware9 || srcDbl == middleware9B) {
+							if (srcDbl < middleware9
+									|| srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
 					} else if (eq(cond9, "<=")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl <= middleware9 || srcDbl > middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl > middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl <= middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl >= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl <= middleware9 || srcDbl < middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl < middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl <= middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl <= middleware9 || srcDbl == middleware9B) {
+							if (srcDbl <= middleware9
+									|| srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
 					} else if (eq(cond9, "==")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl == middleware9 || srcDbl > middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl > middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl == middleware9 || srcDbl >= middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl >= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl == middleware9 || srcDbl < middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl < middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl == middleware9 || srcDbl <= middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl == middleware9 || srcDbl == middleware9B) {
+							if (srcDbl == middleware9
+									|| srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
@@ -29168,7 +31700,8 @@ public class KL {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl > middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl > middleware9
+									&& srcDbl >= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<")) {
@@ -29176,33 +31709,40 @@ public class KL {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl > middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl > middleware9
+									&& srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl > middleware9 && srcDbl == middleware9B) {
+							if (srcDbl > middleware9
+									&& srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
 					} else if (eq(cond9, ">=")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl >= middleware9 && srcDbl > middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl > middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl >= middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl >= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl >= middleware9 && srcDbl < middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl < middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl >= middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl >= middleware9 && srcDbl == middleware9B) {
+							if (srcDbl >= middleware9
+									&& srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
@@ -29212,7 +31752,8 @@ public class KL {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl < middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl < middleware9
+									&& srcDbl >= middleware9B) {
 
 								return sol9;
 							}
@@ -29221,55 +31762,67 @@ public class KL {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl < middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl < middleware9
+									&& srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl < middleware9 && srcDbl == middleware9B) {
+							if (srcDbl < middleware9
+									&& srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
 					} else if (eq(cond9, "<=")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl <= middleware9 && srcDbl > middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl > middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl <= middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl >= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl <= middleware9 && srcDbl < middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl < middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl <= middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl <= middleware9 && srcDbl == middleware9B) {
+							if (srcDbl <= middleware9
+									&& srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
 					} else if (eq(cond9, "==")) {
 						if (eq(cond9B, ">")) {
-							if (srcDbl == middleware9 && srcDbl > middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl > middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, ">=")) {
-							if (srcDbl == middleware9 && srcDbl >= middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl >= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<")) {
-							if (srcDbl == middleware9 && srcDbl < middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl < middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "<=")) {
-							if (srcDbl == middleware9 && srcDbl <= middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl <= middleware9B) {
 								return sol9;
 							}
 						} else if (eq(cond9B, "==")) {
-							if (srcDbl == middleware9 && srcDbl == middleware9B) {
+							if (srcDbl == middleware9
+									&& srcDbl == middleware9B) {
 								return sol9;
 							}
 						}
@@ -29316,7 +31869,8 @@ public class KL {
 				return null;
 			}
 			if (cond10 instanceof String) {
-				if (!in(Str(cond10), "else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
+				if (!in(Str(cond10),
+						"else|(?<=[<>=])\\-?\\d*\\.?\\d+|\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})|else")) {
 					print("[KL.LogicalError.UnlikelyTypesSeen]\nDue to a type conflict, current switch statement was rendered meaningless, and hence ignored.");
 					return null;
 				}
@@ -29326,8 +31880,10 @@ public class KL {
 				if (hasRangeShorthand) {
 					// provides following Kotlin-like behavior:
 					// when(...x, "n1..n2", () -> {}...)
-					double a = Dbl(findMatch(Str(cond10), "\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
-							b = Dbl(findMatch(Str(cond10), "(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
+					double a = Dbl(findMatch(Str(cond10),
+							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
+							b = Dbl(findMatch(Str(cond10),
+									"(?<=[\\.\\-]{2})\\-?\\d*\\.?\\d+"));
 					if (exclusive) {
 						a = round(a + 1);
 						b = round(b >= 0 ? b - 1 : b + 1);
@@ -29336,7 +31892,8 @@ public class KL {
 				}
 				String cond10B = "";
 				boolean either = false, both = false;
-				if (in(Str(cond10), "\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
+				if (in(Str(cond10),
+						"\\s*[\\&\\|]{1,2}\\s*(?=[<>=]\\-?\\d*\\.?\\d)")) {
 					String op = Str(cond10).replaceAll("[^\\&\\|]", "");
 					if (in(op.replaceAll("[\\&]", ""), "\\|")) {
 						either = true;
@@ -29347,123 +31904,150 @@ public class KL {
 					cond10 = parts[0];
 					cond10B = parts[1];
 				}
-				double middleware10 = Dbl(Str(cond10).replaceAll("[^\\-\\d\\.]", "")),
-						middleware10B = Dbl(Str(cond10B).replaceAll("[^\\-\\d\\.]", ""));
+				double middleware10 = Dbl(
+						Str(cond10).replaceAll("[^\\-\\d\\.]", "")),
+						middleware10B = Dbl(
+								Str(cond10B).replaceAll("[^\\-\\d\\.]", ""));
 				cond10 = String(cond10).replaceAll("[^<>=else]", "");
 				cond10B = String(cond10B).replaceAll("[^<>=]", "");
 
 				if (either) {
 					if (eq(cond10, ">")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl > middleware10 || srcDbl > middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl > middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl >= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl > middleware10 || srcDbl < middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl > middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl > middleware10 || srcDbl == middleware10B) {
+							if (srcDbl > middleware10
+									|| srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
 					} else if (eq(cond10, ">=")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl >= middleware10 || srcDbl > middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl >= middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl >= middleware10B) {
 
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl >= middleware10 || srcDbl < middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl >= middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl >= middleware10 || srcDbl == middleware10B) {
+							if (srcDbl >= middleware10
+									|| srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
 					} else if (eq(cond10, "<")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl < middleware10 || srcDbl > middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl < middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl >= middleware10B) {
 
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl < middleware10 || srcDbl < middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl < middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl < middleware10 || srcDbl == middleware10B) {
+							if (srcDbl < middleware10
+									|| srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
 					} else if (eq(cond10, "<=")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl <= middleware10 || srcDbl > middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl <= middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl >= middleware10B) {
 
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl <= middleware10 || srcDbl < middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl <= middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl <= middleware10 || srcDbl == middleware10B) {
+							if (srcDbl <= middleware10
+									|| srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
 					} else if (eq(cond10, "==")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl == middleware10 || srcDbl > middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl == middleware10 || srcDbl >= middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl >= middleware10B) {
 
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl == middleware10 || srcDbl < middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl == middleware10 || srcDbl <= middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl == middleware10 || srcDbl == middleware10B) {
+							if (srcDbl == middleware10
+									|| srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
@@ -29471,112 +32055,137 @@ public class KL {
 				} else if (both) {
 					if (eq(cond10, ">")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl > middleware10 && srcDbl > middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl > middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl >= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl > middleware10 && srcDbl < middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl > middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl > middleware10 && srcDbl == middleware10B) {
+							if (srcDbl > middleware10
+									&& srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
 					} else if (eq(cond10, ">=")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl >= middleware10 && srcDbl > middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl >= middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl >= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl >= middleware10 && srcDbl < middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl >= middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl >= middleware10 && srcDbl == middleware10B) {
+							if (srcDbl >= middleware10
+									&& srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
 					} else if (eq(cond10, "<")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl < middleware10 && srcDbl > middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl < middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl >= middleware10B) {
 
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl < middleware10 && srcDbl < middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl < middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl < middleware10 && srcDbl == middleware10B) {
+							if (srcDbl < middleware10
+									&& srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
 					} else if (eq(cond10, "<=")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl <= middleware10 && srcDbl > middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl <= middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl >= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl <= middleware10 && srcDbl < middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl <= middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl <= middleware10 && srcDbl == middleware10B) {
+							if (srcDbl <= middleware10
+									&& srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
 					} else if (eq(cond10, "==")) {
 						if (eq(cond10B, ">")) {
-							if (srcDbl == middleware10 && srcDbl > middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl > middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, ">=")) {
-							if (srcDbl == middleware10 && srcDbl >= middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl >= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<")) {
-							if (srcDbl == middleware10 && srcDbl < middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl < middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "<=")) {
-							if (srcDbl == middleware10 && srcDbl <= middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl <= middleware10B) {
 								return sol10;
 							}
 						} else if (eq(cond10B, "==")) {
-							if (srcDbl == middleware10 && srcDbl == middleware10B) {
+							if (srcDbl == middleware10
+									&& srcDbl == middleware10B) {
 								return sol10;
 							}
 						}
@@ -29933,103 +32542,134 @@ public class KL {
 		return null;
 	}
 
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8,
-			Object cond9, T sol9) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8, cond9, sol9, null, null);
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				null, null);
 	}
 
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8, null, null, null, null);
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, null, null,
+				null, null);
 	}
 
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, null,
-				null, null, null, null, null);
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, null, null, null, null,
+				null, null);
 	}
 
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, null, null, null,
-				null, null, null, null, null);
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, null, null, null, null, null, null,
+				null, null);
 	}
 
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, null, null, null, null, null,
-				null, null, null, null, null);
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, null, null, null, null, null, null, null, null,
+				null, null);
 	}
 
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null, null, null, null, null, null, null,
-				null, null, null, null, null);
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null);
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
-	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2, T sol2) {
-		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null);
+	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
+		return sw(src, cond1, sol1, cond2, sol2, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
 	public static <T> T sw(Object src, Object cond1, T sol1) {
-		return sw(src, cond1, sol1, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null);
+		return sw(src, cond1, sol1, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8,
-			Object cond9, T sol9, Object cond10, T sol10) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8, cond9, sol9, cond10, sol10);
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8,
-			Object cond9, T sol9) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8, cond9, sol9);
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7, cond8,
-				sol8);
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7);
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6);
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5) {
-		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5);
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
 		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
 	}
 
-	public static <T> T when(Object src, Object cond1, T sol1, Object cond2, T sol2) {
+	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
 		return sw(src, cond1, sol1, cond2, sol2);
 	}
 
@@ -30037,8 +32677,8 @@ public class KL {
 		return sw(src, cond1, sol1);
 	}
 
-	public static final boolean Yes = true, No = !Yes, On = Yes, Off = No, Ok = Yes, NotOk = !Ok, Fail = NotOk, Y = Yes,
-			N = No;
+	public static final boolean Yes = true, No = !Yes, On = Yes, Off = No,
+			Ok = Yes, NotOk = !Ok, Fail = NotOk, Y = Yes, N = No;
 	public static Object none = null, ignore = none, pass = ignore;
 	public static String Else = "else";
 	// helps method sw handle default/else cases
@@ -30079,7 +32719,9 @@ public class KL {
 		}
 		int step = 1;
 		if (is(optional) && len(optional) == 1) {
-			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0]) ? optional[0] : 1;
+			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0])
+					? optional[0]
+					: 1;
 		}
 		if (m > n) {
 			for (int i = m; i >= n; i -= step) {
@@ -30095,12 +32737,15 @@ public class KL {
 
 	public static String[] range(String m, String n, int... optional) {
 		strArr arr = new strArr();
-		if (isNull(m) || isNull(n) || eq(m, n) || !eq(m, "[A-Za-z]") || !eq(n, "[A-Za-z]")) {
+		if (isNull(m) || isNull(n) || eq(m, n) || !eq(m, "[A-Za-z]")
+				|| !eq(n, "[A-Za-z]")) {
 			return arr.array();
 		}
 		int step = 1;
 		if (is(optional) && len(optional) == 1) {
-			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0]) ? optional[0] : 1;
+			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0])
+					? optional[0]
+					: 1;
 		}
 		int charCodeOfM = m.charAt(0), charCodeOfN = n.charAt(0);
 		if (charCodeOfM > charCodeOfN) {
@@ -30129,7 +32774,9 @@ public class KL {
 		}
 		int step = 1;
 		if (is(optional) && len(optional) == 1) {
-			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0]) ? optional[0] : 1;
+			step = is(optional[0]) && !isNeg(optional[0]) && !isInf(optional[0])
+					? optional[0]
+					: 1;
 		}
 		if (m > n) {
 			for (double i = m; i >= n; i -= .1 * step) {
@@ -30145,7 +32792,7 @@ public class KL {
 
 	public static int[] range(int n, boolean reverse) {
 		if (not(n) || isNeg(n)) {
-			return new int[] {};
+			return new int[]{};
 		}
 		if (reverse) {
 			return range(n, 1);
@@ -30155,7 +32802,7 @@ public class KL {
 
 	public static int[] range(int m, int n, int gap, boolean reverse) {
 		if (isNull(m) || isNull(n) || eq(m, n)) {
-			return new int[] {};
+			return new int[]{};
 		}
 		if (reverse) {
 			return range(n, m, gap);
@@ -30165,7 +32812,7 @@ public class KL {
 
 	public static int[] range(int m, int n, boolean reverse) {
 		if (isNull(m) || isNull(n) || eq(m, n)) {
-			return new int[] {};
+			return new int[]{};
 		}
 		if (reverse) {
 			return range(n, m);
@@ -30175,7 +32822,7 @@ public class KL {
 
 	public static double[] range(double n, boolean reverse) {
 		if (not(n) || isNeg(n)) {
-			return new double[] {};
+			return new double[]{};
 		}
 		if (reverse) {
 			return range(n, 1);
@@ -30185,7 +32832,7 @@ public class KL {
 
 	public static double[] range(double m, double n, int gap, boolean reverse) {
 		if (isNull(m) || isNull(n) || eq(m, n)) {
-			return new double[] {};
+			return new double[]{};
 		}
 		if (reverse) {
 			return range(n, m, gap);
@@ -30195,7 +32842,7 @@ public class KL {
 
 	public static double[] range(double m, double n, boolean reverse) {
 		if (isNull(m) || isNull(n) || eq(m, n)) {
-			return new double[] {};
+			return new double[]{};
 		}
 		if (reverse) {
 			return range(n, m);
@@ -30205,7 +32852,7 @@ public class KL {
 
 	public static String[] range(String m, String n, int gap, boolean reverse) {
 		if (not(m) || not(n) || eq(m, n)) {
-			return new String[] {};
+			return new String[]{};
 		}
 		if (reverse) {
 			return range(n, m, gap);
@@ -30215,7 +32862,7 @@ public class KL {
 
 	public static String[] range(String m, String n, boolean reverse) {
 		if (not(m) || not(n) || eq(m, n)) {
-			return new String[] {};
+			return new String[]{};
 		}
 		if (reverse) {
 			return range(n, m);
@@ -30225,7 +32872,7 @@ public class KL {
 
 	public static char[] range(char m, char n, boolean reverse) {
 		if (not(m) || not(n) || eq(m, n)) {
-			return new char[] {};
+			return new char[]{};
 		}
 		if (reverse) {
 			return range(n, m);
@@ -30266,6 +32913,10 @@ public class KL {
 	}
 
 	public static int[] range(Object[] arr) {
+		return range(len(arr));
+	}
+
+	public static int[] range(arr arr) {
 		return range(len(arr));
 	}
 
@@ -30449,6 +33100,10 @@ public class KL {
 		return range(arr);
 	}
 
+	public static int[] idx(arr arr) {
+		return range(arr);
+	}
+
 	public static int[] idx(strArr arr) {
 		return range(arr);
 	}
@@ -30473,7 +33128,8 @@ public class KL {
 		return range(arr);
 	}
 
-	public static void each(String[] iterable, ObjIntConsumer<String> consumer) {
+	public static void each(String[] iterable,
+			ObjIntConsumer<String> consumer) {
 		if (not(iterable) || not(consumer)) {
 			return;
 		}
@@ -30585,7 +33241,8 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 
-	public static void each(double[] iterable, ObjIntConsumer<Double> consumer) {
+	public static void each(double[] iterable,
+			ObjIntConsumer<Double> consumer) {
 		if (not(iterable) || not(consumer)) {
 			return;
 		}
@@ -30613,7 +33270,8 @@ public class KL {
 		each(iterable.array(), consumer);
 	}
 
-	public static void each(boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
+	public static void each(boolean[] iterable,
+			ObjIntConsumer<Boolean> consumer) {
 		if (not(iterable) || not(consumer)) {
 			return;
 		}
@@ -30633,7 +33291,8 @@ public class KL {
 		}
 	}
 
-	public static void each(boolArr iterable, ObjIntConsumer<Boolean> consumer) {
+	public static void each(boolArr iterable,
+			ObjIntConsumer<Boolean> consumer) {
 		each(iterable.array(), consumer);
 	}
 
@@ -30663,19 +33322,23 @@ public class KL {
 
 	// handling Object arrays
 	// DON'T remove
-	public static void forEach(String[] iterable, ObjIntConsumer<String> consumer) {
+	public static void forEach(String[] iterable,
+			ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(strArr iterable, ObjIntConsumer<String> consumer) {
+	public static void forEach(strArr iterable,
+			ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(int[] iterable, ObjIntConsumer<Integer> consumer) {
+	public static void forEach(int[] iterable,
+			ObjIntConsumer<Integer> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(intArr iterable, ObjIntConsumer<Integer> consumer) {
+	public static void forEach(intArr iterable,
+			ObjIntConsumer<Integer> consumer) {
 		each(iterable, consumer);
 	}
 
@@ -30683,31 +33346,38 @@ public class KL {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(longArr iterable, ObjIntConsumer<Long> consumer) {
+	public static void forEach(longArr iterable,
+			ObjIntConsumer<Long> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(float[] iterable, ObjIntConsumer<Float> consumer) {
+	public static void forEach(float[] iterable,
+			ObjIntConsumer<Float> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(fltArr iterable, ObjIntConsumer<Float> consumer) {
+	public static void forEach(fltArr iterable,
+			ObjIntConsumer<Float> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(double[] iterable, ObjIntConsumer<Double> consumer) {
+	public static void forEach(double[] iterable,
+			ObjIntConsumer<Double> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(dblArr iterable, ObjIntConsumer<Double> consumer) {
+	public static void forEach(dblArr iterable,
+			ObjIntConsumer<Double> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(boolean[] iterable, ObjIntConsumer<Boolean> consumer) {
+	public static void forEach(boolean[] iterable,
+			ObjIntConsumer<Boolean> consumer) {
 		each(iterable, consumer);
 	}
 
-	public static void forEach(boolArr iterable, ObjIntConsumer<Boolean> consumer) {
+	public static void forEach(boolArr iterable,
+			ObjIntConsumer<Boolean> consumer) {
 		each(iterable, consumer);
 	}
 
@@ -30733,7 +33403,7 @@ public class KL {
 		}
 		return s;
 	}
-	
+
 	public static String times(String s, int n) {
 		return repeat(s, n);
 	}
@@ -30796,7 +33466,8 @@ public class KL {
 		return Arrays.stream(arr).map(func).toArray();
 	}
 
-	public static boolean[] map(boolean[] arr, Function<Boolean, Boolean> func) {
+	public static boolean[] map(boolean[] arr,
+			Function<Boolean, Boolean> func) {
 		if (not(arr) || not(func)) {
 			return arr;
 		}
@@ -30855,7 +33526,8 @@ public class KL {
 		return new dblArr(array).popIf(condition).array();
 	}
 
-	public static boolean[] popIf(boolean[] array, Predicate<Boolean> condition) {
+	public static boolean[] popIf(boolean[] array,
+			Predicate<Boolean> condition) {
 		return new boolArr(array).popIf(condition).array();
 	}
 
@@ -30903,7 +33575,8 @@ public class KL {
 		return new dblArr(array).keepIf(condition).array();
 	}
 
-	public static boolean[] keepIf(boolean[] array, Predicate<Boolean> condition) {
+	public static boolean[] keepIf(boolean[] array,
+			Predicate<Boolean> condition) {
 		return new boolArr(array).keepIf(condition).array();
 	}
 
@@ -30931,7 +33604,8 @@ public class KL {
 		return list.keepIf(condition);
 	}
 
-	public static String[] filterOut(String[] array, Predicate<String> condition) {
+	public static String[] filterOut(String[] array,
+			Predicate<String> condition) {
 		return popIf(array, condition);
 	}
 
@@ -30947,11 +33621,13 @@ public class KL {
 		return popIf(array, condition);
 	}
 
-	public static double[] filterOut(double[] array, Predicate<Double> condition) {
+	public static double[] filterOut(double[] array,
+			Predicate<Double> condition) {
 		return popIf(array, condition);
 	}
 
-	public static boolean[] filterOut(boolean[] array, Predicate<Boolean> condition) {
+	public static boolean[] filterOut(boolean[] array,
+			Predicate<Boolean> condition) {
 		return popIf(array, condition);
 	}
 
@@ -30975,7 +33651,8 @@ public class KL {
 		return popIf(list, condition);
 	}
 
-	public static boolArr filterOut(boolArr list, Predicate<Boolean> condition) {
+	public static boolArr filterOut(boolArr list,
+			Predicate<Boolean> condition) {
 		return popIf(list, condition);
 	}
 
@@ -30999,7 +33676,8 @@ public class KL {
 		return keepIf(array, condition);
 	}
 
-	public static boolean[] filter(boolean[] array, Predicate<Boolean> condition) {
+	public static boolean[] filter(boolean[] array,
+			Predicate<Boolean> condition) {
 		return keepIf(array, condition);
 	}
 
@@ -31027,7 +33705,8 @@ public class KL {
 		return keepIf(list, condition);
 	}
 
-	public static String[] onlyPop(String[] array, Predicate<String> condition) {
+	public static String[] onlyPop(String[] array,
+			Predicate<String> condition) {
 		return popIf(array, condition);
 	}
 
@@ -31043,11 +33722,13 @@ public class KL {
 		return popIf(array, condition);
 	}
 
-	public static double[] onlyPop(double[] array, Predicate<Double> condition) {
+	public static double[] onlyPop(double[] array,
+			Predicate<Double> condition) {
 		return popIf(array, condition);
 	}
 
-	public static boolean[] onlyPop(boolean[] array, Predicate<Boolean> condition) {
+	public static boolean[] onlyPop(boolean[] array,
+			Predicate<Boolean> condition) {
 		return popIf(array, condition);
 	}
 
@@ -31075,7 +33756,8 @@ public class KL {
 		return popIf(list, condition);
 	}
 
-	public static String[] onlyKeep(String[] array, Predicate<String> condition) {
+	public static String[] onlyKeep(String[] array,
+			Predicate<String> condition) {
 		return keepIf(array, condition);
 	}
 
@@ -31091,11 +33773,13 @@ public class KL {
 		return keepIf(array, condition);
 	}
 
-	public static double[] onlyKeep(double[] array, Predicate<Double> condition) {
+	public static double[] onlyKeep(double[] array,
+			Predicate<Double> condition) {
 		return keepIf(array, condition);
 	}
 
-	public static boolean[] onlyKeep(boolean[] array, Predicate<Boolean> condition) {
+	public static boolean[] onlyKeep(boolean[] array,
+			Predicate<Boolean> condition) {
 		return keepIf(array, condition);
 	}
 
@@ -31125,13 +33809,15 @@ public class KL {
 
 	// Date functions
 	public static String nthDay(int n) {
-		String days[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+		String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+				"Friday", "Saturday"};
 		return days[n];
 	}
 
 	public static String nthMonth(int n) {
-		String months[] = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
-				"October", "November", "December" };
+		String months[] = {"January", "February", "March", "April", "May",
+				"June", "July", "August", "September", "October", "November",
+				"December"};
 		return months[n];
 	}
 
@@ -31156,7 +33842,7 @@ public class KL {
 		parts[0] = parts[0];
 		parts[1] = split(parts[1], " ")[0] + " " + split(parts[1], " ")[1];
 		String time = slice(parts, len(parts) - 1)[0];
-		String x[] = { time, join(slice(parts, 0, len(parts) - 1), ", ") };
+		String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
 		String result = join(x, ", ");
 		return result;
 	}
@@ -31167,8 +33853,10 @@ public class KL {
 		}
 		String parts[] = now().split(", ");
 		String time = parts[0], day = sliceKeep(parts[1], 3),
-				dateOfMonth = sliceKeep(parts[2], 3) + " " + parts[2].split(" ")[1], year = parts[3];
-		String result = join(new String[] { time, day, dateOfMonth, year }, ", ");
+				dateOfMonth = sliceKeep(parts[2], 3) + " "
+						+ parts[2].split(" ")[1],
+				year = parts[3];
+		String result = join(new String[]{time, day, dateOfMonth, year}, ", ");
 		return result;
 	}
 
@@ -31220,21 +33908,21 @@ public class KL {
 	public static String getSeason() {
 		String m = slice(getMonth(), 0, 3).toLowerCase();
 		switch (m) {
-		case "may":
-		case "jun":
-		case "jul":
-		case "aug":
-			return "Summer";
-		case "sep":
-		case "oct":
-			return "Spring";
-		case "nov":
-		case "dec":
-		case "jan":
-		case "feb":
-			return "Winter";
-		default:
-			return "Fall/Autumn";
+			case "may" :
+			case "jun" :
+			case "jul" :
+			case "aug" :
+				return "Summer";
+			case "sep" :
+			case "oct" :
+				return "Spring";
+			case "nov" :
+			case "dec" :
+			case "jan" :
+			case "feb" :
+				return "Winter";
+			default :
+				return "Fall/Autumn";
 		}
 	}
 
@@ -31422,7 +34110,8 @@ public class KL {
 		KL dt2 = new KL();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug for
 		// better accuracy
-		String result = "" + ("" + dt2.nthMonth(m - 1) + " " + new Date(new Date().getYear(), m, 0).getDate());
+		String result = "" + ("" + dt2.nthMonth(m - 1) + " "
+				+ new Date(new Date().getYear(), m, 0).getDate());
 		return result;
 	}
 
@@ -31513,7 +34202,8 @@ public class KL {
 	public static String nthHour(int n) {
 		Date dt = new Date();
 		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setTime(dt.getTime() - (int) 36e5 * dt.getHours() + (n * (int) 36e5));
+		dt.setTime(
+				dt.getTime() - (int) 36e5 * dt.getHours() + (n * (int) 36e5));
 		String time = formattedDate(dt);
 		time = time.split(", ")[3];
 		return time;
@@ -31528,7 +34218,8 @@ public class KL {
 		if (isNull(args) || not(args.length)) {
 			return;
 		}
-		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]), "[\\%\\$\\&\\{\\}\\.\\d]")) {
+		if (!isNull(args[0]) && args[0] instanceof String
+				&& in(Str(args[0]), "[\\%\\$\\&\\{\\}\\.\\d]")) {
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
 				return;
@@ -31552,15 +34243,26 @@ public class KL {
 				} else if (arg instanceof Character) {
 					arg = "\'" + arg + "\'";
 				} else if (arg instanceof Float || arg instanceof Double) {
-					if (in(Str(arg instanceof Float ? (float) arg : (double) arg), "(?<=\\.)\\d{3,}")) {
-						arg = fus(arg instanceof Float ? (float) arg : (double) arg);
+					if (in(Str(
+							arg instanceof Float ? (float) arg : (double) arg),
+							"(?<=\\.)\\d{3,}")) {
+						arg = fus(arg instanceof Float
+								? (float) arg
+								: (double) arg);
 					} else {
-						arg = f(arg instanceof Float ? (float) arg : (double) arg).replaceAll("\\.?[0]+$", "");
+						arg = f(arg instanceof Float
+								? (float) arg
+								: (double) arg).replaceAll("\\.?[0]+$", "");
 					}
 				} else if (type(arg, "(o|tree)[A-Z]*")) {
-					arg = Str(arg).replaceAll("(?<=\\=)([A-Za-z]{1}(?!\\w))", "\'$1\'")
-							.replaceAll("(?<=\\=)((\\d*[A-Za-z]{2,}\\d*)(\\s*[A-Za-z]+\\d*){0,})", "\"$1\"")
-							.replaceAll("\"(true|false)\"", "$1").replaceAll("=", ": ");
+					arg = Str(arg)
+							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!\\w))",
+									"\'$1\'")
+							.replaceAll(
+									"(?<=\\=)((\\d*[A-Za-z]{2,}\\d*)(\\s*[A-Za-z]+\\d*){0,})",
+									"\"$1\"")
+							.replaceAll("\"(true|false)\"", "$1")
+							.replaceAll("=", ": ");
 				}
 				System.out.print(arg + " ");
 			}
@@ -31602,8 +34304,10 @@ public class KL {
 		if (isNull(arg)) {
 			return;
 		}
-		if (arg instanceof o || arg instanceof oI || arg instanceof oL || arg instanceof oF || arg instanceof oD
-				|| arg instanceof oB || arg instanceof HashMap || arg instanceof tree || arg instanceof TreeMap) {
+		if (arg instanceof o || arg instanceof oI || arg instanceof oL
+				|| arg instanceof oF || arg instanceof oD || arg instanceof oB
+				|| arg instanceof HashMap || arg instanceof tree
+				|| arg instanceof TreeMap) {
 			if (arg instanceof o) {
 				arg = arr((o) arg);
 			} else if (arg instanceof oI) {
@@ -31638,7 +34342,8 @@ public class KL {
 				arg = arr((treeDB) arg);
 			}
 		}
-		if (isStrArr(arg) || isIntArr(arg) || isLongArr(arg) || isFltArr(arg) || isDblArr(arg) || isBoolArr(arg)) {
+		if (isStrArr(arg) || isIntArr(arg) || isLongArr(arg) || isFltArr(arg)
+				|| isDblArr(arg) || isBoolArr(arg)) {
 			if (isStrArr(arg)) {
 				strArr helper = (strArr) arg;
 				arg = helper.array();
@@ -31664,8 +34369,9 @@ public class KL {
 			// are based on a
 			// Object wrapper, like String[], Number[], Object[]
 			if (isArrOfStr(arg)) {
-				System.out.print(
-						"[" + (!isEmpty((String[]) arg) ? "\"" + join((String[]) arg, "\", \"") + "\"" : "") + "]");
+				System.out.print("[" + (!isEmpty((String[]) arg)
+						? "\"" + join((String[]) arg, "\", \"") + "\""
+						: "") + "]");
 			} else if (isArrOfNum(arg)) {
 				System.out.print("[" + join((Number[]) arg) + "]");
 			} else if (isArrOfObj(arg)) {
@@ -31673,7 +34379,9 @@ public class KL {
 			}
 		} else {
 			if (isArrOfChar(arg)) {
-				System.out.print("[" + (!isEmpty((char[]) arg) ? "\'" + join(arg, "\', \'") + "\'" : "") + "]");
+				System.out.print("[" + (!isEmpty((char[]) arg)
+						? "\'" + join(arg, "\', \'") + "\'"
+						: "") + "]");
 			} else if (isArrOfInt(arg)) {
 				System.out.print("[" + join((int[]) arg) + "]");
 			} else if (isArrOfLong(arg)) {
@@ -32737,40 +35445,50 @@ public class KL {
 		return Arr(t);
 	}
 
-	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
-		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8, String k9, int v9, String k10, int v10) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6, String k7, int v7, String k8, int v8, String k9, int v9) {
-		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8, String k9, int v9) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6, String k7, int v7, String k8, int v8) {
-		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7, String k8, int v8) {
+		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6, String k7, int v7) {
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6, String k7,
+			int v7) {
 		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5,
-			String k6, int v6) {
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5, String k6, int v6) {
 		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4, String k5, int v5) {
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4, String k5, int v5) {
 		return new oI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3, String k4, int v4) {
+	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3,
+			String k4, int v4) {
 		return new oI(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oI o(String k1, int v1, String k2, int v2, String k3, int v3) {
+	public static oI o(String k1, int v1, String k2, int v2, String k3,
+			int v3) {
 		return new oI(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -32782,42 +35500,52 @@ public class KL {
 		return new oI(k1, v1);
 	}
 
-	public static oL o(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9, String k10,
-			long v10) {
-		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8, String k9, long v9,
+			String k10, long v10) {
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oL o(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6, String k7, long v7, String k8, long v8, String k9, long v9) {
-		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8, String k9, long v9) {
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oL o(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6, String k7, long v7, String k8, long v8) {
-		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7, String k8, long v8) {
+		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oL o(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6, String k7, long v7) {
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6, long v6,
+			String k7, long v7) {
 		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oL o(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5, String k6, long v6) {
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5, String k6,
+			long v6) {
 		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oL o(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4, String k5,
-			long v5) {
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4, String k5, long v5) {
 		return new oL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oL o(String k1, long v1, String k2, long v2, String k3, long v3, String k4, long v4) {
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
+			long v3, String k4, long v4) {
 		return new oL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oL o(String k1, long v1, String k2, long v2, String k3, long v3) {
+	public static oL o(String k1, long v1, String k2, long v2, String k3,
+			long v3) {
 		return new oL(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -32829,42 +35557,53 @@ public class KL {
 		return new oL(k1, v1);
 	}
 
-	public static oF o(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9, String k10,
-			float v10) {
-		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8, String k9,
+			float v9, String k10, float v10) {
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oF o(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6, String k7, float v7, String k8, float v8, String k9, float v9) {
-		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8, String k9,
+			float v9) {
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oF o(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6, String k7, float v7, String k8, float v8) {
-		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7, String k8, float v8) {
+		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oF o(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6, String k7, float v7) {
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6, String k7, float v7) {
 		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oF o(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5, String k6, float v6) {
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5, String k6,
+			float v6) {
 		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oF o(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4, String k5,
-			float v5) {
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4, String k5, float v5) {
 		return new oF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oF o(String k1, float v1, String k2, float v2, String k3, float v3, String k4, float v4) {
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
+			float v3, String k4, float v4) {
 		return new oF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oF o(String k1, float v1, String k2, float v2, String k3, float v3) {
+	public static oF o(String k1, float v1, String k2, float v2, String k3,
+			float v3) {
 		return new oF(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -32876,43 +35615,53 @@ public class KL {
 		return new oF(k1, v1);
 	}
 
-	public static oD o(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9,
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8, String k9,
 			double v9, String k10, double v10) {
-		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oD o(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8, String k9,
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8, String k9,
 			double v9) {
-		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oD o(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6, String k7, double v7, String k8, double v8) {
-		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7, String k8, double v8) {
+		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oD o(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6, String k7, double v7) {
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6, String k7, double v7) {
 		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oD o(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5, String k6, double v6) {
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5, String k6,
+			double v6) {
 		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oD o(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4,
-			String k5, double v5) {
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4, String k5, double v5) {
 		return new oD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oD o(String k1, double v1, String k2, double v2, String k3, double v3, String k4, double v4) {
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3, String k4, double v4) {
 		return new oD(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oD o(String k1, double v1, String k2, double v2, String k3, double v3) {
+	public static oD o(String k1, double v1, String k2, double v2, String k3,
+			double v3) {
 		return new oD(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -32924,43 +35673,53 @@ public class KL {
 		return new oD(k1, v1);
 	}
 
-	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
 			boolean v9, String k10, boolean v10) {
-		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8, String k9,
 			boolean v9) {
-		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6, String k7, boolean v7, String k8, boolean v8) {
-		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7, String k8, boolean v8) {
+		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6, String k7, boolean v7) {
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6, String k7, boolean v7) {
 		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
 	}
 
-	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5, String k6, boolean v6) {
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5, String k6,
+			boolean v6) {
 		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4,
-			String k5, boolean v5) {
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4, String k5, boolean v5) {
 		return new oB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3, String k4, boolean v4) {
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3, String k4, boolean v4) {
 		return new oB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3, boolean v3) {
+	public static oB o(String k1, boolean v1, String k2, boolean v2, String k3,
+			boolean v3) {
 		return new oB(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -32973,42 +35732,53 @@ public class KL {
 	}
 
 	// treeI
-	public static treeI tree(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9, int k10,
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8, int k9, String v9, int k10,
 			String v10) {
-		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeI tree(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6, int k7, String v7, int k8, String v8, int k9, String v9) {
-		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8, int k9, String v9) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeI tree(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6, int k7, String v7, int k8, String v8) {
-		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7, int k8, String v8) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeI tree(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6, int k7, String v7) {
-		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
+			int k7, String v7) {
+		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeI tree(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5, int k6, String v6) {
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5, int k6,
+			String v6) {
 		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeI tree(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4, int k5,
-			String v5) {
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4, int k5, String v5) {
 		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeI tree(int k1, String v1, int k2, String v2, int k3, String v3, int k4, String v4) {
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3, int k4, String v4) {
 		return new treeI(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeI tree(int k1, String v1, int k2, String v2, int k3, String v3) {
+	public static treeI tree(int k1, String v1, int k2, String v2, int k3,
+			String v3) {
 		return new treeI(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33021,43 +35791,54 @@ public class KL {
 	}
 
 	// part B
-	public static treeDS tree(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6, double k7, String v7, double k8, String v8, double k9,
-			String v9, double k10, String v10) {
-		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8,
+			double k9, String v9, double k10, String v10) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeDS tree(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6, double k7, String v7, double k8, String v8, double k9,
-			String v9) {
-		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8,
+			double k9, String v9) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
 	}
 
-	public static treeDS tree(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6, double k7, String v7, double k8, String v8) {
-		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7, double k8, String v8) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
 	}
 
-	public static treeDS tree(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6, double k7, String v7) {
-		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6, double k7, String v7) {
+		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeDS tree(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5, double k6, String v6) {
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5,
+			double k6, String v6) {
 		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeDS tree(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4,
-			double k5, String v5) {
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4, double k5, String v5) {
 		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeDS tree(double k1, String v1, double k2, String v2, double k3, String v3, double k4, String v4) {
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3, double k4, String v4) {
 		return new treeDS(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeDS tree(double k1, String v1, double k2, String v2, double k3, String v3) {
+	public static treeDS tree(double k1, String v1, double k2, String v2,
+			double k3, String v3) {
 		return new treeDS(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33070,40 +35851,51 @@ public class KL {
 	}
 
 	// treeL
-	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6, int k7, long v7, int k8, long v8, int k9, long v9, int k10, long v10) {
-		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8, int k9, long v9, int k10, long v10) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6, int k7, long v7, int k8, long v8, int k9, long v9) {
-		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8, int k9, long v9) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6, int k7, long v7, int k8, long v8) {
-		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
+			int k8, long v8) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6, int k7, long v7) {
-		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6, int k7,
+			long v7) {
+		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5,
-			int k6, long v6) {
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5, int k6, long v6) {
 		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4, int k5, long v5) {
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4, int k5, long v5) {
 		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3, int k4, long v4) {
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3,
+			int k4, long v4) {
 		return new treeL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeL tree(int k1, long v1, int k2, long v2, int k3, long v3) {
+	public static treeL tree(int k1, long v1, int k2, long v2, int k3,
+			long v3) {
 		return new treeL(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33116,42 +35908,53 @@ public class KL {
 	}
 
 	// part B
-	public static treeDL tree(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5,
-			long v5, double k6, long v6, double k7, long v7, double k8, long v8, double k9, long v9, double k10,
-			long v10) {
-		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6, long v6,
+			double k7, long v7, double k8, long v8, double k9, long v9,
+			double k10, long v10) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeDL tree(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5,
-			long v5, double k6, long v6, double k7, long v7, double k8, long v8, double k9, long v9) {
-		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6, long v6,
+			double k7, long v7, double k8, long v8, double k9, long v9) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
 	}
 
-	public static treeDL tree(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5,
-			long v5, double k6, long v6, double k7, long v7, double k8, long v8) {
-		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6, long v6,
+			double k7, long v7, double k8, long v8) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
 	}
 
-	public static treeDL tree(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5,
-			long v5, double k6, long v6, double k7, long v7) {
-		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6, long v6,
+			double k7, long v7) {
+		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeDL tree(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5,
-			long v5, double k6, long v6) {
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5, double k6,
+			long v6) {
 		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeDL tree(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4, double k5,
-			long v5) {
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4, double k5, long v5) {
 		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeDL tree(double k1, long v1, double k2, long v2, double k3, long v3, double k4, long v4) {
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3, double k4, long v4) {
 		return new treeDL(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeDL tree(double k1, long v1, double k2, long v2, double k3, long v3) {
+	public static treeDL tree(double k1, long v1, double k2, long v2, double k3,
+			long v3) {
 		return new treeDL(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33164,40 +35967,52 @@ public class KL {
 	}
 
 	// treeF
-	public static treeF tree(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6, int k7, float v7, int k8, float v8, int k9, float v9, int k10, float v10) {
-		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8, int k9, float v9, int k10,
+			float v10) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeF tree(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6, int k7, float v7, int k8, float v8, int k9, float v9) {
-		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8, int k9, float v9) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeF tree(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6, int k7, float v7, int k8, float v8) {
-		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7, int k8, float v8) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeF tree(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6, int k7, float v7) {
-		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6,
+			int k7, float v7) {
+		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeF tree(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5,
-			int k6, float v6) {
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5, int k6, float v6) {
 		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeF tree(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4, int k5, float v5) {
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4, int k5, float v5) {
 		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeF tree(int k1, float v1, int k2, float v2, int k3, float v3, int k4, float v4) {
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3, int k4, float v4) {
 		return new treeF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeF tree(int k1, float v1, int k2, float v2, int k3, float v3) {
+	public static treeF tree(int k1, float v1, int k2, float v2, int k3,
+			float v3) {
 		return new treeF(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33210,42 +36025,54 @@ public class KL {
 	}
 
 	// partB
-	public static treeDF tree(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6, double k7, float v7, double k8, float v8, double k9, float v9,
-			double k10, float v10) {
-		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8,
+			double k9, float v9, double k10, float v10) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeDF tree(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6, double k7, float v7, double k8, float v8, double k9, float v9) {
-		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8,
+			double k9, float v9) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
 	}
 
-	public static treeDF tree(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6, double k7, float v7, double k8, float v8) {
-		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7, double k8, float v8) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
 	}
 
-	public static treeDF tree(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6, double k7, float v7) {
-		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6, double k7, float v7) {
+		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeDF tree(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5, double k6, float v6) {
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5,
+			double k6, float v6) {
 		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeDF tree(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4,
-			double k5, float v5) {
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4, double k5, float v5) {
 		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeDF tree(double k1, float v1, double k2, float v2, double k3, float v3, double k4, float v4) {
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3, double k4, float v4) {
 		return new treeDF(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeDF tree(double k1, float v1, double k2, float v2, double k3, float v3) {
+	public static treeDF tree(double k1, float v1, double k2, float v2,
+			double k3, float v3) {
 		return new treeDF(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33258,42 +36085,53 @@ public class KL {
 	}
 
 	// treeD: exclusive
-	public static treeD tree(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6, int k7, double v7, int k8, double v8, int k9, double v9, int k10,
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8, int k9, double v9, int k10,
 			double v10) {
-		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeD tree(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6, int k7, double v7, int k8, double v8, int k9, double v9) {
-		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8, int k9, double v9) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeD tree(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6, int k7, double v7, int k8, double v8) {
-		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7, int k8, double v8) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeD tree(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6, int k7, double v7) {
-		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
+			int k7, double v7) {
+		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeD tree(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5, int k6, double v6) {
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5, int k6,
+			double v6) {
 		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeD tree(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4, int k5,
-			double v5) {
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4, int k5, double v5) {
 		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeD tree(int k1, double v1, int k2, double v2, int k3, double v3, int k4, double v4) {
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3, int k4, double v4) {
 		return new treeD(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeD tree(int k1, double v1, int k2, double v2, int k3, double v3) {
+	public static treeD tree(int k1, double v1, int k2, double v2, int k3,
+			double v3) {
 		return new treeD(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33306,42 +36144,54 @@ public class KL {
 	}
 
 	// treeB
-	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6, int k7, boolean v7, int k8, boolean v8, int k9, boolean v9, int k10,
-			boolean v10) {
-		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8, int k9,
+			boolean v9, int k10, boolean v10) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6, int k7, boolean v7, int k8, boolean v8, int k9, boolean v9) {
-		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8, int k9,
+			boolean v9) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8, k9, v9);
 	}
 
-	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6, int k7, boolean v7, int k8, boolean v8) {
-		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7, int k8, boolean v8) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7,
+				k8, v8);
 	}
 
-	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6, int k7, boolean v7) {
-		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6, int k7, boolean v7) {
+		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5, int k6, boolean v6) {
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5, int k6,
+			boolean v6) {
 		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4, int k5,
-			boolean v5) {
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4, int k5, boolean v5) {
 		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3, int k4, boolean v4) {
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3, int k4, boolean v4) {
 		return new treeB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3, boolean v3) {
+	public static treeB tree(int k1, boolean v1, int k2, boolean v2, int k3,
+			boolean v3) {
 		return new treeB(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33354,44 +36204,56 @@ public class KL {
 	}
 
 	// part B
-	public static treeDB tree(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
 			double k9, boolean v9, double k10, boolean v10) {
-		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9, k10, v10);
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9, k10, v10);
 	}
 
-	public static treeDB tree(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8, boolean v8,
 			double k9, boolean v9) {
-		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8, k9, v9);
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8, k9, v9);
 	}
 
-	public static treeDB tree(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6, double k7, boolean v7, double k8, boolean v8) {
-		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7, k8, v8);
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7, double k8,
+			boolean v8) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7, k8, v8);
 	}
 
-	public static treeDB tree(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6, double k7, boolean v7) {
-		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7, v7);
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6, double k7, boolean v7) {
+		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6, k7,
+				v7);
 	}
 
-	public static treeDB tree(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5, double k6, boolean v6) {
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
+			double k6, boolean v6) {
 		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5, k6, v6);
 	}
 
-	public static treeDB tree(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4, double k5, boolean v5) {
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4, double k5,
+			boolean v5) {
 		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4, k5, v5);
 	}
 
-	public static treeDB tree(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3, double k4,
-			boolean v4) {
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3, double k4, boolean v4) {
 		return new treeDB(k1, v1, k2, v2, k3, v3, k4, v4);
 	}
 
-	public static treeDB tree(double k1, boolean v1, double k2, boolean v2, double k3, boolean v3) {
+	public static treeDB tree(double k1, boolean v1, double k2, boolean v2,
+			double k3, boolean v3) {
 		return new treeDB(k1, v1, k2, v2, k3, v3);
 	}
 
@@ -33482,7 +36344,8 @@ public class KL {
 		}
 		// the null check was needed here
 		String[] returnValue = str.split(delimiting_str_or_regex);
-		if (eq(delimiting_str_or_regex, "") || (len(returnValue) > 0 && eq(returnValue[0], ""))) {
+		if (eq(delimiting_str_or_regex, "")
+				|| (len(returnValue) > 0 && eq(returnValue[0], ""))) {
 			returnValue = slice(returnValue, 1);
 		}
 		// TESTED AND LEARNED: Java split(""), unlike in JavaScript , adds an
@@ -33580,7 +36443,8 @@ public class KL {
 			return "";
 		String shortest = words[0];
 		for (String currentWord : words) {
-			if (currentWord.length() < shortest.length()) shortest = currentWord;
+			if (currentWord.length() < shortest.length())
+				shortest = currentWord;
 		}
 		return shortest;
 	}
@@ -33590,7 +36454,8 @@ public class KL {
 			return "";
 		String longest = words[0];
 		for (String currentWord : words) {
-			if (currentWord.length() > longest.length()) longest = currentWord;
+			if (currentWord.length() > longest.length())
+				longest = currentWord;
 		}
 		return longest;
 	}
@@ -33845,7 +36710,8 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -33858,7 +36724,8 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -33871,7 +36738,8 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -33884,7 +36752,8 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -33897,7 +36766,8 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -33910,7 +36780,8 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -33923,7 +36794,8 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -33936,7 +36808,8 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)", "$1and$1");
+		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
+				"$1and$1");
 		// helps return a string in the American format of joining: a, b, and c
 		// for
 		// three items
@@ -34129,7 +37002,8 @@ public class KL {
 	// numbers
 	public static int Int(String arg, int base) {
 		try {
-			return Integer.parseInt(arg.replaceAll("(?<=\\d)\\.\\d+", ""), base);
+			return Integer.parseInt(arg.replaceAll("(?<=\\d)\\.\\d+", ""),
+					base);
 		} catch (Exception err) {
 			return 0;
 		}
@@ -35429,52 +38303,62 @@ public class KL {
 	}
 
 	public static int min(intArr nums) {
-		IntSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		IntSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static long min(longArr nums) {
-		LongSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static double min(dblArr nums) {
-		DoubleSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static int min(oI nums) {
-		IntSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		IntSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static long min(oL nums) {
-		LongSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static double min(oD nums) {
-		DoubleSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static int min(treeDI nums) {
-		IntSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		IntSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static long min(treeDL nums) {
-		LongSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static long min(treeL nums) {
-		LongSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
 	public static double min(treeD nums) {
-		DoubleSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMin();
 	}
 
@@ -35494,52 +38378,62 @@ public class KL {
 	}
 
 	public static int max(intArr nums) {
-		IntSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		IntSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static long max(longArr nums) {
-		LongSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static double max(dblArr nums) {
-		DoubleSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static int max(oI nums) {
-		IntSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		IntSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static long max(oL nums) {
-		LongSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static double max(oD nums) {
-		DoubleSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static int max(treeDI nums) {
-		IntSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		IntSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static long max(treeDL nums) {
-		LongSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static long max(treeL nums) {
-		LongSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		LongSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
 	public static double max(treeD nums) {
-		DoubleSummaryStatistics stat = Arrays.stream(nums.array()).summaryStatistics();
+		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
+				.summaryStatistics();
 		return stat.getMax();
 	}
 
@@ -35624,34 +38518,35 @@ public class KL {
 		String last_two = Str(seclast_char) + Str(last_char);
 		if (n > 14 && n < 111) {
 			switch (last_char) {
-			case '1':
-				result += "st";
-				break;
-			case '2':
-				result += "nd";
-				break;
-			case '3':
-				result += "rd";
-				break;
-			default:
-				result += "th";
+				case '1' :
+					result += "st";
+					break;
+				case '2' :
+					result += "nd";
+					break;
+				case '3' :
+					result += "rd";
+					break;
+				default :
+					result += "th";
 			}
 		} else {
-			if (eq(last_two, "11") || eq(last_two, "12") || eq(last_two, "13")) {
+			if (eq(last_two, "11") || eq(last_two, "12")
+					|| eq(last_two, "13")) {
 				result += "th";
 			} else {
 				switch (last_char) {
-				case '1':
-					result += "st";
-					break;
-				case '2':
-					result += "nd";
-					break;
-				case '3':
-					result += "rd";
-					break;
-				default:
-					result += "th";
+					case '1' :
+						result += "st";
+						break;
+					case '2' :
+						result += "nd";
+						break;
+					case '3' :
+						result += "rd";
+						break;
+					default :
+						result += "th";
 				}
 			}
 		}
@@ -35666,34 +38561,35 @@ public class KL {
 		String last_two = Str(seclast_char) + Str(last_char);
 		if (n > 14 && n < 111) {
 			switch (last_char) {
-			case '1':
-				result += "st";
-				break;
-			case '2':
-				result += "nd";
-				break;
-			case '3':
-				result += "rd";
-				break;
-			default:
-				result += "th";
+				case '1' :
+					result += "st";
+					break;
+				case '2' :
+					result += "nd";
+					break;
+				case '3' :
+					result += "rd";
+					break;
+				default :
+					result += "th";
 			}
 		} else {
-			if (eq(last_two, "11") || eq(last_two, "12") || eq(last_two, "13")) {
+			if (eq(last_two, "11") || eq(last_two, "12")
+					|| eq(last_two, "13")) {
 				result += "th";
 			} else {
 				switch (last_char) {
-				case '1':
-					result += "st";
-					break;
-				case '2':
-					result += "nd";
-					break;
-				case '3':
-					result += "rd";
-					break;
-				default:
-					result += "th";
+					case '1' :
+						result += "st";
+						break;
+					case '2' :
+						result += "nd";
+						break;
+					case '3' :
+						result += "rd";
+						break;
+					default :
+						result += "th";
 				}
 			}
 		}
@@ -35703,8 +38599,8 @@ public class KL {
 	// since a long is just a LONG integer, this should work^
 	// let's set up some currency variables
 	public static double zr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9, kh = 1e11;
-	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15, qt = 1e18, sx = 1e21, sp = 1e24, oc = 1e27,
-			nn = 1e30, dc = 1e33;
+	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
+			qt = 1e18, sx = 1e21, sp = 1e24, oc = 1e27, nn = 1e30, dc = 1e33;
 
 	public static String fpkr(int amount) {
 		if (isNull(amount)) {
@@ -35730,8 +38626,11 @@ public class KL {
 				}
 			}
 		}
-		return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+",
-				"").replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return replace(
+				stringBuilder.reverse().toString() + "."
+						+ sliceToAfter(Str(floats), "."),
+				"(?<=\\.\\d{2})\\d+", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 
 	public static String fpkr(long amount) {
@@ -35758,8 +38657,11 @@ public class KL {
 				}
 			}
 		}
-		return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+",
-				"").replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return replace(
+				stringBuilder.reverse().toString() + "."
+						+ sliceToAfter(Str(floats), "."),
+				"(?<=\\.\\d{2})\\d+", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 
 	public static String fpkr(float amount) {
@@ -35787,13 +38689,17 @@ public class KL {
 			}
 		}
 
-		return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+",
-				"").replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return replace(
+				stringBuilder.reverse().toString() + "."
+						+ sliceToAfter(Str(floats), "."),
+				"(?<=\\.\\d{2})\\d+", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 
 	public static String fpkr(float amount, int decimalPlaces) {
 		String formattedN = fpkr(amount);
-		if (isNull(decimalPlaces) || isNeg(decimalPlaces) || !in(formattedN, "(?<=\\.)\\d+")) {
+		if (isNull(decimalPlaces) || isNeg(decimalPlaces)
+				|| !in(formattedN, "(?<=\\.)\\d+")) {
 			return formattedN;
 		}
 		String[] parts = formattedN.split("\\.");
@@ -35805,8 +38711,10 @@ public class KL {
 			slicedFloats = sliceKeep(floats, decimalPlaces);
 			// no changes, please
 		}
-		String result = (len(floats) >= decimalPlaces ? formattedNumberWithFloats + separator + slicedFloats
-				: formattedN).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		String result = (len(floats) >= decimalPlaces
+				? formattedNumberWithFloats + separator + slicedFloats
+				: formattedN)
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 		return result;
 	}
 
@@ -35834,13 +38742,17 @@ public class KL {
 				}
 			}
 		}
-		return replace(stringBuilder.reverse().toString() + "." + sliceToAfter(Str(floats), "."), "(?<=\\.\\d{2})\\d+",
-				"").replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return replace(
+				stringBuilder.reverse().toString() + "."
+						+ sliceToAfter(Str(floats), "."),
+				"(?<=\\.\\d{2})\\d+", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 
 	public static String fpkr(double amount, int decimalPlaces) {
 		String formattedN = fpkr(amount);
-		if (isNull(decimalPlaces) || isNeg(decimalPlaces) || !in(formattedN, "(?<=\\.)\\d+")) {
+		if (isNull(decimalPlaces) || isNeg(decimalPlaces)
+				|| !in(formattedN, "(?<=\\.)\\d+")) {
 			return formattedN;
 		}
 		String[] parts = formattedN.split("\\.");
@@ -35852,8 +38764,10 @@ public class KL {
 			slicedFloats = sliceKeep(floats, decimalPlaces);
 			// no changes, please
 		}
-		String result = (len(floats) >= decimalPlaces ? formattedNumberWithFloats + separator + slicedFloats
-				: formattedN).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		String result = (len(floats) >= decimalPlaces
+				? formattedNumberWithFloats + separator + slicedFloats
+				: formattedN)
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 		return result;
 	}
 
@@ -35861,16 +38775,22 @@ public class KL {
 		if (isNull(n)) {
 			return "";
 		}
-		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "").replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return NumberFormat
+				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
+						.setRegion("US").build())
+				.format(n).replaceAll("[^\\d\\,\\.]", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 
 	public static String fus(long n) {
 		if (isNull(n)) {
 			return "";
 		}
-		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "").replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return NumberFormat
+				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
+						.setRegion("US").build())
+				.format(n).replaceAll("[^\\d\\,\\.]", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 
 	public static String fus(float n) {
@@ -35878,13 +38798,17 @@ public class KL {
 			return "";
 		}
 		double floats = n % 1;
-		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "").replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return NumberFormat
+				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
+						.setRegion("US").build())
+				.format(n).replaceAll("[^\\d\\,\\.]", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 
 	public static String fus(float amount, int decimalPlaces) {
 		String formattedN = fus(amount);
-		if (isNull(decimalPlaces) || isNeg(decimalPlaces) || !in(formattedN, "(?<=\\.)\\d+")) {
+		if (isNull(decimalPlaces) || isNeg(decimalPlaces)
+				|| !in(formattedN, "(?<=\\.)\\d+")) {
 			return formattedN;
 		}
 		String[] parts = formattedN.split("\\.");
@@ -35896,8 +38820,10 @@ public class KL {
 			slicedFloats = sliceKeep(floats, decimalPlaces);
 			// no changes, please
 		}
-		String result = (len(floats) >= decimalPlaces ? formattedNumberWithFloats + separator + slicedFloats
-				: formattedN).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		String result = (len(floats) >= decimalPlaces
+				? formattedNumberWithFloats + separator + slicedFloats
+				: formattedN)
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 		return result;
 	}
 
@@ -35906,13 +38832,17 @@ public class KL {
 			return "";
 		}
 		double floats = n % 1;
-		return NumberFormat.getCurrencyInstance(new Locale.Builder().setLanguage("en").setRegion("US").build())
-				.format(n).replaceAll("[^\\d\\,\\.]", "").replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		return NumberFormat
+				.getCurrencyInstance(new Locale.Builder().setLanguage("en")
+						.setRegion("US").build())
+				.format(n).replaceAll("[^\\d\\,\\.]", "")
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 	}
 
 	public static String fus(double amount, int decimalPlaces) {
 		String formattedN = fus(amount);
-		if (isNull(decimalPlaces) || isNeg(decimalPlaces) || !in(formattedN, "(?<=\\.)\\d+")) {
+		if (isNull(decimalPlaces) || isNeg(decimalPlaces)
+				|| !in(formattedN, "(?<=\\.)\\d+")) {
 			return formattedN;
 		}
 		String[] parts = formattedN.split("\\.");
@@ -35924,8 +38854,10 @@ public class KL {
 			slicedFloats = sliceKeep(floats, decimalPlaces);
 			// no changes, please
 		}
-		String result = (len(floats) >= decimalPlaces ? formattedNumberWithFloats + separator + slicedFloats
-				: formattedN).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
+		String result = (len(floats) >= decimalPlaces
+				? formattedNumberWithFloats + separator + slicedFloats
+				: formattedN)
+				.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$", "");
 		return result;
 	}
 
@@ -35959,43 +38891,55 @@ public class KL {
 		}
 		try {
 			// refactoring alike specifiers by grouping them together
-			s = s.replaceAll("%l", "%d").replaceAll("[%\\{](\\.\\d)?db\\}?", "%$1f")
-					.replaceAll("[%\\{]([dinf]):(th|r(?!s)|p?x|uc?(?!sd)|c)\\}?", "%$1$2");
+			s = s.replaceAll("%l", "%d")
+					.replaceAll("[%\\{](\\.\\d)?db\\}?", "%$1f").replaceAll(
+							"[%\\{]([dinf]):(th|r(?!s)|p?x|uc?(?!sd)|c)\\}?",
+							"%$1$2");
 			s = s.replaceAll("[%\\{]([dinf])\\:,3(\\.\\d(f|db))?\\}?", "%$1u$2")
 					.replaceAll("[%\\{][dinf]\\:,2?(\\.\\d)(f|db)\\}?", "%$1f")
 					.replaceAll("[%\\{]([dinf])\\:,2?\\}?", "%$1")
 					.replaceAll("[%\\{]([dinf])([\\:\\.]usd)\\}?", "%$1$2")
-					.replaceAll("[%\\{]([dinf])c?([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})\\}?", "%$1c$2");
+					.replaceAll(
+							"[%\\{]([dinf])c?([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})\\}?",
+							"%$1c$2");
 			/*
-			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr} {%f:inr}
+			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr}
+			 * {%f:inr}
 			 */
 			s = s.replaceAll("[%\\{]([dinf])c?[\\:\\.]\\$\\}?", "%$1c:USD");
 			// kills a bug
 			// handling exponentials
-			String[] exponentialMatches = findMatches(s, "(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
+			String[] exponentialMatches = findMatches(s,
+					"(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
 			if (hasLen(exponentialMatches)) {
 				double[] parsedNumsWithoutPowers = new double[exponentialMatches.length];
 				int[] parsedExponentialPowers = new int[exponentialMatches.length];
 				for (int i : range(exponentialMatches)) {
-					parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i].replaceAll("[Ee][\\+\\-]?\\d+$", ""));
-					parsedExponentialPowers[i] = Int(findMatch(exponentialMatches[i], "(?<=\\d[Ee])[\\+\\-]?\\d+"));
+					parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i]
+							.replaceAll("[Ee][\\+\\-]?\\d+$", ""));
+					parsedExponentialPowers[i] = Int(
+							findMatch(exponentialMatches[i],
+									"(?<=\\d[Ee])[\\+\\-]?\\d+"));
 					double[] parsedNumsWithPowers = parsedNumsWithoutPowers;
 					// temporarily
 					int power = parsedExponentialPowers[i];
 					if (isNeg(power)) {
 						while (power < 0) {
 							parsedNumsWithPowers[i] /= 10;
-							parsedNumsWithPowers[i] = setPrecision(parsedNumsWithPowers[i], 14);
+							parsedNumsWithPowers[i] = setPrecision(
+									parsedNumsWithPowers[i], 14);
 							power++;
 						}
 					} else {
 						while (power > 0) {
 							parsedNumsWithPowers[i] *= 10;
-							parsedNumsWithPowers[i] = setPrecision(parsedNumsWithPowers[i], 14);
+							parsedNumsWithPowers[i] = setPrecision(
+									parsedNumsWithPowers[i], 14);
 							power--;
 						}
 					}
-					s = s.replaceFirst(exponentialMatches[i].replaceAll("([\\+\\-])", "\\\\$1"),
+					s = s.replaceFirst(exponentialMatches[i]
+							.replaceAll("([\\+\\-])", "\\\\$1"),
 							Str(parsedNumsWithPowers[i]));
 				}
 			}
@@ -36003,45 +38947,83 @@ public class KL {
 					"(?<!\\\\)%(\\.\\d)?[\\%cswdifnb](((c|uc?)(\\.\\d(f|db))?)([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?|th|r|p?x)?|\\$*\\{(\\.\\df)?\\}");
 			for (String m : matches) {
 				for (Object arg : args) {
-					if (arg instanceof Character && eq(m, "%[\\%c]|\\$*\\{\\}")) {
+					if (arg instanceof Character
+							&& eq(m, "%[\\%c]|\\$*\\{\\}")) {
 						s = replaceFirst(s, "%[\\%c]|\\$*\\{\\}", Str(arg));
-					} else if (arg instanceof String && eq(m, "%[\\%sw]|\\$*\\{\\}")) {
+					} else if (arg instanceof String
+							&& eq(m, "%[\\%sw]|\\$*\\{\\}")) {
 						s = replaceFirst(s, "%[\\%sw]|\\$*\\{\\}", Str(arg));
 					} else if ((arg instanceof Integer || arg instanceof Long)
 							&& (in(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}"))) {
 						if (in(m, "%[din]u")) {
 							if (eq(m, "%[din]uc")) {
-								s = replaceFirst(s, m, Str(usd(arg instanceof Integer ? (int) arg : (long) arg))
-										.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+								s = replaceFirst(s, m, Str(
+										usd(arg instanceof Integer
+												? (int) arg
+												: (long) arg))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												""));
 							} else {
-								s = replaceFirst(s, "%[din]u", Str(fus(arg instanceof Integer ? (int) arg : (long) arg))
-										.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+								s = replaceFirst(s, "%[din]u", Str(
+										fus(arg instanceof Integer
+												? (int) arg
+												: (long) arg))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												""));
 							}
 						} else if (eq(m, "%[din]th")) {
-							s = replaceFirst(s, m, Str(th(arg instanceof Integer ? (int) arg : (long) arg)));
+							s = replaceFirst(s, m,
+									Str(th(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
 						} else if (eq(m, "%[din]r")) {
 							s = replaceFirst(s, m, Str(toRoman((int) arg)));
 						} else if (eq(m, "%[din]px")) {
-							s = replaceFirst(s, m, Str(pksuffix(arg instanceof Integer ? (int) arg : (long) arg)));
+							s = replaceFirst(s, m,
+									Str(pksuffix(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
 						} else if (eq(m, "%[din]x")) {
-							s = replaceFirst(s, m, Str(ussuffix(arg instanceof Integer ? (int) arg : (long) arg)));
+							s = replaceFirst(s, m,
+									Str(ussuffix(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
 						} else if (eq(m,
 								"%[\\%din](?!p?x|r|th|uc?|c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)|\\$*\\{\\}")) {
 							// replacing basic integer format specifiers %d, %i,
 							// %n
-							s = replaceFirst(s, "%[\\%din](?!p?x|r|th|uc?|c)|\\$*\\{\\}",
-									Str(f(arg instanceof Integer ? (int) arg : (long) arg))
-											.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+							s = replaceFirst(s,
+									"%[\\%din](?!p?x|r|th|uc?|c)|\\$*\\{\\}",
+									Str(f(arg instanceof Integer
+											? (int) arg
+											: (long) arg)).replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
 						} else {
-							if (in(m, "%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
-								if (eq(m, "%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})")) {
+							if (in(m,
+									"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
+								if (eq(m,
+										"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})")) {
 									String currency = m.split("[\\:\\.]")[1];
-									s = replaceFirst(s, "%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})",
-											Str(curr(arg instanceof Integer ? (int) arg : (long) arg, currency))
-													.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+									s = replaceFirst(s,
+											"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})",
+											Str(curr(
+													arg instanceof Integer
+															? (int) arg
+															: (long) arg,
+													currency)).replaceAll(
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
+															""));
 								} else {
-									s = replaceFirst(s, m, Str(pkr(arg instanceof Integer ? (int) arg : (long) arg))
-											.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+									s = replaceFirst(s, m, Str(
+											pkr(arg instanceof Integer
+													? (int) arg
+													: (long) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
 								}
 							}
 						}
@@ -36054,54 +39036,95 @@ public class KL {
 							// `in`, `eq`, `findMatch`, and `findMatches` for
 							// quicker caching through format specifiers
 							if (eq(m, "%[\\%fn]uc")) {
-								s = replaceFirst(s, m,
-										Str(usd(setPrecision(arg instanceof Float ? (float) arg : (double) arg))
-												.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "")));
+								s = replaceFirst(s, m, Str(usd(
+										setPrecision(arg instanceof Float
+												? (float) arg
+												: (double) arg))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												"")));
 							} else {
 								if (in(m, "(?<=%[\\%fn]u)(\\.\\d(f|db))")) {
-									int decimalPlaces = Int(findMatch(m, "(?<=%[\\%fn]u\\.)(\\d)(?=f|db)"));
+									int decimalPlaces = Int(findMatch(m,
+											"(?<=%[\\%fn]u\\.)(\\d)(?=f|db)"));
 									s = replaceFirst(s, "%[\\%fn]u\\.\\d(f|db)",
-											Str(fus(arg instanceof Float ? (float) arg : (double) arg, decimalPlaces)
-													.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "")));
+											Str(fus(arg instanceof Float
+													? (float) arg
+													: (double) arg,
+													decimalPlaces).replaceAll(
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
+															"")));
 								} else {
-									s = replaceFirst(s, "%[%fn]u",
-											Str(fus(setPrecision(arg instanceof Float ? (float) arg : (double) arg))
-													.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "")));
+									s = replaceFirst(s, "%[%fn]u", Str(fus(
+											setPrecision(arg instanceof Float
+													? (float) arg
+													: (double) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"")));
 								}
 							}
 						} else if (in(m, "%[\\%fn]p?x")) {
 							if (eq(m, "%[\\%fn]px")) {
 								s = replaceFirst(s, m,
-										Str(pksuffix(arg instanceof Float ? (float) arg : (double) arg)));
+										Str(pksuffix(arg instanceof Float
+												? (float) arg
+												: (double) arg)));
 							} else {
 								s = replaceFirst(s, m,
-										Str(ussuffix(arg instanceof Float ? (float) arg : (double) arg)));
+										Str(ussuffix(arg instanceof Float
+												? (float) arg
+												: (double) arg)));
 							}
-						} else if (in(m, "%(\\.\\d)?[\\%fn]c?(?!u)|\\$*\\{(\\.\\df)?\\}")) {
-							if (in(m, "%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
-								if (eq(m, "%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})")) {
+						} else if (in(m,
+								"%(\\.\\d)?[\\%fn]c?(?!u)|\\$*\\{(\\.\\df)?\\}")) {
+							if (in(m,
+									"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
+								if (eq(m,
+										"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})")) {
 									String currency = m.split("[\\:\\.]")[1];
-									s = replaceFirst(s, "%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})",
-											Str(curr(arg instanceof Float ? (float) arg : (double) arg, currency))
-													.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+									s = replaceFirst(s,
+											"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})",
+											Str(curr(
+													arg instanceof Float
+															? (float) arg
+															: (double) arg,
+													currency)).replaceAll(
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
+															""));
 								} else {
-									s = replaceFirst(s, m, Str(pkr(arg instanceof Float ? (float) arg : (double) arg))
-											.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+									s = replaceFirst(s, m, Str(
+											pkr(arg instanceof Float
+													? (float) arg
+													: (double) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
 								}
 							} else if (eq(m, "\\$*[%\\{]\\.\\df\\}?")) {
-								int decimalPlaces = Int(findMatch(m, "(?<=\\.)\\d(?=f)"));
+								int decimalPlaces = Int(
+										findMatch(m, "(?<=\\.)\\d(?=f)"));
 								s = replaceFirst(s, "\\$*[%\\{]\\.\\df\\}?",
-										f(arg instanceof Float ? (float) arg : (double) arg, decimalPlaces))
-										.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "");
+										f(arg instanceof Float
+												? (float) arg
+												: (double) arg, decimalPlaces))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												"");
 							} else {
 								s = replaceFirst(s,
 										"(%[%fn]|\\$*\\{f?\\})(?!p?x|u|u?c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)",
-										Str(f(setPrecision(arg instanceof Float ? (float) arg : (double) arg))
-												.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "")));
+										Str(f(setPrecision(arg instanceof Float
+												? (float) arg
+												: (double) arg)).replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"")));
 							}
 						}
-					} else if (arg instanceof Boolean && eq(m, "%[\\%b]|\\$*\\{\\}")) {
-						s = replaceFirst(s, "%[\\%b]|\\$*\\{\\}", Str((boolean) arg));
+					} else if (arg instanceof Boolean
+							&& eq(m, "%[\\%b]|\\$*\\{\\}")) {
+						s = replaceFirst(s, "%[\\%b]|\\$*\\{\\}",
+								Str((boolean) arg));
 					}
 					// replaceFirst is really what we need here, as replacing
 					// "all"
@@ -36135,21 +39158,29 @@ public class KL {
 						if (in(m, "[:=\\[\\]]")) {
 							if (in(m,
 									"[:=]{1,2}(?=\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)")
-									&& (field instanceof String || field instanceof Integer || field instanceof Long
-											|| field instanceof Float || field instanceof Double)) {
+									&& (field instanceof String
+											|| field instanceof Integer
+											|| field instanceof Long
+											|| field instanceof Float
+											|| field instanceof Double)) {
 								if (!in(m, "[:=]{2}|\\\\[:=]")) {
 									label = "";
 								} else {
-									label = m.replaceAll("\\\\", findMatch(m, "(?<=\\\\)[:=]")).replaceAll(
-											"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)",
-											"");
+									label = m
+											.replaceAll("\\\\",
+													findMatch(m,
+															"(?<=\\\\)[:=]"))
+											.replaceAll(
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)",
+													"");
 									// keep one [:=] in this case, but remove
 									// the other, to make up for the label from
 									// the double :|=
 									// One could also use \\[:=] to force
 									// labels.
 								}
-							} else if (in(m, "(?<=\\w)[:=\\\\]{2}(?!\\.\\d)|(?<=\\w)\\[\\-?\\d+\\]")) {
+							} else if (in(m,
+									"(?<=\\w)[:=\\\\]{2}(?!\\.\\d)|(?<=\\w)\\[\\-?\\d+\\]")) {
 								label = "";
 								// good practice: if double colon (::) or double
 								// equals (==) is not followed by a
@@ -36161,7 +39192,8 @@ public class KL {
 								// of the
 								// field AS-IS
 							} else {
-								label = m.replaceAll("[\\$\\{\\\\\\}]|(?<=[:=])[\\w,]+", "");
+								label = m.replaceAll(
+										"[\\$\\{\\\\\\}]|(?<=[:=])[\\w,]+", "");
 							}
 							// allows following behavior:
 							// {amount:.1f} returns the double or floating-point
@@ -36189,22 +39221,30 @@ public class KL {
 							}
 							// some tweaks
 							if (field instanceof String) {
-								if (in(m, ("(?<=[:=\\[])[,\\-]?\\d+(,?\\d+)?\\]?"))) {
+								if (in(m,
+										("(?<=[:=\\[])[,\\-]?\\d+(,?\\d+)?\\]?"))) {
 									if (in(m, ("(?<=[:=])\\d+,\\d+"))) {
-										int a = Int(findMatch(m, "(?<=[:=])\\d+(?=,\\d+)")),
-												b = Int(findMatch(m, "(?<=[:=]\\d+,)\\d+"));
+										int a = Int(findMatch(m,
+												"(?<=[:=])\\d+(?=,\\d+)")),
+												b = Int(findMatch(m,
+														"(?<=[:=]\\d+,)\\d+"));
 										field = slice(Str(field), a, b);
 									} else if (in(m, ("(?<=[:=])\\d+,"))) {
-										int a = Int(findMatch(m, "(?<=[:=])\\d+(?=,)"));
+										int a = Int(findMatch(m,
+												"(?<=[:=])\\d+(?=,)"));
 										field = slice(Str(field), a);
 									} else if (in(m, ("(?<=[:=])[,\\-]\\d+"))) {
-										int a = Int(findMatch(m, "(?<=[:=][,\\-])\\d+"));
+										int a = Int(findMatch(m,
+												"(?<=[:=][,\\-])\\d+"));
 										field = sliceRight(Str(field), a);
-									} else if (in(m, ("(?<=[\\[])\\-?\\d+(?=\\])"))) {
-										int i = Int(findMatch(m, "(?<=\\[)\\-?\\d+(?=\\])"));
+									} else if (in(m,
+											("(?<=[\\[])\\-?\\d+(?=\\])"))) {
+										int i = Int(findMatch(m,
+												"(?<=\\[)\\-?\\d+(?=\\])"));
 										field = nth(Str(field), i);
 									} else {
-										int b = Int(findMatch(m, "(?<=[:=])\\d+"));
+										int b = Int(
+												findMatch(m, "(?<=[:=])\\d+"));
 										field = sliceKeep(Str(field), b);
 									}
 								} else if (in(m, ("(?<=[:=])_"))) {
@@ -36213,62 +39253,118 @@ public class KL {
 							}
 							if (field instanceof Number) {
 								if (in(m, ("(?<=[:=])(,3)(\\.\\d(f|db))?"))) {
-									if (in(m, "(?<=[:=])(,3)(?=\\.\\d(f|db))")) {
-										field = fus(field instanceof Integer ? (int) field
-												: field instanceof Long ? (long) field
-														: field instanceof Float ? (float) field : (double) field,
-												decimalPlaces).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "");
+									if (in(m,
+											"(?<=[:=])(,3)(?=\\.\\d(f|db))")) {
+										field = fus(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field,
+												decimalPlaces).replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
 									} else {
-										field = fus(field instanceof Integer ? (int) field
-												: field instanceof Long ? (long) field
-														: field instanceof Float ? (float) field : (double) field)
-												.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "");
+										field = fus(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field)
+												.replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
 									}
-								} else if (in(m, ("(?<=[:=])(,2?)(\\.\\d(f|db))?"))) {
-									if (in(m, "(?<=[:=])(,2?)(?=\\.\\d(f|db))")) {
-										field = f(field instanceof Integer ? (int) field
-												: field instanceof Long ? (long) field
-														: field instanceof Float ? (float) field : (double) field,
-												decimalPlaces).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "");
+								} else if (in(m,
+										("(?<=[:=])(,2?)(\\.\\d(f|db))?"))) {
+									if (in(m,
+											"(?<=[:=])(,2?)(?=\\.\\d(f|db))")) {
+										field = f(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field,
+												decimalPlaces).replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
 									} else {
-										field = f(field instanceof Integer ? (int) field
-												: field instanceof Long ? (long) field
-														: field instanceof Float ? (float) field : (double) field)
-												.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "");
+										field = f(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field)
+												.replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
 									}
 								} else if (in(m, ("(?<=[:=])(pkr|rs)"))) {
-									field = pkr(field instanceof Integer ? (int) field
-											: field instanceof Long ? (long) field
-													: field instanceof Float ? (float) field : (double) field)
-											.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "");
+									field = pkr(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field)
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
 								} else if (in(m, ("(?<=[:=])usd"))) {
-									field = usd(field instanceof Integer ? (int) field
-											: field instanceof Long ? (long) field
-													: field instanceof Float ? (float) field : (double) field)
-											.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "");
+									field = usd(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field)
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
 								} else if (in(m, ("(?<=[:=])th"))) {
-									if (field instanceof Integer || field instanceof Long) {
-										field = th(field instanceof Integer ? (int) field : (long) field);
+									if (field instanceof Integer
+											|| field instanceof Long) {
+										field = th(field instanceof Integer
+												? (int) field
+												: (long) field);
 									}
 								} else if (in(m, ("(?<=[:=])r"))) {
 									if (field instanceof Integer) {
 										field = toRoman((int) field);
 									}
 								} else if (in(m, ("(?<=[:=])px"))) {
-									field = pksuffix(field instanceof Integer ? (int) field
-											: field instanceof Long ? (long) field
-													: field instanceof Float ? (float) field : (double) field);
+									field = pksuffix(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
 								} else if (in(m, ("(?<=[:=])x"))) {
-									field = ussuffix(field instanceof Integer ? (int) field
-											: field instanceof Long ? (long) field
-													: field instanceof Float ? (float) field : (double) field);
+									field = ussuffix(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
 								} else if (in(m, "(?<=[:=])[A-Za-z]{3,4}")) {
-									String currency = findMatch(m, "(?<=[:=])[A-Za-z]{3,4}");
-									field = curr(
-											field instanceof Integer ? (int) field
-													: field instanceof Long ? (long) field
-															: field instanceof Float ? (float) field : (double) field,
-											currency).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", "");
+									String currency = findMatch(m,
+											"(?<=[:=])[A-Za-z]{3,4}");
+									field = curr(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field,
+											currency).replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
 								}
 							}
 						}
@@ -36320,8 +39416,9 @@ public class KL {
 								field = f((double) field, decimalPlaces);
 							}
 						}
-						if (isStrArr(field) || isIntArr(field) || isLongArr(field) || isFltArr(field) || isDblArr(field)
-								|| isBoolArr(field)) {
+						if (isStrArr(field) || isIntArr(field)
+								|| isLongArr(field) || isFltArr(field)
+								|| isDblArr(field) || isBoolArr(field)) {
 							if (isStrArr(field)) {
 								strArr helper = (strArr) field;
 								field = helper.array();
@@ -36344,7 +39441,8 @@ public class KL {
 						}
 						if (isArr(field)) {
 							if (in(m, "(?<=[\\[])\\-?\\d+(?=\\])")) {
-								int i = Int(findMatch(m, "(?<=\\[)\\-?\\d+(?=\\])"));
+								int i = Int(findMatch(m,
+										"(?<=\\[)\\-?\\d+(?=\\])"));
 								if (field instanceof Object[]) {
 									if (isArrOfStr(field)) {
 										field = nth((String[]) field, i);
@@ -36377,42 +39475,61 @@ public class KL {
 									// Object wrapper, like String[], Number[],
 									// Object[]
 									if (isArrOfStr(field)) {
-										field = "[" + (!isEmpty((String[]) field)
-												? "\"" + join((String[]) field, "\", \"") + "\""
-												: "") + "]";
+										field = "["
+												+ (!isEmpty((String[]) field)
+														? "\"" + join(
+																(String[]) field,
+																"\", \"") + "\""
+														: "")
+												+ "]";
 									} else if (isArrOfNum(field)) {
-										field = "[" + join((Number[]) field) + "]";
+										field = "[" + join((Number[]) field)
+												+ "]";
 									} else if (isArrOfObj(field)) {
-										field = "[" + join((Object[]) field, ", ") + "]";
+										field = "["
+												+ join((Object[]) field, ", ")
+												+ "]";
 									}
 								} else {
 									if (isArrOfChar(field)) {
-										field = "["
-												+ (!isEmpty((char[]) field) ? "\'" + join(field, "\', \'") + "\'" : "")
-												+ "]";
+										field = "[" + (!isEmpty((char[]) field)
+												? "\'" + join(field, "\', \'")
+														+ "\'"
+												: "") + "]";
 									} else if (isArrOfInt(field)) {
 										field = "[" + join((int[]) field) + "]";
 									} else if (isArrOfLong(field)) {
-										field = "[" + join((long[]) field) + "]";
+										field = "[" + join((long[]) field)
+												+ "]";
 									} else if (isArrOfFlt(field)) {
-										field = "[" + join((float[]) field) + "]";
+										field = "[" + join((float[]) field)
+												+ "]";
 									} else if (isArrOfDbl(field)) {
-										field = "[" + join((double[]) field) + "]";
+										field = "[" + join((double[]) field)
+												+ "]";
 									} else if (isArrOfBool(field)) {
-										field = "[" + join((boolean[]) field) + "]";
+										field = "[" + join((boolean[]) field)
+												+ "]";
 									}
 								}
 							}
 						}
-						if (field instanceof o || field instanceof oI || field instanceof oL || field instanceof oF
-								|| field instanceof oD || field instanceof oB || field instanceof HashMap
-								|| field instanceof tree || field instanceof TreeMap) {
-							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+")
-									&& in(Str(field), m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
+						if (field instanceof o || field instanceof oI
+								|| field instanceof oL || field instanceof oF
+								|| field instanceof oD || field instanceof oB
+								|| field instanceof HashMap
+								|| field instanceof tree
+								|| field instanceof TreeMap) {
+							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+") && in(
+									Str(field),
+									m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
 								String key = m.split("(?<=\\w)\\.")[1];
-								field = Str(field).split(key + "=")[1].split(",")[0].replaceAll("[\\{\\}]", "");
+								field = Str(field).split(key + "=")[1]
+										.split(",")[0]
+										.replaceAll("[\\{\\}]", "");
 							} else if (in(m, ("(?<=[\\[])\\-?\\d+(?=\\])"))) {
-								int i = Int(findMatch(m, "(?<=\\[)\\-?\\d+(?=\\])"));
+								int i = Int(findMatch(m,
+										"(?<=\\[)\\-?\\d+(?=\\])"));
 								if (field instanceof o) {
 									field = nth((o) field, i);
 								} else if (field instanceof oI) {
@@ -36448,23 +39565,33 @@ public class KL {
 								}
 							} else {
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
-										+ Str(field).replaceAll("(?<=\\=)([A-Za-z]{1}(?!\\w))", "\'$1\'")
-												.replaceAll("(?<=\\=)((\\d*[A-Za-z]{2,}\\d*)(\\s*[A-Za-z]+\\d*){0,})",
+										+ Str(field).replaceAll(
+												"(?<=\\=)([A-Za-z]{1}(?!\\w))",
+												"\'$1\'")
+												.replaceAll(
+														"(?<=\\=)((\\d*[A-Za-z]{2,}\\d*)(\\s*[A-Za-z]+\\d*){0,})",
 														"\"$1\"")
-												.replaceAll("\"(true|false)\"", "$1").replaceAll("=", ": ");
+												.replaceAll("\"(true|false)\"",
+														"$1")
+												.replaceAll("=", ": ");
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\[\\\\\\]\\}])", "\\\\$1");
 						// replace special characters, so s.replaceFirst doesn't
 						// confuse them with an ending character ($), or a
 						// quantifier ({,})
-						s = s.replaceFirst(m, label.length() > 0 ? label + Str(field) : Str(field));
+						s = s.replaceFirst(m,
+								label.length() > 0
+										? label + Str(field)
+										: Str(field));
 					}
-				} catch (NoSuchFieldException | IllegalAccessException | SecurityException e) {
+				} catch (NoSuchFieldException | IllegalAccessException
+						| SecurityException e) {
 				}
 			}
 			// for methods
-			if (in(s, "(?<!\\\\)(\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*)")) {
+			if (in(s,
+					"(?<!\\\\)(\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*)")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object valueFromMethod = new Object();
@@ -36472,7 +39599,9 @@ public class KL {
 					String[] methodicalMatches = findMatches(s,
 							"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*");
 					for (String m : methodicalMatches) {
-						String toGet = m.replaceAll("(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]", "");
+						String toGet = m.replaceAll(
+								"(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
+								"");
 						if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)")) {
 							hasParams = true;
 						}
@@ -36480,20 +39609,31 @@ public class KL {
 							valueFromMethod = cls.getMethod(toGet).invoke(this);
 						} else {
 							boolean multiParam = false;
-							String unprocessedParamString = m.replaceAll("^[\\$\\{]\\w+[:\\(](?=\\w+)|[\\)\\}]*$", "");
+							String unprocessedParamString = m.replaceAll(
+									"^[\\$\\{]\\w+[:\\(](?=\\w+)|[\\)\\}]*$",
+									"");
 							if (in(unprocessedParamString, "\\s*,\\s*")) {
 								multiParam = true;
-								String[] paramMatches = unprocessedParamString.split("\\s*,\\s*");
+								String[] paramMatches = unprocessedParamString
+										.split("\\s*,\\s*");
 								Object[] finalParams = new Object[paramMatches.length];
 								Class<?>[] paramTypes = new Class<?>[paramMatches.length];
 								for (int i : range(paramMatches)) {
 									String param = paramMatches[i];
 									paramTypes[i] = isIntLike(param)
-											? (!in(param, "(?<=\\d)[Ll]$") ? int.class : long.class)
+											? (!in(param, "(?<=\\d)[Ll]$")
+													? int.class
+													: long.class)
 											: isFltLike(param)
-													? (!in(param, "(?<=\\d)[Ff]$") ? double.class : float.class)
-													: eq(param, "true|false") ? boolean.class : String.class;
-									param = param.replaceAll("(?<=\\d)[LlFf]$", "");
+													? (!in(param,
+															"(?<=\\d)[Ff]$")
+																	? double.class
+																	: float.class)
+													: eq(param, "true|false")
+															? boolean.class
+															: String.class;
+									param = param.replaceAll("(?<=\\d)[LlFf]$",
+											"");
 									// ----------------------- NOTE
 									// -----------------------------
 									// Since longs can hold both ints, and
@@ -36510,29 +39650,50 @@ public class KL {
 									// extra, or
 									// double, precision.
 									// ----------------------------------------------------------
-									finalParams[i] = isIntLike(param) ? Int(param)
-											: isDblLike(param) ? Dbl(param)
-													: eq(param, "true|false") ? (eq(param, "true") ? true : false)
+									finalParams[i] = isIntLike(param)
+											? Int(param)
+											: isDblLike(param)
+													? Dbl(param)
+													: eq(param, "true|false")
+															? (eq(param, "true")
+																	? true
+																	: false)
 															: Str(param);
 								}
 								for (String param : paramMatches) {
-									valueFromMethod = cls.getMethod(toGet, paramTypes).invoke(this, finalParams);
+									valueFromMethod = cls
+											.getMethod(toGet, paramTypes)
+											.invoke(this, finalParams);
 
-									m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
+									m = m.replaceAll("([\\$\\{\\(\\)\\}])",
+											"\\\\$1");
 									s = s.replaceFirst(m,
-											valueFromMethod instanceof Character || valueFromMethod instanceof String
+											valueFromMethod instanceof Character
+													|| valueFromMethod instanceof String
 													|| valueFromMethod instanceof Number
-													|| valueFromMethod instanceof Boolean ? Str(valueFromMethod) : m);
+													|| valueFromMethod instanceof Boolean
+															? Str(valueFromMethod)
+															: m);
 								}
 							} else {
-								Class<?> type = isIntLike(unprocessedParamString)
-										? (!in(unprocessedParamString, "(?<=\\d)[Ll]$") ? int.class : long.class)
-										: isFltLike(unprocessedParamString)
-												? (!in(unprocessedParamString, "(?<=\\d)[Ff]$") ? double.class
-														: float.class)
-												: eq(unprocessedParamString, "true|false") ? boolean.class
-														: String.class;
-								unprocessedParamString = unprocessedParamString.replaceAll("(?<=\\d)[LlFf]$", "");
+								Class<?> type = isIntLike(
+										unprocessedParamString)
+												? (!in(unprocessedParamString,
+														"(?<=\\d)[Ll]$")
+																? int.class
+																: long.class)
+												: isFltLike(
+														unprocessedParamString)
+																? (!in(unprocessedParamString,
+																		"(?<=\\d)[Ff]$")
+																				? double.class
+																				: float.class)
+																: eq(unprocessedParamString,
+																		"true|false")
+																				? boolean.class
+																				: String.class;
+								unprocessedParamString = unprocessedParamString
+										.replaceAll("(?<=\\d)[LlFf]$", "");
 								// ----------------------- NOTE
 								// -----------------------------
 								// Since longs can hold both ints, and longs,
@@ -36545,54 +39706,71 @@ public class KL {
 								// literally just a float, except with extra, or
 								// double, precision.
 								// ----------------------------------------------------------
-								valueFromMethod = cls.getMethod(toGet, type).invoke(this,
-										isIntLike(unprocessedParamString) ? Int(unprocessedParamString)
-												: isDblLike(unprocessedParamString) ? Dbl(unprocessedParamString)
-														: eq(unprocessedParamString, "true|false")
-																? (eq(unprocessedParamString, "true") ? true : false)
-																: unprocessedParamString);
+								valueFromMethod = cls.getMethod(toGet, type)
+										.invoke(this, isIntLike(
+												unprocessedParamString)
+														? Int(unprocessedParamString)
+														: isDblLike(
+																unprocessedParamString)
+																		? Dbl(unprocessedParamString)
+																		: eq(unprocessedParamString,
+																				"true|false")
+																						? (eq(unprocessedParamString,
+																								"true")
+																										? true
+																										: false)
+																						: unprocessedParamString);
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
 						s = s.replaceFirst(m,
-								valueFromMethod instanceof Character || valueFromMethod instanceof String
-										|| valueFromMethod instanceof Number || valueFromMethod instanceof Boolean
+								valueFromMethod instanceof Character
+										|| valueFromMethod instanceof String
+										|| valueFromMethod instanceof Number
+										|| valueFromMethod instanceof Boolean
 												? Str(valueFromMethod)
 												: m);
 					}
-				} catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException | SecurityException e) {
+				} catch (NoSuchMethodException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException
+						| SecurityException e) {
 
 				}
 			}
 			// for numeric operations
 			String catchNumericValuesWithOperator = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)\\}?";
 			while (in(s, catchNumericValuesWithOperator)) {
-				String[] numericMatchesWithOperators = findMatches(s, catchNumericValuesWithOperator);
+				String[] numericMatchesWithOperators = findMatches(s,
+						catchNumericValuesWithOperator);
 				if (in(s, catchNumericValuesWithOperator)) {
 					for (String m : numericMatchesWithOperators) {
-						String[] parts = m.split("(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=[\\.\\d]+)");
-						double operandA = Dbl(parts[0]), operandB = Dbl(parts[1]);
-						String op = m.replaceAll("[^\\+\\-\\*\\×\\/\\÷]|^\\{?[\\+\\-\\*\\×\\/\\÷]", "");
+						String[] parts = m.split(
+								"(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=[\\.\\d]+)");
+						double operandA = Dbl(parts[0]),
+								operandB = Dbl(parts[1]);
+						String op = m.replaceAll(
+								"[^\\+\\-\\*\\×\\/\\÷]|^\\{?[\\+\\-\\*\\×\\/\\÷]",
+								"");
 						double result = 0;
 						switch (op) {
-						case "+":
-							result = setPrecision(operandA + operandB);
-							break;
-						case "-":
-							result = setPrecision(operandA - operandB);
-							break;
-						case "*":
-						case "×":
-							result = setPrecision(operandA * operandB);
-							break;
-						case "/":
-						case "÷":
-							result = setPrecision(operandA / operandB);
-							break;
+							case "+" :
+								result = setPrecision(operandA + operandB);
+								break;
+							case "-" :
+								result = setPrecision(operandA - operandB);
+								break;
+							case "*" :
+							case "×" :
+								result = setPrecision(operandA * operandB);
+								break;
+							case "/" :
+							case "÷" :
+								result = setPrecision(operandA / operandB);
+								break;
 						}
 						s = replaceFirst(s, catchNumericValuesWithOperator,
-								Str(result).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+								Str(result).replaceAll(
+										"((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
 					}
 				}
 			}
@@ -36611,28 +39789,31 @@ public class KL {
 			return "";
 		String labelSeparator = "";
 		boolean labeling = false;
-		nameOfObj = nameOfObj.trim().replaceAll("^\\$", "");
-		//make the $ sign at the start of nameOfObj optional
+		nameOfObj = nameOfObj.trim().replaceAll("^\\$+", "");
+		// make the $ sign at the start of nameOfObj optional
 		if (in(nameOfObj, "(?<=\\w)[:=]")) {
 			labeling = true;
 			labelSeparator = findMatch(nameOfObj, "(?<=\\w)([:=])");
-			labelSeparator = eq(labelSeparator, "=") ? " " + labelSeparator + " " : labelSeparator + " ";
+			labelSeparator = eq(labelSeparator, "=")
+					? " " + labelSeparator + " "
+					: labelSeparator + " ";
 			nameOfObj = nameOfObj.replaceAll("[:=]", "");
 		}
 		format = format.replaceAll("[\\{\\$](\\w+)\\}?",
-				(labeling ? "$1" + labelSeparator : "") + "\\$" + nameOfObj + "\\.$1");
+				(labeling ? "$1" + labelSeparator : "") + "\\$" + nameOfObj
+						+ "\\.$1");
 		String newFormat = kl().f(format);
 		return newFormat;
 	}
-    
-    public static String as(String nameOfObj, String format) {
+
+	public static String as(String nameOfObj, String format) {
 		return with(nameOfObj, format);
 	}
-    
+
 	public static void printw(String nameOfObj, String format) {
 		print(with(nameOfObj, format));
 	}
-	
+
 	public static void printAs(String nameOfObj, String format) {
 		printw(nameOfObj, format);
 	}
@@ -36815,22 +39996,22 @@ public class KL {
 		}
 		String result = "";
 		switch (size) {
-		case 1:
-		case 2:
-			result = Str(n / zr) + "zr";
-			break;
-		case 3:
-			result = Str(n / lc) + "lc";
-			break;
-		case 4:
-			result = Str(n / cr) + "cr";
-			break;
-		case 5:
-			result = Str(n / ar) + "ar";
-			break;
-		case 6:
-			result = Str(n / kh) + "kh";
-			break;
+			case 1 :
+			case 2 :
+				result = Str(n / zr) + "zr";
+				break;
+			case 3 :
+				result = Str(n / lc) + "lc";
+				break;
+			case 4 :
+				result = Str(n / cr) + "cr";
+				break;
+			case 5 :
+				result = Str(n / ar) + "ar";
+				break;
+			case 6 :
+				result = Str(n / kh) + "kh";
+				break;
 		}
 		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
@@ -36845,22 +40026,22 @@ public class KL {
 		}
 		String result = "";
 		switch (size) {
-		case 1:
-		case 2:
-			result = Str(n / zr) + "zr";
-			break;
-		case 3:
-			result = Str(n / lc) + "lc";
-			break;
-		case 4:
-			result = Str(n / cr) + "cr";
-			break;
-		case 5:
-			result = Str(n / ar) + "ar";
-			break;
-		case 6:
-			result = Str(n / kh) + "kh";
-			break;
+			case 1 :
+			case 2 :
+				result = Str(n / zr) + "zr";
+				break;
+			case 3 :
+				result = Str(n / lc) + "lc";
+				break;
+			case 4 :
+				result = Str(n / cr) + "cr";
+				break;
+			case 5 :
+				result = Str(n / ar) + "ar";
+				break;
+			case 6 :
+				result = Str(n / kh) + "kh";
+				break;
 		}
 		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
@@ -36875,22 +40056,22 @@ public class KL {
 		}
 		String result = "";
 		switch (size) {
-		case 1:
-		case 2:
-			result = Str(n / zr) + "zr";
-			break;
-		case 3:
-			result = Str(n / lc) + "lc";
-			break;
-		case 4:
-			result = Str(n / cr) + "cr";
-			break;
-		case 5:
-			result = Str(n / ar) + "ar";
-			break;
-		case 6:
-			result = Str(n / kh) + "kh";
-			break;
+			case 1 :
+			case 2 :
+				result = Str(n / zr) + "zr";
+				break;
+			case 3 :
+				result = Str(n / lc) + "lc";
+				break;
+			case 4 :
+				result = Str(n / cr) + "cr";
+				break;
+			case 5 :
+				result = Str(n / ar) + "ar";
+				break;
+			case 6 :
+				result = Str(n / kh) + "kh";
+				break;
 		}
 		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
@@ -36905,22 +40086,22 @@ public class KL {
 		}
 		String result = "";
 		switch (size) {
-		case 1:
-		case 2:
-			result = Str(n / zr) + "zr";
-			break;
-		case 3:
-			result = Str(n / lc) + "lc";
-			break;
-		case 4:
-			result = Str(n / cr) + "cr";
-			break;
-		case 5:
-			result = Str(n / ar) + "ar";
-			break;
-		case 6:
-			result = Str(n / kh) + "kh";
-			break;
+			case 1 :
+			case 2 :
+				result = Str(n / zr) + "zr";
+				break;
+			case 3 :
+				result = Str(n / lc) + "lc";
+				break;
+			case 4 :
+				result = Str(n / cr) + "cr";
+				break;
+			case 5 :
+				result = Str(n / ar) + "ar";
+				break;
+			case 6 :
+				result = Str(n / kh) + "kh";
+				break;
 		}
 		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
@@ -36935,40 +40116,40 @@ public class KL {
 		}
 		String result = "";
 		switch (size) {
-		case 1:
-		case 2:
-			result = Str(n / K) + "k";
-			break;
-		case 3:
-			result = Str(n / M) + "M";
-			break;
-		case 4:
-			result = Str(n / B) + "B";
-			break;
-		case 5:
-			result = Str(n / T) + "T";
-			break;
-		case 6:
-			result = Str(n / qd) + "qd";
-			break;
-		case 7:
-			result = Str(n / qt) + "qt";
-			break;
-		case 8:
-			result = Str(n / sx) + "sx";
-			break;
-		case 9:
-			result = Str(n / sp) + "sp";
-			break;
-		case 10:
-			result = Str(n / oc) + "oc";
-			break;
-		case 11:
-			result = Str(n / nn) + "nn";
-			break;
-		case 12:
-			result = Str(n / dc) + "dc";
-			break;
+			case 1 :
+			case 2 :
+				result = Str(n / K) + "k";
+				break;
+			case 3 :
+				result = Str(n / M) + "M";
+				break;
+			case 4 :
+				result = Str(n / B) + "B";
+				break;
+			case 5 :
+				result = Str(n / T) + "T";
+				break;
+			case 6 :
+				result = Str(n / qd) + "qd";
+				break;
+			case 7 :
+				result = Str(n / qt) + "qt";
+				break;
+			case 8 :
+				result = Str(n / sx) + "sx";
+				break;
+			case 9 :
+				result = Str(n / sp) + "sp";
+				break;
+			case 10 :
+				result = Str(n / oc) + "oc";
+				break;
+			case 11 :
+				result = Str(n / nn) + "nn";
+				break;
+			case 12 :
+				result = Str(n / dc) + "dc";
+				break;
 		}
 		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
@@ -36983,40 +40164,40 @@ public class KL {
 		}
 		String result = "";
 		switch (size) {
-		case 1:
-		case 2:
-			result = Str(n / K) + "k";
-			break;
-		case 3:
-			result = Str(n / M) + "M";
-			break;
-		case 4:
-			result = Str(n / B) + "B";
-			break;
-		case 5:
-			result = Str(n / T) + "T";
-			break;
-		case 6:
-			result = Str(n / qd) + "qd";
-			break;
-		case 7:
-			result = Str(n / qt) + "qt";
-			break;
-		case 8:
-			result = Str(n / sx) + "sx";
-			break;
-		case 9:
-			result = Str(n / sp) + "sp";
-			break;
-		case 10:
-			result = Str(n / oc) + "oc";
-			break;
-		case 11:
-			result = Str(n / nn) + "nn";
-			break;
-		case 12:
-			result = Str(n / dc) + "dc";
-			break;
+			case 1 :
+			case 2 :
+				result = Str(n / K) + "k";
+				break;
+			case 3 :
+				result = Str(n / M) + "M";
+				break;
+			case 4 :
+				result = Str(n / B) + "B";
+				break;
+			case 5 :
+				result = Str(n / T) + "T";
+				break;
+			case 6 :
+				result = Str(n / qd) + "qd";
+				break;
+			case 7 :
+				result = Str(n / qt) + "qt";
+				break;
+			case 8 :
+				result = Str(n / sx) + "sx";
+				break;
+			case 9 :
+				result = Str(n / sp) + "sp";
+				break;
+			case 10 :
+				result = Str(n / oc) + "oc";
+				break;
+			case 11 :
+				result = Str(n / nn) + "nn";
+				break;
+			case 12 :
+				result = Str(n / dc) + "dc";
+				break;
 		}
 		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
@@ -37031,40 +40212,40 @@ public class KL {
 		}
 		String result = "";
 		switch (size) {
-		case 1:
-		case 2:
-			result = Str(n / K) + "k";
-			break;
-		case 3:
-			result = Str(n / M) + "M";
-			break;
-		case 4:
-			result = Str(n / B) + "B";
-			break;
-		case 5:
-			result = Str(n / T) + "T";
-			break;
-		case 6:
-			result = Str(n / qd) + "qd";
-			break;
-		case 7:
-			result = Str(n / qt) + "qt";
-			break;
-		case 8:
-			result = Str(n / sx) + "sx";
-			break;
-		case 9:
-			result = Str(n / sp) + "sp";
-			break;
-		case 10:
-			result = Str(n / oc) + "oc";
-			break;
-		case 11:
-			result = Str(n / nn) + "nn";
-			break;
-		case 12:
-			result = Str(n / dc) + "dc";
-			break;
+			case 1 :
+			case 2 :
+				result = Str(n / K) + "k";
+				break;
+			case 3 :
+				result = Str(n / M) + "M";
+				break;
+			case 4 :
+				result = Str(n / B) + "B";
+				break;
+			case 5 :
+				result = Str(n / T) + "T";
+				break;
+			case 6 :
+				result = Str(n / qd) + "qd";
+				break;
+			case 7 :
+				result = Str(n / qt) + "qt";
+				break;
+			case 8 :
+				result = Str(n / sx) + "sx";
+				break;
+			case 9 :
+				result = Str(n / sp) + "sp";
+				break;
+			case 10 :
+				result = Str(n / oc) + "oc";
+				break;
+			case 11 :
+				result = Str(n / nn) + "nn";
+				break;
+			case 12 :
+				result = Str(n / dc) + "dc";
+				break;
 		}
 		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
@@ -37079,49 +40260,50 @@ public class KL {
 		}
 		String result = "";
 		switch (size) {
-		case 1:
-		case 2:
-			result = Str(n / K) + "k";
-			break;
-		case 3:
-			result = Str(n / M) + "M";
-			break;
-		case 4:
-			result = Str(n / B) + "B";
-			break;
-		case 5:
-			result = Str(n / T) + "T";
-			break;
-		case 6:
-			result = Str(n / qd) + "qd";
-			break;
-		case 7:
-			result = Str(n / qt) + "qt";
-			break;
-		case 8:
-			result = Str(n / sx) + "sx";
-			break;
-		case 9:
-			result = Str(n / sp) + "sp";
-			break;
-		case 10:
-			result = Str(n / oc) + "oc";
-			break;
-		case 11:
-			result = Str(n / nn) + "nn";
-			break;
-		case 12:
-			result = Str(n / dc) + "dc";
-			break;
+			case 1 :
+			case 2 :
+				result = Str(n / K) + "k";
+				break;
+			case 3 :
+				result = Str(n / M) + "M";
+				break;
+			case 4 :
+				result = Str(n / B) + "B";
+				break;
+			case 5 :
+				result = Str(n / T) + "T";
+				break;
+			case 6 :
+				result = Str(n / qd) + "qd";
+				break;
+			case 7 :
+				result = Str(n / qt) + "qt";
+				break;
+			case 8 :
+				result = Str(n / sx) + "sx";
+				break;
+			case 9 :
+				result = Str(n / sp) + "sp";
+				break;
+			case 10 :
+				result = Str(n / oc) + "oc";
+				break;
+			case 11 :
+				result = Str(n / nn) + "nn";
+				break;
+			case 12 :
+				result = Str(n / dc) + "dc";
+				break;
 		}
 		return result.replaceAll("\\.[0]+(?=[A-Za-z]{1,3}$)", "");
 	}
 
 	public static String toRoman(int n) {
 		treeI tree = new treeI();
-		tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X").add(40, "XL").add(50, "L").add(90, "XC")
-				.add(100, "C").add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M").add(4000, "M_V")
-				.add(9000, "I_X").add(10000, "_X");
+		tree.add(1, "I").add(4, "IV").add(5, "V").add(9, "IX").add(10, "X")
+				.add(40, "XL").add(50, "L").add(90, "XC").add(100, "C")
+				.add(400, "CD").add(500, "D").add(900, "CM").add(1000, "M")
+				.add(4000, "M_V").add(9000, "I_X").add(10000, "_X");
 		int x = tree.floorKey(n);
 		if (n != x) {
 			return tree.get(x) + toRoman(n - x);
@@ -37163,7 +40345,8 @@ public class KL {
 		}
 		int count = 0;
 		for (Object o : objs) {
-			if (o == null || (o instanceof Double ? isInfinity((double) o) : false)) {
+			if (o == null
+					|| (o instanceof Double ? isInfinity((double) o) : false)) {
 				// tested: the else false clause stays, as it gets ignored; if o
 				// is a non-double, only the first condition is tested, the RHS
 				// will just be ignored
@@ -38129,7 +41312,8 @@ public class KL {
 	}
 
 	public static int randInt(int start, int end) {
-		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end)) {
+		if (isNull(start) || not(end) || eq(start, end) || start > end
+				|| isNeg(end)) {
 			return 0;
 		}
 		int number = ThreadLocalRandom.current().nextInt(start, end);
@@ -38178,7 +41362,8 @@ public class KL {
 	}
 
 	public static double randFlt(int start, int end) {
-		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end)) {
+		if (isNull(start) || not(end) || eq(start, end) || start > end
+				|| isNeg(end)) {
 			return 0;
 		}
 		double number = randInt(start, end) * .3;
@@ -38197,19 +41382,21 @@ public class KL {
 	}
 
 	public static double randDbl(int start, int end) {
-		if (isNull(start) || not(end) || eq(start, end) || start > end || isNeg(end)) {
+		if (isNull(start) || not(end) || eq(start, end) || start > end
+				|| isNeg(end)) {
 			return 0;
 		}
 		return randFlt(start, end);
 	}
 
 	public static String randPct() {
-		Number[] nums = { randInt(100), randDbl() };
+		Number[] nums = {randInt(100), randDbl()};
 		return randFrom(nums) + "%";
 	}
 
 	public static String randStr(int len) {
-		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop" + "qrstuvwxyz\\+=";
+		final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop"
+				+ "qrstuvwxyz\\+=";
 		SecureRandom rnd = new SecureRandom();
 		StringBuilder sb = new StringBuilder(len);
 		for (int i = 0; i < len; i++) {
@@ -38764,7 +41951,8 @@ public class KL {
 			return str;
 		}
 	}
-	public static String replace(String str, CharSequence re, CharSequence _with) {
+	public static String replace(String str, CharSequence re,
+			CharSequence _with) {
 		return replace(str, re.toString(), _with.toString());
 	}
 	public static String replace(String str, char oldChar, char newChar) {
@@ -38806,7 +41994,7 @@ public class KL {
 			return str;
 		return replace(str, secondWord(str), _with);
 	}
-	public static String replaceSecondLastWord(String str,String _with) {
+	public static String replaceSecondLastWord(String str, String _with) {
 		if (not(str))
 			return "";
 		if (!wordsIn(str) || _with == null)
@@ -38826,8 +42014,9 @@ public class KL {
 		if (!wordsIn(str) || _with == null || n < 0 || n >= wordCount(str))
 			return str;
 		return replace(str, nthWord(str, n), _with);
-	}	
-	public static String replace(String str, String to_replace, Function<String, String> fn) {
+	}
+	public static String replace(String str, String to_replace,
+			Function<String, String> fn) {
 		if (not(str) || not(to_replace) || not(fn)) {
 			return str;
 		}
@@ -38956,7 +42145,8 @@ public class KL {
 		return output;
 	}
 
-	public static String replaceOne(String str, String to_replace, String regex_to_replace_with) {
+	public static String replaceOne(String str, String to_replace,
+			String regex_to_replace_with) {
 		if (not(str) || not(to_replace)) {
 			return str;
 		}
@@ -39076,7 +42266,8 @@ public class KL {
 		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
 		}
-		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
+				len(oldArr));
 		return newArr;
 	}
 
@@ -39108,7 +42299,8 @@ public class KL {
 		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
 		}
-		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
+				len(oldArr));
 		return newArr;
 	}
 
@@ -39116,7 +42308,8 @@ public class KL {
 		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
 		}
-		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
+				len(oldArr));
 		return newArr;
 	}
 
@@ -39124,7 +42317,8 @@ public class KL {
 		if (not(oldArr) || not(start) || isNeg(start) || start >= len(oldArr)) {
 			return slice(oldArr);
 		}
-		Object newArr[] = Arrays.copyOfRange(oldArr.clone(), start, len(oldArr));
+		Object newArr[] = Arrays.copyOfRange(oldArr.clone(), start,
+				len(oldArr));
 		return newArr;
 	}
 
@@ -39171,16 +42365,18 @@ public class KL {
 	}
 
 	public static String slice(String str, int start, int end) {
-		if (not(str) || isNull(start) || start >= len(str) || eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end > len(str)) {
+		if (not(str) || isNull(start) || start >= len(str) || eq(start, end)
+				|| end < start || not(end) || isNeg(start) || isNeg(end)
+				|| end > len(str)) {
 			return slice(str);
 		}
 		return str.substring(start, end);
 	}
 
 	public static String[] slice(String oldArr[], int start, int end) {
-		if (not(oldArr) || isNull(start) || start >= len(oldArr) || eq(start, end) || end < start || not(end)
-				|| isNeg(start) || isNeg(end) || end >= len(oldArr)) {
+		if (not(oldArr) || isNull(start) || start >= len(oldArr)
+				|| eq(start, end) || end < start || not(end) || isNeg(start)
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
 		}
 		String newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
@@ -39188,8 +42384,9 @@ public class KL {
 	}
 
 	public static int[] slice(int oldArr[], int start, int end) {
-		if (not(oldArr) || isNull(start) || start >= len(oldArr) || eq(start, end) || end < start || not(end)
-				|| isNeg(start) || isNeg(end) || end >= len(oldArr)) {
+		if (not(oldArr) || isNull(start) || start >= len(oldArr)
+				|| eq(start, end) || end < start || not(end) || isNeg(start)
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
 		}
 		int newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
@@ -39197,8 +42394,9 @@ public class KL {
 	}
 
 	public static long[] slice(long oldArr[], int start, int end) {
-		if (not(oldArr) || isNull(start) || start >= len(oldArr) || eq(start, end) || end < start || not(end)
-				|| isNeg(start) || isNeg(end) || end >= len(oldArr)) {
+		if (not(oldArr) || isNull(start) || start >= len(oldArr)
+				|| eq(start, end) || end < start || not(end) || isNeg(start)
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
 		}
 		long newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
@@ -39206,8 +42404,9 @@ public class KL {
 	}
 
 	public static float[] slice(float oldArr[], int start, int end) {
-		if (not(oldArr) || isNull(start) || start >= len(oldArr) || eq(start, end) || end < start || not(end)
-				|| isNeg(start) || isNeg(end) || end >= len(oldArr)) {
+		if (not(oldArr) || isNull(start) || start >= len(oldArr)
+				|| eq(start, end) || end < start || not(end) || isNeg(start)
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
 		}
 		float newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
@@ -39215,8 +42414,9 @@ public class KL {
 	}
 
 	public static double[] slice(double oldArr[], int start, int end) {
-		if (not(oldArr) || isNull(start) || start >= len(oldArr) || eq(start, end) || end < start || not(end)
-				|| isNeg(start) || isNeg(end) || end >= len(oldArr)) {
+		if (not(oldArr) || isNull(start) || start >= len(oldArr)
+				|| eq(start, end) || end < start || not(end) || isNeg(start)
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
 		}
 		double newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
@@ -39224,8 +42424,9 @@ public class KL {
 	}
 
 	public static boolean[] slice(boolean oldArr[], int start, int end) {
-		if (not(oldArr) || isNull(start) || start >= len(oldArr) || eq(start, end) || end < start || not(end)
-				|| isNeg(start) || isNeg(end) || end >= len(oldArr)) {
+		if (not(oldArr) || isNull(start) || start >= len(oldArr)
+				|| eq(start, end) || end < start || not(end) || isNeg(start)
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
 		}
 		boolean newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
@@ -39233,8 +42434,9 @@ public class KL {
 	}
 
 	public static Object[] slice(Object oldArr[], int start, int end) {
-		if (not(oldArr) || isNull(start) || start >= len(oldArr) || eq(start, end) || end < start || not(end)
-				|| isNeg(start) || isNeg(end) || end >= len(oldArr)) {
+		if (not(oldArr) || isNull(start) || start >= len(oldArr)
+				|| eq(start, end) || end < start || not(end) || isNeg(start)
+				|| isNeg(end) || end >= len(oldArr)) {
 			return slice(oldArr);
 		}
 		Object newArr[] = Arrays.copyOfRange(oldArr.clone(), start, end);
@@ -39242,48 +42444,54 @@ public class KL {
 	}
 
 	public static strArr slice(strArr arr, int start, int end) {
-		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end > len(arr)) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
+				|| end < start || not(end) || isNeg(start) || isNeg(end)
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
 	}
 
 	public static intArr slice(intArr arr, int start, int end) {
-		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end > len(arr)) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
+				|| end < start || not(end) || isNeg(start) || isNeg(end)
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
 	}
 
 	public static longArr slice(longArr arr, int start, int end) {
-		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end > len(arr)) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
+				|| end < start || not(end) || isNeg(start) || isNeg(end)
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
 	}
 
 	public static fltArr slice(fltArr arr, int start, int end) {
-		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end > len(arr)) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
+				|| end < start || not(end) || isNeg(start) || isNeg(end)
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
 	}
 
 	public static dblArr slice(dblArr arr, int start, int end) {
-		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end > len(arr)) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
+				|| end < start || not(end) || isNeg(start) || isNeg(end)
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
 	}
 
 	public static boolArr slice(boolArr arr, int start, int end) {
-		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end) || end < start || not(end) || isNeg(start)
-				|| isNeg(end) || end > len(arr)) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
+				|| end < start || not(end) || isNeg(start) || isNeg(end)
+				|| end > len(arr)) {
 			return slice(arr);
 		}
 		return arr.slice(start, end);
@@ -39388,98 +42596,112 @@ public class KL {
 	}
 
 	public static String sliceEnd(String str, int earlyEnd) {
-		if (not(str) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(str)) {
+		if (not(str) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(str)) {
 			return slice(str);
 		}
 		return slice(str, 0, len(str) - earlyEnd);
 	}
 
 	public static String[] sliceEnd(String[] arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static int[] sliceEnd(int[] arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static long[] sliceEnd(long[] arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static float[] sliceEnd(float[] arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static double[] sliceEnd(double[] arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static boolean[] sliceEnd(boolean[] arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static Object[] sliceEnd(Object[] arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static strArr sliceEnd(strArr arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static intArr sliceEnd(intArr arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static longArr sliceEnd(longArr arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static fltArr sliceEnd(fltArr arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static dblArr sliceEnd(dblArr arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
 
 	public static boolArr sliceEnd(boolArr arr, int earlyEnd) {
-		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd) || earlyEnd > len(arr)) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
 			return slice(arr);
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
@@ -40171,12 +43393,13 @@ public class KL {
 		if (not(str) || not(re))
 			return false;
 		try {
-			if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?") || re.equals("^")
-					|| re.equals("$")) {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
 								// content
 			}
-			Pattern pattern = Pattern.compile("^(" + re + ")", Pattern.CASE_INSENSITIVE);
+			Pattern pattern = Pattern.compile("^(" + re + ")",
+					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str);
 			return !!matcher.find();
 		} catch (PatternSyntaxException | StackOverflowError e) {
@@ -40194,12 +43417,13 @@ public class KL {
 		if (not(str) || not(re))
 			return false;
 		try {
-			if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?") || re.equals("^")
-					|| re.equals("$")) {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
 								// content
 			}
-			Pattern pattern = Pattern.compile("(" + re + ")$", Pattern.CASE_INSENSITIVE);
+			Pattern pattern = Pattern.compile("(" + re + ")$",
+					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str);
 			return !!matcher.find();
 		} catch (PatternSyntaxException | StackOverflowError e) {
@@ -40366,7 +43590,9 @@ public class KL {
 	}
 
 	public static String nth(String str, int n) {
-		return n >= 0 && n < len(str) ? Str(str.toCharArray()[n]) : nthLastOf(str, Pos(n));
+		return n >= 0 && n < len(str)
+				? Str(str.toCharArray()[n])
+				: nthLastOf(str, Pos(n));
 	}
 
 	public static String nth(String[] arr, int n) {
@@ -40666,7 +43892,9 @@ public class KL {
 	public static String nthLastOf(String str, int n) {
 		if (isNull(str))
 			return "";
-		return n > 0 && n <= len(str) ? ("" + str.toCharArray()[len(str) - n]) : "";
+		return n > 0 && n <= len(str)
+				? ("" + str.toCharArray()[len(str) - n])
+				: "";
 	}
 
 	public static char nthLastOf(char[] arr, int n) {
@@ -40990,7 +44218,8 @@ public class KL {
 	}
 
 	public static int indexOf(String str, char ch, int start) {
-		if (str == null || str.isEmpty() || ch == '\0' || start < 0 || start >= str.length())
+		if (str == null || str.isEmpty() || ch == '\0' || start < 0
+				|| start >= str.length())
 			return -1;
 		try {
 			return str.indexOf(ch, start);
@@ -41003,8 +44232,8 @@ public class KL {
 		if (str == null || str.isEmpty())
 			return -1;
 		try {
-			if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?") || re.equals("^")
-					|| re.equals("$")) {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
 								// content
 			}
@@ -41019,11 +44248,12 @@ public class KL {
 	}
 
 	public static int indexOf(String str, String re, int start) {
-		if (re == null || str.isEmpty() || re.isEmpty() || start < 0 || start >= str.length())
+		if (re == null || str.isEmpty() || re.isEmpty() || start < 0
+				|| start >= str.length())
 			return -1;
 		try {
-			if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?") || re.equals("^")
-					|| re.equals("$")) {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
 								// content
 			}
@@ -41033,7 +44263,8 @@ public class KL {
 			if (!m.find())
 				return -1;
 			return m.start();
-		} catch (PatternSyntaxException | StackOverflowError | IndexOutOfBoundsException e) {
+		} catch (PatternSyntaxException | StackOverflowError
+				| IndexOutOfBoundsException e) {
 			return -1;
 		}
 	}
@@ -41049,7 +44280,8 @@ public class KL {
 	}
 
 	public static int lastIndexOf(String str, int ch, int start) {
-		if (str == null || str.isEmpty() || ch == '\0' || start < 0 || start >= str.length())
+		if (str == null || str.isEmpty() || ch == '\0' || start < 0
+				|| start >= str.length())
 			return -1;
 		try {
 			return str.lastIndexOf(ch, start);
@@ -41062,8 +44294,8 @@ public class KL {
 		if (str == null || str.isEmpty() || re == null || re.isEmpty())
 			return -1;
 		try {
-			if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?") || re.equals("^")
-					|| re.equals("$")) {
+			if (re.equals(".") || re.equals("*") || re.equals("+")
+					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
 								// content
 			}
@@ -41089,7 +44321,8 @@ public class KL {
 	}
 
 	public static int indexOf(String[] inStrArr, String lookupStr) {
-		if (inStrArr == null || inStrArr.length == 0 || lookupStr == null || lookupStr.isEmpty())
+		if (inStrArr == null || inStrArr.length == 0 || lookupStr == null
+				|| lookupStr.isEmpty())
 			return -1;
 		for (int i = 0; i < len(inStrArr); i++) {
 			if (inStrArr[i].equals(lookupStr)) {
@@ -41100,7 +44333,8 @@ public class KL {
 	}
 
 	public static int lastIndexOf(String[] inStrArr, String lookupStr) {
-		if (inStrArr == null || inStrArr.length == 0 || lookupStr == null || lookupStr.isEmpty())
+		if (inStrArr == null || inStrArr.length == 0 || lookupStr == null
+				|| lookupStr.isEmpty())
 			return -1;
 		for (int i = len(inStrArr) - 1; i >= 0; i--) {
 			if (inStrArr[i].equals(lookupStr)) {
@@ -41288,7 +44522,8 @@ public class KL {
 		return occurrences;
 	}
 
-	public static int numberOfOccurrencesIn(String[] inStrArr, String lookupStr) {
+	public static int numberOfOccurrencesIn(String[] inStrArr,
+			String lookupStr) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inStrArr); i++) {
 			if (inStrArr[i].equals(lookupStr)) {
@@ -41328,7 +44563,8 @@ public class KL {
 		return occurrences;
 	}
 
-	public static int numberOfOccurrencesIn(double[] inDblArr, double lookupDbl) {
+	public static int numberOfOccurrencesIn(double[] inDblArr,
+			double lookupDbl) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inDblArr); i++) {
 			if (inDblArr[i] == lookupDbl) {
@@ -41338,7 +44574,8 @@ public class KL {
 		return occurrences;
 	}
 
-	public static int numberOfOccurrencesIn(boolean[] inBoolArr, boolean lookupBool) {
+	public static int numberOfOccurrencesIn(boolean[] inBoolArr,
+			boolean lookupBool) {
 		int occurrences = 0;
 		for (int i = 0; i < len(inBoolArr); i++) {
 			if (inBoolArr[i] == lookupBool) {
@@ -41436,16 +44673,21 @@ public class KL {
 		// as not(re) would trim whitespace " ", which we sometimes DO need to
 		// look up in a string to see if the string is more than one word, down
 		// to ""
-		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?") || re.equals("^") || re.equals("$")) {
+		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
+				|| re.equals("^") || re.equals("$")) {
 			re = "\\" + re; // escape special characters IF they're the only
 							// content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
-					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])", "\\\\$1")
-					.replaceAll("(?<!\\\\)%c", "[A-Za-z]").replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
-					.replaceAll("(?<!\\\\)%b", "(true|false)").replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
-					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+").replaceAll("(?<!\\\\)%n", "\\\\d+");
+					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
+							"\\\\$1")
+					.replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+					.replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
+					.replaceAll("(?<!\\\\)%b", "(true|false)")
+					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
+					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
+					.replaceAll("(?<!\\\\)%n", "\\\\d+");
 
 			// modification precaution: it has been tested, and hence learned,
 			// the
@@ -41462,7 +44704,8 @@ public class KL {
 			if (is(bools)) {
 				strict = bools[0] == true;
 			}
-			Pattern pattern = Pattern.compile(re, strict ? 0 : Pattern.CASE_INSENSITIVE);
+			Pattern pattern = Pattern.compile(re,
+					strict ? 0 : Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str.trim());
 			return !!matcher.find();
 		} catch (PatternSyntaxException | StackOverflowError e) {
@@ -41474,16 +44717,21 @@ public class KL {
 		if (not(str) || not(re)) {
 			return "";
 		}
-		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?") || re.equals("^") || re.equals("$")) {
+		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
+				|| re.equals("^") || re.equals("$")) {
 			re = "\\" + re; // escape special characters IF they're the only
 							// content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
-					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])", "\\\\$1")
-					.replaceAll("(?<!\\\\)%c", "[A-Za-z]").replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
-					.replaceAll("(?<!\\\\)%b", "(true|false)").replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
-					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+").replaceAll("(?<!\\\\)%n", "\\\\d+");
+					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
+							"\\\\$1")
+					.replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+					.replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
+					.replaceAll("(?<!\\\\)%b", "(true|false)")
+					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
+					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
+					.replaceAll("(?<!\\\\)%n", "\\\\d+");
 			// modification precaution: it has been tested, and hence learned,
 			// the
 			// double-escaping remains AS-IS
@@ -41499,7 +44747,8 @@ public class KL {
 			if (is(bools)) {
 				strict = bools[0] == true;
 			}
-			Pattern pattern = Pattern.compile("(" + re + ")", strict ? 0 : Pattern.CASE_INSENSITIVE);
+			Pattern pattern = Pattern.compile("(" + re + ")",
+					strict ? 0 : Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str.trim());
 			if (!matcher.find()) {
 				return "";
@@ -41510,7 +44759,8 @@ public class KL {
 		}
 	}
 
-	public static String[] findMatches(String str, String re, boolean... bools) {
+	public static String[] findMatches(String str, String re,
+			boolean... bools) {
 		if (not(str) || not(re)) {
 			return blank.Str;
 		}
@@ -41518,16 +44768,21 @@ public class KL {
 		// been blank.strArr, but that would have been too long, and would be
 		// almost the same as typing new String[]{}. Sometimes, we're just
 		// looking for conciseness.
-		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?") || re.equals("^") || re.equals("$")) {
+		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
+				|| re.equals("^") || re.equals("$")) {
 			re = "\\" + re; // escape special characters IF they're the only
 							// content
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
-					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])", "\\\\$1")
-					.replaceAll("(?<!\\\\)%c", "[A-Za-z]").replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
-					.replaceAll("(?<!\\\\)%b", "(true|false)").replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
-					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+").replaceAll("(?<!\\\\)%n", "\\\\d+");
+					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
+							"\\\\$1")
+					.replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+					.replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
+					.replaceAll("(?<!\\\\)%b", "(true|false)")
+					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
+					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
+					.replaceAll("(?<!\\\\)%n", "\\\\d+");
 			// modification precaution: it has been tested, and hence learned,
 			// the
 			// double-escaping remains AS-IS
@@ -41543,7 +44798,8 @@ public class KL {
 			if (is(bools)) {
 				strict = bools[0] == true;
 			}
-			Pattern pattern = Pattern.compile("(" + re + ")", strict ? 0 : Pattern.CASE_INSENSITIVE);
+			Pattern pattern = Pattern.compile("(" + re + ")",
+					strict ? 0 : Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str.trim());
 			strArr arr = new strArr();
 			while (matcher.find()) {
@@ -41560,7 +44816,7 @@ public class KL {
 
 	public static int[] intsOf(String s) {
 		if (not(s)) {
-			return new int[] {};
+			return new int[]{};
 		}
 		intArr arr = new intArr();
 		String[] matches = findMatches(s, "(?<!\\.)(\\d+)(?!\\.)");
@@ -41595,7 +44851,7 @@ public class KL {
 
 	public static float[] fltsOf(String s) {
 		if (not(s)) {
-			return new float[] {};
+			return new float[]{};
 		}
 		fltArr arr = new fltArr();
 		String[] matches = findMatches(s, "\\-?\\d*\\.\\d+");
@@ -41630,7 +44886,7 @@ public class KL {
 
 	public static double[] dblsOf(String s) {
 		if (not(s)) {
-			return new double[] {};
+			return new double[]{};
 		}
 		dblArr arr = new dblArr();
 		String[] matches = findMatches(s, "\\-?\\d*\\.\\d+");
@@ -41665,7 +44921,7 @@ public class KL {
 
 	public static double[] numsOf(String s) {
 		if (not(s)) {
-			return new double[] {};
+			return new double[]{};
 		}
 		dblArr arr = new dblArr();
 		String[] matches = findMatches(s, "\\-?\\d*\\.?\\d+");
@@ -41687,10 +44943,11 @@ public class KL {
 
 	public static String[] emailsOf(String s) {
 		if (not(s)) {
-			return new String[] {};
+			return new String[]{};
 		}
 		strArr arr = new strArr();
-		String[] matches = findMatches(s, "[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
+		String[] matches = findMatches(s,
+				"[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
 		for (int i : range(matches)) {
 			arr.push(matches[i]);
 		}
@@ -41699,7 +44956,7 @@ public class KL {
 
 	public static String[] urlsOf(String s) {
 		if (not(s)) {
-			return new String[] {};
+			return new String[]{};
 		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
@@ -41712,7 +44969,7 @@ public class KL {
 
 	public static String[] phonesOf(String s) {
 		if (not(s)) {
-			return new String[] {};
+			return new String[]{};
 		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
@@ -41736,7 +44993,8 @@ public class KL {
 		if (not(s)) {
 			return false;
 		}
-		return eq(trim(s), "[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
+		return eq(trim(s),
+				"[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
 		// apparently, Java is stupid when it comes to regular expression.
 		// Learned: neither "\\s"
 	}
@@ -42010,15 +45268,15 @@ public class KL {
 	}
 
 	public static final class blank {
-		public static String[] Str = new String[] {};
-		public static int[] Int = new int[] {};
-		public static char[] Ch, Char = Ch = new char[] {};
-		public static long[] Long = new long[] {};
-		public static float[] Flt = new float[] {};
-		public static double[] Dbl = new double[] {};
-		public static boolean[] Bool = new boolean[] {};
-		public static Number[] Num = new Number[] {};
-		public static Object[] Obj = new Object[] {};
+		public static String[] Str = new String[]{};
+		public static int[] Int = new int[]{};
+		public static char[] Ch, Char = Ch = new char[]{};
+		public static long[] Long = new long[]{};
+		public static float[] Flt = new float[]{};
+		public static double[] Dbl = new double[]{};
+		public static boolean[] Bool = new boolean[]{};
+		public static Number[] Num = new Number[]{};
+		public static Object[] Obj = new Object[]{};
 		public static strArr strArr = new strArr();
 		public static intArr intArr = new intArr();
 		public static longArr longArr = new longArr();
@@ -42813,7 +46071,8 @@ public class KL {
 		return arrA.intersection(arrays);
 	}
 
-	public static String[] negativeIntersection(String[] arrA, String[]... arrays) {
+	public static String[] negativeIntersection(String[] arrA,
+			String[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Str;
 		}
@@ -42834,21 +46093,24 @@ public class KL {
 		return new longArr(arrA).negativeIntersection(arrays).array();
 	}
 
-	public static float[] negativeIntersection(float[] arrA, float[]... arrays) {
+	public static float[] negativeIntersection(float[] arrA,
+			float[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Flt;
 		}
 		return new fltArr(arrA).negativeIntersection(arrays).array();
 	}
 
-	public static double[] negativeIntersection(double[] arrA, double[]... arrays) {
+	public static double[] negativeIntersection(double[] arrA,
+			double[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Dbl;
 		}
 		return new dblArr(arrA).negativeIntersection(arrays).array();
 	}
 
-	public static boolean[] negativeIntersection(boolean[] arrA, boolean[]... arrays) {
+	public static boolean[] negativeIntersection(boolean[] arrA,
+			boolean[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Bool;
 		}
@@ -42869,7 +46131,8 @@ public class KL {
 		return arrA.negativeIntersection(arrays);
 	}
 
-	public static longArr negativeIntersection(longArr arrA, longArr... arrays) {
+	public static longArr negativeIntersection(longArr arrA,
+			longArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.longArr;
 		}
@@ -42890,7 +46153,8 @@ public class KL {
 		return arrA.negativeIntersection(arrays);
 	}
 
-	public static boolArr negativeIntersection(boolArr arrA, boolArr... arrays) {
+	public static boolArr negativeIntersection(boolArr arrA,
+			boolArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.boolArr;
 		}
@@ -43182,7 +46446,8 @@ public class KL {
 		return result.array();
 	}
 
-	public static boolean[] negativeIntersection(boolean[] arrA, boolean... arrB) {
+	public static boolean[] negativeIntersection(boolean[] arrA,
+			boolean... arrB) {
 		boolArr result = new boolArr(arrA);
 		for (int i : range(arrB)) {
 			if (in(arrA, arrB[i])) {
@@ -43441,7 +46706,8 @@ public class KL {
 			return "";
 		}
 		input = (input.toUpperCase().substring(0, 1)
-				+ (!in(input, "[A-Z]{2,}") ? input.toLowerCase() : input).substring(1))
+				+ (!in(input, "[A-Z]{2,}") ? input.toLowerCase() : input)
+						.substring(1))
 				.replaceAll("(?<!\\w)i(?!\\w)", "I");
 		return input;
 	}
@@ -43567,6 +46833,13 @@ public class KL {
 			return 0;
 		}
 		return arr.length;
+	}
+
+	public static int len(arr arr) {
+		if (arr == null) {
+			return 0;
+		}
+		return arr.length();
 	}
 
 	public static int len(strArr arr) {
@@ -44264,31 +47537,34 @@ public class KL {
 		if (in(middleware, "\\s")) {
 			middleware = middleware.split(" ")[1];
 			if (in(middleware, "\\[")) {
-				return replace(middleware.replaceAll("\\[", "array\\."), "\\w$", m -> {
-					if (eq(m, "C")) {
-						return "char";
-					} else if (eq(m, "I")) {
-						return "int";
-					} else if (eq(m, "J")) {
-						return "long";
-					} else if (eq(m, "F")) {
-						return "flt";
-					} else if (eq(m, "D")) {
-						return "dbl";
-					} else if (eq(m, "Z")) {
-						return "bool";
-					}
-					// BE CAUTIOUS: For some reason, the bool arrays
-					// fall under group Z memory addresses. Catching I
-					// just couldn't work <beware that it's been tested,
-					// and failed>. Just so you know, WITH Z... IT DOES
-					// WORK.
-					return "arr";
-				}).replaceAll("Ljava\\.lang\\.|\\;", "").replaceAll("String", "str").replaceAll("Number", "num")
+				return replace(middleware.replaceAll("\\[", "array\\."), "\\w$",
+						m -> {
+							if (eq(m, "C")) {
+								return "char";
+							} else if (eq(m, "I")) {
+								return "int";
+							} else if (eq(m, "J")) {
+								return "long";
+							} else if (eq(m, "F")) {
+								return "flt";
+							} else if (eq(m, "D")) {
+								return "dbl";
+							} else if (eq(m, "Z")) {
+								return "bool";
+							}
+							// BE CAUTIOUS: For some reason, the bool arrays
+							// fall under group Z memory addresses. Catching I
+							// just couldn't work <beware that it's been tested,
+							// and failed>. Just so you know, WITH Z... IT DOES
+							// WORK.
+							return "arr";
+						}).replaceAll("Ljava\\.lang\\.|\\;", "")
+						.replaceAll("String", "str").replaceAll("Number", "num")
 						.replaceAll("Object", "o");
 			}
-			return middleware.toLowerCase().replaceAll("(?<=\\w{3,4})arr", "Arr").replaceAll("\\$", "\\.")
-					.replaceAll("\\w+\\.", "");
+			return middleware.toLowerCase()
+					.replaceAll("(?<=\\w{3,4})arr", "Arr")
+					.replaceAll("\\$", "\\.").replaceAll("\\w+\\.", "");
 		}
 		String result = middleware.split("\\.")[2].toLowerCase();
 		// arrays that belong to a class, for instance, Number[], Object[],
@@ -44300,83 +47576,103 @@ public class KL {
 		if (not(guessedType)) {
 			return false;
 		}
-		return len(guessedType) < 3 ? startsWith(type(o), guessedType) : in(type(o), guessedType);
+		return len(guessedType) < 3
+				? startsWith(type(o), guessedType)
+				: in(type(o), guessedType);
 	}
 
 	// ^this one stays too
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8, Object cond9, Runnable sol9, Object cond10,
-			Runnable sol10) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
 		if (not(src)) {
 			return false;
 		}
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7,
-				cond8, sol8, cond9, sol9, cond10, sol10);
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
 	}
 
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
 		if (not(src)) {
 			return false;
 		}
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7,
-				cond8, sol8, cond9, sol9);
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
 	}
 
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7, Object cond8, Runnable sol8) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
 		if (not(src)) {
 			return false;
 		}
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7,
-				cond8, sol8);
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
 	}
 
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6,
-			Object cond7, Runnable sol7) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
 		if (not(src)) {
 			return false;
 		}
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7);
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
 	}
 
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5, Object cond6, Runnable sol6) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
 		if (not(src)) {
 			return false;
 		}
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6);
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
 	}
 
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
 		if (not(src)) {
 			return false;
 		}
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5);
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
 	}
 
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3, Object cond4, Runnable sol4) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
 		if (not(src)) {
 			return false;
 		}
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4,
+				sol4);
 	}
 
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2, Object cond3,
-			Runnable sol3) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
 		if (not(src)) {
 			return false;
 		}
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3);
 	}
 
-	public static boolean type(Object src, Object cond1, Runnable sol1, Object cond2, Runnable sol2) {
+	public static boolean type(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
 		if (not(src)) {
 			return false;
 		}
@@ -44391,51 +47687,66 @@ public class KL {
 	}
 
 	// type version 2
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8,
-			Object cond9, T sol9, Object cond10, T sol10) {
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7,
-				cond8, sol8, cond9, sol9, cond10, sol10);
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
 	}
 
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8,
-			Object cond9, T sol9) {
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7,
-				cond8, sol8, cond9, sol9);
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
 	}
 
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8, T sol8) {
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7,
-				cond8, sol8);
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
 	}
 
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6, Object cond7, T sol7) {
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6, cond7, sol7);
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
 	}
 
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5, Object cond6, T sol6) {
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5, cond6, sol6);
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
 	}
 
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4, Object cond5, T sol5) {
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5);
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
 	}
 
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3, Object cond4,
-			T sol4) {
-		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
+		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3, cond4,
+				sol4);
 	}
 
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2, Object cond3, T sol3) {
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
 		return sw(type(src), cond1, sol1, cond2, sol2, cond3, sol3);
 	}
 
-	public static <T> T type(Object src, Object cond1, T sol1, Object cond2, T sol2) {
+	public static <T> T type(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
 		return sw(type(src), cond1, sol1, cond2, sol2);
 	}
 
@@ -44444,11 +47755,15 @@ public class KL {
 	}
 
 	// let's set up some "type"-helpers for the function
-	public static String None = "null", Ch, Str = "string", Int = "integer", Char = Ch = "character", Long = "long",
-			Flt = "float", Dbl = "double", Bool = "boolean", Arr = "array\\.", ArrOfChar = "array\\.char",
-			ArrOfStr = "array\\.str", ArrOfInt = "array\\.int", ArrOfLong = "array\\.long", ArrOfFlt = "array\\.flt",
-			ArrOfDbl = "array\\.dbl", ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num", ArrOfObj = "array\\.o",
-			strArr = "strArr", intArr = "intArr", longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
+	public static String None = "null", Ch, Str = "string", Int = "integer",
+			Char = Ch = "character", Long = "long", Flt = "float",
+			Dbl = "double", Bool = "boolean", Arr = "array\\.",
+			ArrOfChar = "array\\.char", ArrOfStr = "array\\.str",
+			ArrOfInt = "array\\.int", ArrOfLong = "array\\.long",
+			ArrOfFlt = "array\\.flt", ArrOfDbl = "array\\.dbl",
+			ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num",
+			ArrOfObj = "array\\.o", strArr = "strArr", intArr = "intArr",
+			longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
 			boolArr = "boolArr";
 
 	public static char[] charArrToCharArr(Character[] inputArr) {
@@ -44927,331 +48242,594 @@ public class KL {
 		return arr.shuffle();
 	}
 
-	private static String[] ctss = { "Abbottabad", "Adilpur", "Ahmadpur East", "Ahmadpur Sial", "Akora", "Aliabad",
-			"Alik Ghund", "Alipur", "Alizai", "Alpurai", "Aman Garh", "Amirabad", "Arifwala", "Ashanagro Koto",
-			"Athmuqam", "Attock City", "Awaran", "Baddomalhi", "Badin", "Baffa", "Bagarji", "Bagh", "Bahawalnagar",
-			"Bahawalnagar", "Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal", "Barkhan", "Basirpur",
-			"Basti Dosa", "Bat Khela", "Battagram", "Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan",
-			"Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala", "Bozdar Wada", "Bulri", "Burewala",
-			"Chak", "Chak Azam Sahu", "Chak Five Hundred Seventy-five", "Chak Jhumra",
+	private static String[] ctss = {"Abbottabad", "Adilpur", "Ahmadpur East",
+			"Ahmadpur Sial", "Akora", "Aliabad", "Alik Ghund", "Alipur",
+			"Alizai", "Alpurai", "Aman Garh", "Amirabad", "Arifwala",
+			"Ashanagro Koto", "Athmuqam", "Attock City", "Awaran", "Baddomalhi",
+			"Badin", "Baffa", "Bagarji", "Bagh", "Bahawalnagar", "Bahawalnagar",
+			"Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal",
+			"Barkhan", "Basirpur", "Basti Dosa", "Bat Khela", "Battagram",
+			"Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan",
+			"Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala",
+			"Bozdar Wada", "Bulri", "Burewala", "Chak", "Chak Azam Sahu",
+			"Chak Five Hundred Seventy-five", "Chak Jhumra",
 			"Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left",
-			"Chak Two Hundred Forty-nine Thal Development Authority", "Chakwal", "Chaman", "Chamber", "Charsadda",
-			"Chawinda", "Chenab Nagar", "Cherat Cantonement", "Chhor", "Chichawatni", "Chilas", "Chiniot", "Chishtian",
-			"Chitral", "Choa Saidan Shah", "Chowki Jamali", "Chuchar-kana Mandi", "Chuhar Jamali", "Chunian", "Dadhar",
-			"Dadu", "Daggar", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS", "Daromehar", "Darya Khan",
-			"Darya Khan Marri", "Daska Kalan", "Dasu", "Daud Khel", "Daulatpur", "Daultala", "Daur", "Dera Alahyar",
-			"Dera Bugti", "Dera Ghazi Khan", "Dera Ismail Khan", "Dera Murad Jamali", "Dhanot", "Dhaunkal",
-			"Dhoro Naro", "Digri", "Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo", "Doaba", "Dokri",
-			"Duki", "Dullewala", "Dunga Bunga", "Dunyapur", "Eidgah", "Eminabad", "Faisalabad", "Faqirwali", "Faruka",
-			"Fazilpur", "Fort Abbas", "Gadani", "Gakuch", "Gambat", "Gandava", "Garh Maharaja", "Garhi Khairo",
-			"Garhiyasin", "Ghauspur", "Ghotki", "Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan",
-			"Gujar Khan", "Gujranwala", "Gujrat", "Gulishah Kach", "Gwadar", "Hadali", "Hafizabad", "Hala", "Hangu",
-			"Haripur", "Harnai", "Harnoli", "Harunabad", "Hasilpur", "Hattian Bala", "Haveli Lakha", "Havelian",
-			"Hazro City", "Hingorja", "Hujra Shah Muqim", "Hyderabad", "Islamabad", "Islamkot", "Jacobabad",
-			"Jahanian Shah", "Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand", "Jandiala Sher Khan",
-			"Jaranwala", "Jati", "Jatoi Shimali", "Jauharabad", "Jhang City", "Jhang Sadr", "Jhawarian", "Jhelum",
-			"Jhol", "Jiwani", "Johi", "Jam Sahib", "Kabirwala", "Kadhan", "Kahna Nau", "Kahror Pakka", "Kahuta",
-			"Kakad Wari Dir Upper", "Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar", "Kalur Kot",
-			"Kamalia", "Kamar Mushani", "Kambar", "Kamoke", "Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur",
-			"Karachi", "Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur", "Keshupur", "Keti Bandar",
-			"Khadan Khak", "Khadro", "Khairpur", "Khairpur Mir\'s", "Khairpur Nathan Shah", "Khairpur Tamewah",
-			"Khalabat", "Khandowa", "Khanewal", "Khangah Dogran", "Khangarh", "Khanpur", "Khanpur Mahar", "Kharan",
-			"Kharian", "Khewra", "Khurrianwala", "Khushab", "Khuzdar", "Kohat", "Kohlu", "Kot Addu", "Kot Diji",
-			"Kot Ghulam Muhammad", "Kot Malik Barkhurdar", "Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba",
-			"Kot Sultan", "Kotli", "Kotli Loharan", "Kotri", "Kulachi", "Kundian", "Kunjah", "Kunri", "Lachi",
-			"Ladhewala Waraich", "Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal", "Larkana", "Layyah",
-			"Liliani", "Lodhran", "Loralai", "Mach", "Madeji", "Mailsi", "Malakand", "Malakwal", "Malakwal City",
-			"Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin", "Mangla", "Mankera", "Mansehra",
-			"Mardan", "Mastung", "Matiari", "Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun", "Mianke Mor",
-			"Mianwali", "Minchianabad", "Mingora", "Miran Shah", "Miro Khan", "Mirpur Bhtoro", "Mirpur Khas",
-			"Mirpur Mathelo", "Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro", "Moza Shahwala",
-			"Multan", "Muridke", "Murree", "Musa Khel Bazar", "Mustafabad", "Muzaffargarh", "Muzaffarabad", "Nabisar",
-			"Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Naudero", "Naukot", "Naushahra Virkan",
-			"Naushahro Firoz", "Nawabshah", "Nazir Town", "New Badah", "New Mirpur", "Noorabad", "Nowshera",
-			"Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi", "Pad Idan", "Paharpur", "Pakpattan", "Panjgur",
-			"Pano Aqil", "Parachinar", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia", "Pind Dadan Khan",
-			"Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth", "Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran",
-			"Qila Abdullah", "Qila Saifullah", "Quetta", "Rahim Yar Khan", "Raiwind", "Raja Jang", "Rajanpur",
-			"Rajo Khanani", "Ranipur", "Rasulnagar", "Ratodero", "Rawala Kot", "Rawalpindi", "Renala Khurd",
-			"Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Saddiqabad", "Sahiwal", "Sahiwal", "Saidu Sharif",
-			"Sakrand", "Samaro", "Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann", "Sarai Alamgir",
-			"Sarai Naurang", "Sarai Sidhu", "Sargodha", "Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot",
-			"Shahdadpur", "Shahkot", "Shahpur", "Shahpur Chakar", "Shahr Sultan", "Shakargarh", "Sharqpur Sharif",
-			"Shekhupura", "Shikarpur", "Shingli Bala", "Shinpokh", "Shorkot", "Shujaabad", "Sialkot", "Sibi",
-			"Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhri", "Sohbatpur", "Sukheke Mandi", "Sukkur", "Surab",
-			"Surkhpur", "Swabi", "Sita Road", "Talagang", "Talamba", "Talhar", "Tandlianwala", "Tando Adam",
-			"Tando Alahyar", "Tando Bago", "Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi", "Tangwani",
-			"Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta", "Thul", "Timargara", "Toba Tek Singh", "Topi", "Turbat",
-			"Ubauro", "Umarkot", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai", "Vihari", "Wana", "Warah",
-			"Wazirabad", "Yazman", "Zafarwal", "Zahir Pir", "Zaida", "Zhob", "Ziarat" },
-			wdss = { "documentary", "compliment", "insult", "vocalist", "pianist", "violinist", "thirst", "hunger",
-					"brevity", "longevity", "sanity", "insanity", "bikini", "panty", "hymen", "synthesis", "dementia",
-					"amnesia", "blood sugar", "fever", "flu", "diarrhea", "glucose", "Latino", "Latina", "anesthetics",
-					"anesthesia", "Cannabis", "oasis", "desert", "dessert", "hemoglobin", "cardiographer", "carpenter",
-					"oceanic", "terran", "abroad", "absorbing", "abstract", "academic", "accelerated", "accented",
-					"accountant", "acquainted", "acute", "obtuse", "protective", "possessive", "real", "unreal",
-					"realistic", "unrealistic", "imagined", "delusional", "addicting", "addictive", "adjustable",
-					"admired", "adult", "adverse", "advised", "aerosol", "afraid", "creeped out", "horrified",
-					"horrific", "terrified", "terrific", "devastated", "frustrated", "aggravated", "aggressive",
-					"agreeable", "alienate", "aligned", "all-round", "alleged", "almond", "alright", "altruistic",
-					"ambient", "ambivalent", "amiable", "amino", "amorphous", "amused", "anatomical", "ancestral",
-					"angelic", "angrier", "answerable", "antiquarian", "antiretroviral", "appellate", "applicable",
-					"apportioned", "approachable", "appropriated", "archer", "aroused", "arrested", "assertive",
-					"assigned", "athletic", "atrocious", "attained", "authoritarian", "autobiographical", "avaricious",
-					"avocado", "awake", "awesome", "backstage", "backwoods", "balding", "bandaged", "banded", "banned",
-					"barreled", "battle", "beaten", "begotten", "beguiled", "bellied", "belted", "beneficent",
-					"besieged", "betting", "big-money", "biggest", "biochemical", "bipolar", "blackened", "blame",
-					"blessed", "blindfolded", "bloat", "blocked", "blooded", "decrepit", "dedicated", "defaced",
-					"defective", "defenseless", "deluded", "deodorant", "departed", "depress", "fretted", "frugal",
-					"indiscriminate", "indomitable", "inert", "inflate", "inform", "inheriting", "injured", "injurious",
-					"inking", "inoffensive", "insane", "insensible", "insidious", "insincere", "insistent", "insolent",
-					"insufferable", "intemperate", "interdependent", "interesting", "interfering", "intern",
-					"interpreted", "intersecting", "intolerable", "intolerant", "intuitive", "irresolute", "irritate",
-					"jealous", "jerking", "joining", "joint", "journalistic", "joyful", "keyed", "knowing",
-					"lacklustre", "laden", "lagging", "lamented", "laughable", "layered", "leather", "leathern",
-					"leery", "left-footed", "legible", "leisure", "lessening", "liberating", "life-size", "lifted",
-					"lightest", "limitless", "listening", "literary", "liver", "livid", "lobster", "locked",
-					"long-held", "long-lasting", "long-running", "oversize", "overworked", "oyster", "paced", "panting",
-					"paralyzed", "paramount", "parental", "parted", "partisan", "passive", "edible", "eatable",
-					"kissable", "palette" },
-			ntltss = { "Afghan", "Egyptian", "Alantic", "Albanian", "Algerian", "Virgin Islander", "American Samoan",
-					"Andorran", "Angolan", "Anguillan", "Antarctic", "Antiguan and Barbudan", "Equatorial Guinean",
-					"Argentine; Argentinian", "Armenian", "Aruban", "Azerbaijani", "Ethiopian", "Australian",
-					"Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Belarusian", "Belgian", "Belizean", "Beninese",
-					"Bermudian", "Bhutanese", "Bolivian", "Bosnian", "Botswanan", "of Bouvet Island", "Brazilian",
-					"of the British Indian Ocean Territory", "British Virgin Islander", "Bruneian", "Bulgarian",
-					"Burkinabe", "Burundian", "Cape Verdean", "Chilean", "Chinese", "of Clipperton Island",
-					"Cook Islander", "Costa Rican", "Ivorian", "Curacaoan", "Danish", "German", "Dominican",
-					"Djiboutian", "Ecuadorian", "Salvadorian; Salvadoran", "Eritrean", "Estonian", "Falklander",
-					"Faroese", "Fijian", "Finnish", "French", "of the French Southern and Antarctic Lands", "Guianese",
-					"Polynesian", "Gabonese", "Gambian", "Georgian", "Ghanaian", "Gibraltarian", "Grenadian", "Greek",
-					"Greenlandic", "Guadeloupean", "Guamanian", "Guatemalan", "Guernsey", "Guinean", "Bissau-Guinean",
-					"Guyanese", "Haitian", "of the Heard Island and McDonald Islands", "of the Holy See/of the Vatican",
-					"Honduran", "Hong Kong Chinese", "Indian", "Indonesian", "Manx", "Iraqi", "Iranian", "Irish",
-					"Icelandic", "Israeli", "Italian", "Jamaican", "Japanese", "Yemeni", "Jersey", "Jordanian",
-					"Caymanian", "Cambodian", "Cameroonian", "Canadian", "Kazakh", "Qatari", "Kenyan", "Kyrgyz",
-					"Kiribatian", "of the Cocos (Keeling) Islands", "Colombian", "Comorian", "Congolese", "Croatian",
-					"Cuban", "Kuwaiti", "Lao; Laotian", "Mesotho", "Latvian", "Lebanese", "Liberian", "Libyan",
-					"Liechtensteiners", "Lithuanian", "Luxembourgish", "Macanese", "Malagasy", "Malawian", "Malaysian",
-					"Maldivian", "Malian", "Maltese", "Moroccan", "Marshallese", "Martinican", "Mauritanian",
-					"Mauritian", "Mahoran", "Mexican", "Micronesian", "Moldovan", "Monegasque", "Mongolian",
-					"Montenegrin", "Montserratian", "Mozambican", "Burmese", "Namibian", "Nauruan", "Nepalese",
-					"New Caledonian", "New Zealander", "Nicaraguan", "Dutch", "Nigerien", "Nigerian", "Niuean",
-					"North Korean", "Marian Islander", "Norfolk Islander", "Norwegian", "Omani", "Austrian",
-					"Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Filipino",
-					"Pitcairner", "Polish", "Portuguese", "Puerto Rican", "Reunionese", "Rwandan; Rwandese", "Romanian",
-					"Russian", "Solomon Islander", "Zambian", "Samoan", "Sammarinese", "Sao Tomean", "Saudi Arabian",
-					"Swedish", "Swiss", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Zimbabwean",
-					"Singaporean", "Slovak", "Slovenian", "Somali; Somalian", "Spanish", "Sri Lankan",
-					"Saint Barthelemian", "of Saint Helena, Ascension and Tristan da Cunha", "of Saint Kitts and Nevis",
-					"Saint Lucian", "of Saint Martin", "of Sint Maarten", "of Saint Pierre and Miquelon",
-					"Vincentian; of Saint Vincent and the Grenadines", "South African", "Sudanese",
-					"of South Georgia and the South Sandwich Islands", "South Korean", "South Sudanese", "Surinamese",
-					"of Svalbard, of Jan Mayen", "Swazi", "Syrian", "Tajik", "Taiwanese", "Tanzanian", "Thai",
-					"East Timorese", "Togolese", "Tokelauan", "Tongan", "of Trinidad and Tobago", "Chadian", "Czech",
-					"Tunisian", "Turkish", "Turkmen", "of the Turks and Caicos Islands", "Tuvaluan", "Ugandan",
-					"Ukrainian", "Hungarian", "Uruguayan", "Uzbek", "Vanuatuan", "Venezuelan", "Emirian",
-					"American; The United States of America", "British", "Vietnamese",
-					"of the Wallis and Futuna Islands", "of Christmas Island", "Sahrawi", "Central African",
-					"Cypriot" },
-			rfnss = { "+92 (308) 215 2441", "+92 (305) 205 3250", "+92 (314) 763 2228", "+92 (323) 267 3234",
-					"+92 (320) 005 8284", "+92 (312) 486 1408", "+92 (313) 556 6782", "+92 (312) 188 8504",
-					"+92 (321) 517 0564", "+92 (300) 215 0018", "+92 (331) 066 8182", "+92 (305) 621 8357",
-					"+92 (312) 303 6683", "+92 (330) 315 6554", "+92 (318) 702 7462", "+92 (307) 083 6477",
-					"+92 (333) 585 3443", "+92 (315) 547 0136", "+92 (327) 660 2848", "+92 (330) 144 4028",
-					"+92 (323) 276 4840", "+92 (327) 738 8321", "+92 (305) 812 7050", "+92 (324) 620 5556",
-					"+92 (310) 681 7606", "+92 (336) 286 8600", "+92 (333) 241 8207", "+92 (322) 527 1520",
-					"+92 (303) 510 4857", "+92 (337) 650 1744", "+92 (321) 331 4144", "+92 (301) 515 4836",
-					"+92 (332) 460 3760", "+92 (333) 168 2174", "+92 (304) 272 1350", "+92 (320) 375 3538",
-					"+92 (336) 516 5606", "+92 (330) 088 7340", "+92 (317) 523 7275", "+92 (314) 128 3831",
-					"+92 (326) 825 7157", "+92 (302) 115 2032", "+92 (336) 362 6505", "+92 (313) 627 6536",
-					"+92 (302) 832 5304", "+92 (300) 131 4753", "+92 (311) 588 0281", "+92 (337) 412 0180",
-					"+92 (321) 601 7236", "+92 (306) 075 0548", "+92 (336) 744 6742", "+92 (335) 684 5677",
-					"+92 (323) 753 4302", "+92 (322) 864 6866", "+92 (301) 077 0316", "+92 (320) 080 7036",
-					"+92 (327) 613 3783", "+92 (334) 138 2771", "+92 (330) 343 8104", "+92 (325) 201 0684",
-					"+92 (337) 775 7221", "+92 (311) 857 5310", "+92 (322) 615 5255", "+92 (310) 731 2176",
-					"+92 (323) 412 7433", "+92 (323) 180 3238", "+92 (318) 704 5111", "+92 (321) 485 2814",
-					"+92 (334) 611 2074", "+92 (314) 343 0881", "+92 (300) 537 3177", "+92 (310) 187 8100",
-					"+92 (320) 878 2262", "+92 (324) 785 1028", "+92 (313) 070 1354", "+92 (318) 204 0637",
-					"+92 (328) 877 2626", "+92 (318) 018 4006", "+92 (306) 104 1463", "+92 (313) 862 3726",
-					"+92 (318) 388 7683", "+92 (330) 738 5730", "+92 (316) 166 6803", "+92 (313) 271 3641",
-					"+92 (307) 718 8285", "+92 (306) 256 2360", "+92 (321) 104 8067", "+92 (300) 884 5048",
-					"+92 (307) 085 3035", "+92 (335) 446 3531", "+92 (322) 647 3410", "+92 (328) 760 2861",
-					"+92 (327) 772 6701", "+92 (300) 211 6834", "+92 (333) 515 7716", "+92 (314) 534 3700",
-					"+92 (330) 078 1205", "+92 (304) 316 1564", "+92 (338) 782 0723", "+92 (318) 250 1765",
-					"+92 (300) 125 7551", "+92 (330) 715 6381", "+92 (306) 366 6305", "+92 (330) 548 0703",
-					"+92 (324) 818 1781", "+92 (334) 057 4635", "+92 (327) 646 3800" },
-			rgynss = { "Ahmed Raza", "Bilal Tariq", "Usman Siddiqi", "Omar Farooq", "Waleed Kamal", "Talha Iqbal",
-					"Faisal Latif", "Hassan Jameel", "Adnan Bashir", "Kashif Rauf", "Imran Saeed", "Adeel Qureshi",
-					"Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid", "Faizan Khalid", "Hammad Zubair", "Naveed Aslam",
-					"Waqar Mehmood", "Sarmad Sheikh", "Tariq Anwar", "Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain",
-					"Mudassir Younas", "Jawad Hamid", "Ammar Khalil", "Rizwan Waheed", "Hasnain Saleem", "Basit Jamal",
-					"Sheraz Ahmed", "Umer Shahbaz", "Arsalan Hashim", "Raheel Sultan", "Fahad Zaman", "Sajid Irfan",
-					"Owais Rauf", "Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem", "Tauseef Haroon", "Murtaza Shah",
-					"Maaz Asif", "Samiullah Arif", "Nabeel Qamar", "Taimoor Rauf", "Atif Nawaz", "Hashir Siddiqui",
-					"Zubair Imran", "Abrar Hussain", "Farhan Waseem", "Umair Tariq", "Arif Ali", "Shayan Latif",
-					"Irfan Khalid", "Hamza Masood", "Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed",
-					"Mudassir Kamal", "Haris Younas", "Noman Waqar", "Waseem Abbas", "Faizan Rauf", "Mubashir Jamil",
-					"Sohail Shahzad", "Ubaid Latif", "Sikandar Saeed", "Hasham Khalid", "Farrukh Hussain",
-					"Zain Qureshi", "Arslan Abbas", "Muzammil Tariq", "Usama Rasheed", "Adeel Sultan", "Taha Iqbal",
-					"Kamil Arshad", "Danish Rauf", "Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar", "Omer Siddiqi",
-					"Dawood Mushtaq", "Ammar Waheed", "Fasih Shah", "Adnan Khalil", "Imran Waseem", "Waleed Anwar",
-					"Yasir Rauf", "Arham Bashir", "Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain", "Hassan Qamar",
-					"Usman Kamal", "Tariq Yousaf", "Owais Farooq", "Raheel Bashir", "Waqas Khalid", "Faisal Shah",
-					"Bilal Latif", "Zeeshan Abbas", "Faizan Hussain", "Mudassir Farooq", "Kashif Khalid", "Abrar Tariq",
-					"Umair Siddiqi", "Hamza Jameel", "Nabeel Usman", "Khalil Laghari", "Murtaza Waseem", "Sajid Waheed",
-					"Noman Riaz", "Hashir Hussain", "Sheraz Rauf", "Ahmed Tariq", "Atif Bashir", "Omar Siddiqui",
-					"Irfan Khalil", "Raheel Jamil", "Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran", "Waleed Hussain",
-					"Taimoor Abbas", "Mudassir Waheed", "Umer Khalid", "Azeem Munawar", "Junaid Bashir", "Shayan Rauf",
-					"Ahmed Hanif", "Bilal Hussain", "Umair Riaz", "Zubair Khalid", "Adeel Haroon", "Sajid Qamar",
-					"Faizan Latif", "Hammad Saleem", "Shoaib Tariq", "Noman Anwar", "Fahad Hussain", "Hashim Waseem",
-					"Hamza Abbas", "Arsalan Khalid", "Taha Rasheed", "Usama Farooq", "Sarim Bashir", "Khizar Waheed",
-					"Mudassir Khalid", "Waqas Rauf", "Tariq Hussain", "Jawad Siddiqui", "Shehryar Abbas",
-					"Naveed Tariq", "Muzammil Jamil", "Zeeshan Khalid", "Atif Hussain", "Sarmad Waqar", "Shoaib Khalid",
-					"Ahmed Qureshi", "Raheel Abbas", "Hammad Riaz", "Sheraz Bashir", "Danish Khalid", "Adil Waheed",
-					"Hashir Tariq", "Faizan Waseem", "Usman Abbas", "Khurram Latif", "Owais Siddiqui",
-					"Mudassir Hussain", "Tauseef Khalid", "Farrukh Waseem", "Umer Saleem", "Hamza Rauf",
-					"Shoaib Kamran", "Bilal Abbas", "Sajid Tariq", "Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid",
-					"Ahmed Farooq", "Atif Khalid", "Irfan Waseem", "Junaid Tariq", "Umair Saleem", "Arsalan Hussain",
-					"Waleed Abbas", "Adnan Waseem", "Sheraz Khalid", "Mudassir Abbas", "Shoaib Rauf", "Omar Hussain",
-					"Raheel Khalid", "Hammad Waseem", "Waseem Farooq", "Hasham Tariq", "Faisal Khalid", "Kashif Abbas",
-					"Tauseef Abbas", "Hamza Saleem", "Zeeshan Waseem", "Sarmad Hussain", "Bilal Khalid", "Umair Abbas",
-					"Mudassir Riaz", "Adil Khalid", "Ahmed Abbas", "Owais Hussain" },
-			rglnss = { "Ayesha Waleed", "Fatima Kamal", "Hira Latif", "Sana Farooq", "Mahnoor Tariq", "Faiza Tehseem",
-					"Fozia Mehshar", "Iqra Siddiqui", "Laiba Aslam", "Anum Riaz", "Saba Kiani", "Hafsa Saeed",
-					"Sidra Hashmi", "Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel", "Rida qAbbas", "Nimra Waseem",
-					"Huma Tariq", "Samina Khalid", "Zeenat Rauf", "Amna Waheed", "Neelam Hashmi", "Aiman Qamar",
-					"Romaisa Hussain", "Fareeda Asif", "Sania Anwar", "Humaisa Khalil", "Asma Riaz", "Sadia Kamran",
-					"Sehrish Waseem", "Uzma Tariq", "Mehwish Latif", "Hina Abbas", "Areeba Waqar", "Tanzeela Jafar",
-					"Anila Saleem", "Mahira Umer", "Bushra Nadeem", "Zoya Mehmood", "Nida Hashim", "Sumaira Yasir",
-					"Mahnoor Hussain", "Komal Saeed", "Laiba Waseem", "Amina Abbas", "Rida Jameel", "Saeeka Haroon",
-					"Zainab Farooq", "Fatima Hussain", "Hafsa Mehmood", "Minal Khawar", "Yumna Tariq", "Ayeza Barkat",
-					"Asia Farhan", "Kinza Jamal", "Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed", "Hira Khalid",
-					"Amna Riaz", "Iqra Farooq", "Anum Abbas", "Mehwish Iqrar", "Sumaiya Tariq", "Romaisa Khalil",
-					"Faiza Waseem", "Bushra Farooq", "Sadia Abbas", "Hiba Hussain", "Afshan Siddiqui", "Sana Basit",
-					"Areeba Khalid", "Maira Waseem", "Nimra Hussain", "Sehrish Saleem", "Amna Jameel", "Zoya Khalid",
-					"Mehreen Tariq", "Aiman Abbas", "Komal Riaz", "Hira Saleem", "Palwasha Moazzam", "Laiba Nayyar",
-					"Minahal Tahir", "Mehwish Shuja", "Javeria Feroze", "Zara Munawwar", "Fiza Jatoi", "Fatima Riaz",
-					"Zainab Alvi", "Tanzeela Abbas", "Kiran Waseem", "Ayesha Khalid", "Samina Hussain", "Sadia Waseem",
-					"Bisma Majeed", "Areeba Latif", "Sehrish Tariq", "Hafsa Waseem", "Hina Tariq", "Zoya Saleem",
-					"Maham Khalid", "Muneera Rauf", "Bushra Tariq", "Zeenat Hussain", "Areeba Saleem", "Kainat Rizvi",
-					"Sumaiya Hussain", "Sadia Khalid", "Mahnoor Irshad", "Fatima Jameel", "Sakina Hilaj", "Iqra Danyal",
-					"Hina Riaz", "Neha Saleem", "Mehwish Khalid", "Asma Waseem", "Romaisa Tariq", "Laiba Khalid",
-					"Komal Noor", "Bushra Waseem", "Zainab Tariq", "Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad",
-					"Komal Hussain", "Maryam Raza", "Romaisa Haroon", "Mehwish Abbas", "Maham Riaz", "Sumaiya Khalid",
-					"Anila Anjum", "Areeba Hussain" },
-			areas_in_karachi = { "Askari 1", "Askari 2", "Askari 3", "Askari 4", "Askari 5", "Bahria Town - Precinct 1",
-					"Bahria Town - Precinct 10", "Bahria Town - Precinct 11", "Bahria Town - Precinct 12",
-					"Bahria Town - Precinct 13", "Bahria Town - Precinct 14", "Bahria Town - Precinct 15",
-					"Bahria Town - Precinct 16", "Bahria Town - Precinct 17", "Bahria Town - Precinct 18",
-					"Bahria Town - Precinct 19", "Bahria Town - Precinct 2", "Bahria Town - Precinct 20",
-					"Bahria Town - Precinct 21", "Bahria Town - Precinct 22", "Bahria Town - Precinct 23",
-					"Bahria Town - Precinct 24", "Bahria Town - Precinct 25", "Bahria Town - Precinct 26",
-					"Bahria Town - Precinct 27", "Bahria Town - Precinct 28", "Bahria Town - Precinct 29",
-					"Bahria Town - Precinct 3", "Bahria Town - Precinct 30", "Bahria Town - Precinct 31",
-					"Bahria Town - Precinct 32", "Bahria Town - Precinct 33", "Bahria Town - Precinct 4",
-					"Bahria Town - Precinct 5", "Bahria Town - Precinct 6", "Bahria Town - Precinct 7",
-					"Bahria Town - Precinct 8", "Bahria Town - Precinct 9", "BufferZone - Sector 15 A 1",
-					"BufferZone - Sector 15 A 2", "BufferZone - Sector 15 A 3", "BufferZone - Sector 15 A 4",
-					"BufferZone - Sector 15 A 5", "BufferZone - Sector 15 B", "BufferZone - Sector 16 A",
-					"BufferZone - Sector 16 B", "Cantonment", "Clifton - Block 1", "Clifton - Block 2",
-					"Clifton - Block 3", "Clifton - Block 4", "Clifton - Block 5", "Clifton - Block 6",
-					"Clifton - Block 7", "Clifton - Block 8", "Clifton - Block 9", "Clifton - Kehkashan",
-					"DHA - Phase 1", "DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4", "DHA - Phase 5",
-					"DHA - Phase 6", "DHA - Phase 7", "DHA - Phase 8", "DHA - Phase 9", "F.B Area - Azizabad",
-					"F.B Area - B1 Area", "F.B Area - B Area", "F.B Area - Block 1", "F.B Area - Block 10",
-					"F.B Area - Block 11", "F.B Area - Block 12", "F.B Area - Block 13", "F.B Area - Block 14",
-					"F.B Area - Block 15", "F.B Area - Block 16", "F.B Area - Block 17", "F.B Area - Block 18",
-					"F.B Area - Block 19", "F.B Area - Block 2", "F.B Area - Block 20", "F.B Area - Block 21",
-					"F.B Area - Block 22", "F.B Area - Block 3", "F.B Area - Block 4", "F.B Area - Block 5",
-					"F.B Area - Block 6", "F.C Area - C1 Area", "F.C Area - C Area", "Garden - Garden East",
-					"Garden - Garden West", "Garden - Soldier Bazaar", "Gulistan-e-Johar - Block 1",
-					"Gulistan-e-Johar - Block 10", "Gulistan-e-Johar - Block 11", "Gulistan-e-Johar - Block 12",
-					"Gulistan-e-Johar - Block 13", "Gulistan-e-Johar - Block 14", "Gulistan-e-Johar - Block 15",
-					"Gulistan-e-Johar - Block 16", "Gulistan-e-Johar - Block 17", "Gulistan-e-Johar - Block 18",
-					"Gulistan-e-Johar - Block 19", "Gulistan-e-Johar - Block 2", "Gulistan-e-Johar - Block 20",
-					"Gulistan-e-Johar - Block 3", "Gulistan-e-Johar - Block 4", "Gulistan-e-Johar - Block 5",
-					"Gulistan-e-Johar - Block 6", "Gulistan-e-Johar - Block 7", "Gulistan-e-Johar - Block 8",
-					"Gulistan-e-Johar - Block 9", "Gulshan-e-Hadeed - Data Nagar", "Gulshan-e-Hadeed - EIDU Goth",
-					"Gulshan-e-Hadeed - Gulshan-e-Mauzzam", "Gulshan-e-Hadeed - Gulshan-e-Rehman",
-					"Gulshan-e-Hadeed - Mehran Road", "Gulshan-e-Hadeed - Phase 1", "Gulshan-e-Hadeed - Phase 2",
-					"Gulshan-e-Hadeed - Phase 3", "Gulshan-e-Hadeed - PTCL Satellite Station",
-					"Gulshan-e-Hadeed - Shah Latif Town", "Gulshan-e-Hadeed - Shahnawaz Goth",
-					"Gulshan-e-Hadeed - Shah Town", "Gulshan-e-Hadeed - Steel Town", "Gulshan-e-Iqbal - Adamjee Nagar",
-					"Gulshan-e-Iqbal - Block 1", "Gulshan-e-Iqbal - Block 10", "Gulshan-e-Iqbal - Block 11",
-					"Gulshan-e-Iqbal - Block 12", "Gulshan-e-Iqbal - Block 13", "Gulshan-e-Iqbal - Block 14",
-					"Gulshan-e-Iqbal - Block 15", "Gulshan-e-Iqbal - Block 16", "Gulshan-e-Iqbal - Block 17",
-					"Gulshan-e-Iqbal - Block 18", "Gulshan-e-Iqbal - Block 19", "Gulshan-e-Iqbal - Block 2",
-					"Gulshan-e-Iqbal - Block 3", "Gulshan-e-Iqbal - Block 4", "Gulshan-e-Iqbal - Block 5",
-					"Gulshan-e-Iqbal - Block 6", "Gulshan-e-Iqbal - Block 7", "Gulshan-e-Iqbal - Block 8",
-					"Gulshan-e-Iqbal - Block 9", "Gulshan-e-Iqbal - Civic Center", "Gulshan-e-Iqbal - Dhoraji",
-					"Korangi - Abdullah Shah Noorani Pahari Colony", "Korangi - Korangi Industrial Area",
-					"Korangi - Nasir Colony", "Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town",
-					"Korangi - Zia Colony", "Landhi - Alflah Housing Society", "Landhi - Awami Colony",
-					"Landhi - Bagh-e-Korangi", "Landhi - Bakhtawar Goth", "Landhi - Barmi Colony",
-					"Landhi - Bhutto Nagar", "Landhi - Future Colony", "Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth",
-					"Landhi - Labour Colony", "Landhi - Landhi Industrial Area", "Landhi - Muslimabad Colony",
-					"Landhi - Muzaffarabad Colony", "Landhi - Punjab Town", "Landhi - Qasim Town",
-					"Landhi - Sadat Colony", "Landhi - Shah Khalid Colony", "Landhi - Sharafi Goth",
-					"Landhi - Zamanabad", "Liaquatabad - Block 1", "Liaquatabad - Block 10", "Liaquatabad - Block 2",
-					"Liaquatabad - Block 3", "Liaquatabad - Block 4", "Liaquatabad - Block 5", "Liaquatabad - Block 6",
-					"Liaquatabad - Block 7", "Liaquatabad - Block 8", "Liaquatabad - Block 9", "Malir - Malir Halt",
-					"Malir - Malir Cantt", "Nazimabad - Block 1", "Nazimabad - Block 2", "Nazimabad - Block 3",
-					"Nazimabad - Block 4", "Nazimabad - Block 5", "North Karachi - Sector 10",
-					"North Karachi - Sector 11 - A", "North Karachi - Sector 11 - B", "North Karachi - Sector 11 - C 1",
-					"North Karachi - Sector 11 - C 2", "North Karachi - Sector 11 - C 3",
-					"North Karachi - Sector 11 - E", "North Karachi - Sector 11 - H", "North Karachi - Sector 11 - I",
-					"North Karachi - Sector 11 - K", "North Karachi - Sector 11 - L", "North Karachi - Sector 2",
-					"North Karachi - Sector 3", "North Karachi - Sector 4", "North Karachi - Sector 5 - A 1",
-					"North Karachi - Sector 5 - A 2", "North Karachi - Sector 5 - A 3",
-					"North Karachi - Sector 5 - A 4", "North Karachi - Sector 5 - B 1",
-					"North Karachi - Sector 5 - B 2", "North Karachi - Sector 5 - B 3",
-					"North Karachi - Sector 5 - B 4", "North Karachi - Sector 5 - C 1",
-					"North Karachi - Sector 5 - C 2", "North Karachi - Sector 5 - C 3",
-					"North Karachi - Sector 5 - C 4", "North Karachi - Sector 5 - I", "North Karachi - Sector 5 - J",
-					"North Karachi - Sector 5 - K", "North Karachi - Sector 5 - L", "North Karachi - Sector 5 - M",
-					"North Karachi - Sector 6", "North Karachi - Sector 7 - D 1", "North Karachi - Sector 7 - D 2",
-					"North Karachi - Sector 7 - D 3", "North Karachi - Sector 7 - D 4", "North Karachi - Sector 8",
-					"North Karachi - Sector 9", "North Nazimabad - Block A", "North Nazimabad - Block B",
-					"North Nazimabad - Block C", "North Nazimabad - Block D", "North Nazimabad - Block E",
-					"North Nazimabad - Block F", "North Nazimabad - Block G", "North Nazimabad - Block H",
-					"North Nazimabad - Block I", "North Nazimabad - Block J", "North Nazimabad - Block K",
-					"North Nazimabad - Block L", "North Nazimabad - Block M", "North Nazimabad - Block N",
-					"North Nazimabad - Block O", "North Nazimabad - Block P", "North Nazimabad - Block Q",
-					"North Nazimabad - Block R", "North Nazimabad - Block S", "North Nazimabad - Block T",
-					"Old Town - Bhimpora", "Old Town - Bohra Pir", "Old Town - Bombay Bazar", "Old Town - Jodia Bazar",
-					"Old Town - Kagzi Bazar", "Old Town - Kakri Ground", "Old Town - Kamil Gali",
-					"Old Town - Khada Market", "Old Town - Kharadar", "Old Town - Lee Market", "Old Town - Mithadar",
-					"Old Town - Nanwara", "Old Town - Nishter Road", "Old Town - Pan Mandi", "Old Town - Ramswami",
-					"Old Town - Ranchorline", "Orangi Town - Banaras Town", "Orangi Town - Bangla Bazaar",
-					"Orangi Town - Bilal Colony", "Orangi Town - Katti Pahari", "Orangi Town - Moria Goth Orangi",
-					"Orangi Town - Orangi", "Orangi Town - Sector 14 - A", "Orangi Town - Sector 14 - C",
-					"Orangi Town - Thorani Goth", "Baldiya Town", "Baloch Colony", "Civil Line", "FC Area",
-					"Firdous Colony", "Gulshan-e-Maymar", "Hawksbay", "I.I Chundrigar", "Jamshed Road",
-					"K.D.A Officers", "Kemari", "Liyari", "M.A Jinnah Rd", "Manora", "New Karachi", "New Surjani",
-					"PIB Colony", "Pipri Goth", "Rizvia Society", "Saddar", "Scheme 33", "Shabbirabad",
-					"P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2", "P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4",
-					"P.E.C.H.S - Block 5", "P.E.C.H.S - Block 6", "P.E.C.H.S - Khalid Bin Walid",
-					"P.E.C.H.S - Tariq Road", "S.I.T.E - Golimar", "S.I.T.E - S.I.T.E",
-					"Shah Faisal Colony - Aswan Town", "Shah Faisal Colony - Gulshan-e-Asghar",
-					"Shah Faisal Colony - Shah Faisal Colony 1", "Shah Faisal Colony - Shah Faisal Colony 5",
-					"F.B Area - Block 7", "F.B Area - Block 9", "P.E.C.H.S - Block 7", "Aram Bagh", "Bath Island",
-					"University Road", "Bahadurabad", "Shah Faisal Colony - 4", "Banglore Town", "Fowler Lines",
-					"Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal", "Shah Faisal Colony - 3",
-					"Shah Faisal Colony - Green Town", "Darwaish Colony", "Korangi - Sector 31 B", "Firdous Colony",
-					"North Nazimabad - Block W", "K.A.E.C.H.S", "Mehmoodabad", "Korangi - Mehran Town",
-					"Landhi Town - 36 B", "Karachi Memon Society", "Madras Cooperative Housing Society",
-					"Shahrah-e-Faisal", "Korangi - Sector 41 B", "Clifton - Delhi Colony", "Korangi - Sector 32 B",
-					"Dhoraji - Adamjee Nagar", "Bhimpura", "Dhoraji - CP& Berar Society",
-					"Shahra-e-Faisal - Umar Colony", "Model Colony", "Gulshan-e-Shamim", "Clifton - Shah Rasool Colony",
-					"North Karachi - Sector 12 C", "Jail Road - Hyderabad Colony", "Napier Quarter", "Gulzar-e-Hijri",
-					"North Karachi - Sector 12 A", "Shahra-e-Faisal - Jinnah Housing Society", "K.D.A Scheme 1",
-					"Clifton - Punjab Colony", "Korangi - Sector 31 D", "Clifton - Zamzama", "Parsi Colony",
-					"Qayyumabad", "Khokrapar", "Shah Faisal Colony - Muslimabad Malir City", "F.B Area - Block 8",
-					"Nanak Wara", "Mohammad Ali Society", "Manzoor Colony", "Dalmia", "Defence View - Phase 1",
-					"Defence View - Phase 2", "KDA Officers Housing Society", "Karimabad", "Soldier Bazar",
-					"Hussainabad", "Sharfabad Society", "Gharibabad", "Sindhi Muslim Cooperative Housing Society" },
-			rndcts = { "Your heart is the size of an ocean. Go find yourself in its hidden depths.",
+			"Chak Two Hundred Forty-nine Thal Development Authority", "Chakwal",
+			"Chaman", "Chamber", "Charsadda", "Chawinda", "Chenab Nagar",
+			"Cherat Cantonement", "Chhor", "Chichawatni", "Chilas", "Chiniot",
+			"Chishtian", "Chitral", "Choa Saidan Shah", "Chowki Jamali",
+			"Chuchar-kana Mandi", "Chuhar Jamali", "Chunian", "Dadhar", "Dadu",
+			"Daggar", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS",
+			"Daromehar", "Darya Khan", "Darya Khan Marri", "Daska Kalan",
+			"Dasu", "Daud Khel", "Daulatpur", "Daultala", "Daur",
+			"Dera Alahyar", "Dera Bugti", "Dera Ghazi Khan", "Dera Ismail Khan",
+			"Dera Murad Jamali", "Dhanot", "Dhaunkal", "Dhoro Naro", "Digri",
+			"Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo",
+			"Doaba", "Dokri", "Duki", "Dullewala", "Dunga Bunga", "Dunyapur",
+			"Eidgah", "Eminabad", "Faisalabad", "Faqirwali", "Faruka",
+			"Fazilpur", "Fort Abbas", "Gadani", "Gakuch", "Gambat", "Gandava",
+			"Garh Maharaja", "Garhi Khairo", "Garhiyasin", "Ghauspur", "Ghotki",
+			"Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan",
+			"Gujar Khan", "Gujranwala", "Gujrat", "Gulishah Kach", "Gwadar",
+			"Hadali", "Hafizabad", "Hala", "Hangu", "Haripur", "Harnai",
+			"Harnoli", "Harunabad", "Hasilpur", "Hattian Bala", "Haveli Lakha",
+			"Havelian", "Hazro City", "Hingorja", "Hujra Shah Muqim",
+			"Hyderabad", "Islamabad", "Islamkot", "Jacobabad", "Jahanian Shah",
+			"Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand",
+			"Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali",
+			"Jauharabad", "Jhang City", "Jhang Sadr", "Jhawarian", "Jhelum",
+			"Jhol", "Jiwani", "Johi", "Jam Sahib", "Kabirwala", "Kadhan",
+			"Kahna Nau", "Kahror Pakka", "Kahuta", "Kakad Wari Dir Upper",
+			"Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar",
+			"Kalur Kot", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke",
+			"Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi",
+			"Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur",
+			"Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur",
+			"Khairpur Mir\'s", "Khairpur Nathan Shah", "Khairpur Tamewah",
+			"Khalabat", "Khandowa", "Khanewal", "Khangah Dogran", "Khangarh",
+			"Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra",
+			"Khurrianwala", "Khushab", "Khuzdar", "Kohat", "Kohlu", "Kot Addu",
+			"Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar",
+			"Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba",
+			"Kot Sultan", "Kotli", "Kotli Loharan", "Kotri", "Kulachi",
+			"Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich",
+			"Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal",
+			"Larkana", "Layyah", "Liliani", "Lodhran", "Loralai", "Mach",
+			"Madeji", "Mailsi", "Malakand", "Malakwal", "Malakwal City",
+			"Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin",
+			"Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Matiari",
+			"Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun",
+			"Mianke Mor", "Mianwali", "Minchianabad", "Mingora", "Miran Shah",
+			"Miro Khan", "Mirpur Bhtoro", "Mirpur Khas", "Mirpur Mathelo",
+			"Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro",
+			"Moza Shahwala", "Multan", "Muridke", "Murree", "Musa Khel Bazar",
+			"Mustafabad", "Muzaffargarh", "Muzaffarabad", "Nabisar",
+			"Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Naudero",
+			"Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah",
+			"Nazir Town", "New Badah", "New Mirpur", "Noorabad", "Nowshera",
+			"Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi",
+			"Pad Idan", "Paharpur", "Pakpattan", "Panjgur", "Pano Aqil",
+			"Parachinar", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia",
+			"Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth",
+			"Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Abdullah",
+			"Qila Saifullah", "Quetta", "Rahim Yar Khan", "Raiwind",
+			"Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar",
+			"Ratodero", "Rawala Kot", "Rawalpindi", "Renala Khurd",
+			"Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Saddiqabad",
+			"Sahiwal", "Sahiwal", "Saidu Sharif", "Sakrand", "Samaro",
+			"Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann",
+			"Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha",
+			"Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur",
+			"Shahkot", "Shahpur", "Shahpur Chakar", "Shahr Sultan",
+			"Shakargarh", "Sharqpur Sharif", "Shekhupura", "Shikarpur",
+			"Shingli Bala", "Shinpokh", "Shorkot", "Shujaabad", "Sialkot",
+			"Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhri",
+			"Sohbatpur", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur",
+			"Swabi", "Sita Road", "Talagang", "Talamba", "Talhar",
+			"Tandlianwala", "Tando Adam", "Tando Alahyar", "Tando Bago",
+			"Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi",
+			"Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta",
+			"Thul", "Timargara", "Toba Tek Singh", "Topi", "Turbat", "Ubauro",
+			"Umarkot", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai",
+			"Vihari", "Wana", "Warah", "Wazirabad", "Yazman", "Zafarwal",
+			"Zahir Pir", "Zaida", "Zhob", "Ziarat"},
+			wdss = {"documentary", "compliment", "insult", "vocalist",
+					"pianist", "violinist", "thirst", "hunger", "brevity",
+					"longevity", "sanity", "insanity", "bikini", "panty",
+					"hymen", "synthesis", "dementia", "amnesia", "blood sugar",
+					"fever", "flu", "diarrhea", "glucose", "Latino", "Latina",
+					"anesthetics", "anesthesia", "Cannabis", "oasis", "desert",
+					"dessert", "hemoglobin", "cardiographer", "carpenter",
+					"oceanic", "terran", "abroad", "absorbing", "abstract",
+					"academic", "accelerated", "accented", "accountant",
+					"acquainted", "acute", "obtuse", "protective", "possessive",
+					"real", "unreal", "realistic", "unrealistic", "imagined",
+					"delusional", "addicting", "addictive", "adjustable",
+					"admired", "adult", "adverse", "advised", "aerosol",
+					"afraid", "creeped out", "horrified", "horrific",
+					"terrified", "terrific", "devastated", "frustrated",
+					"aggravated", "aggressive", "agreeable", "alienate",
+					"aligned", "all-round", "alleged", "almond", "alright",
+					"altruistic", "ambient", "ambivalent", "amiable", "amino",
+					"amorphous", "amused", "anatomical", "ancestral", "angelic",
+					"angrier", "answerable", "antiquarian", "antiretroviral",
+					"appellate", "applicable", "apportioned", "approachable",
+					"appropriated", "archer", "aroused", "arrested",
+					"assertive", "assigned", "athletic", "atrocious",
+					"attained", "authoritarian", "autobiographical",
+					"avaricious", "avocado", "awake", "awesome", "backstage",
+					"backwoods", "balding", "bandaged", "banded", "banned",
+					"barreled", "battle", "beaten", "begotten", "beguiled",
+					"bellied", "belted", "beneficent", "besieged", "betting",
+					"big-money", "biggest", "biochemical", "bipolar",
+					"blackened", "blame", "blessed", "blindfolded", "bloat",
+					"blocked", "blooded", "decrepit", "dedicated", "defaced",
+					"defective", "defenseless", "deluded", "deodorant",
+					"departed", "depress", "fretted", "frugal",
+					"indiscriminate", "indomitable", "inert", "inflate",
+					"inform", "inheriting", "injured", "injurious", "inking",
+					"inoffensive", "insane", "insensible", "insidious",
+					"insincere", "insistent", "insolent", "insufferable",
+					"intemperate", "interdependent", "interesting",
+					"interfering", "intern", "interpreted", "intersecting",
+					"intolerable", "intolerant", "intuitive", "irresolute",
+					"irritate", "jealous", "jerking", "joining", "joint",
+					"journalistic", "joyful", "keyed", "knowing", "lacklustre",
+					"laden", "lagging", "lamented", "laughable", "layered",
+					"leather", "leathern", "leery", "left-footed", "legible",
+					"leisure", "lessening", "liberating", "life-size", "lifted",
+					"lightest", "limitless", "listening", "literary", "liver",
+					"livid", "lobster", "locked", "long-held", "long-lasting",
+					"long-running", "oversize", "overworked", "oyster", "paced",
+					"panting", "paralyzed", "paramount", "parental", "parted",
+					"partisan", "passive", "edible", "eatable", "kissable",
+					"palette"},
+			ntltss = {"Afghan", "Egyptian", "Alantic", "Albanian", "Algerian",
+					"Virgin Islander", "American Samoan", "Andorran", "Angolan",
+					"Anguillan", "Antarctic", "Antiguan and Barbudan",
+					"Equatorial Guinean", "Argentine; Argentinian", "Armenian",
+					"Aruban", "Azerbaijani", "Ethiopian", "Australian",
+					"Bahamian", "Bahraini", "Bangladeshi", "Barbadian",
+					"Belarusian", "Belgian", "Belizean", "Beninese",
+					"Bermudian", "Bhutanese", "Bolivian", "Bosnian",
+					"Botswanan", "of Bouvet Island", "Brazilian",
+					"of the British Indian Ocean Territory",
+					"British Virgin Islander", "Bruneian", "Bulgarian",
+					"Burkinabe", "Burundian", "Cape Verdean", "Chilean",
+					"Chinese", "of Clipperton Island", "Cook Islander",
+					"Costa Rican", "Ivorian", "Curacaoan", "Danish", "German",
+					"Dominican", "Djiboutian", "Ecuadorian",
+					"Salvadorian; Salvadoran", "Eritrean", "Estonian",
+					"Falklander", "Faroese", "Fijian", "Finnish", "French",
+					"of the French Southern and Antarctic Lands", "Guianese",
+					"Polynesian", "Gabonese", "Gambian", "Georgian", "Ghanaian",
+					"Gibraltarian", "Grenadian", "Greek", "Greenlandic",
+					"Guadeloupean", "Guamanian", "Guatemalan", "Guernsey",
+					"Guinean", "Bissau-Guinean", "Guyanese", "Haitian",
+					"of the Heard Island and McDonald Islands",
+					"of the Holy See/of the Vatican", "Honduran",
+					"Hong Kong Chinese", "Indian", "Indonesian", "Manx",
+					"Iraqi", "Iranian", "Irish", "Icelandic", "Israeli",
+					"Italian", "Jamaican", "Japanese", "Yemeni", "Jersey",
+					"Jordanian", "Caymanian", "Cambodian", "Cameroonian",
+					"Canadian", "Kazakh", "Qatari", "Kenyan", "Kyrgyz",
+					"Kiribatian", "of the Cocos (Keeling) Islands", "Colombian",
+					"Comorian", "Congolese", "Croatian", "Cuban", "Kuwaiti",
+					"Lao; Laotian", "Mesotho", "Latvian", "Lebanese",
+					"Liberian", "Libyan", "Liechtensteiners", "Lithuanian",
+					"Luxembourgish", "Macanese", "Malagasy", "Malawian",
+					"Malaysian", "Maldivian", "Malian", "Maltese", "Moroccan",
+					"Marshallese", "Martinican", "Mauritanian", "Mauritian",
+					"Mahoran", "Mexican", "Micronesian", "Moldovan",
+					"Monegasque", "Mongolian", "Montenegrin", "Montserratian",
+					"Mozambican", "Burmese", "Namibian", "Nauruan", "Nepalese",
+					"New Caledonian", "New Zealander", "Nicaraguan", "Dutch",
+					"Nigerien", "Nigerian", "Niuean", "North Korean",
+					"Marian Islander", "Norfolk Islander", "Norwegian", "Omani",
+					"Austrian", "Pakistani", "Palauan", "Panamanian",
+					"Papua New Guinean", "Paraguayan", "Peruvian", "Filipino",
+					"Pitcairner", "Polish", "Portuguese", "Puerto Rican",
+					"Reunionese", "Rwandan; Rwandese", "Romanian", "Russian",
+					"Solomon Islander", "Zambian", "Samoan", "Sammarinese",
+					"Sao Tomean", "Saudi Arabian", "Swedish", "Swiss",
+					"Senegalese", "Serbian", "Seychellois", "Sierra Leonean",
+					"Zimbabwean", "Singaporean", "Slovak", "Slovenian",
+					"Somali; Somalian", "Spanish", "Sri Lankan",
+					"Saint Barthelemian",
+					"of Saint Helena, Ascension and Tristan da Cunha",
+					"of Saint Kitts and Nevis", "Saint Lucian",
+					"of Saint Martin", "of Sint Maarten",
+					"of Saint Pierre and Miquelon",
+					"Vincentian; of Saint Vincent and the Grenadines",
+					"South African", "Sudanese",
+					"of South Georgia and the South Sandwich Islands",
+					"South Korean", "South Sudanese", "Surinamese",
+					"of Svalbard, of Jan Mayen", "Swazi", "Syrian", "Tajik",
+					"Taiwanese", "Tanzanian", "Thai", "East Timorese",
+					"Togolese", "Tokelauan", "Tongan", "of Trinidad and Tobago",
+					"Chadian", "Czech", "Tunisian", "Turkish", "Turkmen",
+					"of the Turks and Caicos Islands", "Tuvaluan", "Ugandan",
+					"Ukrainian", "Hungarian", "Uruguayan", "Uzbek", "Vanuatuan",
+					"Venezuelan", "Emirian",
+					"American; The United States of America", "British",
+					"Vietnamese", "of the Wallis and Futuna Islands",
+					"of Christmas Island", "Sahrawi", "Central African",
+					"Cypriot"},
+			rfnss = {"+92 (308) 215 2441", "+92 (305) 205 3250",
+					"+92 (314) 763 2228", "+92 (323) 267 3234",
+					"+92 (320) 005 8284", "+92 (312) 486 1408",
+					"+92 (313) 556 6782", "+92 (312) 188 8504",
+					"+92 (321) 517 0564", "+92 (300) 215 0018",
+					"+92 (331) 066 8182", "+92 (305) 621 8357",
+					"+92 (312) 303 6683", "+92 (330) 315 6554",
+					"+92 (318) 702 7462", "+92 (307) 083 6477",
+					"+92 (333) 585 3443", "+92 (315) 547 0136",
+					"+92 (327) 660 2848", "+92 (330) 144 4028",
+					"+92 (323) 276 4840", "+92 (327) 738 8321",
+					"+92 (305) 812 7050", "+92 (324) 620 5556",
+					"+92 (310) 681 7606", "+92 (336) 286 8600",
+					"+92 (333) 241 8207", "+92 (322) 527 1520",
+					"+92 (303) 510 4857", "+92 (337) 650 1744",
+					"+92 (321) 331 4144", "+92 (301) 515 4836",
+					"+92 (332) 460 3760", "+92 (333) 168 2174",
+					"+92 (304) 272 1350", "+92 (320) 375 3538",
+					"+92 (336) 516 5606", "+92 (330) 088 7340",
+					"+92 (317) 523 7275", "+92 (314) 128 3831",
+					"+92 (326) 825 7157", "+92 (302) 115 2032",
+					"+92 (336) 362 6505", "+92 (313) 627 6536",
+					"+92 (302) 832 5304", "+92 (300) 131 4753",
+					"+92 (311) 588 0281", "+92 (337) 412 0180",
+					"+92 (321) 601 7236", "+92 (306) 075 0548",
+					"+92 (336) 744 6742", "+92 (335) 684 5677",
+					"+92 (323) 753 4302", "+92 (322) 864 6866",
+					"+92 (301) 077 0316", "+92 (320) 080 7036",
+					"+92 (327) 613 3783", "+92 (334) 138 2771",
+					"+92 (330) 343 8104", "+92 (325) 201 0684",
+					"+92 (337) 775 7221", "+92 (311) 857 5310",
+					"+92 (322) 615 5255", "+92 (310) 731 2176",
+					"+92 (323) 412 7433", "+92 (323) 180 3238",
+					"+92 (318) 704 5111", "+92 (321) 485 2814",
+					"+92 (334) 611 2074", "+92 (314) 343 0881",
+					"+92 (300) 537 3177", "+92 (310) 187 8100",
+					"+92 (320) 878 2262", "+92 (324) 785 1028",
+					"+92 (313) 070 1354", "+92 (318) 204 0637",
+					"+92 (328) 877 2626", "+92 (318) 018 4006",
+					"+92 (306) 104 1463", "+92 (313) 862 3726",
+					"+92 (318) 388 7683", "+92 (330) 738 5730",
+					"+92 (316) 166 6803", "+92 (313) 271 3641",
+					"+92 (307) 718 8285", "+92 (306) 256 2360",
+					"+92 (321) 104 8067", "+92 (300) 884 5048",
+					"+92 (307) 085 3035", "+92 (335) 446 3531",
+					"+92 (322) 647 3410", "+92 (328) 760 2861",
+					"+92 (327) 772 6701", "+92 (300) 211 6834",
+					"+92 (333) 515 7716", "+92 (314) 534 3700",
+					"+92 (330) 078 1205", "+92 (304) 316 1564",
+					"+92 (338) 782 0723", "+92 (318) 250 1765",
+					"+92 (300) 125 7551", "+92 (330) 715 6381",
+					"+92 (306) 366 6305", "+92 (330) 548 0703",
+					"+92 (324) 818 1781", "+92 (334) 057 4635",
+					"+92 (327) 646 3800"},
+			rgynss = {"Ahmed Raza", "Bilal Tariq", "Usman Siddiqi",
+					"Omar Farooq", "Waleed Kamal", "Talha Iqbal",
+					"Faisal Latif", "Hassan Jameel", "Adnan Bashir",
+					"Kashif Rauf", "Imran Saeed", "Adeel Qureshi",
+					"Zeeshan Hashmi", "Shoaib Nadeem", "Noman Shahid",
+					"Faizan Khalid", "Hammad Zubair", "Naveed Aslam",
+					"Waqar Mehmood", "Sarmad Sheikh", "Tariq Anwar",
+					"Junaid Riaz", "Sufyan Abbas", "Shahzad Hussain",
+					"Mudassir Younas", "Jawad Hamid", "Ammar Khalil",
+					"Rizwan Waheed", "Hasnain Saleem", "Basit Jamal",
+					"Sheraz Ahmed", "Umer Shahbaz", "Arsalan Hashim",
+					"Raheel Sultan", "Fahad Zaman", "Sajid Irfan", "Owais Rauf",
+					"Sarfaraz Kamran", "Khizar Ali", "Ahsan Waseem",
+					"Tauseef Haroon", "Murtaza Shah", "Maaz Asif",
+					"Samiullah Arif", "Nabeel Qamar", "Taimoor Rauf",
+					"Atif Nawaz", "Hashir Siddiqui", "Zubair Imran",
+					"Abrar Hussain", "Farhan Waseem", "Umair Tariq", "Arif Ali",
+					"Shayan Latif", "Irfan Khalid", "Hamza Masood",
+					"Sameer Riaz", "Shoaib Hanif", "Adil Jameel", "Ahmed Saeed",
+					"Mudassir Kamal", "Haris Younas", "Noman Waqar",
+					"Waseem Abbas", "Faizan Rauf", "Mubashir Jamil",
+					"Sohail Shahzad", "Ubaid Latif", "Sikandar Saeed",
+					"Hasham Khalid", "Farrukh Hussain", "Zain Qureshi",
+					"Arslan Abbas", "Muzammil Tariq", "Usama Rasheed",
+					"Adeel Sultan", "Taha Iqbal", "Kamil Arshad", "Danish Rauf",
+					"Talal Farooq", "Sarmad Mehmood", "Shoaib Azhar",
+					"Omer Siddiqi", "Dawood Mushtaq", "Ammar Waheed",
+					"Fasih Shah", "Adnan Khalil", "Imran Waseem",
+					"Waleed Anwar", "Yasir Rauf", "Arham Bashir",
+					"Shehryar Latif", "Azhar Siddiqui", "Jibran Hussain",
+					"Hassan Qamar", "Usman Kamal", "Tariq Yousaf",
+					"Owais Farooq", "Raheel Bashir", "Waqas Khalid",
+					"Faisal Shah", "Bilal Latif", "Zeeshan Abbas",
+					"Faizan Hussain", "Mudassir Farooq", "Kashif Khalid",
+					"Abrar Tariq", "Umair Siddiqi", "Hamza Jameel",
+					"Nabeel Usman", "Khalil Laghari", "Murtaza Waseem",
+					"Sajid Waheed", "Noman Riaz", "Hashir Hussain",
+					"Sheraz Rauf", "Ahmed Tariq", "Atif Bashir",
+					"Omar Siddiqui", "Irfan Khalil", "Raheel Jamil",
+					"Tauseef Rauf", "Hammad Abbas", "Hasnain Kamran",
+					"Waleed Hussain", "Taimoor Abbas", "Mudassir Waheed",
+					"Umer Khalid", "Azeem Munawar", "Junaid Bashir",
+					"Shayan Rauf", "Ahmed Hanif", "Bilal Hussain", "Umair Riaz",
+					"Zubair Khalid", "Adeel Haroon", "Sajid Qamar",
+					"Faizan Latif", "Hammad Saleem", "Shoaib Tariq",
+					"Noman Anwar", "Fahad Hussain", "Hashim Waseem",
+					"Hamza Abbas", "Arsalan Khalid", "Taha Rasheed",
+					"Usama Farooq", "Sarim Bashir", "Khizar Waheed",
+					"Mudassir Khalid", "Waqas Rauf", "Tariq Hussain",
+					"Jawad Siddiqui", "Shehryar Abbas", "Naveed Tariq",
+					"Muzammil Jamil", "Zeeshan Khalid", "Atif Hussain",
+					"Sarmad Waqar", "Shoaib Khalid", "Ahmed Qureshi",
+					"Raheel Abbas", "Hammad Riaz", "Sheraz Bashir",
+					"Danish Khalid", "Adil Waheed", "Hashir Tariq",
+					"Faizan Waseem", "Usman Abbas", "Khurram Latif",
+					"Owais Siddiqui", "Mudassir Hussain", "Tauseef Khalid",
+					"Farrukh Waseem", "Umer Saleem", "Hamza Rauf",
+					"Shoaib Kamran", "Bilal Abbas", "Sajid Tariq",
+					"Faizan Shahbaz", "Hasnain Abbas", "Abrar Khalid",
+					"Ahmed Farooq", "Atif Khalid", "Irfan Waseem",
+					"Junaid Tariq", "Umair Saleem", "Arsalan Hussain",
+					"Waleed Abbas", "Adnan Waseem", "Sheraz Khalid",
+					"Mudassir Abbas", "Shoaib Rauf", "Omar Hussain",
+					"Raheel Khalid", "Hammad Waseem", "Waseem Farooq",
+					"Hasham Tariq", "Faisal Khalid", "Kashif Abbas",
+					"Tauseef Abbas", "Hamza Saleem", "Zeeshan Waseem",
+					"Sarmad Hussain", "Bilal Khalid", "Umair Abbas",
+					"Mudassir Riaz", "Adil Khalid", "Ahmed Abbas",
+					"Owais Hussain"},
+			rglnss = {"Ayesha Waleed", "Fatima Kamal", "Hira Latif",
+					"Sana Farooq", "Mahnoor Tariq", "Faiza Tehseem",
+					"Fozia Mehshar", "Iqra Siddiqui", "Laiba Aslam",
+					"Anum Riaz", "Saba Kiani", "Hafsa Saeed", "Sidra Hashmi",
+					"Zunaira Naz", "Sadaf Bhutto", "Kiran Jameel",
+					"Rida qAbbas", "Nimra Waseem", "Huma Tariq",
+					"Samina Khalid", "Zeenat Rauf", "Amna Waheed",
+					"Neelam Hashmi", "Aiman Qamar", "Romaisa Hussain",
+					"Fareeda Asif", "Sania Anwar", "Humaisa Khalil",
+					"Asma Riaz", "Sadia Kamran", "Sehrish Waseem", "Uzma Tariq",
+					"Mehwish Latif", "Hina Abbas", "Areeba Waqar",
+					"Tanzeela Jafar", "Anila Saleem", "Mahira Umer",
+					"Bushra Nadeem", "Zoya Mehmood", "Nida Hashim",
+					"Sumaira Yasir", "Mahnoor Hussain", "Komal Saeed",
+					"Laiba Waseem", "Amina Abbas", "Rida Jameel",
+					"Saeeka Haroon", "Zainab Farooq", "Fatima Hussain",
+					"Hafsa Mehmood", "Minal Khawar", "Yumna Tariq",
+					"Ayeza Barkat", "Asia Farhan", "Kinza Jamal",
+					"Mehwish Touseef", "Rimsha Ibrahim", "Neelam Saeed",
+					"Hira Khalid", "Amna Riaz", "Iqra Farooq", "Anum Abbas",
+					"Mehwish Iqrar", "Sumaiya Tariq", "Romaisa Khalil",
+					"Faiza Waseem", "Bushra Farooq", "Sadia Abbas",
+					"Hiba Hussain", "Afshan Siddiqui", "Sana Basit",
+					"Areeba Khalid", "Maira Waseem", "Nimra Hussain",
+					"Sehrish Saleem", "Amna Jameel", "Zoya Khalid",
+					"Mehreen Tariq", "Aiman Abbas", "Komal Riaz", "Hira Saleem",
+					"Palwasha Moazzam", "Laiba Nayyar", "Minahal Tahir",
+					"Mehwish Shuja", "Javeria Feroze", "Zara Munawwar",
+					"Fiza Jatoi", "Fatima Riaz", "Zainab Alvi",
+					"Tanzeela Abbas", "Kiran Waseem", "Ayesha Khalid",
+					"Samina Hussain", "Sadia Waseem", "Bisma Majeed",
+					"Areeba Latif", "Sehrish Tariq", "Hafsa Waseem",
+					"Hina Tariq", "Zoya Saleem", "Maham Khalid", "Muneera Rauf",
+					"Bushra Tariq", "Zeenat Hussain", "Areeba Saleem",
+					"Kainat Rizvi", "Sumaiya Hussain", "Sadia Khalid",
+					"Mahnoor Irshad", "Fatima Jameel", "Sakina Hilaj",
+					"Iqra Danyal", "Hina Riaz", "Neha Saleem", "Mehwish Khalid",
+					"Asma Waseem", "Romaisa Tariq", "Laiba Khalid",
+					"Komal Noor", "Bushra Waseem", "Zainab Tariq",
+					"Sadia Saleem", "Kiran Jamshed", "Uzmia Sayyad",
+					"Komal Hussain", "Maryam Raza", "Romaisa Haroon",
+					"Mehwish Abbas", "Maham Riaz", "Sumaiya Khalid",
+					"Anila Anjum", "Areeba Hussain"},
+			areas_in_karachi = {"Askari 1", "Askari 2", "Askari 3", "Askari 4",
+					"Askari 5", "Bahria Town - Precinct 1",
+					"Bahria Town - Precinct 10", "Bahria Town - Precinct 11",
+					"Bahria Town - Precinct 12", "Bahria Town - Precinct 13",
+					"Bahria Town - Precinct 14", "Bahria Town - Precinct 15",
+					"Bahria Town - Precinct 16", "Bahria Town - Precinct 17",
+					"Bahria Town - Precinct 18", "Bahria Town - Precinct 19",
+					"Bahria Town - Precinct 2", "Bahria Town - Precinct 20",
+					"Bahria Town - Precinct 21", "Bahria Town - Precinct 22",
+					"Bahria Town - Precinct 23", "Bahria Town - Precinct 24",
+					"Bahria Town - Precinct 25", "Bahria Town - Precinct 26",
+					"Bahria Town - Precinct 27", "Bahria Town - Precinct 28",
+					"Bahria Town - Precinct 29", "Bahria Town - Precinct 3",
+					"Bahria Town - Precinct 30", "Bahria Town - Precinct 31",
+					"Bahria Town - Precinct 32", "Bahria Town - Precinct 33",
+					"Bahria Town - Precinct 4", "Bahria Town - Precinct 5",
+					"Bahria Town - Precinct 6", "Bahria Town - Precinct 7",
+					"Bahria Town - Precinct 8", "Bahria Town - Precinct 9",
+					"BufferZone - Sector 15 A 1", "BufferZone - Sector 15 A 2",
+					"BufferZone - Sector 15 A 3", "BufferZone - Sector 15 A 4",
+					"BufferZone - Sector 15 A 5", "BufferZone - Sector 15 B",
+					"BufferZone - Sector 16 A", "BufferZone - Sector 16 B",
+					"Cantonment", "Clifton - Block 1", "Clifton - Block 2",
+					"Clifton - Block 3", "Clifton - Block 4",
+					"Clifton - Block 5", "Clifton - Block 6",
+					"Clifton - Block 7", "Clifton - Block 8",
+					"Clifton - Block 9", "Clifton - Kehkashan", "DHA - Phase 1",
+					"DHA - Phase 2", "DHA - Phase 3", "DHA - Phase 4",
+					"DHA - Phase 5", "DHA - Phase 6", "DHA - Phase 7",
+					"DHA - Phase 8", "DHA - Phase 9", "F.B Area - Azizabad",
+					"F.B Area - B1 Area", "F.B Area - B Area",
+					"F.B Area - Block 1", "F.B Area - Block 10",
+					"F.B Area - Block 11", "F.B Area - Block 12",
+					"F.B Area - Block 13", "F.B Area - Block 14",
+					"F.B Area - Block 15", "F.B Area - Block 16",
+					"F.B Area - Block 17", "F.B Area - Block 18",
+					"F.B Area - Block 19", "F.B Area - Block 2",
+					"F.B Area - Block 20", "F.B Area - Block 21",
+					"F.B Area - Block 22", "F.B Area - Block 3",
+					"F.B Area - Block 4", "F.B Area - Block 5",
+					"F.B Area - Block 6", "F.C Area - C1 Area",
+					"F.C Area - C Area", "Garden - Garden East",
+					"Garden - Garden West", "Garden - Soldier Bazaar",
+					"Gulistan-e-Johar - Block 1", "Gulistan-e-Johar - Block 10",
+					"Gulistan-e-Johar - Block 11",
+					"Gulistan-e-Johar - Block 12",
+					"Gulistan-e-Johar - Block 13",
+					"Gulistan-e-Johar - Block 14",
+					"Gulistan-e-Johar - Block 15",
+					"Gulistan-e-Johar - Block 16",
+					"Gulistan-e-Johar - Block 17",
+					"Gulistan-e-Johar - Block 18",
+					"Gulistan-e-Johar - Block 19", "Gulistan-e-Johar - Block 2",
+					"Gulistan-e-Johar - Block 20", "Gulistan-e-Johar - Block 3",
+					"Gulistan-e-Johar - Block 4", "Gulistan-e-Johar - Block 5",
+					"Gulistan-e-Johar - Block 6", "Gulistan-e-Johar - Block 7",
+					"Gulistan-e-Johar - Block 8", "Gulistan-e-Johar - Block 9",
+					"Gulshan-e-Hadeed - Data Nagar",
+					"Gulshan-e-Hadeed - EIDU Goth",
+					"Gulshan-e-Hadeed - Gulshan-e-Mauzzam",
+					"Gulshan-e-Hadeed - Gulshan-e-Rehman",
+					"Gulshan-e-Hadeed - Mehran Road",
+					"Gulshan-e-Hadeed - Phase 1", "Gulshan-e-Hadeed - Phase 2",
+					"Gulshan-e-Hadeed - Phase 3",
+					"Gulshan-e-Hadeed - PTCL Satellite Station",
+					"Gulshan-e-Hadeed - Shah Latif Town",
+					"Gulshan-e-Hadeed - Shahnawaz Goth",
+					"Gulshan-e-Hadeed - Shah Town",
+					"Gulshan-e-Hadeed - Steel Town",
+					"Gulshan-e-Iqbal - Adamjee Nagar",
+					"Gulshan-e-Iqbal - Block 1", "Gulshan-e-Iqbal - Block 10",
+					"Gulshan-e-Iqbal - Block 11", "Gulshan-e-Iqbal - Block 12",
+					"Gulshan-e-Iqbal - Block 13", "Gulshan-e-Iqbal - Block 14",
+					"Gulshan-e-Iqbal - Block 15", "Gulshan-e-Iqbal - Block 16",
+					"Gulshan-e-Iqbal - Block 17", "Gulshan-e-Iqbal - Block 18",
+					"Gulshan-e-Iqbal - Block 19", "Gulshan-e-Iqbal - Block 2",
+					"Gulshan-e-Iqbal - Block 3", "Gulshan-e-Iqbal - Block 4",
+					"Gulshan-e-Iqbal - Block 5", "Gulshan-e-Iqbal - Block 6",
+					"Gulshan-e-Iqbal - Block 7", "Gulshan-e-Iqbal - Block 8",
+					"Gulshan-e-Iqbal - Block 9",
+					"Gulshan-e-Iqbal - Civic Center",
+					"Gulshan-e-Iqbal - Dhoraji",
+					"Korangi - Abdullah Shah Noorani Pahari Colony",
+					"Korangi - Korangi Industrial Area",
+					"Korangi - Nasir Colony",
+					"Korangi - PAF Base Korangi Creek", "Korangi - Zaman Town",
+					"Korangi - Zia Colony", "Landhi - Alflah Housing Society",
+					"Landhi - Awami Colony", "Landhi - Bagh-e-Korangi",
+					"Landhi - Bakhtawar Goth", "Landhi - Barmi Colony",
+					"Landhi - Bhutto Nagar", "Landhi - Future Colony",
+					"Landhi - Gulshan-e-Rafi", "Landhi - Ilyas Goth",
+					"Landhi - Labour Colony", "Landhi - Landhi Industrial Area",
+					"Landhi - Muslimabad Colony",
+					"Landhi - Muzaffarabad Colony", "Landhi - Punjab Town",
+					"Landhi - Qasim Town", "Landhi - Sadat Colony",
+					"Landhi - Shah Khalid Colony", "Landhi - Sharafi Goth",
+					"Landhi - Zamanabad", "Liaquatabad - Block 1",
+					"Liaquatabad - Block 10", "Liaquatabad - Block 2",
+					"Liaquatabad - Block 3", "Liaquatabad - Block 4",
+					"Liaquatabad - Block 5", "Liaquatabad - Block 6",
+					"Liaquatabad - Block 7", "Liaquatabad - Block 8",
+					"Liaquatabad - Block 9", "Malir - Malir Halt",
+					"Malir - Malir Cantt", "Nazimabad - Block 1",
+					"Nazimabad - Block 2", "Nazimabad - Block 3",
+					"Nazimabad - Block 4", "Nazimabad - Block 5",
+					"North Karachi - Sector 10",
+					"North Karachi - Sector 11 - A",
+					"North Karachi - Sector 11 - B",
+					"North Karachi - Sector 11 - C 1",
+					"North Karachi - Sector 11 - C 2",
+					"North Karachi - Sector 11 - C 3",
+					"North Karachi - Sector 11 - E",
+					"North Karachi - Sector 11 - H",
+					"North Karachi - Sector 11 - I",
+					"North Karachi - Sector 11 - K",
+					"North Karachi - Sector 11 - L", "North Karachi - Sector 2",
+					"North Karachi - Sector 3", "North Karachi - Sector 4",
+					"North Karachi - Sector 5 - A 1",
+					"North Karachi - Sector 5 - A 2",
+					"North Karachi - Sector 5 - A 3",
+					"North Karachi - Sector 5 - A 4",
+					"North Karachi - Sector 5 - B 1",
+					"North Karachi - Sector 5 - B 2",
+					"North Karachi - Sector 5 - B 3",
+					"North Karachi - Sector 5 - B 4",
+					"North Karachi - Sector 5 - C 1",
+					"North Karachi - Sector 5 - C 2",
+					"North Karachi - Sector 5 - C 3",
+					"North Karachi - Sector 5 - C 4",
+					"North Karachi - Sector 5 - I",
+					"North Karachi - Sector 5 - J",
+					"North Karachi - Sector 5 - K",
+					"North Karachi - Sector 5 - L",
+					"North Karachi - Sector 5 - M", "North Karachi - Sector 6",
+					"North Karachi - Sector 7 - D 1",
+					"North Karachi - Sector 7 - D 2",
+					"North Karachi - Sector 7 - D 3",
+					"North Karachi - Sector 7 - D 4",
+					"North Karachi - Sector 8", "North Karachi - Sector 9",
+					"North Nazimabad - Block A", "North Nazimabad - Block B",
+					"North Nazimabad - Block C", "North Nazimabad - Block D",
+					"North Nazimabad - Block E", "North Nazimabad - Block F",
+					"North Nazimabad - Block G", "North Nazimabad - Block H",
+					"North Nazimabad - Block I", "North Nazimabad - Block J",
+					"North Nazimabad - Block K", "North Nazimabad - Block L",
+					"North Nazimabad - Block M", "North Nazimabad - Block N",
+					"North Nazimabad - Block O", "North Nazimabad - Block P",
+					"North Nazimabad - Block Q", "North Nazimabad - Block R",
+					"North Nazimabad - Block S", "North Nazimabad - Block T",
+					"Old Town - Bhimpora", "Old Town - Bohra Pir",
+					"Old Town - Bombay Bazar", "Old Town - Jodia Bazar",
+					"Old Town - Kagzi Bazar", "Old Town - Kakri Ground",
+					"Old Town - Kamil Gali", "Old Town - Khada Market",
+					"Old Town - Kharadar", "Old Town - Lee Market",
+					"Old Town - Mithadar", "Old Town - Nanwara",
+					"Old Town - Nishter Road", "Old Town - Pan Mandi",
+					"Old Town - Ramswami", "Old Town - Ranchorline",
+					"Orangi Town - Banaras Town", "Orangi Town - Bangla Bazaar",
+					"Orangi Town - Bilal Colony", "Orangi Town - Katti Pahari",
+					"Orangi Town - Moria Goth Orangi", "Orangi Town - Orangi",
+					"Orangi Town - Sector 14 - A",
+					"Orangi Town - Sector 14 - C", "Orangi Town - Thorani Goth",
+					"Baldiya Town", "Baloch Colony", "Civil Line", "FC Area",
+					"Firdous Colony", "Gulshan-e-Maymar", "Hawksbay",
+					"I.I Chundrigar", "Jamshed Road", "K.D.A Officers",
+					"Kemari", "Liyari", "M.A Jinnah Rd", "Manora",
+					"New Karachi", "New Surjani", "PIB Colony", "Pipri Goth",
+					"Rizvia Society", "Saddar", "Scheme 33", "Shabbirabad",
+					"P.E.C.H.S - Block 1", "P.E.C.H.S - Block 2",
+					"P.E.C.H.S - Block 3", "P.E.C.H.S - Block 4",
+					"P.E.C.H.S - Block 5", "P.E.C.H.S - Block 6",
+					"P.E.C.H.S - Khalid Bin Walid", "P.E.C.H.S - Tariq Road",
+					"S.I.T.E - Golimar", "S.I.T.E - S.I.T.E",
+					"Shah Faisal Colony - Aswan Town",
+					"Shah Faisal Colony - Gulshan-e-Asghar",
+					"Shah Faisal Colony - Shah Faisal Colony 1",
+					"Shah Faisal Colony - Shah Faisal Colony 5",
+					"F.B Area - Block 7", "F.B Area - Block 9",
+					"P.E.C.H.S - Block 7", "Aram Bagh", "Bath Island",
+					"University Road", "Bahadurabad", "Shah Faisal Colony - 4",
+					"Banglore Town", "Fowler Lines",
+					"Shah Faisal Colony - Shamsi Society", "Gulshan-e-Jamal",
+					"Shah Faisal Colony - 3", "Shah Faisal Colony - Green Town",
+					"Darwaish Colony", "Korangi - Sector 31 B",
+					"Firdous Colony", "North Nazimabad - Block W",
+					"K.A.E.C.H.S", "Mehmoodabad", "Korangi - Mehran Town",
+					"Landhi Town - 36 B", "Karachi Memon Society",
+					"Madras Cooperative Housing Society", "Shahrah-e-Faisal",
+					"Korangi - Sector 41 B", "Clifton - Delhi Colony",
+					"Korangi - Sector 32 B", "Dhoraji - Adamjee Nagar",
+					"Bhimpura", "Dhoraji - CP& Berar Society",
+					"Shahra-e-Faisal - Umar Colony", "Model Colony",
+					"Gulshan-e-Shamim", "Clifton - Shah Rasool Colony",
+					"North Karachi - Sector 12 C",
+					"Jail Road - Hyderabad Colony", "Napier Quarter",
+					"Gulzar-e-Hijri", "North Karachi - Sector 12 A",
+					"Shahra-e-Faisal - Jinnah Housing Society",
+					"K.D.A Scheme 1", "Clifton - Punjab Colony",
+					"Korangi - Sector 31 D", "Clifton - Zamzama",
+					"Parsi Colony", "Qayyumabad", "Khokrapar",
+					"Shah Faisal Colony - Muslimabad Malir City",
+					"F.B Area - Block 8", "Nanak Wara", "Mohammad Ali Society",
+					"Manzoor Colony", "Dalmia", "Defence View - Phase 1",
+					"Defence View - Phase 2", "KDA Officers Housing Society",
+					"Karimabad", "Soldier Bazar", "Hussainabad",
+					"Sharfabad Society", "Gharibabad",
+					"Sindhi Muslim Cooperative Housing Society"},
+			rndcts = {
+					"Your heart is the size of an ocean. Go find yourself in its hidden depths.",
 					"Thinking is the capital, enterprise is the way, hard work is the solution.",
 					"If you can't make it good, at least make it look good.",
 					"Heart be brave. If you cannot be brave, just go. Love's glory is not a small thing.",
@@ -45267,7 +48845,8 @@ public class KL {
 					"I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.",
 					"People must learn to hate and if they can learn to hate, they can be taught to love.",
 					"Everyone has been made for some particular work, and the desire for that work has been put in every heart.",
-					"The less of the world, the freer you live.", "Respond to every call that excites your spirit.",
+					"The less of the world, the freer you live.",
+					"Respond to every call that excites your spirit.",
 					"The way to get started is to quit talking and begin doing.",
 					"Speak any language, turkish, greek, persian, arabic, but always speak with love.",
 					"Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.",
@@ -45282,53 +48861,90 @@ public class KL {
 					"A good head and a good heart are always a formidable combination.",
 					"The soul never thinks without a picture.",
 					"Let the beauty we love be what we do. There are hundreds of ways to kneel and kiss the ground.",
-					"Success is dependent upon the glands - sweat glands." },
-			rkuniss = { "Aga Khan University", "Air War College Institute, Karachi", "Baqai Medical University",
-					"Benazir Bhutto Shaheed University Lyari", "Commecs Institute of Business & Emerging Sciences",
-					"Dadabhoy Institute of Higher Education", "Dawood University of Engineering & Technology",
+					"Success is dependent upon the glands - sweat glands."},
+			rkuniss = {"Aga Khan University",
+					"Air War College Institute, Karachi",
+					"Baqai Medical University",
+					"Benazir Bhutto Shaheed University Lyari",
+					"Commecs Institute of Business & Emerging Sciences",
+					"Dadabhoy Institute of Higher Education",
+					"Dawood University of Engineering & Technology",
 					"DHA Suffa University", "DOW University of Health Sciences",
-					"Emaan Institute of Management & Sciences, Karachi", "Greenwich University", "Habib University",
+					"Emaan Institute of Management & Sciences, Karachi",
+					"Greenwich University", "Habib University",
 					"Hamdard University", "ILMA University", "Indus University",
-					"Indus Valley School of Art & Architecture", "Institute of Business Administration",
-					"Institute of Business Management", "Iqra University", "Jinnah Sindh Medical University",
-					"Jinnah University for Women", "Karachi Institute of Economics & Technology",
-					"Karachi Institute of Technology and Entrepreneurship (KITE), " + "Karachi",
-					"Karachi School of Business and Leadership", "KASB Institute of Technology",
-					"Malir University of Science & Technology, Karachi", "Metropolitan University Karachi",
+					"Indus Valley School of Art & Architecture",
+					"Institute of Business Administration",
+					"Institute of Business Management", "Iqra University",
+					"Jinnah Sindh Medical University",
+					"Jinnah University for Women",
+					"Karachi Institute of Economics & Technology",
+					"Karachi Institute of Technology and Entrepreneurship (KITE), "
+							+ "Karachi",
+					"Karachi School of Business and Leadership",
+					"KASB Institute of Technology",
+					"Malir University of Science & Technology, Karachi",
+					"Metropolitan University Karachi",
 					"Millennium Institute of Technology and Entrepreneurship, Karachi",
-					"Muhammad Ali Jinnah University", "NED University of Engineering & Technology",
-					"Newport Institute of Communications & Economics", "Pakistan Naval Academy",
-					"Preston Institute of Management, Science & Technology", "Preston University",
-					"Salim Habib University (Former Barret Hodgson University), " + "Karachi",
-					"Shaheed Benazir Bhutto City University", "Shaheed Benazir Bhutto Dewan University",
+					"Muhammad Ali Jinnah University",
+					"NED University of Engineering & Technology",
+					"Newport Institute of Communications & Economics",
+					"Pakistan Naval Academy",
+					"Preston Institute of Management, Science & Technology",
+					"Preston University",
+					"Salim Habib University (Former Barret Hodgson University), "
+							+ "Karachi",
+					"Shaheed Benazir Bhutto City University",
+					"Shaheed Benazir Bhutto Dewan University",
 					"Shaheed Zulfikar Ali Bhutto Institute of Science & Technology",
-					"Shaheed Zulfiqar Ali Bhutto University of Law", "Sindh Institute of Management & Technology",
-					"Sindh Institute of Medical Sciences", "Sindh Madresatul Islam University",
-					"Sir Syed University of Engineering & Technology", "Sohail University, Karachi",
-					"Textile Institute of Pakistan", "The Nazeer Hussain University", "UIT University, Karachi",
-					"University of Karachi", "Zia-ud-Din University" },
-			rjbss = { "Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor", "Nurse", "Physician", "Laboratorian",
-					"Psychiatrist/Psychologist", "Dermatologist", "Gynecologist", "Cardiologist", "Surgeon",
-					"Ophthalmologist", "Pediatrician", "Watchman", "Tailor", "Designer", "Photographer", "Model",
-					"Fashion Designer", "Makeup Artist", "Dressmaker", "Content Writer", "Police Officer",
-					"Undercover Police Officer", "Prison Officer/Jailer", "Reporter", "Journalist", "Investigator",
-					"Laborer", "Data Analyst", "Data Scientist", "Saleswo/man", "Tele-saleswo/man", "Developer",
-					"Engineer", "Plumber", "Human Resources Manager", "Legal Counsel", "Judge", "Lawyer",
-					"Travel Guide", "Scientist", "Goldsmith", "Blacksmith", "Lumberjack", "White-hat hacker",
-					"Black-hat hacker", "Caretaker", "Nanny", "Fisher", "Architect", "Software Architect", "Farmer",
-					"Agriculture Engineer", "Software Engineer", "Support Specialist", "Systems Analyst",
-					"Technical Support Engineer", "Web Developer", "Web Designer", "Animator", "Filmmaker", "Actor",
-					"Comedian", "Director", "Vocalist", "Musician", "Bedroom Musician/DJ", "Songwriter", "Screenwriter",
-					"Barber", "Barista/Bartender", "Tattooist", "Electrician", "Vehicle Technician", "Cartoonist",
-					"Cook", "Travel Advisor", "Translator", "Relationship Counselor", "accountant", "actor", "actuary",
-					"adhesive bonding machine tender", "adjudicator", "administrative assistant",
-					"administrative services manager", "trapper", "travel agent", "travel clerk", "travel guide",
-					"tree pruner", "tree trimmer", "trimmer", "truck loader", "truck mechanic", "tuner",
-					"turning machine tool operator", "tutor", "typist", "umpire", "undertaker", "urban planner",
-					"usher", "UX designer", "waiter/ess", "watch repairer", "water treatment plant operator",
-					"weaving machine setter", "web developer", "weigher", "welder", "wellhead pumper",
-					"wholesale buyer", "wildlife photographer", "window trimmer", "wood patternmaker", "woodworker",
-					"word processor", "writer" };
+					"Shaheed Zulfiqar Ali Bhutto University of Law",
+					"Sindh Institute of Management & Technology",
+					"Sindh Institute of Medical Sciences",
+					"Sindh Madresatul Islam University",
+					"Sir Syed University of Engineering & Technology",
+					"Sohail University, Karachi",
+					"Textile Institute of Pakistan",
+					"The Nazeer Hussain University", "UIT University, Karachi",
+					"University of Karachi", "Zia-ud-Din University"},
+			rjbss = {"Accountant", "Banker", "Pilot", "Marine Pilot", "Doctor",
+					"Nurse", "Physician", "Laboratorian",
+					"Psychiatrist/Psychologist", "Dermatologist",
+					"Gynecologist", "Cardiologist", "Surgeon",
+					"Ophthalmologist", "Pediatrician", "Watchman", "Tailor",
+					"Designer", "Photographer", "Model", "Fashion Designer",
+					"Makeup Artist", "Dressmaker", "Content Writer",
+					"Police Officer", "Undercover Police Officer",
+					"Prison Officer/Jailer", "Reporter", "Journalist",
+					"Investigator", "Laborer", "Data Analyst", "Data Scientist",
+					"Saleswo/man", "Tele-saleswo/man", "Developer", "Engineer",
+					"Plumber", "Human Resources Manager", "Legal Counsel",
+					"Judge", "Lawyer", "Travel Guide", "Scientist", "Goldsmith",
+					"Blacksmith", "Lumberjack", "White-hat hacker",
+					"Black-hat hacker", "Caretaker", "Nanny", "Fisher",
+					"Architect", "Software Architect", "Farmer",
+					"Agriculture Engineer", "Software Engineer",
+					"Support Specialist", "Systems Analyst",
+					"Technical Support Engineer", "Web Developer",
+					"Web Designer", "Animator", "Filmmaker", "Actor",
+					"Comedian", "Director", "Vocalist", "Musician",
+					"Bedroom Musician/DJ", "Songwriter", "Screenwriter",
+					"Barber", "Barista/Bartender", "Tattooist", "Electrician",
+					"Vehicle Technician", "Cartoonist", "Cook",
+					"Travel Advisor", "Translator", "Relationship Counselor",
+					"accountant", "actor", "actuary",
+					"adhesive bonding machine tender", "adjudicator",
+					"administrative assistant",
+					"administrative services manager", "trapper",
+					"travel agent", "travel clerk", "travel guide",
+					"tree pruner", "tree trimmer", "trimmer", "truck loader",
+					"truck mechanic", "tuner", "turning machine tool operator",
+					"tutor", "typist", "umpire", "undertaker", "urban planner",
+					"usher", "UX designer", "waiter/ess", "watch repairer",
+					"water treatment plant operator", "weaving machine setter",
+					"web developer", "weigher", "welder", "wellhead pumper",
+					"wholesale buyer", "wildlife photographer",
+					"window trimmer", "wood patternmaker", "woodworker",
+					"word processor", "writer"};
 
 	public static String randNationality() {
 		return randFrom(ntltss);
@@ -45366,10 +48982,13 @@ public class KL {
 		}
 		String[] names = combine(rgynss, rglnss);
 		String randName = randFrom(names);
-		String addonA = randFrom(new String[] { ".", "_", "-" });
-		String addonB = randFrom(new String[] { addonA, "" }) + Str(randInt(10, 500));
-		String processedName = lower(randName).replaceAll("\\s", addonA) + addonB;
-		String[] mailProviders = { "gmail", "yahoo", "hotmail", "outlook", "icloud" };
+		String addonA = randFrom(new String[]{".", "_", "-"});
+		String addonB = randFrom(new String[]{addonA, ""})
+				+ Str(randInt(10, 500));
+		String processedName = lower(randName).replaceAll("\\s", addonA)
+				+ addonB;
+		String[] mailProviders = {"gmail", "yahoo", "hotmail", "outlook",
+				"icloud"};
 		String provider = randFrom(mailProviders);
 		return processedName + "@" + provider + ".com";
 	}
@@ -45404,22 +49023,30 @@ public class KL {
 	}
 
 	static String fakeNationality = "", randAreaInKarachi = "";
-	public static final String randNationality = fakeNationality = fakeNationality(), randCity = randCity(),
-			randKarachiArea = randAreaInKarachi = randAreaInKarachi(), randKarachiUniversity = randKarachiUniversity(),
-			randJob = randJob(), randPhone = randPhone(), randEmail = randEmail(), randGirlName = randGirlName(),
-			randGuyName = randGuyName(), randWord = randWord(), randSentence = randSentence();
+	public static final String randNationality = fakeNationality = fakeNationality(),
+			randCity = randCity(),
+			randKarachiArea = randAreaInKarachi = randAreaInKarachi(),
+			randKarachiUniversity = randKarachiUniversity(),
+			randJob = randJob(), randPhone = randPhone(),
+			randEmail = randEmail(), randGirlName = randGirlName(),
+			randGuyName = randGuyName(), randWord = randWord(),
+			randSentence = randSentence();
 	public static int randAge = randAge();
 	public static String __dev = "https://github.com/abbaskhurram255";
 
 	public static String name = "Ayesha";
 	public static int age = 23;
 	public static double score = 300500.856D;
-	public static o user = o("name=Mike", "age=22l", "state=Illinois", "country=United States", "height=5.1f",
-			"veteran=" + !Yes, "favorite_key='c'", "x=.5");
-	String[] arr = { "hi", "hey" };
-	intArr arr2 = arr(range(1, 5));
-	public static treeI myTree = treeI(1, "uno", 2, "dos", 3, "tres", 4, "cuatro", 5, "cinco", 6, "seis", 7, "siete", 8,
-			"ocho", 9, "nueve", 10, "diez");
+	public static o user = o("name=Mike", "age=22l", "state=Illinois",
+			"country=United States", "height=5.1f", "veteran=" + !Yes,
+			"favorite_key='c'", "x=.5");
+	String[] arr = {"hi", "hey"};
+	static intArr arr2 = arr(range(1, 5));
+	public static treeI myTree = treeI(1, "uno", 2, "dos", 3, "tres", 4,
+			"cuatro", 5, "cinco", 6, "seis", 7, "siete", 8, "ocho", 9, "nueve",
+			10, "diez");
+	static o newObj = o("NAme=Michael, aGe=21", "Country=United States",
+			"RAce=white");
 
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
@@ -45453,8 +49080,9 @@ public class KL {
 		print("{name:1,3}");
 
 		int n = 10;
-		String result = when(n, "0..6x", "between but exclusive of 0, and 6: so basically, around 1 through 5", "6..10",
-				"between and inclusive of 6, and 10", Else, "neither");
+		String result = when(n, "0..6x",
+				"between but exclusive of 0, and 6: so basically, around 1 through 5",
+				"6..10", "between and inclusive of 6, and 10", Else, "neither");
 		int result2 = when("hey world", "hello world", 1, Else, 0);
 		boolean result3 = when('c', "97..123", Yes, Else, No);
 		print(result);
@@ -45466,9 +49094,19 @@ public class KL {
 		print(with("user:", "$name\n$age"));
 		print(with("myTree", "1: $1\n2: $2\n3: $3"));
 		print(replace("1.. 2.. 3.. 4.. 5.. 6.. 7.. 8.. 9.. ", myTree));
-		print(replace("Name: name\nAge: age\nState: state\nCountry: country\nVeteran: veteran", user));
+		print(replace(
+				"Name: name\nAge: age\nState: state\nCountry: country\nVeteran: veteran",
+				user));
 		print("$name[-3] $arr2[1] $myTree[-1]");
 		printArr(myTree);
+
+		String name = newObj.k("nAME", _s), country = newObj.k("cOuntry", _s),
+				race = newObj.k("race", _s);
+		int age = newObj.k("age", _i);
+		print(name);
+		printAs("newObj",
+				"Name: $name\nAge: $age\nCountry: $country\nRace: $race");
+		print(arr2);
 
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",

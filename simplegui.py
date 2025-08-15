@@ -1,4 +1,5 @@
 from FreeSimpleGUI import *
+from KL_Py import *
 
 theme("Reds")
 
@@ -9,11 +10,14 @@ lay = [
     [Submit(), Exit()]
 ]
 
-
 ui = Window("Simple Data Entry Form", lay)
-password_hidden = True
+admin: obj = {
+    "email": "abbaskhurram255@gmail.com",
+    "password": "00000000"
+}
+password_hidden: haal = Ha
 
-while True:
+while Yes:
     event, values = ui.read()
     if event == WIN_CLOSED or event == "Exit":
         break
@@ -24,14 +28,16 @@ while True:
         print(f"    Email={email},")
         print(f"    Password={password}")
         print("}")
-        if email == "abbaskhurram255@gmail.com" and password == "00000000":
+        if email == admin["email"] and password == admin["password"]:
             popup(f"Logged in as {email}")
         else:
+            ui["email"].update(text_color="red")
+            ui["pwd"].update(text_color="red")
             popup("Invalid Credentials!")
     elif event == "reveal-password":
         if password_hidden:
             ui["pwd"].update(password_char="")
         else:
             ui["pwd"].update(password_char="*")
-        password_hidden = not password_hidden
+        password_hidden = nahi(password_hidden)
 ui.close()
