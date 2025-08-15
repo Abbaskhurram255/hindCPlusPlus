@@ -34,4 +34,4 @@ while True:
         else:
             ui["pwd"].update(password_char="*")
         password_hidden = not password_hidden
-window.close()
+ui.close()
