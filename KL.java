@@ -22333,6 +22333,72 @@ public class KL {
 			return false;
 		}
 
+		String i(int i, String tryCastingAs) {
+			if (not(isStr(i(i)))) {
+				return "";
+			}
+			try {
+				return (String) i(i);
+			} catch (ClassCastException e) {
+				return "";
+			}
+		}
+
+		int i(int i, int tryCastingAs) {
+			if (not(isInt(i(i)))) {
+				return 0;
+			}
+			try {
+				return (int) i(i);
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		long i(int i, long tryCastingAs) {
+			if (not(isLong(i(i)))) {
+				return 0;
+			}
+			try {
+				return (long) i(i);
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		float i(int i, float tryCastingAs) {
+			if (not(isFlt(i(i)))) {
+				return 0;
+			}
+			try {
+				return (float) i(i);
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		double i(int i, double tryCastingAs) {
+			if (not(isDbl(i(i)))) {
+				return 0;
+			}
+			try {
+				return (double) i(i);
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		boolean i(int i, boolean tryCastingAs) {
+			if (not(isBool(i(i)))) {
+				return false;
+			}
+			try {
+				return (boolean) i(i);
+			} catch (ClassCastException e) {
+				return false;
+			}
+		}
+
 		Object lasti(int n) {
 			return !isNull(n) && n > 0 && n <= super.size()
 					? super.get(super.size() - n)
@@ -22341,16 +22407,150 @@ public class KL {
 			// exception
 		}
 
+		String lasti(int i, String tryCastingAs) {
+			if (not(isStr(lasti(i)))) {
+				return "";
+			}
+			try {
+				return (String) lasti(i);
+			} catch (ClassCastException e) {
+				return "";
+			}
+		}
+
+		int lasti(int i, int tryCastingAs) {
+			if (not(isInt(lasti(i)))) {
+				return 0;
+			}
+			try {
+				return (int) lasti(i);
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		long lasti(int i, long tryCastingAs) {
+			if (not(isLong(lasti(i)))) {
+				return 0;
+			}
+			try {
+				return (long) lasti(i);
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		float lasti(int i, float tryCastingAs) {
+			if (not(isFlt(lasti(i)))) {
+				return 0;
+			}
+			try {
+				return (float) lasti(i);
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		double lasti(int i, double tryCastingAs) {
+			if (not(isDbl(lasti(i)))) {
+				return 0;
+			}
+			try {
+				return (double) lasti(i);
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		boolean lasti(int i, boolean tryCastingAs) {
+			if (not(isBool(lasti(i)))) {
+				return false;
+			}
+			try {
+				return (boolean) lasti(i);
+			} catch (ClassCastException e) {
+				return false;
+			}
+		}
+
 		Object ilast(int n) {
 			return lasti(n);
+		}
+
+		String ilast(int i, String tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		int ilast(int i, int tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		long ilast(int i, long tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		float ilast(int i, float tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		double ilast(int i, double tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		boolean ilast(int i, boolean tryCastingAs) {
+			return lasti(i, tryCastingAs);
 		}
 
 		Object nth(int n) {
 			return i(n);
 		}
 
+		String nth(int i, String tryCastingAs) {
+			return i(i, tryCastingAs);
+		}
+
+		int nth(int i, int tryCastingAs) {
+			return i(i, tryCastingAs);
+		}
+
+		long nth(int i, long tryCastingAs) {
+			return i(i, tryCastingAs);
+		}
+
+		float nth(int i, float tryCastingAs) {
+			return i(i, tryCastingAs);
+		}
+
+		double nth(int i, double tryCastingAs) {
+			return i(i, tryCastingAs);
+		}
+
+		boolean nth(int i, boolean tryCastingAs) {
+			return i(i, tryCastingAs);
+		}
+
 		Object nthlast(int n) {
 			return lasti(n);
+		}
+
+		int nthlast(int i, int tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		long nthlast(int i, long tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		float nthlast(int i, float tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		double nthlast(int i, double tryCastingAs) {
+			return lasti(i, tryCastingAs);
+		}
+
+		boolean nthlast(int i, boolean tryCastingAs) {
+			return lasti(i, tryCastingAs);
 		}
 
 		Object first() {
@@ -22525,12 +22725,126 @@ public class KL {
 			return i(randInt(length()));
 		}
 
+		String random(String tryCastingAs) {
+			if (not(isStr(random()))) {
+				return "";
+			}
+			try {
+				return (String) random();
+			} catch (ClassCastException e) {
+				return "";
+			}
+		}
+
+		int random(int tryCastingAs) {
+			if (not(isInt(random()))) {
+				return 0;
+			}
+			try {
+				return (int) random();
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		long random(long tryCastingAs) {
+			if (not(isLong(random()))) {
+				return 0;
+			}
+			try {
+				return (long) random();
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		float random(float tryCastingAs) {
+			if (not(isFlt(random()))) {
+				return 0;
+			}
+			try {
+				return (float) random();
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		double random(double tryCastingAs) {
+			if (not(isDbl(random()))) {
+				return 0;
+			}
+			try {
+				return (double) random();
+			} catch (ClassCastException e) {
+				return 0;
+			}
+		}
+
+		boolean random(boolean tryCastingAs) {
+			if (not(isBool(random()))) {
+				return false;
+			}
+			try {
+				return (boolean) random();
+			} catch (ClassCastException e) {
+				return false;
+			}
+		}
+
 		Object rand() {
 			return random();
 		}
 
+		String rand(String tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		int rand(int tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		long rand(long tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		float rand(float tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		double rand(double tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		boolean rand(boolean tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
 		Object any() {
 			return random();
+		}
+
+		String any(String tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		int any(int tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		long any(long tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		float any(float tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		double any(double tryCastingAs) {
+			return random(tryCastingAs);
+		}
+
+		boolean any(boolean tryCastingAs) {
+			return random(tryCastingAs);
 		}
 
 		arr empty() {
