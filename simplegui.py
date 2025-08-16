@@ -11,11 +11,8 @@ lay = [
 ]
 
 ui = Window("Simple Data Entry Form", lay)
-admin: obj = {
-    "email": "abbaskhurram255@gmail.com",
-    "password": "00000000"
-}
-password_hidden: haal = Ha
+admin: obj = obj(email="abbaskhurram255@gmail.com", password="00000000")
+password_hidden: filhal = Ha
 
 while Yes:
     event, values = ui.read()
@@ -28,7 +25,7 @@ while Yes:
         print(f"    Email={email},")
         print(f"    Password={password}")
         print("}")
-        if email == admin["email"] and password == admin["password"]:
+        if email == admin.email and password == admin.password:
             popup(f"Logged in as {email}")
         else:
             ui["email"].update(text_color="red")

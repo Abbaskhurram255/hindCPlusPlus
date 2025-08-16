@@ -1,9 +1,12 @@
 import os, sys, base64, requests, math, re, inspect, ast
 from collections import defaultdict
+from collections.abc import Iterable, Sequence
 from functools import reduce
 from types import *
-from typing import *
-haal = bool
+from typing import List, Callable, TypeVar
+import math
+from math import *
+haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 class obj(dict):
     def __init__(self, *args, **kwargs):
@@ -137,10 +140,17 @@ class kmath:
     earth_gravity = 9.80665
     earth_mass = 5.9722e24
     earth_radius = 6.378137e3
-def encode(data):
-    return base64.b64encode(data.encode()).decode()
-def decode(data):
-    return base64.b64decode(data).decode()
+def encode(data) -> str:
+    try:
+            return base64.b64encode(str(data).encode()).decode()
+    except TypeError as e:
+            return ""
+def decode(data) -> str:
+    import binascii
+    try:
+            return base64.b64decode(data).decode()
+    except (TypeError, binascii.Error) as e:
+            return ""
 def fetch(url):
     try:
         response = requests.get(url)
