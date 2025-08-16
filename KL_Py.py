@@ -4,6 +4,7 @@ from collections.abc import Iterable, Sequence
 from functools import reduce
 from types import *
 from typing import List, Callable, TypeVar
+from numbers import Number
 import math
 from math import *
 haal = filhal = filhaal = bool
@@ -12,7 +13,6 @@ class obj(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._convert_nested_dicts(self)
-
     def _convert_nested_dicts(self, object):
         if isinstance(object, dict):
             for k, v in object.items():
@@ -23,7 +23,6 @@ class obj(dict):
         elif isinstance(object, (list, tuple)):
             return self._convert_nested_collections(object)
         return object
-
     def _convert_nested_collections(self, collection):
         converted_collection = []
         for item in collection:
@@ -34,13 +33,11 @@ class obj(dict):
             else:
                 converted_collection.append(item)
         return type(collection)(converted_collection)
-
     def __getattr__(self, key):
         try:
             return self[key]
         except KeyError:
             raise AttributeError(f"'{self.__class__.__name__}' objectect has no attribute '{key}'")
-
     def __setattr__(self, key, value):
         if key.startswith('_'):  # Allow setting internal attributes
             super().__setattr__(key, value)
@@ -51,7 +48,6 @@ class obj(dict):
                 self[key] = self._convert_nested_collections(value)
             else:
                 self[key] = value
-
     def __setitem__(self, key, value):
         if isinstance(value, dict):
             super().__setitem__(key, obj(value))
@@ -66,9 +62,9 @@ reverseSort = lambda arr: sorted(arr, reverse=Yes)
 reverseSortMutate = lambda arr: arr.sort(reverse=Yes)
 Yes = Ha = true = True
 No = Na = false = False
-def reverse(x):
-	if type(x) != str and type(x) != list: return None
-	if type(x) == list:
+def reverse(x: str | list[any]):
+	if not isinstance(x, str) and not isinstance(x, list): return None
+	if isinstance(x, list):
 		x.reverse()
 		return x
 	return x[::-1]
@@ -140,6 +136,117 @@ class kmath:
     earth_gravity = 9.80665
     earth_mass = 5.9722e24
     earth_radius = 6.378137e3
+    cUnit = "m/s"
+    earthsGravityUnit = "m/s^2"
+    earthsMassUnit = "km"
+    earthsRadiusUnit = "km"
+    class C:
+        @staticmethod
+        def f(n: Number):
+            return round(1.8 * n + 32, 1)
+        @staticmethod
+        def ns(n: Number):
+            return int(n * 3.154e18)
+        @staticmethod
+        def mcs(n: Number):
+            return int(n * 3.154e15)
+        @staticmethod
+        def ms(n: Number):
+            return int(n * 3.154e12)
+        @staticmethod
+        def s(n: Number):
+            return int(n * 3.154e9)
+        @staticmethod
+        def m(n: Number):
+            return int(n * 5.256e7)
+        @staticmethod
+        def h(n: Number):
+            return int(n * 8.76e5)
+        @staticmethod
+        def d(n: Number):
+            return int(n * 3.65e4)
+        @staticmethod
+        def wk(n: Number):
+            return int(n * 5.214e3)
+        @staticmethod
+        def mn(n: Number):
+            return int(n * 1.2e3)
+        @staticmethod
+        def yr(n: Number):
+            return int(n * 1e2)
+        @staticmethod
+        def dc(n: Number):
+            return int(n * 1e1)
+    class F:
+        @staticmethod
+        def c(n: Number):
+            return round(((n - 32) * 5) / 9, 1)
+    class M:
+        @staticmethod
+        def km(n: Number):
+            return int(n * 1e-3)
+        @staticmethod
+        def mi(n: Number):
+            return int(n * 6.21371e-4)
+        @staticmethod
+        def ft(n: Number):
+            return int(n * 3.28084)
+        @staticmethod
+        def _in(n: Number):
+            return int(n * 3.93701e+1)
+        @staticmethod
+        def cm(n: Number):
+            return int(n * 1e2)
+        @staticmethod
+        def mm(n: Number):
+            return int(n * 1e3)
+        @staticmethod
+        def yd(n: Number):
+            return int(n * 1.0936)
+    class KM:
+        @staticmethod
+        def m(n: Number):
+            return int(n * 1e3)
+        @staticmethod
+        def mi(n: Number):
+            return int(n * 6.21371e-1)
+        @staticmethod
+        def ft(n: Number):
+            return int(n * 3.28084e+3)
+        @staticmethod
+        def _in(n: Number):
+            return int(n * 3.93701e+4)
+        @staticmethod
+        def cm(n: Number):
+            return int(n * 1e+5)
+        @staticmethod
+        def mm(n: Number):
+            return int(n * 1e+6)
+        @staticmethod
+        def yd(n: Number):
+            return int(n * 1.09361e+3)
+    class MI:
+        @staticmethod
+        def m(n: Number):
+            return int(n * 1.60934e+3)
+        @staticmethod
+        def km(n: Number):
+            return int(n * 1.60934)
+        @staticmethod
+        def ft(n: Number):
+            return int(n * 5.280e+3)
+        @staticmethod
+        def _in(n: Number):
+            return int(n * 6.3360e+4)
+        @staticmethod
+        def cm(n: Number):
+            return int(n * 1.60934e+5)
+        @staticmethod
+        def mm(n: Number):
+            return int(n * 1.609340e+6)
+        @staticmethod
+        def yd(n: Number):
+            return int(n * 1.76e+3)
 def encode(data) -> str:
     try:
             return base64.b64encode(str(data).encode()).decode()
@@ -167,7 +274,6 @@ def internet_access():
         return False
 def get_file_path(filename):
     return os.path.join(os.getcwd(), filename)
-
 def main():
     print(obj(key="value")["key"] == obj(key="value").key)
     
