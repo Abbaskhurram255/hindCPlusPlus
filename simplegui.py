@@ -10,7 +10,7 @@ lay = [
     [Submit(), Exit()]
 ]
 
-ui = Window("Simple Data Entry Form", lay)
+ui = Window("Simple Data Entry Form", lay, margins=(12, 8))
 admin: obj = obj(email="abbaskhurram255@gmail.com", password="00000000")
 password_hidden: filhal = Ha
 
@@ -30,6 +30,8 @@ while Yes:
         print(f"    Password={pwd}")
         print("}")
         if email == admin.email and pwd == admin.password:
+            ui["email"].update(text_color="#000")
+            ui["pwd"].update(text_color="#000")
             popup(f"Logged in as {email}")
         elif email == "" or pwd == "":
             popup("Neither the email nor the password field can be empty.")
