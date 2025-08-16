@@ -130,801 +130,737 @@ class pesa(money):
     def __init__(self, amount=0, currency="Rs. "):
         super().__init__(amount, currency)
 class kmath:
-    pi = 3.141592653589793
-    speed_of_light = 2.99792e8
-    earth_gravity = 9.80665
-    earth_mass = 5.9722e24
-    earth_radius = 6.378137e3
-    cUnit = "m/s"
-    earthsGravityUnit = "m/s^2"
-    earthsMassUnit = "km"
-    earthsRadiusUnit = "km"
+    pi: float = 3.141592653589793
+    speed_of_light: float = 2.99792e8
+    earth_gravity: float = 9.80665
+    earth_mass: float = 5.9722e24
+    earth_radius: float = 6.378137e3
+    cUnit: str = "m/s"
+    earthsGravityUnit: str = "m/s^2"
+    earthsMassUnit: str = "km"
+    earthsRadiusUnit: str = "km"
     class c:
         @staticmethod
-        def f(n: Number):
+        def f(n: Number) -> Number:
             return round(1.8 * n + 32, 2)
         @staticmethod
-        def ns(n: Number):
+        def ns(n: Number) -> Number:
             return round(n * 3.154e18, 2)
         @staticmethod
-        def mcs(n: Number):
+        def mcs(n: Number) -> Number:
             return round(n * 3.154e15, 2)
         @staticmethod
-        def ms(n: Number):
+        def ms(n: Number) -> Number:
             return round(n * 3.154e12, 2)
         @staticmethod
-        def s(n: Number):
+        def s(n: Number) -> Number:
             return round(n * 3.154e9, 2)
         @staticmethod
-        def m(n: Number):
+        def m(n: Number) -> Number:
             return round(n * 5.256e7, 2)
         @staticmethod
-        def h(n: Number):
+        def h(n: Number) -> Number:
             return round(n * 8.76e5, 2)
         @staticmethod
-        def d(n: Number):
+        def d(n: Number) -> Number:
             return round(n * 3.65e4, 2)
         @staticmethod
-        def wk(n: Number):
+        def wk(n: Number) -> Number:
             return round(n * 5.214e3, 2)
         @staticmethod
-        def mn(n: Number):
+        def mn(n: Number) -> Number:
             return round(n * 1.2e3, 2)
         @staticmethod
-        def yr(n: Number):
+        def yr(n: Number) -> Number:
             return round(n * 1e2, 2)
         @staticmethod
-        def dc(n: Number):
+        def dc(n: Number) -> Number:
             return round(n * 1e1, 2)
     class f:
         @staticmethod
-        def c(n: Number):
+        def c(n: Number) -> Number:
             return round(((n - 32) * 5) / 9, 1)
     class m:
         @staticmethod
-        def km(n: Number):
+        def km(n: Number) -> Number:
             return round(n * 1e-3, 2)
         @staticmethod
-        def mi(n: Number):
+        def mi(n: Number) -> Number:
             return round(n * 6.21371e-4, 2)
         @staticmethod
-        def ft(n: Number):
+        def ft(n: Number) -> Number:
             return round(n * 3.28084, 2)
         @staticmethod
-        def inch(n: Number):
+        def inch(n: Number) -> Number:
             return round(n * 3.93701e+1, 2)
         @staticmethod
-        def cm(n: Number):
+        def cm(n: Number) -> Number:
             return round(n * 1e2, 2)
         @staticmethod
-        def mm(n: Number):
+        def mm(n: Number) -> Number:
             return round(n * 1e3, 2)
         @staticmethod
-        def yd(n: Number):
+        def yd(n: Number) -> Number:
             return round(n * 1.0936, 2)
     class km:
         @staticmethod
-        def m(n: Number):
+        def m(n: Number) -> Number:
             return round(n * 1e3, 2)
         @staticmethod
-        def mi(n: Number):
+        def mi(n: Number) -> Number:
             return round(n * 6.21371e-1, 2)
         @staticmethod
-        def ft(n: Number):
+        def ft(n: Number) -> Number:
             return round(n * 3.28084e+3, 2)
         @staticmethod
-        def inch(n: Number):
+        def inch(n: Number) -> Number:
             return round(n * 3.93701e+4, 2)
         @staticmethod
-        def cm(n: Number):
+        def cm(n: Number) -> Number:
             return round(n * 1e+5, 2)
         @staticmethod
-        def mm(n: Number):
+        def mm(n: Number) -> Number:
             return round(n * 1e+6, 2)
         @staticmethod
-        def yd(n: Number):
+        def yd(n: Number) -> Number:
             return round(n * 1.09361e+3, 2)
     class mi:
         @staticmethod
-        def m(n: Number):
+        def m(n: Number) -> Number:
             return round(n * 1.60934e+3, 2)
         @staticmethod
-        def km(n: Number):
+        def km(n: Number) -> Number:
             return round(n * 1.60934, 2)
         @staticmethod
-        def ft(n: Number):
+        def ft(n: Number) -> Number:
             return round(n * 5.280e+3, 2)
         @staticmethod
-        def inch(n: Number):
+        def inch(n: Number) -> Number:
             return round(n * 6.3360e+4, 2)
         @staticmethod
-        def cm(n: Number):
+        def cm(n: Number) -> Number:
             return round(n * 1.60934e+5, 2)
         @staticmethod
-        def mm(n: Number):
+        def mm(n: Number) -> Number:
             return round(n * 1.609340e+6, 2)
         @staticmethod
-        def yd(n: Number):
+        def yd(n: Number) -> Number:
             return round(n * 1.76e+3, 2)
     class ft:
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 3.048e-1, 2)
         
         @staticmethod
-        def km(n):
+        def km(n: Number) -> Number:
             return round(n * 3.048e-4, 2)
         
         @staticmethod
-        def mi(n):
+        def mi(n: Number) -> Number:
             return round(n * 1.89394e-4, 2)
         
         @staticmethod
-        def inch(n):
+        def inch(n: Number) -> Number:
             return round(n * 1.2e1, 2)
         
         @staticmethod
-        def cm(n):
+        def cm(n: Number) -> Number:
             return round(n * 3.48e+1, 2)
         
         @staticmethod
-        def mm(n):
+        def mm(n: Number) -> Number:
             return round(n * 3.048e+2, 2)
         
         @staticmethod
-        def yd(n):
+        def yd(n: Number) -> Number:
             return round(n * 3.33333e-1, 2)
     class inch:
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 2.54e-2, 2)
         
         @staticmethod
-        def km(n):
+        def km(n: Number) -> Number:
             return round(n * 2.54e-5, 2)
         
         @staticmethod
-        def mi(n):
+        def mi(n: Number) -> Number:
             return round(n * 1.57828e-5, 2)
         
         @staticmethod
-        def ft(n):
+        def ft(n: Number) -> Number:
             return round(n * 8.333e-2, 2)
         
         @staticmethod
-        def cm(n):
+        def cm(n: Number) -> Number:
             return round(n * 2.54, 2)
         
         @staticmethod
-        def mm(n):
+        def mm(n: Number) -> Number:
             return round(n * 2.54e+1, 2)
         
         @staticmethod
-        def yd(n):
+        def yd(n: Number) -> Number:
             return round(n * 2.77778e-2, 2)
     class cm:
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 1e-2, 2)
         
         @staticmethod
-        def km(n):
+        def km(n: Number) -> Number:
             return round(n * 1e-5, 2)
         
         @staticmethod
-        def mi(n):
+        def mi(n: Number) -> Number:
             return round(n * 621371e-6, 2)
         
         @staticmethod
-        def ft(n):
+        def ft(n: Number) -> Number:
             return round(n * 3.28084e-2, 2)
         
         @staticmethod
-        def inch(n):
+        def inch(n: Number) -> Number:
             return round(n * 3.93701e-1, 2)
         
         @staticmethod
-        def mm(n):
+        def mm(n: Number) -> Number:
             return round(n * 1e1, 2)
         
         @staticmethod
-        def yd(n):
+        def yd(n: Number) -> Number:
             return round(n * 1.09361e-2, 2)
     class mm:
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 1e-3, 2)
         
         @staticmethod
-        def km(n):
+        def km(n: Number) -> Number:
             return round(n * 1e-6, 2)
         
         @staticmethod
-        def mi(n):
+        def mi(n: Number) -> Number:
             return round(n * 6.21371e-7, 2)
         
         @staticmethod
-        def ft(n):
+        def ft(n: Number) -> Number:
             return round(n * 3.28084e-3, 2)
         
         @staticmethod
-        def inch(n):
+        def inch(n: Number) -> Number:
             return round(n * 3.93701e-2, 2)
         
         @staticmethod
-        def cm(n):
+        def cm(n: Number) -> Number:
             return round(n * 1e-1, 2)
         
         @staticmethod
-        def yd(n):
+        def yd(n: Number) -> Number:
             return round(n * 1.09361e-3, 2)
     class yd:
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 9.144e-1, 2)
         
         @staticmethod
-        def km(n):
+        def km(n: Number) -> Number:
             return round(n * 9.144e-4, 2)
         
         @staticmethod
-        def mi(n):
+        def mi(n: Number) -> Number:
             return round(n * 5.68182e-4, 2)
         
         @staticmethod
-        def ft(n):
+        def ft(n: Number) -> Number:
             return round(n * 3, 2)
         
         @staticmethod
-        def inch(n):
+        def inch(n: Number) -> Number:
             return round(n * 3.6e1, 2)
         
         @staticmethod
-        def cm(n):
+        def cm(n: Number) -> Number:
             return round(n * 9.144e+1, 2)
         
         @staticmethod
-        def mm(n):
+        def mm(n: Number) -> Number:
             return round(n * 9.144e+2, 2)
     class mcg:
         @staticmethod
-        def mg(n):
+        def mg(n: Number) -> Number:
             return round(n * 1e-3, 2)
         
         @staticmethod
-        def g(n):
+        def g(n: Number) -> Number:
             return round(n * 1e-6, 2)
         
         @staticmethod
-        def kg(n):
+        def kg(n: Number) -> Number:
             return round(n * 1e-9, 2)
         
         @staticmethod
-        def ton(n):
+        def ton(n: Number) -> Number:
             return round(n * 1e-12, 2)
         
         @staticmethod
-        def kiloton(n):
+        def kiloton(n: Number) -> Number:
             return round(n * 1e-15, 2)
         
         @staticmethod
-        def oz(n):
+        def oz(n: Number) -> Number:
             return round(n * 3.527e-8, 2)
         
         @staticmethod
-        def p(n):
+        def p(n: Number) -> Number:
             return round(n * 2.205e-9, 2)
     class mg:
         @staticmethod
-        def mcg(n):
+        def mcg(n: Number) -> Number:
             return round(n * 1e3, 2)
         
         @staticmethod
-        def g(n):
+        def g(n: Number) -> Number:
             return round(n * 1e-3, 2)
         
         @staticmethod
-        def kg(n):
+        def kg(n: Number) -> Number:
             return round(n * 1e-6, 2)
         
         @staticmethod
-        def ton(n):
+        def ton(n: Number) -> Number:
             return round(n * 1e-9, 2)
         
         @staticmethod
-        def kiloton(n):
+        def kiloton(n: Number) -> Number:
             return round(n * 1e-12, 2)
         
         @staticmethod
-        def oz(n):
+        def oz(n: Number) -> Number:
             return round(n * 3.527e-5, 2)
         
         @staticmethod
-        def p(n):
+        def p(n: Number) -> Number:
             return round(n * 2.205e-6, 2)
     class g:
         @staticmethod
-        def mcg(n):
+        def mcg(n: Number) -> Number:
             return round(n * 1e6, 2)
         
         @staticmethod
-        def mg(n):
+        def mg(n: Number) -> Number:
             return round(n * 1e3, 2)
         
         @staticmethod
-        def kg(n):
+        def kg(n: Number) -> Number:
             return round(n / 1e3, 2)
         
         @staticmethod
-        def ton(n):
+        def ton(n: Number) -> Number:
             return round(n / 1e6, 2)
         
         @staticmethod
-        def kiloton(n):
+        def kiloton(n: Number) -> Number:
             return round(n / 1e9, 2)
         
         @staticmethod
-        def oz(n):
+        def oz(n: Number) -> Number:
             return round(n * 3.5e-2, 2)
         
         @staticmethod
-        def p(n):
+        def p(n: Number) -> Number:
             return round(n * 2e-3, 2)
     class kg:
         @staticmethod
-        def mcg(n):
+        def mcg(n: Number) -> Number:
             return round(n * 1e9, 2)
         
         @staticmethod
-        def mg(n):
+        def mg(n: Number) -> Number:
             return round(n * 1e6, 2)
         
         @staticmethod
-        def g(n):
+        def g(n: Number) -> Number:
             return round(n * 1e3, 2)
         
         @staticmethod
-        def ton(n):
+        def ton(n: Number) -> Number:
             return round(n / 1e3, 2)
         
         @staticmethod
-        def kiloton(n):
+        def kiloton(n: Number) -> Number:
             return round(n / 1e6, 2)
         
         @staticmethod
-        def oz(n):
+        def oz(n: Number) -> Number:
             return round(n * 3.5274e1, 2)
         
         @staticmethod
-        def p(n):
+        def p(n: Number) -> Number:
             return round(n * 2.204, 2)
     class ton:
         @staticmethod
-        def mcg(n):
+        def mcg(n: Number) -> Number:
             return round(n * 1e12, 2)
         
         @staticmethod
-        def mg(n):
+        def mg(n: Number) -> Number:
             return round(n * 1e9, 2)
         
         @staticmethod
-        def g(n):
+        def g(n: Number) -> Number:
             return round(n * 1e6, 2)
         
         @staticmethod
-        def kg(n):
+        def kg(n: Number) -> Number:
             return round(n * 1e3, 2)
         
         @staticmethod
-        def kiloton(n):
+        def kiloton(n: Number) -> Number:
             return round(n * 1e-3, 2)
         
         @staticmethod
-        def oz(n):
+        def oz(n: Number) -> Number:
             return round(n * 3.5274e4, 2)
         
         @staticmethod
-        def p(n):
+        def p(n: Number) -> Number:
             return round(n * 2.204e3, 2)
     class kiloton:
         @staticmethod
-        def mcg(n):
+        def mcg(n: Number) -> Number:
             return round(n * 1e15, 2)
         
         @staticmethod
-        def mg(n):
+        def mg(n: Number) -> Number:
             return round(n * 1e12, 2)
         
         @staticmethod
-        def g(n):
+        def g(n: Number) -> Number:
             return round(n * 1e9, 2)
         
         @staticmethod
-        def kg(n):
+        def kg(n: Number) -> Number:
             return round(n * 1e6, 2)
         
         @staticmethod
-        def ton(n):
+        def ton(n: Number) -> Number:
             return round(n * 1e3, 2)
         
         @staticmethod
-        def oz(n):
+        def oz(n: Number) -> Number:
             return round(n * 3.5274e7, 2)
         
         @staticmethod
-        def p(n):
+        def p(n: Number) -> Number:
             return round(n * 2.204e6, 2)
     class oz:
         @staticmethod
-        def mcg(n):
+        def mcg(n: Number) -> Number:
             return round(n * 2.835e7, 2)
         
         @staticmethod
-        def mg(n):
+        def mg(n: Number) -> Number:
             return round(n * 2.835e4, 2)
         
         @staticmethod
-        def g(n):
+        def g(n: Number) -> Number:
             return round(n * 2.835e1, 2)
         
         @staticmethod
-        def kg(n):
+        def kg(n: Number) -> Number:
             return round(n * 2.8e-2, 2)
         
         @staticmethod
-        def ton(n):
+        def ton(n: Number) -> Number:
             return round(n * 2.8e-5, 2)
         
         @staticmethod
-        def kiloton(n):
+        def kiloton(n: Number) -> Number:
             return round(n * 2.8e-8, 2)
         
         @staticmethod
-        def p(n):
+        def p(n: Number) -> Number:
             return round(n * 6.3e-2, 2)
 
     class p:
         @staticmethod
-        def mcg(n):
+        def mcg(n: Number) -> Number:
             return round(n * 4.536e8, 2)
 
         @staticmethod
-        def mg(n):
+        def mg(n: Number) -> Number:
             return round(n * 4.536e5, 2)
 
         @staticmethod
-        def g(n):
+        def g(n: Number) -> Number:
             return round(n * 4.536e2, 2)
 
         @staticmethod
-        def kg(n):
+        def kg(n: Number) -> Number:
             return round(n * 4.53e-1, 2)
 
         @staticmethod
-        def ton(n):
+        def ton(n: Number) -> Number:
             return round(n * 4.53e-4, 2)
 
         @staticmethod
-        def kiloton(n):
+        def kiloton(n: Number) -> Number:
             return round(n * 4.53e-7, 2)
 
         @staticmethod
-        def oz(n):
+        def oz(n: Number) -> Number:
             return round(n * 1.6e1, 2)
 
     class ns:
         @staticmethod
-        def mcs(n):
+        def mcs(n: Number) -> Number:
             return round(n * 1e-3, 2)
 
         @staticmethod
-        def ms(n):
+        def ms(n: Number) -> Number:
             return round(n * 1e-6, 2)
 
         @staticmethod
-        def s(n):
+        def s(n: Number) -> Number:
             return round(n * 1e-9, 2)
 
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 1.6665e-11, 2)
 
         @staticmethod
-        def h(n):
+        def h(n: Number) -> Number:
             return round(n * 2.7775e-13, 2)
 
         @staticmethod
-        def d(n):
+        def d(n: Number) -> Number:
             return round(n * 1.157e-14, 2)
 
         @staticmethod
-        def wk(n):
+        def wk(n: Number) -> Number:
             return round(n * 1.653e-15, 2)
 
         @staticmethod
-        def mn(n):
+        def mn(n: Number) -> Number:
             return round(n * 3.805e-16, 2)
 
         @staticmethod
-        def yr(n):
+        def yr(n: Number) -> Number:
             return round(n * 3.17e-17, 2)
 
         @staticmethod
-        def dc(n):
+        def dc(n: Number) -> Number:
             return round(n * 3.17e-18, 2)
 
         @staticmethod
-        def c(n):
+        def c(n: Number) -> Number:
             return round(n * 3.17e-19, 2)
-
     class mcs:
         @staticmethod
-        def ns(n):
+        def ns(n: Number) -> Number:
             return round(n * 1e3, 2)
-
         @staticmethod
-        def ms(n):
+        def ms(n: Number) -> Number:
             return round(n * 1e-3, 2)
-
         @staticmethod
-        def s(n):
+        def s(n: Number) -> Number:
             return round(n * 1e-6, 2)
-
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 1.6665e-8, 2)
-
         @staticmethod
-        def h(n):
+        def h(n: Number) -> Number:
             return round(n * 2.7775e-10, 2)
-
         @staticmethod
-        def d(n):
+        def d(n: Number) -> Number:
             return round(n * 1.157e-11, 2)
-
         @staticmethod
-        def wk(n):
+        def wk(n: Number) -> Number:
             return round(n * 1.653e-12, 2)
-
         @staticmethod
-        def mn(n):
+        def mn(n: Number) -> Number:
             return round(n * 3.805e-13, 2)
-
         @staticmethod
-        def yr(n):
+        def yr(n: Number) -> Number:
             return round(n * 3.17e-14, 2)
-
         @staticmethod
-        def dc(n):
+        def dc(n: Number) -> Number:
             return round(n * 3.17e-15, 2)
-
         @staticmethod
-        def c(n):
+        def c(n: Number) -> Number:
             return round(n * 3.17e-16, 2)
-
     class ms:
         @staticmethod
-        def ns(n):
+        def ns(n: Number) -> Number:
             return round(n * 1e6, 2)
-
         @staticmethod
-        def mcs(n):
+        def mcs(n: Number) -> Number:
             return round(n * 1e3, 2)
-
         @staticmethod
-        def s(n):
+        def s(n: Number) -> Number:
             return round(n * 1e-3, 2)
-
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 1.6665e-5, 2)
-
         @staticmethod
-        def h(n):
+        def h(n: Number) -> Number:
             return round(n * 2.7775e-7, 2)
-
         @staticmethod
-        def d(n):
+        def d(n: Number) -> Number:
             return round(n * 1.157e-8, 2)
-
         @staticmethod
-        def wk(n):
+        def wk(n: Number) -> Number:
             return round(n * 1.653e-9, 2)
-
         @staticmethod
-        def mn(n):
+        def mn(n: Number) -> Number:
             return round(n * 3.805e-10, 2)
-
         @staticmethod
-        def yr(n):
+        def yr(n: Number) -> Number:
             return round(n * 3.17e-11, 2)
-
         @staticmethod
-        def dc(n):
+        def dc(n: Number) -> Number:
             return round(n * 3.17e-12, 2)
-
         @staticmethod
-        def c(n):
+        def c(n: Number) -> Number:
             return round(n * 3.17e-13, 2)
-
     class s:
         @staticmethod
-        def ns(n):
+        def ns(n: Number) -> Number:
             return round(n * 1e9, 2)
-
         @staticmethod
-        def mcs(n):
+        def mcs(n: Number) -> Number:
             return round(n * 1e6, 2)
-
         @staticmethod
-        def ms(n):
+        def ms(n: Number) -> Number:
             return round(n * 1e3, 2)
-
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 1.66665e-2, 2)
-
         @staticmethod
-        def h(n):
+        def h(n: Number) -> Number:
             return round(n * 2.7775e-4, 2)
 
         @staticmethod
-        def d(n):
+        def d(n: Number) -> Number:
             return round(n * 1.157e-5, 2)
 
         @staticmethod
-        def wk(n):
+        def wk(n: Number) -> Number:
             return round(n * 1.653e-6, 2)
-
         @staticmethod
-        def mn(n):
+        def mn(n: Number) -> Number:
             return round(n * 3.805e-7, 2)
-
         @staticmethod
-        def yr(n):
+        def yr(n: Number) -> Number:
             return round(n * 3.17e-8, 2)
-
         @staticmethod
-        def dc(n):
+        def dc(n: Number) -> Number:
             return round(n * 3.17e-9, 2)
-
         @staticmethod
-        def c(n):
+        def c(n: Number) -> Number:
             return round(n * 3.17e-10, 2)
-
     class h:
         @staticmethod
-        def ns(n):
+        def ns(n: Number) -> Number:
             return round(n * 3.6e12, 2)
-
         @staticmethod
-        def mcs(n):
+        def mcs(n: Number) -> Number:
             return round(n * 3.6e9, 2)
-
         @staticmethod
-        def ms(n):
+        def ms(n: Number) -> Number:
             return round(n * 3.6e6, 2)
-
         @staticmethod
-        def s(n):
+        def s(n: Number) -> Number:
             return round(n * 3.6e3, 2)
-
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 60, 2)
-
         @staticmethod
-        def d(n):
+        def d(n: Number) -> Number:
             return round(n / 24, 2)
-
         @staticmethod
-        def wk(n):
+        def wk(n: Number) -> Number:
             return round(n / 168, 2)
-
         @staticmethod
-        def mn(n):
+        def mn(n: Number) -> Number:
             return round(n / 730, 2)
-
         @staticmethod
-        def yr(n):
+        def yr(n: Number) -> Number:
             return round(n / 876e1, 2)
-
         @staticmethod
-        def dc(n):
+        def dc(n: Number) -> Number:
             return round(n / 876e2, 2)
-
         @staticmethod
-        def c(n):
+        def c(n: Number) -> Number:
             return round(n / 876e3, 2)
-
     class d:
         @staticmethod
-        def ns(n):
+        def ns(n: Number) -> Number:
             return round(n * 8.64e13, 2)
-
         @staticmethod
-        def mcs(n):
+        def mcs(n: Number) -> Number:
             return round(n * 8.64e10, 2)
-
         @staticmethod
-        def ms(n):
+        def ms(n: Number) -> Number:
             return round(n * 8.64e7, 2)
-
         @staticmethod
-        def s(n):
+        def s(n: Number) -> Number:
             return round(n * 8.64e4, 2)
-
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 1.44e3, 2)
-
         @staticmethod
-        def h(n):
+        def h(n: Number) -> Number:
             return round(n * 24, 2)
-
         @staticmethod
-        def wk(n):
+        def wk(n: Number) -> Number:
             return round(n / 7, 2)
-
         @staticmethod
-        def mn(n):
+        def mn(n: Number) -> Number:
             return round(n / 3.417e1, 2)
-
         @staticmethod
-        def yr(n):
+        def yr(n: Number) -> Number:
             return round(n * 365, 2)
-
         @staticmethod
-        def dc(n):
+        def dc(n: Number) -> Number:
             return round(n * 365e1, 2)
-
         @staticmethod
-        def c(n):
+        def c(n: Number) -> Number:
             return round(n * 365e2, 2)
-
     class wk:
         @staticmethod
-        def ns(n):
+        def ns(n: Number) -> Number:
             return round(n * 6.048e14, 2)
-
         @staticmethod
-        def mcs(n):
+        def mcs(n: Number) -> Number:
             return round(n * 6.048e11, 2)
-
         @staticmethod
-        def ms(n):
+        def ms(n: Number) -> Number:
             return round(n * 6.048e8, 2)
-
         @staticmethod
-        def s(n):
+        def s(n: Number) -> Number:
             return round(n * 6.048e5, 2)
-
         @staticmethod
-        def m(n):
+        def m(n: Number) -> Number:
             return round(n * 1.008e4, 2)
-
         @staticmethod
-        def h(n):
+        def h(n: Number) -> Number:
             return round(n * 1.68e2, 2)
-
         @staticmethod
-        def d(n):
+        def d(n: Number) -> Number:
             return round(n * 7, 2)
-
         @staticmethod
-        def mn(n):
+        def mn(n: Number) -> Number:
             return round(n * 2.3e-1, 2)
-
         @staticmethod
-        def yr(n):
+        def yr(n: Number) -> Number:
             return round(n * 1.917e-2, 2)
-
         @staticmethod
-        def dc(n):
+        def dc(n: Number) -> Number:
             return round(n * 1.917e-3, 2)
-
         @staticmethod
-        def c(n):
+        def c(n: Number) -> Number:
             return round(n * 1.917e-4, 2)
 def encode(data) -> str:
     try:
@@ -937,7 +873,7 @@ def decode(data) -> str:
             return base64.b64decode(data).decode()
     except (TypeError, binascii.Error) as e:
             return ""
-def fetch(url):
+def fetch(url: str):
     try:
         response = requests.get(url)
         response.raise_for_status()
@@ -945,14 +881,16 @@ def fetch(url):
     except requests.RequestException as e:
         print(f"Error fetching data: {e}")
         return None
-def internet_access():
+def internet_access() -> boolean:
     try:
         requests.get("https://www.google.com", timeout=5)
         return True
     except requests.ConnectionError:
         return False
-def get_file_path(filename):
+def filepath(filename: str) -> str:
     return os.path.join(os.getcwd(), filename)
+    
+    
 def main():
     print(obj(key="value")["key"] == obj(key="value").key)
     
