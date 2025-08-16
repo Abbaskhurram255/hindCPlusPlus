@@ -704,8 +704,8 @@ class Main {
 	public static void main(String[] args) {
 		lafz salaam = $("  hi", "there", "love!", "I'm", 23);
 		lafz greeting2 = $("hi", " boyfriends");
-		str name = str("mehrunisa ji");
-		System.out.println(name.replaceSecondWord("Ayatullah"));
+		str name = str("Mehrunisa ji");
+		System.out.println(name.replaceSecondWord("Danyal"));
 		System.out.println(salaam.sentCase());
 		System.out.println(name.i(-12));
 		System.out.println(name.lastWord());
