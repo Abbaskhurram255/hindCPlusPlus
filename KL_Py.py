@@ -139,7 +139,7 @@ class kmath:
     earthsGravityUnit = "m/s^2"
     earthsMassUnit = "km"
     earthsRadiusUnit = "km"
-    class C:
+    class c:
         @staticmethod
         def f(n: Number):
             return round(1.8 * n + 32, 2)
@@ -176,11 +176,11 @@ class kmath:
         @staticmethod
         def dc(n: Number):
             return round(n * 1e1, 2)
-    class F:
+    class f:
         @staticmethod
         def c(n: Number):
             return round(((n - 32) * 5) / 9, 1)
-    class M:
+    class m:
         @staticmethod
         def km(n: Number):
             return round(n * 1e-3, 2)
@@ -202,7 +202,7 @@ class kmath:
         @staticmethod
         def yd(n: Number):
             return round(n * 1.0936, 2)
-    class KM:
+    class km:
         @staticmethod
         def m(n: Number):
             return round(n * 1e3, 2)
@@ -224,7 +224,7 @@ class kmath:
         @staticmethod
         def yd(n: Number):
             return round(n * 1.09361e+3, 2)
-    class MI:
+    class mi:
         @staticmethod
         def m(n: Number):
             return round(n * 1.60934e+3, 2)
@@ -582,6 +582,350 @@ class kmath:
         @staticmethod
         def p(n):
             return round(n * 6.3e-2, 2)
+
+    class p:
+        @staticmethod
+        def mcg(n):
+            return round(n * 4.536e8, 2)
+
+        @staticmethod
+        def mg(n):
+            return round(n * 4.536e5, 2)
+
+        @staticmethod
+        def g(n):
+            return round(n * 4.536e2, 2)
+
+        @staticmethod
+        def kg(n):
+            return round(n * 4.53e-1, 2)
+
+        @staticmethod
+        def ton(n):
+            return round(n * 4.53e-4, 2)
+
+        @staticmethod
+        def kiloton(n):
+            return round(n * 4.53e-7, 2)
+
+        @staticmethod
+        def oz(n):
+            return round(n * 1.6e1, 2)
+
+    class ns:
+        @staticmethod
+        def mcs(n):
+            return round(n * 1e-3, 2)
+
+        @staticmethod
+        def ms(n):
+            return round(n * 1e-6, 2)
+
+        @staticmethod
+        def s(n):
+            return round(n * 1e-9, 2)
+
+        @staticmethod
+        def m(n):
+            return round(n * 1.6665e-11, 2)
+
+        @staticmethod
+        def h(n):
+            return round(n * 2.7775e-13, 2)
+
+        @staticmethod
+        def d(n):
+            return round(n * 1.157e-14, 2)
+
+        @staticmethod
+        def wk(n):
+            return round(n * 1.653e-15, 2)
+
+        @staticmethod
+        def mn(n):
+            return round(n * 3.805e-16, 2)
+
+        @staticmethod
+        def yr(n):
+            return round(n * 3.17e-17, 2)
+
+        @staticmethod
+        def dc(n):
+            return round(n * 3.17e-18, 2)
+
+        @staticmethod
+        def c(n):
+            return round(n * 3.17e-19, 2)
+
+    class mcs:
+        @staticmethod
+        def ns(n):
+            return round(n * 1e3, 2)
+
+        @staticmethod
+        def ms(n):
+            return round(n * 1e-3, 2)
+
+        @staticmethod
+        def s(n):
+            return round(n * 1e-6, 2)
+
+        @staticmethod
+        def m(n):
+            return round(n * 1.6665e-8, 2)
+
+        @staticmethod
+        def h(n):
+            return round(n * 2.7775e-10, 2)
+
+        @staticmethod
+        def d(n):
+            return round(n * 1.157e-11, 2)
+
+        @staticmethod
+        def wk(n):
+            return round(n * 1.653e-12, 2)
+
+        @staticmethod
+        def mn(n):
+            return round(n * 3.805e-13, 2)
+
+        @staticmethod
+        def yr(n):
+            return round(n * 3.17e-14, 2)
+
+        @staticmethod
+        def dc(n):
+            return round(n * 3.17e-15, 2)
+
+        @staticmethod
+        def c(n):
+            return round(n * 3.17e-16, 2)
+
+    class ms:
+        @staticmethod
+        def ns(n):
+            return round(n * 1e6, 2)
+
+        @staticmethod
+        def mcs(n):
+            return round(n * 1e3, 2)
+
+        @staticmethod
+        def s(n):
+            return round(n * 1e-3, 2)
+
+        @staticmethod
+        def m(n):
+            return round(n * 1.6665e-5, 2)
+
+        @staticmethod
+        def h(n):
+            return round(n * 2.7775e-7, 2)
+
+        @staticmethod
+        def d(n):
+            return round(n * 1.157e-8, 2)
+
+        @staticmethod
+        def wk(n):
+            return round(n * 1.653e-9, 2)
+
+        @staticmethod
+        def mn(n):
+            return round(n * 3.805e-10, 2)
+
+        @staticmethod
+        def yr(n):
+            return round(n * 3.17e-11, 2)
+
+        @staticmethod
+        def dc(n):
+            return round(n * 3.17e-12, 2)
+
+        @staticmethod
+        def c(n):
+            return round(n * 3.17e-13, 2)
+
+    class s:
+        @staticmethod
+        def ns(n):
+            return round(n * 1e9, 2)
+
+        @staticmethod
+        def mcs(n):
+            return round(n * 1e6, 2)
+
+        @staticmethod
+        def ms(n):
+            return round(n * 1e3, 2)
+
+        @staticmethod
+        def m(n):
+            return round(n * 1.66665e-2, 2)
+
+        @staticmethod
+        def h(n):
+            return round(n * 2.7775e-4, 2)
+
+        @staticmethod
+        def d(n):
+            return round(n * 1.157e-5, 2)
+
+        @staticmethod
+        def wk(n):
+            return round(n * 1.653e-6, 2)
+
+        @staticmethod
+        def mn(n):
+            return round(n * 3.805e-7, 2)
+
+        @staticmethod
+        def yr(n):
+            return round(n * 3.17e-8, 2)
+
+        @staticmethod
+        def dc(n):
+            return round(n * 3.17e-9, 2)
+
+        @staticmethod
+        def c(n):
+            return round(n * 3.17e-10, 2)
+
+    class h:
+        @staticmethod
+        def ns(n):
+            return round(n * 3.6e12, 2)
+
+        @staticmethod
+        def mcs(n):
+            return round(n * 3.6e9, 2)
+
+        @staticmethod
+        def ms(n):
+            return round(n * 3.6e6, 2)
+
+        @staticmethod
+        def s(n):
+            return round(n * 3.6e3, 2)
+
+        @staticmethod
+        def m(n):
+            return round(n * 60, 2)
+
+        @staticmethod
+        def d(n):
+            return round(n / 24, 2)
+
+        @staticmethod
+        def wk(n):
+            return round(n / 168, 2)
+
+        @staticmethod
+        def mn(n):
+            return round(n / 730, 2)
+
+        @staticmethod
+        def yr(n):
+            return round(n / 876e1, 2)
+
+        @staticmethod
+        def dc(n):
+            return round(n / 876e2, 2)
+
+        @staticmethod
+        def c(n):
+            return round(n / 876e3, 2)
+
+    class d:
+        @staticmethod
+        def ns(n):
+            return round(n * 8.64e13, 2)
+
+        @staticmethod
+        def mcs(n):
+            return round(n * 8.64e10, 2)
+
+        @staticmethod
+        def ms(n):
+            return round(n * 8.64e7, 2)
+
+        @staticmethod
+        def s(n):
+            return round(n * 8.64e4, 2)
+
+        @staticmethod
+        def m(n):
+            return round(n * 1.44e3, 2)
+
+        @staticmethod
+        def h(n):
+            return round(n * 24, 2)
+
+        @staticmethod
+        def wk(n):
+            return round(n / 7, 2)
+
+        @staticmethod
+        def mn(n):
+            return round(n / 3.417e1, 2)
+
+        @staticmethod
+        def yr(n):
+            return round(n * 365, 2)
+
+        @staticmethod
+        def dc(n):
+            return round(n * 365e1, 2)
+
+        @staticmethod
+        def c(n):
+            return round(n * 365e2, 2)
+
+    class wk:
+        @staticmethod
+        def ns(n):
+            return round(n * 6.048e14, 2)
+
+        @staticmethod
+        def mcs(n):
+            return round(n * 6.048e11, 2)
+
+        @staticmethod
+        def ms(n):
+            return round(n * 6.048e8, 2)
+
+        @staticmethod
+        def s(n):
+            return round(n * 6.048e5, 2)
+
+        @staticmethod
+        def m(n):
+            return round(n * 1.008e4, 2)
+
+        @staticmethod
+        def h(n):
+            return round(n * 1.68e2, 2)
+
+        @staticmethod
+        def d(n):
+            return round(n * 7, 2)
+
+        @staticmethod
+        def mn(n):
+            return round(n * 2.3e-1, 2)
+
+        @staticmethod
+        def yr(n):
+            return round(n * 1.917e-2, 2)
+
+        @staticmethod
+        def dc(n):
+            return round(n * 1.917e-3, 2)
+
+        @staticmethod
+        def c(n):
+            return round(n * 1.917e-4, 2)
 def encode(data) -> str:
     try:
             return base64.b64encode(str(data).encode()).decode()
