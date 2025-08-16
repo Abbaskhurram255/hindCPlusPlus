@@ -15,18 +15,30 @@ admin: obj = obj(email="abbaskhurram255@gmail.com", password="00000000")
 password_hidden: filhal = Ha
 
 while Yes:
+    values: dict | obj
     event, values = ui.read()
+    # changing the type of variable values to obj for easier acesss
+    if values is not None:
+        values = obj(values)
     if event == WIN_CLOSED or event == "Exit":
         break
     elif event == "Submit":
-        email, password = values["email"], values["pwd"]
+        email, pwd = values.values()
         print("Event: " + event)
         print("{")
         print(f"    Email={email},")
-        print(f"    Password={password}")
+        print(f"    Password={pwd}")
         print("}")
-        if email == admin.email and password == admin.password:
+        if email == admin.email and pwd == admin.password:
             popup(f"Logged in as {email}")
+        elif email == "" or pwd == "":
+            popup("Neither the email nor the password field can be empty.")
+        elif not re.search(r"^[\w\-]+@\w+\.\w+$", email):
+            popup("Invalid Email Format.")
+        elif not email == admin.email and pwd == admin.password:
+            popup("Incorrect Email address.")
+        elif email == admin.email and pwd != admin.password:
+            popup("Incorrect password.")
         else:
             ui["email"].update(text_color="red")
             ui["pwd"].update(text_color="red")
