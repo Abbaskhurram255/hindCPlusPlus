@@ -17,7 +17,7 @@ password_hidden: filhal = Ha
 while Yes:
     values: dict | obj
     event, values = ui.read()
-    # changing the type of variable values to obj for easier acesss
+    # changing the type of variable values to obj for quicker dot-driven access
     if values is not None:
         values = obj(values)
     if event == WIN_CLOSED or event == "Exit":
