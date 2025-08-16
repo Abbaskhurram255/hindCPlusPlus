@@ -1,1 +1,1 @@
-freesimplegui
+pip.exe install freesimplegui

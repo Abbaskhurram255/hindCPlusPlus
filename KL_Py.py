@@ -1,11 +1,62 @@
 import os, sys, base64, requests, math, re, inspect, ast
 from collections import defaultdict
 from functools import reduce
-from typing import List, Callable
-obj = dict
-# allows obj(name=$x, age=$y)
+from types import *
+from typing import *
 haal = bool
 nahi = lambda x: not(x)
+class obj(dict):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._convert_nested_dicts(self)
+
+    def _convert_nested_dicts(self, object):
+        if isinstance(object, dict):
+            for k, v in object.items():
+                if isinstance(v, dict):
+                    object[k] = obj(v)
+                elif isinstance(v, (list, tuple)):
+                    object[k] = self._convert_nested_collections(v)
+        elif isinstance(object, (list, tuple)):
+            return self._convert_nested_collections(object)
+        return object
+
+    def _convert_nested_collections(self, collection):
+        converted_collection = []
+        for item in collection:
+            if isinstance(item, dict):
+                converted_collection.append(obj(item))
+            elif isinstance(item, (list, tuple)):
+                converted_collection.append(self._convert_nested_collections(item))
+            else:
+                converted_collection.append(item)
+        return type(collection)(converted_collection)
+
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(f"'{self.__class__.__name__}' objectect has no attribute '{key}'")
+
+    def __setattr__(self, key, value):
+        if key.startswith('_'):  # Allow setting internal attributes
+            super().__setattr__(key, value)
+        else:
+            if isinstance(value, dict):
+                self[key] = obj(value)
+            elif isinstance(value, (list, tuple)):
+                self[key] = self._convert_nested_collections(value)
+            else:
+                self[key] = value
+
+    def __setitem__(self, key, value):
+        if isinstance(value, dict):
+            super().__setitem__(key, obj(value))
+        elif isinstance(value, (list, tuple)):
+            super().__setitem__(key, self._convert_nested_collections(value))
+        else:
+            super().__setitem__(key, value)
+# allows obj(name=$x, age=$y)
 sort = sorted
 sortMutate = lambda x: x.sort()
 reverseSort = lambda arr: sorted(arr, reverse=Yes)
@@ -108,7 +159,7 @@ def get_file_path(filename):
     return os.path.join(os.getcwd(), filename)
 
 def main():
-    print("test")
+    print(obj(key="value")["key"] == obj(key="value").key)
     
 if __name__ == "__main__":
     main()
