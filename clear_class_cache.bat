@@ -1,0 +1,3 @@
+@echo off
+echo Clearing class cache...
+del *.class
