@@ -893,6 +893,7 @@ def filepath(filename: str) -> str:
     
 def main():
     print(obj(key="value")["key"] == obj(key="value").key)
+    print(kmath.mi.km(1))
     
 if __name__ == "__main__":
     main()
