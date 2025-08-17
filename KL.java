@@ -1,3 +1,4 @@
+
 //core
 import java.lang.reflect.*;
 import java.security.*;
@@ -3321,7 +3322,7 @@ public class KL {
 		}
 		jsonString = jsonString.trim();;
 		if (!jsonString.startsWith("{") || !jsonString.endsWith("}")) {
-			map.add("status", "notok").add("error", "yes");
+			map.add("status=notok, error=true");
 			return map;
 		}
 		jsonString = jsonString.substring(1, jsonString.length() - 1);
@@ -3335,15 +3336,21 @@ public class KL {
 						.replaceAll("\\w+:\\s*", "").trim();
 				if (key.length() != 0 && in(key, "[a-zA-Z]+")
 						&& value.length() != 0 && in(value, "[a-zA-Z]+")) {
-					map.add(key, value);
+					map.add(key + "=" + value);
 				}
 			}
 		}
-		map.add("status", "ok").add("error", "no");
+		map.add("status=ok, error=false");
 		return map;
 	}
 	public static o fetch(String url) {
 		o map = new o();
+		if (not(url))
+			return map;
+		if (startsWith(url, ":[\\\\\\/]{2,3}"))
+			url = "https" + url;
+		if (!startsWith(url, "[A-Za-z]{2,}:[\\\\\\/]{2,3}"))
+			url = "https://" + url;
 		try {
 			URL urlString = url(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
@@ -3361,25 +3368,29 @@ public class KL {
 				reader.close();
 				String jsonString = respBuilder.toString().trim();
 				map = parseJson(jsonString);
-				map.add("response", "200").add("status", "ok").add("error",
-						"no");
+				map.add("response=200, status=ok, error=false");
 				return map;
 			} else {
-				map.add("response", Str(statusCode)).add("status", "notok")
-						.add("error", "yes");
-				print("[KLFetch.Status.NotOK]:\nMessage: GET request failed with status code",
-						statusCode);
+				map.add("response=" + statusCode
+						+ ", status=notok, error=true");
+				print("[KLFetch.Status.NotOK]:\nMessage: GET request failed with response "
+						+ statusCode);
 			}
 			connection.disconnect();
 		} catch (IOException e) {
-			map.add("response", "404").add("status", "notok").add("error",
-					"yes");
+			map.add("response=404, status=notok, error=true");
 			print("[KLFetch.Status.Offline]:\nMessage: Failed to fetch. It appears, you might be offline.");
 		}
 		return map;
 	}
 	public static o silentFetch(String url) {
 		o map = new o();
+		if (not(url))
+			return map;
+		if (startsWith(url, ":[\\\\\\/]{2,3}"))
+			url = "https" + url;
+		if (!startsWith(url, "[A-Za-z]{2,}:[\\\\\\/]{2,3}"))
+			url = "https://" + url;
 		try {
 			URL urlString = url(url);
 			HttpURLConnection connection = (HttpURLConnection) urlString
@@ -3397,17 +3408,15 @@ public class KL {
 				reader.close();
 				String jsonString = respBuilder.toString().trim();
 				map = parseJson(jsonString);
-				map.add("response", "200").add("status", "ok").add("error",
-						"no");
+				map.add("response=200, status=ok, error=false");
 				return map;
 			} else {
-				map.add("response", Str(statusCode)).add("status", "notok")
-						.add("error", "yes");
+				map.add("response=" + statusCode
+						+ ", status=notok, error=true");
 			}
 			connection.disconnect();
 		} catch (IOException e) {
-			map.add("response", "404").add("status", "notok").add("error",
-					"yes");
+			map.add("response=404, status=notok, error=true");
 		}
 		return map;
 	}
@@ -9680,30 +9689,27 @@ public class KL {
 			}
 			return hasValue(o);
 		}
-		o set(String k, Object v) {
-			if (!super.containsKey(k)) {
-				super.put(k, v);
-			} else {
-				super.replace(k, v);
-			}
-			return this;
+		o set(String... kvs) {
+			o oldObj = copy(), newObj = new o(kvs),
+					combined = this.combine(oldObj, newObj);
+			return combined;
 		}
-		o add(String k, Object v) {
-			set(k, v);
+		o add(String... kvs) {
+			set(kvs);
 			return this;
 		}
 		Object delete(String k) {
 			return super.remove(k);
 		}
-		o push(String k, Object v) {
-			add(k, v);
+		o push(String... kvs) {
+			add(kvs);
 			return this;
 		}
 		Object pop(String k) {
 			return delete(k);
 		}
-		o update(String k, Object v) {
-			set(k, v);
+		o update(String... kvs) {
+			set(kvs);
 			return this;
 		}
 		Set<String> keys() {
@@ -18829,7 +18835,7 @@ public class KL {
 		Object nthlast(int n) {
 			return lasti(n);
 		}
-		
+
 		String nthlast(int i, String tryCastingAs) {
 			return lasti(i, tryCastingAs);
 		}
@@ -18851,11 +18857,11 @@ public class KL {
 		Object first() {
 			return nth(0);
 		}
-		
+
 		String first(String tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
-		
+
 		int first(int tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
@@ -18868,18 +18874,18 @@ public class KL {
 		double first(double tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
-		
+
 		boolean first(boolean tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
 		Object second() {
 			return nth(1);
 		}
-		
+
 		String second(String tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
-		
+
 		int second(int tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
@@ -18892,18 +18898,18 @@ public class KL {
 		double second(double tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
-		
+
 		boolean second(boolean tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
 		Object seclast() {
 			return nthlast(2);
 		}
-		
+
 		String seclast(String tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
-		
+
 		int seclast(int i, int tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
@@ -18916,18 +18922,18 @@ public class KL {
 		double seclast(int i, double tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
-		
+
 		boolean seclast(int i, boolean tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
 		Object last() {
 			return nthlast(1);
 		}
-		
+
 		String last(String tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
-		
+
 		int last(int tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
@@ -18940,7 +18946,7 @@ public class KL {
 		double last(double tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
-		
+
 		boolean last(boolean tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
@@ -30504,13 +30510,14 @@ public class KL {
 					}
 				} else if (type(arg, "(o|tree)[A-Z]*")) {
 					arg = Str(arg)
-							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!\\w))",
-									"\'$1\'")
+							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))", "\'$1\'")
 							.replaceAll(
-									"(?<=\\=)((\\d*[A-Za-z]{2,}\\d*)(\\s*[A-Za-z]+\\d*){0,})",
+									"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
 							.replaceAll("\"(true|false)\"", "$1")
 							.replaceAll("=", ": ");
+					// regex accuracy: 93%
+					// changes needed: probably not
 				}
 				System.out.print(arg + " ");
 			}
@@ -30583,7 +30590,7 @@ public class KL {
 			}
 		}
 		if (isStrArr(arg) || isIntArr(arg) || isLongArr(arg) || isFltArr(arg)
-				|| isDblArr(arg) || isBoolArr(arg)) {
+				|| isDblArr(arg) || isBoolArr(arg) || isMixedArr(arg)) {
 			if (isStrArr(arg)) {
 				strArr helper = (strArr) arg;
 				arg = helper.array();
@@ -30599,8 +30606,11 @@ public class KL {
 			} else if (isDblArr(arg)) {
 				dblArr helper = (dblArr) arg;
 				arg = helper.array();
-			} else {
+			} else if (isBoolArr(arg)) {
 				boolArr helper = (boolArr) arg;
+				arg = helper.array();
+			} else {
+				arr helper = (arr) arg;
 				arg = helper.array();
 			}
 		}
@@ -33107,6 +33117,9 @@ public class KL {
 	public static boolean isArrOfObj(Object o) {
 		return type(o, ArrOfObj);
 	}
+	public static boolean isMixedArr(Object o) {
+		return type(o, mixedArr);
+	}
 	public static boolean isAlpha(char c) {
 		return c >= 65 && c <= 122;
 	}
@@ -34977,7 +34990,8 @@ public class KL {
 						}
 						if (isStrArr(field) || isIntArr(field)
 								|| isLongArr(field) || isFltArr(field)
-								|| isDblArr(field) || isBoolArr(field)) {
+								|| isDblArr(field) || isBoolArr(field)
+								|| isMixedArr(field)) {
 							if (isStrArr(field)) {
 								strArr helper = (strArr) field;
 								field = helper.array();
@@ -34993,8 +35007,11 @@ public class KL {
 							} else if (isDblArr(field)) {
 								dblArr helper = (dblArr) field;
 								field = helper.array();
-							} else {
+							} else if (isBoolArr(field)) {
 								boolArr helper = (boolArr) field;
+								field = helper.array();
+							} else {
+								arr helper = (arr) field;
 								field = helper.array();
 							}
 						}
@@ -35082,8 +35099,11 @@ public class KL {
 							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+") && in(
 									Str(field),
 									m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
-								String key = m.split("(?<=\\w)\\.")[1];
-								field = Str(field).split(key + "=")[1]
+								String key = m.split("(?<=\\w)\\.")[1]
+										.toLowerCase();
+								field = Str(field)
+										.split(key.replaceAll("\\$", "")
+												.toLowerCase() + "=")[1]
 										.split(",")[0]
 										.replaceAll("[\\{\\}]", "");
 							} else if (in(m, ("(?<=[\\[])\\-?\\d+(?=\\])"))) {
@@ -35125,14 +35145,16 @@ public class KL {
 							} else {
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
-												"(?<=\\=)([A-Za-z]{1}(?!\\w))",
+												"(?<=\\=)([A-Za-z]{1}(?!.))",
 												"\'$1\'")
 												.replaceAll(
-														"(?<=\\=)((\\d*[A-Za-z]{2,}\\d*)(\\s*[A-Za-z]+\\d*){0,})",
+														"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
 												.replaceAll("\"(true|false)\"",
 														"$1")
 												.replaceAll("=", ": ");
+								// regex accuracy: 93%
+								// changes needed: probably not
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\[\\\\\\]\\}])", "\\\\$1");
@@ -41971,7 +41993,7 @@ public class KL {
 	public static <T> T type(Object src, Object cond1, T sol1) {
 		return sw(type(src), cond1, sol1);
 	}
-	// let's set up some "type"-helpers for the function
+	// let's set up some helpers for the type function
 	public static String None = "null", Ch, Str = "string", Int = "integer",
 			Char = Ch = "character", Long = "long", Flt = "float",
 			Dbl = "double", Bool = "boolean", Arr = "array\\.",
@@ -41981,7 +42003,7 @@ public class KL {
 			ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num",
 			ArrOfObj = "array\\.o", strArr = "strArr", intArr = "intArr",
 			longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
-			boolArr = "boolArr";
+			boolArr = "boolArr", mixedArr = "^arr$";
 	public static char[] charArrToCharArr(Character[] inputArr) {
 		if (not(inputArr)) {
 			return blank.Char;
@@ -43161,6 +43183,7 @@ public class KL {
 	static o newObj = o("NAme=Michael, aGe=21", "Country=United States",
 			"RAce=white");
 	public static arr arr3 = arr("Michael", 26, !false);
+	static o fetched = fetch("https://randusers-api.vercel.app");
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
@@ -43227,6 +43250,12 @@ public class KL {
 		print(arr3.i(-3, _s));
 		print(arr3.i(-3, _i));
 		print(arr3.i(-3, _b));
+		if (fetched.k("error", _b) == No) {
+			printAs("fetched", "Name: $full\nBlood Group: $bloodgroup");
+		} else {
+			print("Couldn't fetch");
+			// display a ui error saying "no internet"
+		}
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);

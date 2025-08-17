@@ -3,7 +3,7 @@ from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from functools import reduce
 from types import *
-from typing import List, Callable, TypeVar
+from typing import List, Callable, TypeVar, Any, Optional
 from numbers import Number
 from math import *
 haal = filhal = filhaal = bool
@@ -881,7 +881,7 @@ def fetch(url: str):
     except requests.RequestException as e:
         print(f"Error fetching data: {e}")
         return None
-def internet_access() -> boolean:
+def internet_access() -> bool:
     try:
         requests.get("https://www.google.com", timeout=5)
         return True

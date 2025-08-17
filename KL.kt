@@ -5500,6 +5500,151 @@ open class KL() {
                      condition: java.util.function.Predicate<Boolean>): BooleanArray {
             return keepIf(array, condition)
         }
+        fun randInt(end: Int): Int {
+            return try {
+                if (end <= 0) {
+                    0
+                } else {
+                    java.util.concurrent.ThreadLocalRandom.current().nextInt(0, end)
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                0
+            }
+        }
+
+        @JvmStatic
+        fun randItem(arr: Array<String>): String {
+            return try {
+                if (arr.isEmpty()) {
+                    ""
+                } else {
+                    arr[randInt(arr.size)]
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                ""
+            }
+        }
+
+        @JvmStatic
+        fun randItem(arr: Array<Int>): Int {
+            return try {
+                if (arr.isEmpty()) {
+                    0
+                } else {
+                    arr[randInt(arr.size)]
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                0
+            }
+        }
+
+        @JvmStatic
+        fun randItem(arr: Array<Long>): Long {
+            return try {
+                if (arr.isEmpty()) {
+                    0
+                } else {
+                    arr[randInt(arr.size)]
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                0
+            }
+        }
+
+        @JvmStatic
+        fun randItem(arr: Array<Float>): Float {
+            return try {
+                if (arr.isEmpty()) {
+                    0f
+                } else {
+                    arr[randInt(arr.size)]
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                0f
+            }
+        }
+
+        @JvmStatic
+        fun randItem(arr: Array<Double>): Double {
+            return try {
+                if (arr.isEmpty()) {
+                    0.0
+                } else {
+                    arr[randInt(arr.size)]
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                0.0
+            }
+        }
+
+        @JvmStatic
+        fun randItem(arr: Array<Boolean>): Boolean {
+            return try {
+                if (arr.isEmpty()) {
+                    false
+                } else {
+                    arr[randInt(arr.size)]
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                false
+            }
+        }
+
+        @JvmStatic
+        fun randItem(arr: Array<Any>): Any {
+            return try {
+                if (arr.isEmpty()) {
+                    ""
+                } else {
+                    arr[randInt(arr.size)]
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                ""
+            }
+        }
+
+        @JvmStatic
+        fun randFrom(arr: Array<String>): String {
+            return randItem(arr)
+        }
+
+        @JvmStatic
+        fun randFrom(arr: Array<Int>): Int {
+            return randItem(arr)
+        }
+
+        @JvmStatic
+        fun randFrom(arr: Array<Long>): Long {
+            return randItem(arr)
+        }
+
+        @JvmStatic
+        fun randFrom(arr: Array<Float>): Float {
+            return randItem(arr)
+        }
+
+        @JvmStatic
+        fun randFrom(arr: Array<Double>): Double {
+            return randItem(arr)
+        }
+
+        @JvmStatic
+        fun randFrom(arr: Array<Boolean>): Boolean {
+            return randItem(arr)
+        }
+
+        @JvmStatic
+        fun randFrom(arr: Array<Any>): Any {
+            return randItem(arr)
+        }
         // Date functions
         fun nthDay(n: Int): String {
             val days = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
