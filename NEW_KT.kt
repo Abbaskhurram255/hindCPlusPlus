@@ -9,14 +9,6 @@ import java.io.InputStreamReader
 import java.io.IOException
 
 class KL {
-    // to shorten new KL() instance calls into just kl()
-    companion object {
-        @JvmStatic
-        fun kl(): KL {
-            return KL()
-        }
-    }
-
     class money {
         private var amnt: Double
         private var curr: String
