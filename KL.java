@@ -1,4 +1,3 @@
-
 //core
 import java.lang.reflect.*;
 import java.security.*;
@@ -3374,7 +3373,7 @@ public class KL {
 				map.add("response=" + statusCode
 						+ ", status=notok, error=true");
 				print("[KLFetch.Status.NotOK]:\nMessage: GET request failed with response "
-						+ statusCode);
+						+ statusCode);;
 			}
 			connection.disconnect();
 		} catch (IOException e) {
@@ -18835,7 +18834,7 @@ public class KL {
 		Object nthlast(int n) {
 			return lasti(n);
 		}
-
+		
 		String nthlast(int i, String tryCastingAs) {
 			return lasti(i, tryCastingAs);
 		}
@@ -18857,11 +18856,11 @@ public class KL {
 		Object first() {
 			return nth(0);
 		}
-
+		
 		String first(String tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
-
+		
 		int first(int tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
@@ -18874,18 +18873,18 @@ public class KL {
 		double first(double tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
-
+		
 		boolean first(boolean tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
 		Object second() {
 			return nth(1);
 		}
-
+		
 		String second(String tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
-
+		
 		int second(int tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
@@ -18898,18 +18897,18 @@ public class KL {
 		double second(double tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
-
+		
 		boolean second(boolean tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
 		Object seclast() {
 			return nthlast(2);
 		}
-
+		
 		String seclast(String tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
-
+		
 		int seclast(int i, int tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
@@ -18922,18 +18921,18 @@ public class KL {
 		double seclast(int i, double tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
-
+		
 		boolean seclast(int i, boolean tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
 		Object last() {
 			return nthlast(1);
 		}
-
+		
 		String last(String tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
-
+		
 		int last(int tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
@@ -18946,7 +18945,7 @@ public class KL {
 		double last(double tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
-
+		
 		boolean last(boolean tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
@@ -25293,6 +25292,132 @@ public class KL {
 	public static boolean when(Object src, Object cond1, Runnable sol1) {
 		return sw(src, cond1, sol1);
 	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static boolean is(Object src, Object cond1, Runnable sol1) {
+		return sw(src, cond1, sol1);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static boolean he(Object src, Object cond1, Runnable sol1) {
+		return sw(src, cond1, sol1);
+	}
 	// sw/when version 1.1: when a condition meets, return its direct respective
 	// solution (of @type ::solutions.sol1.T)
 	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
@@ -29183,10 +29308,123 @@ public class KL {
 	public static <T> T when(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
 	}
-	public static final boolean Yes = true, No = !Yes, On = Yes, Off = No,
-			Ok = Yes, NotOk = !Ok, Fail = NotOk, Y = Yes, N = No;
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static <T> T is(Object src, Object cond1, T sol1) {
+		return sw(src, cond1, sol1);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static <T> T he(Object src, Object cond1, T sol1) {
+		return sw(src, cond1, sol1);
+	}
+	public static boolean Yes = true, No = !Yes, On = Yes, Off = No,
+			Ok = Yes, NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, Ha = Y, Na = N;
 	public static Object none = null, ignore = none, pass = ignore;
-	public static String Else = "else";
+	public static String Else = "else",
+	    Warna = Else;
 	// helps method sw handle default/else cases
 	public static char _c = '\0';
 	public static String _s = "";
@@ -30473,7 +30711,8 @@ public class KL {
 			return;
 		}
 		if (!isNull(args[0]) && args[0] instanceof String
-				&& in(Str(args[0]), "[\\%\\$\\&\\{\\}\\.\\d]")) {
+			&& in(Str(args[0]), "[\\$\\%\\&\\{]+\\.?\\w+\\}?|\\d(?=[Ee][\\+\\-]?\\d)")) {
+			//regex accuracy: 90%
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
 				return;
@@ -30510,7 +30749,8 @@ public class KL {
 					}
 				} else if (type(arg, "(o|tree)[A-Z]*")) {
 					arg = Str(arg)
-							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))", "\'$1\'")
+							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))",
+									"\'$1\'")
 							.replaceAll(
 									"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
@@ -30609,7 +30849,7 @@ public class KL {
 			} else if (isBoolArr(arg)) {
 				boolArr helper = (boolArr) arg;
 				arg = helper.array();
-			} else {
+			}  else {
 				arr helper = (arr) arg;
 				arg = helper.array();
 			}
@@ -32807,6 +33047,18 @@ public class KL {
 			return x.equals(y) || match(x, "^(" + y + ")$", true);
 		}
 	}
+	public static boolean is(String x, String y) {
+		return eq(x, y);
+	}
+	public static boolean is(String x, String y, boolean strict) {
+		return eq(x, y, strict);
+	}
+	public static boolean he(String x, String y) {
+		return eq(x, y);
+	}
+	public static boolean he(String x, String y, boolean strict) {
+		return eq(x, y, strict);
+	}
 	public static boolean uneq(String x, String y) {
 		return !eq(x, y);
 	}
@@ -33122,6 +33374,15 @@ public class KL {
 	}
 	public static boolean isAlpha(char c) {
 		return c >= 65 && c <= 122;
+	}
+	public static boolean isAlpha(String s) {
+		return is(Str(s), "[A-Za-z]+");
+	}
+	public static boolean isDigit(char c) {
+		return c >= 48 && c <= 57;
+	}
+	public static boolean isDigit(String s) {
+		return is(Str(s), "\\d+");
 	}
 	public static boolean isPos(int n) {
 		return n > 0;
@@ -34718,6 +34979,8 @@ public class KL {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
+					s = s.replaceAll("[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)", "\\$$1$2$4\\$$1$5");
+					//^regex accuracy: ~91%
 					String[] fieldMatches = findMatches(s,
 							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?");
 					for (String m : fieldMatches) {
@@ -34990,8 +35253,7 @@ public class KL {
 						}
 						if (isStrArr(field) || isIntArr(field)
 								|| isLongArr(field) || isFltArr(field)
-								|| isDblArr(field) || isBoolArr(field)
-								|| isMixedArr(field)) {
+								|| isDblArr(field) || isBoolArr(field) || isMixedArr(field)) {
 							if (isStrArr(field)) {
 								strArr helper = (strArr) field;
 								field = helper.array();
@@ -35154,7 +35416,7 @@ public class KL {
 														"$1")
 												.replaceAll("=", ": ");
 								// regex accuracy: 93%
-								// changes needed: probably not
+				           	// changes needed: probably not
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\[\\\\\\]\\}])", "\\\\$1");
@@ -36068,6 +36330,186 @@ public class KL {
 	}
 	public static boolean eq(treeB x, treeB y) {
 		return x.equals(y);
+	}
+	public static boolean is(char x, char y) {
+		return eq(x, y);
+	}
+	public static boolean is(int x, int y) {
+		return eq(x, y);
+	}
+	public static boolean is(long x, long y) {
+		return eq(x, y);
+	}
+	public static boolean is(float x, float y) {
+		return eq(x, y);
+	}
+	public static boolean is(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean is(boolean x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean is(Object x, Object y) {
+		return eq(x, y);
+	}
+	public static boolean is(String[] x, String[] y) {
+		return eq(x, y);
+	}
+	public static boolean is(int[] x, int[] y) {
+		return eq(x, y);
+	}
+	public static boolean is(long[] x, long[] y) {
+		return eq(x, y);
+	}
+	public static boolean is(float[] x, float[] y) {
+		return eq(x, y);
+	}
+	public static boolean is(double[] x, double[] y) {
+		return eq(x, y);
+	}
+	public static boolean is(boolean[] x, boolean[] y) {
+		return eq(x, y);
+	}
+	public static boolean is(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean is(strArr x, strArr y) {
+		return eq(x, y);
+	}
+	public static boolean is(intArr x, intArr y) {
+		return eq(x, y);
+	}
+	public static boolean is(longArr x, longArr y) {
+		return eq(x, y);
+	}
+	public static boolean is(fltArr x, fltArr y) {
+		return eq(x, y);
+	}
+	public static boolean is(dblArr x, dblArr y) {
+		return eq(x, y);
+	}
+	public static boolean is(boolArr x, boolArr y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeDI x, treeDI y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeI x, treeI y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeDL x, treeDL y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeL x, treeL y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeDF x, treeDF y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeF x, treeF y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeDS x, treeDS y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeD x, treeD y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeDB x, treeDB y) {
+		return eq(x, y);
+	}
+	public static boolean is(treeB x, treeB y) {
+		return eq(x, y);
+	}
+	public static boolean he(char x, char y) {
+		return eq(x, y);
+	}
+	public static boolean he(int x, int y) {
+		return eq(x, y);
+	}
+	public static boolean he(long x, long y) {
+		return eq(x, y);
+	}
+	public static boolean he(float x, float y) {
+		return eq(x, y);
+	}
+	public static boolean he(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean he(boolean x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean he(Object x, Object y) {
+		return eq(x, y);
+	}
+	public static boolean he(String[] x, String[] y) {
+		return eq(x, y);
+	}
+	public static boolean he(int[] x, int[] y) {
+		return eq(x, y);
+	}
+	public static boolean he(long[] x, long[] y) {
+		return eq(x, y);
+	}
+	public static boolean he(float[] x, float[] y) {
+		return eq(x, y);
+	}
+	public static boolean he(double[] x, double[] y) {
+		return eq(x, y);
+	}
+	public static boolean he(boolean[] x, boolean[] y) {
+		return eq(x, y);
+	}
+	public static boolean he(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean he(strArr x, strArr y) {
+		return eq(x, y);
+	}
+	public static boolean he(intArr x, intArr y) {
+		return eq(x, y);
+	}
+	public static boolean he(longArr x, longArr y) {
+		return eq(x, y);
+	}
+	public static boolean he(fltArr x, fltArr y) {
+		return eq(x, y);
+	}
+	public static boolean he(dblArr x, dblArr y) {
+		return eq(x, y);
+	}
+	public static boolean he(boolArr x, boolArr y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeDI x, treeDI y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeI x, treeI y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeDL x, treeDL y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeL x, treeL y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeDF x, treeDF y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeF x, treeF y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeDS x, treeDS y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeD x, treeD y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeDB x, treeDB y) {
+		return eq(x, y);
+	}
+	public static boolean he(treeB x, treeB y) {
+		return eq(x, y);
 	}
 	public static boolean uneq(char x, char y) {
 		return !eq(x, y);
@@ -41060,8 +41502,8 @@ public class KL {
 		return negativeIntersection(arrA, arrays);
 	}
 	public static String upper(String s) {
-		s = s.toUpperCase();
-		return s;
+		if (not(s)) return "";
+		return s.toUpperCase();
 	}
 	public static String[] upper(String... arr) {
 		if (not(arr)) {
@@ -41071,29 +41513,31 @@ public class KL {
 		return arr;
 	}
 	public static char upper(char c) {
-		c = Str(c).toUpperCase().charAt(0);
+		if (c == '\0') return c;
+		c = Character.toUpperCase(c);
 		return c;
 	}
 	public static char[] upper(char... arr) {
-		if (not(arr)) {
+		if (isEmpty(arr)) {
 			return arr;
 		}
 		arr = map(arr, KL::upper);
 		return arr;
 	}
 	public static String lower(String s) {
-		s = s.toLowerCase();
-		return s;
+		if (not(s)) return "";
+		return s.toLowerCase();
 	}
 	public static String[] lower(String... arr) {
-		if (not(arr)) {
+		if (isEmpty(arr)) {
 			return arr;
 		}
 		arr = map(arr, KL::lower);
 		return arr;
 	}
 	public static char lower(char c) {
-		c = Str(c).toLowerCase().charAt(0);
+		if (c == '\0') return c;
+		c = Character.toLowerCase(c);
 		return c;
 	}
 	public static boolean inUpper(String s) {
@@ -42003,7 +42447,8 @@ public class KL {
 			ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num",
 			ArrOfObj = "array\\.o", strArr = "strArr", intArr = "intArr",
 			longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
-			boolArr = "boolArr", mixedArr = "^arr$";
+			boolArr = "boolArr",
+			mixedArr = "^arr$";
 	public static char[] charArrToCharArr(Character[] inputArr) {
 		if (not(inputArr)) {
 			return blank.Char;
@@ -43000,10 +43445,9 @@ public class KL {
 					"The less of the world, the freer you live.",
 					"Respond to every call that excites your spirit.",
 					"The way to get started is to quit talking and begin doing.",
-					"Speak any language, turkish, greek, persian, arabic, but always speak with love.",
 					"Knowledge is of two kinds: that which is absorbed and that which is heard. And that which is heard does not profit if it is not absorbed.",
-					"When I am silent, I have thunder hidden inside.",
-					"Technological progress is like an axe in the hands of a pathological criminal.",
+					"Don't judge me yet. It IS when I am mute, I have millions of thunders storming inside of me.",
+					"Technical progress is like an axe in the hands of a pathological criminal.",
 					"No one would choose a friendless existence on condition of having all the other things in the world.",
 					"Life is a gamble. You can get hurt, but people die in plane crashes, lose their arms and legs in car accidents; people die every day. Same with fighters: some die, some get hurt, some go on. You just don't let yourself believe it will happen to you.",
 					"Let us sacrifice our today so that our children can have a better tomorrow.",
@@ -43183,6 +43627,7 @@ public class KL {
 	static o newObj = o("NAme=Michael, aGe=21", "Country=United States",
 			"RAce=white");
 	public static arr arr3 = arr("Michael", 26, !false);
+	static o name2 = o("first=Michael, last=Jordan, pronunciation=maikul jord'n");
 	static o fetched = fetch("https://randusers-api.vercel.app");
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
@@ -43215,18 +43660,18 @@ public class KL {
 		print("{name:-2}");
 		print("{name:1,3}");
 		int n = 10;
-		String result = when(n, "0..6x",
+		String result = is(n, "0..6x",
 				"between but exclusive of 0, and 6: so basically, around 1 through 5",
 				"6..10", "between and inclusive of 6, and 10", Else, "neither");
-		int result2 = when("hey world", "hello world", 1, Else, 0);
-		boolean result3 = when('c', "97..123", Yes, Else, No);
+		int result2 = is("hey world", "hello world", 1, Else, 0);
+		boolean result3 = he('c', "97..123", Ha, Warna, Na);
 		print(result);
 		print(result2);
 		print(result3);
 		print("$user");
 		print("$user.name $user.age $user.country $user.height");
 		print(with("user", "Name: $name\nAge: $age"));
-		print(with("user:", "$name\n$age"));
+		print(with("user:", "$name+ +last\n$age"));
 		print(with("myTree", "1: $1\n2: $2\n3: $3"));
 		print(replace("1.. 2.. 3.. 4.. 5.. 6.. 7.. 8.. 9.. ", myTree));
 		print(replace(
@@ -43250,6 +43695,12 @@ public class KL {
 		print(arr3.i(-3, _s));
 		print(arr3.i(-3, _i));
 		print(arr3.i(-3, _b));
+		print("$name2");
+		print("$name2.first+last");
+		print("$name2.first+ +last");
+		print("$name2.last, +first");
+		print("Full name: $name2.first +last\nPronunciation: $name2.pronunciation");
+		print(with("name2", "Full name: $first+ +last\nPronunciation: $pronunciation"));
 		if (fetched.k("error", _b) == No) {
 			printAs("fetched", "Name: $full\nBlood Group: $bloodgroup");
 		} else {
