@@ -1,3 +1,4 @@
+
 //core
 import java.lang.reflect.*;
 import java.security.*;
@@ -18834,7 +18835,7 @@ public class KL {
 		Object nthlast(int n) {
 			return lasti(n);
 		}
-		
+
 		String nthlast(int i, String tryCastingAs) {
 			return lasti(i, tryCastingAs);
 		}
@@ -18856,11 +18857,11 @@ public class KL {
 		Object first() {
 			return nth(0);
 		}
-		
+
 		String first(String tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
-		
+
 		int first(int tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
@@ -18873,18 +18874,18 @@ public class KL {
 		double first(double tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
-		
+
 		boolean first(boolean tryCastingAs) {
 			return nth(0, tryCastingAs);
 		}
 		Object second() {
 			return nth(1);
 		}
-		
+
 		String second(String tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
-		
+
 		int second(int tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
@@ -18897,18 +18898,18 @@ public class KL {
 		double second(double tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
-		
+
 		boolean second(boolean tryCastingAs) {
 			return nth(1, tryCastingAs);
 		}
 		Object seclast() {
 			return nthlast(2);
 		}
-		
+
 		String seclast(String tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
-		
+
 		int seclast(int i, int tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
@@ -18921,18 +18922,18 @@ public class KL {
 		double seclast(int i, double tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
-		
+
 		boolean seclast(int i, boolean tryCastingAs) {
 			return nthlast(2, tryCastingAs);
 		}
 		Object last() {
 			return nthlast(1);
 		}
-		
+
 		String last(String tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
-		
+
 		int last(int tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
@@ -18945,7 +18946,7 @@ public class KL {
 		double last(double tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
-		
+
 		boolean last(boolean tryCastingAs) {
 			return nthlast(1, tryCastingAs);
 		}
@@ -29420,11 +29421,10 @@ public class KL {
 	public static <T> T he(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
 	}
-	public static boolean Yes = true, No = !Yes, On = Yes, Off = No,
-			Ok = Yes, NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, Ha = Y, Na = N;
+	public static boolean Yes = true, No = !Yes, On = Yes, Off = No, Ok = Yes,
+			NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, Ha = Y, Na = N;
 	public static Object none = null, ignore = none, pass = ignore;
-	public static String Else = "else",
-	    Warna = Else;
+	public static String Else = "else", Warna = Else;
 	// helps method sw handle default/else cases
 	public static char _c = '\0';
 	public static String _s = "";
@@ -30710,9 +30710,9 @@ public class KL {
 		if (isNull(args) || not(args.length)) {
 			return;
 		}
-		if (!isNull(args[0]) && args[0] instanceof String
-			&& in(Str(args[0]), "[\\$\\%\\&\\{]+\\.?\\w+\\}?|\\d(?=[Ee][\\+\\-]?\\d)")) {
-			//regex accuracy: 90%
+		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
+				"[\\$\\%\\&\\{]+\\.?\\w+\\}?|\\d(?=[Ee][\\+\\-]?\\d)")) {
+			// regex accuracy: 90%
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
 				return;
@@ -30747,17 +30747,21 @@ public class KL {
 								? (float) arg
 								: (double) arg).replaceAll("\\.?[0]+$", "");
 					}
-				} else if (type(arg, "(o|tree)[A-Z]*")) {
+				} else if (type(arg, "^(o|tree)[A-Z]*$")) {
 					arg = Str(arg)
-							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))",
-									"\'$1\'")
+							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))", "\'$1\'")
 							.replaceAll(
 									"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
-							.replaceAll("\"(true|false)\"", "$1")
+							.replaceAll("\"true\"", "Yes")
+							.replaceAll("\"false\"", "No")
 							.replaceAll("=", ": ");
 					// regex accuracy: 93%
 					// changes needed: probably not
+				} else if (type(arg, Bool)) {
+					o replacements = o("true=Yes, false=No");
+					String preprocessed = replace(Str(arg), replacements);
+					arg = preprocessed;
 				}
 				System.out.print(arg + " ");
 			}
@@ -30849,7 +30853,7 @@ public class KL {
 			} else if (isBoolArr(arg)) {
 				boolArr helper = (boolArr) arg;
 				arg = helper.array();
-			}  else {
+			} else {
 				arr helper = (arr) arg;
 				arg = helper.array();
 			}
@@ -30865,7 +30869,12 @@ public class KL {
 			} else if (isArrOfNum(arg)) {
 				System.out.print("[" + join((Number[]) arg) + "]");
 			} else if (isArrOfObj(arg)) {
-				System.out.print("[" + join((Object[]) arg, ", ") + "]");
+				// pre-processing booleans for better human-readabibility
+				String preprocessed = "[" + join((Object[]) arg, ", ") + "]";
+				preprocessed = preprocessed
+						.replaceAll("true(?=,\\s|\\])", "Yes")
+						.replaceAll("false(?=,\\s|\\])", "No");
+				System.out.print(preprocessed);
 			}
 		} else {
 			if (isArrOfChar(arg)) {
@@ -30881,7 +30890,12 @@ public class KL {
 			} else if (isArrOfDbl(arg)) {
 				System.out.print("[" + join((double[]) arg) + "]");
 			} else if (isArrOfBool(arg)) {
-				System.out.print("[" + join((boolean[]) arg) + "]");
+				// pre-processing booleans for better human-readabibility
+				String preprocessed = "[" + join((boolean[]) arg, ", ") + "]";
+				preprocessed = preprocessed
+						.replaceAll("true(?=,\\s|\\])", "Yes")
+						.replaceAll("false(?=,\\s|\\])", "No");
+				System.out.print(preprocessed);
 			}
 		}
 		System.out.print("\n");
@@ -34957,7 +34971,7 @@ public class KL {
 					} else if (arg instanceof Boolean
 							&& eq(m, "%[\\%b]|\\$*\\{\\}")) {
 						s = replaceFirst(s, "%[\\%b]|\\$*\\{\\}",
-								Str((boolean) arg));
+								eq(Str((boolean) arg), "true") ? "Yes" : "No");
 					}
 					// replaceFirst is really what we need here, as replacing
 					// "all"
@@ -34979,8 +34993,13 @@ public class KL {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
-					s = s.replaceAll("[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)", "\\$$1$2$4\\$$1$5");
-					//^regex accuracy: ~91%
+					while (in(s,
+							"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
+						s = s.replaceAll(
+								"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
+								"\\$$1$2$4\\$$1$5");
+					}
+					// ^regex accuracy: ~91%
 					String[] fieldMatches = findMatches(s,
 							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?");
 					for (String m : fieldMatches) {
@@ -35251,9 +35270,11 @@ public class KL {
 								field = f((double) field, decimalPlaces);
 							}
 						}
+						// pre-processing dynamic arrays
 						if (isStrArr(field) || isIntArr(field)
 								|| isLongArr(field) || isFltArr(field)
-								|| isDblArr(field) || isBoolArr(field) || isMixedArr(field)) {
+								|| isDblArr(field) || isBoolArr(field)
+								|| isMixedArr(field)) {
 							if (isStrArr(field)) {
 								strArr helper = (strArr) field;
 								field = helper.array();
@@ -35288,6 +35309,11 @@ public class KL {
 										field = nth((Number[]) field, i);
 									} else if (isArrOfObj(field)) {
 										field = nth((Object[]) field, i);
+										o replacements = o(
+												"true=Yes, false=No");
+										String preprocessed = replace(
+												Str(field), replacements);
+										field = preprocessed;
 									}
 								} else {
 									if (isArrOfChar(field)) {
@@ -35302,6 +35328,11 @@ public class KL {
 										field = nth((double[]) field, i);
 									} else if (isArrOfBool(field)) {
 										field = nth((boolean[]) field, i);
+										o replacements = o(
+												"true=Yes, false=No");
+										String preprocessed = replace(
+												Str(field), replacements);
+										field = preprocessed;
 									}
 								}
 							} else {
@@ -35324,9 +35355,17 @@ public class KL {
 										field = "[" + join((Number[]) field)
 												+ "]";
 									} else if (isArrOfObj(field)) {
-										field = "["
+										// pre-processing booleans for better
+										// human-readabibility
+										String preprocessed = "["
 												+ join((Object[]) field, ", ")
 												+ "]";
+										preprocessed = preprocessed
+												.replaceAll("true(?=,\\s|\\])",
+														"Yes")
+												.replaceAll("false(?=,\\s|\\])",
+														"No");
+										field = preprocessed;
 									}
 								} else {
 									if (isArrOfChar(field)) {
@@ -35346,8 +35385,17 @@ public class KL {
 										field = "[" + join((double[]) field)
 												+ "]";
 									} else if (isArrOfBool(field)) {
-										field = "[" + join((boolean[]) field)
+										// pre-processing booleans for better
+										// human-readabibility
+										String preprocessed = "["
+												+ join((boolean[]) field, ", ")
 												+ "]";
+										preprocessed = preprocessed
+												.replaceAll("true(?=,\\s|\\])",
+														"Yes")
+												.replaceAll("false(?=,\\s|\\])",
+														"No");
+										field = preprocessed;
 									}
 								}
 							}
@@ -35368,11 +35416,19 @@ public class KL {
 												.toLowerCase() + "=")[1]
 										.split(",")[0]
 										.replaceAll("[\\{\\}]", "");
+								o replacements = o("true=Yes, false=No");
+								String preprocessed = replace(Str(field),
+										replacements);
+								field = preprocessed;
 							} else if (in(m, ("(?<=[\\[])\\-?\\d+(?=\\])"))) {
 								int i = Int(findMatch(m,
 										"(?<=\\[)\\-?\\d+(?=\\])"));
 								if (field instanceof o) {
 									field = nth((o) field, i);
+									o replacements = o("true=Yes, false=No");
+									String preprocessed = replace(Str(field),
+											replacements);
+									field = preprocessed;
 								} else if (field instanceof oI) {
 									field = nth((oI) field, i);
 								} else if (field instanceof oL) {
@@ -35383,6 +35439,10 @@ public class KL {
 									field = nth((oD) field, i);
 								} else if (field instanceof oB) {
 									field = nth((oB) field, i);
+									o replacements = o("true=Yes, false=No");
+									String preprocessed = replace(Str(field),
+											replacements);
+									field = preprocessed;
 								} else if (field instanceof treeI) {
 									field = nth((treeI) field, i);
 								} else if (field instanceof treeL) {
@@ -35393,6 +35453,10 @@ public class KL {
 									field = nth((treeD) field, i);
 								} else if (field instanceof treeB) {
 									field = nth((treeB) field, i);
+									o replacements = o("true=Yes, false=No");
+									String preprocessed = replace(Str(field),
+											replacements);
+									field = preprocessed;
 								} else if (field instanceof treeDS) {
 									field = nth((treeDS) field, i);
 								} else if (field instanceof treeDI) {
@@ -35403,6 +35467,10 @@ public class KL {
 									field = nth((treeDF) field, i);
 								} else if (field instanceof treeDB) {
 									field = nth((treeDB) field, i);
+									o replacements = o("true=Yes, false=No");
+									String preprocessed = replace(Str(field),
+											replacements);
+									field = preprocessed;
 								}
 							} else {
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
@@ -35412,12 +35480,17 @@ public class KL {
 												.replaceAll(
 														"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
-												.replaceAll("\"(true|false)\"",
-														"$1")
+												.replaceAll("\"true\"", "Yes")
+												.replaceAll("\"false\"", "No")
 												.replaceAll("=", ": ");
 								// regex accuracy: 93%
-				           	// changes needed: probably not
+								// changes needed: probably not
 							}
+						} else if (type(field, Bool)) {
+							o replacements = o("true=Yes, false=No");
+							String preprocessed = replace(Str(field),
+									replacements);
+							field = preprocessed;
 						}
 						m = m.replaceAll("([\\$\\{\\[\\\\\\]\\}])", "\\\\$1");
 						// replace special characters, so s.replaceFirst doesn't
@@ -35434,18 +35507,18 @@ public class KL {
 			}
 			// for methods
 			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*)")) {
+					"(?<!\\\\)(\\$*\\{\\w+[:\\(][\\w\\!\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\!\\.\\s,]*\\)*)")) {
 				try {
 					Class<?> cls = this.getClass();
 					Object valueFromMethod = new Object();
 					boolean hasParams = false;
 					String[] methodicalMatches = findMatches(s,
-							"\\$*\\{\\w+[:\\(][\\w\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\.\\s,]*\\)*");
+							"\\$*\\{\\w+[:\\(][\\w\\!\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\!\\.\\s,]*\\)*");
 					for (String m : methodicalMatches) {
 						String toGet = m.replaceAll(
-								"(?<=\\w)[:\\(][\\w\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
+								"(?<=\\w)[:\\(][\\w\\!\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
 								"");
-						if (in(m, "(?<=\\w[:\\(])[\\w\\.\\s,]+(?=\\)*)")) {
+						if (in(m, "(?<=\\w[:\\(])[\\w\\!\\.\\s,]+(?=\\)*)")) {
 							hasParams = true;
 						}
 						if (!hasParams) {
@@ -35453,7 +35526,7 @@ public class KL {
 						} else {
 							boolean multiParam = false;
 							String unprocessedParamString = m.replaceAll(
-									"^[\\$\\{]\\w+[:\\(](?=\\w+)|[\\)\\}]*$",
+									"^[\\$\\{]\\w+[:\\(](?=[\\w\\!]+)|[\\)\\}]+$",
 									"");
 							if (in(unprocessedParamString, "\\s*,\\s*")) {
 								multiParam = true;
@@ -35472,9 +35545,10 @@ public class KL {
 															"(?<=\\d)[Ff]$")
 																	? double.class
 																	: float.class)
-													: eq(param, "true|false")
-															? boolean.class
-															: String.class;
+													: in(param,
+															"(?<!\\!)((\\!*)(true|Yes|false|No))")
+																	? boolean.class
+																	: String.class;
 									param = param.replaceAll("(?<=\\d)[LlFf]$",
 											"");
 									// ----------------------- NOTE
@@ -35497,11 +35571,14 @@ public class KL {
 											? Int(param)
 											: isDblLike(param)
 													? Dbl(param)
-													: eq(param, "true|false")
-															? (eq(param, "true")
-																	? true
-																	: false)
-															: Str(param);
+													: in(param,
+															"(?<!\\!)((\\!*)(true|Yes|false|No))")
+																	? (in(param,
+																			"(?<!\\!)(((!{2}){0,}(true|Yes))|((!{1})(!!)*(false|No)))")
+																					? true
+																					: false)
+																	: Str(param);
+									// regex accuracy: 88%
 								}
 								for (String param : paramMatches) {
 									valueFromMethod = cls
@@ -35513,9 +35590,14 @@ public class KL {
 											valueFromMethod instanceof Character
 													|| valueFromMethod instanceof String
 													|| valueFromMethod instanceof Number
-													|| valueFromMethod instanceof Boolean
 															? Str(valueFromMethod)
-															: m);
+															: valueFromMethod instanceof Boolean
+																	? (eq(Str(
+																			valueFromMethod),
+																			"true")
+																					? "Yes"
+																					: "No")
+																	: m);
 								}
 							} else {
 								Class<?> type = isIntLike(
@@ -35530,8 +35612,8 @@ public class KL {
 																		"(?<=\\d)[Ff]$")
 																				? double.class
 																				: float.class)
-																: eq(unprocessedParamString,
-																		"true|false")
+																: in(unprocessedParamString,
+																		"(?<!\\!)((\\!*)(true|Yes|false|No))")
 																				? boolean.class
 																				: String.class;
 								unprocessedParamString = unprocessedParamString
@@ -35555,13 +35637,14 @@ public class KL {
 														: isDblLike(
 																unprocessedParamString)
 																		? Dbl(unprocessedParamString)
-																		: eq(unprocessedParamString,
-																				"true|false")
-																						? (eq(unprocessedParamString,
-																								"true")
+																		: in(unprocessedParamString,
+																				"(?<!\\!)((\\!*)(true|Yes|false|No))")
+																						? (in(unprocessedParamString,
+																								"(?<!\\!)(((!{2}){0,}(true|Yes))|((!{1})(!!)*(false|No)))")
 																										? true
 																										: false)
 																						: unprocessedParamString);
+								// regex accuracy: 88%
 							}
 						}
 						m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
@@ -35569,9 +35652,14 @@ public class KL {
 								valueFromMethod instanceof Character
 										|| valueFromMethod instanceof String
 										|| valueFromMethod instanceof Number
-										|| valueFromMethod instanceof Boolean
 												? Str(valueFromMethod)
-												: m);
+												: valueFromMethod instanceof Boolean
+														? (eq(Str(
+																valueFromMethod),
+																"true")
+																		? "Yes"
+																		: "No")
+														: m);
 					}
 				} catch (NoSuchMethodException | IllegalAccessException
 						| IllegalArgumentException | InvocationTargetException
@@ -41502,7 +41590,8 @@ public class KL {
 		return negativeIntersection(arrA, arrays);
 	}
 	public static String upper(String s) {
-		if (not(s)) return "";
+		if (not(s))
+			return "";
 		return s.toUpperCase();
 	}
 	public static String[] upper(String... arr) {
@@ -41513,7 +41602,8 @@ public class KL {
 		return arr;
 	}
 	public static char upper(char c) {
-		if (c == '\0') return c;
+		if (c == '\0')
+			return c;
 		c = Character.toUpperCase(c);
 		return c;
 	}
@@ -41525,7 +41615,8 @@ public class KL {
 		return arr;
 	}
 	public static String lower(String s) {
-		if (not(s)) return "";
+		if (not(s))
+			return "";
 		return s.toLowerCase();
 	}
 	public static String[] lower(String... arr) {
@@ -41536,7 +41627,8 @@ public class KL {
 		return arr;
 	}
 	public static char lower(char c) {
-		if (c == '\0') return c;
+		if (c == '\0')
+			return c;
 		c = Character.toLowerCase(c);
 		return c;
 	}
@@ -42447,8 +42539,7 @@ public class KL {
 			ArrOfBool = "array\\.bool", ArrOfNum = "array\\.num",
 			ArrOfObj = "array\\.o", strArr = "strArr", intArr = "intArr",
 			longArr = "longArr", fltArr = "fltArr", dblArr = "dblArr",
-			boolArr = "boolArr",
-			mixedArr = "^arr$";
+			boolArr = "boolArr", mixedArr = "^arr$";
 	public static char[] charArrToCharArr(Character[] inputArr) {
 		if (not(inputArr)) {
 			return blank.Char;
@@ -43617,7 +43708,7 @@ public class KL {
 	public static int age = 23;
 	public static double score = 300500.856D;
 	public static o user = o("name=Mike", "age=22l", "state=Illinois",
-			"country=United States", "height=5.1f", "veteran=" + !Yes,
+			"country=United States", "height=5.1f", "veteran=" + Yes,
 			"favorite_key='c'", "x=.5");
 	String[] arr = {"hi", "hey"};
 	static intArr arr2 = arr(range(1, 5));
@@ -43627,8 +43718,11 @@ public class KL {
 	static o newObj = o("NAme=Michael, aGe=21", "Country=United States",
 			"RAce=white");
 	public static arr arr3 = arr("Michael", 26, !false);
-	static o name2 = o("first=Michael, last=Jordan, pronunciation=maikul jord'n");
+	static o name2 = o(
+			"first=Michael, last=Jordan, pronunciation=maikul jord'n");
 	static o fetched = fetch("https://randusers-api.vercel.app");
+	static boolean veteran = user.k("veteran", _b);
+	static boolean[] boolsArr = {Yes, No, Yes};
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
@@ -43700,13 +43794,20 @@ public class KL {
 		print("$name2.first+ +last");
 		print("$name2.last, +first");
 		print("Full name: $name2.first +last\nPronunciation: $name2.pronunciation");
-		print(with("name2", "Full name: $first+ +last\nPronunciation: $pronunciation"));
+		print(with("name2",
+				"Full name: $first +last\nPronunciation: $pronunciation"));
 		if (fetched.k("error", _b) == No) {
-			printAs("fetched", "Name: $full\nBlood Group: $bloodgroup");
+			printAs("fetched",
+					"Name: $first +middle +last (+id)\nBlood Group: $bloodgroup\nError: $error");
 		} else {
 			print("Couldn't fetch");
-			// display a ui error saying "no internet"
+			// display a ui-based error saying "no internet"
 		}
+		print("$xor(Yes, !Yes)");
+		print(arr(false, "some text").rand(_b));
+		print("$veteran");
+		print("{veteran:}");
+		print("$boolsArr[1]");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
