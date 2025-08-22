@@ -61,6 +61,7 @@ reverseSort = lambda arr: sorted(arr, reverse=Yes)
 reverseSortMutate = lambda arr: arr.sort(reverse=Yes)
 Yes = Ha = true = True
 No = Na = false = False
+none: None = None
 def reverse(x: str | list[any]):
 	if not isinstance(x, str) and not isinstance(x, list): return None
 	if isinstance(x, list):
@@ -896,7 +897,7 @@ def decode(data) -> str:
             return base64.b64decode(data).decode()
     except (TypeError, binascii.Error) as e:
             return ""
-def fetch(url: str):
+def fetch(url: str) -> dict|list:
     try:
         response = requests.get(url)
         response.raise_for_status()
@@ -914,7 +915,7 @@ def filepath(filename: str) -> str:
     return os.path.join(os.getcwd(), filename)
     
     
-def main():
+def main() -> none:
     print(obj(key="value")["key"] == obj(key="value").key)
     name = "Mike"
     printf("$name, you are but a $10+5+2 -year-old kid")
