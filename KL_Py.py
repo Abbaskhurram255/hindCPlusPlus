@@ -70,9 +70,9 @@ def reverse(x: str | list[any]):
 filter = lambda arr, condition: filter(condition, arr)
 # test this
 rng = lambda *args, **kwargs: list(range(*args, **kwargs))
-def f(*args):
+def f(*args) -> str:
     formatted = ""
-    caller_locals = inspect.currentframe().f_back.f_back.f_locals
+    caller_locals = inspect.currentframe().f_back.f_locals
     blacklisted_keywords = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
     blacklisted_functions = ['system', 'popen', 'subprocess']
     for arg in args:
@@ -88,13 +88,35 @@ def f(*args):
                     print(f"Forbidden function in input: '{func}'")
                     continue
             # Evaluate the expression
-            arg = re.sub(r"[\{\$]+([^\s\{\$]+)\}?", r"{\1}", arg)
+            arg = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
             formatted += eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
         except Exception:
             ...
     return formatted
-def kaho(*args):
-    print(f(*args))
+def printf(*args):
+    formatted = ""
+    caller_locals = inspect.currentframe().f_back.f_locals
+    blacklisted_keywords = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
+    blacklisted_functions = ['system', 'popen', 'subprocess']
+    for arg in args:
+        try:
+            ast.parse(f"f'{arg}'")
+            arg_lower = arg.lower()
+            for keyword in blacklisted_keywords:
+                if keyword in arg_lower:
+                    print(f"Forbidden keyword in input: '{keyword}'")
+                    continue
+            for func in blacklisted_functions:
+                if func in arg_lower:
+                    print(f"Forbidden function in input: '{func}'")
+                    continue
+            # Evaluate the expression
+            arg = re.sub(r"[\{\$]+([\w\+\-\*\/]+)\}?", r"{\1}", arg)
+            formatted += eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
+        except Exception:
+            ...
+    print(formatted)
+kaho = printf
 class money:
     def __init__(self, amount=0, currency="Rs. "):
         self.amount = amount if amount >= 0 else 0
@@ -862,6 +884,7 @@ class kmath:
         @staticmethod
         def c(n: Number) -> Number:
             return round(n * 1.917e-4, 2)
+    
 def encode(data) -> str:
     try:
             return base64.b64encode(str(data).encode()).decode()
@@ -893,7 +916,8 @@ def filepath(filename: str) -> str:
     
 def main():
     print(obj(key="value")["key"] == obj(key="value").key)
-    print(kmath.mi.km(1))
+    name = "Mike"
+    printf("$name, you are but a $10+5+2 -year-old kid")
     
 if __name__ == "__main__":
     main()
