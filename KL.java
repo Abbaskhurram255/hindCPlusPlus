@@ -10419,6 +10419,21 @@ public class KL {
 			super.computeIfPresent(key, fn);
 			return this;
 		}
+		int sum() {
+			return KL.sum(array());
+		}
+		int difference() {
+			return KL.difference(array());
+		}
+		int diff() {
+			return difference();
+		}
+		int product() {
+			return KL.product(array());
+		}
+		int quotient() {
+			return KL.quotient(array());
+		}
 		oI map(int value, Function<Integer, Integer> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
@@ -10992,6 +11007,21 @@ public class KL {
 			}
 			super.computeIfPresent(key, fn);
 			return this;
+		}
+		long sum() {
+			return KL.sum(array());
+		}
+		long difference() {
+			return KL.difference(array());
+		}
+		long diff() {
+			return difference();
+		}
+		long product() {
+			return KL.product(array());
+		}
+		long quotient() {
+			return KL.quotient(array());
 		}
 		oL map(long value, Function<Long, Long> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
@@ -11568,6 +11598,21 @@ public class KL {
 			}
 			super.computeIfPresent(key, fn);
 			return this;
+		}
+		float sum() {
+			return KL.sum(array());
+		}
+		float difference() {
+			return KL.difference(array());
+		}
+		float diff() {
+			return difference();
+		}
+		float product() {
+			return KL.product(array());
+		}
+		float quotient() {
+			return KL.quotient(array());
 		}
 		oF map(float value, Function<Float, Float> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
@@ -12147,6 +12192,21 @@ public class KL {
 			}
 			super.computeIfPresent(key, fn);
 			return this;
+		}
+		double sum() {
+			return KL.sum(array());
+		}
+		double difference() {
+			return KL.difference(array());
+		}
+		double diff() {
+			return difference();
+		}
+		double product() {
+			return KL.product(array());
+		}
+		double quotient() {
+			return KL.quotient(array());
 		}
 		oD map(double value, Function<Double, Double> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
@@ -13691,6 +13751,21 @@ public class KL {
 			combine(trees);
 			return this;
 		}
+		long sum() {
+			return KL.sum(array());
+		}
+		long difference() {
+			return KL.difference(array());
+		}
+		long diff() {
+			return difference();
+		}
+		long product() {
+			return KL.product(array());
+		}
+		long quotient() {
+			return KL.quotient(array());
+		}
 		String join() {
 			return string();
 		}
@@ -13934,6 +14009,21 @@ public class KL {
 		treeF join(treeF... trees) {
 			combine(trees);
 			return this;
+		}
+		float sum() {
+			return KL.sum(array());
+		}
+		float difference() {
+			return KL.difference(array());
+		}
+		float diff() {
+			return difference();
+		}
+		float product() {
+			return KL.product(array());
+		}
+		float quotient() {
+			return KL.quotient(array());
 		}
 		String join() {
 			return string();
@@ -14180,6 +14270,21 @@ public class KL {
 		treeD join(treeD... trees) {
 			combine(trees);
 			return this;
+		}
+		double sum() {
+			return KL.sum(array());
+		}
+		double difference() {
+			return KL.difference(array());
+		}
+		double diff() {
+			return difference();
+		}
+		double product() {
+			return KL.product(array());
+		}
+		double quotient() {
+			return KL.quotient(array());
 		}
 		String join() {
 			return string();
@@ -14926,6 +15031,21 @@ public class KL {
 			combine(trees);
 			return this;
 		}
+		int sum() {
+			return KL.sum(array());
+		}
+		int difference() {
+			return KL.difference(array());
+		}
+		int diff() {
+			return difference();
+		}
+		int product() {
+			return KL.product(array());
+		}
+		int quotient() {
+			return KL.quotient(array());
+		}
 		String join() {
 			return string();
 		}
@@ -15121,6 +15241,21 @@ public class KL {
 		treeDL join(treeDL... trees) {
 			combine(trees);
 			return this;
+		}
+		long sum() {
+			return KL.sum(array());
+		}
+		long difference() {
+			return KL.difference(array());
+		}
+		long diff() {
+			return difference();
+		}
+		long product() {
+			return KL.product(array());
+		}
+		long quotient() {
+			return KL.quotient(array());
 		}
 		String join() {
 			return string();
@@ -15369,6 +15504,21 @@ public class KL {
 		treeDF join(treeDF... trees) {
 			combine(trees);
 			return this;
+		}
+		float sum() {
+			return KL.sum(array());
+		}
+		float difference() {
+			return KL.difference(array());
+		}
+		float diff() {
+			return difference();
+		}
+		float product() {
+			return KL.product(array());
+		}
+		float quotient() {
+			return KL.quotient(array());
 		}
 		String join() {
 			return string();
@@ -16605,6 +16755,21 @@ public class KL {
 			}
 			return this;
 		}
+		int sum() {
+			return KL.sum(copy());
+		}
+		int difference() {
+			return KL.difference(copy());
+		}
+		int diff() {
+			return difference();
+		}
+		int product() {
+			return KL.product(copy());
+		}
+		int quotient() {
+			return KL.quotient(copy());
+		}
 		intArr map(int oldVal, int newVal) {
 			int index = super.indexOf(oldVal);
 			if (not(oldVal) || not(newVal) || isNeg(index)) {
@@ -17075,6 +17240,21 @@ public class KL {
 				negativeIntersection(new longArr(arrB));
 			}
 			return this;
+		}
+		long sum() {
+			return KL.sum(copy());
+		}
+		long difference() {
+			return KL.difference(copy());
+		}
+		long diff() {
+			return difference();
+		}
+		long product() {
+			return KL.product(copy());
+		}
+		long quotient() {
+			return KL.quotient(copy());
 		}
 		longArr map(long oldVal, long newVal) {
 			int index = super.indexOf(oldVal);
@@ -17548,6 +17728,21 @@ public class KL {
 			}
 			return this;
 		}
+		float sum() {
+			return KL.sum(copy());
+		}
+		float difference() {
+			return KL.difference(copy());
+		}
+		float diff() {
+			return difference();
+		}
+		float product() {
+			return KL.product(copy());
+		}
+		float quotient() {
+			return KL.quotient(copy());
+		}
 		fltArr map(float oldVal, float newVal) {
 			int index = super.indexOf(oldVal);
 			if (not(oldVal) || not(newVal) || isNeg(index)) {
@@ -18019,6 +18214,21 @@ public class KL {
 				negativeIntersection(new dblArr(arrB));
 			}
 			return this;
+		}
+		double sum() {
+			return KL.sum(copy());
+		}
+		double difference() {
+			return KL.difference(copy());
+		}
+		double diff() {
+			return difference();
+		}
+		double product() {
+			return KL.product(copy());
+		}
+		double quotient() {
+			return KL.quotient(copy());
 		}
 		dblArr map(double oldVal, double newVal) {
 			int index = super.indexOf(oldVal);
@@ -30745,7 +30955,9 @@ public class KL {
 					} else {
 						arg = f(arg instanceof Float
 								? (float) arg
-								: (double) arg).replaceAll("\\.?[0]+$", "");
+								: (double) arg)
+								.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$",
+										"");
 					}
 				} else if (type(arg, "^(o|tree)[A-Z]*$")) {
 					arg = Str(arg)
@@ -34175,6 +34387,24 @@ public class KL {
 		}
 		return (int) Math.pow(n, power);
 	}
+	public static long pow(long n, long power) {
+		if (isNull(n, power)) {
+			return 0;
+		}
+		return (long) Math.pow(n, power);
+	}
+	public static float pow(float n, float power) {
+		if (isNull(n, power)) {
+			return 0;
+		}
+		return (float) Math.pow(n, power);
+	}
+	public static double pow(double n, double power) {
+		if (isNull(n, power)) {
+			return 0;
+		}
+		return Math.pow(n, power);
+	}
 	public static double sq(double n) {
 		return n * n;
 	}
@@ -34318,13 +34548,13 @@ public class KL {
 		return stat.getMax();
 	}
 	public static double mod(double n1, double n2) {
+		// swap, if need to, which we do
 		if (n2 > n1) {
-			// swap
 			n1 += n2;
 			n2 = n1 - n2;
 			n1 -= n2;
 		}
-		return Math.abs(n1 % n2);
+		return Pos(n1 % n2);
 	}
 	public static boolean isPerfectMod(double n1, double n2) {
 		return mod(n1, n2) == 0;
@@ -35666,37 +35896,60 @@ public class KL {
 						| SecurityException e) {
 				}
 			}
+			// for logical operations
+
 			// for numeric operations
-			String catchNumericValuesWithOperator = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-\\*\\×\\/\\÷])(?<operandB>\\-?\\d*\\.?\\d+)\\}?";
+			// NOTE: currently follows a rule of thumb I like to call FSFS
+			// (first-seen first-solved),
+			// will change that
+			String catchNumericValuesWithOperator = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+)(?<operandB>\\-?\\d*\\.?\\d+)?\\}?";
 			while (in(s, catchNumericValuesWithOperator)) {
 				String[] numericMatchesWithOperators = findMatches(s,
 						catchNumericValuesWithOperator);
 				if (in(s, catchNumericValuesWithOperator)) {
 					for (String m : numericMatchesWithOperators) {
 						String[] parts = m.split(
-								"(?<=\\d)[\\+\\-\\*\\×\\/\\÷](?=[\\.\\d]+)");
+								"(?<=\\d)[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+");
 						double operandA = Dbl(parts[0]),
 								operandB = Dbl(parts[1]);
 						String op = m.replaceAll(
-								"[^\\+\\-\\*\\×\\/\\÷]|^\\{?[\\+\\-\\*\\×\\/\\÷]",
+								"[^\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+|^\\{?[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+",
 								"");
 						double result = 0;
-						switch (op) {
-							case "+" :
-								result = setPrecision(operandA + operandB);
-								break;
-							case "-" :
-								result = setPrecision(operandA - operandB);
-								break;
-							case "*" :
-							case "×" :
-								result = setPrecision(operandA * operandB);
-								break;
-							case "/" :
-							case "÷" :
-								result = setPrecision(operandA / operandB);
-								break;
-						}
+						result = switch (op) {
+							case "+" ->
+								// sum
+								setPrecision(operandA + operandB);
+							case "-" ->
+								// difference
+								setPrecision(operandA - operandB);
+							case "***", "^^^" ->
+								// cube
+								setPrecision(3);
+							case "**", "××", "xx", "^^", "^" ->
+								// squaring, and powering (conditionally)
+								setPrecision(pow(operandA,
+										not(operandB) ? 2 : operandB));
+							case "*", "×", "x" ->
+								// product
+								// the two x's are different;
+								// one's a regular x, while the other is a
+								// multiplication sign
+								setPrecision(operandA * operandB);
+							case "__/" ->
+								// cubic root
+								setPrecision(cbrt(operandA));
+							case "_/" ->
+								// square root
+								setPrecision(sqrt(operandA));
+							case "%" ->
+								// find y percent of x
+								percentify(operandA, operandB);
+							case "/", "÷" ->
+								// quotient
+								setPrecision(operandA / operandB);
+							default -> 0;
+						};
 						s = replaceFirst(s, catchNumericValuesWithOperator,
 								Str(result).replaceAll(
 										"((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
@@ -36224,10 +36477,14 @@ public class KL {
 		if (not(n1) || not(n2)) {
 			return 0;
 		}
-		if (n1 < n2) {
-			return Math.round(n1 / n2 * 100.0) / 100.0;
+		if (n1 <= n2) {
+			// n1 is what percent of n2?
+			// e.g. percentify(80, 800) should return 10
+			return setPrecision(n1 / n2 * 100);
 		} else {
-			return Math.round(n1 * (n2 * .01) * 100.0) / 100.0;
+			// need n2 percent of n1
+			// e.g. percentify(800, 50) should return 400
+			return setPrecision(n1 * n2 / 100);
 		}
 	}
 	final static double infinity = Double.POSITIVE_INFINITY;
@@ -36291,7 +36548,7 @@ public class KL {
 		return Math.round(n);
 	}
 	public static int round(double n) {
-		return (int) Math.round(n);
+		return (int) setPrecision(n, 0);
 	}
 	public static int ceil(int n) {
 		return n;
@@ -43723,6 +43980,7 @@ public class KL {
 	static o fetched = fetch("https://randusers-api.vercel.app");
 	static boolean veteran = user.k("veteran", _b);
 	static boolean[] boolsArr = {Yes, No, Yes};
+	public static int n = 6;
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
@@ -43808,6 +44066,9 @@ public class KL {
 		print("$veteran");
 		print("{veteran:}");
 		print("$boolsArr[1]");
+		print("{.5x3.2}");
+		print("{3^^^}");
+		print("Cbrt of 125: {125__/}\nSqrt of 25: {25_/}\nPercentage (if x= 800) out of (y= 1200): (z= ){800%12e2}\n(y= )66 percent of (x= )1200: (z= ){1200%66}");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
