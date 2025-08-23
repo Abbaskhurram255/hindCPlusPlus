@@ -29643,6 +29643,78 @@ public class KL {
 	public static float _f = 0;
 	public static double _d = 0;
 	public static boolean _b = false;
+	public static Object[][] kv(o arg) {
+        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
+        Object[][] output = new Object[arg.keyArray().length()][2];
+        for (int i=0; i<args.keyArray().length; i++) {
+            output[i][0] = arg.keyArray()[i];
+            output[i][1] = arg.array()[i];
+        }
+        return output;
+    }
+    public static Object[][] kv(oI arg) {
+        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
+        Object[][] output = new Object[arg.keyArray().length()][2];
+        for (int i=0; i<args.keyArray().length; i++) {
+            output[i][0] = arg.keyArray()[i];
+            output[i][1] = arg.array()[i];
+        }
+        return output;
+    }
+    public static Object[][] kv(oL arg) {
+        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
+        Object[][] output = new Object[arg.keyArray().length()][2];
+        for (int i=0; i<args.keyArray().length; i++) {
+            output[i][0] = arg.keyArray()[i];
+            output[i][1] = arg.array()[i];
+        }
+        return output;
+    }
+    public static Object[][] kv(oF arg) {
+        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
+        Object[][] output = new Object[arg.keyArray().length()][2];
+        for (int i=0; i<args.keyArray().length; i++) {
+            output[i][0] = arg.keyArray()[i];
+            output[i][1] = arg.array()[i];
+        }
+        return output;
+    }
+    public static Object[][] kv(oD arg) {
+        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
+        Object[][] output = new Object[arg.keyArray().length()][2];
+        for (int i=0; i<args.keyArray().length; i++) {
+            output[i][0] = arg.keyArray()[i];
+            output[i][1] = arg.array()[i];
+        }
+        return output;
+    }
+    public static Object[][] kv(oB arg) {
+        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
+        Object[][] output = new Object[arg.keyArray().length()][2];
+        for (int i=0; i<args.keyArray().length; i++) {
+            output[i][0] = arg.keyArray()[i];
+            output[i][1] = arg.array()[i];
+        }
+        return output;
+    }
+    public static Object[][] kv(tree arg) {
+        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
+        Object[][] output = new Object[arg.keyArray().length()][2];
+        for (int i=0; i<args.keyArray().length; i++) {
+            output[i][0] = arg.keyArray()[i];
+            output[i][1] = arg.array()[i];
+        }
+        return output;
+    }
+    public static Object[][] kv(Object... args) {
+        if (args == null || args.length == 0) return new Object[][]{};
+        Object[][] output = new Object[args.length][2];
+        for (int i=0; i<args.length; i++) {
+            output[i][0] = i;
+            output[i][1] = args[i];
+        }
+        return output;
+    }
 	public static int[] range(int n) {
 		intArr arr = new intArr();
 		if (not(n) || n < 1) {
