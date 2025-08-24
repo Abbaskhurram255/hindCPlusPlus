@@ -29644,77 +29644,270 @@ public class KL {
 	public static double _d = 0;
 	public static boolean _b = false;
 	public static Object[][] kv(o arg) {
-        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
-        Object[][] output = new Object[arg.keyArray().length()][2];
-        for (int i=0; i<args.keyArray().length; i++) {
-            output[i][0] = arg.keyArray()[i];
-            output[i][1] = arg.array()[i];
-        }
-        return output;
-    }
-    public static Object[][] kv(oI arg) {
-        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
-        Object[][] output = new Object[arg.keyArray().length()][2];
-        for (int i=0; i<args.keyArray().length; i++) {
-            output[i][0] = arg.keyArray()[i];
-            output[i][1] = arg.array()[i];
-        }
-        return output;
-    }
-    public static Object[][] kv(oL arg) {
-        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
-        Object[][] output = new Object[arg.keyArray().length()][2];
-        for (int i=0; i<args.keyArray().length; i++) {
-            output[i][0] = arg.keyArray()[i];
-            output[i][1] = arg.array()[i];
-        }
-        return output;
-    }
-    public static Object[][] kv(oF arg) {
-        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
-        Object[][] output = new Object[arg.keyArray().length()][2];
-        for (int i=0; i<args.keyArray().length; i++) {
-            output[i][0] = arg.keyArray()[i];
-            output[i][1] = arg.array()[i];
-        }
-        return output;
-    }
-    public static Object[][] kv(oD arg) {
-        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
-        Object[][] output = new Object[arg.keyArray().length()][2];
-        for (int i=0; i<args.keyArray().length; i++) {
-            output[i][0] = arg.keyArray()[i];
-            output[i][1] = arg.array()[i];
-        }
-        return output;
-    }
-    public static Object[][] kv(oB arg) {
-        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
-        Object[][] output = new Object[arg.keyArray().length()][2];
-        for (int i=0; i<args.keyArray().length; i++) {
-            output[i][0] = arg.keyArray()[i];
-            output[i][1] = arg.array()[i];
-        }
-        return output;
-    }
-    public static Object[][] kv(tree arg) {
-        if (arg == null || arg.keyArray().length() == 0) return new Object[][]{};
-        Object[][] output = new Object[arg.keyArray().length()][2];
-        for (int i=0; i<args.keyArray().length; i++) {
-            output[i][0] = arg.keyArray()[i];
-            output[i][1] = arg.array()[i];
-        }
-        return output;
-    }
-    public static Object[][] kv(Object... args) {
-        if (args == null || args.length == 0) return new Object[][]{};
-        Object[][] output = new Object[args.length][2];
-        for (int i=0; i<args.length; i++) {
-            output[i][0] = i;
-            output[i][1] = args[i];
-        }
-        return output;
-    }
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(oI arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(oL arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(oF arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(oD arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(oB arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeI arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeL arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeF arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeD arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeB arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeDS arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeDI arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeDL arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeDF arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(treeDB arg) {
+		if (arg == null || arg.keyArray().length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[arg.keyArray().length][2];
+		for (int i = 0; i < arg.keyArray().length; i++) {
+			output[i][0] = arg.keyArray()[i];
+			output[i][1] = arg.array()[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(String[] args) {
+		if (args == null || args.length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[args.length][2];
+		for (int i = 0; i < args.length; i++) {
+			output[i][0] = i;
+			output[i][1] = args[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(int[] args) {
+		if (args == null || args.length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[args.length][2];
+		for (int i = 0; i < args.length; i++) {
+			output[i][0] = i;
+			output[i][1] = args[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(long[] args) {
+		if (args == null || args.length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[args.length][2];
+		for (int i = 0; i < args.length; i++) {
+			output[i][0] = i;
+			output[i][1] = args[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(float[] args) {
+		if (args == null || args.length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[args.length][2];
+		for (int i = 0; i < args.length; i++) {
+			output[i][0] = i;
+			output[i][1] = args[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(double[] args) {
+		if (args == null || args.length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[args.length][2];
+		for (int i = 0; i < args.length; i++) {
+			output[i][0] = i;
+			output[i][1] = args[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(boolean[] args) {
+		if (args == null || args.length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[args.length][2];
+		for (int i = 0; i < args.length; i++) {
+			output[i][0] = i;
+			output[i][1] = args[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(Object[] args) {
+		if (args == null || args.length == 0)
+			return new Object[][]{};
+		Object[][] output = new Object[args.length][2];
+		for (int i = 0; i < args.length; i++) {
+			output[i][0] = i;
+			output[i][1] = args[i];
+		}
+		return output;
+	}
+	public static Object[][] kv(arr arg) {
+		if (arg == null || len(arg) == 0)
+			return new Object[][]{};
+		return kv(arg.array());
+	}
+	public static Object[][] kv(strArr arg) {
+		if (arg == null || len(arg) == 0)
+			return new Object[][]{};
+		return kv(arg.array());
+	}
+	public static Object[][] kv(intArr arg) {
+		if (arg == null || len(arg) == 0)
+			return new Object[][]{};
+		return kv(arg.array());
+	}
+	public static Object[][] kv(longArr arg) {
+		if (arg == null || len(arg) == 0)
+			return new Object[][]{};
+		return kv(arg.array());
+	}
+	public static Object[][] kv(fltArr arg) {
+		if (arg == null || len(arg) == 0)
+			return new Object[][]{};
+		return kv(arg.array());
+	}
+	public static Object[][] kv(dblArr arg) {
+		if (arg == null || len(arg) == 0)
+			return new Object[][]{};
+		return kv(arg.array());
+	}
+	public static Object[][] kv(boolArr arg) {
+		if (arg == null || len(arg) == 0)
+			return new Object[][]{};
+		return kv(arg.array());
+	}
 	public static int[] range(int n) {
 		intArr arr = new intArr();
 		if (not(n) || n < 1) {
@@ -33598,6 +33791,11 @@ public class KL {
 			return false;
 		}
 	}
+	public static boolean isNumLike(String s) {
+		if (not(s))
+			return false;
+		return either(isIntLike(s), isDblLike(s));
+	}
 	public static boolean isChar(Object o) {
 		return type(o, Char);
 	}
@@ -35290,20 +35488,19 @@ public class KL {
 			}
 			// post processing...
 			// FOR FIELDS
-			if (in(s,
-					"(?<!\\\\)(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\w\\[\\]\\.]+)?(?!\\(\\w*\\)))")) {
+			String[] fieldMatches = findMatches(s,
+					"\\$?\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?");
+			if (!isEmpty(fieldMatches)) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
 					while (in(s,
-							"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
+							"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
 						s = s.replaceAll(
-								"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
+								"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
 								"\\$$1$2$4\\$$1$5");
 					}
 					// ^regex accuracy: ~91%
-					String[] fieldMatches = findMatches(s,
-							"\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?");
 					for (String m : fieldMatches) {
 						String toGet = m.replaceAll(
 								"[\\$\\{:=\\\\\\}]|\\[\\-?\\d+\\]|(?<=[:=])(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)|(?<=[\\w])\\.[\\w]+",
@@ -35969,7 +36166,45 @@ public class KL {
 				}
 			}
 			// for logical operations
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<A>[\\-\\.\\w]+) (?<op>is|not|has|contains|in|[<>=]{1,3}) (?<B>[^\\s\\$\\{\\}]+)\\}?";
+			if (in(s, catchValuesThatNeedLogic)) {
+				String[] valuesThatNeedLogic = findMatches(s,
+						catchValuesThatNeedLogic);
+				for (String m : valuesThatNeedLogic) {
+					Object A = findMatch(s, catchValuesThatNeedLogic, "$A"),
+							B = findMatch(s, catchValuesThatNeedLogic, "$B");
+					String op = findMatch(s, catchValuesThatNeedLogic, "$op");
+					String result = "";
+					if (!isNumLike(Str(A))) {
+						switch (op) {
+							case "is" :
+							case "==" :
+								if (eq(Str(A), Str(B)))
+									result = "Yes";
+								else
+									result = "No";
+								break;
 
+						}
+					} else {
+						// parse A, and B as doubles
+						A = Dbl(Str(A));
+						B = Dbl(Str(B));
+						switch (op) {
+							case "is" :
+							case "==" :
+								if (eq(A, B))
+									result = "Yes";
+								else
+									result = "No";
+								break;
+
+						}
+					}
+					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
+					s = replaceFirst(s, m, result);
+				}
+			}
 			// for numeric operations
 			// NOTE: currently follows a rule of thumb I like to call FSFS
 			// (first-seen first-solved),
@@ -35988,39 +36223,55 @@ public class KL {
 								"[^\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+|^\\{?[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+",
 								"");
 						double result = 0;
-						result = switch (op) {
-							case "+" ->
+						switch (op) {
+							case "+" :
 								// sum
-								setPrecision(operandA + operandB);
-							case "-" ->
+								result = setPrecision(operandA + operandB);
+								break;
+							case "-" :
 								// difference
-								setPrecision(operandA - operandB);
-							case "***", "^^^" ->
+								result = setPrecision(operandA - operandB);
+								break;
+							case "***" :
+							case "^^^" :
 								// cube
-								setPrecision(3);
-							case "**", "××", "xx", "^^", "^" ->
+								result = setPrecision(pow(operandA, 3));
+								break;
+							case "**" :
+							case "××" :
+							case "xx" :
+							case "^^" :
+							case "^" :
 								// squaring, and powering (conditionally)
-								setPrecision(pow(operandA,
+								result = setPrecision(pow(operandA,
 										not(operandB) ? 2 : operandB));
-							case "*", "×", "x" ->
+								break;
+							case "*" :
+							case "×" :
+							case "x" :
 								// product
-								// the two x's are different;
+								// the two x's are different; break;
 								// one's a regular x, while the other is a
 								// multiplication sign
-								setPrecision(operandA * operandB);
-							case "__/" ->
+								result = setPrecision(operandA * operandB);
+								break;
+							case "__/" :
 								// cubic root
-								setPrecision(cbrt(operandA));
-							case "_/" ->
+								result = setPrecision(cbrt(operandA));
+								break;
+							case "_/" :
 								// square root
-								setPrecision(sqrt(operandA));
-							case "%" ->
+								result = setPrecision(sqrt(operandA));
+								break;
+							case "%" :
 								// find y percent of x
-								percentify(operandA, operandB);
-							case "/", "÷" ->
+								result = percentify(operandA, operandB);
+								break;
+							case "/" :
+							case "÷" :
 								// quotient
-								setPrecision(operandA / operandB);
-							default -> 0;
+								result = setPrecision(operandA / operandB);
+								break;
 						};
 						s = replaceFirst(s, catchNumericValuesWithOperator,
 								Str(result).replaceAll(
@@ -36032,7 +36283,7 @@ public class KL {
 			// cleaning up to make up for the numeric results, removing the &
 			// operator
 			s = sentCase(s);
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 		}
 		return s;
 	}
@@ -38024,7 +38275,7 @@ public class KL {
 		// replacement of the looked up re with a blank string
 		try {
 			return str.replaceAll(re, _with);
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return str;
 		}
 	}
@@ -38044,7 +38295,7 @@ public class KL {
 		// replacement of the looked up re with a blank string
 		try {
 			return str.replaceFirst(re, _with);
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return str;
 		}
 	}
@@ -39252,7 +39503,7 @@ public class KL {
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str);
 			return !!matcher.find();
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return false;
 		}
 	}
@@ -39274,7 +39525,7 @@ public class KL {
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str);
 			return !!matcher.find();
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return false;
 		}
 	}
@@ -39945,7 +40196,7 @@ public class KL {
 			if (!m.find())
 				return -1;
 			return m.start();
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return -1;
 		}
 	}
@@ -39965,7 +40216,7 @@ public class KL {
 			if (!m.find())
 				return -1;
 			return m.start();
-		} catch (PatternSyntaxException | StackOverflowError
+		} catch (IllegalArgumentException | StackOverflowError
 				| IndexOutOfBoundsException e) {
 			return -1;
 		}
@@ -40004,7 +40255,7 @@ public class KL {
 			while (m.find())
 				lastIndex = m.start();
 			return lastIndex;
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return -1;
 		}
 	}
@@ -40354,7 +40605,7 @@ public class KL {
 					strict ? 0 : Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str.trim());
 			return !!matcher.find();
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return false;
 		}
 	}
@@ -40399,9 +40650,56 @@ public class KL {
 				return "";
 			}
 			return matcher.group();
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return "";
 		}
+	}
+	public static String findMatch(String str, String re, String groupName) {
+		if (not(str) || not(re) || not(groupName)) {
+			return "";
+		}
+		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
+				|| re.equals("^") || re.equals("$")) {
+			re = "\\" + re; // escape special characters IF they're the only
+							// content
+		}
+		try {
+			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
+					.replaceAll("(?<![\\\\\\.\\w\\)\\]\\|\\%\\$@])([\\+\\*])",
+							"\\\\$1")
+					.replaceAll("(?<!\\\\)%c", "[A-Za-z]")
+					.replaceAll("(?<!\\\\)(%[sw]|\\{\\})", "[A-Za-z][\\\\w]+")
+					.replaceAll("(?<!\\\\)%b", "(true|false)")
+					.replaceAll("(?<!\\\\)%[di]", "(?<!\\.)\\\\d+(?!\\.)")
+					.replaceAll("(?<!\\\\)%[\\.\\\\d]*f", "\\\\d*\\.\\\\d+")
+					.replaceAll("(?<!\\\\)%n", "\\\\d+");
+			// modification precaution: it has been tested, and hence learned,
+			// the
+			// double-escaping remains AS-IS
+			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
+			// escaping tricky characters, if they're the only content: helps
+			// avoid
+			// false positives as a "." or a "*" alone, can match just anything.
+			// Needless to say, these quantifiers, along with a "+" and an
+			// optionality quantifier, i.e. a "?" quantifier, might also cause
+			// memory heap to exceed
+			// plus, handling both, standard and custom, format specifiers
+			Pattern pattern = Pattern.compile("(" + re + ")",
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(str.trim());
+			if (!matcher.find()) {
+				return "";
+			}
+			groupName = groupName.replaceAll("[\\$\\{\\}]", "");
+			return isIntLike(groupName)
+					? matcher.group(Int(groupName))
+					: matcher.group(groupName);
+		} catch (IllegalArgumentException | StackOverflowError e) {
+			return "";
+		}
+	}
+	public static String findMatch(String str, String re, int groupNumber) {
+		return findMatch(str, re, Str(groupNumber));
 	}
 	public static String[] findMatches(String str, String re,
 			boolean... bools) {
@@ -40453,7 +40751,7 @@ public class KL {
 				}
 			}
 			return arr.array();
-		} catch (PatternSyntaxException | StackOverflowError e) {
+		} catch (IllegalArgumentException | StackOverflowError e) {
 			return blank.Str;
 		}
 	}
@@ -44039,7 +44337,7 @@ public class KL {
 	public static o user = o("name=Mike", "age=22l", "state=Illinois",
 			"country=United States", "height=5.1f", "veteran=" + Yes,
 			"favorite_key='c'", "x=.5");
-	String[] arr = {"hi", "hey"};
+	static String[] arr = {"hi", "hey"};
 	static intArr arr2 = arr(range(1, 5));
 	public static treeI myTree = treeI(1, "uno", 2, "dos", 3, "tres", 4,
 			"cuatro", 5, "cinco", 6, "seis", 7, "siete", 8, "ocho", 9, "nueve",
@@ -44141,6 +44439,19 @@ public class KL {
 		print("{.5x3.2}");
 		print("{3^^^}");
 		print("Cbrt of 125: {125__/}\nSqrt of 25: {25_/}\nPercentage (if x= 800) out of (y= 1200): (z= ){800%12e2}\n(y= )66 percent of (x= )1200: (z= ){1200%66}");
+		print("Cube of $n = {$n^^}\nSquare of $n = {$n^^}\n$n to the power of 1/2 = sqrt of $n = {$n**.5}");
+		print("$$n is 6");
+		for (var kv : kv(user))
+			print(kv[0], "=", kv[1], ",");
+		print();
+		for (var kv : kv(name2))
+			print(kv[0], "=", kv[1], ",");
+		print();
+		for (var kv : kv(arr))
+			print(kv[0], "=", kv[1], ",");
+		print();
+		for (var kv : kv(arr3))
+			print(kv[0], "=", kv[1], ",");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
