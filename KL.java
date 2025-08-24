@@ -29909,8 +29909,61 @@ public class KL {
 			return blank.Obj2D;
 		return kv(arg.array());
 	}
+    public static final class DoFail {
+	    Throwable caughtException = null;
+	    boolean success = false;
+	    public interface CustomRunnable {
+	        void run() throws Throwable;
+	    }
+		DoFail Do(CustomRunnable fn) {
+		    if (fn == null) return null;
+		    try {
+	            fn.run();
+	            success = true;
+	        }
+	        catch (Throwable e) {
+	            success = false;
+	            caughtException = e;
+	        }
+		    return this;
+		}
+		DoFail Done(Runnable fn) {
+		    if (fn == null) return null;
+		    if (caughtException == null)
+		    	fn.run();
+		    return this;
+		}
+		DoFail Always(Runnable fn) {
+		    if (fn == null) return null;
+		    fn.run();
+		    return this;
+		}
+		DoFail Fail(Consumer<Throwable> fallback) {
+		    if (caughtException == null) return this;
+		    fallback.accept(caughtException);
+		    return this;
+		}
+		DoFail Fall(Consumer<Throwable> fallback) {
+			return Fail(fallback);
+		}
+		DoFail Catch(Consumer<Throwable> fallback) {
+			return Fail(fallback);
+		}
+		DoFail Except(Consumer<Throwable> fallback) {
+			return Fail(fallback);
+		}
+		DoFail Error(Consumer<Throwable> fallback) {
+			return Fail(fallback);
+		}
+		DoFail Err(Consumer<Throwable> fallback) {
+			return Fail(fallback);
+		}
+	}
+	public static DoFail Do(DoFail.CustomRunnable fn) {
+		return new DoFail().Do(fn);
+	}
 	public static int[] range(int n) {
-		intArr arr = new intArr();
+		intArr arr = intArr();
 		if (not(n) || n < 1) {
 			return arr.array();
 		}
@@ -29930,7 +29983,7 @@ public class KL {
 		return arr.array();
 	}
 	public static int[] range(int m, int n, int... optional) {
-		intArr arr = new intArr();
+		intArr arr = intArr();
 		if (isNull(m) || isNull(n) || eq(m, n)) {
 			return arr.array();
 		}
@@ -29952,7 +30005,7 @@ public class KL {
 		return arr.array();
 	}
 	public static String[] range(String m, String n, int... optional) {
-		strArr arr = new strArr();
+		strArr arr = strArr();
 		if (isNull(m) || isNull(n) || eq(m, n) || !eq(m, "[A-Za-z]")
 				|| !eq(n, "[A-Za-z]")) {
 			return arr.array();
@@ -29982,7 +30035,7 @@ public class KL {
 		return join(range(Str(m), Str(n)), "").toCharArray();
 	}
 	public static double[] range(double m, double n, int... optional) {
-		dblArr arr = new dblArr();
+		dblArr arr = dblArr();
 		if (isNull(m) || isNull(n) || eq(m, n)) {
 			return arr.array();
 		}
@@ -30005,7 +30058,7 @@ public class KL {
 	}
 	public static int[] range(int n, boolean reverse) {
 		if (not(n) || isNeg(n)) {
-			return new int[]{};
+			return blank.Int;
 		}
 		if (reverse) {
 			return range(n, 1);
@@ -30014,7 +30067,7 @@ public class KL {
 	}
 	public static int[] range(int m, int n, int gap, boolean reverse) {
 		if (isNull(m) || isNull(n) || eq(m, n)) {
-			return new int[]{};
+			return blank.Int;
 		}
 		if (reverse) {
 			return range(n, m, gap);
@@ -30023,7 +30076,7 @@ public class KL {
 	}
 	public static int[] range(int m, int n, boolean reverse) {
 		if (isNull(m) || isNull(n) || eq(m, n)) {
-			return new int[]{};
+			return blank.Int;
 		}
 		if (reverse) {
 			return range(n, m);
@@ -30032,7 +30085,7 @@ public class KL {
 	}
 	public static double[] range(double n, boolean reverse) {
 		if (not(n) || isNeg(n)) {
-			return new double[]{};
+			return blank.Dbl;
 		}
 		if (reverse) {
 			return range(n, 1);
@@ -30041,7 +30094,7 @@ public class KL {
 	}
 	public static double[] range(double m, double n, int gap, boolean reverse) {
 		if (isNull(m) || isNull(n) || eq(m, n)) {
-			return new double[]{};
+			return blank.Dbl;
 		}
 		if (reverse) {
 			return range(n, m, gap);
@@ -30050,7 +30103,7 @@ public class KL {
 	}
 	public static double[] range(double m, double n, boolean reverse) {
 		if (isNull(m) || isNull(n) || eq(m, n)) {
-			return new double[]{};
+			return blank.Dbl;
 		}
 		if (reverse) {
 			return range(n, m);
@@ -30059,7 +30112,7 @@ public class KL {
 	}
 	public static String[] range(String m, String n, int gap, boolean reverse) {
 		if (not(m) || not(n) || eq(m, n)) {
-			return new String[]{};
+			return blank.Str;
 		}
 		if (reverse) {
 			return range(n, m, gap);
@@ -30068,7 +30121,7 @@ public class KL {
 	}
 	public static String[] range(String m, String n, boolean reverse) {
 		if (not(m) || not(n) || eq(m, n)) {
-			return new String[]{};
+			return blank.Str;
 		}
 		if (reverse) {
 			return range(n, m);
@@ -30077,7 +30130,7 @@ public class KL {
 	}
 	public static char[] range(char m, char n, boolean reverse) {
 		if (not(m) || not(n) || eq(m, n)) {
-			return new char[]{};
+			return blank.Char;
 		}
 		if (reverse) {
 			return range(n, m);
