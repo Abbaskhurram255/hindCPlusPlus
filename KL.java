@@ -1,4 +1,5 @@
 
+
 //core
 import java.lang.reflect.*;
 import java.security.*;
@@ -29645,7 +29646,7 @@ public class KL {
 	public static boolean _b = false;
 	public static Object[][] kv(o arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29655,7 +29656,7 @@ public class KL {
 	}
 	public static Object[][] kv(oI arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29665,7 +29666,7 @@ public class KL {
 	}
 	public static Object[][] kv(oL arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29675,7 +29676,7 @@ public class KL {
 	}
 	public static Object[][] kv(oF arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29685,7 +29686,7 @@ public class KL {
 	}
 	public static Object[][] kv(oD arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29695,7 +29696,7 @@ public class KL {
 	}
 	public static Object[][] kv(oB arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29705,7 +29706,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeI arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29715,7 +29716,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeL arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29725,7 +29726,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeF arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29735,7 +29736,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeD arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29745,7 +29746,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeB arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29755,7 +29756,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeDS arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29765,7 +29766,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeDI arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29775,7 +29776,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeDL arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29785,7 +29786,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeDF arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29795,7 +29796,7 @@ public class KL {
 	}
 	public static Object[][] kv(treeDB arg) {
 		if (arg == null || arg.keyArray().length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[arg.keyArray().length][2];
 		for (int i = 0; i < arg.keyArray().length; i++) {
 			output[i][0] = arg.keyArray()[i];
@@ -29805,7 +29806,7 @@ public class KL {
 	}
 	public static Object[][] kv(String[] args) {
 		if (args == null || args.length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[args.length][2];
 		for (int i = 0; i < args.length; i++) {
 			output[i][0] = i;
@@ -29815,7 +29816,7 @@ public class KL {
 	}
 	public static Object[][] kv(int[] args) {
 		if (args == null || args.length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[args.length][2];
 		for (int i = 0; i < args.length; i++) {
 			output[i][0] = i;
@@ -29825,7 +29826,7 @@ public class KL {
 	}
 	public static Object[][] kv(long[] args) {
 		if (args == null || args.length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[args.length][2];
 		for (int i = 0; i < args.length; i++) {
 			output[i][0] = i;
@@ -29835,7 +29836,7 @@ public class KL {
 	}
 	public static Object[][] kv(float[] args) {
 		if (args == null || args.length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[args.length][2];
 		for (int i = 0; i < args.length; i++) {
 			output[i][0] = i;
@@ -29845,7 +29846,7 @@ public class KL {
 	}
 	public static Object[][] kv(double[] args) {
 		if (args == null || args.length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[args.length][2];
 		for (int i = 0; i < args.length; i++) {
 			output[i][0] = i;
@@ -29855,7 +29856,7 @@ public class KL {
 	}
 	public static Object[][] kv(boolean[] args) {
 		if (args == null || args.length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[args.length][2];
 		for (int i = 0; i < args.length; i++) {
 			output[i][0] = i;
@@ -29865,7 +29866,7 @@ public class KL {
 	}
 	public static Object[][] kv(Object[] args) {
 		if (args == null || args.length == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		Object[][] output = new Object[args.length][2];
 		for (int i = 0; i < args.length; i++) {
 			output[i][0] = i;
@@ -29875,37 +29876,37 @@ public class KL {
 	}
 	public static Object[][] kv(arr arg) {
 		if (arg == null || len(arg) == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		return kv(arg.array());
 	}
 	public static Object[][] kv(strArr arg) {
 		if (arg == null || len(arg) == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		return kv(arg.array());
 	}
 	public static Object[][] kv(intArr arg) {
 		if (arg == null || len(arg) == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		return kv(arg.array());
 	}
 	public static Object[][] kv(longArr arg) {
 		if (arg == null || len(arg) == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		return kv(arg.array());
 	}
 	public static Object[][] kv(fltArr arg) {
 		if (arg == null || len(arg) == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		return kv(arg.array());
 	}
 	public static Object[][] kv(dblArr arg) {
 		if (arg == null || len(arg) == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		return kv(arg.array());
 	}
 	public static Object[][] kv(boolArr arg) {
 		if (arg == null || len(arg) == 0)
-			return new Object[][]{};
+			return blank.Obj2D;
 		return kv(arg.array());
 	}
 	public static int[] range(int n) {
@@ -29919,7 +29920,7 @@ public class KL {
 		return arr.array();
 	}
 	public static double[] range(double n) {
-		dblArr arr = new dblArr();
+		dblArr arr = blank.dblArr;
 		if (not(n) || n < 1.1) {
 			return arr.array();
 		}
@@ -31244,16 +31245,83 @@ public class KL {
 			}
 		}
 	}
+	public static void kaholn(Object... args) {
+		// to try, and provide a Hindi-friendly experience
+		if (isNull(args) || not(args.length)) {
+			return;
+		}
+		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
+				"[\\$\\%\\&\\{]+\\.?\\w+\\}?|\\d(?=[Ee][\\+\\-]?\\d)")) {
+			// regex accuracy: 90%
+			if (len(args) >= 2) {
+				new KL().kahof((String) args[0], slice(args, 1));
+				return;
+			} else {
+				new KL().kahof((String) args[0], '\0', "", 0, 0L, 0F, 0D, No);
+				return;
+			}
+		}
+		if (len(args) == 1 && !isNull(args[0]) && isArr(args[0])) {
+			kahoArr(args[0]);
+			return;
+		} else {
+			for (Object arg : args) {
+				if (isNull(arg)) {
+					continue;
+				}
+				if (isArr(arg) || type(arg, "(str|int|long|flt|dbl|bool)Arr")) {
+					kahoArr(arg);
+					System.out.print(" ");
+					continue;
+				} else if (arg instanceof Character) {
+					arg = "\'" + arg + "\'";
+				} else if (arg instanceof Float || arg instanceof Double) {
+					if (in(Str(
+							arg instanceof Float ? (float) arg : (double) arg),
+							"(?<=\\.)\\d{3,}")) {
+						arg = fus(arg instanceof Float
+								? (float) arg
+								: (double) arg);
+					} else {
+						arg = f(arg instanceof Float
+								? (float) arg
+								: (double) arg)
+								.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$",
+										"");
+					}
+				} else if (type(arg, "^(o|tree)[A-Z]*$")) {
+					arg = Str(arg)
+							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))", "\'$1\'")
+							.replaceAll(
+									"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+									"\"$1\"")
+							.replaceAll("\"true\"", "Ha")
+							.replaceAll("\"false\"", "Na")
+							.replaceAll("=", ": ");
+					// regex accuracy: 93%
+					// changes needed: probably not
+				} else if (type(arg, Bool)) {
+					o replacements = o("true=Ha, false=Na");
+					String preprocessed = replace(Str(arg), replacements);
+					arg = preprocessed;
+				}
+				System.out.print(arg + " ");
+			}
+		}
+	}
 	public static void print(Object... args) {
 		println(args);
 		System.out.print("\n");
 	}
 	public static void kaho(Object... args) {
-		println(args);
+		kaholn(args);
 		System.out.print("\n");
 	}
 	public void printf(String str, Object... args) {
 		System.out.println(f(str, args));
+	}
+	public void kahof(String str, Object... args) {
+		System.out.println(hf(str, args));
 	}
 	public static void printf(int n) {
 		System.out.println(f(n));
@@ -31372,6 +31440,133 @@ public class KL {
 				preprocessed = preprocessed
 						.replaceAll("true(?=,\\s|\\])", "Yes")
 						.replaceAll("false(?=,\\s|\\])", "No");
+				System.out.print(preprocessed);
+			}
+		}
+		System.out.print("\n");
+	}
+	public static void kahoArr(Object arg) {
+		if (isNull(arg)) {
+			return;
+		}
+		if (arg instanceof o || arg instanceof oI || arg instanceof oL
+				|| arg instanceof oF || arg instanceof oD || arg instanceof oB
+				|| arg instanceof HashMap || arg instanceof tree
+				|| arg instanceof TreeMap) {
+			if (arg instanceof o) {
+				arg = arr((o) arg);
+			} else if (arg instanceof oI) {
+				arg = arr((oI) arg);
+			} else if (arg instanceof oL) {
+				arg = arr((oL) arg);
+			} else if (arg instanceof oF) {
+				arg = arr((oF) arg);
+			} else if (arg instanceof oD) {
+				arg = arr((oD) arg);
+			} else if (arg instanceof oB) {
+				arg = arr((oB) arg);
+			} else if (arg instanceof treeI) {
+				arg = arr((treeI) arg);
+			} else if (arg instanceof treeL) {
+				arg = arr((treeL) arg);
+			} else if (arg instanceof treeF) {
+				arg = arr((treeF) arg);
+			} else if (arg instanceof tree) {
+				arg = arr((treeD) arg);
+			} else if (arg instanceof treeB) {
+				arg = arr((treeB) arg);
+			} else if (arg instanceof treeDS) {
+				arg = arr((treeDS) arg);
+			} else if (arg instanceof treeDI) {
+				arg = arr((treeDI) arg);
+			} else if (arg instanceof treeDL) {
+				arg = arr((treeDL) arg);
+			} else if (arg instanceof treeDF) {
+				arg = arr((treeDF) arg);
+			} else if (arg instanceof treeDB) {
+				arg = arr((treeDB) arg);
+			}
+		}
+		if (isStrArr(arg) || isIntArr(arg) || isLongArr(arg) || isFltArr(arg)
+				|| isDblArr(arg) || isBoolArr(arg) || isMixedArr(arg)) {
+			if (isStrArr(arg)) {
+				strArr helper = (strArr) arg;
+				arg = helper.array();
+			} else if (isIntArr(arg)) {
+				intArr helper = (intArr) arg;
+				arg = helper.array();
+			} else if (isLongArr(arg)) {
+				longArr helper = (longArr) arg;
+				arg = helper.array();
+			} else if (isFltArr(arg)) {
+				fltArr helper = (fltArr) arg;
+				arg = helper.array();
+			} else if (isDblArr(arg)) {
+				dblArr helper = (dblArr) arg;
+				arg = helper.array();
+			} else if (isBoolArr(arg)) {
+				boolArr helper = (boolArr) arg;
+				arg = helper.array();
+			} else {
+				arr helper = (arr) arg;
+				arg = helper.array();
+			}
+		}
+		if (arg instanceof Object[]) {
+			// if it's not a primitive array and is one of of those arrays that
+			// are based on a
+			// Object wrapper, like String[], Number[], Object[]
+			if (isArrOfStr(arg)) {
+				System.out.print("[" + (!isEmpty((String[]) arg)
+						? "\"" + join((String[]) arg, "\", \"") + "\""
+						: "") + "]");
+			} else if (isArrOfNum(arg)) {
+				System.out
+						.print("["
+								+ join((Number[]) arg).replaceAll(
+										"(?<=,\\s)and(?=\\s\\w+)", "aur")
+								+ "]");
+			} else if (isArrOfObj(arg)) {
+				// pre-processing booleans for better human-readabibility
+				String preprocessed = "[" + join((Object[]) arg, ", ") + "]";
+				preprocessed = preprocessed.replaceAll("true(?=,\\s|\\])", "Ha")
+						.replaceAll("false(?=,\\s|\\])", "Na");
+				System.out.print(preprocessed);
+			}
+		} else {
+			if (isArrOfChar(arg)) {
+				System.out.print("[" + (!isEmpty((char[]) arg)
+						? "\'" + join(arg, "\', \'") + "\'"
+						: "") + "]");
+			} else if (isArrOfInt(arg)) {
+				System.out
+						.print("["
+								+ join((int[]) arg).replaceAll(
+										"(?<=,\\s)and(?=\\s\\w+)", "aur")
+								+ "]");
+			} else if (isArrOfLong(arg)) {
+				System.out
+						.print("["
+								+ join((long[]) arg).replaceAll(
+										"(?<=,\\s)and(?=\\s\\w+)", "aur")
+								+ "]");
+			} else if (isArrOfFlt(arg)) {
+				System.out
+						.print("["
+								+ join((float[]) arg).replaceAll(
+										"(?<=,\\s)and(?=\\s\\w+)", "aur")
+								+ "]");
+			} else if (isArrOfDbl(arg)) {
+				System.out
+						.print("["
+								+ join((double[]) arg).replaceAll(
+										"(?<=,\\s)and(?=\\s\\w+)", "aur")
+								+ "]");
+			} else if (isArrOfBool(arg)) {
+				// pre-processing booleans for better human-readabibility
+				String preprocessed = "[" + join((boolean[]) arg, ", ") + "]";
+				preprocessed = preprocessed.replaceAll("true(?=,\\s|\\])", "Ha")
+						.replaceAll("false(?=,\\s|\\])", "Na");
 				System.out.print(preprocessed);
 			}
 		}
@@ -36287,6 +36482,1077 @@ public class KL {
 		}
 		return s;
 	}
+	// f
+	// Hindi implementation
+	public String hf(String s, Object... args) {
+		if (s == null || s.isEmpty() || args.length == 0) {
+			return s;
+		}
+		try {
+			// refactoring alike specifiers by grouping them together
+			s = s.replaceAll("%l", "%d")
+					.replaceAll("[%\\{](\\.\\d)?db\\}?", "%$1f").replaceAll(
+							"[%\\{]([dinf]):(th|r(?!s)|p?x|uc?(?!sd)|c)\\}?",
+							"%$1$2");
+			s = s.replaceAll("[%\\{]([dinf])\\:,3(\\.\\d(f|db))?\\}?", "%$1u$2")
+					.replaceAll("[%\\{][dinf]\\:,2?(\\.\\d)(f|db)\\}?", "%$1f")
+					.replaceAll("[%\\{]([dinf])\\:,2?\\}?", "%$1")
+					.replaceAll("[%\\{]([dinf])([\\:\\.]usd)\\}?", "%$1$2")
+					.replaceAll(
+							"[%\\{]([dinf])c?([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})\\}?",
+							"%$1c$2");
+			/*
+			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr}
+			 * {%f:inr}
+			 */
+			s = s.replaceAll("[%\\{]([dinf])c?[\\:\\.]\\$\\}?", "%$1c:USD");
+			// kills a bug
+			// handling exponentials
+			String[] exponentialMatches = findMatches(s,
+					"(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
+			if (hasLen(exponentialMatches)) {
+				double[] parsedNumsWithoutPowers = new double[exponentialMatches.length];
+				int[] parsedExponentialPowers = new int[exponentialMatches.length];
+				for (int i : range(exponentialMatches)) {
+					parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i]
+							.replaceAll("[Ee][\\+\\-]?\\d+$", ""));
+					parsedExponentialPowers[i] = Int(
+							findMatch(exponentialMatches[i],
+									"(?<=\\d[Ee])[\\+\\-]?\\d+"));
+					double[] parsedNumsWithPowers = parsedNumsWithoutPowers;
+					// temporarily
+					int power = parsedExponentialPowers[i];
+					if (isNeg(power)) {
+						while (power < 0) {
+							parsedNumsWithPowers[i] /= 10;
+							parsedNumsWithPowers[i] = setPrecision(
+									parsedNumsWithPowers[i], 14);
+							power++;
+						}
+					} else {
+						while (power > 0) {
+							parsedNumsWithPowers[i] *= 10;
+							parsedNumsWithPowers[i] = setPrecision(
+									parsedNumsWithPowers[i], 14);
+							power--;
+						}
+					}
+					s = s.replaceFirst(exponentialMatches[i]
+							.replaceAll("([\\+\\-])", "\\\\$1"),
+							Str(parsedNumsWithPowers[i]));
+				}
+			}
+			String[] matches = findMatches(s,
+					"(?<!\\\\)%(\\.\\d)?[\\%cswdifnb](((c|uc?)(\\.\\d(f|db))?)([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?|th|r|p?x)?|\\$*\\{(\\.\\df)?\\}");
+			for (String m : matches) {
+				for (Object arg : args) {
+					if (arg instanceof Character
+							&& eq(m, "%[\\%c]|\\$*\\{\\}")) {
+						s = replaceFirst(s, "%[\\%c]|\\$*\\{\\}", Str(arg));
+					} else if (arg instanceof String
+							&& eq(m, "%[\\%sw]|\\$*\\{\\}")) {
+						s = replaceFirst(s, "%[\\%sw]|\\$*\\{\\}", Str(arg));
+					} else if ((arg instanceof Integer || arg instanceof Long)
+							&& (in(m, "%[\\%din](th|uc?|c|r)?|\\$*\\{\\}"))) {
+						if (in(m, "%[din]u")) {
+							if (eq(m, "%[din]uc")) {
+								s = replaceFirst(s, m, Str(
+										usd(arg instanceof Integer
+												? (int) arg
+												: (long) arg))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												""));
+							} else {
+								s = replaceFirst(s, "%[din]u", Str(
+										fus(arg instanceof Integer
+												? (int) arg
+												: (long) arg))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												""));
+							}
+						} else if (eq(m, "%[din]th")) {
+							s = replaceFirst(s, m,
+									Str(th(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
+						} else if (eq(m, "%[din]r")) {
+							s = replaceFirst(s, m, Str(toRoman((int) arg)));
+						} else if (eq(m, "%[din]px")) {
+							s = replaceFirst(s, m,
+									Str(pksuffix(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
+						} else if (eq(m, "%[din]x")) {
+							s = replaceFirst(s, m,
+									Str(ussuffix(arg instanceof Integer
+											? (int) arg
+											: (long) arg)));
+						} else if (eq(m,
+								"%[\\%din](?!p?x|r|th|uc?|c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)|\\$*\\{\\}")) {
+							// replacing basic integer format specifiers %d, %i,
+							// %n
+							s = replaceFirst(s,
+									"%[\\%din](?!p?x|r|th|uc?|c)|\\$*\\{\\}",
+									Str(f(arg instanceof Integer
+											? (int) arg
+											: (long) arg)).replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
+						} else {
+							if (in(m,
+									"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
+								if (eq(m,
+										"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})")) {
+									String currency = m.split("[\\:\\.]")[1];
+									s = replaceFirst(s,
+											"%[din]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})",
+											Str(curr(
+													arg instanceof Integer
+															? (int) arg
+															: (long) arg,
+													currency)).replaceAll(
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
+															""));
+								} else {
+									s = replaceFirst(s, m, Str(
+											pkr(arg instanceof Integer
+													? (int) arg
+													: (long) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
+								}
+							}
+						}
+					} else if (arg instanceof Float || arg instanceof Double) {
+						if (in(m, "%[\\%fn]u")) {
+							// DOESN'T work IF the % before f is not escaped,
+							// reason being that it gets misinterpreted as
+							// `catch anything that's a float`. That kind of
+							// syntax was supposed to be a flavor for functions
+							// `in`, `eq`, `findMatch`, and `findMatches` for
+							// quicker caching through format specifiers
+							if (eq(m, "%[\\%fn]uc")) {
+								s = replaceFirst(s, m, Str(usd(
+										setPrecision(arg instanceof Float
+												? (float) arg
+												: (double) arg))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												"")));
+							} else {
+								if (in(m, "(?<=%[\\%fn]u)(\\.\\d(f|db))")) {
+									int decimalPlaces = Int(findMatch(m,
+											"(?<=%[\\%fn]u\\.)(\\d)(?=f|db)"));
+									s = replaceFirst(s, "%[\\%fn]u\\.\\d(f|db)",
+											Str(fus(arg instanceof Float
+													? (float) arg
+													: (double) arg,
+													decimalPlaces).replaceAll(
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
+															"")));
+								} else {
+									s = replaceFirst(s, "%[%fn]u", Str(fus(
+											setPrecision(arg instanceof Float
+													? (float) arg
+													: (double) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"")));
+								}
+							}
+						} else if (in(m, "%[\\%fn]p?x")) {
+							if (eq(m, "%[\\%fn]px")) {
+								s = replaceFirst(s, m,
+										Str(pksuffix(arg instanceof Float
+												? (float) arg
+												: (double) arg)));
+							} else {
+								s = replaceFirst(s, m,
+										Str(ussuffix(arg instanceof Float
+												? (float) arg
+												: (double) arg)));
+							}
+						} else if (in(m,
+								"%(\\.\\d)?[\\%fn]c?(?!u)|\\$*\\{(\\.\\df)?\\}")) {
+							if (in(m,
+									"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?")) {
+								if (eq(m,
+										"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})")) {
+									String currency = m.split("[\\:\\.]")[1];
+									s = replaceFirst(s,
+											"%[fn]c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})",
+											Str(curr(
+													arg instanceof Float
+															? (float) arg
+															: (double) arg,
+													currency)).replaceAll(
+															"((?<=\\.\\d)[0]+|\\.[0]+)$",
+															""));
+								} else {
+									s = replaceFirst(s, m, Str(
+											pkr(arg instanceof Float
+													? (float) arg
+													: (double) arg))
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													""));
+								}
+							} else if (eq(m, "\\$*[%\\{]\\.\\df\\}?")) {
+								int decimalPlaces = Int(
+										findMatch(m, "(?<=\\.)\\d(?=f)"));
+								s = replaceFirst(s, "\\$*[%\\{]\\.\\df\\}?",
+										f(arg instanceof Float
+												? (float) arg
+												: (double) arg, decimalPlaces))
+										.replaceAll(
+												"((?<=\\.\\d)[0]+|\\.[0]+)$",
+												"");
+							} else {
+								s = replaceFirst(s,
+										"(%[%fn]|\\$*\\{f?\\})(?!p?x|u|u?c([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})?)",
+										Str(f(setPrecision(arg instanceof Float
+												? (float) arg
+												: (double) arg)).replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"")));
+							}
+						}
+					} else if (arg instanceof Boolean
+							&& eq(m, "%[\\%b]|\\$*\\{\\}")) {
+						s = replaceFirst(s, "%[\\%b]|\\$*\\{\\}",
+								eq(Str((boolean) arg), "true") ? "Ha" : "Na");
+					}
+					// replaceFirst is really what we need here, as replacing
+					// "all"
+					// %b's, for instance, in the case of booleans, with the
+					// args
+					// array,
+					// just wouldn't work, as the first argument would get to be
+					// the
+					// one
+					// to replace all %b's with itself, rendering all other
+					// <typename>
+					// args useless
+				}
+			}
+			// post processing...
+			// FOR FIELDS
+			String[] fieldMatches = findMatches(s,
+					"\\$?\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?");
+			if (!isEmpty(fieldMatches)) {
+				try {
+					Class<?> cls = this.getClass();
+					Object field;
+					while (in(s,
+							"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
+						s = s.replaceAll(
+								"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
+								"\\$$1$2$4\\$$1$5");
+					}
+					// ^regex accuracy: ~91%
+					for (String m : fieldMatches) {
+						String toGet = m.replaceAll(
+								"[\\$\\{:=\\\\\\}]|\\[\\-?\\d+\\]|(?<=[:=])(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)|(?<=[\\w])\\.[\\w]+",
+								"");
+						field = cls.getDeclaredField(toGet).get(this);
+						String label = "";
+						int decimalPlaces = 2;
+						if (in(m, "[:=\\[\\]]")) {
+							if (in(m,
+									"[:=]{1,2}(?=\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)")
+									&& (field instanceof String
+											|| field instanceof Integer
+											|| field instanceof Long
+											|| field instanceof Float
+											|| field instanceof Double)) {
+								if (!in(m, "[:=]{2}|\\\\[:=]")) {
+									label = "";
+								} else {
+									label = m
+											.replaceAll("\\\\",
+													findMatch(m,
+															"(?<=\\\\)[:=]"))
+											.replaceAll(
+													"[\\$\\{\\\\\\}]|(?<=[:=])[:=](\\.\\d(f|db)|[\\w\\.\\[\\]]+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)",
+													"");
+									// keep one [:=] in this case, but remove
+									// the other, to make up for the label from
+									// the double :|=
+									// One could also use \\[:=] to force
+									// labels.
+								}
+							} else if (in(m,
+									"(?<=\\w)[:=\\\\]{2}(?!\\.\\d)|(?<=\\w)\\[\\-?\\d+\\]")) {
+								label = "";
+								// good practice: if double colon (::) or double
+								// equals (==) is not followed by a
+								// precision, OR IF the user is trying to get
+								// element at a specific index of a string or an
+								// array,
+								// just drop the label, so it returns the exact
+								// value
+								// of the
+								// field AS-IS
+							} else {
+								label = m.replaceAll(
+										"[\\$\\{\\\\\\}]|(?<=[:=])[\\w,]+", "");
+							}
+							// allows following behavior:
+							// {amount:.1f} returns the double or floating-point
+							// value WITHOUT a label
+							// floats, and doubles with effort (i.e. ones seen
+							// with a decimal-place specifier after the colon)
+							// make an exception to the label: they get rid of
+							// it
+							// to have a label --- somewhat like you would with
+							// {pi:}, or {amount:}; except, they use automatic
+							// one-decimal precision by default --- while still
+							// being able to set custom precision: use
+							// {amount<:, or \\>:.1f} (with 2 colons, or a colon
+							// preceded by two backlashes to escape it) to
+							// return the double or floating-point value both
+							// with custom precision, and label `amount: `
+							// replace everything, but keep [:=]
+							if (in(label, "(?<=\\w):$")) {
+								label += " ";
+							}
+							if (in(m,
+									("(?<=[:=]\\.)\\d(?=f|db)|(?<=[:=],\\.)\\d(?=f|db)|(?<=[:=],\\d\\.)\\d(?=f|db)"))) {
+								decimalPlaces = Int(findMatch(m,
+										"(?<=[:=]\\.)\\d(?=f|db)|(?<=[:=],\\.)\\d(?=f|db)|(?<=[:=],\\d\\.)\\d(?=f|db)"));
+							}
+							// some tweaks
+							if (field instanceof String) {
+								if (in(m,
+										("(?<=[:=\\[])[,\\-]?\\d+(,?\\d+)?\\]?"))) {
+									if (in(m, ("(?<=[:=])\\d+,\\d+"))) {
+										int a = Int(findMatch(m,
+												"(?<=[:=])\\d+(?=,\\d+)")),
+												b = Int(findMatch(m,
+														"(?<=[:=]\\d+,)\\d+"));
+										field = slice(Str(field), a, b);
+									} else if (in(m, ("(?<=[:=])\\d+,"))) {
+										int a = Int(findMatch(m,
+												"(?<=[:=])\\d+(?=,)"));
+										field = slice(Str(field), a);
+									} else if (in(m, ("(?<=[:=])[,\\-]\\d+"))) {
+										int a = Int(findMatch(m,
+												"(?<=[:=][,\\-])\\d+"));
+										field = sliceRight(Str(field), a);
+									} else if (in(m,
+											("(?<=[\\[])\\-?\\d+(?=\\])"))) {
+										int i = Int(findMatch(m,
+												"(?<=\\[)\\-?\\d+(?=\\])"));
+										field = nth(Str(field), i);
+									} else {
+										int b = Int(
+												findMatch(m, "(?<=[:=])\\d+"));
+										field = sliceKeep(Str(field), b);
+									}
+								} else if (in(m, ("(?<=[:=])_"))) {
+									field = reverse(Str(field));
+								}
+							}
+							if (field instanceof Number) {
+								if (in(m, ("(?<=[:=])(,3)(\\.\\d(f|db))?"))) {
+									if (in(m,
+											"(?<=[:=])(,3)(?=\\.\\d(f|db))")) {
+										field = fus(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field,
+												decimalPlaces).replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
+									} else {
+										field = fus(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field)
+												.replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
+									}
+								} else if (in(m,
+										("(?<=[:=])(,2?)(\\.\\d(f|db))?"))) {
+									if (in(m,
+											"(?<=[:=])(,2?)(?=\\.\\d(f|db))")) {
+										field = f(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field,
+												decimalPlaces).replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
+									} else {
+										field = f(field instanceof Integer
+												? (int) field
+												: field instanceof Long
+														? (long) field
+														: field instanceof Float
+																? (float) field
+																: (double) field)
+												.replaceAll(
+														"((?<=\\.\\d)[0]+|\\.[0]+)$",
+														"");
+									}
+								} else if (in(m, ("(?<=[:=])(pkr|rs)"))) {
+									field = pkr(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field)
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
+								} else if (in(m, ("(?<=[:=])usd"))) {
+									field = usd(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field)
+											.replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
+								} else if (in(m, ("(?<=[:=])th"))) {
+									if (field instanceof Integer
+											|| field instanceof Long) {
+										field = th(field instanceof Integer
+												? (int) field
+												: (long) field);
+									}
+								} else if (in(m, ("(?<=[:=])r"))) {
+									if (field instanceof Integer) {
+										field = toRoman((int) field);
+									}
+								} else if (in(m, ("(?<=[:=])px"))) {
+									field = pksuffix(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
+								} else if (in(m, ("(?<=[:=])x"))) {
+									field = ussuffix(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field);
+								} else if (in(m, "(?<=[:=])[A-Za-z]{3,4}")) {
+									String currency = findMatch(m,
+											"(?<=[:=])[A-Za-z]{3,4}");
+									field = curr(field instanceof Integer
+											? (int) field
+											: field instanceof Long
+													? (long) field
+													: field instanceof Float
+															? (float) field
+															: (double) field,
+											currency).replaceAll(
+													"((?<=\\.\\d)[0]+|\\.[0]+)$",
+													"");
+								}
+							}
+						}
+						// NOTE
+						// THE GUIDE TO THE ESCAPING BEHAVIOR
+						// ______________________________________________________
+						// To escape a label from appearing in front of a field
+						// that
+						// MIGHT BE A STRING, use {name}, or {name::} instead of
+						// {name:} to get rid of the label.
+						// Label were only added to save a
+						// developer's time by labeling what they were
+						// printing.
+						// Speaking of which, works in REVERSE FOR DOUBLES AND
+						// FLOATS. To escape a label from appearing
+						// in front of a field that
+						// MIGHT BE EITHER A FLOATING-POINT NUMBER OR A DOUBLE,
+						// do nothing. It does that by default. It assumes,
+						// since
+						// you took the time defining a custom decimal
+						// precision, you
+						// might not be needing a label after all. However,
+						// use
+						// \\:, or \\=, or ::, or ==, or :=, or =:, to reverse
+						// this behavior for floats and doubles, and get the
+						// label back
+						// REASON: for doubles, and floats, the escaping works
+						// in
+						// reverse, to get Python-like behavior (e.g.
+						// {amount:.3f} with a single colon @@: or a single
+						// equality sign @@= -> would
+						// return `300.757`, no label by default, unlike with
+						// strings, for which the behavior is in reverse, they
+						// are preceded by a label by default, unless you
+						// manually tell the function to escape them).
+						// On the other hand, to get a labeled
+						// double/floating-point
+						// field, use double colon @@:: or
+						// double equality @@== or backlash with a single colon
+						// @@\\: or backslash with a single equality @@\\= (e.g.
+						// {amount::.3f} for double/floating-point field value
+						// 300.575 would return
+						// `Amount: 300.757`)
+						// ______________________________________________________
+						if (field instanceof Float || field instanceof Double) {
+							if (field instanceof Float) {
+								field = f((float) field, decimalPlaces);
+							} else {
+								field = f((double) field, decimalPlaces);
+							}
+						}
+						// pre-processing dynamic arrays
+						if (isStrArr(field) || isIntArr(field)
+								|| isLongArr(field) || isFltArr(field)
+								|| isDblArr(field) || isBoolArr(field)
+								|| isMixedArr(field)) {
+							if (isStrArr(field)) {
+								strArr helper = (strArr) field;
+								field = helper.array();
+							} else if (isIntArr(field)) {
+								intArr helper = (intArr) field;
+								field = helper.array();
+							} else if (isLongArr(field)) {
+								longArr helper = (longArr) field;
+								field = helper.array();
+							} else if (isFltArr(field)) {
+								fltArr helper = (fltArr) field;
+								field = helper.array();
+							} else if (isDblArr(field)) {
+								dblArr helper = (dblArr) field;
+								field = helper.array();
+							} else if (isBoolArr(field)) {
+								boolArr helper = (boolArr) field;
+								field = helper.array();
+							} else {
+								arr helper = (arr) field;
+								field = helper.array();
+							}
+						}
+						if (isArr(field)) {
+							if (in(m, "(?<=[\\[])\\-?\\d+(?=\\])")) {
+								int i = Int(findMatch(m,
+										"(?<=\\[)\\-?\\d+(?=\\])"));
+								if (field instanceof Object[]) {
+									if (isArrOfStr(field)) {
+										field = nth((String[]) field, i);
+									} else if (isArrOfNum(field)) {
+										field = nth((Number[]) field, i);
+									} else if (isArrOfObj(field)) {
+										field = nth((Object[]) field, i);
+										o replacements = o("true=Ha, false=Na");
+										String preprocessed = replace(
+												Str(field), replacements);
+										field = preprocessed;
+									}
+								} else {
+									if (isArrOfChar(field)) {
+										field = nth((char[]) field, i);
+									} else if (isArrOfInt(field)) {
+										field = nth((int[]) field, i);
+									} else if (isArrOfLong(field)) {
+										field = nth((long[]) field, i);
+									} else if (isArrOfFlt(field)) {
+										field = nth((float[]) field, i);
+									} else if (isArrOfDbl(field)) {
+										field = nth((double[]) field, i);
+									} else if (isArrOfBool(field)) {
+										field = nth((boolean[]) field, i);
+										o replacements = o("true=Ha, false=Na");
+										String preprocessed = replace(
+												Str(field), replacements);
+										field = preprocessed;
+									}
+								}
+							} else {
+								if (field instanceof Object[]) {
+									// if it's not a primitive array and is one
+									// of
+									// of those arrays that
+									// are based on an
+									// Object wrapper, like String[], Number[],
+									// Object[]
+									if (isArrOfStr(field)) {
+										field = "["
+												+ (!isEmpty((String[]) field)
+														? "\"" + join(
+																(String[]) field,
+																"\", \"") + "\""
+														: "")
+												+ "]";
+									} else if (isArrOfNum(field)) {
+										field = "[" + join((Number[]) field)
+												.replaceAll(
+														"(?<=,\\s)and(?=\\s\\w+)",
+														"aur")
+												+ "]";
+									} else if (isArrOfObj(field)) {
+										// pre-processing booleans for better
+										// human-readabibility
+										String preprocessed = "["
+												+ join((Object[]) field, ", ")
+												+ "]";
+										preprocessed = preprocessed
+												.replaceAll("true(?=,\\s|\\])",
+														"Ha")
+												.replaceAll("false(?=,\\s|\\])",
+														"Na");
+										field = preprocessed;
+									}
+								} else {
+									if (isArrOfChar(field)) {
+										field = "[" + (!isEmpty((char[]) field)
+												? "\'" + join(field, "\', \'")
+														+ "\'"
+												: "") + "]";
+									} else if (isArrOfInt(field)) {
+										field = "[" + join((int[]) field)
+												.replaceAll(
+														"(?<=,\\s)and(?=\\s\\w+)",
+														"aur")
+												+ "]";
+									} else if (isArrOfLong(field)) {
+										field = "[" + join((long[]) field)
+												.replaceAll(
+														"(?<=,\\s)and(?=\\s\\w+)",
+														"aur")
+												+ "]";
+									} else if (isArrOfFlt(field)) {
+										field = "[" + join((float[]) field)
+												.replaceAll(
+														"(?<=,\\s)and(?=\\s\\w+)",
+														"aur")
+												+ "]";
+									} else if (isArrOfDbl(field)) {
+										field = "[" + join((double[]) field)
+												.replaceAll(
+														"(?<=,\\s)and(?=\\s\\w+)",
+														"aur")
+												+ "]";
+									} else if (isArrOfBool(field)) {
+										// pre-processing booleans for better
+										// human-readabibility
+										String preprocessed = "["
+												+ join((boolean[]) field, ", ")
+												+ "]";
+										preprocessed = preprocessed
+												.replaceAll("true(?=,\\s|\\])",
+														"Ha")
+												.replaceAll("false(?=,\\s|\\])",
+														"Na");
+										field = preprocessed;
+									}
+								}
+							}
+						}
+						if (field instanceof o || field instanceof oI
+								|| field instanceof oL || field instanceof oF
+								|| field instanceof oD || field instanceof oB
+								|| field instanceof HashMap
+								|| field instanceof tree
+								|| field instanceof TreeMap) {
+							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+") && in(
+									Str(field),
+									m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
+								String key = m.split("(?<=\\w)\\.")[1]
+										.toLowerCase();
+								field = Str(field)
+										.split(key.replaceAll("\\$", "")
+												.toLowerCase() + "=")[1]
+										.split(",")[0]
+										.replaceAll("[\\{\\}]", "");
+								o replacements = o("true=Ha, false=Na");
+								String preprocessed = replace(Str(field),
+										replacements);
+								field = preprocessed;
+							} else if (in(m, ("(?<=[\\[])\\-?\\d+(?=\\])"))) {
+								int i = Int(findMatch(m,
+										"(?<=\\[)\\-?\\d+(?=\\])"));
+								if (field instanceof o) {
+									field = nth((o) field, i);
+									o replacements = o("true=Ha, false=Na");
+									String preprocessed = replace(Str(field),
+											replacements);
+									field = preprocessed;
+								} else if (field instanceof oI) {
+									field = nth((oI) field, i);
+								} else if (field instanceof oL) {
+									field = nth((oL) field, i);
+								} else if (field instanceof oF) {
+									field = nth((oF) field, i);
+								} else if (field instanceof oD) {
+									field = nth((oD) field, i);
+								} else if (field instanceof oB) {
+									field = nth((oB) field, i);
+									o replacements = o("true=Ha, false=Na");
+									String preprocessed = replace(Str(field),
+											replacements);
+									field = preprocessed;
+								} else if (field instanceof treeI) {
+									field = nth((treeI) field, i);
+								} else if (field instanceof treeL) {
+									field = nth((treeL) field, i);
+								} else if (field instanceof treeF) {
+									field = nth((treeF) field, i);
+								} else if (field instanceof treeD) {
+									field = nth((treeD) field, i);
+								} else if (field instanceof treeB) {
+									field = nth((treeB) field, i);
+									o replacements = o("true=Ha, false=Na");
+									String preprocessed = replace(Str(field),
+											replacements);
+									field = preprocessed;
+								} else if (field instanceof treeDS) {
+									field = nth((treeDS) field, i);
+								} else if (field instanceof treeDI) {
+									field = nth((treeDI) field, i);
+								} else if (field instanceof treeDL) {
+									field = nth((treeDL) field, i);
+								} else if (field instanceof treeDF) {
+									field = nth((treeDF) field, i);
+								} else if (field instanceof treeDB) {
+									field = nth((treeDB) field, i);
+									o replacements = o("true=Ha, false=Na");
+									String preprocessed = replace(Str(field),
+											replacements);
+									field = preprocessed;
+								}
+							} else {
+								field = m.replaceAll("[\\$\\{\\}]", "") + " "
+										+ Str(field).replaceAll(
+												"(?<=\\=)([A-Za-z]{1}(?!.))",
+												"\'$1\'")
+												.replaceAll(
+														"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+														"\"$1\"")
+												.replaceAll("\"true\"", "Ha")
+												.replaceAll("\"false\"", "Na")
+												.replaceAll("=", ": ");
+								// regex accuracy: 93%
+								// changes needed: probably not
+							}
+						} else if (type(field, Bool)) {
+							o replacements = o("true=Ha, false=Na");
+							String preprocessed = replace(Str(field),
+									replacements);
+							field = preprocessed;
+						}
+						m = m.replaceAll("([\\$\\{\\[\\\\\\]\\}])", "\\\\$1");
+						// replace special characters, so s.replaceFirst doesn't
+						// confuse them with an ending character ($), or a
+						// quantifier ({,})
+						s = s.replaceFirst(m,
+								label.length() > 0
+										? label + Str(field)
+										: Str(field));
+					}
+				} catch (NoSuchFieldException | IllegalAccessException
+						| SecurityException e) {
+				}
+			}
+			// for methods
+			if (in(s,
+					"(?<!\\\\)(\\$*\\{\\w+[:\\(][\\w\\!\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\!\\.\\s,]*\\)*)")) {
+				try {
+					Class<?> cls = this.getClass();
+					Object valueFromMethod = new Object();
+					boolean hasParams = false;
+					String[] methodicalMatches = findMatches(s,
+							"\\$*\\{\\w+[:\\(][\\w\\!\\.\\s,]*\\)*\\}|\\$+\\w+[:\\(][\\w\\!\\.\\s,]*\\)*");
+					for (String m : methodicalMatches) {
+						String toGet = m.replaceAll(
+								"(?<=\\w)[:\\(][\\w\\!\\.\\s,]+\\)*|[\\$\\{\\(\\)\\}]",
+								"");
+						if (in(m, "(?<=\\w[:\\(])[\\w\\!\\.\\s,]+(?=\\)*)")) {
+							hasParams = true;
+						}
+						if (!hasParams) {
+							valueFromMethod = cls.getMethod(toGet).invoke(this);
+						} else {
+							boolean multiParam = false;
+							String unprocessedParamString = m.replaceAll(
+									"^[\\$\\{]\\w+[:\\(](?=[\\w\\!]+)|[\\)\\}]+$",
+									"");
+							if (in(unprocessedParamString, "\\s*,\\s*")) {
+								multiParam = true;
+								String[] paramMatches = unprocessedParamString
+										.split("\\s*,\\s*");
+								Object[] finalParams = new Object[paramMatches.length];
+								Class<?>[] paramTypes = new Class<?>[paramMatches.length];
+								for (int i : range(paramMatches)) {
+									String param = paramMatches[i];
+									paramTypes[i] = isIntLike(param)
+											? (!in(param, "(?<=\\d)[Ll]$")
+													? int.class
+													: long.class)
+											: isFltLike(param)
+													? (!in(param,
+															"(?<=\\d)[Ff]$")
+																	? double.class
+																	: float.class)
+													: in(param,
+															"(?<!\\!)((\\!*)(true|Ha|false|Na))")
+																	? boolean.class
+																	: String.class;
+									param = param.replaceAll("(?<=\\d)[LlFf]$",
+											"");
+									// ----------------------- NOTE
+									// -----------------------------
+									// Since longs can hold both ints, and
+									// longs,
+									// and
+									// are literally just LONG integers,
+									// LONG.CLASS
+									// DOES
+									// THE JOB!!
+									// Same goes for floats, and doubles. A
+									// double
+									// is
+									// literally just a float, except with
+									// extra, or
+									// double, precision.
+									// ----------------------------------------------------------
+									finalParams[i] = isIntLike(param)
+											? Int(param)
+											: isDblLike(param)
+													? Dbl(param)
+													: in(param,
+															"(?<!\\!)((\\!*)(true|Ha|false|Na))")
+																	? (in(param,
+																			"(?<!\\!)(((!{2}){0,}(true|Ha))|((!{1})(!!)*(false|Na)))")
+																					? true
+																					: false)
+																	: Str(param);
+									// regex accuracy: 88%
+								}
+								for (String param : paramMatches) {
+									valueFromMethod = cls
+											.getMethod(toGet, paramTypes)
+											.invoke(this, finalParams);
+									m = m.replaceAll("([\\$\\{\\(\\)\\}])",
+											"\\\\$1");
+									s = s.replaceFirst(m,
+											valueFromMethod instanceof Character
+													|| valueFromMethod instanceof String
+													|| valueFromMethod instanceof Number
+															? Str(valueFromMethod)
+															: valueFromMethod instanceof Boolean
+																	? (eq(Str(
+																			valueFromMethod),
+																			"true")
+																					? "Ha"
+																					: "Na")
+																	: m);
+								}
+							} else {
+								Class<?> type = isIntLike(
+										unprocessedParamString)
+												? (!in(unprocessedParamString,
+														"(?<=\\d)[Ll]$")
+																? int.class
+																: long.class)
+												: isFltLike(
+														unprocessedParamString)
+																? (!in(unprocessedParamString,
+																		"(?<=\\d)[Ff]$")
+																				? double.class
+																				: float.class)
+																: in(unprocessedParamString,
+																		"(?<!\\!)((\\!*)(true|Ha|false|Na))")
+																				? boolean.class
+																				: String.class;
+								unprocessedParamString = unprocessedParamString
+										.replaceAll("(?<=\\d)[LlFf]$", "");
+								// ----------------------- NOTE
+								// -----------------------------
+								// Since longs can hold both ints, and longs,
+								// and
+								// are literally just LONG integers, LONG.CLASS
+								// DOES
+								// THE JOB!!
+								// Same goes for floats, and doubles. A double
+								// is
+								// literally just a float, except with extra, or
+								// double, precision.
+								// ----------------------------------------------------------
+								valueFromMethod = cls.getMethod(toGet, type)
+										.invoke(this, isIntLike(
+												unprocessedParamString)
+														? Int(unprocessedParamString)
+														: isDblLike(
+																unprocessedParamString)
+																		? Dbl(unprocessedParamString)
+																		: in(unprocessedParamString,
+																				"(?<!\\!)((\\!*)(true|Ha|false|Na))")
+																						? (in(unprocessedParamString,
+																								"(?<!\\!)(((!{2}){0,}(true|Ha))|((!{1})(!!)*(false|Na)))")
+																										? true
+																										: false)
+																						: unprocessedParamString);
+								// regex accuracy: 88%
+							}
+						}
+						m = m.replaceAll("([\\$\\{\\(\\)\\}])", "\\\\$1");
+						s = s.replaceFirst(m,
+								valueFromMethod instanceof Character
+										|| valueFromMethod instanceof String
+										|| valueFromMethod instanceof Number
+												? Str(valueFromMethod)
+												: valueFromMethod instanceof Boolean
+														? (eq(Str(
+																valueFromMethod),
+																"true")
+																		? "Ha"
+																		: "Na")
+														: m);
+					}
+				} catch (NoSuchMethodException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException
+						| SecurityException e) {
+				}
+			}
+			// for logical operations
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<A>[\\-\\.\\w]+) (?<op>is|not|has|contains|in|[<>=]{1,3}) (?<B>[^\\s\\$\\{\\}]+)\\}?";
+			if (in(s, catchValuesThatNeedLogic)) {
+				String[] valuesThatNeedLogic = findMatches(s,
+						catchValuesThatNeedLogic);
+				for (String m : valuesThatNeedLogic) {
+					Object A = findMatch(s, catchValuesThatNeedLogic, "$A"),
+							B = findMatch(s, catchValuesThatNeedLogic, "$B");
+					String op = findMatch(s, catchValuesThatNeedLogic, "$op");
+					String result = "";
+					if (!isNumLike(Str(A))) {
+						switch (op) {
+							case "is" :
+							case "==" :
+								if (eq(Str(A), Str(B)))
+									result = "Ha";
+								else
+									result = "Na";
+								break;
+
+						}
+					} else {
+						// parse A, and B as doubles
+						A = Dbl(Str(A));
+						B = Dbl(Str(B));
+						switch (op) {
+							case "is" :
+							case "==" :
+								if (eq(A, B))
+									result = "Ha";
+								else
+									result = "Na";
+								break;
+
+						}
+					}
+					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
+					s = replaceFirst(s, m, result);
+				}
+			}
+			// for numeric operations
+			// NOTE: currently follows a rule of thumb I like to call FSFS
+			// (first-seen first-solved),
+			// will change that
+			String catchNumericValuesWithOperator = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+)(?<operandB>\\-?\\d*\\.?\\d+)?\\}?";
+			while (in(s, catchNumericValuesWithOperator)) {
+				String[] numericMatchesWithOperators = findMatches(s,
+						catchNumericValuesWithOperator);
+				if (in(s, catchNumericValuesWithOperator)) {
+					for (String m : numericMatchesWithOperators) {
+						String[] parts = m.split(
+								"(?<=\\d)[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+");
+						double operandA = Dbl(parts[0]),
+								operandB = Dbl(parts[1]);
+						String op = m.replaceAll(
+								"[^\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+|^\\{?[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+",
+								"");
+						double result = 0;
+						switch (op) {
+							case "+" :
+								// sum
+								result = setPrecision(operandA + operandB);
+								break;
+							case "-" :
+								// difference
+								result = setPrecision(operandA - operandB);
+								break;
+							case "***" :
+							case "^^^" :
+								// cube
+								result = setPrecision(pow(operandA, 3));
+								break;
+							case "**" :
+							case "××" :
+							case "xx" :
+							case "^^" :
+							case "^" :
+								// squaring, and powering (conditionally)
+								result = setPrecision(pow(operandA,
+										not(operandB) ? 2 : operandB));
+								break;
+							case "*" :
+							case "×" :
+							case "x" :
+								// product
+								// the two x's are different; break;
+								// one's a regular x, while the other is a
+								// multiplication sign
+								result = setPrecision(operandA * operandB);
+								break;
+							case "__/" :
+								// cubic root
+								result = setPrecision(cbrt(operandA));
+								break;
+							case "_/" :
+								// square root
+								result = setPrecision(sqrt(operandA));
+								break;
+							case "%" :
+								// find y percent of x
+								result = percentify(operandA, operandB);
+								break;
+							case "/" :
+							case "÷" :
+								// quotient
+								result = setPrecision(operandA / operandB);
+								break;
+						};
+						s = replaceFirst(s, catchNumericValuesWithOperator,
+								Str(result).replaceAll(
+										"((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+					}
+				}
+			}
+			s = s.replaceAll("[&\\{](?=\\-?\\d*\\.?\\d+(?![:=]))\\}?", "");
+			// cleaning up to make up for the numeric results, removing the &
+			// operator
+			s = sentCase(s);
+		} catch (IllegalArgumentException | StackOverflowError e) {
+		}
+		return s;
+	}
 	public static String with(String nameOfObj, String format) {
 		if (not(nameOfObj) || not(format) || !in(format, "(?<=[\\{\\$])\\w+"))
 			return "";
@@ -40390,6 +41656,12 @@ public class KL {
 		}
 		return -1;
 	}
+	public static int indexOf(arr arr, Object o) {
+		return arr.indexOf(o);
+	}
+	public static int lastIndexOf(arr arr, Object o) {
+		return arr.lastIndexOf(o);
+	}
 	public static int indexOf(strArr arr, String s) {
 		return arr.indexOf(s);
 	}
@@ -40526,15 +41798,50 @@ public class KL {
 		return indexOf(arr, bool) >= 0;
 	}
 	public static boolean in(Object[] arr, Object targetValue) {
-		if (arr == null || targetValue == null) {
+		if (arr == null || isEmpty(arr) || targetValue == null) {
 			return false;
 		}
 		for (Object element : arr) {
-			if (targetValue.equals(element)) {
+			if (element.equals(targetValue)) {
 				return true;
 			}
 		}
 		return false;
+	}
+	public static boolean in(arr arr, Object targetValue) {
+		if (arr == null || targetValue == null)
+			return false;
+		return indexOf(arr, targetValue) >= 0;
+	}
+	public static boolean in(strArr arr, String targetValue) {
+		if (arr == null || targetValue == null)
+			return false;
+		return indexOf(arr, targetValue) >= 0;
+	}
+	public static boolean in(intArr arr, int targetValue) {
+		if (arr == null)
+			return false;
+		return indexOf(arr, targetValue) >= 0;
+	}
+	public static boolean in(longArr arr, long targetValue) {
+		if (arr == null)
+			return false;
+		return indexOf(arr, targetValue) >= 0;
+	}
+	public static boolean in(fltArr arr, float targetValue) {
+		if (arr == null)
+			return false;
+		return indexOf(arr, targetValue) >= 0;
+	}
+	public static boolean in(dblArr arr, double targetValue) {
+		if (arr == null)
+			return false;
+		return indexOf(arr, targetValue) >= 0;
+	}
+	public static boolean in(boolArr arr, boolean targetValue) {
+		if (arr == null)
+			return false;
+		return indexOf(arr, targetValue) >= 0;
 	}
 	public static boolean contains(String str, char lookupCh) {
 		return in(str, lookupCh);
@@ -40561,6 +41868,24 @@ public class KL {
 		return in(arr, lookupBool);
 	}
 	public static boolean contains(Object[] arr, Object targetValue) {
+		return in(arr, targetValue);
+	}
+	public static boolean contains(strArr arr, String targetValue) {
+		return in(arr, targetValue);
+	}
+	public static boolean contains(intArr arr, int targetValue) {
+		return in(arr, targetValue);
+	}
+	public static boolean contains(longArr arr, long targetValue) {
+		return in(arr, targetValue);
+	}
+	public static boolean contains(fltArr arr, float targetValue) {
+		return in(arr, targetValue);
+	}
+	public static boolean contains(dblArr arr, double targetValue) {
+		return in(arr, targetValue);
+	}
+	public static boolean contains(Object[] arr, boolean targetValue) {
 		return in(arr, targetValue);
 	}
 	public static boolean match(String str, String re, boolean... bools) {
@@ -41132,20 +42457,30 @@ public class KL {
 	}
 	public static final class blank {
 		public static String[] Str = new String[]{};
+		public static String[][] Str2D = new String[][]{};
 		public static int[] Int = new int[]{};
+		public static int[][] Int2D = new int[][]{};
 		public static char[] Ch, Char = Ch = new char[]{};
+		public static char[][] Ch2D, Char2D = Ch2D = new char[][]{};
 		public static long[] Long = new long[]{};
+		public static long[][] Long2D = new long[][]{};
 		public static float[] Flt = new float[]{};
+		public static float[][] Flt2D = new float[][]{};
 		public static double[] Dbl = new double[]{};
+		public static double[][] Dbl2D = new double[][]{};
 		public static boolean[] Bool = new boolean[]{};
+		public static boolean[][] Bool2D = new boolean[][]{};
 		public static Number[] Num = new Number[]{};
+		public static Number[][] Num2D = new Number[][]{};
 		public static Object[] Obj = new Object[]{};
-		public static strArr strArr = new strArr();
-		public static intArr intArr = new intArr();
-		public static longArr longArr = new longArr();
-		public static fltArr fltArr = new fltArr();
-		public static dblArr dblArr = new dblArr();
-		public static boolArr boolArr = new boolArr();
+		public static Object[][] Obj2D = new Object[][]{};
+		public static arr mixedArr = new arr();
+		public static strArr strArr = strArr();
+		public static intArr intArr = intArr();
+		public static longArr longArr = longArr();
+		public static fltArr fltArr = fltArr();
+		public static dblArr dblArr = dblArr();
+		public static boolArr boolArr = boolArr();
 	}
 	public static final class binary {
 		public static int indexOf(int[] src, int target) {
@@ -44452,6 +45787,7 @@ public class KL {
 		print();
 		for (var kv : kv(arr3))
 			print(kv[0], "=", kv[1], ",");
+		kaho("$user.veteran");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
