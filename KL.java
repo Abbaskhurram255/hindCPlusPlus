@@ -29634,7 +29634,7 @@ public class KL {
 	}
 	public static boolean Yes = true, No = !Yes, On = Yes, Off = No, Ok = Yes,
 			NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, Ha = Y, Na = N;
-	public static Object none = null, ignore = none, pass = ignore;
+	public static Object ignored, none = null, ignore = ignored = none, pass = ignored;
 	public static String Else = "else", Warna = Else;
 	// helps method sw handle default/else cases
 	public static char _c = '\0';
@@ -29910,36 +29910,36 @@ public class KL {
 		return kv(arg.array());
 	}
     public static final class DoFail {
-	    Throwable caughtException = null;
-	    boolean success = false;
-	    public interface CustomRunnable {
+    	public static interface CustomRunnable {
 	        void run() throws Throwable;
 	    }
+	    private Throwable caughtException = null;
+	    boolean success = No;
 		DoFail Do(CustomRunnable fn) {
-		    if (fn == null) return null;
+		    if (fn == ignored) return null;
 		    try {
 	            fn.run();
-	            success = true;
+	            success = Yes;
 	        }
 	        catch (Throwable e) {
-	            success = false;
 	            caughtException = e;
+	            success = No;
 	        }
 		    return this;
 		}
 		DoFail Done(Runnable fn) {
-		    if (fn == null) return null;
-		    if (caughtException == null)
+		    if (fn == ignored) return null;
+		    if (caughtException == none)
 		    	fn.run();
 		    return this;
 		}
 		DoFail Always(Runnable fn) {
-		    if (fn == null) return null;
+		    if (fn == ignored) return null;
 		    fn.run();
 		    return this;
 		}
 		DoFail Fail(Consumer<Throwable> fallback) {
-		    if (caughtException == null) return this;
+		    if (caughtException == none) return null;
 		    fallback.accept(caughtException);
 		    return this;
 		}
