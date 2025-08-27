@@ -6,6 +6,7 @@ from types import *
 from typing import List, Callable, TypeVar, Any, Optional
 from numbers import Number
 from math import *
+from hindGui import *
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 class obj(dict):

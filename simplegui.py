@@ -1,11 +1,10 @@
-from hindGui import *
 from KL_Py import *
 
 theme("Reds")
 
 lay = [ 
     [Text("Please fill the following fields:")],
-    [T("Email", size=(15,2)), I(event="email")],
+    [T("Email", size=(15, 2)), I(event="email")],
     [T("Password", size=(15, 2)), I(pwd=Yes, event="pwd"), B("Show", size=(4, 1), event="reveal-password")],
     [Submit(), Exit()]
 ]
