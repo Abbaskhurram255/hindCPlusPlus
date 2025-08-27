@@ -112,7 +112,8 @@ class Input(Element):
         """
 
         self.DefaultText = default_text if default_text is not None else ''
-        self.PasswordCharacter = pwd_char
+        if pwd == True and pwd_char:
+            self.PasswordCharacter = pwd_char
         bg = background_color if background_color is not None else hindGui.DEFAULT_INPUT_ELEMENTS_COLOR
         fg = text_color if text_color is not None else hindGui.DEFAULT_INPUT_TEXT_COLOR
         self.selected_text_color = selected_text_color
@@ -259,7 +260,8 @@ class Input(Element):
             self._visible = visible
         if pwd_char is not None and pwd is not None and pwd == True:
             self.TKEntry.configure(show=pwd_char)
-            self.PasswordCharacter = pwd_char
+            if pwd == True and pwd_char:
+                self.PasswordCharacter = pwd_char
         if font is not None:
             self.TKEntry.configure(font=font)
 
