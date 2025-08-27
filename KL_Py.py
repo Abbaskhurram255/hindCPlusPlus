@@ -118,6 +118,9 @@ def printf(*args):
             ...
     print(formatted)
 kaho = printf
+hissa = lambda x, y: x in y
+barabar = lambda x, y: x == y
+khali = lambda x: len(str(x))
 class money:
     def __init__(self, amount=0, currency="Rs. "):
         self.amount = amount if amount >= 0 else 0

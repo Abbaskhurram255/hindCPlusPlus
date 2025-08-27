@@ -1,54 +1,55 @@
-from FreeSimpleGUI import *
+from hindGui import *
 from KL_Py import *
 
 theme("Reds")
 
-lay = [
+lay = [ 
     [Text("Please fill the following fields:")],
-    [T("Email", size=(15,2)), I(key="email")],
-    [T("Password", size=(15, 2)), I(password_char="*", key="pwd"), B("Show", size=(4, 1), key="reveal-password")],
+    [T("Email", size=(15,2)), I(event="email")],
+    [T("Password", size=(15, 2)), I(pwd=Yes, event="pwd"), B("Show", size=(4, 1), event="reveal-password")],
     [Submit(), Exit()]
 ]
 
-ui = Window("Simple Data Entry Form", lay, margins=(12, 8))
+ui = hindGui("Simple Data Entry Form", style=lay, fasla=(12, 8))
 admin: obj = obj(email="abbaskhurram255@gmail.com", password="00000000")
 password_hidden: filhal = Ha
 
 while Yes:
     values: dict | obj
-    event, values = ui.read()
+    event, values = ui.parh()
     # changing the type of variable values to obj for quicker dot-driven access
-    if values is not None:
+    if values:
         values = obj(values)
-    if event == WIN_CLOSED or event == "Exit":
+    if hissa(event, [CLOSE, EXIT]):
+        # print("hate to see you go!")
         break
-    elif event == "Submit":
+    elif hissa(event, "Submit"):
         email, pwd = values.values()
         print("Event: " + event)
         print("{")
         print(f"    Email={email},")
         print(f"    Password={pwd}")
         print("}")
-        if email == admin.email and pwd == admin.password:
-            ui["email"].update(text_color="#000")
-            ui["pwd"].update(text_color="#000")
-            popup(f"Logged in as {email}")
-        elif email == "" or pwd == "":
-            popup("Neither the email nor the password field can be empty.")
-        elif not re.search(r"^[\w\-]+@\w+\.\w+$", email):
-            popup("Invalid Email Format.")
-        elif not email == admin.email and pwd == admin.password:
-            popup("Incorrect Email address.")
-        elif email == admin.email and pwd != admin.password:
-            popup("Incorrect password.")
+        if barabar(email, admin.email) and barabar(pwd, admin.password):
+            ui["email"].change(text_color="#000")
+            ui["pwd"].change(text_color="#000")
+            keh(f"Logged in as {email}")
+        elif khali(email) or khali(pwd):
+            keh("Neither the email nor the password field can be empty.")
+        elif nahi(re.search(r"^[\w\-]+@\w+\.\w+$", email)):
+            keh("Invalid Email Format.")
+        elif nahi(barabar(email, admin.email)) and nahi(barabar(pwd, admin.password)):
+            keh("Incorrect Email address.")
+        elif barabar(email, admin.email) and nahi(barabar(pwd, admin.password)):
+            keh("Incorrect password.")
         else:
-            ui["email"].update(text_color="red")
-            ui["pwd"].update(text_color="red")
-            popup("Invalid Credentials!")
-    elif event == "reveal-password":
+            ui["email"].change(text_color="red")
+            ui["pwd"].change(text_color="red")
+            keh("Invalid Credentials!")
+    elif hissa(event, "reveal-password"):
         if password_hidden:
-            ui["pwd"].update(password_char="")
+            ui["pwd"].change(pwd=False)
         else:
-            ui["pwd"].update(password_char="*")
+            ui["pwd"].change(pwd=True)
         password_hidden = nahi(password_hidden)
-ui.close()
+ui.die()
