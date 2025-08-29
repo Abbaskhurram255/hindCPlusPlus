@@ -35740,7 +35740,7 @@ public class KL {
 			// post processing...
 			// FOR FIELDS
 			String[] fieldMatches = findMatches(s,
-					"\\$?\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?");
+					"(\\$?\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(?!\\sif)");
 			if (!isEmpty(fieldMatches)) {
 				try {
 					Class<?> cls = this.getClass();
@@ -36417,25 +36417,48 @@ public class KL {
 				}
 			}
 			// for logical operations
-			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<A>[\\-\\.\\w]+) (?<op>is|not|has|contains|in|[<>=]{1,3}) (?<B>[^\\s\\$\\{\\}]+)\\}?";
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<alternativeOutput>\\w+)\\sif\\s(?<A>[\\-\\.\\w]+) (?<op>is|not|has|contains|in|[<>=]{1,3}) (?<B>[^\\s\\$\\{\\}]+)\\}?\\selse\\s(?<secondAlternativeOutput>\\w+)\\}?";
 			if (in(s, catchValuesThatNeedLogic)) {
 				String[] valuesThatNeedLogic = findMatches(s,
 						catchValuesThatNeedLogic);
 				for (String m : valuesThatNeedLogic) {
-					Object A = findMatch(s, catchValuesThatNeedLogic, "$A"),
-							B = findMatch(s, catchValuesThatNeedLogic, "$B");
-					String op = findMatch(s, catchValuesThatNeedLogic, "$op");
+					Object A = findMatch(m, catchValuesThatNeedLogic, "$A"),
+							B = findMatch(m, catchValuesThatNeedLogic, "$B");
+					String op = findMatch(m, catchValuesThatNeedLogic, "$op");
+					String alternativeOutputShownIfConditionMet = findMatch(m,
+							catchValuesThatNeedLogic, "$alternativeOutput"),
+							secondAlternativeOutputShownIfConditionMet = findMatch(
+									m, catchValuesThatNeedLogic,
+									"$secondAlternativeOutput");
 					String result = "";
 					if (!isNumLike(Str(A))) {
 						switch (op) {
 							case "is" :
 							case "==" :
-								if (eq(Str(A), Str(B)))
+								if (eq(Str(B), Str(A)))
 									result = "Yes";
 								else
 									result = "No";
 								break;
-
+							case "in" :
+								if (in(Str(B), Str(A)))
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "has" :
+							case "contains" :
+								if (in(Str(A), Str(B)))
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "not" :
+								if (!eq(Str(A), Str(B)))
+									result = "Yes";
+								else
+									result = "No";
+								break;
 						}
 					} else {
 						// parse A, and B as doubles
@@ -36473,8 +36496,18 @@ public class KL {
 								else
 									result = "No";
 								break;
+							case "not" :
+								if (!eq(numA, numB))
+									result = "Yes";
+								else
+									result = "No";
+								break;
 						}
 					}
+					if (eq(result, "Yes"))
+						result = alternativeOutputShownIfConditionMet;
+					else
+						result = secondAlternativeOutputShownIfConditionMet;
 					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
 					s = replaceFirst(s, m, result);
 				}
@@ -45866,6 +45899,7 @@ public class KL {
 		for (var kv : kv(arr3))
 			print(kv[0], "=", kv[1], ",");
 		kaho("$user.veteran");
+		print("$2 if $name is Ayesha else 8");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
