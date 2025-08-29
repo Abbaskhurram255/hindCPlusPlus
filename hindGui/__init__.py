@@ -5395,7 +5395,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 default_text = element.DefaultText
                 element.TKStringVar = tk.StringVar()
                 element.TKStringVar.set(default_text)
-                show = element.PasswordCharacter if element.PasswordCharacter else ''
+                show = element.pwd_char if element.pwd_char else ''
                 bd = border_depth
                 if element.Justification is not None:
                     justification = element.Justification
