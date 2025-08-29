@@ -7177,8 +7177,8 @@ public class KL {
 		clr(String hexStringWithOrWithoutAlpha, boolean hasApha) {
 			this(from(hexStringWithOrWithoutAlpha), hasApha);
 			/*
-			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff clr
-			 * red = clr("red
+			 * @param hexString in the range: (#|0x)000 thru (#|0x)ffffff clr red =
+			 * clr("red
 			 */
 		}
 		clr(String hexStringWithoutAlpha) {
@@ -29634,7 +29634,8 @@ public class KL {
 	}
 	public static boolean Yes = true, No = !Yes, On = Yes, Off = No, Ok = Yes,
 			NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, Ha = Y, Na = N;
-	public static Object ignored, none = null, ignore = ignored = none, pass = ignored;
+	public static Object ignored, none = null, ignore = ignored = none,
+			pass = ignored;
 	public static String Else = "else", Warna = Else;
 	// helps method sw handle default/else cases
 	public static char _c = '\0';
@@ -29909,39 +29910,42 @@ public class KL {
 			return blank.Obj2D;
 		return kv(arg.array());
 	}
-    public static final class DoFail {
-    	public static interface CustomRunnable {
-	        void run() throws Throwable;
-	    }
-	    private Throwable caughtException = null;
-	    boolean success = No;
+	public static final class DoFail {
+		public static interface CustomRunnable {
+			void run() throws Throwable;
+		}
+		private Throwable caughtException = null;
+		boolean success = No;
 		DoFail Do(CustomRunnable fn) {
-		    if (fn == ignored) return null;
-		    try {
-	            fn.run();
-	            success = Yes;
-	        }
-	        catch (Throwable e) {
-	            caughtException = e;
-	            success = No;
-	        }
-		    return this;
+			if (fn == ignored)
+				return null;
+			try {
+				fn.run();
+				success = Yes;
+			} catch (Throwable e) {
+				caughtException = e;
+				success = No;
+			}
+			return this;
 		}
 		DoFail Done(Runnable fn) {
-		    if (fn == ignored) return null;
-		    if (caughtException == none)
-		    	fn.run();
-		    return this;
+			if (fn == ignored)
+				return null;
+			if (caughtException == none)
+				fn.run();
+			return this;
 		}
 		DoFail Always(Runnable fn) {
-		    if (fn == ignored) return null;
-		    fn.run();
-		    return this;
+			if (fn == ignored)
+				return null;
+			fn.run();
+			return this;
 		}
 		DoFail Fail(Consumer<Throwable> fallback) {
-		    if (caughtException == none) return null;
-		    fallback.accept(caughtException);
-		    return this;
+			if (caughtException == none)
+				return null;
+			fallback.accept(caughtException);
+			return this;
 		}
 		DoFail Fall(Consumer<Throwable> fallback) {
 			return Fail(fallback);
@@ -35498,8 +35502,7 @@ public class KL {
 							"[%\\{]([dinf])c?([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})\\}?",
 							"%$1c$2");
 			/*
-			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr}
-			 * {%f:inr}
+			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr} {%f:inr}
 			 */
 			s = s.replaceAll("[%\\{]([dinf])c?[\\:\\.]\\$\\}?", "%$1c:USD");
 			// kills a bug
@@ -36436,17 +36439,40 @@ public class KL {
 						}
 					} else {
 						// parse A, and B as doubles
-						A = Dbl(Str(A));
-						B = Dbl(Str(B));
+						double numA = (double) Dbl(Str(A)),
+								numB = (double) Dbl(Str(B));
 						switch (op) {
 							case "is" :
 							case "==" :
-								if (eq(A, B))
+								if (eq(numA, numB))
 									result = "Yes";
 								else
 									result = "No";
 								break;
-
+							case ">=" :
+								if (numA >= numB)
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case ">" :
+								if (numA > numB)
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "<=" :
+								if (numA <= numB)
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "<" :
+								if (numA < numB)
+									result = "Yes";
+								else
+									result = "No";
+								break;
 						}
 					}
 					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
@@ -36555,8 +36581,7 @@ public class KL {
 							"[%\\{]([dinf])c?([\\:\\.][A-Za-z\\$\\€\\£\\₹\\¥]{1,4})\\}?",
 							"%$1c$2");
 			/*
-			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr}
-			 * {%f:inr}
+			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr} {%f:inr}
 			 */
 			s = s.replaceAll("[%\\{]([dinf])c?[\\:\\.]\\$\\}?", "%$1c:USD");
 			// kills a bug
