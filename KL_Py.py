@@ -119,9 +119,18 @@ def printf(*args):
             ...
     print(formatted)
 kaho = printf
-hissa = lambda x, y: x in y
-barabar = lambda x, y: x == y
-khali = lambda x: len(str(x))
+def hissa(x: str|list, y: str|list):
+    if isinstance(x, str) and isinstance(y, str):
+        return str(x).lower() in str(y).lower()
+    return x in y
+def barabar(x, y):
+    if isinstance(x, str) and isinstance(y, str):
+        return x.lower() == y.lower()
+    return x == y
+def khali(x: Iterable):
+    if x == None:
+        return False
+    return len(x) == 0
 class money:
     def __init__(self, amount=0, currency="Rs. "):
         self.amount = amount if amount >= 0 else 0

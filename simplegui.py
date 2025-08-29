@@ -29,22 +29,20 @@ while Yes:
         print(f"    Email={email},")
         print(f"    Password={pwd}")
         print("}")
-        if barabar(email, admin.email) and barabar(pwd, admin.password):
-            ui["email"].change(text_color="#000")
-            ui["pwd"].change(text_color="#000")
-            keh(f"Logged in as {email}")
-        elif khali(email) or khali(pwd):
+        if khali(email) or khali(pwd):
             keh("Neither the email nor the password field can be empty.")
         elif nahi(re.search(r"^[\w\-]+@\w+\.\w+$", email)):
             keh("Invalid Email Format.")
         elif nahi(barabar(email, admin.email)) and nahi(barabar(pwd, admin.password)):
+            ui["email"].change(text_color="red")
             keh("Incorrect Email address.")
         elif barabar(email, admin.email) and nahi(barabar(pwd, admin.password)):
+            ui["pwd"].change(text_color="red")
             keh("Incorrect password.")
         else:
-            ui["email"].change(text_color="red")
-            ui["pwd"].change(text_color="red")
-            keh("Invalid Credentials!")
+            ui["email"].change(text_color="#000")
+            ui["pwd"].change(text_color="#000")
+            keh(f"Logged in as {email}")
     elif hissa(event, "reveal-password"):
         if password_hidden:
             ui["pwd"].change(pwd=False)
