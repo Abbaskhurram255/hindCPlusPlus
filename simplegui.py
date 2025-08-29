@@ -31,7 +31,7 @@ while Yes:
         print("}")
         if khali(email) or khali(pwd):
             keh("Neither the email nor the password field can be empty.")
-        elif nahi(re.search(r"^\w[\w\-]*@\w{2,}(\.\w{2,}){1,}$", email)):
+        elif nahi(re.search(r"^\w[\w\+\-\.]*@\w{2,}(\.\w{2,}){1,}$", email)):
             keh("Invalid Email Format.")
         elif nahi(barabar(email, admin.email)) and nahi(barabar(pwd, admin.password)):
             ui["email"].change(text_color="red")
