@@ -35004,6 +35004,16 @@ public class KL {
 	public static double cbrt(double n) {
 		return Math.cbrt(n);
 	}
+	public static int factorial(double n) {
+		if (n <= 0 || isInf(n))
+			return 0;
+		int i = 1, factorial = 1;
+		while (i <= n) {
+			factorial *= i;
+			i++;
+		}
+		return factorial;
+	}
 	public static double area(double w, double h) {
 		return w * h;
 	}
@@ -35805,7 +35815,7 @@ public class KL {
 			// post processing...
 			// FOR FIELDS
 			String[] fieldMatches = findMatches(s,
-					"(\\$?\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(?!\\sif)");
+					"\\$?\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?(\\sif)?");
 			if (!isEmpty(fieldMatches)) {
 				try {
 					Class<?> cls = this.getClass();
@@ -35818,6 +35828,8 @@ public class KL {
 					}
 					// ^regex accuracy: ~91%
 					for (String m : fieldMatches) {
+						if (in(m, "\\sif"))
+							continue;
 						String toGet = m.replaceAll(
 								"[\\$\\{:=\\\\\\}]|\\[\\-?\\d+\\]|(?<=[:=])(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)|(?<=[\\w])\\.[\\w]+",
 								"");
@@ -36484,11 +36496,9 @@ public class KL {
 			// for logical operations
 			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\s\\$\\{\\}]+)\\sif\\s(?<A>[^\\s\\$\\{\\}]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|has|contains|in|[<>=]{1,3})?\\s?(?<B>[^\\s\\$\\{\\}]+)?\\}?\\selse\\s(?<alternativeSolution>[^\\s\\$\\{\\}]+)\\}?";
 			if (in(s, catchValuesThatNeedLogic)) {
-				out.println("here");
 				String[] valuesThatNeedLogic = findMatches(s,
 						catchValuesThatNeedLogic);
 				for (String m : valuesThatNeedLogic) {
-					out.println("Match = " + m);
 					Object A = findMatch(m, catchValuesThatNeedLogic, "$A"),
 							B = findMatch(m, catchValuesThatNeedLogic, "$B");
 					String op = findMatch(m, catchValuesThatNeedLogic, "$op");
@@ -36497,15 +36507,14 @@ public class KL {
 							alternativeOutputShownIfConditionNotMet = findMatch(
 									m, catchValuesThatNeedLogic,
 									"$alternativeSolution");
-									out.println("A = " + A + "\nB = " + B + "\nop = " + op + "\noutputShownIfConditionMet = " + outputShownIfConditionMet + "\nalternativeOutputShownIfConditionNotMet" + alternativeOutputShownIfConditionNotMet);
 					String result = "";
 					if (!isNumLike(Str(A))) {
 						switch (op) {
-							case "isnt":
-							case "isn't":
-							case "is not":
-							case "aint":
-							case "ain't":
+							case "isnt" :
+							case "isn't" :
+							case "is not" :
+							case "aint" :
+							case "ain't" :
 							case "not" :
 								if (!eq(Str(A), Str(B)))
 									result = "Yes";
@@ -36514,12 +36523,12 @@ public class KL {
 								break;
 							case "is" :
 							case "==" :
-							case "":
-							    if (neither(op, Str(B))) {
+							case "" :
+								if (neither(op, Str(B))) {
 									if (is(Str(A)))
-									    result = "Yes";
+										result = "Yes";
 									else
-									    result = "No";
+										result = "No";
 								} else {
 									if (eq(Str(B), Str(A)))
 										result = "Yes";
@@ -36546,11 +36555,11 @@ public class KL {
 						double numA = (double) Dbl(Str(A)),
 								numB = (double) Dbl(Str(B));
 						switch (op) {
-							case "isnt":
-							case "isn't":
-							case "is not":
-							case "aint":
-							case "ain't":
+							case "isnt" :
+							case "isn't" :
+							case "is not" :
+							case "aint" :
+							case "ain't" :
 							case "not" :
 								if (!eq(numA, numB))
 									result = "Yes";
@@ -36559,12 +36568,12 @@ public class KL {
 								break;
 							case "is" :
 							case "==" :
-							case "":
-								if (neither(op, numB)) {
+							case "" :
+								if (not(op) && not(numB)) {
 									if (is(numA))
-									    result = "Yes";
+										result = "Yes";
 									else
-									    result = "No";
+										result = "No";
 								} else {
 									if (eq(numA, numB))
 										result = "Yes";
@@ -36610,17 +36619,19 @@ public class KL {
 			// NOTE: currently follows a rule of thumb I like to call FSFS
 			// (first-seen first-solved),
 			// will change that
-			String catchValuesThatRequireNumericOperations = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+)(?<operandB>\\-?\\d*\\.?\\d+)?\\}?";
+			String catchValuesThatRequireNumericOperations = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+)(?<operandB>\\-?\\d*\\.?\\d+)?\\}?";
 			while (in(s, catchValuesThatRequireNumericOperations)) {
-				String[] catchedValuesThatRequiredNumericOperations = findMatches(s,
-						catchValuesThatRequireNumericOperations);
+				String[] catchedValuesThatRequiredNumericOperations = findMatches(
+						s, catchValuesThatRequireNumericOperations);
 				for (String m : catchedValuesThatRequiredNumericOperations) {
 					String[] parts = m.split(
-							"(?<=\\d)[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+");
-					double operandA = Dbl(parts[0]),
-							operandB = Dbl(parts[1]);
+							"(?<=\\d)[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+");
+					double operandA = 0, operandB = 0;
+					operandA = Dbl(parts[0]);
+					if (parts.length > 1)
+						operandB = Dbl(parts[1]);
 					String op = m.replaceAll(
-							"[^\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+|^\\{?[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+",
+							"[^\\.\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+|^\\{?[\\.\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+",
 							"");
 					double result = 0;
 					switch (op) {
@@ -36663,6 +36674,10 @@ public class KL {
 							// square root
 							result = setPrecision(sqrt(operandA));
 							break;
+						case "!" :
+							// factorial
+							result = factorial(operandA);
+							break;
 						case "%" :
 							// find y percent of x
 							result = percentify(operandA, operandB);
@@ -36674,8 +36689,8 @@ public class KL {
 							break;
 					};
 					s = replaceFirst(s, catchValuesThatRequireNumericOperations,
-							Str(result).replaceAll(
-									"((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
+							Str(result).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$",
+									""));
 				}
 			}
 			s = s.replaceAll("[&\\{](?=\\-?\\d*\\.?\\d+(?![:=]))\\}?", "");
@@ -37635,41 +37650,123 @@ public class KL {
 				}
 			}
 			// for logical operations
-			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<A>[\\-\\.\\w]+) (?<op>is|not|has|contains|in|[<>=]{1,3}) (?<B>[^\\s\\$\\{\\}]+)\\}?";
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\s\\$\\{\\}]+)\\sif\\s(?<A>[^\\s\\$\\{\\}]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|has|contains|in|[<>=]{1,3})?\\s?(?<B>[^\\s\\$\\{\\}]+)?\\}?\\selse\\s(?<alternativeSolution>[^\\s\\$\\{\\}]+)\\}?";
 			if (in(s, catchValuesThatNeedLogic)) {
 				String[] valuesThatNeedLogic = findMatches(s,
 						catchValuesThatNeedLogic);
 				for (String m : valuesThatNeedLogic) {
-					Object A = findMatch(s, catchValuesThatNeedLogic, "$A"),
-							B = findMatch(s, catchValuesThatNeedLogic, "$B");
-					String op = findMatch(s, catchValuesThatNeedLogic, "$op");
+					Object A = findMatch(m, catchValuesThatNeedLogic, "$A"),
+							B = findMatch(m, catchValuesThatNeedLogic, "$B");
+					String op = findMatch(m, catchValuesThatNeedLogic, "$op");
+					String outputShownIfConditionMet = findMatch(m,
+							catchValuesThatNeedLogic, "$solution"),
+							alternativeOutputShownIfConditionNotMet = findMatch(
+									m, catchValuesThatNeedLogic,
+									"$alternativeSolution");
 					String result = "";
 					if (!isNumLike(Str(A))) {
 						switch (op) {
-							case "is" :
-							case "==" :
-								if (eq(Str(A), Str(B)))
+							case "isnt" :
+							case "isn't" :
+							case "is not" :
+							case "aint" :
+							case "ain't" :
+							case "not" :
+								if (!eq(Str(A), Str(B)))
 									result = "Ha";
 								else
 									result = "Na";
 								break;
-
+							case "is" :
+							case "==" :
+							case "" :
+								if (neither(op, Str(B))) {
+									if (is(Str(A)))
+										result = "Ha";
+									else
+										result = "Na";
+								} else {
+									if (eq(Str(B), Str(A)))
+										result = "Ha";
+									else
+										result = "Na";
+								}
+								break;
+							case "in" :
+								if (in(Str(B), Str(A)))
+									result = "Ha";
+								else
+									result = "Na";
+								break;
+							case "has" :
+							case "contains" :
+								if (in(Str(A), Str(B)))
+									result = "Ha";
+								else
+									result = "Na";
+								break;
 						}
 					} else {
 						// parse A, and B as doubles
-						A = Dbl(Str(A));
-						B = Dbl(Str(B));
+						double numA = (double) Dbl(Str(A)),
+								numB = (double) Dbl(Str(B));
 						switch (op) {
-							case "is" :
-							case "==" :
-								if (eq(A, B))
+							case "isnt" :
+							case "isn't" :
+							case "is not" :
+							case "aint" :
+							case "ain't" :
+							case "not" :
+								if (!eq(numA, numB))
 									result = "Ha";
 								else
 									result = "Na";
 								break;
-
+							case "is" :
+							case "==" :
+							case "" :
+								if (not(op) && not(numB)) {
+									if (is(numA))
+										result = "Ha";
+									else
+										result = "Na";
+								} else {
+									if (eq(numA, numB))
+										result = "Ha";
+									else
+										result = "Na";
+								}
+								break;
+							case ">=" :
+								if (numA >= numB)
+									result = "Ha";
+								else
+									result = "Na";
+								break;
+							case ">" :
+								if (numA > numB)
+									result = "Ha";
+								else
+									result = "Na";
+								break;
+							case "<=" :
+								if (numA <= numB)
+									result = "Ha";
+								else
+									result = "Na";
+								break;
+							case "<" :
+								if (numA < numB)
+									result = "Ha";
+								else
+									result = "Na";
+								break;
 						}
 					}
+					if (eq(result, "Ha"))
+						result = outputShownIfConditionMet;
+					else
+						result = alternativeOutputShownIfConditionNotMet;
 					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
 					s = replaceFirst(s, m, result);
 				}
@@ -37678,74 +37775,78 @@ public class KL {
 			// NOTE: currently follows a rule of thumb I like to call FSFS
 			// (first-seen first-solved),
 			// will change that
-			String catchNumericValuesWithOperator = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+)(?<operandB>\\-?\\d*\\.?\\d+)?\\}?";
-			while (in(s, catchNumericValuesWithOperator)) {
-				String[] numericMatchesWithOperators = findMatches(s,
-						catchNumericValuesWithOperator);
-				if (in(s, catchNumericValuesWithOperator)) {
-					for (String m : numericMatchesWithOperators) {
-						String[] parts = m.split(
-								"(?<=\\d)[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+");
-						double operandA = Dbl(parts[0]),
-								operandB = Dbl(parts[1]);
-						String op = m.replaceAll(
-								"[^\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+|^\\{?[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_]+",
-								"");
-						double result = 0;
-						switch (op) {
-							case "+" :
-								// sum
-								result = setPrecision(operandA + operandB);
-								break;
-							case "-" :
-								// difference
-								result = setPrecision(operandA - operandB);
-								break;
-							case "***" :
-							case "^^^" :
-								// cube
-								result = setPrecision(pow(operandA, 3));
-								break;
-							case "**" :
-							case "××" :
-							case "xx" :
-							case "^^" :
-							case "^" :
-								// squaring, and powering (conditionally)
-								result = setPrecision(pow(operandA,
-										not(operandB) ? 2 : operandB));
-								break;
-							case "*" :
-							case "×" :
-							case "x" :
-								// product
-								// the two x's are different; break;
-								// one's a regular x, while the other is a
-								// multiplication sign
-								result = setPrecision(operandA * operandB);
-								break;
-							case "__/" :
-								// cubic root
-								result = setPrecision(cbrt(operandA));
-								break;
-							case "_/" :
-								// square root
-								result = setPrecision(sqrt(operandA));
-								break;
-							case "%" :
-								// find y percent of x
-								result = percentify(operandA, operandB);
-								break;
-							case "/" :
-							case "÷" :
-								// quotient
-								result = setPrecision(operandA / operandB);
-								break;
-						};
-						s = replaceFirst(s, catchNumericValuesWithOperator,
-								Str(result).replaceAll(
-										"((?<=\\.\\d)[0]+|\\.[0]+)$", ""));
-					}
+			String catchValuesThatRequireNumericOperations = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+)(?<operandB>\\-?\\d*\\.?\\d+)?\\}?";
+			while (in(s, catchValuesThatRequireNumericOperations)) {
+				String[] catchedValuesThatRequiredNumericOperations = findMatches(
+						s, catchValuesThatRequireNumericOperations);
+				for (String m : catchedValuesThatRequiredNumericOperations) {
+					String[] parts = m.split(
+							"(?<=\\d)[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+");
+					double operandA = 0, operandB = 0;
+					operandA = Dbl(parts[0]);
+					if (parts.length > 1)
+						operandB = Dbl(parts[1]);
+					String op = m.replaceAll(
+							"[^\\.\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+|^\\{?[\\.\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+",
+							"");
+					double result = 0;
+					switch (op) {
+						case "+" :
+							// sum
+							result = setPrecision(operandA + operandB);
+							break;
+						case "-" :
+							// difference
+							result = setPrecision(operandA - operandB);
+							break;
+						case "***" :
+						case "^^^" :
+							// cube
+							result = setPrecision(pow(operandA, 3));
+							break;
+						case "**" :
+						case "××" :
+						case "xx" :
+						case "^^" :
+						case "^" :
+							// squaring, and powering (conditionally)
+							result = setPrecision(pow(operandA,
+									not(operandB) ? 2 : operandB));
+							break;
+						case "*" :
+						case "×" :
+						case "x" :
+							// product
+							// the two x's are different; break;
+							// one's a regular x, while the other is a
+							// multiplication sign
+							result = setPrecision(operandA * operandB);
+							break;
+						case "__/" :
+							// cubic root
+							result = setPrecision(cbrt(operandA));
+							break;
+						case "_/" :
+							// square root
+							result = setPrecision(sqrt(operandA));
+							break;
+						case "!" :
+							// factorial
+							result = factorial(operandA);
+							break;
+						case "%" :
+							// find y percent of x
+							result = percentify(operandA, operandB);
+							break;
+						case "/" :
+						case "÷" :
+							// quotient
+							result = setPrecision(operandA / operandB);
+							break;
+					};
+					s = replaceFirst(s, catchValuesThatRequireNumericOperations,
+							Str(result).replaceAll("((?<=\\.\\d)[0]+|\\.[0]+)$",
+									""));
 				}
 			}
 			s = s.replaceAll("[&\\{](?=\\-?\\d*\\.?\\d+(?![:=]))\\}?", "");
@@ -37788,203 +37889,232 @@ public class KL {
 	}
 	public static void printkv(String[] o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(int[] o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(long[] o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(float[] o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(double[] o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(boolean[] o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(arr o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(strArr o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(intArr o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(longArr o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(fltArr o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(dblArr o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(boolArr o) {
 		String output = "[";
-		for (var kv : kv(o)) output += cat(kv[0], "=", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
 	public static void printkv(o o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(oI o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(oL o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(oF o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(oD o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(oB o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeI o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeL o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeF o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeD o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeB o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeDS o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeDI o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeDL o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeDF o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
 	}
 	public static void printkv(treeDB o) {
 		String output = "{";
-		for (var kv : kv(o)) output += cat(kv[0], ": ", kv[1], ", ");
+		for (var kv : kv(o))
+			output += cat(kv[0], ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39120,16 +39250,6 @@ public class KL {
 			}
 		}
 		return count == len(bools);
-	}
-	public static boolean neither(Object... objs) {
-		if (objs == null) return No;
-		int count = 0;
-		for (Object obj : objs) {
-			if (not(obj)) {
-				count += 1;
-			}
-		}
-		return count == len(objs);
 	}
 	public static boolean not(String s) {
 		return isnl(s) || isEmpty(s);
@@ -42432,9 +42552,13 @@ public class KL {
 				return "";
 			}
 			groupName = groupName.replaceAll("[\\$\\{\\}]", "");
-			return isIntLike(groupName)
+			String acquiredValueFromTheGroup = isIntLike(groupName)
 					? matcher.group(Int(groupName))
 					: matcher.group(groupName);
+			if (isNull(acquiredValueFromTheGroup))
+				return "";
+			//the null check is a requirement
+			return acquiredValueFromTheGroup;
 		} catch (IllegalArgumentException | StackOverflowError e) {
 			return "";
 		}
@@ -46101,7 +46225,7 @@ public class KL {
 	static o fetched = fetch("https://randusers-api.vercel.app");
 	static boolean veteran = user.k("veteran", _b);
 	static boolean[] boolsArr = {Yes, No, Yes};
-	public static int n = 6;
+	public static int n = 0;
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
@@ -46203,7 +46327,7 @@ public class KL {
 		print();
 		printkv(arr3);
 		kaho("$user.veteran");
-		print("$NotOk if $name not Ayesha else Ok");
+		print("$Ok if $n else NotOk");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
