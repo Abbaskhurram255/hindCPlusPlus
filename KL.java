@@ -35815,7 +35815,7 @@ public class KL {
 			// post processing...
 			// FOR FIELDS
 			String[] fieldMatches = findMatches(s,
-					"\\$?\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?(\\sif)?");
+					"(\\$+\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(\\sif)?");
 			if (!isEmpty(fieldMatches)) {
 				try {
 					Class<?> cls = this.getClass();
@@ -35828,7 +35828,7 @@ public class KL {
 					}
 					// ^regex accuracy: ~91%
 					for (String m : fieldMatches) {
-						if (in(m, "\\sif"))
+						if (in(m, "(?<!\\$)\\$\\w+\\sif"))
 							continue;
 						String toGet = m.replaceAll(
 								"[\\$\\{:=\\\\\\}]|\\[\\-?\\d+\\]|(?<=[:=])(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)|(?<=[\\w])\\.[\\w]+",
@@ -36494,7 +36494,7 @@ public class KL {
 				}
 			}
 			// for logical operations
-			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\s\\$\\{\\}]+)\\sif\\s(?<A>[^\\s\\$\\{\\}]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|has|contains|in|[<>=]{1,3})?\\s?(?<B>[^\\s\\$\\{\\}]+)?\\}?\\selse\\s(?<alternativeSolution>[^\\s\\$\\{\\}]+)\\}?";
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\sif\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|has|contains|in|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\selse\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
 			if (in(s, catchValuesThatNeedLogic)) {
 				String[] valuesThatNeedLogic = findMatches(s,
 						catchValuesThatNeedLogic);
@@ -36959,7 +36959,7 @@ public class KL {
 			// post processing...
 			// FOR FIELDS
 			String[] fieldMatches = findMatches(s,
-					"(\\$?\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(?!\\sif)");
+					"(\\$+\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(\\sif)?");
 			if (!isEmpty(fieldMatches)) {
 				try {
 					Class<?> cls = this.getClass();
@@ -36972,6 +36972,8 @@ public class KL {
 					}
 					// ^regex accuracy: ~91%
 					for (String m : fieldMatches) {
+						if (in(m, "(?<!\\$)\\$\\w+\\sif"))
+							continue;
 						String toGet = m.replaceAll(
 								"[\\$\\{:=\\\\\\}]|\\[\\-?\\d+\\]|(?<=[:=])(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)|(?<=[\\w])\\.[\\w]+",
 								"");
@@ -37650,7 +37652,7 @@ public class KL {
 				}
 			}
 			// for logical operations
-			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\s\\$\\{\\}]+)\\sif\\s(?<A>[^\\s\\$\\{\\}]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|has|contains|in|[<>=]{1,3})?\\s?(?<B>[^\\s\\$\\{\\}]+)?\\}?\\selse\\s(?<alternativeSolution>[^\\s\\$\\{\\}]+)\\}?";
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\sif\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|has|contains|in|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\selse\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
 			if (in(s, catchValuesThatNeedLogic)) {
 				String[] valuesThatNeedLogic = findMatches(s,
 						catchValuesThatNeedLogic);
@@ -46327,7 +46329,7 @@ public class KL {
 		print();
 		printkv(arr3);
 		kaho("$user.veteran");
-		print("$Ok if $n else NotOk");
+		print("$eligible if $age >= 24 else $age");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
