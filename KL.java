@@ -43024,6 +43024,74 @@ public class KL {
 		public static dblArr dblArr = dblArr();
 		public static boolArr boolArr = boolArr();
 	}
+	public static class summary {
+		public static o of(Object o) {
+		    o summary = new o();
+		    summary.add("type=" + type(o));
+		    summary.add("isNull=" + isNull(o));
+		    summary.add("isStr=" + isStr(o));
+		    summary.add("isInt=" + isInt(o));
+		    summary.add("isLong=" + isLong(o));
+		    summary.add("isFlt=" + isFlt(o));
+		    summary.add("isDbl=" + isDbl(o));
+		    summary.add("isBool=" + isBool(o));
+		    summary.add("isArr=" + isArr(o));
+		    summary.add("isArrOfObj=" + isArrOfObj(o));
+		    summary.add("isArrOfChar=" + isArrOfChar(o));
+		    summary.add("isArrOfStr=" + isArrOfStr(o));
+		    summary.add("isArrOfInt=" + isArrOfInt(o));
+		    summary.add("isArrOfLong=" + isArrOfLong(o));
+		    summary.add("isArrOfFlt=" + isArrOfFlt(o));
+		    summary.add("isArrOfDbl=" + isArrOfDbl(o));
+		    summary.add("isArrOfBool=" + isArrOfBool(o));
+		    summary.add("isStrArr=" + isStrArr(o));
+		    summary.add("isIntArr=" + isIntArr(o));
+		    summary.add("isLongArr=" + isLongArr(o));
+		    summary.add("isFltArr=" + isFltArr(o));
+		    summary.add("isDblArr=" + isDblArr(o));
+		    summary.add("isBoolArr=" + isBoolArr(o));
+		    if (isStr(o)) {
+			    summary.add("length=" + len((String) o));
+			}
+			if (isChar(o)) {
+				summary.add("isNullChar=" + (((char) o) == '\0'));
+				summary.add("isUpper=" + (isUpper((char) o)));
+				summary.add("isLower=" + (isLower((char) o)));
+			}
+			if (o instanceof Number) {
+				if (isInt(o)) {
+                    summary.add("isPos=" + isPos((int) o));
+			    	summary.add("isNeg=" + isNeg((int) o));
+				}
+				else if (isLong(o)) {
+                    summary.add("isPos=" + isPos((int) o));
+			    	summary.add("isNeg=" + isNeg((int) o));
+				}
+				else if (isFlt(o)) {
+                    summary.add("isPos=" + isPos((int) o));
+			    	summary.add("isNeg=" + isNeg((int) o));
+				}
+				else if (isDbl(o)) {
+                    summary.add("isPos=" + isPos((int) o));
+			    	summary.add("isNeg=" + isNeg((int) o));
+				}
+				else {
+					//is just an instance of the Number class
+                    summary.add("asInt=" + ((Number) o).intValue());
+			    	summary.add("asLong=" + ((Number) o).longValue());
+			        summary.add("asFlt=" + ((Number) o).floatValue());
+			        summary.add("asDbl=" + ((Number) o).doubleValue());
+				}
+			}
+			
+		    return summarized;
+		}
+		public static o get(Object o) {
+			return KL
+			.summary
+			.of(o);
+		}
+	}
 	public static final class binary {
 		public static int indexOf(int[] src, int target) {
 			if (src == null || src.length == 0)
