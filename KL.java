@@ -19600,10 +19600,8 @@ public class KL {
 	private static final Map<Integer, Thread> intervalThreads = new ConcurrentHashMap<>();
 	private static int intervalId = 0;
 	public static int setInterval(Runnable fn, int interval) {
-		if (isNull(fn) || isNull(interval) || isInf(interval)
-				|| isNeg(interval)) {
+		if (not(fn) || not(interval) || isNeg(interval))
 			return -1;
-		}
 		intervalId++;
 		Thread thread = new Thread(() -> {
 			while (!Thread.currentThread().isInterrupted()) {
@@ -19622,9 +19620,8 @@ public class KL {
 	}
 	public static int setInterval(Runnable fn, int interval,
 			int maxIterations) {
-		if (isNull(fn) || isNull(interval) || isInf(interval) || isNeg(interval)
-				|| isNull(maxIterations) || isInf(maxIterations)
-				|| isNeg(maxIterations) || not(maxIterations)) {
+		if (not(fn) || not(interval) || isNeg(interval)
+				|| not(maxIterations) || isNeg(maxIterations)) {
 			return -1;
 		}
 		intervalId++;
@@ -29935,6 +29932,12 @@ public class KL {
 				fn.run();
 			return this;
 		}
+		DoFail Then(Runnable fn) {
+			return Done(fn);
+		}
+		DoFail Success(Runnable fn) {
+			return Done(fn);
+		}
 		DoFail Always(Runnable fn) {
 			if (fn == ignored)
 				return null;
@@ -30033,7 +30036,7 @@ public class KL {
 	}
 	public static int[] range(int n) {
 		intArr arr = intArr();
-		if (not(n) || n < 1) {
+		if (not(n) || n < 0) {
 			return arr.array();
 		}
 		for (int i = 0; i < n; i++) {
@@ -30043,7 +30046,7 @@ public class KL {
 	}
 	public static double[] range(double n) {
 		dblArr arr = blank.dblArr;
-		if (not(n) || n < 1.1) {
+		if (n < 1.1 || not(n)) {
 			return arr.array();
 		}
 		for (double i = 0; i < n; i += .1) {
@@ -30085,7 +30088,8 @@ public class KL {
 					? optional[0]
 					: 1;
 		}
-		int charCodeOfM = m.charAt(0), charCodeOfN = n.charAt(0);
+		int charCodeOfM = m.charAt(0),
+          charCodeOfN = n.charAt(0);
 		if (charCodeOfM > charCodeOfN) {
 			for (int i = charCodeOfM; i >= charCodeOfN; i -= step) {
 				arr.add(Str((char) i));
@@ -30558,8 +30562,7 @@ public class KL {
 			consumer.accept(item);
 		}
 	}
-	// handling Object arrays
-	// DON'T remove
+	// for handling Object arrays, and Number arrays, and others we didn't handle.
 	public static void forEach(String[] iterable,
 			ObjIntConsumer<String> consumer) {
 		each(iterable, consumer);
@@ -30610,8 +30613,7 @@ public class KL {
 	public static <T> void forEach(T[] iterable, ObjIntConsumer<T> consumer) {
 		each(iterable, consumer);
 	}
-	// handling Object arrays
-	// DON'T remove
+	// for handling Object arrays, and Number arrays, and others we didn't handle.
 	public static void repeat(Runnable fn, int times) {
 		for (; times > 0; times--) {
 			new Thread(fn).start();
@@ -34085,8 +34087,14 @@ public class KL {
 			return false;
 		}
 	}
+	public static boolean isIntLike(Object o) {
+		return isIntLike(Str(o));
+	}
 	public static boolean isLongLike(String s) {
 		return isIntLike(s);
+	}
+	public static boolean isLongLike(Object o) {
+		return isLongLike(Str(o));
 	}
 	public static boolean isFltLike(String s) {
 		if (not(s)) {
@@ -34098,6 +34106,9 @@ public class KL {
 			return false;
 		}
 	}
+	public static boolean isFltLike(Object o) {
+		return isFltLike(Str(o));
+	}
 	public static boolean isDblLike(String s) {
 		if (not(s)) {
 			return false;
@@ -34108,10 +34119,18 @@ public class KL {
 			return false;
 		}
 	}
+	public static boolean isDblLike(Object o) {
+		return isDblLike(Str(o));
+	}
 	public static boolean isNumLike(String s) {
 		if (not(s))
 			return false;
 		return either(isIntLike(s), isDblLike(s));
+	}
+	public static boolean isNumLike(Object o) {
+		if (not(o))
+			return false;
+		return either(isIntLike(o), isDblLike(o));
 	}
 	public static boolean isChar(Object o) {
 		return type(o, Char);
@@ -34130,6 +34149,10 @@ public class KL {
 	}
 	public static boolean isDbl(Object o) {
 		return type(o, Dbl);
+	}
+	public static boolean isNum(Object o) {
+		if (not(o)) return false;
+		return o instanceof Number;
 	}
 	public static boolean isBool(Object o) {
 		return type(o, Bool);
@@ -38117,6 +38140,238 @@ public class KL {
 		String output = "{";
 		for (var kv : kv(o))
 			output += cat(kv[0], ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(String[] o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(int[] o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(long[] o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(float[] o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(double[] o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(boolean[] o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(arr o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(strArr o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(intArr o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(longArr o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(fltArr o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(dblArr o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(boolArr o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(o o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(oI o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(oL o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(oF o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(oD o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(oB o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeI o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeL o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeF o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeD o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeB o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeDS o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeDI o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeDL o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeDF o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+		output += "}";
+		output = output.replaceAll(",\\s(?=\\}$)", "");
+		print(output);
+	}
+	public static void printnv(treeDB o) {
+		String output = "{";
+		for (var kv : kv(o))
+			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -42557,9 +42812,9 @@ public class KL {
 			String acquiredValueFromTheGroup = isIntLike(groupName)
 					? matcher.group(Int(groupName))
 					: matcher.group(groupName);
-			if (isNull(acquiredValueFromTheGroup))
+			if (not(acquiredValueFromTheGroup))
 				return "";
-			//the null check is a requirement
+			//the null check is necessary
 			return acquiredValueFromTheGroup;
 		} catch (IllegalArgumentException | StackOverflowError e) {
 			return "";
@@ -43030,6 +43285,7 @@ public class KL {
 		    summary.add("type=" + type(o));
 		    summary.add("isNull=" + isNull(o));
 		    summary.add("isStr=" + isStr(o));
+		    summary.add("isNum=" + (isNum(o) || isNumLike(o)));
 		    summary.add("isInt=" + isInt(o));
 		    summary.add("isLong=" + isLong(o));
 		    summary.add("isFlt=" + isFlt(o));
@@ -43062,6 +43318,7 @@ public class KL {
 				if (isInt(o)) {
                     summary.add("isPos=" + isPos((int) o));
 			    	summary.add("isNeg=" + isNeg((int) o));
+			        summary.add("digits=" + len((int) o));
 				}
 				else if (isLong(o)) {
                     summary.add("isPos=" + isPos((int) o));
@@ -43084,7 +43341,7 @@ public class KL {
 				}
 			}
 			
-		    return summarized;
+		    return summary;
 		}
 		public static o get(Object o) {
 			return KL
@@ -44210,11 +44467,11 @@ public class KL {
 	public static boolean inUpper(char c) {
 		return upper(c) == c;
 	}
-	public static boolean notInUpper(String s) {
-		return !inUpper(s);
+	public static boolean isUpper(String s) {
+		return inUpper(s);
 	}
-	public static boolean notInUpper(char c) {
-		return !inUpper(c);
+	public static boolean isUpper(char c) {
+		return inUpper(c);
 	}
 	public static boolean inLower(String s) {
 		return lower(s).equals(s);
@@ -44222,11 +44479,11 @@ public class KL {
 	public static boolean inLower(char c) {
 		return lower(c) == c;
 	}
-	public static boolean notInLower(String s) {
-		return !inLower(s);
+	public static boolean isLower(String s) {
+		return inLower(s);
 	}
-	public static boolean notInLower(char c) {
-		return !inLower(c);
+	public static boolean isLower(char c) {
+		return inLower(c);
 	}
 	public static String sentCase(String input) {
 		if (not(input)) {
@@ -46398,6 +46655,7 @@ public class KL {
 		printkv(arr3);
 		kaho("$user.veteran");
 		print("$eligible if $age >= 24 else $age");
+		print(summary.of(3));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
