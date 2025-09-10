@@ -130,6 +130,7 @@ class Window:
         size=(None, None),
         element_padding=None,
         fasla=(None, None),
+        f=(None, None),
         button_color=None,
         font=None,
         progress_bar_color=(None, None),
@@ -384,7 +385,7 @@ class Window:
         else:
             self.ElementPadding = element_padding
         self.RightClickMenu = right_click_menu
-        self.Fasla = fasla if fasla != (None, None) else hindGui.DEFAULT_MARGINS
+        self.Fasla = fasla if fasla != (None, None) else f if f != (None, None) else hindGui.DEFAULT_MARGINS
         self.ContainerElemementNumber = Window._GetAContainerNumber()
         # The dictionary containing all elements and keys for the window
         # The keys are the keys for the elements and the values are the elements themselves.

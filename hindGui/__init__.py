@@ -8146,6 +8146,7 @@ def set_options(
     element_size=(None, None),
     button_element_size=(None, None),
     fasla=(None, None),
+    f=(None, None),
     element_padding=(None, None),
     auto_size_text=None,
     auto_size_buttons=None,
@@ -8427,6 +8428,8 @@ def set_options(
 
     if fasla != (None, None):
         DEFAULT_MARGINS = fasla
+    elif f != (None, None):
+        DEFAULT_MARGINS = f
 
     if element_padding != (None, None):
         DEFAULT_ELEMENT_PADDING = element_padding
