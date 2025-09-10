@@ -28,7 +28,7 @@ class OptionMenu(Element):
         expand_y=False,
         background_color=None,
         text_color=None,
-        key=None,
+        event=None,
         k=None,
         pad=None,
         p=None,
@@ -57,9 +57,9 @@ class OptionMenu(Element):
         :type background_color:  (str)
         :param text_color:       color of the text
         :type text_color:        (str)
-        :param key:              Used with window.find_element and with return values to uniquely identify this element
-        :type key:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:              Used with window.find_element and with return values to uniquely identify this element
+        :type event:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param pad:              Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -79,7 +79,7 @@ class OptionMenu(Element):
         self.Disabled = disabled
         bg = background_color if background_color else hindGui.DEFAULT_INPUT_ELEMENTS_COLOR
         fg = text_color if text_color is not None else hindGui.DEFAULT_INPUT_TEXT_COLOR
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -91,7 +91,7 @@ class OptionMenu(Element):
             auto_size_text=auto_size_text,
             background_color=bg,
             text_color=fg,
-            key=key,
+            event=event,
             pad=pad,
             tooltip=tooltip,
             visible=visible,

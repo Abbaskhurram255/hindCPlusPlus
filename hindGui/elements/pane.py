@@ -25,7 +25,7 @@ class Pane(Element):
         relief=RELIEF_RAISED,
         handle_size=None,
         border_width=None,
-        key=None,
+        event=None,
         k=None,
         expand_x=None,
         expand_y=None,
@@ -55,9 +55,9 @@ class Pane(Element):
         :type handle_size:       (int)
         :param border_width:     width of border around element in pixels
         :type border_width:      (int)
-        :param key:              Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type key:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:              Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type event:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param expand_x:         If True the column will automatically expand in the X direction to fill available space
         :type expand_x:          (bool)
@@ -87,13 +87,13 @@ class Pane(Element):
         bg = background_color if background_color is not None else hindGui.DEFAULT_BACKGROUND_COLOR
 
         self.Rows = [pane_list]
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
         self.expand_y = expand_y
 
-        super().__init__(ELEM_TYPE_PANE, background_color=bg, size=sz, pad=pad, key=key, visible=visible, metadata=metadata)
+        super().__init__(ELEM_TYPE_PANE, background_color=bg, size=sz, pad=pad, event=event, visible=visible, metadata=metadata)
         return
 
     def change(self, visible=None):

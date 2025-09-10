@@ -9,14 +9,14 @@ class ErrorElement(Element):
     A "dummy Element" that is returned when there are error conditions, like trying to find an element that's invalid
     """
 
-    def __init__(self, key=None, metadata=None):
+    def __init__(self, event=None, metadata=None):
         """
-        :param key: Used with window.find_element and with return values to uniquely identify this element
-        :type key:
+        :param event: Used with window.find_element and with return values to uniquely identify this element
+        :type event:
         """
-        self.Key = key
+        self.Key = event
 
-        super().__init__(ELEM_TYPE_ERROR, key=key, metadata=metadata)
+        super().__init__(ELEM_TYPE_ERROR, event=event, metadata=metadata)
 
     def change(self, silent_on_error=True, *args, **kwargs):
         """
@@ -31,7 +31,7 @@ class ErrorElement(Element):
         :return:                returns 'self' so call can be chained
         :rtype:                 (ErrorElement)
         """
-        print('** Your change is being ignored because you supplied a bad key earlier **')
+        print('** Your change is being ignored because you supplied a bad event earlier **')
         return self
 
     def get(self):

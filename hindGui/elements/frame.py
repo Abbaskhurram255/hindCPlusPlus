@@ -31,7 +31,7 @@ class Frame(Element):
         pad=None,
         p=None,
         border_width=None,
-        key=None,
+        event=None,
         k=None,
         tooltip=None,
         right_click_menu=None,
@@ -68,9 +68,9 @@ class Frame(Element):
         :type p:                      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param border_width:          width of border around element in pixels
         :type border_width:           (int)
-        :param key:                   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type key:                    str | int | tuple | object
-        :param k:                     Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:                   Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type event:                    str | int | tuple | object
+        :param k:                     Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                      str | int | tuple | object
         :param tooltip:               text, that will appear when mouse hovers over the element
         :type tooltip:                (str)
@@ -113,7 +113,7 @@ class Frame(Element):
         self.Widget = None  # type: tk.LabelFrame
         self.Grab = grab
         self.Layout(layout)
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -126,7 +126,7 @@ class Frame(Element):
             size=sz,
             font=font,
             pad=pad,
-            key=key,
+            event=event,
             tooltip=tooltip,
             visible=visible,
             metadata=metadata,
@@ -178,7 +178,7 @@ class Frame(Element):
                     'You MUST start witha "clean", unused layout every time you create a window',
                     'The offensive Element = ',
                     element,
-                    'and has a key = ',
+                    'and has a event = ',
                     element.Key,
                     'This item will be stripped from your layout',
                     'Hint - try printing your layout and matching the IDs "print(layout)"',

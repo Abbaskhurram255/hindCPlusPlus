@@ -54,7 +54,7 @@ class Listbox(Element):
         sbar_arrow_width=None,
         sbar_frame_color=None,
         sbar_relief=None,
-        key=None,
+        event=None,
         k=None,
         pad=None,
         p=None,
@@ -76,7 +76,7 @@ class Listbox(Element):
         :type change_submits:              (bool)
         :param enable_events:              Turns on the element specific events. Listbox generates events when an item is clicked
         :type enable_events:               (bool)
-        :param bind_return_key:            If True, then the return key will cause a the Listbox to generate an event when return key is pressed
+        :param bind_return_key:            If True, then the return event will cause a the Listbox to generate an event when return event is pressed
         :type bind_return_key:             (bool)
         :param size:                       w=characters-wide, h=rows-high. If an int instead of a tuple is supplied, then height is auto-set to 1
         :type size:                        (int, int) |  (int, None) | int
@@ -116,9 +116,9 @@ class Listbox(Element):
         :type sbar_frame_color:             (str)
         :param sbar_relief:                 Scrollbar relief that will be used for the "thumb" of the scrollbar (the thing you grab that slides). Should be a constant that is defined at starting with "RELIEF_" - RELIEF_RAISED, RELIEF_SUNKEN, RELIEF_FLAT, RELIEF_RIDGE, RELIEF_GROOVE, RELIEF_SOLID
         :type sbar_relief:                  (str)
-        :param key:                        Used with window.find_element and with return values to uniquely identify this element
-        :type key:                         str | int | tuple | object
-        :param k:                          Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:                        Used with window.find_element and with return values to uniquely identify this element
+        :type event:                         str | int | tuple | object
+        :param k:                          Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                           str | int | tuple | object
         :param pad:                        Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                         (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -171,7 +171,7 @@ class Listbox(Element):
         self.element_frame = None  # type: tk.Frame
         self.NoScrollbar = no_scrollbar
         self.HorizontalScroll = horizontal_scroll
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -185,7 +185,7 @@ class Listbox(Element):
             font=font,
             background_color=bg,
             text_color=fg,
-            key=key,
+            event=event,
             pad=pad,
             tooltip=tooltip,
             visible=visible,

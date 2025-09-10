@@ -68,13 +68,13 @@ class SystemTray:
         screen_size = Window.get_screen_size()
 
         if filename:
-            image_elem = Image(filename=filename, background_color='red', enable_events=True, tooltip=tooltip, key='-IMAGE-')
+            image_elem = Image(filename=filename, background_color='red', enable_events=True, tooltip=tooltip, event='-IMAGE-')
         elif data_base64:
-            image_elem = Image(data=data_base64, background_color='red', enable_events=True, tooltip=tooltip, key='-IMAGE-')
+            image_elem = Image(data=data_base64, background_color='red', enable_events=True, tooltip=tooltip, event='-IMAGE-')
         elif data:
-            image_elem = Image(data=data, background_color='red', enable_events=True, tooltip=tooltip, key='-IMAGE-')
+            image_elem = Image(data=data, background_color='red', enable_events=True, tooltip=tooltip, event='-IMAGE-')
         else:
-            image_elem = Image(background_color='red', enable_events=True, tooltip=tooltip, key='-IMAGE-')
+            image_elem = Image(background_color='red', enable_events=True, tooltip=tooltip, event='-IMAGE-')
         layout = [
             [image_elem],
         ]
@@ -278,7 +278,7 @@ class SystemTray:
                     canvas_size=(win_width, win_height),
                     graph_bottom_left=(0, win_height),
                     graph_top_right=(win_width, 0),
-                    key='-GRAPH-',
+                    event='-GRAPH-',
                     background_color=SYSTEM_TRAY_MESSAGE_WIN_COLOR,
                     enable_events=True,
                 )

@@ -64,7 +64,7 @@ class Table(Element):
         bind_return_key=False,
         pad=None,
         p=None,
-        key=None,
+        event=None,
         k=None,
         tooltip=None,
         right_click_menu=None,
@@ -154,15 +154,15 @@ class Table(Element):
         :type enable_click_events:      (bool)
         :param right_click_selects:     If True, then right clicking a row will select that row if multiple rows are not currently selected
         :type right_click_selects:      (bool)
-        :param bind_return_key:         if True, pressing return key will cause event coming from Table, ALSO a left button double click will generate an event if this parameter is True
+        :param bind_return_key:         if True, pressing return event will cause event coming from Table, ALSO a left button double click will generate an event if this parameter is True
         :type bind_return_key:          (bool)
         :param pad:                     Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                       Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                        (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param key:                     Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type key:                      str | int | tuple | object
-        :param k:                       Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:                     Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type event:                      str | int | tuple | object
+        :param k:                       Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                        str | int | tuple | object
         :param tooltip:                 text, that will appear when mouse hovers over the element
         :type tooltip:                  (str)
@@ -227,7 +227,7 @@ class Table(Element):
         self.RightClickMenu = right_click_menu
         self.RowColors = row_colors
         self.tree_ids = []  # ids returned when inserting items into table - will use to delete colors
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -240,7 +240,7 @@ class Table(Element):
             font=font,
             size=sz,
             pad=pad,
-            key=key,
+            event=event,
             tooltip=tooltip,
             visible=visible,
             metadata=metadata,
@@ -370,7 +370,7 @@ class Table(Element):
         """
         selections = self.TKTreeview.selection()
         self.SelectedRows = [int(x) - 1 for x in selections]
-        if self.BindReturnKey:  # Signifies BOTH a return key AND a double click
+        if self.BindReturnKey:  # Signifies BOTH a return event AND a double click
             if self.Key is not None:
                 self.ParentForm.LastButtonClicked = self.Key
             else:
@@ -405,10 +405,10 @@ class Table(Element):
             else:
                 column = None
         except Exception as e:
-            warnings.warn(f'Error getting table click data for table with key= {self.Key}\nError: {e}', UserWarning)
+            warnings.warn(f'Error getting table click data for table with event= {self.Key}\nError: {e}', UserWarning)
             if not hindGui.SUPPRESS_ERROR_POPUPS:
                 _error_popup_with_traceback(
-                    f'Unable to complete operation getting the clicked event for table with key {self.Key}',
+                    f'Unable to complete operation getting the clicked event for table with event {self.Key}',
                     _create_error_message(),
                     e,
                     'Event data:',

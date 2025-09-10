@@ -162,7 +162,7 @@ class Column(Element):
         scrollable=False,
         vertical_scroll_only=False,
         right_click_menu=None,
-        key=None,
+        event=None,
         k=None,
         visible=True,
         justification=None,
@@ -203,9 +203,9 @@ class Column(Element):
         :type vertical_scroll_only:         (bool)
         :param right_click_menu:            A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:             List[List[ List[str] | str ]]
-        :param key:                         Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type key:                          str | int | tuple | object
-        :param k:                           Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:                         Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type event:                          str | int | tuple | object
+        :param k:                           Same as the event. You can use either k or event. Which ever is set will be used.
         :type k:                            str | int | tuple | object
         :param visible:                     set visibility state of the element
         :type visible:                      (bool)
@@ -258,7 +258,7 @@ class Column(Element):
         self.ElementJustification = element_justification
         self.Justification = justification
         self.VerticalAlignment = vertical_alignment
-        key = key if key is not None else k
+        event = event if event is not None else k
         self.Grab = grab
         self.expand_x = expand_x
         self.expand_y = expand_y
@@ -273,7 +273,7 @@ class Column(Element):
             background_color=bg,
             size=sz,
             pad=pad,
-            key=key,
+            event=event,
             visible=visible,
             metadata=metadata,
             sbar_trough_color=sbar_trough_color,
@@ -334,8 +334,8 @@ class Column(Element):
                     'You MUST start witha "clean", unused layout every time you create a window',
                     'The offensive Element = ',
                     element,
-                    'and has a key = ',
-                    element.Key,
+                    'and has a event = ',
+                    element.event,
                     'This item will be stripped from your layout',
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
                     keep_on_top=True,
@@ -345,7 +345,7 @@ class Column(Element):
             element.Position = (CurrentRowNumber, i)
             element.ParentContainer = self
             CurrentRow.append(element)
-            if element.Key is not None:
+            if element.event is not None:
                 self.UseDictionary = True
         # -------------------------  Append the row to list of Rows  ------------------------- #
         self.Rows.append(CurrentRow)

@@ -16,7 +16,7 @@ class Canvas(Element):
         s=(None, None),
         pad=None,
         p=None,
-        key=None,
+        event=None,
         k=None,
         tooltip=None,
         right_click_menu=None,
@@ -39,9 +39,9 @@ class Canvas(Element):
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param key:              Used with window.find_element and with return values to uniquely identify this element
-        :type key:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:              Used with window.find_element and with return values to uniquely identify this element
+        :type event:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param tooltip:          text, that will appear when mouse hovers over the element
         :type tooltip:           (str)
@@ -63,7 +63,7 @@ class Canvas(Element):
         self._TKCanvas = self.Widget = canvas
         self.RightClickMenu = right_click_menu
         self.BorderWidth = border_width
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -74,7 +74,7 @@ class Canvas(Element):
             background_color=background_color,
             size=sz,
             pad=pad,
-            key=key,
+            event=event,
             tooltip=tooltip,
             visible=visible,
             metadata=metadata,

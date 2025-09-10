@@ -18,7 +18,7 @@ from hindGui.elements.helpers import AddMenuItem
 class Menu(Element):
     """
     Menu Element is the Element that provides a Menu Bar that goes across the top of the window, just below titlebar.
-    Here is an example layout.  The "&" are shortcut keys ALT+key.
+    Here is an example layout.  The "&" are shortcut keys ALT+event.
     Is a List of -  "Item String" + List
     Where Item String is what will be displayed on the Menubar itself.
     The List that follows the item represents the items that are shown then Menu item is clicked
@@ -30,9 +30,9 @@ class Menu(Element):
                 ['&Help', '&About...'], ]
     Important Note!  The colors, font, look of the Menubar itself cannot be changed, only the menus shown AFTER clicking the menubar
     can be changed.  If you want to change the style/colors the Menubar, then you will have to use the MenubarCustom element.
-    Finally, "keys" can be added to entries so make them unique.  The "Save" entry has a key associated with it. You
-    can see it has a "::" which signifies the beginning of a key.  The user will not see the key portion when the
-    menu is shown.  The key portion is returned as part of the event.
+    Finally, "keys" can be added to entries so make them unique.  The "Save" entry has a event associated with it. You
+    can see it has a "::" which signifies the beginning of a event.  The user will not see the event portion when the
+    menu is shown.  The event portion is returned as part of the event.
     """
 
     def __init__(
@@ -47,7 +47,7 @@ class Menu(Element):
         font=None,
         pad=None,
         p=None,
-        key=None,
+        event=None,
         k=None,
         visible=True,
         metadata=None,
@@ -73,9 +73,9 @@ class Menu(Element):
         :type p:                          (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param font:                      specifies the  font family, size, etc. of submenus. Does NOT apply to the Menubar itself. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:                       (str or (str, int[, str]) or None)
-        :param key:                       Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type key:                        str | int | tuple | object
-        :param k:                         Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:                       Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type event:                        str | int | tuple | object
+        :param k:                         Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                          str | int | tuple | object
         :param visible:                   set visibility state of the element
         :type visible:                    (bool)
@@ -90,7 +90,7 @@ class Menu(Element):
         self.MenuDefinition = copy.deepcopy(menu_definition)
         self.Widget = self.TKMenu = None  # type: tk.Menu
         self.MenuItemChosen = None
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
 
@@ -100,12 +100,12 @@ class Menu(Element):
             text_color=self.TextColor,
             size=sz,
             pad=pad,
-            key=key,
+            event=event,
             visible=visible,
             font=font,
             metadata=metadata,
         )
-        # super().__init__(ELEM_TYPE_MENUBAR, background_color=COLOR_SYSTEM_DEFAULT, text_color=COLOR_SYSTEM_DEFAULT, size=sz, pad=pad, key=key, visible=visible, font=None, metadata=metadata)
+        # super().__init__(ELEM_TYPE_MENUBAR, background_color=COLOR_SYSTEM_DEFAULT, text_color=COLOR_SYSTEM_DEFAULT, size=sz, pad=pad, event=event, visible=visible, font=None, metadata=metadata)
 
         self.Tearoff = tearoff
 

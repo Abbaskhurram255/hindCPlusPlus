@@ -36,7 +36,7 @@ class Graph(Element):
         drag_submits=False,
         enable_events=False,
         motion_events=False,
-        key=None,
+        event=None,
         k=None,
         tooltip=None,
         right_click_menu=None,
@@ -62,15 +62,15 @@ class Graph(Element):
         :type p:                  (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param change_submits:    * DEPRICATED DO NOT USE. Use `enable_events` instead
         :type change_submits:     (bool)
-        :param drag_submits:      if True and Events are enabled for the Graph, will report Events any time the mouse moves while button down.  When the mouse button is released, you'll get an event = graph key + '+UP' (if key is a string.. if not a string, it'll be made into a tuple)
+        :param drag_submits:      if True and Events are enabled for the Graph, will report Events any time the mouse moves while button down.  When the mouse button is released, you'll get an event = graph event + '+UP' (if event is a string.. if not a string, it'll be made into a tuple)
         :type drag_submits:       (bool)
         :param enable_events:     If True then clicks on the Graph are immediately reported as an event. Use this instead of change_submits
         :type enable_events:      (bool)
-        :param motion_events:     If True then if no button is down and the mouse is moved, an event is generated with key = graph key + '+MOVE' (if key is a string, it not a string then a tuple is returned)
+        :param motion_events:     If True then if no button is down and the mouse is moved, an event is generated with event = graph event + '+MOVE' (if event is a string, it not a string then a tuple is returned)
         :type motion_events:      (bool)
-        :param key:               Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type key:                str | int | tuple | object
-        :param k:                 Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:               Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type event:                str | int | tuple | object
+        :param k:                 Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                  str | int | tuple | object
         :param tooltip:           text, that will appear when mouse hovers over the element
         :type tooltip:            (str)
@@ -103,7 +103,7 @@ class Graph(Element):
         self.RightClickMenu = right_click_menu
         self.FloatValues = float_values
         self.BorderWidth = border_width
-        key = key if key is not None else k
+        event = event if event is not None else k
         pad = pad if pad is not None else p
         self.expand_x = expand_x
         self.expand_y = expand_y
@@ -114,7 +114,7 @@ class Graph(Element):
             background_color=background_color,
             size=canvas_size,
             pad=pad,
-            key=key,
+            event=event,
             tooltip=tooltip,
             visible=visible,
             metadata=metadata,

@@ -33,7 +33,7 @@ class Slider(Element):
         background_color=None,
         text_color=None,
         trough_color=None,
-        key=None,
+        event=None,
         k=None,
         pad=None,
         p=None,
@@ -78,9 +78,9 @@ class Slider(Element):
         :type text_color:              (str)
         :param trough_color:           color of the slider's trough
         :type trough_color:            (str)
-        :param key:                    Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
-        :type key:                     str | int | tuple | object
-        :param k:                      Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:                    Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
+        :type event:                     str | int | tuple | object
+        :param k:                      Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                       str | int | tuple | object
         :param pad:                    Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                     (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -114,7 +114,7 @@ class Slider(Element):
         temp_size = sz
         if temp_size == (None, None):
             temp_size = (20, 20) if self.Orientation.startswith('h') else (8, 20)
-        key = key if key is not None else k
+        event = event if event is not None else k
         pad = pad if pad is not None else p
         self.expand_x = expand_x
         self.expand_y = expand_y
@@ -125,7 +125,7 @@ class Slider(Element):
             font=font,
             background_color=background_color,
             text_color=text_color,
-            key=key,
+            event=event,
             pad=pad,
             tooltip=tooltip,
             visible=visible,

@@ -3,7 +3,7 @@ from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from functools import reduce
 from types import *
-from typing import List, Callable, TypeVar, Any, Optional
+from typing import List, Callable, TypeVar, Any, Optional, Final
 from numbers import Number
 from math import *
 from hindGui import *

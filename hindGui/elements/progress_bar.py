@@ -28,7 +28,7 @@ class TKProgressBar:
         border_width=hindGui.DEFAULT_PROGRESS_BAR_BORDER_WIDTH,
         orientation='horizontal',
         BarColor=(None, None),
-        key=None,
+        event=None,
     ):
         """
         :param root:         The root window bar is to be shown in
@@ -51,8 +51,8 @@ class TKProgressBar:
         :type orientation:   (str)
         :param BarColor:     The 2 colors that make up a progress bar. One is the background, the other is the bar
         :type BarColor:      (str, str)
-        :param key:          Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type key:           str | int | tuple | object
+        :param event:          Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type event:           str | int | tuple | object
         """
 
         self.Length = length
@@ -139,7 +139,7 @@ class ProgressBar(Element):
         style=None,
         border_width=None,
         relief=None,
-        key=None,
+        event=None,
         k=None,
         pad=None,
         p=None,
@@ -170,9 +170,9 @@ class ProgressBar(Element):
         :type border_width:      (int)
         :param relief:           relief style. Values are same as progress meter relief values.  Can be a constant or a string: `RELIEF_RAISED RELIEF_SUNKEN RELIEF_FLAT RELIEF_RIDGE RELIEF_GROOVE RELIEF_SOLID` (Default value = DEFAULT_PROGRESS_BAR_RELIEF)
         :type relief:            (str)
-        :param key:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type key:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type event:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param pad:              Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -207,7 +207,7 @@ class ProgressBar(Element):
         self.BorderWidth = border_width if border_width else hindGui.DEFAULT_PROGRESS_BAR_BORDER_WIDTH
         self.Relief = relief if relief else hindGui.DEFAULT_PROGRESS_BAR_RELIEF
         self.BarExpired = False
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -218,7 +218,7 @@ class ProgressBar(Element):
             ELEM_TYPE_PROGRESS_BAR,
             size=sz,
             auto_size_text=auto_size_text,
-            key=key,
+            event=event,
             pad=pad,
             visible=visible,
             metadata=metadata,

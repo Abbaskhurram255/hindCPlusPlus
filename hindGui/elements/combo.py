@@ -33,7 +33,7 @@ class Combo(Element):
         enable_events=False,
         enable_per_char_events=None,
         disabled=False,
-        key=None,
+        event=None,
         k=None,
         pad=None,
         p=None,
@@ -64,7 +64,7 @@ class Combo(Element):
         :type button_background_color:  (str)
         :param button_arrow_color:      The color of the arrow on the button on the combo box
         :type button_arrow_color:       (str)
-        :param bind_return_key:         If True, then the return key will cause a the Combo to generate an event when return key is pressed
+        :param bind_return_key:         If True, then the return event will cause a the Combo to generate an event when return event is pressed
         :type bind_return_key:          (bool)
         :param change_submits:          DEPRICATED DO NOT USE. Use `enable_events` instead
         :type change_submits:           (bool)
@@ -74,9 +74,9 @@ class Combo(Element):
         :type enable_per_char_events:   (bool)
         :param disabled:                set disable state for element
         :type disabled:                 (bool)
-        :param key:                     Used with window.find_element and with return values to uniquely identify this element
-        :type key:                      str | int | tuple | object
-        :param k:                       Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:                     Used with window.find_element and with return values to uniquely identify this element
+        :type event:                      str | int | tuple | object
+        :param k:                       Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                        str | int | tuple | object
         :param pad:                     Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                      (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -107,7 +107,7 @@ class Combo(Element):
         self.BindReturnKey = bind_return_key
         bg = background_color if background_color else hindGui.DEFAULT_INPUT_ELEMENTS_COLOR
         fg = text_color if text_color is not None else hindGui.DEFAULT_INPUT_TEXT_COLOR
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -128,7 +128,7 @@ class Combo(Element):
             auto_size_text=auto_size_text,
             background_color=bg,
             text_color=fg,
-            key=key,
+            event=event,
             pad=pad,
             tooltip=tooltip,
             font=font or hindGui.DEFAULT_FONT,

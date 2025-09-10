@@ -30,7 +30,7 @@ class StatusBar(Element):
         justification=None,
         pad=None,
         p=None,
-        key=None,
+        event=None,
         k=None,
         right_click_menu=None,
         expand_x=False,
@@ -66,9 +66,9 @@ class StatusBar(Element):
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param key:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
-        :type key:               str | int | tuple | object
-        :param k:                Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:              Used with window.find_element and with return values to uniquely identify this element to uniquely identify this element
+        :type event:               str | int | tuple | object
+        :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                 str | int | tuple | object
         :param right_click_menu: A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:  List[List[ List[str] | str ]]
@@ -94,7 +94,7 @@ class StatusBar(Element):
         else:
             bg = background_color
         self.TKText = self.Widget = None  # type: tk.Label
-        key = key if key is not None else k
+        event = event if event is not None else k
         self.RightClickMenu = right_click_menu
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
@@ -109,7 +109,7 @@ class StatusBar(Element):
             font=font or hindGui.DEFAULT_FONT,
             text_color=self.TextColor,
             pad=pad,
-            key=key,
+            event=event,
             tooltip=tooltip,
             visible=visible,
             metadata=metadata,

@@ -33,7 +33,7 @@ class Checkbox(Element):
         change_submits=False,
         enable_events=False,
         disabled=False,
-        key=None,
+        event=None,
         k=None,
         pad=None,
         p=None,
@@ -71,9 +71,9 @@ class Checkbox(Element):
         :type enable_events:        (bool)
         :param disabled:            set disable state
         :type disabled:             (bool)
-        :param key:                 Used with window.find_element and with return values to uniquely identify this element
-        :type key:                  str | int | tuple | object
-        :param k:                   Same as the Key. You can use either k or key. Which ever is set will be used.
+        :param event:                 Used with window.find_element and with return values to uniquely identify this element
+        :type event:                  str | int | tuple | object
+        :param k:                   Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                    str | int | tuple | object
         :param pad:                 Amount of padding to put around element in pixels (left/right, top/bottom) or ((left, right), (top, bottom)) or an int. If an int, then it's converted into a tuple (int, int)
         :type pad:                  (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
@@ -118,7 +118,7 @@ class Checkbox(Element):
         else:
             self.CheckboxBackgroundColor = checkbox_color
         self.ChangeSubmits = change_submits or enable_events
-        key = key if key is not None else k
+        event = event if event is not None else k
         sz = size if size != (None, None) else s
         pad = pad if pad is not None else p
         self.expand_x = expand_x
@@ -131,7 +131,7 @@ class Checkbox(Element):
             font=font,
             background_color=background_color,
             text_color=self.TextColor,
-            key=key,
+            event=event,
             pad=pad,
             tooltip=tooltip,
             visible=visible,
