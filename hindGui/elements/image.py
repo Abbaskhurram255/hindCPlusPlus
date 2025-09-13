@@ -26,13 +26,13 @@ class Image(Element):
         p=None,
         event=None,
         k=None,
-        tooltip=None,
+        hover=None,
         subsample=None,
         zoom=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         enable_events=False,
         metadata=None,
     ):
@@ -57,8 +57,8 @@ class Image(Element):
         :type event:               str | int | tuple | object
         :param k:                Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                 str | int | tuple | object
-        :param tooltip:          text, that will appear when mouse hovers over the element
-        :type tooltip:           (str)
+        :param hover:            text, that will appear when mouse hovers over the element
+        :type hover:             (str)
         :param subsample:        amount to reduce the size of the image. Divides the size by this number. 2=1/2, 3=1/3, 4=1/4, etc
         :type subsample:         (int)
         :param zoom:             amount to increase the size of the image.
@@ -69,8 +69,8 @@ class Image(Element):
         :type expand_x:          (bool)
         :param expand_y:         If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:          (bool)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param nazar:            set visibility state of the element
+        :type nazar:             (bool)
         :param enable_events:    Turns on the element specific events. For an Image element, the event is "image clicked"
         :type enable_events:     (bool)
         :param metadata:         User metadata that can be set to ANYTHING
@@ -113,23 +113,23 @@ class Image(Element):
             background_color=background_color,
             pad=pad,
             event=event,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
         return
 
-    def change(self, source=None, filename=None, data=None, size=(None, None), subsample=None, zoom=None, visible=None):
+    def change(self, source=None, filename=None, data=None, size=(None, None), subsample=None, zoom=None, nazar=None):
         """
         Changes some of the settings for the Image Element. Must call `Window.Read` or `Window.Finalize` prior.
         To clear an image that's been displayed, call with NONE of the options set.  A blank change call will
         delete the previously shown image.
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param source:   A filename or a base64 bytes. Will automatically detect the type and fill in filename or data for you.
         :type source:    str | bytes | None
@@ -143,8 +143,8 @@ class Image(Element):
         :type subsample: (int)
         :param zoom:     amount to increase the size of the image
         :type zoom:      (int)
-        :param visible:  control visibility of element
-        :type visible:   (bool)
+        :param nazar:  control visibility of element
+        :type nazar:   (bool)
         """
 
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
@@ -201,13 +201,13 @@ class Image(Element):
             except Exception as e:
                 _error_popup_with_traceback('Exception updating Image element', e)
             self.tktext_label.image = image
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
 
         # if everything is set to None, then delete the image
-        if filename is None and image is None and visible is None and size == (None, None):
+        if filename is None and image is None and nazar is None and size == (None, None):
             # Using a try because the image may have been previously deleted and don't want an error if that's happened
             try:
                 self.tktext_label.configure(image='', width=1, height=1, bd=0)
@@ -215,8 +215,8 @@ class Image(Element):
             except:
                 pass
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     def update_animation(self, source, time_between_frames=0):
         """

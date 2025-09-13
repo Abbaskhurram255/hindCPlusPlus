@@ -56,6 +56,37 @@ class obj(dict):
         else:
             super().__setitem__(key, value)
 # allows obj(name=$x, age=$y)
+o = obj
+def get_private_declarations() -> o:
+    [variables, classes, functions] = [{}, {}, {}]
+    for name, obj in locals().items():
+        # Exclude built-in names and imported modules
+        if not name.startswith('__') and inspect.getmodule(obj) is sys.modules[__name__]:
+            if inspect.isfunction(obj):
+                functions[name] = obj
+            elif inspect.isclass(obj):
+                classes[name] = obj
+            # For variables, we can assume anything else that's not a function or class
+            # and is user-defined in this module is a variable.
+            # This is a simplification; more robust checks might be needed for complex cases.
+            elif not inspect.ismodule(obj): # Exclude imported modules
+                variables[name] = obj
+    return o(variables=variables, classes=classes, functions=functions)
+def get_global_declarations() -> o:
+    [variables, classes, functions] = [{}, {}, {}]
+    for name, obj in globals().items():
+        # Exclude built-in names and imported modules
+        if not name.startswith('__') and inspect.getmodule(obj) is sys.modules[__name__]:
+            if inspect.isfunction(obj):
+                functions[name] = obj
+            elif inspect.isclass(obj):
+                classes[name] = obj
+            # For variables, we can assume anything else that's not a function or class
+            # and is user-defined in this module is a variable.
+            # This is a simplification; more robust checks might be needed for complex cases.
+            elif not inspect.ismodule(obj): # Exclude imported modules
+                variables[name] = obj
+    return o(variables=variables, classes=classes, functions=functions)
 sort = sorted
 sortMutate = lambda x: x.sort()
 reverseSort = lambda arr: sorted(arr, reverse=Yes)
@@ -899,12 +930,12 @@ class kmath:
         def c(n: Number) -> Number:
             return round(n * 1.917e-4, 2)
     
-def encode(data) -> str:
+def encode(data: any) -> str:
     try:
             return base64.b64encode(str(data).encode()).decode()
     except TypeError as e:
             return ""
-def decode(data) -> str:
+def decode(data: str) -> str:
     import binascii
     try:
             return base64.b64decode(data).decode()
@@ -926,12 +957,12 @@ def internet_access() -> bool:
         return False
 def filepath(filename: str) -> str:
     return os.path.join(os.getcwd(), filename)
-    
+
     
 def main() -> none:
     print(obj(key="value")["key"] == obj(key="value").key)
-    name = "Mike"
-    printf("$name, you are but a $10+5+2 -year-old kid")
+    name = "Misty"
+    printf("$name, dont! You are, but a $10+5-8 -year-old kid.")
     
 if __name__ == "__main__":
     main()

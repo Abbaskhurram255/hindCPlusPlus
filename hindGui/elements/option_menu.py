@@ -32,8 +32,8 @@ class OptionMenu(Element):
         k=None,
         pad=None,
         p=None,
-        tooltip=None,
-        visible=True,
+        hover=None,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -65,10 +65,10 @@ class OptionMenu(Element):
         :type pad:               (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param tooltip:          text that will appear when mouse hovers over this element
-        :type tooltip:           (str)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param hover:          text that will appear when mouse hovers over this element
+        :type hover:           (str)
+        :param nazar:          set visibility state of the element
+        :type nazar:           (bool)
         :param metadata:         User metadata that can be set to ANYTHING
         :type metadata:          (Any)
         """
@@ -93,20 +93,20 @@ class OptionMenu(Element):
             text_color=fg,
             event=event,
             pad=pad,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
 
-    def change(self, value=None, values=None, disabled=None, visible=None, size=(None, None)):
+    def change(self, value=None, values=None, disabled=None, nazar=None, size=(None, None)):
         """
         Changes some of the settings for the OptionMenu Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param value:    the value to choose by default
         :type value:     (Any)
@@ -114,8 +114,8 @@ class OptionMenu(Element):
         :type values:    List[Any]
         :param disabled: disable or enable state of the element
         :type disabled:  (bool)
-        :param visible:  control visibility of element
-        :type visible:   (bool)
+        :param nazar:  control visibility of element
+        :type nazar:   (bool)
         :param size:     (width, height) size in characters (wide), height is ignored and present to be consistent with other elements
         :type size:      (int, int) (width, UNUSED)
         """
@@ -156,13 +156,13 @@ class OptionMenu(Element):
         elif disabled is False:
             self.TKOptionMenu['state'] = 'normal'
         self.Disabled = disabled if disabled is not None else self.Disabled
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
             # self.TKOptionMenu.pack_forget()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
             # self.TKOptionMenu.pack(padx=self.pad_used[0], pady=self.pad_used[1])
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     Change = change

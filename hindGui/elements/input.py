@@ -26,11 +26,11 @@ class Input(Element):
         background_color=None,
         text_color=None,
         font=None,
-        tooltip=None,
+        hover=None,
         border_width=None,
         change_submits=False,
         enable_events=False,
-        do_not_clear=True,
+        auto_wipe=False,
         event=None,
         k=None,
         focus=False,
@@ -45,7 +45,7 @@ class Input(Element):
         expand_x=False,
         expand_y=False,
         right_click_menu=None,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -67,16 +67,16 @@ class Input(Element):
         :type text_color:                          (str)
         :param font:                               specifies the font family, size. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:                                (str or (str, int[, str]) or None)
-        :param tooltip:                            text, that will appear when mouse hovers over the element
-        :type tooltip:                             (str)
+        :param hover:                            text, that will appear when mouse hovers over the element
+        :type hover:                             (str)
         :param border_width:                       width of border around element in pixels
         :type border_width:                        (int)
         :param change_submits:                     * DEPRICATED DO NOT USE. Use `enable_events` instead
         :type change_submits:                      (bool)
         :param enable_events:                      If True then changes to this element are immediately reported as an event. Use this instead of change_submits (Default = False)
         :type enable_events:                       (bool)
-        :param do_not_clear:                       If False then the field will be set to blank after ANY event (button, any event) (Default = True)
-        :type do_not_clear:                        (bool)
+        :param auto_wipe:                       If False then the field will be set to blank after ANY event (button, any event) (Default = True)
+        :type auto_wipe:                        (bool)
         :param event:                                Value that uniquely identifies this element from all other elements. Used when Finding an element or in return values. Must be unique to the window
         :type event:                                 str | int | tuple | object
         :param k:                                  Same as the Key. You can use either k or event. Which ever is set will be used.
@@ -105,8 +105,8 @@ class Input(Element):
         :type expand_y:                            (bool)
         :param right_click_menu:                   A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:                    List[List[ List[str] | str ]]
-        :param visible:                            set visibility state of the element (Default = True)
-        :type visible:                             (bool)
+        :param nazar:                            set visibility state of the element (Default = True)
+        :type nazar:                             (bool)
         :param metadata:                           User metadata that can be set to ANYTHING
         :type metadata:                            (Any)
         """
@@ -120,7 +120,7 @@ class Input(Element):
         self.selected_text_color = selected_text_color
         self.selected_background_color = selected_background_color
         self.Focus = focus
-        self.do_not_clear = do_not_clear
+        self.auto_wipe = auto_wipe
         self.Justification = justification
         self.Disabled = disabled
         self.ChangeSubmits = change_submits or enable_events
@@ -145,17 +145,18 @@ class Input(Element):
             event=event,
             pad=pad,
             font=font,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
 
     def change(
         self,
+        text=None,
         value=None,
         disabled=None,
         select=None,
-        visible=None,
+        nazar=None,
         text_color=None,
         background_color=None,
         font=None,
@@ -167,11 +168,11 @@ class Input(Element):
     ):
         """
         Changes some of the settings for the Input Element. Must call `Window.Read` or `Window.Finalize` prior.
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param value:            new text to display as default text in Input field
         :type value:             (str)
@@ -179,8 +180,8 @@ class Input(Element):
         :type disabled:          (bool)
         :param select:           if True, then the text will be selected
         :type select:            (bool)
-        :param visible:          change visibility of element
-        :type visible:           (bool)
+        :param nazar:          change visibility of element
+        :type nazar:           (bool)
         :param text_color:       change color of text being typed
         :type text_color:        (str)
         :param background_color: change color of the background
@@ -231,6 +232,7 @@ class Input(Element):
         elif readonly is False:
             self.TKEntry['state'] = 'normal'
 
+        value = text if text is not None else value
         if value is not None:
             if paste is not True:
                 try:
@@ -250,15 +252,15 @@ class Input(Element):
                 self.TKEntry.icursor(move_cursor_to)
         if select:
             self.TKEntry.select_range(0, 'end')
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
             # self.TKEntry.pack_forget()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
             # self.TKEntry.pack(padx=self.pad_used[0], pady=self.pad_used[1])
             # self.TKEntry.pack(padx=self.pad_used[0], pady=self.pad_used[1], in_=self.ParentRowFrame)
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
         if pwd == True:
             self.pwd_char = pwd_char = "*"
             self.TKEntry.configure(show=pwd_char)

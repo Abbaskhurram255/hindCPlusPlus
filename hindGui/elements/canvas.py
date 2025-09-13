@@ -22,7 +22,7 @@ class Canvas(Element):
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         border_width=0,
         metadata=None,
     ):
@@ -51,8 +51,8 @@ class Canvas(Element):
         :type expand_x:          (bool)
         :param expand_y:         If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:          (bool)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param nazar:          set visibility state of the element
+        :type nazar:           (bool)
         :param border_width:     width of border around element in pixels. Not normally used with Canvas element
         :type border_width:      (int)
         :param metadata:         User metadata that can be set to ANYTHING
@@ -76,18 +76,18 @@ class Canvas(Element):
             pad=pad,
             event=event,
             tooltip=tooltip,
-            visible=visible,
+            nazar=nazar,
             metadata=metadata,
         )
         return
 
-    def change(self, background_color=None, visible=None):
+    def change(self, background_color=None, nazar=None):
         """
 
         :param background_color: color of background
         :type background_color:  (str)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param nazar:          set visibility state of the element
+        :type nazar:           (bool)
         """
 
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
@@ -99,12 +99,12 @@ class Canvas(Element):
 
         if background_color not in (None, COLOR_SYSTEM_DEFAULT):
             self._TKCanvas.configure(background=background_color)
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     @property
     def tk_canvas(self):

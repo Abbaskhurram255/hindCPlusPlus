@@ -39,10 +39,10 @@ class Combo(Element):
         p=None,
         expand_x=False,
         expand_y=False,
-        tooltip=None,
+        hover=None,
         readonly=False,
         font=None,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -86,14 +86,14 @@ class Combo(Element):
         :type expand_x:                 (bool)
         :param expand_y:                If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:                 (bool)
-        :param tooltip:                 text that will appear when mouse hovers over this element
-        :type tooltip:                  (str)
+        :param hover:                 text that will appear when mouse hovers over this element
+        :type hover:                  (str)
         :param readonly:                make element readonly (user can't change). True means user cannot change
         :type readonly:                 (bool)
         :param font:                    specifies the font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:                     (str or (str, int[, str]) or None)
-        :param visible:                 set visibility state of the element
-        :type visible:                  (bool)
+        :param nazar:                 set visibility state of the element
+        :type nazar:                  (bool)
         :param metadata:                User metadata that can be set to ANYTHING
         :type metadata:                 (Any)
         """
@@ -130,9 +130,9 @@ class Combo(Element):
             text_color=fg,
             event=event,
             pad=pad,
-            tooltip=tooltip,
+            hover=hover,
             font=font or hindGui.DEFAULT_FONT,
-            visible=visible,
+            nazar=nazar,
             metadata=metadata,
         )
 
@@ -144,7 +144,7 @@ class Combo(Element):
         disabled=None,
         readonly=None,
         font=None,
-        visible=None,
+        nazar=None,
         size=(None, None),
         select=None,
         text_color=None,
@@ -156,11 +156,11 @@ class Combo(Element):
         though more combinations are available. The easy way to remember is that if you
         change the readonly parameter then you are enabling the element.
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param value:            change which value is current selected based on new list of previous list of choices
         :type value:             (Any)
@@ -174,8 +174,8 @@ class Combo(Element):
         :type readonly:          (bool)
         :param font:             specifies the font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:              (str or (str, int[, str]) or None)
-        :param visible:          control visibility of element
-        :type visible:           (bool)
+        :param nazar:          control visibility of element
+        :type nazar:           (bool)
         :param size:             width, height. Width = characters-wide, height = NOTE it's the number of entries to show in the list
         :type size:              (int, int)
         :param select:           if True, then the text will be selected, if False then selection will be cleared
@@ -295,14 +295,14 @@ class Combo(Element):
         except Exception:
             pass  # going to let this one slide
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
             # self.TKCombo.pack_forget()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
             # self.TKCombo.pack(padx=self.pad_used[0], pady=self.pad_used[1])
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self.nazar = nazar
         if select is True:
             self.TKCombo.select_range(0, tk.END)
         elif select is False:

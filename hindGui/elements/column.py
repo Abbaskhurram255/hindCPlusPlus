@@ -164,7 +164,7 @@ class Column(Element):
         right_click_menu=None,
         event=None,
         k=None,
-        visible=True,
+        nazar=True,
         justification=None,
         element_justification=None,
         vertical_alignment=None,
@@ -207,8 +207,8 @@ class Column(Element):
         :type event:                          str | int | tuple | object
         :param k:                           Same as the event. You can use either k or event. Which ever is set will be used.
         :type k:                            str | int | tuple | object
-        :param visible:                     set visibility state of the element
-        :type visible:                      (bool)
+        :param nazar:                     set visibility state of the element
+        :type nazar:                      (bool)
         :param justification:               set justification for the Column itself. Note entire row containing the Column will be affected
         :type justification:                (str)
         :param element_justification:       All elements inside the Column will have this justification 'left', 'right', 'center' are valid values
@@ -274,7 +274,7 @@ class Column(Element):
             size=sz,
             pad=pad,
             event=event,
-            visible=visible,
+            nazar=nazar,
             metadata=metadata,
             sbar_trough_color=sbar_trough_color,
             sbar_background_color=sbar_background_color,
@@ -393,18 +393,18 @@ class Column(Element):
         element = row[col_num]
         return element
 
-    def change(self, visible=None):
+    def change(self, nazar=None):
         """
         Changes some of the settings for the Column Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
-        :param visible: control visibility of element
-        :type visible:  (bool)
+        :param nazar: control visibility of element
+        :type nazar:  (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
@@ -413,22 +413,22 @@ class Column(Element):
             _error_popup_with_traceback('Error in Column.change - The window was closed')
             return
 
-        if visible is False:
+        if nazar is False:
             if self.TKColFrame:
                 self._pack_forget_save_settings()
             if self.ParentPanedWindow:
                 self.ParentPanedWindow.remove(self.TKColFrame)
-        elif visible is True:
+        elif nazar is True:
             if self.TKColFrame:
                 self._pack_restore_settings()
             if self.ParentPanedWindow:
                 self.ParentPanedWindow.add(self.TKColFrame)
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     def contents_changed(self):
         """
-        When a scrollable column has part of its layout changed by making elements visible or invisible or the
+        When a scrollable column has part of its layout changed by making elements nazar or invisible or the
         layout is extended for the Column, then this method needs to be called so that the new scroll area
         is computed to match the new contents.
         """

@@ -174,7 +174,7 @@ class TKCalendar(ttk.Frame):
             return
 
         bbox = widget.bbox(item, column)
-        if not bbox:  # calendar not visible yet
+        if not bbox:  # calendar not nazar yet
             return
 
         # change and then show selection

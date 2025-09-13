@@ -240,7 +240,7 @@ class SystemTray:
     ):
         """
         Displays a "notification window", usually in the bottom right corner of your display.  Has an icon, a title, and a message
-        The window will slowly fade in and out if desired.  Clicking on the window will cause it to move through the end the current "phase". For example, if the window was fading in and it was clicked, then it would immediately stop fading in and instead be fully visible.  It's a way for the user to quickly dismiss the window.
+        The window will slowly fade in and out if desired.  Clicking on the window will cause it to move through the end the current "phase". For example, if the window was fading in and it was clicked, then it would immediately stop fading in and instead be fully nazar.  It's a way for the user to quickly dismiss the window.
         :param title:                  Text to be shown at the top of the window in a larger font
         :type title:                   (str)
         :param message:                Text message that makes up the majority of the window
@@ -251,7 +251,7 @@ class SystemTray:
         :type display_duration_in_ms:  (int)
         :param fade_in_duration:       Number of milliseconds to fade window in and out
         :type fade_in_duration:        (int)
-        :param alpha:                  Alpha channel. 0 - invisible 1 - fully visible
+        :param alpha:                  Alpha channel. 0 - invisible 1 - fully nazar
         :type alpha:                   (float)
         :param location:               Location on the screen to display the window
         :type location:                (int, int)

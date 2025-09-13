@@ -15,7 +15,7 @@ from hindGui import LOOK_AND_FEEL_TABLE
 from hindGui import PackFormIntoFrame
 from hindGui import popup_error
 from hindGui import popup_error_with_traceback
-from hindGui import ToolTip
+from hindGui import Hover
 from hindGui._utils import _error_popup_with_traceback
 from hindGui.window import Window
 
@@ -39,11 +39,11 @@ class Tab(Element):
         border_width=None,
         event=None,
         k=None,
-        tooltip=None,
+        hover=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         element_justification='left',
         image_source=None,
         image_subsample=None,
@@ -73,16 +73,16 @@ class Tab(Element):
         :type event:                    str | int | tuple | object
         :param k:                     Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                      str | int | tuple | object
-        :param tooltip:               text, that will appear when mouse hovers over the element
-        :type tooltip:                (str)
+        :param hover:               text, that will appear when mouse hovers over the element
+        :type hover:                (str)
         :param right_click_menu:      A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:       List[List[ List[str] | str ]]
         :param expand_x:              If True the element will automatically expand in the X direction to fill available space
         :type expand_x:               (bool)
         :param expand_y:              If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:               (bool)
-        :param visible:               set visibility state of the element
-        :type visible:                (bool)
+        :param nazar:               set visibility state of the element
+        :type nazar:                (bool)
         :param element_justification: All elements inside the Tab will have this justification 'left', 'right', 'center' are valid values
         :type element_justification:  (str)
         :param image_source:          A filename or a base64 bytes of an image to place on the Tab
@@ -140,8 +140,8 @@ class Tab(Element):
             font=font,
             pad=pad,
             event=event,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
         return
@@ -231,22 +231,22 @@ class Tab(Element):
             self.AddRow(*row)
         return self
 
-    def change(self, title=None, disabled=None, visible=None):
+    def change(self, title=None, disabled=None, nazar=None):
         """
         Changes some of the settings for the Tab Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param title:    tab title
         :type title:     (str)
         :param disabled: disable or enable state of the element
         :type disabled:  (bool)
-        :param visible:  control visibility of element
-        :type visible:   (bool)
+        :param nazar:  control visibility of element
+        :type nazar:   (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
@@ -260,10 +260,10 @@ class Tab(Element):
             self.Disabled = disabled
             if disabled:
                 state = 'disabled'
-        if visible is False:
+        if nazar is False:
             state = 'hidden'
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
         self.ParentNotebook.tab(self.TabID, state=state)
 
@@ -331,11 +331,11 @@ class TabGroup(Element):
         k=None,
         size=(None, None),
         s=(None, None),
-        tooltip=None,
+        hover=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -379,16 +379,16 @@ class TabGroup(Element):
         :type size:                       (int|None, int|None)
         :param s:                         Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
         :type s:                          (int|None, int|None)
-        :param tooltip:                   text, that will appear when mouse hovers over the element
-        :type tooltip:                    (str)
+        :param hover:                   text, that will appear when mouse hovers over the element
+        :type hover:                    (str)
         :param right_click_menu:          A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:           List[List[ List[str] | str ]]
         :param expand_x:                  If True the element will automatically expand in the X direction to fill available space
         :type expand_x:                   (bool)
         :param expand_y:                  If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:                   (bool)
-        :param visible:                   DEPRECATED  - Should you need to control visiblity for the TabGroup as a whole, place it into a Column element
-        :type visible:                    (bool)
+        :param nazar:                   DEPRECATED  - Should you need to control visiblity for the TabGroup as a whole, place it into a Column element
+        :type nazar:                    (bool)
         :param metadata:                  User metadata that can be set to ANYTHING
         :type metadata:                   (Any)
         """
@@ -433,8 +433,8 @@ class TabGroup(Element):
             font=font,
             pad=pad,
             event=event,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
         return
@@ -647,7 +647,7 @@ class TabGroup(Element):
         state = 'normal'
         if tab_element.Disabled:
             state = 'disabled'
-        if tab_element.visible is False:
+        if tab_element.nazar is False:
             state = 'hidden'
         if photo is not None:
             self.TKNotebook.add(tab_element.TKFrame, text=tab_element.Title, compound=tk.LEFT, state=state, image=photo)
@@ -665,16 +665,16 @@ class TabGroup(Element):
             )
         if tab_element.BorderWidth is not None:
             tab_element.TKFrame.configure(borderwidth=tab_element.BorderWidth)
-        if tab_element.Tooltip is not None:
-            tab_element.TooltipObject = ToolTip(tab_element.TKFrame, text=tab_element.Tooltip, timeout=hindGui.DEFAULT_TOOLTIP_TIME)
+        if tab_element.Hover is not None:
+            tab_element.HoverObject = Hover(tab_element.TKFrame, text=tab_element.Hover, timeout=hindGui.DEFAULT_HOVER_TIME)
         _add_right_click_menu(tab_element, form)
 
-    def change(self, visible=None):
+    def change(self, nazar=None):
         """
         Enables changing the visibility
 
-        :param visible:  control visibility of element
-        :type visible:   (bool)
+        :param nazar:  control visibility of element
+        :type nazar:   (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
@@ -683,13 +683,13 @@ class TabGroup(Element):
             _error_popup_with_traceback('Error in TabGroup.change - The window was closed')
             return
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     AddRow = add_row
     FindKeyFromTabName = find_key_from_tab_name

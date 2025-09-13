@@ -60,9 +60,11 @@ try:
 except:
     webbrowser_available = False
 
-
+#constants
 port = 'hindGui'
 name = 'hindGui'
+ae = True
+nae = na_ae = False
 
 
 warnings.simplefilter('always', UserWarning)
@@ -106,14 +108,14 @@ DEFAULT_AUTOCLOSE_TIME = 3  # time in seconds to show an autoclose form
 DEFAULT_DEBUG_WINDOW_SIZE = (80, 20)
 DEFAULT_WINDOW_LOCATION = (None, None)
 MAX_SCROLLED_TEXT_BOX_HEIGHT = 50
-DEFAULT_TOOLTIP_TIME = 400
-DEFAULT_TOOLTIP_OFFSET = (0, -20)
+DEFAULT_HOVER_TIME = 400
+DEFAULT_HOVER_OFFSET = (0, -20)
 DEFAULT_KEEP_ON_TOP = None
 DEFAULT_SCALING = None
 DEFAULT_ALPHA_CHANNEL = 1.0
 DEFAULT_HIDE_WINDOW_WHEN_CREATING = True
-TOOLTIP_BACKGROUND_COLOR = '#ffffe0'
-TOOLTIP_FONT = None
+HOVER_BACKGROUND_COLOR = '#ffffe0'
+HOVER_FONT = None
 DEFAULT_USE_BUTTON_SHORTCUTS = False
 #################### COLOR STUFF ####################
 BLUES = ('#082567', '#0A37A3', '#00345B')
@@ -963,22 +965,22 @@ tkinter_keysyms = ('space', 'exclam', 'quotedbl', 'numbersign', 'dollar', 'perce
 # fmt: on
 
 # ------------------------------------------------------------------------- #
-#                       ToolTip used by the Elements                        #
+#                       Hover used by the Elements                        #
 # ------------------------------------------------------------------------- #
 
 
-class ToolTip:
+class Hover:
     """
-    Create a tooltip for a given widget
+    Create a hover for a given widget
     (inspired by https://stackoverflow.com/a/36221216)
     This is an INTERNALLY USED only class.  Users should not refer to this class at all.
     """
 
-    def __init__(self, widget, text, timeout=DEFAULT_TOOLTIP_TIME):
+    def __init__(self, widget, text, timeout=DEFAULT_HOVER_TIME):
         """
         :param widget:  The tkinter widget
         :type widget:   widget type varies
-        :param text:    text for the tooltip. It can inslude \n
+        :param text:    text for the hover. It can inslude \n
         :type text:     (str)
         :param timeout: Time in milliseconds that mouse must remain still before tip is shown
         :type timeout:  (int)
@@ -1032,12 +1034,12 @@ class ToolTip:
 
     def showtip(self):
         """
-        Creates a topoltip window with the tooltip text inside of it
+        Creates a topoltip window with the hover text inside of it
         """
         if self.tipwindow:
             return
-        x = self.widget.winfo_rootx() + self.x + DEFAULT_TOOLTIP_OFFSET[0]
-        y = self.widget.winfo_rooty() + self.y + DEFAULT_TOOLTIP_OFFSET[1]
+        x = self.widget.winfo_rootx() + self.x + DEFAULT_HOVER_OFFSET[0]
+        y = self.widget.winfo_rooty() + self.y + DEFAULT_HOVER_OFFSET[1]
         self.tipwindow = tk.Toplevel(self.widget)
         # if not sys.platform.startswith('darwin'):
         try:
@@ -1054,17 +1056,17 @@ class ToolTip:
             self.tipwindow,
             text=self.text,
             justify=tk.LEFT,
-            background=TOOLTIP_BACKGROUND_COLOR,
+            background=HOVER_BACKGROUND_COLOR,
             relief=tk.SOLID,
             borderwidth=1,
         )
-        if TOOLTIP_FONT is not None:
-            label.config(font=TOOLTIP_FONT)
+        if HOVER_FONT is not None:
+            label.config(font=HOVER_FONT)
         label.pack()
 
     def hidetip(self):
         """
-        Destroy the tooltip window
+        Destroy the hover window
         """
         if self.tipwindow:
             self.tipwindow.destroy()
@@ -1309,7 +1311,7 @@ def Sizer(h_pixels=0, v_pixels=0):
 
 def pin(elem, vertical_alignment=None, shrink=True, expand_x=None, expand_y=None):
     """
-    Pin's an element provided into a layout so that when it's made invisible and visible again, it will
+    Pin's an element provided into a layout so that when it's made invisible and nazar again, it will
      be in the correct place.  Otherwise it will be placed at the end of its containing window/column.
 
      The element you want to pin is the element that you'll be making visibile/invisible.
@@ -1476,7 +1478,7 @@ def Titlebar(title='', icon=None, text_color=None, background_color=None, font=N
     set the pad of that Column to the dimensions you would like your fasla to have.
 
     The Titlebar is a COLUMN element.  You can thus call the change method for the column and
-    perform operations such as making the column visible/invisible
+    perform operations such as making the column nazar/invisible
 
     :param icon:             Can be either a filename or Base64 byte string of a PNG or GIF. This is used in an Image element to create the titlebar
     :type icon:              str or bytes or None
@@ -1660,7 +1662,7 @@ def FolderBrowse(
     button_text='Browse',
     target=(ThisRow, -1),
     initial_folder=None,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -1673,7 +1675,7 @@ def FolderBrowse(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -1685,8 +1687,8 @@ def FolderBrowse(
     :type target:            str | (int, int)
     :param initial_folder:   starting path for folders and files
     :type initial_folder:    (str)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -1711,8 +1713,8 @@ def FolderBrowse(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -1728,7 +1730,7 @@ def FolderBrowse(
         button_type=BUTTON_TYPE_BROWSE_FOLDER,
         target=target,
         initial_folder=initial_folder,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -1741,7 +1743,7 @@ def FolderBrowse(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -1754,7 +1756,7 @@ def FileBrowse(
     target=(ThisRow, -1),
     file_types=FILE_TYPES_ALL_FILES,
     initial_folder=None,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -1767,7 +1769,7 @@ def FileBrowse(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -1782,8 +1784,8 @@ def FileBrowse(
     :type file_types:        Tuple[(str, str), ...]
     :param initial_folder:   starting path for folders and files
     :type initial_folder:
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -1808,8 +1810,8 @@ def FileBrowse(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -1825,7 +1827,7 @@ def FileBrowse(
         target=target,
         file_types=file_types,
         initial_folder=initial_folder,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -1838,7 +1840,7 @@ def FileBrowse(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -1852,7 +1854,7 @@ def FilesBrowse(
     file_types=FILE_TYPES_ALL_FILES,
     disabled=False,
     initial_folder=None,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -1864,7 +1866,7 @@ def FilesBrowse(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     files_delimiter=BROWSE_FILES_DELIMITER,
     metadata=None,
     expand_x=False,
@@ -1883,8 +1885,8 @@ def FilesBrowse(
     :type disabled:          (bool)
     :param initial_folder:   starting path for folders and files
     :type initial_folder:    (str)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -1907,8 +1909,8 @@ def FilesBrowse(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param files_delimiter:  String to place between files when multiple files are selected. Normally a ;
     :type files_delimiter:   str
     :param metadata:         Anything you want to store along with this button
@@ -1928,7 +1930,7 @@ def FilesBrowse(
         initial_folder=initial_folder,
         change_submits=change_submits,
         enable_events=enable_events,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -1939,7 +1941,7 @@ def FilesBrowse(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -1956,7 +1958,7 @@ def FileSaveAs(
     initial_folder=None,
     default_extension='',
     disabled=False,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -1968,7 +1970,7 @@ def FileSaveAs(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -1987,8 +1989,8 @@ def FileSaveAs(
     :type initial_folder:     (str)
     :param disabled:          set disable state for element (Default = False)
     :type disabled:           (bool)
-    :param tooltip:           text, that will appear when mouse hovers over the element
-    :type tooltip:            (str)
+    :param hover:           text, that will appear when mouse hovers over the element
+    :type hover:            (str)
     :param size:              (w,h) w=characters-wide, h=rows-high
     :type size:               (int, int)
     :param s:                 Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2011,8 +2013,8 @@ def FileSaveAs(
     :type event:                str | int | tuple | object
     :param k:                 Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                  str | int | tuple | object
-    :param visible:           set initial visibility state of the Button
-    :type visible:            (bool)
+    :param nazar:           set initial visibility state of the Button
+    :type nazar:            (bool)
     :param metadata:          Anything you want to store along with this button
     :type metadata:           (Any)
     :param expand_x:          If True Element will expand in the Horizontal directions
@@ -2028,7 +2030,7 @@ def FileSaveAs(
         file_types=file_types,
         initial_folder=initial_folder,
         default_extension=default_extension,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         disabled=disabled,
@@ -2041,7 +2043,7 @@ def FileSaveAs(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2056,7 +2058,7 @@ def SaveAs(
     initial_folder=None,
     default_extension='',
     disabled=False,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2068,7 +2070,7 @@ def SaveAs(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2087,8 +2089,8 @@ def SaveAs(
     :type initial_folder:     (str)
     :param disabled:          set disable state for element (Default = False)
     :type disabled:           (bool)
-    :param tooltip:           text, that will appear when mouse hovers over the element
-    :type tooltip:            (str)
+    :param hover:           text, that will appear when mouse hovers over the element
+    :type hover:            (str)
     :param size:              (w,h) w=characters-wide, h=rows-high
     :type size:               (int, int)
     :param s:                 Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2110,8 +2112,8 @@ def SaveAs(
     :type event:                str | int | tuple | object
     :param k:                 Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                  str | int | tuple | object
-    :param visible:           set initial visibility state of the Button
-    :type visible:            (bool)
+    :param nazar:           set initial visibility state of the Button
+    :type nazar:            (bool)
     :param metadata:          Anything you want to store along with this button
     :type metadata:           (Any)
     :param expand_x:          If True Element will expand in the Horizontal directions
@@ -2128,7 +2130,7 @@ def SaveAs(
         file_types=file_types,
         initial_folder=initial_folder,
         default_extension=default_extension,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         disabled=disabled,
@@ -2141,7 +2143,7 @@ def SaveAs(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2157,14 +2159,14 @@ def Save(
     button_color=None,
     bind_return_key=True,
     disabled=False,
-    tooltip=None,
+    hover=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2185,8 +2187,8 @@ def Save(
     :type bind_return_key:   (bool)
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2199,8 +2201,8 @@ def Save(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2213,7 +2215,7 @@ def Save(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2226,7 +2228,7 @@ def Save(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2242,14 +2244,14 @@ def Submit(
     button_color=None,
     disabled=False,
     bind_return_key=True,
-    tooltip=None,
+    hover=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2270,8 +2272,8 @@ def Submit(
     :type disabled:          (bool)
     :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
     :type bind_return_key:   (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2284,8 +2286,8 @@ def Submit(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2298,7 +2300,7 @@ def Submit(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2311,7 +2313,7 @@ def Submit(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2328,14 +2330,14 @@ def Open(
     button_color=None,
     disabled=False,
     bind_return_key=True,
-    tooltip=None,
+    hover=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2356,8 +2358,8 @@ def Open(
     :type disabled:          (bool)
     :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
     :type bind_return_key:   (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2370,8 +2372,8 @@ def Open(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2384,7 +2386,7 @@ def Open(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2397,7 +2399,7 @@ def Open(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2413,14 +2415,14 @@ def OK(
     button_color=None,
     disabled=False,
     bind_return_key=True,
-    tooltip=None,
+    hover=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2441,8 +2443,8 @@ def OK(
     :type disabled:          (bool)
     :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
     :type bind_return_key:   (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2455,8 +2457,8 @@ def OK(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2469,7 +2471,7 @@ def OK(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2482,7 +2484,7 @@ def OK(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2498,14 +2500,14 @@ def Ok(
     button_color=None,
     disabled=False,
     bind_return_key=True,
-    tooltip=None,
+    hover=None,
     font=None,
     focus=False,
     pad=None,
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2526,8 +2528,8 @@ def Ok(
     :type disabled:          (bool)
     :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
     :type bind_return_key:   (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param focus:            if focus should be set to this
@@ -2540,8 +2542,8 @@ def Ok(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2554,7 +2556,7 @@ def Ok(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2567,7 +2569,7 @@ def Ok(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2582,7 +2584,7 @@ def Cancel(
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    tooltip=None,
+    hover=None,
     font=None,
     bind_return_key=False,
     focus=False,
@@ -2590,7 +2592,7 @@ def Cancel(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2609,8 +2611,8 @@ def Cancel(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
@@ -2625,8 +2627,8 @@ def Cancel(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2639,7 +2641,7 @@ def Cancel(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2652,7 +2654,7 @@ def Cancel(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2667,7 +2669,7 @@ def Quit(
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    tooltip=None,
+    hover=None,
     font=None,
     bind_return_key=False,
     focus=False,
@@ -2675,7 +2677,7 @@ def Quit(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2694,8 +2696,8 @@ def Quit(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
@@ -2710,8 +2712,8 @@ def Quit(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2724,7 +2726,7 @@ def Quit(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2737,7 +2739,7 @@ def Quit(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2752,7 +2754,7 @@ def Exit(
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    tooltip=None,
+    hover=None,
     font=None,
     bind_return_key=False,
     focus=False,
@@ -2760,7 +2762,7 @@ def Exit(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2779,8 +2781,8 @@ def Exit(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
@@ -2795,8 +2797,8 @@ def Exit(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2809,7 +2811,7 @@ def Exit(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2822,7 +2824,7 @@ def Exit(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2830,14 +2832,14 @@ def Exit(
 
 
 # -------------------------  YES BUTTON Element lazy function  ------------------------- #
-def Yes(
+def YES(
     button_text='Yes',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    tooltip=None,
+    hover=None,
     font=None,
     bind_return_key=True,
     focus=False,
@@ -2845,7 +2847,7 @@ def Yes(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2864,8 +2866,8 @@ def Yes(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param bind_return_key:  (Default = True) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
@@ -2880,8 +2882,8 @@ def Yes(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2894,7 +2896,7 @@ def Yes(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2907,7 +2909,7 @@ def Yes(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -2915,14 +2917,14 @@ def Yes(
 
 
 # -------------------------  NO BUTTON Element lazy function  ------------------------- #
-def No(
+def NO(
     button_text='No',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
     button_color=None,
     disabled=False,
-    tooltip=None,
+    hover=None,
     font=None,
     bind_return_key=False,
     focus=False,
@@ -2930,7 +2932,7 @@ def No(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -2949,8 +2951,8 @@ def No(
     :type button_color:      (str, str) | str
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
     :param bind_return_key:  (Default = False) If True, then the return event will cause a the Listbox to generate an event
@@ -2965,8 +2967,8 @@ def No(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -2979,7 +2981,7 @@ def No(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -2992,7 +2994,7 @@ def No(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -3008,14 +3010,14 @@ def Help(
     button_color=None,
     disabled=False,
     font=None,
-    tooltip=None,
+    hover=None,
     bind_return_key=False,
     focus=False,
     pad=None,
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -3036,8 +3038,8 @@ def Help(
     :type disabled:          (bool)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
@@ -3050,8 +3052,8 @@ def Help(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -3064,7 +3066,7 @@ def Help(
     return Button(
         button_text=button_text,
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3077,7 +3079,7 @@ def Help(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -3093,14 +3095,14 @@ def Debug(
     button_color=None,
     disabled=False,
     font=None,
-    tooltip=None,
+    hover=None,
     bind_return_key=False,
     focus=False,
     pad=None,
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -3124,8 +3126,8 @@ def Debug(
     :type disabled:          (bool)
     :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:              (str or (str, int[, str]) or None)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param bind_return_key:  (Default = False) If True, this button will appear to be clicked when return event is pressed in other elements such as Input and elements with return event options
     :type bind_return_key:   (bool)
     :param focus:            if focus should be set to this
@@ -3138,8 +3140,8 @@ def Debug(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -3155,7 +3157,7 @@ def Debug(
     return Button(
         button_text='',
         button_type=BUTTON_TYPE_READ_FORM,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3168,7 +3170,7 @@ def Debug(
         p=p,
         event=user_key,
         k=k,
-        visible=visible,
+        nazar=nazar,
         image_data=PSG_DEBUGGER_LOGO,
         image_subsample=2,
         border_width=0,
@@ -3186,7 +3188,7 @@ def SimpleButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3218,8 +3220,8 @@ def SimpleButton(
     :type image_size:        (Default = (None))
     :param image_subsample:  amount to reduce the size of the image
     :type image_subsample:   amount to reduce the size of the image
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3261,7 +3263,7 @@ def SimpleButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        tooltip=tooltip,
+        hover=hover,
         disabled=disabled,
         size=size,
         s=s,
@@ -3288,7 +3290,7 @@ def CloseButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3321,8 +3323,8 @@ def CloseButton(
     :type image_size:        (Default = (None))
     :param image_subsample:  amount to reduce the size of the image
     :type image_subsample:   amount to reduce the size of the image
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3364,7 +3366,7 @@ def CloseButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        tooltip=tooltip,
+        hover=hover,
         disabled=disabled,
         size=size,
         s=s,
@@ -3394,7 +3396,7 @@ def ReadButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3422,8 +3424,8 @@ def ReadButton(
     :type image_size:        (Default = (None))
     :param image_subsample:  amount to reduce the size of the image
     :type image_subsample:   amount to reduce the size of the image
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3468,7 +3470,7 @@ def ReadButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         disabled=disabled,
@@ -3499,7 +3501,7 @@ def RealtimeButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3512,7 +3514,7 @@ def RealtimeButton(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -3531,8 +3533,8 @@ def RealtimeButton(
     :type image_subsample:   amount to reduce the size of the image
     :param border_width:     width of border around element
     :type border_width:      (int)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3557,8 +3559,8 @@ def RealtimeButton(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -3576,7 +3578,7 @@ def RealtimeButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        tooltip=tooltip,
+        hover=hover,
         disabled=disabled,
         size=size,
         s=s,
@@ -3589,7 +3591,7 @@ def RealtimeButton(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -3604,7 +3606,7 @@ def DummyButton(
     image_size=(None, None),
     image_subsample=None,
     border_width=None,
-    tooltip=None,
+    hover=None,
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3617,7 +3619,7 @@ def DummyButton(
     p=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -3642,8 +3644,8 @@ def DummyButton(
     :type image_subsample:   amount to reduce the size of the image
     :param border_width:     width of border around element
     :type border_width:      (int)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3668,8 +3670,8 @@ def DummyButton(
     :type event:               str | int | tuple | object
     :param k:                Same as the Event. You can use either k or event. Which ever is set will be used.
     :type k:                 str | int | tuple | object
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         Anything you want to store along with this button
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -3687,7 +3689,7 @@ def DummyButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3700,7 +3702,7 @@ def DummyButton(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -3717,7 +3719,7 @@ def CalendarButton(
     image_data=None,
     image_size=(None, None),
     image_subsample=None,
-    tooltip=None,
+    hover=None,
     border_width=None,
     size=(None, None),
     s=(None, None),
@@ -3732,7 +3734,7 @@ def CalendarButton(
     enable_events=None,
     event=None,
     k=None,
-    visible=True,
+    nazar=True,
     locale=None,
     format='%Y-%m-%d %H:%M:%S',
     begin_at_sunday_plus=0,
@@ -3764,8 +3766,8 @@ def CalendarButton(
     :type image_size:              (Default = (None))
     :param image_subsample:        amount to reduce the size of the image
     :type image_subsample:         amount to reduce the size of the image
-    :param tooltip:                text, that will appear when mouse hovers over the element
-    :type tooltip:                 (str)
+    :param hover:                text, that will appear when mouse hovers over the element
+    :type hover:                 (str)
     :param border_width:           width of border around element
     :type border_width:            width of border around element
     :param size:                   (w,h) w=characters-wide, h=rows-high
@@ -3808,8 +3810,8 @@ def CalendarButton(
     :type no_titlebar:             bool
     :param location:               Location on the screen (x,y) to show the calendar keh window
     :type location:                (int, int)
-    :param visible:                set initial visibility state of the Button
-    :type visible:                 (bool)
+    :param nazar:                set initial visibility state of the Button
+    :type nazar:                 (bool)
     :param metadata:               Anything you want to store along with this button
     :type metadata:                (Any)
     :param expand_x:               If True Element will expand in the Horizontal directions
@@ -3828,7 +3830,7 @@ def CalendarButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3842,7 +3844,7 @@ def CalendarButton(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -3869,7 +3871,7 @@ def ColorChooserButton(
     image_data=None,
     image_size=(None, None),
     image_subsample=None,
-    tooltip=None,
+    hover=None,
     border_width=None,
     size=(None, None),
     s=(None, None),
@@ -3884,7 +3886,7 @@ def ColorChooserButton(
     event=None,
     k=None,
     default_color=None,
-    visible=True,
+    nazar=True,
     metadata=None,
     expand_x=False,
     expand_y=False,
@@ -3904,8 +3906,8 @@ def ColorChooserButton(
     :type image_size:        (int, int)
     :param image_subsample:  amount to reduce the size of the image. Divides the size by this number. 2=1/2, 3=1/3, 4=1/4, etc
     :type image_subsample:   (int)
-    :param tooltip:          text, that will appear when mouse hovers over the element
-    :type tooltip:           (str)
+    :param hover:          text, that will appear when mouse hovers over the element
+    :type hover:           (str)
     :param border_width:     width of border around element
     :type border_width:      (int)
     :param size:             (w,h) w=characters-wide, h=rows-high
@@ -3934,8 +3936,8 @@ def ColorChooserButton(
     :type k:                 str | int | tuple | object
     :param default_color:    Color to be sent to tkinter to use as the default color
     :type default_color:     str
-    :param visible:          set initial visibility state of the Button
-    :type visible:           (bool)
+    :param nazar:          set initial visibility state of the Button
+    :type nazar:           (bool)
     :param metadata:         User metadata that can be set to ANYTHING
     :type metadata:          (Any)
     :param expand_x:         If True Element will expand in the Horizontal directions
@@ -3954,7 +3956,7 @@ def ColorChooserButton(
         image_size=image_size,
         image_subsample=image_subsample,
         border_width=border_width,
-        tooltip=tooltip,
+        hover=hover,
         size=size,
         s=s,
         auto_size_button=auto_size_button,
@@ -3967,7 +3969,7 @@ def ColorChooserButton(
         p=p,
         event=event,
         k=k,
-        visible=visible,
+        nazar=nazar,
         metadata=metadata,
         expand_x=expand_x,
         expand_y=expand_y,
@@ -4099,7 +4101,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                         value = element.TKStringVar.get()
                     except:
                         value = ''
-                    if not top_level_form.NonBlocking and not element.do_not_clear and not top_level_form.ReturnKeyboardEvents:
+                    if not top_level_form.NonBlocking and element.auto_wipe and not top_level_form.ReturnKeyboardEvents:
                         element.TKStringVar.set('')
                 elif element.Type == ELEM_TYPE_INPUT_CHECKBOX:
                     value = element.TKIntVar.get()
@@ -4160,7 +4162,7 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
                         value = element.TKText.get(1.0, tk.END)
                         if element.rstrip:
                             value = value.rstrip()
-                        if not top_level_form.NonBlocking and not element.do_not_clear and not top_level_form.ReturnKeyboardEvents:
+                        if not top_level_form.NonBlocking and element.auto_wipe and not top_level_form.ReturnKeyboardEvents:
                             element.TKText.delete('1.0', tk.END)
                     except:
                         value = None
@@ -4901,7 +4903,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.TKColFrame.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
 
                 # element.TKColFrame.pack(side=side, padx=elementpad[0], pady=elementpad[1], expand=True, fill='both')
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.TKColFrame.pack_forget()
 
@@ -4931,7 +4933,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     pane.Widget = pane.TKColFrame = tk.Frame(element.PanedWindow)
                     pane.ParentPanedWindow = element.PanedWindow
                     PackFormIntoFrame(pane, pane.TKColFrame, toplevel_form)
-                    if pane.visible:
+                    if pane.nazar:
                         element.PanedWindow.add(pane.TKColFrame)
                     if pane.BackgroundColor != COLOR_SYSTEM_DEFAULT and pane.BackgroundColor is not None:
                         pane.TKColFrame.configure(
@@ -4942,7 +4944,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.PanedWindow.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
                 # element.PanedWindow.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=True, fill='both')
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.PanedWindow.pack_forget()
             # -------------------------  TEXT placement element  ------------------------- #
@@ -4984,14 +4986,14 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     tktext_label.configure(fg=element.TextColor)
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 tktext_label.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # tktext_label.pack_forget()
                 element.TKText = tktext_label
                 if element.ClickSubmits:
                     tktext_label.bind('<Button-1>', element._TextClickedHandler)
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKText, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKText, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
                 if element.Grab:
                     element._grab_anywhere_on()
@@ -5002,7 +5004,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 stringvar = tk.StringVar()
                 element.TKStringVar = stringvar
                 element.Location = (row_num, col_num)
-                btext = element.ButtonText
+                btext = element.text
                 btype = element.BType
                 if element.AutoSizeButton is not None:
                     auto_size = element.AutoSizeButton
@@ -5116,7 +5118,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
 
                 tkbutton.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # tkbutton.pack_forget()
                 if element.BindReturnKey:
@@ -5139,8 +5141,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 if element.MouseOverColors[0] not in (COLOR_SYSTEM_DEFAULT, None):
                     tkbutton.config(activeforeground=element.MouseOverColors[0])
 
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKButton, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKButton, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 try:
                     if element.HighlightColors[1] != COLOR_SYSTEM_DEFAULT:
                         tkbutton.config(highlightbackground=element.HighlightColors[1])
@@ -5164,7 +5166,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 stringvar = tk.StringVar()
                 element.TKStringVar = stringvar
                 element.Location = (row_num, col_num)
-                btext = element.ButtonText
+                btext = element.text
                 pos = -1
                 if DEFAULT_USE_BUTTON_SHORTCUTS is True:
                     pos = btext.find(MENU_SHORTCUT_CHARACTER)
@@ -5270,7 +5272,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 element.TKButton = tkbutton  # not used yet but save the TK button in case
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 tkbutton.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # tkbutton.pack_forget()
                 if element.BindReturnKey:
@@ -5286,13 +5288,13 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 tkbutton.configure(style=style_name)  # IMPORTANT!  Apply the style to the button!
                 _add_right_click_menu_and_grab(element)
 
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKButton, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKButton, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
             # -------------------------  BUTTONMENU placement element  ------------------------- #
             elif element_type == ELEM_TYPE_BUTTONMENU:
                 element = element  # type: ButtonMenu
                 element.Location = (row_num, col_num)
-                btext = element.ButtonText
+                btext = element.text
                 if element.AutoSizeButton is not None:
                     auto_size = element.AutoSizeButton
                 else:
@@ -5381,13 +5383,13 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     tkbutton.config(highlightthickness=0)
                 tkbutton.configure(menu=top_menu)
                 element.TKMenu = top_menu
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # tkbutton.pack_forget()
                 if element.Disabled:
                     element.TKButton['state'] = 'disabled'
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKButton, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKButton, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
 
             # -------------------------  INPUT placement element  ------------------------- #
             elif element_type == ELEM_TYPE_INPUT_TEXT:
@@ -5436,7 +5438,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 # element.TKEntry.pack(**element.pack_keywords)
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKEntry.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.TKEntry.pack_forget()
                 if element.Focus is True or (toplevel_form.UseDefaultFocus and not toplevel_form.FocusSet):
@@ -5447,8 +5449,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 if element.ReadOnly:
                     element.TKEntry['state'] = 'readonly'
 
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKEntry, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKEntry, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
                 # row_should_expand = True
@@ -5537,7 +5539,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 element.TKCombo['values'] = element.Values
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKCombo.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.TKCombo.pack_forget()
                 if element.DefaultValue is not None:
@@ -5552,8 +5554,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.TKCombo['state'] = 'readonly'
                 if element.Disabled is True:  # note overrides readonly if disabled
                     element.TKCombo['state'] = 'disabled'
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKCombo, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKCombo, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
             # -------------------------  OPTIONMENU placement Element (Like ComboBox but different) element  ------------------------- #
@@ -5578,13 +5580,13 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.TKOptionMenu['menu'].config(fg=element.TextColor)
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKOptionMenu.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.TKOptionMenu.pack_forget()
                 if element.Disabled is True:
                     element.TKOptionMenu['state'] = 'disabled'
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKOptionMenu, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKOptionMenu, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
             # -------------------------  LISTBOX placement element  ------------------------- #
             elif element_type == ELEM_TYPE_INPUT_LISTBOX:
                 element = element  # type: Listbox
@@ -5655,7 +5657,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element_frame.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], fill=fill, expand=expand)
                 element.TKListbox.pack(side=tk.LEFT, fill=fill, expand=expand)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings(alternate_widget=element_frame)
                     # element_frame.pack_forget()
                 if element.BindReturnKey:
@@ -5663,8 +5665,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.TKListbox.bind('<Double-Button-1>', element._ListboxSelectHandler)
                 if element.Disabled is True:
                     element.TKListbox['state'] = 'disabled'
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKListbox, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKListbox, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
             # -------------------------  MULTILINE placement element  ------------------------- #
             elif element_type == ELEM_TYPE_INPUT_MULTILINE:
@@ -5735,7 +5737,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 element.element_frame.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], fill=fill, expand=expand)
                 element.Widget.pack(side=tk.LEFT, fill=fill, expand=expand)
 
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings(alternate_widget=element_frame)
                     # element.element_frame.pack_forget()
                 else:
@@ -5752,8 +5754,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
 
                 if element.Disabled is True:
                     element.TKText['state'] = 'disabled'
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKText, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKText, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
 
                 if element.reroute_cprint:
                     cprint_set_output_destination(toplevel_form, element.Event)
@@ -5802,11 +5804,11 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.TKCheckbutton.config(highlightcolor=element.TextColor)
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKCheckbutton.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.TKCheckbutton.pack_forget()
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKCheckbutton, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKCheckbutton, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
             # -------------------------  PROGRESS placement element  ------------------------- #
@@ -5846,7 +5848,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 element.Widget = element.TKProgressBar.TKProgressBarForReal
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKProgressBar.TKProgressBarForReal.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings(alternate_widget=element.TKProgressBar.TKProgressBarForReal)
                     # element.TKProgressBar.TKProgressBarForReal.pack_forget()
                 _add_right_click_menu_and_grab(element)
@@ -5898,11 +5900,11 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.TKRadio['state'] = 'disabled'
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKRadio.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.TKRadio.pack_forget()
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKRadio, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKRadio, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
                 # -------------------------  SPIN placement element  ------------------------- #
@@ -5926,7 +5928,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.Widget.configure(wrap=True)
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKSpinBox.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.TKSpinBox.pack_forget()
                 if element.ChangeSubmits:
@@ -5938,8 +5940,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element.TKSpinBox['state'] = 'readonly'
                 if element.Disabled is True:  # note overrides readonly if disabled
                     element.TKSpinBox['state'] = 'disabled'
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKSpinBox, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKSpinBox, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 if element.BindReturnKey:
                     element.TKSpinBox.bind('<Return>', element._SpinboxSelectHandler)
                 _add_right_click_menu_and_grab(element)
@@ -5987,11 +5989,11 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.tktext_label.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
 
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element.tktext_label.pack_forget()
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.tktext_label, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.tktext_label, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 if element.EnableEvents and element.tktext_label is not None:
                     element.tktext_label.bind('<ButtonPress-1>', element._ClickHandler)
 
@@ -6011,11 +6013,11 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element._TKCanvas.configure(background=element.BackgroundColor, highlightthickness=0)
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element._TKCanvas.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element._TKCanvas.pack_forget()
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element._TKCanvas, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element._TKCanvas, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
                 # -------------------------  Graph placement element  ------------------------- #
@@ -6035,11 +6037,11 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     element._TKCanvas2.configure(background=element.BackgroundColor, highlightthickness=0)
                     # element._TKCanvas.configure(background=element.BackgroundColor, highlightthickness=0)
                 element._TKCanvas2.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # element._TKCanvas2.pack_forget()
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element._TKCanvas2, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element._TKCanvas2, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 if element.ChangeSubmits:
                     element._TKCanvas2.bind('<ButtonRelease-1>', element.ButtonReleaseCallBack)
                     element._TKCanvas2.bind('<ButtonPress-1>', element.ButtonPressCallBack)
@@ -6102,7 +6104,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 if element.Size != (None, None):
                     labeled_frame.config(width=element.Size[0], height=element.Size[1])
                     labeled_frame.pack_propagate(0)
-                if not element.visible:
+                if not element.nazar:
                     element._pack_forget_save_settings()
                     # labeled_frame.pack_forget()
                 if element.BackgroundColor != COLOR_SYSTEM_DEFAULT and element.BackgroundColor is not None:
@@ -6119,8 +6121,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     labeled_frame.configure(labelanchor=element.TitleLocation)
                 if element.BorderWidth is not None:
                     labeled_frame.configure(borderwidth=element.BorderWidth)
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(labeled_frame, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(labeled_frame, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
                 # row_should_expand=True
             # -------------------------  Tab placement element  ------------------------- #
@@ -6132,7 +6134,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 state = 'normal'
                 if element.Disabled:
                     state = 'disabled'
-                if element.visible is False:
+                if element.nazar is False:
                     state = 'hidden'
                 # this code will add an image to the tab. Use it when adding the image on a tab enhancement
                 try:
@@ -6191,8 +6193,8 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
 
                 # if element.BorderWidth is not None:
                 #     element.TKFrame.configure(borderwidth=element.BorderWidth)
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKFrame, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKFrame, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
                 # row_should_expand = True
             # -------------------------  TabGroup placement element  ------------------------- #
@@ -6255,12 +6257,12 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
 
                 if element.ChangeSubmits:
                     element.TKNotebook.bind('<<NotebookTabChanged>>', element._TabGroupSelectHandler)
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKNotebook, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKNotebook, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 if element.Size != (None, None):
                     element.TKNotebook.configure(width=element.Size[0], height=element.Size[1])
                 _add_right_click_menu_and_grab(element)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                 # row_should_expand = True
                 # -------------------  SLIDER placement element  ------------------------- #
@@ -6304,14 +6306,14 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     tkscale.configure(fg=text_color)
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 tkscale.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # tkscale.pack_forget()
                 element.TKScale = tkscale
                 if element.Disabled is True:
                     element.TKScale['state'] = 'disabled'
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKScale, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKScale, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
             # -------------------------  TABLE placement element  ------------------------- #
@@ -6524,11 +6526,11 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKTreeview.pack(side=tk.LEFT, padx=0, pady=0, expand=expand, fill=fill)
                 frame.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings(alternate_widget=element.element_frame)  # seems like it should be the frame if following other elements conventions
                     # element.TKTreeview.pack_forget()
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKTreeview, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKTreeview, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
                 if tclversion_detailed == '8.6.9' and ENABLE_TREEVIEW_869_PATCH:
@@ -6704,12 +6706,12 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                 expand, fill, row_should_expand, row_fill_direction = _add_expansion(element, row_should_expand, row_fill_direction)
                 element.TKTreeview.pack(side=tk.LEFT, padx=0, pady=0, expand=expand, fill=fill)
                 element_frame.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], expand=expand, fill=fill)
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings(alternate_widget=element.element_frame)  # seems like it should be the frame if following other elements conventions
                     # element.TKTreeview.pack_forget()
                 treeview.bind('<<TreeviewSelect>>', element._treeview_selected)
-                if element.Tooltip is not None:  # tooltip
-                    element.TooltipObject = ToolTip(element.TKTreeview, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:  # hover
+                    element.HoverObject = Hover(element.TKTreeview, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
                 if tclversion_detailed == '8.6.9' and ENABLE_TREEVIEW_869_PATCH:
@@ -6817,14 +6819,14 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
                     tktext_label.configure(fg=element.TextColor)
                 tktext_label.pack(side=tk.LEFT, padx=elementpad[0], pady=elementpad[1], fill=tk.X, expand=True)
                 row_fill_direction = tk.X
-                if element.visible is False:
+                if element.nazar is False:
                     element._pack_forget_save_settings()
                     # tktext_label.pack_forget()
                 element.TKText = tktext_label
                 if element.ClickSubmits:
                     tktext_label.bind('<Button-1>', element._TextClickedHandler)
-                if element.Tooltip is not None:
-                    element.TooltipObject = ToolTip(element.TKText, text=element.Tooltip, timeout=DEFAULT_TOOLTIP_TIME)
+                if element.Hover is not None:
+                    element.HoverObject = Hover(element.TKText, text=element.Hover, timeout=DEFAULT_HOVER_TIME)
                 _add_right_click_menu_and_grab(element)
 
         # ............................DONE WITH ROW pack the row of widgets ..........................#
@@ -6848,7 +6850,7 @@ def PackFormIntoFrame(form, containing_frame, toplevel_form):
 
 def _get_hidden_master_root():
     """
-    Creates the hidden master root window.  This window is never visible and represents the overall "application"
+    Creates the hidden master root window.  This window is never nazar and represents the overall "application"
     """
 
     # if one is already made, then skip making another
@@ -7012,7 +7014,7 @@ def StartupTK(window):
     if window.DisableMinimize:
         root.attributes('-toolwindow', 1)
 
-    if window.KeepOnTop:
+    if window.OnTop:
         root.wm_attributes('-topmost', 1)
 
     if window.TransparentColor is not None:
@@ -7044,7 +7046,7 @@ def StartupTK(window):
     window.set_icon(window.WindowIcon)
     try:
         alpha_channel = 1 if window.AlphaChannel is None else window.AlphaChannel
-        root.attributes('-alpha', alpha_channel)  # Make window visible again
+        root.attributes('-alpha', alpha_channel)  # Make window nazar again
     except Exception as e:
         print(f'**** Error setting Alpha Channel to {alpha_channel} after window was created ****', e)
         # pass
@@ -7694,9 +7696,9 @@ class _DebugWin:
 
         try:  # The window may be closed by user at any time, so have to protect
             if blocking and not self.no_button:
-                self.window['-PAUSE-'].change(visible=False)
+                self.window['-PAUSE-'].change(nazar=False)
             elif not self.no_button:
-                self.window['-PAUSE-'].change(visible=True)
+                self.window['-PAUSE-'].change(nazar=True)
         except:
             self.window = None
 
@@ -7718,11 +7720,11 @@ class _DebugWin:
                     continue
                 if paused:
                     self.window['-PAUSE-'].change(text='Pause')
-                    self.quit_button.change(visible=True)
+                    self.quit_button.change(nazar=True)
                     break
                 paused = True
                 self.window['-PAUSE-'].change(text='Resume')
-                self.quit_button.change(visible=False)
+                self.quit_button.change(nazar=False)
                 timeout = None
 
         SUPPRESS_WIDGET_NOT_FINALIZED_WARNINGS = suppress
@@ -8174,8 +8176,8 @@ def set_options(
     debug_win_size=(None, None),
     window_location=(None, None),
     error_button_color=(None, None),
-    tooltip_time=None,
-    tooltip_font=None,
+    hover_time=None,
+    hover_font=None,
     use_ttk_buttons=None,
     ttk_theme=None,
     suppress_error_popups=None,
@@ -8197,7 +8199,7 @@ def set_options(
     scaling=None,
     disable_modal_windows=None,
     force_modal_windows=None,
-    tooltip_offset=(None, None),
+    hover_offset=(None, None),
     sbar_trough_color=None,
     sbar_background_color=None,
     sbar_arrow_color=None,
@@ -8275,10 +8277,10 @@ def set_options(
     :type window_location:                  (int, int) | None
     :param error_button_color:              (Default = (None))
     :type error_button_color:               ???
-    :param tooltip_time:                    time in milliseconds to wait before showing a tooltip. Default is 400ms
-    :type tooltip_time:                     (int)
-    :param tooltip_font:                    font to use for all tooltips
-    :type tooltip_font:                     str or Tuple[str, int] or Tuple[str, int, str]
+    :param hover_time:                    time in milliseconds to wait before showing a hover. Default is 400ms
+    :type hover_time:                     (int)
+    :param hover_font:                    font to use for all hovers
+    :type hover_font:                     str or Tuple[str, int] or Tuple[str, int, str]
     :param use_ttk_buttons:                 if True will cause all buttons to be ttk buttons
     :type use_ttk_buttons:                  (bool)
     :param ttk_theme:                       Theme to use with ttk widgets.  Choices (on Windows) include - 'default', 'winnative', 'clam', 'alt', 'classic', 'vista', 'xpnative'
@@ -8321,8 +8323,8 @@ def set_options(
     :type disable_modal_windows:            (bool)
     :param force_modal_windows:             If True then all windows will be modal (the disable option will be ignored... all windows will be forced to be modal)
     :type force_modal_windows:              (bool)
-    :param tooltip_offset:                  Offset to use for tooltips as a tuple. These values will be added to the mouse location when the widget was entered.
-    :type tooltip_offset:                   ((None, None) | (int, int))
+    :param hover_offset:                  Offset to use for hovers as a tuple. These values will be added to the mouse location when the widget was entered.
+    :type hover_offset:                   ((None, None) | (int, int))
     :param sbar_trough_color:               Scrollbar color of the trough
     :type sbar_trough_color:                (str)
     :param sbar_background_color:           Scrollbar color of the background of the arrow buttons at the ends AND the color of the "thumb" (the thing you grab and slide). Switches to arrow color when mouse is over
@@ -8379,11 +8381,11 @@ def set_options(
     global DEFAULT_WINDOW_LOCATION
     global DEFAULT_ELEMENT_TEXT_COLOR
     global DEFAULT_INPUT_TEXT_COLOR
-    global DEFAULT_TOOLTIP_TIME
+    global DEFAULT_HOVER_TIME
     global DEFAULT_ERROR_BUTTON_COLOR
     global DEFAULT_TTK_THEME
     global USE_TTK_BUTTONS
-    global TOOLTIP_FONT
+    global HOVER_FONT
     global SUPPRESS_ERROR_POPUPS
     global SUPPRESS_RAISE_KEY_ERRORS
     global SUPPRESS_KEY_GUESSING
@@ -8402,7 +8404,7 @@ def set_options(
     global DEFAULT_SCALING
     global DEFAULT_MODAL_WINDOWS_ENABLED
     global DEFAULT_MODAL_WINDOWS_FORCED
-    global DEFAULT_TOOLTIP_OFFSET
+    global DEFAULT_HOVER_OFFSET
     global DEFAULT_ALPHA_CHANNEL
     global _pysimplegui_user_settings
     global ttk_part_overrides_from_options
@@ -8510,8 +8512,8 @@ def set_options(
     if input_text_color is not None:
         DEFAULT_INPUT_TEXT_COLOR = input_text_color
 
-    if tooltip_time is not None:
-        DEFAULT_TOOLTIP_TIME = tooltip_time
+    if hover_time is not None:
+        DEFAULT_HOVER_TIME = hover_time
 
     if error_button_color != (None, None):
         DEFAULT_ERROR_BUTTON_COLOR = error_button_color
@@ -8522,8 +8524,8 @@ def set_options(
     if use_ttk_buttons is not None:
         USE_TTK_BUTTONS = use_ttk_buttons
 
-    if tooltip_font is not None:
-        TOOLTIP_FONT = tooltip_font
+    if hover_font is not None:
+        HOVER_FONT = hover_font
 
     if suppress_error_popups is not None:
         SUPPRESS_ERROR_POPUPS = suppress_error_popups
@@ -8589,8 +8591,8 @@ def set_options(
     if force_modal_windows is not None:
         DEFAULT_MODAL_WINDOWS_FORCED = force_modal_windows
 
-    if tooltip_offset != (None, None):
-        DEFAULT_TOOLTIP_OFFSET = tooltip_offset
+    if hover_offset != (None, None):
+        DEFAULT_HOVER_OFFSET = hover_offset
 
     if alpha_channel is not None:
         DEFAULT_ALPHA_CHANNEL = alpha_channel
@@ -9146,7 +9148,7 @@ def theme_previewer(columns=12, scrollable=False, scroll_area_size=(None, None),
     def sample_layout(theme_name):
         return [
             [Text('Text element'), InputText('Input data here', size=(10, 1))],
-            [Button('Ok', event=f"choose_{theme_name}", tooltip=f"Choose {theme_name}"), Button('Disabled', disabled=True), Slider((1, 10), orientation='h', size=(5, 15))],
+            [Button('Ok', event=f"choose_{theme_name}", hover=f"Choose {theme_name}"), Button('Disabled', disabled=True), Slider((1, 10), orientation='h', size=(5, 15))],
         ]
 
     names = list_of_look_and_feel_values()
@@ -9208,7 +9210,7 @@ def _theme_preview_window_swatches():
         [Text('Themes as color swatches', text_color='white', background_color='black', font='Default 25')],
         [
             Text(
-                'Tooltip and right click a color to get the value',
+                'Hover and right click a color to get the value',
                 text_color='white',
                 background_color='black',
                 font='Default 15',
@@ -9248,7 +9250,7 @@ def _theme_preview_window_swatches():
                         pad=(0, 0),
                         font='DEFAUlT 20',
                         right_click_menu=['Nothing', [color]],
-                        tooltip=color,
+                        hover=color,
                         enable_events=True,
                         event=(i, color),
                     )
@@ -11078,7 +11080,7 @@ def popup_get_folder(
                     bind_return_key=True,
                 ),
                 browse_button,
-                Button('Clear History', tooltip='Clears the list of folders shown in the combobox'),
+                Button('Clear History', hover='Clears the list of folders shown in the combobox'),
             ]
         ]
 
@@ -11375,7 +11377,7 @@ def popup_get_file(
                     bind_return_key=True,
                 ),
                 browse_button,
-                Button('Clear History', tooltip='Clears the list of files shown in the combobox'),
+                Button('Clear History', hover='Clears the list of files shown in the combobox'),
             ]
         ]
 
@@ -11544,7 +11546,7 @@ def popup_get_text(
                     size=size if size != (None, None) else (80, 1),
                     bind_return_key=True,
                 ),
-                Button('Clear History', tooltip='Clears the list of files shown in the combobox'),
+                Button('Clear History', hover='Clears the list of files shown in the combobox'),
             ]
         ]
 
@@ -11885,7 +11887,7 @@ def popup_animated(
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
     :type relative_location:    (int, int)
-    :param alpha_channel:       Window transparency 0 = invisible 1 = completely visible. Values between are see through
+    :param alpha_channel:       Window transparency 0 = invisible 1 = completely nazar. Values between are see through
     :type alpha_channel:        (float)
     :param time_between_frames: Amount of time in milliseconds between each frame
     :type time_between_frames:  (int)
@@ -11969,7 +11971,7 @@ def popup_notify(
     """
     Displays a "notification window", usually in the bottom right corner of your display.  Has an icon, a title, and a message.  It is more like a "toaster" window than the normal popups.
 
-    The window will slowly fade in and out if desired.  Clicking on the window will cause it to move through the end the current "phase". For example, if the window was fading in and it was clicked, then it would immediately stop fading in and instead be fully visible.  It's a way for the user to quickly dismiss the window.
+    The window will slowly fade in and out if desired.  Clicking on the window will cause it to move through the end the current "phase". For example, if the window was fading in and it was clicked, then it would immediately stop fading in and instead be fully nazar.  It's a way for the user to quickly dismiss the window.
 
     The return code specifies why the call is returning (e.g. did the user click the message to dismiss it)
 
@@ -11983,7 +11985,7 @@ def popup_notify(
     :type display_duration_in_ms:  (int)
     :param fade_in_duration:       Number of milliseconds to fade window in and out
     :type fade_in_duration:        (int)
-    :param alpha:                  Alpha channel. 0 - invisible 1 - fully visible
+    :param alpha:                  Alpha channel. 0 - invisible 1 - fully nazar
     :type alpha:                   (float)
     :param location:               Location on the screen to display the window
     :type location:                (int, int)
@@ -12021,7 +12023,7 @@ def popup_notify(
 
     message = output
 
-    # def __init__(self, menu=None, filename=None, data=None, data_base64=None, tooltip=None, metadata=None):
+    # def __init__(self, menu=None, filename=None, data=None, data_base64=None, hover=None, metadata=None):
     return SystemTray.notify(
         title=title,
         message=message,
@@ -12151,7 +12153,7 @@ def shell_with_animation(
     :type keep_on_top:          (bool)
     :param location:            (x,y) location on the screen to place the top left corner of your window. Default is to center on screen
     :type location:             (int, int)
-    :param alpha_channel:       Window transparency 0 = invisible 1 = completely visible. Values between are see through
+    :param alpha_channel:       Window transparency 0 = invisible 1 = completely nazar. Values between are see through
     :type alpha_channel:        (float)
     :param time_between_frames: Amount of time in milliseconds between each frame
     :type time_between_frames:  (int)
@@ -13625,11 +13627,11 @@ class _Debugger:
                 In(
                     size=(83, 1),
                     event='-REPL-',
-                    tooltip='Type in any "expression" or "statement"\n and it will be disaplayed below.\nPress RETURN KEY instead of "Go"\nbutton for faster use',
+                    hover='Type in any "expression" or "statement"\n and it will be disaplayed below.\nPress RETURN KEY instead of "Go"\nbutton for faster use',
                 ),
-                B('Go', bind_return_key=True, visible=True),
+                B('Go', bind_return_key=True, nazar=True),
             ],
-            [Multiline(size=(93, 26), event='-OUTPUT-', autoscroll=True, do_not_clear=True)],
+            [Multiline(size=(93, 26), event='-OUTPUT-', autoscroll=True, auto_wipe=True)],
         ]
 
         autowatch_frame = [
@@ -14808,7 +14810,7 @@ def main_open_github_issue():
 
     frame_details = [[Multiline(size=(65, 10), font='Courier 10', k='-ML DETAILS-', expand_x=True, expand_y=True)]]
 
-    tooltip_project_details = 'If you care to share a little about your project,\nthen by all means tell us what you are making!'
+    hover_project_details = 'If you care to share a little about your project,\nthen by all means tell us what you are making!'
     frame_project_details = [
         [
             Multiline(
@@ -14817,12 +14819,12 @@ def main_open_github_issue():
                 k='-ML PROJECT DETAILS-',
                 expand_x=True,
                 expand_y=True,
-                tooltip=tooltip_project_details,
+                hover=hover_project_details,
             )
         ]
     ]
 
-    tooltip_where_find_psg = 'Where did you learn about PySimpleGUI?'
+    hover_where_find_psg = 'Where did you learn about PySimpleGUI?'
     frame_where_you_found_psg = [
         [
             Multiline(
@@ -14831,13 +14833,13 @@ def main_open_github_issue():
                 k='-ML FOUND PSG-',
                 expand_x=True,
                 expand_y=True,
-                tooltip=tooltip_where_find_psg,
+                hover=hover_where_find_psg,
             )
         ]
     ]
 
-    tooltip_code = 'A short program that can be immediately run will considerably speed up getting you quality help.'
-    frame_code = [[Multiline(size=(80, 10), font='Courier 8', k='-ML CODE-', expand_x=True, expand_y=True, tooltip=tooltip_code)]]
+    hover_code = 'A short program that can be immediately run will considerably speed up getting you quality help.'
+    frame_code = [[Multiline(size=(80, 10), font='Courier 8', k='-ML CODE-', expand_x=True, expand_y=True, hover=hover_code)]]
 
     frame_markdown = [[Multiline(size=(80, 10), font='Courier 8', k='-ML MARKDOWN-', expand_x=True, expand_y=True)]]
 
@@ -14898,7 +14900,7 @@ def main_open_github_issue():
 
     layout = [
         [
-            pin(B(SYMBOL_DOWN, pad=(0, 0), k='-HIDE CLIST-', tooltip='Hide/show upper sections of window')),
+            pin(B(SYMBOL_DOWN, pad=(0, 0), k='-HIDE CLIST-', hover='Hide/show upper sections of window')),
             pin(Col(top_layout, k='-TOP COL-')),
         ],
         [layout_pane],
@@ -14949,7 +14951,7 @@ def main_open_github_issue():
                     title = title.strip()
             window['-TITLE-'].change(f'[{event}] {title}')
         if event == '-HIDE CLIST-':
-            window['-TOP COL-'].change(visible=not window['-TOP COL-'].visible)
+            window['-TOP COL-'].change(nazar=not window['-TOP COL-'].nazar)
             window['-HIDE CLIST-'].change(text=SYMBOL_UP if window['-HIDE CLIST-'].get_text() == SYMBOL_DOWN else SYMBOL_DOWN)
         if event == 'Help':
             _github_issue_help()
@@ -15205,7 +15207,7 @@ def main_global_pysimplegui_settings():
         'idle': '<editor> <file>',
     }
 
-    tooltip = (
+    hover = (
         'Format strings for some popular editors/IDEs:\n'
         + 'PyCharm - <editor> --line <line> <file>\n'
         + 'Notepad++ - <editor> -n<line> <file>\n'
@@ -15220,9 +15222,9 @@ def main_global_pysimplegui_settings():
         + 'IDLE - <editor> <file>\n'
     )
 
-    tooltip_file_explorer = 'This is the program you normally use to "Browse" for files\n' + 'For Windows this is normally "explorer". On Linux "nemo" is sometimes used.'
+    hover_file_explorer = 'This is the program you normally use to "Browse" for files\n' + 'For Windows this is normally "explorer". On Linux "nemo" is sometimes used.'
 
-    tooltip_theme = 'The normal default theme for PySimpleGUI is "Dark Blue 13\n' + 'If you do not call theme("theme name") by your program to change the theme, then the default is used.\n' + 'This setting allows you to set the theme that PySimpleGUI will use for ALL of your programs that\n' + 'do not set a theme specifically.'
+    hover_theme = 'The normal default theme for PySimpleGUI is "Dark Blue 13\n' + 'If you do not call theme("theme name") by your program to change the theme, then the default is used.\n' + 'This setting allows you to set the theme that PySimpleGUI will use for ALL of your programs that\n' + 'do not set a theme specifically.'
 
     # ------------------------- TTK Tab -------------------------
     ttk_scrollbar_tab_layout = [
@@ -15319,8 +15321,8 @@ def main_global_pysimplegui_settings():
             [T('Use tags <editor> <file> <line> to specify the string')],
             [T('that will be executed to edit python files using your editor')],
             [
-                T('Edit Format String (hover for tooltip)', tooltip=tooltip),
-                In(settings.get('-editor format string-', '<editor> <file>'), k='-EDITOR FORMAT-', tooltip=tooltip),
+                T('Edit Format String (hover for hover)', hover=hover),
+                In(settings.get('-editor format string-', '<editor> <file>'), k='-EDITOR FORMAT-', hover=hover),
             ],
         ],
         font='_ 16',
@@ -15331,10 +15333,10 @@ def main_global_pysimplegui_settings():
 
     explorer_tab = Tab(
         'Explorer Program',
-        [[In(settings.get('-explorer program-', ''), k='-EXPLORER PROGRAM-', tooltip=tooltip_file_explorer)]],
+        [[In(settings.get('-explorer program-', ''), k='-EXPLORER PROGRAM-', hover=hover_file_explorer)]],
         font='_ 16',
         expand_x=True,
-        tooltip=tooltip_file_explorer,
+        hover=hover_file_explorer,
     )
 
     # ------------------------- Snapshots Tab -------------------------
@@ -15387,7 +15389,7 @@ def main_global_pysimplegui_settings():
                     settings.get('-theme-', None),
                     readonly=True,
                     k='-THEME-',
-                    tooltip=tooltip_theme,
+                    hover=hover_theme,
                 ),
                 Checkbox(
                     'Always use custom Titlebar',
@@ -15932,7 +15934,7 @@ def _create_main_window():
 
     frame3 = [
         [Checkbox('Checkbox1', True, k='-CB1-'), Checkbox('Checkbox2', k='-CB2-')],
-        [Radio('Radio Button1', 1, event='-R1-'), Radio('Radio Button2', 1, default=True, event='-R2-', tooltip='Radio 2')],
+        [Radio('Radio Button1', 1, event='-R1-'), Radio('Radio Button2', 1, default=True, event='-R2-', hover='Radio 2')],
         [T('', size=(1, 4))],
     ]
 
@@ -16039,7 +16041,7 @@ def _create_main_window():
     ]
     tab_upgrade = Tab('Upgrade\n', upgrade_recommendation_tab_layout, expand_x=True)
 
-    tab1 = Tab('Graph\n', frame6, tooltip='Graph is in here', title_color='red')
+    tab1 = Tab('Graph\n', frame6, hover='Graph is in here', title_color='red')
     tab2 = Tab(
         'CB, Radio\nList, Combo',
         [
@@ -16048,38 +16050,38 @@ def _create_main_window():
                     'Multiple Choice Group',
                     frame2,
                     title_color='#FFFFFF',
-                    tooltip='Checkboxes, radio buttons, etc',
+                    hover='Checkboxes, radio buttons, etc',
                     vertical_alignment='t',
                 ),
                 Frame(
                     'Binary Choice Group',
                     frame3,
                     title_color='#FFFFFF',
-                    tooltip='Binary Choice',
+                    hover='Binary Choice',
                     vertical_alignment='t',
                 ),
             ]
         ],
     )
-    # tab3 = Tab('Table and Tree', [[Frame('Structured Data Group', frame5, title_color='red', element_justification='l')]], tooltip='tab 3', title_color='red', )
+    # tab3 = Tab('Table and Tree', [[Frame('Structured Data Group', frame5, title_color='red', element_justification='l')]], hover='tab 3', title_color='red', )
     tab3 = Tab(
         'Table &\nTree',
         [[Column(frame5, element_justification='l', vertical_alignment='t')]],
-        tooltip='tab 3',
+        hover='tab 3',
         title_color='red',
         k='-TAB TABLE-',
     )
     tab4 = Tab(
         'Sliders\n',
         [[Frame('Variable Choice Group', frame4, title_color='blue')]],
-        tooltip='tab 4',
+        hover='tab 4',
         title_color='red',
         k='-TAB VAR-',
     )
     tab5 = Tab(
         'Input\nMultiline',
         [[Frame('TextInput', frame1, title_color='blue')]],
-        tooltip='tab 5',
+        hover='tab 5',
         title_color='red',
         k='-TAB TEXT-',
     )
@@ -16096,9 +16098,9 @@ def _create_main_window():
     layout_top = Column(
         [
             [
-                Image(EMOJI_BASE64_HAPPY_BIG_SMILE, enable_events=True, event='-LOGO-', tooltip='This is PySimpleGUI logo'),
+                Image(EMOJI_BASE64_HAPPY_BIG_SMILE, enable_events=True, event='-LOGO-', hover='This is PySimpleGUI logo'),
                 Image(data=DEFAULT_BASE64_LOADING_GIF, enable_events=True, event='-IMAGE-'),
-                Text('PySimpleGUI Test Harness', font='ANY 14', tooltip='My tooltip', event='-TEXT1-'),
+                Text('PySimpleGUI Test Harness', font='ANY 14', hover='My hover', event='-TEXT1-'),
             ],
             VerLine(ver, 'PySimpleGUI Version') + [Image(HEART_3D_BASE64, subsample=4)],
             # VerLine('{}/{}'.format(tkversion, tclversion), 'TK/TCL Versions'),
@@ -16122,11 +16124,11 @@ def _create_main_window():
         ],
         [
             B('Button', highlight_colors=('yellow', 'red'), pad=(1, 0)),
-            B('ttk Button', use_ttk_buttons=True, tooltip='This is a TTK Button', pad=(1, 0)),
-            B('See-through Mode', tooltip='Make the background transparent', pad=(1, 0)),
+            B('ttk Button', use_ttk_buttons=True, hover='This is a TTK Button', pad=(1, 0)),
+            B('See-through Mode', hover='Make the background transparent', pad=(1, 0)),
             B('Upgrade PySimpleGUI from GitHub', button_color='white on red', event='-INSTALL-', pad=(1, 0)),
-            B('Global Settings', tooltip='Settings across all PySimpleGUI programs', pad=(1, 0)),
-            B('Exit', tooltip='Exit button', pad=(1, 0)),
+            B('Global Settings', hover='Settings across all PySimpleGUI programs', pad=(1, 0)),
+            B('Exit', hover='Exit button', pad=(1, 0)),
         ],
         # [B(image_data=ICON_BUY_ME_A_COFFEE,pad=(1, 0), event='-COFFEE-'),
         [
@@ -16247,8 +16249,8 @@ def main():
         window['+PROGRESS+'].UpdateBar(i % 800)
         window.Element('-IMAGE-').UpdateAnimation(DEFAULT_BASE64_LOADING_GIF, time_between_frames=50)
         if event == 'Button':
-            window.Element('-TEXT1-').SetTooltip('NEW TEXT')
-            window.Element('-MENU-').change(visible=True)
+            window.Element('-TEXT1-').SetHover('NEW TEXT')
+            window.Element('-MENU-').change(nazar=True)
         elif event == 'Popout':
             show_debugger_popout_window()
         elif event == 'Launch Debugger':
@@ -16296,7 +16298,7 @@ def main():
             window = _create_main_window()
             graph_elem = window['+GRAPH+']
         elif event == '-HIDE TABS-':
-            window['-TAB GROUP COL-'].change(visible=window['-TAB GROUP COL-'].metadata is True)
+            window['-TAB GROUP COL-'].change(nazar=window['-TAB GROUP COL-'].metadata is True)
             window['-TAB GROUP COL-'].metadata = not window['-TAB GROUP COL-'].metadata
             window['-HIDE TABS-'].change(text=SYMBOL_UP if window['-TAB GROUP COL-'].metadata else SYMBOL_DOWN)
         elif event == 'SDK Reference':

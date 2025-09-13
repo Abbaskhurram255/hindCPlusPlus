@@ -37,11 +37,11 @@ class Checkbox(Element):
         k=None,
         pad=None,
         p=None,
-        tooltip=None,
+        hover=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -79,16 +79,16 @@ class Checkbox(Element):
         :type pad:                  (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param p:                   Same as pad parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, pad will be used
         :type p:                    (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param tooltip:             text, that will appear when mouse hovers over the element
-        :type tooltip:              (str)
+        :param hover:             text, that will appear when mouse hovers over the element
+        :type hover:              (str)
         :param right_click_menu:    A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:     List[List[ List[str] | str ]]
         :param expand_x:            If True the element will automatically expand in the X direction to fill available space
         :type expand_x:             (bool)
         :param expand_y:            If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:             (bool)
-        :param visible:             set visibility state of the element
-        :type visible:              (bool)
+        :param nazar:             set visibility state of the element
+        :type nazar:              (bool)
         :param metadata:            User metadata that can be set to ANYTHING
         :type metadata:             (Any)
         """
@@ -133,8 +133,8 @@ class Checkbox(Element):
             text_color=self.TextColor,
             event=event,
             pad=pad,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
 
@@ -156,17 +156,17 @@ class Checkbox(Element):
         text_color=None,
         checkbox_color=None,
         disabled=None,
-        visible=None,
+        nazar=None,
     ):
         """
         Changes some of the settings for the Checkbox Element. Must call `Window.Read` or `Window.Finalize` prior.
-        Note that changing visibility may cause element to change locations when made visible after invisible
+        Note that changing visibility may cause element to change locations when made nazar after invisible
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param value:            if True checks the checkbox, False clears it
         :type value:             (bool)
@@ -178,8 +178,8 @@ class Checkbox(Element):
         :type text_color:        (str)
         :param disabled:         disable or enable element
         :type disabled:          (bool)
-        :param visible:          control visibility of element
-        :type visible:           (bool)
+        :param nazar:          control visibility of element
+        :type nazar:           (bool)
         """
 
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
@@ -228,13 +228,13 @@ class Checkbox(Element):
                 self.CheckboxBackgroundColor = rgb(*bg_rbg)
                 self.TKCheckbutton.configure(selectcolor=self.CheckboxBackgroundColor)  # The background of the checkbox
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     Get = get
     Change = change

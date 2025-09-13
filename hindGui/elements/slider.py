@@ -39,8 +39,8 @@ class Slider(Element):
         p=None,
         expand_x=False,
         expand_y=False,
-        tooltip=None,
-        visible=True,
+        hover=None,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -50,7 +50,7 @@ class Slider(Element):
         :type default_value:           int | float
         :param resolution:             the smallest amount the slider can be moved
         :type resolution:              int | float
-        :param tick_interval:          how often a visible tick should be shown next to slider
+        :param tick_interval:          how often a nazar tick should be shown next to slider
         :type tick_interval:           int | float
         :param orientation:            'horizontal' or 'vertical' ('h' or 'v' also work)
         :type orientation:             (str)
@@ -90,10 +90,10 @@ class Slider(Element):
         :type expand_x:                (bool)
         :param expand_y:               If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:                (bool)
-        :param tooltip:                text, that will appear when mouse hovers over the element
-        :type tooltip:                 (str)
-        :param visible:                set visibility state of the element
-        :type visible:                 (bool)
+        :param hover:                text, that will appear when mouse hovers over the element
+        :type hover:                 (str)
+        :param nazar:                set visibility state of the element
+        :type nazar:                 (bool)
         :param metadata:               User metadata that can be set to ANYTHING
         :type metadata:                (Any)
         """
@@ -127,21 +127,21 @@ class Slider(Element):
             text_color=text_color,
             event=event,
             pad=pad,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
         return
 
-    def change(self, value=None, range=(None, None), disabled=None, visible=None):
+    def change(self, value=None, range=(None, None), disabled=None, nazar=None):
         """
         Changes some of the settings for the Slider Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param value:    sets current slider value
         :type value:     int | float
@@ -149,8 +149,8 @@ class Slider(Element):
         :type range:     (int, int) | Tuple[float, float
         :param disabled: disable or enable state of the element
         :type disabled:  (bool)
-        :param visible:  control visibility of element
-        :type visible:   (bool)
+        :param nazar:  control visibility of element
+        :type nazar:   (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
@@ -173,13 +173,13 @@ class Slider(Element):
             self.TKScale['state'] = 'normal'
         self.Disabled = disabled if disabled is not None else self.Disabled
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     def _SliderChangedHandler(self, event):
         """

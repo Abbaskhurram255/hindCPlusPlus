@@ -1,5 +1,6 @@
 from KL_Py import *
 
+
 lay1 = [
     [Text("Please enter your name and email address")],
     [Text("Name: ", size=11, p=(0, 8)), Input(event="name")],
@@ -17,42 +18,51 @@ lay3 = [
 ]
 
 lay = [
-    [Column(lay1, event="col1", visible=True),
-    Column(lay2, event="col2", visible=False),
-    Column(lay3, event="col3", visible=False)],
-    [Button("Next"), Button("Return to Start", visible=False), Button("Exit")]
+    [Column(lay1, event="col1", nazar=ae),
+    Column(lay2, event="col2", nazar=nae),
+    Column(lay3, event="col3", nazar=nae)],
+    [Button("Next", hover="Click to go to the next page"), Button(text="Return to Start", nazar=nae), Button("Exit")]
 ]
 
 
-app: hindGui = hindGui("Dynamic App", lay, fasla=(12, 6))
+app: hindGui = hindGui("Dynamic App", lay, fasla=(12, 6), on_top=Yes)
 username: str
 layout_number: int = 1
 
-while True:
+while app.chal_rahi_he:
     event, values = app.parh()
-    if event in (None, "Exit"):
+    if event in [None, "Exit", "Escape"]:
         break
     if event == "Next":
-        app[f"col{layout_number}"].change(visible=False)
+        app[f"col{layout_number}"].change(nazar=nae)
         if layout_number == 1:
+            app["Return to Start"].change(text="Return to Start")
             username = values["name"].strip()
         if layout_number < 3:
-            app["Return to Start"].change(visible=True)
-            app["Next"].change(visible=True)
+            app["Return to Start"].change(nazar=ae)
+            app["Next"].change(nazar=ae)
             layout_number += 1
-            app[f"col{layout_number}"].change(visible=True)
+            app[f"col{layout_number}"].change(nazar=ae)
         else:
-            app["col3"].change(visible=True)
+            app["col3"].change(nazar=ae)
         if layout_number == 2:
             app["instructions"].change(f"Thank you for voting{', ' + username if len(username) > 0 else ''}")
         if layout_number == 3:
-            app["Next"].change(visible=False)
-        print(f"New Layout: {layout_number}")
+            app["Next"].change(nazar=nae)
+            app["Return to Start"].change(text="Refill")
+        kaho("New Layout: {layout_number}")
     elif event == "Return to Start":
-        app["Next"].change(visible=True)
-        app[f"col{layout_number}"].change(visible=False)
-        app[f"col1"].change(visible=True)
+        # clear all the input fields before sending the user back, if it's the last page
+        if layout_number == 3:
+            for rows in lay1:
+                for el in rows:
+                    if not isinstance(el, Input):
+                        continue
+                    el(value="")
+        app["Next"].change(nazar=ae)
+        app[f"col{layout_number}"].change(nazar=nae)
+        app[f"col1"].change(nazar=ae)
         layout_number = 1
-        app["Return to Start"].change(visible=False)
-        print(f"New Layout: {layout_number}")
+        kaho("New Layout: {layout_number}")
+        app["Return to Start"].change(nazar=nae)
 app.die()

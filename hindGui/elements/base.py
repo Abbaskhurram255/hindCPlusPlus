@@ -35,7 +35,7 @@ from hindGui import theme_text_color
 from hindGui import TITLEBAR_CLOSE_KEY
 from hindGui import TITLEBAR_MAXIMIZE_KEY
 from hindGui import TITLEBAR_MINIMIZE_KEY
-from hindGui import ToolTip
+from hindGui import Hover
 from hindGui import ttk_part_mapping_dict
 from hindGui import TTK_SCROLLBAR_PART_ARROW_BUTTON_ARROW_COLOR
 from hindGui import TTK_SCROLLBAR_PART_ARROW_WIDTH
@@ -60,8 +60,8 @@ class Element:
         text_color=None,
         event=None,
         pad=None,
-        tooltip=None,
-        visible=True,
+        hover=None,
+        nazar=True,
         metadata=None,
         sbar_trough_color=None,
         sbar_background_color=None,
@@ -90,10 +90,10 @@ class Element:
         :type event:                          str | int | tuple | object
         :param pad:                         Amount of padding to put around element in pixels (left/right, top/bottom). If an int is given, then auto-converted to tuple (int, int)
         :type pad:                          (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
-        :param tooltip:                     text, that will appear when mouse hovers over the element
-        :type tooltip:                      (str)
-        :param visible:                     set visibility state of the element (Default = True)
-        :type visible:                      (bool)
+        :param hover:                     text, that will appear when mouse hovers over the element
+        :type hover:                      (str)
+        :param nazar:                     set visibility state of the element (Default = True)
+        :type nazar:                      (bool)
         :param metadata:                    User metadata that can be set to ANYTHING
         :type metadata:                     (Any)
         :param sbar_trough_color:           Scrollbar color of the trough
@@ -145,9 +145,9 @@ class Element:
         self.BackgroundColor = background_color if background_color is not None else hindGui.DEFAULT_ELEMENT_BACKGROUND_COLOR
         self.TextColor = text_color if text_color is not None else hindGui.DEFAULT_ELEMENT_TEXT_COLOR
         self.Event = event  # dictionary event for return values
-        self.Tooltip = tooltip
-        self.TooltipObject = None
-        self._visible = visible
+        self.Hover = hover
+        self.HoverObject = None
+        self._visible = nazar
         self.TKRightClickMenu = None
         self.Widget = None  # Set when creating window. Has the main tkinter widget for element
         self.Tearoff = False  # needed because of right click menu code
@@ -252,7 +252,7 @@ class Element:
             self.Disabled = None  # in case the element hasn't defined this, add it here
 
     @property
-    def visible(self):
+    def nazar(self):
         """
         Returns visibility state for the element.  This is a READONLY property
         :return: Visibility state for element
@@ -593,21 +593,21 @@ class Element:
         self.Widget.unbind(bind_string)
         self.user_bind_dict.pop(bind_string, None)
 
-    def set_tooltip(self, tooltip_text):
+    def set_hover(self, hover_text):
         """
-        Called by application to change the tooltip text for an Element.  Normally invoked using the Element Object such as: window.Element('event').SetToolTip('New tip').
+        Called by application to change the hover text for an Element.  Normally invoked using the Element Object such as: window.Element('event').SetHover('New tip').
 
-        :param tooltip_text: the text to show in tooltip.
-        :type tooltip_text:  (str)
+        :param hover_text: the text to show in hover.
+        :type hover_text:  (str)
         """
 
-        if self.TooltipObject:
+        if self.HoverObject:
             try:
-                self.TooltipObject.leave()
+                self.HoverObject.leave()
             except:
                 pass
 
-        self.TooltipObject = ToolTip(self.Widget, text=tooltip_text, timeout=hindGui.DEFAULT_TOOLTIP_TIME)
+        self.HoverObject = Hover(self.Widget, text=hover_text, timeout=hindGui.DEFAULT_HOVER_TIME)
 
     def set_focus(self, force=False):
         """
@@ -729,7 +729,7 @@ class Element:
 
     def unhide_row(self):
         """
-        Unhides (makes visible again) the row container that the Element is located on.
+        Unhides (makes nazar again) the row container that the Element is located on.
         Note that it will re-appear at the bottom of the window / container, most likely.
         """
         try:
@@ -982,7 +982,7 @@ class Element:
     def _pack_forget_save_settings(self, alternate_widget=None):
         """
         Performs a pack_forget which will make a widget invisible.
-        This method saves the pack settings so that they can be restored if the element is made visible again
+        This method saves the pack settings so that they can be restored if the element is made nazar again
 
         :param alternate_widget:   Widget to use that's different than the one defined in Element.Widget. These are usually Frame widgets
         :type alternate_widget:    (tk.Widget)
@@ -1002,7 +1002,7 @@ class Element:
 
     def _pack_restore_settings(self, alternate_widget=None):
         """
-        Restores a previously packated widget which will make it visible again.
+        Restores a previously packated widget which will make it nazar again.
         If no settings were saved, then the widget is assumed to have not been unpacked and will not try to pack it again
 
         :param alternate_widget:   Widget to use that's different than the one defined in Element.Widget. These are usually Frame widgets
@@ -1039,7 +1039,7 @@ class Element:
         """
         return self.change(*args, **kwargs)
 
-    SetTooltip = set_tooltip
+    SetHover = set_hover
     SetFocus = set_focus
 
 

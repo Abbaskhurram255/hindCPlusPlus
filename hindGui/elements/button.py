@@ -40,10 +40,10 @@ class Button(Element):
 
     def __init__(
         self,
-        button_text='',
+        text='',
         button_type=BUTTON_TYPE_READ_FORM,
         target=(None, None),
-        tooltip=None,
+        hover=None,
         file_types=FILE_TYPES_ALL_FILES,
         initial_folder=None,
         default_extension='',
@@ -75,18 +75,18 @@ class Button(Element):
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
-        :param button_text:           Text to be displayed on the button
-        :type button_text:            (str)
+        :param text:           Text to be displayed on the button
+        :type text:            (str)
         :param button_type:           You  should NOT be setting this directly. ONLY the shortcut functions set this
         :type button_type:            (int)
         :param target:                event or (row,col) target for the button. Note that -1 for column means 1 element to the left of this one. The constant ThisRow is used to indicate the current row. The Button itself is a valid target for some types of button
         :type target:                 str | (int, int)
-        :param tooltip:               text, that will appear when mouse hovers over the element
-        :type tooltip:                (str)
+        :param hover:               text, that will appear when mouse hovers over the element
+        :type hover:                (str)
         :param file_types:            the filetypes that will be used to match files. To indicate all files: (("ALL Files", "*.* *"),).
         :type file_types:             Tuple[(str, str), ...]
         :param initial_folder:        starting path for folders and files
@@ -149,8 +149,8 @@ class Button(Element):
         :type expand_x:               (bool)
         :param expand_y:              If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:               (bool)
-        :param visible:               set visibility state of the element
-        :type visible:                (bool)
+        :param nazar:               set visibility state of the element
+        :type nazar:                (bool)
         :param metadata:              User metadata that can be set to ANYTHING
         :type metadata:               (Any)
         """
@@ -166,7 +166,7 @@ class Button(Element):
         self.FileTypes = file_types
         self.Widget = self.TKButton = None  # type: tk.Button
         self.Target = target
-        self.ButtonText = str(button_text)
+        self.text = str(text)
         self.RightClickMenu = right_click_menu
         # Button colors can be a tuple (text, background) or a string with format "text on background"
         self.ButtonColor = button_color_to_tuple(button_color)
@@ -209,7 +209,7 @@ class Button(Element):
             self.UseTtkButtons = True
 
         if event is None and k is None:
-            _key = self.ButtonText
+            _key = self.text
             if hindGui.DEFAULT_USE_BUTTON_SHORTCUTS is True:
                 pos = _key.find(MENU_SHORTCUT_CHARACTER)
                 if pos != -1:
@@ -235,7 +235,7 @@ class Button(Element):
         self.expand_y = expand_y
 
         sz = size if size != (None, None) else s
-        super().__init__(ELEM_TYPE_BUTTON, size=sz, font=font, pad=pad, event=_key, tooltip=tooltip, visible=visible, metadata=metadata)
+        super().__init__(ELEM_TYPE_BUTTON, size=sz, font=font, pad=pad, event=_key, hover=hover, nazar=nazar, metadata=metadata)
         return
 
     def _compute_highlight_colors(self):
@@ -280,7 +280,7 @@ class Button(Element):
         if self.Event is not None:
             self.ParentForm.LastButtonClicked = self.Event
         else:
-            self.ParentForm.LastButtonClicked = self.ButtonText
+            self.ParentForm.LastButtonClicked = self.text
         _exit_mainloop(self.ParentForm)
 
     def _find_target(self):
@@ -413,7 +413,7 @@ class Button(Element):
             if self.Event is not None:
                 self.ParentForm.LastButtonClicked = self.Event
             else:
-                self.ParentForm.LastButtonClicked = self.ButtonText
+                self.ParentForm.LastButtonClicked = self.text
             self.ParentForm.FormRemainedOpen = False
             self.ParentForm._Close()
             _exit_mainloop(self.ParentForm)
@@ -428,7 +428,7 @@ class Button(Element):
             if self.Event is not None:
                 self.ParentForm.LastButtonClicked = self.Event
             else:
-                self.ParentForm.LastButtonClicked = self.ButtonText
+                self.ParentForm.LastButtonClicked = self.text
             self.ParentForm.FormRemainedOpen = True
             _exit_mainloop(self.ParentForm)
         elif self.BType == BUTTON_TYPE_CLOSES_WIN_ONLY:  # special kind of button that does not exit main loop
@@ -461,7 +461,7 @@ class Button(Element):
         image_source=None,
         image_data=None,
         image_filename=None,
-        visible=None,
+        nazar=None,
         image_subsample=None,
         image_zoom=None,
         disabled_button_color=(None, None),
@@ -470,11 +470,11 @@ class Button(Element):
         """
         Changes some of the settings for the Button Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param text:                  sets button text
         :type text:                   (str)
@@ -490,8 +490,8 @@ class Button(Element):
         :type image_filename:         (str)
         :param disabled_button_color: colors to use when button is disabled (text, background). Use None for a color if don't want to change. Only ttk buttons support both text and background colors. tk buttons only support changing text color
         :type disabled_button_color:  (str, str)
-        :param visible:               control visibility of element
-        :type visible:                (bool)
+        :param nazar:               control visibility of element
+        :type nazar:                (bool)
         :param image_subsample:       amount to reduce the size of the image. Divides the size by this number. 2=1/2, 3=1/3, 4=1/4, etc
         :type image_subsample:        (int)
         :param image_zoom:            amount to increase the size of the image. 2=twice size, 3=3 times, etc
@@ -530,7 +530,7 @@ class Button(Element):
                 if pos != -1:
                     self.TKButton.config(underline=pos)
             self.TKButton.configure(text=btext)
-            self.ButtonText = text
+            self.text = text
         if button_color != (None, None) and button_color != COLOR_SYSTEM_DEFAULT:
             bc = button_color_to_tuple(button_color, self.ButtonColor)
             if self.UseTtkButtons:
@@ -582,9 +582,9 @@ class Button(Element):
             else:
                 self.TKButton.config(highlightthickness=0, image=image, width=width, height=height)
             self.TKButton.image = image
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
         if disabled_button_color != (None, None) and disabled_button_color != COLOR_SYSTEM_DEFAULT:
             if not self.UseTtkButtons:
@@ -599,8 +599,8 @@ class Button(Element):
                 disabled_button_color[1] if disabled_button_color[1] is not None else self.DisabledButtonColor[1],
             )
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     def get_text(self):
         """
@@ -609,7 +609,7 @@ class Button(Element):
         :return: The text currently displayed on the button
         :rtype:  (str)
         """
-        return self.ButtonText
+        return self.text
 
     def click(self):
         """
@@ -633,9 +633,9 @@ class ButtonMenu(Element):
 
     def __init__(
         self,
-        button_text,
+        text,
         menu_def,
-        tooltip=None,
+        hover=None,
         disabled=False,
         image_source=None,
         image_filename=None,
@@ -660,16 +660,16 @@ class ButtonMenu(Element):
         event=None,
         k=None,
         tearoff=False,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
-        :param button_text:               Text to be displayed on the button
-        :type button_text:                (str)
+        :param text:               Text to be displayed on the button
+        :type text:                (str)
         :param menu_def:                  A list of lists of Menu items to show when this element is clicked. See docs for format as they are the same for all menu types
         :type menu_def:                   List[List[str]]
-        :param tooltip:                   text, that will appear when mouse hovers over the element
-        :type tooltip:                    (str)
+        :param hover:                   text, that will appear when mouse hovers over the element
+        :type hover:                    (str)
         :param disabled:                  If True button will be created disabled
         :type disabled:                   (bool)
         :param image_source:              Image to place on button. Use INSTEAD of the image_filename and image_data. Unifies these into 1 easier to use parm
@@ -718,8 +718,8 @@ class ButtonMenu(Element):
         :type k:                          str | int | tuple | object
         :param tearoff:                   Determines if menus should allow them to be torn off
         :type tearoff:                    (bool)
-        :param visible:                   set visibility state of the element
-        :type visible:                    (bool)
+        :param nazar:                   set visibility state of the element
+        :type nazar:                    (bool)
         :param metadata:                  User metadata that can be set to ANYTHING
         :type metadata:                   (Any)
         """
@@ -727,7 +727,7 @@ class ButtonMenu(Element):
         self.MenuDefinition = copy.deepcopy(menu_def)
 
         self.AutoSizeButton = auto_size_button
-        self.ButtonText = button_text
+        self.text = text
         self.ButtonColor = button_color_to_tuple(button_color)
         self.BackgroundColor = background_color if background_color is not None else theme_input_background_color()
         self.TextColor = text_color if text_color is not None else theme_input_text_color()
@@ -767,10 +767,10 @@ class ButtonMenu(Element):
             font=font,
             pad=pad,
             event=event,
-            tooltip=tooltip,
+            hover=hover,
             text_color=self.TextColor,
             background_color=self.BackgroundColor,
-            visible=visible,
+            nazar=nazar,
             metadata=metadata,
         )
         self.Tearoff = tearoff
@@ -791,27 +791,27 @@ class ButtonMenu(Element):
     def change(
         self,
         menu_definition=None,
-        visible=None,
+        nazar=None,
         image_source=None,
         image_size=(None, None),
         image_subsample=None,
         image_zoom=None,
-        button_text=None,
+        text=None,
         button_color=None,
     ):
         """
         Changes some of the settings for the ButtonMenu Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param menu_definition: (New menu definition (in menu definition format)
         :type menu_definition:  List[List]
-        :param visible:         control visibility of element
-        :type visible:          (bool)
+        :param nazar:         control visibility of element
+        :type nazar:          (bool)
         :param image_source:    new image if image is to be changed. Can be a filename or a base64 encoded byte-string
         :type image_source:     (str | bytes)
         :param image_size:      Size of the image in pixels (width, height)
@@ -820,8 +820,8 @@ class ButtonMenu(Element):
         :type image_subsample:  (int)
         :param image_zoom:      amount to increase the size of the image. 2=twice size, 3=3 times, etc
         :type image_zoom:       (int)
-        :param button_text:     Text to be shown on the button
-        :type button_text:      (str)
+        :param text:     Text to be shown on the button
+        :type text:      (str)
         :param button_color:    Normally a tuple, but can be a simplified-button-color-string "foreground on background". Can be a single color if want to set only the background.
         :type button_color:     (str, str) | str
         """
@@ -888,15 +888,15 @@ class ButtonMenu(Element):
 
                 self.TKButtonMenu.config(image=image, compound=tk.CENTER, width=width, height=height)
                 self.TKButtonMenu.image = image
-        if button_text is not None:
-            self.TKButtonMenu.configure(text=button_text)
-            self.ButtonText = button_text
-        if visible is False:
+        if text is not None:
+            self.TKButtonMenu.configure(text=text)
+            self.text = text
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
         if button_color != (None, None) and button_color != COLOR_SYSTEM_DEFAULT:
             bc = button_color_to_tuple(button_color, self.ButtonColor)
             if bc[0] not in (None, COLOR_SYSTEM_DEFAULT):

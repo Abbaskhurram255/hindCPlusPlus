@@ -63,11 +63,11 @@ class Tree(Element):
         p=None,
         event=None,
         k=None,
-        tooltip=None,
+        hover=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -75,7 +75,7 @@ class Tree(Element):
         :type data:                     (TreeData)
         :param headings:                List of individual headings for each column
         :type headings:                 List[str]
-        :param visible_column_map:      Determines if a column should be visible. If left empty, all columns will be shown
+        :param visible_column_map:      Determines if a column should be nazar. If left empty, all columns will be shown
         :type visible_column_map:       List[bool]
         :param col_widths:              List of column widths so that individual column widths can be controlled
         :type col_widths:               List[int]
@@ -125,7 +125,7 @@ class Tree(Element):
         :type num_rows:                 (int)
         :param row_height:              height of a single row in pixels
         :type row_height:               (int)
-        :param vertical_scroll_only:    if True only the vertical scrollbar will be visible
+        :param vertical_scroll_only:    if True only the vertical scrollbar will be nazar
         :type vertical_scroll_only:     (bool)
         :param hide_vertical_scroll:    if True vertical scrollbar will be hidden
         :type hide_vertical_scroll:     (bool)
@@ -151,16 +151,16 @@ class Tree(Element):
         :type event:                      str | int | tuple | object
         :param k:                       Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                        str | int | tuple | object
-        :param tooltip:                 text, that will appear when mouse hovers over the element
-        :type tooltip:                  (str)
+        :param hover:                 text, that will appear when mouse hovers over the element
+        :type hover:                  (str)
         :param right_click_menu:        A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:         List[List[str] | str]]
         :param expand_x:                If True the element will automatically expand in the X direction to fill available space
         :type expand_x:                 (bool)
         :param expand_y:                If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:                 (bool)
-        :param visible:                 set visibility state of the element
-        :type visible:                  (bool)
+        :param nazar:                 set visibility state of the element
+        :type nazar:                  (bool)
         :param metadata:                User metadata that can be set to ANYTHING
         :type metadata:                 (Any)
         """
@@ -224,8 +224,8 @@ class Tree(Element):
             font=font,
             pad=pad,
             event=event,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
             sbar_trough_color=sbar_trough_color,
             sbar_background_color=sbar_background_color,
@@ -311,15 +311,15 @@ class Tree(Element):
         for node in node.children:
             self.add_treeview_data(node)
 
-    def change(self, values=None, event=None, value=None, text=None, icon=None, visible=None):
+    def change(self, values=None, event=None, value=None, text=None, icon=None, nazar=None):
         """
         Changes some of the settings for the Tree Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param values:  Representation of the tree
         :type values:   (TreeData)
@@ -331,8 +331,8 @@ class Tree(Element):
         :type text:     (str)
         :param icon:    can be either a base64 icon or a filename for the icon
         :type icon:     bytes | str
-        :param visible: control visibility of element
-        :type visible:  (bool)
+        :param nazar: control visibility of element
+        :type nazar:  (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
@@ -378,13 +378,13 @@ class Tree(Element):
                 except:
                     pass
             # item = self.TKTreeview.item(id)
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings(self.element_frame)
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings(self.element_frame)
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
         return self
 

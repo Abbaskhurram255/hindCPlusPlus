@@ -34,11 +34,11 @@ class Spin(Element):
         pad=None,
         p=None,
         wrap=None,
-        tooltip=None,
+        hover=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -78,16 +78,16 @@ class Spin(Element):
         :type p:                 (int, int) or ((int, int),(int,int)) or (int,(int,int)) or  ((int, int),int) | int
         :param wrap:             Determines if the values should "Wrap". Default is False. If True, when reaching last value, will continue back to the first value.
         :type wrap:              (bool)
-        :param tooltip:          text, that will appear when mouse hovers over the element
-        :type tooltip:           (str)
+        :param hover:          text, that will appear when mouse hovers over the element
+        :type hover:           (str)
         :param right_click_menu: A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:  List[List[ List[str] | str ]]
         :param expand_x:         If True the element will automatically expand in the X direction to fill available space
         :type expand_x:          (bool)
         :param expand_y:         If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:          (bool)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param nazar:          set visibility state of the element
+        :type nazar:           (bool)
         :param metadata:         User metadata that can be set to ANYTHING
         :type metadata:          (Any)
         """
@@ -119,24 +119,24 @@ class Spin(Element):
             text_color=fg,
             event=event,
             pad=pad,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
         return
 
-    def change(self, value=None, values=None, disabled=None, readonly=None, visible=None):
+    def change(self, value=None, values=None, disabled=None, readonly=None, nazar=None):
         """
         Changes some of the settings for the Spin Element. Must call `Window.Read` or `Window.Finalize` prior
         Note that the state can be in 3 states only.... enabled, disabled, readonly even
         though more combinations are available. The easy way to remember is that if you
         change the readonly parameter then you are enabling the element.
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param value:    set the current value from list of choices
         :type value:     (Any)
@@ -146,8 +146,8 @@ class Spin(Element):
         :type disabled:  (bool)
         :param readonly: make element readonly.  Note disabled and readonly cannot be mixed. It must be one OR the other
         :type readonly:  (bool)
-        :param visible:  control visibility of element
-        :type visible:   (bool)
+        :param nazar:  control visibility of element
+        :type nazar:   (bool)
         """
 
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
@@ -184,12 +184,12 @@ class Spin(Element):
                 self.TKSpinBox['state'] = 'normal'
         self.Disabled = disabled if disabled is not None else self.Disabled
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     def _SpinChangedHandler(self, event):
         """
@@ -238,7 +238,7 @@ class Spin(Element):
         This value will be the same as what was provided as list of choices.  If list items are ints, then the
         item returned will be an int (not a string)
 
-        :return: The currently visible entry
+        :return: The currently nazar entry
         :rtype:  (Any)
         """
         value = self.TKStringVar.get()

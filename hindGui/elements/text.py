@@ -37,8 +37,8 @@ class Text(Element):
         expand_x=False,
         expand_y=False,
         grab=None,
-        tooltip=None,
-        visible=True,
+        hover=None,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -82,10 +82,10 @@ class Text(Element):
         :type expand_y:          (bool)
         :param grab:             If True can grab this element and move the window around. Default is False
         :type grab:              (bool)
-        :param tooltip:          text, that will appear when mouse hovers over the element
-        :type tooltip:           (str)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param hover:          text, that will appear when mouse hovers over the element
+        :type hover:           (str)
+        :param nazar:          set visibility state of the element
+        :type nazar:           (bool)
         :param metadata:         User metadata that can be set to ANYTHING
         :type metadata:          (Any)
         """
@@ -118,20 +118,20 @@ class Text(Element):
             text_color=self.TextColor,
             pad=pad,
             event=event,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
 
-    def change(self, value=None, background_color=None, text_color=None, font=None, visible=None):
+    def change(self, value=None, background_color=None, text_color=None, font=None, nazar=None):
         """
         Changes some of the settings for the Text Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param value:            new text to show
         :type value:             (Any)
@@ -141,8 +141,8 @@ class Text(Element):
         :type text_color:        (str)
         :param font:             specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
         :type font:              (str or (str, int[, str]) or None)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param nazar:          set visibility state of the element
+        :type nazar:           (bool)
         """
 
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
@@ -161,12 +161,12 @@ class Text(Element):
             self.TKText.configure(fg=text_color)
         if font is not None:
             self.TKText.configure(font=font)
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     def get(self):
         """

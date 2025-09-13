@@ -49,7 +49,7 @@ class Menu(Element):
         p=None,
         event=None,
         k=None,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -77,8 +77,8 @@ class Menu(Element):
         :type event:                        str | int | tuple | object
         :param k:                         Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                          str | int | tuple | object
-        :param visible:                   set visibility state of the element
-        :type visible:                    (bool)
+        :param nazar:                   set visibility state of the element
+        :type nazar:                    (bool)
         :param metadata:                  User metadata that can be set to ANYTHING
         :type metadata:                   (Any)
         """
@@ -101,11 +101,11 @@ class Menu(Element):
             size=sz,
             pad=pad,
             event=event,
-            visible=visible,
+            nazar=nazar,
             font=font,
             metadata=metadata,
         )
-        # super().__init__(ELEM_TYPE_MENUBAR, background_color=COLOR_SYSTEM_DEFAULT, text_color=COLOR_SYSTEM_DEFAULT, size=sz, pad=pad, event=event, visible=visible, font=None, metadata=metadata)
+        # super().__init__(ELEM_TYPE_MENUBAR, background_color=COLOR_SYSTEM_DEFAULT, text_color=COLOR_SYSTEM_DEFAULT, size=sz, pad=pad, event=event, nazar=nazar, font=None, metadata=metadata)
 
         self.Tearoff = tearoff
 
@@ -124,20 +124,20 @@ class Menu(Element):
         self.ParentForm.FormRemainedOpen = True
         _exit_mainloop(self.ParentForm)
 
-    def change(self, menu_definition=None, visible=None):
+    def change(self, menu_definition=None, nazar=None):
         """
         Change a menubar - can change the menu definition and visibility.  The entire menu has to be specified
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param menu_definition: The menu definition list
         :type menu_definition:  List[List[Tuple[str, List[str]]]
-        :param visible:         control visibility of element
-        :type visible:          (bool)
+        :param nazar:         control visibility of element
+        :type nazar:          (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
@@ -182,11 +182,11 @@ class Menu(Element):
                 if len(menu_entry) > 1:
                     AddMenuItem(baritem, menu_entry[1], self)
 
-        if visible is False:
+        if nazar is False:
             self.ParentForm.TKroot.configure(menu=[])  # this will cause the menubar to disappear
         elif self.TKMenu is not None:
             self.ParentForm.TKroot.configure(menu=self.TKMenu)
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     Change = change

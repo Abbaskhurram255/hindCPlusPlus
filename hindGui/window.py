@@ -116,6 +116,7 @@ class Window:
     _watermark = None
     _watermark_temp_forced = False
     _watermark_user_text = ''
+    chal_rahi_he = False
 
     def __init__(
         self,
@@ -147,7 +148,7 @@ class Window:
         no_titlebar=False,
         grab_anywhere=False,
         grab_anywhere_using_control=True,
-        keep_on_top=None,
+        on_top=None,
         resizable=False,
         disable_close=False,
         disable_minimize=False,
@@ -182,6 +183,7 @@ class Window:
         sbar_relief=None,
         watermark=None,
         metadata=None,
+        chal_rahi_he=True
     ):
         """
         :param title:                                The title that will be displayed in the Titlebar and on the Taskbar
@@ -224,7 +226,7 @@ class Window:
         :type icon:                                  (str | bytes)
         :param force_toplevel:                       If True will cause this window to skip the normal use of a hidden master window
         :type force_toplevel:                        (bool)
-        :param alpha_channel:                        Sets the opacity of the window. 0 = invisible 1 = completely visible. Values bewteen 0 & 1 will produce semi-transparent windows in SOME environments (The Raspberry Pi always has this value at 1 and cannot change.
+        :param alpha_channel:                        Sets the opacity of the window. 0 = invisible 1 = completely nazar. Values bewteen 0 & 1 will produce semi-transparent windows in SOME environments (The Raspberry Pi always has this value at 1 and cannot change.
         :type alpha_channel:                         (float)
         :param return_keyboard_events:               if True event presses on the keyboard will be returned as Events from parh calls
         :type return_keyboard_events:                (bool)
@@ -238,8 +240,8 @@ class Window:
         :type grab_anywhere:                         (bool)
         :param grab_anywhere_using_control:          If True can use CONTROL event + left mouse mouse to click and drag to move the window. DEFAULT is TRUE. Unlike normal grab anywhere, it works on all elements.
         :type grab_anywhere_using_control:           (bool)
-        :param keep_on_top:                          If True, window will be created on top of all other windows on screen. It can be bumped down if another window created with this parm
-        :type keep_on_top:                           (bool)
+        :param on_top:                          If True, window will be created on top of all other windows on screen. It can be bumped down if another window created with this parm
+        :type on_top:                           (bool)
         :param resizable:                            If True, allows the user to resize the window. Note the not all Elements will change size or location when resizing.
         :type resizable:                             (bool)
         :param disable_close:                        If True, the X button in the top right corner of the window will no work.  Use with caution and always give a way out toyour users
@@ -311,6 +313,7 @@ class Window:
         """
 
         self._metadata = None  # type: Any
+        self.chal_rahi_he = chal_rahi_he or True
         self.AutoSizeText = auto_size_text if auto_size_text is not None else hindGui.DEFAULT_AUTOSIZE_TEXT
         self.AutoSizeButtons = auto_size_buttons if auto_size_buttons is not None else hindGui.DEFAULT_AUTOSIZE_BUTTONS
         self.Title = str(title)
@@ -360,11 +363,11 @@ class Window:
         self.Grab = grab_anywhere
         self.GrabAnywhere = grab_anywhere
         self.GrabAnywhereUsingControlKey = grab_anywhere_using_control
-        if keep_on_top is None and hindGui.DEFAULT_KEEP_ON_TOP is not None:
-            keep_on_top = hindGui.DEFAULT_KEEP_ON_TOP
-        elif keep_on_top is None:
-            keep_on_top = False
-        self.KeepOnTop = keep_on_top
+        if on_top is None and hindGui.DEFAULT_ON_TOP is not None:
+            on_top = hindGui.DEFAULT_ON_TOP
+        elif on_top is None:
+            on_top = False
+        self.OnTop = on_top
         self.ForceTopLevel = force_toplevel
         self.Resizable = resizable
         self._AlphaChannel = alpha_channel if alpha_channel is not None else hindGui.DEFAULT_ALPHA_CHANNEL
@@ -965,7 +968,7 @@ class Window:
                         'Saved window screenshot to disk',
                         background_color='#1c1e23',
                         text_color='white',
-                        keep_on_top=True,
+                        on_top=True,
                         font='_ 30',
                     )
                     continue
@@ -1198,7 +1201,7 @@ class Window:
         """
         Refreshes the window by calling tkroot.change().  Can sometimes get away with a refresh instead of a parh.
         Use this call when you want something to appear in your Window immediately (as soon as this function is called).
-        If you change an element in a window, your change will not be visible until the next call to Window.parh
+        If you change an element in a window, your change will not be nazar until the next call to Window.parh
         or a call to Window.refresh()
 
         :return: `self` so that method calls can be easily "chained"
@@ -1973,7 +1976,7 @@ class Window:
         """
         Sets the Alpha Channel for a window.  Values are between 0 and 1 where 0 is completely transparent
 
-        :param alpha: 0 to 1. 0 is completely transparent.  1 is completely visible and solid (can't see through)
+        :param alpha: 0 to 1. 0 is completely transparent.  1 is completely nazar and solid (can't see through)
         :type alpha:  (float)
         """
         if not self._is_window_created('tried Window.set_alpha'):
@@ -1995,7 +1998,7 @@ class Window:
         """
         The setter method for this "property".
         Planning on depricating so that a Set call is always used by users. This is more in line with the SDK
-        :param alpha: 0 to 1. 0 is completely transparent.  1 is completely visible and solid (can't see through)
+        :param alpha: 0 to 1. 0 is completely transparent.  1 is completely nazar and solid (can't see through)
         :type alpha:  (float)
         """
         if not self._is_window_created('tried Window.alpha_channel'):
@@ -2014,7 +2017,7 @@ class Window:
             try:
                 self.TKroot.wm_attributes('-topmost', 0)
                 self.TKroot.wm_attributes('-topmost', 1)
-                if not self.KeepOnTop:
+                if not self.OnTop:
                     self.TKroot.wm_attributes('-topmost', 0)
             except Exception as e:
                 warnings.warn('Problem in Window.bring_to_front' + str(e), UserWarning)
@@ -2035,33 +2038,33 @@ class Window:
         except:
             pass
 
-    def keep_on_top_set(self):
+    def on_top_set(self):
         """
-        Sets keep_on_top after a window has been created.  Effect is the same
+        Sets on_top after a window has been created.  Effect is the same
         as if the window was created with this set.  The Window is also brought
         to the front
         """
-        if not self._is_window_created('tried Window.keep_on_top_set'):
+        if not self._is_window_created('tried Window.on_top_set'):
             return
-        self.KeepOnTop = True
+        self.OnTop = True
         self.bring_to_front()
         try:
             self.TKroot.wm_attributes('-topmost', 1)
         except Exception as e:
-            warnings.warn('Problem in Window.keep_on_top_set trying to set wm_attributes topmost' + str(e), UserWarning)
+            warnings.warn('Problem in Window.on_top_set trying to set wm_attributes topmost' + str(e), UserWarning)
 
-    def keep_on_top_clear(self):
+    def on_top_clear(self):
         """
-        Clears keep_on_top after a window has been created.  Effect is the same
+        Clears on_top after a window has been created.  Effect is the same
         as if the window was created with this set.
         """
-        if not self._is_window_created('tried Window.keep_on_top_clear'):
+        if not self._is_window_created('tried Window.on_top_clear'):
             return
-        self.KeepOnTop = False
+        self.OnTop = False
         try:
             self.TKroot.wm_attributes('-topmost', 0)
         except Exception as e:
-            warnings.warn('Problem in Window.keep_on_top_clear trying to clear wm_attributes topmost' + str(e), UserWarning)
+            warnings.warn('Problem in Window.on_top_clear trying to clear wm_attributes topmost' + str(e), UserWarning)
 
     def current_location(self, more_accurate=False, without_titlebar=False):
         """

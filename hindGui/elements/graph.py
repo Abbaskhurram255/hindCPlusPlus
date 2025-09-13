@@ -38,11 +38,11 @@ class Graph(Element):
         motion_events=False,
         event=None,
         k=None,
-        tooltip=None,
+        hover=None,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         float_values=False,
         border_width=0,
         metadata=None,
@@ -72,16 +72,16 @@ class Graph(Element):
         :type event:                str | int | tuple | object
         :param k:                 Same as the Key. You can use either k or event. Which ever is set will be used.
         :type k:                  str | int | tuple | object
-        :param tooltip:           text, that will appear when mouse hovers over the element
-        :type tooltip:            (str)
+        :param hover:           text, that will appear when mouse hovers over the element
+        :type hover:            (str)
         :param right_click_menu:  A list of lists of Menu items to show when this element is right clicked. See user docs for exact format.
         :type right_click_menu:   List[List[ List[str] | str ]]
         :param expand_x:          If True the element will automatically expand in the X direction to fill available space
         :type expand_x:           (bool)
         :param expand_y:          If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:           (bool)
-        :param visible:           set visibility state of the element (Default = True)
-        :type visible:            (bool)
+        :param nazar:           set visibility state of the element (Default = True)
+        :type nazar:            (bool)
         :param float_values:      If True x,y coordinates are returned as floats, not ints
         :type float_values:       (bool)
         :param border_width:      width of border around element in pixels. Not normally used for Graph Elements
@@ -115,8 +115,8 @@ class Graph(Element):
             size=canvas_size,
             pad=pad,
             event=event,
-            tooltip=tooltip,
-            visible=visible,
+            hover=hover,
+            nazar=nazar,
             metadata=metadata,
         )
         return
@@ -542,20 +542,20 @@ class Graph(Element):
         except:
             pass
 
-    def change(self, background_color=None, visible=None):
+    def change(self, background_color=None, nazar=None):
         """
         Changes some of the settings for the Graph Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param background_color: color of background
         :type background_color:  ???
-        :param visible:          control visibility of element
-        :type visible:           (bool)
+        :param nazar:          control visibility of element
+        :type nazar:           (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
@@ -567,13 +567,13 @@ class Graph(Element):
         if background_color is not None and background_color != COLOR_SYSTEM_DEFAULT:
             self._TKCanvas2.configure(background=background_color)
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     def move(self, x_direction, y_direction):
         """

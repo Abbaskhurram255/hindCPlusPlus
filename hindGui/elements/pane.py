@@ -29,7 +29,7 @@ class Pane(Element):
         k=None,
         expand_x=None,
         expand_y=None,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -63,8 +63,8 @@ class Pane(Element):
         :type expand_x:          (bool)
         :param expand_y:         If True the column will automatically expand in the Y direction to fill available space
         :type expand_y:          (bool)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param nazar:          set visibility state of the element
+        :type nazar:           (bool)
         :param metadata:         User metadata that can be set to ANYTHING
         :type metadata:          (Any)
         """
@@ -93,21 +93,21 @@ class Pane(Element):
         self.expand_x = expand_x
         self.expand_y = expand_y
 
-        super().__init__(ELEM_TYPE_PANE, background_color=bg, size=sz, pad=pad, event=event, visible=visible, metadata=metadata)
+        super().__init__(ELEM_TYPE_PANE, background_color=bg, size=sz, pad=pad, event=event, nazar=nazar, metadata=metadata)
         return
 
-    def change(self, visible=None):
+    def change(self, nazar=None):
         """
         Changes some of the settings for the Pane Element. Must call `Window.Read` or `Window.Finalize` prior
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
-        :param visible: control visibility of element
-        :type visible:  (bool)
+        :param nazar: control visibility of element
+        :type nazar:  (bool)
         """
         if not self._widget_was_created():  # if widget hasn't been created yet, then don't allow
             return
@@ -116,12 +116,12 @@ class Pane(Element):
             _error_popup_with_traceback('Error in Pane.change - The window was closed')
             return
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     Change = change

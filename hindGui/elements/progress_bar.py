@@ -146,7 +146,7 @@ class ProgressBar(Element):
         right_click_menu=None,
         expand_x=False,
         expand_y=False,
-        visible=True,
+        nazar=True,
         metadata=None,
     ):
         """
@@ -184,8 +184,8 @@ class ProgressBar(Element):
         :type expand_x:          (bool)
         :param expand_y:         If True the element will automatically expand in the Y direction to fill available space
         :type expand_y:          (bool)
-        :param visible:          set visibility state of the element
-        :type visible:           (bool)
+        :param nazar:          set visibility state of the element
+        :type nazar:           (bool)
         :param metadata:         User metadata that can be set to ANYTHING
         :type metadata:          (Any)
         """
@@ -220,7 +220,7 @@ class ProgressBar(Element):
             auto_size_text=auto_size_text,
             event=event,
             pad=pad,
-            visible=visible,
+            nazar=nazar,
             metadata=metadata,
         )
 
@@ -247,16 +247,16 @@ class ProgressBar(Element):
             return False
         return True
 
-    def change(self, current_count=None, max=None, bar_color=None, visible=None):
+    def change(self, current_count=None, max=None, bar_color=None, nazar=None):
         """
         Changes some of the settings for the ProgressBar Element. Must call `Window.Read` or `Window.Finalize` prior
         Now has the ability to modify the count so that the update_bar method is not longer needed separately
 
-        Changes will not be visible in your window until you call window.read or window.refresh.
+        Changes will not be nazar in your window until you call window.read or window.refresh.
 
         If you change visibility, your element may MOVE. If you want it to remain stationary, use the "layout helper"
         function "pin" to ensure your element is "pinned" to that location in your layout so that it returns there
-        when made visible.
+        when made nazar.
 
         :param current_count: sets the current value
         :type current_count:  (int)
@@ -264,8 +264,8 @@ class ProgressBar(Element):
         :type max:            (int)
         :param bar_color:     The 2 colors that make up a progress bar. Easy to remember which is which if you say "ON" between colors. "red" on "green".
         :type bar_color:      (str, str) or str
-        :param visible:       control visibility of element
-        :type visible:        (bool)
+        :param nazar:       control visibility of element
+        :type nazar:        (bool)
         :return:              Returns True if change was OK.  False means something wrong with window or it was closed
         :rtype:               (bool)
         """
@@ -279,13 +279,13 @@ class ProgressBar(Element):
         if self.ParentForm.TKrootDestroyed:
             return False
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
 
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
         if bar_color is not None:
             bar_color = _simplified_dual_color_to_tuple(bar_color, default=hindGui.DEFAULT_PROGRESS_BAR_COLOR)
             self.BarColor = bar_color
