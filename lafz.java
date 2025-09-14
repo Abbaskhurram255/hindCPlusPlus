@@ -477,6 +477,20 @@ class lafz {
 			return false;
 		}
 	}
+	String setIndex(int i, char newChar) {
+		if (i<0 || i>=length()) return str;
+		return new StringBuilder(str).setCharAt(i, newChar).toString();
+	}
+	String setIndex(int i, String newChar) {
+		if (i<0 || i>=length() || newChar == null || newChar.length == 0) return str;
+		return new StringBuilder(str).setCharAt(i, newChar.charAt(0)).toString();
+	}
+	String updateIndex(int i, char newChar) {
+		return setIndex(i, newChar);
+	}
+	String updateIndex(int i, String newChar) {
+		return setIndex(i, newChar);
+	}
 	public static String join(CharSequence delimiter,
 			CharSequence... elements) {
 		try {
