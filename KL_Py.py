@@ -102,7 +102,13 @@ def reverse(x: str | list[any]):
 	return x[::-1]
 filter = lambda arr, condition: filter(condition, arr)
 # test this
-rng = lambda *args, **kwargs: list(range(*args, **kwargs))
+lim = lambda *args, **kwargs: list(range(*args, **kwargs))
+def rng(x: str|list|tuple) -> list[int]:
+    return_list: list[int] = []
+    for i in lim(len(x)-1):
+        print(i)
+        return_list[i] = i
+    return return_list
 def f(*args) -> str:
     formatted = ""
     caller_locals = inspect.currentframe().f_back.f_locals
@@ -150,9 +156,9 @@ def printf(*args):
             ...
     print(formatted)
 kaho = printf
-def hissa(x: str|list, y: str|list):
+def hissa(x: str|list|tuple, y: str|list|tuple):
     if isinstance(x, str) and isinstance(y, str):
-        return str(x).lower() in str(y).lower()
+        return match_i(y, x) or match_i(x, y)
     return x in y
 def barabar(x, y):
     if isinstance(x, str) and isinstance(y, str):
@@ -162,6 +168,52 @@ def khali(x: Iterable):
     if x == None:
         return False
     return len(x) == 0
+def replace(src: str, to_replace: str, replacement: str = "") -> str:
+    occurences: list[str] = re.findall(to_replace, src)
+    for occurence in occurences:
+        src = src.replace(occurence, replacement)
+    return src
+def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
+    occurences: list[str] = re.findall(to_replace, src, re.IGNORECASE)
+    for occurence in occurences:
+        src = src.replace(occurence, replacement)
+    return src
+def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
+    occurences: list[str] = re.findall(to_replace, src)
+    if len(occurences) != 0:
+        return src.replace(occurence, replacement)
+    return src
+def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
+    occurences: list[str] = re.findall(to_replace, src, re.IGNORECASE)
+    if len(occurences) != 0:
+        return src.replace(occurence, replacement)
+    return src
+def find_matches(src: str, to_find: str) -> list:
+    matches: list[str] = re.findall(to_find, src)
+    return matches
+def find_matches_i(src: str, to_find: str) -> list:
+    matches: list[str] = re.findall(to_find, src, re.IGNORECASE)
+    return matches
+def find_match(src: str, to_find: str) -> str:
+    matches: list[str] = find_matches(src, to_find)
+    if len(matches) == 0:
+        return ""
+    return matches[0]
+def find_match_i(src: str, to_find: str) -> str:
+    matches: list[str] = find_matches_i(src, to_find)
+    if len(matches) == 0:
+        return ""
+    return matches[0]
+def match(src: str, to_find: str) -> bool:
+    matches: list[str] = find_matches(src, to_find)
+    if len(matches) != 0:
+        return True
+    return False
+def match_i(src: str, to_find: str) -> bool:
+    matches: list[str] = find_matches_i(src, to_find)
+    if len(matches) != 0:
+        return True
+    return False
 class money:
     def __init__(self, amount=0, currency="Rs. "):
         self.amount = amount if amount >= 0 else 0

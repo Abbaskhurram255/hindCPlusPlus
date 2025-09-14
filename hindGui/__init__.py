@@ -110,7 +110,7 @@ DEFAULT_WINDOW_LOCATION = (None, None)
 MAX_SCROLLED_TEXT_BOX_HEIGHT = 50
 DEFAULT_HOVER_TIME = 400
 DEFAULT_HOVER_OFFSET = (0, -20)
-DEFAULT_KEEP_ON_TOP = None
+DEFAULT_ON_TOP = None
 DEFAULT_SCALING = None
 DEFAULT_ALPHA_CHANNEL = 1.0
 DEFAULT_HIDE_WINDOW_WHEN_CREATING = True
@@ -4240,6 +4240,10 @@ def _BuildResultsForSubform(form, initialize_only, top_level_form):
     try:
         if form.ReturnKeyboardEvents and form.LastKeyboardEvent is not None:
             event = form.LastKeyboardEvent
+            if isinstance(event, str):
+                            if ":" in event:
+                                event = event.split(":")[0]
+                            event = event.lower()
             form.LastKeyboardEvent = None
     except:
         pass
@@ -7240,7 +7244,7 @@ class _QuickMeter:
         border_width=None,
         grab_anywhere=False,
         no_titlebar=False,
-        keep_on_top=None,
+        on_top=None,
         no_button=False,
     ):
         """
@@ -7269,8 +7273,8 @@ class _QuickMeter:
         :type grab_anywhere:  (bool)
         :param no_titlebar:   If True: window will be created without a titlebar
         :type no_titlebar:    (bool)
-        :param keep_on_top:   If True the window will remain above all current windows
-        :type keep_on_top:    (bool)
+        :param on_top:   If True the window will remain above all current windows
+        :type on_top:    (bool)
         :param no_button:     If True: window will be created without a cancel button
         :type no_button:      (bool)
         """
@@ -7287,7 +7291,7 @@ class _QuickMeter:
         self.current_value = current_value
         self.max_value = max_value
         self.close_reason = None
-        self.keep_on_top = keep_on_top
+        self.on_top = on_top
         self.no_button = no_button
         self.window = self.BuildWindow(*args)
 
@@ -7340,7 +7344,7 @@ class _QuickMeter:
             border_depth=self.border_width,
             no_titlebar=self.no_titlebar,
             disable_close=True,
-            keep_on_top=self.keep_on_top,
+            on_top=self.on_top,
         )
         self.window.Layout([layout]).Finalize()
 
@@ -7405,7 +7409,7 @@ def one_line_progress_meter(
     border_width=None,
     grab_anywhere=False,
     no_titlebar=False,
-    keep_on_top=None,
+    on_top=None,
     no_button=False,
 ):
     """
@@ -7433,8 +7437,8 @@ def one_line_progress_meter(
     :type grab_anywhere:  (bool)
     :param no_titlebar:   If True: no titlebar will be shown on the window
     :type no_titlebar:    (bool)
-    :param keep_on_top:   If True the window will remain above all current windows
-    :type keep_on_top:    (bool)
+    :param on_top:   If True the window will remain above all current windows
+    :type on_top:    (bool)
     :param no_button:     If True: window will be created without a cancel button
     :type no_button:      (bool)
     :return:              True if updated successfully. False if user closed the meter with the X or Cancel button
@@ -7454,7 +7458,7 @@ def one_line_progress_meter(
             border_width=border_width,
             grab_anywhere=grab_anywhere,
             no_titlebar=no_titlebar,
-            keep_on_top=keep_on_top,
+            on_top=on_top,
             no_button=no_button,
         )
         _QuickMeter.active_meters[event] = meter
@@ -7524,7 +7528,7 @@ class _DebugWin:
         no_titlebar=False,
         no_button=False,
         grab_anywhere=False,
-        keep_on_top=None,
+        on_top=None,
         do_not_reroute_stdout=True,
         echo_stdout=False,
         resizable=True,
@@ -7566,7 +7570,7 @@ class _DebugWin:
         self.no_titlebar = no_titlebar
         self.no_button = no_button
         self.grab_anywhere = grab_anywhere
-        self.keep_on_top = keep_on_top
+        self.on_top = on_top
         self.do_not_reroute_stdout = do_not_reroute_stdout
         self.echo_stdout = echo_stdout
         self.resizable = resizable
@@ -7604,14 +7608,14 @@ class _DebugWin:
             relative_location=relative_location,
             font=font or ('Courier New', 10),
             grab_anywhere=grab_anywhere,
-            keep_on_top=keep_on_top,
+            on_top=on_top,
             finalize=True,
             resizable=resizable,
         )
         return
 
     def reopen_window(self):
-        if self.window is None or (self.window is not None and self.window.is_closed()):
+        if self.window is None or (self.window is not None and self.window.dead()):
             self.__init__(
                 size=self.size,
                 location=self.location,
@@ -7620,7 +7624,7 @@ class _DebugWin:
                 no_titlebar=self.no_titlebar,
                 no_button=self.no_button,
                 grab_anywhere=self.grab_anywhere,
-                keep_on_top=self.keep_on_top,
+                on_top=self.on_top,
                 do_not_reroute_stdout=self.do_not_reroute_stdout,
                 resizable=self.resizable,
                 echo_stdout=self.echo_stdout,
@@ -7747,7 +7751,7 @@ def easy_print(
     no_titlebar=False,
     no_button=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     do_not_reroute_stdout=True,
     echo_stdout=False,
     text_color=None,
@@ -7793,8 +7797,8 @@ def easy_print(
     :type background_color:       (str)
     :param text_color:            color of the text
     :type text_color:             (str)
-    :param keep_on_top:           If True the window will remain above all current windows
-    :type keep_on_top:            (bool)
+    :param on_top:           If True the window will remain above all current windows
+    :type on_top:            (bool)
     :param location:              Location of upper left corner of the window
     :type location:               (int, int)
     :param do_not_reroute_stdout: do not reroute stdout and stderr. If False, both stdout and stderr will reroute to here
@@ -7827,7 +7831,7 @@ def easy_print(
             no_titlebar=no_titlebar,
             no_button=no_button,
             grab_anywhere=grab_anywhere,
-            keep_on_top=keep_on_top,
+            on_top=on_top,
             do_not_reroute_stdout=do_not_reroute_stdout,
             echo_stdout=echo_stdout,
             resizable=resizable,
@@ -8194,7 +8198,7 @@ def set_options(
     user_settings_path=None,
     pysimplegui_settings_path=None,
     pysimplegui_settings_filename=None,
-    keep_on_top=None,
+    on_top=None,
     dpi_awareness=None,
     scaling=None,
     disable_modal_windows=None,
@@ -8313,8 +8317,8 @@ def set_options(
     :type pysimplegui_settings_path:        (str)
     :param pysimplegui_settings_filename:   default filename for the global PySimpleGUI user_settings
     :type pysimplegui_settings_filename:    (str)
-    :param keep_on_top:                     If True then all windows will automatically be set to keep_on_top=True
-    :type keep_on_top:                      (bool)
+    :param on_top:                     If True then all windows will automatically be set to on_top=True
+    :type on_top:                      (bool)
     :param dpi_awareness:                   If True then will turn on DPI awareness (Windows only at the moment)
     :type dpi_awareness:                    (bool)
     :param scaling:                         Sets the default scaling for all windows including popups, etc.
@@ -8400,7 +8404,7 @@ def set_options(
     global DEFAULT_USER_SETTINGS_PATH
     global DEFAULT_USER_SETTINGS_PYSIMPLEGUI_PATH
     global DEFAULT_USER_SETTINGS_PYSIMPLEGUI_FILENAME
-    global DEFAULT_KEEP_ON_TOP
+    global DEFAULT_ON_TOP
     global DEFAULT_SCALING
     global DEFAULT_MODAL_WINDOWS_ENABLED
     global DEFAULT_MODAL_WINDOWS_FORCED
@@ -8572,8 +8576,8 @@ def set_options(
     if pysimplegui_settings_filename is not None or pysimplegui_settings_filename is not None:
         _pysimplegui_user_settings = UserSettings(filename=DEFAULT_USER_SETTINGS_PYSIMPLEGUI_FILENAME, path=DEFAULT_USER_SETTINGS_PYSIMPLEGUI_PATH)
 
-    if keep_on_top is not None:
-        DEFAULT_KEEP_ON_TOP = keep_on_top
+    if on_top is not None:
+        DEFAULT_ON_TOP = on_top
 
     if dpi_awareness is True:
         if running_windows():
@@ -9134,7 +9138,7 @@ def theme_previewer(columns=12, scrollable=False, scroll_area_size=(None, None),
     # Show a "splash" type message so the user doesn't give up waiting
     popup_quick_message(
         'Hang on for a moment, this will take a bit to create....',
-        keep_on_top=True,
+        on_top=True,
         background_color='red',
         text_color='#FFFFFF',
         auto_close=True,
@@ -9190,7 +9194,7 @@ def theme_previewer(columns=12, scrollable=False, scroll_area_size=(None, None),
         background_color=win_bg,
         resizable=True,
         location=location,
-        keep_on_top=True,
+        on_top=True,
         finalize=True,
         modal=True,
     )
@@ -9262,7 +9266,7 @@ def _theme_preview_window_swatches():
     layout += [[B('Exit')]]
 
     # create and return Window that uses the layout
-    return Window('Theme Color Swatches', layout, background_color='black', finalize=True, keep_on_top=True)
+    return Window('Theme Color Swatches', layout, background_color='black', finalize=True, on_top=True)
 
 
 def theme_previewer_swatches():
@@ -9277,7 +9281,7 @@ def theme_previewer_swatches():
         text_color='white',
         background_color='red',
         font='Default 20',
-        keep_on_top=True,
+        on_top=True,
     )
     window = _theme_preview_window_swatches()
     theme(OFFICIAL_PYSIMPLEGUI_THEME)
@@ -9578,7 +9582,7 @@ def keh(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     any_key_closes=False,
@@ -9629,8 +9633,8 @@ def keh(
     :type location:               (int, int)
     :param relative_location:     (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
     :type relative_location:      (int, int)
-    :param keep_on_top:           If True the window will remain above all current windows
-    :type keep_on_top:            (bool)
+    :param on_top:           If True the window will remain above all current windows
+    :type on_top:            (bool)
     :param any_key_closes:        If True then will turn on return_keyboard_events for the window which will cause window to die as soon as any event is pressed.  Normally the return event only will die the window.  Default is false.
     :type any_key_closes:         (bool)
     :param image:                 Image to include at the top of the keh window
@@ -9779,7 +9783,7 @@ def keh(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         return_keyboard_events=any_key_closes,
@@ -9830,7 +9834,7 @@ def popup_scrolled(
     non_blocking=False,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     font=None,
     image=None,
     icon=None,
@@ -9873,8 +9877,8 @@ def popup_scrolled(
     :type no_titlebar:            (bool)
     :param grab_anywhere:         If True, than can grab anywhere to move the window (Default = False)
     :type grab_anywhere:          (bool)
-    :param keep_on_top:           If True the window will remain above all current windows
-    :type keep_on_top:            (bool)
+    :param on_top:           If True the window will remain above all current windows
+    :type on_top:            (bool)
     :param font:                  specifies the  font family, size, etc. Tuple or Single string format 'name size styles'. Styles: italic * roman bold normal underline overstrike
     :type font:                   (str or (str, int[, str]) or None)
     :param image:                 Image to include at the top of the keh window
@@ -9966,7 +9970,7 @@ def popup_scrolled(
         background_color=background_color,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         modal=modal,
         icon=icon,
     )
@@ -10002,7 +10006,7 @@ def popup_no_buttons(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10058,7 +10062,7 @@ def popup_no_buttons(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10082,7 +10086,7 @@ def popup_non_blocking(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10146,7 +10150,7 @@ def popup_non_blocking(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10170,7 +10174,7 @@ def popup_quick(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10207,8 +10211,8 @@ def popup_quick(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10236,7 +10240,7 @@ def popup_quick(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10260,7 +10264,7 @@ def popup_quick_message(
     font=None,
     no_titlebar=True,
     grab_anywhere=False,
-    keep_on_top=True,
+    on_top=True,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10277,8 +10281,8 @@ def popup_quick_message(
     :type button_type:          (int)
     :param button_color:        button color (foreground, background)
     :type button_color:         (str, str) | str
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param background_color:    color of background
     :type background_color:     (str)
     :param text_color:          color of the text
@@ -10325,7 +10329,7 @@ def popup_quick_message(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10348,7 +10352,7 @@ def popup_no_titlebar(
     line_width=None,
     font=None,
     grab_anywhere=True,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10383,8 +10387,8 @@ def popup_no_titlebar(
     :type font:                 (str or (str, int[, str]) or None)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10411,7 +10415,7 @@ def popup_no_titlebar(
         font=font,
         no_titlebar=True,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10435,7 +10439,7 @@ def popup_auto_close(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10471,8 +10475,8 @@ def popup_auto_close(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10500,7 +10504,7 @@ def popup_auto_close(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10523,7 +10527,7 @@ def popup_error(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10558,8 +10562,8 @@ def popup_error(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10587,7 +10591,7 @@ def popup_error(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10610,7 +10614,7 @@ def popup_cancel(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10645,8 +10649,8 @@ def popup_cancel(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10673,7 +10677,7 @@ def popup_cancel(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10696,7 +10700,7 @@ def popup_ok(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10731,8 +10735,8 @@ def popup_ok(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10759,7 +10763,7 @@ def popup_ok(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10782,7 +10786,7 @@ def popup_ok_cancel(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10817,8 +10821,8 @@ def popup_ok_cancel(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10845,7 +10849,7 @@ def popup_ok_cancel(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10868,7 +10872,7 @@ def popup_yes_no(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -10903,8 +10907,8 @@ def popup_yes_no(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True the window will remain above all current windows
-    :type keep_on_top:          (bool)
+    :param on_top:         If True the window will remain above all current windows
+    :type on_top:          (bool)
     :param location:            Location of upper left corner of the window
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -10931,7 +10935,7 @@ def popup_yes_no(
         font=font,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         image=image,
@@ -10959,7 +10963,7 @@ def popup_get_folder(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     initial_folder=None,
@@ -10995,8 +10999,8 @@ def popup_get_folder(
     :type no_titlebar:               (bool)
     :param grab_anywhere:            If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:             (bool)
-    :param keep_on_top:              If True the window will remain above all current windows
-    :type keep_on_top:               (bool)
+    :param on_top:              If True the window will remain above all current windows
+    :type on_top:               (bool)
     :param location:                 Location of upper left corner of the window
     :type location:                  (int, int)
     :param relative_location:        (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -11096,7 +11100,7 @@ def popup_get_folder(
         background_color=background_color,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         modal=modal,
@@ -11114,7 +11118,7 @@ def popup_get_folder(
                 background_color='red',
                 text_color='white',
                 font='_ 20',
-                keep_on_top=True,
+                on_top=True,
             )
         elif event in ('Ok', '-INPUT-'):
             if values['-INPUT-'] != '':
@@ -11154,7 +11158,7 @@ def popup_get_file(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     initial_folder=None,
@@ -11200,8 +11204,8 @@ def popup_get_file(
     :type no_titlebar:               (bool)
     :param grab_anywhere:            If True: can grab anywhere to move the window (Default = False)
     :type grab_anywhere:             (bool)
-    :param keep_on_top:              If True the window will remain above all current windows
-    :type keep_on_top:               (bool)
+    :param on_top:              If True the window will remain above all current windows
+    :type on_top:               (bool)
     :param location:                 Location of upper left corner of the window
     :type location:                  (int, int)
     :param relative_location:        (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -11393,7 +11397,7 @@ def popup_get_file(
         background_color=background_color,
         no_titlebar=no_titlebar,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         modal=modal,
@@ -11417,7 +11421,7 @@ def popup_get_file(
                 background_color='red',
                 text_color='white',
                 font='_ 20',
-                keep_on_top=True,
+                on_top=True,
             )
         elif event in ('Ok', '-INPUT-'):
             if values['-INPUT-'] != '':
@@ -11453,7 +11457,7 @@ def popup_get_text(
     font=None,
     no_titlebar=False,
     grab_anywhere=False,
-    keep_on_top=None,
+    on_top=None,
     location=(None, None),
     relative_location=(None, None),
     image=None,
@@ -11488,8 +11492,8 @@ def popup_get_text(
     :type no_titlebar:               (bool)
     :param grab_anywhere:            If True can click and drag anywhere in the window to move the window
     :type grab_anywhere:             (bool)
-    :param keep_on_top:              If True the window will remain above all current windows
-    :type keep_on_top:               (bool)
+    :param on_top:              If True the window will remain above all current windows
+    :type on_top:               (bool)
     :param location:                 (x,y) Location on screen to display the upper left corner of window
     :type location:                  (int, int)
     :param relative_location:        (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -11561,7 +11565,7 @@ def popup_get_text(
         no_titlebar=no_titlebar,
         background_color=background_color,
         grab_anywhere=grab_anywhere,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         location=location,
         relative_location=relative_location,
         finalize=True,
@@ -11581,7 +11585,7 @@ def popup_get_text(
                 background_color='red',
                 text_color='white',
                 font='_ 20',
-                keep_on_top=True,
+                on_top=True,
             )
         elif event in ('Ok', '-INPUT-'):
             if values['-INPUT-'] != '':
@@ -11609,7 +11613,7 @@ def popup_get_date(
     begin_at_sunday_plus=0,
     no_titlebar=True,
     title='Choose Date',
-    keep_on_top=True,
+    on_top=True,
     location=(None, None),
     relative_location=(None, None),
     close_when_chosen=False,
@@ -11647,8 +11651,8 @@ def popup_get_date(
     :type locale:                (str)
     :param no_titlebar:          If True no titlebar will be shown
     :type no_titlebar:           (bool)
-    :param keep_on_top:          If True the window will remain above all current windows
-    :type keep_on_top:           (bool)
+    :param on_top:          If True the window will remain above all current windows
+    :type on_top:           (bool)
     :param month_names:          optional list of month names to use (should be 12 items)
     :type month_names:           List[str]
     :param day_abbreviations:    optional list of abbreviations to display as the day of week
@@ -11780,7 +11784,7 @@ def popup_get_date(
         layout,
         no_titlebar=no_titlebar,
         grab_anywhere=True,
-        keep_on_top=keep_on_top,
+        on_top=on_top,
         font='TkFixedFont 12',
         use_default_focus=False,
         location=location,
@@ -11851,7 +11855,7 @@ def popup_animated(
     font=None,
     no_titlebar=True,
     grab_anywhere=True,
-    keep_on_top=True,
+    on_top=True,
     location=(None, None),
     relative_location=(None, None),
     alpha_channel=None,
@@ -11881,8 +11885,8 @@ def popup_animated(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True then you can move the window just clicking anywhere on window, hold and drag
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True then Window will remain on top of all other windows currently shownn
-    :type keep_on_top:          (bool)
+    :param on_top:         If True then Window will remain on top of all other windows currently shownn
+    :type on_top:          (bool)
     :param location:            (x,y) location on the screen to place the top left corner of your window. Default is to center on screen
     :type location:             (int, int)
     :param relative_location:   (x,y) location relative to the default location of the window, in pixels. Normally the window centers.  This location is relative to the location the window would be created. Note they can be negative.
@@ -11932,7 +11936,7 @@ def popup_animated(
             layout,
             no_titlebar=no_titlebar,
             grab_anywhere=grab_anywhere,
-            keep_on_top=keep_on_top,
+            on_top=on_top,
             background_color=background_color,
             location=location,
             alpha_channel=alpha_channel,
@@ -12120,7 +12124,7 @@ def shell_with_animation(
     font=None,
     no_titlebar=True,
     grab_anywhere=True,
-    keep_on_top=True,
+    on_top=True,
     location=(None, None),
     alpha_channel=None,
     time_between_frames=100,
@@ -12149,8 +12153,8 @@ def shell_with_animation(
     :type no_titlebar:          (bool)
     :param grab_anywhere:       If True then you can move the window just clicking anywhere on window, hold and drag
     :type grab_anywhere:        (bool)
-    :param keep_on_top:         If True then Window will remain on top of all other windows currently shownn
-    :type keep_on_top:          (bool)
+    :param on_top:         If True then Window will remain on top of all other windows currently shownn
+    :type on_top:          (bool)
     :param location:            (x,y) location on the screen to place the top left corner of your window. Default is to center on screen
     :type location:             (int, int)
     :param alpha_channel:       Window transparency 0 = invisible 1 = completely nazar. Values between are see through
@@ -12185,7 +12189,7 @@ def shell_with_animation(
             font=font,
             no_titlebar=no_titlebar,
             grab_anywhere=grab_anywhere,
-            keep_on_top=keep_on_top,
+            on_top=on_top,
             location=location,
             alpha_channel=alpha_channel,
         )
@@ -13528,7 +13532,7 @@ def main_mac_feature_control():
     ]
     layout += [[Button('Ok'), Button('Cancel')]]
 
-    window = Window('Mac Feature Control', layout, keep_on_top=True, finalize=True)
+    window = Window('Mac Feature Control', layout, on_top=True, finalize=True)
     while True:
         event, values = window.parh()
         if event in ('Cancel', CLOSE):
@@ -13689,7 +13693,7 @@ class _Debugger:
             icon=PSG_DEBUGGER_LOGO,
             fasla=(0, 0),
             location=location,
-            keep_on_top=True,
+            on_top=True,
             right_click_menu=[
                 [''],
                 [
@@ -13913,7 +13917,7 @@ class _Debugger:
             title=title,
             non_blocking=True,
             font=_Debugger.DEBUGGER_VARIABLE_DETAILS_FONT,
-            keep_on_top=True,
+            on_top=True,
             icon=PSG_DEBUGGER_LOGO,
         )
         theme(old_theme)
@@ -13973,7 +13977,7 @@ class _Debugger:
         ]
         layout += [[Ok(), Cancel(), Button('Clear All'), Button('Select [almost] All', event='-AUTO_SELECT-')]]
 
-        window = Window('Choose Watches', layout, icon=PSG_DEBUGGER_LOGO, finalize=True, keep_on_top=True)
+        window = Window('Choose Watches', layout, icon=PSG_DEBUGGER_LOGO, finalize=True, on_top=True)
 
         while True:  # event loop
             event, values = window.parh()
@@ -14077,7 +14081,7 @@ class _Debugger:
             grab_anywhere=True,
             element_padding=(0, 0),
             fasla=(0, 0),
-            keep_on_top=True,
+            on_top=True,
             right_click_menu=['&Right', ['Debugger::RightClick', 'Exit::RightClick']],
             location=location,
             finalize=True,
@@ -14629,7 +14633,7 @@ def _github_issue_post_validate(values, checklist, issue_types):
             issue_type = itype
             break
     if issue_type is None:
-        popup_error('Must choose issue type', keep_on_top=True)
+        popup_error('Must choose issue type', on_top=True)
         return False
     if values['-OS WIN-']:
         os_ver = values['-OS WIN VER-']
@@ -14640,28 +14644,28 @@ def _github_issue_post_validate(values, checklist, issue_types):
     elif values['-OS OTHER-']:
         os_ver = values['-OS OTHER VER-']
     else:
-        popup_error('Must choose Operating System', keep_on_top=True)
+        popup_error('Must choose Operating System', on_top=True)
         return False
 
     if os_ver == '':
-        popup_error('Must fill in an OS Version', keep_on_top=True)
+        popup_error('Must fill in an OS Version', on_top=True)
         return False
 
     checkboxes = any([values[('-CB-', i)] for i in range(len(checklist))])
     if not checkboxes:
-        popup_error('None of the checkboxes were checked.... you need to have tried something...anything...', keep_on_top=True)
+        popup_error('None of the checkboxes were checked.... you need to have tried something...anything...', on_top=True)
         return False
 
     title = values['-TITLE-'].strip()
     if len(title) == 0:
-        popup_error("Title can't be blank", keep_on_top=True)
+        popup_error("Title can't be blank", on_top=True)
         return False
     elif title[1 : len(title) - 1] == issue_type:
-        popup_error("Title can't be blank (only the type of issue isn't enough)", keep_on_top=True)
+        popup_error("Title can't be blank (only the type of issue isn't enough)", on_top=True)
         return False
 
     if len(values['-ML DETAILS-']) < 4:
-        popup_error('A little more details would be awesome', keep_on_top=True)
+        popup_error('A little more details would be awesome', on_top=True)
         return False
 
     return True
@@ -14736,7 +14740,7 @@ If you've been programming for a month, the person answering your question can a
 
     layout = [[TabGroup([[t_goals, t_why, t_faq, t_exp, t_steps]])], [B('Close')]]
 
-    Window('GitHub Issue GUI Help', layout, keep_on_top=True).parh(die=True)
+    Window('GitHub Issue GUI Help', layout, on_top=True).parh(die=True)
 
     return
 
@@ -14934,7 +14938,7 @@ def main_open_github_issue():
                     '\n'
                     'Are you sure you want to quit?',
                     image=EMOJI_BASE64_PONDER,
-                    keep_on_top=True,
+                    on_top=True,
                 )
                 == 'Yes'
             ):
@@ -14962,7 +14966,7 @@ def main_open_github_issue():
                     issue_type = itype
                     break
             if issue_type is None:
-                popup_error('Must choose issue type', keep_on_top=True)
+                popup_error('Must choose issue type', on_top=True)
                 continue
             if values['-OS WIN-']:
                 operating_system = 'Windows'
@@ -14977,7 +14981,7 @@ def main_open_github_issue():
                 operating_system = 'Other'
                 os_ver = values['-OS OTHER VER-']
             else:
-                popup_error('Must choose Operating System', keep_on_top=True)
+                popup_error('Must choose Operating System', on_top=True)
                 continue
             checkboxes = ['X' if values[('-CB-', i)] else ' ' for i in range(len(checklist))]
 
@@ -15018,7 +15022,7 @@ def main_open_github_issue():
             if event == 'Post Issue':
                 webbrowser.open_new_tab(link)
             else:
-                keh('Your markdown code is in the Markdown tab', keep_on_top=True)
+                keh('Your markdown code is in the Markdown tab', on_top=True)
 
     window.die()
 
@@ -15085,7 +15089,7 @@ def main_get_debug_data(suppress_popup=False):
             '*** Version information copied to your clipboard. Paste into your GitHub Issue. ***\n',
             message,
             title='Select and copy this info to your GitHub Issue',
-            keep_on_top=True,
+            on_top=True,
             size=(100, 10),
         )
 
@@ -15456,7 +15460,7 @@ def main_global_pysimplegui_settings():
     #      [Checkbox('Always use TTK buttons'), CBox('Always use TK Buttons')],
     layout += [[B('Ok', bind_return_key=True), B('Cancel'), B('Mac Patch Control')]]
 
-    window = Window('Settings', layout, keep_on_top=True, modal=False, finalize=True)
+    window = Window('Settings', layout, on_top=True, modal=False, finalize=True)
 
     # fill in the theme list into the Combo element - must do this AFTER the window is created or a tkinter temp window is auto created by tkinter
     ttk_theme_list = ttk.Style().theme_names()
@@ -15536,8 +15540,8 @@ def main_global_pysimplegui_settings():
                 ttk_part_mapping_dict[ttk_part] = value
             DEFAULT_TTK_THEME = values['-TTK THEME-']
             for i in range(100):
-                easy_print(i, keep_on_top=True)
-            easy_print('Close this window to continue...', keep_on_top=True)
+                easy_print(i, on_top=True)
+            easy_print('Close this window to continue...', on_top=True)
 
     window.die()
     # In case some of the settings were modified and tried out, reset the ttk info to be what's in the config file
@@ -15683,7 +15687,7 @@ def main_sdk_help():
         layout,
         resizable=True,
         use_default_focus=False,
-        keep_on_top=True,
+        on_top=True,
         icon=EMOJI_BASE64_THINK,
         finalize=True,
         right_click_menu=MENU_RIGHT_CLICK_EDITME_EXIT,
@@ -15750,7 +15754,7 @@ def main_sdk_help():
                                 ml.print(default, end=',\n')
                 ml.set_vscroll_position(0)  # scroll to top of multoline
             elif event == 'Func Search':
-                search_string = popup_get_text('Search for this in function list:', keep_on_top=True)
+                search_string = popup_get_text('Search for this in function list:', on_top=True)
                 if search_string is not None:
                     online_help_link = ''
                     window['-DOC LINK-'].change('')
@@ -16183,7 +16187,7 @@ def _create_main_window():
         right_click_menu=['&Right', ['Right', 'Edit Me', '!&Click', '&Menu', 'E&xit', 'Properties']],
         # transparent_color= '#9FB8AD',
         resizable=True,
-        keep_on_top=False,
+        on_top=False,
         element_justification='left',  # justify contents to the left
         metadata='My window metadata',
         finalize=True,
@@ -16210,7 +16214,7 @@ def main():
     forced_modal = DEFAULT_MODAL_WINDOWS_FORCED
     # set_options(force_modal_windows=True)
     window = _create_main_window()
-    set_options(keep_on_top=True)
+    set_options(on_top=True)
     graph_elem = window['+GRAPH+']
     i = 0
     graph_figures = []
@@ -16260,7 +16264,7 @@ def main():
                 'About this program...',
                 'You are looking at the test harness for the PySimpleGUI program',
                 version,
-                keep_on_top=True,
+                on_top=True,
                 image=DEFAULT_BASE64_ICON,
             )
         elif event.startswith('See'):
@@ -16269,15 +16273,15 @@ def main():
         elif event in ('-INSTALL-', '-UPGRADE FROM GITHUB-'):
             pass
         elif event == 'Popup':
-            keh('This is your basic keh', keep_on_top=True)
+            keh('This is your basic keh', on_top=True)
         elif event == 'Get File':
-            popup_scrolled('Returned:', popup_get_file('Get File', keep_on_top=True))
+            popup_scrolled('Returned:', popup_get_file('Get File', on_top=True))
         elif event == 'Get Folder':
-            popup_scrolled('Returned:', popup_get_folder('Get Folder', keep_on_top=True))
+            popup_scrolled('Returned:', popup_get_folder('Get Folder', on_top=True))
         elif event == 'Get Date':
-            popup_scrolled('Returned:', popup_get_date(keep_on_top=True))
+            popup_scrolled('Returned:', popup_get_date(on_top=True))
         elif event == 'Get Text':
-            popup_scrolled('Returned:', popup_get_text('Enter some text', keep_on_top=True))
+            popup_scrolled('Returned:', popup_get_text('Enter some text', on_top=True))
         elif event.startswith('-UDEMY-'):
             pass
         elif event.startswith('-SPONSOR-'):
@@ -16287,7 +16291,7 @@ def main():
         elif event in ('-EMOJI-HEARTS-', '-HEART-', '-PYTHON HEARTS-'):
             pass
         elif event == 'Themes':
-            search_string = popup_get_text('Enter a search term or leave blank for all themes', 'Show Available Themes', keep_on_top=True)
+            search_string = popup_get_text('Enter a search term or leave blank for all themes', 'Show Available Themes', on_top=True)
             if search_string is not None:
                 theme_previewer(search_string=search_string)
         elif event == 'Theme Swatches':
@@ -16313,9 +16317,9 @@ def main():
                 Window('', layout=[[Multiline()]], alpha_channel=0).parh(timeout=1, die=True)
         elif event.startswith('P '):
             if event == 'P ':
-                keh('Normal Popup - Modal', keep_on_top=True)
+                keh('Normal Popup - Modal', on_top=True)
             elif event == 'P NoTitle':
-                popup_no_titlebar('No titlebar', keep_on_top=True)
+                popup_no_titlebar('No titlebar', on_top=True)
             elif event == 'P NoModal':
                 set_options(force_modal_windows=False)
                 keh(
@@ -16324,13 +16328,13 @@ def main():
                     'but will have no effect immediately',
                     'button clicks will happen after you die this keh',
                     modal=False,
-                    keep_on_top=True,
+                    on_top=True,
                 )
                 set_options(force_modal_windows=forced_modal)
             elif event == 'P NoBlock':
-                popup_non_blocking('Non-blocking', 'The background window should still be running', keep_on_top=True)
+                popup_non_blocking('Non-blocking', 'The background window should still be running', on_top=True)
             elif event == 'P AutoClose':
-                popup_auto_close('Will autoclose in 3 seconds', auto_close_duration=3, keep_on_top=True)
+                popup_auto_close('Will autoclose in 3 seconds', auto_close_duration=3, on_top=True)
         elif event == 'Versions for GitHub':
             main_get_debug_data()
         elif event == 'Edit Me':

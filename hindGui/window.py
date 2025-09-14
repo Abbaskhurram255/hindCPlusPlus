@@ -116,7 +116,8 @@ class Window:
     _watermark = None
     _watermark_temp_forced = False
     _watermark_user_text = ''
-    chal_rahi_he = False
+    chal_rahi_he = is_running = False
+    is_dead = not chal_rahi_he
 
     def __init__(
         self,
@@ -142,7 +143,7 @@ class Window:
         icon=None,
         force_toplevel=False,
         alpha_channel=None,
-        return_keyboard_events=False,
+        return_keyboard_events=True,
         use_default_focus=True,
         text_justification=None,
         no_titlebar=False,
@@ -161,7 +162,7 @@ class Window:
         right_click_menu_selected_colors=(None, None),
         right_click_menu_font=None,
         right_click_menu_tearoff=False,
-        finalize=False,
+        finalize=True,
         element_justification='left',
         ttk_theme=None,
         use_ttk_buttons=None,
@@ -182,8 +183,7 @@ class Window:
         sbar_frame_color=None,
         sbar_relief=None,
         watermark=None,
-        metadata=None,
-        chal_rahi_he=True
+        metadata=None
     ):
         """
         :param title:                                The title that will be displayed in the Titlebar and on the Taskbar
@@ -313,7 +313,9 @@ class Window:
         """
 
         self._metadata = None  # type: Any
-        self.chal_rahi_he = chal_rahi_he or True
+        self.chal_rahi_he = True
+        self.is_running = True
+        self.is_dead = not self.chal_rahi_he
         self.AutoSizeText = auto_size_text if auto_size_text is not None else hindGui.DEFAULT_AUTOSIZE_TEXT
         self.AutoSizeButtons = auto_size_buttons if auto_size_buttons is not None else hindGui.DEFAULT_AUTOSIZE_BUTTONS
         self.Title = str(title)
@@ -1852,12 +1854,14 @@ class Window:
         except:
             pass
         self.TKrootDestroyed = True
+        self.chal_rahi_he = self.is_running = False
+        self.is_dead = not self.chal_rahi_he
 
         # Free up anything that was held in the style and the root variables
         self.Rows = None
         self.TKroot = None
 
-    def is_closed(self, quick_check=None):
+    def dead(self, quick_check=None) -> bool:
         """
         Returns True is the window is maybe closed.  Can be difficult to tell sometimes
         NOTE - the call to TKroot.change was taking over 500 ms sometimes so added a flag to bypass the lengthy call.
@@ -2065,6 +2069,9 @@ class Window:
             self.TKroot.wm_attributes('-topmost', 0)
         except Exception as e:
             warnings.warn('Problem in Window.on_top_clear trying to clear wm_attributes topmost' + str(e), UserWarning)
+
+    def clear_top(self):
+        self.on_top_clear()
 
     def current_location(self, more_accurate=False, without_titlebar=False):
         """

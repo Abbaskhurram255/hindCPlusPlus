@@ -528,7 +528,7 @@ class Element:
 
     def _this_elements_window_closed(self, quick_check=True):
         if self.ParentForm is not None:
-            return self.ParentForm.is_closed(quick_check=quick_check)
+            return self.ParentForm.dead(quick_check=quick_check)
 
         return True
 
