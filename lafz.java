@@ -479,11 +479,17 @@ class lafz {
 	}
 	String setIndex(int i, char newChar) {
 		if (i<0 || i>=length()) return str;
-		return new StringBuilder(str).setCharAt(i, newChar).toString();
+		StringBuilder sb = new StringBuilder(str);
+        sb.setCharAt(i, newChar);
+        String newString = sb.toString();
+        return newString;
 	}
 	String setIndex(int i, String newChar) {
 		if (i<0 || i>=length() || newChar == null || newChar.length == 0) return str;
-		return new StringBuilder(str).setCharAt(i, newChar.charAt(0)).toString();
+		StringBuilder sb = new StringBuilder(str);
+        sb.setCharAt(i, newChar.charAt(0));
+        String newString = sb.toString();
+        return newString;
 	}
 	String updateIndex(int i, char newChar) {
 		return setIndex(i, newChar);
@@ -549,6 +555,9 @@ class lafz {
 		} catch (PatternSyntaxException | StackOverflowError e) {
 			return str;
 		}
+	}
+	String replaceOne(String re, String _with) {
+		return replaceFirst(re, _with);
 	}
 	String replaceAll(String re, String _with) {
 		return replace(re, _with);
