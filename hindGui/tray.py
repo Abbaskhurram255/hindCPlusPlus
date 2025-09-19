@@ -124,7 +124,7 @@ class SystemTray:
             event = self.last_message_event
             self.last_message_event = None
             return event
-        event, values = self.window.read(timeout=timeout)
+        event, values = self.window.parh(timeout=timeout)
         if event.endswith('DOUBLE_CLICK'):
             return EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED
         elif event == '-IMAGE-':
@@ -329,7 +329,7 @@ class SystemTray:
         if fade_in_duration:
             for i in range(1, int(alpha * 100)):  # fade in
                 window.set_alpha(i / 100)
-                event, values = window.read(timeout=fade_in_duration // 100)
+                event, values = window.parh(timeout=fade_in_duration // 100)
                 if event != TIMEOUT_KEY:
                     window.set_alpha(1)
                     break
@@ -340,7 +340,7 @@ class SystemTray:
             if event == TIMEOUT_KEY:
                 for i in range(int(alpha * 100), 1, -1):  # fade out
                     window.set_alpha(i / 100)
-                    event, values = window.read(timeout=fade_in_duration // 100)
+                    event, values = window.parh(timeout=fade_in_duration // 100)
                     if event != TIMEOUT_KEY:
                         break
         else:

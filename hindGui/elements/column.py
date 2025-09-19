@@ -307,7 +307,7 @@ class Column(Element):
                     'The offensive list is:',
                     element,
                     'This list will be stripped from your layout',
-                    keep_on_top=True,
+                    on_top=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -319,7 +319,7 @@ class Column(Element):
                     'The offensive list is:',
                     element,
                     'This item will be stripped from your layout',
-                    keep_on_top=True,
+                    on_top=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -338,7 +338,7 @@ class Column(Element):
                     element.event,
                     'This item will be stripped from your layout',
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
-                    keep_on_top=True,
+                    on_top=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -371,7 +371,7 @@ class Column(Element):
                     'The offensive row = ',
                     row,
                     'This item will be stripped from your layout',
-                    keep_on_top=True,
+                    on_top=True,
                     image=_random_error_emoji(),
                 )
                 continue
@@ -425,6 +425,7 @@ class Column(Element):
                 self.ParentPanedWindow.add(self.TKColFrame)
         if nazar is not None:
             self._nazar = nazar
+        return self
 
     def contents_changed(self):
         """

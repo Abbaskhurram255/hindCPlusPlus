@@ -1,5 +1,5 @@
 *.class
+*.pyc
 /__pycache__
-*.pyc
-*.pyc
 /hindGui/__pycache__
+/hindGui/elements/__pycache__

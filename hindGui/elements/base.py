@@ -823,14 +823,14 @@ class Element:
                 return False
 
             warnings.warn(
-                'You cannot Change element with event = {} until the window.read() is called or set finalize=True when creating window'.format(self.Event),
+                'You cannot Change element with event = {} until the window.parh() is called or set finalize=True when creating window'.format(self.Event),
                 UserWarning,
             )
             if not hindGui.SUPPRESS_ERROR_POPUPS:
                 _error_popup_with_traceback(
                     f'Unable to complete operation on element with event {self.Event}',
                     'You cannot perform operations (such as calling change) on an Element until:',
-                    ' window.read() is called or finalize=True when Window created.',
+                    ' window.parh() is called or finalize=True when Window created.',
                     'Adding a "finalize=True" parameter to your Window creation will likely fix this.',
                     _create_error_message(),
                 )
@@ -1024,7 +1024,7 @@ class Element:
         that this is not the function that will be called.  Your actual element's change method will be called.
 
         If you call change, you must call window.refresh if you want the change to happen prior to your next
-        window.read() call. Normally uou don't do this as the window.read call is likely going to happen next.
+        window.parh() call. Normally uou don't do this as the window.read call is likely going to happen next.
         """
         print('* Base Element Class change was called. Your element does not seem to have an change method')
 

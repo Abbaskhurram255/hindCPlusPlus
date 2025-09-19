@@ -24,7 +24,7 @@ from hindGui._utils import _error_popup_with_traceback
 class Listbox(Element):
     """
     A List Box.  Provide a list of values for the user to choose one or more of.   Returns a list of selected rows
-    when a window.read() is executed.
+    when a window.parh() is executed.
     """
 
     def __init__(
@@ -308,7 +308,7 @@ class Listbox(Element):
     def get(self):
         """
         Returns the list of items currently selected in this listbox.  It should be identical
-        to the value you would receive when performing a window.read() call.
+        to the value you would receive when performing a window.parh() call.
 
         :return: The list of currently selected items. The actual items are returned, not the indexes
         :rtype:  List[Any]

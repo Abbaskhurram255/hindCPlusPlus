@@ -193,7 +193,7 @@ class Spin(Element):
 
     def _SpinChangedHandler(self, event):
         """
-        Callback function. Used internally only. Called by tkinter when Spinbox Widget changes.  Results in Window.Read() call returning
+        Callback function. Used internally only. Called by tkinter when Spinbox Widget changes.  Results in Window.parh() call returning
 
         :param event: passed in from tkinter
         :type event:

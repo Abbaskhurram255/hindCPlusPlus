@@ -97,18 +97,18 @@ def _error_popup_with_code(title, filename, line_num, *args, emoji=None):
     ]
     if not editor_filename:
         layout += [[Text('Configure editor in the Global settings to enable "Take me to error" feature')]]
-    window = Window(title, layout, keep_on_top=True)
+    window = Window(title, layout, on_top=True)
 
     while True:
-        event, values = window.read()
+        event, values = window.parh()
         if event in ('Close', WIN_CLOSED):
             break
         if event == 'Kill Application':
-            window.close()
+            window.die()
             popup_quick_message(
                 'KILLING APP!  BYE!',
                 font='_ 18',
-                keep_on_top=True,
+                on_top=True,
                 text_color='white',
                 background_color='red',
                 non_blocking=False,
@@ -117,7 +117,7 @@ def _error_popup_with_code(title, filename, line_num, *args, emoji=None):
         if event == 'Take me to error' and filename is not None and line_num is not None:
             execute_editor(filename, line_num)
 
-    window.close()
+    window.die()
 
 
 def _exit_mainloop(exiting_window):
