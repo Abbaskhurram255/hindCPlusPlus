@@ -1659,7 +1659,7 @@ def MenubarCustom(
 
 # -------------------------  FOLDER BROWSE Element lazy function  ------------------------- #
 def FolderBrowse(
-    button_text='Browse',
+    text='Browse',
     target=(ThisRow, -1),
     initial_folder=None,
     hover=None,
@@ -1681,8 +1681,8 @@ def FolderBrowse(
     expand_y=False,
 ):
     """
-    :param button_text:      text in the button (Default value = 'Browse')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Browse')
+    :type text:       (str)
     :param target:           target for the button (Default value = (ThisRow, -1))
     :type target:            str | (int, int)
     :param initial_folder:   starting path for folders and files
@@ -1726,7 +1726,7 @@ def FolderBrowse(
     """
 
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_BROWSE_FOLDER,
         target=target,
         initial_folder=initial_folder,
@@ -1752,7 +1752,7 @@ def FolderBrowse(
 
 # -------------------------  FILE BROWSE Element lazy function  ------------------------- #
 def FileBrowse(
-    button_text='Browse',
+    text='Browse',
     target=(ThisRow, -1),
     file_types=FILE_TYPES_ALL_FILES,
     initial_folder=None,
@@ -1776,8 +1776,8 @@ def FileBrowse(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Browse')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Browse')
+    :type text:       (str)
     :param target:           event or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:            str | (int, int)
     :param file_types:       filter file types Default value = (("ALL Files", "*.* *"),).
@@ -1822,7 +1822,7 @@ def FileBrowse(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_BROWSE_FILE,
         target=target,
         file_types=file_types,
@@ -1849,7 +1849,7 @@ def FileBrowse(
 
 # -------------------------  FILES BROWSE Element (Multiple file selection) lazy function  ------------------------- #
 def FilesBrowse(
-    button_text='Browse',
+    text='Browse',
     target=(ThisRow, -1),
     file_types=FILE_TYPES_ALL_FILES,
     disabled=False,
@@ -1875,8 +1875,8 @@ def FilesBrowse(
     """
     Allows browsing of multiple files. File list is returned as a single list with the delimiter defined using the files_delimiter parameter.
 
-    :param button_text:      text in the button (Default value = 'Browse')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Browse')
+    :type text:       (str)
     :param target:           event or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:            str | (int, int)
     :param file_types:       Default value = (("ALL Files", "*.* *"),).
@@ -1923,7 +1923,7 @@ def FilesBrowse(
     :rtype:                  (Button)
     """
     button = Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_BROWSE_FILES,
         target=target,
         file_types=file_types,
@@ -1952,7 +1952,7 @@ def FilesBrowse(
 
 # -------------------------  FILE BROWSE Element lazy function  ------------------------- #
 def FileSaveAs(
-    button_text='Save As...',
+    text='Save As...',
     target=(ThisRow, -1),
     file_types=FILE_TYPES_ALL_FILES,
     initial_folder=None,
@@ -1977,8 +1977,8 @@ def FileSaveAs(
 ):
     """
 
-    :param button_text:       text in the button (Default value = 'Save As...')
-    :type button_text:        (str)
+    :param text:       text in the button (Default value = 'Save As...')
+    :type text:        (str)
     :param target:            event or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:             str | (int, int)
     :param file_types:        Default value = (("ALL Files", "*.* *"),).
@@ -2024,7 +2024,7 @@ def FileSaveAs(
     :rtype:                   (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_SAVEAS_FILE,
         target=target,
         file_types=file_types,
@@ -2052,7 +2052,7 @@ def FileSaveAs(
 
 # -------------------------  SAVE AS Element lazy function  ------------------------- #
 def SaveAs(
-    button_text='Save As...',
+    text='Save As...',
     target=(ThisRow, -1),
     file_types=FILE_TYPES_ALL_FILES,
     initial_folder=None,
@@ -2077,8 +2077,8 @@ def SaveAs(
 ):
     """
 
-    :param button_text:       text in the button (Default value = 'Save As...')
-    :type button_text:        (str)
+    :param text:       text in the button (Default value = 'Save As...')
+    :type text:        (str)
     :param target:            event or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:             str | (int, int)
     :param file_types:        Default value = (("ALL Files", "*.* *"),).
@@ -2124,7 +2124,7 @@ def SaveAs(
     :rtype:                   (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_SAVEAS_FILE,
         target=target,
         file_types=file_types,
@@ -2152,7 +2152,7 @@ def SaveAs(
 
 # -------------------------  SAVE BUTTON Element lazy function  ------------------------- #
 def Save(
-    button_text='Save',
+    text='Save',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2173,8 +2173,8 @@ def Save(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Save')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Save')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2213,7 +2213,7 @@ def Save(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2237,7 +2237,7 @@ def Save(
 
 # -------------------------  SUBMIT BUTTON Element lazy function  ------------------------- #
 def Submit(
-    button_text='Submit',
+    text='Submit',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2258,8 +2258,8 @@ def Submit(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Submit')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Submit')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2298,7 +2298,7 @@ def Submit(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2323,7 +2323,7 @@ def Submit(
 # -------------------------  OPEN BUTTON Element lazy function  ------------------------- #
 # -------------------------  OPEN BUTTON Element lazy function  ------------------------- #
 def Open(
-    button_text='Open',
+    text='Open',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2344,8 +2344,8 @@ def Open(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Open')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Open')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2384,7 +2384,7 @@ def Open(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2408,7 +2408,7 @@ def Open(
 
 # -------------------------  OK BUTTON Element lazy function  ------------------------- #
 def OK(
-    button_text='OK',
+    text='OK',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2429,8 +2429,8 @@ def OK(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'OK')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'OK')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2469,7 +2469,7 @@ def OK(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2493,7 +2493,7 @@ def OK(
 
 # -------------------------  YES BUTTON Element lazy function  ------------------------- #
 def Ok(
-    button_text='Ok',
+    text='Ok',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2514,8 +2514,8 @@ def Ok(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Ok')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Ok')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2554,7 +2554,7 @@ def Ok(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2578,7 +2578,7 @@ def Ok(
 
 # -------------------------  CANCEL BUTTON Element lazy function  ------------------------- #
 def Cancel(
-    button_text='Cancel',
+    text='Cancel',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2599,8 +2599,8 @@ def Cancel(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Cancel')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Cancel')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2639,7 +2639,7 @@ def Cancel(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2663,7 +2663,7 @@ def Cancel(
 
 # -------------------------  QUIT BUTTON Element lazy function  ------------------------- #
 def Quit(
-    button_text='Quit',
+    text='Quit',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2684,8 +2684,8 @@ def Quit(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Quit')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Quit')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2724,7 +2724,7 @@ def Quit(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2748,7 +2748,7 @@ def Quit(
 
 # -------------------------  Exit BUTTON Element lazy function  ------------------------- #
 def Exit(
-    button_text='Exit',
+    text='Exit',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2769,8 +2769,8 @@ def Exit(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Exit')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Exit')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2809,7 +2809,7 @@ def Exit(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2833,7 +2833,7 @@ def Exit(
 
 # -------------------------  YES BUTTON Element lazy function  ------------------------- #
 def YES(
-    button_text='Yes',
+    text='Yes',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2854,8 +2854,8 @@ def YES(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Yes')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Yes')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2894,7 +2894,7 @@ def YES(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -2918,7 +2918,7 @@ def YES(
 
 # -------------------------  NO BUTTON Element lazy function  ------------------------- #
 def NO(
-    button_text='No',
+    text='No',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -2939,8 +2939,8 @@ def NO(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'No')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'No')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -2979,7 +2979,7 @@ def NO(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -3003,7 +3003,7 @@ def NO(
 
 # -------------------------  NO BUTTON Element lazy function  ------------------------- #
 def Help(
-    button_text='Help',
+    text='Help',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3024,8 +3024,8 @@ def Help(
 ):
     """
 
-    :param button_text:      text in the button (Default value = 'Help')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = 'Help')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3064,7 +3064,7 @@ def Help(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -3088,7 +3088,7 @@ def Help(
 
 # -------------------------  NO BUTTON Element lazy function  ------------------------- #
 def Debug(
-    button_text='',
+    text='',
     size=(None, None),
     s=(None, None),
     auto_size_button=None,
@@ -3112,8 +3112,8 @@ def Debug(
     Your button has been replaced with a normal button that has the PySimpleGUI Debugger buggon logo on it.
     In your event loop, you will need to check for the event of this button and then call:
             show_debugger_popout_window()
-    :param button_text:      text in the button (Default value = '')
-    :type button_text:       (str)
+    :param text:      text in the button (Default value = '')
+    :type text:       (str)
     :param size:             (w,h) w=characters-wide, h=rows-high
     :type size:              (int, int)
     :param s:                Same as size parameter.  It's an alias. If EITHER of them are set, then the one that's set will be used. If BOTH are set, size will be used
@@ -3152,10 +3152,10 @@ def Debug(
     :rtype:                  (Button)
     """
 
-    user_key = event if event is not None else k if k is not None else button_text
+    user_key = event if event is not None else k if k is not None else text
 
     return Button(
-        button_text='',
+        text='',
         button_type=BUTTON_TYPE_READ_FORM,
         hover=hover,
         size=size,
@@ -3182,7 +3182,7 @@ def Debug(
 
 # -------------------------  GENERIC BUTTON Element lazy function  ------------------------- #
 def SimpleButton(
-    button_text,
+    text,
     image_filename=None,
     image_data=None,
     image_size=(None, None),
@@ -3210,8 +3210,8 @@ def SimpleButton(
 
     This Button should not be used.
 
-    :param button_text:      text in the button
-    :type button_text:       (str)
+    :param text:      text in the button
+    :type text:       (str)
     :param image_filename:   image filename if there is a button image
     :type image_filename:    image filename if there is a button image
     :param image_data:       in-RAM image to be displayed on button
@@ -3256,7 +3256,7 @@ def SimpleButton(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_CLOSES_WIN,
         image_filename=image_filename,
         image_data=image_data,
@@ -3284,7 +3284,7 @@ def SimpleButton(
 
 # -------------------------  CLOSE BUTTON Element lazy function  ------------------------- #
 def CloseButton(
-    button_text,
+    text,
     image_filename=None,
     image_data=None,
     image_size=(None, None),
@@ -3313,8 +3313,8 @@ def CloseButton(
     This button should not be used.  Instead explicitly die your windows by calling window.die() or by using
     the die parameter in window.parh
 
-    :param button_text:      text in the button
-    :type button_text:       (str)
+    :param text:      text in the button
+    :type text:       (str)
     :param image_filename:   image filename if there is a button image
     :type image_filename:    image filename if there is a button image
     :param image_data:       in-RAM image to be displayed on button
@@ -3359,7 +3359,7 @@ def CloseButton(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_CLOSES_WIN,
         image_filename=image_filename,
         image_data=image_data,
@@ -3390,7 +3390,7 @@ CButton = CloseButton
 
 # -------------------------  GENERIC BUTTON Element lazy function  ------------------------- #
 def ReadButton(
-    button_text,
+    text,
     image_filename=None,
     image_data=None,
     image_size=(None, None),
@@ -3414,8 +3414,8 @@ def ReadButton(
     expand_y=False,
 ):
     """
-    :param button_text:      text in the button
-    :type button_text:       (str)
+    :param text:      text in the button
+    :type text:       (str)
     :param image_filename:   image filename if there is a button image
     :type image_filename:    image filename if there is a button image
     :param image_data:       in-RAM image to be displayed on button
@@ -3463,7 +3463,7 @@ def ReadButton(
     """
 
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_READ_FORM,
         image_filename=image_filename,
         image_data=image_data,
@@ -3495,7 +3495,7 @@ RButton = ReadFormButton
 
 # -------------------------  Realtime BUTTON Element lazy function  ------------------------- #
 def RealtimeButton(
-    button_text,
+    text,
     image_filename=None,
     image_data=None,
     image_size=(None, None),
@@ -3521,8 +3521,8 @@ def RealtimeButton(
 ):
     """
 
-    :param button_text:      text in the button
-    :type button_text:       (str)
+    :param text:      text in the button
+    :type text:       (str)
     :param image_filename:   image filename if there is a button image
     :type image_filename:    image filename if there is a button image
     :param image_data:       in-RAM image to be displayed on button
@@ -3571,7 +3571,7 @@ def RealtimeButton(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_REALTIME,
         image_filename=image_filename,
         image_data=image_data,
@@ -3600,7 +3600,7 @@ def RealtimeButton(
 
 # -------------------------  Dummy BUTTON Element lazy function  ------------------------- #
 def DummyButton(
-    button_text,
+    text,
     image_filename=None,
     image_data=None,
     image_size=(None, None),
@@ -3632,8 +3632,8 @@ def DummyButton(
     It's used in conjunction with non-blocking windows to silently die them.  They are used to
     implement the non-blocking keh windows. They're also found in some Demo Programs, so look there for proper use.
 
-    :param button_text:      text in the button
-    :type button_text:       (str)
+    :param text:      text in the button
+    :type text:       (str)
     :param image_filename:   image filename if there is a button image
     :type image_filename:    image filename if there is a button image
     :param image_data:       in-RAM image to be displayed on button
@@ -3682,7 +3682,7 @@ def DummyButton(
     :rtype:                  (Button)
     """
     return Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_CLOSES_WIN_ONLY,
         image_filename=image_filename,
         image_data=image_data,
@@ -3711,7 +3711,7 @@ def DummyButton(
 
 # -------------------------  Calendar Chooser Button lazy function  ------------------------- #
 def CalendarButton(
-    button_text,
+    text,
     target=(ThisRow, -1),
     close_when_date_chosen=True,
     default_date_m_d_y=(None, None, None),
@@ -3750,8 +3750,8 @@ def CalendarButton(
     """
     Button that will show a calendar chooser window.  Fills in the target element with result
 
-    :param button_text:            text in the button
-    :type button_text:             (str)
+    :param text:            text in the button
+    :type text:             (str)
     :param target:                 Event or "coordinate" (see docs) of target element
     :type target:                  (int, int) | Any
     :param close_when_date_chosen: (Default = True)
@@ -3822,7 +3822,7 @@ def CalendarButton(
     :rtype:                        (Button)
     """
     button = Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_CALENDAR_CHOOSER,
         target=target,
         image_filename=image_filename,
@@ -3865,7 +3865,7 @@ def CalendarButton(
 
 # -------------------------  Calendar Chooser Button lazy function  ------------------------- #
 def ColorChooserButton(
-    button_text,
+    text,
     target=(ThisRow, -1),
     image_filename=None,
     image_data=None,
@@ -3893,8 +3893,8 @@ def ColorChooserButton(
 ):
     """
 
-    :param button_text:      text in the button
-    :type button_text:       (str)
+    :param text:      text in the button
+    :type text:       (str)
     :param target:           event or (row,col) target for the button. Note that -1 for column means 1 element to the left of this one. The constant ThisRow is used to indicate the current row. The Button itself is a valid target for some types of button
     :type target:            str | (int, int)
     :type image_filename:    (str)
@@ -3948,7 +3948,7 @@ def ColorChooserButton(
     :rtype:                  (Button)
     """
     button = Button(
-        button_text=button_text,
+        text=text,
         button_type=BUTTON_TYPE_COLOR_CHOOSER,
         target=target,
         image_filename=image_filename,

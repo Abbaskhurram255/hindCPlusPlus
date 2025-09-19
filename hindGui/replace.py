@@ -35,8 +35,8 @@ def replace_text_in_files(directory_path, old_text, new_text, file_extension=Non
 
 if __name__ == "__main__":
     target_directory = r"C:\Users\Adi\Downloads\Python_GUI\hindGui"
-    text_to_find = "is_closed"
-    replacement_text = "dead"
+    text_to_find = "button_text"
+    replacement_text = "text"
     extension_filter = ".py"
 
     replace_text_in_files(target_directory, text_to_find, replacement_text, extension_filter)
