@@ -1032,7 +1032,7 @@ class Element:
         """
         Makes it possible to "call" an already existing element.  When you do make the "call", it actually calls
         the Change method for the element.
-        Example:    If this text element was in yoiur layout:
+        Example:    If this text element was in your layout:
                     sg.Text('foo', event='T')
                     Then you can call the Change method for that element by writing:
                     window.find_element('T')('new text value')
