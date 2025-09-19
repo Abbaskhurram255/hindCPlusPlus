@@ -485,7 +485,7 @@ class lafz {
         return newString;
 	}
 	String setIndex(int i, String newChar) {
-		if (i<0 || i>=length() || newChar == null || newChar.length == 0) return str;
+		if (i<0 || i>=length() || newChar == null || newChar.length() == 0) return str;
 		StringBuilder sb = new StringBuilder(str);
         sb.setCharAt(i, newChar.charAt(0));
         String newString = sb.toString();
