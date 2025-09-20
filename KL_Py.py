@@ -111,7 +111,8 @@ def rng(x: str|list|tuple) -> list[int]:
     return return_list
 def f(*args) -> str:
     formatted = ""
-    caller_locals = inspect.currentframe().f_back.f_locals
+    current_frame: Optional[FrameType] = inspect.currentframe()
+    caller_locals: obj = obj(current_frame.f_locals | current_frame.f_back.f_locals | current_frame.f_back.f_back.f_locals | current_frame.f_back.f_back.f_back.f_locals)
     blacklisted_keywords = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
     blacklisted_functions = ['system', 'popen', 'subprocess']
     for arg in args:

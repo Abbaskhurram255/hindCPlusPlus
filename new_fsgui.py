@@ -35,7 +35,7 @@ while app.chal_rahi_he:
     if hissa(event, [None, "Exit", "escape"]):
         break
     if event == "Next":
-        app[f"col{layout_number}"].change(nazar=nae)
+        app[f("col$layout_number")].change(nazar=nae)
         if layout_number == 1:
             app["Return to Start"].change(text="Return to Start")
             username = values["name"].strip()
@@ -43,7 +43,7 @@ while app.chal_rahi_he:
             app["Return to Start"].change(nazar=ae)
             app["Next"].change(nazar=ae)
             layout_number += 1
-            app[f"col{layout_number}"].change(nazar=ae)
+            app[f("col$layout_number")].change(nazar=ae)
         else:
             app["col3"].change(nazar=ae)
         if layout_number == 2:
@@ -51,7 +51,7 @@ while app.chal_rahi_he:
         if layout_number == 3:
             app["Next"].change(nazar=nae)
             app["Return to Start"].change(text="Refill")
-        kaho("New Layout: {layout_number}")
+        kaho("New Layout: $layout_number")
     elif event == "Return to Start":
         # clear all the input fields before sending the user back, if it's the last page
         if layout_number == 3:
@@ -61,9 +61,9 @@ while app.chal_rahi_he:
                         continue
                     el(value="")
         app["Next"].change(nazar=ae)
-        app[f"col{layout_number}"].change(nazar=nae)
-        app[f"col1"].change(nazar=ae)
+        app[f("col$layout_number")].change(nazar=nae)
+        app["col1"].change(nazar=ae)
         layout_number = 1
-        kaho("New Layout: {layout_number}")
+        kaho("New Layout: $layout_number")
         app["Return to Start"].change(nazar=nae)
 app.die()
