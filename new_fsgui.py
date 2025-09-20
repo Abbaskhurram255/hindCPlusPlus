@@ -30,7 +30,6 @@ username: str
 layout_number: int = 1
 
 while app.chal_rahi_he:
-    # print(replace("     hey love      ", r"^\s+(.+)\s+$", r"x"))
     event, values = app.parh()
     print(event)
     if hissa(event, [None, "Exit", "escape"]):
@@ -54,8 +53,8 @@ while app.chal_rahi_he:
             app["Return to Start"].change(text="Refill")
         kaho("New Layout: $layout_number")
     elif event == "Return to Start":
-        # clear all the input fields before sending the user back, if it's the last page
         if layout_number == 3:
+            # if the user is on the last page, clear all input fields before sending them back home
             for rows in lay1:
                 for el in rows:
                     if not isinstance(el, Input):
