@@ -37,17 +37,14 @@ class obj(dict):
         try:
             return self[key]
         except KeyError:
-            raise AttributeError(f"'{self.__class__.__name__}' objectect has no attribute '{key}'")
+            raise AttributeError(f"object '{self.__class__.__name__}' has no attribute '{key}'")
     def __setattr__(self, key, value):
-        if key.startswith('_'):  # Allow setting internal attributes
-            super().__setattr__(key, value)
+        if isinstance(value, dict):
+            self[key] = obj(value)
+        elif isinstance(value, (list, tuple)):
+            self[key] = self._convert_nested_collections(value)
         else:
-            if isinstance(value, dict):
-                self[key] = obj(value)
-            elif isinstance(value, (list, tuple)):
-                self[key] = self._convert_nested_collections(value)
-            else:
-                self[key] = value
+            self[key] = value
     def __setitem__(self, key, value):
         if isinstance(value, dict):
             super().__setitem__(key, obj(value))
@@ -94,6 +91,7 @@ reverseSortMutate = lambda arr: arr.sort(reverse=Yes)
 Yes = Ha = true = True
 No = Na = false = False
 none: None = None
+null = none
 def reverse(x: str | list[any]):
 	if not isinstance(x, str) and not isinstance(x, list): return None
 	if isinstance(x, list):
@@ -110,48 +108,51 @@ def rng(x: str|list|tuple) -> list[int]:
         return_list[i] = i
     return return_list
 def f(*args) -> str:
-    formatted = ""
-    current_frame: Optional[FrameType] = inspect.currentframe()
-    caller_locals: obj = obj(current_frame.f_locals | current_frame.f_back.f_locals | current_frame.f_back.f_back.f_locals | current_frame.f_back.f_back.f_back.f_locals)
-    blacklisted_keywords = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
-    blacklisted_functions = ['system', 'popen', 'subprocess']
+    formatted: str = ""
+    curframe: Optional[FrameType] = inspect.currentframe()
+    caller_locals: obj = obj(curframe.f_locals | curframe.f_globals)
+    while hasattr(curframe, "f_back") and curframe.f_back != None:
+        caller_locals = caller_locals | curframe.f_locals | curframe.f_globals
+        curframe = curframe.f_back
+        # keep retrieving until you hit the oldest ancestor
+    blacklisted_keywords: list = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
+    blacklisted_functions: list = ['system', 'popen', 'subprocess']
+    blacklisted_items: list = blacklisted_keywords + blacklisted_functions
     for arg in args:
         try:
             ast.parse(f"f'{arg}'")
-            arg_lower = arg.lower()
-            for keyword in blacklisted_keywords:
-                if keyword in arg_lower:
-                    print(f"Forbidden keyword in input: '{keyword}'")
-                    continue
-            for func in blacklisted_functions:
-                if func in arg_lower:
-                    print(f"Forbidden function in input: '{func}'")
+            arg_lower: str = arg.lower()
+            for item in blacklisted_items:
+                if item in arg_lower:
+                    print(f"Forbidden keyword/function in input: '{keyword}'")
                     continue
             # Evaluate the expression
-            arg = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
+            arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
             formatted += eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
         except Exception:
             ...
     return formatted
 def printf(*args):
-    formatted = ""
-    caller_locals = inspect.currentframe().f_back.f_locals
-    blacklisted_keywords = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
-    blacklisted_functions = ['system', 'popen', 'subprocess']
+    formatted: str = ""
+    curframe: Optional[FrameType] = inspect.currentframe()
+    caller_locals: obj = obj(curframe.f_locals | curframe.f_globals)
+    while hasattr(curframe, "f_back") and curframe.f_back != None:
+        caller_locals = caller_locals | curframe.f_locals | curframe.f_globals
+        curframe = curframe.f_back
+        # keep retrieving until you hit the oldest ancestor
+    blacklisted_keywords: list = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
+    blacklisted_functions: list = ['system', 'popen', 'subprocess']
+    blacklisted_items: list = blacklisted_keywords + blacklisted_functions
     for arg in args:
         try:
             ast.parse(f"f'{arg}'")
-            arg_lower = arg.lower()
-            for keyword in blacklisted_keywords:
-                if keyword in arg_lower:
-                    print(f"Forbidden keyword in input: '{keyword}'")
-                    continue
-            for func in blacklisted_functions:
-                if func in arg_lower:
-                    print(f"Forbidden function in input: '{func}'")
+            arg_lower: str = arg.lower()
+            for item in blacklisted_items:
+                if item in arg_lower:
+                    print(f"Forbidden keyword/function in input: '{keyword}'")
                     continue
             # Evaluate the expression
-            arg = re.sub(r"[\{\$]+([\w\+\-\*\/]+)\}?", r"{\1}", arg)
+            arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
             formatted += eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
         except Exception:
             ...
@@ -159,7 +160,7 @@ def printf(*args):
 kaho = printf
 def hissa(x: str|list|tuple, y: str|list|tuple):
     if isinstance(x, str) and isinstance(y, str):
-        return match_i(y, x) or match_i(x, y)
+        return match_i(x, y)
     return x in y
 def barabar(x, y):
     if isinstance(x, str) and isinstance(y, str):
@@ -172,23 +173,23 @@ def khali(x: Iterable):
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
     occurences: list[str] = re.findall(to_replace, src)
     for occurence in occurences:
-        src = src.replace(occurence, replacement)
+        src = re.sub(occurence, replacement, src)
     return src
 def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
     occurences: list[str] = re.findall(to_replace, src, re.IGNORECASE)
     for occurence in occurences:
-        src = src.replace(occurence, replacement)
+        src = re.sub(occurence, replacement, src)
     return src
 def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
     occurences: list[str] = re.findall(to_replace, src)
-    if len(occurences) != 0:
-        return src.replace(occurence, replacement)
-    return src
+    if len(occurences) == 0:
+        return src
+    return re.sub(occurences[0], replacement, src)
 def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
     occurences: list[str] = re.findall(to_replace, src, re.IGNORECASE)
-    if len(occurences) != 0:
-        return src.replace(occurence, replacement)
-    return src
+    if len(occurences) == 0:
+        return src
+    return re.sub(occurences[0], replacement, src)
 def find_matches(src: str, to_find: str) -> list:
     matches: list[str] = re.findall(to_find, src)
     return matches
@@ -207,14 +208,14 @@ def find_match_i(src: str, to_find: str) -> str:
     return matches[0]
 def match(src: str, to_find: str) -> bool:
     matches: list[str] = find_matches(src, to_find)
-    if len(matches) != 0:
-        return True
-    return False
+    if len(matches) == 0:
+        return False
+    return True
 def match_i(src: str, to_find: str) -> bool:
     matches: list[str] = find_matches_i(src, to_find)
-    if len(matches) != 0:
-        return True
-    return False
+    if len(matches) == 0:
+        return False
+    return True
 class money:
     def __init__(self, amount=0, currency="Rs. "):
         self.amount = amount if amount >= 0 else 0
@@ -1011,11 +1012,11 @@ def internet_access() -> bool:
 def filepath(filename: str) -> str:
     return os.path.join(os.getcwd(), filename)
 
-    
 def main() -> none:
     print(obj(key="value")["key"] == obj(key="value").key)
     name = "Misty"
-    printf("$name, dont! You are, but a $10+5-8 -year-old kid.")
+    x=4
+    printf("$name, dont! You are, but a $10+5-8 -year-old kid. $x")
     
 if __name__ == "__main__":
     main()

@@ -30,6 +30,7 @@ username: str
 layout_number: int = 1
 
 while app.chal_rahi_he:
+    # print(replace("     hey love      ", r"^\s+(.+)\s+$", r"x"))
     event, values = app.parh()
     print(event)
     if hissa(event, [None, "Exit", "escape"]):
