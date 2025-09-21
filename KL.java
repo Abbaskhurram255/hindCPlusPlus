@@ -4524,7 +4524,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		panel border(LineBorder brdr) {
+		panel border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -4776,7 +4776,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		btn border(LineBorder brdr) {
+		btn border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -4819,6 +4819,10 @@ public class KL {
 		}
 		public String toolTipText() {
 			return super.getToolTipText();
+		}
+		btn place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class toggleBtn extends JToggleButton {
@@ -4953,7 +4957,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		toggleBtn border(LineBorder brdr) {
+		toggleBtn border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -5130,7 +5134,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		radioBtn border(LineBorder brdr) {
+		radioBtn border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -5308,7 +5312,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		radioBtnItem border(LineBorder brdr) {
+		radioBtnItem border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -5485,7 +5489,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		checkBox border(LineBorder brdr) {
+		checkBox border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -5660,7 +5664,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		checkBoxItem border(LineBorder brdr) {
+		checkBoxItem border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -5781,7 +5785,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		menuBar border(LineBorder brdr) {
+		menuBar border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -5935,7 +5939,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		menu border(LineBorder brdr) {
+		menu border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -6106,7 +6110,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		menuItem border(LineBorder brdr) {
+		menuItem border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -6236,7 +6240,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		contextMenu border(LineBorder brdr) {
+		contextMenu border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -6351,7 +6355,7 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
-		dropDown border(LineBorder brdr) {
+		dropDown border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -6400,7 +6404,7 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		txtField border(LineBorder brdr) {
+		txtField border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -6572,7 +6576,7 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		txtArea border(LineBorder brdr) {
+		txtArea border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -6735,7 +6739,7 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		txtPane border(LineBorder brdr) {
+		txtPane border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
@@ -6907,7 +6911,7 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		pwdField border(LineBorder brdr) {
+		pwdField border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
