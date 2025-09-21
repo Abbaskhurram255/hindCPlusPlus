@@ -1,7 +1,7 @@
 import os, sys, base64, requests, math, re, inspect, ast
 from collections import defaultdict
 from collections.abc import Iterable, Sequence
-from functools import reduce
+from functools import reduce, lru_cache, cache
 from types import *
 from typing import List, Callable, TypeVar, Any, Optional, Final
 from numbers import Number
@@ -158,18 +158,54 @@ def printf(*args):
             ...
     print(formatted)
 kaho = printf
-def hissa(x: str|list|tuple, y: str|list|tuple):
+def flat(lst: list) -> list:
+    if lst == None:
+        return []
+    out = []
+    for item in lst:
+        if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
+            out.extend(flat(item))
+        else:
+            out.append(item)
+    return out
+def hissa(x: str|list|tuple, y: str|list|tuple) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return match_i(x, y)
     return x in y
-def barabar(x, y):
+def barabar(x, y) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return x.lower() == y.lower()
     return x == y
-def khali(x: Iterable):
+def khali(x: Iterable) -> haal:
     if x == None:
         return False
     return len(x) == 0
+is_empty = isempty = khali
+# type checks
+is_none = isnone = is_null = isnull = lambda x: x == None
+isnt_none = isntnone = non_none = nonnone = lambda x: not is_none(x)
+is_string = isstring = is_str = isstr = lambda x: isinstance(x, str)
+isnt_string = isntstring = isnt_str = isntstr = non_string = nonstring = non_str = nonstr = lambda x: not is_string(x)
+is_integer = isinteger = is_int = isint = lambda x: isinstance(x, int)
+isnt_integer = isntinteger = isnt_int = isntint = non_integer = noninteger = non_int = nonint = lambda x: not is_integer(x)
+is_float = isfloat = is_flt = isflt = lambda x: isinstance(x, float)
+isnt_float = isntfloat = isnt_float = isntfloat = non_float = nonfloat = non_flt = nonflt = lambda x: not is_float(x)
+is_boolean = isboolean = is_bool = isbool = lambda x: isinstance(x, bool)
+isnt_boolean = isntboolean = isnt_bool = isntbool = non_boolean = nonboolean = non_bool = nonbool = lambda x: not is_boolean(x)
+is_array = isarray = is_arr = isarr = lambda x: isinstance(x, (list, tuple))
+isnt_array = isntarray = isnt_arr = isntarr = non_array = nonarray = non_arr = nonarr = lambda x: not is_array(x)
+is_stringarray = is_stringarr = is_strarray = is_strarr = isstringarray = isstringarr = isstrarray = isstrarr = lambda x: isinstance(x, (list[str], tuple[str, ...]))
+isnt_stringarray = isnt_stringarr = isnt_strarray = isnt_strarr = isntstringarray = isntstringarr = isntstrarray = isntstrarr = non_stringarray = non_stringarr = non_strarray = non_strarr = nonstringarray = nonstringarr = nonstrarray = nonstrarr = lambda x: not is_stringarray(x)
+is_integerarray = is_integerarr = is_intarray = is_intarr = isintegerarray = isintegerarr = isintarray = isintarr = lambda x: isinstance(x, (list[int], tuple[int, ...]))
+isnt_integerarray = isnt_integerarr = isnt_intarray = isnt_intarr = isntintegerarray = isntintegerarr = isntintarray = isntintarr = non_integerarray = non_integerarr = non_intarray = non_intarr = nonintegerarray = nonintegerarr = nonintarray = nonintarr = lambda x: not is_integerarray(x)
+is_floatarray = is_floatarr = is_fltarray = is_fltarr = isfloatarray = isfloatarr = isfltarray = isfltarr = lambda x: isinstance(x, (list[float], tuple[float, ...]))
+isnt_floatarray = isnt_floatarr = isnt_fltarray = isnt_fltarr = isntfloatarray = isntfloatarr = isntfltarray = isntfltarr = non_floatarray = non_floatarr = non_fltarray = non_fltarr = nonfloatarray = nonfloatarr = nonfltarray = nonfltarr = lambda x: not is_floatarray(x)
+is_booleanarray = is_booleanarr = is_boolarray = is_boolarr = isbooleanarray = isbooleanarr = isboolarray = isboolarr = lambda x: isinstance(x, (list[bool], tuple[bool, ...]))
+isnt_booleanarray = isnt_booleanarr = isnt_boolarray = isnt_boolarr = isntbooleanarray = isntbooleanarr = isntboolarray = isntboolarr = non_booleanarray = non_booleanarr = non_boolarray = non_boolarr = nonbooleanarray = nonbooleanarr = nonboolarray = nonboolarr = lambda x: not is_booleanarray(x)
+is_iterable = isiterable = lambda x: isinstance(x, Iterable)
+isnt_iterable = isntiterable = non_iterable = noniterable = lambda x: not is_iterable(x)
+is_callable = iscallable = is_function = isfunction = is_func = isfunc = lambda x: callable(x)
+isnt_callable = isntcallable = non_callable = noncallable = lambda x: not is_callable(x)
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
     occurences: list[str] = re.findall(to_replace, src)
     for occurence in occurences:
@@ -927,6 +963,15 @@ def main() -> none:
     name = "Misty"
     x=4
     printf("$name, dont! You are, but a $10+5-8 -year-old kid. $x")
+    print(isstr(""))
+    print(isint(3))
+    print(isflt(""))
+    print(isstr(None))
+    print(isstr(None))
+    print(isstr(None))
+    print(isstr(None))
+    print(isstr(None))
+    print(isstr(None))
     
 if __name__ == "__main__":
     main()
