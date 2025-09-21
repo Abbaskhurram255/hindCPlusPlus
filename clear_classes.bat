@@ -1,3 +1,7 @@
 @echo off
-echo Clearing class cache...
-del *.class
+if exist *.class (
+    echo Clearing class cache...
+    del *.class
+) else (
+    echo No Java class cache found to clear!
+)
