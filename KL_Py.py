@@ -2,6 +2,7 @@ import os, sys, base64, requests, math, re, inspect, ast
 from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from functools import reduce, lru_cache, cache
+from copy import deepcopy
 from types import *
 from typing import List, Callable, TypeVar, Any, Optional, Final
 from numbers import Number
@@ -168,6 +169,13 @@ def flat(lst: list) -> list:
         else:
             out.append(item)
     return out
+def clone(item: list|tuple|dict):
+    if item == None:
+        return None
+    return deepcopy(item)
+    #:params        item {{object to clone}}
+    #:types         [(list, tuple, dict),
+    #:returns       list|tuple {{cloned object}}]
 def hissa(x: str|list|tuple, y: str|list|tuple) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return match_i(x, y)
@@ -959,7 +967,11 @@ def filepath(filename: str) -> str:
     return os.path.join(os.getcwd(), filename)
 
 def main() -> none:
-    print(obj(key="value")["key"] == obj(key="value").key)
+    dictionary: obj = obj(key="value")
+    cloned = clone(dictionary)
+    cloned.key = 4
+    print(dictionary)
+    print(cloned)
     name = "Misty"
     x=4
     printf("$name, dont! You are, but a $10+5-8 -year-old kid. $x")
@@ -972,6 +984,14 @@ def main() -> none:
     print(isstr(None))
     print(isstr(None))
     print(isstr(None))
+    print(isfunc(internet_access))
+    curframe: Optional[FrameType] = inspect.currentframe()
+    caller_locals: obj = obj(curframe.f_locals | curframe.f_globals)
+    while hasattr(curframe, "f_back") and curframe.f_back != None:
+        caller_locals = caller_locals | curframe.f_locals | curframe.f_globals
+        curframe = curframe.f_back
+        # keep retrieving until you hit the oldest ancestor
+    print(caller_locals)
     
 if __name__ == "__main__":
     main()
