@@ -371,27 +371,21 @@ class kmath:
         @staticmethod
         def m(n: Number) -> Number:
             return round(n * 3.048e-1, 2)
-        
         @staticmethod
         def km(n: Number) -> Number:
             return round(n * 3.048e-4, 2)
-        
         @staticmethod
         def mi(n: Number) -> Number:
             return round(n * 1.89394e-4, 2)
-        
         @staticmethod
         def inch(n: Number) -> Number:
             return round(n * 1.2e1, 2)
-        
         @staticmethod
         def cm(n: Number) -> Number:
             return round(n * 3.48e+1, 2)
-        
         @staticmethod
         def mm(n: Number) -> Number:
             return round(n * 3.048e+2, 2)
-        
         @staticmethod
         def yd(n: Number) -> Number:
             return round(n * 3.33333e-1, 2)
@@ -399,27 +393,21 @@ class kmath:
         @staticmethod
         def m(n: Number) -> Number:
             return round(n * 2.54e-2, 2)
-        
         @staticmethod
         def km(n: Number) -> Number:
             return round(n * 2.54e-5, 2)
-        
         @staticmethod
         def mi(n: Number) -> Number:
             return round(n * 1.57828e-5, 2)
-        
         @staticmethod
         def ft(n: Number) -> Number:
             return round(n * 8.333e-2, 2)
-        
         @staticmethod
         def cm(n: Number) -> Number:
             return round(n * 2.54, 2)
-        
         @staticmethod
         def mm(n: Number) -> Number:
             return round(n * 2.54e+1, 2)
-        
         @staticmethod
         def yd(n: Number) -> Number:
             return round(n * 2.77778e-2, 2)
@@ -427,27 +415,21 @@ class kmath:
         @staticmethod
         def m(n: Number) -> Number:
             return round(n * 1e-2, 2)
-        
         @staticmethod
         def km(n: Number) -> Number:
             return round(n * 1e-5, 2)
-        
         @staticmethod
         def mi(n: Number) -> Number:
             return round(n * 621371e-6, 2)
-        
         @staticmethod
         def ft(n: Number) -> Number:
             return round(n * 3.28084e-2, 2)
-        
         @staticmethod
         def inch(n: Number) -> Number:
             return round(n * 3.93701e-1, 2)
-        
         @staticmethod
         def mm(n: Number) -> Number:
             return round(n * 1e1, 2)
-        
         @staticmethod
         def yd(n: Number) -> Number:
             return round(n * 1.09361e-2, 2)
@@ -455,27 +437,21 @@ class kmath:
         @staticmethod
         def m(n: Number) -> Number:
             return round(n * 1e-3, 2)
-        
         @staticmethod
         def km(n: Number) -> Number:
             return round(n * 1e-6, 2)
-        
         @staticmethod
         def mi(n: Number) -> Number:
             return round(n * 6.21371e-7, 2)
-        
         @staticmethod
         def ft(n: Number) -> Number:
             return round(n * 3.28084e-3, 2)
-        
         @staticmethod
         def inch(n: Number) -> Number:
             return round(n * 3.93701e-2, 2)
-        
         @staticmethod
         def cm(n: Number) -> Number:
             return round(n * 1e-1, 2)
-        
         @staticmethod
         def yd(n: Number) -> Number:
             return round(n * 1.09361e-3, 2)
@@ -483,27 +459,21 @@ class kmath:
         @staticmethod
         def m(n: Number) -> Number:
             return round(n * 9.144e-1, 2)
-        
         @staticmethod
         def km(n: Number) -> Number:
             return round(n * 9.144e-4, 2)
-        
         @staticmethod
         def mi(n: Number) -> Number:
             return round(n * 5.68182e-4, 2)
-        
         @staticmethod
         def ft(n: Number) -> Number:
             return round(n * 3, 2)
-        
         @staticmethod
         def inch(n: Number) -> Number:
             return round(n * 3.6e1, 2)
-        
         @staticmethod
         def cm(n: Number) -> Number:
             return round(n * 9.144e+1, 2)
-        
         @staticmethod
         def mm(n: Number) -> Number:
             return round(n * 9.144e+2, 2)
@@ -511,27 +481,21 @@ class kmath:
         @staticmethod
         def mg(n: Number) -> Number:
             return round(n * 1e-3, 2)
-        
         @staticmethod
         def g(n: Number) -> Number:
             return round(n * 1e-6, 2)
-        
         @staticmethod
         def kg(n: Number) -> Number:
             return round(n * 1e-9, 2)
-        
         @staticmethod
         def ton(n: Number) -> Number:
             return round(n * 1e-12, 2)
-        
         @staticmethod
         def kiloton(n: Number) -> Number:
             return round(n * 1e-15, 2)
-        
         @staticmethod
         def oz(n: Number) -> Number:
             return round(n * 3.527e-8, 2)
-        
         @staticmethod
         def p(n: Number) -> Number:
             return round(n * 2.205e-9, 2)
@@ -539,27 +503,21 @@ class kmath:
         @staticmethod
         def mcg(n: Number) -> Number:
             return round(n * 1e3, 2)
-        
         @staticmethod
         def g(n: Number) -> Number:
             return round(n * 1e-3, 2)
-        
         @staticmethod
         def kg(n: Number) -> Number:
             return round(n * 1e-6, 2)
-        
         @staticmethod
         def ton(n: Number) -> Number:
             return round(n * 1e-9, 2)
-        
         @staticmethod
         def kiloton(n: Number) -> Number:
             return round(n * 1e-12, 2)
-        
         @staticmethod
         def oz(n: Number) -> Number:
             return round(n * 3.527e-5, 2)
-        
         @staticmethod
         def p(n: Number) -> Number:
             return round(n * 2.205e-6, 2)
@@ -567,27 +525,21 @@ class kmath:
         @staticmethod
         def mcg(n: Number) -> Number:
             return round(n * 1e6, 2)
-        
         @staticmethod
         def mg(n: Number) -> Number:
             return round(n * 1e3, 2)
-        
         @staticmethod
         def kg(n: Number) -> Number:
             return round(n / 1e3, 2)
-        
         @staticmethod
         def ton(n: Number) -> Number:
             return round(n / 1e6, 2)
-        
         @staticmethod
         def kiloton(n: Number) -> Number:
             return round(n / 1e9, 2)
-        
         @staticmethod
         def oz(n: Number) -> Number:
             return round(n * 3.5e-2, 2)
-        
         @staticmethod
         def p(n: Number) -> Number:
             return round(n * 2e-3, 2)
@@ -595,27 +547,21 @@ class kmath:
         @staticmethod
         def mcg(n: Number) -> Number:
             return round(n * 1e9, 2)
-        
         @staticmethod
         def mg(n: Number) -> Number:
             return round(n * 1e6, 2)
-        
         @staticmethod
         def g(n: Number) -> Number:
             return round(n * 1e3, 2)
-        
         @staticmethod
         def ton(n: Number) -> Number:
             return round(n / 1e3, 2)
-        
         @staticmethod
         def kiloton(n: Number) -> Number:
             return round(n / 1e6, 2)
-        
         @staticmethod
         def oz(n: Number) -> Number:
             return round(n * 3.5274e1, 2)
-        
         @staticmethod
         def p(n: Number) -> Number:
             return round(n * 2.204, 2)
@@ -623,27 +569,21 @@ class kmath:
         @staticmethod
         def mcg(n: Number) -> Number:
             return round(n * 1e12, 2)
-        
         @staticmethod
         def mg(n: Number) -> Number:
             return round(n * 1e9, 2)
-        
         @staticmethod
         def g(n: Number) -> Number:
             return round(n * 1e6, 2)
-        
         @staticmethod
         def kg(n: Number) -> Number:
             return round(n * 1e3, 2)
-        
         @staticmethod
         def kiloton(n: Number) -> Number:
             return round(n * 1e-3, 2)
-        
         @staticmethod
         def oz(n: Number) -> Number:
             return round(n * 3.5274e4, 2)
-        
         @staticmethod
         def p(n: Number) -> Number:
             return round(n * 2.204e3, 2)
@@ -651,27 +591,21 @@ class kmath:
         @staticmethod
         def mcg(n: Number) -> Number:
             return round(n * 1e15, 2)
-        
         @staticmethod
         def mg(n: Number) -> Number:
             return round(n * 1e12, 2)
-        
         @staticmethod
         def g(n: Number) -> Number:
             return round(n * 1e9, 2)
-        
         @staticmethod
         def kg(n: Number) -> Number:
             return round(n * 1e6, 2)
-        
         @staticmethod
         def ton(n: Number) -> Number:
             return round(n * 1e3, 2)
-        
         @staticmethod
         def oz(n: Number) -> Number:
             return round(n * 3.5274e7, 2)
-        
         @staticmethod
         def p(n: Number) -> Number:
             return round(n * 2.204e6, 2)
@@ -679,101 +613,77 @@ class kmath:
         @staticmethod
         def mcg(n: Number) -> Number:
             return round(n * 2.835e7, 2)
-        
         @staticmethod
         def mg(n: Number) -> Number:
             return round(n * 2.835e4, 2)
-        
         @staticmethod
         def g(n: Number) -> Number:
             return round(n * 2.835e1, 2)
-        
         @staticmethod
         def kg(n: Number) -> Number:
             return round(n * 2.8e-2, 2)
-        
         @staticmethod
         def ton(n: Number) -> Number:
             return round(n * 2.8e-5, 2)
-        
         @staticmethod
         def kiloton(n: Number) -> Number:
             return round(n * 2.8e-8, 2)
-        
         @staticmethod
         def p(n: Number) -> Number:
             return round(n * 6.3e-2, 2)
-
     class p:
         @staticmethod
         def mcg(n: Number) -> Number:
             return round(n * 4.536e8, 2)
-
         @staticmethod
         def mg(n: Number) -> Number:
             return round(n * 4.536e5, 2)
-
         @staticmethod
         def g(n: Number) -> Number:
             return round(n * 4.536e2, 2)
-
         @staticmethod
         def kg(n: Number) -> Number:
             return round(n * 4.53e-1, 2)
-
         @staticmethod
         def ton(n: Number) -> Number:
             return round(n * 4.53e-4, 2)
-
         @staticmethod
         def kiloton(n: Number) -> Number:
             return round(n * 4.53e-7, 2)
-
         @staticmethod
         def oz(n: Number) -> Number:
             return round(n * 1.6e1, 2)
-
     class ns:
         @staticmethod
         def mcs(n: Number) -> Number:
             return round(n * 1e-3, 2)
-
         @staticmethod
         def ms(n: Number) -> Number:
             return round(n * 1e-6, 2)
-
         @staticmethod
         def s(n: Number) -> Number:
             return round(n * 1e-9, 2)
-
         @staticmethod
         def m(n: Number) -> Number:
             return round(n * 1.6665e-11, 2)
-
         @staticmethod
         def h(n: Number) -> Number:
             return round(n * 2.7775e-13, 2)
-
         @staticmethod
         def d(n: Number) -> Number:
             return round(n * 1.157e-14, 2)
-
         @staticmethod
         def wk(n: Number) -> Number:
             return round(n * 1.653e-15, 2)
-
         @staticmethod
         def mn(n: Number) -> Number:
             return round(n * 3.805e-16, 2)
-
         @staticmethod
         def yr(n: Number) -> Number:
             return round(n * 3.17e-17, 2)
-
         @staticmethod
         def dc(n: Number) -> Number:
             return round(n * 3.17e-18, 2)
-
         @staticmethod
         def c(n: Number) -> Number:
             return round(n * 3.17e-19, 2)
