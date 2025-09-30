@@ -26,11 +26,16 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 @SuppressWarnings("all")
 public class KL {
-	// to shorten new KL() instance calls into just kl()
-	public static KL kl() {
+	public static class hint {
+		//@class.why: this class is supposed to help make functions more understandable
+	}
+	// to shorten new KL() constructor calls into just kl()
+	public static KL kl(hint... this_method_will_help_make_the_instantiation_quicker) {
+		// @hint: new KL().x -> kl().x
 		return new KL();
 	}
 	public static class money {
+		//@class.why: this class is supposed to help deal with money-related everyday calculations easier (currency conversion will be added soon)
 		private double amnt;
 		private String curr;
 		money() {
@@ -183,8 +188,21 @@ public class KL {
 			super.curr = not(super.curr) || len(super.curr) < 1
 					|| len(super.curr) > 4 ? "Rs. " : titleCase(curr);
 		}
+		pesa dalo(double amnt) {
+			return add(amnt);
+		}
+		pesa nikalo(double amnt) {
+			return take(amnt);
+		}
+		String kul() {
+			return total();
+		}
+		String kul(boolean suffixMode) {
+			return total(suffixMode);
+		}
 	}
 	public static final class math {
+		//@class.why: this class is supposed to help give fellow developers an easier time dealing with units
 		public static double pi = 3.141592653589793, c = 2.99792e8,
 				earthsGravity = 9.80665, earthsMass = 5.9722e24,
 				earthsRadius = 6.378137e3;
@@ -29886,7 +29904,7 @@ public class KL {
 		return sw(src, cond1, sol1);
 	}
 	public static boolean Yes = true, No = !Yes, On = Yes, Off = No, Ok = Yes,
-			NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, Ha = Y, Na = N;
+			NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, ever = Y, Ha = Y, Na = N;
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static String Else = "else", Warna = Else;
@@ -30163,6 +30181,96 @@ public class KL {
 			return blank.Obj2D;
 		return kv(arg.array());
 	}
+	public static Object[][] enumerate(o arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(oI arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(oL arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(oF arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(oD arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(oB arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeI arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeL arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeF arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeD arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeB arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeDS arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeDI arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeDL arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeDF arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(treeDB arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(String[] args) {
+		return kv(args);
+	}
+	public static Object[][] enumerate(int[] args) {
+		return kv(args);
+	}
+	public static Object[][] enumerate(long[] args) {
+		return kv(args);
+	}
+	public static Object[][] enumerate(float[] args) {
+		return kv(args);
+	}
+	public static Object[][] enumerate(double[] args) {
+		return kv(args);
+	}
+	public static Object[][] enumerate(boolean[] args) {
+		return kv(args);
+	}
+	public static Object[][] enumerate(Object[] args) {
+		return kv(args);
+	}
+	public static Object[][] enumerate(arr arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(strArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(intArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(longArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(fltArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(dblArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] enumerate(boolArr arg) {
+		return kv(arg);
+	}
 	public static final class DoFail {
 		public static interface CustomRunnable {
 			void run() throws Throwable;
@@ -30255,8 +30363,20 @@ public class KL {
 	public static DoFail Do(DoFail.CustomRunnable fn) {
 		return new DoFail().Do(fn);
 	}
+	public static DoFail Do(DoFail.CustomRunnable fn, Consumer<Throwable> fallback) {
+		return new DoFail().Do(fn).Fail(fallback);
+	}
+	public static DoFail Do(DoFail.CustomRunnable fn, Runnable fallback) {
+		return new DoFail().Do(fn).Fail(fallback);
+	}
 	public static DoFail Try(DoFail.CustomRunnable fn) {
 		return new DoFail().Do(fn);
+	}
+	public static DoFail Try(DoFail.CustomRunnable fn, Consumer<Throwable> fallback) {
+		return new DoFail().Do(fn).Fail(fallback);
+	}
+	public static DoFail Try(DoFail.CustomRunnable fn, Runnable fallback) {
+		return new DoFail().Do(fn).Fail(fallback);
 	}
 	public static final class karoFail {
 		public static interface CustomRunnable {
@@ -30337,6 +30457,12 @@ public class KL {
 	}
 	public static karoFail karo(karoFail.CustomRunnable fn) {
 		return new karoFail().karo(fn);
+	}
+	public static DoFail karo(DoFail.CustomRunnable fn, Consumer<Throwable> fallback) {
+		return new karoFail().karo(fn).nakam(fallback);
+	}
+	public static DoFail karo(DoFail.CustomRunnable fn, Runnable fallback) {
+		return new karoFail().karo(fn).nakam(fallback);
 	}
 	public static int[] range(int n) {
 		intArr arr = intArr();
@@ -35295,7 +35421,7 @@ public class KL {
 		}
 		return acc;
 	}
-	//matrices
+	//matric-inal
     public static int sum(int[][]... matrices) {
         if (matrices == null || matrices.length == 0) return 0;
         int sum = 0;
@@ -35369,6 +35495,7 @@ public class KL {
             for (float[] eachColumn : eachMatrix) {
             	for (float num : eachColumn) {
             		if (num == matrices[0][0][0]) continue;
+                    //obvious: ignore the first
             		diff -= num;
             	}
             }
@@ -35488,6 +35615,29 @@ public class KL {
         }
         return quotient;
     }
+    public static void guess(int n) {
+        SecureRandom sr = new SecureRandom();
+        int min = 0,
+          max = n,
+          currentAttempt = 1;
+        out.println("--- Looking for " + n + " ---");
+        while (true) {
+            int currentGuess = sr.nextInt(max - min + 1) + min;
+            out.println("Trying " + currentGuess + " (attempt " + currentAttempt + "):");
+            if (currentGuess < n) {
+                out.println("too low");
+                min = currentGuess + 1;
+            } else if (currentGuess > n) {
+                out.println("too high");
+                max = currentGuess - 1;
+            } else {
+                out.println("currentGuess = n = " + n + ", found the number!");
+                out.println("Total attempts made: " + currentAttempt);
+                break;
+            }
+            currentAttempt++;
+        }
+    }
 	public static int pow(int n, int power) {
 		if (isNull(n, power)) {
 			return 0;
@@ -35541,125 +35691,177 @@ public class KL {
 		return .5 * area(w, h);
 	}
 	public static int min(int... nums) {
+		if (nums == null)
+		    return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(long... nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(double... nums) {
+		if (nums == null)
+		    return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMin();
 	}
 	public static int min(intArr nums) {
+		if (nums == null)
+		    return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(longArr nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(dblArr nums) {
+		if (nums == null)
+		    return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static int min(oI nums) {
+		if (nums == null)
+		    return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(oL nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(oD nums) {
+		if (nums == null)
+		    return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static int min(treeDI nums) {
+		if (nums == null)
+		    return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(treeDL nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(treeL nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(treeD nums) {
+		if (nums == null)
+		    return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static int max(int... nums) {
+		if (nums == null)
+		    return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(long... nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(double... nums) {
+		if (nums == null)
+		    return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMax();
 	}
 	public static int max(intArr nums) {
+		if (nums == null)
+		    return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(longArr nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(dblArr nums) {
+		if (nums == null)
+		    return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static int max(oI nums) {
+		if (nums == null)
+		    return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(oL nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(oD nums) {
+		if (nums == null)
+		    return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static int max(treeDI nums) {
+		if (nums == null)
+		    return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(treeDL nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(treeL nums) {
+		if (nums == null)
+		    return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(treeD nums) {
+		if (nums == null)
+		    return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
