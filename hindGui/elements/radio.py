@@ -23,7 +23,7 @@ class Radio(Element):
         self,
         text,
         group_id,
-        default=False,
+        selected=False,
         disabled=False,
         size=(None, None),
         s=(None, None),
@@ -50,8 +50,8 @@ class Radio(Element):
         :type text:              (str)
         :param group_id:         Groups together multiple Radio Buttons. Any type works
         :type group_id:          (Any)
-        :param default:          Set to True for the one element of the group you want initially selected
-        :type default:           (bool)
+        :param selected:          Set to True for the one element of the group you want initially selected
+        :type selected:           (bool)
         :param disabled:         set disable state
         :type disabled:          (bool)
         :param size:             (w, h) w=characters-wide, h=rows-high. If an int instead of a tuple is supplied, then height is auto-set to 1
@@ -94,7 +94,7 @@ class Radio(Element):
         :type metadata:          (Any)
         """
 
-        self.InitialState = default
+        self.InitialState = selected
         self.Text = text
         self.Widget = self.TKRadio = None  # type: tk.Radiobutton
         self.GroupID = group_id

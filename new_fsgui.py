@@ -9,8 +9,8 @@ lay1 = [
 
 lay2 = [
     [Text("Thank you for registering!")],
-    [Radio("Trump", "vote")],
-    [Radio("Biden", "vote")]
+    [Radio("Trump", "vote", selected=No)],
+    [Radio("Biden", "vote", selected=No)]
 ]
 
 lay3 = [

@@ -31755,7 +31755,6 @@ public class KL {
 		}
 		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
 				"[\\$\\%\\&\\{\\}]|\\d(?=[Ee][\\+\\-]?\\d)")) {
-			// regex accuracy: 90%
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
 				return;
@@ -36589,21 +36588,21 @@ public class KL {
 			}
 			// post processing...
 			// FOR FIELDS
+			while (in(s,
+					"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
+				s = s.replaceAll(
+						"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
+						"\\$$1$2$4\\$$1$5");
+			}
+			//this while loop works as a start-up, and needs to happen before the field matches are looked up. It's helpful in the sense that it allows the following syntax: $name.first+ +last [resulting in $name.first $name.last, hence ending up with {:~missing_context~:{name.first,e.g.Mike} {name.last,e.g.Turner}}]
 			String[] fieldMatches = findMatches(s,
-					"(\\$+\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(\\sif)?");
+					"(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(\\sif)?");
 			if (!isEmpty(fieldMatches)) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
-					while (in(s,
-							"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
-						s = s.replaceAll(
-								"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
-								"\\$$1$2$4\\$$1$5");
-					}
 					// ^regex accuracy: ~91%
 					for (String m : fieldMatches) {
-						//out.println("Here: " + m);
 						if (in(m, "(?<!\\$)\\$\\w+\\sif"))
 							continue;
 						String toGet = m.replaceAll(
@@ -37734,18 +37733,19 @@ public class KL {
 			}
 			// post processing...
 			// FOR FIELDS
+			while (in(s,
+					"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
+				s = s.replaceAll(
+						"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
+						"\\$$1$2$4\\$$1$5");
+			}
+			//this while loop works as a start-up, and needs to happen before the field matches are looked up. It's helpful in the sense that it allows the following syntax: $name.first+ +last [resulting in $name.first $name.last, hence ending up with {:~missing_context~:{name.first,e.g.Mike} {name.last,e.g.Turner}}]
 			String[] fieldMatches = findMatches(s,
-					"(\\$+\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(\\sif)?");
+					"(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(\\sif)?");
 			if (!isEmpty(fieldMatches)) {
 				try {
 					Class<?> cls = this.getClass();
 					Object field;
-					while (in(s,
-							"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
-						s = s.replaceAll(
-								"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
-								"\\$$1$2$4\\$$1$5");
-					}
 					// ^regex accuracy: ~91%
 					for (String m : fieldMatches) {
 						if (in(m, "(?<!\\$)\\$\\w+\\sif"))
@@ -47801,6 +47801,14 @@ public class KL {
 		print(summary.of(3));
 		print(as("newObj",
 				"Name: $name\nAge: $age\nCountry: $country\nRace: $race"));
+		print("$name2");
+		print("$name2.first+last");
+		print("$name2.first+ +last");
+		print("$name2.last, +first");
+		print("Full name: $name2.first +last\nPronunciation: $name2.pronunciation");
+		print(with("name2",
+				"Full name: $first +last\nPronunciation: $pronunciation"));
+		print("$name2.first +last");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
