@@ -30,7 +30,8 @@ public class KL {
 		//@class.why: this class is supposed to help make functions more understandable
 	}
 	// to shorten new KL() constructor calls into just kl()
-	public static KL kl(hint... this_method_will_help_make_the_instantiation_quicker) {
+	public static KL kl(
+			hint... this_method_will_help_make_the_instantiation_quicker) {
 		// @hint: new KL().x -> kl().x
 		return new KL();
 	}
@@ -189,10 +190,12 @@ public class KL {
 					|| len(super.curr) > 4 ? "Rs. " : titleCase(curr);
 		}
 		pesa dalo(double amnt) {
-			return add(amnt);
+			add(amnt);
+			return this;
 		}
 		pesa nikalo(double amnt) {
-			return take(amnt);
+			take(amnt);
+			return this;
 		}
 		String kul() {
 			return total();
@@ -201,7 +204,7 @@ public class KL {
 			return total(suffixMode);
 		}
 	}
-	public static final class math {
+	public static final class kmath {
 		//@class.why: this class is supposed to help give fellow developers an easier time dealing with units
 		public static double pi = 3.141592653589793, c = 2.99792e8,
 				earthsGravity = 9.80665, earthsMass = 5.9722e24,
@@ -15967,7 +15970,7 @@ public class KL {
 		}
 		strArr popIf(Predicate<? super String> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn);
 			return this;
 		}
@@ -15979,7 +15982,7 @@ public class KL {
 		}
 		strArr keepIf(Predicate<? super String> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn.negate());
 			return this;
 		}
@@ -15990,7 +15993,8 @@ public class KL {
 			return this.onlyKeep(fn);
 		}
 		strArr map(UnaryOperator<String> fn) {
-			if (not(fn)) return this;
+			if (not(fn))
+				return this;
 			super.replaceAll(fn);
 			return this;
 		}
@@ -16470,7 +16474,7 @@ public class KL {
 		}
 		intArr popIf(Predicate<? super Integer> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn);
 			return this;
 		}
@@ -16482,7 +16486,7 @@ public class KL {
 		}
 		intArr keepIf(Predicate<? super Integer> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn.negate());
 			return this;
 		}
@@ -16493,7 +16497,8 @@ public class KL {
 			return this.onlyKeep(fn);
 		}
 		intArr map(UnaryOperator<Integer> fn) {
-			if (not(fn)) return this;
+			if (not(fn))
+				return this;
 			super.replaceAll(fn);
 			return this;
 		}
@@ -16992,7 +16997,7 @@ public class KL {
 		}
 		longArr popIf(Predicate<? super Long> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn);
 			return this;
 		}
@@ -17004,7 +17009,7 @@ public class KL {
 		}
 		longArr keepIf(Predicate<? super Long> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn.negate());
 			return this;
 		}
@@ -17015,7 +17020,8 @@ public class KL {
 			return this.onlyKeep(fn);
 		}
 		longArr map(UnaryOperator<Long> fn) {
-			if (not(fn)) return this;
+			if (not(fn))
+				return this;
 			super.replaceAll(fn);
 			return this;
 		}
@@ -17520,7 +17526,7 @@ public class KL {
 		}
 		fltArr popIf(Predicate<? super Float> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn);
 			return this;
 		}
@@ -17532,7 +17538,7 @@ public class KL {
 		}
 		fltArr keepIf(Predicate<? super Float> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn.negate());
 			return this;
 		}
@@ -17543,7 +17549,8 @@ public class KL {
 			return this.onlyKeep(fn);
 		}
 		fltArr map(UnaryOperator<Float> fn) {
-			if (not(fn)) return this;
+			if (not(fn))
+				return this;
 			super.replaceAll(fn);
 			return this;
 		}
@@ -18043,7 +18050,7 @@ public class KL {
 		}
 		dblArr popIf(Predicate<? super Double> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn);
 			return this;
 		}
@@ -18055,7 +18062,7 @@ public class KL {
 		}
 		dblArr keepIf(Predicate<? super Double> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn.negate());
 			return this;
 		}
@@ -18066,7 +18073,8 @@ public class KL {
 			return this.onlyKeep(fn);
 		}
 		dblArr map(UnaryOperator<Double> fn) {
-			if (not(fn)) return this;
+			if (not(fn))
+				return this;
 			super.replaceAll(fn);
 			return this;
 		}
@@ -18566,7 +18574,7 @@ public class KL {
 		}
 		boolArr popIf(Predicate<? super Boolean> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn);
 			return this;
 		}
@@ -18578,7 +18586,7 @@ public class KL {
 		}
 		boolArr keepIf(Predicate<? super Boolean> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn.negate());
 			return this;
 		}
@@ -18589,7 +18597,8 @@ public class KL {
 			return this.onlyKeep(fn);
 		}
 		boolArr map(UnaryOperator<Boolean> fn) {
-			if (not(fn)) return this;
+			if (not(fn))
+				return this;
 			super.replaceAll(fn);
 			return this;
 		}
@@ -19065,7 +19074,7 @@ public class KL {
 		}
 		arr popIf(Predicate<? super Object> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn);
 			return this;
 		}
@@ -19077,7 +19086,7 @@ public class KL {
 		}
 		arr keepIf(Predicate<? super Object> fn) {
 			if (not(fn))
-			    return this;
+				return this;
 			super.removeIf(fn.negate());
 			return this;
 		}
@@ -19088,7 +19097,8 @@ public class KL {
 			return this.onlyKeep(fn);
 		}
 		arr map(UnaryOperator<Object> fn) {
-			if (not(fn)) return this;
+			if (not(fn))
+				return this;
 			super.replaceAll(fn);
 			return this;
 		}
@@ -19894,8 +19904,8 @@ public class KL {
 	}
 	public static int setInterval(Runnable fn, int interval,
 			int maxIterations) {
-		if (not(fn) || not(interval) || isNeg(interval)
-				|| not(maxIterations) || isNeg(maxIterations)) {
+		if (not(fn) || not(interval) || isNeg(interval) || not(maxIterations)
+				|| isNeg(maxIterations)) {
 			return -1;
 		}
 		intervalId++;
@@ -29904,7 +29914,8 @@ public class KL {
 		return sw(src, cond1, sol1);
 	}
 	public static boolean Yes = true, No = !Yes, On = Yes, Off = No, Ok = Yes,
-			NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, ever = Y, Ha = Y, Na = N;
+			NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, ever = Y, Ha = Y,
+			Na = N;
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static String Else = "else", Warna = Else;
@@ -30363,7 +30374,8 @@ public class KL {
 	public static DoFail Do(DoFail.CustomRunnable fn) {
 		return new DoFail().Do(fn);
 	}
-	public static DoFail Do(DoFail.CustomRunnable fn, Consumer<Throwable> fallback) {
+	public static DoFail Do(DoFail.CustomRunnable fn,
+			Consumer<Throwable> fallback) {
 		return new DoFail().Do(fn).Fail(fallback);
 	}
 	public static DoFail Do(DoFail.CustomRunnable fn, Runnable fallback) {
@@ -30372,7 +30384,8 @@ public class KL {
 	public static DoFail Try(DoFail.CustomRunnable fn) {
 		return new DoFail().Do(fn);
 	}
-	public static DoFail Try(DoFail.CustomRunnable fn, Consumer<Throwable> fallback) {
+	public static DoFail Try(DoFail.CustomRunnable fn,
+			Consumer<Throwable> fallback) {
 		return new DoFail().Do(fn).Fail(fallback);
 	}
 	public static DoFail Try(DoFail.CustomRunnable fn, Runnable fallback) {
@@ -30458,10 +30471,11 @@ public class KL {
 	public static karoFail karo(karoFail.CustomRunnable fn) {
 		return new karoFail().karo(fn);
 	}
-	public static DoFail karo(DoFail.CustomRunnable fn, Consumer<Throwable> fallback) {
+	public static karoFail karo(karoFail.CustomRunnable fn,
+			Consumer<Throwable> fallback) {
 		return new karoFail().karo(fn).nakam(fallback);
 	}
-	public static DoFail karo(DoFail.CustomRunnable fn, Runnable fallback) {
+	public static karoFail karo(karoFail.CustomRunnable fn, Runnable fallback) {
 		return new karoFail().karo(fn).nakam(fallback);
 	}
 	public static int[] range(int n) {
@@ -30518,8 +30532,7 @@ public class KL {
 					? optional[0]
 					: 1;
 		}
-		int charCodeOfM = m.charAt(0),
-          charCodeOfN = n.charAt(0);
+		int charCodeOfM = m.charAt(0), charCodeOfN = n.charAt(0);
 		if (charCodeOfM > charCodeOfN) {
 			for (int i = charCodeOfM; i >= charCodeOfN; i -= step) {
 				arr.add(Str((char) i));
@@ -31741,7 +31754,7 @@ public class KL {
 			return;
 		}
 		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
-				"[\\$\\%\\&\\{]+\\.?\\w+\\}?|\\d(?=[Ee][\\+\\-]?\\d)")) {
+				"[\\$\\%\\&\\{\\}]|\\d(?=[Ee][\\+\\-]?\\d)")) {
 			// regex accuracy: 90%
 			if (len(args) >= 2) {
 				new KL().printf((String) args[0], slice(args, 1));
@@ -34581,7 +34594,8 @@ public class KL {
 		return type(o, Dbl);
 	}
 	public static boolean isNum(Object o) {
-		if (not(o)) return false;
+		if (not(o))
+			return false;
 		return o instanceof Number;
 	}
 	public static boolean isBool(Object o) {
@@ -35422,222 +35436,261 @@ public class KL {
 		return acc;
 	}
 	//matric-inal
-    public static int sum(int[][]... matrices) {
-        if (matrices == null || matrices.length == 0) return 0;
-        int sum = 0;
-        for (int[][] eachMatrix : matrices) {
-            for (int[] eachColumn : eachMatrix) {
-            	for (int num : eachColumn) sum += num;
-            }
-        }
-        return sum;
-    }
-    public static long sum(long[][]... matrices) {
-        if (matrices == null || matrices.length == 0) return 0;
-        long sum = 0;
-        for (long[][] eachMatrix : matrices) {
-            for (long[] eachColumn : eachMatrix) {
-            	for (long num : eachColumn) sum += num;
-            }
-        }
-        return sum;
-    }
-    public static float sum(float[][]... matrices) {
-       if (matrices == null || matrices.length == 0) return 0;
-        float sum = 0;
-        for (float[][] eachMatrix : matrices) {
-            for (float[] eachColumn : eachMatrix) {
-            	for (float num : eachColumn) sum += num;
-            }
-        }
-        return sum;
-    }
-    public static double sum(double[][]... matrices) {
-        if (matrices == null || matrices.length == 0) return 0;
-        double sum = 0;
-        for (double[][] eachMatrix : matrices) {
-            for (double[] eachColumn : eachMatrix) {
-            	for (double num : eachColumn) sum += num;
-            }
-        }
-        return sum;
-    }
-    public static int difference(int[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        int diff = matrices[0][0][0];
-        for (int[][] eachMatrix : matrices) {
-            for (int[] eachColumn : eachMatrix) {
-            	for (int num : eachColumn) {
-            		if (num == matrices[0][0][0]) continue;
-            		diff -= num;
-            	}
-            }
-        }
-        return diff;
-    }
-    public static long difference(long[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        long diff = matrices[0][0][0];
-        for (long[][] eachMatrix : matrices) {
-            for (long[] eachColumn : eachMatrix) {
-            	for (long num : eachColumn) {
-            		if (num == matrices[0][0][0]) continue;
-            		diff -= num;
-            	}
-            }
-        }
-        return diff;
-    }
-    public static float difference(float[][]... matrices) {
-       if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        float diff = matrices[0][0][0];
-        for (float[][] eachMatrix : matrices) {
-            for (float[] eachColumn : eachMatrix) {
-            	for (float num : eachColumn) {
-            		if (num == matrices[0][0][0]) continue;
-                    //obvious: ignore the first
-            		diff -= num;
-            	}
-            }
-        }
-        return diff;
-    }
-    public static double difference(double[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        double diff = matrices[0][0][0];
-        for (double[][] eachMatrix : matrices) {
-            for (double[] eachColumn : eachMatrix) {
-            	for (double num : eachColumn) {
-            		if (num == matrices[0][0][0]) continue;
-            		diff -= num;
-            	}
-            }
-        }
-        return diff;
-    }
-    public static int product(int[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        int product = 1;
-        for (int[][] eachMatrix : matrices) {
-            for (int[] eachColumn : eachMatrix) {
-            	for (int num : eachColumn) {
-            		product *= num;
-            	}
-            }
-        }
-        return product;
-    }
-    public static long product(long[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        long product = 1;
-        for (long[][] eachMatrix : matrices) {
-            for (long[] eachColumn : eachMatrix) {
-            	for (long num : eachColumn) {
-            		product *= num;
-            	}
-            }
-        }
-        return product;
-    }
-    public static float product(float[][]... matrices) {
-       if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        float product = 1;
-        for (float[][] eachMatrix : matrices) {
-            for (float[] eachColumn : eachMatrix) {
-            	for (float num : eachColumn) {
-            		product *= num;
-            	}
-            }
-        }
-        return product;
-    }
-    public static double product(double[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        double product = 1;
-        for (double[][] eachMatrix : matrices) {
-            for (double[] eachColumn : eachMatrix) {
-            	for (double num : eachColumn) {
-            		product *= num;
-            	}
-            }
-        }
-        return product;
-    }
-    public static int quotient(int[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        int quotient = matrices[0][0][0] == 0 ? 1 : matrices[0][0][0];
-        for (int[][] eachMatrix : matrices) {
-            for (int[] eachColumn : eachMatrix) {
-            	for (int num : eachColumn) {
-            		if (num == matrices[0][0][0]) continue;
-            		quotient /= num;
-            	}
-            }
-        }
-        return quotient;
-    }
-    public static long quotient(long[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        long quotient = matrices[0][0][0] == 0 ? 1 : matrices[0][0][0];
-        for (long[][] eachMatrix : matrices) {
-            for (long[] eachColumn : eachMatrix) {
-            	for (long num : eachColumn) {
-            		if (num == matrices[0][0][0]) continue;
-            		quotient /= num;
-            	}
-            }
-        }
-        return quotient;
-    }
-    public static float quotient(float[][]... matrices) {
-       if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        float quotient = matrices[0][0][0] == 0 ? 1 : matrices[0][0][0];
-        for (float[][] eachMatrix : matrices) {
-            for (float[] eachColumn : eachMatrix) {
-            	for (float num : eachColumn) {
-            		if (num == matrices[0][0][0]) continue;
-            		quotient /= num;
-            	}
-            }
-        }
-        return quotient;
-    }
-    public static double quotient(double[][]... matrices) {
-        if (matrices == null || matrices.length == 0 || matrices[0].length == 0 || matrices[0][0].length == 0) return 0;
-        double quotient = matrices[0][0][0] == 0 ? 1 : matrices[0][0][0];
-        for (double[][] eachMatrix : matrices) {
-            for (double[] eachColumn : eachMatrix) {
-            	for (double num : eachColumn) {
-            		if (num == matrices[0][0][0]) continue;
-            		quotient /= num;
-            	}
-            }
-        }
-        return quotient;
-    }
-    public static void guess(int n) {
-        SecureRandom sr = new SecureRandom();
-        int min = 0,
-          max = n,
-          currentAttempt = 1;
-        out.println("--- Looking for " + n + " ---");
-        while (true) {
-            int currentGuess = sr.nextInt(max - min + 1) + min;
-            out.println("Trying " + currentGuess + " (attempt " + currentAttempt + "):");
-            if (currentGuess < n) {
-                out.println("too low");
-                min = currentGuess + 1;
-            } else if (currentGuess > n) {
-                out.println("too high");
-                max = currentGuess - 1;
-            } else {
-                out.println("currentGuess = n = " + n + ", found the number!");
-                out.println("Total attempts made: " + currentAttempt);
-                break;
-            }
-            currentAttempt++;
-        }
-    }
+	public static int sum(int[][]... matrices) {
+		if (matrices == null || matrices.length == 0)
+			return 0;
+		int sum = 0;
+		for (int[][] eachMatrix : matrices) {
+			for (int[] eachColumn : eachMatrix) {
+				for (int num : eachColumn)
+					sum += num;
+			}
+		}
+		return sum;
+	}
+	public static long sum(long[][]... matrices) {
+		if (matrices == null || matrices.length == 0)
+			return 0;
+		long sum = 0;
+		for (long[][] eachMatrix : matrices) {
+			for (long[] eachColumn : eachMatrix) {
+				for (long num : eachColumn)
+					sum += num;
+			}
+		}
+		return sum;
+	}
+	public static float sum(float[][]... matrices) {
+		if (matrices == null || matrices.length == 0)
+			return 0;
+		float sum = 0;
+		for (float[][] eachMatrix : matrices) {
+			for (float[] eachColumn : eachMatrix) {
+				for (float num : eachColumn)
+					sum += num;
+			}
+		}
+		return sum;
+	}
+	public static double sum(double[][]... matrices) {
+		if (matrices == null || matrices.length == 0)
+			return 0;
+		double sum = 0;
+		for (double[][] eachMatrix : matrices) {
+			for (double[] eachColumn : eachMatrix) {
+				for (double num : eachColumn)
+					sum += num;
+			}
+		}
+		return sum;
+	}
+	public static int difference(int[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		int diff = matrices[0][0][0];
+		for (int[][] eachMatrix : matrices) {
+			for (int[] eachColumn : eachMatrix) {
+				for (int num : eachColumn) {
+					if (num == matrices[0][0][0])
+						continue;
+					diff -= num;
+				}
+			}
+		}
+		return diff;
+	}
+	public static long difference(long[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		long diff = matrices[0][0][0];
+		for (long[][] eachMatrix : matrices) {
+			for (long[] eachColumn : eachMatrix) {
+				for (long num : eachColumn) {
+					if (num == matrices[0][0][0])
+						continue;
+					diff -= num;
+				}
+			}
+		}
+		return diff;
+	}
+	public static float difference(float[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		float diff = matrices[0][0][0];
+		for (float[][] eachMatrix : matrices) {
+			for (float[] eachColumn : eachMatrix) {
+				for (float num : eachColumn) {
+					if (num == matrices[0][0][0])
+						continue;
+					//obvious: ignore the first
+					diff -= num;
+				}
+			}
+		}
+		return diff;
+	}
+	public static double difference(double[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		double diff = matrices[0][0][0];
+		for (double[][] eachMatrix : matrices) {
+			for (double[] eachColumn : eachMatrix) {
+				for (double num : eachColumn) {
+					if (num == matrices[0][0][0])
+						continue;
+					diff -= num;
+				}
+			}
+		}
+		return diff;
+	}
+	public static int product(int[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		int product = 1;
+		for (int[][] eachMatrix : matrices) {
+			for (int[] eachColumn : eachMatrix) {
+				for (int num : eachColumn) {
+					product *= num;
+				}
+			}
+		}
+		return product;
+	}
+	public static long product(long[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		long product = 1;
+		for (long[][] eachMatrix : matrices) {
+			for (long[] eachColumn : eachMatrix) {
+				for (long num : eachColumn) {
+					product *= num;
+				}
+			}
+		}
+		return product;
+	}
+	public static float product(float[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		float product = 1;
+		for (float[][] eachMatrix : matrices) {
+			for (float[] eachColumn : eachMatrix) {
+				for (float num : eachColumn) {
+					product *= num;
+				}
+			}
+		}
+		return product;
+	}
+	public static double product(double[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		double product = 1;
+		for (double[][] eachMatrix : matrices) {
+			for (double[] eachColumn : eachMatrix) {
+				for (double num : eachColumn) {
+					product *= num;
+				}
+			}
+		}
+		return product;
+	}
+	public static int quotient(int[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		int quotient = matrices[0][0][0] == 0 ? 1 : matrices[0][0][0];
+		for (int[][] eachMatrix : matrices) {
+			for (int[] eachColumn : eachMatrix) {
+				for (int num : eachColumn) {
+					if (num == matrices[0][0][0])
+						continue;
+					quotient /= num;
+				}
+			}
+		}
+		return quotient;
+	}
+	public static long quotient(long[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		long quotient = matrices[0][0][0] == 0 ? 1 : matrices[0][0][0];
+		for (long[][] eachMatrix : matrices) {
+			for (long[] eachColumn : eachMatrix) {
+				for (long num : eachColumn) {
+					if (num == matrices[0][0][0])
+						continue;
+					quotient /= num;
+				}
+			}
+		}
+		return quotient;
+	}
+	public static float quotient(float[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		float quotient = matrices[0][0][0] == 0 ? 1 : matrices[0][0][0];
+		for (float[][] eachMatrix : matrices) {
+			for (float[] eachColumn : eachMatrix) {
+				for (float num : eachColumn) {
+					if (num == matrices[0][0][0])
+						continue;
+					quotient /= num;
+				}
+			}
+		}
+		return quotient;
+	}
+	public static double quotient(double[][]... matrices) {
+		if (matrices == null || matrices.length == 0 || matrices[0].length == 0
+				|| matrices[0][0].length == 0)
+			return 0;
+		double quotient = matrices[0][0][0] == 0 ? 1 : matrices[0][0][0];
+		for (double[][] eachMatrix : matrices) {
+			for (double[] eachColumn : eachMatrix) {
+				for (double num : eachColumn) {
+					if (num == matrices[0][0][0])
+						continue;
+					quotient /= num;
+				}
+			}
+		}
+		return quotient;
+	}
+	public static void guess(int n) {
+		SecureRandom sr = new SecureRandom();
+		int min = 0, max = n, currentAttempt = 1;
+		out.println("--- Looking for " + n + " ---");
+		while (true) {
+			int currentGuess = sr.nextInt(max - min + 1) + min;
+			out.println("Trying " + currentGuess + " (attempt " + currentAttempt
+					+ "):");
+			if (currentGuess < n) {
+				out.println("too low");
+				min = currentGuess + 1;
+			} else if (currentGuess > n) {
+				out.println("too high");
+				max = currentGuess - 1;
+			} else {
+				out.println("currentGuess = n = " + n + ", found the number!");
+				out.println("Total attempts made: " + currentAttempt);
+				break;
+			}
+			currentAttempt++;
+		}
+	}
 	public static int pow(int n, int power) {
 		if (isNull(n, power)) {
 			return 0;
@@ -35692,176 +35745,176 @@ public class KL {
 	}
 	public static int min(int... nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(long... nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(double... nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMin();
 	}
 	public static int min(intArr nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(longArr nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(dblArr nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static int min(oI nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(oL nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(oD nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static int min(treeDI nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(treeDL nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static long min(treeL nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static double min(treeD nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMin();
 	}
 	public static int max(int... nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(long... nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(double... nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums).summaryStatistics();
 		return stat.getMax();
 	}
 	public static int max(intArr nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(longArr nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(dblArr nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static int max(oI nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(oL nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(oD nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static int max(treeDI nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		IntSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(treeDL nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static long max(treeL nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		LongSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
 	}
 	public static double max(treeD nums) {
 		if (nums == null)
-		    return 0;
+			return 0;
 		DoubleSummaryStatistics stat = Arrays.stream(nums.array())
 				.summaryStatistics();
 		return stat.getMax();
@@ -36550,6 +36603,7 @@ public class KL {
 					}
 					// ^regex accuracy: ~91%
 					for (String m : fieldMatches) {
+						//out.println("Here: " + m);
 						if (in(m, "(?<!\\$)\\$\\w+\\sif"))
 							continue;
 						String toGet = m.replaceAll(
@@ -38603,17 +38657,19 @@ public class KL {
 		return newFormat;
 	}
 	public static String as(String nameOfObj, String format) {
-		if (isNull(nameOfObj) || isNull(format) || len(format) == 0) return "";
+		if (isNull(nameOfObj) || isNull(format) || len(format) == 0)
+			return "";
 		if (!in(format, "(?<=\\$)\\w+")) {
-			String type = nameOfObj,
-			  obj = format;
+			String type = nameOfObj, obj = format;
 			return (String) as((Object) type, (Object) obj);
 		}
-        return with(nameOfObj, format);
+		return with(nameOfObj, format);
 	}
 	public static <T> T as(T type, Object o) {
-		if (isNull(type, o)) return null;
-		if (!eq(type(type), type(o))) return null;
+		if (isNull(type, o))
+			return null;
+		if (!eq(type(type), type(o)))
+			return null;
 		return (T) o;
 	}
 	public static void printw(String nameOfObj, String format) {
@@ -38857,7 +38913,7 @@ public class KL {
 	public static void printnv(String[] o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38865,7 +38921,7 @@ public class KL {
 	public static void printnv(int[] o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38873,7 +38929,7 @@ public class KL {
 	public static void printnv(long[] o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38881,7 +38937,7 @@ public class KL {
 	public static void printnv(float[] o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38889,7 +38945,7 @@ public class KL {
 	public static void printnv(double[] o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38897,7 +38953,7 @@ public class KL {
 	public static void printnv(boolean[] o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38905,7 +38961,7 @@ public class KL {
 	public static void printnv(arr o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38913,7 +38969,7 @@ public class KL {
 	public static void printnv(strArr o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38921,7 +38977,7 @@ public class KL {
 	public static void printnv(intArr o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38929,7 +38985,7 @@ public class KL {
 	public static void printnv(longArr o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38937,7 +38993,7 @@ public class KL {
 	public static void printnv(fltArr o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38945,7 +39001,7 @@ public class KL {
 	public static void printnv(dblArr o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38953,7 +39009,7 @@ public class KL {
 	public static void printnv(boolArr o) {
 		String output = "[";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ". ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
 		output += "]";
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
@@ -38961,7 +39017,7 @@ public class KL {
 	public static void printnv(o o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -38969,7 +39025,7 @@ public class KL {
 	public static void printnv(oI o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -38977,7 +39033,7 @@ public class KL {
 	public static void printnv(oL o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -38985,7 +39041,7 @@ public class KL {
 	public static void printnv(oF o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -38993,7 +39049,7 @@ public class KL {
 	public static void printnv(oD o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39001,7 +39057,7 @@ public class KL {
 	public static void printnv(oB o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39009,7 +39065,7 @@ public class KL {
 	public static void printnv(treeI o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39017,7 +39073,7 @@ public class KL {
 	public static void printnv(treeL o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39025,7 +39081,7 @@ public class KL {
 	public static void printnv(treeF o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39033,7 +39089,7 @@ public class KL {
 	public static void printnv(treeD o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39041,7 +39097,7 @@ public class KL {
 	public static void printnv(treeB o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39049,7 +39105,7 @@ public class KL {
 	public static void printnv(treeDS o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39057,7 +39113,7 @@ public class KL {
 	public static void printnv(treeDI o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39065,7 +39121,7 @@ public class KL {
 	public static void printnv(treeDL o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39073,7 +39129,7 @@ public class KL {
 	public static void printnv(treeDF o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -39081,7 +39137,7 @@ public class KL {
 	public static void printnv(treeDB o) {
 		String output = "{";
 		for (var kv : kv(o))
-			output += cat(((int)kv[0])+1, ": ", kv[1], ", ");
+			output += cat(((int) kv[0]) + 1, ": ", kv[1], ", ");
 		output += "}";
 		output = output.replaceAll(",\\s(?=\\}$)", "");
 		print(output);
@@ -40983,7 +41039,7 @@ public class KL {
 	}
 	public static String[] removeDuplicatesOf(String[] arr) {
 		if (not(arr))
-		    return blank.Str;
+			return blank.Str;
 		return Arrays.stream(arr).distinct().toArray(String[]::new);
 	}
 	public static int[] removeDuplicatesOf(int[] arr) {
@@ -44200,33 +44256,33 @@ public class KL {
 	}
 	public static class summary {
 		public static o of(Object o) {
-		    o summary = new o();
-		    summary.add("type=" + type(o));
-		    summary.add("isNull=" + isNull(o));
-		    summary.add("isStr=" + isStr(o));
-		    summary.add("isNum=" + (isNum(o) || isNumLike(o)));
-		    summary.add("isInt=" + isInt(o));
-		    summary.add("isLong=" + isLong(o));
-		    summary.add("isFlt=" + isFlt(o));
-		    summary.add("isDbl=" + isDbl(o));
-		    summary.add("isBool=" + isBool(o));
-		    summary.add("isArr=" + isArr(o));
-		    summary.add("isArrOfObj=" + isArrOfObj(o));
-		    summary.add("isArrOfChar=" + isArrOfChar(o));
-		    summary.add("isArrOfStr=" + isArrOfStr(o));
-		    summary.add("isArrOfInt=" + isArrOfInt(o));
-		    summary.add("isArrOfLong=" + isArrOfLong(o));
-		    summary.add("isArrOfFlt=" + isArrOfFlt(o));
-		    summary.add("isArrOfDbl=" + isArrOfDbl(o));
-		    summary.add("isArrOfBool=" + isArrOfBool(o));
-		    summary.add("isStrArr=" + isStrArr(o));
-		    summary.add("isIntArr=" + isIntArr(o));
-		    summary.add("isLongArr=" + isLongArr(o));
-		    summary.add("isFltArr=" + isFltArr(o));
-		    summary.add("isDblArr=" + isDblArr(o));
-		    summary.add("isBoolArr=" + isBoolArr(o));
-		    if (isStr(o)) {
-			    summary.add("length=" + len((String) o));
+			o summary = new o();
+			summary.add("type=" + type(o));
+			summary.add("isNull=" + isNull(o));
+			summary.add("isStr=" + isStr(o));
+			summary.add("isNum=" + (isNum(o) || isNumLike(o)));
+			summary.add("isInt=" + isInt(o));
+			summary.add("isLong=" + isLong(o));
+			summary.add("isFlt=" + isFlt(o));
+			summary.add("isDbl=" + isDbl(o));
+			summary.add("isBool=" + isBool(o));
+			summary.add("isArr=" + isArr(o));
+			summary.add("isArrOfObj=" + isArrOfObj(o));
+			summary.add("isArrOfChar=" + isArrOfChar(o));
+			summary.add("isArrOfStr=" + isArrOfStr(o));
+			summary.add("isArrOfInt=" + isArrOfInt(o));
+			summary.add("isArrOfLong=" + isArrOfLong(o));
+			summary.add("isArrOfFlt=" + isArrOfFlt(o));
+			summary.add("isArrOfDbl=" + isArrOfDbl(o));
+			summary.add("isArrOfBool=" + isArrOfBool(o));
+			summary.add("isStrArr=" + isStrArr(o));
+			summary.add("isIntArr=" + isIntArr(o));
+			summary.add("isLongArr=" + isLongArr(o));
+			summary.add("isFltArr=" + isFltArr(o));
+			summary.add("isDblArr=" + isDblArr(o));
+			summary.add("isBoolArr=" + isBoolArr(o));
+			if (isStr(o)) {
+				summary.add("length=" + len((String) o));
 			}
 			if (isChar(o)) {
 				summary.add("isNullChar=" + (((char) o) == '\0'));
@@ -44235,37 +44291,31 @@ public class KL {
 			}
 			if (o instanceof Number) {
 				if (isInt(o)) {
-                    summary.add("isPos=" + isPos((int) o));
-			    	summary.add("isNeg=" + isNeg((int) o));
-			        summary.add("digits=" + len((int) o));
-				}
-				else if (isLong(o)) {
-                    summary.add("isPos=" + isPos((int) o));
-			    	summary.add("isNeg=" + isNeg((int) o));
-				}
-				else if (isFlt(o)) {
-                    summary.add("isPos=" + isPos((int) o));
-			    	summary.add("isNeg=" + isNeg((int) o));
-				}
-				else if (isDbl(o)) {
-                    summary.add("isPos=" + isPos((int) o));
-			    	summary.add("isNeg=" + isNeg((int) o));
-				}
-				else {
+					summary.add("isPos=" + isPos((int) o));
+					summary.add("isNeg=" + isNeg((int) o));
+					summary.add("digits=" + len((int) o));
+				} else if (isLong(o)) {
+					summary.add("isPos=" + isPos((int) o));
+					summary.add("isNeg=" + isNeg((int) o));
+				} else if (isFlt(o)) {
+					summary.add("isPos=" + isPos((int) o));
+					summary.add("isNeg=" + isNeg((int) o));
+				} else if (isDbl(o)) {
+					summary.add("isPos=" + isPos((int) o));
+					summary.add("isNeg=" + isNeg((int) o));
+				} else {
 					//is just an instance of the Number class
-                    summary.add("asInt=" + ((Number) o).intValue());
-			    	summary.add("asLong=" + ((Number) o).longValue());
-			        summary.add("asFlt=" + ((Number) o).floatValue());
-			        summary.add("asDbl=" + ((Number) o).doubleValue());
+					summary.add("asInt=" + ((Number) o).intValue());
+					summary.add("asLong=" + ((Number) o).longValue());
+					summary.add("asFlt=" + ((Number) o).floatValue());
+					summary.add("asDbl=" + ((Number) o).doubleValue());
 				}
 			}
-			
-		    return summary;
+
+			return summary;
 		}
 		public static o get(Object o) {
-			return KL
-			.summary
-			.of(o);
+			return KL.summary.of(o);
 		}
 	}
 	public static final class binary {
@@ -44352,172 +44402,178 @@ public class KL {
 	}
 	public static int[] flat(int[][] arr) {
 		if (arr == null || arr.length == 0)
-		    return new int[]{};
-		int[] resultingArr = java.util.Arrays.stream(arr).flatMapToInt(java.util.Arrays::stream).toArray();
+			return new int[]{};
+		int[] resultingArr = java.util.Arrays.stream(arr)
+				.flatMapToInt(java.util.Arrays::stream).toArray();
 		return resultingArr;
 	}
 	public static int[] flatten(int[][] arr) {
 		return flat(arr);
 	}
 	public static int[] flat(int[][][] arr) {
-	    if (arr == null || arr.length == 0)
-		    return new int[]{};
-        int totalElements = 0;
-        for (int[][] array2D : arr) {
-            for (int[] array1D : array2D) {
-                totalElements += array1D.length;
-            }
-        }
-        int[] flattenedArray = new int[totalElements];
-        int index = 0;
-        for (int[][] array2D : arr) {
-            for (int[] array1D : array2D) {
-                System.arraycopy(array1D, 0, flattenedArray, index, array1D.length);
-                index += array1D.length;
-            }
-        }
-        return flattenedArray;
-    }
-    public static int[] flatten(int[][][] arr) {
+		if (arr == null || arr.length == 0)
+			return new int[]{};
+		int totalElements = 0;
+		for (int[][] array2D : arr) {
+			for (int[] array1D : array2D) {
+				totalElements += array1D.length;
+			}
+		}
+		int[] flattenedArray = new int[totalElements];
+		int index = 0;
+		for (int[][] array2D : arr) {
+			for (int[] array1D : array2D) {
+				System.arraycopy(array1D, 0, flattenedArray, index,
+						array1D.length);
+				index += array1D.length;
+			}
+		}
+		return flattenedArray;
+	}
+	public static int[] flatten(int[][][] arr) {
 		return flat(arr);
 	}
-    public static int[][] flatOneLevel(int[][][] arr) {
-        if (arr == null || arr.length == 0)
-		    return new int[][]{};
-        int total1DArrays = 0;
-        for (int[][] array2D : arr) {
-            total1DArrays += array2D.length;
-        }
-        int[][] flattenedArray = new int[total1DArrays][];
-        int index = 0;
-        for (int[][] array2D : arr) {
-            for (int[] array1D : array2D) {
-                flattenedArray[index++] = array1D;
-            }
-        }
-        return flattenedArray;
-    }
-    public static int[][] flattenOneLevel(int[][][] arr) {
-    	return flatOneLevel(arr);
-    }
-    public static int[][] flatOne(int[][][] arr) {
-    	return flatOneLevel(arr);
-    }
-    public static int[][] flattenOne(int[][][] arr) {
-    	return flatOneLevel(arr);
-    }
+	public static int[][] flatOneLevel(int[][][] arr) {
+		if (arr == null || arr.length == 0)
+			return new int[][]{};
+		int total1DArrays = 0;
+		for (int[][] array2D : arr) {
+			total1DArrays += array2D.length;
+		}
+		int[][] flattenedArray = new int[total1DArrays][];
+		int index = 0;
+		for (int[][] array2D : arr) {
+			for (int[] array1D : array2D) {
+				flattenedArray[index++] = array1D;
+			}
+		}
+		return flattenedArray;
+	}
+	public static int[][] flattenOneLevel(int[][][] arr) {
+		return flatOneLevel(arr);
+	}
+	public static int[][] flatOne(int[][][] arr) {
+		return flatOneLevel(arr);
+	}
+	public static int[][] flattenOne(int[][][] arr) {
+		return flatOneLevel(arr);
+	}
 	public static long[] flat(long[][] arr) {
 		if (arr == null || arr.length == 0)
-		    return new long[]{};
-		long[] resultingArr = java.util.Arrays.stream(arr).flatMapToLong(java.util.Arrays::stream).toArray();
+			return new long[]{};
+		long[] resultingArr = java.util.Arrays.stream(arr)
+				.flatMapToLong(java.util.Arrays::stream).toArray();
 		return resultingArr;
 	}
 	public static long[] flatten(long[][] arr) {
 		return flat(arr);
 	}
 	public static long[] flat(long[][][] arr) {
-	    if (arr == null || arr.length == 0)
-		    return new long[]{};
-        int totalElements = 0;
-        for (long[][] array2D : arr) {
-            for (long[] array1D : array2D) {
-                totalElements += array1D.length;
-            }
-        }
-        long[] flattenedArray = new long[totalElements];
-        int index = 0;
-        for (long[][] array2D : arr) {
-            for (long[] array1D : array2D) {
-                System.arraycopy(array1D, 0, flattenedArray, index, array1D.length);
-                index += array1D.length;
-            }
-        }
-        return flattenedArray;
-    }
-    public static long[] flatten(long[][][] arr) {
+		if (arr == null || arr.length == 0)
+			return new long[]{};
+		int totalElements = 0;
+		for (long[][] array2D : arr) {
+			for (long[] array1D : array2D) {
+				totalElements += array1D.length;
+			}
+		}
+		long[] flattenedArray = new long[totalElements];
+		int index = 0;
+		for (long[][] array2D : arr) {
+			for (long[] array1D : array2D) {
+				System.arraycopy(array1D, 0, flattenedArray, index,
+						array1D.length);
+				index += array1D.length;
+			}
+		}
+		return flattenedArray;
+	}
+	public static long[] flatten(long[][][] arr) {
 		return flat(arr);
 	}
-    public static long[][] flatOneLevel(long[][][] arr) {
-        if (arr == null || arr.length == 0)
-		    return new long[][]{};
-        int total1DArrays = 0;
-        for (long[][] array2D : arr) {
-            total1DArrays += array2D.length;
-        }
-        long[][] flattenedArray = new long[total1DArrays][];
-        int index = 0;
-        for (long[][] array2D : arr) {
-            for (long[] array1D : array2D) {
-                flattenedArray[index++] = array1D;
-            }
-        }
-        return flattenedArray;
-    }
-    public static long[][] flattenOneLevel(long[][][] arr) {
-    	return flatOneLevel(arr);
-    }
-    public static long[][] flatOne(long[][][] arr) {
-    	return flatOneLevel(arr);
-    }
-    public static long[][] flattenOne(long[][][] arr) {
-    	return flatOneLevel(arr);
-    }
+	public static long[][] flatOneLevel(long[][][] arr) {
+		if (arr == null || arr.length == 0)
+			return new long[][]{};
+		int total1DArrays = 0;
+		for (long[][] array2D : arr) {
+			total1DArrays += array2D.length;
+		}
+		long[][] flattenedArray = new long[total1DArrays][];
+		int index = 0;
+		for (long[][] array2D : arr) {
+			for (long[] array1D : array2D) {
+				flattenedArray[index++] = array1D;
+			}
+		}
+		return flattenedArray;
+	}
+	public static long[][] flattenOneLevel(long[][][] arr) {
+		return flatOneLevel(arr);
+	}
+	public static long[][] flatOne(long[][][] arr) {
+		return flatOneLevel(arr);
+	}
+	public static long[][] flattenOne(long[][][] arr) {
+		return flatOneLevel(arr);
+	}
 	public static double[] flat(double[][] arr) {
 		if (arr == null || arr.length == 0)
-		    return new double[]{};
-		double[] resultingArr = java.util.Arrays.stream(arr).flatMapToDouble(java.util.Arrays::stream).toArray();
+			return new double[]{};
+		double[] resultingArr = java.util.Arrays.stream(arr)
+				.flatMapToDouble(java.util.Arrays::stream).toArray();
 		return resultingArr;
 	}
 	public static double[] flatten(double[][] arr) {
 		return flat(arr);
 	}
 	public static double[] flat(double[][][] arr) {
-	    if (arr == null || arr.length == 0)
-		    return new double[]{};
-        int totalElements = 0;
-        for (double[][] array2D : arr) {
-            for (double[] array1D : array2D) {
-                totalElements += array1D.length;
-            }
-        }
-        double[] flattenedArray = new double[totalElements];
-        int index = 0;
-        for (double[][] array2D : arr) {
-            for (double[] array1D : array2D) {
-                System.arraycopy(array1D, 0, flattenedArray, index, array1D.length);
-                index += array1D.length;
-            }
-        }
-        return flattenedArray;
-    }
-    public static double[] flatten(double[][][] arr) {
+		if (arr == null || arr.length == 0)
+			return new double[]{};
+		int totalElements = 0;
+		for (double[][] array2D : arr) {
+			for (double[] array1D : array2D) {
+				totalElements += array1D.length;
+			}
+		}
+		double[] flattenedArray = new double[totalElements];
+		int index = 0;
+		for (double[][] array2D : arr) {
+			for (double[] array1D : array2D) {
+				System.arraycopy(array1D, 0, flattenedArray, index,
+						array1D.length);
+				index += array1D.length;
+			}
+		}
+		return flattenedArray;
+	}
+	public static double[] flatten(double[][][] arr) {
 		return flat(arr);
 	}
-    public static double[][] flatOneLevel(double[][][] arr) {
-        if (arr == null || arr.length == 0)
-		    return new double[][]{};
-        int total1DArrays = 0;
-        for (double[][] array2D : arr) {
-            total1DArrays += array2D.length;
-        }
-        double[][] flattenedArray = new double[total1DArrays][];
-        int index = 0;
-        for (double[][] array2D : arr) {
-            for (double[] array1D : array2D) {
-                flattenedArray[index++] = array1D;
-            }
-        }
-        return flattenedArray;
-    }
-    public static double[][] flattenOneLevel(double[][][] arr) {
-    	return flatOneLevel(arr);
-    }
-    public static double[][] flatOne(double[][][] arr) {
-    	return flatOneLevel(arr);
-    }
-    public static double[][] flattenOne(double[][][] arr) {
-    	return flatOneLevel(arr);
-    }
+	public static double[][] flatOneLevel(double[][][] arr) {
+		if (arr == null || arr.length == 0)
+			return new double[][]{};
+		int total1DArrays = 0;
+		for (double[][] array2D : arr) {
+			total1DArrays += array2D.length;
+		}
+		double[][] flattenedArray = new double[total1DArrays][];
+		int index = 0;
+		for (double[][] array2D : arr) {
+			for (double[] array1D : array2D) {
+				flattenedArray[index++] = array1D;
+			}
+		}
+		return flattenedArray;
+	}
+	public static double[][] flattenOneLevel(double[][][] arr) {
+		return flatOneLevel(arr);
+	}
+	public static double[][] flatOne(double[][][] arr) {
+		return flatOneLevel(arr);
+	}
+	public static double[][] flattenOne(double[][][] arr) {
+		return flatOneLevel(arr);
+	}
 	public static String[] combine(String[] arrA, String[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Str;
