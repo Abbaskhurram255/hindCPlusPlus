@@ -197,6 +197,18 @@ public class KL {
 			take(amnt);
 			return this;
 		}
+		String bache() {
+			return total();
+		}
+		String bache(boolean suffixMode) {
+			return total(suffixMode);
+		}
+		String bakaya() {
+			return total();
+		}
+		String bakaya(boolean suffixMode) {
+			return total(suffixMode);
+		}
 		String kul() {
 			return total();
 		}
@@ -29913,9 +29925,11 @@ public class KL {
 	public static <T> T he(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
 	}
-	public static boolean Yes = true, No = !Yes, On = Yes, Off = No, Ok = Yes,
-			NotOk = !Ok, Fail = NotOk, Y = Yes, N = No, ever = Y, Ha = Y,
-			Na = N;
+	public static boolean True = true, False = !True, yes = True, no = False,
+			Yes = yes, No = no, on = Yes, off = No, On = on, Off = off,
+			Success = Yes, Failure = No, Y = Yes, N = No, ever = Y, ha = Y,
+			na = N, Ha = ha, Na = na, sach = Ha, jhoot = Na, Sach = sach,
+			Jhoot = jhoot;
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static String Else = "else", Warna = Else;
@@ -30417,6 +30431,9 @@ public class KL {
 			return this;
 		}
 		karoFail hua(Runnable fn) {
+			return kia(fn);
+		}
+		karoFail then(Runnable fn) {
 			return kia(fn);
 		}
 		karoFail hamesha(Runnable fn) {
@@ -31811,6 +31828,10 @@ public class KL {
 			}
 		}
 	}
+	public static void print(Object... args) {
+		println(args);
+		System.out.print("\n");
+	}
 	public static void kaholn(Object... args) {
 		// to try, and provide a Hindi-friendly experience
 		if (isNull(args) || not(args.length)) {
@@ -31875,13 +31896,15 @@ public class KL {
 			}
 		}
 	}
-	public static void print(Object... args) {
-		println(args);
-		System.out.print("\n");
-	}
 	public static void kaho(Object... args) {
 		kaholn(args);
 		System.out.print("\n");
+	}
+	public static void bololn(Object... args) {
+		kaholn(args);
+	}
+	public static void bolo(Object... args) {
+		kaho(args);
 	}
 	public void printf(String str, Object... args) {
 		System.out.println(f(str, args));
@@ -36066,7 +36089,8 @@ public class KL {
 	}
 	// since a long is just a LONG integer, this should work^
 	// let's set up some currency variables
-	public static double zr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9, kh = 1e11;
+	public static double so = 1e2, hzr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9,
+			kh = 1e11;
 	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
 			qt = 1e18, sx = 1e21, sp = 1e24, oc = 1e27, nn = 1e30, dc = 1e33;
 	public static String fpkr(int amount) {
@@ -39304,7 +39328,7 @@ public class KL {
 		switch (size) {
 			case 1 :
 			case 2 :
-				result = Str(n / zr) + "zr";
+				result = Str(n / hzr) + "hzr";
 				break;
 			case 3 :
 				result = Str(n / lc) + "lc";
@@ -39333,7 +39357,7 @@ public class KL {
 		switch (size) {
 			case 1 :
 			case 2 :
-				result = Str(n / zr) + "zr";
+				result = Str(n / hzr) + "hzr";
 				break;
 			case 3 :
 				result = Str(n / lc) + "lc";
@@ -39362,7 +39386,7 @@ public class KL {
 		switch (size) {
 			case 1 :
 			case 2 :
-				result = Str(n / zr) + "zr";
+				result = Str(n / hzr) + "hzr";
 				break;
 			case 3 :
 				result = Str(n / lc) + "lc";
@@ -39391,7 +39415,7 @@ public class KL {
 		switch (size) {
 			case 1 :
 			case 2 :
-				result = Str(n / zr) + "zr";
+				result = Str(n / hzr) + "hzr";
 				break;
 			case 3 :
 				result = Str(n / lc) + "lc";
@@ -47809,6 +47833,9 @@ public class KL {
 		print(with("name2",
 				"Full name: $first +last\nPronunciation: $pronunciation"));
 		print("$name2.first +last");
+		pesa pese = naiRakam(600);
+		pese.dalo(2 * hzr).nikalo(2 * so);
+		kaho("Bakaya =", pese.bakaya());
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
