@@ -28,29 +28,29 @@ import javax.swing.text.*;
 public class KL {
 	// to shorten new KL() constructor calls into just kl()
 	class hint {
-	//@class.why: this class is supposed to help make functions more understandable
-	class why{}
-	class reason{}
-	class type{}
-	class expects{}
-	class returns{}
-	class forClass{}
-	class constructor{}
-	class forConstructor{}
-	class field{}
-	class forField{}
-	class method{}
-	class forMethod{}
-	class param{}
-	class params{}
-	class forParam{}
-	class forParams{}
-	class typesExpected{}
-	class expectedTypes{}
-	class typesHandled{}
-	class handledTypes{}
-	class returnType{}
-}
+		//@class.why: this class is supposed to help make functions more understandable
+		class why{}
+		class reason{}
+		class type{}
+		class expects{}
+		class returns{}
+		class forClass{}
+		class constructor{}
+		class forConstructor{}
+		class field{}
+		class forField{}
+		class method{}
+		class forMethod{}
+		class param{}
+		class params{}
+		class forParam{}
+		class forParams{}
+		class typesExpected{}
+		class expectedTypes{}
+		class typesHandled{}
+		class handledTypes{}
+		class returnType{}
+	}
 	public static KL kl(
 			hint.method... this_method_will_help_make_the_instantiation_quicker) {
 		// @hint: new KL().x -> kl().x
