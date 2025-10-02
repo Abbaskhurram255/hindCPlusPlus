@@ -28,6 +28,8 @@ import javax.swing.text.*;
 public class KL {
 	public static class hint {
 		//@class.why: this class is supposed to help make functions more understandable
+		hint why, reason;
+		Object constructor, forConstructor, field, forField, method, forMethod, params, forParams, typesExpected, expectedTypes, typesHandled, handledTypes, returnType;
 	}
 	// to shorten new KL() constructor calls into just kl()
 	public static KL kl(
