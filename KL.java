@@ -28,14 +28,15 @@ import javax.swing.text.*;
 public class KL {
 	public static class hint {
 		//@class.why: this class is supposed to help make functions more understandable
-		hint why, reason;
-		Object constructor, forConstructor, field, forField, method, forMethod, params, forParams, typesExpected, expectedTypes, typesHandled, handledTypes, returnType;
+		hint why, reason, type, expects, returns, forClass, constructor, forConstructor, field, forField, method, forMethod, param, params, forParam, forParams, typesExpected, expectedTypes, typesHandled, handledTypes, returnType;
 	}
 	// to shorten new KL() constructor calls into just kl()
 	public static KL kl(
 			hint... this_method_will_help_make_the_instantiation_quicker) {
 		// @hint: new KL().x -> kl().x
 		return new KL();
+		hint.expects nothing;
+		hint.returns KL;
 	}
 	public static class money {
 		//@class.why: this class is supposed to help deal with money-related everyday calculations easier (currency conversion will be added soon)
