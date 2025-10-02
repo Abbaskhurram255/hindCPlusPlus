@@ -26,17 +26,37 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 @SuppressWarnings("all")
 public class KL {
-	public static class hint {
-		//@class.why: this class is supposed to help make functions more understandable
-		hint why, reason, type, expects, returns, forClass, constructor, forConstructor, field, forField, method, forMethod, param, params, forParam, forParams, typesExpected, expectedTypes, typesHandled, handledTypes, returnType;
-	}
 	// to shorten new KL() constructor calls into just kl()
+	class hint {
+	//@class.why: this class is supposed to help make functions more understandable
+	class why{}
+	class reason{}
+	class type{}
+	class expects{}
+	class returns{}
+	class forClass{}
+	class constructor{}
+	class forConstructor{}
+	class field{}
+	class forField{}
+	class method{}
+	class forMethod{}
+	class param{}
+	class params{}
+	class forParam{}
+	class forParams{}
+	class typesExpected{}
+	class expectedTypes{}
+	class typesHandled{}
+	class handledTypes{}
+	class returnType{}
+}
 	public static KL kl(
-			hint... this_method_will_help_make_the_instantiation_quicker) {
+			hint.method... this_method_will_help_make_the_instantiation_quicker) {
 		// @hint: new KL().x -> kl().x
-		return new KL();
 		hint.expects nothing;
 		hint.returns KL;
+		return new KL();
 	}
 	public static class money {
 		//@class.why: this class is supposed to help deal with money-related everyday calculations easier (currency conversion will be added soon)
