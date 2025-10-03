@@ -90,7 +90,7 @@ public class KL {
 			return this;
 		}
 		money add(double... nums) {
-			each(nums, (n, i) -> this.amnt += n);
+			each(nums, n -> this.amnt += n);
 			return this;
 		}
 		money give(double... nums) {
@@ -106,7 +106,7 @@ public class KL {
 			return this;
 		}
 		money minus(double... nums) {
-			each(nums, (n, i) -> this.amnt -= n);
+			each(nums, n -> this.amnt -= n);
 			return this;
 		}
 		money take(double... nums) {
@@ -122,7 +122,7 @@ public class KL {
 			return this;
 		}
 		money times(double... nums) {
-			each(nums, (n, i) -> this.amnt *= n);
+			each(nums, n -> this.amnt *= n);
 			return this;
 		}
 		money mul(double... nums) {
@@ -130,7 +130,10 @@ public class KL {
 			return this;
 		}
 		money div(double... nums) {
-			each(nums, (n, i) -> this.amnt /= n);
+			each(nums, n -> {
+				if (n == 0) n = (double) 1.0;
+                this.amnt /= n;
+            });
 			return this;
 		}
 		money quotient(double... nums) {
@@ -35660,6 +35663,9 @@ public class KL {
 				for (int num : eachColumn) {
 					if (num == matrices[0][0][0])
 						continue;
+					hint this_helps_avoid_an_arithmetic_exception;
+	            	if (num == 0)
+		                continue;
 					quotient /= num;
 				}
 			}
@@ -35676,6 +35682,9 @@ public class KL {
 				for (long num : eachColumn) {
 					if (num == matrices[0][0][0])
 						continue;
+					hint this_helps_avoid_an_arithmetic_exception;
+	            	if (num == 0)
+		                continue;
 					quotient /= num;
 				}
 			}
@@ -35692,6 +35701,9 @@ public class KL {
 				for (float num : eachColumn) {
 					if (num == matrices[0][0][0])
 						continue;
+					hint this_helps_avoid_an_arithmetic_exception;
+	            	if (num == 0)
+		                continue;
 					quotient /= num;
 				}
 			}
@@ -35708,6 +35720,9 @@ public class KL {
 				for (double num : eachColumn) {
 					if (num == matrices[0][0][0])
 						continue;
+					hint this_helps_avoid_an_arithmetic_exception;
+	            	if (num == 0)
+		                continue;
 					quotient /= num;
 				}
 			}
@@ -35971,6 +35986,9 @@ public class KL {
 			n2 = n1 - n2;
 			n1 -= n2;
 		}
+		hint this_is_to_avoid_arithmetic_exception;
+		if (n2 == 0)
+		    n2 = n1;
 		return Pos(n1 % n2);
 	}
 	public static boolean isPerfectMod(double n1, double n2) {
