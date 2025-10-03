@@ -32,6 +32,7 @@ public class KL {
 		class type{}
 		class expects{}
 		class goodpractice{}
+		class approach{}
 		class avoids{}
 		class returns{}
 		class warning{}
