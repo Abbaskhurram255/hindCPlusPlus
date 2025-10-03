@@ -29,11 +29,12 @@ public class KL {
 	// to shorten new KL() constructor calls into just kl()
 	class hint {
 		//@class.why: this class is supposed to help make functions more understandable
-		class why{}
-		class reason{}
 		class type{}
 		class expects{}
+		class goodpractice{}
+		class avoids{}
 		class returns{}
+		class warning{}
 		class forClass{}
 		class constructor{}
 		class forConstructor{}
@@ -141,7 +142,7 @@ public class KL {
 			return this;
 		}
 		public String suffix(boolean... bools) {
-			boolean forceInternational = bools.length > 0 ? bools[0] : false;
+			boolean forceInternational = bools != null && bools.length > 0 ? bools[0] : false;
 			this.curr = trim(this.curr) + " ";
 			if (in(this.curr, "pk|in|rs")) {
 				return "Rs. " + (forceInternational
