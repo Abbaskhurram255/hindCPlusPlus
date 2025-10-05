@@ -10,6 +10,20 @@ from math import *
 from hindGui import *
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
+Str = str
+def Int(x: str|int|float, base: int = 10) -> int:
+    try:
+        x = Str(x)
+        if "." in x:
+            x = x.split(".")[0]
+        return int(x, base)
+    except (ValueError, TypeError):
+        return 0
+def Flt(x: str|int|float) -> float:
+    try:
+        return float(x)
+    except (ValueError, TypeError):
+        return 0
 class obj(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -967,6 +981,12 @@ def filepath(filename: str) -> str:
     return os.path.join(os.getcwd(), filename)
 
 def main() -> none:
+    print(Int("100", 2))
+    print(Flt("2.22"))
+    print(Int(2.22))
+    print(Flt(2.22))
+    print(Int(2))
+    print(Flt(2))
     dictionary: obj = obj(key="value")
     cloned = clone(dictionary)
     cloned.key = 4
@@ -985,13 +1005,6 @@ def main() -> none:
     print(isstr(None))
     print(isstr(None))
     print(isfunc(internet_access))
-    curframe: Optional[FrameType] = inspect.currentframe()
-    caller_locals: obj = obj(curframe.f_locals | curframe.f_globals)
-    while hasattr(curframe, "f_back") and curframe.f_back != None:
-        caller_locals = caller_locals | curframe.f_locals | curframe.f_globals
-        curframe = curframe.f_back
-        # keep retrieving until you hit the oldest ancestor
-    print(caller_locals)
     
 if __name__ == "__main__":
     main()
