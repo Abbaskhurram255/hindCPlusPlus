@@ -39394,11 +39394,50 @@ public class KL {
 				fn.run();
 			return this;
 		}
+		Object Done(Callable fn) {
+			if (fn == ignored)
+				return null;
+			if (caughtException == none) {
+				try {
+					return fn.call();
+				} catch (Throwable e) {
+					hint.avoids Exception_thrown_by_fn_call;
+					return null;
+				}
+			}
+			return null;
+		}
+		<T> T Done(Callable fn, T returnType) {
+			if (fn == ignored)
+				return null;
+			if (caughtException == none) {
+				try {
+					return as(returnType, fn.call());
+				} catch (Throwable e) {
+					hint.avoids Exception_thrown_by_fn_call;
+					hint.avoids ClassCastException_thrown_by_as;
+					return null;
+				}
+			}
+			return null;
+		}
 		DoFail Then(Runnable fn) {
 			return Done(fn);
 		}
+		Object Then(Callable fn) {
+			return Done(fn);
+		}
+		<T> T Then(Callable fn, T returnType) {
+			return Done(fn, returnType);
+		}
 		DoFail Success(Runnable fn) {
 			return Done(fn);
+		}
+		Object Success(Callable fn) {
+			return Done(fn);
+		}
+		<T> T Success(Callable fn, T returnType) {
+			return Done(fn, returnType);
 		}
 		DoFail Always(Runnable fn) {
 			if (fn == ignored)
@@ -39421,11 +39460,38 @@ public class KL {
 			fallback.run();
 			return this;
 		}
-		DoFail Fall(Consumer<Throwable> fallback) {
+		Object Fail(Callable fallback) {
+			if (caughtException == none || fallback == none)
+				return null;
+			try {
+				return fallback.call();
+			} catch (Throwable e) {
+				hint.avoids Exception_thrown_by_fn_call;
+				return null;
+			}
+		}
+		<T> T Fail(Callable fallback, T returnType) {
+			if (caughtException == none || fallback == none)
+				return null;
+			try {
+				return as(returnType, fallback.call());
+			} catch (Throwable e) {
+				hint.avoids Exception_thrown_by_fn_call;
+				hint.avoids ClassCastException_thrown_by_as;
+				return null;
+			}
+		}
+		DoFail Failure(Consumer<Throwable> fallback) {
 			return Fail(fallback);
 		}
-		DoFail Fall(Runnable fallback) {
+		DoFail Failure(Runnable fallback) {
 			return Fail(fallback);
+		}
+		Object Failure(Callable fallback) {
+			return Fail(fallback);
+		}
+		<T> T Failure(Callable fallback, T returnType) {
+			return Fail(fallback, returnType);
 		}
 		DoFail Catch(Consumer<Throwable> fallback) {
 			return Fail(fallback);
@@ -39433,11 +39499,23 @@ public class KL {
 		DoFail Catch(Runnable fallback) {
 			return Fail(fallback);
 		}
+		Object Catch(Callable fallback) {
+			return Fail(fallback);
+		}
+		<T> T Catch(Callable fallback, T returnType) {
+			return Fail(fallback, returnType);
+		}
 		DoFail Except(Consumer<Throwable> fallback) {
 			return Fail(fallback);
 		}
 		DoFail Except(Runnable fallback) {
 			return Fail(fallback);
+		}
+		Object Except(Callable fallback) {
+			return Fail(fallback);
+		}
+		<T> T Except(Callable fallback, T returnType) {
+			return Fail(fallback, returnType);
 		}
 		DoFail Error(Consumer<Throwable> fallback) {
 			return Fail(fallback);
@@ -39445,17 +39523,35 @@ public class KL {
 		DoFail Error(Runnable fallback) {
 			return Fail(fallback);
 		}
+		Object Error(Callable fallback) {
+			return Fail(fallback);
+		}
+		<T> T Error(Callable fallback, T returnType) {
+			return Fail(fallback, returnType);
+		}
 		DoFail Err(Consumer<Throwable> fallback) {
 			return Fail(fallback);
 		}
 		DoFail Err(Runnable fallback) {
 			return Fail(fallback);
 		}
+		Object Err(Callable fallback) {
+			return Fail(fallback);
+		}
+		<T> T Err(Callable fallback, T returnType) {
+			return Fail(fallback, returnType);
+		}
 		DoFail E(Consumer<Throwable> fallback) {
 			return Fail(fallback);
 		}
 		DoFail E(Runnable fallback) {
 			return Fail(fallback);
+		}
+		Object E(Callable fallback) {
+			return Fail(fallback);
+		}
+		<T> T E(Callable fallback, T returnType) {
+			return Fail(fallback, returnType);
 		}
 	}
 	public static DoFail Do(DoFail.CustomRunnable fn) {
@@ -39538,8 +39634,41 @@ public class KL {
 				fn.run();
 			return this;
 		}
+		Object hua(Callable fn) {
+			if (fn == ignored)
+				return null;
+			if (caughtException == none) {
+				try {
+					return fn.call();
+				} catch (Throwable e) {
+					hint.avoids Exception_thrown_by_fn_call;
+					return null;
+				}
+			}
+			return null;
+		}
+		<T> T hua(Callable fn, T returnType) {
+			if (fn == ignored)
+				return null;
+			if (caughtException == none) {
+				try {
+					return as(returnType, fn.call());
+				} catch (Throwable e) {
+					hint.avoids Exception_thrown_by_fn_call;
+					hint.avoids ClassCastException_thrown_by_as;
+					return null;
+				}
+			}
+			return null;
+		}
 		karoFail then(Runnable fn) {
 			return hua(fn);
+		}
+		Object then(Callable fn) {
+			return hua(fn);
+		}
+		<T> T then(Callable fn, T returnType) {
+			return hua(fn, returnType);
 		}
 		karoFail hamesha(Runnable fn) {
 			if (fn == ignored)
@@ -39559,11 +39688,38 @@ public class KL {
 			fallback.run();
 			return this;
 		}
+		Object warna(Callable fallback) {
+			if (caughtException == none || fallback == none)
+				return null;
+			try {
+				return fallback.call();
+			} catch (Throwable e) {
+				hint.avoids Exception_thrown_by_fn_call;
+				return null;
+			}
+		}
+		<T> T warna(Callable fallback, T returnType) {
+			if (caughtException == none || fallback == none)
+				return null;
+			try {
+				return as(returnType, fallback.call());
+			} catch (Throwable e) {
+				hint.avoids Exception_thrown_by_fn_call;
+				hint.avoids ClassCastException_thrown_by_as;
+				return null;
+			}
+		}
 		karoFail nakam(Consumer<Throwable> fallback) {
 			return warna(fallback);
 		}
 		karoFail nakam(Runnable fallback) {
 			return warna(fallback);
+		}
+		Object nakam(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T nakam(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
 		}
 		karoFail fail(Consumer<Throwable> fallback) {
 			return warna(fallback);
@@ -39571,11 +39727,23 @@ public class KL {
 		karoFail fail(Runnable fallback) {
 			return warna(fallback);
 		}
+		Object fail(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T fail(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
+		}
 		karoFail error(Consumer<Throwable> fallback) {
 			return warna(fallback);
 		}
 		karoFail error(Runnable fallback) {
 			return warna(fallback);
+		}
+		Object error(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T error(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
 		}
 		karoFail err(Consumer<Throwable> fallback) {
 			return warna(fallback);
@@ -39583,11 +39751,23 @@ public class KL {
 		karoFail err(Runnable fallback) {
 			return warna(fallback);
 		}
+		Object err(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T err(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
+		}
 		karoFail e(Consumer<Throwable> fallback) {
 			return warna(fallback);
 		}
 		karoFail e(Runnable fallback) {
 			return warna(fallback);
+		}
+		Object e(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T e(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
 		}
 	}
 	public static karoFail karo(karoFail.CustomRunnable fn) {
@@ -39669,7 +39849,7 @@ public class KL {
 			return agar(condition);
 		}
 		public static agar nahi(boolean condition) {
-			return agar(!condition);
+			return agar(not(condition));
 		}
 		agar tab(Runnable fn) {
 			if (fn == ignored)
@@ -39683,6 +39863,45 @@ public class KL {
 		}
 		agar then(Runnable fn) {
 			return tab(fn);
+		}
+		Object tab(Callable fn) {
+			if (fn == ignored)
+				return null;
+			if (caughtException == none) {
+				try {
+					return fn.call();
+				} catch (Throwable e) {
+					hint.avoids Exception_thrown_by_fn_call;
+					return null;
+				}
+			}
+			return null;
+		}
+		Object to(Callable fn) {
+			return tab(fn);
+		}
+		Object then(Callable fn) {
+			return tab(fn);
+		}
+		<T> T tab(Callable fn, T returnType) {
+			if (fn == ignored)
+				return null;
+			if (caughtException == none) {
+				try {
+					return as(returnType, fn.call());
+				} catch (Throwable e) {
+					hint.avoids Exception_thrown_by_fn_call;
+					hint.avoids ClassCastException_thrown_by_as;
+					return null;
+				}
+			}
+			return null;
+		}
+		<T> T to(Callable fn, T returnType) {
+			return tab(fn, returnType);
+		}
+		<T> T then(Callable fn, T returnType) {
+			return tab(fn, returnType);
 		}
 		agar hamesha(Runnable fn) {
 			if (fn == ignored)
@@ -39702,11 +39921,38 @@ public class KL {
 			fallback.run();
 			return this;
 		}
+		Object warna(Callable fallback) {
+			if (caughtException == none || fallback == none)
+				return null;
+			try {
+				return fallback.call();
+			} catch (Throwable e) {
+				hint.avoids Exception_thrown_by_fn_call;
+				return null;
+			}
+		}
+		<T> T warna(Callable fallback, T returnType) {
+			if (caughtException == none || fallback == none)
+				return null;
+			try {
+				return as(returnType, fallback.call());
+			} catch (Throwable e) {
+				hint.avoids Exception_thrown_by_fn_call;
+				hint.avoids ClassCastException_thrown_by_as;
+				return null;
+			}
+		}
 		agar nakam(Consumer<Throwable> fallback) {
 			return warna(fallback);
 		}
 		agar nakam(Runnable fallback) {
 			return warna(fallback);
+		}
+		Object nakam(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T nakam(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
 		}
 		agar fail(Consumer<Throwable> fallback) {
 			return warna(fallback);
@@ -39714,11 +39960,23 @@ public class KL {
 		agar fail(Runnable fallback) {
 			return warna(fallback);
 		}
+		Object fail(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T fail(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
+		}
 		agar error(Consumer<Throwable> fallback) {
 			return warna(fallback);
 		}
 		agar error(Runnable fallback) {
 			return warna(fallback);
+		}
+		Object error(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T error(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
 		}
 		agar err(Consumer<Throwable> fallback) {
 			return warna(fallback);
@@ -39726,11 +39984,23 @@ public class KL {
 		agar err(Runnable fallback) {
 			return warna(fallback);
 		}
+		Object err(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T err(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
+		}
 		agar e(Consumer<Throwable> fallback) {
 			return warna(fallback);
 		}
 		agar e(Runnable fallback) {
 			return warna(fallback);
+		}
+		Object e(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T e(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
 		}
 	}
 	public static agar agar(agar.CustomRunnable fn) {
@@ -39766,7 +40036,6 @@ public class KL {
 			Runnable onFallback) {
 		return new agar(condition).tab(onSuccess).nakam(onFallback);
 	}
-
 	public static int[] range(int n) {
 		intArr arr = intArr();
 		if (not(n) || n < 0) {
@@ -40061,6 +40330,9 @@ public class KL {
 	}
 	public static int[] rng(Object[] arr) {
 		return range(arr);
+	}
+	public static int[] rng(arr arr) {
+		return range(len(arr));
 	}
 	public static int[] rng(strArr arr) {
 		return range(arr);
