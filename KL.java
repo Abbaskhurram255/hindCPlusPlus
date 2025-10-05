@@ -28,22 +28,38 @@ import javax.swing.text.*;
 public class KL {
 	class hint {
 		//@class.why: this class is supposed to help make functions more understandable
-		class goodpractice{}
-		class time{}
-		class approach{}
-		class avoids{}
-		class warning{}
-		class forClass{}
-		class constructor{}
-		class forConstructor{}
-		class field{}
-		class forField{}
-		class method{}
-		class forMethod{}
-		class param{}
-		class params{}
-		class forParam{}
-		class forParams{}
+		class goodpractice {
+		}
+		class time {
+		}
+		class approach {
+		}
+		class avoids {
+		}
+		class warning {
+		}
+		class forClass {
+		}
+		class constructor {
+		}
+		class forConstructor {
+		}
+		class field {
+		}
+		class forField {
+		}
+		class method {
+		}
+		class forMethod {
+		}
+		class param {
+		}
+		class params {
+		}
+		class forParam {
+		}
+		class forParams {
+		}
 	}
 	public static KL kl() {
 		// @hint.method this_method_will_help_make_the_instantiation_quicker
@@ -63,13 +79,13 @@ public class KL {
 		}
 		money(double amnt, String cur) {
 			this.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
-			this.cur = not(this.cur) || len(this.cur) < 1
-					|| len(this.cur) > 4 ? "Rs. " : titleCase(cur);
+			this.cur = not(this.cur) || len(this.cur) < 1 || len(this.cur) > 4
+					? "Rs. "
+					: titleCase(cur);
 		}
 		money cur(String newCurrency) {
-			this.cur = not(newCurrency) || len(newCurrency) < 1 || len(newCurrency) > 4
-					? "Rs. "
-					: titleCase(newCurrency);
+			this.cur = not(newCurrency) || len(newCurrency) < 1
+					|| len(newCurrency) > 4 ? "Rs. " : titleCase(newCurrency);
 			return this;
 		}
 		money currency(String newCurrency) {
@@ -134,9 +150,10 @@ public class KL {
 		}
 		money div(double... nums) {
 			each(nums, n -> {
-				if (n == 0) n = (double) 1.0;
-                this.amnt /= n;
-            });
+				if (n == 0)
+					n = (double) 1.0;
+				this.amnt /= n;
+			});
 			return this;
 		}
 		money quotient(double... nums) {
@@ -144,7 +161,9 @@ public class KL {
 			return this;
 		}
 		public String suffix(boolean... bools) {
-			boolean forceInternational = bools != null && bools.length > 0 ? bools[0] : false;
+			boolean forceInternational = bools != null && bools.length > 0
+					? bools[0]
+					: false;
 			this.cur = trim(this.cur) + " ";
 			if (in(this.cur, "pk|in|rs")) {
 				return "Rs. " + (forceInternational
@@ -30195,9 +30214,9 @@ public class KL {
 	public static boolean True = true, False = !True, yes = True, no = False,
 			Yes = yes, No = no, on = Yes, off = No, On = on, Off = off,
 			Success = Yes, Failure = No, Y = Yes, N = No, ever = Y, ha = Y,
-			na = N, nahi = na, Ha = ha, Na = na, Nahi = Na, he = ha, hen = ha, sach = Ha, jhoot = Na, Sach = sach,
-			Jhoot = jhoot;
-			//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
+			na = N, nahi = na, Ha = ha, Na = na, Nahi = Na, he = ha, hen = ha,
+			sach = Ha, jhoot = Na, Sach = sach, Jhoot = jhoot;
+	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static String Else = "else", warna = Else, Warna = warna;
@@ -30439,27 +30458,6 @@ public class KL {
 		}
 		return output;
 	}
-	
-	
-	
-	
-	
-	public static <T> Object[][] kv(T[] arg, Object[] zippedArg) {
-		if (arg == null || arg.length == 0 || zippedArg == null || zippedArg.length == 0)
-			return blank.Obj2D;
-		int length = min(len(arg), len(zippedArg));
-		Object[][] output = new Object[length][2];
-		for (int i = 0; i < length; i++) {
-			output[i][0] = arg[i];
-			output[i][1] = zippedArg[i];
-		}
-		return output;
-	}
-	
-	
-	
-	
-	
 	public static Object[][] kv(arr arg) {
 		if (arg == null || len(arg) == 0)
 			return blank.Obj2D;
@@ -30584,6 +30582,8777 @@ public class KL {
 	}
 	public static Object[][] enumerate(boolArr arg) {
 		return kv(arg);
+	}
+	public static Object[][] collect(String[] arg, String[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, int[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, long[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, float[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, double[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, boolean[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, Object[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, String[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, int[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, long[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, float[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, double[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, boolean[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, Object[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, String[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, int[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, long[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, float[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, double[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, boolean[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, Object[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, String[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, int[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, long[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, float[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, double[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, boolean[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, Object[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, String[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, int[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, long[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, float[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, double[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, boolean[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, Object[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, String[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, int[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, long[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, float[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, double[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, boolean[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, Object[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, String[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, int[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, long[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, float[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, double[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, boolean[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, Object[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null
+				|| zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(String[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(int[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(long[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(float[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(double[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(boolean[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] collect(Object[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		if (arg == null || arg.length == 0 || zippedArgA == null
+				|| zippedArgA.length == 0 || zippedArgB == null
+				|| zippedArgB.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArgA), len(zippedArgB));
+		Object[][] output = new Object[length][3];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArgA[i];
+			output[i][2] = zippedArgB[i];
+		}
+		return output;
+	}
+	public static Object[][] extract(String[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(String[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(String[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(String[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(String[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(String[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(String[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(int[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(int[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(int[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(int[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(int[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(int[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(int[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(long[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(long[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(long[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(long[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(long[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(long[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(long[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(float[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(float[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(float[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(float[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(float[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(float[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(float[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(double[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(double[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(double[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(double[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(double[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(double[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(double[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(boolean[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(boolean[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(boolean[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(boolean[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(boolean[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(boolean[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(boolean[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(Object[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(Object[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(Object[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(Object[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(Object[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(Object[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(Object[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] extract(String[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(String[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(int[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(long[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(float[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(double[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(boolean[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(Object[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(String[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(String[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(String[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(String[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(String[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(String[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(int[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(int[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(int[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(int[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(int[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(int[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(int[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(long[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(long[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(long[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(long[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(long[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(long[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(long[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(float[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(float[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(float[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(float[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(float[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(float[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(float[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(double[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(double[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(double[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(double[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(double[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(double[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(double[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(boolean[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(boolean[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(boolean[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(boolean[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(boolean[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(boolean[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(boolean[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(Object[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(Object[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(Object[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(Object[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(Object[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(Object[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(Object[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] all(String[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(String[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(int[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(long[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(float[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(double[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(boolean[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] all(Object[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
 	}
 	public static final class DoFail {
 		public static interface CustomRunnable {
@@ -30799,12 +39568,13 @@ public class KL {
 			}
 		}
 		agar(boolean condition) {
-		    if (not(condition)) {
-		        caughtException = new Exception("The condition turned out to be false.");
-		        success = No;
-		        return;
-	        }
-		    success = Yes;
+			if (not(condition)) {
+				caughtException = new Exception(
+						"The condition turned out to be false.");
+				success = No;
+				return;
+			}
+			success = Yes;
 		}
 		agar tab(Runnable fn) {
 			if (fn == ignored)
@@ -30874,23 +39644,23 @@ public class KL {
 	public static agar agar(boolean condition) {
 		return new agar(condition);
 	}
-	public static agar agar(agar.CustomRunnable fn,
-			Runnable onSuccess, Consumer<Throwable> onFallback) {
+	public static agar agar(agar.CustomRunnable fn, Runnable onSuccess,
+			Consumer<Throwable> onFallback) {
 		return new agar(fn).tab(onSuccess).nakam(onFallback);
 	}
-	public static agar agar(agar.CustomRunnable fn, Runnable onSuccess, Runnable onFallback) {
+	public static agar agar(agar.CustomRunnable fn, Runnable onSuccess,
+			Runnable onFallback) {
 		return new agar(fn).tab(onSuccess).nakam(onFallback);
 	}
-	public static agar agar(boolean condition,
-			Runnable onSuccess, Consumer<Throwable> onFallback) {
+	public static agar agar(boolean condition, Runnable onSuccess,
+			Consumer<Throwable> onFallback) {
 		return new agar(condition).tab(onSuccess).nakam(onFallback);
 	}
-	public static agar agar(boolean condition, Runnable onSuccess, Runnable onFallback) {
+	public static agar agar(boolean condition, Runnable onSuccess,
+			Runnable onFallback) {
 		return new agar(condition).tab(onSuccess).nakam(onFallback);
 	}
-	
-	
-	
+
 	public static int[] range(int n) {
 		intArr arr = intArr();
 		if (not(n) || n < 0) {
@@ -36016,8 +44786,8 @@ public class KL {
 					if (num == matrices[0][0][0])
 						continue;
 					hint this_helps_avoid_an_arithmetic_exception;
-	            	if (num == 0)
-		                continue;
+					if (num == 0)
+						continue;
 					quotient /= num;
 				}
 			}
@@ -36035,8 +44805,8 @@ public class KL {
 					if (num == matrices[0][0][0])
 						continue;
 					hint this_helps_avoid_an_arithmetic_exception;
-	            	if (num == 0)
-		                continue;
+					if (num == 0)
+						continue;
 					quotient /= num;
 				}
 			}
@@ -36054,8 +44824,8 @@ public class KL {
 					if (num == matrices[0][0][0])
 						continue;
 					hint this_helps_avoid_an_arithmetic_exception;
-	            	if (num == 0)
-		                continue;
+					if (num == 0)
+						continue;
 					quotient /= num;
 				}
 			}
@@ -36073,8 +44843,8 @@ public class KL {
 					if (num == matrices[0][0][0])
 						continue;
 					hint this_helps_avoid_an_arithmetic_exception;
-	            	if (num == 0)
-		                continue;
+					if (num == 0)
+						continue;
 					quotient /= num;
 				}
 			}
@@ -36340,7 +45110,7 @@ public class KL {
 		}
 		hint this_is_to_avoid_arithmetic_exception;
 		if (n2 == 0)
-		    n2 = n1;
+			n2 = n1;
 		return Pos(n1 % n2);
 	}
 	public static boolean isPerfectMod(double n1, double n2) {
@@ -46215,8 +54985,7 @@ public class KL {
 		}
 		return arrA.negativeIntersection(arrays);
 	}
-	public static arr negativeIntersection(arr arrA,
-			arr... arrays) {
+	public static arr negativeIntersection(arr arrA, arr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.mixedArr;
 		}
@@ -48858,21 +57627,33 @@ public class KL {
 		pesa pese = naiRakam(600);
 		pese.dalo(2 * hzr).nikalo(2 * so);
 		kaho("Bakaya =", pese.bakaya());
-		agar(() -> print(0/0)).tab(() -> print("possible.")).warna(() -> print("not possible."));
-		agar(() -> print(0/0), () -> print("possible."), () -> print("not possible."));
-		agar(2/2==1).tab(() -> print("sahi, 2/2 wakai 1 ke barabar he.")).warna(() -> print("nahi, 2/2 1 ke barabar nahi."));
-		agar(2/2==1, () -> print("sahi, 2/2 wakai 1 ke barabar he."), () -> print("nahi, 2/2 1 ke barabar nahi."));
-		
-		agar(() -> print(0/0)).tab(() -> print("possible.")).warna(e -> print(e));
-		agar(() -> print(0/0), () -> print("possible."), err -> print(err));
-		agar(2/2==1).tab(() -> print("sahi, 2/2 wakai 1 ke barabar he.")).warna(e -> print(e));
-		agar(2/2==1, () -> print("sahi, 2/2 wakai 1 ke barabar he."), err -> print(err));
-		
-		
-		
-		
-		agar(he(5, 2+2)).to(() -> kaho("theek kaha.")).warna(() -> kaho("galat kaha."));
-		he(2+2, 5, () -> kaho("theek."), Warna, () -> kaho("galat."));
+		agar(() -> print(0 / 0)).tab(() -> print("possible."))
+				.warna(() -> print("not possible."));
+		agar(() -> print(0 / 0), () -> print("possible."),
+				() -> print("not possible."));
+		agar(2 / 2 == 1).tab(() -> print("sahi, 2/2 wakai 1 ke barabar he."))
+				.warna(() -> print("nahi, 2/2 1 ke barabar nahi."));
+		agar(2 / 2 == 1, () -> print("sahi, 2/2 wakai 1 ke barabar he."),
+				() -> print("nahi, 2/2 1 ke barabar nahi."));
+
+		agar(() -> print(0 / 0)).tab(() -> print("possible."))
+				.warna(e -> print(e));
+		agar(() -> print(0 / 0), () -> print("possible."), err -> print(err));
+		agar(2 / 2 == 1).tab(() -> print("sahi, 2/2 wakai 1 ke barabar he."))
+				.warna(e -> print(e));
+		agar(2 / 2 == 1, () -> print("sahi, 2/2 wakai 1 ke barabar he."),
+				err -> print(err));
+
+		agar(he(5, 2 + 2)).to(() -> kaho("theek kaha."))
+				.warna(() -> kaho("galat kaha."));
+		he(2 + 2, 5, () -> kaho("theek."), Warna, () -> kaho("galat."));
+
+		String[] names = {"Mike", "Angela", "Motricia"};
+		int[] ages = {23, 26, 31, 17};
+		String[] states = {"Michigan", "North Dakota", "Florida"};
+		for (var each : all(names, ages, states)) {
+			print(each[0], "is", each[1], "and", "is", "from", each[2]);
+		}
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
