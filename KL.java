@@ -40952,362 +40952,369 @@ public class KL {
 		return keepIf(list, condition);
 	}
 	// Date functions
-	public static String nthDay(int n) {
-		String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-				"Friday", "Saturday"};
-		return days[n];
-	}
-	public static String nthMonth(int n) {
-		String months[] = {"January", "February", "March", "April", "May",
-				"June", "July", "August", "September", "October", "November",
-				"December"};
-		return months[n];
-	}
-	public static String formattedDate(Date dt) {
-		int dayOfWeek = dt.getDay(), monthOfYear = dt.getMonth();
-		String day, month;
-		String date = dt.toLocaleString();
-		String ampm = date.substring(date.length() - 2);
-		date = date.substring(0, date.length() - 6) + " " + ampm;
-		month = nthMonth(monthOfYear);
-		date = month + " " + date.substring(4);
-		day = nthDay(dayOfWeek);
-		date = day + ", " + date;
-		return date;
-	}
-	public static String now() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * (3600 * 1000))); // fix 5-hour bug
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		parts[0] = parts[0];
-		parts[1] = split(parts[1], " ")[0] + " " + split(parts[1], " ")[1];
-		String time = slice(parts, len(parts) - 1)[0];
-		String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
-		String result = join(x, ", ");
-		return result;
-	}
-	public static String now(boolean shortened) {
-		if (!shortened) {
+	public static class date {
+		public static String nthDay(int n) {
+			String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday",
+					"Thursday", "Friday", "Saturday"};
+			return days[n];
+		}
+		public static String nthMonth(int n) {
+			String months[] = {"January", "February", "March", "April", "May",
+					"June", "July", "August", "September", "October",
+					"November", "December"};
+			return months[n];
+		}
+		public static String formattedDate(Date dt) {
+			int dayOfWeek = dt.getDay(), monthOfYear = dt.getMonth();
+			String day, month;
+			String date = dt.toLocaleString();
+			String ampm = date.substring(date.length() - 2);
+			date = date.substring(0, date.length() - 6) + " " + ampm;
+			month = nthMonth(monthOfYear);
+			date = month + " " + date.substring(4);
+			day = nthDay(dayOfWeek);
+			date = day + ", " + date;
+			return date;
+		}
+		public static String now() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * (3600 * 1000))); // fix 5-hour bug
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			parts[0] = parts[0];
+			parts[1] = split(parts[1], " ")[0] + " " + split(parts[1], " ")[1];
+			String time = slice(parts, len(parts) - 1)[0];
+			String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
+			String result = join(x, ", ");
+			return result;
+		}
+		public static String now(boolean shortened) {
+			if (!shortened) {
+				return now();
+			}
+			String parts[] = now().split(", ");
+			String time = parts[0], day = sliceKeep(parts[1], 3),
+					dateOfMonth = sliceKeep(parts[2], 3) + " "
+							+ parts[2].split(" ")[1],
+					year = parts[3];
+			String result = join(new String[]{time, day, dateOfMonth, year},
+					", ");
+			return result;
+		}
+		public static String getDate() {
+			String parts[] = now().split(", ");
+			return parts[2] + ", " + parts[3];
+		}
+		public static String getDay() {
+			return now().split(", ")[1];
+		}
+		public static String getMonth() {
+			return now().split(", ")[2].split(" ")[0];
+		}
+		public static String getYear() {
+			return now().split(", ")[3];
+		}
+		public static String getTime() {
+			return now().split(", ")[0];
+		}
+		public static String getTimeStamp() {
+			return now(true).toUpperCase().replaceAll("\\W+", "-");
+		}
+		public static String timestamp() {
+			return getTimeStamp();
+		}
+		public static String timeSignature() {
+			return getDateStamp();
+		}
+		public static String getDateStamp() {
+			return getTimeStamp().split("(?<=[AP]M)-")[1];
+		}
+		public static String dateStamp() {
+			return getDateStamp();
+		}
+		public static String dateSignature() {
+			return getDateStamp();
+		}
+		public static String getSeason() {
+			String m = slice(getMonth(), 0, 3).toLowerCase();
+			switch (m) {
+				case "may" :
+				case "jun" :
+				case "jul" :
+				case "aug" :
+					return "Summer";
+				case "sep" :
+				case "oct" :
+					return "Spring";
+				case "nov" :
+				case "dec" :
+				case "jan" :
+				case "feb" :
+					return "Winter";
+				default :
+					return "Fall/Autumn";
+			}
+		}
+		public static String yesterday() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() - ((int) 36e5 * 24)); // decrement 24 hours or
+			// (3.6*10⁶)*24
+			// milliseconds
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String dayBeforeYesterday() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() - ((int) 72e5 * 24)); // decrement 48 hours or
+			// (7.2*10⁶)*24
+			// milliseconds
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String twoDaysAgo() {
+			return dayBeforeYesterday();
+		}
+		public static String tomorrow() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) (36e2 * 1e3)))); // fix 5-hour bug
+			dt.setTime(dt.getTime() + ((int) 36e5 * 24)); // increment 24 hours or
+			// (3.6*10⁶)*24
+			// milliseconds
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String dayAfterTomorrow() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() + ((int) 72e5 * 24)); // increment 48 hours or
+			// (7.2*10⁶)*24
+			// milliseconds
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String twoDaysLater() {
+			return dayAfterTomorrow();
+		}
+		public static String lastMonth() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setMonth(dt.getMonth() - 1); // decrement a month
+			String date = formattedDate(dt);
+			date = date.split(", ")[1].split(" ")[0];
+			return date;
+		}
+		public static String lastMonthOf(String date) {
+			Date dt = new Date(date);
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setMonth(dt.getMonth() - 1); // decrement a month
+			date = formattedDate(dt);
+			date = date.split(", ")[1].split(" ")[0];
+			return date;
+		}
+		public static String nextMonth() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setMonth(dt.getMonth() + 1); // increment a month
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = date.split(", ")[1].split(" ")[0];
+			return date;
+		}
+		public static String nextMonthOf(String date) {
+			Date dt = new Date(date);
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setMonth(dt.getMonth() + 1); // increment a month
+			date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = date.split(", ")[1].split(" ")[0];
+			return date;
+		}
+		public static String lastYear() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setYear(dt.getYear() - 1); // decrement a year
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = date.split(", ")[2];
+			return date;
+		}
+		public static String lastYearOf(String date) {
+			Date dt = new Date(date);
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setYear(dt.getYear() - 1); // decrement a year
+			date = formattedDate(dt);
+			date = date.split(", ")[2];
+			return date;
+		}
+		public static String nextYear() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setYear(dt.getYear() + 1); // increment a year
+			String date = formattedDate(dt);
+			date = date.split(", ")[2];
+			return date;
+		}
+		public static String nextYear(String date) {
+			Date dt = new Date(date);
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setYear(dt.getYear() + 1); // increment a year
+			date = formattedDate(dt);
+			date = date.split(", ")[2];
+			return date;
+		}
+		public static String age2bday(int age) {
+			Date dt = new Date();
+			// dt.setTime(dt.getTime()+(5*((int)36e5))); //fix 5-hour bug
+			String bday = "" + ((dt.getYear() + 1900) - age); // adding 1900 helps
+			// resolve a bug
+			return bday;
+		}
+		public static int bday2age(String date) {
+			Date dt = new Date(date);
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			int age = new Date().getYear() - dt.getYear();
+			return age;
+		}
+		public static String date2day(String date) {
+			Date dt = new Date(date);
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			date = formattedDate(dt);
+			date = date.split(", ")[0];
+			return date;
+		}
+		public static String date2month(String date) {
+			Date dt = new Date(date);
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			date = formattedDate(dt);
+			date = date.split(", ")[1].split(" ")[0];
+			return date;
+		}
+		public static String timeGreet() {
+			String greeting;
+			int h = new Date().getHours() + 5; // fix 5-hour bug along the way
+			if (h >= 20) {
+				greeting = "Good night";
+			} else if (h >= 16) {
+				greeting = "Good evening";
+			} else if (h >= 12) {
+				greeting = "Good afternoon";
+			} else if (h >= 0 && h <= 4) {
+				greeting = "Good new day";
+			} else {
+				greeting = "Good morning";
+			}
+			return greeting;
+		}
+		public static String lastOfMonth(int m) {
+			Date dt = new Date();
+			date dt2 = new KL.date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug for
+			// better accuracy
+			String result = "" + ("" + dt2.nthMonth(m - 1) + " "
+					+ new Date(new Date().getYear(), m, 0).getDate());
+			return result;
+		}
+		public static boolean isWeekend() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			return dt.getDay() % 6 == 0;
+		}
+		public static boolean isLeapYear() {
+			return (1900 + new Date().getYear()) % 4 == 0;
+		}
+		public static int nextLeapYear() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug for
+			// better accuracy
+			int i = 0;
+			if (dt.getYear() % 4 == 0) {
+				dt.setYear(dt.getYear() + 1); // ignore current year, if it's leap
+			}
+			while (dt.getYear() % 4 != 0) {
+				dt.setYear((dt.getYear()) + i);
+				i++;
+			}
+			int result = (1900 + dt.getYear()); // comes with a bug fix
+			return result;
+		}
+		public static String dateBefore(int n) {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setDate(dt.getDate() - Math.abs(n));
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String dateAfter(int n) {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setDate(dt.getDate() + Math.abs(n));
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String minsAgo(int n) {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() - (n * (int) 60e3));
+			String time = formattedDate(dt);
+			time = time.split(", ")[3];
+			return time;
+		}
+		public static String minsLater(int n) {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() + (n * (int) 60e3));
+			String time = formattedDate(dt);
+			time = time.split(", ")[3];
+			return time;
+		}
+		public static String hoursAgo(int n) {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // first fix the 5-hour
+			// bug
+			dt.setTime(dt.getTime() - (n * (int) 36e5));
+			String time = formattedDate(dt);
+			time = time.split(", ")[3];
+			return time;
+		}
+		public static String hoursLater(int n) {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // first fix the 5-hour
+			// bug
+			dt.setTime(dt.getTime() + (n * (int) 36e5));
+			String time = formattedDate(dt);
+			time = time.split(", ")[3];
+			return time;
+		}
+		public static String nthHour(int n) {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() - (int) 36e5 * dt.getHours()
+					+ (n * (int) 36e5));
+			String time = formattedDate(dt);
+			time = time.split(", ")[3];
+			return time;
+		}
+		@Override
+		public String toString() {
 			return now();
 		}
-		String parts[] = now().split(", ");
-		String time = parts[0], day = sliceKeep(parts[1], 3),
-				dateOfMonth = sliceKeep(parts[2], 3) + " "
-						+ parts[2].split(" ")[1],
-				year = parts[3];
-		String result = join(new String[]{time, day, dateOfMonth, year}, ", ");
-		return result;
-	}
-	public static String getDate() {
-		String parts[] = now().split(", ");
-		return parts[2] + ", " + parts[3];
-	}
-	public static String getDay() {
-		return now().split(", ")[1];
-	}
-	public static String getMonth() {
-		return now().split(", ")[2].split(" ")[0];
-	}
-	public static String getYear() {
-		return now().split(", ")[3];
-	}
-	public static String getTime() {
-		return now().split(", ")[0];
-	}
-	public static String getTimestamp() {
-		return now(true).toUpperCase().replaceAll("\\W+", "-");
-	}
-	public static String timestamp() {
-		return getTimestamp();
-	}
-	public static String timesignature() {
-		return getDatestamp();
-	}
-	public static String getDatestamp() {
-		return getTimestamp().split("(?<=[AP]M)-")[1];
-	}
-	public static String datestamp() {
-		return getDatestamp();
-	}
-	public static String datesignature() {
-		return getDatestamp();
-	}
-	public static String getSeason() {
-		String m = slice(getMonth(), 0, 3).toLowerCase();
-		switch (m) {
-			case "may" :
-			case "jun" :
-			case "jul" :
-			case "aug" :
-				return "Summer";
-			case "sep" :
-			case "oct" :
-				return "Spring";
-			case "nov" :
-			case "dec" :
-			case "jan" :
-			case "feb" :
-				return "Winter";
-			default :
-				return "Fall/Autumn";
-		}
-	}
-	public static String yesterday() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setTime(dt.getTime() - ((int) 36e5 * 24)); // decrement 24 hours or
-		// (3.6*10⁶)*24
-		// milliseconds
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = parts[0] + ", " + parts[1] + ", " + parts[2];
-		return date;
-	}
-	public static String dayBeforeYesterday() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setTime(dt.getTime() - ((int) 72e5 * 24)); // decrement 48 hours or
-		// (7.2*10⁶)*24
-		// milliseconds
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = parts[0] + ", " + parts[1] + ", " + parts[2];
-		return date;
-	}
-	public static String twoDaysAgo() {
-		return dayBeforeYesterday();
-	}
-	public static String tomorrow() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) (36e2 * 1e3)))); // fix 5-hour bug
-		dt.setTime(dt.getTime() + ((int) 36e5 * 24)); // increment 24 hours or
-		// (3.6*10⁶)*24
-		// milliseconds
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = parts[0] + ", " + parts[1] + ", " + parts[2];
-		return date;
-	}
-	public static String dayAfterTomorrow() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setTime(dt.getTime() + ((int) 72e5 * 24)); // increment 48 hours or
-		// (7.2*10⁶)*24
-		// milliseconds
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = parts[0] + ", " + parts[1] + ", " + parts[2];
-		return date;
-	}
-	public static String twoDaysLater() {
-		return dayAfterTomorrow();
-	}
-	public static String lastMonth() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setMonth(dt.getMonth() - 1); // decrement a month
-		String date = formattedDate(dt);
-		date = date.split(", ")[1].split(" ")[0];
-		return date;
-	}
-	public static String lastMonthOf(String date) {
-		Date dt = new Date(date);
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setMonth(dt.getMonth() - 1); // decrement a month
-		date = formattedDate(dt);
-		date = date.split(", ")[1].split(" ")[0];
-		return date;
-	}
-	public static String nextMonth() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setMonth(dt.getMonth() + 1); // increment a month
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = date.split(", ")[1].split(" ")[0];
-		return date;
-	}
-	public static String nextMonthOf(String date) {
-		Date dt = new Date(date);
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setMonth(dt.getMonth() + 1); // increment a month
-		date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = date.split(", ")[1].split(" ")[0];
-		return date;
-	}
-	public static String lastYear() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setYear(dt.getYear() - 1); // decrement a year
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = date.split(", ")[2];
-		return date;
-	}
-	public static String lastYearOf(String date) {
-		Date dt = new Date(date);
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setYear(dt.getYear() - 1); // decrement a year
-		date = formattedDate(dt);
-		date = date.split(", ")[2];
-		return date;
-	}
-	public static String nextYear() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setYear(dt.getYear() + 1); // increment a year
-		String date = formattedDate(dt);
-		date = date.split(", ")[2];
-		return date;
-	}
-	public static String nextYear(String date) {
-		Date dt = new Date(date);
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setYear(dt.getYear() + 1); // increment a year
-		date = formattedDate(dt);
-		date = date.split(", ")[2];
-		return date;
-	}
-	public static String age2bday(int age) {
-		Date dt = new Date();
-		// dt.setTime(dt.getTime()+(5*((int)36e5))); //fix 5-hour bug
-		String bday = "" + ((dt.getYear() + 1900) - age); // adding 1900 helps
-		// resolve a bug
-		return bday;
-	}
-	public static int bday2age(String date) {
-		Date dt = new Date(date);
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		int age = new Date().getYear() - dt.getYear();
-		return age;
-	}
-	public static String date2day(String date) {
-		Date dt = new Date(date);
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		date = formattedDate(dt);
-		date = date.split(", ")[0];
-		return date;
-	}
-	public static String date2month(String date) {
-		Date dt = new Date(date);
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		date = formattedDate(dt);
-		date = date.split(", ")[1].split(" ")[0];
-		return date;
-	}
-	public static String timeGreet() {
-		String greeting;
-		int h = new Date().getHours() + 5; // fix 5-hour bug along the way
-		if (h >= 20) {
-			greeting = "Good night";
-		} else if (h >= 16) {
-			greeting = "Good evening";
-		} else if (h >= 12) {
-			greeting = "Good afternoon";
-		} else if (h >= 0 && h <= 4) {
-			greeting = "Good new day";
-		} else {
-			greeting = "Good morning";
-		}
-		return greeting;
-	}
-	public static String lastOfMonth(int m) {
-		Date dt = new Date();
-		KL dt2 = new KL();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug for
-		// better accuracy
-		String result = "" + ("" + dt2.nthMonth(m - 1) + " "
-				+ new Date(new Date().getYear(), m, 0).getDate());
-		return result;
-	}
-	public static boolean isWeekend() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		return dt.getDay() % 6 == 0;
-	}
-	public static boolean isLeapYear() {
-		return (1900 + new Date().getYear()) % 4 == 0;
-	}
-	public static int nextLeapYear() {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug for
-		// better accuracy
-		int i = 0;
-		if (dt.getYear() % 4 == 0) {
-			dt.setYear(dt.getYear() + 1); // ignore current year, if it's leap
-		}
-		while (dt.getYear() % 4 != 0) {
-			dt.setYear((dt.getYear()) + i);
-			i++;
-		}
-		int result = (1900 + dt.getYear()); // comes with a bug fix
-		return result;
-	}
-	public static String dateBefore(int n) {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setDate(dt.getDate() - Math.abs(n));
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = parts[0] + ", " + parts[1] + ", " + parts[2];
-		return date;
-	}
-	public static String dateAfter(int n) {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setDate(dt.getDate() + Math.abs(n));
-		String date = formattedDate(dt);
-		String parts[] = date.split(", ");
-		date = parts[0] + ", " + parts[1] + ", " + parts[2];
-		return date;
-	}
-	public static String minsAgo(int n) {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setTime(dt.getTime() - (n * (int) 60e3));
-		String time = formattedDate(dt);
-		time = time.split(", ")[3];
-		return time;
-	}
-	public static String minsLater(int n) {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setTime(dt.getTime() + (n * (int) 60e3));
-		String time = formattedDate(dt);
-		time = time.split(", ")[3];
-		return time;
-	}
-	public static String hoursAgo(int n) {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // first fix the 5-hour
-		// bug
-		dt.setTime(dt.getTime() - (n * (int) 36e5));
-		String time = formattedDate(dt);
-		time = time.split(", ")[3];
-		return time;
-	}
-	public static String hoursLater(int n) {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // first fix the 5-hour
-		// bug
-		dt.setTime(dt.getTime() + (n * (int) 36e5));
-		String time = formattedDate(dt);
-		time = time.split(", ")[3];
-		return time;
-	}
-	public static String nthHour(int n) {
-		Date dt = new Date();
-		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-		dt.setTime(
-				dt.getTime() - (int) 36e5 * dt.getHours() + (n * (int) 36e5));
-		String time = formattedDate(dt);
-		time = time.split(", ")[3];
-		return time;
 	}
 	public static String date() {
-		return now();
+		return Str(new date());
 	}
 	// utilities
 	public static void println(Object... args) {
@@ -58104,6 +58111,7 @@ public class KL {
 				.tab(() -> print("Possible. New n =", num[0]))
 				.warna(e -> print("Not possible"));
 		print(not(2 + 2, 5));
+		print(new date());
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
