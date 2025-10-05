@@ -39650,6 +39650,27 @@ public class KL {
 			}
 			success = Yes;
 		}
+		public static agar possible(CustomRunnable fn) {
+			return agar(fn);
+		}
+		public static agar possible(CustomCallable fn) {
+			return agar(fn);
+		}
+		public static agar mumkin(CustomRunnable fn) {
+			return possible(fn);
+		}
+		public static agar mumkin(CustomCallable fn) {
+			return possible(fn);
+		}
+		public static agar he(boolean condition) {
+			return agar(condition);
+		}
+		public static agar hen(boolean condition) {
+			return agar(condition);
+		}
+		public static agar nahi(boolean condition) {
+			return agar(!condition);
+		}
 		agar tab(Runnable fn) {
 			if (fn == ignored)
 				return null;
@@ -49366,6 +49387,75 @@ public class KL {
 	public static boolean uneq(treeB x, treeB y) {
 		return !eq(x, y);
 	}
+	public static boolean not(char x, char y) {
+		return !eq(x, y);
+	}
+	public static boolean not(int x, int y) {
+		return !eq(x, y);
+	}
+	public static boolean not(long x, long y) {
+		return !eq(x, y);
+	}
+	public static boolean not(float x, float y) {
+		return !eq(x, y);
+	}
+	public static boolean not(double x, double y) {
+		return !eq(x, y);
+	}
+	public static boolean not(boolean x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean not(Object x, Object y) {
+		return !eq(x, y);
+	}
+	public static boolean not(strArr x, strArr y) {
+		return !eq(x, y);
+	}
+	public static boolean not(intArr x, intArr y) {
+		return !eq(x, y);
+	}
+	public static boolean not(longArr x, longArr y) {
+		return !eq(x, y);
+	}
+	public static boolean not(fltArr x, fltArr y) {
+		return !eq(x, y);
+	}
+	public static boolean not(dblArr x, dblArr y) {
+		return !eq(x, y);
+	}
+	public static boolean not(boolArr x, boolArr y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeDI x, treeDI y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeI x, treeI y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeDL x, treeDL y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeL x, treeL y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeDF x, treeDF y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeF x, treeF y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeDS x, treeDS y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeD x, treeD y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeDB x, treeDB y) {
+		return !eq(x, y);
+	}
+	public static boolean not(treeB x, treeB y) {
+		return !eq(x, y);
+	}
 	public static boolean nahi(char x, char y) {
 		return !eq(x, y);
 	}
@@ -57727,7 +57817,7 @@ public class KL {
 		agar(2 / 2 == 1, () -> print("sahi, 2/2 wakai 1 ke barabar he."),
 				err -> print(err));
 
-		agar(he(5, 2 + 2)).to(() -> kaho("theek kaha."))
+		agar.nahi(5 == 2 + 2).to(() -> kaho("theek kaha."))
 				.warna(() -> kaho("galat kaha."));
 		he(2 + 2, 5, () -> kaho("theek."), Warna, () -> kaho("galat."));
 
@@ -57737,7 +57827,11 @@ public class KL {
 		for (var each : all(names, ages, states)) {
 			print(each[0], "is", each[1], "and", "is", "from", each[2]);
 		}
-		agar(() -> 2 / 2).tab(() -> print("possible.")).warna(e -> print(e));
+		int num[] = {n};
+		agar.possible(() -> num[0] /= 2)
+				.tab(() -> print("Possible. New n =", num[0]))
+				.warna(e -> print("Not possible"));
+		print(not(2 + 2, 5));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
