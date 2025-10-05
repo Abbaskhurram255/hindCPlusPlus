@@ -39358,6 +39358,9 @@ public class KL {
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
+		public static interface CustomCallable {
+			Object call() throws Throwable;
+		}
 		private Throwable caughtException = null;
 		boolean success = No;
 		DoFail Do(CustomRunnable fn) {
@@ -39365,6 +39368,18 @@ public class KL {
 				return null;
 			try {
 				fn.run();
+				success = Yes;
+			} catch (Throwable e) {
+				caughtException = e;
+				success = No;
+			}
+			return this;
+		}
+		DoFail Do(CustomCallable fn) {
+			if (fn == ignored)
+				return null;
+			try {
+				fn.call();
 				success = Yes;
 			} catch (Throwable e) {
 				caughtException = e;
@@ -39450,6 +39465,13 @@ public class KL {
 			Consumer<Throwable> fallback) {
 		return new DoFail().Do(fn).Fail(fallback);
 	}
+	public static DoFail Do(DoFail.CustomCallable fn) {
+		return new DoFail().Do(fn);
+	}
+	public static DoFail Do(DoFail.CustomCallable fn,
+			Consumer<Throwable> fallback) {
+		return new DoFail().Do(fn).Fail(fallback);
+	}
 	public static DoFail Do(DoFail.CustomRunnable fn, Runnable fallback) {
 		return new DoFail().Do(fn).Fail(fallback);
 	}
@@ -39463,9 +39485,25 @@ public class KL {
 	public static DoFail Try(DoFail.CustomRunnable fn, Runnable fallback) {
 		return new DoFail().Do(fn).Fail(fallback);
 	}
+	public static DoFail Do(DoFail.CustomCallable fn, Runnable fallback) {
+		return new DoFail().Do(fn).Fail(fallback);
+	}
+	public static DoFail Try(DoFail.CustomCallable fn) {
+		return new DoFail().Do(fn);
+	}
+	public static DoFail Try(DoFail.CustomCallable fn,
+			Consumer<Throwable> fallback) {
+		return new DoFail().Do(fn).Fail(fallback);
+	}
+	public static DoFail Try(DoFail.CustomCallable fn, Runnable fallback) {
+		return new DoFail().Do(fn).Fail(fallback);
+	}
 	public static final class karoFail {
 		public static interface CustomRunnable {
 			void run() throws Throwable;
+		}
+		public static interface CustomCallable {
+			Object call() throws Throwable;
 		}
 		private Throwable caughtException = null;
 		boolean success = No;
@@ -39474,6 +39512,18 @@ public class KL {
 				return null;
 			try {
 				fn.run();
+				success = Yes;
+			} catch (Throwable e) {
+				caughtException = e;
+				success = No;
+			}
+			return this;
+		}
+		karoFail karo(CustomCallable fn) {
+			if (fn == ignored)
+				return null;
+			try {
+				fn.call();
 				success = Yes;
 			} catch (Throwable e) {
 				caughtException = e;
@@ -39543,16 +39593,29 @@ public class KL {
 	public static karoFail karo(karoFail.CustomRunnable fn) {
 		return new karoFail().karo(fn);
 	}
+	public static karoFail karo(karoFail.CustomCallable fn) {
+		return new karoFail().karo(fn);
+	}
 	public static karoFail karo(karoFail.CustomRunnable fn,
+			Consumer<Throwable> fallback) {
+		return new karoFail().karo(fn).nakam(fallback);
+	}
+	public static karoFail karo(karoFail.CustomCallable fn,
 			Consumer<Throwable> fallback) {
 		return new karoFail().karo(fn).nakam(fallback);
 	}
 	public static karoFail karo(karoFail.CustomRunnable fn, Runnable fallback) {
 		return new karoFail().karo(fn).nakam(fallback);
 	}
+	public static karoFail karo(karoFail.CustomCallable fn, Runnable fallback) {
+		return new karoFail().karo(fn).nakam(fallback);
+	}
 	public static final class agar {
 		public static interface CustomRunnable {
 			void run() throws Throwable;
+		}
+		public static interface CustomCallable {
+			Object call() throws Throwable;
 		}
 		private Throwable caughtException = null;
 		boolean success = No;
@@ -39561,6 +39624,17 @@ public class KL {
 				return;
 			try {
 				fn.run();
+				success = Yes;
+			} catch (Throwable e) {
+				caughtException = e;
+				success = No;
+			}
+		}
+		agar(CustomCallable fn) {
+			if (fn == ignored)
+				return;
+			try {
+				fn.call();
 				success = Yes;
 			} catch (Throwable e) {
 				caughtException = e;
@@ -39641,6 +39715,9 @@ public class KL {
 	public static agar agar(agar.CustomRunnable fn) {
 		return new agar(fn);
 	}
+	public static agar agar(agar.CustomCallable fn) {
+		return new agar(fn);
+	}
 	public static agar agar(boolean condition) {
 		return new agar(condition);
 	}
@@ -39649,6 +39726,14 @@ public class KL {
 		return new agar(fn).tab(onSuccess).nakam(onFallback);
 	}
 	public static agar agar(agar.CustomRunnable fn, Runnable onSuccess,
+			Runnable onFallback) {
+		return new agar(fn).tab(onSuccess).nakam(onFallback);
+	}
+	public static agar agar(agar.CustomCallable fn, Runnable onSuccess,
+			Consumer<Throwable> onFallback) {
+		return new agar(fn).tab(onSuccess).nakam(onFallback);
+	}
+	public static agar agar(agar.CustomCallable fn, Runnable onSuccess,
 			Runnable onFallback) {
 		return new agar(fn).tab(onSuccess).nakam(onFallback);
 	}
@@ -57636,8 +57721,6 @@ public class KL {
 		agar(2 / 2 == 1, () -> print("sahi, 2/2 wakai 1 ke barabar he."),
 				() -> print("nahi, 2/2 1 ke barabar nahi."));
 
-		agar(() -> print(0 / 0)).tab(() -> print("possible."))
-				.warna(e -> print(e));
 		agar(() -> print(0 / 0), () -> print("possible."), err -> print(err));
 		agar(2 / 2 == 1).tab(() -> print("sahi, 2/2 wakai 1 ke barabar he."))
 				.warna(e -> print(e));
@@ -57654,6 +57737,7 @@ public class KL {
 		for (var each : all(names, ages, states)) {
 			print(each[0], "is", each[1], "and", "is", "from", each[2]);
 		}
+		agar(() -> 2 / 2).tab(() -> print("possible.")).warna(e -> print(e));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
