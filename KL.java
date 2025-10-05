@@ -26,15 +26,12 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 @SuppressWarnings("all")
 public class KL {
-	// to shorten new KL() constructor calls into just kl()
 	class hint {
 		//@class.why: this class is supposed to help make functions more understandable
-		class type{}
-		class expects{}
 		class goodpractice{}
+		class time{}
 		class approach{}
 		class avoids{}
-		class returns{}
 		class warning{}
 		class forClass{}
 		class constructor{}
@@ -47,47 +44,51 @@ public class KL {
 		class params{}
 		class forParam{}
 		class forParams{}
-		class typesExpected{}
-		class expectedTypes{}
-		class typesHandled{}
-		class handledTypes{}
-		class returnType{}
 	}
-	public static KL kl(
-			hint.method... this_method_will_help_make_the_instantiation_quicker) {
-		// @hint: new KL().x -> kl().x
-		hint.expects nothing;
-		hint.returns KL;
+	public static KL kl() {
+		// @hint.method this_method_will_help_make_the_instantiation_quicker
 		return new KL();
 	}
 	public static class money {
 		//@class.why: this class is supposed to help deal with money-related everyday calculations easier (currency conversion will be added soon)
 		private double amnt;
-		private String curr;
+		private String cur;
 		money() {
 			this.amnt = 0;
-			this.curr = "Rs. ";
+			this.cur = "Rs. ";
 		}
 		money(double amnt) {
 			this.amnt = not(amnt) ? 0 : amnt;
-			this.curr = "Rs. ";
+			this.cur = "Rs. ";
 		}
-		money(double amnt, String curr) {
+		money(double amnt, String cur) {
 			this.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
-			this.curr = not(this.curr) || len(this.curr) < 1
-					|| len(this.curr) > 4 ? "Rs. " : titleCase(curr);
+			this.cur = not(this.cur) || len(this.cur) < 1
+					|| len(this.cur) > 4 ? "Rs. " : titleCase(cur);
 		}
-		money curr(String curr) {
-			this.curr = not(curr) || len(curr) < 1 || len(curr) > 4
+		money cur(String newCurrency) {
+			this.cur = not(newCurrency) || len(newCurrency) < 1 || len(newCurrency) > 4
 					? "Rs. "
-					: titleCase(curr);
+					: titleCase(newCurrency);
+			return this;
+		}
+		money currency(String newCurrency) {
+			cur(newCurrency);
+			return this;
+		}
+		money setCur(String newCurrency) {
+			cur(newCurrency);
+			return this;
+		}
+		money setCurrency(String newCurrency) {
+			cur(newCurrency);
 			return this;
 		}
 		money amount(double newAmnt) {
 			this.amnt = isinf(newAmnt) ? this.amnt : newAmnt;
 			return this;
 		}
-		money set(double newAmnt) {
+		money setAmount(double newAmnt) {
 			amount(newAmnt);
 			return this;
 		}
@@ -144,30 +145,30 @@ public class KL {
 		}
 		public String suffix(boolean... bools) {
 			boolean forceInternational = bools != null && bools.length > 0 ? bools[0] : false;
-			this.curr = trim(this.curr) + " ";
-			if (in(this.curr, "pk|in|rs")) {
+			this.cur = trim(this.cur) + " ";
+			if (in(this.cur, "pk|in|rs")) {
 				return "Rs. " + (forceInternational
 						? ussuffix(amnt)
 						: pksuffix(amnt));
 			}
-			if (in(this.curr, "us")) {
+			if (in(this.cur, "us")) {
 				return "USD " + ussuffix(amnt);
 			}
-			return this.curr + (forceInternational
-					|| (is(this.curr) && !in(this.curr, "pk|in|rs"))
+			return this.cur + (forceInternational
+					|| (is(this.cur) && !in(this.cur, "pk|in|rs"))
 							? ussuffix(amnt)
 							: pksuffix(amnt));
 		}
 		@Override
 		public String toString() {
-			this.curr = trim(this.curr) + " ";
-			if (not(this.curr) || in(this.curr, "pk|in|rs")) {
+			this.cur = trim(this.cur) + " ";
+			if (not(this.cur) || in(this.cur, "pk|in|rs")) {
 				return pkr(amnt);
 			}
-			if (in(this.curr, "us")) {
+			if (in(this.cur, "us")) {
 				return usd(amnt);
 			}
-			return this.curr + f(amnt);
+			return this.cur + f(amnt);
 		}
 		public String toString(boolean suffixMode) {
 			return suffixMode ? suffix() : toString();
@@ -206,16 +207,16 @@ public class KL {
 	public static final class pesa extends money {
 		pesa() {
 			super.amnt = 0;
-			super.curr = "Rs. ";
+			super.cur = "Rs. ";
 		}
 		pesa(double amnt) {
 			super.amnt = isinf(amnt) ? 0 : amnt;
-			super.curr = "Rs. ";
+			super.cur = "Rs. ";
 		}
-		pesa(double amnt, String curr) {
+		pesa(double amnt, String cur) {
 			super.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
-			super.curr = not(super.curr) || len(super.curr) < 1
-					|| len(super.curr) > 4 ? "Rs. " : titleCase(curr);
+			super.cur = not(super.cur) || len(super.cur) < 1
+					|| len(super.cur) > 4 ? "Rs. " : titleCase(cur);
 		}
 		pesa dalo(double amnt) {
 			add(amnt);
@@ -25951,6 +25952,132 @@ public class KL {
 	public static boolean he(Object src, Object cond1, Runnable sol1) {
 		return sw(src, cond1, sol1);
 	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static boolean hen(Object src, Object cond1, Runnable sol1) {
+		return sw(src, cond1, sol1);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
+			Object cond10, Runnable sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8, Object cond9, Runnable sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
+			Object cond8, Runnable sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6, Object cond7, Runnable sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5,
+			Object cond6, Runnable sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4, Object cond5, Runnable sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
+			Object cond4, Runnable sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2, Object cond3, Runnable sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1,
+			Object cond2, Runnable sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static boolean agar(Object src, Object cond1, Runnable sol1) {
+		return sw(src, cond1, sol1);
+	}
 	// sw/when version 1.1: when a condition meets, return its direct respective
 	// solution (of @type ::solutions.sol1.T)
 	public static <T> T sw(Object src, Object cond1, T sol1, Object cond2,
@@ -29953,14 +30080,127 @@ public class KL {
 	public static <T> T he(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
 	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static <T> T hen(Object src, Object cond1, T sol1) {
+		return sw(src, cond1, sol1);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9,
+				cond10, sol10);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8, Object cond9, T sol9) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8, cond9,
+				sol9);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
+			T sol8) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6, Object cond7, T sol7) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6, cond7, sol7);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5, Object cond6, T sol6) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5, cond6, sol6);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
+			T sol5) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4,
+				cond5, sol5);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3, Object cond4, T sol4) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2, Object cond3, T sol3) {
+		return sw(src, cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
+			T sol2) {
+		return sw(src, cond1, sol1, cond2, sol2);
+	}
+	public static <T> T agar(Object src, Object cond1, T sol1) {
+		return sw(src, cond1, sol1);
+	}
 	public static boolean True = true, False = !True, yes = True, no = False,
 			Yes = yes, No = no, on = Yes, off = No, On = on, Off = off,
 			Success = Yes, Failure = No, Y = Yes, N = No, ever = Y, ha = Y,
-			na = N, Ha = ha, Na = na, sach = Ha, jhoot = Na, Sach = sach,
+			na = N, nahi = na, Ha = ha, Na = na, Nahi = Na, he = ha, hen = ha, sach = Ha, jhoot = Na, Sach = sach,
 			Jhoot = jhoot;
+			//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
-	public static String Else = "else", Warna = Else;
+	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
 	public static char _c = '\0';
 	public static String _s = "";
@@ -30199,6 +30439,27 @@ public class KL {
 		}
 		return output;
 	}
+	
+	
+	
+	
+	
+	public static <T> Object[][] kv(T[] arg, Object[] zippedArg) {
+		if (arg == null || arg.length == 0 || zippedArg == null || zippedArg.length == 0)
+			return blank.Obj2D;
+		int length = min(len(arg), len(zippedArg));
+		Object[][] output = new Object[length][2];
+		for (int i = 0; i < length; i++) {
+			output[i][0] = arg[i];
+			output[i][1] = zippedArg[i];
+		}
+		return output;
+	}
+	
+	
+	
+	
+	
 	public static Object[][] kv(arr arg) {
 		if (arg == null || len(arg) == 0)
 			return blank.Obj2D;
@@ -30451,18 +30712,15 @@ public class KL {
 			}
 			return this;
 		}
-		karoFail kia(Runnable fn) {
+		karoFail hua(Runnable fn) {
 			if (fn == ignored)
 				return null;
 			if (caughtException == none)
 				fn.run();
 			return this;
 		}
-		karoFail hua(Runnable fn) {
-			return kia(fn);
-		}
 		karoFail then(Runnable fn) {
-			return kia(fn);
+			return hua(fn);
 		}
 		karoFail hamesha(Runnable fn) {
 			if (fn == ignored)
@@ -30523,6 +30781,116 @@ public class KL {
 	public static karoFail karo(karoFail.CustomRunnable fn, Runnable fallback) {
 		return new karoFail().karo(fn).nakam(fallback);
 	}
+	public static final class agar {
+		public static interface CustomRunnable {
+			void run() throws Throwable;
+		}
+		private Throwable caughtException = null;
+		boolean success = No;
+		agar(CustomRunnable fn) {
+			if (fn == ignored)
+				return;
+			try {
+				fn.run();
+				success = Yes;
+			} catch (Throwable e) {
+				caughtException = e;
+				success = No;
+			}
+		}
+		agar(boolean condition) {
+		    if (not(condition)) {
+		        caughtException = new Exception("The condition turned out to be false.");
+		        success = No;
+		        return;
+	        }
+		    success = Yes;
+		}
+		agar tab(Runnable fn) {
+			if (fn == ignored)
+				return null;
+			if (caughtException == none)
+				fn.run();
+			return this;
+		}
+		agar to(Runnable fn) {
+			return tab(fn);
+		}
+		agar then(Runnable fn) {
+			return tab(fn);
+		}
+		agar hamesha(Runnable fn) {
+			if (fn == ignored)
+				return this;
+			fn.run();
+			return this;
+		}
+		agar warna(Consumer<Throwable> fallback) {
+			if (caughtException == none || fallback == none)
+				return this;
+			fallback.accept(caughtException);
+			return this;
+		}
+		agar warna(Runnable fallback) {
+			if (caughtException == none || fallback == none)
+				return this;
+			fallback.run();
+			return this;
+		}
+		agar nakam(Consumer<Throwable> fallback) {
+			return warna(fallback);
+		}
+		agar nakam(Runnable fallback) {
+			return warna(fallback);
+		}
+		agar fail(Consumer<Throwable> fallback) {
+			return warna(fallback);
+		}
+		agar fail(Runnable fallback) {
+			return warna(fallback);
+		}
+		agar error(Consumer<Throwable> fallback) {
+			return warna(fallback);
+		}
+		agar error(Runnable fallback) {
+			return warna(fallback);
+		}
+		agar err(Consumer<Throwable> fallback) {
+			return warna(fallback);
+		}
+		agar err(Runnable fallback) {
+			return warna(fallback);
+		}
+		agar e(Consumer<Throwable> fallback) {
+			return warna(fallback);
+		}
+		agar e(Runnable fallback) {
+			return warna(fallback);
+		}
+	}
+	public static agar agar(agar.CustomRunnable fn) {
+		return new agar(fn);
+	}
+	public static agar agar(boolean condition) {
+		return new agar(condition);
+	}
+	public static agar agar(agar.CustomRunnable fn,
+			Runnable onSuccess, Consumer<Throwable> onFallback) {
+		return new agar(fn).tab(onSuccess).nakam(onFallback);
+	}
+	public static agar agar(agar.CustomRunnable fn, Runnable onSuccess, Runnable onFallback) {
+		return new agar(fn).tab(onSuccess).nakam(onFallback);
+	}
+	public static agar agar(boolean condition,
+			Runnable onSuccess, Consumer<Throwable> onFallback) {
+		return new agar(condition).tab(onSuccess).nakam(onFallback);
+	}
+	public static agar agar(boolean condition, Runnable onSuccess, Runnable onFallback) {
+		return new agar(condition).tab(onSuccess).nakam(onFallback);
+	}
+	
+	
+	
 	public static int[] range(int n) {
 		intArr arr = intArr();
 		if (not(n) || n < 0) {
@@ -34362,6 +34730,12 @@ public class KL {
 	public static boolean he(String x, String y, boolean strict) {
 		return eq(x, y, strict);
 	}
+	public static boolean nahi(String x, String y) {
+		return !he(x, y);
+	}
+	public static boolean nahi(String x, String y, boolean strict) {
+		return !he(x, y, strict);
+	}
 	public static boolean uneq(String x, String y) {
 		return !eq(x, y);
 	}
@@ -34545,30 +34919,6 @@ public class KL {
 	}
 	public static java.util.List<Boolean> List(Boolean... arg) {
 		return Arrays.asList(arg);
-	}
-	public static <T> java.util.List<T> list(T... args) {
-		return List(args);
-	}
-	// may or MAY NOT work, as working with generic types can be unpredictable,
-	// as
-	// learned from the mistakes in the past. So, here are some backup plans:
-	public static java.util.List<String> list(String... arg) {
-		return List(arg);
-	}
-	public static java.util.List<Integer> list(Integer... arg) {
-		return List(arg);
-	}
-	public static java.util.List<Long> list(Long... arg) {
-		return List(arg);
-	}
-	public static java.util.List<Float> list(Float... arg) {
-		return List(arg);
-	}
-	public static java.util.List<Double> list(Double... arg) {
-		return List(arg);
-	}
-	public static java.util.List<Boolean> list(Boolean... arg) {
-		return List(arg);
 	}
 	public static boolean isIntLike(String s) {
 		if (not(s)) {
@@ -40161,6 +40511,96 @@ public class KL {
 	public static boolean uneq(treeB x, treeB y) {
 		return !eq(x, y);
 	}
+	public static boolean nahi(char x, char y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(int x, int y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(long x, long y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(float x, float y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(double x, double y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(boolean x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(Object x, Object y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(String[] x, String[] y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(int[] x, int[] y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(long[] x, long[] y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(float[] x, float[] y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(double[] x, double[] y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(boolean[] x, boolean[] y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(Object[] x, Object[] y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(strArr x, strArr y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(intArr x, intArr y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(longArr x, longArr y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(fltArr x, fltArr y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(dblArr x, dblArr y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(boolArr x, boolArr y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeDI x, treeDI y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeI x, treeI y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeDL x, treeDL y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeL x, treeL y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeDF x, treeDF y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeF x, treeF y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeDS x, treeDS y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeD x, treeD y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeDB x, treeDB y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(treeB x, treeB y) {
+		return !eq(x, y);
+	}
 	public static boolean both(String... strings) {
 		int count = 0;
 		for (String s : strings) {
@@ -40613,6 +41053,282 @@ public class KL {
 	}
 	public static boolean is(treeB t) {
 		return !not(t);
+	}
+	public static boolean he(char c) {
+		return is(c);
+	}
+	public static boolean he(String s) {
+		return is(s);
+	}
+	public static boolean he(int n) {
+		return is(n);
+	}
+	public static boolean he(long n) {
+		return is(n);
+	}
+	public static boolean he(float n) {
+		return is(n);
+	}
+	public static boolean he(double n) {
+		return is(n);
+	}
+	public static boolean he(boolean condition) {
+		return is(condition);
+	}
+	public static boolean he(Object o) {
+		return is(o);
+	}
+	public static boolean he(char[] arr) {
+		return is(arr);
+	}
+	public static boolean he(char[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean he(String[] arr) {
+		return is(arr);
+	}
+	public static boolean he(String[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean he(int[] arr) {
+		return is(arr);
+	}
+	public static boolean he(int[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean he(long[] arr) {
+		return is(arr);
+	}
+	public static boolean he(long[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean he(float[] arr) {
+		return is(arr);
+	}
+	public static boolean he(float[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean he(double[] arr) {
+		return is(arr);
+	}
+	public static boolean he(double[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean he(boolean[] arr) {
+		return is(arr);
+	}
+	public static boolean he(boolean[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean he(Object... arr) {
+		return is(arr);
+	}
+	public static boolean he(Object[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean he(strArr arr) {
+		return is(arr);
+	}
+	public static boolean he(intArr arr) {
+		return is(arr);
+	}
+	public static boolean he(longArr arr) {
+		return is(arr);
+	}
+	public static boolean he(fltArr arr) {
+		return is(arr);
+	}
+	public static boolean he(dblArr arr) {
+		return is(arr);
+	}
+	public static boolean he(boolArr arr) {
+		return is(arr);
+	}
+	public static boolean he(o o) {
+		return is(o);
+	}
+	public static boolean he(oI o) {
+		return is(o);
+	}
+	public static boolean he(oL o) {
+		return is(o);
+	}
+	public static boolean he(oF o) {
+		return is(o);
+	}
+	public static boolean he(oD o) {
+		return is(o);
+	}
+	public static boolean he(oB o) {
+		return is(o);
+	}
+	public static boolean he(treeDI t) {
+		return is(t);
+	}
+	public static boolean he(treeI t) {
+		return is(t);
+	}
+	public static boolean he(treeDL t) {
+		return is(t);
+	}
+	public static boolean he(treeL t) {
+		return is(t);
+	}
+	public static boolean he(treeDF t) {
+		return is(t);
+	}
+	public static boolean he(treeF t) {
+		return is(t);
+	}
+	public static boolean he(treeDS t) {
+		return is(t);
+	}
+	public static boolean he(treeD t) {
+		return is(t);
+	}
+	public static boolean he(treeDB t) {
+		return is(t);
+	}
+	public static boolean he(treeB t) {
+		return is(t);
+	}
+	public static boolean nahi(char c) {
+		return !is(c);
+	}
+	public static boolean nahi(String s) {
+		return !is(s);
+	}
+	public static boolean nahi(int n) {
+		return !is(n);
+	}
+	public static boolean nahi(long n) {
+		return !is(n);
+	}
+	public static boolean nahi(float n) {
+		return !is(n);
+	}
+	public static boolean nahi(double n) {
+		return !is(n);
+	}
+	public static boolean nahi(boolean condition) {
+		return !is(condition);
+	}
+	public static boolean nahi(Object o) {
+		return !is(o);
+	}
+	public static boolean nahi(char[] arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(char[]... arrays) {
+		return !is(arrays);
+	}
+	public static boolean nahi(String[] arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(String[]... arrays) {
+		return !is(arrays);
+	}
+	public static boolean nahi(int[] arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(int[]... arrays) {
+		return !is(arrays);
+	}
+	public static boolean nahi(long[] arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(long[]... arrays) {
+		return !is(arrays);
+	}
+	public static boolean nahi(float[] arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(float[]... arrays) {
+		return !is(arrays);
+	}
+	public static boolean nahi(double[] arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(double[]... arrays) {
+		return !is(arrays);
+	}
+	public static boolean nahi(boolean[] arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(boolean[]... arrays) {
+		return !is(arrays);
+	}
+	public static boolean nahi(Object... arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(Object[]... arrays) {
+		return !is(arrays);
+	}
+	public static boolean nahi(strArr arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(intArr arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(longArr arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(fltArr arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(dblArr arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(boolArr arr) {
+		return !is(arr);
+	}
+	public static boolean nahi(o o) {
+		return !is(o);
+	}
+	public static boolean nahi(oI o) {
+		return !is(o);
+	}
+	public static boolean nahi(oL o) {
+		return !is(o);
+	}
+	public static boolean nahi(oF o) {
+		return !is(o);
+	}
+	public static boolean nahi(oD o) {
+		return !is(o);
+	}
+	public static boolean nahi(oB o) {
+		return !is(o);
+	}
+	public static boolean nahi(treeDI t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeI t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeDL t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeL t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeDF t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeF t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeDS t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeD t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeDB t) {
+		return !is(t);
+	}
+	public static boolean nahi(treeB t) {
+		return !is(t);
 	}
 	public static boolean xor(String a, String b) {
 		return (is(a) || is(b)) && !(is(a) && is(b));
@@ -41578,10 +42294,6 @@ public class KL {
 			return "";
 		}
 		return remove(str, "^\\s+|\\s+$");
-		// TESTED, and proven: DOUBLE-ESCAPING WASN'T NEEDED here. As a matter
-		// of fact, for some reason, it's not needed with whitespaces ("\\s") in
-		// Java. Though functionally equivalent to str.trim(), I believe it's
-		// better to at least try and create your own implementation.
 	}
 	public static String[] slice(String arr[]) {
 		if (not(arr)) {
@@ -41627,37 +42339,43 @@ public class KL {
 	}
 	public static strArr slice(strArr arr) {
 		if (not(arr)) {
-			return new strArr(blank.Str);
+			return blank.strArr;
 		}
 		return arr.copy();
 	}
 	public static intArr slice(intArr arr) {
 		if (not(arr)) {
-			return new intArr(blank.Int);
+			return blank.intArr;
 		}
 		return arr.copy();
 	}
 	public static longArr slice(longArr arr) {
 		if (not(arr)) {
-			return new longArr(blank.Long);
+			return blank.longArr;
 		}
 		return arr.copy();
 	}
 	public static fltArr slice(fltArr arr) {
 		if (not(arr)) {
-			return new fltArr(blank.Flt);
+			return blank.fltArr;
 		}
 		return arr.copy();
 	}
 	public static dblArr slice(dblArr arr) {
 		if (not(arr)) {
-			return new dblArr(blank.Dbl);
+			return blank.dblArr;
 		}
 		return arr.copy();
 	}
 	public static boolArr slice(boolArr arr) {
 		if (not(arr)) {
-			return new boolArr(blank.Bool);
+			return blank.boolArr;
+		}
+		return arr.copy();
+	}
+	public static arr slice(arr arr) {
+		if (not(arr)) {
+			return blank.mixedArr;
 		}
 		return arr.copy();
 	}
@@ -41751,6 +42469,12 @@ public class KL {
 		return arr.slice(start, arr.length());
 	}
 	public static boolArr slice(boolArr arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
+			return slice(arr);
+		}
+		return arr.slice(start, arr.length());
+	}
+	public static arr slice(arr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
 		}
@@ -41875,6 +42599,14 @@ public class KL {
 		}
 		return arr.slice(start, end);
 	}
+	public static arr slice(arr arr, int start, int end) {
+		if (not(arr) || isNull(start) || start >= len(arr) || eq(start, end)
+				|| end < start || not(end) || isNeg(start) || isNeg(end)
+				|| end > len(arr)) {
+			return slice(arr);
+		}
+		return arr.slice(start, end);
+	}
 	public static String sliceRight(String str, int start) {
 		if (not(str) || not(start) || isNeg(start) || start >= len(str)) {
 			return slice(str);
@@ -41954,6 +42686,12 @@ public class KL {
 		return slice(arr, len(arr) - start, len(arr));
 	}
 	public static boolArr sliceRight(boolArr arr, int start) {
+		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
+			return slice(arr);
+		}
+		return slice(arr, len(arr) - start, len(arr));
+	}
+	public static arr sliceRight(arr arr, int start) {
 		if (not(arr) || not(start) || isNeg(start) || start >= len(arr)) {
 			return slice(arr);
 		}
@@ -42057,6 +42795,13 @@ public class KL {
 		}
 		return slice(arr, 0, len(arr) - earlyEnd);
 	}
+	public static arr sliceEnd(arr arr, int earlyEnd) {
+		if (not(arr) || not(earlyEnd) || isNeg(earlyEnd)
+				|| earlyEnd > len(arr)) {
+			return slice(arr);
+		}
+		return slice(arr, 0, len(arr) - earlyEnd);
+	}
 	public static String sliceOff(String str, int earlyEnd) {
 		return sliceEnd(str, earlyEnd);
 	}
@@ -42099,6 +42844,9 @@ public class KL {
 	public static boolArr sliceOff(boolArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
+	public static arr sliceOff(arr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
 	public static String sliceOut(String str, int earlyEnd) {
 		return sliceEnd(str, earlyEnd);
 	}
@@ -42139,6 +42887,9 @@ public class KL {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static boolArr sliceOut(boolArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static arr sliceOut(arr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static String sliceKeep(String str, int end) {
@@ -42207,9 +42958,18 @@ public class KL {
 		}
 		return slice(arr, 0, end);
 	}
+	public static Object[] sliceKeep(Object[] arr, int end) {
+		if (not(arr)) {
+			return blank.Obj;
+		}
+		if (not(end) || isNeg(end) || end > len(arr)) {
+			return slice(arr);
+		}
+		return slice(arr, 0, end);
+	}
 	public static strArr sliceKeep(strArr arr, int end) {
 		if (not(arr)) {
-			return new strArr(blank.Str);
+			return blank.strArr;
 		}
 		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
@@ -42218,7 +42978,7 @@ public class KL {
 	}
 	public static intArr sliceKeep(intArr arr, int end) {
 		if (not(arr)) {
-			return new intArr(blank.Int);
+			return blank.intArr;
 		}
 		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
@@ -42227,7 +42987,7 @@ public class KL {
 	}
 	public static longArr sliceKeep(longArr arr, int end) {
 		if (not(arr)) {
-			return new longArr(blank.Long);
+			return blank.longArr;
 		}
 		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
@@ -42236,7 +42996,7 @@ public class KL {
 	}
 	public static fltArr sliceKeep(fltArr arr, int end) {
 		if (not(arr)) {
-			return new fltArr(blank.Flt);
+			return blank.fltArr;
 		}
 		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
@@ -42245,7 +43005,7 @@ public class KL {
 	}
 	public static dblArr sliceKeep(dblArr arr, int end) {
 		if (not(arr)) {
-			return new dblArr(blank.Dbl);
+			return blank.dblArr;
 		}
 		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
@@ -42254,7 +43014,16 @@ public class KL {
 	}
 	public static boolArr sliceKeep(boolArr arr, int end) {
 		if (not(arr)) {
-			return new boolArr(blank.Bool);
+			return blank.boolArr;
+		}
+		if (not(end) || isNeg(end) || end > len(arr)) {
+			return slice(arr);
+		}
+		return slice(arr, 0, end);
+	}
+	public static arr sliceKeep(arr arr, int end) {
+		if (not(arr)) {
+			return blank.mixedArr;
 		}
 		if (not(end) || isNeg(end) || end > len(arr)) {
 			return slice(arr);
@@ -42282,6 +43051,9 @@ public class KL {
 	public static boolean[] trim(boolean[] arr) {
 		return slice(arr);
 	}
+	public static Object[] trim(Object[] arr) {
+		return slice(arr);
+	}
 	public static strArr trim(strArr arr) {
 		return slice(arr);
 	}
@@ -42298,6 +43070,9 @@ public class KL {
 		return slice(arr);
 	}
 	public static boolArr trim(boolArr arr) {
+		return slice(arr);
+	}
+	public static arr trim(arr arr) {
 		return slice(arr);
 	}
 	public static String trim(String str, int start) {
@@ -42321,6 +43096,9 @@ public class KL {
 	public static boolean[] trim(boolean[] arr, int start) {
 		return slice(arr, start);
 	}
+	public static Object[] trim(Object[] arr, int start) {
+		return slice(arr, start);
+	}
 	public static strArr trim(strArr arr, int start) {
 		return slice(arr, start);
 	}
@@ -42337,6 +43115,9 @@ public class KL {
 		return slice(arr, start);
 	}
 	public static boolArr trim(boolArr arr, int start) {
+		return slice(arr, start);
+	}
+	public static arr trim(arr arr, int start) {
 		return slice(arr, start);
 	}
 	public static String trim(String str, int start, int end) {
@@ -42360,6 +43141,9 @@ public class KL {
 	public static boolean[] trim(boolean[] arr, int start, int end) {
 		return slice(arr, start, end);
 	}
+	public static Object[] trim(Object[] arr, int start, int end) {
+		return slice(arr, start, end);
+	}
 	public static strArr trim(strArr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
@@ -42376,6 +43160,9 @@ public class KL {
 		return slice(arr, start, end);
 	}
 	public static boolArr trim(boolArr arr, int start, int end) {
+		return slice(arr, start, end);
+	}
+	public static arr trim(arr arr, int start, int end) {
 		return slice(arr, start, end);
 	}
 	public static String trimRight(String str, int start) {
@@ -42399,6 +43186,9 @@ public class KL {
 	public static boolean[] trimRight(boolean[] arr, int start) {
 		return sliceRight(arr, start);
 	}
+	public static Object[] trimRight(Object[] arr, int start) {
+		return sliceRight(arr, start);
+	}
 	public static strArr trimRight(strArr arr, int start) {
 		return sliceRight(arr, start);
 	}
@@ -42415,6 +43205,9 @@ public class KL {
 		return sliceRight(arr, start);
 	}
 	public static boolArr trimRight(boolArr arr, int start) {
+		return sliceRight(arr, start);
+	}
+	public static arr trimRight(arr arr, int start) {
 		return sliceRight(arr, start);
 	}
 	public static String trimKeep(String str, int end) {
@@ -42438,6 +43231,9 @@ public class KL {
 	public static boolean[] trimKeep(boolean[] arr, int end) {
 		return sliceKeep(arr, end);
 	}
+	public static Object[] trimKeep(Object[] arr, int end) {
+		return sliceKeep(arr, end);
+	}
 	public static strArr trimKeep(strArr arr, int end) {
 		return sliceKeep(arr, end);
 	}
@@ -42454,6 +43250,9 @@ public class KL {
 		return sliceKeep(arr, end);
 	}
 	public static boolArr trimKeep(boolArr arr, int end) {
+		return sliceKeep(arr, end);
+	}
+	public static arr trimKeep(arr arr, int end) {
 		return sliceKeep(arr, end);
 	}
 	public static String trimEnd(String str, int earlyEnd) {
@@ -42477,6 +43276,9 @@ public class KL {
 	public static boolean[] trimEnd(boolean[] arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
+	public static Object[] trimEnd(Object[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
 	public static strArr trimEnd(strArr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
@@ -42493,6 +43295,9 @@ public class KL {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static boolArr trimEnd(boolArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static arr trimEnd(arr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static String trimOff(String str, int earlyEnd) {
@@ -42516,6 +43321,9 @@ public class KL {
 	public static boolean[] trimOff(boolean[] arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
+	public static Object[] trimOff(Object[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
 	public static strArr trimOff(strArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
@@ -42532,6 +43340,9 @@ public class KL {
 		return trimEnd(arr, earlyEnd);
 	}
 	public static boolArr trimOff(boolArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static arr trimOff(arr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
 	public static String trimOut(String str, int earlyEnd) {
@@ -42555,6 +43366,9 @@ public class KL {
 	public static boolean[] trimOut(boolean[] arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
+	public static Object[] trimOut(Object[] arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
 	public static strArr trimOut(strArr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
@@ -42571,6 +43385,9 @@ public class KL {
 		return trimEnd(arr, earlyEnd);
 	}
 	public static boolArr trimOut(boolArr arr, int earlyEnd) {
+		return trimEnd(arr, earlyEnd);
+	}
+	public static arr trimOut(arr arr, int earlyEnd) {
 		return trimEnd(arr, earlyEnd);
 	}
 	public static String sliceTo(String str, String thatSpecificPart) {
@@ -44313,7 +45130,7 @@ public class KL {
 		public static Number[][] Num2D = new Number[][]{};
 		public static Object[] Obj = new Object[]{};
 		public static Object[][] Obj2D = new Object[][]{};
-		public static arr mixedArr = new arr();
+		public static arr mixedArr = new arr(), arr = mixedArr;
 		public static strArr strArr = strArr();
 		public static intArr intArr = intArr();
 		public static longArr longArr = longArr();
@@ -44391,7 +45208,7 @@ public class KL {
 				return -1;
 			int[] arr = src.clone();
 			java.util.Arrays.sort(arr);
-			int low = 0, high = src.length - 1;
+			int low = 0, high = arr.length - 1;
 			while (low <= high) {
 				int mid = low + (high - low) / 2;
 				if (arr[mid] == target)
@@ -44411,7 +45228,7 @@ public class KL {
 				return -1;
 			long[] arr = src.clone();
 			java.util.Arrays.sort(arr);
-			int low = 0, high = src.length - 1;
+			int low = 0, high = arr.length - 1;
 			while (low <= high) {
 				int mid = low + (high - low) / 2;
 				if (arr[mid] == target)
@@ -44431,7 +45248,7 @@ public class KL {
 				return -1;
 			float[] arr = src.clone();
 			java.util.Arrays.sort(arr);
-			int low = 0, high = src.length - 1;
+			int low = 0, high = arr.length - 1;
 			while (low <= high) {
 				int mid = low + (high - low) / 2;
 				if (arr[mid] == target)
@@ -44451,7 +45268,7 @@ public class KL {
 				return -1;
 			double[] arr = src.clone();
 			java.util.Arrays.sort(arr);
-			int low = 0, high = src.length - 1;
+			int low = 0, high = arr.length - 1;
 			while (low <= high) {
 				int mid = low + (high - low) / 2;
 				if (arr[mid] == target)
@@ -44713,40 +45530,100 @@ public class KL {
 		}
 		return combine(new boolArr(arrA), arrays).array();
 	}
+	public static Object[] combine(Object[] arrA, Object[]... arrRest) {
+		if (not(arrA) || not(arrRest)) {
+			return blank.Obj;
+		}
+		return combine(new arr(arrA), arrRest).array();
+	}
+	public static Object[] combine(Object[] arrA, arr... arrRest) {
+		if (not(arrA) || not(arrRest)) {
+			return blank.Obj;
+		}
+		return combine(new arr(arrA), arrRest).array();
+	}
 	public static strArr combine(strArr arrA, strArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.strArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static strArr combine(strArr arrA, String[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.strArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static intArr combine(intArr arrA, intArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.intArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static intArr combine(intArr arrA, int[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.intArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static longArr combine(longArr arrA, longArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.longArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static longArr combine(longArr arrA, long[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.longArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static fltArr combine(fltArr arrA, fltArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.fltArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static fltArr combine(fltArr arrA, float[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.fltArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static dblArr combine(dblArr arrA, dblArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.dblArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static dblArr combine(dblArr arrA, double[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.dblArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static boolArr combine(boolArr arrA, boolArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.boolArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static boolArr combine(boolArr arrA, boolean[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.boolArr;
+		}
+		return arrA.combine(arrays);
+	}
+	public static arr combine(arr arrA, arr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.mixedArr;
+		}
+		return arrA.combine(arrays);
+	}
+	public static arr combine(arr arrA, Object[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.mixedArr;
+		}
 		return arrA.combine(arrays);
 	}
 	public static String[] concat(String[] arrA, String[]... arrays) {
@@ -44785,6 +45662,12 @@ public class KL {
 	public static boolean[] concat(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static Object[] concat(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] concat(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
 	public static strArr concat(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
@@ -44819,6 +45702,12 @@ public class KL {
 		return combine(arrA, arrays);
 	}
 	public static boolArr concat(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr concat(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr concat(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] cat(String[] arrA, String[]... arrays) {
@@ -44857,6 +45746,12 @@ public class KL {
 	public static boolean[] cat(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static Object[] cat(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] cat(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
 	public static strArr cat(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
@@ -44891,6 +45786,12 @@ public class KL {
 		return combine(arrA, arrays);
 	}
 	public static boolArr cat(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr cat(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr cat(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] merge(String[] arrA, String[]... arrays) {
@@ -44929,6 +45830,12 @@ public class KL {
 	public static boolean[] merge(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static Object[] merge(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] merge(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
 	public static strArr merge(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
@@ -44963,6 +45870,12 @@ public class KL {
 		return combine(arrA, arrays);
 	}
 	public static boolArr merge(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr merge(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr merge(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] join(String[] arrA, String[]... arrays) {
@@ -45001,6 +45914,12 @@ public class KL {
 	public static boolean[] join(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static Object[] join(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] join(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
 	public static strArr join(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
@@ -45035,6 +45954,12 @@ public class KL {
 		return combine(arrA, arrays);
 	}
 	public static boolArr join(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr join(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr join(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] add(String[] arrA, String[]... arrays) {
@@ -45073,6 +45998,12 @@ public class KL {
 	public static boolean[] add(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static Object[] add(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] add(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
 	public static strArr add(strArr arrA, strArr... arrays) {
 		return combine(arrA, arrays);
 	}
@@ -45107,6 +46038,12 @@ public class KL {
 		return combine(arrA, arrays);
 	}
 	public static boolArr add(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr add(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr add(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static String[] intersection(String[] arrA, String[]... arrays) {
@@ -45145,6 +46082,12 @@ public class KL {
 		}
 		return new boolArr(arrA).intersection(arrays).array();
 	}
+	public static Object[] intersection(Object[] arrA, Object[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Obj;
+		}
+		return new arr(arrA).intersection(arrays).array();
+	}
 	public static strArr intersection(strArr arrA, strArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.strArr;
@@ -45178,6 +46121,12 @@ public class KL {
 	public static boolArr intersection(boolArr arrA, boolArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.boolArr;
+		}
+		return arrA.intersection(arrays);
+	}
+	public static arr intersection(arr arrA, arr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.mixedArr;
 		}
 		return arrA.intersection(arrays);
 	}
@@ -45221,6 +46170,13 @@ public class KL {
 		}
 		return new boolArr(arrA).negativeIntersection(arrays).array();
 	}
+	public static Object[] negativeIntersection(Object[] arrA,
+			Object[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Obj;
+		}
+		return new arr(arrA).negativeIntersection(arrays).array();
+	}
 	public static strArr negativeIntersection(strArr arrA, strArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.strArr;
@@ -45256,6 +46212,13 @@ public class KL {
 			boolArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.boolArr;
+		}
+		return arrA.negativeIntersection(arrays);
+	}
+	public static arr negativeIntersection(arr arrA,
+			arr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.mixedArr;
 		}
 		return arrA.negativeIntersection(arrays);
 	}
@@ -45331,7 +46294,7 @@ public class KL {
 	public static boolArr popIfMatch(boolArr arrA, boolArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
-	public static String[] onlyKeep(String[] arrA, String... arrB) {
+	public static String[] onlyKeep(String[] arrA, String[]... arrB) {
 		if (not(arrA) || not(arrB)) {
 			return blank.Str;
 		}
@@ -45343,21 +46306,19 @@ public class KL {
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static int[] onlyKeep(int[] arrA, int... arrB) {
+	public static int[] onlyKeep(int[] arrA, int[]... arrB) {
 		if (not(arrA) || not(arrB)) {
 			return blank.Int;
 		}
-		// blank.Int is sugar for new int[]{}
-		if (len(arrB) == 1) {
-			int end = arrB[0];
-			if (not(end) || isInf(end) || isNeg(end)) {
-				return blank.Int;
-			}
-			return sliceKeep(arrA, end);
-		}
 		return intersection(arrA, arrB);
 	}
-	public static long[] onlyKeep(long[] arrA, long... arrB) {
+	public static int[] onlyKeep(int[] arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
+			return blank.Int;
+		}
+		return sliceKeep(arrA, end);
+	}
+	public static long[] onlyKeep(long[] arrA, long[]... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static long[] onlyKeep(long[] arrA, int end) {
@@ -45366,7 +46327,7 @@ public class KL {
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static float[] onlyKeep(float[] arrA, float... arrB) {
+	public static float[] onlyKeep(float[] arrA, float[]... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static float[] onlyKeep(float[] arrA, int end) {
@@ -45375,7 +46336,7 @@ public class KL {
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static double[] onlyKeep(double[] arrA, double... arrB) {
+	public static double[] onlyKeep(double[] arrA, double[]... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static double[] onlyKeep(double[] arrA, int end) {
@@ -45384,7 +46345,7 @@ public class KL {
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static boolean[] onlyKeep(boolean[] arrA, boolean... arrB) {
+	public static boolean[] onlyKeep(boolean[] arrA, boolean[]... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static boolean[] onlyKeep(boolean[] arrA, int end) {
@@ -45393,57 +46354,75 @@ public class KL {
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static strArr onlyKeep(strArr arrA, strArr arrB) {
+	public static Object[] onlyKeep(Object[] arrA, Object[]... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static Object[] onlyKeep(Object[] arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
+			return blank.Obj;
+		}
+		return sliceKeep(arrA, end);
+	}
+	public static strArr onlyKeep(strArr arrA, strArr... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static strArr onlyKeep(strArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
-			return new strArr(blank.Str);
+			return blank.strArr;
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static intArr onlyKeep(intArr arrA, intArr arrB) {
+	public static intArr onlyKeep(intArr arrA, intArr... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static intArr onlyKeep(intArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
-			return new intArr(blank.Int);
+			return blank.intArr;
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static longArr onlyKeep(longArr arrA, longArr arrB) {
+	public static longArr onlyKeep(longArr arrA, longArr... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static longArr onlyKeep(longArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
-			return new longArr(blank.Long);
+			return blank.longArr;
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static fltArr onlyKeep(fltArr arrA, fltArr arrB) {
+	public static fltArr onlyKeep(fltArr arrA, fltArr... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static fltArr onlyKeep(fltArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
-			return new fltArr(blank.Flt);
+			return blank.fltArr;
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static dblArr onlyKeep(dblArr arrA, dblArr arrB) {
+	public static dblArr onlyKeep(dblArr arrA, dblArr... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static dblArr onlyKeep(dblArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
-			return new dblArr(blank.Dbl);
+			return blank.dblArr;
 		}
 		return sliceKeep(arrA, end);
 	}
-	public static boolArr onlyKeep(boolArr arrA, boolArr arrB) {
+	public static boolArr onlyKeep(boolArr arrA, boolArr... arrB) {
 		return intersection(arrA, arrB);
 	}
 	public static boolArr onlyKeep(boolArr arrA, int end) {
 		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
-			return new boolArr(blank.Bool);
+			return blank.boolArr;
+		}
+		return sliceKeep(arrA, end);
+	}
+	public static arr onlyKeep(arr arrA, arr... arrB) {
+		return intersection(arrA, arrB);
+	}
+	public static arr onlyKeep(arr arrA, int end) {
+		if (not(arrA) || not(end) || isInf(end) || isNeg(end)) {
+			return blank.mixedArr;
 		}
 		return sliceKeep(arrA, end);
 	}
@@ -47879,6 +48858,21 @@ public class KL {
 		pesa pese = naiRakam(600);
 		pese.dalo(2 * hzr).nikalo(2 * so);
 		kaho("Bakaya =", pese.bakaya());
+		agar(() -> print(0/0)).tab(() -> print("possible.")).warna(() -> print("not possible."));
+		agar(() -> print(0/0), () -> print("possible."), () -> print("not possible."));
+		agar(2/2==1).tab(() -> print("sahi, 2/2 wakai 1 ke barabar he.")).warna(() -> print("nahi, 2/2 1 ke barabar nahi."));
+		agar(2/2==1, () -> print("sahi, 2/2 wakai 1 ke barabar he."), () -> print("nahi, 2/2 1 ke barabar nahi."));
+		
+		agar(() -> print(0/0)).tab(() -> print("possible.")).warna(e -> print(e));
+		agar(() -> print(0/0), () -> print("possible."), err -> print(err));
+		agar(2/2==1).tab(() -> print("sahi, 2/2 wakai 1 ke barabar he.")).warna(e -> print(e));
+		agar(2/2==1, () -> print("sahi, 2/2 wakai 1 ke barabar he."), err -> print(err));
+		
+		
+		
+		
+		agar(he(5, 2+2)).to(() -> kaho("theek kaha.")).warna(() -> kaho("galat kaha."));
+		he(2+2, 5, () -> kaho("theek."), Warna, () -> kaho("galat."));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
