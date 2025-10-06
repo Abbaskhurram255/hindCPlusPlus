@@ -41001,7 +41001,7 @@ public class KL {
 					", ");
 			return result;
 		}
-		public static String getDate() {
+		public static String today() {
 			String parts[] = now().split(", ");
 			return parts[2] + ", " + parts[3];
 		}
@@ -41016,6 +41016,9 @@ public class KL {
 		}
 		public static String getTime() {
 			return now().split(", ")[0];
+		}
+		public static String time() {
+			return getTime();
 		}
 		public static String getTimeStamp() {
 			return now(true).toUpperCase().replaceAll("\\W+", "-");
@@ -41172,19 +41175,6 @@ public class KL {
 			date = date.split(", ")[2];
 			return date;
 		}
-		public static String age2bday(int age) {
-			Date dt = new Date();
-			// dt.setTime(dt.getTime()+(5*((int)36e5))); //fix 5-hour bug
-			String bday = "" + ((dt.getYear() + 1900) - age); // adding 1900 helps
-			// resolve a bug
-			return bday;
-		}
-		public static int bday2age(String date) {
-			Date dt = new Date(date);
-			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-			int age = new Date().getYear() - dt.getYear();
-			return age;
-		}
 		public static String date2day(String date) {
 			Date dt = new Date(date);
 			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
@@ -41313,8 +41303,117 @@ public class KL {
 			return now();
 		}
 	}
-	public static String date() {
-		return Str(new date());
+	public static class tareekh extends date {
+		public static String ab() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * (3600 * 1000))); // fix 5-hour bug
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			parts[0] = parts[0];
+			parts[1] = split(parts[1], " ")[0] + " " + split(parts[1], " ")[1];
+			String time = slice(parts, len(parts) - 1)[0];
+			String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
+			String result = join(x, ", ");
+			return result;
+		}
+		public static String ab(boolean shortened) {
+			if (!shortened) {
+				return ab();
+			}
+			String parts[] = ab().split(", ");
+			String time = parts[0], day = sliceKeep(parts[1], 3),
+					dateOfMonth = sliceKeep(parts[2], 3) + " "
+							+ parts[2].split(" ")[1],
+					year = parts[3];
+			String result = join(new String[]{time, day, dateOfMonth, year},
+					", ");
+			return result;
+		}
+		public static String aj() {
+			String parts[] = ab().split(", ");
+			return parts[2] + ", " + parts[3];
+		}
+		public static String din() {
+			return ab().split(", ")[1];
+		}
+		public static String mahina() {
+			return ab().split(", ")[2].split(" ")[0];
+		}
+		public static String saal() {
+			return ab().split(", ")[3];
+		}
+		public static String wakt() {
+			return ab().split(", ")[0];
+		}
+		public static String kalThi() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() - ((int) 36e5 * 24)); // decrement 24 hours or
+			// (3.6*10⁶)*24
+			// milliseconds
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String parsoThi() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() - ((int) 72e5 * 24)); // decrement 48 hours or
+			// (7.2*10⁶)*24
+			// milliseconds
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String doDinPehle() {
+			return parsoThi();
+		}
+		public static String kalHogi() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) (36e2 * 1e3)))); // fix 5-hour bug
+			dt.setTime(dt.getTime() + ((int) 36e5 * 24)); // increment 24 hours or
+			// (3.6*10⁶)*24
+			// milliseconds
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String parsoHogi() {
+			Date dt = new Date();
+			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+			dt.setTime(dt.getTime() + ((int) 72e5 * 24)); // increment 48 hours or
+			// (7.2*10⁶)*24
+			// milliseconds
+			String date = formattedDate(dt);
+			String parts[] = date.split(", ");
+			date = parts[0] + ", " + parts[1] + ", " + parts[2];
+			return date;
+		}
+		public static String doDinBad() {
+			return parsoHogi();
+		}
+	}
+	public static date date() {
+		return new date();
+	}
+	public static String time() {
+		return new date().getTime();
+	}
+	public static String age2bday(int age) {
+		Date dt = new Date();
+		// dt.setTime(dt.getTime()+(5*((int)36e5))); //fix 5-hour bug
+		String bday = "" + ((dt.getYear() + 1900) - age); // adding 1900 helps
+		// resolve a bug
+		return bday;
+	}
+	public static int bday2age(String date) {
+		Date dt = new Date(date);
+		dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
+		int age = new Date().getYear() - dt.getYear();
+		return age;
 	}
 	// utilities
 	public static void println(Object... args) {
@@ -58111,7 +58210,6 @@ public class KL {
 				.tab(() -> print("Possible. New n =", num[0]))
 				.warna(e -> print("Not possible"));
 		print(not(2 + 2, 5));
-		print(new date());
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
