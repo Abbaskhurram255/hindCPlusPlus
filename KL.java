@@ -39354,6 +39354,3044 @@ public class KL {
 			Object[] zippedArgB) {
 		return collect(arg, zippedArgA, zippedArgB);
 	}
+	public static Object[][] from(String[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(String[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(String[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(String[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(String[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(String[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(String[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(int[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(int[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(int[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(int[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(int[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(int[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(int[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(long[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(long[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(long[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(long[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(long[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(long[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(long[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(float[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(float[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(float[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(float[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(float[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(float[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(float[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(double[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(double[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(double[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(double[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(double[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(double[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(double[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(boolean[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(boolean[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(boolean[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(boolean[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(boolean[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(boolean[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(boolean[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(Object[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(Object[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(Object[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(Object[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(Object[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(Object[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(Object[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] from(String[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(String[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(int[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(long[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(float[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(double[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(boolean[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] from(Object[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(String[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(String[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(String[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(String[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(String[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(String[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(int[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(int[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(int[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(int[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(int[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(int[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(int[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(long[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(long[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(long[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(long[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(long[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(long[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(long[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(float[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(float[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(float[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(float[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(float[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(float[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(float[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(double[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(double[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(double[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(double[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(double[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(double[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(double[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(boolean[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(boolean[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(boolean[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(boolean[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(boolean[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(boolean[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(boolean[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(Object[] arg, String[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(Object[] arg, int[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(Object[] arg, long[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(Object[] arg, float[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(Object[] arg, double[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(Object[] arg, boolean[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(Object[] arg, Object[] zippedArg) {
+		return collect(arg, zippedArg);
+	}
+	public static Object[][] ikhatte(String[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(String[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(int[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(long[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(float[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(double[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(boolean[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, String[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, String[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, String[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, String[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, String[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, String[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, String[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, int[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, int[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, int[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, int[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, int[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, int[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, int[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, long[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, long[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, long[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, long[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, long[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, long[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, long[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, float[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, float[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, float[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, float[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, float[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, float[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, float[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, double[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, double[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, double[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, double[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, double[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, double[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, double[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, boolean[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, boolean[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, boolean[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, boolean[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, boolean[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, boolean[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, boolean[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, Object[] zippedArgA,
+			String[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, Object[] zippedArgA,
+			int[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, Object[] zippedArgA,
+			long[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, Object[] zippedArgA,
+			float[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, Object[] zippedArgA,
+			double[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, Object[] zippedArgA,
+			boolean[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] ikhatte(Object[] arg, Object[] zippedArgA,
+			Object[] zippedArgB) {
+		return collect(arg, zippedArgA, zippedArgB);
+	}
 	public static final class DoFail {
 		public static interface CustomRunnable {
 			void run() throws Throwable;
@@ -41305,92 +44343,40 @@ public class KL {
 	}
 	public static class tareekh extends date {
 		public static String ab() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * (3600 * 1000))); // fix 5-hour bug
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			parts[0] = parts[0];
-			parts[1] = split(parts[1], " ")[0] + " " + split(parts[1], " ")[1];
-			String time = slice(parts, len(parts) - 1)[0];
-			String x[] = {time, join(slice(parts, 0, len(parts) - 1), ", ")};
-			String result = join(x, ", ");
-			return result;
+			return now();
 		}
 		public static String ab(boolean shortened) {
-			if (!shortened) {
-				return ab();
-			}
-			String parts[] = ab().split(", ");
-			String time = parts[0], day = sliceKeep(parts[1], 3),
-					dateOfMonth = sliceKeep(parts[2], 3) + " "
-							+ parts[2].split(" ")[1],
-					year = parts[3];
-			String result = join(new String[]{time, day, dateOfMonth, year},
-					", ");
-			return result;
+			return now(shortened);
 		}
 		public static String aj() {
-			String parts[] = ab().split(", ");
-			return parts[2] + ", " + parts[3];
+			return today();
 		}
 		public static String din() {
-			return ab().split(", ")[1];
+			return getDay();
 		}
 		public static String mahina() {
-			return ab().split(", ")[2].split(" ")[0];
+			return getMonth();
 		}
 		public static String saal() {
-			return ab().split(", ")[3];
+			return getYear();
 		}
 		public static String wakt() {
-			return ab().split(", ")[0];
+			return getTime();
 		}
 		public static String kalThi() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-			dt.setTime(dt.getTime() - ((int) 36e5 * 24)); // decrement 24 hours or
-			// (3.6*10⁶)*24
-			// milliseconds
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
+			return yesterday();
 		}
 		public static String parsoThi() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-			dt.setTime(dt.getTime() - ((int) 72e5 * 24)); // decrement 48 hours or
-			// (7.2*10⁶)*24
-			// milliseconds
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
+			return dayBeforeYesterday();
 		}
 		public static String doDinPehle() {
 			return parsoThi();
 		}
 		public static String kalHogi() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int) (36e2 * 1e3)))); // fix 5-hour bug
-			dt.setTime(dt.getTime() + ((int) 36e5 * 24)); // increment 24 hours or
-			// (3.6*10⁶)*24
-			// milliseconds
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
+			return tomorrow();
 		}
 		public static String parsoHogi() {
-			Date dt = new Date();
-			dt.setTime(dt.getTime() + (5 * ((int) 36e5))); // fix 5-hour bug
-			dt.setTime(dt.getTime() + ((int) 72e5 * 24)); // increment 48 hours or
-			// (7.2*10⁶)*24
-			// milliseconds
-			String date = formattedDate(dt);
-			String parts[] = date.split(", ");
-			date = parts[0] + ", " + parts[1] + ", " + parts[2];
-			return date;
+			return dayAfterTomorrow();
 		}
 		public static String doDinBad() {
 			return parsoHogi();
@@ -58202,13 +61188,16 @@ public class KL {
 		String[] names = {"Mike", "Angela", "Motricia"};
 		int[] ages = {23, 26, 31, 17};
 		String[] states = {"Michigan", "North Dakota", "Florida"};
-		for (var each : all(names, ages, states)) {
-			print(each[0], "is", each[1], "and", "is", "from", each[2]);
+		for (var harEk : ikhatte(names, states, ages)) {
+			Object harEkUser = harEk[0],
+              falaanMulk = harEk[1],
+			  falaanUmr = harEk[2];
+			bolo(harEkUser, falaanMulk, "se", "he,", "or uski umr", falaanUmr, "he");
 		}
 		int num[] = {n};
 		agar.possible(() -> num[0] /= 2)
-				.tab(() -> print("Possible. New n =", num[0]))
-				.warna(e -> print("Not possible"));
+				.tab(() -> bolo("Possible. New n =", num[0]))
+				.warna(e -> bolo("Not possible."));
 		print(not(2 + 2, 5));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
