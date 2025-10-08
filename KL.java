@@ -29931,6 +29931,126 @@ public class KL {
 				null, null, null, null, null, null, null, null, null, null,
 				null);
 	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9,
+			Object cond10, Callable<T> sol10) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call(), cond10, sol10.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T sw(Object src, Object cond1, Callable<T> sol1) {
+		try {
+			return sw(src, cond1, sol1.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
 	public static <T> T when(Object src, Object cond1, T sol1, Object cond2,
 			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
 			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
@@ -29986,6 +30106,126 @@ public class KL {
 	}
 	public static <T> T when(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9,
+			Object cond10, Callable<T> sol10) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call(), cond10, sol10.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T when(Object src, Object cond1, Callable<T> sol1) {
+		try {
+			return sw(src, cond1, sol1.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
 	}
 	public static <T> T is(Object src, Object cond1, T sol1, Object cond2,
 			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
@@ -30043,6 +30283,126 @@ public class KL {
 	public static <T> T is(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
 	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9,
+			Object cond10, Callable<T> sol10) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call(), cond10, sol10.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T is(Object src, Object cond1, Callable<T> sol1) {
+		try {
+			return sw(src, cond1, sol1.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
 	public static <T> T he(Object src, Object cond1, T sol1, Object cond2,
 			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
 			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
@@ -30098,6 +30458,126 @@ public class KL {
 	}
 	public static <T> T he(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9,
+			Object cond10, Callable<T> sol10) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call(), cond10, sol10.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T he(Object src, Object cond1, Callable<T> sol1) {
+		try {
+			return sw(src, cond1, sol1.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
 	}
 	public static <T> T hen(Object src, Object cond1, T sol1, Object cond2,
 			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
@@ -30155,6 +30635,126 @@ public class KL {
 	public static <T> T hen(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
 	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9,
+			Object cond10, Callable<T> sol10) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call(), cond10, sol10.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T hen(Object src, Object cond1, Callable<T> sol1) {
+		try {
+			return sw(src, cond1, sol1.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
 	public static <T> T agar(Object src, Object cond1, T sol1, Object cond2,
 			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
 			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
@@ -30210,6 +30810,126 @@ public class KL {
 	}
 	public static <T> T agar(Object src, Object cond1, T sol1) {
 		return sw(src, cond1, sol1);
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9,
+			Object cond10, Callable<T> sol10) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call(), cond10, sol10.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8, Object cond9, Callable<T> sol9) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call(), cond9,
+					sol9.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7,
+			Object cond8, Callable<T> sol8) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call(), cond8, sol8.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6, Object cond7, Callable<T> sol7) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call(), cond7, sol7.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5,
+			Object cond6, Callable<T> sol6) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call(), cond6,
+					sol6.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4, Object cond5, Callable<T> sol5) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call(), cond5, sol5.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3,
+			Object cond4, Callable<T> sol4) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call(), cond4, sol4.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2, Object cond3, Callable<T> sol3) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call(), cond3,
+					sol3.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1,
+			Object cond2, Callable<T> sol2) {
+		try {
+			return sw(src, cond1, sol1.call(), cond2, sol2.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
+	}
+	public static <T> T agar(Object src, Object cond1, Callable<T> sol1) {
+		try {
+			return sw(src, cond1, sol1.call());
+		} catch (Throwable e) {
+			hint.avoids Exception_thrown_by_Callable_call;
+			return null;
+		}
 	}
 	public static boolean True = true, False = !True, yes = True, no = False,
 			Yes = yes, No = no, on = Yes, off = No, On = on, Off = off,
@@ -43297,6 +44017,54 @@ public class KL {
 	public static int[] range(boolArr arr) {
 		return range(len(arr));
 	}
+	public static int[] range(int start, String str) {
+		return range(start, len(str));
+	}
+	public static int[] range(int start, char[] arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, String[] arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, int[] arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, long[] arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, float[] arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, double[] arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, boolean[] arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, Object[] arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, arr arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, strArr arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, intArr arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, longArr arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, fltArr arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, dblArr arr) {
+		return range(start, len(arr));
+	}
+	public static int[] range(int start, boolArr arr) {
+		return range(start, len(arr));
+	}
 	public static int[] rng(int n) {
 		return range(n);
 	}
@@ -43390,6 +44158,54 @@ public class KL {
 	public static int[] rng(boolArr arr) {
 		return range(arr);
 	}
+	public static int[] rng(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] rng(int start, char[] arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, String[] arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, int[] arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, long[] arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, float[] arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, double[] arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, boolean[] arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, Object[] arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, arr arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, strArr arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, intArr arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, longArr arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, fltArr arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, dblArr arr) {
+		return range(start, arr);
+	}
+	public static int[] rng(int start, boolArr arr) {
+		return range(start, arr);
+	}
 	public static int[] idx(String str) {
 		return range(str);
 	}
@@ -43437,6 +44253,54 @@ public class KL {
 	}
 	public static int[] idx(boolArr arr) {
 		return range(arr);
+	}
+	public static int[] idx(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] idx(int start, char[] arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, String[] arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, int[] arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, long[] arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, float[] arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, double[] arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, boolean[] arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, Object[] arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, arr arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, strArr arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, intArr arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, longArr arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, fltArr arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, dblArr arr) {
+		return range(start, arr);
+	}
+	public static int[] idx(int start, boolArr arr) {
+		return range(start, arr);
 	}
 	public static void each(String[] iterable,
 			ObjIntConsumer<String> consumer) {
@@ -61192,7 +62056,7 @@ public class KL {
 			Object harEkUser = harEk[0],
               falaanMulk = harEk[1],
 			  falaanUmr = harEk[2];
-			bolo(harEkUser, falaanMulk, "se", "he,", "or uski umr", falaanUmr, "he");
+			bolo(harEkUser, falaanJaga, "se he, or uski umr", falaanUmr, "he");
 		}
 		int num[] = {n};
 		agar.possible(() -> num[0] /= 2)
