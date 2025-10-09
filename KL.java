@@ -43794,6 +43794,167 @@ public class KL {
 			Runnable onFallback) {
 		return new agar(condition).tab(onSuccess).nakam(onFallback);
 	}
+	public class range {
+		public static int[] inclusive(int n) {
+			intArr arr = intArr();
+			if (not(n) || n < 0) {
+				return arr.array();
+			}
+			for (int i = 0; i <= n; i++) {
+				arr.add(i);
+			}
+			return arr.array();
+		}
+		public static double[] inclusive(double n) {
+			dblArr arr = blank.dblArr;
+			if (n < 1.1 || not(n)) {
+				return arr.array();
+			}
+			for (double i = 0; i <= n; i += .1) {
+				arr.add(i);
+			}
+			return arr.array();
+		}
+		public static int[] inclusive(int m, int n, int... optional) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, optional);
+		}
+		public static String[] inclusive(String m, String n, int... optional) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, optional);
+		}
+		public static char[] inclusive(char m, char n) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n);
+		}
+		public static double[] inclusive(double m, double n, int... optional) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, optional);
+		}
+		public static int[] incl(int n) {
+			return inclusive(n);
+		}
+		public static double[] incl(double n) {
+			return inclusive(n);
+		}
+		public static int[] incl(int m, int n, int... optional) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, optional);
+		}
+		public static String[] incl(String m, String n, int... optional) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, optional);
+		}
+		public static char[] incl(char m, char n) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n);
+		}
+		public static double[] incl(double m, double n, int... optional) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, optional);
+		}
+		public static int[] exclusive(int n) {
+			hint.method points_to_the_regular_EXCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(n);
+		}
+		public static double[] exclusive(double n) {
+			hint.method points_to_the_regular_EXCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(n);
+		}
+		public static int[] exclusive(int m, int n, int... optional) {
+			intArr arr = intArr();
+			if (isNull(m) || isNull(n) || eq(m, n)) {
+				return arr.array();
+			}
+			int step = 1;
+			if (is(optional) && len(optional) == 1) {
+				step = is(optional[0]) && !isNeg(optional[0])
+						&& !isInf(optional[0]) ? optional[0] : 1;
+			}
+			if (m > n) {
+				for (int i = m; i > n; i -= step) {
+					arr.add(i);
+				}
+			} else {
+				for (int i = m; i < n; i += step) {
+					arr.add(i);
+				}
+			}
+			return arr.array();
+		}
+		public static String[] exclusive(String m, String n, int... optional) {
+			strArr arr = strArr();
+			if (isNull(m) || isNull(n) || eq(m, n) || !eq(m, "[A-Za-z]")
+					|| !eq(n, "[A-Za-z]")) {
+				return arr.array();
+			}
+			int step = 1;
+			if (is(optional) && len(optional) == 1) {
+				step = is(optional[0]) && !isNeg(optional[0])
+						&& !isInf(optional[0]) ? optional[0] : 1;
+			}
+			int charCodeOfM = m.charAt(0), charCodeOfN = n.charAt(0);
+			if (charCodeOfM > charCodeOfN) {
+				for (int i = charCodeOfM; i > charCodeOfN; i -= step) {
+					arr.add(Str((char) i));
+				}
+			} else {
+				for (int i = charCodeOfM; i < charCodeOfN; i += step) {
+					arr.add(Str((char) i));
+				}
+			}
+			return arr.array();
+		}
+		public static char[] exclusive(char m, char n) {
+			if (not(m) || not(n)) {
+				return blank.Char;
+			}
+			return join(exclusive(Str(m), Str(n)), "").toCharArray();
+		}
+		public static double[] exclusive(double m, double n, int... optional) {
+			dblArr arr = dblArr();
+			if (isNull(m) || isNull(n) || eq(m, n)) {
+				return arr.array();
+			}
+			int step = 1;
+			if (is(optional) && len(optional) == 1) {
+				step = is(optional[0]) && !isNeg(optional[0])
+						&& !isInf(optional[0]) ? optional[0] : 1;
+			}
+			if (m > n) {
+				for (double i = m; i > n; i -= .1 * step) {
+					arr.add(Dbl(setPrecision(i)));
+				}
+			} else {
+				for (double i = m; i < n; i += .1 * step) {
+					arr.add(Dbl(setPrecision(i)));
+				}
+			}
+			return arr.array();
+		}
+		public static int[] excl(int n) {
+			hint.method points_to_the_regular_EXCLUSIVE_KL_range_method_in_this_case;
+			return exclusive(n);
+		}
+		public static double[] excl(double n) {
+			hint.method points_to_the_regular_EXCLUSIVE_KL_range_method_in_this_case;
+			return exclusive(n);
+		}
+		public static int[] excl(int m, int n, int... optional) {
+			return exclusive(m, n, optional);
+		}
+		public static String[] excl(String m, String n, int... optional) {
+			return exclusive(m, n, optional);
+		}
+		public static char[] excl(char m, char n) {
+			return exclusive(m, n);
+		}
+		public static double[] excl(double m, double n, int... optional) {
+			return exclusive(m, n, optional);
+		}
+	}
+	public class rng extends range {
+	}
 	public static int[] range(int n) {
 		intArr arr = intArr();
 		if (not(n) || n < 0) {
@@ -53129,20 +53290,21 @@ public class KL {
 		}
 		return tree.get(n);
 	}
-	public int fibonacci(int n) {
-	    if (n <= 1) return n;
-	    int a = 0, b = 1;
-	    for (int i = 2; i <= n; i++) {
-	        int sum = a + b;
-	        a = b;
-	        b = sum;
-	    }
-	    return b;
+	public static int fibonacci(int n) {
+		if (n <= 1)
+			return n;
+		int a = 0, b = 1;
+		for (int i = 2; i <= n; i++) {
+			int sum = a + b;
+			a = b;
+			b = sum;
+		}
+		return b;
 	}
 	public static int[] fibonacciSequence(int n) {
 		intArr result = intArr();
-		for (int i : range(n)) {
-			result.push(fibonacci(i + 1));
+		for (int i : range.inclusive(n)) {
+			result.push(fibonacci(i));
 		}
 		return result.array();
 	}
@@ -53159,6 +53321,9 @@ public class KL {
 			// e.g. percentify(800, 50) should return 400
 			return setPrecision(n1 * n2 / 100);
 		}
+	}
+	public static double percentify(double n1, double n2) {
+		return percentage(n1, n2);
 	}
 	final static double infinity = Double.POSITIVE_INFINITY;
 	public static <T> boolean isNull(T... objs) {
@@ -62057,9 +62222,8 @@ public class KL {
 		int[] ages = {23, 26, 31, 17};
 		String[] states = {"Michigan", "North Dakota", "Florida"};
 		for (var harEk : ikhatte(names, states, ages)) {
-			Object harEkUser = harEk[0],
-              falaanJaga = harEk[1],
-			  falaanSaal = harEk[2];
+			Object harEkUser = harEk[0], falaanJaga = harEk[1],
+					falaanSaal = harEk[2];
 			bolo(harEkUser, falaanJaga, "se he, or uski umr", falaanSaal, "he");
 		}
 		int num[] = {n};
@@ -62067,6 +62231,8 @@ public class KL {
 				.tab(() -> bolo("Possible. New n =", num[0]))
 				.warna(e -> bolo("Not possible."));
 		print(not(2 + 2, 5));
+		print(fibonacci(8));
+		print(fibonacciSequence(8));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
