@@ -53129,20 +53129,24 @@ public class KL {
 		}
 		return tree.get(n);
 	}
-	public static int fibonacci(int n) {
-		if (n < 2) {
-			return n;
-		}
-		return fibonacci(n - 1) + fibonacci(n - 2);
+	public int fibonacci(int n) {
+	    if (n <= 1) return n;
+	    int a = 0, b = 1;
+	    for (int i = 2; i <= n; i++) {
+	        int sum = a + b;
+	        a = b;
+	        b = sum;
+	    }
+	    return b;
 	}
 	public static int[] fibonacciSequence(int n) {
-		intArr result = new intArr();
+		intArr result = intArr();
 		for (int i : range(n)) {
 			result.push(fibonacci(i + 1));
 		}
 		return result.array();
 	}
-	public static double percentify(double n1, double n2) {
+	public static double percentage(double n1, double n2) {
 		if (not(n1) || not(n2)) {
 			return 0;
 		}
@@ -62054,9 +62058,9 @@ public class KL {
 		String[] states = {"Michigan", "North Dakota", "Florida"};
 		for (var harEk : ikhatte(names, states, ages)) {
 			Object harEkUser = harEk[0],
-              falaanMulk = harEk[1],
-			  falaanUmr = harEk[2];
-			bolo(harEkUser, falaanJaga, "se he, or uski umr", falaanUmr, "he");
+              falaanJaga = harEk[1],
+			  falaanSaal = harEk[2];
+			bolo(harEkUser, falaanJaga, "se he, or uski umr", falaanSaal, "he");
 		}
 		int num[] = {n};
 		agar.possible(() -> num[0] /= 2)
