@@ -28,37 +28,45 @@ import javax.swing.text.*;
 public class KL {
 	class hint {
 		//@class.why: this class is supposed to help make functions more understandable
-		class goodpractice {
+		class behavior extends hint {
 		}
-		class time {
+		class goodpractice extends hint {
 		}
-		class approach {
+		class time extends hint {
 		}
-		class avoids {
+		class timecomplexity extends hint.time {
 		}
-		class warning {
+		class approach extends hint {
 		}
-		class forClass {
+		class avoids extends hint {
 		}
-		class constructor {
+		class warning extends hint {
 		}
-		class forConstructor {
+		class forClass extends hint {
 		}
-		class field {
+		class constructor extends hint {
 		}
-		class forField {
+		class forConstructor extends hint.constructor {
 		}
-		class method {
+		class field extends hint {
 		}
-		class forMethod {
+		class forField extends hint.field {
 		}
-		class param {
+		class method extends hint {
 		}
-		class params {
+		class forMethod extends hint.method {
 		}
-		class forParam {
+		class param extends hint {
 		}
-		class forParams {
+		class forParam extends hint.param {
+		}
+	}
+	class mode {
+		class grow extends mode {
+		}
+		class shrink extends mode {
+		}
+		class newLength extends mode {
 		}
 	}
 	public static KL kl() {
@@ -30939,6 +30947,8 @@ public class KL {
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
+	public static Object ka = ignored, me_se = new Object(),
+            mese = me_se;
 	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
 	public static char _c = '\0';
@@ -43794,24 +43804,38 @@ public class KL {
 			Runnable onFallback) {
 		return new agar(condition).tab(onSuccess).nakam(onFallback);
 	}
-	public class range {
+	public static class range {
 		public static int[] inclusive(int n) {
 			intArr arr = intArr();
-			if (not(n) || n < 0) {
+			if (not(n) || isInf(n)) {
 				return arr.array();
 			}
-			for (int i = 0; i <= n; i++) {
-				arr.add(i);
+			if (n > 0) {
+				for (int i = 0; i <= n; i++) {
+					arr.add(i);
+				}
+			}
+			else {
+				for (int i = 0; i >= n; i--) {
+					arr.add(i);
+				}
 			}
 			return arr.array();
 		}
 		public static double[] inclusive(double n) {
 			dblArr arr = blank.dblArr;
-			if (n < 1.1 || not(n)) {
+			if (not(n)) {
 				return arr.array();
 			}
-			for (double i = 0; i <= n; i += .1) {
-				arr.add(i);
+			if (n > 0) {
+				for (double i = 0; i <= n; i += .1) {
+					arr.add(i);
+				}
+			}
+			else {
+				for (double i = 0; i >= n; i -= .1) {
+					arr.add(i);
+				}
 			}
 			return arr.array();
 		}
@@ -43830,6 +43854,47 @@ public class KL {
 		public static double[] inclusive(double m, double n, int... optional) {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return KL.range(m, n, optional);
+		}
+		public static int[] inclusive(int n, boolean reverse) {
+			if (not(n) || isNeg(n)) {
+				return blank.Int;
+			}
+			if (isPos(n) && reverse == Yes) {
+				return inclusive(n, 0);
+			}
+			return inclusive(n);
+		}
+		public static int[] inclusive(int m, int n, int gap, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, gap, reverse);
+		}
+		public static int[] inclusive(int m, int n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, reverse);
+		}
+		public static double[] inclusive(double n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(n, reverse);
+		}
+		public static double[] inclusive(double m, double n, int gap, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, gap, reverse);
+		}
+		public static double[] inclusive(double m, double n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, reverse);
+		}
+		public static String[] inclusive(String m, String n, int gap, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, gap, reverse);
+		}
+		public static String[] inclusive(String m, String n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, reverse);
+		}
+		public static char[] inclusive(char m, char n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(m, n, reverse);
 		}
 		public static int[] incl(int n) {
 			return inclusive(n);
@@ -43852,6 +43917,41 @@ public class KL {
 		public static double[] incl(double m, double n, int... optional) {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return inclusive(m, n, optional);
+		}
+		public static int[] incl(int n, boolean reverse) {
+			return inclusive(n, reverse);
+		}
+		public static int[] incl(int m, int n, int gap, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, gap, reverse);
+		}
+		public static int[] incl(int m, int n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, reverse);
+		}
+		public static double[] incl(double n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(n, reverse);
+		}
+		public static double[] incl(double m, double n, int gap, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, gap, reverse);
+		}
+		public static double[] incl(double m, double n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, reverse);
+		}
+		public static String[] incl(String m, String n, int gap, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, gap, reverse);
+		}
+		public static String[] incl(String m, String n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, reverse);
+		}
+		public static char[] incl(char m, char n, boolean reverse) {
+			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
+			return inclusive(m, n, reverse);
 		}
 		public static int[] exclusive(int n) {
 			hint.method points_to_the_regular_EXCLUSIVE_KL_range_method_in_this_case;
@@ -43932,6 +44032,82 @@ public class KL {
 			}
 			return arr.array();
 		}
+		public static int[] exclusive(int n, boolean reverse) {
+			hint.method points_to_the_regular_EXCLUSIVE_KL_range_method_in_this_case;
+			return KL.range(n, reverse);
+		}
+		public static int[] exclusive(int m, int n, int gap, boolean reverse) {
+			if (isNull(m) || isNull(n) || eq(m, n)) {
+				return blank.Int;
+			}
+			if (reverse) {
+				return exclusive(n, m, gap);
+			}
+			return exclusive(m, n, gap);
+		}
+		public static int[] exclusive(int m, int n, boolean reverse) {
+			if (isNull(m) || isNull(n) || eq(m, n)) {
+				return blank.Int;
+			}
+			if (reverse) {
+				return exclusive(n, m);
+			}
+			return exclusive(m, n);
+		}
+		public static double[] exclusive(double n, boolean reverse) {
+			if (not(n) || isNeg(n)) {
+				return blank.Dbl;
+			}
+			if (reverse) {
+				return range(n, 1);
+			}
+			return range(n);
+		}
+		public static double[] exclusive(double m, double n, int gap, boolean reverse) {
+			if (isNull(m) || isNull(n) || eq(m, n)) {
+				return blank.Dbl;
+			}
+			if (reverse) {
+				return exclusive(n, m, gap);
+			}
+			return exclusive(m, n, gap);
+		}
+		public static double[] exclusive(double m, double n, boolean reverse) {
+			if (isNull(m) || isNull(n) || eq(m, n)) {
+				return blank.Dbl;
+			}
+			if (reverse) {
+				return exclusive(n, m);
+			}
+			return exclusive(m, n);
+		}
+		public static String[] exclusive(String m, String n, int gap, boolean reverse) {
+			if (not(m) || not(n) || eq(m, n)) {
+				return blank.Str;
+			}
+			if (reverse) {
+				return exclusive(n, m, gap);
+			}
+			return exclusive(m, n, gap);
+		}
+		public static String[] exclusive(String m, String n, boolean reverse) {
+			if (not(m) || not(n) || eq(m, n)) {
+				return blank.Str;
+			}
+			if (reverse) {
+				return exclusive(n, m);
+			}
+			return exclusive(m, n);
+		}
+		public static char[] exclusive(char m, char n, boolean reverse) {
+			if (not(m) || not(n) || eq(m, n)) {
+				return blank.Char;
+			}
+			if (reverse) {
+				return exclusive(n, m);
+			}
+			return exclusive(m, n);
+		}
 		public static int[] excl(int n) {
 			hint.method points_to_the_regular_EXCLUSIVE_KL_range_method_in_this_case;
 			return exclusive(n);
@@ -43952,26 +44128,68 @@ public class KL {
 		public static double[] excl(double m, double n, int... optional) {
 			return exclusive(m, n, optional);
 		}
+		public static int[] excl(int n, boolean reverse) {
+			hint.method points_to_the_regular_EXCLUSIVE_KL_range_method_in_this_case;
+			return exclusive(n, reverse);
+		}
+		public static int[] excl(int m, int n, int gap, boolean reverse) {
+			return exclusive(m, n, gap, reverse);
+		}
+		public static int[] excl(int m, int n, boolean reverse) {
+			return exclusive(m, n, reverse);
+		}
+		public static double[] excl(double n, boolean reverse) {
+			return exclusive(n, reverse);
+		}
+		public static double[] excl(double m, double n, int gap, boolean reverse) {
+			return exclusive(m, n, gap, reverse);
+		}
+		public static double[] excl(double m, double n, boolean reverse) {
+			return exclusive(m, n, reverse);
+		}
+		public static String[] excl(String m, String n, int gap, boolean reverse) {
+			return exclusive(m, n, gap, reverse);
+		}
+		public static String[] excl(String m, String n, boolean reverse) {
+			return exclusive(m, n, reverse);
+		}
+		public static char[] excl(char m, char n, boolean reverse) {
+			return exclusive(m, n, reverse);
+		}
 	}
-	public class rng extends range {
+	public static class rng extends range {
 	}
 	public static int[] range(int n) {
 		intArr arr = intArr();
-		if (not(n) || n < 0) {
+		if (not(n) || isInf(n)) {
 			return arr.array();
 		}
-		for (int i = 0; i < n; i++) {
-			arr.add(i);
+		if (n > 0) {
+			for (int i = 0; i < n; i++) {
+				arr.add(i);
+			}
+		}
+		else {
+			for (int i = 0; i > n; i--) {
+				arr.add(i);
+			}
 		}
 		return arr.array();
 	}
 	public static double[] range(double n) {
 		dblArr arr = blank.dblArr;
-		if (n < 1.1 || not(n)) {
+		if (not(n)) {
 			return arr.array();
 		}
-		for (double i = 0; i < n; i += .1) {
-			arr.add(i);
+		if (n > 0) {
+			for (double i = 0; i < n; i += .1) {
+				arr.add(i);
+			}
+		}
+		else {
+			for (double i = 0; i > n; i -= .1) {
+				arr.add(i);
+			}
 		}
 		return arr.array();
 	}
@@ -44133,98 +44351,368 @@ public class KL {
 	public static int[] range(String str) {
 		return range(len(str));
 	}
-	public static int[] range(char[] arr) {
-		return range(len(arr));
+	public static int[] range(char[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(String[] arr) {
-		return range(len(arr));
+	public static int[] range(String[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(int[] arr) {
-		return range(len(arr));
+	public static int[] range(int[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(long[] arr) {
-		return range(len(arr));
+	public static int[] range(long[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(float[] arr) {
-		return range(len(arr));
+	public static int[] range(float[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(double[] arr) {
-		return range(len(arr));
+	public static int[] range(double[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(boolean[] arr) {
-		return range(len(arr));
+	public static int[] range(boolean[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(Object[] arr) {
-		return range(len(arr));
+	public static int[] range(Object[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(arr arr) {
-		return range(len(arr));
+	public static int[] range(arr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(strArr arr) {
-		return range(len(arr));
+	public static int[] range(strArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(intArr arr) {
-		return range(len(arr));
+	public static int[] range(intArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(longArr arr) {
-		return range(len(arr));
+	public static int[] range(longArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(fltArr arr) {
-		return range(len(arr));
+	public static int[] range(fltArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(dblArr arr) {
-		return range(len(arr));
+	public static int[] range(dblArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
-	public static int[] range(boolArr arr) {
-		return range(len(arr));
+	public static int[] range(boolArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range(minLength);
 	}
 	public static int[] range(int start, String str) {
-		return range(start, len(str));
+		return range.excl(start, len(str));
 	}
-	public static int[] range(int start, char[] arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, char[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, String[] arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, String[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, int[] arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, int[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, long[] arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, long[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, float[] arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, float[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, double[] arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, double[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, boolean[] arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, boolean[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, Object[] arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, Object[]... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, arr arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, arr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, strArr arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, strArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, intArr arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, intArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, longArr arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, longArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, fltArr arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, fltArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, dblArr arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, dblArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
-	public static int[] range(int start, boolArr arr) {
-		return range(start, len(arr));
+	public static int[] range(int start, boolArr... arrays) {
+		if (arrays == null || arrays.length == 0 || arrays[0] == null)
+		    return blank.Int;
+		int minLength = len(arrays[0]);
+		for (int i=1; i<arrays.length; i++) {
+			if (arrays[i] == null)
+			    continue;
+			if (len(arrays[i]) < minLength)
+			    minLength = len(arrays[i]);
+		}
+		return range.excl(start, minLength);
 	}
 	public static int[] rng(int n) {
 		return range(n);
@@ -44274,194 +44762,194 @@ public class KL {
 	public static int[] rng(String str) {
 		return range(str);
 	}
-	public static int[] rng(char[] arr) {
-		return range(arr);
+	public static int[] rng(char[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(String[] arr) {
-		return range(arr);
+	public static int[] rng(String[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(int[] arr) {
-		return range(arr);
+	public static int[] rng(int[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(long[] arr) {
-		return range(arr);
+	public static int[] rng(long[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(float[] arr) {
-		return range(arr);
+	public static int[] rng(float[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(double[] arr) {
-		return range(arr);
+	public static int[] rng(double[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(boolean[] arr) {
-		return range(arr);
+	public static int[] rng(boolean[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(Object[] arr) {
-		return range(arr);
+	public static int[] rng(Object[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(arr arr) {
+	public static int[] rng(arr... arrays) {
 		return range(len(arr));
 	}
-	public static int[] rng(strArr arr) {
-		return range(arr);
+	public static int[] rng(strArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(intArr arr) {
-		return range(arr);
+	public static int[] rng(intArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(longArr arr) {
-		return range(arr);
+	public static int[] rng(longArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(fltArr arr) {
-		return range(arr);
+	public static int[] rng(fltArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(dblArr arr) {
-		return range(arr);
+	public static int[] rng(dblArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] rng(boolArr arr) {
-		return range(arr);
+	public static int[] rng(boolArr... arrays) {
+		return range(arrays);
 	}
 	public static int[] rng(int start, String str) {
 		return range(start, str);
 	}
-	public static int[] rng(int start, char[] arr) {
-		return range(start, arr);
+	public static int[] rng(int start, char[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, String[] arr) {
-		return range(start, arr);
+	public static int[] rng(int start, String[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, int[] arr) {
-		return range(start, arr);
+	public static int[] rng(int start, int[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, long[] arr) {
-		return range(start, arr);
+	public static int[] rng(int start, long[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, float[] arr) {
-		return range(start, arr);
+	public static int[] rng(int start, float[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, double[] arr) {
-		return range(start, arr);
+	public static int[] rng(int start, double[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, boolean[] arr) {
-		return range(start, arr);
+	public static int[] rng(int start, boolean[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, Object[] arr) {
-		return range(start, arr);
+	public static int[] rng(int start, Object[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, arr arr) {
-		return range(start, arr);
+	public static int[] rng(int start, arr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, strArr arr) {
-		return range(start, arr);
+	public static int[] rng(int start, strArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, intArr arr) {
-		return range(start, arr);
+	public static int[] rng(int start, intArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, longArr arr) {
-		return range(start, arr);
+	public static int[] rng(int start, longArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, fltArr arr) {
-		return range(start, arr);
+	public static int[] rng(int start, fltArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, dblArr arr) {
-		return range(start, arr);
+	public static int[] rng(int start, dblArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] rng(int start, boolArr arr) {
-		return range(start, arr);
+	public static int[] rng(int start, boolArr... arrays) {
+		return range(start, arrays);
 	}
 	public static int[] idx(String str) {
 		return range(str);
 	}
-	public static int[] idx(char[] arr) {
-		return range(arr);
+	public static int[] idx(char[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(String[] arr) {
-		return range(arr);
+	public static int[] idx(String[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(int[] arr) {
-		return range(arr);
+	public static int[] idx(int[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(long[] arr) {
-		return range(arr);
+	public static int[] idx(long[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(float[] arr) {
-		return range(arr);
+	public static int[] idx(float[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(double[] arr) {
-		return range(arr);
+	public static int[] idx(double[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(boolean[] arr) {
-		return range(arr);
+	public static int[] idx(boolean[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(Object[] arr) {
-		return range(arr);
+	public static int[] idx(Object[]... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(arr arr) {
-		return range(arr);
+	public static int[] idx(arr... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(strArr arr) {
-		return range(arr);
+	public static int[] idx(strArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(intArr arr) {
-		return range(arr);
+	public static int[] idx(intArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(longArr arr) {
-		return range(arr);
+	public static int[] idx(longArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(fltArr arr) {
-		return range(arr);
+	public static int[] idx(fltArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(dblArr arr) {
-		return range(arr);
+	public static int[] idx(dblArr... arrays) {
+		return range(arrays);
 	}
-	public static int[] idx(boolArr arr) {
-		return range(arr);
+	public static int[] idx(boolArr... arrays) {
+		return range(arrays);
 	}
 	public static int[] idx(int start, String str) {
 		return range(start, str);
 	}
-	public static int[] idx(int start, char[] arr) {
-		return range(start, arr);
+	public static int[] idx(int start, char[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, String[] arr) {
-		return range(start, arr);
+	public static int[] idx(int start, String[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, int[] arr) {
-		return range(start, arr);
+	public static int[] idx(int start, int[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, long[] arr) {
-		return range(start, arr);
+	public static int[] idx(int start, long[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, float[] arr) {
-		return range(start, arr);
+	public static int[] idx(int start, float[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, double[] arr) {
-		return range(start, arr);
+	public static int[] idx(int start, double[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, boolean[] arr) {
-		return range(start, arr);
+	public static int[] idx(int start, boolean[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, Object[] arr) {
-		return range(start, arr);
+	public static int[] idx(int start, Object[]... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, arr arr) {
-		return range(start, arr);
+	public static int[] idx(int start, arr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, strArr arr) {
-		return range(start, arr);
+	public static int[] idx(int start, strArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, intArr arr) {
-		return range(start, arr);
+	public static int[] idx(int start, intArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, longArr arr) {
-		return range(start, arr);
+	public static int[] idx(int start, longArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, fltArr arr) {
-		return range(start, arr);
+	public static int[] idx(int start, fltArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, dblArr arr) {
-		return range(start, arr);
+	public static int[] idx(int start, dblArr... arrays) {
+		return range(start, arrays);
 	}
-	public static int[] idx(int start, boolArr arr) {
-		return range(start, arr);
+	public static int[] idx(int start, boolArr... arrays) {
+		return range(start, arrays);
 	}
 	public static void each(String[] iterable,
 			ObjIntConsumer<String> consumer) {
@@ -53294,7 +53782,7 @@ public class KL {
 		if (n <= 1)
 			return n;
 		int a = 0, b = 1;
-		for (int i = 2; i <= n; i++) {
+		for (int i : range.inclusive(2, n)) {
 			int sum = a + b;
 			a = b;
 			b = sum;
@@ -62081,8 +62569,26 @@ public class KL {
 			"first=Michael, last=Jordan, pronunciation=maikul jord'n");
 	static o fetched = fetch("https://randusers-api.vercel.app");
 	static boolean veteran = user.k("veteran", _b);
-	static boolean[] boolsArr = {Yes, No, Yes};
 	public static int n = 0;
+	public static int[] resize(int[] arr, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Int;
+		int newLen = len(arr) + by;
+		if (newLen <= 0)
+			return blank.Int;
+		int[] newArr = new int[newLen];
+		for (int i : range(arr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	/*
+	 * class resize { by() {} to() {} toFixed() {} toSize() {} shrink() {} grow() {} }
+	 *
+	 *
+	 *
+	 * myArr = resize.by(2, arr, mode.shrink) resize.toLength(2, arr) = resize(arr, 2,
+	 * mode.newLength)
+	 */
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
@@ -62233,6 +62739,9 @@ public class KL {
 		print(not(2 + 2, 5));
 		print(fibonacci(8));
 		print(fibonacciSequence(8));
+		int[] myArr = range(6, 10);
+		myArr = resize(myArr, -1);
+		print(myArr[2]);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
