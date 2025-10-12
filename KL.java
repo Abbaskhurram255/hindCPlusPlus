@@ -28,9 +28,13 @@ import javax.swing.text.*;
 public class KL {
 	class hint {
 		//@class.why: this class is supposed to help make functions more understandable
+		class info extends hint {}
+		class intention extends hint {}
 		class behavior extends hint {
 		}
 		class goodpractice extends hint {
+		}
+		class badpractice extends hint {
 		}
 		class time extends hint {
 		}
@@ -3525,13 +3529,100 @@ public class KL {
 	public static String fileSeparator = System.getProperty("file.separator"),
 			workDirectory = System.getProperty("user.dir").toLowerCase();
 	public static class sys {
+		private static Runtime runtime = Runtime.getRuntime();
 		public static String name = System.getProperty("os.name").toLowerCase()
 				.split(" ")[0],
 				version = System.getProperty("os.version").toLowerCase(),
 				arch = System.getProperty("os.arch").toLowerCase();
+		public static long freeMemory() {
+			return runtime.freeMemory() / (1024 * 1024);
+		}
+		public static long totalMemory() {
+			return runtime.totalMemory() / (1024 * 1024);
+		}
+		public static int numberOfCores() {
+			return runtime.availableProcessors();
+		}
+		public static int cores() {
+			return numberOfCores();
+		}
+		public static void free() {
+			hint.intention is_supposed_to_run_the_garbage_collector_would_could_free_some_memory;
+			hint.info may_or_may_not_always_work;
+			runtime.gc();
+		}
+		public static Process run(String commandString) {
+			if (not(commandString))
+			    return null;
+	        String os = name;
+	        ProcessBuilder processBuilder = new ProcessBuilder();
+	        if (os.contains("win")) {
+	            processBuilder.command("cmd.exe", "/c", commandString);
+	        } else {
+	            processBuilder.command("bash", "-c", commandString);
+	        }
+	        try {
+		        Process process = processBuilder.start();
+		        var executor = Executors.newFixedThreadPool(2);
+		        Future<java.util.List<String>> outputFuture = executor.submit(() -> {
+		            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		            return reader.lines().collect(Collectors.toList());
+		        });
+		        Future<java.util.List<String>> errorFuture = executor.submit(() -> {
+		            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+		            return reader.lines().collect(Collectors.toList());
+		        });
+		        int exitCode = process.waitFor();
+		        System.out.println("--- Output ---");
+		        outputFuture.get().forEach(System.out::println);
+		        System.out.println("--- Error ---");
+		        errorFuture.get().forEach(System.err::println);
+		        System.out.println("\nExited with code: " + exitCode);
+		        executor.shutdown();
+		        if (exitCode != 0) {
+		            System.err.println("Command execution failed with exit code " + exitCode);
+		        }
+		        return process;
+		    }
+		    catch (Throwable e) {
+			    return null;
+			}
+	    }
+	    public static void kill(Process process) {
+		    if (not(process))
+		        return;
+		    process.destroyForcibly();
+    	}
+        public static void kill(String processName) {
+        	if (not(processName))
+                return;
+        	Stream<ProcessHandle> allProcesses = ProcessHandle.allProcesses();
+        try {
+	        allProcesses
+	            .filter(ProcessHandle::isAlive)
+	            .filter(ph -> ph.info().command().isPresent())
+	            .filter(ph -> ph.info().command().get().endsWith(processName))
+	            .findFirst() // Find the first matching process
+	            .ifPresentOrElse(
+	                handle -> {
+	                    System.out.println("Found process with PID " + handle.pid() + ". Attempting to destroy...");
+	                    if (handle.destroyForcibly()) {
+	                        System.out.println("Process destroyed successfully.");
+	                    } else {
+	                        System.out.println("Failed to destroy process.");
+	                    }
+	                },
+	                () -> System.out.println("Process '" + processName + "' not found.")
+	            );
+            }
+            catch (Throwable e) {
+            }
+        }
 		public static boolean is(String s) {
 			return startsWith(name, s);
 		}
+	}
+	public static class system extends KL.sys {
 	}
 	public static class user {
 		public static String name = System.getProperty("user.name"),
@@ -44059,9 +44150,9 @@ public class KL {
 				return blank.Dbl;
 			}
 			if (reverse) {
-				return range(n, 1);
+				return exclusive(n, 1);
 			}
-			return range(n);
+			return exclusive(n);
 		}
 		public static double[] exclusive(double m, double n, int gap, boolean reverse) {
 			if (isNull(m) || isNull(n) || eq(m, n)) {
@@ -62573,11 +62664,15 @@ public class KL {
 	public static int[] resize(int[] arr, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Int;
+		if (not(by))
+		    return arr;
 		int newLen = len(arr) + by;
+		hint.behavior decrements_the_size_if_by_is_negative;
+		hint.behavior else_increments_it;
 		if (newLen <= 0)
 			return blank.Int;
 		int[] newArr = new int[newLen];
-		for (int i : range(arr))
+		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
@@ -62589,6 +62684,31 @@ public class KL {
 	 * myArr = resize.by(2, arr, mode.shrink) resize.toLength(2, arr) = resize(arr, 2,
 	 * mode.newLength)
 	 */
+	 public static void har(Runnable step1, Callable<Boolean> step2, Runnable step3, Runnable task) {
+		if (step1 == null || step2 == null || step3 == null || task == null)
+		    return;
+        step1.run();
+		boolean condition;
+		try {
+		    condition = step2.call();
+		}
+		catch (Throwable e) {
+		    condition = false;
+		}
+		while (condition) {
+		    try {
+                task.run();
+		        step3.run();
+	            condition = step2.call();
+	        }
+	        catch (Throwable e) {
+	            
+	        }
+		}
+	}
+	public static void har(Runnable step1, boolean step2, Runnable step3, Runnable task) {
+		return har(step1, new Callable<Boolean>(){public boolean call() {return step2}}, step3, task);
+	}
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
@@ -62741,7 +62861,7 @@ public class KL {
 		print(fibonacciSequence(8));
 		int[] myArr = range(6, 10);
 		myArr = resize(myArr, -1);
-		print(myArr[2]);
+		for (int i : range(myArr)) print(myArr[i]);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
