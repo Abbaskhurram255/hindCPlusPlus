@@ -28,8 +28,10 @@ import javax.swing.text.*;
 public class KL {
 	class hint {
 		//@class.why: this class is supposed to help make functions more understandable
-		class info extends hint {}
-		class intention extends hint {}
+		class info extends hint {
+		}
+		class intention extends hint {
+		}
 		class behavior extends hint {
 		}
 		class goodpractice extends hint {
@@ -68,9 +70,21 @@ public class KL {
 	class mode {
 		class grow extends mode {
 		}
+		class increment extends mode.grow {
+		}
+		class inc extends mode.increment {
+		}
 		class shrink extends mode {
 		}
+		class decrement extends mode.shrink {
+		}
+		class dec extends mode.decrement {
+		}
+		class length extends mode {
+		}
 		class newLength extends mode {
+		}
+		class reverse extends mode {
 		}
 	}
 	public static KL kl() {
@@ -3553,71 +3567,79 @@ public class KL {
 		}
 		public static Process run(String commandString) {
 			if (not(commandString))
-			    return null;
-	        String os = name;
-	        ProcessBuilder processBuilder = new ProcessBuilder();
-	        if (os.contains("win")) {
-	            processBuilder.command("cmd.exe", "/c", commandString);
-	        } else {
-	            processBuilder.command("bash", "-c", commandString);
-	        }
-	        try {
-		        Process process = processBuilder.start();
-		        var executor = Executors.newFixedThreadPool(2);
-		        Future<java.util.List<String>> outputFuture = executor.submit(() -> {
-		            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		            return reader.lines().collect(Collectors.toList());
-		        });
-		        Future<java.util.List<String>> errorFuture = executor.submit(() -> {
-		            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-		            return reader.lines().collect(Collectors.toList());
-		        });
-		        int exitCode = process.waitFor();
-		        System.out.println("--- Output ---");
-		        outputFuture.get().forEach(System.out::println);
-		        System.out.println("--- Error ---");
-		        errorFuture.get().forEach(System.err::println);
-		        System.out.println("\nExited with code: " + exitCode);
-		        executor.shutdown();
-		        if (exitCode != 0) {
-		            System.err.println("Command execution failed with exit code " + exitCode);
-		        }
-		        return process;
-		    }
-		    catch (Throwable e) {
-			    return null;
+				return null;
+			String os = name;
+			ProcessBuilder processBuilder = new ProcessBuilder();
+			if (os.contains("win")) {
+				processBuilder.command("cmd.exe", "/c", commandString);
+			} else {
+				processBuilder.command("bash", "-c", commandString);
 			}
-	    }
-	    public static void kill(Process process) {
-		    if (not(process))
-		        return;
-		    process.destroyForcibly();
-    	}
-        public static void kill(String processName) {
-        	if (not(processName))
-                return;
-        	Stream<ProcessHandle> allProcesses = ProcessHandle.allProcesses();
-        try {
-	        allProcesses
-	            .filter(ProcessHandle::isAlive)
-	            .filter(ph -> ph.info().command().isPresent())
-	            .filter(ph -> ph.info().command().get().endsWith(processName))
-	            .findFirst() // Find the first matching process
-	            .ifPresentOrElse(
-	                handle -> {
-	                    System.out.println("Found process with PID " + handle.pid() + ". Attempting to destroy...");
-	                    if (handle.destroyForcibly()) {
-	                        System.out.println("Process destroyed successfully.");
-	                    } else {
-	                        System.out.println("Failed to destroy process.");
-	                    }
-	                },
-	                () -> System.out.println("Process '" + processName + "' not found.")
-	            );
-            }
-            catch (Throwable e) {
-            }
-        }
+			try {
+				Process process = processBuilder.start();
+				var executor = Executors.newFixedThreadPool(2);
+				Future<java.util.List<String>> outputFuture = executor
+						.submit(() -> {
+							BufferedReader reader = new BufferedReader(
+									new InputStreamReader(
+											process.getInputStream()));
+							return reader.lines().collect(Collectors.toList());
+						});
+				Future<java.util.List<String>> errorFuture = executor
+						.submit(() -> {
+							BufferedReader reader = new BufferedReader(
+									new InputStreamReader(
+											process.getErrorStream()));
+							return reader.lines().collect(Collectors.toList());
+						});
+				int exitCode = process.waitFor();
+				System.out.println("--- Output ---");
+				outputFuture.get().forEach(System.out::println);
+				System.out.println("--- Error ---");
+				errorFuture.get().forEach(System.err::println);
+				System.out.println("\nExited with code: " + exitCode);
+				executor.shutdown();
+				if (exitCode != 0) {
+					System.err
+							.println("Command execution failed with exit code "
+									+ exitCode);
+				}
+				return process;
+			} catch (Throwable e) {
+				return null;
+			}
+		}
+		public static void kill(Process process) {
+			if (not(process))
+				return;
+			process.destroyForcibly();
+		}
+		public static void kill(String processName) {
+			if (not(processName))
+				return;
+			Stream<ProcessHandle> allProcesses = ProcessHandle.allProcesses();
+			try {
+				allProcesses.filter(ProcessHandle::isAlive)
+						.filter(ph -> ph.info().command().isPresent())
+						.filter(ph -> ph.info().command().get()
+								.endsWith(processName))
+						.findFirst() // Find the first matching process
+						.ifPresentOrElse(handle -> {
+							System.out.println(
+									"Found process with PID " + handle.pid()
+											+ ". Attempting to destroy...");
+							if (handle.destroyForcibly()) {
+								System.out.println(
+										"Process destroyed successfully.");
+							} else {
+								System.out
+										.println("Failed to destroy process.");
+							}
+						}, () -> System.out.println(
+								"Process '" + processName + "' not found."));
+			} catch (Throwable e) {
+			}
+		}
 		public static boolean is(String s) {
 			return startsWith(name, s);
 		}
@@ -31038,8 +31060,7 @@ public class KL {
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
-	public static Object ka = ignored, me_se = new Object(),
-            mese = me_se;
+	public static Object ka = ignored, me_se = new Object(), mese = me_se;
 	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
 	public static char _c = '\0';
@@ -43905,8 +43926,7 @@ public class KL {
 				for (int i = 0; i <= n; i++) {
 					arr.add(i);
 				}
-			}
-			else {
+			} else {
 				for (int i = 0; i >= n; i--) {
 					arr.add(i);
 				}
@@ -43922,8 +43942,7 @@ public class KL {
 				for (double i = 0; i <= n; i += .1) {
 					arr.add(i);
 				}
-			}
-			else {
+			} else {
 				for (double i = 0; i >= n; i -= .1) {
 					arr.add(i);
 				}
@@ -43967,7 +43986,8 @@ public class KL {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return KL.range(n, reverse);
 		}
-		public static double[] inclusive(double m, double n, int gap, boolean reverse) {
+		public static double[] inclusive(double m, double n, int gap,
+				boolean reverse) {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return KL.range(m, n, gap, reverse);
 		}
@@ -43975,7 +43995,8 @@ public class KL {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return KL.range(m, n, reverse);
 		}
-		public static String[] inclusive(String m, String n, int gap, boolean reverse) {
+		public static String[] inclusive(String m, String n, int gap,
+				boolean reverse) {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return KL.range(m, n, gap, reverse);
 		}
@@ -44024,7 +44045,8 @@ public class KL {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return inclusive(n, reverse);
 		}
-		public static double[] incl(double m, double n, int gap, boolean reverse) {
+		public static double[] incl(double m, double n, int gap,
+				boolean reverse) {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return inclusive(m, n, gap, reverse);
 		}
@@ -44032,7 +44054,8 @@ public class KL {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return inclusive(m, n, reverse);
 		}
-		public static String[] incl(String m, String n, int gap, boolean reverse) {
+		public static String[] incl(String m, String n, int gap,
+				boolean reverse) {
 			hint.method points_to_the_regular_INCLUSIVE_KL_range_method_in_this_case;
 			return inclusive(m, n, gap, reverse);
 		}
@@ -44154,7 +44177,8 @@ public class KL {
 			}
 			return exclusive(n);
 		}
-		public static double[] exclusive(double m, double n, int gap, boolean reverse) {
+		public static double[] exclusive(double m, double n, int gap,
+				boolean reverse) {
 			if (isNull(m) || isNull(n) || eq(m, n)) {
 				return blank.Dbl;
 			}
@@ -44172,7 +44196,8 @@ public class KL {
 			}
 			return exclusive(m, n);
 		}
-		public static String[] exclusive(String m, String n, int gap, boolean reverse) {
+		public static String[] exclusive(String m, String n, int gap,
+				boolean reverse) {
 			if (not(m) || not(n) || eq(m, n)) {
 				return blank.Str;
 			}
@@ -44232,13 +44257,15 @@ public class KL {
 		public static double[] excl(double n, boolean reverse) {
 			return exclusive(n, reverse);
 		}
-		public static double[] excl(double m, double n, int gap, boolean reverse) {
+		public static double[] excl(double m, double n, int gap,
+				boolean reverse) {
 			return exclusive(m, n, gap, reverse);
 		}
 		public static double[] excl(double m, double n, boolean reverse) {
 			return exclusive(m, n, reverse);
 		}
-		public static String[] excl(String m, String n, int gap, boolean reverse) {
+		public static String[] excl(String m, String n, int gap,
+				boolean reverse) {
 			return exclusive(m, n, gap, reverse);
 		}
 		public static String[] excl(String m, String n, boolean reverse) {
@@ -44259,8 +44286,7 @@ public class KL {
 			for (int i = 0; i < n; i++) {
 				arr.add(i);
 			}
-		}
-		else {
+		} else {
 			for (int i = 0; i > n; i--) {
 				arr.add(i);
 			}
@@ -44276,8 +44302,7 @@ public class KL {
 			for (double i = 0; i < n; i += .1) {
 				arr.add(i);
 			}
-		}
-		else {
+		} else {
 			for (double i = 0; i > n; i -= .1) {
 				arr.add(i);
 			}
@@ -44444,365 +44469,397 @@ public class KL {
 	}
 	public static int[] range(char[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(String[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(int[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(long[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(float[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(double[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(boolean[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(Object[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(arr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(strArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(intArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(longArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(fltArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(dblArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(boolArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
 		return range(minLength);
 	}
 	public static int[] range(int start, String str) {
+		if (str == null || len(str) == 0 || start >= len(str))
+			return blank.Int;
 		return range.excl(start, len(str));
 	}
 	public static int[] range(int start, char[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, String[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, int[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, long[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, float[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, double[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, boolean[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, Object[]... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, arr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, strArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, intArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, longArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, fltArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, dblArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] range(int start, boolArr... arrays) {
 		if (arrays == null || arrays.length == 0 || arrays[0] == null)
-		    return blank.Int;
+			return blank.Int;
 		int minLength = len(arrays[0]);
-		for (int i=1; i<arrays.length; i++) {
+		for (int i = 1; i < arrays.length; i++) {
 			if (arrays[i] == null)
-			    continue;
+				continue;
 			if (len(arrays[i]) < minLength)
-			    minLength = len(arrays[i]);
+				minLength = len(arrays[i]);
 		}
+		if (start >= minLength)
+			return blank.Int;
 		return range.excl(start, minLength);
 	}
 	public static int[] rng(int n) {
@@ -52931,7 +52988,11 @@ public class KL {
 			return null;
 		if (!eq(type(type), type(o)))
 			return null;
-		return (T) o;
+		try {
+			return (T) o;
+		} catch (ClassCastException e) {
+			return null;
+		}
 	}
 	public static void printw(String nameOfObj, String format) {
 		print(with(nameOfObj, format));
@@ -53904,7 +53965,10 @@ public class KL {
 	public static double percentify(double n1, double n2) {
 		return percentage(n1, n2);
 	}
-	final static double infinity = Double.POSITIVE_INFINITY;
+	final static double Infinity, Positive_Infinity, positive_infinity,
+			Negative_Infinity,
+			infinity = Infinity = positive_infinity = Positive_Infinity = Double.POSITIVE_INFINITY,
+			negative_infinity = Negative_Infinity = Double.NEGATIVE_INFINITY;
 	public static <T> boolean isNull(T... objs) {
 		if (objs == null) {
 			return true;
@@ -53947,7 +54011,7 @@ public class KL {
 		return isNull(subArrays);
 	}
 	public static boolean isInfinity(double n) {
-		return n == infinity || n == Double.NEGATIVE_INFINITY;
+		return n == Infinity || n == Negative_Infinity;
 	}
 	public static boolean isInf(double n) {
 		return isInfinity(n);
@@ -62665,7 +62729,7 @@ public class KL {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Int;
 		if (not(by))
-		    return arr;
+			return arr;
 		int newLen = len(arr) + by;
 		hint.behavior decrements_the_size_if_by_is_negative;
 		hint.behavior else_increments_it;
@@ -62676,6 +62740,9 @@ public class KL {
 			newArr[i] = arr[i];
 		return newArr;
 	}
+	class resize {
+
+	}
 	/*
 	 * class resize { by() {} to() {} toFixed() {} toSize() {} shrink() {} grow() {} }
 	 *
@@ -62684,30 +62751,30 @@ public class KL {
 	 * myArr = resize.by(2, arr, mode.shrink) resize.toLength(2, arr) = resize(arr, 2,
 	 * mode.newLength)
 	 */
-	 public static void har(Runnable step1, Callable<Boolean> step2, Runnable step3, Runnable task) {
+	public static void har(Runnable step1, Callable<Boolean> step2,
+			Runnable step3, Runnable task) {
 		if (step1 == null || step2 == null || step3 == null || task == null)
-		    return;
-        step1.run();
+			return;
+		step1.run();
 		boolean condition;
 		try {
-		    condition = step2.call();
-		}
-		catch (Throwable e) {
-		    condition = false;
+			condition = step2.call();
+		} catch (Throwable e) {
+			condition = false;
 		}
 		while (condition) {
-		    try {
-                task.run();
-		        step3.run();
-	            condition = step2.call();
-	        }
-	        catch (Throwable e) {
-	            
-	        }
+			try {
+				task.run();
+				step3.run();
+				condition = step2.call();
+			} catch (Throwable e) {
+
+			}
 		}
 	}
-	public static void har(Runnable step1, boolean step2, Runnable step3, Runnable task) {
-		return har(step1, new Callable<Boolean>(){public boolean call() {return step2}}, step3, task);
+	public static void har(Runnable step1, boolean step2, Runnable step3,
+			Runnable task) {
+		har(step1, () -> step2, step3, task);
 	}
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
@@ -62860,8 +62927,10 @@ public class KL {
 		print(fibonacci(8));
 		print(fibonacciSequence(8));
 		int[] myArr = range(6, 10);
-		myArr = resize(myArr, -1);
-		for (int i : range(myArr)) print(myArr[i]);
+		myArr = resize(myArr, -2);
+		for (int i : range(1, myArr))
+			print(myArr[i]);
+		bolo(range(2, 5));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
