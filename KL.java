@@ -87,6 +87,13 @@ public class KL {
 		class reverse extends mode {
 		}
 	}
+	class init {
+		public static int i, j, k;
+	}
+	class variable extends init {
+	}
+	class varbl extends variable {
+	}
 	public static KL kl() {
 		// @hint.method this_method_will_help_make_the_instantiation_quicker
 		return new KL();
@@ -43507,6 +43514,12 @@ public class KL {
 			}
 			return this;
 		}
+		karoFail koshish(CustomRunnable fn) {
+			return karo(fn);
+		}
+		karoFail koshish(CustomCallable fn) {
+			return karo(fn);
+		}
 		karoFail hua(Runnable fn) {
 			if (fn == ignored)
 				return null;
@@ -43548,6 +43561,33 @@ public class KL {
 			return hua(fn);
 		}
 		<T> T then(Callable fn, T returnType) {
+			return hua(fn, returnType);
+		}
+		karoFail kamyab(Runnable fn) {
+			return hua(fn);
+		}
+		Object kamyab(Callable fn) {
+			return hua(fn);
+		}
+		<T> T kamyab(Callable fn, T returnType) {
+			return hua(fn, returnType);
+		}
+		karoFail kamyabi(Runnable fn) {
+			return hua(fn);
+		}
+		Object kamyabi(Callable fn) {
+			return hua(fn);
+		}
+		<T> T kamyabi(Callable fn, T returnType) {
+			return hua(fn, returnType);
+		}
+		karoFail puri(Runnable fn) {
+			return hua(fn);
+		}
+		Object puri(Callable fn) {
+			return hua(fn);
+		}
+		<T> T puri(Callable fn, T returnType) {
 			return hua(fn, returnType);
 		}
 		karoFail hamesha(Runnable fn) {
@@ -43599,6 +43639,30 @@ public class KL {
 			return warna(fallback);
 		}
 		<T> T nakam(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
+		}
+		karoFail nakami(Consumer<Throwable> fallback) {
+			return warna(fallback);
+		}
+		karoFail nakami(Runnable fallback) {
+			return warna(fallback);
+		}
+		Object nakami(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T nakami(Callable fallback, T returnType) {
+			return warna(fallback, returnType);
+		}
+		karoFail adhrui(Consumer<Throwable> fallback) {
+			return warna(fallback);
+		}
+		karoFail adhuri(Runnable fallback) {
+			return warna(fallback);
+		}
+		Object adhuri(Callable fallback) {
+			return warna(fallback);
+		}
+		<T> T adhuri(Callable fallback, T returnType) {
 			return warna(fallback, returnType);
 		}
 		karoFail fail(Consumer<Throwable> fallback) {
@@ -43668,6 +43732,28 @@ public class KL {
 		return new karoFail().karo(fn).nakam(fallback);
 	}
 	public static karoFail karo(karoFail.CustomCallable fn, Runnable fallback) {
+		return new karoFail().karo(fn).nakam(fallback);
+	}
+	public static karoFail koshish(karoFail.CustomRunnable fn) {
+		return new karoFail().karo(fn);
+	}
+	public static karoFail koshish(karoFail.CustomCallable fn) {
+		return new karoFail().karo(fn);
+	}
+	public static karoFail koshish(karoFail.CustomRunnable fn,
+			Consumer<Throwable> fallback) {
+		return new karoFail().karo(fn).nakam(fallback);
+	}
+	public static karoFail koshish(karoFail.CustomCallable fn,
+			Consumer<Throwable> fallback) {
+		return new karoFail().karo(fn).nakam(fallback);
+	}
+	public static karoFail koshish(karoFail.CustomRunnable fn,
+			Runnable fallback) {
+		return new karoFail().karo(fn).nakam(fallback);
+	}
+	public static karoFail koshish(karoFail.CustomCallable fn,
+			Runnable fallback) {
 		return new karoFail().karo(fn).nakam(fallback);
 	}
 	public static final class agar {
@@ -52986,9 +53072,22 @@ public class KL {
 	public static <T> T as(T type, Object o) {
 		if (isNull(type, o))
 			return null;
-		if (!eq(type(type), type(o)))
+		if (not(type(type), type(o)))
 			return null;
 		try {
+			if (isStr(o) && isNumLike(type)) {
+				String objectParsedAsString = as(_s, o);
+				if (isIntLike(objectParsedAsString)) {
+					if (isInt(type))
+						return (T) ((Integer) Int(objectParsedAsString));
+					return (T) ((Long) Long(objectParsedAsString));
+				}
+				if (isDblLike(objectParsedAsString)) {
+					if (isDbl(type))
+						return (T) ((Double) Dbl(objectParsedAsString));
+					return (T) ((Float) Flt(objectParsedAsString));
+				}
+			}
 			return (T) o;
 		} catch (ClassCastException e) {
 			return null;
@@ -62924,13 +63023,17 @@ public class KL {
 				.tab(() -> bolo("Possible. New n =", num[0]))
 				.warna(e -> bolo("Not possible."));
 		print(not(2 + 2, 5));
-		print(fibonacci(8));
-		print(fibonacciSequence(8));
 		int[] myArr = range(6, 10);
 		myArr = resize(myArr, -2);
 		for (int i : range(1, myArr))
 			print(myArr[i]);
 		bolo(range(2, 5));
+		har(() -> varbl.i = 0, varbl.i < 5, () -> varbl.i++,
+				() -> print(range(6, 10)[varbl.i]));
+		Object[] toParse = {1, "hi", "5.2", false};
+		for (int i : range(toParse)) {
+			print(toParse[i]);
+		}
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
