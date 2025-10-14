@@ -44734,7 +44734,7 @@ public class KL {
 		return range(minLength);
 	}
 	public static int[] range(int start, String str) {
-		if (str == null || len(str) == 0 || start >= len(str))
+		if (str == null || len(str) == 0 || start < 0 || start >= len(str))
 			return blank.Int;
 		return range.excl(start, len(str));
 	}
@@ -44748,7 +44748,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44762,7 +44762,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44776,7 +44776,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44790,7 +44790,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44804,7 +44804,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44818,7 +44818,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44832,7 +44832,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44846,7 +44846,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44860,7 +44860,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44874,7 +44874,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44888,7 +44888,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44902,7 +44902,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44916,7 +44916,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44930,7 +44930,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
@@ -44944,7 +44944,7 @@ public class KL {
 			if (len(arrays[i]) < minLength)
 				minLength = len(arrays[i]);
 		}
-		if (start >= minLength)
+		if (start < 0 || start >= minLength)
 			return blank.Int;
 		return range.excl(start, minLength);
 	}
