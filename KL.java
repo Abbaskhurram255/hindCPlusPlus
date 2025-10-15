@@ -67,32 +67,22 @@ public class KL {
 		class forParam extends hint.param {
 		}
 	}
-	class mode {
-		class grow extends mode {
-		}
-		class increment extends mode.grow {
-		}
-		class inc extends mode.increment {
-		}
-		class shrink extends mode {
-		}
-		class decrement extends mode.shrink {
-		}
-		class dec extends mode.decrement {
-		}
-		class length extends mode {
-		}
-		class newLength extends mode {
-		}
-		class reverse extends mode {
-		}
+	public static enum mode {
+		//expansion
+		extend, grow, increment, inc,
+		//shrinking
+		shrink, decrement, dec,
+		//complete renewal
+		length, newLength,
+		//sorting, and reversal
+        reverse, asc, desc;
 	}
-	class init {
+	public static class init {
 		public static int i, j, k;
 	}
-	class variable extends init {
+	public static class variable extends init {
 	}
-	class varbl extends variable {
+	public static class varbl extends variable {
 	}
 	public static KL kl() {
 		// @hint.method this_method_will_help_make_the_instantiation_quicker
@@ -3572,6 +3562,9 @@ public class KL {
 			hint.info may_or_may_not_always_work;
 			runtime.gc();
 		}
+		public static void gc() {
+			free();
+		}
 		public static Process run(String commandString) {
 			if (not(commandString))
 				return null;
@@ -3616,6 +3609,22 @@ public class KL {
 				return null;
 			}
 		}
+		public static Process perform(String action) {
+			return run(action);
+		}
+		public static Process execute(String action) {
+			return run(action);
+		}
+		public static Process task(String action) {
+			return run(action);
+		}
+		public static Process open(String action) {
+			if (not(action))
+			    return null;
+			if (neither(in(action, " "), endsWith(action, ".exe")))
+			    action += ".exe";
+			return run(action);
+		}
 		public static void kill(Process process) {
 			if (not(process))
 				return;
@@ -3640,7 +3649,7 @@ public class KL {
 										"Process destroyed successfully.");
 							} else {
 								System.out
-										.println("Failed to destroy process.");
+										.println("Failed to destroy the process.");
 							}
 						}, () -> System.out.println(
 								"Process '" + processName + "' not found."));
@@ -20030,13 +20039,30 @@ public class KL {
 	public static arr arr(Object... objects) {
 		return new arr(objects);
 	}
-	public static boolean runTask(Runnable fn) {
-		if (not(fn)) {
+	public static boolean run(Runnable... fns) {
+		if (not(fns)) {
 			return false;
 		}
-		new Thread(fn).start();
+		int numberOfFns = len(fns),
+		  numberOfCoresInCpu = sys.cores();
+		if (numberOfFns > numberOfCoresInCpu)
+		    return false;
+		for (Runnable fn : fns) {
+			if (fn == null)
+			    continue;
+            try {
+                new Thread(fn).start();
+            }
+            catch (IllegalThreadStateException | OutOfMemoryError | SecurityException e) {
+            	hint.intention better_be_careful_than_sorry;
+            }
+        }
 		return true;
 	}
+	public static boolean start(Runnable... fns) {
+		return run(fns);
+	}
+	hint.behavior these_will_help_keep_track_of_the_timeouts;
 	private static final Map<Integer, Thread> timeoutThreads = new ConcurrentHashMap<>();
 	private static int timeoutId = 0, iterationsDone = 0;
 	public static int setTimeout(Runnable fn, int delay) {
@@ -20057,22 +20083,43 @@ public class KL {
 		thread.start();
 		return timeoutId;
 	}
+	public static void setTimeout(int delay, Runnable fn) {
+		setTimeout(fn, delay);
+	}
+	public static void delay(Runnable fn, int delay) {
+		setTimeout(fn, delay);
+	}
+	public static void delay(int delay, Runnable fn) {
+		setTimeout(fn, delay);
+	}
+	public static void baad(Runnable fn, int delay) {
+		setTimeout(fn, delay);
+	}
+	public static void baad(int delay, Runnable fn) {
+		setTimeout(fn, delay);
+	}
+	public static void bad(Runnable fn, int delay) {
+		baad(fn, delay);
+	}
+	public static void bad(int delay, Runnable fn) {
+		baad(fn, delay);
+	}
 	public static void clearTimeout(int id) {
+		if (!timeoutThreads.containsKey(id))
+		    return;
 		Thread thread = timeoutThreads.remove(id);
 		if (thread != null) {
 			thread.interrupt();
 		}
 	}
-	public static void delay(Runnable fn, int delay) {
-		setTimeout(fn, delay);
-	}
 	public static void clearDelay(int id) {
 		clearTimeout(id);
 	}
+	hint.behavior these_will_help_keep_track_of_the_intervals;
 	private static final Map<Integer, Thread> intervalThreads = new ConcurrentHashMap<>();
 	private static int intervalId = 0;
 	public static int setInterval(Runnable fn, int interval) {
-		if (not(fn) || not(interval) || isNeg(interval))
+		if (not(fn) || not(interval) || isNeg(interval) || isInf(interval))
 			return -1;
 		intervalId++;
 		Thread thread = new Thread(() -> {
@@ -20118,13 +20165,36 @@ public class KL {
 		thread.start();
 		return intervalId;
 	}
+	public static int setInterval(int interval, Runnable fn) {
+				return setInterval(fn, interval);
+	}
+	public static int setInterval(int interval, Runnable fn,
+			int maxIterations) {
+				return setInterval(fn, interval, maxIterations);
+	}
+	public static int har(int interval, Runnable fn) {
+				return setInterval(interval, fn);
+	}
+	public static int har(int interval, Runnable fn,
+			int maxIterations) {
+				return setInterval(interval, fn, maxIterations);
+	}
 	public static void clearInterval(int id) {
+		if (!intervalThreads.containsKey(id))
+		    return;
 		Thread thread = intervalThreads.remove(id);
 		if (thread != null) {
 			thread.interrupt();
 		}
 	}
-	// @@deprecated sw version 0.0.0.0: the most basic on-the-fly implementation
+	public static void stop(int id) {
+		clearTimeout(id);
+		clearInterval(id);
+	}
+	public static void roko(int id) {
+		stop(id);
+	}
+	// @@deprecated sw version 0.0.0.0: the most basic, on-the-fly implementation
 	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
 			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
 			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
@@ -31068,9 +31138,13 @@ public class KL {
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static Object ka = ignored, me_se = new Object(), mese = me_se;
+	public static int minute, sec = 1000,
+	  mint = minute = sec * 60,
+	  hr = min * 60;
+	public static int kilo = (int)1e3;
 	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
-	public static char _c = '\0';
+	public static char _c = '\';
 	public static String _s = "";
 	public static int _i = 0;
 	public static long _l = 0;
@@ -53075,21 +53149,9 @@ public class KL {
 		if (not(type(type), type(o)))
 			return null;
 		try {
-			if (isStr(o) && isNumLike(type)) {
-				String objectParsedAsString = as(_s, o);
-				if (isIntLike(objectParsedAsString)) {
-					if (isInt(type))
-						return (T) ((Integer) Int(objectParsedAsString));
-					return (T) ((Long) Long(objectParsedAsString));
-				}
-				if (isDblLike(objectParsedAsString)) {
-					if (isDbl(type))
-						return (T) ((Double) Dbl(objectParsedAsString));
-					return (T) ((Float) Flt(objectParsedAsString));
-				}
-			}
 			return (T) o;
 		} catch (ClassCastException e) {
+			hint.goodpractice better_be_safe_than_sorry;
 			return null;
 		}
 	}
@@ -55431,6 +55493,24 @@ public class KL {
 	}
 	public static boolean xor(boolean a, boolean b) {
 		return (a || b) && !(a && b);
+	}
+	public static boolean xnor(String a, String b) {
+		return not(xor(a, b));
+	}
+	public static boolean xnor(int a, int b) {
+		return not(xor(a, b));
+	}
+	public static boolean xnor(long a, long b) {
+		return not(xor(a, b));
+	}
+	public static boolean xnor(float a, float b) {
+		return not(xor(a, b));
+	}
+	public static boolean xnor(double a, double b) {
+		return not(xor(a, b));
+	}
+	public static boolean xnor(boolean a, boolean b) {
+		return not(xor(a, b));
 	}
 	public static boolean implies(boolean a, boolean b) {
 		return a && !b ? false : true;
@@ -62850,30 +62930,36 @@ public class KL {
 	 * myArr = resize.by(2, arr, mode.shrink) resize.toLength(2, arr) = resize(arr, 2,
 	 * mode.newLength)
 	 */
-	public static void har(Runnable step1, Callable<Boolean> step2,
-			Runnable step3, Runnable task) {
-		if (step1 == null || step2 == null || step3 == null || task == null)
+	public static void har(int initialization, Callable<Boolean> conditionAsACallable,
+			Runnable changeInCondition, Runnable task) {
+		if (isInfinity(initialization) || isNull(conditionAsACallable, changeInCondition, task))
 			return;
-		step1.run();
 		boolean condition;
 		try {
-			condition = step2.call();
+			condition = conditionAsACallable.call();
 		} catch (Throwable e) {
 			condition = false;
 		}
+		if (not(condition))
+		    return;
+		int crashSafety = 0;
 		while (condition) {
 			try {
 				task.run();
-				step3.run();
-				condition = step2.call();
+				changeInCondition.run();
+				condition = conditionAsACallable.call();
+				crashSafety++;
+				if (crashSafety > 1e5) {
+					hint.good_practice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
+					break;
+				}
 			} catch (Throwable e) {
-
 			}
 		}
 	}
-	public static void har(Runnable step1, boolean step2, Runnable step3,
-			Runnable task) {
-		har(step1, () -> step2, step3, task);
+	public static void har(Callable<Boolean> conditionAsACallable,
+			Runnable changeInCondition, Runnable task) {
+		return har(0, conditionAsACallable, changeInCondition, task);
 	}
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
@@ -63028,12 +63114,8 @@ public class KL {
 		for (int i : range(1, myArr))
 			print(myArr[i]);
 		bolo(range(2, 5));
-		har(() -> varbl.i = 0, varbl.i < 5, () -> varbl.i++,
-				() -> print(range(6, 10)[varbl.i]));
-		Object[] toParse = {1, "hi", "5.2", false};
-		for (int i : range(toParse)) {
-			print(toParse[i]);
-		}
+		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
+				() -> print(varbl.i));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
