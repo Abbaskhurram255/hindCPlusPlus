@@ -75,7 +75,7 @@ public class KL {
 		//complete renewal
 		length, newLength,
 		//sorting, and reversal
-        reverse, asc, desc;
+		reverse, asc, desc;
 	}
 	public static class init {
 		public static int i, j, k;
@@ -3620,9 +3620,9 @@ public class KL {
 		}
 		public static Process open(String action) {
 			if (not(action))
-			    return null;
+				return null;
 			if (neither(in(action, " "), endsWith(action, ".exe")))
-			    action += ".exe";
+				action += ".exe";
 			return run(action);
 		}
 		public static void kill(Process process) {
@@ -3649,7 +3649,8 @@ public class KL {
 										"Process destroyed successfully.");
 							} else {
 								System.out
-										.println("Failed to destroy the process.");
+										.println(
+												"Failed to destroy the process.");
 							}
 						}, () -> System.out.println(
 								"Process '" + processName + "' not found."));
@@ -20043,20 +20044,19 @@ public class KL {
 		if (not(fns)) {
 			return false;
 		}
-		int numberOfFns = len(fns),
-		  numberOfCoresInCpu = sys.cores();
+		int numberOfFns = len(fns), numberOfCoresInCpu = sys.cores();
 		if (numberOfFns > numberOfCoresInCpu)
-		    return false;
+			return false;
 		for (Runnable fn : fns) {
 			if (fn == null)
-			    continue;
-            try {
-                new Thread(fn).start();
-            }
-            catch (IllegalThreadStateException | OutOfMemoryError | SecurityException e) {
-            	hint.intention better_be_careful_than_sorry;
-            }
-        }
+				continue;
+			try {
+				new Thread(fn).start();
+			} catch (IllegalThreadStateException | OutOfMemoryError
+					| SecurityException e) {
+				hint.intention better_be_careful_than_sorry;
+			}
+		}
 		return true;
 	}
 	public static boolean start(Runnable... fns) {
@@ -20106,7 +20106,7 @@ public class KL {
 	}
 	public static void clearTimeout(int id) {
 		if (!timeoutThreads.containsKey(id))
-		    return;
+			return;
 		Thread thread = timeoutThreads.remove(id);
 		if (thread != null) {
 			thread.interrupt();
@@ -20166,22 +20166,21 @@ public class KL {
 		return intervalId;
 	}
 	public static int setInterval(int interval, Runnable fn) {
-				return setInterval(fn, interval);
+		return setInterval(fn, interval);
 	}
 	public static int setInterval(int interval, Runnable fn,
 			int maxIterations) {
-				return setInterval(fn, interval, maxIterations);
+		return setInterval(fn, interval, maxIterations);
 	}
 	public static int har(int interval, Runnable fn) {
-				return setInterval(interval, fn);
+		return setInterval(interval, fn);
 	}
-	public static int har(int interval, Runnable fn,
-			int maxIterations) {
-				return setInterval(interval, fn, maxIterations);
+	public static int har(int interval, Runnable fn, int maxIterations) {
+		return setInterval(interval, fn, maxIterations);
 	}
 	public static void clearInterval(int id) {
 		if (!intervalThreads.containsKey(id))
-		    return;
+			return;
 		Thread thread = intervalThreads.remove(id);
 		if (thread != null) {
 			thread.interrupt();
@@ -31138,13 +31137,12 @@ public class KL {
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static Object ka = ignored, me_se = new Object(), mese = me_se;
-	public static int minute, sec = 1000,
-	  mint = minute = sec * 60,
-	  hr = min * 60;
-	public static int kilo = (int)1e3;
+	public static int minute, sec = 1000, mint = minute = sec * 60,
+			hr = mint * 60;
+	public static int kilo = (int) 1e3;
 	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
-	public static char _c = '\';
+	public static char _c = '\0';
 	public static String _s = "";
 	public static int _i = 0;
 	public static long _l = 0;
@@ -45477,13 +45475,20 @@ public class KL {
 		each(iterable, consumer);
 	}
 	// for handling Object arrays, and Number arrays, and others we didn't handle.
-	public static void repeat(Runnable fn, int times) {
-		for (; times > 0; times--) {
-			new Thread(fn).start();
-		}
+	public static int repeat(Runnable fn, int gap, int maxIterations) {
+		return setInterval(fn, gap, maxIterations);
+	}
+	public static int repeat(Runnable fn, int gap) {
+		return setInterval(fn, gap);
+	}
+	public static int repeat(int gap, Runnable fn, int maxIterations) {
+		return setInterval(gap, fn, maxIterations);
+	}
+	public static int repeat(int gap, Runnable fn) {
+		return setInterval(gap, fn);
 	}
 	public static String repeat(String s, int times) {
-		if (not(s) || not(times) || isNeg(times)) {
+		if (not(s) || not(times) || isNeg(times) || isInfinity(times)) {
 			return s;
 		}
 		String org = s;
@@ -49188,6 +49193,158 @@ public class KL {
 	public static double reverse(double n) {
 		return n > 0 ? Neg(n) : Pos(n);
 	}
+	public static int twice(int n) {
+		return times(n, 2);
+	}
+	public static long twice(long n) {
+		return times(n, 2);
+	}
+	public static float twice(float n) {
+		return times(n, 2);
+	}
+	public static double twice(double n) {
+		return times(n, 2);
+	}
+	public static int thrice(int n) {
+		return times(n, 3);
+	}
+	public static long thrice(long n) {
+		return times(n, 3);
+	}
+	public static float thrice(float n) {
+		return times(n, 3);
+	}
+	public static double thrice(double n) {
+		return times(n, 3);
+	}
+	public static int half(int n) {
+		return n / 2;
+	}
+	public static long half(long n) {
+		return n / 2;
+	}
+	public static float half(float n) {
+		return n / 2;
+	}
+	public static double half(double n) {
+		return n / 2;
+	}
+	public static int quarter(int n) {
+		return n / 4;
+	}
+	public static long quarter(long n) {
+		return n / 4;
+	}
+	public static float quarter(float n) {
+		return n / 4;
+	}
+	public static double quarter(double n) {
+		return n / 4;
+	}
+	public static int eighth(int n) {
+		return n / 8;
+	}
+	public static long eighth(long n) {
+		return n / 8;
+	}
+	public static float eighth(float n) {
+		return n / 8;
+	}
+	public static double eighth(double n) {
+		return n / 8;
+	}
+	public static int sixteenth(int n) {
+		return n / 16;
+	}
+	public static long sixteenth(long n) {
+		return n / 16;
+	}
+	public static float sixteenth(float n) {
+		return n / 16;
+	}
+	public static double sixteenth(double n) {
+		return n / 16;
+	}
+	public static int dugna(int n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return twice(n);
+	}
+	public static long dugna(long n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return twice(n);
+	}
+	public static float dugna(float n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return twice(n);
+	}
+	public static double dugna(double n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return twice(n);
+	}
+	public static int adha(int n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return half(n);
+	}
+	public static long adha(long n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return half(n);
+	}
+	public static float adha(float n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return half(n);
+	}
+	public static double adha(double n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return half(n);
+	}
+	public static int chotha(int n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return quarter(n);
+	}
+	public static long chotha(long n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return quarter(n);
+	}
+	public static float chotha(float n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return quarter(n);
+	}
+	public static double chotha(double n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return quarter(n);
+	}
+	public static int athwa(int n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return eighth(n);
+	}
+	public static long athwa(long n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return eighth(n);
+	}
+	public static float athwa(float n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return eighth(n);
+	}
+	public static double athwa(double n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return sixteenth(n);
+	}
+	public static int solwa(int n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return sixteenth(n);
+	}
+	public static long solwa(long n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return sixteenth(n);
+	}
+	public static float solwa(float n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return sixteenth(n);
+	}
+	public static double solwa(double n,
+			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+		return sixteenth(n);
+	}
 	public static int sum(int... ns) {
 		if (not(ns)) {
 			return 0;
@@ -49368,6 +49525,168 @@ public class KL {
 		}
 		return acc;
 	}
+	public static int add(int... ns) {
+		return sum(ns);
+	}
+	public static long add(long... ns) {
+		return sum(ns);
+	}
+	public static float add(float... ns) {
+		return sum(ns);
+	}
+	public static double add(double... ns) {
+		return sum(ns);
+	}
+	public static int add(intArr ns) {
+		return sum(ns);
+	}
+	public static long add(longArr ns) {
+		return sum(ns);
+	}
+	public static float add(fltArr ns) {
+		return sum(ns);
+	}
+	public static double add(dblArr ns) {
+		return sum(ns);
+	}
+	public static int add(oI ns) {
+		return sum(ns);
+	}
+	public static long add(oL ns) {
+		return sum(ns);
+	}
+	public static float add(oF ns) {
+		return sum(ns);
+	}
+	public static double add(oD ns) {
+		return sum(ns);
+	}
+	public static int add(treeDI ns) {
+		return sum(ns);
+	}
+	public static long add(treeDL ns) {
+		return sum(ns);
+	}
+	public static long add(treeL ns) {
+		return sum(ns);
+	}
+	public static float add(treeDF ns) {
+		return sum(ns);
+	}
+	public static float add(treeF ns) {
+		return sum(ns);
+	}
+	public static double add(treeD ns) {
+		return sum(ns);
+	}
+	public static int milao(int... ns) {
+		return sum(ns);
+	}
+	public static long milao(long... ns) {
+		return sum(ns);
+	}
+	public static float milao(float... ns) {
+		return sum(ns);
+	}
+	public static double milao(double... ns) {
+		return sum(ns);
+	}
+	public static int milao(intArr ns) {
+		return sum(ns);
+	}
+	public static long milao(longArr ns) {
+		return sum(ns);
+	}
+	public static float milao(fltArr ns) {
+		return sum(ns);
+	}
+	public static double milao(dblArr ns) {
+		return sum(ns);
+	}
+	public static int milao(oI ns) {
+		return sum(ns);
+	}
+	public static long milao(oL ns) {
+		return sum(ns);
+	}
+	public static float milao(oF ns) {
+		return sum(ns);
+	}
+	public static double milao(oD ns) {
+		return sum(ns);
+	}
+	public static int milao(treeDI ns) {
+		return sum(ns);
+	}
+	public static long milao(treeDL ns) {
+		return sum(ns);
+	}
+	public static long milao(treeL ns) {
+		return sum(ns);
+	}
+	public static float milao(treeDF ns) {
+		return sum(ns);
+	}
+	public static float milao(treeF ns) {
+		return sum(ns);
+	}
+	public static double milao(treeD ns) {
+		return sum(ns);
+	}
+	public static int milake(int... ns) {
+		return sum(ns);
+	}
+	public static long milake(long... ns) {
+		return sum(ns);
+	}
+	public static float milake(float... ns) {
+		return sum(ns);
+	}
+	public static double milake(double... ns) {
+		return sum(ns);
+	}
+	public static int milake(intArr ns) {
+		return sum(ns);
+	}
+	public static long milake(longArr ns) {
+		return sum(ns);
+	}
+	public static float milake(fltArr ns) {
+		return sum(ns);
+	}
+	public static double milake(dblArr ns) {
+		return sum(ns);
+	}
+	public static int milake(oI ns) {
+		return sum(ns);
+	}
+	public static long milake(oL ns) {
+		return sum(ns);
+	}
+	public static float milake(oF ns) {
+		return sum(ns);
+	}
+	public static double milake(oD ns) {
+		return sum(ns);
+	}
+	public static int milake(treeDI ns) {
+		return sum(ns);
+	}
+	public static long milake(treeDL ns) {
+		return sum(ns);
+	}
+	public static long milake(treeL ns) {
+		return sum(ns);
+	}
+	public static float milake(treeDF ns) {
+		return sum(ns);
+	}
+	public static float milake(treeF ns) {
+		return sum(ns);
+	}
+	public static double milake(treeD ns) {
+		return sum(ns);
+	}
 	public static int difference(int... ns) {
 		if (not(ns)) {
 			return 0;
@@ -49535,6 +49854,60 @@ public class KL {
 			acc -= ns.array()[next];
 		}
 		return acc;
+	}
+	public static int fasla(int... ns) {
+		return difference(ns);
+	}
+	public static long fasla(long... ns) {
+		return difference(ns);
+	}
+	public static float fasla(float... ns) {
+		return difference(ns);
+	}
+	public static double fasla(double... ns) {
+		return difference(ns);
+	}
+	public static int fasla(intArr ns) {
+		return difference(ns);
+	}
+	public static long fasla(longArr ns) {
+		return difference(ns);
+	}
+	public static float fasla(fltArr ns) {
+		return difference(ns);
+	}
+	public static double fasla(dblArr ns) {
+		return difference(ns);
+	}
+	public static int fasla(oI ns) {
+		return difference(ns);
+	}
+	public static long fasla(oL ns) {
+		return difference(ns);
+	}
+	public static float fasla(oF ns) {
+		return difference(ns);
+	}
+	public static double fasla(oD ns) {
+		return difference(ns);
+	}
+	public static int fasla(treeDI ns) {
+		return difference(ns);
+	}
+	public static long fasla(treeDL ns) {
+		return difference(ns);
+	}
+	public static long fasla(treeL ns) {
+		return difference(ns);
+	}
+	public static float fasla(treeDF ns) {
+		return difference(ns);
+	}
+	public static float fasla(treeF ns) {
+		return difference(ns);
+	}
+	public static double fasla(treeD ns) {
+		return difference(ns);
 	}
 	public static int product(int... ns) {
 		if (not(ns)) {
@@ -49716,6 +50089,114 @@ public class KL {
 		}
 		return acc;
 	}
+	public static int times(int... ns) {
+		return product(ns);
+	}
+	public static long times(long... ns) {
+		return product(ns);
+	}
+	public static float times(float... ns) {
+		return product(ns);
+	}
+	public static double times(double... ns) {
+		return product(ns);
+	}
+	public static int times(intArr ns) {
+		return product(ns);
+	}
+	public static long times(longArr ns) {
+		return product(ns);
+	}
+	public static float times(fltArr ns) {
+		return product(ns);
+	}
+	public static double times(dblArr ns) {
+		return product(ns);
+	}
+	public static int times(oI ns) {
+		return product(ns);
+	}
+	public static long times(oL ns) {
+		return product(ns);
+	}
+	public static float times(oF ns) {
+		return product(ns);
+	}
+	public static double times(oD ns) {
+		return product(ns);
+	}
+	public static int times(treeDI ns) {
+		return product(ns);
+	}
+	public static long times(treeDL ns) {
+		return product(ns);
+	}
+	public static long times(treeL ns) {
+		return product(ns);
+	}
+	public static float times(treeDF ns) {
+		return product(ns);
+	}
+	public static float times(treeF ns) {
+		return product(ns);
+	}
+	public static double times(treeD ns) {
+		return product(ns);
+	}
+	public static int guna(int... ns) {
+		return product(ns);
+	}
+	public static long guna(long... ns) {
+		return product(ns);
+	}
+	public static float guna(float... ns) {
+		return product(ns);
+	}
+	public static double guna(double... ns) {
+		return product(ns);
+	}
+	public static int guna(intArr ns) {
+		return product(ns);
+	}
+	public static long guna(longArr ns) {
+		return product(ns);
+	}
+	public static float guna(fltArr ns) {
+		return product(ns);
+	}
+	public static double guna(dblArr ns) {
+		return product(ns);
+	}
+	public static int guna(oI ns) {
+		return product(ns);
+	}
+	public static long guna(oL ns) {
+		return product(ns);
+	}
+	public static float guna(oF ns) {
+		return product(ns);
+	}
+	public static double guna(oD ns) {
+		return product(ns);
+	}
+	public static int guna(treeDI ns) {
+		return product(ns);
+	}
+	public static long guna(treeDL ns) {
+		return product(ns);
+	}
+	public static long guna(treeL ns) {
+		return product(ns);
+	}
+	public static float guna(treeDF ns) {
+		return product(ns);
+	}
+	public static float guna(treeF ns) {
+		return product(ns);
+	}
+	public static double guna(treeD ns) {
+		return product(ns);
+	}
 	public static int quotient(int... ns) {
 		if (not(ns)) {
 			return 0;
@@ -49895,6 +50376,60 @@ public class KL {
 			acc /= ns.array()[next];
 		}
 		return acc;
+	}
+	public static int hissa(int... ns) {
+		return quotient(ns);
+	}
+	public static long hissa(long... ns) {
+		return quotient(ns);
+	}
+	public static float hissa(float... ns) {
+		return quotient(ns);
+	}
+	public static double hissa(double... ns) {
+		return quotient(ns);
+	}
+	public static int hissa(intArr ns) {
+		return quotient(ns);
+	}
+	public static long hissa(longArr ns) {
+		return quotient(ns);
+	}
+	public static float hissa(fltArr ns) {
+		return quotient(ns);
+	}
+	public static double hissa(dblArr ns) {
+		return quotient(ns);
+	}
+	public static int hissa(oI ns) {
+		return quotient(ns);
+	}
+	public static long hissa(oL ns) {
+		return quotient(ns);
+	}
+	public static float hissa(oF ns) {
+		return quotient(ns);
+	}
+	public static double hissa(oD ns) {
+		return quotient(ns);
+	}
+	public static int hissa(treeDI ns) {
+		return quotient(ns);
+	}
+	public static long hissa(treeDL ns) {
+		return quotient(ns);
+	}
+	public static long hissa(treeL ns) {
+		return quotient(ns);
+	}
+	public static float hissa(treeDF ns) {
+		return quotient(ns);
+	}
+	public static float hissa(treeF ns) {
+		return quotient(ns);
+	}
+	public static double hissa(treeD ns) {
+		return quotient(ns);
 	}
 	//matric-inal
 	public static int sum(int[][]... matrices) {
@@ -50543,6 +51078,7 @@ public class KL {
 	}
 	// since a long is just a LONG integer, this should work^
 	// let's set up some currency variables
+	public static int guna, dafa = guna = 1;
 	public static double so = 1e2, hzr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9,
 			kh = 1e11;
 	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
@@ -60210,6 +60746,258 @@ public class KL {
 	public static arr add(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static String[] milao(String[] arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static String[] milao(String[] arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] milao(int[] arrA, int[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] milao(int[] arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] milao(long[] arrA, long[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] milao(long[] arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] milao(float[] arrA, float[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] milao(float[] arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] milao(double[] arrA, double[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] milao(double[] arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] milao(boolean[] arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] milao(boolean[] arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static Object[] milao(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] milao(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static strArr milao(strArr arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static strArr milao(strArr arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr milao(intArr arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr milao(intArr arrA, int[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr milao(longArr arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr milao(longArr arrA, long[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr milao(fltArr arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr milao(fltArr arrA, float[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr milao(dblArr arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr milao(dblArr arrA, double[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr milao(boolArr arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr milao(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr milao(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr milao(arr arrA, Object[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static String[] milake(String[] arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static String[] milake(String[] arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] milake(int[] arrA, int[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] milake(int[] arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] milake(long[] arrA, long[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] milake(long[] arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] milake(float[] arrA, float[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] milake(float[] arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] milake(double[] arrA, double[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] milake(double[] arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] milake(boolean[] arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] milake(boolean[] arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static Object[] milake(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] milake(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static strArr milake(strArr arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static strArr milake(strArr arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr milake(intArr arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr milake(intArr arrA, int[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr milake(longArr arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr milake(longArr arrA, long[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr milake(fltArr arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr milake(fltArr arrA, float[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr milake(dblArr arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr milake(dblArr arrA, double[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr milake(boolArr arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr milake(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr milake(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr milake(arr arrA, Object[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static String[] extend(String[] arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static String[] extend(String[] arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] extend(int[] arrA, int[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] extend(int[] arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] extend(long[] arrA, long[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] extend(long[] arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] extend(float[] arrA, float[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] extend(float[] arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] extend(double[] arrA, double[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] extend(double[] arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] extend(boolean[] arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] extend(boolean[] arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static Object[] extend(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] extend(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static strArr extend(strArr arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static strArr extend(strArr arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr extend(intArr arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr extend(intArr arrA, int[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr extend(longArr arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr extend(longArr arrA, long[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr extend(fltArr arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr extend(fltArr arrA, float[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr extend(dblArr arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr extend(dblArr arrA, double[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr extend(boolArr arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr extend(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr extend(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr extend(arr arrA, Object[]... arrays) {
+		return combine(arrA, arrays);
+	}
 	public static String[] intersection(String[] arrA, String[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Str;
@@ -62930,9 +63718,11 @@ public class KL {
 	 * myArr = resize.by(2, arr, mode.shrink) resize.toLength(2, arr) = resize(arr, 2,
 	 * mode.newLength)
 	 */
-	public static void har(int initialization, Callable<Boolean> conditionAsACallable,
+	public static void har(int initialization,
+			Callable<Boolean> conditionAsACallable,
 			Runnable changeInCondition, Runnable task) {
-		if (isInfinity(initialization) || isNull(conditionAsACallable, changeInCondition, task))
+		if (isInfinity(initialization)
+				|| isNull(conditionAsACallable, changeInCondition, task))
 			return;
 		boolean condition;
 		try {
@@ -62941,7 +63731,7 @@ public class KL {
 			condition = false;
 		}
 		if (not(condition))
-		    return;
+			return;
 		int crashSafety = 0;
 		while (condition) {
 			try {
@@ -62950,7 +63740,7 @@ public class KL {
 				condition = conditionAsACallable.call();
 				crashSafety++;
 				if (crashSafety > 1e5) {
-					hint.good_practice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
+					hint.goodpractice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
 					break;
 				}
 			} catch (Throwable e) {
@@ -62959,7 +63749,7 @@ public class KL {
 	}
 	public static void har(Callable<Boolean> conditionAsACallable,
 			Runnable changeInCondition, Runnable task) {
-		return har(0, conditionAsACallable, changeInCondition, task);
+		har(0, conditionAsACallable, changeInCondition, task);
 	}
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
@@ -63116,6 +63906,8 @@ public class KL {
 		bolo(range(2, 5));
 		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
+		int interval = setInterval(() -> bolo("hi"), 1, 5);
+
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
