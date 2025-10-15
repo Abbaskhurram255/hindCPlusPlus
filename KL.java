@@ -73,9 +73,10 @@ public class KL {
 		//shrinking
 		shrink, decrement, dec,
 		//complete renewal
-		length, newLength,
+		setLength,
 		//sorting, and reversal
-		reverse, asc, desc;
+		reverse, asc, desc,
+		standard, regular;
 	}
 	public static class init {
 		public static int i, j, k;
@@ -60998,6 +60999,90 @@ public class KL {
 	public static arr extend(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static String[] phelao(String[] arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static String[] phelao(String[] arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] phelao(int[] arrA, int[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] phelao(int[] arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] phelao(long[] arrA, long[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] phelao(long[] arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] phelao(float[] arrA, float[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] phelao(float[] arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] phelao(double[] arrA, double[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] phelao(double[] arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] phelao(boolean[] arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] phelao(boolean[] arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static Object[] phelao(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] phelao(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static strArr phelao(strArr arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static strArr phelao(strArr arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr phelao(intArr arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr phelao(intArr arrA, int[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr phelao(longArr arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr phelao(longArr arrA, long[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr phelao(fltArr arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr phelao(fltArr arrA, float[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr phelao(dblArr arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr phelao(dblArr arrA, double[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr phelao(boolArr arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr phelao(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr phelao(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr phelao(arr arrA, Object[]... arrays) {
+		return combine(arrA, arrays);
+	}
 	public static String[] intersection(String[] arrA, String[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Str;
@@ -63692,14 +63777,93 @@ public class KL {
 	static o fetched = fetch("https://randusers-api.vercel.app");
 	static boolean veteran = user.k("veteran", _b);
 	public static int n = 0;
-	public static int[] resize(int[] arr, int by) {
+	public static mode setLength = mode.setLength;
+	public static char[] resize(char[] arr, mode mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Char;
+		if (not(by))
+			return arr;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
+		if (newLen <= 0)
+			return blank.Char;
+		char[] newArr = new char[newLen];
+		for (int i : range(newArr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	public static char[] resize(char[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static char[] extend(char[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static char[] extend(char[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static char[] phelao(char[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static char[] phelao(char[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static String[] resize(String[] arr, mode mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Str;
+		if (not(by))
+			return arr;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
+		if (newLen <= 0)
+			return blank.Str;
+		String[] newArr = new String[newLen];
+		for (int i : range(newArr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	public static String[] resize(String[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static String[] extend(String[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static String[] extend(String[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static String[] phelao(String[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static String[] phelao(String[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static int[] resize(int[] arr, mode mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Int;
 		if (not(by))
 			return arr;
-		int newLen = len(arr) + by;
-		hint.behavior decrements_the_size_if_by_is_negative;
-		hint.behavior else_increments_it;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
 		if (newLen <= 0)
 			return blank.Int;
 		int[] newArr = new int[newLen];
@@ -63707,9 +63871,294 @@ public class KL {
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	class resize {
-
+	public static int[] resize(int[] arr, int by) {
+		return resize(arr, mode.standard, by);
 	}
+	public static int[] extend(int[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static int[] extend(int[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static int[] phelao(int[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static int[] phelao(int[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static long[] resize(long[] arr, mode mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Long;
+		if (not(by))
+			return arr;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
+		if (newLen <= 0)
+			return blank.Long;
+		long[] newArr = new long[newLen];
+		for (int i : range(newArr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	public static long[] resize(long[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static long[] extend(long[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static long[] extend(long[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static long[] phelao(long[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static long[] phelao(long[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static float[] resize(float[] arr, mode mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Flt;
+		if (not(by))
+			return arr;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
+		if (newLen <= 0)
+			return blank.Flt;
+		float[] newArr = new float[newLen];
+		for (int i : range(newArr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	public static float[] resize(float[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static float[] extend(float[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static float[] extend(float[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static float[] phelao(float[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static float[] phelao(float[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static double[] resize(double[] arr, mode mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Dbl;
+		if (not(by))
+			return arr;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
+		if (newLen <= 0)
+			return blank.Dbl;
+		double[] newArr = new double[newLen];
+		for (int i : range(newArr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	public static double[] resize(double[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static double[] extend(double[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static double[] extend(double[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static double[] phelao(double[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static double[] phelao(double[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static Number[] resize(Number[] arr, mode mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Num;
+		if (not(by))
+			return arr;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
+		if (newLen <= 0)
+			return blank.Num;
+		Number[] newArr = new Number[newLen];
+		for (int i : range(newArr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	public static Number[] resize(Number[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static Number[] extend(Number[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static Number[] extend(Number[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static Number[] phelao(Number[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static Number[] phelao(Number[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static Object[] resize(Object[] arr, mode mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Obj;
+		if (not(by))
+			return arr;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
+		if (newLen <= 0)
+			return blank.Obj;
+		Object[] newArr = new Object[newLen];
+		for (int i : range(newArr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	public static Object[] resize(Object[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static Object[] extend(Object[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static Object[] extend(Object[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static Object[] phelao(Object[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static Object[] phelao(Object[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static boolean[] resize(boolean[] arr, mode mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Bool;
+		if (not(by))
+			return arr;
+		int newLen;
+		if (mode == mode.newLength) {
+			newLen = by;
+		}
+		else {
+			newLen = len(arr) + by;
+			hint.behavior decrements_the_size_if_by_is_negative;
+		    hint.behavior else_increments_it;
+		}
+		if (newLen <= 0)
+			return blank.Bool;
+		boolean[] newArr = new boolean[newLen];
+		for (int i : range(newArr))
+			newArr[i] = arr[i];
+		return newArr;
+	}
+	public static boolean[] resize(boolean[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static boolean[] extend(boolean[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static boolean[] extend(boolean[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static boolean[] phelao(boolean[] arr, mode mode, int by) {
+		return resize(arr, mode, by);
+	}
+	public static boolean[] phelao(boolean[] arr, int by) {
+		return resize(arr, mode.standard, by);
+	}
+	public static class resize {
+		public static char[] to(int newLen, char[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static char[] by(int by, char[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+		public static String[] to(int newLen, String[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static String[] by(int by, String[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+		public static int[] to(int newLen, int[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static int[] by(int by, int[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+		public static long[] to(int newLen, long[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static long[] by(int by, long[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+		public static float[] to(int newLen, float[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static float[] by(int by, float[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+		public static double[] to(int newLen, double[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static double[] by(int by, double[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+		public static Number[] to(int newLen, Number[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static Number[] by(int by, Number[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+		public static Object[] to(int newLen, Object[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static Object[] by(int by, Object[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+		public static boolean[] to(int newLen, boolean[] arr) {
+			return resize(arr, setLength, newLen);
+		}
+		public static boolean[] by(int by, boolean[] arr) {
+			return resize(arr, mode.standard, by);
+		}
+	}
+	public static class extend extends resize{}
 	/*
 	 * class resize { by() {} to() {} toFixed() {} toSize() {} shrink() {} grow() {} }
 	 *
@@ -63906,7 +64355,6 @@ public class KL {
 		bolo(range(2, 5));
 		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
-		int interval = setInterval(() -> bolo("hi"), 1, 5);
 
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
