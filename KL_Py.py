@@ -35,6 +35,9 @@ def FltInput(*args, **kwargs):
     except Exception:
         return 0
 intInput, fltInput = IntInput, FltInput
+def flatten(lst: list) -> list:
+    return sum((flatten(sub) if isinstance(sub, list) else [sub] for sub in lst), [])
+flat = flatten
 class obj(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -1016,6 +1019,7 @@ def main() -> none:
     print(isstr(None))
     print(isstr(None))
     print(isfunc(internet_access))
+    print(flatten([1, [2, [3, 4, [5, 6]]]]))
     
 if __name__ == "__main__":
     main()
