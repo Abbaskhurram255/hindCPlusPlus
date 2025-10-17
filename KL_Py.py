@@ -1020,6 +1020,7 @@ def main() -> none:
     print(isstr(None))
     print(isfunc(internet_access))
     print(flatten([1, [2, [3, 4, [5, 6]]]]))
+    print(type(IntInput("Please enter a whole number: ")))
     
 if __name__ == "__main__":
     main()
