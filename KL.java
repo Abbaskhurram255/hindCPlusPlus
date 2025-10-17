@@ -30,9 +30,20 @@ public class KL {
 		//@class.why: this class is supposed to help make functions more understandable
 		class info extends hint {
 		}
+		class critical extends hint {
+		}
 		class intention extends hint {
 		}
+		//use: hint.critical("@saving-from-trouble") this
+		//use: hint.importance.level("1 of 10") this_call_will_help_arithmetic_buffs
 		class behavior extends hint {
+			private class condition extends hint.behavior {}
+			public class otherwise extends hint.behavior {}
+			public class regardless extends hint.behavior.otherwise {}
+			public class nonetheless extends hint.behavior.otherwise {}
+			public class nevertheless extends hint.behavior.otherwise {}
+			public condition condition(String type, String conditionalHint) {return new condition();}
+			public condition condition(String conditionalHint) {return new condition();}
 		}
 		class goodpractice extends hint {
 		}
@@ -50,22 +61,33 @@ public class KL {
 		}
 		class forClass extends hint {
 		}
+		forClass forClass(String type) {return new forClass();}
 		class constructor extends hint {
 		}
+		constructor constructor(String type) {return new constructor();}
 		class forConstructor extends hint.constructor {
 		}
+		forConstructor forConstructor(String type) {return new forConstructor();}
 		class field extends hint {
 		}
+		field field(String type) {return new field();}
 		class forField extends hint.field {
 		}
+		forField forField(String type) {return new forField();}
 		class method extends hint {
 		}
+		method method(String type) {return new method();}
 		class forMethod extends hint.method {
 		}
+		forMethod forMethod(String type) {return new forMethod();}
 		class param extends hint {
 		}
+		param param(int positionalArgumentNumber, String type) {return new param();}
+		param param(String type, int positionalArgumentNumber) {return new param();}
 		class forParam extends hint.param {
 		}
+		forParam forParam(int positionalArgumentNumber, String type) {return new forParam();}
+		forParam forParam(String type, int positionalArgumentNumber) {return new forParam();}
 	}
 	public static enum mode {
 		//expansion
@@ -64077,8 +64099,8 @@ public class KL {
 		}
 		else {
 			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior.condition("A", "if by < 0") decrements_the_size;
+		    hint.behavior.otherwise increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Bool;
@@ -64348,14 +64370,26 @@ public class KL {
 				.tab(() -> bolo("Possible. New n =", num[0]))
 				.warna(e -> bolo("Not possible."));
 		print(not(2 + 2, 5));
-		int[] myArr = range(6, 10);
-		myArr = resize(myArr, -2);
+		int[] myArr = {6, 7, 8, 9, 10};
+		myArr = phelao(myArr, -2);
+		myArr = phelao(myArr, mode.twice);
+		myArr = barhao(myArr, 2);
+		myArr = ghatao(myArr, 2);
+		myArr = dalo(myArr, 2);
+		myArr = push(myArr, 3);
+		myArr = pop(myArr, 3);
+		int popped = popGet(myArr, 3);
+		n = me_izafa(n, 6, 8, 6, 9);
+		n = se_nikala(n, 3);
+		n = izafa(n, 6, 8, 6, 9);
+		n = barhao(n, 6, 8, 6, 9);
+		n = ghatao(n, 10, 5, 5);
 		for (int i : range(1, myArr))
 			print(myArr[i]);
 		bolo(range(2, 5));
 		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
-
+		
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
