@@ -61105,6 +61105,174 @@ public class KL {
 	public static arr phelao(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static String[] push(String[] arrA, String... items) {
+		return combine(arrA, items);
+	}
+	public static String[] push(String[] arrA, strArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static int[] push(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
+	public static int[] push(int[] arrA, intArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static long[] push(long[] arrA, long... items) {
+		return combine(arrA, items);
+	}
+	public static long[] push(long[] arrA, longArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static float[] push(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
+	public static float[] push(float[] arrA, fltArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static double[] push(double[] arrA, double... items) {
+		return combine(arrA, items);
+	}
+	public static double[] push(double[] arrA, dblArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static boolean[] push(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
+	public static boolean[] push(boolean[] arrA, boolArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static Object[] push(Object[] arrA, Object[]... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static Object[] push(Object[] arrA, arr... arrRest) {
+		return combine(arrA, arrRest);
+	}
+	public static strArr push(strArr arrA, strArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static strArr push(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
+	public static intArr push(intArr arrA, intArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static intArr push(intArr arrA, int... items) {
+		return combine(arrA, items);
+	}
+	public static longArr push(longArr arrA, longArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static longArr push(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
+	public static fltArr push(fltArr arrA, fltArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static fltArr push(fltArr arrA, float... items) {
+		return combine(arrA, items);
+	}
+	public static dblArr push(dblArr arrA, dblArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static dblArr push(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
+	public static boolArr push(boolArr arrA, boolArr... arrays) {
+		return combine(arrA, items);
+	}
+	public static boolArr push(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
+	}
+	public static arr push(arr arrA, arr... arrays) {
+		return combine(arrA, items);
+	}
+	public static arr push(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
+	public static String[] pop(String[] arrA, String... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static String[] pop(String[] arrA, strArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static int[] pop(int[] arrA, int... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static int[] pop(int[] arrA, intArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static long[] pop(long[] arrA, long... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static long[] pop(long[] arrA, longArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static float[] pop(float[] arrA, float... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static float[] pop(float[] arrA, fltArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static double[] pop(double[] arrA, double... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static double[] pop(double[] arrA, dblArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static boolean[] pop(boolean[] arrA, boolean... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static boolean[] pop(boolean[] arrA, boolArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static Object[] pop(Object[] arrA, Object[]... arrRest) {
+		return negativeIntersection(arrA, arrRest);
+	}
+	public static Object[] pop(Object[] arrA, arr... arrRest) {
+		return negativeIntersection(arrA, arrRest);
+	}
+	public static strArr pop(strArr arrA, strArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static strArr pop(strArr arrA, String... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static intArr pop(intArr arrA, intArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static intArr pop(intArr arrA, int... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static longArr pop(longArr arrA, longArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static longArr pop(longArr arrA, long... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static fltArr pop(fltArr arrA, fltArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static fltArr pop(fltArr arrA, float... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static dblArr pop(dblArr arrA, dblArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static dblArr pop(dblArr arrA, double... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static boolArr pop(boolArr arrA, boolArr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static boolArr pop(boolArr arrA, boolean... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static arr pop(arr arrA, arr... arrays) {
+		return negativeIntersection(arrA, items);
+	}
+	public static arr pop(arr arrA, Object... items) {
+		return negativeIntersection(arrA, items);
+	}
 	public static String[] intersection(String[] arrA, String[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Str;
@@ -64381,7 +64549,6 @@ public class KL {
 		int popped = popGet(myArr, 3);
 		n = me_izafa(n, 6, 8, 6, 9);
 		n = se_nikala(n, 3);
-		n = izafa(n, 6, 8, 6, 9);
 		n = barhao(n, 6, 8, 6, 9);
 		n = ghatao(n, 10, 5, 5);
 		for (int i : range(1, myArr))
