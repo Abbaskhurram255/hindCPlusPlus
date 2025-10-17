@@ -24,6 +24,17 @@ def Flt(x: str|int|float) -> float:
         return float(x)
     except (ValueError, TypeError):
         return 0
+def IntInput(*args, **kwargs):
+    try:
+        return Int(input(*args, **kwargs))
+    except Exception:
+        return 0
+def FltInput(*args, **kwargs):
+    try:
+        return Flt(input(*args, **kwargs))
+    except Exception:
+        return 0
+intInput, fltInput = IntInput, FltInput
 class obj(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

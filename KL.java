@@ -26,24 +26,35 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 @SuppressWarnings("all")
 public class KL {
-	class hint {
+	public static class hint {
 		//@class.why: this class is supposed to help make functions more understandable
-		class info extends hint {
+		public static class info extends hint {
 		}
-		class critical extends hint {
+		public static class critical extends hint {
 		}
-		class intention extends hint {
+		public static class intention extends hint {
 		}
 		//use: hint.critical("@saving-from-trouble") this
 		//use: hint.importance.level("1 of 10") this_call_will_help_arithmetic_buffs
-		class behavior extends hint {
-			private class condition extends hint.behavior {}
-			public class otherwise extends hint.behavior {}
-			public class regardless extends hint.behavior.otherwise {}
-			public class nonetheless extends hint.behavior.otherwise {}
-			public class nevertheless extends hint.behavior.otherwise {}
-			public condition condition(String type, String conditionalHint) {return new condition();}
-			public condition condition(String conditionalHint) {return new condition();}
+		public static class behavior extends hint {
+			private class condition extends hint.behavior {
+			}
+			public class otherwise extends hint.behavior {
+			}
+			public class regardless extends hint.behavior.otherwise {
+			}
+			public class nonetheless extends hint.behavior.otherwise {
+			}
+			public class nevertheless extends hint.behavior.otherwise {
+			}
+			public static condition condition(String type,
+					String conditionalHint) {
+				condition instance = new condition();
+				return instance;
+			}
+			public static condition condition(String conditionalHint) {
+				return new condition();
+			}
 		}
 		class goodpractice extends hint {
 		}
@@ -61,33 +72,55 @@ public class KL {
 		}
 		class forClass extends hint {
 		}
-		forClass forClass(String type) {return new forClass();}
+		forClass forClass(String type) {
+			return new forClass();
+		}
 		class constructor extends hint {
 		}
-		constructor constructor(String type) {return new constructor();}
+		constructor constructor(String type) {
+			return new constructor();
+		}
 		class forConstructor extends hint.constructor {
 		}
-		forConstructor forConstructor(String type) {return new forConstructor();}
+		forConstructor forConstructor(String type) {
+			return new forConstructor();
+		}
 		class field extends hint {
 		}
-		field field(String type) {return new field();}
+		field field(String type) {
+			return new field();
+		}
 		class forField extends hint.field {
 		}
-		forField forField(String type) {return new forField();}
+		forField forField(String type) {
+			return new forField();
+		}
 		class method extends hint {
 		}
-		method method(String type) {return new method();}
+		method method(String type) {
+			return new method();
+		}
 		class forMethod extends hint.method {
 		}
-		forMethod forMethod(String type) {return new forMethod();}
+		forMethod forMethod(String type) {
+			return new forMethod();
+		}
 		class param extends hint {
 		}
-		param param(int positionalArgumentNumber, String type) {return new param();}
-		param param(String type, int positionalArgumentNumber) {return new param();}
+		param param(int positionalArgumentNumber, String type) {
+			return new param();
+		}
+		param param(String type, int positionalArgumentNumber) {
+			return new param();
+		}
 		class forParam extends hint.param {
 		}
-		forParam forParam(int positionalArgumentNumber, String type) {return new forParam();}
-		forParam forParam(String type, int positionalArgumentNumber) {return new forParam();}
+		forParam forParam(int positionalArgumentNumber, String type) {
+			return new forParam();
+		}
+		forParam forParam(String type, int positionalArgumentNumber) {
+			return new forParam();
+		}
 	}
 	public static enum mode {
 		//expansion
@@ -97,8 +130,7 @@ public class KL {
 		//complete renewal
 		setLength,
 		//sorting, and reversal
-		reverse, asc, desc,
-		standard, regular;
+		reverse, asc, desc, standard, regular;
 	}
 	public static class init {
 		public static int i, j, k;
@@ -3671,9 +3703,8 @@ public class KL {
 								System.out.println(
 										"Process destroyed successfully.");
 							} else {
-								System.out
-										.println(
-												"Failed to destroy the process.");
+								System.out.println(
+										"Failed to destroy the process.");
 							}
 						}, () -> System.out.println(
 								"Process '" + processName + "' not found."));
@@ -9045,29 +9076,34 @@ public class KL {
 			super();
 		}
 		o(String... keyValuePairs) {
+			if (not(keyValuePairs))
+				return;
 			strArr collectedKeyValuePairs = strArr(keyValuePairs);
 			for (String eqSignSeparatedPair : keyValuePairs) {
-				if (in(eqSignSeparatedPair, ",\\s*")) {
-					String[] subEqSeparatedPairsSplitByAComma = eqSignSeparatedPair
-							.split(",\\s*");
-					collectedKeyValuePairs = filterOut(collectedKeyValuePairs,
-							v -> in(v, ", "));
-					// now that we have processed our sub pairs (saved in
-					// array subEqSeparatedPairsSplitByComma)
-					// let's kick out all the pairs that have a ", " in them
-					// and when we're done, we'll make up for them by pushing
-					// all the elements from array
-					// subEqSeparatedPairsSplitByAComma to the collected
-					// key-value pairs
-					for (String subEqSeparatedPair : subEqSeparatedPairsSplitByAComma)
-						collectedKeyValuePairs.push(subEqSeparatedPair);
-				}
+				if (!in(eqSignSeparatedPair, ",\\s*"))
+					continue;
+				if (in(eqSignSeparatedPair, "^\\{|\\}$"))
+					eqSignSeparatedPair = eqSignSeparatedPair
+							.replaceAll("^\\{|\\}$", "");
+				String[] subEqSeparatedPairsSplitByAComma = eqSignSeparatedPair
+						.split(",\\s*");
+				collectedKeyValuePairs = filterOut(collectedKeyValuePairs,
+						v -> in(v, ", "));
+				// now that we have processed our sub pairs (saved in
+				// array subEqSeparatedPairsSplitByComma)
+				// let's kick out all the pairs that have a ", " in them
+				// and when we're done, we'll make up for them by pushing
+				// all the elements from array
+				// subEqSeparatedPairsSplitByAComma to the collected
+				// key-value pairs
+				for (String subEqSeparatedPair : subEqSeparatedPairsSplitByAComma)
+					collectedKeyValuePairs.push(subEqSeparatedPair);
 			}
 			for (String eqSignSeparatedPair : collectedKeyValuePairs) {
 				if (eqSignSeparatedPair == null)
 					continue;
 				if (in(eqSignSeparatedPair,
-						"(?<k>\\w+)=(?<v>['\\.]?\\w+['\\.]?)")) {
+						"(?<k>\\w+)\\s*(=|:)\\s*(?<v>['\\.]?\\w+['\\.]?)")) {
 					String k;
 					Object v = new Object();
 					String[] pairs = eqSignSeparatedPair.split("=");
@@ -60187,6 +60223,12 @@ public class KL {
 		}
 		return combine(new strArr(arrA), arrays).array();
 	}
+	public static String[] combine(String[] arrA, String... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Str;
+		}
+		return combine(new strArr(arrA), items).array();
+	}
 	public static String[] combine(String[] arrA, strArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Str;
@@ -60199,6 +60241,12 @@ public class KL {
 		}
 		return combine(new intArr(arrA), arrays).array();
 	}
+	public static int[] combine(int[] arrA, int... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Int;
+		}
+		return combine(new intArr(arrA), items).array();
+	}
 	public static int[] combine(int[] arrA, intArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Int;
@@ -60210,6 +60258,12 @@ public class KL {
 			return blank.Long;
 		}
 		return combine(new longArr(arrA), arrays).array();
+	}
+	public static long[] combine(long[] arrA, long... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Long;
+		}
+		return combine(new longArr(arrA), items).array();
 	}
 	public static long[] combine(long[] arrA, longArr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -61108,37 +61162,37 @@ public class KL {
 	public static String[] push(String[] arrA, String... items) {
 		return combine(arrA, items);
 	}
-	public static String[] push(String[] arrA, strArr... arrays) {
+	public static String[] push(String[] arrA, strArr... items) {
 		return combine(arrA, items);
 	}
 	public static int[] push(int[] arrA, int... items) {
 		return combine(arrA, items);
 	}
-	public static int[] push(int[] arrA, intArr... arrays) {
+	public static int[] push(int[] arrA, intArr... items) {
 		return combine(arrA, items);
 	}
 	public static long[] push(long[] arrA, long... items) {
 		return combine(arrA, items);
 	}
-	public static long[] push(long[] arrA, longArr... arrays) {
+	public static long[] push(long[] arrA, longArr... items) {
 		return combine(arrA, items);
 	}
 	public static float[] push(float[] arrA, float... items) {
 		return combine(arrA, items);
 	}
-	public static float[] push(float[] arrA, fltArr... arrays) {
+	public static float[] push(float[] arrA, fltArr... items) {
 		return combine(arrA, items);
 	}
 	public static double[] push(double[] arrA, double... items) {
 		return combine(arrA, items);
 	}
-	public static double[] push(double[] arrA, dblArr... arrays) {
+	public static double[] push(double[] arrA, dblArr... items) {
 		return combine(arrA, items);
 	}
 	public static boolean[] push(boolean[] arrA, boolean... items) {
 		return combine(arrA, items);
 	}
-	public static boolean[] push(boolean[] arrA, boolArr... arrays) {
+	public static boolean[] push(boolean[] arrA, boolArr... items) {
 		return combine(arrA, items);
 	}
 	public static Object[] push(Object[] arrA, Object[]... arrRest) {
@@ -61147,43 +61201,43 @@ public class KL {
 	public static Object[] push(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
 	}
-	public static strArr push(strArr arrA, strArr... arrays) {
+	public static strArr push(strArr arrA, strArr... items) {
 		return combine(arrA, items);
 	}
 	public static strArr push(strArr arrA, String... items) {
 		return combine(arrA, items);
 	}
-	public static intArr push(intArr arrA, intArr... arrays) {
+	public static intArr push(intArr arrA, intArr... items) {
 		return combine(arrA, items);
 	}
 	public static intArr push(intArr arrA, int... items) {
 		return combine(arrA, items);
 	}
-	public static longArr push(longArr arrA, longArr... arrays) {
+	public static longArr push(longArr arrA, longArr... items) {
 		return combine(arrA, items);
 	}
 	public static longArr push(longArr arrA, long... items) {
 		return combine(arrA, items);
 	}
-	public static fltArr push(fltArr arrA, fltArr... arrays) {
+	public static fltArr push(fltArr arrA, fltArr... items) {
 		return combine(arrA, items);
 	}
 	public static fltArr push(fltArr arrA, float... items) {
 		return combine(arrA, items);
 	}
-	public static dblArr push(dblArr arrA, dblArr... arrays) {
+	public static dblArr push(dblArr arrA, dblArr... items) {
 		return combine(arrA, items);
 	}
 	public static dblArr push(dblArr arrA, double... items) {
 		return combine(arrA, items);
 	}
-	public static boolArr push(boolArr arrA, boolArr... arrays) {
+	public static boolArr push(boolArr arrA, boolArr... items) {
 		return combine(arrA, items);
 	}
 	public static boolArr push(boolArr arrA, boolean... items) {
 		return combine(arrA, items);
 	}
-	public static arr push(arr arrA, arr... arrays) {
+	public static arr push(arr arrA, arr... items) {
 		return combine(arrA, items);
 	}
 	public static arr push(arr arrA, Object... items) {
@@ -61192,37 +61246,37 @@ public class KL {
 	public static String[] pop(String[] arrA, String... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static String[] pop(String[] arrA, strArr... arrays) {
+	public static String[] pop(String[] arrA, strArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static int[] pop(int[] arrA, int... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static int[] pop(int[] arrA, intArr... arrays) {
+	public static int[] pop(int[] arrA, intArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static long[] pop(long[] arrA, long... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static long[] pop(long[] arrA, longArr... arrays) {
+	public static long[] pop(long[] arrA, longArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static float[] pop(float[] arrA, float... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static float[] pop(float[] arrA, fltArr... arrays) {
+	public static float[] pop(float[] arrA, fltArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static double[] pop(double[] arrA, double... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static double[] pop(double[] arrA, dblArr... arrays) {
+	public static double[] pop(double[] arrA, dblArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static boolean[] pop(boolean[] arrA, boolean... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static boolean[] pop(boolean[] arrA, boolArr... arrays) {
+	public static boolean[] pop(boolean[] arrA, boolArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static Object[] pop(Object[] arrA, Object[]... arrRest) {
@@ -61231,43 +61285,43 @@ public class KL {
 	public static Object[] pop(Object[] arrA, arr... arrRest) {
 		return negativeIntersection(arrA, arrRest);
 	}
-	public static strArr pop(strArr arrA, strArr... arrays) {
+	public static strArr pop(strArr arrA, strArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static strArr pop(strArr arrA, String... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static intArr pop(intArr arrA, intArr... arrays) {
+	public static intArr pop(intArr arrA, intArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static intArr pop(intArr arrA, int... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static longArr pop(longArr arrA, longArr... arrays) {
+	public static longArr pop(longArr arrA, longArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static longArr pop(longArr arrA, long... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static fltArr pop(fltArr arrA, fltArr... arrays) {
+	public static fltArr pop(fltArr arrA, fltArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static fltArr pop(fltArr arrA, float... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static dblArr pop(dblArr arrA, dblArr... arrays) {
+	public static dblArr pop(dblArr arrA, dblArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static dblArr pop(dblArr arrA, double... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static boolArr pop(boolArr arrA, boolArr... arrays) {
+	public static boolArr pop(boolArr arrA, boolArr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static boolArr pop(boolArr arrA, boolean... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static arr pop(arr arrA, arr... arrays) {
+	public static arr pop(arr arrA, arr... items) {
 		return negativeIntersection(arrA, items);
 	}
 	public static arr pop(arr arrA, Object... items) {
@@ -63974,13 +64028,12 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
-		}
-		else {
+		} else {
 			newLen = len(arr) + by;
 			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior else_increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Char;
@@ -64010,13 +64063,12 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
-		}
-		else {
+		} else {
 			newLen = len(arr) + by;
 			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior else_increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Str;
@@ -64046,13 +64098,12 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
-		}
-		else {
+		} else {
 			newLen = len(arr) + by;
 			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior else_increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Int;
@@ -64082,13 +64133,12 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
-		}
-		else {
+		} else {
 			newLen = len(arr) + by;
 			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior else_increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Long;
@@ -64118,13 +64168,12 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
-		}
-		else {
+		} else {
 			newLen = len(arr) + by;
 			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior else_increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Flt;
@@ -64154,13 +64203,12 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
-		}
-		else {
+		} else {
 			newLen = len(arr) + by;
 			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior else_increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Dbl;
@@ -64190,13 +64238,12 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
-		}
-		else {
+		} else {
 			newLen = len(arr) + by;
 			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior else_increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Num;
@@ -64226,13 +64273,12 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
-		}
-		else {
+		} else {
 			newLen = len(arr) + by;
 			hint.behavior decrements_the_size_if_by_is_negative;
-		    hint.behavior else_increments_it;
+			hint.behavior else_increments_it;
 		}
 		if (newLen <= 0)
 			return blank.Obj;
@@ -64262,7 +64308,7 @@ public class KL {
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == mode.newLength) {
+		if (mode == KL.mode.setLength) {
 			newLen = by;
 		}
 		else {
@@ -64348,7 +64394,8 @@ public class KL {
 			return resize(arr, mode.standard, by);
 		}
 	}
-	public static class extend extends resize{}
+	public static class extend extends resize {
+	}
 	/*
 	 * class resize { by() {} to() {} toFixed() {} toSize() {} shrink() {} grow() {} }
 	 *
@@ -64358,8 +64405,8 @@ public class KL {
 	 * mode.newLength)
 	 */
 	public static void har(int initialization,
-			Callable<Boolean> conditionAsACallable,
-			Runnable changeInCondition, Runnable task) {
+			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
+			Runnable task) {
 		if (isInfinity(initialization)
 				|| isNull(conditionAsACallable, changeInCondition, task))
 			return;
@@ -64542,6 +64589,7 @@ public class KL {
 		myArr = phelao(myArr, -2);
 		myArr = phelao(myArr, mode.twice);
 		myArr = barhao(myArr, 2);
+		myArr = times(myArr, 2);
 		myArr = ghatao(myArr, 2);
 		myArr = dalo(myArr, 2);
 		myArr = push(myArr, 3);
@@ -64556,7 +64604,7 @@ public class KL {
 		bolo(range(2, 5));
 		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
-		
+
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
