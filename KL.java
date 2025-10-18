@@ -60277,6 +60277,12 @@ public class KL {
 		}
 		return combine(new fltArr(arrA), arrays).array();
 	}
+	public static float[] combine(float[] arrA, float... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Flt;
+		}
+		return combine(new fltArr(arrA), items).array();
+	}
 	public static float[] combine(float[] arrA, fltArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Flt;
@@ -60288,6 +60294,12 @@ public class KL {
 			return blank.Dbl;
 		}
 		return combine(new dblArr(arrA), arrays).array();
+	}
+	public static double[] combine(double[] arrA, double... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Dbl;
+		}
+		return combine(new dblArr(arrA), items).array();
 	}
 	public static double[] combine(double[] arrA, dblArr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -60301,6 +60313,12 @@ public class KL {
 		}
 		return combine(new boolArr(arrA), arrays).array();
 	}
+	public static boolean[] combine(boolean[] arrA, boolean... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Bool;
+		}
+		return combine(new boolArr(arrA), items).array();
+	}
 	public static boolean[] combine(boolean[] arrA, boolArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Bool;
@@ -60312,6 +60330,12 @@ public class KL {
 			return blank.Obj;
 		}
 		return combine(new arr(arrA), arrRest).array();
+	}
+	public static Object[] combine(Object[] arrA, Object... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Obj;
+		}
+		return combine(new arr(arrA), items).array();
 	}
 	public static Object[] combine(Object[] arrA, arr... arrRest) {
 		if (not(arrA) || not(arrRest)) {
@@ -60331,6 +60355,12 @@ public class KL {
 		}
 		return arrA.combine(arrays);
 	}
+	public static strArr combine(strArr arrA, String... items) {
+		if (not(arrA) || not(items)) {
+			return blank.strArr;
+		}
+		return arrA.combine(items);
+	}
 	public static intArr combine(intArr arrA, intArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.intArr;
@@ -60342,6 +60372,12 @@ public class KL {
 			return blank.intArr;
 		}
 		return arrA.combine(arrays);
+	}
+	public static intArr combine(intArr arrA, int... items) {
+		if (not(arrA) || not(items)) {
+			return blank.intArr;
+		}
+		return arrA.combine(items);
 	}
 	public static longArr combine(longArr arrA, longArr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -60355,6 +60391,12 @@ public class KL {
 		}
 		return arrA.combine(arrays);
 	}
+	public static longArr combine(longArr arrA, long... items) {
+		if (not(arrA) || not(items)) {
+			return blank.longArr;
+		}
+		return arrA.combine(items);
+	}
 	public static fltArr combine(fltArr arrA, fltArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.fltArr;
@@ -60366,6 +60408,12 @@ public class KL {
 			return blank.fltArr;
 		}
 		return arrA.combine(arrays);
+	}
+	public static fltArr combine(fltArr arrA, float... items) {
+		if (not(arrA) || not(items)) {
+			return blank.fltArr;
+		}
+		return arrA.combine(items);
 	}
 	public static dblArr combine(dblArr arrA, dblArr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -60379,6 +60427,12 @@ public class KL {
 		}
 		return arrA.combine(arrays);
 	}
+	public static dblArr combine(dblArr arrA, double... items) {
+		if (not(arrA) || not(items)) {
+			return blank.dblArr;
+		}
+		return arrA.combine(items);
+	}
 	public static boolArr combine(boolArr arrA, boolArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.boolArr;
@@ -60390,6 +60444,12 @@ public class KL {
 			return blank.boolArr;
 		}
 		return arrA.combine(arrays);
+	}
+	public static boolArr combine(boolArr arrA, boolean... items) {
+		if (not(arrA) || not(items)) {
+			return blank.boolArr;
+		}
+		return arrA.combine(items);
 	}
 	public static arr combine(arr arrA, arr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -60403,8 +60463,17 @@ public class KL {
 		}
 		return arrA.combine(arrays);
 	}
+	public static arr combine(arr arrA, Object... items) {
+		if (not(arrA) || not(items)) {
+			return blank.mixedArr;
+		}
+		return arrA.combine(items);
+	}
 	public static String[] concat(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] concat(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] concat(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -60412,11 +60481,17 @@ public class KL {
 	public static int[] concat(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] concat(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] concat(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] concat(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] concat(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] concat(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60424,11 +60499,17 @@ public class KL {
 	public static float[] concat(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] concat(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] concat(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] concat(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] concat(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] concat(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60436,11 +60517,17 @@ public class KL {
 	public static boolean[] concat(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] concat(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] concat(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] concat(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] concat(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] concat(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -60451,11 +60538,17 @@ public class KL {
 	public static strArr concat(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr concat(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr concat(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr concat(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr concat(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr concat(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60463,11 +60556,17 @@ public class KL {
 	public static longArr concat(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr concat(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr concat(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr concat(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr concat(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr concat(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60475,11 +60574,17 @@ public class KL {
 	public static dblArr concat(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr concat(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr concat(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr concat(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr concat(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr concat(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -60487,8 +60592,14 @@ public class KL {
 	public static arr concat(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr concat(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static String[] cat(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] cat(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] cat(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -60496,11 +60607,17 @@ public class KL {
 	public static int[] cat(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] cat(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] cat(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] cat(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] cat(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] cat(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60508,11 +60625,17 @@ public class KL {
 	public static float[] cat(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] cat(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] cat(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] cat(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] cat(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] cat(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60520,11 +60643,17 @@ public class KL {
 	public static boolean[] cat(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] cat(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] cat(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] cat(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] cat(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] cat(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -60535,11 +60664,17 @@ public class KL {
 	public static strArr cat(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr cat(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr cat(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr cat(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr cat(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr cat(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60547,11 +60682,17 @@ public class KL {
 	public static longArr cat(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr cat(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr cat(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr cat(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr cat(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr cat(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60559,11 +60700,17 @@ public class KL {
 	public static dblArr cat(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr cat(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr cat(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr cat(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr cat(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr cat(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -60571,8 +60718,14 @@ public class KL {
 	public static arr cat(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr cat(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static String[] merge(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] merge(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] merge(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -60580,11 +60733,17 @@ public class KL {
 	public static int[] merge(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] merge(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] merge(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] merge(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] merge(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] merge(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60592,11 +60751,17 @@ public class KL {
 	public static float[] merge(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] merge(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] merge(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] merge(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] merge(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] merge(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60604,11 +60769,17 @@ public class KL {
 	public static boolean[] merge(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] merge(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] merge(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] merge(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] merge(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] merge(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -60619,11 +60790,17 @@ public class KL {
 	public static strArr merge(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr merge(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr merge(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr merge(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr merge(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr merge(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60631,11 +60808,17 @@ public class KL {
 	public static longArr merge(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr merge(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr merge(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr merge(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr merge(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr merge(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60643,11 +60826,17 @@ public class KL {
 	public static dblArr merge(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr merge(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr merge(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr merge(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr merge(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr merge(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -60655,8 +60844,14 @@ public class KL {
 	public static arr merge(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr merge(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static String[] join(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] join(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] join(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -60664,11 +60859,17 @@ public class KL {
 	public static int[] join(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] join(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] join(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] join(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] join(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] join(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60676,11 +60877,17 @@ public class KL {
 	public static float[] join(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] join(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] join(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] join(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] join(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] join(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60688,11 +60895,17 @@ public class KL {
 	public static boolean[] join(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] join(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] join(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] join(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] join(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] join(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -60703,11 +60916,17 @@ public class KL {
 	public static strArr join(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr join(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr join(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr join(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr join(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr join(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60715,11 +60934,17 @@ public class KL {
 	public static longArr join(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr join(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr join(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr join(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr join(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr join(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60727,11 +60952,17 @@ public class KL {
 	public static dblArr join(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr join(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr join(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr join(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr join(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr join(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -60739,8 +60970,14 @@ public class KL {
 	public static arr join(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr join(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static String[] add(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] add(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] add(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -60748,11 +60985,17 @@ public class KL {
 	public static int[] add(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] add(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] add(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] add(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] add(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] add(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60760,11 +61003,17 @@ public class KL {
 	public static float[] add(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] add(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] add(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] add(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] add(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] add(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60772,11 +61021,17 @@ public class KL {
 	public static boolean[] add(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] add(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] add(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] add(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] add(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] add(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -60787,11 +61042,17 @@ public class KL {
 	public static strArr add(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr add(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr add(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr add(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr add(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr add(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60799,11 +61060,17 @@ public class KL {
 	public static longArr add(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr add(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr add(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr add(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr add(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr add(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60811,11 +61078,17 @@ public class KL {
 	public static dblArr add(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr add(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr add(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr add(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr add(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr add(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -60823,8 +61096,14 @@ public class KL {
 	public static arr add(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr add(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static String[] milao(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] milao(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] milao(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -60832,11 +61111,17 @@ public class KL {
 	public static int[] milao(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] milao(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] milao(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] milao(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] milao(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] milao(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60844,11 +61129,17 @@ public class KL {
 	public static float[] milao(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] milao(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] milao(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] milao(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] milao(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] milao(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60856,11 +61147,17 @@ public class KL {
 	public static boolean[] milao(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] milao(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] milao(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] milao(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] milao(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] milao(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -60871,11 +61168,17 @@ public class KL {
 	public static strArr milao(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr milao(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr milao(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr milao(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr milao(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr milao(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60883,11 +61186,17 @@ public class KL {
 	public static longArr milao(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr milao(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr milao(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr milao(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr milao(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr milao(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60895,11 +61204,17 @@ public class KL {
 	public static dblArr milao(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr milao(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr milao(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr milao(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr milao(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr milao(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -60907,8 +61222,14 @@ public class KL {
 	public static arr milao(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr milao(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static String[] milake(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] milake(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] milake(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -60916,11 +61237,17 @@ public class KL {
 	public static int[] milake(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] milake(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] milake(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] milake(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] milake(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] milake(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60928,11 +61255,17 @@ public class KL {
 	public static float[] milake(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] milake(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] milake(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] milake(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] milake(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] milake(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60940,11 +61273,17 @@ public class KL {
 	public static boolean[] milake(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] milake(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] milake(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] milake(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] milake(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] milake(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -60955,11 +61294,17 @@ public class KL {
 	public static strArr milake(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr milake(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr milake(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr milake(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr milake(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr milake(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -60967,11 +61312,17 @@ public class KL {
 	public static longArr milake(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr milake(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr milake(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr milake(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr milake(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr milake(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -60979,11 +61330,17 @@ public class KL {
 	public static dblArr milake(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr milake(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr milake(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr milake(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr milake(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr milake(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -60991,8 +61348,14 @@ public class KL {
 	public static arr milake(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr milake(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static String[] extend(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] extend(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] extend(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -61000,11 +61363,17 @@ public class KL {
 	public static int[] extend(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] extend(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] extend(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] extend(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] extend(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] extend(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -61012,11 +61381,17 @@ public class KL {
 	public static float[] extend(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] extend(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] extend(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] extend(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] extend(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] extend(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -61024,11 +61399,17 @@ public class KL {
 	public static boolean[] extend(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] extend(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] extend(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] extend(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] extend(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] extend(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -61039,11 +61420,17 @@ public class KL {
 	public static strArr extend(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr extend(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr extend(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr extend(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr extend(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr extend(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -61051,11 +61438,17 @@ public class KL {
 	public static longArr extend(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr extend(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr extend(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr extend(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr extend(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr extend(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -61063,11 +61456,17 @@ public class KL {
 	public static dblArr extend(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr extend(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr extend(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr extend(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr extend(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr extend(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -61075,8 +61474,14 @@ public class KL {
 	public static arr extend(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr extend(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static String[] phelao(String[] arrA, String[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static String[] phelao(String[] arrA, String... items) {
+		return combine(arrA, items);
 	}
 	public static String[] phelao(String[] arrA, strArr... arrays) {
 		return combine(arrA, arrays);
@@ -61084,11 +61489,17 @@ public class KL {
 	public static int[] phelao(int[] arrA, int[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static int[] phelao(int[] arrA, int... items) {
+		return combine(arrA, items);
+	}
 	public static int[] phelao(int[] arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static long[] phelao(long[] arrA, long[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static long[] phelao(long[] arrA, long... items) {
+		return combine(arrA, items);
 	}
 	public static long[] phelao(long[] arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -61096,11 +61507,17 @@ public class KL {
 	public static float[] phelao(float[] arrA, float[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static float[] phelao(float[] arrA, float... items) {
+		return combine(arrA, items);
+	}
 	public static float[] phelao(float[] arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static double[] phelao(double[] arrA, double[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static double[] phelao(double[] arrA, double... items) {
+		return combine(arrA, items);
 	}
 	public static double[] phelao(double[] arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -61108,11 +61525,17 @@ public class KL {
 	public static boolean[] phelao(boolean[] arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static boolean[] phelao(boolean[] arrA, boolean... items) {
+		return combine(arrA, items);
+	}
 	public static boolean[] phelao(boolean[] arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static Object[] phelao(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
+	}
+	public static Object[] phelao(Object[] arrA, Object... items) {
+		return combine(arrA, items);
 	}
 	public static Object[] phelao(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
@@ -61123,11 +61546,17 @@ public class KL {
 	public static strArr phelao(strArr arrA, String[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static strArr phelao(strArr arrA, String... items) {
+		return combine(arrA, items);
+	}
 	public static intArr phelao(intArr arrA, intArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static intArr phelao(intArr arrA, int[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static intArr phelao(intArr arrA, int... items) {
+		return combine(arrA, items);
 	}
 	public static longArr phelao(longArr arrA, longArr... arrays) {
 		return combine(arrA, arrays);
@@ -61135,11 +61564,17 @@ public class KL {
 	public static longArr phelao(longArr arrA, long[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static longArr phelao(longArr arrA, long... items) {
+		return combine(arrA, items);
+	}
 	public static fltArr phelao(fltArr arrA, fltArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static fltArr phelao(fltArr arrA, float[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static fltArr phelao(fltArr arrA, float... items) {
+		return combine(arrA, items);
 	}
 	public static dblArr phelao(dblArr arrA, dblArr... arrays) {
 		return combine(arrA, arrays);
@@ -61147,11 +61582,17 @@ public class KL {
 	public static dblArr phelao(dblArr arrA, double[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static dblArr phelao(dblArr arrA, double... items) {
+		return combine(arrA, items);
+	}
 	public static boolArr phelao(boolArr arrA, boolArr... arrays) {
 		return combine(arrA, arrays);
 	}
 	public static boolArr phelao(boolArr arrA, boolean[]... arrays) {
 		return combine(arrA, arrays);
+	}
+	public static boolArr phelao(boolArr arrA, boolean... items) {
+		return combine(arrA, items);
 	}
 	public static arr phelao(arr arrA, arr... arrays) {
 		return combine(arrA, arrays);
@@ -61159,170 +61600,257 @@ public class KL {
 	public static arr phelao(arr arrA, Object[]... arrays) {
 		return combine(arrA, arrays);
 	}
+	public static arr phelao(arr arrA, Object... items) {
+		return combine(arrA, items);
+	}
+	public static String[] push(String[] arrA, String[]... arrays) {
+		return combine(arrA, arrays);
+	}
 	public static String[] push(String[] arrA, String... items) {
 		return combine(arrA, items);
 	}
-	public static String[] push(String[] arrA, strArr... items) {
-		return combine(arrA, items);
+	public static String[] push(String[] arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static int[] push(int[] arrA, int[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static int[] push(int[] arrA, int... items) {
 		return combine(arrA, items);
 	}
-	public static int[] push(int[] arrA, intArr... items) {
-		return combine(arrA, items);
+	public static int[] push(int[] arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static long[] push(long[] arrA, long[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static long[] push(long[] arrA, long... items) {
 		return combine(arrA, items);
 	}
-	public static long[] push(long[] arrA, longArr... items) {
-		return combine(arrA, items);
+	public static long[] push(long[] arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static float[] push(float[] arrA, float[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static float[] push(float[] arrA, float... items) {
 		return combine(arrA, items);
 	}
-	public static float[] push(float[] arrA, fltArr... items) {
-		return combine(arrA, items);
+	public static float[] push(float[] arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static double[] push(double[] arrA, double[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static double[] push(double[] arrA, double... items) {
 		return combine(arrA, items);
 	}
-	public static double[] push(double[] arrA, dblArr... items) {
-		return combine(arrA, items);
+	public static double[] push(double[] arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolean[] push(boolean[] arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static boolean[] push(boolean[] arrA, boolean... items) {
 		return combine(arrA, items);
 	}
-	public static boolean[] push(boolean[] arrA, boolArr... items) {
-		return combine(arrA, items);
+	public static boolean[] push(boolean[] arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static Object[] push(Object[] arrA, Object[]... arrRest) {
 		return combine(arrA, arrRest);
 	}
+	public static Object[] push(Object[] arrA, Object... items) {
+		return combine(arrA, items);
+	}
 	public static Object[] push(Object[] arrA, arr... arrRest) {
 		return combine(arrA, arrRest);
 	}
-	public static strArr push(strArr arrA, strArr... items) {
-		return combine(arrA, items);
+	public static strArr push(strArr arrA, strArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static strArr push(strArr arrA, String[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static strArr push(strArr arrA, String... items) {
 		return combine(arrA, items);
 	}
-	public static intArr push(intArr arrA, intArr... items) {
-		return combine(arrA, items);
+	public static intArr push(intArr arrA, intArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static intArr push(intArr arrA, int[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static intArr push(intArr arrA, int... items) {
 		return combine(arrA, items);
 	}
-	public static longArr push(longArr arrA, longArr... items) {
-		return combine(arrA, items);
+	public static longArr push(longArr arrA, longArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static longArr push(longArr arrA, long[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static longArr push(longArr arrA, long... items) {
 		return combine(arrA, items);
 	}
-	public static fltArr push(fltArr arrA, fltArr... items) {
-		return combine(arrA, items);
+	public static fltArr push(fltArr arrA, fltArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static fltArr push(fltArr arrA, float[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static fltArr push(fltArr arrA, float... items) {
 		return combine(arrA, items);
 	}
-	public static dblArr push(dblArr arrA, dblArr... items) {
-		return combine(arrA, items);
+	public static dblArr push(dblArr arrA, dblArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static dblArr push(dblArr arrA, double[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static dblArr push(dblArr arrA, double... items) {
 		return combine(arrA, items);
 	}
-	public static boolArr push(boolArr arrA, boolArr... items) {
-		return combine(arrA, items);
+	public static boolArr push(boolArr arrA, boolArr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static boolArr push(boolArr arrA, boolean[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static boolArr push(boolArr arrA, boolean... items) {
 		return combine(arrA, items);
 	}
-	public static arr push(arr arrA, arr... items) {
-		return combine(arrA, items);
+	public static arr push(arr arrA, arr... arrays) {
+		return combine(arrA, arrays);
+	}
+	public static arr push(arr arrA, Object[]... arrays) {
+		return combine(arrA, arrays);
 	}
 	public static arr push(arr arrA, Object... items) {
 		return combine(arrA, items);
 	}
+	public static String[] pop(String[] arrA, String[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
 	public static String[] pop(String[] arrA, String... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static String[] pop(String[] arrA, strArr... items) {
-		return negativeIntersection(arrA, items);
+	public static String[] pop(String[] arrA, strArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static int[] pop(int[] arrA, int[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static int[] pop(int[] arrA, int... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static int[] pop(int[] arrA, intArr... items) {
-		return negativeIntersection(arrA, items);
+	public static int[] pop(int[] arrA, intArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static long[] pop(long[] arrA, long[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static long[] pop(long[] arrA, long... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static long[] pop(long[] arrA, longArr... items) {
-		return negativeIntersection(arrA, items);
+	public static long[] pop(long[] arrA, longArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static float[] pop(float[] arrA, float[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static float[] pop(float[] arrA, float... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static float[] pop(float[] arrA, fltArr... items) {
-		return negativeIntersection(arrA, items);
+	public static float[] pop(float[] arrA, fltArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static double[] pop(double[] arrA, double[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static double[] pop(double[] arrA, double... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static double[] pop(double[] arrA, dblArr... items) {
-		return negativeIntersection(arrA, items);
+	public static double[] pop(double[] arrA, dblArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static boolean[] pop(boolean[] arrA, boolean[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static boolean[] pop(boolean[] arrA, boolean... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static boolean[] pop(boolean[] arrA, boolArr... items) {
-		return negativeIntersection(arrA, items);
+	public static boolean[] pop(boolean[] arrA, boolArr... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static Object[] pop(Object[] arrA, Object[]... arrRest) {
 		return negativeIntersection(arrA, arrRest);
 	}
+	public static Object[] pop(Object[] arrA, Object... items) {
+		return negativeIntersection(arrA, items);
+	}
 	public static Object[] pop(Object[] arrA, arr... arrRest) {
 		return negativeIntersection(arrA, arrRest);
 	}
-	public static strArr pop(strArr arrA, strArr... items) {
-		return negativeIntersection(arrA, items);
+	public static strArr pop(strArr arrA, strArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static strArr pop(strArr arrA, String[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static strArr pop(strArr arrA, String... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static intArr pop(intArr arrA, intArr... items) {
-		return negativeIntersection(arrA, items);
+	public static intArr pop(intArr arrA, intArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static intArr pop(intArr arrA, int[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static intArr pop(intArr arrA, int... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static longArr pop(longArr arrA, longArr... items) {
-		return negativeIntersection(arrA, items);
+	public static longArr pop(longArr arrA, longArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static longArr pop(longArr arrA, long[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static longArr pop(longArr arrA, long... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static fltArr pop(fltArr arrA, fltArr... items) {
-		return negativeIntersection(arrA, items);
+	public static fltArr pop(fltArr arrA, fltArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static fltArr pop(fltArr arrA, float[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static fltArr pop(fltArr arrA, float... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static dblArr pop(dblArr arrA, dblArr... items) {
-		return negativeIntersection(arrA, items);
+	public static dblArr pop(dblArr arrA, dblArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static dblArr pop(dblArr arrA, double[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static dblArr pop(dblArr arrA, double... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static boolArr pop(boolArr arrA, boolArr... items) {
-		return negativeIntersection(arrA, items);
+	public static boolArr pop(boolArr arrA, boolArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static boolArr pop(boolArr arrA, boolean[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static boolArr pop(boolArr arrA, boolean... items) {
 		return negativeIntersection(arrA, items);
 	}
-	public static arr pop(arr arrA, arr... items) {
-		return negativeIntersection(arrA, items);
+	public static arr pop(arr arrA, arr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static arr pop(arr arrA, Object[]... arrays) {
+		return negativeIntersection(arrA, arrays);
 	}
 	public static arr pop(arr arrA, Object... items) {
 		return negativeIntersection(arrA, items);
