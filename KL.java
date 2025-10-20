@@ -61861,7 +61861,31 @@ public class KL {
 		}
 		return new strArr(arrA).intersection(arrays).array();
 	}
+	public static String[] intersection(String[] arrA, String... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Str;
+		}
+		return new strArr(arrA).intersection(items).array();
+	}
+	public static String[] intersection(String[] arrA, strArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Str;
+		}
+		return new strArr(arrA).intersection(arrays).array();
+	}
 	public static int[] intersection(int[] arrA, int[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Int;
+		}
+		return new intArr(arrA).intersection(arrays).array();
+	}
+	public static int[] intersection(int[] arrA, int... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Int;
+		}
+		return new intArr(arrA).intersection(items).array();
+	}
+	public static int[] intersection(int[] arrA, intArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Int;
 		}
@@ -61873,7 +61897,31 @@ public class KL {
 		}
 		return new longArr(arrA).intersection(arrays).array();
 	}
+	public static long[] intersection(long[] arrA, long... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Long;
+		}
+		return new longArr(arrA).intersection(items).array();
+	}
+	public static long[] intersection(long[] arrA, longArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Long;
+		}
+		return new longArr(arrA).intersection(arrays).array();
+	}
 	public static float[] intersection(float[] arrA, float[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Flt;
+		}
+		return new fltArr(arrA).intersection(arrays).array();
+	}
+	public static float[] intersection(float[] arrA, float... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Flt;
+		}
+		return new fltArr(arrA).intersection(items).array();
+	}
+	public static float[] intersection(float[] arrA, fltArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Flt;
 		}
@@ -61885,7 +61933,31 @@ public class KL {
 		}
 		return new dblArr(arrA).intersection(arrays).array();
 	}
+	public static double[] intersection(double[] arrA, double... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Dbl;
+		}
+		return new dblArr(arrA).intersection(items).array();
+	}
+	public static double[] intersection(double[] arrA, dblArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Dbl;
+		}
+		return new dblArr(arrA).intersection(arrays).array();
+	}
 	public static boolean[] intersection(boolean[] arrA, boolean[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Bool;
+		}
+		return new boolArr(arrA).intersection(arrays).array();
+	}
+	public static boolean[] intersection(boolean[] arrA, boolean... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Bool;
+		}
+		return new boolArr(arrA).intersection(items).array();
+	}
+	public static boolean[] intersection(boolean[] arrA, boolArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Bool;
 		}
@@ -61897,11 +61969,35 @@ public class KL {
 		}
 		return new arr(arrA).intersection(arrays).array();
 	}
+	public static Object[] intersection(Object[] arrA, Object... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Obj;
+		}
+		return new arr(arrA).intersection(items).array();
+	}
+	public static Object[] intersection(Object[] arrA, arr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Obj;
+		}
+		return new arr(arrA).intersection(arrays).array();
+	}
 	public static strArr intersection(strArr arrA, strArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.strArr;
 		}
 		return arrA.intersection(arrays);
+	}
+	public static strArr intersection(strArr arrA, String[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.strArr;
+		}
+		return arrA.intersection(arrays);
+	}
+	public static strArr intersection(strArr arrA, String... items) {
+		if (not(arrA) || not(items)) {
+			return blank.strArr;
+		}
+		return arrA.intersection(items);
 	}
 	public static intArr intersection(intArr arrA, intArr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -61909,11 +62005,35 @@ public class KL {
 		}
 		return arrA.intersection(arrays);
 	}
+	public static intArr intersection(intArr arrA, int[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.intArr;
+		}
+		return arrA.intersection(arrays);
+	}
+	public static intArr intersection(intArr arrA, int... items) {
+		if (not(arrA) || not(items)) {
+			return blank.intArr;
+		}
+		return arrA.intersection(items);
+	}
 	public static longArr intersection(longArr arrA, longArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.longArr;
 		}
 		return arrA.intersection(arrays);
+	}
+	public static longArr intersection(longArr arrA, long[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.longArr;
+		}
+		return arrA.intersection(arrays);
+	}
+	public static longArr intersection(longArr arrA, long... items) {
+		if (not(arrA) || not(items)) {
+			return blank.longArr;
+		}
+		return arrA.intersection(items);
 	}
 	public static fltArr intersection(fltArr arrA, fltArr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -61921,11 +62041,35 @@ public class KL {
 		}
 		return arrA.intersection(arrays);
 	}
+	public static fltArr intersection(fltArr arrA, float[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.fltArr;
+		}
+		return arrA.intersection(arrays);
+	}
+	public static fltArr intersection(fltArr arrA, float... items) {
+		if (not(arrA) || not(items)) {
+			return blank.fltArr;
+		}
+		return arrA.intersection(items);
+	}
 	public static dblArr intersection(dblArr arrA, dblArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.dblArr;
 		}
 		return arrA.intersection(arrays);
+	}
+	public static dblArr intersection(dblArr arrA, double[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.dblArr;
+		}
+		return arrA.intersection(arrays);
+	}
+	public static dblArr intersection(dblArr arrA, double... items) {
+		if (not(arrA) || not(items)) {
+			return blank.dblArr;
+		}
+		return arrA.intersection(items);
 	}
 	public static boolArr intersection(boolArr arrA, boolArr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -61933,14 +62077,49 @@ public class KL {
 		}
 		return arrA.intersection(arrays);
 	}
+	public static boolArr intersection(boolArr arrA, boolean[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.boolArr;
+		}
+		return arrA.intersection(arrays);
+	}
+	public static boolArr intersection(boolArr arrA, boolean... items) {
+		if (not(arrA) || not(items)) {
+			return blank.boolArr;
+		}
+		return arrA.intersection(items);
+	}
 	public static arr intersection(arr arrA, arr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.mixedArr;
 		}
 		return arrA.intersection(arrays);
 	}
-	public static String[] negativeIntersection(String[] arrA,
-			String[]... arrays) {
+	public static arr intersection(arr arrA, Object[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.mixedArr;
+		}
+		return arrA.intersection(arrays);
+	}
+	public static arr intersection(arr arrA, Object... items) {
+		if (not(arrA) || not(items)) {
+			return blank.mixedArr;
+		}
+		return arrA.intersection(items);
+	}
+	public static String[] negativeIntersection(String[] arrA, String[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Str;
+		}
+		return new strArr(arrA).negativeIntersection(arrays).array();
+	}
+	public static String[] negativeIntersection(String[] arrA, String... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Str;
+		}
+		return new strArr(arrA).negativeIntersection(items).array();
+	}
+	public static String[] negativeIntersection(String[] arrA, strArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Str;
 		}
@@ -61952,35 +62131,103 @@ public class KL {
 		}
 		return new intArr(arrA).negativeIntersection(arrays).array();
 	}
+	public static int[] negativeIntersection(int[] arrA, int... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Int;
+		}
+		return new intArr(arrA).negativeIntersection(items).array();
+	}
+	public static int[] negativeIntersection(int[] arrA, intArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Int;
+		}
+		return new intArr(arrA).negativeIntersection(arrays).array();
+	}
 	public static long[] negativeIntersection(long[] arrA, long[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Long;
 		}
 		return new longArr(arrA).negativeIntersection(arrays).array();
 	}
-	public static float[] negativeIntersection(float[] arrA,
-			float[]... arrays) {
+	public static long[] negativeIntersection(long[] arrA, long... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Long;
+		}
+		return new longArr(arrA).negativeIntersection(items).array();
+	}
+	public static long[] negativeIntersection(long[] arrA, longArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Long;
+		}
+		return new longArr(arrA).negativeIntersection(arrays).array();
+	}
+	public static float[] negativeIntersection(float[] arrA, float[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Flt;
 		}
 		return new fltArr(arrA).negativeIntersection(arrays).array();
 	}
-	public static double[] negativeIntersection(double[] arrA,
-			double[]... arrays) {
+	public static float[] negativeIntersection(float[] arrA, float... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Flt;
+		}
+		return new fltArr(arrA).negativeIntersection(items).array();
+	}
+	public static float[] negativeIntersection(float[] arrA, fltArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Flt;
+		}
+		return new fltArr(arrA).negativeIntersection(arrays).array();
+	}
+	public static double[] negativeIntersection(double[] arrA, double[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Dbl;
 		}
 		return new dblArr(arrA).negativeIntersection(arrays).array();
 	}
-	public static boolean[] negativeIntersection(boolean[] arrA,
-			boolean[]... arrays) {
+	public static double[] negativeIntersection(double[] arrA, double... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Dbl;
+		}
+		return new dblArr(arrA).negativeIntersection(items).array();
+	}
+	public static double[] negativeIntersection(double[] arrA, dblArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Dbl;
+		}
+		return new dblArr(arrA).negativeIntersection(arrays).array();
+	}
+	public static boolean[] negativeIntersection(boolean[] arrA, boolean[]... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Bool;
 		}
 		return new boolArr(arrA).negativeIntersection(arrays).array();
 	}
-	public static Object[] negativeIntersection(Object[] arrA,
-			Object[]... arrays) {
+	public static boolean[] negativeIntersection(boolean[] arrA, boolean... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Bool;
+		}
+		return new boolArr(arrA).negativeIntersection(items).array();
+	}
+	public static boolean[] negativeIntersection(boolean[] arrA, boolArr... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Bool;
+		}
+		return new boolArr(arrA).negativeIntersection(arrays).array();
+	}
+	public static Object[] negativeIntersection(Object[] arrA, Object[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.Obj;
+		}
+		return new arr(arrA).negativeIntersection(arrays).array();
+	}
+	public static Object[] negativeIntersection(Object[] arrA, Object... items) {
+		if (not(arrA) || not(items)) {
+			return blank.Obj;
+		}
+		return new arr(arrA).negativeIntersection(items).array();
+	}
+	public static Object[] negativeIntersection(Object[] arrA, arr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.Obj;
 		}
@@ -61992,18 +62239,53 @@ public class KL {
 		}
 		return arrA.negativeIntersection(arrays);
 	}
+	public static strArr negativeIntersection(strArr arrA, String[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.strArr;
+		}
+		return arrA.negativeIntersection(arrays);
+	}
+	public static strArr negativeIntersection(strArr arrA, String... items) {
+		if (not(arrA) || not(items)) {
+			return blank.strArr;
+		}
+		return arrA.negativeIntersection(items);
+	}
 	public static intArr negativeIntersection(intArr arrA, intArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.intArr;
 		}
 		return arrA.negativeIntersection(arrays);
 	}
-	public static longArr negativeIntersection(longArr arrA,
-			longArr... arrays) {
+	public static intArr negativeIntersection(intArr arrA, int[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.intArr;
+		}
+		return arrA.negativeIntersection(arrays);
+	}
+	public static intArr negativeIntersection(intArr arrA, int... items) {
+		if (not(arrA) || not(items)) {
+			return blank.intArr;
+		}
+		return arrA.negativeIntersection(items);
+	}
+	public static longArr negativeIntersection(longArr arrA, longArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.longArr;
 		}
 		return arrA.negativeIntersection(arrays);
+	}
+	public static longArr negativeIntersection(longArr arrA, long[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.longArr;
+		}
+		return arrA.negativeIntersection(arrays);
+	}
+	public static longArr negativeIntersection(longArr arrA, long... items) {
+		if (not(arrA) || not(items)) {
+			return blank.longArr;
+		}
+		return arrA.negativeIntersection(items);
 	}
 	public static fltArr negativeIntersection(fltArr arrA, fltArr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -62011,18 +62293,53 @@ public class KL {
 		}
 		return arrA.negativeIntersection(arrays);
 	}
+	public static fltArr negativeIntersection(fltArr arrA, float[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.fltArr;
+		}
+		return arrA.negativeIntersection(arrays);
+	}
+	public static fltArr negativeIntersection(fltArr arrA, float... items) {
+		if (not(arrA) || not(items)) {
+			return blank.fltArr;
+		}
+		return arrA.negativeIntersection(items);
+	}
 	public static dblArr negativeIntersection(dblArr arrA, dblArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.dblArr;
 		}
 		return arrA.negativeIntersection(arrays);
 	}
-	public static boolArr negativeIntersection(boolArr arrA,
-			boolArr... arrays) {
+	public static dblArr negativeIntersection(dblArr arrA, double[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.dblArr;
+		}
+		return arrA.negativeIntersection(arrays);
+	}
+	public static dblArr negativeIntersection(dblArr arrA, double... items) {
+		if (not(arrA) || not(items)) {
+			return blank.dblArr;
+		}
+		return arrA.negativeIntersection(items);
+	}
+	public static boolArr negativeIntersection(boolArr arrA, boolArr... arrays) {
 		if (not(arrA) || not(arrays)) {
 			return blank.boolArr;
 		}
 		return arrA.negativeIntersection(arrays);
+	}
+	public static boolArr negativeIntersection(boolArr arrA, boolean[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.boolArr;
+		}
+		return arrA.negativeIntersection(arrays);
+	}
+	public static boolArr negativeIntersection(boolArr arrA, boolean... items) {
+		if (not(arrA) || not(items)) {
+			return blank.boolArr;
+		}
+		return arrA.negativeIntersection(items);
 	}
 	public static arr negativeIntersection(arr arrA, arr... arrays) {
 		if (not(arrA) || not(arrays)) {
@@ -62030,77 +62347,269 @@ public class KL {
 		}
 		return arrA.negativeIntersection(arrays);
 	}
+	public static arr negativeIntersection(arr arrA, Object[]... arrays) {
+		if (not(arrA) || not(arrays)) {
+			return blank.mixedArr;
+		}
+		return arrA.negativeIntersection(arrays);
+	}
+	public static arr negativeIntersection(arr arrA, Object... items) {
+		if (not(arrA) || not(items)) {
+			return blank.mixedArr;
+		}
+		return arrA.negativeIntersection(items);
+	}
 	public static String[] keepIfMatch(String[] arrA, String[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static String[] keepIfMatch(String[] arrA, String... items) {
+		return intersection(arrA, items);
+	}
+	public static String[] keepIfMatch(String[] arrA, strArr... arrays) {
 		return intersection(arrA, arrays);
 	}
 	public static int[] keepIfMatch(int[] arrA, int[]... arrays) {
 		return intersection(arrA, arrays);
 	}
+	public static int[] keepIfMatch(int[] arrA, int... items) {
+		return intersection(arrA, items);
+	}
+	public static int[] keepIfMatch(int[] arrA, intArr... arrays) {
+		return intersection(arrA, arrays);
+	}
 	public static long[] keepIfMatch(long[] arrA, long[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static long[] keepIfMatch(long[] arrA, long... items) {
+		return intersection(arrA, items);
+	}
+	public static long[] keepIfMatch(long[] arrA, longArr... arrays) {
 		return intersection(arrA, arrays);
 	}
 	public static float[] keepIfMatch(float[] arrA, float[]... arrays) {
 		return intersection(arrA, arrays);
 	}
+	public static float[] keepIfMatch(float[] arrA, float... items) {
+		return intersection(arrA, items);
+	}
+	public static float[] keepIfMatch(float[] arrA, fltArr... arrays) {
+		return intersection(arrA, arrays);
+	}
 	public static double[] keepIfMatch(double[] arrA, double[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static double[] keepIfMatch(double[] arrA, double... items) {
+		return intersection(arrA, items);
+	}
+	public static double[] keepIfMatch(double[] arrA, dblArr... arrays) {
 		return intersection(arrA, arrays);
 	}
 	public static boolean[] keepIfMatch(boolean[] arrA, boolean[]... arrays) {
 		return intersection(arrA, arrays);
 	}
+	public static boolean[] keepIfMatch(boolean[] arrA, boolean... items) {
+		return intersection(arrA, items);
+	}
+	public static boolean[] keepIfMatch(boolean[] arrA, boolArr... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static Object[] keepIfMatch(Object[] arrA, Object[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static Object[] keepIfMatch(Object[] arrA, Object... items) {
+		return intersection(arrA, items);
+	}
+	public static Object[] keepIfMatch(Object[] arrA, arr... arrays) {
+		return intersection(arrA, arrays);
+	}
 	public static strArr keepIfMatch(strArr arrA, strArr... arrays) {
 		return intersection(arrA, arrays);
+	}
+	public static strArr keepIfMatch(strArr arrA, String[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static strArr keepIfMatch(strArr arrA, String... items) {
+		return intersection(arrA, items);
 	}
 	public static intArr keepIfMatch(intArr arrA, intArr... arrays) {
 		return intersection(arrA, arrays);
 	}
+	public static intArr keepIfMatch(intArr arrA, int[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static intArr keepIfMatch(intArr arrA, int... items) {
+		return intersection(arrA, items);
+	}
 	public static longArr keepIfMatch(longArr arrA, longArr... arrays) {
 		return intersection(arrA, arrays);
+	}
+	public static longArr keepIfMatch(longArr arrA, long[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static longArr keepIfMatch(longArr arrA, long... items) {
+		return intersection(arrA, items);
 	}
 	public static fltArr keepIfMatch(fltArr arrA, fltArr... arrays) {
 		return intersection(arrA, arrays);
 	}
+	public static fltArr keepIfMatch(fltArr arrA, float[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static fltArr keepIfMatch(fltArr arrA, float... items) {
+		return intersection(arrA, items);
+	}
 	public static dblArr keepIfMatch(dblArr arrA, dblArr... arrays) {
 		return intersection(arrA, arrays);
+	}
+	public static dblArr keepIfMatch(dblArr arrA, double[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static dblArr keepIfMatch(dblArr arrA, double... items) {
+		return intersection(arrA, items);
 	}
 	public static boolArr keepIfMatch(boolArr arrA, boolArr... arrays) {
 		return intersection(arrA, arrays);
 	}
+	public static boolArr keepIfMatch(boolArr arrA, boolean[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static boolArr keepIfMatch(boolArr arrA, boolean... items) {
+		return intersection(arrA, items);
+	}
+	public static arr keepIfMatch(arr arrA, arr... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static arr keepIfMatch(arr arrA, Object[]... arrays) {
+		return intersection(arrA, arrays);
+	}
+	public static arr keepIfMatch(arr arrA, Object... items) {
+		return intersection(arrA, items);
+	}
 	public static String[] popIfMatch(String[] arrA, String[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static String[] popIfMatch(String[] arrA, String... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static String[] popIfMatch(String[] arrA, strArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
 	public static int[] popIfMatch(int[] arrA, int[]... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
+	public static int[] popIfMatch(int[] arrA, int... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static int[] popIfMatch(int[] arrA, intArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
 	public static long[] popIfMatch(long[] arrA, long[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static long[] popIfMatch(long[] arrA, long... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static long[] popIfMatch(long[] arrA, longArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
 	public static float[] popIfMatch(float[] arrA, float[]... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
+	public static float[] popIfMatch(float[] arrA, float... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static float[] popIfMatch(float[] arrA, fltArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
 	public static double[] popIfMatch(double[] arrA, double[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static double[] popIfMatch(double[] arrA, double... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static double[] popIfMatch(double[] arrA, dblArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
 	public static boolean[] popIfMatch(boolean[] arrA, boolean[]... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
+	public static boolean[] popIfMatch(boolean[] arrA, boolean... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static boolean[] popIfMatch(boolean[] arrA, boolArr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static Object[] popIfMatch(Object[] arrA, Object[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static Object[] popIfMatch(Object[] arrA, Object... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static Object[] popIfMatch(Object[] arrA, arr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
 	public static strArr popIfMatch(strArr arrA, strArr... arrays) {
 		return negativeIntersection(arrA, arrays);
+	}
+	public static strArr popIfMatch(strArr arrA, String[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static strArr popIfMatch(strArr arrA, String... items) {
+		return negativeIntersection(arrA, items);
 	}
 	public static intArr popIfMatch(intArr arrA, intArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
+	public static intArr popIfMatch(intArr arrA, int[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static intArr popIfMatch(intArr arrA, int... items) {
+		return negativeIntersection(arrA, items);
+	}
 	public static longArr popIfMatch(longArr arrA, longArr... arrays) {
 		return negativeIntersection(arrA, arrays);
+	}
+	public static longArr popIfMatch(longArr arrA, long[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static longArr popIfMatch(longArr arrA, long... items) {
+		return negativeIntersection(arrA, items);
 	}
 	public static fltArr popIfMatch(fltArr arrA, fltArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
+	public static fltArr popIfMatch(fltArr arrA, float[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static fltArr popIfMatch(fltArr arrA, float... items) {
+		return negativeIntersection(arrA, items);
+	}
 	public static dblArr popIfMatch(dblArr arrA, dblArr... arrays) {
 		return negativeIntersection(arrA, arrays);
 	}
+	public static dblArr popIfMatch(dblArr arrA, double[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static dblArr popIfMatch(dblArr arrA, double... items) {
+		return negativeIntersection(arrA, items);
+	}
 	public static boolArr popIfMatch(boolArr arrA, boolArr... arrays) {
 		return negativeIntersection(arrA, arrays);
+	}
+	public static boolArr popIfMatch(boolArr arrA, boolean[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static boolArr popIfMatch(boolArr arrA, boolean... items) {
+		return negativeIntersection(arrA, items);
+	}
+	public static arr popIfMatch(arr arrA, arr... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static arr popIfMatch(arr arrA, Object[]... arrays) {
+		return negativeIntersection(arrA, arrays);
+	}
+	public static arr popIfMatch(arr arrA, Object... items) {
+		return negativeIntersection(arrA, items);
 	}
 	public static String[] onlyKeep(String[] arrA, String[]... arrB) {
 		if (not(arrA) || not(arrB)) {
