@@ -47857,6 +47857,7 @@ public class KL {
 			kahoArr(args[0]);
 			return;
 		} else {
+			int count = 0;
 			for (Object arg : args) {
 				if (isNull(arg)) {
 					continue;
