@@ -30,45 +30,49 @@ public class KL {
 		//@class.why: this class is supposed to help make functions more understandable
 		public static class info extends hint {
 		}
+		public static class safety extends hint {
+		}
 		public static class critical extends hint {
 		}
 		public static class intention extends hint {
 		}
-		//use: hint.critical("@saving-from-trouble") this
-		//use: hint.importance.level("1 of 10") this_call_will_help_arithmetic_buffs
 		public static class behavior extends hint {
 		}
-		class goodpractice extends hint {
+		public static class functionality {
 		}
-		class badpractice extends hint {
+		public static class goodpractice extends hint {
 		}
-		class time extends hint {
+		public static class badpractice extends hint {
 		}
-		class timecomplexity extends hint.time {
+		public static class time extends hint {
 		}
-		class approach extends hint {
+		public static class timecomplexity extends hint.time {
 		}
-		class avoids extends hint {
+		public static class approach extends hint {
 		}
-		class warning extends hint {
+		public static class avoids extends hint {
 		}
-		class forClass extends hint {
+		public static class prevents extends hint {
 		}
-		class constructor extends hint {
+		public static class warning extends hint {
 		}
-		class forConstructor extends hint.constructor {
+		public static class forClass extends hint {
 		}
-		class field extends hint {
+		public static class constructor extends hint {
 		}
-		class forField extends hint.field {
+		public static class forConstructor extends hint.constructor {
 		}
-		class method extends hint {
+		public static class field extends hint {
 		}
-		class forMethod extends hint.method {
+		public static class forField extends hint.field {
 		}
-		class param extends hint {
+		public static class method extends hint {
 		}
-		class forParam extends hint.param {
+		public static class forMethod extends hint.method {
+		}
+		public static class param extends hint {
+		}
+		public static class forParam extends hint.param {
 		}
 	}
 	public static enum length {
@@ -9045,12 +9049,13 @@ public class KL {
 				if (eqSignSeparatedPair == null)
 					continue;
 				if (in(eqSignSeparatedPair,
-						"(?<k>\\w+)\\s*(=|:)\\s*(?<v>['\\.]?\\w+['\\.]?)")) {
+						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>['\"-\\.]?!*\\w+['\"-\\.]?)")) {
 					String k;
 					Object v = new Object();
-					String[] pairs = eqSignSeparatedPair.split("=");
+					String[] pairs = eqSignSeparatedPair.split("\\s*[:=]\\s*");
+					hint.functionality tested_to_be_accurate;
 					if (len(pairs) == 2) {
-						k = lower(pairs[0]);
+						k = lower(pairs[0]).replaceAll("^['\"]+|['\"]+$", "");
 						String unprocessedV = pairs[1];
 						if (isIntLike(unprocessedV))
 							v = Int(unprocessedV);
@@ -9065,13 +9070,19 @@ public class KL {
 						} else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
 							// the D in here should be optional
 							v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
-						} else if (eq(unprocessedV, "(true|false)"))
-							v = eq(unprocessedV, "true") ? true : false;
+						} else if (eq(unprocessedV, "!*(true|false)")) {
+							boolean midValue = in(unprocessedV.replaceAll("!", ""), "true$") ? true : false;
+							while (in(unprocessedV, "!")) {
+							    unprocessedV = replaceFirst(unprocessedV, "!", "");
+							    midValue = !midValue;
+							}
+							v = midValue;
+						}
 						else if (in(unprocessedV, "(?<=')[a-zA-Z](?=')"))
 							v = unprocessedV.replaceAll("\'", "")
 									.toCharArray()[0];
 						else
-							v = Str(unprocessedV);
+							v = Str(unprocessedV).replaceAll("^\"+|\"+$", "");
 						super.put(k, v);
 					}
 				}
@@ -52604,6 +52615,226 @@ public class KL {
 		}
 		return quotient;
 	}
+	public static class add {
+		public static char[] each(char[] arr, int n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Char;
+			return map(arr, item -> (char)(item + n));
+		}
+		public static String[] each(String[] arr, String s) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Str;
+			return map(arr, item -> item + s);
+		}
+		public static int[] each(int[] arr, int n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Int;
+			return map(arr, item -> item + n);
+		}
+		public static long[] each(long[] arr, long n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Long;
+			return map(arr, item -> item + n);
+		}
+		public static float[] each(float[] arr, float n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Flt;
+			return map(arr, item -> item + n);
+		}
+		public static double[] each(double[] arr, double n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Dbl;
+			return map(arr, item -> item + n);
+		}
+		public static String[] toEach(String[] arr, String s) {
+			return each(arr, s);
+		}
+		public static int[] toEach(int[] arr, int n) {
+			return each(arr, n);
+		}
+		public static long[] toEach(long[] arr, long n) {
+			return each(arr, n);
+		}
+		public static float[] toEach(float[] arr, float n) {
+			return each(arr, n);
+		}
+		public static double[] toEach(double[] arr, double n) {
+			return each(arr, n);
+		}
+	}
+	public static class remove {
+		public static char[] each(char[] arr, int n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Char;
+			return map(arr, item -> (char)(item - n));
+        }
+		public static String[] each(String[] arr, String s) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Str;
+			return map(arr, item -> item.replaceAll(s+"$", ""));
+		}
+		public static int[] each(int[] arr, int n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Int;
+			return map(arr, item -> item - n);
+		}
+		public static long[] each(long[] arr, long n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Long;
+			return map(arr, item -> item - n);
+		}
+		public static float[] each(float[] arr, float n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Flt;
+			return map(arr, item -> item - n);
+		}
+		public static double[] each(double[] arr, double n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Dbl;
+			return map(arr, item -> item - n);
+		}
+		public static String[] fromEach(String[] arr, String s) {
+			return each(arr, s);
+		}
+		public static int[] fromEach(int[] arr, int n) {
+			return each(arr, n);
+		}
+		public static long[] fromEach(long[] arr, long n) {
+			return each(arr, n);
+		}
+		public static float[] fromEach(float[] arr, float n) {
+			return each(arr, n);
+		}
+		public static double[] fromEach(double[] arr, double n) {
+			return each(arr, n);
+		}
+	}
+	public static class subtract extends remove {
+	}
+	public static class multiply {
+		public static String[] each(String[] arr, int n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Str;
+			return map(arr, item -> repeat(item, n));
+		}
+		public static int[] each(int[] arr, int n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Int;
+			return map(arr, item -> item * n);
+		}
+		public static long[] each(long[] arr, long n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Long;
+			return map(arr, item -> item * n);
+		}
+		public static float[] each(float[] arr, float n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Flt;
+			return map(arr, item -> item * n);
+		}
+		public static double[] each(double[] arr, double n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Dbl;
+			return map(arr, item -> item * n);
+		}
+	}
+	public static class divide {
+		public static int[] each(int[] arr, int n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Int;
+			return map(arr, item -> item / n);
+		}
+		public static long[] each(long[] arr, long n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Long;
+			return map(arr, item -> item / n);
+		}
+		public static float[] each(float[] arr, float n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Flt;
+			return map(arr, item -> item / n);
+		}
+		public static double[] each(double[] arr, double n) {
+			if (arr == null || len(arr) == 0)
+			    return blank.Dbl;
+			return map(arr, item -> item / n);
+		}
+	}
+	public static class ekekme {
+		public static String[] dalo(String[] arr, String s) {
+			return add.toEach(arr, s);
+		}
+		public static int[] dalo(int[] arr, int n) {
+			return add.toEach(arr, n);
+		}
+		public static long[] dalo(long[] arr, long n) {
+			return add.toEach(arr, n);
+		}
+		public static float[] dalo(float[] arr, float n) {
+			return add.toEach(arr, n);
+		}
+		public static double[] dalo(double[] arr, double n) {
+			return add.toEach(arr, n);
+		}
+	}
+	public static class ekekse {
+		public static String[] nikalo(String[] arr, String s) {
+			return subtract.fromEach(arr, s);
+		}
+		public static int[] nikalo(int[] arr, int n) {
+			return subtract.fromEach(arr, n);
+		}
+		public static long[] nikalo(long[] arr, long n) {
+			return subtract.fromEach(arr, n);
+		}
+		public static float[] nikalo(float[] arr, float n) {
+			return subtract.fromEach(arr, n);
+		}
+		public static double[] nikalo(double[] arr, double n) {
+			return subtract.fromEach(arr, n);
+		}
+	}
+	public static class ekekko {
+		public static String[] multiply(String[] arr, int n) {
+			return multiply.each(arr, n);
+		}
+		public static int[] multiply(int[] arr, int n) {
+			return multiply.each(arr, n);
+		}
+		public static long[] multiply(long[] arr, long n) {
+			return multiply.each(arr, n);
+		}
+		public static float[] multiply(float[] arr, float n) {
+			return multiply.each(arr, n);
+		}
+		public static double[] multiply(double[] arr, double n) {
+			return multiply.each(arr, n);
+		}
+		public static int[] divide(int[] arr, int n) {
+			return divide.each(arr, n);
+		}
+		public static long[] divide(long[] arr, long n) {
+			return divide.each(arr, n);
+		}
+		public static float[] divide(float[] arr, float n) {
+			return divide.each(arr, n);
+		}
+		public static double[] divide(double[] arr, double n) {
+			return divide.each(arr, n);
+		}
+		public static int[] bato(int[] arr, int n) {
+			return divide(arr, n);
+		}
+		public static long[] bato(long[] arr, long n) {
+			return divide(arr, n);
+		}
+		public static float[] bato(float[] arr, float n) {
+			return divide(arr, n);
+		}
+		public static double[] bato(double[] arr, double n) {
+			return divide(arr, n);
+		}
+	}
 	public static void guess(int n) {
 		SecureRandom sr = new SecureRandom();
 		int min = 0, max = n, currentAttempt = 1;
@@ -53005,7 +53236,8 @@ public class KL {
 	}
 	// since a long is just a LONG integer, this should work^
 	// let's set up some currency variables
-	public static int guna, dafa = guna = 1;
+	public static int guna, hla, sra, tha, wa, ta, hisso_me, dugni, dafa = guna = hla = sra = tha = wa = ta = hisso_me = 1, dugna = dugni = 2;
+	public static double adhi, poni, adha = adhi = 1/2, pona = poni = .75, sawa = 1.25, dedh = 1.5, dhai = 2.5;
 	public static double so = 1e2, hzr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9,
 			kh = 1e11;
 	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
@@ -58742,6 +58974,9 @@ public class KL {
 	}
 	public static String remove(String str, String re) {
 		return replace(str, re, "");
+	}
+	public static String removeFirst(String str, String re) {
+		return replaceFirst(str, re, "");
 	}
 	public static String removeAll(String str, String re) {
 		return remove(str, re);
@@ -66848,17 +67083,15 @@ public class KL {
 	public static char[] resize(char[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Char;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -66869,8 +67102,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Char;
 		char[] newArr = new char[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static char[] resize(char[] arr, length mode) {
@@ -66900,17 +67137,15 @@ public class KL {
 	public static String[] resize(String[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Str;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -66921,8 +67156,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Str;
 		String[] newArr = new String[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static String[] resize(String[] arr, length mode) {
@@ -66952,17 +67191,15 @@ public class KL {
 	public static int[] resize(int[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Int;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -66973,8 +67210,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Int;
 		int[] newArr = new int[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static int[] resize(int[] arr, length mode) {
@@ -67004,17 +67245,15 @@ public class KL {
 	public static long[] resize(long[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Long;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -67025,8 +67264,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Long;
 		long[] newArr = new long[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static long[] resize(long[] arr, length mode) {
@@ -67056,17 +67299,15 @@ public class KL {
 	public static float[] resize(float[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Flt;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -67077,8 +67318,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Flt;
 		float[] newArr = new float[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static float[] resize(float[] arr, length mode) {
@@ -67108,17 +67353,15 @@ public class KL {
 	public static double[] resize(double[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Dbl;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -67129,8 +67372,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Dbl;
 		double[] newArr = new double[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static double[] resize(double[] arr, length mode) {
@@ -67160,17 +67407,15 @@ public class KL {
 	public static Number[] resize(Number[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Num;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -67181,8 +67426,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Num;
 		Number[] newArr = new Number[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static Number[] resize(Number[] arr, length mode) {
@@ -67212,17 +67461,15 @@ public class KL {
 	public static Object[] resize(Object[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Obj;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -67233,8 +67480,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Obj;
 		Object[] newArr = new Object[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static Object[] resize(Object[] arr, length mode) {
@@ -67264,17 +67515,15 @@ public class KL {
 	public static boolean[] resize(boolean[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Bool;
-		if (not(by))
-			return arr;
 		int newLen;
 		switch (mode) {
-			case KL.length.setLength :
+			case setLength :
 				newLen = by;
 				break;
-			case length.twice :
+			case twice :
 				newLen = len(arr) * 2;
 				break;
-			case length.half :
+			case half :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -67285,8 +67534,12 @@ public class KL {
 		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Bool;
 		boolean[] newArr = new boolean[newLen];
-		for (int i : range(newArr))
+		for (int i : range(newArr)) {
+			if (i >= len(arr))
+				break;
+			hint.safety helps_prevent_index_out_of_bounds_exception;
 			newArr[i] = arr[i];
+		}
 		return newArr;
 	}
 	public static boolean[] resize(boolean[] arr, length mode) {
@@ -67513,6 +67766,16 @@ public class KL {
 		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
 		print(" ", "hello", "world");
+		o user = o("{'name': \"Tahani\", \"nationality\": British-Pakistani, \"age\": 32}", "{dying: !true}");
+		user.set("{dying: !!true}");
+		print(user.k("name", _s));
+		print(user.k("nationality", _s));
+		print(user.k("age", _i));
+		print(user.k("dying", _b));
+		int[] testArr = {1, 3, 5};
+		testArr = extend(testArr, length.twice);
+		print(testArr);
+		print(len(testArr));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
