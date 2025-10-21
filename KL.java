@@ -71,16 +71,8 @@ public class KL {
 		class forParam extends hint.param {
 		}
 	}
-	public static hint hint = new hint();
-	public static enum mode {
-		//expansion
-		extend, grow, increment, inc,
-		//shrinking
-		shrink, decrement, dec,
-		//complete renewal
-		setLength,
-		//sorting, and reversal
-		reverse, asc, desc, standard, regular;
+	public static enum length {
+		standard, setLength, twice, half;
 	}
 	public static class init {
 		public static int i, j, k;
@@ -106,7 +98,7 @@ public class KL {
 			this.cur = "Rs. ";
 		}
 		money(double amnt, String cur) {
-			this.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
+			this.amnt = not(amnt) || isInf(amnt) ? 0 : amnt;
 			this.cur = not(this.cur) || len(this.cur) < 1 || len(this.cur) > 4
 					? "Rs. "
 					: titleCase(cur);
@@ -129,7 +121,7 @@ public class KL {
 			return this;
 		}
 		money amount(double newAmnt) {
-			this.amnt = isinf(newAmnt) ? this.amnt : newAmnt;
+			this.amnt = isInf(newAmnt) ? this.amnt : newAmnt;
 			return this;
 		}
 		money setAmount(double newAmnt) {
@@ -257,11 +249,11 @@ public class KL {
 			super.cur = "Rs. ";
 		}
 		pesa(double amnt) {
-			super.amnt = isinf(amnt) ? 0 : amnt;
+			super.amnt = isInf(amnt) ? 0 : amnt;
 			super.cur = "Rs. ";
 		}
 		pesa(double amnt, String cur) {
-			super.amnt = not(amnt) || isinf(amnt) ? 0 : amnt;
+			super.amnt = not(amnt) || isInf(amnt) ? 0 : amnt;
 			super.cur = not(super.cur) || len(super.cur) < 1
 					|| len(super.cur) > 4 ? "Rs. " : titleCase(cur);
 		}
@@ -47763,9 +47755,9 @@ public class KL {
 			return;
 		}
 		String breakCharacter;
-		if (isStr(args[0]) && len(as(_s, args[0])) == 1
-				&& in(as(_s, args[0]), "^\\W$")) {
+		if (isStr(args[0]) && in(as(_s, args[0]), "^\\W$")) {
 			breakCharacter = as(_s, args[0]);
+			args = slice(args, 1);
 		} else {
 			breakCharacter = printSettings.breakCharacter;
 		}
@@ -47783,6 +47775,7 @@ public class KL {
 			printArr(args[0]);
 			return;
 		} else {
+			int count = 0;
 			for (Object arg : args) {
 				if (isNull(arg)) {
 					continue;
@@ -47823,7 +47816,12 @@ public class KL {
 					String preprocessed = replace(Str(arg), replacements);
 					arg = preprocessed;
 				}
-				System.out.print(arg + printSettings.breakCharacter);
+				String result = (arg + breakCharacter).replaceAll("^\\s+", "");
+				hint trimming_whitespace_in_case_any_seen_on_the_left;
+				count++;
+				if (count == len(args) && !eq(breakCharacter, " "))
+					result = result.replaceAll(breakCharacter + "$", "");
+				System.out.print(result);
 			}
 		}
 	}
@@ -47840,6 +47838,7 @@ public class KL {
 		if (isStr(args[0]) && len(as(_s, args[0])) == 1
 				&& in(as(_s, args[0]), "^\\W$")) {
 			breakCharacter = as(_s, args[0]);
+			args = slice(args, 1);
 		} else {
 			breakCharacter = printSettings.breakCharacter;
 		}
@@ -47898,7 +47897,12 @@ public class KL {
 					String preprocessed = replace(Str(arg), replacements);
 					arg = preprocessed;
 				}
-				System.out.print(arg + breakCharacter);
+				String result = (arg + breakCharacter).replaceAll("^\\s+", "");
+				hint trimming_whitespace_in_case_any_seen_on_the_left;
+				count++;
+				if (count == len(args) && !eq(breakCharacter, " "))
+					result = result.replaceAll(breakCharacter + "$", "");
+				System.out.print(result);
 			}
 		}
 	}
@@ -56584,10 +56588,13 @@ public class KL {
 	public static double percentify(double n1, double n2) {
 		return percentage(n1, n2);
 	}
-	final static double Infinity, Positive_Infinity, positive_infinity,
-			Negative_Infinity,
-			infinity = Infinity = positive_infinity = Positive_Infinity = Double.POSITIVE_INFINITY,
-			negative_infinity = Negative_Infinity = Double.NEGATIVE_INFINITY;
+	final static double Infinity, Positive_Infinity, PositiveInfinity,
+			positive_infinity, Negative_Infinity, NegativeInfinity,
+			Int_Infinity, Integer_Infinity, IntegerInfinity, IntInfinity,
+			integer_infinity, int_infinity, integerInfinity,
+			infinity = Infinity = positive_infinity = Positive_Infinity = PositiveInfinity = Double.POSITIVE_INFINITY,
+			negative_infinity = Negative_Infinity = NegativeInfinity = Double.NEGATIVE_INFINITY,
+			intInfinity = IntInfinity = Int_Infinity = integerInfinity = IntegerInfinity = Integer_Infinity = int_infinity = integer_infinity = Integer.MAX_VALUE;
 	public static <T> boolean isNull(T... objs) {
 		if (objs == null) {
 			return true;
@@ -56617,25 +56624,16 @@ public class KL {
 		return count > 0;
 		// to handle null arrays, not just regular objects
 	}
-	public static <T> boolean isNl(T... objs) {
-		return isNull(objs);
+	public static boolean isInfinity(int n) {
+		return n == IntegerInfinity;
 	}
-	public static <T> boolean isNl(T[]... subArrays) {
-		return isNull(subArrays);
-	}
-	public static <T> boolean isnl(T... objs) {
-		return isNull(objs);
-	}
-	public static <T> boolean isnl(T[]... subArrays) {
-		return isNull(subArrays);
+	public static boolean isInf(int n) {
+		return isInfinity(n);
 	}
 	public static boolean isInfinity(double n) {
 		return n == Infinity || n == Negative_Infinity;
 	}
 	public static boolean isInf(double n) {
-		return isInfinity(n);
-	}
-	public static boolean isinf(double n) {
 		return isInfinity(n);
 	}
 	public static int round(int n) {
@@ -57386,139 +57384,139 @@ public class KL {
 		return count == len(bools);
 	}
 	public static boolean not(String s) {
-		return isnl(s) || isEmpty(s);
+		return isNull(s) || isEmpty(s);
 	}
 	public static boolean not(char c) {
-		return isnl(c) || isEmpty(c);
+		return isNull(c) || isEmpty(c);
 	}
 	public static boolean not(int n) {
-		return isnl(n) || 0 == n;
+		return isNull(n) || 0 == n;
 	}
 	public static boolean not(long n) {
-		return isnl(n) || 0 == n;
+		return isNull(n) || 0 == n;
 	}
 	public static boolean not(float n) {
-		return isnl(n) || 0 == n;
+		return isNull(n) || 0 == n;
 	}
 	public static boolean not(double n) {
-		return isnl(n) || 0 == n;
+		return isNull(n) || 0 == n;
 	}
 	public static boolean not(boolean condition) {
-		return isnl(condition) || !condition;
+		return isNull(condition) || !condition;
 	}
 	public static boolean not(Object o) {
-		return isnl(o);
+		return isNull(o);
 	}
 	public static boolean not(char[] arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(char[]... arrays) {
-		return isnl(arrays) || isEmpty(arrays);
+		return isNull(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(String[] arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(String[]... arrays) {
-		return isnl(arrays) || isEmpty(arrays);
+		return isNull(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(int[] arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(int[]... arrays) {
-		return isnl(arrays) || isEmpty(arrays);
+		return isNull(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(long[] arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(long[]... arrays) {
-		return isnl(arrays) || isEmpty(arrays);
+		return isNull(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(float[] arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(float[]... arrays) {
-		return isnl(arrays) || isEmpty(arrays);
+		return isNull(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(double[] arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(double[]... arrays) {
-		return isnl(arrays) || isEmpty(arrays);
+		return isNull(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(boolean[] arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(boolean[]... arrays) {
-		return isnl(arrays) || isEmpty(arrays);
+		return isNull(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(Object[]... arrays) {
-		return isnl(arrays) || isEmpty(arrays);
+		return isNull(arrays) || isEmpty(arrays);
 	}
 	public static boolean not(strArr arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(intArr arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(longArr arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(fltArr arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(dblArr arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(boolArr arr) {
-		return isnl(arr) || isEmpty(arr);
+		return isNull(arr) || isEmpty(arr);
 	}
 	public static boolean not(o o) {
-		return isnl(o) || isEmpty(o);
+		return isNull(o) || isEmpty(o);
 	}
 	public static boolean not(oI o) {
-		return isnl(o) || isEmpty(o);
+		return isNull(o) || isEmpty(o);
 	}
 	public static boolean not(oL o) {
-		return isnl(o) || isEmpty(o);
+		return isNull(o) || isEmpty(o);
 	}
 	public static boolean not(oF o) {
-		return isnl(o) || isEmpty(o);
+		return isNull(o) || isEmpty(o);
 	}
 	public static boolean not(oD o) {
-		return isnl(o) || isEmpty(o);
+		return isNull(o) || isEmpty(o);
 	}
 	public static boolean not(oB o) {
-		return isnl(o) || isEmpty(o);
+		return isNull(o) || isEmpty(o);
 	}
 	public static boolean not(treeDI t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeI t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeDL t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeL t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeDF t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeF t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeDS t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeD t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeDB t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean not(treeB t) {
-		return isnl(t) || isEmpty(t);
+		return isNull(t) || isEmpty(t);
 	}
 	public static boolean is(char c) {
 		return !not(c);
@@ -66845,386 +66843,475 @@ public class KL {
 	static o fetched = fetch("https://randusers-api.vercel.app");
 	static boolean veteran = user.k("veteran", _b);
 	public static int n = 0;
-	public static mode setLength = mode.setLength;
-	public static char[] resize(char[] arr, mode mode, int by) {
+	public static length setLength = length.setLength;
+	public static char[] resize(char[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Char;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-			hint.behavior else_increments_it;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Char;
 		char[] newArr = new char[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static char[] resize(char[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static char[] resize(char[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static char[] extend(char[] arr, mode mode, int by) {
+	public static char[] resize(char[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static char[] extend(char[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static char[] extend(char[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static char[] extend(char[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static char[] phelao(char[] arr, mode mode, int by) {
+	public static char[] phelao(char[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
-	public static char[] phelao(char[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static char[] phelao(char[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static String[] resize(String[] arr, mode mode, int by) {
+	public static char[] phelao(char[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static String[] resize(String[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Str;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-			hint.behavior else_increments_it;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Str;
 		String[] newArr = new String[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static String[] resize(String[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static String[] resize(String[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static String[] extend(String[] arr, mode mode, int by) {
+	public static String[] resize(String[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static String[] extend(String[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static String[] extend(String[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static String[] extend(String[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static String[] phelao(String[] arr, mode mode, int by) {
+	public static String[] phelao(String[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
-	public static String[] phelao(String[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static String[] phelao(String[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static int[] resize(int[] arr, mode mode, int by) {
+	public static String[] phelao(String[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static int[] resize(int[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Int;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-			hint.behavior else_increments_it;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Int;
 		int[] newArr = new int[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static int[] resize(int[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static int[] resize(int[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static int[] extend(int[] arr, mode mode, int by) {
+	public static int[] resize(int[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static int[] extend(int[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static int[] extend(int[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static int[] extend(int[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static int[] phelao(int[] arr, mode mode, int by) {
+	public static int[] phelao(int[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
-	public static int[] phelao(int[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static int[] phelao(int[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static long[] resize(long[] arr, mode mode, int by) {
+	public static int[] phelao(int[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static long[] resize(long[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Long;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-			hint.behavior else_increments_it;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Long;
 		long[] newArr = new long[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static long[] resize(long[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static long[] resize(long[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static long[] extend(long[] arr, mode mode, int by) {
+	public static long[] resize(long[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static long[] extend(long[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static long[] extend(long[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static long[] extend(long[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static long[] phelao(long[] arr, mode mode, int by) {
+	public static long[] phelao(long[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
-	public static long[] phelao(long[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static long[] phelao(long[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static float[] resize(float[] arr, mode mode, int by) {
+	public static long[] phelao(long[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static float[] resize(float[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Flt;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-			hint.behavior else_increments_it;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Flt;
 		float[] newArr = new float[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static float[] resize(float[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static float[] resize(float[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static float[] extend(float[] arr, mode mode, int by) {
+	public static float[] resize(float[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static float[] extend(float[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static float[] extend(float[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static float[] extend(float[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static float[] phelao(float[] arr, mode mode, int by) {
+	public static float[] phelao(float[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
-	public static float[] phelao(float[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static float[] phelao(float[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static double[] resize(double[] arr, mode mode, int by) {
+	public static float[] phelao(float[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static double[] resize(double[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Dbl;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-			hint.behavior else_increments_it;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Dbl;
 		double[] newArr = new double[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static double[] resize(double[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static double[] resize(double[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static double[] extend(double[] arr, mode mode, int by) {
+	public static double[] resize(double[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static double[] extend(double[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static double[] extend(double[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static double[] extend(double[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static double[] phelao(double[] arr, mode mode, int by) {
+	public static double[] phelao(double[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
-	public static double[] phelao(double[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static double[] phelao(double[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static Number[] resize(Number[] arr, mode mode, int by) {
+	public static double[] phelao(double[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static Number[] resize(Number[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Num;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-			hint.behavior else_increments_it;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Num;
 		Number[] newArr = new Number[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static Number[] resize(Number[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static Number[] resize(Number[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static Number[] extend(Number[] arr, mode mode, int by) {
+	public static Number[] resize(Number[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static Number[] extend(Number[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static Number[] extend(Number[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static Number[] extend(Number[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static Number[] phelao(Number[] arr, mode mode, int by) {
+	public static Number[] phelao(Number[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
-	public static Number[] phelao(Number[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static Number[] phelao(Number[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static Object[] resize(Object[] arr, mode mode, int by) {
+	public static Number[] phelao(Number[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static Object[] resize(Object[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Obj;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
-			hint.behavior decrements_the_size_if_by_is_negative;
-			hint.behavior else_increments_it;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Obj;
 		Object[] newArr = new Object[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static Object[] resize(Object[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static Object[] resize(Object[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static Object[] extend(Object[] arr, mode mode, int by) {
+	public static Object[] resize(Object[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static Object[] extend(Object[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static Object[] extend(Object[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static Object[] extend(Object[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static Object[] phelao(Object[] arr, mode mode, int by) {
+	public static Object[] phelao(Object[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
-	public static Object[] phelao(Object[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static Object[] phelao(Object[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static boolean[] resize(boolean[] arr, mode mode, int by) {
+	public static Object[] phelao(Object[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static boolean[] resize(boolean[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Bool;
 		if (not(by))
 			return arr;
 		int newLen;
-		if (mode == KL.mode.setLength) {
-			newLen = by;
-		} else {
-			newLen = len(arr) + by;
+		switch (mode) {
+			case KL.length.setLength :
+				newLen = by;
+				break;
+			case length.twice :
+				newLen = len(arr) * 2;
+				break;
+			case length.half :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
 		}
-		if (newLen <= 0)
+		if (newLen <= 0 || isInfinity(newLen))
 			return blank.Bool;
 		boolean[] newArr = new boolean[newLen];
 		for (int i : range(newArr))
 			newArr[i] = arr[i];
 		return newArr;
 	}
-	public static boolean[] resize(boolean[] arr, int by) {
-		return resize(arr, mode.standard, by);
+	public static boolean[] resize(boolean[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
-	public static boolean[] extend(boolean[] arr, mode mode, int by) {
+	public static boolean[] resize(boolean[] arr, int by) {
+		return resize(arr, length.standard, by);
+	}
+	public static boolean[] extend(boolean[] arr, length mode, int by) {
 		return resize(arr, mode, by);
+	}
+	public static boolean[] extend(boolean[] arr, length mode) {
+		return resize(arr, mode, 0);
 	}
 	public static boolean[] extend(boolean[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static boolean[] phelao(boolean[] arr, mode mode, int by) {
+	public static boolean[] phelao(boolean[] arr, length mode, int by) {
 		return resize(arr, mode, by);
 	}
+	public static boolean[] phelao(boolean[] arr, length mode) {
+		return resize(arr, mode, 0);
+	}
 	public static boolean[] phelao(boolean[] arr, int by) {
-		return resize(arr, mode.standard, by);
+		return resize(arr, length.standard, by);
 	}
-	public static class resize {
-		public static char[] to(int newLen, char[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static char[] by(int by, char[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-		public static String[] to(int newLen, String[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static String[] by(int by, String[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-		public static int[] to(int newLen, int[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static int[] by(int by, int[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-		public static long[] to(int newLen, long[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static long[] by(int by, long[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-		public static float[] to(int newLen, float[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static float[] by(int by, float[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-		public static double[] to(int newLen, double[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static double[] by(int by, double[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-		public static Number[] to(int newLen, Number[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static Number[] by(int by, Number[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-		public static Object[] to(int newLen, Object[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static Object[] by(int by, Object[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-		public static boolean[] to(int newLen, boolean[] arr) {
-			return resize(arr, setLength, newLen);
-		}
-		public static boolean[] by(int by, boolean[] arr) {
-			return resize(arr, mode.standard, by);
-		}
-	}
-	public static class extend extends resize {
-	}
-	/*
-	 * class resize { by() {} to() {} toFixed() {} toSize() {} shrink() {} grow() {} }
-	 *
-	 *
-	 *
-	 * myArr = resize.by(2, arr, mode.shrink) resize.toLength(2, arr) = resize(arr, 2,
-	 * mode.newLength)
-	 */
 	public static void har(int initialization,
 			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
 			Runnable task) {
@@ -67408,11 +67495,11 @@ public class KL {
 		print(not(2 + 2, 5));
 		int[] myArr = {6, 7, 8, 9, 10};
 		myArr = phelao(myArr, -2);
-		myArr = phelao(myArr, mode.twice);
-		myArr = barhao(myArr, 2);
-		myArr = times(myArr, 2);
-		myArr = ghatao(myArr, 2);
-		myArr = dalo(myArr, 2);
+		myArr = phelao(myArr, length.twice);
+		//		myArr = barhao(myArr, 2);
+		//		myArr = times(myArr, 2);
+		//		myArr = ghatao(myArr, 2);
+		//		myArr = dalo(myArr, 2);
 		myArr = push(myArr, 3);
 		myArr = pop(myArr, 3);
 		n = me_izafa(n, 6, 8, 6, 9);
@@ -67424,7 +67511,7 @@ public class KL {
 		bolo(range(2, 5));
 		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
-
+		print(" ", "hello", "world");
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
