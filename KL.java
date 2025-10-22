@@ -9028,8 +9028,6 @@ public class KL {
 			for (String eqSignSeparatedPair : keyValuePairs) {
 				if (!in(eqSignSeparatedPair, ",\\s*"))
 					continue;
-				eqSignSeparatedPair = eqSignSeparatedPair
-						.replaceAll("^\\{|\\}$", "");
 				//allows the following syntax: o userData = o("{name: Fareena, age: 24}");
 				String[] subEqSeparatedPairsSplitByAComma = eqSignSeparatedPair
 						.split(",\\s*");
@@ -9048,8 +9046,10 @@ public class KL {
 			for (String eqSignSeparatedPair : collectedKeyValuePairs) {
 				if (eqSignSeparatedPair == null)
 					continue;
+				eqSignSeparatedPair = eqSignSeparatedPair
+						.replaceAll("^\\{+|\\}+$", "");
 				if (in(eqSignSeparatedPair,
-						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>['\"-\\.]?!*\\w+['\"-\\.]?)")) {
+						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>['\"-\\.]?!*\\w+['\"-\\.]?\\w*)")) {
 					String k;
 					Object v = new Object();
 					String[] pairs = eqSignSeparatedPair.split("\\s*[:=]\\s*");
@@ -9070,15 +9070,18 @@ public class KL {
 						} else if (eq(unprocessedV, "\\-?\\d*\\.?\\d+[Dd]?")) {
 							// the D in here should be optional
 							v = Dbl(unprocessedV.replaceAll("[Dd]$", ""));
-						} else if (eq(unprocessedV, "!*(true|false)")) {
-							boolean midValue = in(unprocessedV.replaceAll("!", ""), "true$") ? true : false;
+						} else if (in(unprocessedV, "!*(true|false)")) {
+							boolean midValue = in(
+									unprocessedV.replaceAll("^!+", ""), "true")
+											? true
+											: false;
 							while (in(unprocessedV, "!")) {
-							    unprocessedV = replaceFirst(unprocessedV, "!", "");
-							    midValue = !midValue;
+								unprocessedV = replaceFirst(unprocessedV, "!",
+										"");
+								midValue = !midValue;
 							}
 							v = midValue;
-						}
-						else if (in(unprocessedV, "(?<=')[a-zA-Z](?=')"))
+						} else if (in(unprocessedV, "(?<=')[a-zA-Z](?=')"))
 							v = unprocessedV.replaceAll("\'", "")
 									.toCharArray()[0];
 						else
@@ -37249,6 +37252,96 @@ public class KL {
 		}
 		return output;
 	}
+	public static Object[][] collect(o arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(oI arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(oL arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(oF arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(oD arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(oB arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeI arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeL arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeF arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeD arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeB arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeDS arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeDI arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeDL arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeDF arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(treeDB arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(String[] args) {
+		return kv(args);
+	}
+	public static Object[][] collect(int[] args) {
+		return kv(args);
+	}
+	public static Object[][] collect(long[] args) {
+		return kv(args);
+	}
+	public static Object[][] collect(float[] args) {
+		return kv(args);
+	}
+	public static Object[][] collect(double[] args) {
+		return kv(args);
+	}
+	public static Object[][] collect(boolean[] args) {
+		return kv(args);
+	}
+	public static Object[][] collect(Object[] args) {
+		return kv(args);
+	}
+	public static Object[][] collect(arr arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(strArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(intArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(longArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(fltArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(dblArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] collect(boolArr arg) {
+		return kv(arg);
+	}
 	public static Object[][] extract(String[] arg, String[] zippedArg) {
 		return collect(arg, zippedArg);
 	}
@@ -38767,6 +38860,96 @@ public class KL {
 	public static Object[][] extract(Object[] arg, Object[] zippedArgA,
 			Object[] zippedArgB) {
 		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] extract(o arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(oI arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(oL arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(oF arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(oD arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(oB arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeI arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeL arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeF arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeD arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeB arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeDS arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeDI arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeDL arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeDF arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(treeDB arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(String[] args) {
+		return kv(args);
+	}
+	public static Object[][] extract(int[] args) {
+		return kv(args);
+	}
+	public static Object[][] extract(long[] args) {
+		return kv(args);
+	}
+	public static Object[][] extract(float[] args) {
+		return kv(args);
+	}
+	public static Object[][] extract(double[] args) {
+		return kv(args);
+	}
+	public static Object[][] extract(boolean[] args) {
+		return kv(args);
+	}
+	public static Object[][] extract(Object[] args) {
+		return kv(args);
+	}
+	public static Object[][] extract(arr arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(strArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(intArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(longArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(fltArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(dblArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] extract(boolArr arg) {
+		return kv(arg);
 	}
 	public static Object[][] all(String[] arg, String[] zippedArg) {
 		return collect(arg, zippedArg);
@@ -41806,6 +41989,96 @@ public class KL {
 			Object[] zippedArgB) {
 		return collect(arg, zippedArgA, zippedArgB);
 	}
+	public static Object[][] from(o arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(oI arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(oL arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(oF arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(oD arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(oB arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeI arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeL arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeF arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeD arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeB arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeDS arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeDI arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeDL arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeDF arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(treeDB arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(String[] args) {
+		return kv(args);
+	}
+	public static Object[][] from(int[] args) {
+		return kv(args);
+	}
+	public static Object[][] from(long[] args) {
+		return kv(args);
+	}
+	public static Object[][] from(float[] args) {
+		return kv(args);
+	}
+	public static Object[][] from(double[] args) {
+		return kv(args);
+	}
+	public static Object[][] from(boolean[] args) {
+		return kv(args);
+	}
+	public static Object[][] from(Object[] args) {
+		return kv(args);
+	}
+	public static Object[][] from(arr arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(strArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(intArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(longArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(fltArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(dblArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] from(boolArr arg) {
+		return kv(arg);
+	}
 	public static Object[][] of(String[] arg, String[] zippedArg) {
 		return collect(arg, zippedArg);
 	}
@@ -43323,6 +43596,96 @@ public class KL {
 	public static Object[][] of(Object[] arg, Object[] zippedArgA,
 			Object[] zippedArgB) {
 		return collect(arg, zippedArgA, zippedArgB);
+	}
+	public static Object[][] of(o arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(oI arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(oL arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(oF arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(oD arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(oB arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeI arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeL arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeF arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeD arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeB arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeDS arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeDI arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeDL arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeDF arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(treeDB arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(String[] args) {
+		return kv(args);
+	}
+	public static Object[][] of(int[] args) {
+		return kv(args);
+	}
+	public static Object[][] of(long[] args) {
+		return kv(args);
+	}
+	public static Object[][] of(float[] args) {
+		return kv(args);
+	}
+	public static Object[][] of(double[] args) {
+		return kv(args);
+	}
+	public static Object[][] of(boolean[] args) {
+		return kv(args);
+	}
+	public static Object[][] of(Object[] args) {
+		return kv(args);
+	}
+	public static Object[][] of(arr arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(strArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(intArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(longArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(fltArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(dblArr arg) {
+		return kv(arg);
+	}
+	public static Object[][] of(boolArr arg) {
+		return kv(arg);
 	}
 	public static Object[][] ikhatte(String[] arg, String[] zippedArg) {
 		return collect(arg, zippedArg);
@@ -47766,10 +48129,12 @@ public class KL {
 			return;
 		}
 		String breakCharacter;
-		if (isStr(args[0]) && in(as(_s, args[0]), "^\\W$")) {
+		if (isStr(args[0]) && in(as(_s, args[0]), "^\\W{0,1}$")) {
 			breakCharacter = as(_s, args[0]);
 			args = slice(args, 1);
 		} else {
+			if (printSettings.breakCharacter == null)
+				printSettings.breakCharacter = "";
 			breakCharacter = printSettings.breakCharacter;
 		}
 		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
@@ -47846,11 +48211,12 @@ public class KL {
 			return;
 		}
 		String breakCharacter;
-		if (isStr(args[0]) && len(as(_s, args[0])) == 1
-				&& in(as(_s, args[0]), "^\\W$")) {
+		if (isStr(args[0]) && in(as(_s, args[0]), "^\\W{0,1}$")) {
 			breakCharacter = as(_s, args[0]);
 			args = slice(args, 1);
 		} else {
+			if (printSettings.breakCharacter == null)
+				printSettings.breakCharacter = "";
 			breakCharacter = printSettings.breakCharacter;
 		}
 		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
@@ -52618,32 +52984,32 @@ public class KL {
 	public static class add {
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Char;
-			return map(arr, item -> (char)(item + n));
+				return blank.Char;
+			return map(arr, item -> (char) (item + n));
 		}
 		public static String[] each(String[] arr, String s) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Str;
+				return blank.Str;
 			return map(arr, item -> item + s);
 		}
 		public static int[] each(int[] arr, int n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Int;
+				return blank.Int;
 			return map(arr, item -> item + n);
 		}
 		public static long[] each(long[] arr, long n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Long;
+				return blank.Long;
 			return map(arr, item -> item + n);
 		}
 		public static float[] each(float[] arr, float n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Flt;
+				return blank.Flt;
 			return map(arr, item -> item + n);
 		}
 		public static double[] each(double[] arr, double n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Dbl;
+				return blank.Dbl;
 			return map(arr, item -> item + n);
 		}
 		public static String[] toEach(String[] arr, String s) {
@@ -52665,32 +53031,32 @@ public class KL {
 	public static class remove {
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Char;
-			return map(arr, item -> (char)(item - n));
-        }
+				return blank.Char;
+			return map(arr, item -> (char) (item - n));
+		}
 		public static String[] each(String[] arr, String s) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Str;
-			return map(arr, item -> item.replaceAll(s+"$", ""));
+				return blank.Str;
+			return map(arr, item -> item.replaceAll(s + "$", ""));
 		}
 		public static int[] each(int[] arr, int n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Int;
+				return blank.Int;
 			return map(arr, item -> item - n);
 		}
 		public static long[] each(long[] arr, long n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Long;
+				return blank.Long;
 			return map(arr, item -> item - n);
 		}
 		public static float[] each(float[] arr, float n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Flt;
+				return blank.Flt;
 			return map(arr, item -> item - n);
 		}
 		public static double[] each(double[] arr, double n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Dbl;
+				return blank.Dbl;
 			return map(arr, item -> item - n);
 		}
 		public static String[] fromEach(String[] arr, String s) {
@@ -52714,49 +53080,49 @@ public class KL {
 	public static class multiply {
 		public static String[] each(String[] arr, int n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Str;
+				return blank.Str;
 			return map(arr, item -> repeat(item, n));
 		}
 		public static int[] each(int[] arr, int n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Int;
+				return blank.Int;
 			return map(arr, item -> item * n);
 		}
 		public static long[] each(long[] arr, long n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Long;
+				return blank.Long;
 			return map(arr, item -> item * n);
 		}
 		public static float[] each(float[] arr, float n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Flt;
+				return blank.Flt;
 			return map(arr, item -> item * n);
 		}
 		public static double[] each(double[] arr, double n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Dbl;
+				return blank.Dbl;
 			return map(arr, item -> item * n);
 		}
 	}
 	public static class divide {
 		public static int[] each(int[] arr, int n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Int;
+				return blank.Int;
 			return map(arr, item -> item / n);
 		}
 		public static long[] each(long[] arr, long n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Long;
+				return blank.Long;
 			return map(arr, item -> item / n);
 		}
 		public static float[] each(float[] arr, float n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Flt;
+				return blank.Flt;
 			return map(arr, item -> item / n);
 		}
 		public static double[] each(double[] arr, double n) {
 			if (arr == null || len(arr) == 0)
-			    return blank.Dbl;
+				return blank.Dbl;
 			return map(arr, item -> item / n);
 		}
 	}
@@ -53236,8 +53602,11 @@ public class KL {
 	}
 	// since a long is just a LONG integer, this should work^
 	// let's set up some currency variables
-	public static int guna, hla, sra, tha, wa, ta, hisso_me, dugni, dafa = guna = hla = sra = tha = wa = ta = hisso_me = 1, dugna = dugni = 2;
-	public static double adhi, poni, adha = adhi = 1/2, pona = poni = .75, sawa = 1.25, dedh = 1.5, dhai = 2.5;
+	public static int guna, hla, sra, tha, wa, ta, hisso_me, dugni,
+			dafa = guna = hla = sra = tha = wa = ta = hisso_me = 1,
+			dugna = dugni = 2;
+	public static double adhi, poni, adha = adhi = 1 / 2, pona = poni = .75,
+			sawa = 1.25, dedh = 1.5, dhai = 2.5;
 	public static double so = 1e2, hzr = 1e3, lc = 1e5, cr = 1e7, ar = 1e9,
 			kh = 1e11;
 	public static double K = 1e3, M = 1e6, B = 1e9, T = 1e12, qd = 1e15,
@@ -67765,13 +68134,18 @@ public class KL {
 		bolo(range(2, 5));
 		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
-		print(" ", "hello", "world");
-		o user = o("{'name': \"Tahani\", \"nationality\": British-Pakistani, \"age\": 32}", "{dying: !true}");
-		user.set("{dying: !!true}");
+		print("", "hello", "to", "me");
+		hint helps_kill_the_additional_whitespace_otherwise_added_after_each_argument;
+		o user = o(
+				"{'name': \"Tahani\", \"nationality\": British-Pakistani, \"age\": 32}",
+				"{dying: !true}");
+		user.set("{dying: !false}");
 		print(user.k("name", _s));
 		print(user.k("nationality", _s));
 		print(user.k("age", _i));
-		print(user.k("dying", _b));
+		print(user);
+		for (var kv : from(user))
+			print(kv[0] + "=" + kv[1]);
 		int[] testArr = {1, 3, 5};
 		testArr = extend(testArr, length.twice);
 		print(testArr);
