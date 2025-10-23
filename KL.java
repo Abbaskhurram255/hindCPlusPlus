@@ -288,6 +288,239 @@ public class KL {
 			return total(suffixMode);
 		}
 	}
+	public static class number extends Number {
+		private double value;
+		number() {
+			this.value = 0;
+		}
+		number(double value) {
+			this.value = value;
+		}
+		@Override
+		public int intValue() {
+			return (int) value;
+		}
+		@Override
+		public long longValue() {
+			return (long) value;
+		}
+		@Override
+		public float floatValue() {
+			return (float) value;
+		}
+		@Override
+		public double doubleValue() {
+			return value;
+		}
+		public int asInt() {
+			return intValue();
+		}
+		public long asLong() {
+			return longValue();
+		}
+		public float asFloat() {
+			return floatValue();
+		}
+		public double asDouble() {
+			return doubleValue();
+		}
+		public double value() {
+			return value;
+		}
+		public double getValue() {
+			return value;
+		}
+		public double get() {
+			return value;
+		}
+		number set(double n) {
+			this.value = n;
+			return this;
+		}
+		number put(double n) {
+			set(n);
+			return this;
+		}
+		number add(double n) {
+			this.value += n;
+			return this;
+		}
+		number me_dalo(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number me_dala(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number me_izafa(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number subtract(double n) {
+			this.value -= n;
+			return this;
+		}
+		number remove(double n) {
+			subtract(n);
+			return this;
+		}
+		number se_nikalo(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number se_nikala(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number me_ghata(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number se_gae(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number multiply(double n) {
+			this.value *= n;
+			return this;
+		}
+		number times(double n) {
+			multiply(n);
+			return this;
+		}
+		number guna(double n, Object... languageSupportingArgs) {
+			times(n);
+			return this;
+		}
+		number divide(double n) {
+			if (this.value == 0)
+				this.value = 1;
+			if (n == 0)
+				n = 1;
+			//hint.avoids Arithmetic_Exception;    
+			this.value *= n;
+			return this;
+		}
+		number split(double n) {
+			divide(n);
+			return this;
+		}
+		number hissa(double n, Object... languageSupportingArgs) {
+			split(n);
+			return this;
+		}
+		@Override
+		public String toString() {
+			return "" + get();
+		}
+	}
+	public static class num extends number {
+		num() {
+			super();
+		}
+		num(double value) {
+			super(value);
+		}
+		num set(double n) {
+			super.set(n);
+			return this;
+		}
+		num put(double n) {
+			super.set(n);
+			return this;
+		}
+		num add(double n) {
+			super.add(n);
+			return this;
+		}
+		num me_dalo(double n, Object... languageSupportingArgs) {
+			super.me_dalo(n);
+			return this;
+		}
+		num me_dala(double n, Object... languageSupportingArgs) {
+			super.me_dala(n);
+			return this;
+		}
+		num me_izafa(double n, Object... languageSupportingArgs) {
+			super.me_izafa(n);
+			return this;
+		}
+		num subtract(double n) {
+			super.subtract(n);
+			return this;
+		}
+		num remove(double n) {
+			super.remove(n);
+			return this;
+		}
+		num se_nikalo(double n, Object... languageSupportingArgs) {
+			super.se_nikalo(n);
+			return this;
+		}
+		num se_nikala(double n, Object... languageSupportingArgs) {
+			super.se_nikala(n);
+			return this;
+		}
+		num me_ghata(double n, Object... languageSupportingArgs) {
+			super.me_ghata(n);
+			return this;
+		}
+		num se_gae(double n, Object... languageSupportingArgs) {
+			super.se_gae(n);
+			return this;
+		}
+		num multiply(double n) {
+			super.multiply(n);
+			return this;
+		}
+		num times(double n) {
+			super.times(n);
+			return this;
+		}
+		num guna(double n) {
+			super.guna(n);
+			return this;
+		}
+		num divide(double n) {
+			super.divide(n);
+			return this;
+		}
+		num split(double n) {
+			super.split(n);
+			return this;
+		}
+		num hissa(double n) {
+			super.hissa(n);
+			return this;
+		}
+	}
+	public static class naya {
+		public static number number() {
+			return new number();
+		}
+		public static number number(double value) {
+			return new number(value);
+		}
+		public static num num() {
+			return new num();
+		}
+		public static num num(double value) {
+			return new num(value);
+		}
+	}
+	public static number number() {
+		return new number();
+	}
+	public static number number(double value) {
+		return new number(value);
+	}
+	public static num num() {
+		return new num();
+	}
+	public static num num(double value) {
+		return new num(value);
+	}
 	public static final class kmath {
 		//@class.why: this class is supposed to help give fellow developers an easier time dealing with units
 		public static double pi = 3.141592653589793, c = 2.99792e8,
@@ -31151,7 +31384,8 @@ public class KL {
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
-	public static Object ka = ignored, me_se = new Object(), mese = me_se;
+	public static Object ko, ka = ko = new Object(), me_se = new Object(),
+			mese = me_se;
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
 	public static int kilo = (int) 1e3;
@@ -48129,10 +48363,12 @@ public class KL {
 			return;
 		}
 		String breakCharacter;
-		if (isStr(args[0]) && in(as(_s, args[0]), "^\\W{0,1}$")) {
+		if (isNull(args[0])
+				|| (isStr(args[0]) && in(as(_s, args[0]), "^\\W{0,1}$"))) {
 			breakCharacter = as(_s, args[0]);
 			args = slice(args, 1);
 		} else {
+			//to be continued...
 			if (printSettings.breakCharacter == null)
 				printSettings.breakCharacter = "";
 			breakCharacter = printSettings.breakCharacter;
@@ -57465,6 +57701,19 @@ public class KL {
 	}
 	public static boolean is(treeB x, treeB y) {
 		return eq(x, y);
+	}
+	public static class is extends KL {
+	}
+	public static class not {
+		public static boolean provided(Object o) {
+			return KL.isNull(o);
+		}
+		public static boolean given(Object o) {
+			return KL.isNull(o);
+		}
+		public static boolean type(Object o, String guessedType) {
+			return not(KL.type(o, guessedType));
+		}
 	}
 	public static boolean he(char x, char y) {
 		return eq(x, y);
@@ -68134,7 +68383,7 @@ public class KL {
 		bolo(range(2, 5));
 		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
-		print("", "hello", "to", "me");
+		print(none, "hello", "to", "me");
 		hint helps_kill_the_additional_whitespace_otherwise_added_after_each_argument;
 		o user = o(
 				"{'name': \"Tahani\", \"nationality\": British-Pakistani, \"age\": 32}",
@@ -68150,6 +68399,7 @@ public class KL {
 		testArr = extend(testArr, length.twice);
 		print(testArr);
 		print(len(testArr));
+		print(is.type("", Str));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
