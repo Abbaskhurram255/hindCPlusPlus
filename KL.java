@@ -296,6 +296,144 @@ public class KL {
 		number(double value) {
 			this.value = value;
 		}
+		number set(double n) {
+			this.value = n;
+			return this;
+		}
+		number put(double n) {
+			set(n);
+			return this;
+		}
+		number add(double n) {
+			this.value += n;
+			return this;
+		}
+		number barha() {
+			add(1);
+			return this;
+		}
+		number barha(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number barhao() {
+			add(1);
+			return this;
+		}
+		number barhao(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number barhi() {
+			add(1);
+			return this;
+		}
+		number barhi(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number me_dalo(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number me_dala(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number me_izafa(double n, Object... languageSupportingArgs) {
+			add(n);
+			return this;
+		}
+		number subtract(double n) {
+			this.value -= n;
+			return this;
+		}
+		number remove(double n) {
+			subtract(n);
+			return this;
+		}
+		number ghata() {
+			remove(1);
+			return this;
+		}
+		number ghata(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number ghatao() {
+			remove(1);
+			return this;
+		}
+		number ghatao(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number ghati() {
+			remove(1);
+			return this;
+		}
+		number ghati(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number me_kami() {
+			remove(1);
+			return this;
+		}
+		number me_kami(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number se_nikalo(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number se_nikala(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number me_ghata(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number se_gae(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number se_gaya(double n, Object... languageSupportingArgs) {
+			remove(n);
+			return this;
+		}
+		number multiply(double n) {
+			this.value *= n;
+			return this;
+		}
+		number times(double n) {
+			multiply(n);
+			return this;
+		}
+		number guna(double n, Object... languageSupportingArgs) {
+			times(n);
+			return this;
+		}
+		number divide(double n) {
+			if (this.value == 0)
+				this.value = 1;
+			if (n == 0)
+				n = 1;
+			//hint.avoids Arithmetic_Exception;    
+			this.value *= n;
+			return this;
+		}
+		number split(double n) {
+			divide(n);
+			return this;
+		}
+		number hissa(double n, Object... languageSupportingArgs) {
+			split(n);
+			return this;
+		}
+		// getters
 		@Override
 		public int intValue() {
 			return (int) value;
@@ -333,82 +471,25 @@ public class KL {
 		public double get() {
 			return value;
 		}
-		number set(double n) {
-			this.value = n;
-			return this;
-		}
-		number put(double n) {
-			set(n);
-			return this;
-		}
-		number add(double n) {
-			this.value += n;
-			return this;
-		}
-		number me_dalo(double n, Object... languageSupportingArgs) {
-			add(n);
-			return this;
-		}
-		number me_dala(double n, Object... languageSupportingArgs) {
-			add(n);
-			return this;
-		}
-		number me_izafa(double n, Object... languageSupportingArgs) {
-			add(n);
-			return this;
-		}
-		number subtract(double n) {
-			this.value -= n;
-			return this;
-		}
-		number remove(double n) {
-			subtract(n);
-			return this;
-		}
-		number se_nikalo(double n, Object... languageSupportingArgs) {
-			remove(n);
-			return this;
-		}
-		number se_nikala(double n, Object... languageSupportingArgs) {
-			remove(n);
-			return this;
-		}
-		number me_ghata(double n, Object... languageSupportingArgs) {
-			remove(n);
-			return this;
-		}
-		number se_gae(double n, Object... languageSupportingArgs) {
-			remove(n);
-			return this;
-		}
-		number multiply(double n) {
-			this.value *= n;
-			return this;
-		}
-		number times(double n) {
-			multiply(n);
-			return this;
-		}
-		number guna(double n, Object... languageSupportingArgs) {
-			times(n);
-			return this;
-		}
-		number divide(double n) {
+		public double ka_adha() {
 			if (this.value == 0)
-				this.value = 1;
-			if (n == 0)
-				n = 1;
-			//hint.avoids Arithmetic_Exception;    
-			this.value *= n;
-			return this;
+				return 0.0;
+			return this.value / 2;
 		}
-		number split(double n) {
-			divide(n);
-			return this;
+		public double ka_dugna() {
+			if (this.value == 0)
+				return 0.0;
+			return this.value * 2;
 		}
-		number hissa(double n, Object... languageSupportingArgs) {
-			split(n);
-			return this;
+		public double ka_chotha() {
+			if (this.value == 0)
+				return 0.0;
+			return this.value / 4;
+		}
+		public double ka_athwa() {
+			if (this.value == 0)
+				return 0.0;
+			return this.value / 8;
 		}
 		@Override
 		public String toString() {
@@ -434,6 +515,30 @@ public class KL {
 			super.add(n);
 			return this;
 		}
+		num barha() {
+			super.barha();
+			return this;
+		}
+		num barha(double n, Object... languageSupportingArgs) {
+			super.barha(n);
+			return this;
+		}
+		num barhao() {
+			super.barhao();
+			return this;
+		}
+		num barhao(double n, Object... languageSupportingArgs) {
+			super.barhao(n);
+			return this;
+		}
+		num barhi() {
+			super.barhi();
+			return this;
+		}
+		num barhi(double n, Object... languageSupportingArgs) {
+			super.barhi(n);
+			return this;
+		}
 		num me_dalo(double n, Object... languageSupportingArgs) {
 			super.me_dalo(n);
 			return this;
@@ -454,6 +559,38 @@ public class KL {
 			super.remove(n);
 			return this;
 		}
+		num ghata() {
+			super.ghata();
+			return this;
+		}
+		num ghata(double n, Object... languageSupportingArgs) {
+			super.ghata(n);
+			return this;
+		}
+		num ghatao() {
+			super.ghatao();
+			return this;
+		}
+		num ghatao(double n, Object... languageSupportingArgs) {
+			super.ghatao(n);
+			return this;
+		}
+		num ghati() {
+			super.ghati();
+			return this;
+		}
+		num ghati(double n, Object... languageSupportingArgs) {
+			super.ghati(n);
+			return this;
+		}
+		num me_kami() {
+			super.ghati();
+			return this;
+		}
+		num me_kami(double n, Object... languageSupportingArgs) {
+			super.ghati(n);
+			return this;
+		}
 		num se_nikalo(double n, Object... languageSupportingArgs) {
 			super.se_nikalo(n);
 			return this;
@@ -468,6 +605,10 @@ public class KL {
 		}
 		num se_gae(double n, Object... languageSupportingArgs) {
 			super.se_gae(n);
+			return this;
+		}
+		num se_gaya(double n, Object... languageSupportingArgs) {
+			super.se_gaya(n);
 			return this;
 		}
 		num multiply(double n) {
@@ -31384,8 +31525,8 @@ public class KL {
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
-	public static Object ko, ka = ko = new Object(), me_se = new Object(),
-			mese = me_se;
+	public static Object ko, ki, ke, ka = ko = ki = ke = new Object(),
+			me_se = new Object(), mese = me_se;
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
 	public static int kilo = (int) 1e3;
@@ -48363,15 +48504,16 @@ public class KL {
 			return;
 		}
 		String breakCharacter;
-		if (isNull(args[0])
-				|| (isStr(args[0]) && in(as(_s, args[0]), "^\\W{0,1}$"))) {
+		if (isStr(args[0]) && in(as(_s, args[0]), "^\\W{0,1}$")) {
 			breakCharacter = as(_s, args[0]);
 			args = slice(args, 1);
 		} else {
-			//to be continued...
-			if (printSettings.breakCharacter == null)
+			if (isNull(printSettings.breakCharacter))
 				printSettings.breakCharacter = "";
-			breakCharacter = printSettings.breakCharacter;
+			if (isNull(args[0]))
+				breakCharacter = "";
+			else
+				breakCharacter = printSettings.breakCharacter;
 		}
 		if (!isNull(args[0]) && args[0] instanceof String && in(Str(args[0]),
 				"[\\$\\%\\&\\{\\}]|\\d(?=[Ee][\\+\\-]?\\d)")) {
@@ -51367,6 +51509,11 @@ public class KL {
 	public static double twice(double n) {
 		return times(n, 2);
 	}
+	public static double twice(Number n) {
+		if (n == null)
+			return 0.0;
+		return times(n.doubleValue(), 2);
+	}
 	public static int thrice(int n) {
 		return times(n, 3);
 	}
@@ -51378,6 +51525,11 @@ public class KL {
 	}
 	public static double thrice(double n) {
 		return times(n, 3);
+	}
+	public static double thrice(Number n) {
+		if (n == null)
+			return 0.0;
+		return times(n.doubleValue(), 3);
 	}
 	public static int half(int n) {
 		return n / 2;
@@ -51391,6 +51543,11 @@ public class KL {
 	public static double half(double n) {
 		return n / 2;
 	}
+	public static double half(Number n) {
+		if (n == null)
+			return 0.0;
+		return n.doubleValue() / 2;
+	}
 	public static int quarter(int n) {
 		return n / 4;
 	}
@@ -51402,6 +51559,11 @@ public class KL {
 	}
 	public static double quarter(double n) {
 		return n / 4;
+	}
+	public static double quarter(Number n) {
+		if (n == null)
+			return 0.0;
+		return n.doubleValue() / 4;
 	}
 	public static int eighth(int n) {
 		return n / 8;
@@ -51415,97 +51577,70 @@ public class KL {
 	public static double eighth(double n) {
 		return n / 8;
 	}
-	public static int sixteenth(int n) {
-		return n / 16;
+	public static double eighth(Number n) {
+		if (n == null)
+			return 0.0;
+		return n.doubleValue() / 8;
 	}
-	public static long sixteenth(long n) {
-		return n / 16;
-	}
-	public static float sixteenth(float n) {
-		return n / 16;
-	}
-	public static double sixteenth(double n) {
-		return n / 16;
-	}
-	public static int dugna(int n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static int dugna(int n, Object... languageSupportingArgs) {
 		return twice(n);
 	}
-	public static long dugna(long n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static long dugna(long n, Object... languageSupportingArgs) {
 		return twice(n);
 	}
-	public static float dugna(float n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static float dugna(float n, Object... languageSupportingArgs) {
 		return twice(n);
 	}
-	public static double dugna(double n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static double dugna(double n, Object... languageSupportingArgs) {
 		return twice(n);
 	}
-	public static int adha(int n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static double dugna(Number n, Object... languageSupportingArgs) {
+		return twice(n);
+	}
+	public static int adha(int n, Object... languageSupportingArgs) {
 		return half(n);
 	}
-	public static long adha(long n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static long adha(long n, Object... languageSupportingArgs) {
 		return half(n);
 	}
-	public static float adha(float n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static float adha(float n, Object... languageSupportingArgs) {
 		return half(n);
 	}
-	public static double adha(double n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static double adha(double n, Object... languageSupportingArgs) {
 		return half(n);
 	}
-	public static int chotha(int n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static double adha(Number n, Object... languageSupportingArgs) {
+		return half(n);
+	}
+	public static int chotha(int n, Object... languageSupportingArgs) {
 		return quarter(n);
 	}
-	public static long chotha(long n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static long chotha(long n, Object... languageSupportingArgs) {
 		return quarter(n);
 	}
-	public static float chotha(float n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static float chotha(float n, Object... languageSupportingArgs) {
 		return quarter(n);
 	}
-	public static double chotha(double n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static double chotha(double n, Object... languageSupportingArgs) {
 		return quarter(n);
 	}
-	public static int athwa(int n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static double chotha(Number n, Object... languageSupportingArgs) {
+		return quarter(n);
+	}
+	public static int athwa(int n, Object... languageSupportingArgs) {
 		return eighth(n);
 	}
-	public static long athwa(long n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static long athwa(long n, Object... languageSupportingArgs) {
 		return eighth(n);
 	}
-	public static float athwa(float n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
+	public static float athwa(float n, Object... languageSupportingArgs) {
 		return eighth(n);
 	}
-	public static double athwa(double n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
-		return sixteenth(n);
+	public static double athwa(double n, Object... languageSupportingArgs) {
+		return eighth(n);
 	}
-	public static int solwa(int n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
-		return sixteenth(n);
-	}
-	public static long solwa(long n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
-		return sixteenth(n);
-	}
-	public static float solwa(float n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
-		return sixteenth(n);
-	}
-	public static double solwa(double n,
-			Object... optional_placeholder_param_to_be_able_put_variable_field_ka_in_here) {
-		return sixteenth(n);
+	public static double athwa(Number n, Object... languageSupportingArgs) {
+		return eighth(n);
 	}
 	public static int sum(int... ns) {
 		if (not(ns)) {
@@ -57704,16 +57839,7 @@ public class KL {
 	}
 	public static class is extends KL {
 	}
-	public static class not {
-		public static boolean provided(Object o) {
-			return KL.isNull(o);
-		}
-		public static boolean given(Object o) {
-			return KL.isNull(o);
-		}
-		public static boolean type(Object o, String guessedType) {
-			return not(KL.type(o, guessedType));
-		}
+	public static class he extends is {
 	}
 	public static boolean he(char x, char y) {
 		return eq(x, y);
@@ -58053,6 +58179,493 @@ public class KL {
 	}
 	public static boolean nahi(treeB x, treeB y) {
 		return !eq(x, y);
+	}
+	public static class not {
+		public static boolean provided(Object o) {
+			return KL.isNull(o);
+		}
+		public static boolean given(Object o) {
+			return KL.isNull(o);
+		}
+		public static boolean type(Object o, String guessedType) {
+			return not(KL.type(o, guessedType));
+		}
+		public static boolean isType(Object o, String guessedType) {
+			return not(KL.isType(o, guessedType));
+		}
+		public static boolean heType(Object o, String guessedType) {
+			return not(KL.heType(o, guessedType));
+		}
+		public static boolean is(char c) {
+			return KL.not(c);
+		}
+		public static boolean is(String s) {
+			return KL.not(s);
+		}
+		public static boolean is(int n) {
+			return KL.not(n);
+		}
+		public static boolean is(long n) {
+			return KL.not(n);
+		}
+		public static boolean is(float n) {
+			return KL.not(n);
+		}
+		public static boolean is(double n) {
+			return KL.not(n);
+		}
+		public static boolean is(boolean condition) {
+			return KL.not(condition);
+		}
+		public static boolean is(Object o) {
+			return KL.not(o);
+		}
+		public static boolean is(char[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(char[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean is(String[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(String[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean is(int[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(int[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean is(long[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(long[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean is(float[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(float[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean is(double[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(double[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean is(boolean[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(boolean[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean is(Object... arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(Object[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean is(strArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(intArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(longArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(fltArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(dblArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(boolArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean is(o o) {
+			return KL.not(o);
+		}
+		public static boolean is(oI o) {
+			return KL.not(o);
+		}
+		public static boolean is(oL o) {
+			return KL.not(o);
+		}
+		public static boolean is(oF o) {
+			return KL.not(o);
+		}
+		public static boolean is(oD o) {
+			return KL.not(o);
+		}
+		public static boolean is(oB o) {
+			return KL.not(o);
+		}
+		public static boolean is(treeDI t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeI t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeDL t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeL t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeDF t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeF t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeDS t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeD t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeDB t) {
+			return KL.not(t);
+		}
+		public static boolean is(treeB t) {
+			return KL.not(t);
+		}
+		public static boolean he(char c) {
+			return KL.not(c);
+		}
+		public static boolean he(String s) {
+			return KL.not(s);
+		}
+		public static boolean he(int n) {
+			return KL.not(n);
+		}
+		public static boolean he(long n) {
+			return KL.not(n);
+		}
+		public static boolean he(float n) {
+			return KL.not(n);
+		}
+		public static boolean he(double n) {
+			return KL.not(n);
+		}
+		public static boolean he(boolean condition) {
+			return KL.not(condition);
+		}
+		public static boolean he(Object o) {
+			return KL.not(o);
+		}
+		public static boolean he(char[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(char[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean he(String[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(String[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean he(int[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(int[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean he(long[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(long[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean he(float[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(float[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean he(double[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(double[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean he(boolean[] arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(boolean[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean he(Object... arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(Object[]... arrays) {
+			return KL.not(arrays);
+		}
+		public static boolean he(strArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(intArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(longArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(fltArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(dblArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(boolArr arr) {
+			return KL.not(arr);
+		}
+		public static boolean he(o o) {
+			return KL.not(o);
+		}
+		public static boolean he(oI o) {
+			return KL.not(o);
+		}
+		public static boolean he(oL o) {
+			return KL.not(o);
+		}
+		public static boolean he(oF o) {
+			return KL.not(o);
+		}
+		public static boolean he(oD o) {
+			return KL.not(o);
+		}
+		public static boolean he(oB o) {
+			return KL.not(o);
+		}
+		public static boolean he(treeDI t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeI t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeDL t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeL t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeDF t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeF t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeDS t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeD t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeDB t) {
+			return KL.not(t);
+		}
+		public static boolean he(treeB t) {
+			return KL.not(t);
+		}
+		public static boolean is(char x, char y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(String x, String y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(String x, String y, boolean strict) {
+			return KL.uneq(x, y, strict);
+		}
+		public static boolean is(int x, int y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(long x, long y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(float x, float y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(double x, double y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(boolean x, boolean y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(Object x, Object y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(String[] x, String[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(int[] x, int[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(long[] x, long[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(float[] x, float[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(double[] x, double[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(boolean[] x, boolean[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(Object[] x, Object[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(strArr x, strArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(intArr x, intArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(longArr x, longArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(fltArr x, fltArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(dblArr x, dblArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(boolArr x, boolArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeDI x, treeDI y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeI x, treeI y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeDL x, treeDL y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeL x, treeL y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeDF x, treeDF y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeF x, treeF y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeDS x, treeDS y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeD x, treeD y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeDB x, treeDB y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean is(treeB x, treeB y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(char x, char y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(String x, String y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(String x, String y, boolean strict) {
+			return eq(x, y, strict);
+		}
+		public static boolean he(int x, int y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(long x, long y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(float x, float y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(double x, double y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(boolean x, boolean y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(Object x, Object y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(String[] x, String[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(int[] x, int[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(long[] x, long[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(float[] x, float[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(double[] x, double[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(boolean[] x, boolean[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(Object[] x, Object[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(strArr x, strArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(intArr x, intArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(longArr x, longArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(fltArr x, fltArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(dblArr x, dblArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(boolArr x, boolArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeDI x, treeDI y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeI x, treeI y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeDL x, treeDL y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeL x, treeL y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeDF x, treeDF y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeF x, treeF y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeDS x, treeDS y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeD x, treeD y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeDB x, treeDB y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean he(treeB x, treeB y) {
+			return KL.uneq(x, y);
+		}
+	}
+	public static class nahi extends not {
 	}
 	public static boolean both(String... strings) {
 		int count = 0;
@@ -66350,6 +66963,12 @@ public class KL {
 				? startsWith(type(o), guessedType)
 				: in(type(o), guessedType);
 	}
+	public static boolean isType(Object o, String guessedType) {
+		return type(o, guessedType);
+	}
+	public static boolean heType(Object o, String guessedType) {
+		return type(o, guessedType);
+	}
 	// ^this one stays too
 	public static boolean type(Object src, Object cond1, Runnable sol1,
 			Object cond2, Runnable sol2, Object cond3, Runnable sol3,
@@ -68399,7 +69018,11 @@ public class KL {
 		testArr = extend(testArr, length.twice);
 		print(testArr);
 		print(len(testArr));
-		print(is.type("", Str));
+		num age2 = num(30);
+		age2.me_izafa(10, ka);
+		age2.se_gaya(age2.ka_chotha());
+		age2.me_dala(age2.ka_chotha());
+		System.out.println(age2.get());
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
