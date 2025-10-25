@@ -70141,32 +70141,7 @@ public class KL {
 				changeInCondition.run();
 				condition = conditionAsACallable.call();
 				crashSafety++;
-				if (crashSafety > 1e5) {
-					hint.goodpractice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
-					break;
-				}
-			} catch (Throwable e) {
-			}
-		}
-	}
-	public static void har(int initialization,
-			boolean conditionToWrap, Runnable changeInCondition,
-			Runnable task) {
-		if (isInfinity(initialization)
-				|| isNull(changeInCondition, task))
-			return;
-		bool conditionInAWrapper = bool(conditionToWrap);
-		boolean condition = conditionInAWrapper.get();
-		if (not(condition))
-			return;
-		int crashSafety = 0;
-		while (condition) {
-			try {
-				task.run();
-				changeInCondition.run();
-				condition = conditionInAWrapper.get();
-				crashSafety++;
-				if (crashSafety > 1e5) {
+				if (crashSafety > 1e4) {
 					hint.goodpractice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
 					break;
 				}
@@ -70365,7 +70340,7 @@ public class KL {
 		age2.se_gaya(age2.ka_chotha());
 		age2.me_dala(age2.ka_chotha());
 		System.out.println(age2.get());
-		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
+		har(varbl.i = -2, varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
