@@ -31517,10 +31517,292 @@ public class KL {
 			return null;
 		}
 	}
+	public static class bln {
+	    boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, No, no, Na, na, Jhoot, jhoot, True = Yes = yes = Met = met = Sach = Sach = False = No = no = Jhoot = jhoot = false;
+	    hint initially_all_the_positive_and_non_variables_should_point_to_false_since_we_dont_know_the_condition_yet;
+	    bln(boolean condition) {
+	        True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = condition;
+	        False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+	    }
+	    bln(int n) {
+	        True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = n > 0 ? true : false;
+	        False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+	    }
+	    bln negate() {
+	        True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = !yes;
+	        False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !no;
+	        return this;
+	    }
+	    bln neg() {
+	        return negate();
+	    }
+	    boolean get() {
+	        return yes;
+	    }
+	    boolean True() {
+	        return Yes;
+	    }
+	    boolean Yes() {
+	        return True();
+	    }
+	    boolean yes() {
+	        return True();
+	    }
+	    boolean Ha() {
+	        return True();
+	    }
+	    boolean ha() {
+	        return True();
+	    }
+	    boolean He() {
+	        return True();
+	    }
+	    boolean he() {
+	        return True();
+	    }
+	    boolean met() {
+	        return True();
+	    }
+	    boolean Sach() {
+	        return True();
+	    }
+	    boolean sach() {
+	        return True();
+	    }
+	    boolean No() {
+	        return No;
+	    }
+	    boolean no() {
+	        return No();
+	    }
+	    boolean Na() {
+	        return No();
+	    }
+	    boolean na() {
+	        return No();
+	    }
+	    boolean Nahi() {
+	        return No();
+	    }
+	    boolean nahi() {
+	        return No();
+	    }
+	    boolean Jhoot() {
+	        return No();
+	    }    
+	    boolean jhoot() {
+	        return No();
+	    }    
+	    @Override public String toString() {
+	        return ""+(yes == true ? "Yes" : "No");
+	    }    
+	}
+	public static class bool extends bln {
+	    bool(boolean condition) {
+	        super(condition);
+	    }
+	    bool(int n) {
+	        super(n);
+	    }
+	    bool negate() {
+	        super.negate();
+	        return this;
+	    }
+	    bool neg() {
+	        return negate();
+	    }
+	}
+	public static class cdn extends bool {
+	    cdn(boolean condition) {
+	        super(condition);
+	    }
+	    cdn(int n) {
+	        super(n);
+	    }
+	    cdn negate() {
+	        super.negate();
+	        return this;
+	    }
+	    cdn neg() {
+	        return negate();
+	    }
+	}
+	public static class hal extends cdn {
+	    hal(boolean condition) {
+	        super(condition);
+	    }
+	    hal(int n) {
+	        super(n);
+	    }
+	    hal negate() {
+	        super.negate();
+	        return this;
+	    }
+	    hal neg() {
+	        return negate();
+	    }
+	}
+	public static class hlt extends hal {
+	    hlt(boolean condition) {
+	        super(condition);
+	    }
+	    hlt(int n) {
+	        super(n);
+	    }
+	    hlt negate() {
+	        super.negate();
+	        return this;
+	    }
+	    hlt neg() {
+	        return negate();
+	    }
+	}
+    public static bln bln(boolean c) {
+        return new bln(c);
+    }
+    public static bln bln(int n) {
+        return new bln(n);
+    }
+    public static bool bool(boolean c) {
+        return new bool(c);
+    }
+    public static bool bool(int n) {
+        return new bool(n);
+    }
+    public static cdn cdn(boolean c) {
+        return new cdn(c);
+    }
+    public static cdn cdn(int n) {
+        return new cdn(n);
+    }
+    public static hal hal(boolean c) {
+        return new hal(c);
+    }
+    public static hal hal(int n) {
+        return new hal(n);
+    }
+    public static hlt hlt(boolean c) {
+        return new hlt(c);
+    }
+    public static hlt hlt(int n) {
+        return new hlt(n);
+    }
+    public static boolean Yes(boolean c) {
+        return c == true;
+    }
+    public static boolean Yes(bln c) {
+        if (c == null)
+            return false;
+        return c.get() == true;
+    }
+    public static boolean yes(boolean c) {
+        return Yes(c);
+    }
+    public static boolean yes(bln c) {
+        return Yes(c);
+    }
+    public static boolean Sach(boolean c) {
+        return Yes(c);
+    }
+    public static boolean Sach(bln c) {
+        return Yes(c);
+    }
+    public static boolean sach(boolean c) {
+        return Yes(c);
+    }
+    public static boolean sach(bln c) {
+        return Yes(c);
+    }
+    public static boolean Ha(boolean c) {
+        return Yes(c);
+    }
+    public static boolean Ha(bln c) {
+        return Yes(c);
+    }
+    public static boolean ha(boolean c) {
+        return Yes(c);
+    }
+    public static boolean ha(bln c) {
+        return Yes(c);
+    }
+    public static boolean He(boolean c) {
+        return Yes(c);
+    }
+    public static boolean He(bln c) {
+        return Yes(c);
+    }
+    public static boolean he(boolean c) {
+        return Yes(c);
+    }
+    public static boolean he(bln c) {
+        return Yes(c);
+    }
+    public static boolean True(boolean c) {
+        return Yes(c);
+    }
+    public static boolean True(bln c) {
+        return Yes(c);
+    }
+    public static boolean No(boolean c) {
+        return c == false;
+    }
+    public static boolean No(bln c) {
+        if (c == null)
+            return false;
+        return c.get() == false;
+    }
+    public static boolean no(boolean c) {
+        return No(c);
+    }
+    public static boolean no(bln c) {
+        return No(c);
+    }
+    public static boolean Jhoot(boolean c) {
+        return No(c);
+    }
+    public static boolean Jhoot(bln c) {
+        return No(c);
+    }
+    public static boolean jhoot(boolean c) {
+        return No(c);
+    }
+    public static boolean jhoot(bln c) {
+        return No(c);
+    }
+    public static boolean Na(boolean c) {
+        return No(c);
+    }
+    public static boolean Na(bln c) {
+        return No(c);
+    }
+    public static boolean na(boolean c) {
+        return No(c);
+    }
+    public static boolean na(bln c) {
+        return No(c);
+    }
+    public static boolean Nahi(boolean c) {
+        return No(c);
+    }
+    public static boolean Nahi(bln c) {
+        return No(c);
+    }
+    public static boolean nahi(boolean c) {
+        return No(c);
+    }
+    public static boolean nahi(bln c) {
+        return No(c);
+    }
+    public static boolean False(boolean c) {
+        return No(c);
+    }
+    public static boolean False(bln c) {
+        return No(c);
+    }
 	public static boolean True = true, False = !True, yes = True, no = False,
 			Yes = yes, No = no, on = Yes, off = No, On = on, Off = off,
 			Success = Yes, Failure = No, Y = Yes, N = No, ever = Y, ha = Y,
-			na = N, nahi = na, Ha = ha, Na = na, Nahi = Na, he = ha, hen = ha,
+			na = N, nahi = na, Ha = ha, Na = na, Nahi = Na, He = ha, he = ha, Hen = ha, hen = ha,
 			sach = Ha, jhoot = Na, Sach = sach, Jhoot = jhoot;
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
@@ -51461,15 +51743,27 @@ public class KL {
 	public static int Pos(int n) {
 		return Math.abs(n);
 	}
+	public static int abs(int n) {
+		return Pos(n);
+	}
 	public static long Pos(long n) {
 		return Math.abs(n);
+	}
+	public static long abs(long n) {
+		return Pos(n);
 	}
 	public static float Pos(float n) {
 		return Math.abs(n);
 	}
+	public static float abs(float n) {
+		return Pos(n);
+	}
 	public static double Pos(double n) {
 		return Math.abs(n);
 	}
+	public static double abs(double n) {
+		return Pos(n);
+	}	
 	public static int Neg(int n) {
 		return -Pos(n);
 	}
@@ -54610,7 +54904,7 @@ public class KL {
 											("(?<=[\\[])\\-?\\d+(?=\\])"))) {
 										int i = Int(findMatch(m,
 												"(?<=\\[)\\-?\\d+(?=\\])"));
-										field = nth(Str(field), i);
+										field = i(Str(field), i);
 									} else {
 										int b = Int(
 												findMatch(m, "(?<=[:=])\\d+"));
@@ -55755,7 +56049,7 @@ public class KL {
 											("(?<=[\\[])\\-?\\d+(?=\\])"))) {
 										int i = Int(findMatch(m,
 												"(?<=\\[)\\-?\\d+(?=\\])"));
-										field = nth(Str(field), i);
+										field = i(Str(field), i);
 									} else {
 										int b = Int(
 												findMatch(m, "(?<=[:=])\\d+"));
@@ -59598,6 +59892,12 @@ public class KL {
 		}
 		return arr[randInt(len(arr))];
 	}
+	public static Object randItem(arr arr) {
+		if (not(arr)) {
+			return null;
+		}
+		return arr.i(randInt(arr.length()));
+	}
 	public static String randItem(strArr arr) {
 		if (not(arr)) {
 			return "";
@@ -61666,153 +61966,162 @@ public class KL {
 		}
 		return tree.last() == lookupBool;
 	}
-	public static char nth(char[] arr, int n) {
-		return n >= 0 && n < len(arr) ? arr[n] : '\0';
+	public static char i(char[] arr, int i) {
+		if (not(arr) || i >= len(arr) || isInf(i))
+		    return '\0';
+		return i >= 0 ? arr[i] : iLast(arr, Pos(i));
 	}
-	public static String nth(String str, int n) {
-		return n >= 0 && n < len(str)
-				? Str(str.toCharArray()[n])
-				: nthLastOf(str, Pos(n));
+	public static String i(String str, int i) {
+		if (not(str) || i >= len(str) || isInf(i))
+		    return "";
+		return i >= 0
+				? Str(str.toCharArray()[i])
+				: iLast(str, Pos(i));
 	}
-	public static String nth(String[] arr, int n) {
+	public static String i(String[] arr, int i) {
 		if (isNull(arr))
 			return "";
-		return new strArr(arr).i(n);
+		return new strArr(arr).i(i);
 	}
-	public static int nth(int[] arr, int n) {
+	public static int i(int[] arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return new intArr(arr).i(n);
+		return new intArr(arr).i(i);
 	}
-	public static long nth(long[] arr, int n) {
+	public static long i(long[] arr, int i) {
 		if (isNull(arr))
-			return 0;
-		return new longArr(arr).i(n);
+			return 0L;
+		return new longArr(arr).i(i);
 	}
-	public static float nth(float[] arr, int n) {
+	public static float i(float[] arr, int i) {
 		if (isNull(arr))
-			return 0;
-		return new fltArr(arr).i(n);
+			return 0.0F;
+		return new fltArr(arr).i(i);
 	}
-	public static double nth(double[] arr, int n) {
+	public static double i(double[] arr, int i) {
 		if (isNull(arr))
-			return 0;
-		return new dblArr(arr).i(n);
+			return 0.0D;
+		return new dblArr(arr).i(i);
 	}
-	public static boolean nth(boolean[] arr, int n) {
+	public static boolean i(boolean[] arr, int i) {
 		if (isNull(arr))
 			return false;
-		return new boolArr(arr).i(n);
+		return new boolArr(arr).i(i);
 	}
-	public static Object nth(Object[] arr, int n) {
+	public static Object i(Object[] arr, int i) {
 		if (isNull(arr))
 			return none;
-		return n >= 0 && n < len(arr) ? arr[n] : none;
+		return new arr(arr).i(i);
 	}
-	public static String nth(strArr arr, int n) {
+	public static Object i(arr arr, int i) {
+		if (isNull(arr))
+			return null;
+		return arr.i(i);
+	}
+	public static String i(strArr arr, int i) {
 		if (isNull(arr))
 			return "";
-		return arr.i(n);
+		return arr.i(i);
 	}
-	public static int nth(intArr arr, int n) {
+	public static int i(intArr arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return arr.i(n);
+		return arr.i(i);
 	}
-	public static long nth(longArr arr, int n) {
+	public static long i(longArr arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return arr.i(n);
+		return arr.i(i);
 	}
-	public static double nth(dblArr arr, int n) {
+	public static double i(dblArr arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return arr.i(n);
+		return arr.i(i);
 	}
-	public static boolean nth(boolArr arr, int n) {
+	public static boolean i(boolArr arr, int i) {
 		if (isNull(arr))
 			return false;
-		return arr.i(n);
+		return arr.i(i);
 	}
-	public static Object nth(o object, int n) {
+	public static Object i(o object, int i) {
 		if (isNull(object))
 			return none;
-		return object.i(n);
+		return object.i(i);
 	}
-	public static int nth(oI object, int n) {
+	public static int i(oI object, int i) {
 		if (isNull(object))
 			return 0;
-		return object.i(n);
+		return object.i(i);
 	}
-	public static long nth(oL object, int n) {
+	public static long i(oL object, int i) {
 		if (isNull(object))
 			return 0;
-		return object.i(n);
+		return object.i(i);
 	}
-	public static float nth(oF object, int n) {
+	public static float i(oF object, int i) {
 		if (isNull(object))
 			return 0;
-		return object.i(n);
+		return object.i(i);
 	}
-	public static double nth(oD object, int n) {
+	public static double i(oD object, int i) {
 		if (isNull(object))
 			return 0;
-		return object.i(n);
+		return object.i(i);
 	}
-	public static boolean nth(oB object, int n) {
+	public static boolean i(oB object, int i) {
 		if (isNull(object))
 			return false;
-		return object.i(n);
+		return object.i(i);
 	}
-	public static String nth(treeI tree, int n) {
+	public static String i(treeI tree, int i) {
 		if (isNull(tree))
 			return "";
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static long nth(treeL tree, int n) {
+	public static long i(treeL tree, int i) {
 		if (isNull(tree))
 			return 0;
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static float nth(treeF tree, int n) {
+	public static float i(treeF tree, int i) {
 		if (isNull(tree))
 			return 0;
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static double nth(treeD tree, int n) {
+	public static double i(treeD tree, int i) {
 		if (isNull(tree))
 			return 0;
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static boolean nth(treeB tree, int n) {
+	public static boolean i(treeB tree, int i) {
 		if (isNull(tree))
 			return false;
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static String nth(treeDS tree, int n) {
+	public static String i(treeDS tree, int i) {
 		if (isNull(tree))
 			return "";
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static int nth(treeDI tree, int n) {
+	public static int i(treeDI tree, int i) {
 		if (isNull(tree))
 			return 0;
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static long nth(treeDL tree, int n) {
+	public static long i(treeDL tree, int i) {
 		if (isNull(tree))
 			return 0;
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static float nth(treeDF tree, int n) {
+	public static float i(treeDF tree, int i) {
 		if (isNull(tree))
 			return 0;
-		return tree.i(n);
+		return tree.i(i);
 	}
-	public static boolean nth(treeDB tree, int n) {
+	public static boolean i(treeDB tree, int i) {
 		if (isNull(tree))
 			return false;
-		return tree.i(n);
+		return tree.i(i);
 	}
 	public static String firstOf(String[] arr) {
 		if (not(arr)) {
@@ -61922,77 +62231,82 @@ public class KL {
 		}
 		return arr.second();
 	}
-	public static String nthLastOf(String str, int n) {
+	public static String iLast(String str, int i) {
 		if (isNull(str))
 			return "";
-		return n > 0 && n <= len(str)
-				? ("" + str.toCharArray()[len(str) - n])
+		return i > 0 && i <= len(str)
+				? ("" + str.toCharArray()[len(str) - i])
 				: "";
 	}
-	public static char nthLastOf(char[] arr, int n) {
+	public static char iLast(char[] arr, int i) {
 		if (isNull(arr))
 			return '\0';
-		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : '\0';
+		return i > 0 && i <= len(arr) ? arr[len(arr) - i] : '\0';
 	}
-	public static String nthLastOf(String[] arr, int n) {
+	public static String iLast(String[] arr, int i) {
 		if (isNull(arr))
 			return "";
-		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : "";
+		return i > 0 && i <= len(arr) ? arr[len(arr) - i] : "";
 	}
-	public static int nthLastOf(int[] arr, int n) {
+	public static int iLast(int[] arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
+		return i > 0 && i <= len(arr) ? arr[len(arr) - i] : 0;
 	}
-	public static long nthLastOf(long[] arr, int n) {
+	public static long iLast(long[] arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
+		return i > 0 && i <= len(arr) ? arr[len(arr) - i] : 0;
 	}
-	public static float nthLastOf(float[] arr, int n) {
+	public static float iLast(float[] arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
+		return i > 0 && i <= len(arr) ? arr[len(arr) - i] : 0;
 	}
-	public static double nthLastOf(double[] arr, int n) {
+	public static double iLast(double[] arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : 0;
+		return i > 0 && i <= len(arr) ? arr[len(arr) - i] : 0;
 	}
-	public static boolean nthLastOf(boolean[] arr, int n) {
+	public static boolean iLast(boolean[] arr, int i) {
 		if (isNull(arr))
 			return false;
-		return n > 0 && n <= len(arr) ? arr[len(arr) - n] : false;
+		return i > 0 && i <= len(arr) ? arr[len(arr) - i] : false;
 	}
-	public static String nthLastOf(strArr arr, int n) {
+	public static Object iLast(arr arr, int i) {
+		if (isNull(arr))
+			return null;
+		return i > 0 && i <= len(arr) ? arr.lasti(i) : null;
+	}
+	public static String iLast(strArr arr, int i) {
 		if (isNull(arr))
 			return "";
-		return n > 0 && n <= len(arr) ? arr.lasti(n) : "";
+		return i > 0 && i <= len(arr) ? arr.lasti(i) : "";
 	}
-	public static int nthLastOf(intArr arr, int n) {
+	public static int iLast(intArr arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
+		return i > 0 && i <= len(arr) ? arr.lasti(i) : 0;
 	}
-	public static long nthLastOf(longArr arr, int n) {
+	public static long iLast(longArr arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
+		return i > 0 && i <= len(arr) ? arr.lasti(i) : 0;
 	}
-	public static float nthLastOf(fltArr arr, int n) {
+	public static float iLast(fltArr arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
+		return i > 0 && i <= len(arr) ? arr.lasti(i) : 0;
 	}
-	public static double nthLastOf(dblArr arr, int n) {
+	public static double iLast(dblArr arr, int i) {
 		if (isNull(arr))
 			return 0;
-		return n > 0 && n <= len(arr) ? arr.lasti(n) : 0;
+		return i > 0 && i <= len(arr) ? arr.lasti(i) : 0;
 	}
-	public static boolean nthLastOf(boolArr arr, int n) {
+	public static boolean iLast(boolArr arr, int i) {
 		if (isNull(arr))
 			return false;
-		return n > 0 && n <= len(arr) ? arr.lasti(n) : false;
+		return i > 0 && i <= len(arr) ? arr.lasti(i) : false;
 	}
 	public static String secondLastOf(String str) {
 		return len(str) - 2 >= 0 ? ("" + str.toCharArray()[len(str) - 2]) : "";
@@ -68823,6 +69137,31 @@ public class KL {
 				task.run();
 				changeInCondition.run();
 				condition = conditionAsACallable.call();
+				crashSafety++;
+				if (crashSafety > 1e5) {
+					hint.goodpractice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
+					break;
+				}
+			} catch (Throwable e) {
+			}
+		}
+	}
+	public static void har(int initialization,
+			boolean conditionToWrap, Runnable changeInCondition,
+			Runnable task) {
+		if (isInfinity(initialization)
+				|| isNull(conditionAsACallable, changeInCondition, task))
+			return;
+		bool conditionInAWrapper = bool(conditionToWrap);
+		boolean conditionToWrap = conditionInAWrapper.get();
+		if (not(condition))
+			return;
+		int crashSafety = 0;
+		while (condition) {
+			try {
+				task.run();
+				changeInCondition.run();
+				condition = conditionInAWrapper.get();
 				crashSafety++;
 				if (crashSafety > 1e5) {
 					hint.goodpractice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
