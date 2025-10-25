@@ -31731,9 +31731,11 @@ public class KL {
     public static boolean He(bln c) {
         return Yes(c);
     }
+    /*
     public static boolean he(boolean c) {
         return Yes(c);
     }
+    */
     public static boolean he(bln c) {
         return Yes(c);
     }
@@ -31787,9 +31789,11 @@ public class KL {
     public static boolean Nahi(bln c) {
         return No(c);
     }
+    /*
     public static boolean nahi(boolean c) {
         return No(c);
     }
+    */
     public static boolean nahi(bln c) {
         return No(c);
     }
@@ -31811,7 +31815,6 @@ public class KL {
 			me_se = new Object(), mese = me_se;
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
-	public static int kilo = (int) 1e3;
 	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
 	public static char _c = '\0';
@@ -51382,10 +51385,58 @@ public class KL {
 	public static boolean he(String x, String y, boolean strict) {
 		return eq(x, y, strict);
 	}
+	public static boolean barabar(String x, String y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(String x, String y, boolean strict) {
+		return eq(x, y, strict);
+	}
+	public static boolean Yes(String x, String y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(String x, String y, boolean strict) {
+		return eq(x, y, strict);
+	}
+	public static boolean yes(String x, String y) {
+		return eq(x, y);
+	}
+	public static boolean yes(String x, String y, boolean strict) {
+		return eq(x, y, strict);
+	}
+	public static boolean Sach(String x, String y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(String x, String y, boolean strict) {
+		return eq(x, y, strict);
+	}
+	public static boolean sach(String x, String y) {
+		return eq(x, y);
+	}
+	public static boolean sach(String x, String y, boolean strict) {
+		return eq(x, y, strict);
+	}
+	public static boolean True(String x, String y) {
+		return eq(x, y);
+	}
+	public static boolean True(String x, String y, boolean strict) {
+		return eq(x, y, strict);
+	}
 	public static boolean nahi(String x, String y) {
 		return !he(x, y);
 	}
 	public static boolean nahi(String x, String y, boolean strict) {
+		return !he(x, y, strict);
+	}
+	public static boolean Jhoot(String x, String y) {
+		return !he(x, y);
+	}
+	public static boolean Jhoot(String x, String y, boolean strict) {
+		return !he(x, y, strict);
+	}
+	public static boolean jhoot(String x, String y) {
+		return !he(x, y);
+	}
+	public static boolean jhoot(String x, String y, boolean strict) {
 		return !he(x, y, strict);
 	}
 	public static boolean uneq(String x, String y) {
@@ -55113,11 +55164,11 @@ public class KL {
 										"(?<=\\[)\\-?\\d+(?=\\])"));
 								if (field instanceof Object[]) {
 									if (isArrOfStr(field)) {
-										field = nth((String[]) field, i);
+										field = i((String[]) field, i);
 									} else if (isArrOfNum(field)) {
-										field = nth((Number[]) field, i);
+										field = i((Number[]) field, i);
 									} else if (isArrOfObj(field)) {
-										field = nth((Object[]) field, i);
+										field = i((Object[]) field, i);
 										o replacements = o(
 												"true=Yes, false=No");
 										String preprocessed = replace(
@@ -55126,17 +55177,17 @@ public class KL {
 									}
 								} else {
 									if (isArrOfChar(field)) {
-										field = nth((char[]) field, i);
+										field = i((char[]) field, i);
 									} else if (isArrOfInt(field)) {
-										field = nth((int[]) field, i);
+										field = i((int[]) field, i);
 									} else if (isArrOfLong(field)) {
-										field = nth((long[]) field, i);
+										field = i((long[]) field, i);
 									} else if (isArrOfFlt(field)) {
-										field = nth((float[]) field, i);
+										field = i((float[]) field, i);
 									} else if (isArrOfDbl(field)) {
-										field = nth((double[]) field, i);
+										field = i((double[]) field, i);
 									} else if (isArrOfBool(field)) {
-										field = nth((boolean[]) field, i);
+										field = i((boolean[]) field, i);
 										o replacements = o(
 												"true=Yes, false=No");
 										String preprocessed = replace(
@@ -55233,49 +55284,49 @@ public class KL {
 								int i = Int(findMatch(m,
 										"(?<=\\[)\\-?\\d+(?=\\])"));
 								if (field instanceof o) {
-									field = nth((o) field, i);
+									field = i((o) field, i);
 									o replacements = o("true=Yes, false=No");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
 								} else if (field instanceof oI) {
-									field = nth((oI) field, i);
+									field = i((oI) field, i);
 								} else if (field instanceof oL) {
-									field = nth((oL) field, i);
+									field = i((oL) field, i);
 								} else if (field instanceof oF) {
-									field = nth((oF) field, i);
+									field = i((oF) field, i);
 								} else if (field instanceof oD) {
-									field = nth((oD) field, i);
+									field = i((oD) field, i);
 								} else if (field instanceof oB) {
-									field = nth((oB) field, i);
+									field = i((oB) field, i);
 									o replacements = o("true=Yes, false=No");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
 								} else if (field instanceof treeI) {
-									field = nth((treeI) field, i);
+									field = i((treeI) field, i);
 								} else if (field instanceof treeL) {
-									field = nth((treeL) field, i);
+									field = i((treeL) field, i);
 								} else if (field instanceof treeF) {
-									field = nth((treeF) field, i);
+									field = i((treeF) field, i);
 								} else if (field instanceof treeD) {
-									field = nth((treeD) field, i);
+									field = i((treeD) field, i);
 								} else if (field instanceof treeB) {
-									field = nth((treeB) field, i);
+									field = i((treeB) field, i);
 									o replacements = o("true=Yes, false=No");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
 								} else if (field instanceof treeDS) {
-									field = nth((treeDS) field, i);
+									field = i((treeDS) field, i);
 								} else if (field instanceof treeDI) {
-									field = nth((treeDI) field, i);
+									field = i((treeDI) field, i);
 								} else if (field instanceof treeDL) {
-									field = nth((treeDL) field, i);
+									field = i((treeDL) field, i);
 								} else if (field instanceof treeDF) {
-									field = nth((treeDF) field, i);
+									field = i((treeDF) field, i);
 								} else if (field instanceof treeDB) {
-									field = nth((treeDB) field, i);
+									field = i((treeDB) field, i);
 									o replacements = o("true=Yes, false=No");
 									String preprocessed = replace(Str(field),
 											replacements);
@@ -56258,11 +56309,11 @@ public class KL {
 										"(?<=\\[)\\-?\\d+(?=\\])"));
 								if (field instanceof Object[]) {
 									if (isArrOfStr(field)) {
-										field = nth((String[]) field, i);
+										field = i((String[]) field, i);
 									} else if (isArrOfNum(field)) {
-										field = nth((Number[]) field, i);
+										field = i((Number[]) field, i);
 									} else if (isArrOfObj(field)) {
-										field = nth((Object[]) field, i);
+										field = i((Object[]) field, i);
 										o replacements = o("true=Ha, false=Na");
 										String preprocessed = replace(
 												Str(field), replacements);
@@ -56270,17 +56321,17 @@ public class KL {
 									}
 								} else {
 									if (isArrOfChar(field)) {
-										field = nth((char[]) field, i);
+										field = i((char[]) field, i);
 									} else if (isArrOfInt(field)) {
-										field = nth((int[]) field, i);
+										field = i((int[]) field, i);
 									} else if (isArrOfLong(field)) {
-										field = nth((long[]) field, i);
+										field = i((long[]) field, i);
 									} else if (isArrOfFlt(field)) {
-										field = nth((float[]) field, i);
+										field = i((float[]) field, i);
 									} else if (isArrOfDbl(field)) {
-										field = nth((double[]) field, i);
+										field = i((double[]) field, i);
 									} else if (isArrOfBool(field)) {
-										field = nth((boolean[]) field, i);
+										field = i((boolean[]) field, i);
 										o replacements = o("true=Ha, false=Na");
 										String preprocessed = replace(
 												Str(field), replacements);
@@ -56392,49 +56443,49 @@ public class KL {
 								int i = Int(findMatch(m,
 										"(?<=\\[)\\-?\\d+(?=\\])"));
 								if (field instanceof o) {
-									field = nth((o) field, i);
+									field = i((o) field, i);
 									o replacements = o("true=Ha, false=Na");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
 								} else if (field instanceof oI) {
-									field = nth((oI) field, i);
+									field = i((oI) field, i);
 								} else if (field instanceof oL) {
-									field = nth((oL) field, i);
+									field = i((oL) field, i);
 								} else if (field instanceof oF) {
-									field = nth((oF) field, i);
+									field = i((oF) field, i);
 								} else if (field instanceof oD) {
-									field = nth((oD) field, i);
+									field = i((oD) field, i);
 								} else if (field instanceof oB) {
-									field = nth((oB) field, i);
+									field = i((oB) field, i);
 									o replacements = o("true=Ha, false=Na");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
 								} else if (field instanceof treeI) {
-									field = nth((treeI) field, i);
+									field = i((treeI) field, i);
 								} else if (field instanceof treeL) {
-									field = nth((treeL) field, i);
+									field = i((treeL) field, i);
 								} else if (field instanceof treeF) {
-									field = nth((treeF) field, i);
+									field = i((treeF) field, i);
 								} else if (field instanceof treeD) {
-									field = nth((treeD) field, i);
+									field = i((treeD) field, i);
 								} else if (field instanceof treeB) {
-									field = nth((treeB) field, i);
+									field = i((treeB) field, i);
 									o replacements = o("true=Ha, false=Na");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
 								} else if (field instanceof treeDS) {
-									field = nth((treeDS) field, i);
+									field = i((treeDS) field, i);
 								} else if (field instanceof treeDI) {
-									field = nth((treeDI) field, i);
+									field = i((treeDI) field, i);
 								} else if (field instanceof treeDL) {
-									field = nth((treeDL) field, i);
+									field = i((treeDL) field, i);
 								} else if (field instanceof treeDF) {
-									field = nth((treeDF) field, i);
+									field = i((treeDF) field, i);
 								} else if (field instanceof treeDB) {
-									field = nth((treeDB) field, i);
+									field = i((treeDB) field, i);
 									o replacements = o("true=Ha, false=Na");
 									String preprocessed = replace(Str(field),
 											replacements);
@@ -57970,75 +58021,153 @@ public class KL {
 		return x == y;
 	}
 	public static boolean eq(Object x, Object y) {
+		if (not(x)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(String[] x, String[] y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return Arrays.equals(x, y);
 	}
 	public static boolean eq(int[] x, int[] y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return Arrays.equals(x, y);
 	}
 	public static boolean eq(long[] x, long[] y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return Arrays.equals(x, y);
 	}
 	public static boolean eq(float[] x, float[] y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return Arrays.equals(x, y);
 	}
 	public static boolean eq(double[] x, double[] y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return Arrays.equals(x, y);
 	}
 	public static boolean eq(boolean[] x, boolean[] y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return Arrays.equals(x, y);
 	}
 	public static boolean eq(Object[] x, Object[] y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return Arrays.equals(x, y);
 	}
+	public static boolean eq(arr x, arr y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
+		return x.eq(y);
+	}
 	public static boolean eq(strArr x, strArr y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.eq(y);
 	}
 	public static boolean eq(intArr x, intArr y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.eq(y);
 	}
 	public static boolean eq(longArr x, longArr y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.eq(y);
 	}
 	public static boolean eq(fltArr x, fltArr y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.eq(y);
 	}
 	public static boolean eq(dblArr x, dblArr y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.eq(y);
 	}
 	public static boolean eq(boolArr x, boolArr y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.eq(y);
 	}
 	public static boolean eq(treeDI x, treeDI y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeI x, treeI y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeDL x, treeDL y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeL x, treeL y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeDF x, treeDF y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeF x, treeF y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeDS x, treeDS y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeD x, treeD y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeDB x, treeDB y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean eq(treeB x, treeB y) {
+		if (isNull(x) || isNull(y)) {
+			return false;
+		}
 		return x.equals(y);
 	}
 	public static boolean is(char x, char y) {
@@ -58081,6 +58210,9 @@ public class KL {
 		return eq(x, y);
 	}
 	public static boolean is(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean is(arr x, arr y) {
 		return eq(x, y);
 	}
 	public static boolean is(strArr x, strArr y) {
@@ -58177,6 +58309,9 @@ public class KL {
 	public static boolean he(Object[] x, Object[] y) {
 		return eq(x, y);
 	}
+	public static boolean he(arr x, arr y) {
+		return eq(x, y);
+	}
 	public static boolean he(strArr x, strArr y) {
 		return eq(x, y);
 	}
@@ -58225,6 +58360,564 @@ public class KL {
 	public static boolean he(treeB x, treeB y) {
 		return eq(x, y);
 	}
+	public static boolean barabar(char x, char y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(int x, int y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(long x, long y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(float x, float y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(boolean x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(Object x, Object y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(String[] x, String[] y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(int[] x, int[] y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(long[] x, long[] y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(float[] x, float[] y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(double[] x, double[] y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(boolean[] x, boolean[] y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(arr x, arr y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(strArr x, strArr y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(intArr x, intArr y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(longArr x, longArr y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(fltArr x, fltArr y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(dblArr x, dblArr y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(boolArr x, boolArr y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeDI x, treeDI y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeI x, treeI y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeDL x, treeDL y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeL x, treeL y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeDF x, treeDF y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeF x, treeF y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeDS x, treeDS y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeD x, treeD y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeDB x, treeDB y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(treeB x, treeB y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(char x, char y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(int x, int y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(long x, long y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(float x, float y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(boolean x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(Object x, Object y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(String[] x, String[] y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(int[] x, int[] y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(long[] x, long[] y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(float[] x, float[] y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(double[] x, double[] y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(boolean[] x, boolean[] y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(arr x, arr y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(strArr x, strArr y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(intArr x, intArr y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(longArr x, longArr y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(fltArr x, fltArr y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(dblArr x, dblArr y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(boolArr x, boolArr y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeDI x, treeDI y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeI x, treeI y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeDL x, treeDL y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeL x, treeL y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeDF x, treeDF y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeF x, treeF y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeDS x, treeDS y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeD x, treeD y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeDB x, treeDB y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(treeB x, treeB y) {
+		return eq(x, y);
+	}
+	public static boolean yes(char x, char y) {
+		return eq(x, y);
+	}
+	public static boolean yes(int x, int y) {
+		return eq(x, y);
+	}
+	public static boolean yes(long x, long y) {
+		return eq(x, y);
+	}
+	public static boolean yes(float x, float y) {
+		return eq(x, y);
+	}
+	public static boolean yes(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean yes(boolean x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean yes(Object x, Object y) {
+		return eq(x, y);
+	}
+	public static boolean yes(String[] x, String[] y) {
+		return eq(x, y);
+	}
+	public static boolean yes(int[] x, int[] y) {
+		return eq(x, y);
+	}
+	public static boolean yes(long[] x, long[] y) {
+		return eq(x, y);
+	}
+	public static boolean yes(float[] x, float[] y) {
+		return eq(x, y);
+	}
+	public static boolean yes(double[] x, double[] y) {
+		return eq(x, y);
+	}
+	public static boolean yes(boolean[] x, boolean[] y) {
+		return eq(x, y);
+	}
+	public static boolean yes(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean yes(arr x, arr y) {
+		return eq(x, y);
+	}
+	public static boolean yes(strArr x, strArr y) {
+		return eq(x, y);
+	}
+	public static boolean yes(intArr x, intArr y) {
+		return eq(x, y);
+	}
+	public static boolean yes(longArr x, longArr y) {
+		return eq(x, y);
+	}
+	public static boolean yes(fltArr x, fltArr y) {
+		return eq(x, y);
+	}
+	public static boolean yes(dblArr x, dblArr y) {
+		return eq(x, y);
+	}
+	public static boolean yes(boolArr x, boolArr y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeDI x, treeDI y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeI x, treeI y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeDL x, treeDL y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeL x, treeL y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeDF x, treeDF y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeF x, treeF y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeDS x, treeDS y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeD x, treeD y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeDB x, treeDB y) {
+		return eq(x, y);
+	}
+	public static boolean yes(treeB x, treeB y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(char x, char y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(int x, int y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(long x, long y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(float x, float y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(boolean x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(Object x, Object y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(String[] x, String[] y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(int[] x, int[] y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(long[] x, long[] y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(float[] x, float[] y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(double[] x, double[] y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(boolean[] x, boolean[] y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(arr x, arr y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(strArr x, strArr y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(intArr x, intArr y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(longArr x, longArr y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(fltArr x, fltArr y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(dblArr x, dblArr y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(boolArr x, boolArr y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeDI x, treeDI y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeI x, treeI y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeDL x, treeDL y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeL x, treeL y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeDF x, treeDF y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeF x, treeF y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeDS x, treeDS y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeD x, treeD y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeDB x, treeDB y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(treeB x, treeB y) {
+		return eq(x, y);
+	}
+	public static boolean sach(char x, char y) {
+		return eq(x, y);
+	}
+	public static boolean sach(int x, int y) {
+		return eq(x, y);
+	}
+	public static boolean sach(long x, long y) {
+		return eq(x, y);
+	}
+	public static boolean sach(float x, float y) {
+		return eq(x, y);
+	}
+	public static boolean sach(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean sach(boolean x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean sach(Object x, Object y) {
+		return eq(x, y);
+	}
+	public static boolean sach(String[] x, String[] y) {
+		return eq(x, y);
+	}
+	public static boolean sach(int[] x, int[] y) {
+		return eq(x, y);
+	}
+	public static boolean sach(long[] x, long[] y) {
+		return eq(x, y);
+	}
+	public static boolean sach(float[] x, float[] y) {
+		return eq(x, y);
+	}
+	public static boolean sach(double[] x, double[] y) {
+		return eq(x, y);
+	}
+	public static boolean sach(boolean[] x, boolean[] y) {
+		return eq(x, y);
+	}
+	public static boolean sach(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean sach(arr x, arr y) {
+		return eq(x, y);
+	}
+	public static boolean sach(strArr x, strArr y) {
+		return eq(x, y);
+	}
+	public static boolean sach(intArr x, intArr y) {
+		return eq(x, y);
+	}
+	public static boolean sach(longArr x, longArr y) {
+		return eq(x, y);
+	}
+	public static boolean sach(fltArr x, fltArr y) {
+		return eq(x, y);
+	}
+	public static boolean sach(dblArr x, dblArr y) {
+		return eq(x, y);
+	}
+	public static boolean sach(boolArr x, boolArr y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeDI x, treeDI y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeI x, treeI y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeDL x, treeDL y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeL x, treeL y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeDF x, treeDF y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeF x, treeF y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeDS x, treeDS y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeD x, treeD y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeDB x, treeDB y) {
+		return eq(x, y);
+	}
+	public static boolean sach(treeB x, treeB y) {
+		return eq(x, y);
+	}
+	public static boolean True(char x, char y) {
+		return eq(x, y);
+	}
+	public static boolean True(int x, int y) {
+		return eq(x, y);
+	}
+	public static boolean True(long x, long y) {
+		return eq(x, y);
+	}
+	public static boolean True(float x, float y) {
+		return eq(x, y);
+	}
+	public static boolean True(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean True(boolean x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean True(Object x, Object y) {
+		return eq(x, y);
+	}
+	public static boolean True(String[] x, String[] y) {
+		return eq(x, y);
+	}
+	public static boolean True(int[] x, int[] y) {
+		return eq(x, y);
+	}
+	public static boolean True(long[] x, long[] y) {
+		return eq(x, y);
+	}
+	public static boolean True(float[] x, float[] y) {
+		return eq(x, y);
+	}
+	public static boolean True(double[] x, double[] y) {
+		return eq(x, y);
+	}
+	public static boolean True(boolean[] x, boolean[] y) {
+		return eq(x, y);
+	}
+	public static boolean True(Object[] x, Object[] y) {
+		return eq(x, y);
+	}
+	public static boolean True(arr x, arr y) {
+		return eq(x, y);
+	}
+	public static boolean True(strArr x, strArr y) {
+		return eq(x, y);
+	}
+	public static boolean True(intArr x, intArr y) {
+		return eq(x, y);
+	}
+	public static boolean True(longArr x, longArr y) {
+		return eq(x, y);
+	}
+	public static boolean True(fltArr x, fltArr y) {
+		return eq(x, y);
+	}
+	public static boolean True(dblArr x, dblArr y) {
+		return eq(x, y);
+	}
+	public static boolean True(boolArr x, boolArr y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeDI x, treeDI y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeI x, treeI y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeDL x, treeDL y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeL x, treeL y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeDF x, treeDF y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeF x, treeF y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeDS x, treeDS y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeD x, treeD y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeDB x, treeDB y) {
+		return eq(x, y);
+	}
+	public static boolean True(treeB x, treeB y) {
+		return eq(x, y);
+	}
 	public static boolean uneq(char x, char y) {
 		return !eq(x, y);
 	}
@@ -58265,6 +58958,9 @@ public class KL {
 		return !eq(x, y);
 	}
 	public static boolean uneq(Object[] x, Object[] y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(arr x, arr y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(strArr x, strArr y) {
@@ -58334,6 +59030,9 @@ public class KL {
 		return !eq(x, y);
 	}
 	public static boolean not(Object x, Object y) {
+		return !eq(x, y);
+	}
+	public static boolean not(arr x, arr y) {
 		return !eq(x, y);
 	}
 	public static boolean not(strArr x, strArr y) {
@@ -58426,6 +59125,9 @@ public class KL {
 	public static boolean nahi(Object[] x, Object[] y) {
 		return !eq(x, y);
 	}
+	public static boolean nahi(arr x, arr y) {
+		return !eq(x, y);
+	}
 	public static boolean nahi(strArr x, strArr y) {
 		return !eq(x, y);
 	}
@@ -58472,6 +59174,192 @@ public class KL {
 		return !eq(x, y);
 	}
 	public static boolean nahi(treeB x, treeB y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(char x, char y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(int x, int y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(long x, long y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(float x, float y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(double x, double y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(boolean x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(Object x, Object y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(String[] x, String[] y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(int[] x, int[] y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(long[] x, long[] y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(float[] x, float[] y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(double[] x, double[] y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(boolean[] x, boolean[] y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(Object[] x, Object[] y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(arr x, arr y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(strArr x, strArr y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(intArr x, intArr y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(longArr x, longArr y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(fltArr x, fltArr y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(dblArr x, dblArr y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(boolArr x, boolArr y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeDI x, treeDI y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeI x, treeI y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeDL x, treeDL y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeL x, treeL y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeDF x, treeDF y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeF x, treeF y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeDS x, treeDS y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeD x, treeD y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeDB x, treeDB y) {
+		return !eq(x, y);
+	}
+	public static boolean Jhoot(treeB x, treeB y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(char x, char y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(int x, int y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(long x, long y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(float x, float y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(double x, double y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(boolean x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(Object x, Object y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(String[] x, String[] y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(int[] x, int[] y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(long[] x, long[] y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(float[] x, float[] y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(double[] x, double[] y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(boolean[] x, boolean[] y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(Object[] x, Object[] y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(arr x, arr y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(strArr x, strArr y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(intArr x, intArr y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(longArr x, longArr y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(fltArr x, fltArr y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(dblArr x, dblArr y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(boolArr x, boolArr y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeDI x, treeDI y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeI x, treeI y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeDL x, treeDL y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeL x, treeL y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeDF x, treeDF y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeF x, treeF y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeDS x, treeDS y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeD x, treeD y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeDB x, treeDB y) {
+		return !eq(x, y);
+	}
+	public static boolean jhoot(treeB x, treeB y) {
 		return !eq(x, y);
 	}
 	public static class not {
@@ -58962,6 +59850,8 @@ public class KL {
 	public static class nahi extends not {
 	}
 	public static boolean both(String... strings) {
+		if (not(strings))
+		    return false;
 		int count = 0;
 		for (String s : strings) {
 			if (is(s)) {
@@ -58971,6 +59861,8 @@ public class KL {
 		return count == len(strings);
 	}
 	public static boolean both(int... ints) {
+		if (not(ints))
+		    return false;
 		int count = 0;
 		for (int n : ints) {
 			if (is(n)) {
@@ -58980,6 +59872,8 @@ public class KL {
 		return count == len(ints);
 	}
 	public static boolean both(long... longs) {
+		if (not(longs))
+		    return false;
 		int count = 0;
 		for (long n : longs) {
 			if (is(n)) {
@@ -58989,6 +59883,8 @@ public class KL {
 		return count == len(longs);
 	}
 	public static boolean both(float... floats) {
+		if (not(floats))
+		    return false;
 		int count = 0;
 		for (float n : floats) {
 			if (is(n)) {
@@ -58998,6 +59894,8 @@ public class KL {
 		return count == len(floats);
 	}
 	public static boolean both(double... doubles) {
+		if (not(doubles))
+		    return false;
 		int count = 0;
 		for (double n : doubles) {
 			if (is(n)) {
@@ -59007,6 +59905,8 @@ public class KL {
 		return count == len(doubles);
 	}
 	public static boolean both(boolean... bools) {
+		if (not(bools))
+		    return false;
 		int count = 0;
 		for (boolean bool : bools) {
 			if (is(bool)) {
@@ -59210,6 +60110,9 @@ public class KL {
 	public static boolean not(Object[]... arrays) {
 		return isNull(arrays) || isEmpty(arrays);
 	}
+	public static boolean not(arr arr) {
+		return isNull(arr) || isEmpty(arr);
+	}
 	public static boolean not(strArr arr) {
 		return isNull(arr) || isEmpty(arr);
 	}
@@ -59347,6 +60250,9 @@ public class KL {
 	}
 	public static boolean is(Object[]... arrays) {
 		return !not(arrays);
+	}
+	public static boolean is(arr arr) {
+		return !not(arr);
 	}
 	public static boolean is(strArr arr) {
 		return !not(arr);
@@ -59486,6 +60392,9 @@ public class KL {
 	public static boolean he(Object[]... arrays) {
 		return is(arrays);
 	}
+	public static boolean he(arr arr) {
+		return is(arr);
+	}
 	public static boolean he(strArr arr) {
 		return is(arr);
 	}
@@ -59623,6 +60532,9 @@ public class KL {
 	}
 	public static boolean nahi(Object[]... arrays) {
 		return !is(arrays);
+	}
+	public static boolean nahi(arr arr) {
+		return !is(arr);
 	}
 	public static boolean nahi(strArr arr) {
 		return !is(arr);
@@ -66840,6 +67752,9 @@ public class KL {
 	public static int size(boolean arr[]) {
 		return len(arr);
 	}
+	public static int size(arr arr) {
+		return len(arr);
+	}
 	public static int size(strArr arr) {
 		return len(arr);
 	}
@@ -66910,6 +67825,8 @@ public class KL {
 		return '\0' == c;
 	}
 	public static boolean isEmpty(String s) {
+		if (isNull(s))
+		    return true;
 		return 0 == len(s);
 	}
 	public static boolean isEmpty(int n) {
@@ -66925,11 +67842,17 @@ public class KL {
 		return 0 == n;
 	}
 	public static boolean isEmpty(char[] arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(char[]... subArrays) {
+		if (isNull(subArrays))
+		    return true;
 		int count = 0;
 		for (char[] arr : subArrays) {
+			if (arr == null)
+			    continue;
 			if (isEmpty((arr))) {
 				count++;
 			}
@@ -66938,9 +67861,13 @@ public class KL {
 		// to handle sub arays
 	}
 	public static boolean isEmpty(String[] arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(String[]... subArrays) {
+		if (isNull(subArrays))
+		    return true;
 		int count = 0;
 		for (String[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -66951,9 +67878,13 @@ public class KL {
 		// to handle sub arays
 	}
 	public static boolean isEmpty(int[] arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(int[]... subArrays) {
+		if (isNull(subArrays))
+		    return true;
 		int count = 0;
 		for (int[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -66964,9 +67895,13 @@ public class KL {
 		// to handle sub arays
 	}
 	public static boolean isEmpty(long[] arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(long[]... subArrays) {
+		if (isNull(subArrays))
+		    return true;
 		int count = 0;
 		for (long[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -66977,9 +67912,13 @@ public class KL {
 		// to handle sub arays
 	}
 	public static boolean isEmpty(float[] arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(float[]... subArrays) {
+		if (isNull(subArrays))
+		    return true;
 		int count = 0;
 		for (float[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -66990,9 +67929,13 @@ public class KL {
 		// to handle sub arays
 	}
 	public static boolean isEmpty(double[] arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(double[]... subArrays) {
+		if (isNull(subArrays))
+		    return true;
 		int count = 0;
 		for (double[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -67003,9 +67946,13 @@ public class KL {
 		// to handle sub arays
 	}
 	public static boolean isEmpty(boolean[] arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(boolean[]... subArrays) {
+		if (isNull(subArrays))
+		    return true;
 		int count = 0;
 		for (boolean[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -67016,9 +67963,13 @@ public class KL {
 		// to handle sub arays
 	}
 	public static boolean isEmpty(Object[] arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(Object[]... subArrays) {
+		if (isNull(subArrays))
+		    return true;
 		int count = 0;
 		for (Object[] arr : subArrays) {
 			if (0 == len(arr)) {
@@ -67028,70 +67979,119 @@ public class KL {
 		return count > 0;
 		// to handle sub arays
 	}
+	public static boolean isEmpty(arr arr) {
+		if (isNull(arr))
+		    return true;
+		return 0 == len(arr) || arr.isEmpty();
+	}
 	public static boolean isEmpty(strArr arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(intArr arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(longArr arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(fltArr arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(dblArr arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(boolArr arr) {
+		if (isNull(arr))
+		    return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(o o) {
+		if (isNull(o))
+		    return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oI o) {
+		if (isNull(o))
+		    return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oL o) {
+		if (isNull(o))
+		    return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oF o) {
+		if (isNull(o))
+		    return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oD o) {
+		if (isNull(o))
+		    return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oB o) {
+		if (isNull(o))
+		    return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(treeDI t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeI t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeDL t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeL t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeDF t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeF t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeDS t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeD t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeDB t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeB t) {
+		if (isNull(t))
+		    return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean hasLen(char c) {
@@ -67159,6 +68159,9 @@ public class KL {
 	}
 	public static boolean hasLen(Object[]... subArrays) {
 		return !isEmpty(subArrays);
+	}
+	public static boolean hasLen(arr arr) {
+		return !isEmpty(arr);
 	}
 	public static boolean hasLen(strArr arr) {
 		return !isEmpty(arr);
@@ -69150,10 +70153,10 @@ public class KL {
 			boolean conditionToWrap, Runnable changeInCondition,
 			Runnable task) {
 		if (isInfinity(initialization)
-				|| isNull(conditionAsACallable, changeInCondition, task))
+				|| isNull(changeInCondition, task))
 			return;
 		bool conditionInAWrapper = bool(conditionToWrap);
-		boolean conditionToWrap = conditionInAWrapper.get();
+		boolean condition = conditionInAWrapper.get();
 		if (not(condition))
 			return;
 		int crashSafety = 0;
@@ -69362,6 +70365,8 @@ public class KL {
 		age2.se_gaya(age2.ka_chotha());
 		age2.me_dala(age2.ka_chotha());
 		System.out.println(age2.get());
+		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
+				() -> print(varbl.i));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
