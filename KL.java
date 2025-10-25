@@ -70340,8 +70340,6 @@ public class KL {
 		age2.se_gaya(age2.ka_chotha());
 		age2.me_dala(age2.ka_chotha());
 		System.out.println(age2.get());
-		har(varbl.i = -2, varbl.i < 5, () -> varbl.i++,
-				() -> print(varbl.i));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
