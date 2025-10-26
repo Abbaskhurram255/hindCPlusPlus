@@ -52713,58 +52713,166 @@ public class KL {
 		}
 		return acc;
 	}
-	public static int fasla(int... ns) {
+	public static int me_fasla(int... ns) {
 		return difference(ns);
 	}
-	public static long fasla(long... ns) {
+	public static long me_fasla(long... ns) {
 		return difference(ns);
 	}
-	public static float fasla(float... ns) {
+	public static float me_fasla(float... ns) {
 		return difference(ns);
 	}
-	public static double fasla(double... ns) {
+	public static double me_fasla(double... ns) {
 		return difference(ns);
 	}
-	public static int fasla(intArr ns) {
+	public static int me_fasla(intArr ns) {
 		return difference(ns);
 	}
-	public static long fasla(longArr ns) {
+	public static long me_fasla(longArr ns) {
 		return difference(ns);
 	}
-	public static float fasla(fltArr ns) {
+	public static float me_fasla(fltArr ns) {
 		return difference(ns);
 	}
-	public static double fasla(dblArr ns) {
+	public static double me_fasla(dblArr ns) {
 		return difference(ns);
 	}
-	public static int fasla(oI ns) {
+	public static int me_fasla(oI ns) {
 		return difference(ns);
 	}
-	public static long fasla(oL ns) {
+	public static long me_fasla(oL ns) {
 		return difference(ns);
 	}
-	public static float fasla(oF ns) {
+	public static float me_fasla(oF ns) {
 		return difference(ns);
 	}
-	public static double fasla(oD ns) {
+	public static double me_fasla(oD ns) {
 		return difference(ns);
 	}
-	public static int fasla(treeDI ns) {
+	public static int me_fasla(treeDI ns) {
 		return difference(ns);
 	}
-	public static long fasla(treeDL ns) {
+	public static long me_fasla(treeDL ns) {
 		return difference(ns);
 	}
-	public static long fasla(treeL ns) {
+	public static long me_fasla(treeL ns) {
 		return difference(ns);
 	}
-	public static float fasla(treeDF ns) {
+	public static float me_fasla(treeDF ns) {
 		return difference(ns);
 	}
-	public static float fasla(treeF ns) {
+	public static float me_fasla(treeF ns) {
 		return difference(ns);
 	}
-	public static double fasla(treeD ns) {
+	public static double me_fasla(treeD ns) {
+		return difference(ns);
+	}
+	public static int me_ghata(int... ns) {
+		return difference(ns);
+	}
+	public static long me_ghata(long... ns) {
+		return difference(ns);
+	}
+	public static float me_ghata(float... ns) {
+		return difference(ns);
+	}
+	public static double me_ghata(double... ns) {
+		return difference(ns);
+	}
+	public static int me_ghata(intArr ns) {
+		return difference(ns);
+	}
+	public static long me_ghata(longArr ns) {
+		return difference(ns);
+	}
+	public static float me_ghata(fltArr ns) {
+		return difference(ns);
+	}
+	public static double me_ghata(dblArr ns) {
+		return difference(ns);
+	}
+	public static int me_ghata(oI ns) {
+		return difference(ns);
+	}
+	public static long me_ghata(oL ns) {
+		return difference(ns);
+	}
+	public static float me_ghata(oF ns) {
+		return difference(ns);
+	}
+	public static double me_ghata(oD ns) {
+		return difference(ns);
+	}
+	public static int me_ghata(treeDI ns) {
+		return difference(ns);
+	}
+	public static long me_ghata(treeDL ns) {
+		return difference(ns);
+	}
+	public static long me_ghata(treeL ns) {
+		return difference(ns);
+	}
+	public static float me_ghata(treeDF ns) {
+		return difference(ns);
+	}
+	public static float me_ghata(treeF ns) {
+		return difference(ns);
+	}
+	public static double me_ghata(treeD ns) {
+		return difference(ns);
+	}
+	public static int me_kami(int... ns) {
+		return difference(ns);
+	}
+	public static long me_kami(long... ns) {
+		return difference(ns);
+	}
+	public static float me_kami(float... ns) {
+		return difference(ns);
+	}
+	public static double me_kami(double... ns) {
+		return difference(ns);
+	}
+	public static int me_kami(intArr ns) {
+		return difference(ns);
+	}
+	public static long me_kami(longArr ns) {
+		return difference(ns);
+	}
+	public static float me_kami(fltArr ns) {
+		return difference(ns);
+	}
+	public static double me_kami(dblArr ns) {
+		return difference(ns);
+	}
+	public static int me_kami(oI ns) {
+		return difference(ns);
+	}
+	public static long me_kami(oL ns) {
+		return difference(ns);
+	}
+	public static float me_kami(oF ns) {
+		return difference(ns);
+	}
+	public static double me_kami(oD ns) {
+		return difference(ns);
+	}
+	public static int me_kami(treeDI ns) {
+		return difference(ns);
+	}
+	public static long me_kami(treeDL ns) {
+		return difference(ns);
+	}
+	public static long me_kami(treeL ns) {
+		return difference(ns);
+	}
+	public static float me_kami(treeDF ns) {
+		return difference(ns);
+	}
+	public static float me_kami(treeF ns) {
+		return difference(ns);
+	}
+	public static double me_kami(treeD ns) {
 		return difference(ns);
 	}
 	public static int ghatao(int... ns) {
@@ -52819,6 +52927,60 @@ public class KL {
 		return difference(ns);
 	}
 	public static double ghatao(treeD ns) {
+		return difference(ns);
+	}
+	public static int se_ghatao(int... ns) {
+		return difference(ns);
+	}
+	public static long se_ghatao(long... ns) {
+		return difference(ns);
+	}
+	public static float se_ghatao(float... ns) {
+		return difference(ns);
+	}
+	public static double se_ghatao(double... ns) {
+		return difference(ns);
+	}
+	public static int se_ghatao(intArr ns) {
+		return difference(ns);
+	}
+	public static long se_ghatao(longArr ns) {
+		return difference(ns);
+	}
+	public static float se_ghatao(fltArr ns) {
+		return difference(ns);
+	}
+	public static double se_ghatao(dblArr ns) {
+		return difference(ns);
+	}
+	public static int se_ghatao(oI ns) {
+		return difference(ns);
+	}
+	public static long se_ghatao(oL ns) {
+		return difference(ns);
+	}
+	public static float se_ghatao(oF ns) {
+		return difference(ns);
+	}
+	public static double se_ghatao(oD ns) {
+		return difference(ns);
+	}
+	public static int se_ghatao(treeDI ns) {
+		return difference(ns);
+	}
+	public static long se_ghatao(treeDL ns) {
+		return difference(ns);
+	}
+	public static long se_ghatao(treeL ns) {
+		return difference(ns);
+	}
+	public static float se_ghatao(treeDF ns) {
+		return difference(ns);
+	}
+	public static float se_ghatao(treeF ns) {
+		return difference(ns);
+	}
+	public static double se_ghatao(treeD ns) {
 		return difference(ns);
 	}
 	public static int se_nikalo(int... ns) {
@@ -53820,27 +53982,51 @@ public class KL {
 			return map(arr, item -> item * n);
 		}
 	}
+	public static class times extends multiply {
+	}
 	public static class divide {
 		public static int[] each(int[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Int;
-			return map(arr, item -> item / n);
+			return map(arr, item -> {
+				hint.avoids Arithmetic_Exception;
+				if (item == 0 || n == 0)
+				    return 0;
+                return item / n;
+             });
 		}
 		public static long[] each(long[] arr, long n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Long;
-			return map(arr, item -> item / n);
+			return map(arr, item -> {
+				hint.avoids Arithmetic_Exception;
+				if (item == 0 || n == 0)
+				    return 0;
+                return item / n;
+             });
 		}
 		public static float[] each(float[] arr, float n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Flt;
-			return map(arr, item -> item / n);
+			return map(arr, item -> {
+				hint.avoids Arithmetic_Exception;
+				if (item == 0 || n == 0)
+				    return 0;
+                return item / n;
+             });
 		}
 		public static double[] each(double[] arr, double n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Dbl;
-			return map(arr, item -> item / n);
+			return map(arr, item -> {
+				hint.avoids Arithmetic_Exception;
+				if (item == 0 || n == 0)
+				    return 0;
+                return item / n;
+             });
 		}
+	}
+	public static class quotient extends divide {
 	}
 	public static class ekekme {
 		public static String[] dalo(String[] arr, String s) {
