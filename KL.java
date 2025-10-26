@@ -9423,7 +9423,7 @@ public class KL {
 				eqSignSeparatedPair = eqSignSeparatedPair
 						.replaceAll("^\\{+|\\}+$", "");
 				if (in(eqSignSeparatedPair,
-						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>['\"-\\.]?!*\\w+['\"-\\.]?\\w*)")) {
+						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\-\\.]?!*\\w+['\"\\-\\.]?[;\\&\\s\\w]*[\\}\\]]?)")) {
 					String k;
 					Object v = new Object();
 					String[] pairs = eqSignSeparatedPair.split("\\s*[:=]\\s*");
@@ -9432,6 +9432,26 @@ public class KL {
 						k = lower(pairs[0].trim()).replaceAll("^['\"]+|['\"]+$",
 								"");
 						String unprocessedV = pairs[1].trim();
+						/*
+						if (startsWith(unprocessedV, "\\{") && endsWith(unprocessedV, "\\}") && in(unprocessedV, "\\{(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\-\\.]?!*\\w+['\"\\-\\.]?[;\\&\\s\\w]*[\\}\\]]?)\\}")) {
+							print("unprocessedV =", unprocessedV);
+							o newO = new o(unprocessedV);
+							print("newO =", newO);
+							v = newO;
+							super.put(k, v);
+							continue;
+						}
+						*/
+						if (startsWith(unprocessedV, "\\[") && endsWith(unprocessedV, "\\]")) {
+							unprocessedV = unprocessedV.replaceAll("^\\[|\\]$", "");
+							if (!in(unprocessedV, ";$"))
+							    unprocessedV += ";";
+							String[] items = unprocessedV.split("\\s*[;&]+\\s");
+							items = KL.map(items, item -> item.replaceAll("^['\"]|['\"]$", ""));
+							v = items;
+							super.put(k, v);
+							continue;
+						}
 						if (isIntLike(unprocessedV))
 							v = Int(unprocessedV);
 						else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
@@ -9647,6 +9667,66 @@ public class KL {
 				return false;
 			}
 		}
+		String[] key(String k, String[] tryCastingAs) {
+			if (not(isArrOfStr(key(k)))) {
+				return blank.Str;
+			}
+			try {
+				return (String[]) key(k);
+			} catch (ClassCastException e) {
+				return blank.Str;
+			}
+		}
+		int[] key(String k, int[] tryCastingAs) {
+			if (not(isArrOfInt(key(k)))) {
+				return blank.Int;
+			}
+			try {
+				return (int[]) key(k);
+			} catch (ClassCastException e) {
+				return blank.Int;
+			}
+		}
+		long[] key(String k, long[] tryCastingAs) {
+			if (not(isArrOfLong(key(k)))) {
+				return blank.Long;
+			}
+			try {
+				return (long[]) key(k);
+			} catch (ClassCastException e) {
+				return blank.Long;
+			}
+		}
+		float[] key(String k, float[] tryCastingAs) {
+			if (not(isArrOfFlt(key(k)))) {
+				return blank.Flt;
+			}
+			try {
+				return (float[]) key(k);
+			} catch (ClassCastException e) {
+				return blank.Flt;
+			}
+		}
+		double[] key(String k, double[] tryCastingAs) {
+			if (not(isArrOfDbl(key(k)))) {
+				return blank.Dbl;
+			}
+			try {
+				return (double[]) key(k);
+			} catch (ClassCastException e) {
+				return blank.Dbl;
+			}
+		}
+		boolean[] key(String k, boolean[] tryCastingAs) {
+			if (not(isArrOfBool(key(k)))) {
+				return blank.Bool;
+			}
+			try {
+				return (boolean[]) key(k);
+			} catch (ClassCastException e) {
+				return blank.Bool;
+			}
+		}
 		Object k(String k) {
 			return key(k);
 		}
@@ -9666,6 +9746,24 @@ public class KL {
 			return key(k, tryCastingAs);
 		}
 		boolean k(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		String[] k(String k, String[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		int[] k(String k, int[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		long[] k(String k, long[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		float[] k(String k, float[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		double[] k(String k, double[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		boolean[] k(String k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
 		Object val(String k) {
@@ -9689,6 +9787,24 @@ public class KL {
 		boolean val(String k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
+		String[] val(String k, String[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		int[] val(String k, int[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		long[] val(String k, long[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		float[] val(String k, float[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		double[] val(String k, double[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		boolean[] val(String k, boolean[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
 		Object v(String k) {
 			return key(k);
 		}
@@ -9710,6 +9826,24 @@ public class KL {
 		boolean v(String k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
+		String[] v(String k, String[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		int[] v(String k, int[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		long[] v(String k, long[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		float[] v(String k, float[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		double[] v(String k, double[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		boolean[] v(String k, boolean[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
 		String get(String k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
@@ -9726,6 +9860,24 @@ public class KL {
 			return key(k, tryCastingAs);
 		}
 		boolean get(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		String[] get(String k, String[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		int[] get(String k, int[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		long[] get(String k, long[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		float[] get(String k, float[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		double[] get(String k, double[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		boolean[] get(String k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
 		String[] keyArray() {
@@ -31827,6 +31979,13 @@ public class KL {
 	public static float _f = 0;
 	public static double _d = 0;
 	public static boolean _b = false;
+	public static char[] _C = blank.Char;
+	public static String[] _S = blank.Str;
+	public static int[] _I = blank.Int;
+	public static long[] _L = blank.Long;
+	public static float[] _F = blank.Flt;
+	public static double[] _D = blank.Dbl;
+	public static boolean[] _B = blank.Bool;
 	public static Object[][] kv(o arg) {
 		if (arg == null || arg.keyArray().length == 0)
 			return blank.Obj2D;
@@ -64239,6 +64398,12 @@ public class KL {
 	public static String findMatch(String str, String re, int groupNumber) {
 		return findMatch(str, re, Str(groupNumber));
 	}
+	public static String findGroup(String str, String re, String groupName) {
+		return findMatch(str, re, groupName);
+	}
+	public static String findGroup(String str, String re, int groupNumber) {
+		return findMatch(str, re, Str(groupNumber));
+	}
 	public static String[] findMatches(String str, String re,
 			boolean... bools) {
 		if (not(str) || not(re)) {
@@ -70637,17 +70802,18 @@ public class KL {
 		for (int i : range(1, myArr))
 			print(myArr[i]);
 		bolo(range(2, 5));
-		har(varbl.i = -2, () -> varbl.i < 5, () -> varbl.i++,
+		har(varbl.i = 0, () -> varbl.i < 5, () -> varbl.i++,
 				() -> print(varbl.i));
 		print(none, "hello", "to", "me");
 		hint helps_kill_the_additional_whitespace_otherwise_added_after_each_argument;
 		o user = o(
-				"{'name': \"Tahani\", \"nationality\": British-Pakistani, \"age\": 32}",
+				"{'name': {first: \"Tahani\", last: \"Jamil\"}, \"nationality\": British-Pakistani, \"age\": 32, hobbies: [Netflix; gossip; & partying]}",
 				"{dying: !true}");
 		user.set("{dying: !false}");
 		print(user.k("name", _s));
 		print(user.k("nationality", _s));
 		print(user.k("age", _i));
+		print(user.k("hobbies", _S));
 		print(user);
 		for (var kv : from(user))
 			print(kv[0] + "=" + kv[1]);
