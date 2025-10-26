@@ -76,7 +76,7 @@ public class KL {
 		}
 	}
 	public static enum length {
-		standard, setLength, twice, half;
+		standard, setLength, naiLength, twice, dugni, half, adhi;
 	}
 	public static class init {
 		public static int i, j, k;
@@ -9429,8 +9429,9 @@ public class KL {
 					String[] pairs = eqSignSeparatedPair.split("\\s*[:=]\\s*");
 					hint.functionality tested_to_be_accurate;
 					if (len(pairs) == 2) {
-						k = lower(pairs[0]).replaceAll("^['\"]+|['\"]+$", "");
-						String unprocessedV = pairs[1];
+						k = lower(pairs[0].trim()).replaceAll("^['\"]+|['\"]+$",
+								"");
+						String unprocessedV = pairs[1].trim();
 						if (isIntLike(unprocessedV))
 							v = Int(unprocessedV);
 						else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
@@ -31518,296 +31519,298 @@ public class KL {
 		}
 	}
 	public static class bln {
-	    boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, No, no, Na, na, Jhoot, jhoot, True = Yes = yes = Met = met = Sach = Sach = False = No = no = Jhoot = jhoot = false;
-	    hint initially_all_the_positive_and_non_variables_should_point_to_false_since_we_dont_know_the_condition_yet;
-	    bln(boolean condition) {
-	        True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = condition;
-	        False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
-	    }
-	    bln(int n) {
-	        True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = n > 0 ? true : false;
-	        False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
-	    }
-	    bln negate() {
-	        True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = !yes;
-	        False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !no;
-	        return this;
-	    }
-	    bln neg() {
-	        return negate();
-	    }
-	    boolean get() {
-	        return yes;
-	    }
-	    boolean True() {
-	        return Yes;
-	    }
-	    boolean Yes() {
-	        return True();
-	    }
-	    boolean yes() {
-	        return True();
-	    }
-	    boolean Ha() {
-	        return True();
-	    }
-	    boolean ha() {
-	        return True();
-	    }
-	    boolean He() {
-	        return True();
-	    }
-	    boolean he() {
-	        return True();
-	    }
-	    boolean met() {
-	        return True();
-	    }
-	    boolean Sach() {
-	        return True();
-	    }
-	    boolean sach() {
-	        return True();
-	    }
-	    boolean No() {
-	        return No;
-	    }
-	    boolean no() {
-	        return No();
-	    }
-	    boolean Na() {
-	        return No();
-	    }
-	    boolean na() {
-	        return No();
-	    }
-	    boolean Nahi() {
-	        return No();
-	    }
-	    boolean nahi() {
-	        return No();
-	    }
-	    boolean Jhoot() {
-	        return No();
-	    }    
-	    boolean jhoot() {
-	        return No();
-	    }    
-	    @Override public String toString() {
-	        return ""+(yes == true ? "Yes" : "No");
-	    }    
+		boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, No, no, Na, na,
+				Jhoot, jhoot,
+				True = Yes = yes = Met = met = Sach = Sach = False = No = no = Jhoot = jhoot = false;
+		hint initially_all_the_positive_and_non_variables_should_point_to_false_since_we_dont_know_the_condition_yet;
+		bln(boolean condition) {
+			True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = condition;
+			False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+		}
+		bln(int n) {
+			True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = n > 0
+					? true
+					: false;
+			False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+		}
+		bln negate() {
+			True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = !yes;
+			False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !no;
+			return this;
+		}
+		bln neg() {
+			return negate();
+		}
+		boolean get() {
+			return yes;
+		}
+		boolean True() {
+			return Yes;
+		}
+		boolean Yes() {
+			return True();
+		}
+		boolean yes() {
+			return True();
+		}
+		boolean Ha() {
+			return True();
+		}
+		boolean ha() {
+			return True();
+		}
+		boolean He() {
+			return True();
+		}
+		boolean he() {
+			return True();
+		}
+		boolean met() {
+			return True();
+		}
+		boolean Sach() {
+			return True();
+		}
+		boolean sach() {
+			return True();
+		}
+		boolean No() {
+			return No;
+		}
+		boolean no() {
+			return No();
+		}
+		boolean Na() {
+			return No();
+		}
+		boolean na() {
+			return No();
+		}
+		boolean Nahi() {
+			return No();
+		}
+		boolean nahi() {
+			return No();
+		}
+		boolean Jhoot() {
+			return No();
+		}
+		boolean jhoot() {
+			return No();
+		}
+		@Override
+		public String toString() {
+			return "" + (yes == true ? "Yes" : "No");
+		}
 	}
 	public static class bool extends bln {
-	    bool(boolean condition) {
-	        super(condition);
-	    }
-	    bool(int n) {
-	        super(n);
-	    }
-	    bool negate() {
-	        super.negate();
-	        return this;
-	    }
-	    bool neg() {
-	        return negate();
-	    }
+		bool(boolean condition) {
+			super(condition);
+		}
+		bool(int n) {
+			super(n);
+		}
+		bool negate() {
+			super.negate();
+			return this;
+		}
+		bool neg() {
+			return negate();
+		}
 	}
 	public static class cdn extends bool {
-	    cdn(boolean condition) {
-	        super(condition);
-	    }
-	    cdn(int n) {
-	        super(n);
-	    }
-	    cdn negate() {
-	        super.negate();
-	        return this;
-	    }
-	    cdn neg() {
-	        return negate();
-	    }
+		cdn(boolean condition) {
+			super(condition);
+		}
+		cdn(int n) {
+			super(n);
+		}
+		cdn negate() {
+			super.negate();
+			return this;
+		}
+		cdn neg() {
+			return negate();
+		}
 	}
 	public static class hal extends cdn {
-	    hal(boolean condition) {
-	        super(condition);
-	    }
-	    hal(int n) {
-	        super(n);
-	    }
-	    hal negate() {
-	        super.negate();
-	        return this;
-	    }
-	    hal neg() {
-	        return negate();
-	    }
+		hal(boolean condition) {
+			super(condition);
+		}
+		hal(int n) {
+			super(n);
+		}
+		hal negate() {
+			super.negate();
+			return this;
+		}
+		hal neg() {
+			return negate();
+		}
 	}
 	public static class hlt extends hal {
-	    hlt(boolean condition) {
-	        super(condition);
-	    }
-	    hlt(int n) {
-	        super(n);
-	    }
-	    hlt negate() {
-	        super.negate();
-	        return this;
-	    }
-	    hlt neg() {
-	        return negate();
-	    }
+		hlt(boolean condition) {
+			super(condition);
+		}
+		hlt(int n) {
+			super(n);
+		}
+		hlt negate() {
+			super.negate();
+			return this;
+		}
+		hlt neg() {
+			return negate();
+		}
 	}
-    public static bln bln(boolean c) {
-        return new bln(c);
-    }
-    public static bln bln(int n) {
-        return new bln(n);
-    }
-    public static bool bool(boolean c) {
-        return new bool(c);
-    }
-    public static bool bool(int n) {
-        return new bool(n);
-    }
-    public static cdn cdn(boolean c) {
-        return new cdn(c);
-    }
-    public static cdn cdn(int n) {
-        return new cdn(n);
-    }
-    public static hal hal(boolean c) {
-        return new hal(c);
-    }
-    public static hal hal(int n) {
-        return new hal(n);
-    }
-    public static hlt hlt(boolean c) {
-        return new hlt(c);
-    }
-    public static hlt hlt(int n) {
-        return new hlt(n);
-    }
-    public static boolean Yes(boolean c) {
-        return c == true;
-    }
-    public static boolean Yes(bln c) {
-        if (c == null)
-            return false;
-        return c.get() == true;
-    }
-    public static boolean yes(boolean c) {
-        return Yes(c);
-    }
-    public static boolean yes(bln c) {
-        return Yes(c);
-    }
-    public static boolean Sach(boolean c) {
-        return Yes(c);
-    }
-    public static boolean Sach(bln c) {
-        return Yes(c);
-    }
-    public static boolean sach(boolean c) {
-        return Yes(c);
-    }
-    public static boolean sach(bln c) {
-        return Yes(c);
-    }
-    public static boolean Ha(boolean c) {
-        return Yes(c);
-    }
-    public static boolean Ha(bln c) {
-        return Yes(c);
-    }
-    public static boolean ha(boolean c) {
-        return Yes(c);
-    }
-    public static boolean ha(bln c) {
-        return Yes(c);
-    }
-    public static boolean He(boolean c) {
-        return Yes(c);
-    }
-    public static boolean He(bln c) {
-        return Yes(c);
-    }
-    /*
-    public static boolean he(boolean c) {
-        return Yes(c);
-    }
-    */
-    public static boolean he(bln c) {
-        return Yes(c);
-    }
-    public static boolean True(boolean c) {
-        return Yes(c);
-    }
-    public static boolean True(bln c) {
-        return Yes(c);
-    }
-    public static boolean No(boolean c) {
-        return c == false;
-    }
-    public static boolean No(bln c) {
-        if (c == null)
-            return false;
-        return c.get() == false;
-    }
-    public static boolean no(boolean c) {
-        return No(c);
-    }
-    public static boolean no(bln c) {
-        return No(c);
-    }
-    public static boolean Jhoot(boolean c) {
-        return No(c);
-    }
-    public static boolean Jhoot(bln c) {
-        return No(c);
-    }
-    public static boolean jhoot(boolean c) {
-        return No(c);
-    }
-    public static boolean jhoot(bln c) {
-        return No(c);
-    }
-    public static boolean Na(boolean c) {
-        return No(c);
-    }
-    public static boolean Na(bln c) {
-        return No(c);
-    }
-    public static boolean na(boolean c) {
-        return No(c);
-    }
-    public static boolean na(bln c) {
-        return No(c);
-    }
-    public static boolean Nahi(boolean c) {
-        return No(c);
-    }
-    public static boolean Nahi(bln c) {
-        return No(c);
-    }
-    /*
-    public static boolean nahi(boolean c) {
-        return No(c);
-    }
-    */
-    public static boolean nahi(bln c) {
-        return No(c);
-    }
-    public static boolean False(boolean c) {
-        return No(c);
-    }
-    public static boolean False(bln c) {
-        return No(c);
-    }
+	public static bln bln(boolean c) {
+		return new bln(c);
+	}
+	public static bln bln(int n) {
+		return new bln(n);
+	}
+	public static bool bool(boolean c) {
+		return new bool(c);
+	}
+	public static bool bool(int n) {
+		return new bool(n);
+	}
+	public static cdn cdn(boolean c) {
+		return new cdn(c);
+	}
+	public static cdn cdn(int n) {
+		return new cdn(n);
+	}
+	public static hal hal(boolean c) {
+		return new hal(c);
+	}
+	public static hal hal(int n) {
+		return new hal(n);
+	}
+	public static hlt hlt(boolean c) {
+		return new hlt(c);
+	}
+	public static hlt hlt(int n) {
+		return new hlt(n);
+	}
+	public static boolean Yes(boolean c) {
+		return c == true;
+	}
+	public static boolean Yes(bln c) {
+		if (c == null)
+			return false;
+		return c.get() == true;
+	}
+	public static boolean yes(boolean c) {
+		return Yes(c);
+	}
+	public static boolean yes(bln c) {
+		return Yes(c);
+	}
+	public static boolean Sach(boolean c) {
+		return Yes(c);
+	}
+	public static boolean Sach(bln c) {
+		return Yes(c);
+	}
+	public static boolean sach(boolean c) {
+		return Yes(c);
+	}
+	public static boolean sach(bln c) {
+		return Yes(c);
+	}
+	public static boolean Ha(boolean c) {
+		return Yes(c);
+	}
+	public static boolean Ha(bln c) {
+		return Yes(c);
+	}
+	public static boolean ha(boolean c) {
+		return Yes(c);
+	}
+	public static boolean ha(bln c) {
+		return Yes(c);
+	}
+	public static boolean He(boolean c) {
+		return Yes(c);
+	}
+	public static boolean He(bln c) {
+		return Yes(c);
+	}
+	/*
+	 * public static boolean he(boolean c) { return Yes(c); }
+	 */
+	public static boolean he(bln c) {
+		return Yes(c);
+	}
+	public static boolean True(boolean c) {
+		return Yes(c);
+	}
+	public static boolean True(bln c) {
+		return Yes(c);
+	}
+	public static boolean No(boolean c) {
+		return c == false;
+	}
+	public static boolean No(bln c) {
+		if (c == null)
+			return false;
+		return c.get() == false;
+	}
+	public static boolean no(boolean c) {
+		return No(c);
+	}
+	public static boolean no(bln c) {
+		return No(c);
+	}
+	public static boolean Jhoot(boolean c) {
+		return No(c);
+	}
+	public static boolean Jhoot(bln c) {
+		return No(c);
+	}
+	public static boolean jhoot(boolean c) {
+		return No(c);
+	}
+	public static boolean jhoot(bln c) {
+		return No(c);
+	}
+	public static boolean Na(boolean c) {
+		return No(c);
+	}
+	public static boolean Na(bln c) {
+		return No(c);
+	}
+	public static boolean na(boolean c) {
+		return No(c);
+	}
+	public static boolean na(bln c) {
+		return No(c);
+	}
+	public static boolean Nahi(boolean c) {
+		return No(c);
+	}
+	public static boolean Nahi(bln c) {
+		return No(c);
+	}
+	/*
+	 * public static boolean nahi(boolean c) { return No(c); }
+	 */
+	public static boolean nahi(bln c) {
+		return No(c);
+	}
+	public static boolean False(boolean c) {
+		return No(c);
+	}
+	public static boolean False(bln c) {
+		return No(c);
+	}
 	public static boolean True = true, False = !True, yes = True, no = False,
 			Yes = yes, No = no, on = Yes, off = No, On = on, Off = off,
 			Success = Yes, Failure = No, Y = Yes, N = No, ever = Y, ha = Y,
-			na = N, nahi = na, Ha = ha, Na = na, Nahi = Na, He = ha, he = ha, Hen = ha, hen = ha,
-			sach = Ha, jhoot = Na, Sach = sach, Jhoot = jhoot;
+			na = N, nahi = na, Ha = ha, Na = na, Nahi = Na, He = ha, he = ha,
+			Hen = ha, hen = ha, sach = Ha, jhoot = Na, Sach = sach,
+			Jhoot = jhoot;
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
@@ -48056,6 +48059,9 @@ public class KL {
 	public static String repeat(String s) {
 		return repeat(s, 2);
 	}
+	public static String fill(String s, int n) {
+		return repeat(s, n);
+	}
 	public static char[] map(char[] arr, Function<Character, Character> func) {
 		if (not(arr) || not(func)) {
 			return arr;
@@ -51814,7 +51820,7 @@ public class KL {
 	}
 	public static double abs(double n) {
 		return Pos(n);
-	}	
+	}
 	public static int Neg(int n) {
 		return -Pos(n);
 	}
@@ -52713,6 +52719,60 @@ public class KL {
 		}
 		return acc;
 	}
+	public static int fasla(int... ns) {
+		return difference(ns);
+	}
+	public static long fasla(long... ns) {
+		return difference(ns);
+	}
+	public static float fasla(float... ns) {
+		return difference(ns);
+	}
+	public static double fasla(double... ns) {
+		return difference(ns);
+	}
+	public static int fasla(intArr ns) {
+		return difference(ns);
+	}
+	public static long fasla(longArr ns) {
+		return difference(ns);
+	}
+	public static float fasla(fltArr ns) {
+		return difference(ns);
+	}
+	public static double fasla(dblArr ns) {
+		return difference(ns);
+	}
+	public static int fasla(oI ns) {
+		return difference(ns);
+	}
+	public static long fasla(oL ns) {
+		return difference(ns);
+	}
+	public static float fasla(oF ns) {
+		return difference(ns);
+	}
+	public static double fasla(oD ns) {
+		return difference(ns);
+	}
+	public static int fasla(treeDI ns) {
+		return difference(ns);
+	}
+	public static long fasla(treeDL ns) {
+		return difference(ns);
+	}
+	public static long fasla(treeL ns) {
+		return difference(ns);
+	}
+	public static float fasla(treeDF ns) {
+		return difference(ns);
+	}
+	public static float fasla(treeF ns) {
+		return difference(ns);
+	}
+	public static double fasla(treeD ns) {
+		return difference(ns);
+	}
 	public static int me_fasla(int... ns) {
 		return difference(ns);
 	}
@@ -52765,6 +52825,60 @@ public class KL {
 		return difference(ns);
 	}
 	public static double me_fasla(treeD ns) {
+		return difference(ns);
+	}
+	public static int ghatao(int... ns) {
+		return difference(ns);
+	}
+	public static long ghatao(long... ns) {
+		return difference(ns);
+	}
+	public static float ghatao(float... ns) {
+		return difference(ns);
+	}
+	public static double ghatao(double... ns) {
+		return difference(ns);
+	}
+	public static int ghatao(intArr ns) {
+		return difference(ns);
+	}
+	public static long ghatao(longArr ns) {
+		return difference(ns);
+	}
+	public static float ghatao(fltArr ns) {
+		return difference(ns);
+	}
+	public static double ghatao(dblArr ns) {
+		return difference(ns);
+	}
+	public static int ghatao(oI ns) {
+		return difference(ns);
+	}
+	public static long ghatao(oL ns) {
+		return difference(ns);
+	}
+	public static float ghatao(oF ns) {
+		return difference(ns);
+	}
+	public static double ghatao(oD ns) {
+		return difference(ns);
+	}
+	public static int ghatao(treeDI ns) {
+		return difference(ns);
+	}
+	public static long ghatao(treeDL ns) {
+		return difference(ns);
+	}
+	public static long ghatao(treeL ns) {
+		return difference(ns);
+	}
+	public static float ghatao(treeDF ns) {
+		return difference(ns);
+	}
+	public static float ghatao(treeF ns) {
+		return difference(ns);
+	}
+	public static double ghatao(treeD ns) {
 		return difference(ns);
 	}
 	public static int me_ghata(int... ns) {
@@ -52873,60 +52987,6 @@ public class KL {
 		return difference(ns);
 	}
 	public static double me_kami(treeD ns) {
-		return difference(ns);
-	}
-	public static int ghatao(int... ns) {
-		return difference(ns);
-	}
-	public static long ghatao(long... ns) {
-		return difference(ns);
-	}
-	public static float ghatao(float... ns) {
-		return difference(ns);
-	}
-	public static double ghatao(double... ns) {
-		return difference(ns);
-	}
-	public static int ghatao(intArr ns) {
-		return difference(ns);
-	}
-	public static long ghatao(longArr ns) {
-		return difference(ns);
-	}
-	public static float ghatao(fltArr ns) {
-		return difference(ns);
-	}
-	public static double ghatao(dblArr ns) {
-		return difference(ns);
-	}
-	public static int ghatao(oI ns) {
-		return difference(ns);
-	}
-	public static long ghatao(oL ns) {
-		return difference(ns);
-	}
-	public static float ghatao(oF ns) {
-		return difference(ns);
-	}
-	public static double ghatao(oD ns) {
-		return difference(ns);
-	}
-	public static int ghatao(treeDI ns) {
-		return difference(ns);
-	}
-	public static long ghatao(treeDL ns) {
-		return difference(ns);
-	}
-	public static long ghatao(treeL ns) {
-		return difference(ns);
-	}
-	public static float ghatao(treeDF ns) {
-		return difference(ns);
-	}
-	public static float ghatao(treeF ns) {
-		return difference(ns);
-	}
-	public static double ghatao(treeD ns) {
 		return difference(ns);
 	}
 	public static int se_ghatao(int... ns) {
@@ -53991,9 +54051,9 @@ public class KL {
 			return map(arr, item -> {
 				hint.avoids Arithmetic_Exception;
 				if (item == 0 || n == 0)
-				    return 0;
-                return item / n;
-             });
+					return 0;
+				return item / n;
+			});
 		}
 		public static long[] each(long[] arr, long n) {
 			if (arr == null || len(arr) == 0)
@@ -54001,9 +54061,9 @@ public class KL {
 			return map(arr, item -> {
 				hint.avoids Arithmetic_Exception;
 				if (item == 0 || n == 0)
-				    return 0;
-                return item / n;
-             });
+					return 0L;
+				return item / n;
+			});
 		}
 		public static float[] each(float[] arr, float n) {
 			if (arr == null || len(arr) == 0)
@@ -54011,9 +54071,9 @@ public class KL {
 			return map(arr, item -> {
 				hint.avoids Arithmetic_Exception;
 				if (item == 0 || n == 0)
-				    return 0;
-                return item / n;
-             });
+					return 0.0F;
+				return item / n;
+			});
 		}
 		public static double[] each(double[] arr, double n) {
 			if (arr == null || len(arr) == 0)
@@ -54021,9 +54081,9 @@ public class KL {
 			return map(arr, item -> {
 				hint.avoids Arithmetic_Exception;
 				if (item == 0 || n == 0)
-				    return 0;
-                return item / n;
-             });
+					return 0.0D;
+				return item / n;
+			});
 		}
 	}
 	public static class quotient extends divide {
@@ -60037,7 +60097,7 @@ public class KL {
 	}
 	public static boolean both(String... strings) {
 		if (not(strings))
-		    return false;
+			return false;
 		int count = 0;
 		for (String s : strings) {
 			if (is(s)) {
@@ -60048,7 +60108,7 @@ public class KL {
 	}
 	public static boolean both(int... ints) {
 		if (not(ints))
-		    return false;
+			return false;
 		int count = 0;
 		for (int n : ints) {
 			if (is(n)) {
@@ -60059,7 +60119,7 @@ public class KL {
 	}
 	public static boolean both(long... longs) {
 		if (not(longs))
-		    return false;
+			return false;
 		int count = 0;
 		for (long n : longs) {
 			if (is(n)) {
@@ -60070,7 +60130,7 @@ public class KL {
 	}
 	public static boolean both(float... floats) {
 		if (not(floats))
-		    return false;
+			return false;
 		int count = 0;
 		for (float n : floats) {
 			if (is(n)) {
@@ -60081,7 +60141,7 @@ public class KL {
 	}
 	public static boolean both(double... doubles) {
 		if (not(doubles))
-		    return false;
+			return false;
 		int count = 0;
 		for (double n : doubles) {
 			if (is(n)) {
@@ -60092,7 +60152,7 @@ public class KL {
 	}
 	public static boolean both(boolean... bools) {
 		if (not(bools))
-		    return false;
+			return false;
 		int count = 0;
 		for (boolean bool : bools) {
 			if (is(bool)) {
@@ -63066,15 +63126,13 @@ public class KL {
 	}
 	public static char i(char[] arr, int i) {
 		if (not(arr) || i >= len(arr) || isInf(i))
-		    return '\0';
+			return '\0';
 		return i >= 0 ? arr[i] : iLast(arr, Pos(i));
 	}
 	public static String i(String str, int i) {
 		if (not(str) || i >= len(str) || isInf(i))
-		    return "";
-		return i >= 0
-				? Str(str.toCharArray()[i])
-				: iLast(str, Pos(i));
+			return "";
+		return i >= 0 ? Str(str.toCharArray()[i]) : iLast(str, Pos(i));
 	}
 	public static String i(String[] arr, int i) {
 		if (isNull(arr))
@@ -68012,7 +68070,7 @@ public class KL {
 	}
 	public static boolean isEmpty(String s) {
 		if (isNull(s))
-		    return true;
+			return true;
 		return 0 == len(s);
 	}
 	public static boolean isEmpty(int n) {
@@ -68029,16 +68087,16 @@ public class KL {
 	}
 	public static boolean isEmpty(char[] arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(char[]... subArrays) {
 		if (isNull(subArrays))
-		    return true;
+			return true;
 		int count = 0;
 		for (char[] arr : subArrays) {
 			if (arr == null)
-			    continue;
+				continue;
 			if (isEmpty((arr))) {
 				count++;
 			}
@@ -68048,12 +68106,12 @@ public class KL {
 	}
 	public static boolean isEmpty(String[] arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(String[]... subArrays) {
 		if (isNull(subArrays))
-		    return true;
+			return true;
 		int count = 0;
 		for (String[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -68065,12 +68123,12 @@ public class KL {
 	}
 	public static boolean isEmpty(int[] arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(int[]... subArrays) {
 		if (isNull(subArrays))
-		    return true;
+			return true;
 		int count = 0;
 		for (int[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -68082,12 +68140,12 @@ public class KL {
 	}
 	public static boolean isEmpty(long[] arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(long[]... subArrays) {
 		if (isNull(subArrays))
-		    return true;
+			return true;
 		int count = 0;
 		for (long[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -68099,12 +68157,12 @@ public class KL {
 	}
 	public static boolean isEmpty(float[] arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(float[]... subArrays) {
 		if (isNull(subArrays))
-		    return true;
+			return true;
 		int count = 0;
 		for (float[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -68116,12 +68174,12 @@ public class KL {
 	}
 	public static boolean isEmpty(double[] arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(double[]... subArrays) {
 		if (isNull(subArrays))
-		    return true;
+			return true;
 		int count = 0;
 		for (double[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -68133,12 +68191,12 @@ public class KL {
 	}
 	public static boolean isEmpty(boolean[] arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(boolean[]... subArrays) {
 		if (isNull(subArrays))
-		    return true;
+			return true;
 		int count = 0;
 		for (boolean[] arr : subArrays) {
 			if (isEmpty((arr))) {
@@ -68150,12 +68208,12 @@ public class KL {
 	}
 	public static boolean isEmpty(Object[] arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr);
 	}
 	public static boolean isEmpty(Object[]... subArrays) {
 		if (isNull(subArrays))
-		    return true;
+			return true;
 		int count = 0;
 		for (Object[] arr : subArrays) {
 			if (0 == len(arr)) {
@@ -68167,117 +68225,117 @@ public class KL {
 	}
 	public static boolean isEmpty(arr arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(strArr arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(intArr arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(longArr arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(fltArr arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(dblArr arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(boolArr arr) {
 		if (isNull(arr))
-		    return true;
+			return true;
 		return 0 == len(arr) || arr.isEmpty();
 	}
 	public static boolean isEmpty(o o) {
 		if (isNull(o))
-		    return true;
+			return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oI o) {
 		if (isNull(o))
-		    return true;
+			return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oL o) {
 		if (isNull(o))
-		    return true;
+			return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oF o) {
 		if (isNull(o))
-		    return true;
+			return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oD o) {
 		if (isNull(o))
-		    return true;
+			return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(oB o) {
 		if (isNull(o))
-		    return true;
+			return true;
 		return 0 == len(o) || o.isEmpty();
 	}
 	public static boolean isEmpty(treeDI t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeI t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeDL t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeL t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeDF t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeF t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeDS t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeD t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeDB t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean isEmpty(treeB t) {
 		if (isNull(t))
-		    return true;
+			return true;
 		return 0 == len(t) || t.isEmpty();
 	}
 	public static boolean hasLen(char c) {
@@ -69819,19 +69877,23 @@ public class KL {
 	static o fetched = fetch("https://randusers-api.vercel.app");
 	static boolean veteran = user.k("veteran", _b);
 	public static int n = 0;
-	public static length setLength = length.setLength;
+	public static length setLength = length.setLength,
+			naiLength = length.naiLength;
 	public static char[] resize(char[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Char;
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -69880,12 +69942,15 @@ public class KL {
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -69934,12 +69999,15 @@ public class KL {
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -69988,12 +70056,15 @@ public class KL {
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -70042,12 +70113,15 @@ public class KL {
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -70096,12 +70170,15 @@ public class KL {
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -70150,12 +70227,15 @@ public class KL {
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -70204,12 +70284,15 @@ public class KL {
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -70258,12 +70341,15 @@ public class KL {
 		int newLen;
 		switch (mode) {
 			case setLength :
+			case naiLength :
 				newLen = by;
 				break;
 			case twice :
+			case dugni :
 				newLen = len(arr) * 2;
 				break;
 			case half :
+			case adhi :
 				newLen = len(arr) / 2;
 				break;
 			default :
@@ -70305,6 +70391,54 @@ public class KL {
 	}
 	public static boolean[] phelao(boolean[] arr, int by) {
 		return resize(arr, length.standard, by);
+	}
+	public static int[] autofill(int[] src, length mode, int by) {
+		if (src == null || len(src) == 0 || isInf(by))
+			return blank.Int;
+		int[] arr = src.clone();
+		java.util.Arrays.sort(arr);
+		int step, firstItem = 0, secondItem = 0, lastItem;
+		if (len(arr) < 2)
+			step = 1;
+		else {
+			firstItem = i(arr, 0);
+			secondItem = i(arr, 1);
+			step = max(firstItem, secondItem) - min(firstItem, secondItem);
+			if (not(step) || isNeg(step))
+				return arr;
+		}
+		int newLen;
+		switch (mode) {
+			case setLength :
+			case naiLength :
+				newLen = by;
+				break;
+			case twice :
+			case dugni :
+				newLen = len(arr) * 2;
+				break;
+			case half :
+			case adhi :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
+		}
+		if (newLen <= 0 || isInfinity(newLen))
+			return blank.Int;
+		int[] newArr = new int[newLen];
+		for (int i : range(newArr)) {
+			if (i >= len(arr)) {
+				lastItem = i(arr, -1);
+				newArr[i] = lastItem + step;
+				step *= 2;
+			} else {
+				newArr[i] = arr[i];
+			}
+		}
+		return newArr;
 	}
 	public static void har(int initialization,
 			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
@@ -70517,15 +70651,17 @@ public class KL {
 		print(user);
 		for (var kv : from(user))
 			print(kv[0] + "=" + kv[1]);
-		int[] testArr = {1, 3, 5};
-		testArr = extend(testArr, length.twice);
+		int[] testArr = {1, 3, 5, 7};
+		testArr = resize(testArr, length.half);
 		print(testArr);
 		print(len(testArr));
 		num age2 = num(30);
 		age2.me_izafa(10, ka);
-		age2.se_gaya(age2.ka_chotha());
+		age2.se_gaya(age2.ka_adha());
 		age2.me_dala(age2.ka_chotha());
 		System.out.println(age2.get());
+		int[] myNewArr = {1, 3, 5, 7};
+		print(autofill(myNewArr, length.standard, 10));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
