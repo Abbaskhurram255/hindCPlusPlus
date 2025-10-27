@@ -9437,13 +9437,16 @@ public class KL {
 					if (len(pairs) == 2) {
 						k = lower(pairs[0].trim()).replaceAll("^['\"]+|['\"]+$",
 								"");
-						String unprocessedV = pairs[1].trim()
-								.replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
-								.replaceAll("(?<=['\"\\w])\\s*[;&]+\\s*", ", ");
+						String unprocessedV = pairs[1].trim();
 						if (startsWith(unprocessedV, "\\{") && in(unprocessedV,
 								"(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
+							unprocessedV = 
+									unprocessedV.replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
+											.replaceAll(
+													"(?<=['\"\\w])\\s*[;&]+\\s*",
+													", ");
 							o newO = new o(unprocessedV);
-							print("newO =", newO);
+							//							print("newO =", newO);
 							v = newO;
 							super.put(k, v);
 							continue;
@@ -9454,8 +9457,9 @@ public class KL {
 									"");
 							if (!in(unprocessedV, ";$"))
 								unprocessedV += ";";
-							String[] items = unprocessedV
-									.split("\\s*[;&]+\\s*");
+							String[] items = untangle(
+									unprocessedV.split("\\s*[;&]+\\s*"));
+							hint.goodpractice the_untangle_method_helps_get_rid_of_a_bug;
 							items = KL.map(items, item -> item
 									.replaceAll("^['\"]|['\"]$", ""));
 							v = items;
@@ -48338,77 +48342,149 @@ public class KL {
 		return Arrays.stream(arr).reduce(0, func);
 	}
 	public static String[] popIf(String[] array, Predicate<String> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Str;
+		}
 		return new strArr(array).popIf(condition).array();
 	}
 	public static int[] popIf(int[] array, Predicate<Integer> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Int;
+		}
 		return new intArr(array).popIf(condition).array();
 	}
 	public static long[] popIf(long[] array, Predicate<Long> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Long;
+		}
 		return new longArr(array).popIf(condition).array();
 	}
 	public static float[] popIf(float[] array, Predicate<Float> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Flt;
+		}
 		return new fltArr(array).popIf(condition).array();
 	}
 	public static double[] popIf(double[] array, Predicate<Double> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Dbl;
+		}
 		return new dblArr(array).popIf(condition).array();
 	}
 	public static boolean[] popIf(boolean[] array,
 			Predicate<Boolean> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Bool;
+		}
 		return new boolArr(array).popIf(condition).array();
 	}
 	public static strArr popIf(strArr list, Predicate<String> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.strArr;
+		}
 		return list.popIf(condition);
 	}
 	public static intArr popIf(intArr list, Predicate<Integer> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.intArr;
+		}
 		return list.popIf(condition);
 	}
 	public static longArr popIf(longArr list, Predicate<Long> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.longArr;
+		}
 		return list.popIf(condition);
 	}
 	public static fltArr popIf(fltArr list, Predicate<Float> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.fltArr;
+		}
 		return list.popIf(condition);
 	}
 	public static dblArr popIf(dblArr list, Predicate<Double> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.dblArr;
+		}
 		return list.popIf(condition);
 	}
 	public static boolArr popIf(boolArr list, Predicate<Boolean> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.boolArr;
+		}
 		return list.popIf(condition);
 	}
 	public static String[] keepIf(String[] array, Predicate<String> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Str;
+		}
 		return new strArr(array).keepIf(condition).array();
 	}
 	public static int[] keepIf(int[] array, Predicate<Integer> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Int;
+		}
 		return new intArr(array).keepIf(condition).array();
 	}
 	public static long[] keepIf(long[] array, Predicate<Long> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Long;
+		}
 		return new longArr(array).keepIf(condition).array();
 	}
 	public static float[] keepIf(float[] array, Predicate<Float> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Flt;
+		}
 		return new fltArr(array).keepIf(condition).array();
 	}
 	public static double[] keepIf(double[] array, Predicate<Double> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Dbl;
+		}
 		return new dblArr(array).keepIf(condition).array();
 	}
 	public static boolean[] keepIf(boolean[] array,
 			Predicate<Boolean> condition) {
+		if (arr == null || isNull(condition)) {
+			return blank.Bool;
+		}
 		return new boolArr(array).keepIf(condition).array();
 	}
 	public static strArr keepIf(strArr list, Predicate<String> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.strArr;
+		}
 		return list.keepIf(condition);
 	}
 	public static intArr keepIf(intArr list, Predicate<Integer> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.intArr;
+		}
 		return list.keepIf(condition);
 	}
 	public static longArr keepIf(longArr list, Predicate<Long> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.longArr;
+		}
 		return list.keepIf(condition);
 	}
 	public static fltArr keepIf(fltArr list, Predicate<Float> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.fltArr;
+		}
 		return list.keepIf(condition);
 	}
 	public static dblArr keepIf(dblArr list, Predicate<Double> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.dblArr;
+		}
 		return list.keepIf(condition);
 	}
 	public static boolArr keepIf(boolArr list, Predicate<Boolean> condition) {
+		if (not(list) || isNull(condition)) {
+			return blank.boolArr;
+		}
 		return list.keepIf(condition);
 	}
 	public static String[] filterOut(String[] array,
@@ -48451,6 +48527,119 @@ public class KL {
 			Predicate<Boolean> condition) {
 		return popIf(list, condition);
 	}
+	public static String[] filterOut(String[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static int[] filterOut(int[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static long[] filterOut(long[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static float[] filterOut(float[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static double[] filterOut(double[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static boolean[] filterOut(boolean[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static strArr filterOut(strArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static intArr filterOut(intArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static longArr filterOut(longArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static fltArr filterOut(fltArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static dblArr filterOut(dblArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static boolArr filterOut(boolArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static String[] filterAway(String[] array,
+			Predicate<String> condition) {
+		return popIf(array, condition);
+	}
+	public static int[] filterAway(int[] array, Predicate<Integer> condition) {
+		return popIf(array, condition);
+	}
+	public static long[] filterAway(long[] array, Predicate<Long> condition) {
+		return popIf(array, condition);
+	}
+	public static float[] filterAway(float[] array,
+			Predicate<Float> condition) {
+		return popIf(array, condition);
+	}
+	public static double[] filterAway(double[] array,
+			Predicate<Double> condition) {
+		return popIf(array, condition);
+	}
+	public static boolean[] filterAway(boolean[] array,
+			Predicate<Boolean> condition) {
+		return popIf(array, condition);
+	}
+	public static strArr filterAway(strArr list, Predicate<String> condition) {
+		return popIf(list, condition);
+	}
+	public static intArr filterAway(intArr list, Predicate<Integer> condition) {
+		return popIf(list, condition);
+	}
+	public static longArr filterAway(longArr list, Predicate<Long> condition) {
+		return popIf(list, condition);
+	}
+	public static fltArr filterAway(fltArr list, Predicate<Float> condition) {
+		return popIf(list, condition);
+	}
+	public static dblArr filterAway(dblArr list, Predicate<Double> condition) {
+		return popIf(list, condition);
+	}
+	public static boolArr filterAway(boolArr list,
+			Predicate<Boolean> condition) {
+		return popIf(list, condition);
+	}
+	public static String[] filterAway(String[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static int[] filterAway(int[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static long[] filterAway(long[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static float[] filterAway(float[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static double[] filterAway(double[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static boolean[] filterAway(boolean[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static strArr filterAway(strArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static intArr filterAway(intArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static longArr filterAway(longArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static fltArr filterAway(fltArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static dblArr filterAway(dblArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static boolArr filterAway(boolArr list) {
+		return keepIf(list, item -> is(item));
+	}
 	public static String[] filter(String[] array, Predicate<String> condition) {
 		return keepIf(array, condition);
 	}
@@ -48487,6 +48676,42 @@ public class KL {
 	}
 	public static boolArr filter(boolArr list, Predicate<Boolean> condition) {
 		return keepIf(list, condition);
+	}
+	public static String[] filter(String[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static int[] filter(int[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static long[] filter(long[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static float[] filter(float[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static double[] filter(double[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static boolean[] filter(boolean[] array) {
+		return keepIf(array, item -> is(item));
+	}
+	public static strArr filter(strArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static intArr filter(intArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static longArr filter(longArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static fltArr filter(fltArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static dblArr filter(dblArr list) {
+		return keepIf(list, item -> is(item));
+	}
+	public static boolArr filter(boolArr list) {
+		return keepIf(list, item -> is(item));
 	}
 	public static String[] onlyPop(String[] array,
 			Predicate<String> condition) {
@@ -49175,7 +49400,8 @@ public class KL {
 	}
 	// printing arrays
 	public static void printArr(Object arg) {
-		if (isNull(arg)) {
+		if (arg == null) {
+			System.out.println("[]");
 			return;
 		}
 		if (arg instanceof o || arg instanceof oI || arg instanceof oL
@@ -50997,7 +51223,7 @@ public class KL {
 		// extra "" character at the beginning, i.e. at index 0, of the array
 		// the string has been split into. JavaScript is way better in this
 		// case.
-		return returnValue;
+		return untangle(returnValue);
 	}
 	public static String[] splitIntoWords(String str) {
 		if (not(str)) {
@@ -68965,6 +69191,13 @@ public class KL {
 	public static char[] untangle(Character[] inputArr) {
 		return charArrToCharArr(inputArr);
 	}
+	public static String[] untangle(String[] inputArr) {
+		if (not(inputArr)) {
+			return blank.Str;
+		}
+		hint.goodpractice getting_rid_of_a_bug;
+		return filterAway(inputArr, item -> not(item));
+	}
 	public static int[] untangle(Integer[] inputArr) {
 		return intArrToIntArr(inputArr);
 	}
@@ -70841,13 +71074,13 @@ public class KL {
 		print(none, "hello", "to", "me");
 		hint helps_kill_the_additional_whitespace_otherwise_added_after_each_argument;
 		o user = o(
-				"{'name': {first->\"Tahani\"; middle->Al; last->\"Jamil\" & pronunciation->[\"tahaanee\"; \"uhl\"; \"jmiuhl\"]}, \"nationality\": British-Pakistani, \"age\": 32, hobbies: [Netflix; gossip; & partying]}",
+				"{'name': {first->\"Tahani\"; middle->Al; last->\"Jamil\"}, \"nationality\": British-Pakistani, \"age\": 32, hobbies: [Netflix; gossip; & partying]}",
 				"{dying: !true}");
 		user.set("{dying: !false}");
 		print(user.k("name", _s));
 		print(user.k("nationality", _s));
 		print(user.k("age", _i));
-		print(user.k("hobbies", _S));
+		printArr(user.k("hobbies", _S));
 		print(user.k("name", blank.o));
 		print(user);
 		for (var kv : of(user))
@@ -70863,6 +71096,7 @@ public class KL {
 		System.out.println(age2.get());
 		int[] myNewArr = {1, 3, 5, 7};
 		print(autofill(myNewArr, length.standard, 10));
+		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
