@@ -38,7 +38,7 @@ public class KL {
 		}
 		public static class behavior extends hint {
 		}
-		public static class functionality {
+		public static class functionality extends hint {
 		}
 		public static class goodpractice extends hint {
 		}
@@ -77,6 +77,12 @@ public class KL {
 	}
 	public static enum length {
 		standard, setLength, naiLength, twice, dugni, half, adhi;
+	}
+	public static class lambai {
+		//enums cannot be extended, hence manual manipulation
+		public static length standard = length.standard, setLength = length.setLength,
+				naiLength = length.naiLength, twice = length.twice,
+				dugni = length.dugni, half = length.half, adhi = length.adhi;
 	}
 	public static class init {
 		public static int i, j, k;
@@ -9423,7 +9429,7 @@ public class KL {
 				eqSignSeparatedPair = eqSignSeparatedPair
 						.replaceAll("^\\{+|\\}+$", "");
 				if (in(eqSignSeparatedPair,
-						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\-\\.]?!*\\w+['\"\\-\\.]?[:;\\&\\s\\w\\{]*[\\}\\]]?)")) {
+						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
 					String k;
 					Object v = new Object();
 					String[] pairs = eqSignSeparatedPair.split("\\s*[:=]\\s*");
@@ -9431,21 +9437,27 @@ public class KL {
 					if (len(pairs) == 2) {
 						k = lower(pairs[0].trim()).replaceAll("^['\"]+|['\"]+$",
 								"");
-						String unprocessedV = pairs[1].trim();
-						if (startsWith(unprocessedV, "\\{") && endsWith(unprocessedV, "\\}") && in(unprocessedV, "\\{(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\-\\.]?!*\\w+['\"\\-\\.]?[;\\&\\s\\w]*[\\}\\]]?)\\}")) {
-							print("unprocessedV =", unprocessedV);
+						String unprocessedV = pairs[1].trim()
+								.replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
+								.replaceAll("(?<=['\"\\w])\\s*[;&]+\\s*", ", ");
+						if (startsWith(unprocessedV, "\\{") && in(unprocessedV,
+								"(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
 							o newO = new o(unprocessedV);
 							print("newO =", newO);
 							v = newO;
 							super.put(k, v);
 							continue;
 						}
-						if (startsWith(unprocessedV, "\\[") && endsWith(unprocessedV, "\\]")) {
-							unprocessedV = unprocessedV.replaceAll("^\\[|\\]$", "");
+						if (startsWith(unprocessedV, "\\[")
+								&& endsWith(unprocessedV, "\\]")) {
+							unprocessedV = unprocessedV.replaceAll("^\\[|\\]$",
+									"");
 							if (!in(unprocessedV, ";$"))
-							    unprocessedV += ";";
-							String[] items = unprocessedV.split("\\s*[;&]+\\s");
-							items = KL.map(items, item -> item.replaceAll("^['\"]|['\"]$", ""));
+								unprocessedV += ";";
+							String[] items = unprocessedV
+									.split("\\s*[;&]+\\s*");
+							items = KL.map(items, item -> item
+									.replaceAll("^['\"]|['\"]$", ""));
 							v = items;
 							super.put(k, v);
 							continue;
@@ -9725,6 +9737,16 @@ public class KL {
 				return blank.Bool;
 			}
 		}
+		o key(String k, o tryCastingAs) {
+			if (not(type(key(k), "o"))) {
+				return blank.o;
+			}
+			try {
+				return (o) key(k);
+			} catch (ClassCastException e) {
+				return blank.o;
+			}
+		}
 		Object k(String k) {
 			return key(k);
 		}
@@ -9744,6 +9766,9 @@ public class KL {
 			return key(k, tryCastingAs);
 		}
 		boolean k(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		o k(String k, o tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
 		String[] k(String k, String[] tryCastingAs) {
@@ -9785,6 +9810,9 @@ public class KL {
 		boolean val(String k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
+		o val(String k, o tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
 		String[] val(String k, String[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
@@ -9824,6 +9852,9 @@ public class KL {
 		boolean v(String k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
+		o v(String k, o tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
 		String[] v(String k, String[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
@@ -9858,6 +9889,9 @@ public class KL {
 			return key(k, tryCastingAs);
 		}
 		boolean get(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		o get(String k, o tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
 		String[] get(String k, String[] tryCastingAs) {
@@ -31977,6 +32011,7 @@ public class KL {
 	public static float _f = 0;
 	public static double _d = 0;
 	public static boolean _b = false;
+	public static boolean _o = false;
 	public static char[] _C = blank.Char;
 	public static String[] _S = blank.Str;
 	public static int[] _I = blank.Int;
@@ -64857,6 +64892,7 @@ public class KL {
 		public static fltArr fltArr = fltArr();
 		public static dblArr dblArr = dblArr();
 		public static boolArr boolArr = boolArr();
+		public static o o = o();
 	}
 	public static class summary {
 		public static o of(Object o) {
@@ -70805,18 +70841,19 @@ public class KL {
 		print(none, "hello", "to", "me");
 		hint helps_kill_the_additional_whitespace_otherwise_added_after_each_argument;
 		o user = o(
-				"{'name': {first: \"Tahani\", last: \"Jamil\"}, \"nationality\": British-Pakistani, \"age\": 32, hobbies: [Netflix; gossip; & partying]}",
+				"{'name': {first->\"Tahani\"; middle->Al; last->\"Jamil\" & pronunciation->[\"tahaanee\"; \"uhl\"; \"jmiuhl\"]}, \"nationality\": British-Pakistani, \"age\": 32, hobbies: [Netflix; gossip; & partying]}",
 				"{dying: !true}");
 		user.set("{dying: !false}");
 		print(user.k("name", _s));
 		print(user.k("nationality", _s));
 		print(user.k("age", _i));
 		print(user.k("hobbies", _S));
+		print(user.k("name", blank.o));
 		print(user);
-		for (var kv : from(user))
+		for (var kv : of(user))
 			print(kv[0] + "=" + kv[1]);
 		int[] testArr = {1, 3, 5, 7};
-		testArr = resize(testArr, length.half);
+		testArr = resize(testArr, lambai.adhi);
 		print(testArr);
 		print(len(testArr));
 		num age2 = num(30);
