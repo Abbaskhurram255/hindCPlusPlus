@@ -9423,7 +9423,7 @@ public class KL {
 				eqSignSeparatedPair = eqSignSeparatedPair
 						.replaceAll("^\\{+|\\}+$", "");
 				if (in(eqSignSeparatedPair,
-						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\-\\.]?!*\\w+['\"\\-\\.]?[;\\&\\s\\w]*[\\}\\]]?)")) {
+						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\-\\.]?!*\\w+['\"\\-\\.]?[:;\\&\\s\\w\\{]*[\\}\\]]?)")) {
 					String k;
 					Object v = new Object();
 					String[] pairs = eqSignSeparatedPair.split("\\s*[:=]\\s*");
@@ -9432,7 +9432,6 @@ public class KL {
 						k = lower(pairs[0].trim()).replaceAll("^['\"]+|['\"]+$",
 								"");
 						String unprocessedV = pairs[1].trim();
-						/*
 						if (startsWith(unprocessedV, "\\{") && endsWith(unprocessedV, "\\}") && in(unprocessedV, "\\{(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\-\\.]?!*\\w+['\"\\-\\.]?[;\\&\\s\\w]*[\\}\\]]?)\\}")) {
 							print("unprocessedV =", unprocessedV);
 							o newO = new o(unprocessedV);
@@ -9441,7 +9440,6 @@ public class KL {
 							super.put(k, v);
 							continue;
 						}
-						*/
 						if (startsWith(unprocessedV, "\\[") && endsWith(unprocessedV, "\\]")) {
 							unprocessedV = unprocessedV.replaceAll("^\\[|\\]$", "");
 							if (!in(unprocessedV, ";$"))
