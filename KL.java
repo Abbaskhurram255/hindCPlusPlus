@@ -32015,7 +32015,6 @@ public class KL {
 	public static float _f = 0;
 	public static double _d = 0;
 	public static boolean _b = false;
-	public static boolean _o = false;
 	public static char[] _C = blank.Char;
 	public static String[] _S = blank.Str;
 	public static int[] _I = blank.Int;
@@ -32023,6 +32022,7 @@ public class KL {
 	public static float[] _F = blank.Flt;
 	public static double[] _D = blank.Dbl;
 	public static boolean[] _B = blank.Bool;
+	public static o _o = blank.o;
 	public static Object[][] kv(o arg) {
 		if (arg == null || arg.keyArray().length == 0)
 			return blank.Obj2D;
@@ -71081,7 +71081,7 @@ public class KL {
 		print(user.k("nationality", _s));
 		print(user.k("age", _i));
 		printArr(user.k("hobbies", _S));
-		print(user.k("name", blank.o));
+		print(user.k("name", _o));
 		print(user);
 		for (var kv : of(user))
 			print(kv[0] + "=" + kv[1]);
