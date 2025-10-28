@@ -80,9 +80,10 @@ public class KL {
 	}
 	public static class lambai {
 		//enums cannot be extended, hence manual manipulation
-		public static length standard = length.standard, setLength = length.setLength,
-				naiLength = length.naiLength, twice = length.twice,
-				dugni = length.dugni, half = length.half, adhi = length.adhi;
+		public static length standard = length.standard,
+				setLength = length.setLength, naiLength = length.naiLength,
+				twice = length.twice, dugni = length.dugni, half = length.half,
+				adhi = length.adhi;
 	}
 	public static class init {
 		public static int i, j, k;
@@ -9440,11 +9441,10 @@ public class KL {
 						String unprocessedV = pairs[1].trim();
 						if (startsWith(unprocessedV, "\\{") && in(unprocessedV,
 								"(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
-							unprocessedV = 
-									unprocessedV.replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
-											.replaceAll(
-													"(?<=['\"\\w])\\s*[;&]+\\s*",
-													", ");
+							unprocessedV = unprocessedV
+									.replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
+									.replaceAll("(?<=['\"\\w])\\s*[;&]+\\s*",
+											", ");
 							o newO = new o(unprocessedV);
 							//							print("newO =", newO);
 							v = newO;
@@ -9465,25 +9465,28 @@ public class KL {
 							Object[] finalProcessedItems = new Object[items.length];
 							Object processedItem;
 							for (int i : range(items)) {
-							   String rawItem = items[i];
-							    if (isIntLike(rawItem))
+								String rawItem = items[i];
+								if (isIntLike(rawItem))
 									processedItem = Int(rawItem);
 								else if (eq(rawItem, "\\-?\\d+[Ll]"))
-									processedItem = Long(rawItem.replaceAll("[Ll]$", ""));
+									processedItem = Long(
+											rawItem.replaceAll("[Ll]$", ""));
 								else if (eq(rawItem, "\\-?\\d*\\.?\\d+[Ff]")) {
 									// the `[Ff]` check in here is mandatory to
 									// recognize
 									// the
 									// value as a float, and not a double
-									processedItem = Flt(rawItem.replaceAll("[Ff]$", ""));
-								} else if (eq(rawItem, "\\-?\\d*\\.?\\d+[Dd]?")) {
+									processedItem = Flt(
+											rawItem.replaceAll("[Ff]$", ""));
+								} else if (eq(rawItem,
+										"\\-?\\d*\\.?\\d+[Dd]?")) {
 									// the D in here should be optional
-									processedItem = Dbl(rawItem.replaceAll("[Dd]$", ""));
+									processedItem = Dbl(
+											rawItem.replaceAll("[Dd]$", ""));
 								} else if (in(rawItem, "!*(true|false)")) {
 									boolean midValue = in(
-											rawItem.replaceAll("^!+", ""), "true")
-													? true
-													: false;
+											rawItem.replaceAll("^!+", ""),
+											"true") ? true : false;
 									while (in(rawItem, "!")) {
 										rawItem = replaceFirst(rawItem, "!",
 												"");
@@ -9494,7 +9497,8 @@ public class KL {
 									processedItem = rawItem.replaceAll("\'", "")
 											.toCharArray()[0];
 								else
-									processedItem = Str(rawItem).replaceAll("^\"+|\"+$", "");
+									processedItem = Str(rawItem)
+											.replaceAll("^\"+|\"+$", "");
 								finalProcessedItems[i] = processedItem;
 							}
 							v = finalProcessedItems;
@@ -31742,8 +31746,8 @@ public class KL {
 		}
 	}
 	public static class bln {
-		boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, False, No, no, Na, na, Nahi, nahi,
-				Jhoot, jhoot,
+		boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, False, No, no,
+				Na, na, Nahi, nahi, Jhoot, jhoot,
 				True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = false;
 		hint initially_all_the_positive_and_non_variables_should_point_to_false_since_we_dont_know_the_condition_yet;
 		bln(boolean condition) {
@@ -47237,6 +47241,105 @@ public class KL {
 	public static class between extends range {
 	}
 	public static class darmyan extends range {
+		public static int[] shamilAkhri(int n) {
+			return inclusive(n);
+		}
+		public static double[] shamilAkhri(double n) {
+			return inclusive(n);
+		}
+		public static int[] shamilAkhri(int m, int n, int... optional) {
+			return inclusive(m, n, optional);
+		}
+		public static String[] shamilAkhri(String m, String n,
+				int... optional) {
+			return inclusive(m, n, optional);
+		}
+		public static char[] shamilAkhri(char m, char n) {
+			return inclusive(m, n);
+		}
+		public static double[] shamilAkhri(double m, double n,
+				int... optional) {
+			return inclusive(m, n, optional);
+		}
+		public static int[] shamilAkhri(int n, boolean reverse) {
+			return inclusive(n, reverse);
+		}
+		public static int[] shamilAkhri(int m, int n, int gap,
+				boolean reverse) {
+			return inclusive(m, n, gap, reverse);
+		}
+		public static int[] shamilAkhri(int m, int n, boolean reverse) {
+			return inclusive(m, n, reverse);
+		}
+		public static double[] shamilAkhri(double n, boolean reverse) {
+			return inclusive(n, reverse);
+		}
+		public static double[] shamilAkhri(double m, double n, int gap,
+				boolean reverse) {
+			return inclusive(m, n, gap, reverse);
+		}
+		public static double[] shamilAkhri(double m, double n,
+				boolean reverse) {
+			return inclusive(m, n, reverse);
+		}
+		public static String[] shamilAkhri(String m, String n, int gap,
+				boolean reverse) {
+			return inclusive(m, n, gap, reverse);
+		}
+		public static String[] shamilAkhri(String m, String n,
+				boolean reverse) {
+			return inclusive(m, n, reverse);
+		}
+		public static char[] shamilAkhri(char m, char n, boolean reverse) {
+			return inclusive(m, n, reverse);
+		}
+		public static int[] bagerAkhri(int n) {
+			return exclusive(n);
+		}
+		public static double[] bagerAkhri(double n) {
+			return exclusive(n);
+		}
+		public static int[] bagerAkhri(int m, int n, int... optional) {
+			return exclusive(m, n, optional);
+		}
+		public static String[] bagerAkhri(String m, String n, int... optional) {
+			return exclusive(m, n, optional);
+		}
+		public static char[] bagerAkhri(char m, char n) {
+			return exclusive(m, n);
+		}
+		public static double[] bagerAkhri(double m, double n, int... optional) {
+			return exclusive(m, n, optional);
+		}
+		public static int[] bagerAkhri(int n, boolean reverse) {
+			return exclusive(n, reverse);
+		}
+		public static int[] bagerAkhri(int m, int n, int gap, boolean reverse) {
+			return exclusive(m, n, gap, reverse);
+		}
+		public static int[] bagerAkhri(int m, int n, boolean reverse) {
+			return exclusive(m, n, reverse);
+		}
+		public static double[] bagerAkhri(double n, boolean reverse) {
+			return exclusive(n, reverse);
+		}
+		public static double[] bagerAkhri(double m, double n, int gap,
+				boolean reverse) {
+			return exclusive(m, n, gap, reverse);
+		}
+		public static double[] bagerAkhri(double m, double n, boolean reverse) {
+			return exclusive(m, n, reverse);
+		}
+		public static String[] bagerAkhri(String m, String n, int gap,
+				boolean reverse) {
+			return exclusive(m, n, gap, reverse);
+		}
+		public static String[] bagerAkhri(String m, String n, boolean reverse) {
+			return exclusive(m, n, reverse);
+		}
+		public static char[] bagerAkhri(char m, char n, boolean reverse) {
+			return exclusive(m, n, reverse);
+		}
 	}
 	public static int[] range(int n) {
 		intArr arr = intArr();
@@ -48252,6 +48355,53 @@ public class KL {
 	public static int[] until(int start, boolArr... arrays) {
 		return range(start, arrays);
 	}
+	public static int[] between(int n) {
+		return range(n);
+	}
+	public static double[] between(double n) {
+		return range(n);
+	}
+	public static int[] between(int m, int n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static String[] between(String m, String n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static char[] between(char m, char n) {
+		return range(m, n);
+	}
+	public static double[] between(double m, double n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static int[] between(int n, boolean reverse) {
+		return range(n, reverse);
+	}
+	public static int[] between(int m, int n, int gap, boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static int[] between(int m, int n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static double[] between(double n, boolean reverse) {
+		return range(n, reverse);
+	}
+	public static double[] between(double m, double n, int gap,
+			boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static double[] between(double m, double n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static String[] between(String m, String n, int gap,
+			boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static String[] between(String m, String n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static char[] between(char m, char n, boolean reverse) {
+		return range(m, n, reverse);
+	}
 	public static int[] between(String str) {
 		return range(str);
 	}
@@ -48347,6 +48497,53 @@ public class KL {
 	}
 	public static int[] between(int start, boolArr... arrays) {
 		return range(start, arrays);
+	}
+	public static int[] darmyan(int n) {
+		return range(n);
+	}
+	public static double[] darmyan(double n) {
+		return range(n);
+	}
+	public static int[] darmyan(int m, int n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static String[] darmyan(String m, String n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static char[] darmyan(char m, char n) {
+		return range(m, n);
+	}
+	public static double[] darmyan(double m, double n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static int[] darmyan(int n, boolean reverse) {
+		return range(n, reverse);
+	}
+	public static int[] darmyan(int m, int n, int gap, boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static int[] darmyan(int m, int n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static double[] darmyan(double n, boolean reverse) {
+		return range(n, reverse);
+	}
+	public static double[] darmyan(double m, double n, int gap,
+			boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static double[] darmyan(double m, double n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static String[] darmyan(String m, String n, int gap,
+			boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static String[] darmyan(String m, String n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static char[] darmyan(char m, char n, boolean reverse) {
+		return range(m, n, reverse);
 	}
 	public static int[] darmyan(String str) {
 		return range(str);
