@@ -47232,6 +47232,10 @@ public class KL {
 	}
 	public static class in extends range {
 	}
+	public static class until extends range {
+	}
+	public static class between extends range {
+	}
 	public static class darmyan extends range {
 	}
 	public static int[] range(int n) {
@@ -48150,6 +48154,198 @@ public class KL {
 		return range(start, arrays);
 	}
 	public static int[] in(int start, boolArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(String str) {
+		return range(str);
+	}
+	public static int[] until(char[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(String[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(int[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(long[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(float[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(double[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(boolean[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(Object[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(arr... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(strArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(intArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(longArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(fltArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(dblArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(boolArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] until(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] until(int start, char[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, String[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, int[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, long[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, float[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, double[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, boolean[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, Object[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, arr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, strArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, intArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, longArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, fltArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, dblArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] until(int start, boolArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(String str) {
+		return range(str);
+	}
+	public static int[] between(char[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(String[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(int[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(long[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(float[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(double[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(boolean[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(Object[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(arr... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(strArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(intArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(longArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(fltArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(dblArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(boolArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] between(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] between(int start, char[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, String[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, int[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, long[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, float[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, double[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, boolean[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, Object[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, arr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, strArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, intArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, longArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, fltArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, dblArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] between(int start, boolArr... arrays) {
 		return range(start, arrays);
 	}
 	public static int[] darmyan(String str) {
