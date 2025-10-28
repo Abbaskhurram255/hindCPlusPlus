@@ -72090,7 +72090,7 @@ public class KL {
 		print(none, "hello", "to", "me");
 		hint helps_kill_the_additional_whitespace_otherwise_added_after_each_argument;
 		o user = o(
-				"{'name': {first->\"Tahani\"; middle->Al; last->\"Jamil\"}, \"nationality\": British-Pakistani, \"age\": 32, hobbies: [Netflix; gossip; & partying]}",
+				"{name: {first->Tahani; middle->Al; last->Jamil}, nationality: British-Pakistani, age: 32, hobbies: [Netflix; gossip; & partying]}",
 				"{dying: !true}");
 		user.set("{dying: !false}");
 		print(user.k("name", _s));
@@ -72114,9 +72114,10 @@ public class KL {
 		print(autofill(myNewArr, length.standard, 10));
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
 		o user3 = o(
-				"{name: {first->Juliet; last->Salvador}, age: 17, hobbies: [travel; basketball & tennis]}");
+				"{name: {first->Juliet; last->Salvador}, age: 17, is_a_student: !false, hobbies: [travel; basketball & tennis]}");
 		print(user3.k("name", _o));
 		print(user3.k("age", _i));
+		print(user3.k("is_a_student", _b));
 		printArr(user3.k("hobbies", _S));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
