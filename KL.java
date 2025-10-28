@@ -31910,6 +31910,12 @@ public class KL {
 	public static hal hal(int n) {
 		return new hal(n);
 	}
+	public static hal filhal(boolean c) {
+		return new hal(c);
+	}
+	public static hal filhal(int n) {
+		return new hal(n);
+	}
 	public static hlt hlt(boolean c) {
 		return new hlt(c);
 	}
