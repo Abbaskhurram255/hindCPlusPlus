@@ -32048,7 +32048,7 @@ public class KL {
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static Object ko, ki, ke, ka = ko = ki = ke = new Object(),
-			me_se = new Object(), mese = me_se;
+			mese = new Object();
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
 	public static String Else = "else", warna = Else, Warna = warna;
@@ -48891,6 +48891,117 @@ public class KL {
 			Object... languageSupportingArgs) {
 		return range(start, arr);
 	}
+	public static int[] lia(String str, Object... languageSupportingArgs) {
+		return range(str);
+	}
+	public static int[] lia(char[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(String[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(int[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(long[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(float[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(double[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(boolean[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(Object[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(arr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(strArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(intArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(longArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(fltArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(dblArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(boolArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] lia(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] lia(int start, char[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, String[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, int[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, long[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, float[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, double[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, boolean[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, Object[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, arr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, strArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, intArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, longArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, fltArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, dblArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] lia(int start, boolArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
 	public static void each(String[] iterable,
 			ObjIntConsumer<String> consumer) {
 		if (not(iterable) || not(consumer)) {
@@ -58535,6 +58646,14 @@ public class KL {
 		output = output.replaceAll(",\\s(?=\\]$)", "");
 		print(output);
 	}
+	public static void printkv(Object[] o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(kv[0], "=", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
 	public static void printkv(arr o) {
 		String output = "[";
 		for (var kv : kv(o))
@@ -58760,6 +58879,14 @@ public class KL {
 		print(output);
 	}
 	public static void printnv(boolean[] o) {
+		String output = "[";
+		for (var kv : kv(o))
+			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
+		output += "]";
+		output = output.replaceAll(",\\s(?=\\]$)", "");
+		print(output);
+	}
+	public static void printnv(Object[] o) {
 		String output = "[";
 		for (var kv : kv(o))
 			output += cat(((int) kv[0]) + 1, ". ", kv[1], ", ");
@@ -71981,7 +72108,7 @@ public class KL {
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
 		String[] meriTestStringArr = {"BMW", "Mercedes", "Maserati", "Ford",
 				"Ferrari", "Porsche"};
-		for (int i : hissa(meriTestStringArr, ka)) {
+		for (int i : lia(meriTestStringArr, mese)) {
 			print(meriTestStringArr[i]);
 		}
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
