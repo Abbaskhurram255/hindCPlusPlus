@@ -9462,7 +9462,42 @@ public class KL {
 							hint.goodpractice the_untangle_method_helps_get_rid_of_a_bug;
 							items = KL.map(items, item -> item
 									.replaceAll("^['\"]|['\"]$", ""));
-							v = items;
+							Object[] finalProcessedItems = new Object[items.length];
+							Object processedItem;
+							for (int i : range(items)) {
+							   String rawItem = items[i];
+							    if (isIntLike(rawItem))
+									processedItem = Int(rawItem);
+								else if (eq(rawItem, "\\-?\\d+[Ll]"))
+									processedItem = Long(rawItem.replaceAll("[Ll]$", ""));
+								else if (eq(rawItem, "\\-?\\d*\\.?\\d+[Ff]")) {
+									// the `[Ff]` check in here is mandatory to
+									// recognize
+									// the
+									// value as a float, and not a double
+									processedItem = Flt(rawItem.replaceAll("[Ff]$", ""));
+								} else if (eq(rawItem, "\\-?\\d*\\.?\\d+[Dd]?")) {
+									// the D in here should be optional
+									processedItem = Dbl(rawItem.replaceAll("[Dd]$", ""));
+								} else if (in(rawItem, "!*(true|false)")) {
+									boolean midValue = in(
+											rawItem.replaceAll("^!+", ""), "true")
+													? true
+													: false;
+									while (in(rawItem, "!")) {
+										rawItem = replaceFirst(rawItem, "!",
+												"");
+										midValue = !midValue;
+									}
+									processedItem = midValue;
+								} else if (in(rawItem, "(?<=')[a-zA-Z](?=')"))
+									processedItem = rawItem.replaceAll("\'", "")
+											.toCharArray()[0];
+								else
+									processedItem = Str(rawItem).replaceAll("^\"+|\"+$", "");
+								finalProcessedItems[i] = processedItem;
+							}
+							v = finalProcessedItems;
 							super.put(k, v);
 							continue;
 						}
@@ -31707,9 +31742,9 @@ public class KL {
 		}
 	}
 	public static class bln {
-		boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, No, no, Na, na,
+		boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, False, No, no, Na, na, Nahi, nahi,
 				Jhoot, jhoot,
-				True = Yes = yes = Met = met = Sach = Sach = False = No = no = Jhoot = jhoot = false;
+				True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = false;
 		hint initially_all_the_positive_and_non_variables_should_point_to_false_since_we_dont_know_the_condition_yet;
 		bln(boolean condition) {
 			True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = condition;
