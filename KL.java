@@ -4733,6 +4733,7 @@ public class KL {
 			return Dbl(this.ask(title, message));
 		}
 	}
+	public static gui gui = new gui();
 	public static class label extends JLabel {
 		private static final long serialVersionUID = 1L;
 		public static int top = TOP, left = LEFT, bottom = BOTTOM,
