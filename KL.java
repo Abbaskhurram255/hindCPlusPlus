@@ -50181,7 +50181,13 @@ public class KL {
 	public static date date() {
 		return new date();
 	}
+	public static date tareekh() {
+		return new date();
+	}
 	public static String time() {
+		return new date().getTime();
+	}
+	public static String wakt() {
 		return new date().getTime();
 	}
 	public static String age2bday(int age) {
