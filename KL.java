@@ -72113,6 +72113,11 @@ public class KL {
 		int[] myNewArr = {1, 3, 5, 7};
 		print(autofill(myNewArr, length.standard, 10));
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
+		o user3 = o(
+				"{name: {first->Juliet; last->Salvador}, age: 17, hobbies: [travel; basketball & tennis]}");
+		print(user3.k("name", _o));
+		print(user3.k("age", _i));
+		printArr(user3.k("hobbies", _S));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
