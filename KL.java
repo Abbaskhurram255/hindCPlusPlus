@@ -47232,13 +47232,11 @@ public class KL {
 	}
 	public static class rng extends range {
 	}
-	public static class idx extends range {
-	}
-	public static class in extends range {
-	}
 	public static class until extends range {
 	}
 	public static class between extends range {
+	}
+	public static class bw extends range {
 	}
 	public static class darmyan extends range {
 		public static int[] shamilAkhri(int n) {
@@ -48498,6 +48496,147 @@ public class KL {
 	public static int[] between(int start, boolArr... arrays) {
 		return range(start, arrays);
 	}
+	public static int[] bw(int n) {
+		return range(n);
+	}
+	public static double[] bw(double n) {
+		return range(n);
+	}
+	public static int[] bw(int m, int n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static String[] bw(String m, String n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static char[] bw(char m, char n) {
+		return range(m, n);
+	}
+	public static double[] bw(double m, double n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static int[] bw(int n, boolean reverse) {
+		return range(n, reverse);
+	}
+	public static int[] bw(int m, int n, int gap, boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static int[] bw(int m, int n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static double[] bw(double n, boolean reverse) {
+		return range(n, reverse);
+	}
+	public static double[] bw(double m, double n, int gap, boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static double[] bw(double m, double n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static String[] bw(String m, String n, int gap, boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static String[] bw(String m, String n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static char[] bw(char m, char n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static int[] bw(String str) {
+		return range(str);
+	}
+	public static int[] bw(char[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(String[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(int[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(long[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(float[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(double[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(boolean[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(Object[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(arr... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(strArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(intArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(longArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(fltArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(dblArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(boolArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] bw(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] bw(int start, char[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, String[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, int[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, long[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, float[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, double[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, boolean[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, Object[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, arr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, strArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, intArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, longArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, fltArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, dblArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] bw(int start, boolArr... arrays) {
+		return range(start, arrays);
+	}
 	public static int[] darmyan(int n) {
 		return range(n);
 	}
@@ -48640,6 +48779,117 @@ public class KL {
 	}
 	public static int[] darmyan(int start, boolArr... arrays) {
 		return range(start, arrays);
+	}
+	public static int[] hissa(String str, Object... languageSupportingArgs) {
+		return range(str);
+	}
+	public static int[] hissa(char[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(String[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(int[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(long[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(float[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(double[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(boolean[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(Object[] arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(arr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(strArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(intArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(longArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(fltArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(dblArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(boolArr arr, Object... languageSupportingArgs) {
+		return range(arr);
+	}
+	public static int[] hissa(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] hissa(int start, char[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, String[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, int[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, long[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, float[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, double[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, boolean[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, Object[] arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, arr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, strArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, intArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, longArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, fltArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, dblArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
+	}
+	public static int[] hissa(int start, boolArr arr,
+			Object... languageSupportingArgs) {
+		return range(start, arr);
 	}
 	public static void each(String[] iterable,
 			ObjIntConsumer<String> consumer) {
@@ -71729,6 +71979,11 @@ public class KL {
 		int[] myNewArr = {1, 3, 5, 7};
 		print(autofill(myNewArr, length.standard, 10));
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
+		String[] meriTestStringArr = {"BMW", "Mercedes", "Maserati", "Ford",
+				"Ferrari", "Porsche"};
+		for (int i : hissa(meriTestStringArr, ka)) {
+			print(meriTestStringArr[i]);
+		}
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
