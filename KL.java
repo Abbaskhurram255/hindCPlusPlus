@@ -47228,6 +47228,12 @@ public class KL {
 	}
 	public static class rng extends range {
 	}
+	public static class idx extends range {
+	}
+	public static class in extends range {
+	}
+	public static class darmyan extends range {
+	}
 	public static int[] range(int n) {
 		intArr arr = intArr();
 		if (not(n) || isInf(n)) {
@@ -48048,6 +48054,198 @@ public class KL {
 		return range(start, arrays);
 	}
 	public static int[] idx(int start, boolArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(String str) {
+		return range(str);
+	}
+	public static int[] in(char[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(String[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(int[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(long[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(float[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(double[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(boolean[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(Object[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(arr... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(strArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(intArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(longArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(fltArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(dblArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(boolArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] in(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] in(int start, char[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, String[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, int[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, long[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, float[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, double[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, boolean[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, Object[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, arr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, strArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, intArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, longArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, fltArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, dblArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] in(int start, boolArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(String str) {
+		return range(str);
+	}
+	public static int[] darmyan(char[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(String[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(int[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(long[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(float[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(double[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(boolean[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(Object[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(arr... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(strArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(intArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(longArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(fltArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(dblArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(boolArr... arrays) {
+		return range(arrays);
+	}
+	public static int[] darmyan(int start, String str) {
+		return range(start, str);
+	}
+	public static int[] darmyan(int start, char[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, String[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, int[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, long[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, float[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, double[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, boolean[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, Object[]... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, arr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, strArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, intArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, longArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, fltArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, dblArr... arrays) {
+		return range(start, arrays);
+	}
+	public static int[] darmyan(int start, boolArr... arrays) {
 		return range(start, arrays);
 	}
 	public static void each(String[] iterable,
