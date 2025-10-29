@@ -56,6 +56,8 @@ public class KL {
 		}
 		public static class warning extends hint {
 		}
+		public static class WARNING extends hint {
+		}
 		public static class forClass extends hint {
 		}
 		public static class constructor extends hint {
@@ -4051,22 +4053,22 @@ public class KL {
 				workDirectory = KL.workDirectory;
 	}
 	// gui
-	public static class gui extends JFrame {
+	public static class app extends JFrame {
 		private static final long serialVersionUID = 1L;
-		gui() {
+		public app() {
 			super();
 			exitOnClose();
 			resizable();
 			super.setLayout(new BorderLayout());
 		}
-		gui(String title) {
+		public app(String title) {
 			super();
 			exitOnClose();
 			resizable();
 			title(title);
 			super.setLayout(new BorderLayout());
 		}
-		gui(String title, int w, int h) {
+		public app(String title, int w, int h) {
 			super();
 			exitOnClose();
 			resizable();
@@ -4074,15 +4076,15 @@ public class KL {
 			size(w, h);
 			super.setLayout(new BorderLayout());
 		}
-		gui title(String title) {
+		public app title(String title) {
 			super.setTitle(title);
 			return this;
 		}
-		gui kaTitle(String title) {
+		public app kaTitle(String title) {
 			title(title);
 			return this;
 		}
-		gui size(int w, int h) {
+		public app size(int w, int h) {
 			if (w < 100 || h < 100 || w > 10e3 || h > 10e3) {
 				super.setSize(400, 600);
 			} else {
@@ -4091,7 +4093,7 @@ public class KL {
 			super.setLocationRelativeTo(null);
 			return this;
 		}
-		gui size(int[] widthAndHeight) {
+		public app size(int[] widthAndHeight) {
 			if (not(widthAndHeight) || len(widthAndHeight) != 2) {
 				return this;
 			}
@@ -4099,7 +4101,7 @@ public class KL {
 			size(w, h);
 			return this;
 		}
-		gui size(o resolution) {
+		public app size(o resolution) {
 			if (not(resolution) || !resolution.hasKey("width")
 					|| !resolution.hasKey("height")) {
 				return this;
@@ -4108,7 +4110,7 @@ public class KL {
 			size(w, h);
 			return this;
 		}
-		gui size(oI resolution) {
+		public app size(oI resolution) {
 			if (not(resolution) || !resolution.hasKey("width")
 					|| !resolution.hasKey("height")) {
 				return this;
@@ -4117,7 +4119,7 @@ public class KL {
 			size(w, h);
 			return this;
 		}
-		gui size(String WxH) {
+		public app size(String WxH) {
 			if (not(WxH) || !eq(WxH, "\\d{3,4}[Xx]\\d{3,4}")) {
 				return this;
 			}
@@ -4126,23 +4128,23 @@ public class KL {
 			size(w, h);
 			return this;
 		}
-		gui kiSize(int w, int h) {
+		public app kiSize(int w, int h) {
 			size(w, h);
 			return this;
 		}
-		gui kiSize(String WxH) {
+		public app kiSize(String WxH) {
 			size(WxH);
 			return this;
 		}
-		gui kiSize(o resolution) {
+		public app kiSize(o resolution) {
 			size(resolution);
 			return this;
 		}
-		gui kiSize(oI resolution) {
+		public app kiSize(oI resolution) {
 			size(resolution);
 			return this;
 		}
-		gui start() {
+		public app start() {
 			Dimension res = super.getSize();
 			int width = res.width, height = res.height;
 			if (width < 100 || height < 100 || width > 10e3 || height > 10e3) {
@@ -4151,83 +4153,81 @@ public class KL {
 			super.setVisible(true);
 			return this;
 		}
-		gui start(int w, int h) {
+		public app start(int w, int h) {
 			size(w, h);
 			super.setVisible(true);
 			return this;
 		}
-		gui shuru() {
+		public app shuru() {
 			start();
 			return this;
 		}
-		gui shuru(int w, int h) {
+		public app shuru(int w, int h) {
 			start(w, h);
 			return this;
 		}
-		gui appear() {
+		public app appear() {
 			start();
 			return this;
 		}
-		gui disappear() {
+		public app disappear() {
 			super.setVisible(false);
 			return this;
 		}
-		gui resizable() {
+		public app resizable() {
 			super.setResizable(true);
 			return this;
 		}
-		gui notResizable() {
+		public app notResizable() {
 			super.setResizable(false);
 			return this;
 		}
-		gui resizableNaHo() {
+		public app resizableNaHo() {
 			notResizable();
 			return this;
 		}
-		gui onTop(boolean b) {
+		public app onTop(boolean b) {
 			super.setAlwaysOnTop(b);
 			return this;
 		}
-		gui onTop() {
+		public app onTop() {
 			onTop(true);
 			return this;
 		}
-		gui offTop() {
+		public app offTop() {
 			onTop(false);
 			return this;
 		}
-		gui alwaysOnTop(boolean b) {
+		public app alwaysOnTop(boolean b) {
 			onTop(b);
 			return this;
 		}
-		gui alwaysOnTop() {
+		public app alwaysOnTop() {
 			onTop();
 			return this;
 		}
-		boolean isOnTop() {
+		public boolean isOnTop() {
 			return super.isAlwaysOnTop();
 		}
-		gui hameshaTopPe(boolean b) {
+		public app hameshaTopPe(boolean b) {
 			onTop(b);
 			return this;
 		}
-		gui hameshaTopPe() {
+		public app hameshaTopPe() {
 			onTop();
 			return this;
 		}
-		gui topPe(boolean b) {
+		public app topPe(boolean b) {
 			onTop(b);
 			return this;
 		}
-		gui hameshaTopPeHe() {
-			isOnTop();
-			return this;
+		public boolean hameshaTopPeHe() {
+			return isOnTop();
 		}
-		gui topPeHe() {
-			isOnTop();
-			return this;
+		public boolean topPeHe() {
+			return isOnTop();
 		}
-		gui add(Component... components) {
+		public app add(Component... components) {
 			for (Component c : components) {
 				if (c == null) {
 					continue;
@@ -4236,11 +4236,11 @@ public class KL {
 			}
 			return this;
 		}
-		gui addAll(Component... components) {
+		public app addAll(Component... components) {
 			this.add(components);
 			return this;
 		}
-		gui opacity(double o) {
+		public app opacity(double o) {
 			if (o < 0 || o > 100) {
 				return this;
 			}
@@ -4251,23 +4251,23 @@ public class KL {
 			}
 			return this;
 		}
-		gui cursor(int c) {
+		public app cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		gui cursor(Cursor crsrObj) {
+		public app cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		gui bg(Color clr) {
+		public app bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		gui setBg(Color clr) {
+		public app setBg(Color clr) {
 			bg(clr);
 			return this;
 		}
-		gui icon(String address) {
+		public app icon(String address) {
 			// set title-bar icon
 			try {
 				super.setIconImage(new ImageIcon(address).getImage());
@@ -4275,15 +4275,15 @@ public class KL {
 			}
 			return this;
 		}
-		gui font(String fontFamily, int fontSize) {
+		public app font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
 		}
-		gui font(String fontFamily, int fontSize, int fontWidth) {
+		public app font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
-		gui font(String fontFamily, int fontSize, boolean bold,
+		public app font(String fontFamily, int fontSize, boolean bold,
 				boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
 					? Font.BOLD | Font.ITALIC
@@ -4291,11 +4291,11 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		gui font(String fontFamily, int fontSize, boolean bold) {
+		public app font(String fontFamily, int fontSize, boolean bold) {
 			font(fontFamily, fontSize, bold, false);
 			return this;
 		}
-		gui font(String fontFamily, int fontSize, int bold, int italic) {
+		public app font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
 					bold == 1 && italic == 1
 							? Font.BOLD | Font.ITALIC
@@ -4305,11 +4305,11 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		gui font(Font fnt) {
+		public app font(Font fnt) {
 			super.setFont(fnt);
 			return this;
 		}
-		boolean openUrl(String urlString) {
+		public boolean openUrl(String urlString) {
 			try {
 				if (!isUrl(urlString)) {
 					return false;
@@ -4320,13 +4320,13 @@ public class KL {
 				return false;
 			}
 		}
-		double mouseX() {
+		public double mouseX() {
 			return MouseInfo.getPointerInfo().getLocation().getX();
 		}
-		double mouseY() {
+		public double mouseY() {
 			return MouseInfo.getPointerInfo().getLocation().getY();
 		}
-		gui exitOnClose() {
+		public app exitOnClose() {
 			super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			this.on("close", () -> {
 				boolean confirmed = this
@@ -4337,7 +4337,7 @@ public class KL {
 			});
 			return this;
 		}
-		gui on(String k, Runnable action) {
+		public app on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (var key : keys) {
@@ -4482,7 +4482,7 @@ public class KL {
 			});
 			return this;
 		}
-		gui state(String newState) {
+		public app state(String newState) {
 			switch (newState) {
 				case "min" :
 					super.setExtendedState(super.ICONIFIED);
@@ -4498,7 +4498,7 @@ public class KL {
 			}
 			return this;
 		}
-		String state() {
+		public String state() {
 			int x = super.getExtendedState();
 			String state = x == super.NORMAL
 					? "normal"
@@ -4509,15 +4509,15 @@ public class KL {
 									: "unknown";
 			return state;
 		}
-		gui min() {
+		public app min() {
 			state("min");
 			return this;
 		}
-		gui max() {
+		public app max() {
 			state("max");
 			return this;
 		}
-		gui message(String message) {
+		public app message(String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4525,7 +4525,7 @@ public class KL {
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
-		gui message(String title, String message) {
+		public app message(String title, String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4533,7 +4533,7 @@ public class KL {
 					JOptionPane.INFORMATION_MESSAGE);
 			return this;
 		}
-		gui message(String title, String message, String iconAddress) {
+		public app message(String title, String message, String iconAddress) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4541,7 +4541,7 @@ public class KL {
 					JOptionPane.INFORMATION_MESSAGE, new icon(iconAddress));
 			return this;
 		}
-		gui message(String title, String message, Icon ico) {
+		public app message(String title, String message, Icon ico) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4549,23 +4549,23 @@ public class KL {
 					JOptionPane.INFORMATION_MESSAGE, ico);
 			return this;
 		}
-		gui msg(String message) {
+		public app msg(String message) {
 			this.message(message);
 			return this;
 		}
-		gui msg(String title, String message) {
+		public app msg(String title, String message) {
 			this.message(title, message);
 			return this;
 		}
-		gui msg(String title, String message, String iconAddress) {
+		public app msg(String title, String message, String iconAddress) {
 			this.message(title, message, iconAddress);
 			return this;
 		}
-		gui msg(String title, String message, Icon ico) {
+		public app msg(String title, String message, Icon ico) {
 			this.message(title, message, ico);
 			return this;
 		}
-		gui error(String message) {
+		public app error(String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4573,7 +4573,7 @@ public class KL {
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
-		gui error(String title, String message) {
+		public app error(String title, String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4581,7 +4581,7 @@ public class KL {
 					JOptionPane.ERROR_MESSAGE);
 			return this;
 		}
-		gui error(String title, String message, String iconAddress) {
+		public app error(String title, String message, String iconAddress) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4589,7 +4589,7 @@ public class KL {
 					JOptionPane.ERROR_MESSAGE, new icon(iconAddress));
 			return this;
 		}
-		gui error(String title, String message, Icon ico) {
+		public app error(String title, String message, Icon ico) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4597,7 +4597,7 @@ public class KL {
 					JOptionPane.ERROR_MESSAGE, ico);
 			return this;
 		}
-		gui warn(String message) {
+		public app warn(String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4605,7 +4605,7 @@ public class KL {
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
-		gui warn(String title, String message) {
+		public app warn(String title, String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4613,7 +4613,7 @@ public class KL {
 					JOptionPane.WARNING_MESSAGE);
 			return this;
 		}
-		gui warn(String title, String message, String iconAddress) {
+		public app warn(String title, String message, String iconAddress) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4621,7 +4621,7 @@ public class KL {
 					JOptionPane.WARNING_MESSAGE, new icon(iconAddress));
 			return this;
 		}
-		gui warn(String title, String message, Icon ico) {
+		public app warn(String title, String message, Icon ico) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4629,7 +4629,7 @@ public class KL {
 					JOptionPane.WARNING_MESSAGE, ico);
 			return this;
 		}
-		boolean confirm(String message) {
+		public boolean confirm(String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4637,7 +4637,7 @@ public class KL {
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
-		boolean confirm(String title, String message) {
+		public boolean confirm(String title, String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4645,7 +4645,7 @@ public class KL {
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
-		boolean confirm(String title, String message, String iconAddress) {
+		public boolean confirm(String title, String message, String iconAddress) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4653,7 +4653,7 @@ public class KL {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					new icon(iconAddress)) == 0);
 		}
-		boolean confirm(String title, String message, Icon ico) {
+		public boolean confirm(String title, String message, Icon ico) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4661,7 +4661,7 @@ public class KL {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					ico) == 0);
 		}
-		boolean confirmCancellable(String message) {
+		public boolean confirmCancellable(String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4669,7 +4669,7 @@ public class KL {
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
-		boolean confirmCancellable(String title, String message) {
+		public boolean confirmCancellable(String title, String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4677,7 +4677,7 @@ public class KL {
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
-		boolean confirmCancellable(String title, String message,
+		public boolean confirmCancellable(String title, String message,
 				String iconAddress) {
 			if (this.isOnTop()) {
 				offTop();
@@ -4686,7 +4686,7 @@ public class KL {
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
 		}
-		boolean confirmCancellable(String title, String message, Icon ico) {
+		public boolean confirmCancellable(String title, String message, Icon ico) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4694,45 +4694,394 @@ public class KL {
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, ico) == 0);
 		}
-		String ask(String message) {
+		public String ask(String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
 			return JOptionPane.showInputDialog(null, message, "Input",
 					JOptionPane.QUESTION_MESSAGE);
 		}
-		String ask(String title, String message) {
+		public String ask(String title, String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
 			return JOptionPane.showInputDialog(null, message, title,
 					JOptionPane.QUESTION_MESSAGE);
 		}
-		int askInt(String message) {
+		public int askInt(String message) {
 			return Int(this.ask(message));
 		}
-		int askInt(String title, String message) {
+		public int askInt(String title, String message) {
 			return Int(this.ask(title, message));
 		}
-		long askLong(String message) {
+		public long askLong(String message) {
 			return Long(this.ask(message));
 		}
-		long askLong(String title, String message) {
+		public long askLong(String title, String message) {
 			return Long(this.ask(title, message));
 		}
-		float askFlt(String message) {
+		public float askFlt(String message) {
 			return Flt(this.ask(message));
 		}
-		float askFlt(String title, String message) {
+		public float askFlt(String title, String message) {
 			return Flt(this.ask(title, message));
 		}
-		double askDbl(String message) {
+		public double askDbl(String message) {
 			return Dbl(this.ask(message));
 		}
-		double askDbl(String title, String message) {
+		public double askDbl(String title, String message) {
 			return Dbl(this.ask(title, message));
 		}
 	}
+                  hint.WARNING do_not_change_the_visibility_of_any_of_the_methods_of_the_following_class;
+                  hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER;
+	hint.approach helps_make_building_guis_easier;
+	public static class gui extends app {
+		private static final long serialVersionUID = 1L;
+		public gui() {
+			super();
+		}
+		public gui(String title) {
+			super(title);
+		}
+		// TO BE CONTINUED
+		public gui(String title, int w, int h) {
+			super(title, w, h);
+		}
+		public gui title(String title) {
+			super.title(title);
+			return this;
+		}
+		public gui kaTitle(String title) {
+			super.kaTitle(title);
+			return this;
+		}
+		public gui size(int w, int h) {
+			super.size(w, h);
+			return this;
+		}
+		public gui size(int[] widthAndHeight) {
+			super.size(widthAndHeight);
+			return this;
+		}
+		public gui size(o resolution) {
+			super.size(resolution);
+			return this;
+		}
+		public gui size(oI resolution) {
+			super.size(resolution);
+			return this;
+		}
+		public gui size(String WxH) {
+			super.size(WxH);
+			return this;
+		}
+		public gui kiSize(int w, int h) {
+			super.kiSize(w, h);
+			return this;
+		}
+		public gui kiSize(String WxH) {
+			super.kiSize(WxH);
+			return this;
+		}
+		public gui kiSize(o resolution) {
+			super.kiSize(resolution);
+			return this;
+		}
+		public gui kiSize(oI resolution) {
+			super.kiSize(resolution);
+			return this;
+		}
+		public gui start() {
+			super.start();
+			return this;
+		}
+		public gui start(int w, int h) {
+			super.start(w, h);
+			return this;
+		}
+		public gui shuru() {
+			super.shuru();
+			return this;
+		}
+		public gui shuru(int w, int h) {
+			super.shuru(w, h);
+			return this;
+		}
+		public gui appear() {
+			super.appear();
+			return this;
+		}
+		public gui disappear() {
+			super.disappear();
+			return this;
+		}
+		public gui resizable() {
+			super.resizable();
+			return this;
+		}
+		public gui notResizable() {
+			super.notResizable();
+			return this;
+		}
+		public gui resizableNaHo() {
+			super.resizableNaHo();
+			return this;
+		}
+		public gui onTop(boolean b) {
+			super.onTop(b);
+			return this;
+		}
+		public gui onTop() {
+			super.onTop();
+			return this;
+		}
+		public gui offTop() {
+			super.offTop();
+			return this;
+		}
+		public gui alwaysOnTop(boolean b) {
+			super.alwaysOnTop(b);
+			return this;
+		}
+		public gui alwaysOnTop() {
+			super.alwaysOnTop();
+			return this;
+		}
+		public boolean isOnTop() {
+			return super.isOnTop();
+		}
+		public gui hameshaTopPe(boolean b) {
+			super.hameshaTopPe(b);
+			return this;
+		}
+		public gui hameshaTopPe() {
+			super.hameshaTopPe();
+			return this;
+		}
+		public gui topPe(boolean b) {
+			super.topPe(b);
+			return this;
+		}
+		public boolean hameshaTopPeHe() {
+			return super.hameshaTopPeHe();
+		}
+		public boolean topPeHe() {
+			return super.topPeHe();
+		}
+		public gui add(Component... components) {
+			super.add(components);
+			return this;
+		}
+		public gui addAll(Component... components) {
+			super.addAll(components);
+			return this;
+		}
+		public gui opacity(double o) {
+			super.opacity(o);
+			return this;
+		}
+		public gui cursor(int c) {
+			super.cursor(c);
+			return this;
+		}
+		public gui cursor(Cursor crsrObj) {
+			super.cursor(crsrObj);
+			return this;
+		}
+		public gui bg(Color clr) {
+			super.bg(clr);
+			return this;
+		}
+		public gui setBg(Color clr) {
+			super.setBg(clr);
+			return this;
+		}
+		public gui icon(String address) {
+			super.icon(address);
+			return this;
+		}
+		public gui font(String fontFamily, int fontSize) {
+			super.font(fontFamily, fontSize);
+			return this;
+		}
+		public gui font(String fontFamily, int fontSize, int fontWidth) {
+			super.font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		public gui font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		public gui font(String fontFamily, int fontSize, boolean bold) {
+			super.font(fontFamily, fontSize, bold);
+			return this;
+		}
+		public gui font(String fontFamily, int fontSize, int bold, int italic) {
+			super.font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		public gui font(Font fnt) {
+			super.font(fnt);
+			return this;
+		}
+		public boolean openUrl(String urlString) {
+			return super.openUrl(urlString);
+		}
+		public double mouseX() {
+			return super.mouseX();
+		}
+		public double mouseY() {
+			return super.mouseY();
+		}
+		public gui exitOnClose() {
+			super.exitOnClose();
+			return this;
+		}
+		public gui on(String k, Runnable action) {
+			super.on(k, action);
+			return this;
+		}
+		public gui state(String newState) {
+			super.state(newState);
+			return this;
+		}
+		public String state() {
+			return super.state();
+		}
+		public gui min() {
+			super.min();
+			return this;
+		}
+		public gui max() {
+			super.max();
+			return this;
+		}
+		public gui message(String message) {
+			super.message(message);
+			return this;
+		}
+		public gui message(String title, String message) {
+			super.message(title, message);
+			return this;
+		}
+		public gui message(String title, String message, String iconAddress) {
+			super.message(title, message, iconAddress);
+			return this;
+		}
+		public gui message(String title, String message, Icon ico) {
+			super.message(title, message, ico);
+			return this;
+		}
+		public gui msg(String message) {
+			super.msg(message);
+			return this;
+		}
+		public gui msg(String title, String message) {
+			super.msg(title, message);
+			return this;
+		}
+		public gui msg(String title, String message, String iconAddress) {
+			super.msg(title, message, iconAddress);
+			return this;
+		}
+		public gui msg(String title, String message, Icon ico) {
+			super.msg(title, message, ico);
+			return this;
+		}
+		public gui error(String message) {
+			super.error(message);
+			return this;
+		}
+		public gui error(String title, String message) {
+			super.error(title, message);
+			return this;
+		}
+		public gui error(String title, String message, String iconAddress) {
+			super.error(title, message, iconAddress);
+			return this;
+		}
+		public gui error(String title, String message, Icon ico) {
+			super.error(title, message, ico);
+			return this;
+		}
+		public gui warn(String message) {
+			super.warn(message);
+			return this;
+		}
+		public gui warn(String title, String message) {
+			super.warn(title, message);
+			return this;
+		}
+		public gui warn(String title, String message, String iconAddress) {
+			super.warn(title, message, iconAddress);
+			return this;
+		}
+		public gui warn(String title, String message, Icon ico) {
+			super.warn(title, message, ico);
+			return this;
+		}
+		public boolean confirm(String message) {
+			return super.confirm(message);
+		}
+		public boolean confirm(String title, String message) {
+			return super.confirm(title, message);
+		}
+		public boolean confirm(String title, String message,
+				String iconAddress) {
+			return super.confirm(title, message, iconAddress);
+		}
+		public boolean confirm(String title, String message, Icon ico) {
+			return super.confirm(title, message, ico);
+		}
+		public boolean confirmCancellable(String message) {
+			return super.confirmCancellable(message);
+		}
+		public boolean confirmCancellable(String title, String message) {
+			return super.confirmCancellable(title, message);
+		}
+		public boolean confirmCancellable(String title, String message,
+				String iconAddress) {
+			return super.confirmCancellable(title, message, iconAddress);
+		}
+		public boolean confirmCancellable(String title, String message, Icon ico) {
+			return super.confirmCancellable(title, message, ico);
+		}
+		public String ask(String message) {
+			return super.ask(message);
+		}
+		public String ask(String title, String message) {
+			return super.ask(title, message);
+		}
+		public int askInt(String message) {
+			return super.askInt(message);
+		}
+		public int askInt(String title, String message) {
+			return super.askInt(title, message);
+		}
+		public long askLong(String message) {
+			return super.askLong(message);
+		}
+		public long askLong(String title, String message) {
+			return super.askLong(title, message);
+		}
+		public float askFlt(String message) {
+			return super.askFlt(message);
+		}
+		public float askFlt(String title, String message) {
+			return super.askFlt(title, message);
+		}
+		public double askDbl(String message) {
+			return super.askDbl(message);
+		}
+		public double askDbl(String title, String message) {
+			return super.askDbl(title, message);
+		}
+	}
+                  hint.WARNING dont_change_the_visibility_of_any_of_the_methods_of_the_following_class;
+                  hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER_PLUGIN;
+	hint.approach helps_give_an_easier_time_building_guis;
 	public static gui gui = new gui();
 	public static class label extends JLabel {
 		private static final long serialVersionUID = 1L;
