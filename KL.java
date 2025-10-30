@@ -4835,7 +4835,7 @@ public class KL {
 			return this;
 		}
 		public gui set(o propsObj) {
-			super.set(o);
+			super.set(propsObj);
 			return this;
 		}
 		public gui set(String... kvs) {
