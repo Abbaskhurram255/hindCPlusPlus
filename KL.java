@@ -4144,6 +4144,25 @@ public class KL {
 			size(resolution);
 			return this;
 		}
+		public app set(o propsObj) {
+			if (propsObj == null)
+				return this;
+			if (propsObj.hasKey("width") && propsObj.hasKey("height")) {
+				int width = propsObj.k("width", _i),
+						height = propsObj.k("height", _i);
+				size(width, height);
+			}
+			if (propsObj.hasKey("title")) {
+				String title = propsObj.k("title", _s);
+				title(title);
+			}
+			return this;
+		}
+		public app set(String kv) {
+			if (kv == null)
+				return this;
+			return set(new o(kv));
+		}
 		public app start() {
 			Dimension res = super.getSize();
 			int width = res.width, height = res.height;
@@ -4259,12 +4278,12 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		public app bg(Color clr) {
+		public app background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
 		public app setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		public app icon(String address) {
@@ -4340,7 +4359,7 @@ public class KL {
 		public app on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
-				for (var key : keys) {
+				for (String key : keys) {
 					on(key, action);
 				}
 			}
@@ -4383,10 +4402,8 @@ public class KL {
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
-							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?click[mw]")
+							|| KL.eq(k, "(m(ouse)?)?\\W?[mw]click")) {
 						button = MouseEvent.BUTTON2;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
 							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
@@ -4645,7 +4662,8 @@ public class KL {
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE) == 0);
 		}
-		public boolean confirm(String title, String message, String iconAddress) {
+		public boolean confirm(String title, String message,
+				String iconAddress) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4686,7 +4704,8 @@ public class KL {
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
 		}
-		public boolean confirmCancellable(String title, String message, Icon ico) {
+		public boolean confirmCancellable(String title, String message,
+				Icon ico) {
 			if (this.isOnTop()) {
 				offTop();
 			}
@@ -4733,8 +4752,8 @@ public class KL {
 			return Dbl(this.ask(title, message));
 		}
 	}
-                  hint.WARNING do_not_change_the_visibility_of_any_of_the_methods_of_the_following_class;
-                  hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER;
+	hint.WARNING do_not_change_the_visibility_of_any_of_the_methods_of_the_following_class;
+	hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER;
 	hint.approach helps_make_building_guis_easier;
 	public static class gui extends app {
 		private static final long serialVersionUID = 1L;
@@ -4889,8 +4908,8 @@ public class KL {
 			super.cursor(crsrObj);
 			return this;
 		}
-		public gui bg(Color clr) {
-			super.bg(clr);
+		public gui background(Color clr) {
+			super.background(clr);
 			return this;
 		}
 		public gui setBg(Color clr) {
@@ -5045,7 +5064,8 @@ public class KL {
 				String iconAddress) {
 			return super.confirmCancellable(title, message, iconAddress);
 		}
-		public boolean confirmCancellable(String title, String message, Icon ico) {
+		public boolean confirmCancellable(String title, String message,
+				Icon ico) {
 			return super.confirmCancellable(title, message, ico);
 		}
 		public String ask(String message) {
@@ -5079,8 +5099,8 @@ public class KL {
 			return super.askDbl(title, message);
 		}
 	}
-                  hint.WARNING dont_change_the_visibility_of_any_of_the_methods_of_the_following_class;
-                  hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER_PLUGIN;
+	hint.WARNING dont_change_the_visibility_of_any_of_the_methods_of_the_following_class;
+	hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER_PLUGIN;
 	hint.approach helps_give_an_easier_time_building_guis;
 	public static gui gui = new gui();
 	public static class label extends JLabel {
@@ -5114,20 +5134,20 @@ public class KL {
 			super(text, icon, horizontalAlignment);
 			super.setOpaque(true);
 		}
-		label bg(Color clr) {
+		label background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		label fg(Color clr) {
+		label foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		label setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		label setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		label add(Component... components) {
@@ -5199,7 +5219,7 @@ public class KL {
 		label on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
-				for (var key : keys) {
+				for (String key : keys) {
 					on(key, action);
 				}
 			}
@@ -5298,24 +5318,22 @@ public class KL {
 			});
 			return this;
 		}
-		label addToolTip(String textToDisplayOnHover) {
+		label hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		label removeToolTip() {
+		label hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		label toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		label toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		label place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class bordLay extends BorderLayout {
@@ -5407,20 +5425,20 @@ public class KL {
 			lay(layout);
 			return this;
 		}
-		panel bg(Color clr) {
+		panel background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		panel fg(Color clr) {
+		panel foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		panel setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		panel setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		panel add(Component... components) {
@@ -5481,7 +5499,7 @@ public class KL {
 		panel on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
-				for (var key : keys) {
+				for (String key : keys) {
 					on(key, action);
 				}
 			}
@@ -5580,24 +5598,22 @@ public class KL {
 			});
 			return this;
 		}
-		panel addToolTip(String textToDisplayOnHover) {
+		panel hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		panel removeToolTip() {
+		panel hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		panel toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		panel toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		panel place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class btn extends JButton {
@@ -5629,14 +5645,16 @@ public class KL {
 		}
 		btn(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			bg(bg);
-			fg(fg);
+			background(bg);
+			foreground(fg);
 		}
 		btn click() {
 			super.doClick();
 			return this;
 		}
 		btn click(ActionListener listener) {
+			if (not(listener))
+				return this;
 			super.addActionListener(listener);
 			return this;
 		}
@@ -5644,20 +5662,20 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		btn bg(Color clr) {
+		btn background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		btn fg(Color clr) {
+		btn foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		btn setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		btn setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		btn img(Icon ico) {
@@ -5751,23 +5769,17 @@ public class KL {
 			}
 			return this;
 		}
-		btn addToolTip(String textToDisplayOnHover) {
+		btn hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		btn removeToolTip() {
+		btn hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		btn toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		btn toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
 		}
 		btn place(int xAxis, int yAxis, int width, int height) {
@@ -5814,10 +5826,12 @@ public class KL {
 		}
 		toggleBtn(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			bg(bg);
-			fg(fg);
+			background(bg);
+			foreground(fg);
 		}
 		toggleBtn click(ActionListener listener) {
+			if (not(listener))
+				return this;
 			super.addActionListener(listener);
 			return this;
 		}
@@ -5825,20 +5839,20 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		toggleBtn bg(Color clr) {
+		toggleBtn background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		toggleBtn fg(Color clr) {
+		toggleBtn foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		toggleBtn setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		toggleBtn setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		toggleBtn img(Icon ico) {
@@ -5932,24 +5946,22 @@ public class KL {
 			}
 			return this;
 		}
-		toggleBtn addToolTip(String textToDisplayOnHover) {
+		toggleBtn hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		toggleBtn removeToolTip() {
+		toggleBtn hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		toggleBtn toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		toggleBtn toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		toggleBtn place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class radioBtn extends JRadioButton {
@@ -5991,10 +6003,12 @@ public class KL {
 		}
 		radioBtn(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			bg(bg);
-			fg(fg);
+			background(bg);
+			foreground(fg);
 		}
 		radioBtn click(ActionListener listener) {
+			if (not(listener))
+				return this;
 			super.addActionListener(listener);
 			return this;
 		}
@@ -6002,20 +6016,20 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		radioBtn bg(Color clr) {
+		radioBtn background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		radioBtn fg(Color clr) {
+		radioBtn foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		radioBtn setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		radioBtn setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		radioBtn img(Icon ico) {
@@ -6109,24 +6123,22 @@ public class KL {
 			}
 			return this;
 		}
-		radioBtn addToolTip(String textToDisplayOnHover) {
+		radioBtn hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		radioBtn removeToolTip() {
+		radioBtn hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		radioBtn toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		radioBtn toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		radioBtn place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class radioBtnItem extends JRadioButtonMenuItem {
@@ -6168,10 +6180,12 @@ public class KL {
 		}
 		radioBtnItem(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			bg(bg);
-			fg(fg);
+			background(bg);
+			foreground(fg);
 		}
 		radioBtnItem click(ActionListener listener) {
+			if (not(listener))
+				return this;
 			super.addActionListener(listener);
 			return this;
 		}
@@ -6179,20 +6193,20 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		radioBtnItem bg(Color clr) {
+		radioBtnItem background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		radioBtnItem fg(Color clr) {
+		radioBtnItem foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		radioBtnItem setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		radioBtnItem setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		radioBtnItem img(Icon ico) {
@@ -6287,24 +6301,22 @@ public class KL {
 			}
 			return this;
 		}
-		radioBtnItem addToolTip(String textToDisplayOnHover) {
+		radioBtnItem hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		radioBtnItem removeToolTip() {
+		radioBtnItem hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		radioBtnItem toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		radioBtnItem toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		radioBtnItem place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class checkBox extends JCheckBox {
@@ -6346,10 +6358,12 @@ public class KL {
 		}
 		checkBox(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			bg(bg);
-			fg(fg);
+			background(bg);
+			foreground(fg);
 		}
 		checkBox click(ActionListener listener) {
+			if (not(listener))
+				return this;
 			super.addActionListener(listener);
 			return this;
 		}
@@ -6357,20 +6371,20 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		checkBox bg(Color clr) {
+		checkBox background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		checkBox fg(Color clr) {
+		checkBox foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		checkBox setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		checkBox setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		checkBox img(Icon ico) {
@@ -6464,24 +6478,22 @@ public class KL {
 			}
 			return this;
 		}
-		checkBox addToolTip(String textToDisplayOnHover) {
+		checkBox hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		checkBox removeToolTip() {
+		checkBox hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		checkBox toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		checkBox toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		checkBox place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class checkBoxItem extends JCheckBoxMenuItem {
@@ -6520,10 +6532,12 @@ public class KL {
 		}
 		checkBoxItem(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			bg(bg);
-			fg(fg);
+			background(bg);
+			foreground(fg);
 		}
 		checkBoxItem click(ActionListener listener) {
+			if (not(listener))
+				return this;
 			super.addActionListener(listener);
 			return this;
 		}
@@ -6531,20 +6545,20 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		checkBoxItem bg(Color clr) {
+		checkBoxItem background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		checkBoxItem fg(Color clr) {
+		checkBoxItem foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		checkBoxItem setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		checkBoxItem setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		checkBoxItem img(Icon ico) {
@@ -6639,24 +6653,22 @@ public class KL {
 			}
 			return this;
 		}
-		checkBoxItem addToolTip(String textToDisplayOnHover) {
+		checkBoxItem hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		checkBoxItem removeToolTip() {
+		checkBoxItem hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		checkBoxItem toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		checkBoxItem toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		checkBoxItem place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class menuBar extends JMenuBar {
@@ -6677,20 +6689,20 @@ public class KL {
 				super.add(item);
 			}
 		}
-		menuBar bg(Color clr) {
+		menuBar background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		menuBar fg(Color clr) {
+		menuBar foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		menuBar setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		menuBar setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		menuBar cursor(int c) {
@@ -6739,24 +6751,22 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
-		menuBar addToolTip(String textToDisplayOnHover) {
+		menuBar hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		menuBar removeToolTip() {
+		menuBar hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		menuBar toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		menuBar toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		menuBar place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class menu extends JMenu {
@@ -6784,8 +6794,8 @@ public class KL {
 		}
 		menu(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			bg(bg);
-			fg(fg);
+			background(bg);
+			foreground(fg);
 		}
 		menu(JMenuItem... menuItems) {
 			super();
@@ -6800,6 +6810,8 @@ public class KL {
 			}
 		}
 		menu click(ActionListener listener) {
+			if (not(listener))
+				return this;
 			super.addActionListener(listener);
 			return this;
 		}
@@ -6807,20 +6819,20 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		menu bg(Color clr) {
+		menu background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		menu fg(Color clr) {
+		menu foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		menu setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		menu setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		menu img(Icon ico) {
@@ -6914,24 +6926,22 @@ public class KL {
 			}
 			return this;
 		}
-		menu addToolTip(String textToDisplayOnHover) {
+		menu hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		menu removeToolTip() {
+		menu hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		menu toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		menu toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		menu place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class menuItem extends JMenuItem {
@@ -6967,10 +6977,12 @@ public class KL {
 		}
 		menuItem(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			bg(bg);
-			fg(fg);
+			background(bg);
+			foreground(fg);
 		}
 		menuItem click(ActionListener listener) {
+			if (not(listener))
+				return this;
 			super.addActionListener(listener);
 			return this;
 		}
@@ -6978,20 +6990,20 @@ public class KL {
 			super.removeActionListener(listener);
 			return this;
 		}
-		menuItem bg(Color clr) {
+		menuItem background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		menuItem fg(Color clr) {
+		menuItem foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		menuItem setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		menuItem setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		menuItem img(Icon ico) {
@@ -7085,24 +7097,22 @@ public class KL {
 			}
 			return this;
 		}
-		menuItem addToolTip(String textToDisplayOnHover) {
+		menuItem hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		menuItem removeToolTip() {
+		menuItem hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		menuItem toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		menuItem toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		menuItem place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class contextMenu extends JPopupMenu {
@@ -7117,7 +7127,7 @@ public class KL {
 		}
 		contextMenu(String text, Color bg) {
 			this(text);
-			bg(bg);
+			background(bg);
 		}
 		contextMenu(String... items) {
 			super();
@@ -7131,20 +7141,20 @@ public class KL {
 				super.add(item);
 			}
 		}
-		contextMenu bg(Color clr) {
+		contextMenu background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		contextMenu fg(Color clr) {
+		contextMenu foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		contextMenu setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		contextMenu setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		contextMenu cursor(int c) {
@@ -7194,24 +7204,22 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
-		contextMenu addToolTip(String textToDisplayOnHover) {
+		contextMenu hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		contextMenu removeToolTip() {
+		contextMenu hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		contextMenu toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		contextMenu toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		contextMenu place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class dropDown extends JComboBox {
@@ -7247,20 +7255,26 @@ public class KL {
 			super.setSelectedIndex(i);
 			return this;
 		}
-		dropDown bg(Color clr) {
+		dropDown click(ActionListener listener) {
+			if (not(listener))
+				return this;
+			super.addActionListener(listener);
+			return this;
+		}
+		dropDown background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		dropDown fg(Color clr) {
+		dropDown foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
 		dropDown setBg(Color clr) {
-			bg(clr);
+			background(clr);
 			return this;
 		}
 		dropDown setFg(Color clr) {
-			fg(clr);
+			foreground(clr);
 			return this;
 		}
 		dropDown cursor(int c) {
@@ -7309,24 +7323,22 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
-		dropDown addToolTip(String textToDisplayOnHover) {
+		dropDown hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		dropDown removeToolTip() {
+		dropDown hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		dropDown toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		dropDown toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		dropDown place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class txtField extends JTextField {
@@ -7345,6 +7357,16 @@ public class KL {
 		}
 		txtField(Document doc, String text, int columns) {
 			super(doc, text, columns);
+		}
+		txtField columns(int columns) {
+			super.setColumns(columns);
+			return this;
+		}
+		txtField click(ActionListener listener) {
+			if (not(listener))
+				return this;
+			super.addActionListener(listener);
+			return this;
 		}
 		txtField cursor(int c) {
 			super.setCursor(new Cursor(c));
@@ -7380,9 +7402,9 @@ public class KL {
 			return this;
 		}
 		txtField on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
-				for (var key : keys) {
+				for (String key : keys) {
 					on(key, action);
 				}
 			}
@@ -7395,22 +7417,19 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					switch (keyCodeCaptured) {
-						case KeyEvent.VK_UP :
-							keyCaptured = "up";
-							break;
-						case KeyEvent.VK_DOWN :
-							keyCaptured = "down";
-							break;
-						case KeyEvent.VK_LEFT :
-							keyCaptured = "left";
-							break;
-						case KeyEvent.VK_RIGHT :
-							keyCaptured = "right";
-							break;
-						case KeyEvent.VK_CONTROL :
-							keyCaptured = "ctrl";
-							break;
+					Field[] keybFields = new key().getClass().getDeclaredFields();
+					try
+					{
+						for (Field keybField : keybFields) {
+							String keyName = keybField.getName();
+							char value = (char) keybField.get(new key());
+							if (KL.eq(k, keyName) && keyCodeCaptured == value) {
+								keyCaptured = keyName;
+							}
+						}
+					}
+					catch (SecurityException|IllegalAccessException|ClassCastException err) {
+					
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -7421,13 +7440,11 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click(?![rw])")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
@@ -7481,24 +7498,22 @@ public class KL {
 			});
 			return this;
 		}
-		txtField addToolTip(String textToDisplayOnHover) {
+		txtField hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		txtField removeToolTip() {
+		txtField hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		txtField toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		txtField toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		txtField place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class txtArea extends JTextArea {
@@ -7517,6 +7532,14 @@ public class KL {
 		}
 		txtArea(Document doc, String text, int rows, int columns) {
 			super(doc, text, rows, columns);
+		}
+		txtArea columns(int columns) {
+			super.setColumns(columns);
+			return this;
+		}
+		txtArea rows(int rows) {
+			super.setRows(rows);
+			return this;
 		}
 		txtArea cursor(int c) {
 			super.setCursor(new Cursor(c));
@@ -7552,9 +7575,9 @@ public class KL {
 			return this;
 		}
 		txtArea on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
-				for (var key : keys) {
+				for (String key : keys) {
 					on(key, action);
 				}
 			}
@@ -7567,22 +7590,20 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					switch (keyCodeCaptured) {
-						case KeyEvent.VK_UP :
-							keyCaptured = "up";
-							break;
-						case KeyEvent.VK_DOWN :
-							keyCaptured = "down";
-							break;
-						case KeyEvent.VK_LEFT :
-							keyCaptured = "left";
-							break;
-						case KeyEvent.VK_RIGHT :
-							keyCaptured = "right";
-							break;
-						case KeyEvent.VK_CONTROL :
-							keyCaptured = "ctrl";
-							break;
+					Field[] keybFields = new key().getClass().getDeclaredFields();
+					try
+					{
+						for (Field keybField : keybFields) {
+							String keyName = keybField.getName();
+							char value = (char) keybField.get(new key());
+							if (KL.eq(k, keyName) && keyCodeCaptured == value) {
+								keyCaptured = keyName;
+								KL.print("new key =", keyCaptured);
+							}
+						}
+					}
+					catch (SecurityException|IllegalAccessException|ClassCastException err) {
+					
 					}
 					if (KL.eq(k, keyCaptured)) {
 						new Thread(action).start();
@@ -7593,13 +7614,11 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click")
+					if (KL.eq(k, "(m(ouse)?)?\\W?click(?![rw])")
 							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
 							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
@@ -7653,24 +7672,22 @@ public class KL {
 			});
 			return this;
 		}
-		txtArea addToolTip(String textToDisplayOnHover) {
+		txtArea hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		txtArea removeToolTip() {
+		txtArea hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		txtArea toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		txtArea toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		txtArea place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class txtPane extends JTextPane {
@@ -7717,7 +7734,7 @@ public class KL {
 		txtPane on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
-				for (var key : keys) {
+				for (String key : keys) {
 					on(key, action);
 				}
 			}
@@ -7816,24 +7833,22 @@ public class KL {
 			});
 			return this;
 		}
-		txtPane addToolTip(String textToDisplayOnHover) {
+		txtPane hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		txtPane removeToolTip() {
+		txtPane hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		txtPane toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		txtPane toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		txtPane place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class pwdField extends JPasswordField {
@@ -7852,6 +7867,16 @@ public class KL {
 		}
 		pwdField(Document doc, String text, int columns) {
 			super(doc, text, columns);
+		}
+		pwdField columns(int columns) {
+			super.setColumns(columns);
+			return this;
+		}
+		pwdField click(ActionListener listener) {
+			if (not(listener))
+				return this;
+			super.addActionListener(listener);
+			return this;
 		}
 		pwdField cursor(int c) {
 			super.setCursor(new Cursor(c));
@@ -7889,7 +7914,7 @@ public class KL {
 		pwdField on(String k, Runnable action) {
 			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
-				for (var key : keys) {
+				for (String key : keys) {
 					on(key, action);
 				}
 			}
@@ -7988,24 +8013,22 @@ public class KL {
 			});
 			return this;
 		}
-		pwdField addToolTip(String textToDisplayOnHover) {
+		pwdField hover(String textToDisplayOnHover) {
+			if (not(textToDisplayOnHover))
+				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		pwdField removeToolTip() {
+		pwdField hover() {
 			super.setToolTipText(null);
 			return this;
 		}
-		pwdField toolTip(String textToDisplayOnHover) {
-			addToolTip(textToDisplayOnHover);
-			return this;
-		}
-		pwdField toolTip() {
-			removeToolTip();
-			return this;
-		}
-		public String toolTipText() {
+		public String getHover() {
 			return super.getToolTipText();
+		}
+		pwdField place(int xAxis, int yAxis, int width, int height) {
+			super.setBounds(xAxis, yAxis, width, height);
+			return this;
 		}
 	}
 	public static class icon extends ImageIcon {
@@ -9703,7 +9726,7 @@ public class KL {
 		return url(address);
 	}
 	public static final class key {
-		public static int enter = '\n', backspace = '\b', tab = '\t',
+		public static final char enter = '\n', backspace = '\b', tab = '\t',
 				cancel = 0x03, clear = 0x0c, shift = 0x10, control = 0x11,
 				alt = 0x12, pause = 0x13, capslock = 0x14, escape = 0x1b,
 				space = 0x20, pageup = 0x21, pagedown = 0x22, end = 0x23,
@@ -9744,8 +9767,8 @@ public class KL {
 				braceright = 0xa2, at = 0x0200, colon = 0x0201,
 				circumflex = 0x0202, dollar = 0x0203, eurosign = 0x0204,
 				exclamationmark = 0x0205, invertedexclamationmark = 0x0206,
-				leftparenthesis = 0x0207, numbersign = 0x0208, plus = 0x0209,
-				rightparenthesis = 0x020a, underscore = 0x020b,
+				openingparenthesis = 0x0207, numbersign = 0x0208, plus = 0x0209,
+				closingparenthesis = 0x020a, underscore = 0x020b,
 				windows = 0x020c;
 	}
 	public static final class o extends HashMap<String, Object> {
