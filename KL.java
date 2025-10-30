@@ -54,8 +54,6 @@ public class KL {
 		}
 		public static class prevents extends hint {
 		}
-		public static class warning extends hint {
-		}
 		public static class WARNING extends hint {
 		}
 		public static class forClass extends hint {
@@ -4147,26 +4145,55 @@ public class KL {
 		public app set(o propsObj) {
 			if (propsObj == null)
 				return this;
+			if (propsObj.hasKey("title")) {
+				String title = propsObj.k("title", _s);
+				title(title);
+			}
 			if (propsObj.hasKey("width") && propsObj.hasKey("height")) {
 				int width = propsObj.k("width", _i),
 						height = propsObj.k("height", _i);
 				size(width, height);
 			}
-			if (propsObj.hasKey("title")) {
-				String title = propsObj.k("title", _s);
-				title(title);
+			if (either(propsObj.hasKey("size"), propsObj.hasKey("resolution"))) {
+				String WxH;
+				if (propsObj.hasKey("size"))
+					WxH = propsObj.k("size", _s);
+				else
+				    WxH = propsObj.k("resolution", _s);
+				size(WxH);
+			}
+			if (propsObj.hasKey("resizable")) {
+				boolean resizable = propsObj.k("resizable", _b);
+				resizable(resizable);
+			}
+			if (either(propsObj.hasKey("onTop"), propsObj.hasKey("alwaysOnTop"))) {
+				boolean onTop;
+                if (propsObj.hasKey("onTop"))
+                    onTop = propsObj.k("onTop", _b);
+                else
+                    onTop = propsObj.k("alwaysOnTop", _b);
+				onTop(onTop);
 			}
 			return this;
 		}
-		public app set(String kv) {
-			if (kv == null)
+		public app set(String... kvs) {
+			if (kvs == null)
 				return this;
-			return set(new o(kv));
+			return set(new o(kvs));
+		}
+		public app lay(LayoutManager layout) {
+			super.getContentPane().setLayout(layout);
+			return this;
+		}
+		public app layout(LayoutManager layout) {
+			lay(layout);
+			return this;
 		}
 		public app start() {
 			Dimension res = super.getSize();
 			int width = res.width, height = res.height;
 			if (width < 100 || height < 100 || width > 10e3 || height > 10e3) {
+				hint use_a_default_resolution_if_the_one_provided_is_either_too_short_or_too_big;
 				size(400, 600);
 			}
 			super.setVisible(true);
@@ -4193,12 +4220,16 @@ public class KL {
 			super.setVisible(false);
 			return this;
 		}
+		public app resizable(boolean b) {
+			super.setResizable(b);
+			return this;
+		}
 		public app resizable() {
-			super.setResizable(true);
+			resizable(true);
 			return this;
 		}
 		public app notResizable() {
-			super.setResizable(false);
+			resizable(false);
 			return this;
 		}
 		public app resizableNaHo() {
@@ -4357,14 +4388,14 @@ public class KL {
 			return this;
 		}
 		public app on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+			if (not(k) || not(action)) {
+				return this;
+			}
+			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
 				}
-			}
-			if (not(k) || not(action)) {
-				return this;
 			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
@@ -4372,25 +4403,22 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					switch (keyCodeCaptured) {
-						case KeyEvent.VK_UP :
-							keyCaptured = "up";
-							break;
-						case KeyEvent.VK_DOWN :
-							keyCaptured = "down";
-							break;
-						case KeyEvent.VK_LEFT :
-							keyCaptured = "left";
-							break;
-						case KeyEvent.VK_RIGHT :
-							keyCaptured = "right";
-							break;
-						case KeyEvent.VK_CONTROL :
-							keyCaptured = "ctrl";
-							break;
+					Field[] keybFields = new key().getClass().getDeclaredFields();
+					try
+					{
+						for (Field keybField : keybFields) {
+							String keyName = keybField.getName();
+							char value = (char) keybField.get(new key());
+							if (KL.eq(k, keyName) && keyCodeCaptured == value) {
+								keyCaptured = keyName;
+							}
+						}
+					}
+					catch (SecurityException|IllegalAccessException|ClassCastException err) {
+					
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -4398,37 +4426,35 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
+					if (KL.in(k, "(m(ouse)?)?\\W?l?clickl?(?![rw])")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?click[mw]")
-							|| KL.eq(k, "(m(ouse)?)?\\W?[mw]click")) {
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
+							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
 							|| KL.eq(k, "(m(ouse)?)?\\W?rclick")) {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -4436,21 +4462,21 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
 			super.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
-					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).start();
+					if (KL.eq(k, "(m(ouse)?)\\W?w(heel)?")) {
+						action.run();
 					}
 				}
 			});
@@ -4458,13 +4484,13 @@ public class KL {
 				@Override
 				public void windowOpened(WindowEvent e) {
 					if (KL.eq(k, "launch|start")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void windowClosing(WindowEvent e) {
 					if (KL.eq(k, "(exit|close)(ing)?")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				// there's a difference between these two
@@ -4472,13 +4498,13 @@ public class KL {
 				public void windowClosed(WindowEvent e) {
 					if (KL.eq(k,
 							"exited|closed|(after|post)\\W?(exit|close)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void windowIconified(WindowEvent e) {
 					if (KL.startsWith(k, "min")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
@@ -4487,13 +4513,13 @@ public class KL {
 				@Override
 				public void windowActivated(WindowEvent e) {
 					if (KL.startsWith(k, "focus")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void windowDeactivated(WindowEvent e) {
 					if (KL.startsWith(k, "defocus")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -4507,11 +4533,8 @@ public class KL {
 				case "max" :
 					super.setExtendedState(super.MAXIMIZED_BOTH);
 					break;
-				case "none" :
-				case "regular" :
-				case "normal" :
+				default :
 					super.setExtendedState(super.NORMAL);
-					break;
 			}
 			return this;
 		}
@@ -4811,6 +4834,22 @@ public class KL {
 			super.kiSize(resolution);
 			return this;
 		}
+		public gui set(o propsObj) {
+			super.set(o);
+			return this;
+		}
+		public gui set(String... kvs) {
+			super.set(kvs);
+			return this;
+		}
+		public gui lay(LayoutManager layout) {
+			super.lay(layout);
+			return this;
+		}
+		public gui layout(LayoutManager layout) {
+			super.layout(layout);
+			return this;
+		}
 		public gui start() {
 			super.start();
 			return this;
@@ -4835,6 +4874,9 @@ public class KL {
 			super.disappear();
 			return this;
 		}
+		public gui resizable(boolean b) { 			super.resizable(b);
+            return this;
+        }
 		public gui resizable() {
 			super.resizable();
 			return this;
@@ -5217,14 +5259,14 @@ public class KL {
 			return this;
 		}
 		label on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+			if (not(k) || not(action)) {
+				return this;
+			}
+			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
 				}
-			}
-			if (not(k) || not(action)) {
-				return this;
 			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
@@ -5232,25 +5274,22 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					switch (keyCodeCaptured) {
-						case KeyEvent.VK_UP :
-							keyCaptured = "up";
-							break;
-						case KeyEvent.VK_DOWN :
-							keyCaptured = "down";
-							break;
-						case KeyEvent.VK_LEFT :
-							keyCaptured = "left";
-							break;
-						case KeyEvent.VK_RIGHT :
-							keyCaptured = "right";
-							break;
-						case KeyEvent.VK_CONTROL :
-							keyCaptured = "ctrl";
-							break;
+					Field[] keybFields = new key().getClass().getDeclaredFields();
+					try
+					{
+						for (Field keybField : keybFields) {
+							String keyName = keybField.getName();
+							char value = (char) keybField.get(new key());
+							if (KL.eq(k, keyName) && keyCodeCaptured == value) {
+								keyCaptured = keyName;
+							}
+						}
+					}
+					catch (SecurityException|IllegalAccessException|ClassCastException err) {
+					
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -5258,13 +5297,9 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
+					if (KL.in(k, "(m(ouse)?)?\\W?l?clickl?(?![rw])")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
@@ -5272,25 +5307,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -5298,21 +5333,21 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
 			super.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
-					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).start();
+					if (KL.eq(k, "(m(ouse)?)\\W?w(heel)?")) {
+						action.run();
 					}
 				}
 			});
@@ -5417,10 +5452,6 @@ public class KL {
 			super.setLayout(layout);
 			return this;
 		}
-		panel setLay(LayoutManager layout) {
-			lay(layout);
-			return this;
-		}
 		panel layout(LayoutManager layout) {
 			lay(layout);
 			return this;
@@ -5497,14 +5528,14 @@ public class KL {
 			return this;
 		}
 		panel on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+			if (not(k) || not(action)) {
+				return this;
+			}
+			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
 				}
-			}
-			if (not(k) || not(action)) {
-				return this;
 			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
@@ -5512,25 +5543,22 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					switch (keyCodeCaptured) {
-						case KeyEvent.VK_UP :
-							keyCaptured = "up";
-							break;
-						case KeyEvent.VK_DOWN :
-							keyCaptured = "down";
-							break;
-						case KeyEvent.VK_LEFT :
-							keyCaptured = "left";
-							break;
-						case KeyEvent.VK_RIGHT :
-							keyCaptured = "right";
-							break;
-						case KeyEvent.VK_CONTROL :
-							keyCaptured = "ctrl";
-							break;
+					Field[] keybFields = new key().getClass().getDeclaredFields();
+					try
+					{
+						for (Field keybField : keybFields) {
+							String keyName = keybField.getName();
+							char value = (char) keybField.get(new key());
+							if (KL.eq(k, keyName) && keyCodeCaptured == value) {
+								keyCaptured = keyName;
+							}
+						}
+					}
+					catch (SecurityException|IllegalAccessException|ClassCastException err) {
+					
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -5538,13 +5566,9 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
+					if (KL.in(k, "(m(ouse)?)?\\W?l?clickl?(?![rw])")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
@@ -5552,25 +5576,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -5578,21 +5602,21 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
 			super.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
-					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).start();
+					if (KL.eq(k, "(m(ouse)?)\\W?w(heel)?")) {
+						action.run();
 					}
 				}
 			});
@@ -7402,14 +7426,14 @@ public class KL {
 			return this;
 		}
 		txtField on(String k, Runnable action) {
+			if (not(k) || not(action)) {
+				return this;
+			}
 			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
 				}
-			}
-			if (not(k) || not(action)) {
-				return this;
 			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
@@ -7432,7 +7456,7 @@ public class KL {
 					
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -7440,9 +7464,7 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click(?![rw])")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
+					if (KL.in(k, "(m(ouse)?)?\\W?l?clickl?(?![rw])")) {
 						button = MouseEvent.BUTTON1;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
@@ -7452,25 +7474,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -7478,21 +7500,21 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
 			super.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
-					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).start();
+					if (KL.eq(k, "(m(ouse)?)\\W?w(heel)?")) {
+						action.run();
 					}
 				}
 			});
@@ -7575,14 +7597,14 @@ public class KL {
 			return this;
 		}
 		txtArea on(String k, Runnable action) {
+			if (not(k) || not(action)) {
+				return this;
+			}
 			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
 				}
-			}
-			if (not(k) || not(action)) {
-				return this;
 			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
@@ -7598,7 +7620,6 @@ public class KL {
 							char value = (char) keybField.get(new key());
 							if (KL.eq(k, keyName) && keyCodeCaptured == value) {
 								keyCaptured = keyName;
-								KL.print("new key =", keyCaptured);
 							}
 						}
 					}
@@ -7606,7 +7627,7 @@ public class KL {
 					
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -7614,9 +7635,7 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click(?![rw])")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
+					if (KL.in(k, "(m(ouse)?)?\\W?l?clickl?(?![rw])")) {
 						button = MouseEvent.BUTTON1;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
@@ -7626,25 +7645,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -7652,21 +7671,21 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
 			super.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
-					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).start();
+					if (KL.eq(k, "(m(ouse)?)\\W?w(heel)?")) {
+						action.run();
 					}
 				}
 			});
@@ -7732,14 +7751,14 @@ public class KL {
 			return this;
 		}
 		txtPane on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+			if (not(k) || not(action)) {
+				return this;
+			}
+			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
 				}
-			}
-			if (not(k) || not(action)) {
-				return this;
 			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
@@ -7747,25 +7766,22 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					switch (keyCodeCaptured) {
-						case KeyEvent.VK_UP :
-							keyCaptured = "up";
-							break;
-						case KeyEvent.VK_DOWN :
-							keyCaptured = "down";
-							break;
-						case KeyEvent.VK_LEFT :
-							keyCaptured = "left";
-							break;
-						case KeyEvent.VK_RIGHT :
-							keyCaptured = "right";
-							break;
-						case KeyEvent.VK_CONTROL :
-							keyCaptured = "ctrl";
-							break;
+					Field[] keybFields = new key().getClass().getDeclaredFields();
+					try
+					{
+						for (Field keybField : keybFields) {
+							String keyName = keybField.getName();
+							char value = (char) keybField.get(new key());
+							if (KL.eq(k, keyName) && keyCodeCaptured == value) {
+								keyCaptured = keyName;
+							}
+						}
+					}
+					catch (SecurityException|IllegalAccessException|ClassCastException err) {
+					
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -7773,13 +7789,9 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
+					if (KL.in(k, "(m(ouse)?)?\\W?l?clickl?(?![rw])")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
@@ -7787,25 +7799,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -7813,21 +7825,21 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
 			super.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
-					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).start();
+					if (KL.eq(k, "(m(ouse)?)\\W?w(heel)?")) {
+						action.run();
 					}
 				}
 			});
@@ -7912,14 +7924,14 @@ public class KL {
 			return this;
 		}
 		pwdField on(String k, Runnable action) {
-			if (KL.in(k, "\\w{3,}\\s*[\\|\\+\\&,;]\\s*\\w{3,}")) {
+			if (not(k) || not(action)) {
+				return this;
+			}
+			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
 				}
-			}
-			if (not(k) || not(action)) {
-				return this;
 			}
 			super.addKeyListener(new KeyAdapter() {
 				@Override
@@ -7927,25 +7939,22 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					switch (keyCodeCaptured) {
-						case KeyEvent.VK_UP :
-							keyCaptured = "up";
-							break;
-						case KeyEvent.VK_DOWN :
-							keyCaptured = "down";
-							break;
-						case KeyEvent.VK_LEFT :
-							keyCaptured = "left";
-							break;
-						case KeyEvent.VK_RIGHT :
-							keyCaptured = "right";
-							break;
-						case KeyEvent.VK_CONTROL :
-							keyCaptured = "ctrl";
-							break;
+					Field[] keybFields = new key().getClass().getDeclaredFields();
+					try
+					{
+						for (Field keybField : keybFields) {
+							String keyName = keybField.getName();
+							char value = (char) keybField.get(new key());
+							if (KL.eq(k, keyName) && keyCodeCaptured == value) {
+								keyCaptured = keyName;
+							}
+						}
+					}
+					catch (SecurityException|IllegalAccessException|ClassCastException err) {
+					
 					}
 					if (KL.eq(k, keyCaptured)) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -7953,13 +7962,9 @@ public class KL {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					int button = -1;
-					if (KL.eq(k, "(m(ouse)?)?\\W?click")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickl")
-							|| KL.eq(k, "(m(ouse)?)?\\W?lclick")) {
+					if (KL.in(k, "(m(ouse)?)?\\W?l?clickl?(?![rw])")) {
 						button = MouseEvent.BUTTON1;
-					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickm")
-							|| KL.eq(k, "(m(ouse)?)?\\W?clickw")
-							|| KL.eq(k, "(m(ouse)?)?\\W?mclick")
+					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickw")
 							|| KL.eq(k, "(m(ouse)?)?\\W?wclick")) {
 						button = MouseEvent.BUTTON2;
 					} else if (KL.eq(k, "(m(ouse)?)?\\W?clickr")
@@ -7967,25 +7972,25 @@ public class KL {
 						button = MouseEvent.BUTTON3;
 					}
 					if (e.getButton() == button) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?release")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(enter|in)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?(leave|out)")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
@@ -7993,21 +7998,21 @@ public class KL {
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)?\\W?drag")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					if (KL.eq(k, "(m(ouse)?)\\W?move")) {
-						new Thread(action).start();
+						action.run();
 					}
 				}
 			});
 			super.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
-					if (KL.eq(k, "(m(ouse)?)\\W?wheel")) {
-						new Thread(action).start();
+					if (KL.eq(k, "(m(ouse)?)\\W?w(heel)?")) {
+						action.run();
 					}
 				}
 			});
