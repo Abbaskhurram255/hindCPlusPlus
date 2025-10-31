@@ -63437,6 +63437,76 @@ public class KL {
 	public static boolArr unique(boolArr arr) {
 		return removeDuplicatesOf(arr);
 	}
+	public static String[] set(String[] arr) {
+	    if (arr == null || arr.length == 0)
+	        return blank.Str;
+	    return new strArr(arr).unique().array();
+	}
+	public static int[] set(int[] arr) {
+	    if (arr == null || arr.length == 0)
+	        return blank.Int;
+	    return new intArr(arr).unique().array();
+	}
+	public static long[] set(long[] arr) {
+	    if (arr == null || arr.length == 0)
+	        return blank.Long;
+	    return new longArr(arr).unique().array();
+	}
+	public static float[] set(float[] arr) {
+	    if (arr == null || arr.length == 0)
+	        return blank.Flt;
+	    return new fltArr(arr).unique().array();
+	}
+	public static double[] set(double[] arr) {
+	    if (arr == null || arr.length == 0)
+	        return blank.Dbl;
+	    return new dblArr(arr).unique().array();
+	}
+	public static boolean[] set(boolean[] arr) {
+	    if (arr == null || arr.length == 0)
+	        return blank.Bool;
+	    return new boolArr(arr).unique().array();
+	}
+	public static Object[] set(Object[] arr) {
+	    if (arr == null || arr.length == 0)
+	        return blank.Obj;
+	    return new arr(arr).unique().array();
+	}
+	public static strArr set(strArr arr) {
+	    if (arr == null || arr.length() == 0)
+	        return blank.strArr;
+	    return arr.unique();
+	}
+	public static intArr set(intArr arr) {
+	    if (arr == null || arr.length() == 0)
+	        return blank.intArr;
+	    return arr.unique();
+	}
+	public static longArr set(longArr arr) {
+	    if (arr == null || arr.length() == 0)
+	        return blank.longArr;
+	    return arr.unique();
+	}
+	public static fltArr set(fltArr arr) {
+	    if (arr == null || arr.length() == 0)
+	        return blank.fltArr;
+	    return arr.unique();
+	}
+	public static dblArr set(dblArr arr) {
+	    if (arr == null || arr.length() == 0)
+	        return blank.dblArr;
+	    return arr.unique();
+	}
+	public static boolArr set(boolArr arr) {
+	    if (arr == null || arr.length() == 0)
+	        return blank.boolArr;
+	    return arr.unique();
+	}
+	public static arr set(arr arr) {
+	    if (arr == null || arr.length() == 0)
+	        return blank.mixedArr;
+	    return arr.unique();
+	}
 	public static String replace(String str, String re, String _with) {
 		if (not(str))
 			return "";
