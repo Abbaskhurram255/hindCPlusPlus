@@ -4145,8 +4145,14 @@ public class KL {
 		public app set(o propsObj) {
 			if (propsObj == null)
 				return this;
-			if (propsObj.hasKey("title")) {
-				String title = propsObj.k("title", _s);
+			if (propsObj.hasKey("title") || propsObj.hasKey("name") || propsObj.hasKey("naam")) {
+				String title;
+                if (propsObj.hasKey("title"))
+                    title = propsObj.k("title", _s);
+                else if (propsObj.hasKey("name"))
+                    title = propsObj.k("name", _s);
+                else
+                    title = propsObj.k("naam", _s);
 				title(title);
 			}
 			if (propsObj.hasKey("width") && propsObj.hasKey("height")) {
@@ -4154,7 +4160,7 @@ public class KL {
 						height = propsObj.k("height", _i);
 				size(width, height);
 			}
-			if (either(propsObj.hasKey("size"), propsObj.hasKey("resolution"))) {
+			if (propsObj.hasKey("size") || propsObj.hasKey("resolution")) {
 				String WxH;
 				if (propsObj.hasKey("size"))
 					WxH = propsObj.k("size", _s);
@@ -4166,12 +4172,16 @@ public class KL {
 				boolean resizable = propsObj.k("resizable", _b);
 				resizable(resizable);
 			}
-			if (either(propsObj.hasKey("onTop"), propsObj.hasKey("alwaysOnTop"))) {
+			if (propsObj.hasKey("onTop") || propsObj.hasKey("alwaysOnTop") || propsObj.hasKey("topPe") || propsObj.hasKey("hameshaTopPe")) {
 				boolean onTop;
                 if (propsObj.hasKey("onTop"))
                     onTop = propsObj.k("onTop", _b);
-                else
+                else if (propsObj.hasKey("alwaysOnTop"))
                     onTop = propsObj.k("alwaysOnTop", _b);
+                else if (propsObj.hasKey("topPe"))
+                    onTop = propsObj.k("topPe", _b);
+                else
+                    onTop = propsObj.k("hameshaTopPe", _b);
 				onTop(onTop);
 			}
 			return this;
@@ -4179,7 +4189,18 @@ public class KL {
 		public app set(String... kvs) {
 			if (kvs == null)
 				return this;
+			for (int i : range(kvs)) {
+				if (kvs[i] == null)
+				    continue;
+				kvs[i] = kvs[i].replaceAll("\b([Hh][ae]|[Yy]es|[Ss]ach)\b", "true").replaceAll("\b([Nn](a(hi)?|o)|[Jj]hoot)\b", "false");
+			}
 			return set(new o(kvs));
+		}
+		public app rakho(o propsObj) {
+			return set(propsObj);
+		}
+		public app rakho(String... kvs) {
+			return set(kvs);
 		}
 		public app lay(LayoutManager layout) {
 			super.getContentPane().setLayout(layout);
@@ -4839,6 +4860,14 @@ public class KL {
 			return this;
 		}
 		public gui set(String... kvs) {
+			super.set(kvs);
+			return this;
+		}
+		public gui rakho(o propsObj) {
+			super.set(propsObj);
+			return this;
+		}
+		public gui rakho(String... kvs) {
 			super.set(kvs);
 			return this;
 		}
@@ -10909,6 +10938,9 @@ public class KL {
 			}
 			return hasValue(o);
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 		o set(String... kvs) {
 			o oldObj = copy(), newObj = new o(kvs),
 					combined = this.combine(oldObj, newObj);
@@ -11136,6 +11168,13 @@ public class KL {
 			super.putAll(newMap);
 			return this;
 		}
+		o replaceKey(String oldKey, String newKey) {
+			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
+			    return this;
+            super.remove(oldKey);
+            super.put(newKey, super.get(oldKey));
+            return this;
+	    }
 		o map(Function<Object, Object> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -11353,6 +11392,9 @@ public class KL {
 				return hasValue((Integer) o);
 			}
 			return false;
+		}
+		boolean includes(Object o) {
+			return has(o);
 		}
 		String[] keyArray() {
 			Object[] objArray = super.keySet().toArray();
@@ -11689,6 +11731,13 @@ public class KL {
 			super.putAll(newMap);
 			return this;
 		}
+		oI replaceKey(String oldKey, String newKey) {
+			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
+			    return this;
+            super.remove(oldKey);
+            super.put(newKey, super.get(oldKey));
+            return this;
+	    }
 		oI map(Function<Integer, Integer> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -12026,6 +12075,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 		oL set(String k, Long v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
@@ -12278,6 +12330,13 @@ public class KL {
 			super.putAll(newMap);
 			return this;
 		}
+		oL replaceKey(String oldKey, String newKey) {
+			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
+			    return this;
+            super.remove(oldKey);
+            super.put(newKey, super.get(oldKey));
+            return this;
+	    }
 		oL map(Function<Long, Long> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -12617,6 +12676,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 		oF set(String k, Float v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
@@ -12869,6 +12931,13 @@ public class KL {
 			super.putAll(newMap);
 			return this;
 		}
+		oF replaceKey(String oldKey, String newKey) {
+			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
+			    return this;
+            super.remove(oldKey);
+            super.put(newKey, super.get(oldKey));
+            return this;
+	    }
 		oF map(Function<Float, Float> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -13211,6 +13280,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 		oD set(String k, Double v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
@@ -13463,6 +13535,13 @@ public class KL {
 			super.putAll(newMap);
 			return this;
 		}
+		oD replaceKey(String oldKey, String newKey) {
+			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
+			    return this;
+            super.remove(oldKey);
+            super.put(newKey, super.get(oldKey));
+            return this;
+	    }
 		oD map(Function<Double, Double> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -13806,6 +13885,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 		oB set(String k, Boolean v) {
 			if (!super.containsKey(k)) {
 				super.put(k, v);
@@ -14043,6 +14125,13 @@ public class KL {
 			super.putAll(newMap);
 			return this;
 		}
+		oB replaceKey(String oldKey, String newKey) {
+			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
+			    return this;
+            super.remove(oldKey);
+            super.put(newKey, super.get(oldKey));
+            return this;
+	    }
 		oB map(Function<Boolean, Boolean> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -14346,6 +14435,13 @@ public class KL {
 			}
 			return this;
 		}
+		tree<Key, Value> replaceKey(Key oldKey, Key newKey) {
+			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
+			    return this;
+            super.remove(oldKey);
+            super.put(newKey, super.get(oldKey));
+            return this;
+	    }
 		tree<Key, Value> map(Value value, Function<Value, Value> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
@@ -14743,6 +14839,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 	}
 	public static treeI treeI(int k1, String v1, int k2, String v2, int k3,
 			String v3, int k4, String v4, int k5, String v5, int k6, String v6,
@@ -15003,6 +15102,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 	}
 	public static treeL treeL(int k1, long v1, int k2, long v2, int k3, long v3,
 			int k4, long v4, int k5, long v5, int k6, long v6, int k7, long v7,
@@ -15261,6 +15363,9 @@ public class KL {
 				return super.hasValue((Float) o);
 			}
 			return false;
+		}
+		boolean includes(Object o) {
+			return has(o);
 		}
 	}
 	public static treeF treeF(int k1, float v1, int k2, float v2, int k3,
@@ -15523,6 +15628,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 	}
 	public static treeD treeD(int k1, double v1, int k2, double v2, int k3,
 			double v3, int k4, double v4, int k5, double v5, int k6, double v6,
@@ -15769,6 +15877,9 @@ public class KL {
 				return super.hasValue((Boolean) o);
 			}
 			return false;
+		}
+		boolean includes(Object o) {
+			return has(o);
 		}
 	}
 	public static treeB treeB(int k1, boolean v1, int k2, boolean v2, int k3,
@@ -16020,6 +16131,9 @@ public class KL {
 				return super.hasValue((String) o);
 			}
 			return false;
+		}
+		boolean includes(Object o) {
+			return has(o);
 		}
 	}
 	public static treeDS treeDS(double k1, String v1, double k2, String v2,
@@ -16283,6 +16397,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 	}
 	public static class treeDL extends tree<Double, Long> {
 		public static final long serialVersionUID = 1L;
@@ -16493,6 +16610,9 @@ public class KL {
 				return super.hasValue((Long) o);
 			}
 			return false;
+		}
+		boolean includes(Object o) {
+			return has(o);
 		}
 	}
 	public static treeDL treeDL(double k1, long v1, double k2, long v2,
@@ -16757,6 +16877,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 	}
 	public static treeDF treeDF(double k1, float v1, double k2, float v2,
 			double k3, float v3, double k4, float v4, double k5, float v5,
@@ -17009,6 +17132,9 @@ public class KL {
 			}
 			return false;
 		}
+		boolean includes(Object o) {
+			return has(o);
+		}
 	}
 	public static treeDB treeDB(double k1, boolean v1, double k2, boolean v2,
 			double k3, boolean v3, double k4, boolean v4, double k5, boolean v5,
@@ -17227,6 +17353,9 @@ public class KL {
 		}
 		boolean has(String x) {
 			return super.contains(x);
+		}
+		boolean includes(String x) {
+			return has(x);
 		}
 		String i(int i) {
 			if (i >= 0 && i < length()) {
@@ -17731,6 +17860,9 @@ public class KL {
 		}
 		boolean has(int x) {
 			return super.contains(x);
+		}
+		boolean includes(int x) {
+			return has(x);
 		}
 		int i(int i) {
 			if (i >= 0 && i < length()) {
@@ -18254,6 +18386,9 @@ public class KL {
 		}
 		boolean has(long x) {
 			return super.contains(x);
+		}
+		boolean includes(long x) {
+			return has(x);
 		}
 		long i(int i) {
 			if (i >= 0 && i < length()) {
@@ -18784,6 +18919,9 @@ public class KL {
 		boolean has(float x) {
 			return super.contains(x);
 		}
+		boolean includes(float x) {
+			return has(x);
+		}
 		float i(int i) {
 			if (i >= 0 && i < length()) {
 				return array()[i];
@@ -19307,6 +19445,9 @@ public class KL {
 		}
 		boolean has(double x) {
 			return super.contains(x);
+		}
+		boolean includes(double x) {
+			return has(x);
 		}
 		double i(int i) {
 			if (i >= 0 && i < length()) {
@@ -19832,6 +19973,9 @@ public class KL {
 		boolean has(boolean x) {
 			return super.contains(x);
 		}
+		boolean includes(boolean x) {
+			return has(x);
+		}
 		boolean i(int i) {
 			if (i >= 0 && i < length()) {
 				return array()[i];
@@ -20331,6 +20475,9 @@ public class KL {
 		}
 		boolean has(Object x) {
 			return super.contains(x);
+		}
+		boolean includes(Object o) {
+			return has(o);
 		}
 		Object i(int i) {
 			if (i >= 0 && i < length()) {
