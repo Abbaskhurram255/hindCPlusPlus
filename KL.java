@@ -4145,14 +4145,15 @@ public class KL {
 		public app set(o propsObj) {
 			if (propsObj == null)
 				return this;
-			if (propsObj.hasKey("title") || propsObj.hasKey("name") || propsObj.hasKey("naam")) {
+			if (propsObj.hasKey("title") || propsObj.hasKey("name")
+					|| propsObj.hasKey("naam")) {
 				String title;
-                if (propsObj.hasKey("title"))
-                    title = propsObj.k("title", _s);
-                else if (propsObj.hasKey("name"))
-                    title = propsObj.k("name", _s);
-                else
-                    title = propsObj.k("naam", _s);
+				if (propsObj.hasKey("title"))
+					title = propsObj.k("title", _s);
+				else if (propsObj.hasKey("name"))
+					title = propsObj.k("name", _s);
+				else
+					title = propsObj.k("naam", _s);
 				title(title);
 			}
 			if (propsObj.hasKey("width") && propsObj.hasKey("height")) {
@@ -4165,23 +4166,25 @@ public class KL {
 				if (propsObj.hasKey("size"))
 					WxH = propsObj.k("size", _s);
 				else
-				    WxH = propsObj.k("resolution", _s);
+					WxH = propsObj.k("resolution", _s);
 				size(WxH);
 			}
 			if (propsObj.hasKey("resizable")) {
 				boolean resizable = propsObj.k("resizable", _b);
 				resizable(resizable);
 			}
-			if (propsObj.hasKey("onTop") || propsObj.hasKey("alwaysOnTop") || propsObj.hasKey("topPe") || propsObj.hasKey("hameshaTopPe")) {
+			if (propsObj.hasKey("onTop") || propsObj.hasKey("alwaysOnTop")
+					|| propsObj.hasKey("topPe")
+					|| propsObj.hasKey("hameshaTopPe")) {
 				boolean onTop;
-                if (propsObj.hasKey("onTop"))
-                    onTop = propsObj.k("onTop", _b);
-                else if (propsObj.hasKey("alwaysOnTop"))
-                    onTop = propsObj.k("alwaysOnTop", _b);
-                else if (propsObj.hasKey("topPe"))
-                    onTop = propsObj.k("topPe", _b);
-                else
-                    onTop = propsObj.k("hameshaTopPe", _b);
+				if (propsObj.hasKey("onTop"))
+					onTop = propsObj.k("onTop", _b);
+				else if (propsObj.hasKey("alwaysOnTop"))
+					onTop = propsObj.k("alwaysOnTop", _b);
+				else if (propsObj.hasKey("topPe"))
+					onTop = propsObj.k("topPe", _b);
+				else
+					onTop = propsObj.k("hameshaTopPe", _b);
 				onTop(onTop);
 			}
 			return this;
@@ -4191,10 +4194,18 @@ public class KL {
 				return this;
 			for (int i : range(kvs)) {
 				if (kvs[i] == null)
-				    continue;
-				kvs[i] = kvs[i].replaceAll("\b([Hh][ae]|[Yy]es|[Ss]ach)\b", "true").replaceAll("\b([Nn](a(hi)?|o)|[Jj]hoot)\b", "false");
+					continue;
+				kvs[i] = kvs[i]
+						.replaceAll("\\b([Hh][ae]|[Yy]es|[Ss]ach)\\b", "true")
+						.replaceAll("\\b([Nn](a(hi)?|o)|[Jj]hoot)\\b", "false");
 			}
 			return set(new o(kvs));
+		}
+		public app use(o propsObj) {
+			return set(propsObj);
+		}
+		public app use(String... kvs) {
+			return set(kvs);
 		}
 		public app rakho(o propsObj) {
 			return set(propsObj);
@@ -4412,7 +4423,8 @@ public class KL {
 			if (not(k) || not(action)) {
 				return this;
 			}
-			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
+			if (KL.in(k,
+					"(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
@@ -4424,9 +4436,9 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					Field[] keybFields = new key().getClass().getDeclaredFields();
-					try
-					{
+					Field[] keybFields = new key().getClass()
+							.getDeclaredFields();
+					try {
 						for (Field keybField : keybFields) {
 							String keyName = keybField.getName();
 							char value = (char) keybField.get(new key());
@@ -4434,9 +4446,9 @@ public class KL {
 								keyCaptured = keyName;
 							}
 						}
-					}
-					catch (SecurityException|IllegalAccessException|ClassCastException err) {
-					
+					} catch (SecurityException | IllegalAccessException
+							| ClassCastException err) {
+
 					}
 					if (KL.eq(k, keyCaptured)) {
 						action.run();
@@ -4863,6 +4875,14 @@ public class KL {
 			super.set(kvs);
 			return this;
 		}
+		public gui use(o propsObj) {
+			super.use(propsObj);
+			return this;
+		}
+		public gui use(String... kvs) {
+			super.use(kvs);
+			return this;
+		}
 		public gui rakho(o propsObj) {
 			super.set(propsObj);
 			return this;
@@ -4903,9 +4923,10 @@ public class KL {
 			super.disappear();
 			return this;
 		}
-		public gui resizable(boolean b) { 			super.resizable(b);
-            return this;
-        }
+		public gui resizable(boolean b) {
+			super.resizable(b);
+			return this;
+		}
 		public gui resizable() {
 			super.resizable();
 			return this;
@@ -5173,7 +5194,7 @@ public class KL {
 	hint.WARNING dont_change_the_visibility_of_any_of_the_methods_of_the_following_class;
 	hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER_PLUGIN;
 	hint.approach helps_give_an_easier_time_building_guis;
-	public static gui gui = new gui();
+	//public static gui gui = new gui();
 	public static class label extends JLabel {
 		private static final long serialVersionUID = 1L;
 		public static int top = TOP, left = LEFT, bottom = BOTTOM,
@@ -5291,7 +5312,8 @@ public class KL {
 			if (not(k) || not(action)) {
 				return this;
 			}
-			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
+			if (KL.in(k,
+					"(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
@@ -5303,9 +5325,9 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					Field[] keybFields = new key().getClass().getDeclaredFields();
-					try
-					{
+					Field[] keybFields = new key().getClass()
+							.getDeclaredFields();
+					try {
 						for (Field keybField : keybFields) {
 							String keyName = keybField.getName();
 							char value = (char) keybField.get(new key());
@@ -5313,9 +5335,9 @@ public class KL {
 								keyCaptured = keyName;
 							}
 						}
-					}
-					catch (SecurityException|IllegalAccessException|ClassCastException err) {
-					
+					} catch (SecurityException | IllegalAccessException
+							| ClassCastException err) {
+
 					}
 					if (KL.eq(k, keyCaptured)) {
 						action.run();
@@ -5560,7 +5582,8 @@ public class KL {
 			if (not(k) || not(action)) {
 				return this;
 			}
-			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
+			if (KL.in(k,
+					"(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
@@ -5572,9 +5595,9 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					Field[] keybFields = new key().getClass().getDeclaredFields();
-					try
-					{
+					Field[] keybFields = new key().getClass()
+							.getDeclaredFields();
+					try {
 						for (Field keybField : keybFields) {
 							String keyName = keybField.getName();
 							char value = (char) keybField.get(new key());
@@ -5582,9 +5605,9 @@ public class KL {
 								keyCaptured = keyName;
 							}
 						}
-					}
-					catch (SecurityException|IllegalAccessException|ClassCastException err) {
-					
+					} catch (SecurityException | IllegalAccessException
+							| ClassCastException err) {
+
 					}
 					if (KL.eq(k, keyCaptured)) {
 						action.run();
@@ -5669,109 +5692,113 @@ public class KL {
 			return this;
 		}
 	}
-	public static class btn extends JButton {
+	public static class button extends JButton {
 		private static final long serialVersionUID = 1L;
-		btn() {
+		button() {
 			super();
 			super.setFocusable(false);
 		}
-		btn(String text) {
+		button(String text) {
 			super(text);
 			super.setFocusable(false);
 		}
-		btn(Action a) {
+		button(Action a) {
 			super(a);
 			super.setFocusable(false);
 		}
-		btn(Icon i) {
+		button(Icon i) {
 			super(i);
 			super.setFocusable(false);
 		}
-		btn(String text, Icon i) {
+		button(String text, Icon i) {
 			super(text, i);
 			super.setFocusable(false);
 		}
-		btn(String text, ActionListener listener) {
-			super(text);
-			super.setFocusable(false);
+		button(String text, ActionListener listener) {
+			this(text);
 			click(listener);
 		}
-		btn(String text, ActionListener listener, Color bg, Color fg) {
+		button(String text, Color bg, Color fg) {
+			this(text);
+			background(bg);
+			foreground(fg);
+		}
+		button(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
 			background(bg);
 			foreground(fg);
 		}
-		btn click() {
+		button click() {
 			super.doClick();
 			return this;
 		}
-		btn click(ActionListener listener) {
+		button click(ActionListener listener) {
 			if (not(listener))
 				return this;
 			super.addActionListener(listener);
 			return this;
 		}
-		btn offClick(ActionListener listener) {
+		button offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		btn background(Color clr) {
+		button background(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		btn foreground(Color clr) {
+		button foreground(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		btn setBg(Color clr) {
+		button setBg(Color clr) {
 			background(clr);
 			return this;
 		}
-		btn setFg(Color clr) {
+		button setFg(Color clr) {
 			foreground(clr);
 			return this;
 		}
-		btn img(Icon ico) {
+		button img(Icon ico) {
 			super.setIcon(ico);
 			return this;
 		}
-		btn img(String address) {
+		button img(String address) {
 			img(new image(address));
 			return this;
 		}
-		btn icon(Icon ico) {
+		button icon(Icon ico) {
 			this.img(ico);
 			return this;
 		}
-		btn icon(String address) {
+		button icon(String address) {
 			this.img(address);
 			return this;
 		}
-		btn setImage(Icon ico) {
+		button setImage(Icon ico) {
 			this.img(ico);
 			return this;
 		}
-		btn setImage(String address) {
+		button setImage(String address) {
 			this.img(address);
 			return this;
 		}
-		btn cursor(int c) {
+		button cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
 		}
-		btn cursor(Cursor crsrObj) {
+		button cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		btn font(String fontFamily, int fontSize) {
+		button font(String fontFamily, int fontSize) {
 			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
 			return this;
 		}
-		btn font(String fontFamily, int fontSize, int fontWidth) {
+		button font(String fontFamily, int fontSize, int fontWidth) {
 			super.setFont(new Font(fontFamily, fontWidth, fontSize));
 			return this;
 		}
-		btn font(String fontFamily, int fontSize, boolean bold,
+		button font(String fontFamily, int fontSize, boolean bold,
 				boolean italic) {
 			super.setFont(new Font(fontFamily, bold && italic
 					? Font.BOLD | Font.ITALIC
@@ -5779,11 +5806,11 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		btn font(String fontFamily, int fontSize, boolean bold) {
+		button font(String fontFamily, int fontSize, boolean bold) {
 			font(fontFamily, fontSize, bold, false);
 			return this;
 		}
-		btn font(String fontFamily, int fontSize, int bold, int italic) {
+		button font(String fontFamily, int fontSize, int bold, int italic) {
 			super.setFont(new Font(fontFamily,
 					bold == 1 && italic == 1
 							? Font.BOLD | Font.ITALIC
@@ -5793,50 +5820,199 @@ public class KL {
 					fontSize));
 			return this;
 		}
-		btn font(Font fnt) {
+		button font(Font fnt) {
 			super.setFont(fnt);
 			return this;
 		}
-		btn border(Border brdr) {
+		button border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
 		}
-		btn alignx(int pos) {
+		button alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
 		}
-		btn aligny(int pos) {
+		button aligny(int pos) {
 			super.setVerticalAlignment(pos);
 			return this;
 		}
 		String text() {
 			return super.getText();
 		}
-		btn text(String s) {
+		button text(String s) {
 			super.setText(s);
 			return this;
 		}
-		btn on(String evt, ActionListener action) {
+		button on(String evt, ActionListener action) {
 			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
 				click(action);
 			}
 			return this;
 		}
-		btn hover(String textToDisplayOnHover) {
+		button hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
 			super.setToolTipText(textToDisplayOnHover);
 			return this;
 		}
-		btn hover() {
+		button hover() {
 			super.setToolTipText(null);
 			return this;
 		}
 		public String getHover() {
 			return super.getToolTipText();
 		}
-		btn place(int xAxis, int yAxis, int width, int height) {
+		button place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
+			return this;
+		}
+	}
+	public static class btn extends button {
+		btn() {
+			super();
+		}
+		btn(String text) {
+			super(text);
+		}
+		btn(Action a) {
+			super(a);
+		}
+		btn(Icon i) {
+			super(i);
+		}
+		btn(String text, Icon i) {
+			super(text, i);
+		}
+		btn(String text, ActionListener onClickAction) {
+			super(text, onClickAction);
+		}
+		btn(String text, Color bg, Color fg) {
+			super(text, bg, fg);
+		}
+		btn(String text, ActionListener onClickAction, Color bg, Color fg) {
+			super(text, onClickAction, bg, fg);
+		}
+		btn click() {
+			super.click();
+			return this;
+		}
+		btn click(ActionListener listener) {
+			super.click(listener);
+			return this;
+		}
+		btn offClick(ActionListener listener) {
+			super.offClick(listener);
+			return this;
+		}
+		btn background(Color clr) {
+			super.background(clr);
+			return this;
+		}
+		btn foreground(Color clr) {
+			super.foreground(clr);
+			return this;
+		}
+		btn setBg(Color clr) {
+			super.setBg(clr);
+			return this;
+		}
+		btn setFg(Color clr) {
+			super.setFg(clr);
+			return this;
+		}
+		btn img(Icon ico) {
+			super.img(ico);
+			return this;
+		}
+		btn img(String address) {
+			super.img(address);
+			return this;
+		}
+		btn icon(Icon ico) {
+			super.icon(ico);
+			return this;
+		}
+		btn icon(String address) {
+			super.icon(address);
+			return this;
+		}
+		btn setImage(Icon ico) {
+			super.setImage(ico);
+			return this;
+		}
+		btn setImage(String address) {
+			super.setImage(address);
+			return this;
+		}
+		btn cursor(int c) {
+			super.cursor(c);
+			return this;
+		}
+		btn cursor(Cursor crsrObj) {
+			super.cursor(crsrObj);
+			return this;
+		}
+		btn font(String fontFamily, int fontSize) {
+			super.font(fontFamily, fontSize);
+			return this;
+		}
+		btn font(String fontFamily, int fontSize, int fontWidth) {
+			super.font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		btn font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		btn font(String fontFamily, int fontSize, boolean bold) {
+			super.font(fontFamily, fontSize, bold);;
+			return this;
+		}
+		btn font(String fontFamily, int fontSize, int bold, int italic) {
+			super.font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		btn font(Font fnt) {
+			super.font(fnt);
+			return this;
+		}
+		btn border(Border brdr) {
+			super.border(brdr);
+			return this;
+		}
+		btn alignx(int pos) {
+			super.alignx(pos);
+			return this;
+		}
+		btn aligny(int pos) {
+			super.aligny(pos);
+			return this;
+		}
+		String text() {
+			return super.text();
+		}
+		btn text(String s) {
+			super.text(s);
+			return this;
+		}
+		btn on(String evt, ActionListener action) {
+			super.on(evt, action);
+			return this;
+		}
+		btn hover(String textToDisplayOnHover) {
+			super.hover(textToDisplayOnHover);
+			return this;
+		}
+		btn hover() {
+			super.hover();
+			return this;
+		}
+		public String getHover() {
+			return super.getHover();
+		}
+		btn place(int xAxis, int yAxis, int width, int height) {
+			super.place(xAxis, yAxis, width, height);
 			return this;
 		}
 	}
@@ -7458,7 +7634,8 @@ public class KL {
 			if (not(k) || not(action)) {
 				return this;
 			}
-			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
+			if (KL.in(k,
+					"(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
@@ -7470,9 +7647,9 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					Field[] keybFields = new key().getClass().getDeclaredFields();
-					try
-					{
+					Field[] keybFields = new key().getClass()
+							.getDeclaredFields();
+					try {
 						for (Field keybField : keybFields) {
 							String keyName = keybField.getName();
 							char value = (char) keybField.get(new key());
@@ -7480,9 +7657,9 @@ public class KL {
 								keyCaptured = keyName;
 							}
 						}
-					}
-					catch (SecurityException|IllegalAccessException|ClassCastException err) {
-					
+					} catch (SecurityException | IllegalAccessException
+							| ClassCastException err) {
+
 					}
 					if (KL.eq(k, keyCaptured)) {
 						action.run();
@@ -7629,7 +7806,8 @@ public class KL {
 			if (not(k) || not(action)) {
 				return this;
 			}
-			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
+			if (KL.in(k,
+					"(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
@@ -7641,9 +7819,9 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					Field[] keybFields = new key().getClass().getDeclaredFields();
-					try
-					{
+					Field[] keybFields = new key().getClass()
+							.getDeclaredFields();
+					try {
 						for (Field keybField : keybFields) {
 							String keyName = keybField.getName();
 							char value = (char) keybField.get(new key());
@@ -7651,9 +7829,9 @@ public class KL {
 								keyCaptured = keyName;
 							}
 						}
-					}
-					catch (SecurityException|IllegalAccessException|ClassCastException err) {
-					
+					} catch (SecurityException | IllegalAccessException
+							| ClassCastException err) {
+
 					}
 					if (KL.eq(k, keyCaptured)) {
 						action.run();
@@ -7783,7 +7961,8 @@ public class KL {
 			if (not(k) || not(action)) {
 				return this;
 			}
-			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
+			if (KL.in(k,
+					"(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
@@ -7795,9 +7974,9 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					Field[] keybFields = new key().getClass().getDeclaredFields();
-					try
-					{
+					Field[] keybFields = new key().getClass()
+							.getDeclaredFields();
+					try {
 						for (Field keybField : keybFields) {
 							String keyName = keybField.getName();
 							char value = (char) keybField.get(new key());
@@ -7805,9 +7984,9 @@ public class KL {
 								keyCaptured = keyName;
 							}
 						}
-					}
-					catch (SecurityException|IllegalAccessException|ClassCastException err) {
-					
+					} catch (SecurityException | IllegalAccessException
+							| ClassCastException err) {
+
 					}
 					if (KL.eq(k, keyCaptured)) {
 						action.run();
@@ -7956,7 +8135,8 @@ public class KL {
 			if (not(k) || not(action)) {
 				return this;
 			}
-			if (KL.in(k, "(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
+			if (KL.in(k,
+					"(?<k1>[\\w\\.:]+)\\s*[\\|\\+\\&,;]\\s*(?<k2>[\\w\\.:]+)")) {
 				String[] keys = k.split("\\s*[\\|\\+\\&,;]\\s*");
 				for (String key : keys) {
 					on(key, action);
@@ -7968,9 +8148,9 @@ public class KL {
 					char keyCharCaptured = e.getKeyChar();
 					int keyCodeCaptured = e.getKeyCode();
 					String keyCaptured = "" + keyCharCaptured;
-					Field[] keybFields = new key().getClass().getDeclaredFields();
-					try
-					{
+					Field[] keybFields = new key().getClass()
+							.getDeclaredFields();
+					try {
 						for (Field keybField : keybFields) {
 							String keyName = keybField.getName();
 							char value = (char) keybField.get(new key());
@@ -7978,9 +8158,9 @@ public class KL {
 								keyCaptured = keyName;
 							}
 						}
-					}
-					catch (SecurityException|IllegalAccessException|ClassCastException err) {
-					
+					} catch (SecurityException | IllegalAccessException
+							| ClassCastException err) {
+
 					}
 					if (KL.eq(k, keyCaptured)) {
 						action.run();
@@ -9712,14 +9892,36 @@ public class KL {
 	public static gui nayaGUI(String t, int w, int h) {
 		return new gui(t, w, h);
 	}
+	public static button button() {
+		return new button();
+	}
+	public static button button(String text) {
+		return new button(text);
+	}
+	public static button button(Action a) {
+		return new button(a);
+	}
+	public static button button(Icon i) {
+		return new button(i);
+	}
+	public static button button(String text, Icon i) {
+		return new button(text, i);
+	}
+	public static button button(String text, ActionListener onClickAction) {
+		return new button(text, onClickAction);
+	}
+	public static button button(String text, Color bg, Color fg) {
+		return new button(text, bg, fg);
+	}
+	public static button button(String text, ActionListener onClickAction,
+			Color bg, Color fg) {
+		return new button(text, onClickAction, bg, fg);
+	}
 	public static btn btn() {
 		return new btn();
 	}
-	public static btn btn(String txt) {
-		return new btn(txt);
-	}
-	public static btn btn(String txt, ActionListener actionOnClick) {
-		return new btn(txt, actionOnClick);
+	public static btn btn(String text) {
+		return new btn(text);
 	}
 	public static btn btn(Action a) {
 		return new btn(a);
@@ -9730,14 +9932,21 @@ public class KL {
 	public static btn btn(String text, Icon i) {
 		return new btn(text, i);
 	}
+	public static btn btn(String text, ActionListener onClickAction) {
+		return new btn(text, onClickAction);
+	}
+	public static btn btn(String text, Color bg, Color fg) {
+		return new btn(text, bg, fg);
+	}
+	public static btn btn(String text, ActionListener onClickAction, Color bg,
+			Color fg) {
+		return new btn(text, onClickAction, bg, fg);
+	}
 	public static btn nayaBtn() {
 		return new btn();
 	}
-	public static btn nayaBtn(String txt) {
-		return new btn(txt);
-	}
-	public static btn nayaBtn(String txt, ActionListener actionOnClick) {
-		return new btn(txt, actionOnClick);
+	public static btn nayaBtn(String text) {
+		return new btn(text);
 	}
 	public static btn nayaBtn(Action a) {
 		return new btn(a);
@@ -9747,6 +9956,16 @@ public class KL {
 	}
 	public static btn nayaBtn(String text, Icon i) {
 		return new btn(text, i);
+	}
+	public static btn nayaBtn(String text, ActionListener onClickAction) {
+		return new btn(text, onClickAction);
+	}
+	public static btn nayaBtn(String text, Color bg, Color fg) {
+		return new btn(text, bg, fg);
+	}
+	public static btn nayaBtn(String text, ActionListener onClickAction,
+			Color bg, Color fg) {
+		return new btn(text, onClickAction, bg, fg);
 	}
 	public static URL url(String address) {
 		try {
@@ -10927,6 +11146,9 @@ public class KL {
 			}
 		}
 		boolean hasKey(String k) {
+			if (not(k))
+				return false;
+			k = lower(k);
 			return super.containsKey(k);
 		}
 		boolean hasValue(Object v) {
@@ -11170,11 +11392,11 @@ public class KL {
 		}
 		o replaceKey(String oldKey, String newKey) {
 			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
-			    return this;
-            super.remove(oldKey);
-            super.put(newKey, super.get(oldKey));
-            return this;
-	    }
+				return this;
+			super.remove(oldKey);
+			super.put(newKey, super.get(oldKey));
+			return this;
+		}
 		o map(Function<Object, Object> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -11380,6 +11602,9 @@ public class KL {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		boolean hasKey(String k) {
+			if (not(k))
+				return false;
+			k = lower(k);
 			return super.containsKey(k);
 		}
 		boolean hasValue(Integer v) {
@@ -11733,11 +11958,11 @@ public class KL {
 		}
 		oI replaceKey(String oldKey, String newKey) {
 			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
-			    return this;
-            super.remove(oldKey);
-            super.put(newKey, super.get(oldKey));
-            return this;
-	    }
+				return this;
+			super.remove(oldKey);
+			super.put(newKey, super.get(oldKey));
+			return this;
+		}
 		oI map(Function<Integer, Integer> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -12062,6 +12287,9 @@ public class KL {
 			return nthlast(1);
 		}
 		boolean hasKey(String k) {
+			if (not(k))
+				return false;
+			k = lower(k);
 			return super.containsKey(k);
 		}
 		boolean hasValue(Long v) {
@@ -12332,11 +12560,11 @@ public class KL {
 		}
 		oL replaceKey(String oldKey, String newKey) {
 			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
-			    return this;
-            super.remove(oldKey);
-            super.put(newKey, super.get(oldKey));
-            return this;
-	    }
+				return this;
+			super.remove(oldKey);
+			super.put(newKey, super.get(oldKey));
+			return this;
+		}
 		oL map(Function<Long, Long> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -12663,6 +12891,9 @@ public class KL {
 			return nthlast(1);
 		}
 		boolean hasKey(String k) {
+			if (not(k))
+				return false;
+			k = lower(k);
 			return super.containsKey(k);
 		}
 		boolean hasValue(Float v) {
@@ -12933,11 +13164,11 @@ public class KL {
 		}
 		oF replaceKey(String oldKey, String newKey) {
 			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
-			    return this;
-            super.remove(oldKey);
-            super.put(newKey, super.get(oldKey));
-            return this;
-	    }
+				return this;
+			super.remove(oldKey);
+			super.put(newKey, super.get(oldKey));
+			return this;
+		}
 		oF map(Function<Float, Float> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -13267,6 +13498,9 @@ public class KL {
 			return nthlast(1);
 		}
 		boolean hasKey(String k) {
+			if (not(k))
+				return false;
+			k = lower(k);
 			return super.containsKey(k);
 		}
 		boolean hasValue(Double v) {
@@ -13537,11 +13771,11 @@ public class KL {
 		}
 		oD replaceKey(String oldKey, String newKey) {
 			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
-			    return this;
-            super.remove(oldKey);
-            super.put(newKey, super.get(oldKey));
-            return this;
-	    }
+				return this;
+			super.remove(oldKey);
+			super.put(newKey, super.get(oldKey));
+			return this;
+		}
 		oD map(Function<Double, Double> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -13872,6 +14106,9 @@ public class KL {
 			return nthlast(1);
 		}
 		boolean hasKey(String k) {
+			if (not(k))
+				return false;
+			k = lower(k);
 			return super.containsKey(k);
 		}
 		boolean hasValue(Boolean v) {
@@ -14127,11 +14364,11 @@ public class KL {
 		}
 		oB replaceKey(String oldKey, String newKey) {
 			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
-			    return this;
-            super.remove(oldKey);
-            super.put(newKey, super.get(oldKey));
-            return this;
-	    }
+				return this;
+			super.remove(oldKey);
+			super.put(newKey, super.get(oldKey));
+			return this;
+		}
 		oB map(Function<Boolean, Boolean> fn) {
 			super.replaceAll((k, v) -> fn.apply(v));
 			return this;
@@ -14437,11 +14674,11 @@ public class KL {
 		}
 		tree<Key, Value> replaceKey(Key oldKey, Key newKey) {
 			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
-			    return this;
-            super.remove(oldKey);
-            super.put(newKey, super.get(oldKey));
-            return this;
-	    }
+				return this;
+			super.remove(oldKey);
+			super.put(newKey, super.get(oldKey));
+			return this;
+		}
 		tree<Key, Value> map(Value value, Function<Value, Value> fn) {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
@@ -50791,7 +51028,7 @@ public class KL {
 					arg = Str(arg)
 							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))", "\'$1\'")
 							.replaceAll(
-									"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
 							.replaceAll("\"true\"", "Yes")
 							.replaceAll("\"false\"", "No")
@@ -50874,7 +51111,7 @@ public class KL {
 					arg = Str(arg)
 							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))", "\'$1\'")
 							.replaceAll(
-									"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
 							.replaceAll("\"true\"", "Ha")
 							.replaceAll("\"false\"", "Na")
@@ -51600,6 +51837,13 @@ public class KL {
 		boolArr arr = new boolArr(items);
 		return arr;
 	}
+	public static arr Arr(Object... items) {
+		if (isNull(items) || isEmpty(items)) {
+			return blank.mixedArr;
+		}
+		arr arr = new arr(items);
+		return arr;
+	}
 	public static String[] Arr(strArr arr) {
 		if (arr == null || arr.isEmpty())
 			return blank.Str;
@@ -51628,6 +51872,11 @@ public class KL {
 	public static boolean[] Arr(boolArr arr) {
 		if (arr == null || arr.isEmpty())
 			return blank.Bool;
+		return arr.array();
+	}
+	public static Object[] Arr(arr arr) {
+		if (arr == null || arr.isEmpty())
+			return blank.Obj;
 		return arr.array();
 	}
 	public static strArr arr(String... items) {
@@ -51666,9 +51915,12 @@ public class KL {
 	public static boolArr naiArr(boolean... items) {
 		return Arr(items);
 	}
+	public static arr naiArr(Object... items) {
+		return Arr(items);
+	}
 	public static Object[] Arr(o o) {
 		if (not(o)) {
-			return blank.Str;
+			return blank.Obj;
 		}
 		return o.array();
 	}
@@ -51828,6 +52080,30 @@ public class KL {
 	public static boolean[] arr(treeB t) {
 		return Arr(t);
 	}
+	public static int[] keys(char[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] keys(String[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] keys(int[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] keys(long[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] keys(float[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] keys(double[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] keys(boolean[]... arrays) {
+		return range(arrays);
+	}
+	public static int[] keys(Object[]... arrays) {
+		return range(arrays);
+	}
 	public static String[] keys(o o) {
 		if (not(o)) {
 			return blank.Str;
@@ -51940,6 +52216,9 @@ public class KL {
 		return Arr(array);
 	}
 	public static boolean[] values(boolArr array) {
+		return Arr(array);
+	}
+	public static Object[] values(arr array) {
 		return Arr(array);
 	}
 	public static Object[] values(o o) {
@@ -57527,7 +57806,7 @@ public class KL {
 												"(?<=\\=)([A-Za-z]{1}(?!.))",
 												"\'$1\'")
 												.replaceAll(
-														"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
 												.replaceAll("\"true\"", "Yes")
 												.replaceAll("\"false\"", "No")
@@ -58686,7 +58965,7 @@ public class KL {
 												"(?<=\\=)([A-Za-z]{1}(?!.))",
 												"\'$1\'")
 												.replaceAll(
-														"(?<=\\=)((((\\d*[A-Za-z]{2,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
 												.replaceAll("\"true\"", "Ha")
 												.replaceAll("\"false\"", "Na")
@@ -63585,74 +63864,74 @@ public class KL {
 		return removeDuplicatesOf(arr);
 	}
 	public static String[] set(String[] arr) {
-	    if (arr == null || arr.length == 0)
-	        return blank.Str;
-	    return new strArr(arr).unique().array();
+		if (arr == null || arr.length == 0)
+			return blank.Str;
+		return new strArr(arr).unique().array();
 	}
 	public static int[] set(int[] arr) {
-	    if (arr == null || arr.length == 0)
-	        return blank.Int;
-	    return new intArr(arr).unique().array();
+		if (arr == null || arr.length == 0)
+			return blank.Int;
+		return new intArr(arr).unique().array();
 	}
 	public static long[] set(long[] arr) {
-	    if (arr == null || arr.length == 0)
-	        return blank.Long;
-	    return new longArr(arr).unique().array();
+		if (arr == null || arr.length == 0)
+			return blank.Long;
+		return new longArr(arr).unique().array();
 	}
 	public static float[] set(float[] arr) {
-	    if (arr == null || arr.length == 0)
-	        return blank.Flt;
-	    return new fltArr(arr).unique().array();
+		if (arr == null || arr.length == 0)
+			return blank.Flt;
+		return new fltArr(arr).unique().array();
 	}
 	public static double[] set(double[] arr) {
-	    if (arr == null || arr.length == 0)
-	        return blank.Dbl;
-	    return new dblArr(arr).unique().array();
+		if (arr == null || arr.length == 0)
+			return blank.Dbl;
+		return new dblArr(arr).unique().array();
 	}
 	public static boolean[] set(boolean[] arr) {
-	    if (arr == null || arr.length == 0)
-	        return blank.Bool;
-	    return new boolArr(arr).unique().array();
+		if (arr == null || arr.length == 0)
+			return blank.Bool;
+		return new boolArr(arr).unique().array();
 	}
 	public static Object[] set(Object[] arr) {
-	    if (arr == null || arr.length == 0)
-	        return blank.Obj;
-	    return new arr(arr).unique().array();
+		if (arr == null || arr.length == 0)
+			return blank.Obj;
+		return new arr(arr).unique().array();
 	}
 	public static strArr set(strArr arr) {
-	    if (arr == null || arr.length() == 0)
-	        return blank.strArr;
-	    return arr.unique();
+		if (arr == null || arr.length() == 0)
+			return blank.strArr;
+		return arr.unique();
 	}
 	public static intArr set(intArr arr) {
-	    if (arr == null || arr.length() == 0)
-	        return blank.intArr;
-	    return arr.unique();
+		if (arr == null || arr.length() == 0)
+			return blank.intArr;
+		return arr.unique();
 	}
 	public static longArr set(longArr arr) {
-	    if (arr == null || arr.length() == 0)
-	        return blank.longArr;
-	    return arr.unique();
+		if (arr == null || arr.length() == 0)
+			return blank.longArr;
+		return arr.unique();
 	}
 	public static fltArr set(fltArr arr) {
-	    if (arr == null || arr.length() == 0)
-	        return blank.fltArr;
-	    return arr.unique();
+		if (arr == null || arr.length() == 0)
+			return blank.fltArr;
+		return arr.unique();
 	}
 	public static dblArr set(dblArr arr) {
-	    if (arr == null || arr.length() == 0)
-	        return blank.dblArr;
-	    return arr.unique();
+		if (arr == null || arr.length() == 0)
+			return blank.dblArr;
+		return arr.unique();
 	}
 	public static boolArr set(boolArr arr) {
-	    if (arr == null || arr.length() == 0)
-	        return blank.boolArr;
-	    return arr.unique();
+		if (arr == null || arr.length() == 0)
+			return blank.boolArr;
+		return arr.unique();
 	}
 	public static arr set(arr arr) {
-	    if (arr == null || arr.length() == 0)
-	        return blank.mixedArr;
-	    return arr.unique();
+		if (arr == null || arr.length() == 0)
+			return blank.mixedArr;
+		return arr.unique();
 	}
 	public static String replace(String str, String re, String _with) {
 		if (not(str))
@@ -69790,6 +70069,12 @@ public class KL {
 		}
 		inputs = map(inputs, KL::titleCase);
 		return inputs;
+	}
+	public static String title(String input) {
+		return titleCase(input);
+	}
+	public static String[] title(String... inputs) {
+		return titleCase(inputs);
 	}
 	public static String reverse(String str) {
 		if (not(str)) {
