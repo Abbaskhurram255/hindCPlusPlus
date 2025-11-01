@@ -491,6 +491,12 @@ class lafz {
         String newString = sb.toString();
         return newString;
 	}
+	String i(int i, char newChar) {
+		return setIndex(i, newChar);
+	}
+	String i(int i, String newChar) {
+		return setIndex(i, newChar);
+	}
 	String updateIndex(int i, char newChar) {
 		return setIndex(i, newChar);
 	}
