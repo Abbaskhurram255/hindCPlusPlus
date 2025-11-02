@@ -60444,11 +60444,45 @@ public class KL {
 	public static long round(long n) {
 		return n;
 	}
+	public static float round(float n, int byNPlaces) {
+		return setPrecision(n, byNPlaces);
+	}
 	public static int round(float n) {
-		return Math.round(n);
+		return (int) round(n, 0);
+	}
+	public static float[] round(float[] nums, int byNPlaces) {
+		if (nums == null || nums.length == 0)
+			return blank.Flt;
+		return map(nums, n -> round(n, byNPlaces));
+	}
+	public static int[] round(float[] nums) {
+		if (nums == null || nums.length == 0)
+			return blank.Int;
+		int[] result = new int[nums.length];
+		for (int i = 0; i < nums.length; i++) {
+			result[i] = round(nums[i]);
+		}
+		return result;
+	}
+	public static double round(double n, int byNPlaces) {
+		return setPrecision(n, byNPlaces);
 	}
 	public static int round(double n) {
 		return (int) setPrecision(n, 0);
+	}
+	public static double[] round(double[] nums, int byNPlaces) {
+		if (nums == null || nums.length == 0)
+			return blank.Dbl;
+		return map(nums, n -> round(n, byNPlaces));
+	}
+	public static int[] round(double[] nums) {
+		if (nums == null || nums.length == 0)
+			return blank.Int;
+		int[] result = new int[nums.length];
+		for (int i = 0; i < nums.length; i++) {
+			result[i] = round(nums[i]);
+		}
+		return result;
 	}
 	public static int ceil(int n) {
 		return n;
@@ -71103,8 +71137,14 @@ public class KL {
 	public static float[] untangle(Float[] inputArr) {
 		return floatArrToFloatArr(inputArr);
 	}
+	public static float[] untangle(float[] inputArr) {
+		return round(inputArr, 1);
+	}
 	public static double[] untangle(Double[] inputArr) {
 		return dblArrToDblArr(inputArr);
+	}
+	public static double[] untangle(double[] inputArr) {
+		return round(inputArr, 1);
 	}
 	public static boolean[] untangle(Boolean[] inputArr) {
 		return boolArrToBoolArr(inputArr);
@@ -71127,25 +71167,49 @@ public class KL {
 	public static boolean[] reverse(boolean[] arr) {
 		return new boolArr(arr).reverse().array();
 	}
+	public static Object[] reverse(Object[] arr) {
+		if (arr == null || arr.length == 0)
+			return blank.Obj;
+		return new arr(arr).reverse().array();
+	}
 	public static strArr reverse(strArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.strArr;
 		return arr.reverse();
 	}
 	public static intArr reverse(intArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.intArr;
 		return arr.reverse();
 	}
 	public static longArr reverse(longArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.longArr;
 		return arr.reverse();
 	}
 	public static fltArr reverse(fltArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.fltArr;
 		return arr.reverse();
 	}
 	public static dblArr reverse(dblArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.dblArr;
 		return arr.reverse();
 	}
 	public static boolArr reverse(boolArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.boolArr;
+		return arr.reverse();
+	}
+	public static arr reverse(arr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.mixedArr;
 		return arr.reverse();
 	}
 	public static String[] sort(String[] arr) {
+		if (arr == null || arr.length == 0)
+			return blank.Str;
 		return new strArr(arr).sort().array();
 	}
 	public static String[] sort(String[] arr, String condition) {
@@ -71155,6 +71219,8 @@ public class KL {
 		return new strArr(arr).sort(condition).array();
 	}
 	public static int[] sort(int[] arr) {
+		if (arr == null || arr.length == 0)
+			return blank.Int;
 		return new intArr(arr).sort().array();
 	}
 	public static int[] sort(int[] arr, String condition) {
@@ -71164,6 +71230,8 @@ public class KL {
 		return new intArr(arr).sort(condition).array();
 	}
 	public static long[] sort(long[] arr) {
+		if (arr == null || arr.length == 0)
+			return blank.Long;
 		return new longArr(arr).sort().array();
 	}
 	public static long[] sort(long[] arr, String condition) {
@@ -71173,6 +71241,8 @@ public class KL {
 		return new longArr(arr).sort(condition).array();
 	}
 	public static float[] sort(float[] arr) {
+		if (arr == null || arr.length == 0)
+			return blank.Flt;
 		return new fltArr(arr).sort().array();
 	}
 	public static float[] sort(float[] arr, String condition) {
@@ -71182,6 +71252,8 @@ public class KL {
 		return new fltArr(arr).sort(condition).array();
 	}
 	public static double[] sort(double[] arr) {
+		if (arr == null || arr.length == 0)
+			return blank.Dbl;
 		return new dblArr(arr).sort().array();
 	}
 	public static double[] sort(double[] arr, String condition) {
@@ -71191,6 +71263,8 @@ public class KL {
 		return new dblArr(arr).sort(condition).array();
 	}
 	public static boolean[] sort(boolean[] arr) {
+		if (arr == null || arr.length == 0)
+			return blank.Bool;
 		return new boolArr(arr).sort().array();
 	}
 	public static boolean[] sort(boolean[] arr, String condition) {
@@ -71199,13 +71273,28 @@ public class KL {
 		}
 		return new boolArr(arr).sort(condition).array();
 	}
+	public static Object[] sort(Object[] arr) {
+		if (arr == null || arr.length == 0)
+			return blank.Obj;
+		return new arr(arr).sort().array();
+	}
+	public static Object[] sort(Object[] arr, String condition) {
+		if (not(arr) || not(condition)) {
+			return arr;
+		}
+		return new arr(arr).sort(condition).array();
+	}
 	public static strArr sort(strArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.strArr;
 		return arr.sort();
 	}
 	public static strArr sort(strArr arr, String condition) {
 		return new strArr(sort(arr.array(), condition));
 	}
 	public static intArr sort(intArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.intArr;
 		return arr.sort();
 	}
 	public static intArr sort(intArr arr, String condition) {
@@ -71215,6 +71304,8 @@ public class KL {
 		return arr.sort(condition);
 	}
 	public static longArr sort(longArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.longArr;
 		return arr.sort();
 	}
 	public static longArr sort(longArr arr, String condition) {
@@ -71224,6 +71315,8 @@ public class KL {
 		return arr.sort(condition);
 	}
 	public static fltArr sort(fltArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.fltArr;
 		return arr.sort();
 	}
 	public static fltArr sort(fltArr arr, String condition) {
@@ -71233,6 +71326,8 @@ public class KL {
 		return arr.sort(condition);
 	}
 	public static dblArr sort(dblArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.dblArr;
 		return arr.sort();
 	}
 	public static dblArr sort(dblArr arr, String condition) {
@@ -71242,9 +71337,22 @@ public class KL {
 		return arr.sort(condition);
 	}
 	public static boolArr sort(boolArr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.boolArr;
 		return arr.sort();
 	}
 	public static boolArr sort(boolArr arr, String condition) {
+		if (not(arr) || not(condition)) {
+			return arr;
+		}
+		return arr.sort(condition);
+	}
+	public static arr sort(arr arr) {
+		if (arr == null || arr.length() == 0)
+			return blank.mixedArr;
+		return arr.sort();
+	}
+	public static arr sort(arr arr, String condition) {
 		if (not(arr) || not(condition)) {
 			return arr;
 		}
@@ -72720,19 +72828,15 @@ public class KL {
 	public static boolean[] phelao(boolean[] arr, int by) {
 		return resize(arr, length.standard, by);
 	}
-	public static int[] autofill(int[] src, length mode, int by) {
-		if (src == null || len(src) == 0 || isInf(by))
+	public static int[] autofill(int[] arr, length mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Int;
-		int[] arr = src.clone();
-		java.util.Arrays.sort(arr);
-		int step, firstItem = 0, secondItem = 0, lastItem;
+		int step, firstItem = i(arr, 0), secondItem = i(arr, 1);
 		if (len(arr) < 2)
 			step = 1;
 		else {
-			firstItem = i(arr, 0);
-			secondItem = i(arr, 1);
-			step = max(firstItem, secondItem) - min(firstItem, secondItem);
-			if (not(step) || isNeg(step))
+			step = secondItem - firstItem;
+			if (not(step))
 				return arr;
 		}
 		int newLen;
@@ -72759,9 +72863,136 @@ public class KL {
 		int[] newArr = new int[newLen];
 		for (int i : range(newArr)) {
 			if (i >= len(arr)) {
-				lastItem = i(arr, -1);
-				newArr[i] = lastItem + step;
-				step *= 2;
+				newArr[i] = newArr[i - 1] + step;
+			} else {
+				newArr[i] = arr[i];
+			}
+		}
+		return newArr;
+	}
+	public static long[] autofill(long[] arr, length mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Long;
+		long step;
+		long firstItem = i(arr, 0), secondItem = i(arr, 1);
+		if (len(arr) < 2)
+			step = 1;
+		else {
+			step = secondItem - firstItem;
+			if (not(step))
+				return arr;
+		}
+		int newLen;
+		switch (mode) {
+			case setLength :
+			case naiLength :
+				newLen = by;
+				break;
+			case twice :
+			case dugni :
+				newLen = len(arr) * 2;
+				break;
+			case half :
+			case adhi :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
+		}
+		if (newLen <= 0 || isInfinity(newLen))
+			return blank.Long;
+		long[] newArr = new long[newLen];
+		for (int i : range(newArr)) {
+			if (i >= len(arr)) {
+				newArr[i] = newArr[i - 1] + step;
+			} else {
+				newArr[i] = arr[i];
+			}
+		}
+		return newArr;
+	}
+	public static float[] autofill(float[] arr, length mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Flt;
+		float step;
+		float firstItem = i(arr, 0), secondItem = i(arr, 1);
+		if (len(arr) < 2)
+			step = 1;
+		else {
+			step = secondItem - firstItem;
+			if (not(step))
+				return arr;
+		}
+		int newLen;
+		switch (mode) {
+			case setLength :
+			case naiLength :
+				newLen = by;
+				break;
+			case twice :
+			case dugni :
+				newLen = len(arr) * 2;
+				break;
+			case half :
+			case adhi :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
+		}
+		if (newLen <= 0 || isInfinity(newLen))
+			return blank.Flt;
+		float[] newArr = new float[newLen];
+		for (int i : range(newArr)) {
+			if (i >= len(arr)) {
+				newArr[i] = newArr[i - 1] + step;
+			} else {
+				newArr[i] = arr[i];
+			}
+		}
+		return newArr;
+	}
+	public static double[] autofill(double[] arr, length mode, int by) {
+		if (arr == null || len(arr) == 0 || isInf(by))
+			return blank.Dbl;
+		double step;
+		double firstItem = i(arr, 0), secondItem = i(arr, 1);
+		if (len(arr) < 2)
+			step = 1;
+		else {
+			step = secondItem - firstItem;
+			if (not(step))
+				return arr;
+		}
+		int newLen;
+		switch (mode) {
+			case setLength :
+			case naiLength :
+				newLen = by;
+				break;
+			case twice :
+			case dugni :
+				newLen = len(arr) * 2;
+				break;
+			case half :
+			case adhi :
+				newLen = len(arr) / 2;
+				break;
+			default :
+				newLen = len(arr) + by;
+				hint.behavior decrements_the_size_if_by_is_negative;
+				hint.behavior else_increments_it;
+		}
+		if (newLen <= 0 || isInfinity(newLen))
+			return blank.Dbl;
+		double[] newArr = new double[newLen];
+		for (int i : range(newArr)) {
+			if (i >= len(arr)) {
+				newArr[i] = newArr[i - 1] + step;
 			} else {
 				newArr[i] = arr[i];
 			}
@@ -72982,7 +73213,8 @@ public class KL {
 		for (var kv : of(user))
 			print(kv[0] + "=" + kv[1]);
 		int[] testArr = {1, 3, 5, 7};
-		testArr = resize(testArr, lambai.adhi);
+		testArr = resize(testArr, 1);
+		testArr[4] = 9;
 		print(testArr);
 		print(len(testArr));
 		num age2 = num(30);
@@ -72990,7 +73222,7 @@ public class KL {
 		age2.se_gaya(age2.ka_adha());
 		age2.me_dala(age2.ka_chotha());
 		System.out.println(age2.get());
-		int[] myNewArr = {1, 3, 5, 7};
+		double[] myNewArr = {1.5, 1.8};
 		print(autofill(myNewArr, length.standard, 10));
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
 		o user3 = o(
