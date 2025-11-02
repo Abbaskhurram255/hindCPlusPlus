@@ -8380,8 +8380,7 @@ public class KL {
 		}
 		public static int from(String hex) {
 			hex = hex.replaceAll("^(0x|#)", "");
-			if (not(hex) || !eq(hex, "([a-f0-9]{3,4}){1,2}") || len(hex) == 5
-					|| len(hex) == 7) {
+			if (not(hex) || !eq(hex, "[a-fA-F0-9]{3,4}|[a-fA-F0-9]{6}|[a-fA-F0-9]{8}")) {
 				return 0;
 			}
 			int len = len(hex);
@@ -60396,7 +60395,8 @@ public class KL {
 			integer_infinity, int_infinity, integerInfinity,
 			infinity = Infinity = positive_infinity = Positive_Infinity = PositiveInfinity = Double.POSITIVE_INFINITY,
 			negative_infinity = Negative_Infinity = NegativeInfinity = Double.NEGATIVE_INFINITY,
-			intInfinity = IntInfinity = Int_Infinity = integerInfinity = IntegerInfinity = Integer_Infinity = int_infinity = integer_infinity = Integer.MAX_VALUE;
+			intInfinity = IntInfinity = Int_Infinity = integerInfinity = IntegerInfinity = Integer_Infinity = int_infinity = integer_infinity = Integer.MAX_VALUE,
+					NegativeIntInfinity, Negative_Int_Infinity,  negativeIntegerInfinity, NegativeIntegerInfinity, Negative_Integer_Infinity, negative_int_infinity, negative_integer_infinity, negativeIntInfinity = NegativeIntInfinity = Negative_Int_Infinity = negativeIntegerInfinity = NegativeIntegerInfinity = Negative_Integer_Infinity = negative_int_infinity = negative_integer_infinity = Integer.MIN_VALUE;
 	public static <T> boolean isNull(T... objs) {
 		if (objs == null) {
 			return true;
@@ -60404,7 +60404,7 @@ public class KL {
 		int count = 0;
 		for (Object o : objs) {
 			if (o == null
-					|| (o instanceof Double ? isInfinity((double) o) : false)) {
+					|| (o instanceof Integer ? isInfinity((int) o) : o instanceof Double ? isInfinity((double) o) : false)) {
 				// tested: the else false clause stays, as it gets ignored; if o
 				// is a non-double, only the first condition is tested, the RHS
 				// will just be ignored
@@ -60427,7 +60427,7 @@ public class KL {
 		// to handle null arrays, not just regular objects
 	}
 	public static boolean isInfinity(int n) {
-		return n == IntegerInfinity;
+		return n == IntegerInfinity || n == NegativeIntegerInfinity;
 	}
 	public static boolean isInf(int n) {
 		return isInfinity(n);
@@ -62362,6 +62362,102 @@ public class KL {
 			return KL.uneq(x, y);
 		}
 		public static boolean he(treeB x, treeB y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(char x, char y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(String x, String y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(String x, String y, boolean strict) {
+			return eq(x, y, strict);
+		}
+		public static boolean barabar(int x, int y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(long x, long y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(float x, float y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(double x, double y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(boolean x, boolean y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(Object x, Object y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(String[] x, String[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(int[] x, int[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(long[] x, long[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(float[] x, float[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(double[] x, double[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(boolean[] x, boolean[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(Object[] x, Object[] y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(strArr x, strArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(intArr x, intArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(longArr x, longArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(fltArr x, fltArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(dblArr x, dblArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(boolArr x, boolArr y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeDI x, treeDI y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeI x, treeI y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeDL x, treeDL y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeL x, treeL y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeDF x, treeDF y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeF x, treeF y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeDS x, treeDS y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeD x, treeD y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeDB x, treeDB y) {
+			return KL.uneq(x, y);
+		}
+		public static boolean barabar(treeB x, treeB y) {
 			return KL.uneq(x, y);
 		}
 	}
@@ -72870,6 +72966,16 @@ public class KL {
 		}
 		return newArr;
 	}
+	public static int[] autofill(int[] arr, length mode) {
+		return autofill(arr, mode, 0);
+	}
+	public static int[] autofill(int[] arr, int by) {
+		if (arr == null || by < 0 || isInfinity(by))
+			return blank.Int;
+		if (arr.length == 0)
+			return range(by);;
+		return autofill(arr, length.standard, by);
+	}
 	public static long[] autofill(long[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Long;
@@ -72912,6 +73018,12 @@ public class KL {
 			}
 		}
 		return newArr;
+	}
+	public static long[] autofill(long[] arr, length mode) {
+		return autofill(arr, mode, 0);
+	}
+	public static long[] autofill(long[] arr, int by) {
+		return autofill(arr, length.standard, by);
 	}
 	public static float[] autofill(float[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
@@ -72956,6 +73068,12 @@ public class KL {
 		}
 		return newArr;
 	}
+	public static float[] autofill(float[] arr, length mode) {
+		return autofill(arr, mode, 0);
+	}
+	public static float[] autofill(float[] arr, int by) {
+		return autofill(arr, length.standard, by);
+	}
 	public static double[] autofill(double[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Dbl;
@@ -72998,6 +73116,12 @@ public class KL {
 			}
 		}
 		return newArr;
+	}
+	public static double[] autofill(double[] arr, length mode) {
+		return autofill(arr, mode, 0);
+	}
+	public static double[] autofill(double[] arr, int by) {
+		return autofill(arr, length.standard, by);
 	}
 	public static void har(int initialization,
 			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
