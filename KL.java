@@ -78,12 +78,14 @@ public class KL {
 	public static enum length {
 		standard, setLength, naiLength, twice, dugni, half, adhi;
 	}
-	public static class lambai {
+	public static class size {
 		//enums cannot be extended, hence manual manipulation
 		public static length standard = length.standard,
 				setLength = length.setLength, naiLength = length.naiLength,
 				twice = length.twice, dugni = length.dugni, half = length.half,
 				adhi = length.adhi;
+	}
+	public static class lambai extends size {
 	}
 	public static class init {
 		public static int i, j, k;
@@ -8380,7 +8382,8 @@ public class KL {
 		}
 		public static int from(String hex) {
 			hex = hex.replaceAll("^(0x|#)", "");
-			if (not(hex) || !eq(hex, "[a-fA-F0-9]{3,4}|[a-fA-F0-9]{6}|[a-fA-F0-9]{8}")) {
+			if (not(hex) || !eq(hex,
+					"[a-fA-F0-9]{3,4}|[a-fA-F0-9]{6}|[a-fA-F0-9]{8}")) {
 				return 0;
 			}
 			int len = len(hex);
@@ -47996,6 +47999,8 @@ public class KL {
 	}
 	public static class until extends range {
 	}
+	public static class fill extends range {
+	}
 	public static class between extends range {
 	}
 	public static class bw extends range {
@@ -49541,6 +49546,51 @@ public class KL {
 	}
 	public static int[] darmyan(int start, boolArr... arrays) {
 		return range(start, arrays);
+	}
+	public static int[] fill(int n) {
+		return range(n);
+	}
+	public static double[] fill(double n) {
+		return range(n);
+	}
+	public static int[] fill(int m, int n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static String[] fill(String m, String n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static char[] fill(char m, char n) {
+		return range(m, n);
+	}
+	public static double[] fill(double m, double n, int... optional) {
+		return range(m, n, optional);
+	}
+	public static int[] fill(int n, boolean reverse) {
+		return range(n, reverse);
+	}
+	public static int[] fill(int m, int n, int gap, boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static int[] fill(int m, int n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static double[] fill(double n, boolean reverse) {
+		return range(n, reverse);
+	}
+	public static double[] fill(double m, double n, int gap, boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static double[] fill(double m, double n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static String[] fill(String m, String n, int gap, boolean reverse) {
+		return range(m, n, gap, reverse);
+	}
+	public static String[] fill(String m, String n, boolean reverse) {
+		return range(m, n, reverse);
+	}
+	public static char[] fill(char m, char n, boolean reverse) {
+		return range(m, n, reverse);
 	}
 	public static int[] hissa(String str, Object... languageSupportingArgs) {
 		return range(str);
@@ -53794,22 +53844,6 @@ public class KL {
 	public static double Double(boolean arg) {
 		return Dbl(arg);
 	}
-	public static double setPrecision(double n, int decimalPlaces) {
-		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces)) {
-			return n;
-		}
-		String formatted = String.format("%." + Str(decimalPlaces) + "f", n);
-		return Dbl(formatted);
-	}
-	public static double toPrecision(double n, int decimalPlaces) {
-		return setPrecision(n, decimalPlaces);
-	}
-	public static double setPrecision(double n) {
-		return setPrecision(n, 1);
-	}
-	public static double toPrecision(double n) {
-		return setPrecision(n);
-	}
 	public static float setPrecision(float n, int decimalPlaces) {
 		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces)) {
 			return n;
@@ -53824,6 +53858,22 @@ public class KL {
 		return setPrecision(n, 1);
 	}
 	public static float toPrecision(float n) {
+		return setPrecision(n);
+	}
+	public static double setPrecision(double n, int decimalPlaces) {
+		if (not(n) || isNull(decimalPlaces) || isNeg(decimalPlaces)) {
+			return n;
+		}
+		String formatted = String.format("%." + Str(decimalPlaces) + "f", n);
+		return Dbl(formatted);
+	}
+	public static double toPrecision(double n, int decimalPlaces) {
+		return setPrecision(n, decimalPlaces);
+	}
+	public static double setPrecision(double n) {
+		return setPrecision(n, 1);
+	}
+	public static double toPrecision(double n) {
 		return setPrecision(n);
 	}
 	public static <T> java.util.List<T> List(T... args) {
@@ -56357,6 +56407,21 @@ public class KL {
 			return multiply.each(arr, n);
 		}
 		public static double[] multiply(double[] arr, double n) {
+			return multiply.each(arr, n);
+		}
+		public static String[] guna(String[] arr, int n) {
+			return multiply.each(arr, n);
+		}
+		public static int[] guna(int[] arr, int n) {
+			return multiply.each(arr, n);
+		}
+		public static long[] guna(long[] arr, long n) {
+			return multiply.each(arr, n);
+		}
+		public static float[] guna(float[] arr, float n) {
+			return multiply.each(arr, n);
+		}
+		public static double[] guna(double[] arr, double n) {
 			return multiply.each(arr, n);
 		}
 		public static int[] divide(int[] arr, int n) {
@@ -60396,15 +60461,19 @@ public class KL {
 			infinity = Infinity = positive_infinity = Positive_Infinity = PositiveInfinity = Double.POSITIVE_INFINITY,
 			negative_infinity = Negative_Infinity = NegativeInfinity = Double.NEGATIVE_INFINITY,
 			intInfinity = IntInfinity = Int_Infinity = integerInfinity = IntegerInfinity = Integer_Infinity = int_infinity = integer_infinity = Integer.MAX_VALUE,
-					NegativeIntInfinity, Negative_Int_Infinity,  negativeIntegerInfinity, NegativeIntegerInfinity, Negative_Integer_Infinity, negative_int_infinity, negative_integer_infinity, negativeIntInfinity = NegativeIntInfinity = Negative_Int_Infinity = negativeIntegerInfinity = NegativeIntegerInfinity = Negative_Integer_Infinity = negative_int_infinity = negative_integer_infinity = Integer.MIN_VALUE;
+			NegativeIntInfinity, Negative_Int_Infinity, negativeIntegerInfinity,
+			NegativeIntegerInfinity, Negative_Integer_Infinity,
+			negative_int_infinity, negative_integer_infinity,
+			negativeIntInfinity = NegativeIntInfinity = Negative_Int_Infinity = negativeIntegerInfinity = NegativeIntegerInfinity = Negative_Integer_Infinity = negative_int_infinity = negative_integer_infinity = Integer.MIN_VALUE;
 	public static <T> boolean isNull(T... objs) {
 		if (objs == null) {
 			return true;
 		}
 		int count = 0;
 		for (Object o : objs) {
-			if (o == null
-					|| (o instanceof Integer ? isInfinity((int) o) : o instanceof Double ? isInfinity((double) o) : false)) {
+			if (o == null || (o instanceof Integer
+					? isInfinity((int) o)
+					: o instanceof Double ? isInfinity((double) o) : false)) {
 				// tested: the else false clause stays, as it gets ignored; if o
 				// is a non-double, only the first condition is tested, the RHS
 				// will just be ignored
@@ -67112,7 +67181,7 @@ public class KL {
 	public static boolArr copyArr(boolArr arr) {
 		return clone(arr);
 	}
-	public static final class blank {
+	public static class blank {
 		public static String[] Str = new String[]{};
 		public static String[][] Str2D = new String[][]{};
 		public static int[] Int = new int[]{};
@@ -67139,6 +67208,8 @@ public class KL {
 		public static dblArr dblArr = dblArr();
 		public static boolArr boolArr = boolArr();
 		public static o o = o();
+	}
+	public static class khali extends blank {
 	}
 	public static class summary {
 		public static o of(Object o) {
@@ -67181,14 +67252,14 @@ public class KL {
 					summary.add("isNeg=" + isNeg((int) o));
 					summary.add("digits=" + len((int) o));
 				} else if (isLong(o)) {
-					summary.add("isPos=" + isPos((int) o));
-					summary.add("isNeg=" + isNeg((int) o));
+					summary.add("isPos=" + isPos((long) o));
+					summary.add("isNeg=" + isNeg((long) o));
 				} else if (isFlt(o)) {
-					summary.add("isPos=" + isPos((int) o));
-					summary.add("isNeg=" + isNeg((int) o));
+					summary.add("isPos=" + isPos((float) o));
+					summary.add("isNeg=" + isNeg((float) o));
 				} else if (isDbl(o)) {
-					summary.add("isPos=" + isPos((int) o));
-					summary.add("isNeg=" + isNeg((int) o));
+					summary.add("isPos=" + isPos((double) o));
+					summary.add("isNeg=" + isNeg((double) o));
 				} else {
 					//is just an instance of the Number class
 					summary.add("asInt=" + ((Number) o).intValue());
@@ -67202,6 +67273,70 @@ public class KL {
 		}
 		public static o get(Object o) {
 			return KL.summary.of(o);
+		}
+	}
+	public static class malumat {
+		public static o barae(Object o, Object... languageSupportingArgs) {
+			o malumat = new o();
+			malumat.add("type=" + type(o));
+			malumat.add("heNull=" + isNull(o));
+			malumat.add("heStr=" + isStr(o));
+			malumat.add("heNum=" + (isNum(o) || isNumLike(o)));
+			malumat.add("heInt=" + isInt(o));
+			malumat.add("heLong=" + isLong(o));
+			malumat.add("heFlt=" + isFlt(o));
+			malumat.add("heDbl=" + isDbl(o));
+			malumat.add("heBool=" + isBool(o));
+			malumat.add("heArr=" + isArr(o));
+			malumat.add("heArrOfObj=" + isArrOfObj(o));
+			malumat.add("heArrOfChar=" + isArrOfChar(o));
+			malumat.add("heArrOfStr=" + isArrOfStr(o));
+			malumat.add("heArrOfInt=" + isArrOfInt(o));
+			malumat.add("heArrOfLong=" + isArrOfLong(o));
+			malumat.add("heArrOfFlt=" + isArrOfFlt(o));
+			malumat.add("heArrOfDbl=" + isArrOfDbl(o));
+			malumat.add("heArrOfBool=" + isArrOfBool(o));
+			malumat.add("heStrArr=" + isStrArr(o));
+			malumat.add("heIntArr=" + isIntArr(o));
+			malumat.add("heLongArr=" + isLongArr(o));
+			malumat.add("heFltArr=" + isFltArr(o));
+			malumat.add("heDblArr=" + isDblArr(o));
+			malumat.add("heBoolArr=" + isBoolArr(o));
+			if (isStr(o)) {
+				malumat.add("length=" + len((String) o));
+			}
+			if (isChar(o)) {
+				malumat.add("heNullChar=" + (((char) o) == '\0'));
+				malumat.add("heUpper=" + (isUpper((char) o)));
+				malumat.add("heLower=" + (isLower((char) o)));
+			}
+			if (o instanceof Number) {
+				if (isInt(o)) {
+					malumat.add("hePos=" + isPos((int) o));
+					malumat.add("heNeg=" + isNeg((int) o));
+					malumat.add("digits=" + len((int) o));
+				} else if (isLong(o)) {
+					malumat.add("hePos=" + isPos((long) o));
+					malumat.add("heNeg=" + isNeg((long) o));
+				} else if (isFlt(o)) {
+					malumat.add("hePos=" + isPos((float) o));
+					malumat.add("heNeg=" + isNeg((float) o));
+				} else if (isDbl(o)) {
+					malumat.add("hePos=" + isPos((double) o));
+					malumat.add("heNeg=" + isNeg((double) o));
+				} else {
+					//is just an instance of the Number class
+					malumat.add("asInt=" + ((Number) o).intValue());
+					malumat.add("asLong=" + ((Number) o).longValue());
+					malumat.add("asFlt=" + ((Number) o).floatValue());
+					malumat.add("asDbl=" + ((Number) o).doubleValue());
+				}
+			}
+
+			return malumat;
+		}
+		public static o lo(Object o, Object... languageSupportingArgs) {
+			return KL.malumat.barae(o);
 		}
 	}
 	public static final class binary {
@@ -72924,11 +73059,13 @@ public class KL {
 	public static boolean[] phelao(boolean[] arr, int by) {
 		return resize(arr, length.standard, by);
 	}
-	public static int[] autofill(int[] arr, length mode, int by) {
-		if (arr == null || len(arr) == 0 || isInf(by))
+	public static int[] fill(int[] arr, length mode, int by) {
+		if (arr == null || isInf(by))
 			return blank.Int;
+		if (isEmpty(arr) && either(by > 0, by < 0))
+			return range(by);
 		int step, firstItem = i(arr, 0), secondItem = i(arr, 1);
-		if (len(arr) < 2)
+		if (len(arr) == 1)
 			step = 1;
 		else {
 			step = secondItem - firstItem;
@@ -72966,22 +73103,18 @@ public class KL {
 		}
 		return newArr;
 	}
-	public static int[] autofill(int[] arr, length mode) {
-		return autofill(arr, mode, 0);
+	public static int[] fill(int[] arr, length mode) {
+		return fill(arr, mode, 0);
 	}
-	public static int[] autofill(int[] arr, int by) {
-		if (arr == null || by < 0 || isInfinity(by))
-			return blank.Int;
-		if (arr.length == 0)
-			return range(by);;
-		return autofill(arr, length.standard, by);
+	public static int[] fill(int[] arr, int by) {
+		return fill(arr, length.standard, by);
 	}
-	public static long[] autofill(long[] arr, length mode, int by) {
+	public static long[] fill(long[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Long;
 		long step;
 		long firstItem = i(arr, 0), secondItem = i(arr, 1);
-		if (len(arr) < 2)
+		if (len(arr) == 1)
 			step = 1;
 		else {
 			step = secondItem - firstItem;
@@ -73019,18 +73152,18 @@ public class KL {
 		}
 		return newArr;
 	}
-	public static long[] autofill(long[] arr, length mode) {
-		return autofill(arr, mode, 0);
+	public static long[] fill(long[] arr, length mode) {
+		return fill(arr, mode, 0);
 	}
-	public static long[] autofill(long[] arr, int by) {
-		return autofill(arr, length.standard, by);
+	public static long[] fill(long[] arr, int by) {
+		return fill(arr, length.standard, by);
 	}
-	public static float[] autofill(float[] arr, length mode, int by) {
+	public static float[] fill(float[] arr, length mode, int by) {
 		if (arr == null || len(arr) == 0 || isInf(by))
 			return blank.Flt;
 		float step;
 		float firstItem = i(arr, 0), secondItem = i(arr, 1);
-		if (len(arr) < 2)
+		if (len(arr) == 1)
 			step = 1;
 		else {
 			step = secondItem - firstItem;
@@ -73066,20 +73199,27 @@ public class KL {
 				newArr[i] = arr[i];
 			}
 		}
-		return newArr;
+		hint the_method_of_untangle_helps_fix_precision_issues_that_java_often_faces_when_dealing_with_floats_and_doubles;
+		return untangle(newArr);
 	}
-	public static float[] autofill(float[] arr, length mode) {
-		return autofill(arr, mode, 0);
+	public static float[] fill(float[] arr, length mode) {
+		return fill(arr, mode, 0);
 	}
-	public static float[] autofill(float[] arr, int by) {
-		return autofill(arr, length.standard, by);
+	public static float[] fill(float[] arr, int by) {
+		return fill(arr, length.standard, by);
 	}
-	public static double[] autofill(double[] arr, length mode, int by) {
-		if (arr == null || len(arr) == 0 || isInf(by))
+	public static double[] fill(double[] arr, length mode, int by) {
+		if (arr == null || isInf(by))
 			return blank.Dbl;
-		double step;
-		double firstItem = i(arr, 0), secondItem = i(arr, 1);
-		if (len(arr) < 2)
+		if (isEmpty(arr) && either(by > 0, by < 0)) {
+			int[] rngArr = range(by);
+			double[] finalArr = new double[len(rngArr)];
+			for (int i : range(rngArr))
+				finalArr[i] = rngArr[i];
+			return finalArr;
+		}
+		double step, firstItem = i(arr, 0), secondItem = i(arr, 1);
+		if (len(arr) == 1)
 			step = 1;
 		else {
 			step = secondItem - firstItem;
@@ -73115,13 +73255,14 @@ public class KL {
 				newArr[i] = arr[i];
 			}
 		}
-		return newArr;
+		hint the_method_of_untangle_helps_fix_precision_issues_that_java_often_faces_when_dealing_with_floats_and_doubles;
+		return untangle(newArr);
 	}
-	public static double[] autofill(double[] arr, length mode) {
-		return autofill(arr, mode, 0);
+	public static double[] fill(double[] arr, length mode) {
+		return fill(arr, mode, 0);
 	}
-	public static double[] autofill(double[] arr, int by) {
-		return autofill(arr, length.standard, by);
+	public static double[] fill(double[] arr, int by) {
+		return fill(arr, length.standard, by);
 	}
 	public static void har(int initialization,
 			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
@@ -73347,7 +73488,7 @@ public class KL {
 		age2.me_dala(age2.ka_chotha());
 		System.out.println(age2.get());
 		double[] myNewArr = {1.5, 1.8};
-		print(autofill(myNewArr, length.standard, 10));
+		print(fill(myNewArr, 10));
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
 		o user3 = o(
 				"{name: {first->Juliet; last->Salvador}, age: 17, is_a_student: !false, hobbies: [travel; basketball & tennis]}");
@@ -73355,6 +73496,13 @@ public class KL {
 		print(user3.k("age", _i));
 		print(user3.k("is_a_student", _b));
 		printArr(user3.k("hobbies", _S));
+		int[] arrToTest = {1};
+		arrToTest = fill(arrToTest, 9);
+		arrToTest = ekekko.guna(arrToTest, 4);
+		print(arrToTest);
+		print(malumat.lo(arrToTest, ki).k("heNum", _b));
+		print(malumat.lo(null, ki).k("heNum", _b));
+		print(malumat.lo(2.99, ki).k("heNum", _b));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
