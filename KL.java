@@ -56236,7 +56236,23 @@ public class KL {
 		public static double[] toEach(double[] arr, double n) {
 			return each(arr, n);
 		}
+		public static String[] ekekme(String[] arr, String s) {
+			return each(arr, s);
+		}
+		public static int[] ekekme(int[] arr, int n) {
+			return each(arr, n);
+		}
+		public static long[] ekekme(long[] arr, long n) {
+			return each(arr, n);
+		}
+		public static float[] ekekme(float[] arr, float n) {
+			return each(arr, n);
+		}
+		public static double[] ekekme(double[] arr, double n) {
+			return each(arr, n);
+		}
 	}
+	public static class dalo extends add {}
 	public static class remove {
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
@@ -56283,9 +56299,25 @@ public class KL {
 		public static double[] fromEach(double[] arr, double n) {
 			return each(arr, n);
 		}
+		public static String[] ekekse(String[] arr, String s) {
+			return each(arr, s);
+		}
+		public static int[] ekekse(int[] arr, int n) {
+			return each(arr, n);
+		}
+		public static long[] ekekse(long[] arr, long n) {
+			return each(arr, n);
+		}
+		public static float[] ekekse(float[] arr, float n) {
+			return each(arr, n);
+		}
+		public static double[] ekekse(double[] arr, double n) {
+			return each(arr, n);
+		}
 	}
 	public static class subtract extends remove {
 	}
+	public static class nikalo extends remove {}
 	public static class multiply {
 		public static String[] each(String[] arr, int n) {
 			if (arr == null || len(arr) == 0)
@@ -56311,6 +56343,21 @@ public class KL {
 			if (arr == null || len(arr) == 0)
 				return blank.Dbl;
 			return map(arr, item -> item * n);
+		}
+		public static String[] ekekko(String[] arr, int n) {
+			return each(arr, n);
+		}
+		public static int[] ekekko(int[] arr, int n) {
+			return each(arr, n);
+		}
+		public static long[] ekekko(long[] arr, long n) {
+			return each(arr, n);
+		}
+		public static float[] ekekko(float[] arr, float n) {
+			return each(arr, n);
+		}
+		public static double[] ekekko(double[] arr, double n) {
+			return each(arr, n);
 		}
 	}
 	public static class times extends multiply {
@@ -56355,6 +56402,18 @@ public class KL {
 					return 0.0D;
 				return item / n;
 			});
+		}
+		public static int[] ekekko(int[] arr, int n) {
+			return each(arr, n);
+		}
+		public static long[] ekekko(long[] arr, long n) {
+			return each(arr, n);
+		}
+		public static float[] ekekko(float[] arr, float n) {
+			return each(arr, n);
+		}
+		public static double[] ekekko(double[] arr, double n) {
+			return each(arr, n);
 		}
 	}
 	public static class quotient extends divide {
@@ -56448,6 +56507,37 @@ public class KL {
 		public static double[] bato(double[] arr, double n) {
 			return divide(arr, n);
 		}
+	}
+	public static class guna {
+			public static String[] ekek(String[] arr, int n) {
+				return multiply.each(arr, n);
+			}
+			public static int[] ekek(int[] arr, int n) {
+				return multiply.each(arr, n);
+			}
+			public static long[] ekek(long[] arr, long n) {
+				return multiply.each(arr, n);
+			}
+			public static float[] ekek(float[] arr, float n) {
+				return multiply.each(arr, n);
+			}
+			public static double[] ekek(double[] arr, double n) {
+				return multiply.each(arr, n);
+			}
+	}
+	public static class bato {
+			public static int[] ekek(int[] arr, int n) {
+				return divide.each(arr, n);
+			}
+			public static long[] ekek(long[] arr, long n) {
+				return divide.each(arr, n);
+			}
+			public static float[] ekek(float[] arr, float n) {
+				return divide.each(arr, n);
+			}
+			public static double[] ekek(double[] arr, double n) {
+				return divide.each(arr, n);
+			}
 	}
 	public static void guess(int n) {
 		SecureRandom sr = new SecureRandom();
@@ -73498,7 +73588,7 @@ public class KL {
 		printArr(user3.k("hobbies", _S));
 		int[] arrToTest = {1};
 		arrToTest = fill(arrToTest, 9);
-		arrToTest = ekekko.guna(arrToTest, 4);
+		arrToTest = dalo.ekekme(arrToTest, 4);
 		print(arrToTest);
 		print(malumat.lo(arrToTest, ki).k("heNum", _b));
 		print(malumat.lo(null, ki).k("heNum", _b));
