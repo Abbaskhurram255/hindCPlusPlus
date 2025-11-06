@@ -98,6 +98,7 @@ public class KL {
 		// @hint.method this_method_will_help_make_the_instantiation_quicker
 		return new KL();
 	}
+	public static KL kl = kl();
 	public static class money {
 		//@class.why: this class is supposed to help deal with money-related everyday calculations easier (currency conversion will be added soon)
 		private double amnt;
@@ -4355,12 +4356,81 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		public app background(Color clr) {
+		public app peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		public app peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		public app parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		public app parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		public app keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		public app keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		public app bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		public app setBg(Color clr) {
-			background(clr);
+		public app kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		public app color(Color clr) {
+			super.setForeground(clr);
+			return this;
+		}
+		public app textColor(Color clr) {
+			color(clr);
+			return this;
+		}
+		public app kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		public app icon(String address) {
@@ -4570,6 +4640,14 @@ public class KL {
 					}
 				}
 			});
+			return this;
+		}
+		public app pe(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
+		public app par(String k, Object languageArg, Runnable action) {
+			on(k, action);
 			return this;
 		}
 		public app state(String newState) {
@@ -5014,12 +5092,81 @@ public class KL {
 			super.cursor(crsrObj);
 			return this;
 		}
+		public gui peMouse(int c, Object... languageSupportingArgs) {
+			super.peMouse(c);
+			return this;
+		}
+		public gui peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			super.peMouse(crsrObj);
+			return this;
+		}
+		public gui parMouse(int c, Object... languageSupportingArgs) {
+			super.parMouse(c);
+			return this;
+		}
+		public gui parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			super.parMouse(crsrObj);
+			return this;
+		}
+		public gui keSamneMouse(int c, Object... languageSupportingArgs) {
+			super.keSamneMouse(c);
+			return this;
+		}
+		public gui keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			super.keSamneMouse(crsrObj);
+			return this;
+		}
+		public gui bg(Color clr) {
+			super.bg(clr);
+			return this;
+		}
+		public gui kaBg(Color clr) {
+			super.kaBg(clr);
+			return this;
+		}
+		public gui kiBg(Color clr) {
+			super.kiBg(clr);
+			return this;
+		}
+		public gui bgColor(Color clr) {
+			super.bgColor(clr);
+			return this;
+		}
+		public gui kaBgColor(Color clr) {
+			super.kaBgColor(clr);
+			return this;
+		}
 		public gui background(Color clr) {
 			super.background(clr);
 			return this;
 		}
-		public gui setBg(Color clr) {
-			super.setBg(clr);
+		public gui kaBackground(Color clr) {
+			super.kaBackground(clr);
+			return this;
+		}
+		public gui kiBackground(Color clr) {
+			super.kiBackground(clr);
+			return this;
+		}
+		public gui backgroundColor(Color clr) {
+			super.backgroundColor(clr);
+			return this;
+		}
+		public gui kaBackgroundColor(Color clr) {
+			super.kaBackgroundColor(clr);
+			return this;
+		}
+		public gui color(Color clr) {
+			super.color(clr);
+			return this;
+		}
+		public gui textColor(Color clr) {
+			super.textColor(clr);
+			return this;
+		}
+		public gui kaTextColor(Color clr) {
+			super.kaTextColor(clr);
 			return this;
 		}
 		public gui icon(String address) {
@@ -5066,6 +5213,14 @@ public class KL {
 		}
 		public gui on(String k, Runnable action) {
 			super.on(k, action);
+			return this;
+		}
+		public gui pe(String k, Object languageArg, Runnable action) {
+			super.pe(k, languageArg, action);
+			return this;
+		}
+		public gui par(String k, Object languageArg, Runnable action) {
+			super.par(k, languageArg, action);
 			return this;
 		}
 		public gui state(String newState) {
@@ -5240,20 +5395,56 @@ public class KL {
 			super(text, icon, horizontalAlignment);
 			super.setOpaque(true);
 		}
-		label background(Color clr) {
+		label bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		label foreground(Color clr) {
+		label kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		label color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		label setBg(Color clr) {
-			background(clr);
+		label textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		label setFg(Color clr) {
-			foreground(clr);
+		label kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		label add(Component... components) {
@@ -5271,6 +5462,30 @@ public class KL {
 		}
 		label cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		label peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		label peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		label parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		label parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		label keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		label keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		label font(String fontFamily, int fontSize) {
@@ -5418,6 +5633,14 @@ public class KL {
 			});
 			return this;
 		}
+		label pe(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
+		label par(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
 		label hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -5428,8 +5651,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		label keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		label keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		label place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -5511,6 +5748,7 @@ public class KL {
 			if (frameToAddTo_optional.length == 1
 					&& frameToAddTo_optional[0] != null) {
 				JFrame frame = frameToAddTo_optional[0];
+				//kl.print("here");
 				frame.add(this);
 			}
 		}
@@ -5547,20 +5785,56 @@ public class KL {
 			lay(layout);
 			return this;
 		}
-		panel background(Color clr) {
+		panel bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		panel foreground(Color clr) {
+		panel kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		panel color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		panel setBg(Color clr) {
-			background(clr);
+		panel textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		panel setFg(Color clr) {
-			foreground(clr);
+		panel kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		panel add(Component... components) {
@@ -5578,6 +5852,30 @@ public class KL {
 		}
 		panel cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		panel peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		panel peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		panel parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		panel parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		panel keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		panel keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		panel font(String fontFamily, int fontSize) {
@@ -5616,6 +5914,10 @@ public class KL {
 		}
 		panel border(Border brdr) {
 			super.setBorder(brdr);
+			return this;
+		}
+		panel kaBorder(Border brdr) {
+			border(brdr);
 			return this;
 		}
 		panel on(String k, Runnable action) {
@@ -5714,6 +6016,14 @@ public class KL {
 			});
 			return this;
 		}
+		panel pe(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
+		panel par(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
 		panel hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -5724,8 +6034,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		panel keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		panel keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		panel place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -5797,8 +6121,8 @@ public class KL {
 		button(String text, Color bg, Color fg,
 				JPanel... panelToAddTo_optional) {
 			this(text);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 			if (panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
@@ -5808,8 +6132,8 @@ public class KL {
 		button(String text, ActionListener listener, Color bg, Color fg,
 				JPanel... panelToAddTo_optional) {
 			this(text, listener);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 			if (panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
@@ -5826,24 +6150,100 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		button koClick() {
+			click();
+			return this;
+		}
+		button koClickKaro() {
+			click();
+			return this;
+		}
+		button parClick() {
+			click();
+			return this;
+		}
+		button parClickKaro() {
+			click();
+			return this;
+		}
+		button peClick() {
+			click();
+			return this;
+		}
+		button peClickKaro() {
+			click();
+			return this;
+		}
+		button parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		button parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		button peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		button peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		button offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		button background(Color clr) {
+		button bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		button foreground(Color clr) {
+		button kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		button color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		button setBg(Color clr) {
-			background(clr);
+		button textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		button setFg(Color clr) {
-			foreground(clr);
+		button kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		button img(Icon ico) {
@@ -5876,6 +6276,30 @@ public class KL {
 		}
 		button cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		button peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		button peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		button parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		button parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		button keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		button keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		button font(String fontFamily, int fontSize) {
@@ -5916,6 +6340,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		button kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		button alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -5947,8 +6375,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		button keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		button keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		button place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -5995,24 +6437,100 @@ public class KL {
 			super.click(listener);
 			return this;
 		}
+		btn koClick() {
+			super.koClick();
+			return this;
+		}
+		btn koClickKaro() {
+			super.koClickKaro();
+			return this;
+		}
+		btn parClick() {
+			super.parClick();
+			return this;
+		}
+		btn parClickKaro() {
+			super.parClickKaro();
+			return this;
+		}
+		btn peClick() {
+			super.peClick();
+			return this;
+		}
+		btn peClickKaro() {
+			super.peClickKaro();
+			return this;
+		}
+		btn parClickPe(ActionListener listener) {
+			super.parClickPe(listener);
+			return this;
+		}
+		btn parClickPar(ActionListener listener) {
+			super.parClickPar(listener);
+			return this;
+		}
+		btn peClickPe(ActionListener listener) {
+			super.peClickPe(listener);
+			return this;
+		}
+		btn peClickPar(ActionListener listener) {
+			super.peClickPar(listener);
+			return this;
+		}
 		btn offClick(ActionListener listener) {
 			super.offClick(listener);
+			return this;
+		}
+		btn bg(Color clr) {
+			super.bg(clr);
+			return this;
+		}
+		btn kaBg(Color clr) {
+			super.kaBg(clr);
+			return this;
+		}
+		btn kiBg(Color clr) {
+			super.kiBg(clr);
+			return this;
+		}
+		btn bgColor(Color clr) {
+			super.bgColor(clr);
+			return this;
+		}
+		btn kaBgColor(Color clr) {
+			super.kaBgColor(clr);
 			return this;
 		}
 		btn background(Color clr) {
 			super.background(clr);
 			return this;
 		}
-		btn foreground(Color clr) {
-			super.foreground(clr);
+		btn kaBackground(Color clr) {
+			super.kaBackground(clr);
 			return this;
 		}
-		btn setBg(Color clr) {
-			super.setBg(clr);
+		btn kiBackground(Color clr) {
+			super.kiBackground(clr);
 			return this;
 		}
-		btn setFg(Color clr) {
-			super.setFg(clr);
+		btn backgroundColor(Color clr) {
+			super.backgroundColor(clr);
+			return this;
+		}
+		btn kaBackgroundColor(Color clr) {
+			super.kaBackgroundColor(clr);
+			return this;
+		}
+		btn color(Color clr) {
+			super.color(clr);
+			return this;
+		}
+		btn textColor(Color clr) {
+			super.textColor(clr);
+			return this;
+		}
+		btn kaTextColor(Color clr) {
+			super.kaTextColor(clr);
 			return this;
 		}
 		btn img(Icon ico) {
@@ -6047,6 +6565,30 @@ public class KL {
 			super.cursor(crsrObj);
 			return this;
 		}
+		btn peMouse(int c, Object... languageSupportingArgs) {
+			super.peMouse(c);
+			return this;
+		}
+		btn peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			super.peMouse(crsrObj);
+			return this;
+		}
+		btn parMouse(int c, Object... languageSupportingArgs) {
+			super.parMouse(c);
+			return this;
+		}
+		btn parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			super.parMouse(crsrObj);
+			return this;
+		}
+		btn keSamneMouse(int c, Object... languageSupportingArgs) {
+			super.keSamneMouse(c);
+			return this;
+		}
+		btn keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			super.keSamneMouse(crsrObj);
+			return this;
+		}
 		btn font(String fontFamily, int fontSize) {
 			super.font(fontFamily, fontSize);
 			return this;
@@ -6076,6 +6618,10 @@ public class KL {
 			super.border(brdr);
 			return this;
 		}
+		btn kaBorder(Border brdr) {
+			super.kaBorder(brdr);
+			return this;
+		}
 		btn alignx(int pos) {
 			super.alignx(pos);
 			return this;
@@ -6103,8 +6649,22 @@ public class KL {
 			super.hover();
 			return this;
 		}
-		public String getHover() {
+		btn keSamneBolo(String textJoBolnaHe) {
+			super.keSamneBolo(textJoBolnaHe);
+			return this;
+		}
+		btn keSamneBolo() {
+			super.keSamneBolo();
+			return this;
+		}
+		String getHover() {
 			return super.getHover();
+		}
+		String getHoverText() {
+			return super.getHoverText();
+		}
+		String keSamneBola() {
+			return super.keSamneBola();
 		}
 		btn place(int xAxis, int yAxis, int width, int height) {
 			super.place(xAxis, yAxis, width, height);
@@ -6155,8 +6715,8 @@ public class KL {
 		}
 		toggleBtn(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 		}
 		toggleBtn click(ActionListener listener) {
 			if (not(listener))
@@ -6164,24 +6724,76 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		toggleBtn parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		toggleBtn parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		toggleBtn peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		toggleBtn peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		toggleBtn offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		toggleBtn background(Color clr) {
+		toggleBtn bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		toggleBtn foreground(Color clr) {
+		toggleBtn kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		toggleBtn color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		toggleBtn setBg(Color clr) {
-			background(clr);
+		toggleBtn textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		toggleBtn setFg(Color clr) {
-			foreground(clr);
+		toggleBtn kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		toggleBtn img(Icon ico) {
@@ -6214,6 +6826,31 @@ public class KL {
 		}
 		toggleBtn cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		toggleBtn peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		toggleBtn peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		toggleBtn parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		toggleBtn parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		toggleBtn keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		toggleBtn keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		toggleBtn font(String fontFamily, int fontSize) {
@@ -6254,6 +6891,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		toggleBtn kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		toggleBtn alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -6285,8 +6926,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		toggleBtn keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		toggleBtn keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		toggleBtn place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -6337,8 +6992,8 @@ public class KL {
 		}
 		radioBtn(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 		}
 		radioBtn click(ActionListener listener) {
 			if (not(listener))
@@ -6346,24 +7001,76 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		radioBtn parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		radioBtn parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		radioBtn peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		radioBtn peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		radioBtn offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		radioBtn background(Color clr) {
+		radioBtn bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		radioBtn foreground(Color clr) {
+		radioBtn kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtn color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		radioBtn setBg(Color clr) {
-			background(clr);
+		radioBtn textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		radioBtn setFg(Color clr) {
-			foreground(clr);
+		radioBtn kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		radioBtn img(Icon ico) {
@@ -6396,6 +7103,31 @@ public class KL {
 		}
 		radioBtn cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		radioBtn peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		radioBtn peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		radioBtn parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		radioBtn parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		radioBtn keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		radioBtn keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		radioBtn font(String fontFamily, int fontSize) {
@@ -6436,6 +7168,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		radioBtn kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		radioBtn alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -6467,8 +7203,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		radioBtn keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		radioBtn keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		radioBtn place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -6519,8 +7269,8 @@ public class KL {
 		}
 		radioBtnItem(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 		}
 		radioBtnItem click(ActionListener listener) {
 			if (not(listener))
@@ -6528,24 +7278,76 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		radioBtnItem parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		radioBtnItem parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		radioBtnItem peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		radioBtnItem peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		radioBtnItem offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		radioBtnItem background(Color clr) {
+		radioBtnItem bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		radioBtnItem foreground(Color clr) {
+		radioBtnItem kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		radioBtnItem color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		radioBtnItem setBg(Color clr) {
-			background(clr);
+		radioBtnItem textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		radioBtnItem setFg(Color clr) {
-			foreground(clr);
+		radioBtnItem kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		radioBtnItem img(Icon ico) {
@@ -6578,6 +7380,32 @@ public class KL {
 		}
 		radioBtnItem cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		radioBtnItem peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		radioBtnItem peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		radioBtnItem parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		radioBtnItem parMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		radioBtnItem keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		radioBtnItem keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		radioBtnItem font(String fontFamily, int fontSize) {
@@ -6619,6 +7447,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		radioBtnItem kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		radioBtnItem alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -6650,8 +7482,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		radioBtnItem keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		radioBtnItem keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		radioBtnItem place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -6702,8 +7548,8 @@ public class KL {
 		}
 		checkBox(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 		}
 		checkBox click(ActionListener listener) {
 			if (not(listener))
@@ -6711,24 +7557,76 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		checkBox parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		checkBox parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		checkBox peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		checkBox peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		checkBox offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		checkBox background(Color clr) {
+		checkBox bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		checkBox foreground(Color clr) {
+		checkBox kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBox color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		checkBox setBg(Color clr) {
-			background(clr);
+		checkBox textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		checkBox setFg(Color clr) {
-			foreground(clr);
+		checkBox kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		checkBox img(Icon ico) {
@@ -6761,6 +7659,31 @@ public class KL {
 		}
 		checkBox cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		checkBox peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		checkBox peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		checkBox parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		checkBox parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		checkBox keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		checkBox keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		checkBox font(String fontFamily, int fontSize) {
@@ -6801,6 +7724,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		checkBox kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		checkBox alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -6832,8 +7759,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		checkBox keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		checkBox keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		checkBox place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -6881,8 +7822,8 @@ public class KL {
 		}
 		checkBoxItem(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 		}
 		checkBoxItem click(ActionListener listener) {
 			if (not(listener))
@@ -6890,24 +7831,76 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		checkBoxItem parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		checkBoxItem parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		checkBoxItem peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		checkBoxItem peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		checkBoxItem offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		checkBoxItem background(Color clr) {
+		checkBoxItem bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		checkBoxItem foreground(Color clr) {
+		checkBoxItem kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		checkBoxItem color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		checkBoxItem setBg(Color clr) {
-			background(clr);
+		checkBoxItem textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		checkBoxItem setFg(Color clr) {
-			foreground(clr);
+		checkBoxItem kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		checkBoxItem img(Icon ico) {
@@ -6940,6 +7933,32 @@ public class KL {
 		}
 		checkBoxItem cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		checkBoxItem peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		checkBoxItem peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		checkBoxItem parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		checkBoxItem parMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		checkBoxItem keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		checkBoxItem keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		checkBoxItem font(String fontFamily, int fontSize) {
@@ -6981,6 +8000,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		checkBoxItem kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		checkBoxItem alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -7012,8 +8035,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		checkBoxItem keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		checkBoxItem keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		checkBoxItem place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -7043,20 +8080,56 @@ public class KL {
 				super.add(item);
 			}
 		}
-		menuBar background(Color clr) {
+		menuBar bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		menuBar foreground(Color clr) {
+		menuBar kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuBar color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		menuBar setBg(Color clr) {
-			background(clr);
+		menuBar textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		menuBar setFg(Color clr) {
-			foreground(clr);
+		menuBar kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		menuBar cursor(int c) {
@@ -7065,6 +8138,30 @@ public class KL {
 		}
 		menuBar cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		menuBar peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menuBar peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		menuBar parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menuBar parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		menuBar keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menuBar keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		menuBar font(String fontFamily, int fontSize) {
@@ -7105,6 +8202,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		menuBar kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		menuBar hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -7115,8 +8216,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		menuBar keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		menuBar keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		menuBar place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -7153,8 +8268,8 @@ public class KL {
 		}
 		menu(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 		}
 		menu(JMenuItem... menuItems) {
 			super();
@@ -7174,24 +8289,76 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		menu parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		menu parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		menu peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		menu peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		menu offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		menu background(Color clr) {
+		menu bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		menu foreground(Color clr) {
+		menu kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menu color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		menu setBg(Color clr) {
-			background(clr);
+		menu textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		menu setFg(Color clr) {
-			foreground(clr);
+		menu kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		menu img(Icon ico) {
@@ -7224,6 +8391,30 @@ public class KL {
 		}
 		menu cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		menu peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menu peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		menu parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menu parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		menu keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menu keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		menu font(String fontFamily, int fontSize) {
@@ -7264,6 +8455,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		menu kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		menu alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -7295,8 +8490,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		menu keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		menu keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		menu place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -7341,8 +8550,8 @@ public class KL {
 		}
 		menuItem(String text, ActionListener listener, Color bg, Color fg) {
 			this(text, listener);
-			background(bg);
-			foreground(fg);
+			bg(bg);
+			color(fg);
 		}
 		menuItem click(ActionListener listener) {
 			if (not(listener))
@@ -7350,24 +8559,76 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		menuItem parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		menuItem parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		menuItem peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		menuItem peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		menuItem offClick(ActionListener listener) {
 			super.removeActionListener(listener);
 			return this;
 		}
-		menuItem background(Color clr) {
+		menuItem bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		menuItem foreground(Color clr) {
+		menuItem kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		menuItem color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		menuItem setBg(Color clr) {
-			background(clr);
+		menuItem textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		menuItem setFg(Color clr) {
-			foreground(clr);
+		menuItem kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		menuItem img(Icon ico) {
@@ -7400,6 +8661,31 @@ public class KL {
 		}
 		menuItem cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		menuItem peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menuItem peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		menuItem parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menuItem parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		menuItem keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		menuItem keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		menuItem font(String fontFamily, int fontSize) {
@@ -7440,6 +8726,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		menuItem kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		menuItem alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -7471,8 +8761,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		menuItem keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		menuItem keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		menuItem place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -7496,7 +8800,7 @@ public class KL {
 		}
 		contextMenu(String text, Color bg) {
 			this(text);
-			background(bg);
+			bg(bg);
 		}
 		contextMenu(String... items) {
 			super();
@@ -7510,20 +8814,56 @@ public class KL {
 				super.add(item);
 			}
 		}
-		contextMenu background(Color clr) {
+		contextMenu bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		contextMenu foreground(Color clr) {
+		contextMenu kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		contextMenu color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		contextMenu setBg(Color clr) {
-			background(clr);
+		contextMenu textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		contextMenu setFg(Color clr) {
-			foreground(clr);
+		contextMenu kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		contextMenu cursor(int c) {
@@ -7532,6 +8872,31 @@ public class KL {
 		}
 		contextMenu cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		contextMenu peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		contextMenu peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		contextMenu parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		contextMenu parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		contextMenu keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		contextMenu keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		contextMenu font(String fontFamily, int fontSize) {
@@ -7573,6 +8938,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		contextMenu kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		contextMenu hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -7583,8 +8952,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		contextMenu keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		contextMenu keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		contextMenu place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -7635,20 +9018,72 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
-		dropDown background(Color clr) {
+		dropDown parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		dropDown parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		dropDown peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		dropDown peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		dropDown bg(Color clr) {
 			super.setBackground(clr);
 			return this;
 		}
-		dropDown foreground(Color clr) {
+		dropDown kaBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown kiBg(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown bgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown kaBgColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown background(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown kaBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown kiBackground(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown backgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown kaBackgroundColor(Color clr) {
+			bg(clr);
+			return this;
+		}
+		dropDown color(Color clr) {
 			super.setForeground(clr);
 			return this;
 		}
-		dropDown setBg(Color clr) {
-			background(clr);
+		dropDown textColor(Color clr) {
+			color(clr);
 			return this;
 		}
-		dropDown setFg(Color clr) {
-			foreground(clr);
+		dropDown kaTextColor(Color clr) {
+			color(clr);
 			return this;
 		}
 		dropDown cursor(int c) {
@@ -7657,6 +9092,31 @@ public class KL {
 		}
 		dropDown cursor(Cursor crsrObj) {
 			super.setCursor(crsrObj);
+			return this;
+		}
+		dropDown peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		dropDown peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		dropDown parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		dropDown parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		dropDown keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		dropDown keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
 			return this;
 		}
 		dropDown font(String fontFamily, int fontSize) {
@@ -7697,6 +9157,10 @@ public class KL {
 			super.setBorder(brdr);
 			return this;
 		}
+		dropDown kaBorder(Border brdr) {
+			border(brdr);
+			return this;
+		}
 		dropDown hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -7707,8 +9171,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		dropDown keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		dropDown keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		dropDown place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -7755,6 +9233,22 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		txtField parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		txtField parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		txtField peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		txtField peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		txtField cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
@@ -7763,8 +9257,37 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
+		txtField peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtField peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		txtField parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtField parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		txtField keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtField keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
 		txtField border(Border brdr) {
 			super.setBorder(brdr);
+			return this;
+		}
+		txtField kaBorder(Border brdr) {
+			border(brdr);
 			return this;
 		}
 		String text() {
@@ -7774,6 +9297,13 @@ public class KL {
 			super.setText(s);
 			return this;
 		}
+		String kaText() {
+			return text();
+		}
+		txtField kaText(String s) {
+			text(s);
+			return this;
+		}
 		String val() {
 			return text();
 		}
@@ -7781,10 +9311,24 @@ public class KL {
 			text(s);
 			return this;
 		}
+		String kiVal() {
+			return text();
+		}
+		txtField kiVal(String s) {
+			text(s);
+			return this;
+		}
 		String value() {
 			return text();
 		}
 		txtField value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		txtField kiValue(String s) {
 			text(s);
 			return this;
 		}
@@ -7884,6 +9428,14 @@ public class KL {
 			});
 			return this;
 		}
+		txtField pe(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
+		txtField par(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
 		txtField hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -7894,8 +9446,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		txtField keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		txtField keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		txtField place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -7956,8 +9522,36 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
+		txtArea peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtArea peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		txtArea parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtArea parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		txtArea keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtArea keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
 		txtArea border(Border brdr) {
 			super.setBorder(brdr);
+			return this;
+		}
+		txtArea kaBorder(Border brdr) {
+			border(brdr);
 			return this;
 		}
 		String text() {
@@ -7967,6 +9561,13 @@ public class KL {
 			super.setText(s);
 			return this;
 		}
+		String kaText() {
+			return text();
+		}
+		txtArea kaText(String s) {
+			text(s);
+			return this;
+		}
 		String val() {
 			return text();
 		}
@@ -7974,10 +9575,24 @@ public class KL {
 			text(s);
 			return this;
 		}
+		String kiVal() {
+			return text();
+		}
+		txtArea kiVal(String s) {
+			text(s);
+			return this;
+		}
 		String value() {
 			return text();
 		}
 		txtArea value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		txtArea kiValue(String s) {
 			text(s);
 			return this;
 		}
@@ -8077,6 +9692,14 @@ public class KL {
 			});
 			return this;
 		}
+		txtArea pe(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
+		txtArea par(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
 		txtArea hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -8087,8 +9710,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		txtArea keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		txtArea keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		txtArea place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -8116,8 +9753,36 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
+		txtPane peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtPane peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		txtPane parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtPane parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		txtPane keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		txtPane keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
 		txtPane border(Border brdr) {
 			super.setBorder(brdr);
+			return this;
+		}
+		txtPane kaBorder(Border brdr) {
+			border(brdr);
 			return this;
 		}
 		String text() {
@@ -8127,6 +9792,13 @@ public class KL {
 			super.setText(s);
 			return this;
 		}
+		String kaText() {
+			return text();
+		}
+		txtPane kaText(String s) {
+			text(s);
+			return this;
+		}
 		String val() {
 			return text();
 		}
@@ -8134,10 +9806,24 @@ public class KL {
 			text(s);
 			return this;
 		}
+		String kiVal() {
+			return text();
+		}
+		txtPane kiVal(String s) {
+			text(s);
+			return this;
+		}
 		String value() {
 			return text();
 		}
 		txtPane value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		txtPane kiValue(String s) {
 			text(s);
 			return this;
 		}
@@ -8237,6 +9923,14 @@ public class KL {
 			});
 			return this;
 		}
+		txtPane pe(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
+		txtPane par(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
 		txtPane hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -8247,8 +9941,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		txtPane keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		txtPane keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		txtPane place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -8295,6 +10003,22 @@ public class KL {
 			super.addActionListener(listener);
 			return this;
 		}
+		pwdField parClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		pwdField parClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		pwdField peClickPe(ActionListener listener) {
+			click(listener);
+			return this;
+		}
+		pwdField peClickPar(ActionListener listener) {
+			click(listener);
+			return this;
+		}
 		pwdField cursor(int c) {
 			super.setCursor(new Cursor(c));
 			return this;
@@ -8303,8 +10027,37 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
+		pwdField peMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		pwdField peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		pwdField parMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		pwdField parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
+		pwdField keSamneMouse(int c, Object... languageSupportingArgs) {
+			cursor(c);
+			return this;
+		}
+		pwdField keSamneMouse(Cursor crsrObj,
+				Object... languageSupportingArgs) {
+			cursor(crsrObj);
+			return this;
+		}
 		pwdField border(Border brdr) {
 			super.setBorder(brdr);
+			return this;
+		}
+		pwdField kaBorder(Border brdr) {
+			border(brdr);
 			return this;
 		}
 		String text() {
@@ -8314,6 +10067,13 @@ public class KL {
 			super.setText(text);
 			return this;
 		}
+		String kaText() {
+			return text();
+		}
+		pwdField kaText(String s) {
+			text(s);
+			return this;
+		}
 		String val() {
 			return text();
 		}
@@ -8321,10 +10081,24 @@ public class KL {
 			text(s);
 			return this;
 		}
+		String kiVal() {
+			return text();
+		}
+		pwdField kiVal(String s) {
+			text(s);
+			return this;
+		}
 		String value() {
 			return text();
 		}
 		pwdField value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		pwdField kiValue(String s) {
 			text(s);
 			return this;
 		}
@@ -8424,6 +10198,14 @@ public class KL {
 			});
 			return this;
 		}
+		pwdField pe(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
+		pwdField par(String k, Object languageArg, Runnable action) {
+			on(k, action);
+			return this;
+		}
 		pwdField hover(String textToDisplayOnHover) {
 			if (not(textToDisplayOnHover))
 				return this;
@@ -8434,8 +10216,22 @@ public class KL {
 			super.setToolTipText(null);
 			return this;
 		}
-		public String getHover() {
+		pwdField keSamneBolo(String textJoBolnaHe) {
+			hover(textJoBolnaHe);
+			return this;
+		}
+		pwdField keSamneBolo() {
+			hover();
+			return this;
+		}
+		String getHover() {
 			return super.getToolTipText();
+		}
+		String getHoverText() {
+			return getHover();
+		}
+		String keSamneBola() {
+			return getHover();
 		}
 		pwdField place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
@@ -21787,7 +23583,7 @@ public class KL {
 			try {
 				Thread.sleep(delay < 1000 ? delay * 1000 : delay);
 			} catch (InterruptedException e) {
-				print("[KL.Info.InterruptedTimeout]:\nThe timeout was interrupted, either intentionally or by a background task.");
+				print("[KL.Info.InterruptedTimeout]:\nThe timeout was interrupted, either intentionally or by a bg task.");
 				return;
 			}
 			SwingUtilities.invokeLater(fn);
@@ -21840,7 +23636,7 @@ public class KL {
 				try {
 					Thread.sleep(interval < 1000 ? interval * 1000 : interval);
 				} catch (InterruptedException e) {
-					print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a background task.");
+					print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a bg task.");
 					break;
 				}
 				SwingUtilities.invokeLater(fn);
@@ -33143,8 +34939,9 @@ public class KL {
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
-	public static Object ko, ki, ke, pe, par, dabane_pe, dabane_par,
-			ka = ko = ki = ke = pe = par = dabane_pe = dabane_par = new Object(),
+	public static Object ko, ki, ke, pe, par, dabane_pe, dabane_par, karne_pe,
+			karne_par,
+			ka = ko = ki = ke = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = new Object(),
 			mese = new Object();
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
