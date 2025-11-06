@@ -56252,7 +56252,8 @@ public class KL {
 			return each(arr, n);
 		}
 	}
-	public static class dalo extends add {}
+	public static class dalo extends add {
+	}
 	public static class remove {
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
@@ -56317,7 +56318,8 @@ public class KL {
 	}
 	public static class subtract extends remove {
 	}
-	public static class nikalo extends remove {}
+	public static class nikalo extends remove {
+	}
 	public static class multiply {
 		public static String[] each(String[] arr, int n) {
 			if (arr == null || len(arr) == 0)
@@ -56509,35 +56511,35 @@ public class KL {
 		}
 	}
 	public static class guna {
-			public static String[] ekek(String[] arr, int n) {
-				return multiply.each(arr, n);
-			}
-			public static int[] ekek(int[] arr, int n) {
-				return multiply.each(arr, n);
-			}
-			public static long[] ekek(long[] arr, long n) {
-				return multiply.each(arr, n);
-			}
-			public static float[] ekek(float[] arr, float n) {
-				return multiply.each(arr, n);
-			}
-			public static double[] ekek(double[] arr, double n) {
-				return multiply.each(arr, n);
-			}
+		public static String[] ekek(String[] arr, int n) {
+			return multiply.each(arr, n);
+		}
+		public static int[] ekek(int[] arr, int n) {
+			return multiply.each(arr, n);
+		}
+		public static long[] ekek(long[] arr, long n) {
+			return multiply.each(arr, n);
+		}
+		public static float[] ekek(float[] arr, float n) {
+			return multiply.each(arr, n);
+		}
+		public static double[] ekek(double[] arr, double n) {
+			return multiply.each(arr, n);
+		}
 	}
 	public static class bato {
-			public static int[] ekek(int[] arr, int n) {
-				return divide.each(arr, n);
-			}
-			public static long[] ekek(long[] arr, long n) {
-				return divide.each(arr, n);
-			}
-			public static float[] ekek(float[] arr, float n) {
-				return divide.each(arr, n);
-			}
-			public static double[] ekek(double[] arr, double n) {
-				return divide.each(arr, n);
-			}
+		public static int[] ekek(int[] arr, int n) {
+			return divide.each(arr, n);
+		}
+		public static long[] ekek(long[] arr, long n) {
+			return divide.each(arr, n);
+		}
+		public static float[] ekek(float[] arr, float n) {
+			return divide.each(arr, n);
+		}
+		public static double[] ekek(double[] arr, double n) {
+			return divide.each(arr, n);
+		}
 	}
 	public static void guess(int n) {
 		SecureRandom sr = new SecureRandom();
@@ -73588,11 +73590,14 @@ public class KL {
 		printArr(user3.k("hobbies", _S));
 		int[] arrToTest = {1};
 		arrToTest = fill(arrToTest, 9);
-		arrToTest = dalo.ekekme(arrToTest, 4);
+		arrToTest = ekekko.guna(arrToTest, 4);
 		print(arrToTest);
 		print(malumat.lo(arrToTest, ki).k("heNum", _b));
 		print(malumat.lo(null, ki).k("heNum", _b));
 		print(malumat.lo(2.99, ki).k("heNum", _b));
+		int[] newArr = {3, 5, 8};
+		newArr = subtract.fromEach(newArr, 1);
+		print(newArr);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
