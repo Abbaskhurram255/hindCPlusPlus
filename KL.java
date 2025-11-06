@@ -4055,6 +4055,18 @@ public class KL {
 	// gui
 	public static class app extends JFrame {
 		private static final long serialVersionUID = 1L;
+		public static int SADA_WALA = Cursor.DEFAULT_CURSOR,
+				CROSSHAIR_WALA = Cursor.CROSSHAIR_CURSOR,
+				TEXT_WALA = Cursor.TEXT_CURSOR, WAIT_WALA = Cursor.WAIT_CURSOR,
+				SW_RESIZE_WALA = Cursor.SW_RESIZE_CURSOR,
+				SE_RESIZE_WALA = Cursor.SE_RESIZE_CURSOR,
+				NW_RESIZE_WALA = Cursor.NW_RESIZE_CURSOR,
+				NE_RESIZE_WALA = Cursor.NE_RESIZE_CURSOR,
+				N_RESIZE_WALA = Cursor.N_RESIZE_CURSOR,
+				S_RESIZE_WALA = Cursor.S_RESIZE_CURSOR,
+				W_RESIZE_WALA = Cursor.W_RESIZE_CURSOR,
+				E_RESIZE_WALA = Cursor.E_RESIZE_CURSOR,
+				HATH_WALA = Cursor.HAND_CURSOR, MOVE_WALA = Cursor.MOVE_CURSOR;
 		public app() {
 			super();
 			exitOnClose();
@@ -5423,6 +5435,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		label koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class bordLay extends BorderLayout {
 		private static final long serialVersionUID = 1L;
@@ -5489,17 +5506,38 @@ public class KL {
 	}
 	public static class panel extends JPanel {
 		private static final long serialVersionUID = 1L;
-		panel() {
+		panel(JFrame... frameToAddTo_optional) {
 			super();
+			if (frameToAddTo_optional.length == 1
+					&& frameToAddTo_optional[0] != null) {
+				JFrame frame = frameToAddTo_optional[0];
+				frame.add(this);
+			}
 		}
-		panel(LayoutManager layout) {
+		panel(LayoutManager layout, JFrame... frameToAddTo_optional) {
 			super(layout);
+			if (frameToAddTo_optional.length == 1
+					&& frameToAddTo_optional[0] != null) {
+				JFrame frame = frameToAddTo_optional[0];
+				frame.add(this);
+			}
 		}
-		panel(boolean isDoubleBuffered) {
+		panel(boolean isDoubleBuffered, JFrame... frameToAddTo_optional) {
 			super(isDoubleBuffered);
+			if (frameToAddTo_optional.length == 1
+					&& frameToAddTo_optional[0] != null) {
+				JFrame frame = frameToAddTo_optional[0];
+				frame.add(this);
+			}
 		}
-		panel(LayoutManager layout, boolean isDoubleBuffered) {
+		panel(LayoutManager layout, boolean isDoubleBuffered,
+				JFrame... frameToAddTo_optional) {
 			super(layout, isDoubleBuffered);
+			if (frameToAddTo_optional.length == 1
+					&& frameToAddTo_optional[0] != null) {
+				JFrame frame = frameToAddTo_optional[0];
+				frame.add(this);
+			}
 		}
 		panel lay(LayoutManager layout) {
 			super.setLayout(layout);
@@ -5693,42 +5731,90 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		panel koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class button extends JButton {
 		private static final long serialVersionUID = 1L;
-		button() {
+		button(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		button(String text) {
+		button(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		button(Action a) {
+		button(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
+			if (panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		button(Icon i) {
+		button(Icon i, JPanel... panelToAddTo_optional) {
 			super(i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		button(String text, Icon i) {
+		button(String text, Icon i, JPanel... panelToAddTo_optional) {
 			super(text, i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		button(String text, ActionListener listener) {
+		button(String text, ActionListener listener,
+				JPanel... panelToAddTo_optional) {
 			this(text);
 			click(listener);
+			if (panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		button(String text, Color bg, Color fg) {
+		button(String text, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text);
 			background(bg);
 			foreground(fg);
+			if (panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		button(String text, ActionListener listener, Color bg, Color fg) {
+		button(String text, ActionListener listener, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text, listener);
 			background(bg);
 			foreground(fg);
+			if (panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		button click() {
 			super.doClick();
@@ -5868,31 +5954,38 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		button koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class btn extends button {
-		btn() {
-			super();
+		btn(JPanel... panelToAddTo_optional) {
+			super(panelToAddTo_optional);
 		}
-		btn(String text) {
-			super(text);
+		btn(String text, JPanel... panelToAddTo_optional) {
+			super(text, panelToAddTo_optional);
 		}
-		btn(Action a) {
-			super(a);
+		btn(Action a, JPanel... panelToAddTo_optional) {
+			super(a, panelToAddTo_optional);
 		}
-		btn(Icon i) {
-			super(i);
+		btn(Icon i, JPanel... panelToAddTo_optional) {
+			super(i, panelToAddTo_optional);
 		}
-		btn(String text, Icon i) {
-			super(text, i);
+		btn(String text, Icon i, JPanel... panelToAddTo_optional) {
+			super(text, i, panelToAddTo_optional);
 		}
-		btn(String text, ActionListener onClickAction) {
-			super(text, onClickAction);
+		btn(String text, ActionListener onClickAction,
+				JPanel... panelToAddTo_optional) {
+			super(text, onClickAction, panelToAddTo_optional);
 		}
-		btn(String text, Color bg, Color fg) {
-			super(text, bg, fg);
+		btn(String text, Color bg, Color fg, JPanel... panelToAddTo_optional) {
+			super(text, bg, fg, panelToAddTo_optional);
 		}
-		btn(String text, ActionListener onClickAction, Color bg, Color fg) {
-			super(text, onClickAction, bg, fg);
+		btn(String text, ActionListener onClickAction, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
+			super(text, onClickAction, bg, fg, panelToAddTo_optional);
 		}
 		btn click() {
 			super.click();
@@ -6015,6 +6108,11 @@ public class KL {
 		}
 		btn place(int xAxis, int yAxis, int width, int height) {
 			super.place(xAxis, yAxis, width, height);
+			return this;
+		}
+		btn koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
 			return this;
 		}
 	}
@@ -6194,6 +6292,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		toggleBtn koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class radioBtn extends JRadioButton {
 		private static final long serialVersionUID = 1L;
@@ -6369,6 +6472,11 @@ public class KL {
 		}
 		radioBtn place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
+			return this;
+		}
+		radioBtn koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
 			return this;
 		}
 	}
@@ -6549,6 +6657,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		radioBtnItem koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class checkBox extends JCheckBox {
 		private static final long serialVersionUID = 1L;
@@ -6726,6 +6839,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		checkBox koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class checkBoxItem extends JCheckBoxMenuItem {
 		private static final long serialVersionUID = 1L;
@@ -6901,6 +7019,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		checkBoxItem koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class menuBar extends JMenuBar {
 		private static final long serialVersionUID = 1L;
@@ -6997,6 +7120,11 @@ public class KL {
 		}
 		menuBar place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
+			return this;
+		}
+		menuBar koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
 			return this;
 		}
 	}
@@ -7174,6 +7302,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		menu koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class menuItem extends JMenuItem {
 		private static final long serialVersionUID = 1L;
@@ -7345,6 +7478,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		menuItem koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class contextMenu extends JPopupMenu {
 		private static final long serialVersionUID = 1L;
@@ -7450,6 +7588,11 @@ public class KL {
 		}
 		contextMenu place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
+			return this;
+		}
+		contextMenu koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
 			return this;
 		}
 	}
@@ -7571,6 +7714,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		dropDown koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class txtField extends JTextField {
 		private static final long serialVersionUID = 1L;
@@ -7591,6 +7739,14 @@ public class KL {
 		}
 		txtField columns(int columns) {
 			super.setColumns(columns);
+			return this;
+		}
+		txtField chorai(int columns) {
+			columns(columns);
+			return this;
+		}
+		txtField kiChorai(int columns) {
+			columns(columns);
 			return this;
 		}
 		txtField click(ActionListener listener) {
@@ -7745,6 +7901,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		txtField koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class txtArea extends JTextArea {
 		private static final long serialVersionUID = 1L;
@@ -7767,8 +7928,24 @@ public class KL {
 			super.setColumns(columns);
 			return this;
 		}
+		txtArea chorai(int columns) {
+			columns(columns);
+			return this;
+		}
+		txtArea kiChorai(int columns) {
+			columns(columns);
+			return this;
+		}
 		txtArea rows(int rows) {
 			super.setRows(rows);
+			return this;
+		}
+		txtArea lambai(int rows) {
+			rows(rows);
+			return this;
+		}
+		txtArea kiLambai(int rows) {
+			rows(rows);
 			return this;
 		}
 		txtArea cursor(int c) {
@@ -7915,6 +8092,11 @@ public class KL {
 		}
 		txtArea place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
+			return this;
+		}
+		txtArea koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
 			return this;
 		}
 	}
@@ -8072,6 +8254,11 @@ public class KL {
 			super.setBounds(xAxis, yAxis, width, height);
 			return this;
 		}
+		txtPane koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
+			return this;
+		}
 	}
 	public static class pwdField extends JPasswordField {
 		private static final long serialVersionUID = 1L;
@@ -8092,6 +8279,14 @@ public class KL {
 		}
 		pwdField columns(int columns) {
 			super.setColumns(columns);
+			return this;
+		}
+		pwdField chorai(int columns) {
+			columns(columns);
+			return this;
+		}
+		pwdField kiChorai(int columns) {
+			columns(columns);
 			return this;
 		}
 		pwdField click(ActionListener listener) {
@@ -8244,6 +8439,11 @@ public class KL {
 		}
 		pwdField place(int xAxis, int yAxis, int width, int height) {
 			super.setBounds(xAxis, yAxis, width, height);
+			return this;
+		}
+		pwdField koRakho(int xAxis, int yAxis, int width, int height,
+				Object... languageSupportingArgs) {
+			place(xAxis, yAxis, width, height);
 			return this;
 		}
 	}
@@ -9499,30 +9699,35 @@ public class KL {
 	public static file file(URI uri) {
 		return new file(uri);
 	}
-	public static panel panel() {
-		return new panel();
+	public static panel panel(JFrame... frameToAddTo_optional) {
+		return new panel(frameToAddTo_optional);
 	}
-	public static panel panel(LayoutManager layout) {
-		return new panel(layout);
+	public static panel panel(LayoutManager layout,
+			JFrame... frameToAddTo_optional) {
+		return new panel(layout, frameToAddTo_optional);
 	}
-	public static panel panel(boolean isDoubleBuffered) {
-		return new panel(isDoubleBuffered);
+	public static panel panel(boolean isDoubleBuffered,
+			JFrame... frameToAddTo_optional) {
+		return new panel(isDoubleBuffered, frameToAddTo_optional);
 	}
-	public static panel panel(LayoutManager layout, boolean isDoubleBuffered) {
-		return new panel(layout, isDoubleBuffered);
+	public static panel panel(LayoutManager layout, boolean isDoubleBuffered,
+			JFrame... frameToAddTo_optional) {
+		return new panel(layout, isDoubleBuffered, frameToAddTo_optional);
 	}
-	public static panel nayaPanel() {
-		return new panel();
-	}
-	public static panel nayaPanel(LayoutManager layout) {
-		return new panel(layout);
-	}
-	public static panel nayaPanel(boolean isDoubleBuffered) {
-		return new panel(isDoubleBuffered);
+	public static panel nayaPanel(JFrame... frameToAddTo_optional) {
+		return panel(frameToAddTo_optional);
 	}
 	public static panel nayaPanel(LayoutManager layout,
-			boolean isDoubleBuffered) {
-		return new panel(layout, isDoubleBuffered);
+			JFrame... frameToAddTo_optional) {
+		return panel(layout, frameToAddTo_optional);
+	}
+	public static panel nayaPanel(boolean isDoubleBuffered,
+			JFrame... frameToAddTo_optional) {
+		return panel(isDoubleBuffered, frameToAddTo_optional);
+	}
+	public static panel nayaPanel(LayoutManager layout,
+			boolean isDoubleBuffered, JFrame... frameToAddTo_optional) {
+		return panel(layout, isDoubleBuffered, frameToAddTo_optional);
 	}
 	public static label label() {
 		return new label();
@@ -9919,55 +10124,61 @@ public class KL {
 			Color bg, Color fg) {
 		return new button(text, onClickAction, bg, fg);
 	}
-	public static btn btn() {
-		return new btn();
+	public static btn btn(JPanel... panelToAddTo_optional) {
+		return new btn(panelToAddTo_optional);
 	}
-	public static btn btn(String text) {
-		return new btn(text);
+	public static btn btn(String text, JPanel... panelToAddTo_optional) {
+		return new btn(text, panelToAddTo_optional);
 	}
-	public static btn btn(Action a) {
-		return new btn(a);
+	public static btn btn(Action a, JPanel... panelToAddTo_optional) {
+		return new btn(a, panelToAddTo_optional);
 	}
-	public static btn btn(Icon i) {
-		return new btn(i);
+	public static btn btn(Icon i, JPanel... panelToAddTo_optional) {
+		return new btn(i, panelToAddTo_optional);
 	}
-	public static btn btn(String text, Icon i) {
-		return new btn(text, i);
+	public static btn btn(String text, Icon i,
+			JPanel... panelToAddTo_optional) {
+		return new btn(text, i, panelToAddTo_optional);
 	}
-	public static btn btn(String text, ActionListener onClickAction) {
-		return new btn(text, onClickAction);
+	public static btn btn(String text, ActionListener onClickAction,
+			JPanel... panelToAddTo_optional) {
+		return new btn(text, onClickAction, panelToAddTo_optional);
 	}
-	public static btn btn(String text, Color bg, Color fg) {
-		return new btn(text, bg, fg);
+	public static btn btn(String text, Color bg, Color fg,
+			JPanel... panelToAddTo_optional) {
+		return new btn(text, bg, fg, panelToAddTo_optional);
 	}
 	public static btn btn(String text, ActionListener onClickAction, Color bg,
-			Color fg) {
-		return new btn(text, onClickAction, bg, fg);
+			Color fg, JPanel... panelToAddTo_optional) {
+		return new btn(text, onClickAction, bg, fg, panelToAddTo_optional);
 	}
-	public static btn nayaBtn() {
-		return new btn();
+	public static btn nayaBtn(JPanel... panelToAddTo_optional) {
+		return new btn(panelToAddTo_optional);
 	}
-	public static btn nayaBtn(String text) {
-		return new btn(text);
+	public static btn nayaBtn(String text, JPanel... panelToAddTo_optional) {
+		return new btn(text, panelToAddTo_optional);
 	}
-	public static btn nayaBtn(Action a) {
-		return new btn(a);
+	public static btn nayaBtn(Action a, JPanel... panelToAddTo_optional) {
+		return new btn(a, panelToAddTo_optional);
 	}
-	public static btn nayaBtn(Icon i) {
-		return new btn(i);
+	public static btn nayaBtn(Icon i, JPanel... panelToAddTo_optional) {
+		return new btn(i, panelToAddTo_optional);
 	}
-	public static btn nayaBtn(String text, Icon i) {
-		return new btn(text, i);
-	}
-	public static btn nayaBtn(String text, ActionListener onClickAction) {
-		return new btn(text, onClickAction);
-	}
-	public static btn nayaBtn(String text, Color bg, Color fg) {
-		return new btn(text, bg, fg);
+	public static btn nayaBtn(String text, Icon i,
+			JPanel... panelToAddTo_optional) {
+		return new btn(text, i, panelToAddTo_optional);
 	}
 	public static btn nayaBtn(String text, ActionListener onClickAction,
-			Color bg, Color fg) {
-		return new btn(text, onClickAction, bg, fg);
+			JPanel... panelToAddTo_optional) {
+		return new btn(text, onClickAction, panelToAddTo_optional);
+	}
+	public static btn nayaBtn(String text, Color bg, Color fg,
+			JPanel... panelToAddTo_optional) {
+		return new btn(text, bg, fg, panelToAddTo_optional);
+	}
+	public static btn nayaBtn(String text, ActionListener onClickAction,
+			Color bg, Color fg, JPanel... panelToAddTo_optional) {
+		return new btn(text, onClickAction, bg, fg, panelToAddTo_optional);
 	}
 	public static URL url(String address) {
 		try {
@@ -10459,6 +10670,90 @@ public class KL {
 			return key(k, tryCastingAs);
 		}
 		boolean[] k(String k, boolean[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		Object ka(String k) {
+			return key(k);
+		}
+		String ka(String k, String tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		int ka(String k, int tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		long ka(String k, long tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		float ka(String k, float tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		double ka(String k, double tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		boolean ka(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		o ka(String k, o tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		String[] ka(String k, String[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		int[] ka(String k, int[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		long[] ka(String k, long[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		float[] ka(String k, float[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		double[] ka(String k, double[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		boolean[] ka(String k, boolean[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		Object ki(String k) {
+			return key(k);
+		}
+		String ki(String k, String tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		int ki(String k, int tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		long ki(String k, long tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		float ki(String k, float tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		double ki(String k, double tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		boolean ki(String k, boolean tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		o ki(String k, o tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		String[] ki(String k, String[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		int[] ki(String k, int[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		long[] ki(String k, long[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		float[] ki(String k, float[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		double[] ki(String k, double[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		boolean[] ki(String k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
 		Object val(String k) {
@@ -11597,6 +11892,12 @@ public class KL {
 		int k(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
+		int ka(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		int ki(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
 		int val(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
@@ -12201,6 +12502,12 @@ public class KL {
 		long k(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
+		long ka(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		long ki(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
 		long val(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
@@ -12803,6 +13110,12 @@ public class KL {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		float k(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		float ka(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		float ki(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		float val(String k) {
@@ -13410,6 +13723,12 @@ public class KL {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		double k(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		double ka(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		double ki(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		double val(String k) {
@@ -14020,6 +14339,12 @@ public class KL {
 		boolean k(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
+		boolean ka(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		boolean ki(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
 		boolean val(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
@@ -14590,6 +14915,12 @@ public class KL {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		Value k(Key k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		Value ka(Key k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		Value ki(Key k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		Value val(Key k) {
@@ -32812,26 +33143,41 @@ public class KL {
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
-	public static Object ko, ki, ke, ka = ko = ki = ke = new Object(),
+	public static Object ko, ki, ke, pe, par, dabane_pe, dabane_par,
+			ka = ko = ki = ke = pe = par = dabane_pe = dabane_par = new Object(),
 			mese = new Object();
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
 	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
-	public static char _c = '\0';
-	public static String _s = "";
-	public static int _i = 0;
-	public static long _l = 0;
-	public static float _f = 0;
-	public static double _d = 0;
-	public static boolean _b = false;
-	public static char[] _C = blank.Char;
-	public static String[] _S = blank.Str;
-	public static int[] _I = blank.Int;
-	public static long[] _L = blank.Long;
-	public static float[] _F = blank.Flt;
-	public static double[] _D = blank.Dbl;
-	public static boolean[] _B = blank.Bool;
+	public static char CHARACTER, CHARACTER_TOR,
+			_c = CHARACTER = CHARACTER_TOR = '\0';
+	public static String STRING, STRING_TOR, _s = STRING = STRING_TOR = "";
+	public static int INTEGER, INTEGER_TOR, _i = INTEGER = INTEGER_TOR = 0;
+	public static long LONG, LONG_TOR, _l = LONG = LONG_TOR = 0;
+	public static float FLOAT, FLOAT_TOR, _f = FLOAT = FLOAT_TOR = 0;
+	public static double DOUBLE, DOUBLE_TOR, _d = DOUBLE = DOUBLE_TOR = 0;
+	public static boolean BOOLEAN, BOOLEAN_TOR,
+			_b = BOOLEAN = BOOLEAN_TOR = false;
+	public static char[] CHARACTERARR, CHARACTERARRAY, CHARARR, CHARARRAY,
+			CHARACTERARR_TOR, CHARACTERARRAY_TOR, CHARARR_TOR, CHARARRAY_TOR,
+			_C = CHARACTERARR = CHARACTERARRAY = CHARARR = CHARARRAY = CHARACTERARR_TOR = CHARACTERARRAY_TOR = CHARARR_TOR = CHARARRAY_TOR = blank.Char;
+	public static String[] STRINGARR, STRINGARRAY, STRINGARR_TOR,
+			STRINGARRAY_TOR,
+			_S = STRINGARR = STRINGARRAY = STRINGARR_TOR = STRINGARRAY_TOR = blank.Str;
+	public static int[] INTEGERARR, INTEGERARRAY, INTEGERARR_TOR,
+			INTEGERARRAY_TOR,
+			_I = INTEGERARR = INTEGERARRAY = INTEGERARR_TOR = INTEGERARRAY_TOR = blank.Int;
+	public static long[] LONGARR, LONGARRAY, LONGARR_TOR, LONGARRAY_TOR,
+			_L = LONGARR = LONGARRAY = LONGARR_TOR = LONGARRAY_TOR = blank.Long;
+	public static float[] FLOATARR, FLOATARRAY, FLOATARR_TOR, FLOATARRAY_TOR,
+			_F = FLOATARR = FLOATARRAY = FLOATARR_TOR = FLOATARRAY_TOR = blank.Flt;
+	public static double[] DOUBLEARR, DOUBLEARRAY, DOUBLEARR_TOR,
+			DOUBLEARRAY_TOR,
+			_D = DOUBLEARR = DOUBLEARRAY = DOUBLEARR_TOR = DOUBLEARRAY_TOR = blank.Dbl;
+	public static boolean[] BOOLEANARR, BOOLEANARRAY, BOOLEANARR_TOR,
+			BOOLEANARRAY_TOR,
+			_B = BOOLEANARR = BOOLEANARRAY = BOOLEANARR_TOR = BOOLEANARRAY_TOR = blank.Bool;
 	public static o _o = blank.o;
 	public static Object[][] kv(o arg) {
 		if (arg == null || arg.keyArray().length == 0)
@@ -59559,6 +59905,9 @@ public class KL {
 			return null;
 		}
 	}
+	public static <T> T tor(T type, Object o) {
+		return as(type, o);
+	}
 	public static void printw(String nameOfObj, String format) {
 		print(with(nameOfObj, format));
 	}
@@ -73596,7 +73945,7 @@ public class KL {
 		print(malumat.lo(null, ki).k("heNum", _b));
 		print(malumat.lo(2.99, ki).k("heNum", _b));
 		int[] newArr = {3, 5, 8};
-		newArr = subtract.fromEach(newArr, 1);
+		newArr = nikalo.ekekse(newArr, 1);
 		print(newArr);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
