@@ -4090,10 +4090,28 @@ public class KL {
 			super.setLayout(new BorderLayout());
 		}
 		public app title(String title) {
+			if (not(title))
+				title = "Basic KL.GUI Application";
 			super.setTitle(title);
 			return this;
 		}
 		public app kaTitle(String title) {
+			title(title);
+			return this;
+		}
+		public app name(String title) {
+			title(title);
+			return this;
+		}
+		public app kaName(String title) {
+			title(title);
+			return this;
+		}
+		public app naam(String title) {
+			title(title);
+			return this;
+		}
+		public app kaNaam(String title) {
 			title(title);
 			return this;
 		}
@@ -4473,6 +4491,32 @@ public class KL {
 		}
 		public app font(Font fnt) {
 			super.setFont(fnt);
+			return this;
+		}
+		public app kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		public app kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		public app kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		public app kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		public app kaFont(String fontFamily, int fontSize, int bold,
+				int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		public app kaFont(Font fnt) {
+			font(fnt);
 			return this;
 		}
 		public boolean openUrl(String urlString) {
@@ -4899,6 +4943,12 @@ public class KL {
 		public double askDbl(String title, String message) {
 			return Dbl(this.ask(title, message));
 		}
+		public void close() {
+			System.exit(0);
+		}
+		public void exit() {
+			close();
+		}
 	}
 	hint.WARNING do_not_change_the_visibility_of_any_of_the_methods_of_the_following_class;
 	hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER;
@@ -4921,6 +4971,22 @@ public class KL {
 		}
 		public gui kaTitle(String title) {
 			super.kaTitle(title);
+			return this;
+		}
+		public gui name(String title) {
+			super.name(title);
+			return this;
+		}
+		public gui kaName(String title) {
+			super.kaName(title);
+			return this;
+		}
+		public gui naam(String title) {
+			super.naam(title);
+			return this;
+		}
+		public gui kaNaam(String title) {
+			super.kaNaam(title);
 			return this;
 		}
 		public gui size(int w, int h) {
@@ -5198,6 +5264,32 @@ public class KL {
 			super.font(fnt);
 			return this;
 		}
+		public gui kaFont(String fontFamily, int fontSize) {
+			super.kaFont(fontFamily, fontSize);
+			return this;
+		}
+		public gui kaFont(String fontFamily, int fontSize, int fontWidth) {
+			super.kaFont(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		public gui kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.kaFont(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		public gui kaFont(String fontFamily, int fontSize, boolean bold) {
+			super.kaFont(fontFamily, fontSize, bold);
+			return this;
+		}
+		public gui kaFont(String fontFamily, int fontSize, int bold,
+				int italic) {
+			super.kaFont(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		public gui kaFont(Font fnt) {
+			super.kaFont(fnt);
+			return this;
+		}
 		public boolean openUrl(String urlString) {
 			return super.openUrl(urlString);
 		}
@@ -5366,34 +5458,71 @@ public class KL {
 	//public static gui gui = new gui();
 	public static class label extends JLabel {
 		private static final long serialVersionUID = 1L;
-		public static int top = TOP, left = LEFT, bottom = BOTTOM,
+		public static final int top = TOP, left = LEFT, bottom = BOTTOM,
 				right = RIGHT, center = CENTER, east = EAST, west = WEST,
 				north = NORTH, south = SOUTH, northeast = NORTH_EAST,
 				northwest = NORTH_WEST, southeast = SOUTH_EAST,
 				southwest = SOUTH_WEST, y = VERTICAL, x = HORIZONTAL;
-		label() {
+		label(JPanel... panelToAddTo_optional) {
 			super();
 			super.setOpaque(true);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		label(String text) {
+		label(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setOpaque(true);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		label(String text, int alignment) {
+		label(String text, int alignment, JPanel... panelToAddTo_optional) {
 			super(text, alignment);
 			super.setOpaque(true);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		label(Icon image) {
+		label(Icon image, JPanel... panelToAddTo_optional) {
 			super(image);
 			super.setOpaque(true);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		label(Icon image, int alignment) {
+		label(Icon image, int alignment, JPanel... panelToAddTo_optional) {
 			super(image, alignment);
 			super.setOpaque(true);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		label(String text, Icon icon, int horizontalAlignment) {
+		label(String text, Icon icon, int horizontalAlignment,
+				JPanel... panelToAddTo_optional) {
 			super(text, icon, horizontalAlignment);
 			super.setOpaque(true);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		label bg(Color clr) {
 			super.setBackground(clr);
@@ -5522,6 +5651,31 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		label kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		label kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		label kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		label kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		label kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		label kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		label alignx(int pos) {
 			super.setHorizontalAlignment(pos);
 			return this;
@@ -5535,6 +5689,41 @@ public class KL {
 		}
 		label text(String s) {
 			super.setText(s);
+			return this;
+		}
+		String kaText() {
+			return text();
+		}
+		label kaText(String s) {
+			text(s);
+			return this;
+		}
+		String val() {
+			return text();
+		}
+		label val(String s) {
+			text(s);
+			return this;
+		}
+		String kiVal() {
+			return text();
+		}
+		label kiVal(String s) {
+			text(s);
+			return this;
+		}
+		String value() {
+			return text();
+		}
+		label value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		label kiValue(String s) {
+			text(s);
 			return this;
 		}
 		label on(String k, Runnable action) {
@@ -5680,15 +5869,15 @@ public class KL {
 	}
 	public static class bordLay extends BorderLayout {
 		private static final long serialVersionUID = 1L;
+		public static final String center = CENTER, east = EAST, right = east,
+				west = WEST, left = west, north = NORTH, top = north,
+				south = SOUTH, bottom = south;
 		bordLay() {
 			super();
 		}
 		bordLay(int hgap, int vgap) {
 			super(hgap, vgap);
 		}
-		public static String center = CENTER, east = EAST, right = east,
-				west = WEST, left = west, north = NORTH, top = north,
-				south = SOUTH, bottom = south;
 	}
 	public static class gridLay extends GridLayout {
 		private static final long serialVersionUID = 1L;
@@ -5912,6 +6101,31 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		panel kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		panel kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		panel kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		panel kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		panel kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		panel kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		panel border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -6066,7 +6280,8 @@ public class KL {
 		button(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
-			if (panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -6075,7 +6290,8 @@ public class KL {
 		button(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
-			if (panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -6084,7 +6300,8 @@ public class KL {
 		button(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
-			if (panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -6093,7 +6310,8 @@ public class KL {
 		button(Icon i, JPanel... panelToAddTo_optional) {
 			super(i);
 			super.setFocusable(false);
-			if (panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -6102,7 +6320,8 @@ public class KL {
 		button(String text, Icon i, JPanel... panelToAddTo_optional) {
 			super(text, i);
 			super.setFocusable(false);
-			if (panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -6112,7 +6331,8 @@ public class KL {
 				JPanel... panelToAddTo_optional) {
 			this(text);
 			click(listener);
-			if (panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -6123,7 +6343,8 @@ public class KL {
 			this(text);
 			bg(bg);
 			color(fg);
-			if (panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -6134,7 +6355,8 @@ public class KL {
 			this(text, listener);
 			bg(bg);
 			color(fg);
-			if (panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -6336,6 +6558,31 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		button kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		button kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		button kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		button kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		button kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		button kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		button border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -6357,6 +6604,41 @@ public class KL {
 		}
 		button text(String s) {
 			super.setText(s);
+			return this;
+		}
+		String kaText() {
+			return text();
+		}
+		button kaText(String s) {
+			text(s);
+			return this;
+		}
+		String val() {
+			return text();
+		}
+		button val(String s) {
+			text(s);
+			return this;
+		}
+		String kiVal() {
+			return text();
+		}
+		button kiVal(String s) {
+			text(s);
+			return this;
+		}
+		String value() {
+			return text();
+		}
+		button value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		button kiValue(String s) {
+			text(s);
 			return this;
 		}
 		button on(String evt, ActionListener action) {
@@ -6614,6 +6896,31 @@ public class KL {
 			super.font(fnt);
 			return this;
 		}
+		btn kaFont(String fontFamily, int fontSize) {
+			super.kaFont(fontFamily, fontSize);
+			return this;
+		}
+		btn kaFont(String fontFamily, int fontSize, int fontWidth) {
+			super.kaFont(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		btn kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.kaFont(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		btn kaFont(String fontFamily, int fontSize, boolean bold) {
+			super.kaFont(fontFamily, fontSize, bold);
+			return this;
+		}
+		btn kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			super.kaFont(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		btn kaFont(Font fnt) {
+			super.kaFont(fnt);
+			return this;
+		}
 		btn border(Border brdr) {
 			super.border(brdr);
 			return this;
@@ -6635,6 +6942,41 @@ public class KL {
 		}
 		btn text(String s) {
 			super.text(s);
+			return this;
+		}
+		String kaText() {
+			return super.kaText();
+		}
+		btn kaText(String s) {
+			super.kaText(s);
+			return this;
+		}
+		String val() {
+			return super.val();
+		}
+		btn val(String s) {
+			super.val(s);
+			return this;
+		}
+		String kiVal() {
+			return super.kiVal();
+		}
+		btn kiVal(String s) {
+			super.kiVal(s);
+			return this;
+		}
+		String value() {
+			return super.value();
+		}
+		btn value(String s) {
+			super.value(s);
+			return this;
+		}
+		String kiValue() {
+			return super.kiValue();
+		}
+		btn kiValue(String s) {
+			super.kiValue(s);
 			return this;
 		}
 		btn on(String evt, ActionListener action) {
@@ -6678,45 +7020,110 @@ public class KL {
 	}
 	public static class toggleBtn extends JToggleButton {
 		private static final long serialVersionUID = 1L;
-		toggleBtn() {
+		toggleBtn(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
+
 		}
-		toggleBtn(Action a) {
+		toggleBtn(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		toggleBtn(String text) {
+		toggleBtn(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		toggleBtn(String text, boolean selected) {
+		toggleBtn(String text, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, selected);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		toggleBtn(Icon i) {
+		toggleBtn(Icon i, JPanel... panelToAddTo_optional) {
 			super(i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		toggleBtn(Icon i, boolean selected) {
+		toggleBtn(Icon i, boolean selected, JPanel... panelToAddTo_optional) {
 			super(i, selected);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		toggleBtn(String text, Icon i) {
+		toggleBtn(String text, Icon i, JPanel... panelToAddTo_optional) {
 			super(text, i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		toggleBtn(String text, Icon i, boolean selected) {
+		toggleBtn(String text, Icon i, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, i, selected);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		toggleBtn(String text, ActionListener listener) {
+		toggleBtn(String text, ActionListener listener,
+				JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
 			click(listener);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		toggleBtn(String text, ActionListener listener, Color bg, Color fg) {
+		toggleBtn(String text, ActionListener listener, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text, listener);
 			bg(bg);
 			color(fg);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		toggleBtn click(ActionListener listener) {
 			if (not(listener))
@@ -6887,6 +7294,32 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		toggleBtn kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		toggleBtn kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		toggleBtn kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		toggleBtn kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		toggleBtn kaFont(String fontFamily, int fontSize, int bold,
+				int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		toggleBtn kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		toggleBtn border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -6910,9 +7343,165 @@ public class KL {
 			super.setText(s);
 			return this;
 		}
-		toggleBtn on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
-				click(action);
+		String kaText() {
+			return text();
+		}
+		toggleBtn kaText(String s) {
+			text(s);
+			return this;
+		}
+		boolean val() {
+			return super.isSelected();
+		}
+		toggleBtn val(boolean state) {
+			super.setSelected(state);
+			return this;
+		}
+		boolean kiVal() {
+			return val();
+		}
+		toggleBtn kiVal(boolean state) {
+			val(state);
+			return this;
+		}
+		boolean value() {
+			return val();
+		}
+		toggleBtn value(boolean state) {
+			val(state);
+			return this;
+		}
+		boolean kiValue() {
+			return val();
+		}
+		toggleBtn kiValue(boolean state) {
+			val(state);
+			return this;
+		}
+		boolean checked() {
+			return val();
+		}
+		toggleBtn check(boolean state) {
+			val(state);
+			return this;
+		}
+		toggleBtn check() {
+			val(true);
+			return this;
+		}
+		toggleBtn check(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean unchecked() {
+			return val() == false;
+		}
+		toggleBtn uncheck(boolean state) {
+			val(!state);
+			return this;
+		}
+		toggleBtn uncheck() {
+			val(false);
+			return this;
+		}
+		toggleBtn uncheck(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (!selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean marked() {
+			return checked();
+		}
+		toggleBtn mark(boolean state) {
+			check(state);
+			return this;
+		}
+		toggleBtn mark() {
+			check();
+			return this;
+		}
+		toggleBtn mark(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unmarked() {
+			return unchecked();
+		}
+		toggleBtn unmark(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		toggleBtn unmark() {
+			uncheck();
+			return this;
+		}
+		toggleBtn unmark(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		boolean selected() {
+			return checked();
+		}
+		toggleBtn select(boolean state) {
+			check(state);
+			return this;
+		}
+		toggleBtn select() {
+			check(true);
+			return this;
+		}
+		toggleBtn select(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unselected() {
+			return unchecked();
+		}
+		toggleBtn unselect(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		toggleBtn unselect() {
+			uncheck();
+			return this;
+		}
+		toggleBtn unselect(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		toggleBtn toggle() {
+			val(!selected());
+			return this;
+		}
+		toggleBtn toggle(Runnable fn) {
+			if (not(fn))
+				return this;
+			//the button doesn't need to be in the state "selected"
+			//toggle should handle both cases
+			click(e -> {
+				fn.run();
+			});
+			return this;
+		}
+		toggleBtn on(String evt, Object action) {
+			if (not(evt) || not(action))
+				return this;
+			if (action instanceof ActionListener && eq(evt, "click|toggle")) {
+				click((ActionListener) action);
+			} else if (action instanceof Runnable
+					&& in(evt, "^(check|mark|select)(ed)?$")) {
+				mark((Runnable) action);
 			}
 			return this;
 		}
@@ -7164,6 +7753,31 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		radioBtn kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		radioBtn kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		radioBtn kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		radioBtn kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		radioBtn kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		radioBtn kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		radioBtn border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -7185,6 +7799,41 @@ public class KL {
 		}
 		radioBtn text(String s) {
 			super.setText(s);
+			return this;
+		}
+		String kaText() {
+			return text();
+		}
+		radioBtn kaText(String s) {
+			text(s);
+			return this;
+		}
+		String val() {
+			return text();
+		}
+		radioBtn val(String s) {
+			text(s);
+			return this;
+		}
+		String kiVal() {
+			return text();
+		}
+		radioBtn kiVal(String s) {
+			text(s);
+			return this;
+		}
+		String value() {
+			return text();
+		}
+		radioBtn value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		radioBtn kiValue(String s) {
+			text(s);
 			return this;
 		}
 		radioBtn on(String evt, ActionListener action) {
@@ -7232,45 +7881,112 @@ public class KL {
 	}
 	public static class radioBtnItem extends JRadioButtonMenuItem {
 		private static final long serialVersionUID = 1L;
-		radioBtnItem() {
+		radioBtnItem(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(Action a) {
+		radioBtnItem(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(String text) {
+		radioBtnItem(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(String text, boolean selected) {
+		radioBtnItem(String text, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, selected);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(Icon i) {
+		radioBtnItem(Icon i, JPanel... panelToAddTo_optional) {
 			super(i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(Icon i, boolean selected) {
+		radioBtnItem(Icon i, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(i, selected);
+			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(String text, Icon i) {
+		radioBtnItem(String text, Icon i, JPanel... panelToAddTo_optional) {
 			super(text, i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(String text, Icon i, boolean selected) {
+		radioBtnItem(String text, Icon i, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, i, selected);
+			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(String text, ActionListener listener) {
+		radioBtnItem(String text, ActionListener listener,
+				JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
 			click(listener);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtnItem(String text, ActionListener listener, Color bg, Color fg) {
+		radioBtnItem(String text, ActionListener listener, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text, listener);
 			bg(bg);
 			color(fg);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		radioBtnItem click(ActionListener listener) {
 			if (not(listener))
@@ -7443,6 +8159,32 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		radioBtnItem kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		radioBtnItem kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		radioBtnItem kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		radioBtnItem kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		radioBtnItem kaFont(String fontFamily, int fontSize, int bold,
+				int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		radioBtnItem kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		radioBtnItem border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -7464,6 +8206,41 @@ public class KL {
 		}
 		radioBtnItem text(String s) {
 			super.setText(s);
+			return this;
+		}
+		String kaText() {
+			return text();
+		}
+		radioBtnItem kaText(String s) {
+			text(s);
+			return this;
+		}
+		String val() {
+			return text();
+		}
+		radioBtnItem val(String s) {
+			text(s);
+			return this;
+		}
+		String kiVal() {
+			return text();
+		}
+		radioBtnItem kiVal(String s) {
+			text(s);
+			return this;
+		}
+		String value() {
+			return text();
+		}
+		radioBtnItem value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		radioBtnItem kiValue(String s) {
+			text(s);
 			return this;
 		}
 		radioBtnItem on(String evt, ActionListener action) {
@@ -7511,45 +8288,109 @@ public class KL {
 	}
 	public static class checkBox extends JCheckBox {
 		private static final long serialVersionUID = 1L;
-		checkBox() {
+		checkBox(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(Action a) {
+		checkBox(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(String text) {
+		checkBox(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(String text, boolean selected) {
+		checkBox(String text, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, selected);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(Icon i) {
+		checkBox(Icon i, JPanel... panelToAddTo_optional) {
 			super(i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(Icon i, boolean selected) {
+		checkBox(Icon i, boolean selected, JPanel... panelToAddTo_optional) {
 			super(i, selected);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(String text, Icon i) {
+		checkBox(String text, Icon i, JPanel... panelToAddTo_optional) {
 			super(text, i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(String text, Icon i, boolean selected) {
+		checkBox(String text, Icon i, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, i, selected);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(String text, ActionListener listener) {
+		checkBox(String text, ActionListener listener,
+				JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
 			click(listener);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBox(String text, ActionListener listener, Color bg, Color fg) {
+		checkBox(String text, ActionListener listener, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text, listener);
 			bg(bg);
 			color(fg);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		checkBox click(ActionListener listener) {
 			if (not(listener))
@@ -7720,6 +8561,31 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		checkBox kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		checkBox kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		checkBox kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		checkBox kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		checkBox kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		checkBox kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		checkBox border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -7741,6 +8607,41 @@ public class KL {
 		}
 		checkBox text(String s) {
 			super.setText(s);
+			return this;
+		}
+		String kaText() {
+			return text();
+		}
+		checkBox kaText(String s) {
+			text(s);
+			return this;
+		}
+		String val() {
+			return text();
+		}
+		checkBox val(String s) {
+			text(s);
+			return this;
+		}
+		String kiVal() {
+			return text();
+		}
+		checkBox kiVal(String s) {
+			text(s);
+			return this;
+		}
+		String value() {
+			return text();
+		}
+		checkBox value(String s) {
+			text(s);
+			return this;
+		}
+		String kiValue() {
+			return text();
+		}
+		checkBox kiValue(String s) {
+			text(s);
 			return this;
 		}
 		checkBox on(String evt, ActionListener action) {
@@ -10061,7 +10962,9 @@ public class KL {
 			return this;
 		}
 		String text() {
-			return new String(super.getPassword());
+			//converting the password from char[] to String
+			//"" + super.getPassword() won't work
+			return new String(String.valueOf(super.getPassword()));
 		}
 		pwdField text(String text) {
 			super.setText(text);
@@ -11895,30 +12798,33 @@ public class KL {
 	public static gui nayaGUI(String t, int w, int h) {
 		return new gui(t, w, h);
 	}
-	public static button button() {
-		return new button();
+	public static button button(JPanel... panelToAddTo_optional) {
+		return new button(panelToAddTo_optional);
 	}
-	public static button button(String text) {
-		return new button(text);
+	public static button button(String text, JPanel... panelToAddTo_optional) {
+		return new button(text, panelToAddTo_optional);
 	}
-	public static button button(Action a) {
-		return new button(a);
+	public static button button(Action a, JPanel... panelToAddTo_optional) {
+		return new button(a, panelToAddTo_optional);
 	}
-	public static button button(Icon i) {
-		return new button(i);
+	public static button button(Icon i, JPanel... panelToAddTo_optional) {
+		return new button(i, panelToAddTo_optional);
 	}
-	public static button button(String text, Icon i) {
-		return new button(text, i);
-	}
-	public static button button(String text, ActionListener onClickAction) {
-		return new button(text, onClickAction);
-	}
-	public static button button(String text, Color bg, Color fg) {
-		return new button(text, bg, fg);
+	public static button button(String text, Icon i,
+			JPanel... panelToAddTo_optional) {
+		return new button(text, i, panelToAddTo_optional);
 	}
 	public static button button(String text, ActionListener onClickAction,
-			Color bg, Color fg) {
-		return new button(text, onClickAction, bg, fg);
+			JPanel... panelToAddTo_optional) {
+		return new button(text, onClickAction, panelToAddTo_optional);
+	}
+	public static button button(String text, Color bg, Color fg,
+			JPanel... panelToAddTo_optional) {
+		return new button(text, bg, fg, panelToAddTo_optional);
+	}
+	public static button button(String text, ActionListener onClickAction,
+			Color bg, Color fg, JPanel... panelToAddTo_optional) {
+		return new button(text, onClickAction, bg, fg, panelToAddTo_optional);
 	}
 	public static btn btn(JPanel... panelToAddTo_optional) {
 		return new btn(panelToAddTo_optional);
@@ -34940,9 +35846,8 @@ public class KL {
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static Object ko, ki, ke, pe, par, dabane_pe, dabane_par, karne_pe,
-			karne_par,
-			ka = ko = ki = ke = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = new Object(),
-			mese = new Object();
+			karne_par, rakho, mese,
+			ka = ko = ki = ke = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = mese = new Object();
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
 	public static String Else = "else", warna = Else, Warna = warna;
