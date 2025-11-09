@@ -4068,6 +4068,8 @@ public class KL {
 				W_RESIZE_WALA = Cursor.W_RESIZE_CURSOR,
 				E_RESIZE_WALA = Cursor.E_RESIZE_CURSOR,
 				HATH_WALA = Cursor.HAND_CURSOR, MOVE_WALA = Cursor.MOVE_CURSOR;
+		public static int X = SwingConstants.HORIZONTAL,
+				Y = SwingConstants.VERTICAL;
 		public app() {
 			super();
 			exitOnClose();
@@ -5462,7 +5464,7 @@ public class KL {
 				right = RIGHT, center = CENTER, east = EAST, west = WEST,
 				north = NORTH, south = SOUTH, northeast = NORTH_EAST,
 				northwest = NORTH_WEST, southeast = SOUTH_EAST,
-				southwest = SOUTH_WEST, y = VERTICAL, x = HORIZONTAL;
+				southwest = SOUTH_WEST, x = HORIZONTAL, y = VERTICAL;
 		label(JPanel... panelToAddTo_optional) {
 			super();
 			super.setOpaque(true);
@@ -7060,35 +7062,22 @@ public class KL {
 			super();
 		}
 		btnGrp(AbstractButton... buttons) {
-			super();
-			addAll(buttons);
+			super(buttons);
 		}
 		btnGrp add(AbstractButton... buttons) {
-			if (buttons == null || buttons.length == 0)
-				return this;
-			for (AbstractButton button : buttons) {
-				if (button == null)
-					continue;
-				super.add(button);
-			}
+			super.add(buttons);
 			return this;
 		}
 		btnGrp addAll(AbstractButton... buttons) {
-			this.add(buttons);
+			super.addAll(buttons);
 			return this;
 		}
 		btnGrp remove(AbstractButton... buttons) {
-			if (buttons == null || buttons.length == 0)
-				return this;
-			for (AbstractButton button : buttons) {
-				if (button == null)
-					continue;
-				super.remove(button);
-			}
+			super.remove(buttons);
 			return this;
 		}
 		btnGrp removeAll(AbstractButton... buttons) {
-			this.remove(buttons);
+			super.removeAll(buttons);
 			return this;
 		}
 	}
@@ -9706,49 +9695,69 @@ public class KL {
 	}
 	public static class separator extends JSeparator {
 		private static final long serialVersionUID = 1L;
-		separator() {
+		separator(JPanel... panelToAddTo_optional) {
 			super();
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		separator(int orientation) {
+		separator(int orientation, JPanel... panelToAddTo_optional) {
 			super(orientation);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 	}
 	public static class separatorX extends separator {
-		separatorX() {
-			super(SwingConstants.HORIZONTAL);
+		separatorX(JPanel... panelToAddTo_optional) {
+			super(SwingConstants.HORIZONTAL, panelToAddTo_optional);
 		}
 	}
 	public static class separatorY extends separator {
-		separatorY() {
-			super(SwingConstants.VERTICAL);
+		separatorY(JPanel... panelToAddTo_optional) {
+			super(SwingConstants.VERTICAL, panelToAddTo_optional);
 		}
 	}
 	public static class sep extends separator {
-		sep() {
-			super();
+		sep(JPanel... panelToAddTo_optional) {
+			super(panelToAddTo_optional);
 		}
-		sep(int orientation) {
-			super(orientation);
+		sep(int orientation, JPanel... panelToAddTo_optional) {
+			super(orientation, panelToAddTo_optional);
 		}
 	}
 	public static class sepX extends separatorX {
-		sepX() {
-			super();
+		sepX(JPanel... panelToAddTo_optional) {
+			super(panelToAddTo_optional);
 		}
 	}
 	public static class sepY extends separatorY {
-		sepY() {
-			super();
+		sepY(JPanel... panelToAddTo_optional) {
+			super(panelToAddTo_optional);
 		}
 	}
 	public static class menuBar extends JMenuBar {
 		private static final long serialVersionUID = 1L;
-		menuBar() {
+		menuBar(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
+
 		}
 		menuBar(JMenu... menus) {
-			this();
+			super();
+			super.setFocusable(false);
 			if (menus == null) {
 				return;
 			}
@@ -9877,6 +9886,31 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		menuBar kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		menuBar kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		menuBar kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		menuBar kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		menuBar kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		menuBar kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		menuBar border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -9924,35 +9958,75 @@ public class KL {
 	}
 	public static class menu extends JMenu {
 		private static final long serialVersionUID = 1L;
-		menu() {
+		menu(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menu(Action a) {
+		menu(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menu(String text) {
+		menu(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menu(String text, boolean canBeTornOff) {
+		menu(String text, boolean canBeTornOff,
+				JPanel... panelToAddTo_optional) {
 			super(text, canBeTornOff);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menu(String text, ActionListener listener) {
+		menu(String text, ActionListener listener,
+				JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
 			click(listener);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menu(String text, ActionListener listener, Color bg, Color fg) {
+		menu(String text, ActionListener listener, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text, listener);
 			bg(bg);
 			color(fg);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		menu(JMenuItem... menuItems) {
 			super();
-			if (menuItems == null) {
+			super.setFocusable(false);
+			if (menuItems == null || menuItems.length == 0) {
 				return;
 			}
 			for (JMenuItem item : menuItems) {
@@ -10130,6 +10204,31 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		menu kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		menu kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		menu kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		menu kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		menu kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		menu kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		menu border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -10150,7 +10249,16 @@ public class KL {
 			return super.getText();
 		}
 		menu text(String s) {
+			if (s == null)
+				s = "";
 			super.setText(s);
+			return this;
+		}
+		String kaText() {
+			return text();
+		}
+		menu kaText(String s) {
+			text(s);
 			return this;
 		}
 		menu on(String evt, ActionListener action) {
@@ -10198,39 +10306,89 @@ public class KL {
 	}
 	public static class menuItem extends JMenuItem {
 		private static final long serialVersionUID = 1L;
-		menuItem() {
+		menuItem(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menuItem(Action a) {
+		menuItem(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menuItem(String text) {
+		menuItem(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menuItem(String text, int mnemonic) {
+		menuItem(String text, int mnemonic, JPanel... panelToAddTo_optional) {
 			super(text, mnemonic);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menuItem(Icon i) {
+		menuItem(Icon i, JPanel... panelToAddTo_optional) {
 			super(i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menuItem(String text, Icon i) {
+		menuItem(String text, Icon i, JPanel... panelToAddTo_optional) {
 			super(text, i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menuItem(String text, ActionListener listener) {
+		menuItem(String text, ActionListener listener,
+				JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
 			click(listener);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		menuItem(String text, ActionListener listener, Color bg, Color fg) {
+		menuItem(String text, ActionListener listener, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text, listener);
 			bg(bg);
 			color(fg);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		menuItem click(ActionListener listener) {
 			if (not(listener))
@@ -10401,6 +10559,31 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		menuItem kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		menuItem kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		menuItem kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		menuItem kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		menuItem kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		menuItem kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		menuItem border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -10421,7 +10604,16 @@ public class KL {
 			return super.getText();
 		}
 		menuItem text(String s) {
+			if (s == null)
+				s = "";
 			super.setText(s);
+			return this;
+		}
+		String kaText() {
+			return text();
+		}
+		menuItem kaText(String s) {
+			text(s);
 			return this;
 		}
 		menuItem on(String evt, ActionListener action) {
@@ -10469,17 +10661,36 @@ public class KL {
 	}
 	public static class contextMenu extends JPopupMenu {
 		private static final long serialVersionUID = 1L;
-		contextMenu() {
+		contextMenu(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		contextMenu(String text) {
+		contextMenu(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		contextMenu(String text, Color bg) {
-			this(text);
+		contextMenu(String text, Color bg, JPanel... panelToAddTo_optional) {
+			super(text);
+			super.setFocusable(false);
 			bg(bg);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		contextMenu(String... items) {
 			super();
@@ -10613,6 +10824,32 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		contextMenu kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		contextMenu kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		contextMenu kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		contextMenu kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		contextMenu kaFont(String fontFamily, int fontSize, int bold,
+				int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		contextMenu kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		contextMenu border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -10661,21 +10898,40 @@ public class KL {
 	public static class dropDown extends JComboBox {
 		private static final long serialVersionUID = 1L;
 		int size = 0;
-		dropDown() {
+		dropDown(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		<T> dropDown(T... items) {
 			super(items);
 			size = items.length;
 		}
-		<T> dropDown(Vector<T> itemsOfTypeVector) {
+		<T> dropDown(Vector<T> itemsOfTypeVector,
+				JPanel... panelToAddTo_optional) {
 			super(itemsOfTypeVector);
 			size = itemsOfTypeVector.size();
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		<T> dropDown(ComboBoxModel<T> model) {
+		<T> dropDown(ComboBoxModel<T> model, JPanel... panelToAddTo_optional) {
 			super(model);
 			size = model.getSize();
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		dropDown add(int i) {
 			if (i < 0 || i >= size) {
@@ -10830,6 +11086,31 @@ public class KL {
 		}
 		dropDown font(Font fnt) {
 			super.setFont(fnt);
+			return this;
+		}
+		dropDown kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		dropDown kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		dropDown kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		dropDown kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		dropDown kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		dropDown kaFont(Font fnt) {
+			font(fnt);
 			return this;
 		}
 		dropDown border(Border brdr) {
