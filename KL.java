@@ -13202,6 +13202,16 @@ public class KL {
 			return hasKey(k) ? super.get(k) : none;
 			// will take a key in the form of a string, but RETURN AN OBJECT
 		}
+		char key(String k, char tryCastingAs) {
+			if (not(isChar(key(k)))) {
+				return '\0';
+			}
+			try {
+				return (char) key(k);
+			} catch (ClassCastException e) {
+				return "";
+			}
+		}
 		String key(String k, String tryCastingAs) {
 			if (not(isStr(key(k)))) {
 				return "";
@@ -13335,6 +13345,9 @@ public class KL {
 		Object k(String k) {
 			return key(k);
 		}
+		char k(String k, char tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
 		String k(String k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
@@ -13376,6 +13389,9 @@ public class KL {
 		}
 		Object ka(String k) {
 			return key(k);
+		}
+		char ka(String k, char tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 		String ka(String k, String tryCastingAs) {
 			return key(k, tryCastingAs);
@@ -13419,6 +13435,9 @@ public class KL {
 		Object ki(String k) {
 			return key(k);
 		}
+		char k(String k, char tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
 		String ki(String k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
@@ -13458,8 +13477,14 @@ public class KL {
 		boolean[] ki(String k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
+		boolean he(String k) {
+			return key(k, _b);
+		}
 		Object val(String k) {
 			return key(k);
+		}
+		char val(String k, char tryCastingAs) {
+			return key(k, tryCastingAs);
 		}
 		String val(String k, String tryCastingAs) {
 			return key(k, tryCastingAs);
@@ -13503,6 +13528,9 @@ public class KL {
 		Object v(String k) {
 			return key(k);
 		}
+		char v(String k, char tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
 		String v(String k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
@@ -13540,6 +13568,9 @@ public class KL {
 			return key(k, tryCastingAs);
 		}
 		boolean[] v(String k, boolean[] tryCastingAs) {
+			return key(k, tryCastingAs);
+		}
+		char get(String k, char tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
 		String get(String k, String tryCastingAs) {
@@ -17045,6 +17076,9 @@ public class KL {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		boolean ki(String k) {
+			return hasKey(k) ? super.get(k) : null;
+		}
+		boolean he(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
 		boolean val(String k) {
@@ -35853,34 +35887,42 @@ public class KL {
 	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
 	public static char CHARACTER, CHARACTER_TOR,
-			_c = CHARACTER = CHARACTER_TOR = '\0';
-	public static String STRING, STRING_TOR, _s = STRING = STRING_TOR = "";
-	public static int INTEGER, INTEGER_TOR, _i = INTEGER = INTEGER_TOR = 0;
-	public static long LONG, LONG_TOR, _l = LONG = LONG_TOR = 0;
-	public static float FLOAT, FLOAT_TOR, _f = FLOAT = FLOAT_TOR = 0;
-	public static double DOUBLE, DOUBLE_TOR, _d = DOUBLE = DOUBLE_TOR = 0;
-	public static boolean BOOLEAN, BOOLEAN_TOR,
-			_b = BOOLEAN = BOOLEAN_TOR = false;
-	public static char[] CHARACTERARR, CHARACTERARRAY, CHARARR, CHARARRAY,
-			CHARACTERARR_TOR, CHARACTERARRAY_TOR, CHARARR_TOR, CHARARRAY_TOR,
-			_C = CHARACTERARR = CHARACTERARRAY = CHARARR = CHARARRAY = CHARACTERARR_TOR = CHARACTERARRAY_TOR = CHARARR_TOR = CHARARRAY_TOR = blank.Char;
-	public static String[] STRINGARR, STRINGARRAY, STRINGARR_TOR,
-			STRINGARRAY_TOR,
-			_S = STRINGARR = STRINGARRAY = STRINGARR_TOR = STRINGARRAY_TOR = blank.Str;
-	public static int[] INTEGERARR, INTEGERARRAY, INTEGERARR_TOR,
-			INTEGERARRAY_TOR,
-			_I = INTEGERARR = INTEGERARRAY = INTEGERARR_TOR = INTEGERARRAY_TOR = blank.Int;
-	public static long[] LONGARR, LONGARRAY, LONGARR_TOR, LONGARRAY_TOR,
-			_L = LONGARR = LONGARRAY = LONGARR_TOR = LONGARRAY_TOR = blank.Long;
-	public static float[] FLOATARR, FLOATARRAY, FLOATARR_TOR, FLOATARRAY_TOR,
-			_F = FLOATARR = FLOATARRAY = FLOATARR_TOR = FLOATARRAY_TOR = blank.Flt;
-	public static double[] DOUBLEARR, DOUBLEARRAY, DOUBLEARR_TOR,
-			DOUBLEARRAY_TOR,
-			_D = DOUBLEARR = DOUBLEARRAY = DOUBLEARR_TOR = DOUBLEARRAY_TOR = blank.Dbl;
-	public static boolean[] BOOLEANARR, BOOLEANARRAY, BOOLEANARR_TOR,
-			BOOLEANARRAY_TOR,
-			_B = BOOLEANARR = BOOLEANARRAY = BOOLEANARR_TOR = BOOLEANARRAY_TOR = blank.Bool;
-	public static o _o = blank.o;
+character_tor,
+			_c = CHARACTER = CHARACTER_TOR = character_tor = '\0';
+	public static String STRING, STRING_TOR, string_tor, _s = STRING = STRING_TOR = string_tor = "";
+	public static int INTEGER, INTEGER_TOR, integer_tor, _i = INTEGER = INTEGER_TOR = integer_tor = 0;
+	public static long LONG, LONG_TOR, long_tor, _l = LONG = LONG_TOR = long_tor = 0L;
+	public static float FLOAT, FLOAT_TOR, float_tor, _f = FLOAT = FLOAT_TOR = float_tor = 0.0F;
+	public static double DOUBLE, DOUBLE_TOR, double_tor, _d = DOUBLE = DOUBLE_TOR = double_tor = 0.0D;
+	public static boolean BOOLEAN, BOOLEAN_TOR, boolean_arr,
+			_b = BOOLEAN = BOOLEAN_TOR = boolean_arr = false;
+	public static char[] CHARACTER_ARR, CHARACTER_ARRAY, CHAR_ARR, CHAR_ARRAY,
+			CHARACTER_ARR_TOR, CHARACTER_ARRAY_TOR, CHAR_ARR_TOR, CHAR_ARRAY_TOR,
+			character_arr_tor, character_array_tor, char_arr_tor, char_array_tor,
+			_C = CHARACTER_ARR = CHARACTER_ARRAY = CHAR_ARR = CHAR_ARRAY = CHARACTER_ARR_TOR = CHARACTER_ARRAY_TOR = CHAR_ARR_TOR = CHAR_ARRAY_TOR = character_arr_tor = character_array_tor = char_arr_tor = char_array_tor = blank.Char;
+	public static String[] STRING_ARR, STRING_ARRAY, STRING_ARR_TOR,
+			STRING_ARRAY_TOR,
+            string_arr_tor,
+			string_array_tor,
+			_S = STRING_ARR = STRING_ARRAY = STRING_ARR_TOR = STRING_ARRAY_TOR = string_arr_tor =
+			string_array_tor = blank.Str;
+	public static int[] INTEGER_ARR, INTEGER_ARRAY, INTEGER_ARR_TOR, integer_arr_tor,
+			integer_array_tor,
+			_I = INTEGER_ARR = INTEGER_ARRAY = INTEGER_ARR_TOR = INTEGER_ARRAY_TOR = integer_arr_tor = integer_array_tor = blank.Int;
+	public static long[] LONG_ARR, LONG_ARRAY, LONG_ARR_TOR, LONG_ARRAY_TOR, long_arr_tor, long_array_tor,
+			_L = LONG_ARR = LONG_ARRAY = LONG_ARR_TOR = LONG_ARRAY_TOR = long_arr_tor = long_array_tor = blank.Long;
+	public static float[] FLOAT_ARR, FLOAT_ARRAY, FLOAT_ARR_TOR, FLOAT_ARRAY_TOR, float_arr_tor, float_array_tor,
+			_F = FLOAT_ARR = FLOAT_ARRAY = FLOAT_ARR_TOR = FLOAT_ARRAY_TOR = float_arr_tor = float_array_tor = blank.Flt;
+	public static double[] DOUBLE_ARR, DOUBLE_ARRAY, DOUBLE_ARR_TOR,
+			DOUBLE_ARRAY_TOR, double_arr_tor,
+			double_array_tor,
+			_D = DOUBLE_ARR = DOUBLE_ARRAY = DOUBLE_ARR_TOR = DOUBLE_ARRAY_TOR = double_arr_tor = double_array_tor = blank.Dbl;
+	public static boolean[] BOOLEAN_ARR, BOOLEAN_ARRAY, BOOLEAN_ARR_TOR,
+			BOOLEAN_ARRAY_TOR,
+			boolean_arr_tor,
+			boolean_array_tor,
+			_B = BOOLEAN_ARR = BOOLEAN_ARRAY = BOOLEAN_ARR_TOR = BOOLEAN_ARRAY_TOR = boolean_arr_tor = boolean_array_tor = blank.Bool;
+	public static o O_TOR, OBJECT_TOR, o_tor, object_tor, _o = O_TOR = OBJECT_TOR = o_tor = object_tor = blank.o;
 	public static Object[][] kv(o arg) {
 		if (arg == null || arg.keyArray().length == 0)
 			return blank.Obj2D;
@@ -76635,17 +76677,14 @@ public class KL {
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
 		o user3 = o(
 				"{name: {first->Juliet; last->Salvador}, age: 17, is_a_student: !false, hobbies: [travel; basketball & tennis]}");
-		print(user3.k("name", _o));
-		print(user3.k("age", _i));
-		print(user3.k("is_a_student", _b));
-		printArr(user3.k("hobbies", _S));
+		print(user3.ka("name", object_tor));
+		print(user3.ki("age", integer_tor));
+		print(user3.he("is_a_student"));
+		printArr(user3.ki("hobbies", string_array_tor));
 		int[] arrToTest = {1};
 		arrToTest = fill(arrToTest, 9);
 		arrToTest = ekekko.guna(arrToTest, 4);
 		print(arrToTest);
-		print(malumat.lo(arrToTest, ki).k("heNum", _b));
-		print(malumat.lo(null, ki).k("heNum", _b));
-		print(malumat.lo(2.99, ki).k("heNum", _b));
 		int[] newArr = {3, 5, 8};
 		newArr = nikalo.ekekse(newArr, 1);
 		print(newArr);
