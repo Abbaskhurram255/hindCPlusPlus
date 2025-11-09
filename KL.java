@@ -7018,6 +7018,80 @@ public class KL {
 			return this;
 		}
 	}
+	public static class btnGroup extends ButtonGroup {
+		btnGroup() {
+			super();
+		}
+		btnGroup(AbstractButton... buttons) {
+			super();
+			addAll(buttons);
+		}
+		btnGroup add(AbstractButton... buttons) {
+			if (buttons == null || buttons.length == 0)
+				return this;
+			for (AbstractButton button : buttons) {
+				if (button == null)
+					continue;
+				super.add(button);
+			}
+			return this;
+		}
+		btnGroup addAll(AbstractButton... buttons) {
+			this.add(buttons);
+			return this;
+		}
+		btnGroup remove(AbstractButton... buttons) {
+			if (buttons == null || buttons.length == 0)
+				return this;
+			for (AbstractButton button : buttons) {
+				if (button == null)
+					continue;
+				super.remove(button);
+			}
+			return this;
+		}
+		btnGroup removeAll(AbstractButton... buttons) {
+			this.remove(buttons);
+			return this;
+		}
+	}
+	public static class btnGrp extends btnGroup {
+		btnGrp() {
+			super();
+		}
+		btnGrp(AbstractButton... buttons) {
+			super();
+			addAll(buttons);
+		}
+		btnGrp add(AbstractButton... buttons) {
+			if (buttons == null || buttons.length == 0)
+				return this;
+			for (AbstractButton button : buttons) {
+				if (button == null)
+					continue;
+				super.add(button);
+			}
+			return this;
+		}
+		btnGrp addAll(AbstractButton... buttons) {
+			this.add(buttons);
+			return this;
+		}
+		btnGrp remove(AbstractButton... buttons) {
+			if (buttons == null || buttons.length == 0)
+				return this;
+			for (AbstractButton button : buttons) {
+				if (button == null)
+					continue;
+				super.remove(button);
+			}
+			return this;
+		}
+		btnGrp removeAll(AbstractButton... buttons) {
+			this.remove(buttons);
+			return this;
+		}
+	}
 	public static class toggleBtn extends JToggleButton {
 		private static final long serialVersionUID = 1L;
 		toggleBtn(JPanel... panelToAddTo_optional) {
@@ -7544,45 +7618,103 @@ public class KL {
 	}
 	public static class radioBtn extends JRadioButton {
 		private static final long serialVersionUID = 1L;
-		radioBtn() {
+		radioBtn(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtn(Action a) {
+		radioBtn(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtn(String text) {
+		radioBtn(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtn(String text, boolean selected) {
+		radioBtn(String text, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, selected);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtn(Icon i) {
+		radioBtn(Icon i, JPanel... panelToAddTo_optional) {
 			super(i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtn(Icon i, boolean selected) {
+		radioBtn(Icon i, boolean selected, JPanel... panelToAddTo_optional) {
 			super(i, selected);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtn(String text, Icon i) {
+		radioBtn(String text, Icon i, JPanel... panelToAddTo_optional) {
 			super(text, i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtn(String text, Icon i, boolean selected) {
+		radioBtn(String text, Icon i, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, i, selected);
 		}
-		radioBtn(String text, ActionListener listener) {
+		radioBtn(String text, ActionListener listener,
+				JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
 			click(listener);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		radioBtn(String text, ActionListener listener, Color bg, Color fg) {
+		radioBtn(String text, ActionListener listener, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text, listener);
 			bg(bg);
 			color(fg);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		radioBtn click(ActionListener listener) {
 			if (not(listener))
@@ -7808,37 +7940,158 @@ public class KL {
 			text(s);
 			return this;
 		}
-		String val() {
-			return text();
+		boolean val() {
+			return super.isSelected();
 		}
-		radioBtn val(String s) {
-			text(s);
+		radioBtn val(boolean state) {
+			super.setSelected(state);
 			return this;
 		}
-		String kiVal() {
-			return text();
+		boolean kiVal() {
+			return val();
 		}
-		radioBtn kiVal(String s) {
-			text(s);
+		radioBtn kiVal(boolean state) {
+			val(state);
 			return this;
 		}
-		String value() {
-			return text();
+		boolean value() {
+			return val();
 		}
-		radioBtn value(String s) {
-			text(s);
+		radioBtn value(boolean state) {
+			val(state);
 			return this;
 		}
-		String kiValue() {
-			return text();
+		boolean kiValue() {
+			return val();
 		}
-		radioBtn kiValue(String s) {
-			text(s);
+		radioBtn kiValue(boolean state) {
+			val(state);
 			return this;
 		}
-		radioBtn on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
-				click(action);
+		boolean checked() {
+			return val();
+		}
+		radioBtn check(boolean state) {
+			val(state);
+			return this;
+		}
+		radioBtn check() {
+			val(true);
+			return this;
+		}
+		radioBtn check(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean unchecked() {
+			return val() == false;
+		}
+		radioBtn uncheck(boolean state) {
+			val(!state);
+			return this;
+		}
+		radioBtn uncheck() {
+			val(false);
+			return this;
+		}
+		radioBtn uncheck(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (!selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean marked() {
+			return checked();
+		}
+		radioBtn mark(boolean state) {
+			check(state);
+			return this;
+		}
+		radioBtn mark() {
+			check();
+			return this;
+		}
+		radioBtn mark(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unmarked() {
+			return unchecked();
+		}
+		radioBtn unmark(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		radioBtn unmark() {
+			uncheck();
+			return this;
+		}
+		radioBtn unmark(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		boolean selected() {
+			return checked();
+		}
+		radioBtn select(boolean state) {
+			check(state);
+			return this;
+		}
+		radioBtn select() {
+			check(true);
+			return this;
+		}
+		radioBtn select(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unselected() {
+			return unchecked();
+		}
+		radioBtn unselect(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		radioBtn unselect() {
+			uncheck();
+			return this;
+		}
+		radioBtn unselect(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		radioBtn toggle() {
+			val(!selected());
+			return this;
+		}
+		radioBtn toggle(Runnable fn) {
+			if (not(fn))
+				return this;
+			//the button doesn't need to be in the state "selected"
+			//toggle should handle both cases
+			click(e -> {
+				fn.run();
+			});
+			return this;
+		}
+		radioBtn on(String evt, Object action) {
+			if (not(evt) || not(action))
+				return this;
+			if (action instanceof ActionListener && eq(evt, "click|toggle")) {
+				click((ActionListener) action);
+			} else if (action instanceof Runnable
+					&& in(evt, "^(check|mark|select)(ed)?$")) {
+				mark((Runnable) action);
 			}
 			return this;
 		}
@@ -8205,6 +8458,8 @@ public class KL {
 			return super.getText();
 		}
 		radioBtnItem text(String s) {
+			if (s == null)
+				s = "";
 			super.setText(s);
 			return this;
 		}
@@ -8215,37 +8470,158 @@ public class KL {
 			text(s);
 			return this;
 		}
-		String val() {
-			return text();
+		boolean val() {
+			return super.isSelected();
 		}
-		radioBtnItem val(String s) {
-			text(s);
+		radioBtnItem val(boolean state) {
+			super.setSelected(state);
 			return this;
 		}
-		String kiVal() {
-			return text();
+		boolean kiVal() {
+			return val();
 		}
-		radioBtnItem kiVal(String s) {
-			text(s);
+		radioBtnItem kiVal(boolean state) {
+			val(state);
 			return this;
 		}
-		String value() {
-			return text();
+		boolean value() {
+			return val();
 		}
-		radioBtnItem value(String s) {
-			text(s);
+		radioBtnItem value(boolean state) {
+			val(state);
 			return this;
 		}
-		String kiValue() {
-			return text();
+		boolean kiValue() {
+			return val();
 		}
-		radioBtnItem kiValue(String s) {
-			text(s);
+		radioBtnItem kiValue(boolean state) {
+			val(state);
 			return this;
 		}
-		radioBtnItem on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
-				click(action);
+		boolean checked() {
+			return val();
+		}
+		radioBtnItem check(boolean state) {
+			val(state);
+			return this;
+		}
+		radioBtnItem check() {
+			val(true);
+			return this;
+		}
+		radioBtnItem check(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean unchecked() {
+			return val() == false;
+		}
+		radioBtnItem uncheck(boolean state) {
+			val(!state);
+			return this;
+		}
+		radioBtnItem uncheck() {
+			val(false);
+			return this;
+		}
+		radioBtnItem uncheck(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (!selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean marked() {
+			return checked();
+		}
+		radioBtnItem mark(boolean state) {
+			check(state);
+			return this;
+		}
+		radioBtnItem mark() {
+			check();
+			return this;
+		}
+		radioBtnItem mark(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unmarked() {
+			return unchecked();
+		}
+		radioBtnItem unmark(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		radioBtnItem unmark() {
+			uncheck();
+			return this;
+		}
+		radioBtnItem unmark(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		boolean selected() {
+			return checked();
+		}
+		radioBtnItem select(boolean state) {
+			check(state);
+			return this;
+		}
+		radioBtnItem select() {
+			check(true);
+			return this;
+		}
+		radioBtnItem select(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unselected() {
+			return unchecked();
+		}
+		radioBtnItem unselect(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		radioBtnItem unselect() {
+			uncheck();
+			return this;
+		}
+		radioBtnItem unselect(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		radioBtnItem toggle() {
+			val(!selected());
+			return this;
+		}
+		radioBtnItem toggle(Runnable fn) {
+			if (not(fn))
+				return this;
+			//the button doesn't need to be in the state "selected"
+			//toggle should handle both cases
+			click(e -> {
+				fn.run();
+			});
+			return this;
+		}
+		radioBtnItem on(String evt, Object action) {
+			if (not(evt) || not(action))
+				return this;
+			if (action instanceof ActionListener && eq(evt, "click|toggle")) {
+				click((ActionListener) action);
+			} else if (action instanceof Runnable
+					&& in(evt, "^(check|mark|select)(ed)?$")) {
+				mark((Runnable) action);
 			}
 			return this;
 		}
@@ -8606,6 +8982,8 @@ public class KL {
 			return super.getText();
 		}
 		checkBox text(String s) {
+			if (s == null)
+				s = "";
 			super.setText(s);
 			return this;
 		}
@@ -8616,37 +8994,158 @@ public class KL {
 			text(s);
 			return this;
 		}
-		String val() {
-			return text();
+		boolean val() {
+			return super.isSelected();
 		}
-		checkBox val(String s) {
-			text(s);
+		checkBox val(boolean state) {
+			super.setSelected(state);
 			return this;
 		}
-		String kiVal() {
-			return text();
+		boolean kiVal() {
+			return val();
 		}
-		checkBox kiVal(String s) {
-			text(s);
+		checkBox kiVal(boolean state) {
+			val(state);
 			return this;
 		}
-		String value() {
-			return text();
+		boolean value() {
+			return val();
 		}
-		checkBox value(String s) {
-			text(s);
+		checkBox value(boolean state) {
+			val(state);
 			return this;
 		}
-		String kiValue() {
-			return text();
+		boolean kiValue() {
+			return val();
 		}
-		checkBox kiValue(String s) {
-			text(s);
+		checkBox kiValue(boolean state) {
+			val(state);
 			return this;
 		}
-		checkBox on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
-				click(action);
+		boolean checked() {
+			return val();
+		}
+		checkBox check(boolean state) {
+			val(state);
+			return this;
+		}
+		checkBox check() {
+			val(true);
+			return this;
+		}
+		checkBox check(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean unchecked() {
+			return val() == false;
+		}
+		checkBox uncheck(boolean state) {
+			val(!state);
+			return this;
+		}
+		checkBox uncheck() {
+			val(false);
+			return this;
+		}
+		checkBox uncheck(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (!selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean marked() {
+			return checked();
+		}
+		checkBox mark(boolean state) {
+			check(state);
+			return this;
+		}
+		checkBox mark() {
+			check();
+			return this;
+		}
+		checkBox mark(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unmarked() {
+			return unchecked();
+		}
+		checkBox unmark(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		checkBox unmark() {
+			uncheck();
+			return this;
+		}
+		checkBox unmark(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		boolean selected() {
+			return checked();
+		}
+		checkBox select(boolean state) {
+			check(state);
+			return this;
+		}
+		checkBox select() {
+			check(true);
+			return this;
+		}
+		checkBox select(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unselected() {
+			return unchecked();
+		}
+		checkBox unselect(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		checkBox unselect() {
+			uncheck();
+			return this;
+		}
+		checkBox unselect(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		checkBox toggle() {
+			val(!selected());
+			return this;
+		}
+		checkBox toggle(Runnable fn) {
+			if (not(fn))
+				return this;
+			//the button doesn't need to be in the state "selected"
+			//toggle should handle both cases
+			click(e -> {
+				fn.run();
+			});
+			return this;
+		}
+		checkBox on(String evt, Object action) {
+			if (not(evt) || not(action))
+				return this;
+			if (action instanceof ActionListener && eq(evt, "click|toggle")) {
+				click((ActionListener) action);
+			} else if (action instanceof Runnable
+					&& in(evt, "^(check|mark|select)(ed)?$")) {
+				mark((Runnable) action);
 			}
 			return this;
 		}
@@ -8689,42 +9188,100 @@ public class KL {
 	}
 	public static class checkBoxItem extends JCheckBoxMenuItem {
 		private static final long serialVersionUID = 1L;
-		checkBoxItem() {
+		checkBoxItem(JPanel... panelToAddTo_optional) {
 			super();
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBoxItem(Action a) {
+		checkBoxItem(Action a, JPanel... panelToAddTo_optional) {
 			super(a);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBoxItem(String text) {
+		checkBoxItem(String text, JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBoxItem(String text, boolean selected) {
+		checkBoxItem(String text, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, selected);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBoxItem(Icon i) {
+		checkBoxItem(Icon i, JPanel... panelToAddTo_optional) {
 			super(i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBoxItem(String text, Icon i) {
+		checkBoxItem(String text, Icon i, JPanel... panelToAddTo_optional) {
 			super(text, i);
 			super.setFocusable(false);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBoxItem(String text, Icon i, boolean selected) {
+		checkBoxItem(String text, Icon i, boolean selected,
+				JPanel... panelToAddTo_optional) {
 			super(text, i, selected);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBoxItem(String text, ActionListener listener) {
+		checkBoxItem(String text, ActionListener listener,
+				JPanel... panelToAddTo_optional) {
 			super(text);
 			super.setFocusable(false);
 			click(listener);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		checkBoxItem(String text, ActionListener listener, Color bg, Color fg) {
+		checkBoxItem(String text, ActionListener listener, Color bg, Color fg,
+				JPanel... panelToAddTo_optional) {
 			this(text, listener);
 			bg(bg);
 			color(fg);
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		checkBoxItem click(ActionListener listener) {
 			if (not(listener))
@@ -8897,6 +9454,32 @@ public class KL {
 			super.setFont(fnt);
 			return this;
 		}
+		checkBoxItem kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		checkBoxItem kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		checkBoxItem kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		checkBoxItem kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		checkBoxItem kaFont(String fontFamily, int fontSize, int bold,
+				int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		checkBoxItem kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		checkBoxItem border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -8917,12 +9500,170 @@ public class KL {
 			return super.getText();
 		}
 		checkBoxItem text(String s) {
+			if (s == null)
+				s = "";
 			super.setText(s);
 			return this;
 		}
-		checkBoxItem on(String evt, ActionListener action) {
-			if (KL.is(evt) && KL.is(action) && KL.eq(evt, "click")) {
-				click(action);
+		String kaText() {
+			return text();
+		}
+		checkBoxItem kaText(String s) {
+			text(s);
+			return this;
+		}
+		boolean val() {
+			return super.isSelected();
+		}
+		checkBoxItem val(boolean state) {
+			super.setSelected(state);
+			return this;
+		}
+		boolean kiVal() {
+			return val();
+		}
+		checkBoxItem kiVal(boolean state) {
+			val(state);
+			return this;
+		}
+		boolean value() {
+			return val();
+		}
+		checkBoxItem value(boolean state) {
+			val(state);
+			return this;
+		}
+		boolean kiValue() {
+			return val();
+		}
+		checkBoxItem kiValue(boolean state) {
+			val(state);
+			return this;
+		}
+		boolean checked() {
+			return val();
+		}
+		checkBoxItem check(boolean state) {
+			val(state);
+			return this;
+		}
+		checkBoxItem check() {
+			val(true);
+			return this;
+		}
+		checkBoxItem check(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean unchecked() {
+			return val() == false;
+		}
+		checkBoxItem uncheck(boolean state) {
+			val(!state);
+			return this;
+		}
+		checkBoxItem uncheck() {
+			val(false);
+			return this;
+		}
+		checkBoxItem uncheck(Runnable fn) {
+			if (not(fn))
+				return this;
+			click(e -> {
+				if (!selected()) {
+					fn.run();
+				}
+			});
+			return this;
+		}
+		boolean marked() {
+			return checked();
+		}
+		checkBoxItem mark(boolean state) {
+			check(state);
+			return this;
+		}
+		checkBoxItem mark() {
+			check();
+			return this;
+		}
+		checkBoxItem mark(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unmarked() {
+			return unchecked();
+		}
+		checkBoxItem unmark(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		checkBoxItem unmark() {
+			uncheck();
+			return this;
+		}
+		checkBoxItem unmark(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		boolean selected() {
+			return checked();
+		}
+		checkBoxItem select(boolean state) {
+			check(state);
+			return this;
+		}
+		checkBoxItem select() {
+			check(true);
+			return this;
+		}
+		checkBoxItem select(Runnable fn) {
+			check(fn);
+			return this;
+		}
+		boolean unselected() {
+			return unchecked();
+		}
+		checkBoxItem unselect(boolean state) {
+			uncheck(state);
+			return this;
+		}
+		checkBoxItem unselect() {
+			uncheck();
+			return this;
+		}
+		checkBoxItem unselect(Runnable fn) {
+			uncheck(fn);
+			return this;
+		}
+		checkBoxItem toggle() {
+			val(!selected());
+			return this;
+		}
+		checkBoxItem toggle(Runnable fn) {
+			if (not(fn))
+				return this;
+			//the button doesn't need to be in the state "selected"
+			//toggle should handle both cases
+			click(e -> {
+				fn.run();
+			});
+			return this;
+		}
+		checkBoxItem on(String evt, Object action) {
+			if (not(evt) || not(action))
+				return this;
+			if (action instanceof ActionListener && eq(evt, "click|toggle")) {
+				click((ActionListener) action);
+			} else if (action instanceof Runnable
+					&& in(evt, "^(check|mark|select)(ed)?$")) {
+				mark((Runnable) action);
 			}
 			return this;
 		}
@@ -8961,6 +9702,43 @@ public class KL {
 				Object... languageSupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
+		}
+	}
+	public static class separator extends JSeparator {
+		private static final long serialVersionUID = 1L;
+		separator() {
+			super();
+		}
+		separator(int orientation) {
+			super(orientation);
+		}
+	}
+	public static class separatorX extends separator {
+		separatorX() {
+			super(SwingConstants.HORIZONTAL);
+		}
+	}
+	public static class separatorY extends separator {
+		separatorY() {
+			super(SwingConstants.VERTICAL);
+		}
+	}
+	public static class sep extends separator {
+		sep() {
+			super();
+		}
+		sep(int orientation) {
+			super(orientation);
+		}
+	}
+	public static class sepX extends separatorX {
+		sepX() {
+			super();
+		}
+	}
+	public static class sepY extends separatorY {
+		sepY() {
+			super();
 		}
 	}
 	public static class menuBar extends JMenuBar {
@@ -13209,7 +13987,7 @@ public class KL {
 			try {
 				return (char) key(k);
 			} catch (ClassCastException e) {
-				return "";
+				return '\0';
 			}
 		}
 		String key(String k, String tryCastingAs) {
@@ -13435,7 +14213,7 @@ public class KL {
 		Object ki(String k) {
 			return key(k);
 		}
-		char k(String k, char tryCastingAs) {
+		char ki(String k, char tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
 		String ki(String k, String tryCastingAs) {
@@ -17557,7 +18335,7 @@ public class KL {
 		return new oB();
 	}
 	public static class tree<Key, Value> extends TreeMap<Key, Value> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		tree() {
 			super();
 		}
@@ -17951,7 +18729,7 @@ public class KL {
 		}
 	}
 	public static class treeI extends tree<Integer, String> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeI() {
 			super();
 		}
@@ -18201,7 +18979,7 @@ public class KL {
 		return new treeI();
 	}
 	public static class treeL extends tree<Integer, Long> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeL() {
 			super();
 		}
@@ -18462,7 +19240,7 @@ public class KL {
 		return new treeL();
 	}
 	public static class treeF extends tree<Integer, Float> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeF() {
 			super();
 		}
@@ -18725,7 +19503,7 @@ public class KL {
 		return new treeF();
 	}
 	public static class treeD extends tree<Integer, Double> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeD() {
 			super();
 		}
@@ -18990,7 +19768,7 @@ public class KL {
 		return new treeD();
 	}
 	public static class treeB extends tree<Integer, Boolean> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeB() {
 			super();
 		}
@@ -19241,7 +20019,7 @@ public class KL {
 		return new treeB();
 	}
 	public static class treeDS extends tree<Double, String> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeDS() {
 			super();
 		}
@@ -19495,7 +20273,7 @@ public class KL {
 		return new treeDS();
 	}
 	public static class treeDI extends tree<Double, Integer> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeDI() {
 			super();
 		}
@@ -19708,7 +20486,7 @@ public class KL {
 		}
 	}
 	public static class treeDL extends tree<Double, Long> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeDL() {
 			super();
 		}
@@ -19974,7 +20752,7 @@ public class KL {
 		return new treeDL();
 	}
 	public static class treeDF extends tree<Double, Float> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeDF() {
 			super();
 		}
@@ -20240,7 +21018,7 @@ public class KL {
 		return new treeDF();
 	}
 	public static class treeDB extends tree<Double, Boolean> {
-		public static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 		treeDB() {
 			super();
 		}
@@ -35886,43 +36664,45 @@ public class KL {
 			hr = mint * 60;
 	public static String Else = "else", warna = Else, Warna = warna;
 	// helps method sw handle default/else cases
-	public static char CHARACTER, CHARACTER_TOR,
-character_tor,
+	public static char CHARACTER, CHARACTER_TOR, character_tor,
 			_c = CHARACTER = CHARACTER_TOR = character_tor = '\0';
-	public static String STRING, STRING_TOR, string_tor, _s = STRING = STRING_TOR = string_tor = "";
-	public static int INTEGER, INTEGER_TOR, integer_tor, _i = INTEGER = INTEGER_TOR = integer_tor = 0;
-	public static long LONG, LONG_TOR, long_tor, _l = LONG = LONG_TOR = long_tor = 0L;
-	public static float FLOAT, FLOAT_TOR, float_tor, _f = FLOAT = FLOAT_TOR = float_tor = 0.0F;
-	public static double DOUBLE, DOUBLE_TOR, double_tor, _d = DOUBLE = DOUBLE_TOR = double_tor = 0.0D;
+	public static String STRING, STRING_TOR, string_tor,
+			_s = STRING = STRING_TOR = string_tor = "";
+	public static int INTEGER, INTEGER_TOR, integer_tor,
+			_i = INTEGER = INTEGER_TOR = integer_tor = 0;
+	public static long LONG, LONG_TOR, long_tor,
+			_l = LONG = LONG_TOR = long_tor = 0L;
+	public static float FLOAT, FLOAT_TOR, float_tor,
+			_f = FLOAT = FLOAT_TOR = float_tor = 0.0F;
+	public static double DOUBLE, DOUBLE_TOR, double_tor,
+			_d = DOUBLE = DOUBLE_TOR = double_tor = 0.0D;
 	public static boolean BOOLEAN, BOOLEAN_TOR, boolean_arr,
 			_b = BOOLEAN = BOOLEAN_TOR = boolean_arr = false;
 	public static char[] CHARACTER_ARR, CHARACTER_ARRAY, CHAR_ARR, CHAR_ARRAY,
-			CHARACTER_ARR_TOR, CHARACTER_ARRAY_TOR, CHAR_ARR_TOR, CHAR_ARRAY_TOR,
-			character_arr_tor, character_array_tor, char_arr_tor, char_array_tor,
+			CHARACTER_ARR_TOR, CHARACTER_ARRAY_TOR, CHAR_ARR_TOR,
+			CHAR_ARRAY_TOR, character_arr_tor, character_array_tor,
+			char_arr_tor, char_array_tor,
 			_C = CHARACTER_ARR = CHARACTER_ARRAY = CHAR_ARR = CHAR_ARRAY = CHARACTER_ARR_TOR = CHARACTER_ARRAY_TOR = CHAR_ARR_TOR = CHAR_ARRAY_TOR = character_arr_tor = character_array_tor = char_arr_tor = char_array_tor = blank.Char;
 	public static String[] STRING_ARR, STRING_ARRAY, STRING_ARR_TOR,
-			STRING_ARRAY_TOR,
-            string_arr_tor,
-			string_array_tor,
-			_S = STRING_ARR = STRING_ARRAY = STRING_ARR_TOR = STRING_ARRAY_TOR = string_arr_tor =
-			string_array_tor = blank.Str;
-	public static int[] INTEGER_ARR, INTEGER_ARRAY, INTEGER_ARR_TOR, integer_arr_tor,
-			integer_array_tor,
+			STRING_ARRAY_TOR, string_arr_tor, string_array_tor,
+			_S = STRING_ARR = STRING_ARRAY = STRING_ARR_TOR = STRING_ARRAY_TOR = string_arr_tor = string_array_tor = blank.Str;
+	public static int[] INTEGER_ARR, INTEGER_ARRAY, INTEGER_ARR_TOR,
+			INTEGER_ARRAY_TOR, integer_arr_tor, integer_array_tor,
 			_I = INTEGER_ARR = INTEGER_ARRAY = INTEGER_ARR_TOR = INTEGER_ARRAY_TOR = integer_arr_tor = integer_array_tor = blank.Int;
-	public static long[] LONG_ARR, LONG_ARRAY, LONG_ARR_TOR, LONG_ARRAY_TOR, long_arr_tor, long_array_tor,
+	public static long[] LONG_ARR, LONG_ARRAY, LONG_ARR_TOR, LONG_ARRAY_TOR,
+			long_arr_tor, long_array_tor,
 			_L = LONG_ARR = LONG_ARRAY = LONG_ARR_TOR = LONG_ARRAY_TOR = long_arr_tor = long_array_tor = blank.Long;
-	public static float[] FLOAT_ARR, FLOAT_ARRAY, FLOAT_ARR_TOR, FLOAT_ARRAY_TOR, float_arr_tor, float_array_tor,
+	public static float[] FLOAT_ARR, FLOAT_ARRAY, FLOAT_ARR_TOR,
+			FLOAT_ARRAY_TOR, float_arr_tor, float_array_tor,
 			_F = FLOAT_ARR = FLOAT_ARRAY = FLOAT_ARR_TOR = FLOAT_ARRAY_TOR = float_arr_tor = float_array_tor = blank.Flt;
 	public static double[] DOUBLE_ARR, DOUBLE_ARRAY, DOUBLE_ARR_TOR,
-			DOUBLE_ARRAY_TOR, double_arr_tor,
-			double_array_tor,
+			DOUBLE_ARRAY_TOR, double_arr_tor, double_array_tor,
 			_D = DOUBLE_ARR = DOUBLE_ARRAY = DOUBLE_ARR_TOR = DOUBLE_ARRAY_TOR = double_arr_tor = double_array_tor = blank.Dbl;
 	public static boolean[] BOOLEAN_ARR, BOOLEAN_ARRAY, BOOLEAN_ARR_TOR,
-			BOOLEAN_ARRAY_TOR,
-			boolean_arr_tor,
-			boolean_array_tor,
+			BOOLEAN_ARRAY_TOR, boolean_arr_tor, boolean_array_tor,
 			_B = BOOLEAN_ARR = BOOLEAN_ARRAY = BOOLEAN_ARR_TOR = BOOLEAN_ARRAY_TOR = boolean_arr_tor = boolean_array_tor = blank.Bool;
-	public static o O_TOR, OBJECT_TOR, o_tor, object_tor, _o = O_TOR = OBJECT_TOR = o_tor = object_tor = blank.o;
+	public static o O_TOR, OBJECT_TOR, o_tor, object_tor,
+			_o = O_TOR = OBJECT_TOR = o_tor = object_tor = blank.o;
 	public static Object[][] kv(o arg) {
 		if (arg == null || arg.keyArray().length == 0)
 			return blank.Obj2D;
