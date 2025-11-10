@@ -94,11 +94,12 @@ public class KL {
 	}
 	public static class varbl extends variable {
 	}
-	public static KL kl() {
+	public static final KL kl() {
 		// @hint.method this_method_will_help_make_the_instantiation_quicker
 		return new KL();
 	}
-	public static KL kl = kl();
+	public static final KL kl = kl(),
+			iske_lie = kl();
 	public static class money {
 		//@class.why: this class is supposed to help deal with money-related everyday calculations easier (currency conversion will be added soon)
 		private double amnt;
@@ -4055,6 +4056,7 @@ public class KL {
 	}
 	// gui
 	public static class app extends JFrame {
+		public app iske_lie = this;
 		private static final long serialVersionUID = 1L;
 		public static int SADA_WALA = Cursor.DEFAULT_CURSOR,
 				CROSSHAIR_WALA = Cursor.CROSSHAIR_CURSOR,
@@ -4400,6 +4402,9 @@ public class KL {
 				Object... languageSupportingArgs) {
 			cursor(crsrObj);
 			return this;
+		}
+		public Color bg() {
+			return super.getBackground();
 		}
 		public app bg(Color clr) {
 			super.setBackground(clr);
@@ -4956,6 +4961,7 @@ public class KL {
 	hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER;
 	hint.approach helps_make_building_guis_easier;
 	public static class gui extends app {
+		public gui iske_lie = this;
 		private static final long serialVersionUID = 1L;
 		public gui() {
 			super();
@@ -5457,7 +5463,6 @@ public class KL {
 	hint.WARNING dont_change_the_visibility_of_any_of_the_methods_of_the_following_class;
 	hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER_PLUGIN;
 	hint.approach helps_give_an_easier_time_building_guis;
-	//public static gui gui = new gui();
 	public static class label extends JLabel {
 		private static final long serialVersionUID = 1L;
 		public static final int top = TOP, left = LEFT, bottom = BOTTOM,
@@ -11160,20 +11165,45 @@ public class KL {
 	}
 	public static class txtField extends JTextField {
 		private static final long serialVersionUID = 1L;
-		txtField() {
+		txtField(JPanel... panelToAddTo_optional) {
 			super();
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtField(String text) {
+		txtField(String text, JPanel... panelToAddTo_optional) {
 			super(text);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtField(int columns) {
+		txtField(int columns, JPanel... panelToAddTo_optional) {
 			super(columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtField(String text, int columns) {
+		txtField(String text, int columns, JPanel... panelToAddTo_optional) {
 			super(text, columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtField(Document doc, String text, int columns) {
+		txtField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
 			super(doc, text, columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		txtField columns(int columns) {
 			super.setColumns(columns);
@@ -11242,6 +11272,65 @@ public class KL {
 			cursor(crsrObj);
 			return this;
 		}
+		txtField font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		txtField font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		txtField font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		txtField font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		txtField font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		txtField font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		txtField kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		txtField kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		txtField kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		txtField kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		txtField kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		txtField kaFont(Font fnt) {
+			font(fnt);
+			return this;
+		}
 		txtField border(Border brdr) {
 			super.setBorder(brdr);
 			return this;
@@ -11254,6 +11343,8 @@ public class KL {
 			return super.getText();
 		}
 		txtField text(String s) {
+			if (s == null)
+				s = "";
 			super.setText(s);
 			return this;
 		}
@@ -11435,20 +11526,45 @@ public class KL {
 	}
 	public static class txtArea extends JTextArea {
 		private static final long serialVersionUID = 1L;
-		txtArea() {
+		txtArea(JPanel... panelToAddTo_optional) {
 			super();
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtArea(String text) {
+		txtArea(String text, JPanel... panelToAddTo_optional) {
 			super(text);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtArea(int rows, int columns) {
+		txtArea(int rows, int columns, JPanel... panelToAddTo_optional) {
 			super(rows, columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtArea(String text, int rows, int columns) {
+		txtArea(String text, int rows, int columns, JPanel... panelToAddTo_optional) {
 			super(text, rows, columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtArea(Document doc, String text, int rows, int columns) {
+		txtArea(Document doc, String text, int rows, int columns, JPanel... panelToAddTo_optional) {
 			super(doc, text, rows, columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		txtArea columns(int columns) {
 			super.setColumns(columns);
@@ -11504,6 +11620,65 @@ public class KL {
 		}
 		txtArea keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
 			cursor(crsrObj);
+			return this;
+		}
+		txtArea font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		txtArea font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		txtArea font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		txtArea font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		txtArea font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		txtArea font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		txtArea kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		txtArea kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		txtArea kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		txtArea kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		txtArea kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		txtArea kaFont(Font fnt) {
+			font(fnt);
 			return this;
 		}
 		txtArea border(Border brdr) {
@@ -11699,11 +11874,21 @@ public class KL {
 	}
 	public static class txtPane extends JTextPane {
 		private static final long serialVersionUID = 1L;
-		txtPane() {
+		txtPane(JPanel... panelToAddTo_optional) {
 			super();
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		txtPane(StyledDocument doc) {
+		txtPane(StyledDocument doc, JPanel... panelToAddTo_optional) {
 			super(doc);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		txtPane cursor(int c) {
 			super.setCursor(new Cursor(c));
@@ -11735,6 +11920,65 @@ public class KL {
 		}
 		txtPane keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
 			cursor(crsrObj);
+			return this;
+		}
+		txtPane font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		txtPane font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		txtPane font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		txtPane font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		txtPane font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		txtPane font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		txtPane kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		txtPane kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		txtPane kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		txtPane kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		txtPane kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		txtPane kaFont(Font fnt) {
+			font(fnt);
 			return this;
 		}
 		txtPane border(Border brdr) {
@@ -11930,20 +12174,45 @@ public class KL {
 	}
 	public static class pwdField extends JPasswordField {
 		private static final long serialVersionUID = 1L;
-		pwdField() {
+		pwdField(JPanel... panelToAddTo_optional) {
 			super();
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		pwdField(String text) {
+		pwdField(String text, JPanel... panelToAddTo_optional) {
 			super(text);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		pwdField(int columns) {
+		pwdField(int columns, JPanel... panelToAddTo_optional) {
 			super(columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		pwdField(String text, int columns) {
+		pwdField(String text, int columns, JPanel... panelToAddTo_optional) {
 			super(text, columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
-		pwdField(Document doc, String text, int columns) {
+		pwdField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
 			super(doc, text, columns);
+			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+					&& panelToAddTo_optional[0] != null) {
+				JPanel panel = panelToAddTo_optional[0];
+				panel.add(this);
+			}
 		}
 		pwdField columns(int columns) {
 			super.setColumns(columns);
@@ -12010,6 +12279,65 @@ public class KL {
 		pwdField keSamneMouse(Cursor crsrObj,
 				Object... languageSupportingArgs) {
 			cursor(crsrObj);
+			return this;
+		}
+		pwdField font(String fontFamily, int fontSize) {
+			super.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
+			return this;
+		}
+		pwdField font(String fontFamily, int fontSize, int fontWidth) {
+			super.setFont(new Font(fontFamily, fontWidth, fontSize));
+			return this;
+		}
+		pwdField font(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			super.setFont(new Font(fontFamily, bold && italic
+					? Font.BOLD | Font.ITALIC
+					: bold ? Font.BOLD : italic ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		pwdField font(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold, false);
+			return this;
+		}
+		pwdField font(String fontFamily, int fontSize, int bold, int italic) {
+			super.setFont(new Font(fontFamily,
+					bold == 1 && italic == 1
+							? Font.BOLD | Font.ITALIC
+							: bold == 1
+									? Font.BOLD
+									: italic == 1 ? Font.ITALIC : Font.PLAIN,
+					fontSize));
+			return this;
+		}
+		pwdField font(Font fnt) {
+			super.setFont(fnt);
+			return this;
+		}
+		pwdField kaFont(String fontFamily, int fontSize) {
+			font(fontFamily, fontSize);
+			return this;
+		}
+		pwdField kaFont(String fontFamily, int fontSize, int fontWidth) {
+			font(fontFamily, fontSize, fontWidth);
+			return this;
+		}
+		pwdField kaFont(String fontFamily, int fontSize, boolean bold,
+				boolean italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		pwdField kaFont(String fontFamily, int fontSize, boolean bold) {
+			font(fontFamily, fontSize, bold);
+			return this;
+		}
+		pwdField kaFont(String fontFamily, int fontSize, int bold, int italic) {
+			font(fontFamily, fontSize, bold, italic);
+			return this;
+		}
+		pwdField kaFont(Font fnt) {
+			font(fnt);
 			return this;
 		}
 		pwdField border(Border brdr) {
@@ -13487,83 +13815,83 @@ public class KL {
 			boolean isDoubleBuffered, JFrame... frameToAddTo_optional) {
 		return panel(layout, isDoubleBuffered, frameToAddTo_optional);
 	}
-	public static label label() {
-		return new label();
+	public static label label(JPanel... panelToAddTo_optional) {
+		return new label(panelToAddTo_optional);
 	}
-	public static label label(String text) {
-		return new label(text);
+	public static label label(String text, JPanel... panelToAddTo_optional) {
+		return new label(text, panelToAddTo_optional);
 	}
-	public static label label(String text, int alignment) {
-		return new label(text, alignment);
+	public static label label(String text, int alignment, JPanel... panelToAddTo_optional) {
+		return new label(text, alignment, panelToAddTo_optional);
 	}
-	public static label nayaLabel() {
-		return new label();
+	public static label nayaLabel(JPanel... panelToAddTo_optional) {
+		return new label(panelToAddTo_optional);
 	}
-	public static label nayaLabel(String text) {
-		return new label(text);
+	public static label nayaLabel(String text, JPanel... panelToAddTo_optional) {
+		return new label(text, panelToAddTo_optional);
 	}
-	public static label nayaLabel(String text, int alignment) {
-		return new label(text, alignment);
+	public static label nayaLabel(String text, int alignment, JPanel... panelToAddTo_optional) {
+		return new label(text, alignment, panelToAddTo_optional);
 	}
-	public static txtField txtField() {
-		return new txtField();
+	public static txtField txtField(JPanel... panelToAddTo_optional) {
+		return new txtField(panelToAddTo_optional);
 	}
-	public static txtField txtField(String text) {
-		return new txtField(text);
+	public static txtField txtField(String text, JPanel... panelToAddTo_optional) {
+		return new txtField(text, panelToAddTo_optional);
 	}
-	public static txtField txtField(int columns) {
-		return new txtField(columns);
+	public static txtField txtField(int columns, JPanel... panelToAddTo_optional) {
+		return new txtField(columns, panelToAddTo_optional);
 	}
-	public static txtField txtField(String text, int columns) {
-		return new txtField(text, columns);
+	public static txtField txtField(String text, int columns, JPanel... panelToAddTo_optional) {
+		return new txtField(text, columns, panelToAddTo_optional);
 	}
-	public static txtField txtField(Document doc, String text, int columns) {
-		return new txtField(doc, text, columns);
+	public static txtField txtField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+		return new txtField(doc, text, columns, panelToAddTo_optional);
 	}
-	public static txtField naiTxtField() {
-		return new txtField();
+	public static txtField naiTxtField(JPanel... panelToAddTo_optional) {
+		return new txtField(panelToAddTo_optional);
 	}
-	public static txtField naiTxtField(String text) {
-		return new txtField(text);
+	public static txtField naiTxtField(String text, JPanel... panelToAddTo_optional) {
+		return new txtField(text, panelToAddTo_optional);
 	}
-	public static txtField naiTxtField(int columns) {
-		return new txtField(columns);
+	public static txtField naiTxtField(int columns, JPanel... panelToAddTo_optional) {
+		return new txtField(columns, panelToAddTo_optional);
 	}
-	public static txtField naiTxtField(String text, int columns) {
-		return new txtField(text, columns);
+	public static txtField naiTxtField(String text, int columns, JPanel... panelToAddTo_optional) {
+		return new txtField(text, columns, panelToAddTo_optional);
 	}
-	public static txtField naiTxtField(Document doc, String text, int columns) {
-		return new txtField(doc, text, columns);
+	public static txtField naiTxtField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+		return new txtField(doc, text, columns, panelToAddTo_optional);
 	}
-	public static pwdField pwdField() {
-		return new pwdField();
+	public static pwdField pwdField(JPanel... panelToAddTo_optional) {
+		return new pwdField(panelToAddTo_optional);
 	}
-	public static pwdField pwdField(String text) {
-		return new pwdField(text);
+	public static pwdField pwdField(String text, JPanel... panelToAddTo_optional) {
+		return new pwdField(text, panelToAddTo_optional);
 	}
-	public static pwdField pwdField(int columns) {
-		return new pwdField(columns);
+	public static pwdField pwdField(int columns, JPanel... panelToAddTo_optional) {
+		return new pwdField(columns, panelToAddTo_optional);
 	}
-	public static pwdField pwdField(String text, int columns) {
-		return new pwdField(text, columns);
+	public static pwdField pwdField(String text, int columns, JPanel... panelToAddTo_optional) {
+		return new pwdField(text, columns, panelToAddTo_optional);
 	}
-	public static pwdField pwdField(Document doc, String text, int columns) {
-		return new pwdField(doc, text, columns);
+	public static pwdField pwdField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+		return new pwdField(doc, text, columns, panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField() {
-		return new pwdField();
+	public static pwdField naiPwdField(JPanel... panelToAddTo_optional) {
+		return new pwdField(panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField(String text) {
-		return new pwdField(text);
+	public static pwdField naiPwdField(String text, JPanel... panelToAddTo_optional) {
+		return new pwdField(text, panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField(int columns) {
-		return new pwdField(columns);
+	public static pwdField naiPwdField(int columns, JPanel... panelToAddTo_optional) {
+		return new pwdField(columns, panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField(String text, int columns) {
-		return new pwdField(text, columns);
+	public static pwdField naiPwdField(String text, int columns, JPanel... panelToAddTo_optional) {
+		return new pwdField(text, columns, panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField(Document doc, String text, int columns) {
-		return new pwdField(doc, text, columns);
+	public static pwdField naiPwdField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+		return new pwdField(doc, text, columns, panelToAddTo_optional);
 	}
 	public static icon icon() {
 		return new icon();
