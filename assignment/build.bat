@@ -2,8 +2,8 @@
 if exist "assets/app.ico" (
     pyinstaller --noconfirm --onefile --windowed --add-data "KL_Py.py:." --add-data "assets;assets" --icon="assets/app.ico" assignment.py
 )
-else if exist "assets/icon.ico" (
-    pyinstaller --noconfirm --onefile --windowed --add-data "KL_Py.py:." --add-data "assets;assets" --icon="assets/icon.ico" assignment.py
+else if exist "assets/favicon.ico" (
+    pyinstaller --noconfirm --onefile --windowed --add-data "KL_Py.py:." --add-data "assets;assets" --icon="assets/favicon.ico" assignment.py
 )
 else (
     pyinstaller --noconfirm --onefile --windowed --add-data "KL_Py.py:." --add-data "assets;assets" assignment.py
