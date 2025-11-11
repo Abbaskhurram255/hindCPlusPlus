@@ -1754,7 +1754,7 @@ def FolderBrowse(
 def FileBrowse(
     text='Browse',
     target=(ThisRow, -1),
-    file_types=FILE_TYPES_ALL_FILES,
+    allowed_types=FILE_TYPES_ALL_FILES,
     initial_folder=None,
     hover=None,
     size=(None, None),
@@ -1780,8 +1780,8 @@ def FileBrowse(
     :type text:       (str)
     :param target:           event or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:            str | (int, int)
-    :param file_types:       filter file types Default value = (("ALL Files", "*.* *"),).
-    :type file_types:        Tuple[(str, str), ...]
+    :param allowed_types:       filter file types Default value = (("ALL Files", "*.* *"),).
+    :type allowed_types:        Tuple[(str, str), ...]
     :param initial_folder:   starting path for folders and files
     :type initial_folder:
     :param hover:          text, that will appear when mouse hovers over the element
@@ -1825,7 +1825,7 @@ def FileBrowse(
         text=text,
         button_type=BUTTON_TYPE_BROWSE_FILE,
         target=target,
-        file_types=file_types,
+        allowed_types=allowed_types,
         initial_folder=initial_folder,
         hover=hover,
         size=size,
@@ -1851,7 +1851,7 @@ def FileBrowse(
 def FilesBrowse(
     text='Browse',
     target=(ThisRow, -1),
-    file_types=FILE_TYPES_ALL_FILES,
+    allowed_types=FILE_TYPES_ALL_FILES,
     disabled=False,
     initial_folder=None,
     hover=None,
@@ -1879,8 +1879,8 @@ def FilesBrowse(
     :type text:       (str)
     :param target:           event or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:            str | (int, int)
-    :param file_types:       Default value = (("ALL Files", "*.* *"),).
-    :type file_types:        Tuple[(str, str), ...]
+    :param allowed_types:       Default value = (("ALL Files", "*.* *"),).
+    :type allowed_types:        Tuple[(str, str), ...]
     :param disabled:         set disable state for element (Default = False)
     :type disabled:          (bool)
     :param initial_folder:   starting path for folders and files
@@ -1926,7 +1926,7 @@ def FilesBrowse(
         text=text,
         button_type=BUTTON_TYPE_BROWSE_FILES,
         target=target,
-        file_types=file_types,
+        allowed_types=allowed_types,
         initial_folder=initial_folder,
         change_submits=change_submits,
         enable_events=enable_events,
@@ -1954,7 +1954,7 @@ def FilesBrowse(
 def FileSaveAs(
     text='Save As...',
     target=(ThisRow, -1),
-    file_types=FILE_TYPES_ALL_FILES,
+    allowed_types=FILE_TYPES_ALL_FILES,
     initial_folder=None,
     default_extension='',
     disabled=False,
@@ -1981,8 +1981,8 @@ def FileSaveAs(
     :type text:        (str)
     :param target:            event or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:             str | (int, int)
-    :param file_types:        Default value = (("ALL Files", "*.* *"),).
-    :type file_types:         Tuple[(str, str), ...]
+    :param allowed_types:        Default value = (("ALL Files", "*.* *"),).
+    :type allowed_types:         Tuple[(str, str), ...]
     :param default_extension: If no extension entered by user, add this to filename (only used in saveas dialogs)
     :type default_extension:  (str)
     :param initial_folder:    starting path for folders and files
@@ -2027,7 +2027,7 @@ def FileSaveAs(
         text=text,
         button_type=BUTTON_TYPE_SAVEAS_FILE,
         target=target,
-        file_types=file_types,
+        allowed_types=allowed_types,
         initial_folder=initial_folder,
         default_extension=default_extension,
         hover=hover,
@@ -2054,7 +2054,7 @@ def FileSaveAs(
 def SaveAs(
     text='Save As...',
     target=(ThisRow, -1),
-    file_types=FILE_TYPES_ALL_FILES,
+    allowed_types=FILE_TYPES_ALL_FILES,
     initial_folder=None,
     default_extension='',
     disabled=False,
@@ -2081,8 +2081,8 @@ def SaveAs(
     :type text:        (str)
     :param target:            event or (row,col) target for the button (Default value = (ThisRow, -1))
     :type target:             str | (int, int)
-    :param file_types:        Default value = (("ALL Files", "*.* *"),).
-    :type file_types:         Tuple[(str, str), ...]
+    :param allowed_types:        Default value = (("ALL Files", "*.* *"),).
+    :type allowed_types:         Tuple[(str, str), ...]
     :param default_extension: If no extension entered by user, add this to filename (only used in saveas dialogs)
     :type default_extension:  (str)
     :param initial_folder:    starting path for folders and files
@@ -2127,7 +2127,7 @@ def SaveAs(
         text=text,
         button_type=BUTTON_TYPE_SAVEAS_FILE,
         target=target,
-        file_types=file_types,
+        allowed_types=allowed_types,
         initial_folder=initial_folder,
         default_extension=default_extension,
         hover=hover,
@@ -7242,7 +7242,7 @@ class _QuickMeter:
         button_color=(None, None),
         size=DEFAULT_PROGRESS_BAR_SIZE,
         border_width=None,
-        grab_anywhere=False,
+        grab_anywhere=True,
         no_titlebar=False,
         on_top=None,
         no_button=False,
@@ -7407,7 +7407,7 @@ def one_line_progress_meter(
     button_color=None,
     size=DEFAULT_PROGRESS_BAR_SIZE,
     border_width=None,
-    grab_anywhere=False,
+    grab_anywhere=True,
     no_titlebar=False,
     on_top=None,
     no_button=False,
@@ -7527,7 +7527,7 @@ class _DebugWin:
         font=None,
         no_titlebar=False,
         no_button=False,
-        grab_anywhere=False,
+        grab_anywhere=True,
         on_top=None,
         do_not_reroute_stdout=True,
         echo_stdout=False,
@@ -7750,7 +7750,7 @@ def easy_print(
     font=None,
     no_titlebar=False,
     no_button=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     do_not_reroute_stdout=True,
     echo_stdout=False,
@@ -8944,7 +8944,7 @@ def theme_button_color(color=None):
             color_tuple = button_color_to_tuple(color, (None, None))
         if color_tuple == (None, None):
             if not SUPPRESS_ERROR_POPUPS:
-                popup_error('theme_button_color - bad color string passed in', color)
+                error('theme_button_color - bad color string passed in', color)
             else:
                 print('** Badly formatted button color... not a tuple nor string **', color)
             set_options(button_color=color)  # go ahead and try with their string
@@ -9101,7 +9101,7 @@ def theme_global(new_theme=None):
     """
     if new_theme is not None:
         if new_theme not in theme_list():
-            popup_error_with_traceback(
+            error_with_traceback(
                 'Cannot use custom themes with theme_global call',
                 f'Your request to use theme {new_theme} cannot be performed.',
                 'The PySimpleGUI Global User Settings are meant for PySimpleGUI standard items, not user config items',
@@ -9581,7 +9581,7 @@ def keh(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -9833,7 +9833,7 @@ def popup_scrolled(
     relative_location=(None, None),
     non_blocking=False,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     font=None,
     image=None,
@@ -10005,7 +10005,7 @@ def popup_no_buttons(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10085,7 +10085,7 @@ def popup_non_blocking(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10173,7 +10173,7 @@ def popup_quick(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10263,7 +10263,7 @@ def popup_quick_message(
     line_width=None,
     font=None,
     no_titlebar=True,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=True,
     location=(None, None),
     relative_location=(None, None),
@@ -10438,7 +10438,7 @@ def popup_auto_close(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10512,10 +10512,10 @@ def popup_auto_close(
     )
 
 
-# --------------------------- popup_error ---------------------------
-def popup_error(
+# --------------------------- error ---------------------------
+def error(
     *args,
-    title=None,
+    title="Error",
     button_color=(None, None),
     background_color=None,
     text_color=None,
@@ -10526,7 +10526,7 @@ def popup_error(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10613,7 +10613,7 @@ def popup_cancel(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10699,7 +10699,7 @@ def popup_ok(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10785,7 +10785,7 @@ def popup_ok_cancel(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10871,7 +10871,7 @@ def popup_yes_no(
     line_width=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -10962,7 +10962,7 @@ def popup_get_folder(
     icon=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -11148,7 +11148,7 @@ def popup_get_file(
     default_extension='',
     save_as=False,
     multiple_files=False,
-    file_types=FILE_TYPES_ALL_FILES,
+    allowed_types=FILE_TYPES_ALL_FILES,
     no_window=False,
     size=(None, None),
     button_color=None,
@@ -11157,7 +11157,7 @@ def popup_get_file(
     icon=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -11184,8 +11184,8 @@ def popup_get_file(
     :type save_as:                   (bool)
     :param multiple_files:           if True, then allows multiple files to be selected that are returned with ';' between each filename
     :type multiple_files:            (bool)
-    :param file_types:               List of extensions to show using wildcards. All files (the default) = (("ALL Files", "*.* *"),).
-    :type file_types:                Tuple[Tuple[str,str]]
+    :param allowed_types:               List of extensions to show using wildcards. All files (the default) = (("ALL Files", "*.* *"),).
+    :type allowed_types:                Tuple[Tuple[str,str]]
     :param no_window:                if True, no PySimpleGUI window will be shown. Instead just the tkinter dialog is shown
     :type no_window:                 (bool)
     :param size:                     (width, height) of the InputText Element or Combo element if using history feature
@@ -11282,19 +11282,19 @@ def popup_get_file(
         # for Macs, setting parent=None fixes a warning problem.
         if save_as:
             if running_mac():
-                is_all = [(x, y) for (x, y) in file_types if all(ch in '* .' for ch in y)]
-                if not len(set(file_types)) > 1 and (len(is_all) != 0 or file_types == FILE_TYPES_ALL_FILES):
+                is_all = [(x, y) for (x, y) in allowed_types if all(ch in '* .' for ch in y)]
+                if not len(set(allowed_types)) > 1 and (len(is_all) != 0 or allowed_types == FILE_TYPES_ALL_FILES):
                     filename = tk.filedialog.asksaveasfilename(initialdir=initial_folder, initialfile=default_path, defaultextension=default_extension)  # show the 'get file' dialog box
                 else:
                     filename = tk.filedialog.asksaveasfilename(
-                        filetypes=file_types,
+                        filetypes=allowed_types,
                         initialdir=initial_folder,
                         initialfile=default_path,
                         defaultextension=default_extension,
                     )  # show the 'get file' dialog box
             else:
                 filename = tk.filedialog.asksaveasfilename(
-                    filetypes=file_types,
+                    filetypes=allowed_types,
                     initialdir=initial_folder,
                     initialfile=default_path,
                     parent=root,
@@ -11302,19 +11302,19 @@ def popup_get_file(
                 )  # show the 'get file' dialog box
         elif multiple_files:
             if running_mac():
-                is_all = [(x, y) for (x, y) in file_types if all(ch in '* .' for ch in y)]
-                if not len(set(file_types)) > 1 and (len(is_all) != 0 or file_types == FILE_TYPES_ALL_FILES):
+                is_all = [(x, y) for (x, y) in allowed_types if all(ch in '* .' for ch in y)]
+                if not len(set(allowed_types)) > 1 and (len(is_all) != 0 or allowed_types == FILE_TYPES_ALL_FILES):
                     filename = tk.filedialog.askopenfilenames(initialdir=initial_folder, initialfile=default_path, defaultextension=default_extension)  # show the 'get file' dialog box
                 else:
                     filename = tk.filedialog.askopenfilenames(
-                        filetypes=file_types,
+                        filetypes=allowed_types,
                         initialdir=initial_folder,
                         initialfile=default_path,
                         defaultextension=default_extension,
                     )  # show the 'get file' dialog box
             else:
                 filename = tk.filedialog.askopenfilenames(
-                    filetypes=file_types,
+                    filetypes=allowed_types,
                     initialdir=initial_folder,
                     initialfile=default_path,
                     parent=root,
@@ -11322,19 +11322,19 @@ def popup_get_file(
                 )  # show the 'get file' dialog box
         else:
             if running_mac():
-                is_all = [(x, y) for (x, y) in file_types if all(ch in '* .' for ch in y)]
-                if not len(set(file_types)) > 1 and (len(is_all) != 0 or file_types == FILE_TYPES_ALL_FILES):
+                is_all = [(x, y) for (x, y) in allowed_types if all(ch in '* .' for ch in y)]
+                if not len(set(allowed_types)) > 1 and (len(is_all) != 0 or allowed_types == FILE_TYPES_ALL_FILES):
                     filename = tk.filedialog.askopenfilename(initialdir=initial_folder, initialfile=default_path, defaultextension=default_extension)  # show the 'get files' dialog box
                 else:
                     filename = tk.filedialog.askopenfilename(
-                        filetypes=file_types,
+                        filetypes=allowed_types,
                         initialdir=initial_folder,
                         initialfile=default_path,
                         defaultextension=default_extension,
                     )  # show the 'get files' dialog box
             else:
                 filename = tk.filedialog.askopenfilename(
-                    filetypes=file_types,
+                    filetypes=allowed_types,
                     initialdir=initial_folder,
                     initialfile=default_path,
                     parent=root,
@@ -11350,11 +11350,11 @@ def popup_get_file(
         return filename
 
     if save_as:
-        browse_button = SaveAs(file_types=file_types, initial_folder=initial_folder, default_extension=default_extension)
+        browse_button = SaveAs(allowed_types=allowed_types, initial_folder=initial_folder, default_extension=default_extension)
     elif multiple_files:
-        browse_button = FilesBrowse(file_types=file_types, initial_folder=initial_folder, files_delimiter=files_delimiter)
+        browse_button = FilesBrowse(allowed_types=allowed_types, initial_folder=initial_folder, files_delimiter=files_delimiter)
     else:
-        browse_button = FileBrowse(file_types=file_types, initial_folder=initial_folder)
+        browse_button = FileBrowse(allowed_types=allowed_types, initial_folder=initial_folder)
 
     if image is not None:
         if isinstance(image, str):
@@ -11456,7 +11456,7 @@ def popup_get_text(
     icon=None,
     font=None,
     no_titlebar=False,
-    grab_anywhere=False,
+    grab_anywhere=True,
     on_top=None,
     location=(None, None),
     relative_location=(None, None),
@@ -11671,11 +11671,11 @@ def popup_get_date(
 
     if month_names is not None and len(month_names) != 12:
         if not SUPPRESS_ERROR_POPUPS:
-            popup_error('Incorrect month names list specified. Must have 12 entries.', 'Your list:', month_names)
+            error('Incorrect month names list specified. Must have 12 entries.', 'Your list:', month_names)
 
     if day_abbreviations is not None and len(day_abbreviations) != 7:
         if not SUPPRESS_ERROR_POPUPS:
-            popup_error('Incorrect day abbreviation list. Must have 7 entries.', 'Your list:', day_abbreviations)
+            error('Incorrect day abbreviation list. Must have 7 entries.', 'Your list:', day_abbreviations)
 
     now = datetime.datetime.now()
     cur_month, cur_day, cur_year = now.month, now.day, now.year
@@ -12078,7 +12078,7 @@ def popup_menu(window, element, menu_def, title=None, location=(None, None)):
     top_menu.invoke(0)
 
 
-def popup_error_with_traceback(title, *messages, emoji=None):
+def error_with_traceback(title, *messages, emoji=None):
     """
     Show an error message and as many additoinal lines of messages as you want.
     Will show the same error window as PySimpleGUI uses internally.  Has a button to
@@ -13295,7 +13295,7 @@ def execute_get_results(subprocess_id, timeout=None):
             # a Timeout error is not actually an error that needs to be reported
             pass
         except Exception as e:
-            popup_error('Error in execute_get_results', e)
+            error('Error in execute_get_results', e)
     return out_decoded, err_decoded
 
 
@@ -14633,7 +14633,7 @@ def _github_issue_post_validate(values, checklist, issue_types):
             issue_type = itype
             break
     if issue_type is None:
-        popup_error('Must choose issue type', on_top=True)
+        error('Must choose issue type', on_top=True)
         return False
     if values['-OS WIN-']:
         os_ver = values['-OS WIN VER-']
@@ -14644,28 +14644,28 @@ def _github_issue_post_validate(values, checklist, issue_types):
     elif values['-OS OTHER-']:
         os_ver = values['-OS OTHER VER-']
     else:
-        popup_error('Must choose Operating System', on_top=True)
+        error('Must choose Operating System', on_top=True)
         return False
 
     if os_ver == '':
-        popup_error('Must fill in an OS Version', on_top=True)
+        error('Must fill in an OS Version', on_top=True)
         return False
 
     checkboxes = any([values[('-CB-', i)] for i in range(len(checklist))])
     if not checkboxes:
-        popup_error('None of the checkboxes were checked.... you need to have tried something...anything...', on_top=True)
+        error('None of the checkboxes were checked.... you need to have tried something...anything...', on_top=True)
         return False
 
     title = values['-TITLE-'].strip()
     if len(title) == 0:
-        popup_error("Title can't be blank", on_top=True)
+        error("Title can't be blank", on_top=True)
         return False
     elif title[1 : len(title) - 1] == issue_type:
-        popup_error("Title can't be blank (only the type of issue isn't enough)", on_top=True)
+        error("Title can't be blank (only the type of issue isn't enough)", on_top=True)
         return False
 
     if len(values['-ML DETAILS-']) < 4:
-        popup_error('A little more details would be awesome', on_top=True)
+        error('A little more details would be awesome', on_top=True)
         return False
 
     return True
@@ -14966,7 +14966,7 @@ def main_open_github_issue():
                     issue_type = itype
                     break
             if issue_type is None:
-                popup_error('Must choose issue type', on_top=True)
+                error('Must choose issue type', on_top=True)
                 continue
             if values['-OS WIN-']:
                 operating_system = 'Windows'
@@ -14981,7 +14981,7 @@ def main_open_github_issue():
                 operating_system = 'Other'
                 os_ver = values['-OS OTHER VER-']
             else:
-                popup_error('Must choose Operating System', on_top=True)
+                error('Must choose Operating System', on_top=True)
                 continue
             checkboxes = ['X' if values[('-CB-', i)] else ' ' for i in range(len(checklist))]
 
@@ -16533,7 +16533,7 @@ _DEPRECATED_NAMES = {
     'PopupAnimated': ('popup_animated', popup_animated),
     'PopupAutoClose': ('popup_auto_close', popup_auto_close),
     'PopupCancel': ('popup_cancel', popup_cancel),
-    'PopupError': ('popup_error', popup_error),
+    'PopupError': ('error', error),
     'PopupGetFile': ('popup_get_file', popup_get_file),
     'PopupGetFolder': ('popup_get_folder', popup_get_folder),
     'PopupGetText': ('popup_get_text', popup_get_text),

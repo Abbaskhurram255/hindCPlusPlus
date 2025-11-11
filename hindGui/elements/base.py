@@ -15,7 +15,7 @@ from hindGui import ELEM_TYPE_PANE
 from hindGui import ELEM_TYPE_TAB
 from hindGui import ELEM_TYPE_TAB_GROUP
 from hindGui import MENU_RIGHT_CLICK_DISABLED
-from hindGui import popup_error_with_traceback
+from hindGui import error_with_traceback
 from hindGui import PSG_THEME_PART_BACKGROUND
 from hindGui import PSG_THEME_PART_BUTTON_BACKGROUND
 from hindGui import PSG_THEME_PART_BUTTON_TEXT
@@ -957,7 +957,7 @@ class Element:
             # Save the grabbed image to disk
         except Exception as e:
             # print(e)
-            popup_error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture of an element', e)
+            error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture of an element', e)
             return None
 
         # return grab
@@ -971,9 +971,9 @@ class Element:
             try:
                 grab.save(full_filename)
             except Exception as e:
-                popup_error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture', e)
+                error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture', e)
         else:
-            popup_error_with_traceback(
+            error_with_traceback(
                 'Screen capture failure',
                 'You have attempted a screen capture but have not set up a good filename to save to',
             )

@@ -13,8 +13,8 @@ from hindGui import ELEM_TYPE_TAB_GROUP
 from hindGui import Element
 from hindGui import LOOK_AND_FEEL_TABLE
 from hindGui import PackFormIntoFrame
-from hindGui import popup_error
-from hindGui import popup_error_with_traceback
+from hindGui import error
+from hindGui import error_with_traceback
 from hindGui import Hover
 from hindGui._utils import _error_popup_with_traceback
 from hindGui.window import Window
@@ -159,7 +159,7 @@ class Tab(Element):
         # -------------------------  Add the elements to a row  ------------------------- #
         for i, element in enumerate(args):  # Loop through list of elements and add them to the row
             if type(element) is list:
-                popup_error_with_traceback(
+                error_with_traceback(
                     'Error creating Tab layout',
                     'Layout has a LIST instead of an ELEMENT',
                     'This sometimes means you have a badly placed ]',
@@ -169,7 +169,7 @@ class Tab(Element):
                 )
                 continue
             elif callable(element) and not isinstance(element, Element):
-                popup_error_with_traceback(
+                error_with_traceback(
                     'Error creating Tab layout',
                     'Layout has a FUNCTION instead of an ELEMENT',
                     'This likely means you are missing () from your layout',
@@ -183,7 +183,7 @@ class Tab(Element):
                     '*** YOU ARE ATTEMPTING TO REUSE AN ELEMENT IN YOUR LAYOUT! Once placed in a layout, an element cannot be used in another layout. ***',
                     UserWarning,
                 )
-                popup_error_with_traceback(
+                error_with_traceback(
                     'Error creating Tab layout',
                     'The layout specified has already been used',
                     'You MUST start witha "clean", unused layout every time you create a window',
@@ -217,7 +217,7 @@ class Tab(Element):
             try:
                 iter(row)
             except TypeError:
-                popup_error(
+                error(
                     'Error creating Tab layout',
                     'Your row is not an iterable (e.g. a list)',
                     f'Instead of a list, the type found was {type(row)}',
@@ -453,7 +453,7 @@ class TabGroup(Element):
         # -------------------------  Add the elements to a row  ------------------------- #
         for i, element in enumerate(args):  # Loop through list of elements and add them to the row
             if type(element) is list:
-                popup_error(
+                error(
                     'Error creating Tab layout',
                     'Layout has a LIST instead of an ELEMENT',
                     'This sometimes means you have a badly placed ]',
@@ -465,7 +465,7 @@ class TabGroup(Element):
                 )
                 continue
             elif callable(element) and not isinstance(element, Element):
-                popup_error(
+                error(
                     'Error creating Tab layout',
                     'Layout has a FUNCTION instead of an ELEMENT',
                     'This likely means you are missing () from your layout',
@@ -481,7 +481,7 @@ class TabGroup(Element):
                     '*** YOU ARE ATTEMPTING TO REUSE AN ELEMENT IN YOUR LAYOUT! Once placed in a layout, an element cannot be used in another layout. ***',
                     UserWarning,
                 )
-                popup_error(
+                error(
                     'Error creating Tab layout',
                     'The layout specified has already been used',
                     'You MUST start witha "clean", unused layout every time you create a window',
@@ -516,7 +516,7 @@ class TabGroup(Element):
             try:
                 iter(row)
             except TypeError:
-                popup_error(
+                error(
                     'Error creating Tab layout',
                     'Your row is not an iterable (e.g. a list)',
                     f'Instead of a list, the type found was {type(row)}',

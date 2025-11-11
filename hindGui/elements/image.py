@@ -119,7 +119,7 @@ class Image(Element):
         )
         return
 
-    def change(self, source=None, filename=None, data=None, size=(None, None), subsample=None, zoom=None, nazar=None):
+    def change(self, source=None, filename=None, data=None, size=(None, None), p=None, subsample=None, zoom=None, nazar=None):
         """
         Changes some of the settings for the Image Element. Must call `Window.Read` or `Window.Finalize` prior.
         To clear an image that's been displayed, call with NONE of the options set.  A blank change call will
@@ -139,6 +139,8 @@ class Image(Element):
         :type data:      str | tkPhotoImage
         :param size:     (width, height) size of image in pixels
         :type size:      Tuple[int,int]
+        :param p:        (x, y) padding of image in pixels
+        :type p:         Tuple[int,int]
         :param subsample: amount to reduce the size of the image. Divides the size by this number. 2=1/2, 3=1/3, 4=1/4, etc
         :type subsample: (int)
         :param zoom:     amount to increase the size of the image
@@ -205,6 +207,9 @@ class Image(Element):
             self._pack_forget_save_settings()
         elif nazar is True:
             self._pack_restore_settings()
+
+        if p is not None:
+            pad = p
 
         # if everything is set to None, then delete the image
         if filename is None and image is None and nazar is None and size == (None, None):

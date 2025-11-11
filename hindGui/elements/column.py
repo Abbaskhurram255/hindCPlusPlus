@@ -7,7 +7,7 @@ import hindGui
 from hindGui import _make_ttk_scrollbar
 from hindGui import _random_error_emoji
 from hindGui import ELEM_TYPE_COLUMN
-from hindGui import popup_error
+from hindGui import error
 from hindGui import VarHolder
 from hindGui._utils import _error_popup_with_traceback
 from hindGui.elements.base import Element
@@ -300,7 +300,7 @@ class Column(Element):
         # -------------------------  Add the elements to a row  ------------------------- #
         for i, element in enumerate(args):  # Loop through list of elements and add them to the row
             if type(element) is list:
-                popup_error(
+                error(
                     'Error creating Column layout',
                     'Layout has a LIST instead of an ELEMENT',
                     'This sometimes means you have a badly placed ]',
@@ -312,7 +312,7 @@ class Column(Element):
                 )
                 continue
             elif callable(element) and not isinstance(element, Element):
-                popup_error(
+                error(
                     'Error creating Column layout',
                     'Layout has a FUNCTION instead of an ELEMENT',
                     'This likely means you are missing () from your layout',
@@ -328,7 +328,7 @@ class Column(Element):
                     '*** YOU ARE ATTEMPTING TO REUSE AN ELEMENT IN YOUR LAYOUT! Once placed in a layout, an element cannot be used in another layout. ***',
                     UserWarning,
                 )
-                popup_error(
+                error(
                     'Error creating Column layout',
                     'The layout specified has already been used',
                     'You MUST start witha "clean", unused layout every time you create a window',
@@ -364,7 +364,7 @@ class Column(Element):
             try:
                 iter(row)
             except TypeError:
-                popup_error(
+                error(
                     'Error creating Column layout',
                     'Your row is not an iterable (e.g. a list)',
                     f'Instead of a list, the type found was {type(row)}',

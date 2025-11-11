@@ -57,7 +57,7 @@ from hindGui import fill_form_with_values
 from hindGui import GRAB_ANYWHERE_IGNORE_THESE_WIDGETS
 from hindGui import InitializeResults
 from hindGui import PackFormIntoFrame
-from hindGui import popup_error_with_traceback
+from hindGui import error_with_traceback
 from hindGui import popup_get_date
 from hindGui import popup_quick_message
 from hindGui import pysimplegui_user_settings
@@ -1034,10 +1034,13 @@ class Window:
         if self.TKrootDestroyed:
             self.read_closed_window_count += 1
             if self.read_closed_window_count > 100:
-                popup_error_with_traceback(
-                    'Trying to parh a closed window',
-                    'You have tried 100 times to parh a closed window.',
-                    'You need to add a check for event == WIN_CLOSED',
+                error_with_traceback(
+                    'Ap ek khatm shuda graphical user interface',
+                    'ko istamal karne ki bar bar koshish kar rahe hen',
+                    '`while app(.isrunning):` block ke andar',
+                    'if `event == WIN_CLOSED: break` check dalie',
+                    'take ap is application ka GUI hi nahi',
+                    'isko jar se khatm kar paen.'
                 )
             return None, None
         if not self.Shown:
@@ -1229,6 +1232,19 @@ class Window:
         """
 
         fill_form_with_values(self, values_dict)
+        return self
+
+    def toggletop(self):
+        if self.OnTop:
+            self.offtop()
+        else:
+            self.ontop()
+        return self
+    def ontop(self):
+        self.on_top_set()
+        return self
+    def offtop(self):
+        self.on_top_clear()
         return self
 
     def _find_closest_key(self, search_key):
@@ -2581,7 +2597,7 @@ class Window:
             # Save the grabbed image to disk
         except Exception as e:
             # print(e)
-            popup_error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture', e)
+            error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture', e)
 
             return None
         # return grab
@@ -2595,9 +2611,9 @@ class Window:
             try:
                 grab.save(full_filename)
             except Exception as e:
-                popup_error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture', e)
+                error_with_traceback('Screen capture failure', 'Error happened while trying to save screencapture', e)
         else:
-            popup_error_with_traceback(
+            error_with_traceback(
                 'Screen capture failure',
                 'You have attempted a screen capture but have not set up a good filename to save to',
             )

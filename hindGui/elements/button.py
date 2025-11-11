@@ -44,7 +44,7 @@ class Button(Element):
         button_type=BUTTON_TYPE_READ_FORM,
         target=(None, None),
         hover=None,
-        file_types=FILE_TYPES_ALL_FILES,
+        allowed_types=FILE_TYPES_ALL_FILES,
         initial_folder=None,
         default_extension='',
         disabled=False,
@@ -87,8 +87,8 @@ class Button(Element):
         :type target:                 str | (int, int)
         :param hover:               text, that will appear when mouse hovers over the element
         :type hover:                (str)
-        :param file_types:            the filetypes that will be used to match files. To indicate all files: (("ALL Files", "*.* *"),).
-        :type file_types:             Tuple[(str, str), ...]
+        :param allowed_types:            the filetypes that will be used to match files. To indicate all files: (("ALL Files", "*.* *"),).
+        :type allowed_types:             Tuple[(str, str), ...]
         :param initial_folder:        starting path for folders and files
         :type initial_folder:         (str)
         :param default_extension:     If no extension entered by user, add this to filename (only used in saveas dialogs)
@@ -157,13 +157,13 @@ class Button(Element):
 
         self.AutoSizeButton = auto_size_button
         self.BType = button_type
-        if file_types is not None and len(file_types) == 2 and isinstance(file_types[0], str) and isinstance(file_types[1], str):
+        if allowed_types is not None and len(allowed_types) == 2 and isinstance(allowed_types[0], str) and isinstance(allowed_types[1], str):
             warnings.warn(
-                'file_types parameter not correctly specified. This parameter is a LIST of TUPLES. You have passed (str,str) rather than ((str, str),). Fixing it for you this time.\nchanging {} to {}\nPlease correct your code'.format(file_types, ((file_types[0], file_types[1]),)),
+                'allowed_types parameter not correctly specified. This parameter is a LIST of TUPLES. You have passed (str,str) rather than ((str, str),). Fixing it for you this time.\nchanging {} to {}\nPlease correct your code'.format(allowed_types, ((allowed_types[0], allowed_types[1]),)),
                 UserWarning,
             )
-            file_types = ((file_types[0], file_types[1]),)
-        self.FileTypes = file_types
+            allowed_types = ((allowed_types[0], allowed_types[1]),)
+        self.AllowedTypes = allowed_types
         self.Widget = self.TKButton = None  # type: tk.Button
         self.Target = target
         self.text = str(text)
@@ -331,7 +331,7 @@ class Button(Element):
             return
         target_element, strvar, should_submit_window = self._find_target()
 
-        filetypes = FILE_TYPES_ALL_FILES if self.FileTypes is None else self.FileTypes
+        filetypes = FILE_TYPES_ALL_FILES if self.AllowedTypes is None else self.AllowedTypes
 
         if self.BType == BUTTON_TYPE_BROWSE_FOLDER:
             if running_mac():  # macs don't like seeing the parent window (go firgure)

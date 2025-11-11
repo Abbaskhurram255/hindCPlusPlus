@@ -82,11 +82,11 @@ class SystemTray:
             'Window Title',
             layout,
             element_padding=(0, 0),
-            margins=(0, 0),
+            fasla=(0, 0),
             grab_anywhere=True,
             no_titlebar=True,
             transparent_color='red',
-            keep_on_top=True,
+            on_top=True,
             right_click_menu=menu,
             location=(screen_size[0] - 100, screen_size[1] - 100),
             finalize=True,
@@ -188,7 +188,7 @@ class SystemTray:
         """
         Close the system tray window
         """
-        self.window.close()
+        self.window.die()
 
     def update(
         self,
@@ -292,9 +292,9 @@ class SystemTray:
             background_color=SYSTEM_TRAY_MESSAGE_WIN_COLOR,
             no_titlebar=True,
             location=win_location,
-            keep_on_top=True,
+            on_top=True,
             alpha_channel=0,
-            margins=(0, 0),
+            fasla=(0, 0),
             element_padding=(0, 0),
             grab_anywhere=True,
             finalize=True,
@@ -334,7 +334,7 @@ class SystemTray:
                     window.set_alpha(1)
                     break
             if event != TIMEOUT_KEY:
-                window.close()
+                window.die()
                 return EVENT_SYSTEM_TRAY_MESSAGE_CLICKED if event == '-GRAPH-' else event
             event, values = window(timeout=display_duration_in_ms)
             if event == TIMEOUT_KEY:
@@ -346,7 +346,7 @@ class SystemTray:
         else:
             window.set_alpha(alpha)
             event, values = window(timeout=display_duration_in_ms)
-        window.close()
+        window.die()
 
         return EVENT_SYSTEM_TRAY_MESSAGE_CLICKED if event == '-GRAPH-' else event
 

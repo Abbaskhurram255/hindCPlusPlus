@@ -992,6 +992,8 @@ def internet_access() -> bool:
     except requests.ConnectionError:
         return False
 def filepath(filename: str) -> str:
+    if filename == none or not isstr(filename) or len("" + filename) == 0:
+        return ""
     return os.path.join(os.getcwd(), filename)
 
 def main() -> none:
