@@ -9651,14 +9651,8 @@ def keh(
     :rtype:                       str | None
     """
 
-    if not args:
-        args_to_print = ['']
-    else:
-        args_to_print = args
-    if line_width is not None:
-        local_line_width = line_width
-    else:
-        local_line_width = MESSAGE_BOX_LINE_WIDTH
+    args_to_print = args if args is not None else ['']
+    local_line_width = line_width if line_width is not None else MESSAGE_BOX_LINE_WIDTH
     _title = title if title is not None else args_to_print[0]
 
     layout = [[]]
@@ -9670,8 +9664,6 @@ def keh(
             layout += [[Image(data=image)]]
 
     for message in args_to_print:
-        # fancy code to check if string and convert if not is not need. Just always convert to string :-)
-        # if not isinstance(message, str): message = str(message)
         message = str(message)
         if message.count('\n'):  # if there are line breaks, then wrap each segment separately
             # message_wrapped = message         # used to just do this, but now breaking into smaller pieces
@@ -9689,10 +9681,7 @@ def keh(
         layout += [[Text(message_wrapped, auto_size_text=True, text_color=text_color, background_color=background_color)]]
         total_lines += height
 
-    if non_blocking:
-        PopupButton = DummyButton  # important to use or else button will die other windows too!
-    else:
-        PopupButton = Button
+    PopupButton = DummyButton if non_blocking else Button  # important to use, else the button will die, along with the other windows!
     # show either an OK or Yes/No depending on paramater
     if custom_text != (None, None):
         if type(custom_text) is not tuple:
@@ -9740,9 +9729,9 @@ def keh(
             ]
         ]
     elif button_type == POPUP_BUTTONS_CANCELLED:
-        layout += [[PopupButton('Cancelled', button_color=button_color, focus=True, bind_return_key=True)]]
+        layout += [[PopupButton('Cancel', button_color=button_color, focus=True, bind_return_key=True)]]
     elif button_type == POPUP_BUTTONS_ERROR:
-        layout += [[PopupButton('Error', size=(6, 1), button_color=button_color, focus=True, bind_return_key=True)]]
+        layout += [[PopupButton('OK', size=(6, 1), button_color=button_color, focus=True, bind_return_key=True)]]
     elif button_type == POPUP_BUTTONS_OK_CANCEL:
         layout += [
             [

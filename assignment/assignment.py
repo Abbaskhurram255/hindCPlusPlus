@@ -1,6 +1,6 @@
 from KL_Py import *
 #theme("DarkPurple1")
-theme("DarkTeal6")
+theme("DarkTeal67")
 
 (default_image_path, default_image_size) = (filepath("assets/placeholder.png"), (280, 256))
 
@@ -17,7 +17,7 @@ while app.chal_rahi_he:
     if hissa(event, [None, "Exit", "escape"]):
         break
     if event == "Upload":
-        new_image_path = values["selected_image_path"]
+        new_image_path = values["selected_image_path"].strip()
         if new_image_path == "":
             app.offtop()
             error("Please select an image.")
