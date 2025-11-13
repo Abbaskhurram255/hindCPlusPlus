@@ -26,51 +26,119 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 @SuppressWarnings("all")
 public class KL {
+	public static final KL kl() {
+		// @hint.method this_method_will_help_make_the_instantiation_quicker
+		return new KL();
+	}
+	public static final KL kl = kl(), iske_lie = kl(), khud = kl(), self = khud,
+			parent = khud;
 	public static class hint {
+		public hint khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		//@class.why: this class is supposed to help make functions more understandable
 		public static class info extends hint {
+			public info khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 		}
 		public static class safety extends hint {
+			public safety khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class critical extends hint {
+			public critical khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
+		}
+		public static class caution extends hint {
+			public caution khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class intention extends hint {
+			public intention khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class behavior extends hint {
+			public behavior khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class functionality extends hint {
+			public functionality khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class goodpractice extends hint {
+			public goodpractice khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class badpractice extends hint {
+			public badpractice khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class time extends hint {
+			public time khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 		}
 		public static class timecomplexity extends hint.time {
 		}
 		public static class approach extends hint {
+			public approach khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class avoids extends hint {
+			public avoids khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class prevents extends hint {
+			public prevents khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class WARNING extends hint {
+			public WARNING khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class forClass extends hint {
+			public forClass khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class constructor extends hint {
+			public constructor khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class forConstructor extends hint.constructor {
 		}
 		public static class field extends hint {
+			public field khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 		}
 		public static class forField extends hint.field {
 		}
 		public static class method extends hint {
+			public method khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 		}
 		public static class forMethod extends hint.method {
 		}
 		public static class param extends hint {
+			public param khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 		}
 		public static class forParam extends hint.param {
 		}
@@ -79,6 +147,9 @@ public class KL {
 		standard, setLength, naiLength, twice, dugni, half, adhi;
 	}
 	public static class size {
+		public size khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		//enums cannot be extended, hence manual manipulation
 		public static length standard = length.standard,
 				setLength = length.setLength, naiLength = length.naiLength,
@@ -86,21 +157,30 @@ public class KL {
 				adhi = length.adhi;
 	}
 	public static class lambai extends size {
+		public lambai khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 	}
 	public static class init {
+		public init khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		public static int i, j, k;
 	}
 	public static class variable extends init {
+		public variable khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 	}
 	public static class varbl extends variable {
+		public varbl khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 	}
-	public static final KL kl() {
-		// @hint.method this_method_will_help_make_the_instantiation_quicker
-		return new KL();
-	}
-	public static final KL kl = kl(),
-			iske_lie = kl();
 	public static class money {
+		public money khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		//@class.why: this class is supposed to help deal with money-related everyday calculations easier (currency conversion will be added soon)
 		private double amnt;
 		private String cur;
@@ -259,6 +339,9 @@ public class KL {
 		}
 	}
 	public static final class pesa extends money {
+		public pesa khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		pesa() {
 			super.amnt = 0;
 			super.cur = "Rs. ";
@@ -300,6 +383,9 @@ public class KL {
 		}
 	}
 	public static class number extends Number {
+		public number khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private double value;
 		number() {
 			this.value = 0;
@@ -508,6 +594,9 @@ public class KL {
 		}
 	}
 	public static class num extends number {
+		public num khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		num() {
 			super();
 		}
@@ -648,6 +737,9 @@ public class KL {
 		}
 	}
 	public static class naya {
+		public naya khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		public static number number() {
 			return new number();
 		}
@@ -674,6 +766,9 @@ public class KL {
 		return new num(value);
 	}
 	public static final class kmath {
+		public kmath khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		//@class.why: this class is supposed to help give fellow developers an easier time dealing with units
 		public static double pi = 3.141592653589793, c = 2.99792e8,
 				earthsGravity = 9.80665, earthsMass = 5.9722e24,
@@ -681,6 +776,9 @@ public class KL {
 		public static String cUnit = "m/s", earthsGravityUnit = "m/s^2",
 				earthsMassUnit = "km", earthsRadiusUnit = "km";
 		public static final class c {
+			public c khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			// temperature::c
 			public static int f(int n) {
 				return (int) (1.8 * n + 32);
@@ -829,6 +927,9 @@ public class KL {
 			}
 		}
 		public static final class f {
+			public f khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int c(int n) {
 				return (int) (((n - 32) * 5) / 9);
 			}
@@ -843,6 +944,9 @@ public class KL {
 			}
 		}
 		public static final class m {
+			public m khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			// distance::m
 			public static int km(int n) {
 				return (int) (n * 1e-3);
@@ -1063,6 +1167,9 @@ public class KL {
 			}
 		}
 		public static final class km {
+			public km khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int m(int n) {
 				return (int) (n * 1e3);
 			}
@@ -1149,6 +1256,9 @@ public class KL {
 			}
 		}
 		public static final class mi {
+			public mi khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int m(int n) {
 				return (int) (n * 1.60934e+3);
 			}
@@ -1235,6 +1345,9 @@ public class KL {
 			}
 		}
 		public static final class ft {
+			public ft khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int m(int n) {
 				return (int) (n * 3.048e-1);
 			}
@@ -1321,6 +1434,9 @@ public class KL {
 			}
 		}
 		public static final class in {
+			public in khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int m(int n) {
 				return (int) (n * 2.54e-2);
 			}
@@ -1407,6 +1523,9 @@ public class KL {
 			}
 		}
 		public static final class cm {
+			public cm khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int m(int n) {
 				return (int) (n * 1e-2);
 			}
@@ -1493,6 +1612,9 @@ public class KL {
 			}
 		}
 		public static final class mm {
+			public mm khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int m(int n) {
 				return (int) (n * 1e-3);
 			}
@@ -1579,6 +1701,9 @@ public class KL {
 			}
 		}
 		public static final class yd {
+			public yd khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int m(int n) {
 				return (int) (n * 9.144e-1);
 			}
@@ -1665,6 +1790,9 @@ public class KL {
 			}
 		}
 		public static final class mcg {
+			public mcg khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int mg(int n) {
 				return (int) (n * 1e-3);
 			}
@@ -1751,6 +1879,9 @@ public class KL {
 			}
 		}
 		public static final class mg {
+			public mg khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int mcg(int n) {
 				return (int) (n * 1e3);
 			}
@@ -1837,6 +1968,9 @@ public class KL {
 			}
 		}
 		public static final class g {
+			public g khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int mcg(int n) {
 				return (int) (n * 1e6);
 			}
@@ -1923,6 +2057,9 @@ public class KL {
 			}
 		}
 		public static final class kg {
+			public kg khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int mcg(int n) {
 				return (int) (n * 1e9);
 			}
@@ -2009,6 +2146,9 @@ public class KL {
 			}
 		}
 		public static final class ton {
+			public ton khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int mcg(int n) {
 				return (int) (n * 1e12);
 			}
@@ -2095,6 +2235,9 @@ public class KL {
 			}
 		}
 		public static final class kiloton {
+			public kiloton khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public KL parent = super;
 			public static int mcg(int n) {
 				return (int) (n * 1e15);
 			}
@@ -2181,6 +2324,9 @@ public class KL {
 			}
 		}
 		public static final class oz {
+			public oz khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int mcg(int n) {
 				return (int) (n * 2.835e7);
 			}
@@ -2267,6 +2413,9 @@ public class KL {
 			}
 		}
 		public static final class p {
+			public p khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int mcg(int n) {
 				return (int) (n * 4.536e8);
 			}
@@ -2353,6 +2502,9 @@ public class KL {
 			}
 		}
 		public static final class ns {
+			public ns khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int mcs(int n) {
 				return (int) (n * 1e-3);
 			}
@@ -2487,6 +2639,9 @@ public class KL {
 			}
 		}
 		public static final class mcs {
+			public mcs khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 1e3);
 			}
@@ -2621,6 +2776,9 @@ public class KL {
 			}
 		}
 		public static final class ms {
+			public ms khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 1e6);
 			}
@@ -2755,6 +2913,9 @@ public class KL {
 			}
 		}
 		public static final class s {
+			public s khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 1e9);
 			}
@@ -2889,6 +3050,9 @@ public class KL {
 			}
 		}
 		public static final class h {
+			public h khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 3.6e12);
 			}
@@ -3023,6 +3187,9 @@ public class KL {
 			}
 		}
 		public static final class d {
+			public d khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 8.64e13);
 			}
@@ -3157,6 +3324,9 @@ public class KL {
 			}
 		}
 		public static final class wk {
+			public wk khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 6.048e14);
 			}
@@ -3291,6 +3461,9 @@ public class KL {
 			}
 		}
 		public static final class mn {
+			public mn khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 2.628e15);
 			}
@@ -3425,6 +3598,9 @@ public class KL {
 			}
 		}
 		public static final class yr {
+			public yr khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 3.154e16);
 			}
@@ -3559,6 +3735,9 @@ public class KL {
 			}
 		}
 		public static final class dc {
+			public dc khud = this, iske_lie = khud, iska = khud, isko = khud,
+					self = khud;
+			public KL parent = super;
 			public static int ns(int n) {
 				return (int) (n * 3.154e17);
 			}
@@ -3920,12 +4099,30 @@ public class KL {
 	public String filePath(String filename) {
 		return path(filename);
 	}
+	public String filepath(String filename) {
+		return path(filename);
+	}
+	public String file_path(String filename) {
+		return path(filename);
+	}
 	public String pathTo(String filename) {
+		return path(filename);
+	}
+	public String pathto(String filename) {
+		return path(filename);
+	}
+	public String path_to(String filename) {
+		return path(filename);
+	}
+	public String src(String filename) {
 		return path(filename);
 	}
 	public static String fileSeparator = System.getProperty("file.separator"),
 			workDirectory = System.getProperty("user.dir").toLowerCase();
 	public static class sys {
+		public sys khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static Runtime runtime = Runtime.getRuntime();
 		public static String name = System.getProperty("os.name").toLowerCase()
 				.split(" ")[0],
@@ -3944,8 +4141,8 @@ public class KL {
 			return numberOfCores();
 		}
 		public static void free() {
-			hint.intention is_supposed_to_run_the_garbage_collector_would_could_free_some_memory;
-			hint.info may_or_may_not_always_work;
+			hint.intention is_supposed_to_run_the_garbage_collector_would_could_clear_some_memory;
+			hint.caution may_or_may_not_always_work;
 			runtime.gc();
 		}
 		public static void gc() {
@@ -4049,6 +4246,9 @@ public class KL {
 	public static class system extends KL.sys {
 	}
 	public static class user {
+		public user khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		public static String name = System.getProperty("user.name"),
 				language = System.getProperty("user.language").toLowerCase(),
 				homeDirectory = System.getProperty("user.home"),
@@ -4056,7 +4256,9 @@ public class KL {
 	}
 	// gui
 	public static class app extends JFrame {
-		public app iske_lie = this;
+		public app khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		public static int SADA_WALA = Cursor.DEFAULT_CURSOR,
 				CROSSHAIR_WALA = Cursor.CROSSHAIR_CURSOR,
@@ -4961,7 +5163,9 @@ public class KL {
 	hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER;
 	hint.approach helps_make_building_guis_easier;
 	public static class gui extends app {
-		public gui iske_lie = this;
+		public gui khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		public gui() {
 			super();
@@ -5464,6 +5668,9 @@ public class KL {
 	hint.info all_should_be_set_to_public_TO_BE_SEEN_BY_ECLIPSE_WINDOWBUILDER_PLUGIN;
 	hint.approach helps_give_an_easier_time_building_guis;
 	public static class label extends JLabel {
+		public label khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		public static final int top = TOP, left = LEFT, bottom = BOTTOM,
 				right = RIGHT, center = CENTER, east = EAST, west = WEST,
@@ -5875,6 +6082,9 @@ public class KL {
 		}
 	}
 	public static class bordLay extends BorderLayout {
+		public bordLay khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		public static final String center = CENTER, east = EAST, right = east,
 				west = WEST, left = west, north = NORTH, top = north,
@@ -5887,6 +6097,9 @@ public class KL {
 		}
 	}
 	public static class gridLay extends GridLayout {
+		public gridLay khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		gridLay() {
 			super();
@@ -5899,18 +6112,27 @@ public class KL {
 		}
 	}
 	public static class gridBagLay extends GridBagLayout {
+		public gridBagLay khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		gridBagLay() {
 			super();
 		}
 	}
 	public static class gridBagSettings extends GridBagConstraints {
+		public gridBagSettings khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		gridBagSettings() {
 			super();
 		}
 	}
 	public static class flowLay extends FlowLayout {
+		public flowLay khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		flowLay() {
 			super();
@@ -5923,6 +6145,9 @@ public class KL {
 		}
 	}
 	public static class cardLay extends CardLayout {
+		public cardLay khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		cardLay() {
 			super();
@@ -5932,12 +6157,18 @@ public class KL {
 		}
 	}
 	public static class boxLay extends BoxLayout {
+		public boxLay khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		boxLay(Container target, int axis) {
 			super(target, axis);
 		}
 	}
 	public static class panel extends JPanel {
+		public panel khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		panel(JFrame... frameToAddTo_optional) {
 			super();
@@ -6283,6 +6514,9 @@ public class KL {
 		}
 	}
 	public static class button extends JButton {
+		public button khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		button(JPanel... panelToAddTo_optional) {
 			super();
@@ -6692,6 +6926,9 @@ public class KL {
 		}
 	}
 	public static class btn extends button {
+		public btn khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		btn(JPanel... panelToAddTo_optional) {
 			super(panelToAddTo_optional);
 		}
@@ -7026,6 +7263,9 @@ public class KL {
 		}
 	}
 	public static class btnGroup extends ButtonGroup {
+		public btnGroup khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		btnGroup() {
 			super();
 		}
@@ -7063,6 +7303,9 @@ public class KL {
 		}
 	}
 	public static class btnGrp extends btnGroup {
+		public btnGrp khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		btnGrp() {
 			super();
 		}
@@ -7087,6 +7330,9 @@ public class KL {
 		}
 	}
 	public static class toggleBtn extends JToggleButton {
+		public toggleBtn khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		toggleBtn(JPanel... panelToAddTo_optional) {
 			super();
@@ -7611,6 +7857,9 @@ public class KL {
 		}
 	}
 	public static class radioBtn extends JRadioButton {
+		public radioBtn khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		radioBtn(JPanel... panelToAddTo_optional) {
 			super();
@@ -8127,6 +8376,9 @@ public class KL {
 		}
 	}
 	public static class radioBtnItem extends JRadioButtonMenuItem {
+		public radioBtnItem khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		radioBtnItem(JPanel... panelToAddTo_optional) {
 			super();
@@ -8657,6 +8909,9 @@ public class KL {
 		}
 	}
 	public static class checkBox extends JCheckBox {
+		public checkBox khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		checkBox(JPanel... panelToAddTo_optional) {
 			super();
@@ -9181,6 +9436,9 @@ public class KL {
 		}
 	}
 	public static class checkBoxItem extends JCheckBoxMenuItem {
+		public checkBoxItem khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		checkBoxItem(JPanel... panelToAddTo_optional) {
 			super();
@@ -9699,6 +9957,9 @@ public class KL {
 		}
 	}
 	public static class separator extends JSeparator {
+		public separator khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		separator(JPanel... panelToAddTo_optional) {
 			super();
@@ -9720,16 +9981,25 @@ public class KL {
 		}
 	}
 	public static class separatorX extends separator {
+		public separatorX khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		separatorX(JPanel... panelToAddTo_optional) {
 			super(SwingConstants.HORIZONTAL, panelToAddTo_optional);
 		}
 	}
 	public static class separatorY extends separator {
+		public separatorY khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		separatorY(JPanel... panelToAddTo_optional) {
 			super(SwingConstants.VERTICAL, panelToAddTo_optional);
 		}
 	}
 	public static class sep extends separator {
+		public sep khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		sep(JPanel... panelToAddTo_optional) {
 			super(panelToAddTo_optional);
 		}
@@ -9738,16 +10008,25 @@ public class KL {
 		}
 	}
 	public static class sepX extends separatorX {
+		public sepX khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		sepX(JPanel... panelToAddTo_optional) {
 			super(panelToAddTo_optional);
 		}
 	}
 	public static class sepY extends separatorY {
+		public sepY khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		sepY(JPanel... panelToAddTo_optional) {
 			super(panelToAddTo_optional);
 		}
 	}
 	public static class menuBar extends JMenuBar {
+		public menuBar khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		menuBar(JPanel... panelToAddTo_optional) {
 			super();
@@ -9962,6 +10241,9 @@ public class KL {
 		}
 	}
 	public static class menu extends JMenu {
+		public menu khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		menu(JPanel... panelToAddTo_optional) {
 			super();
@@ -10310,6 +10592,9 @@ public class KL {
 		}
 	}
 	public static class menuItem extends JMenuItem {
+		public menuItem khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		private static final long serialVersionUID = 1L;
 		menuItem(JPanel... panelToAddTo_optional) {
 			super();
@@ -10665,6 +10950,9 @@ public class KL {
 		}
 	}
 	public static class contextMenu extends JPopupMenu {
+		public contextMenu khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		contextMenu(JPanel... panelToAddTo_optional) {
 			super();
@@ -10901,6 +11189,9 @@ public class KL {
 		}
 	}
 	public static class dropDown extends JComboBox {
+		public dropDown khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		int size = 0;
 		dropDown(JPanel... panelToAddTo_optional) {
@@ -11164,10 +11455,14 @@ public class KL {
 		}
 	}
 	public static class txtField extends JTextField {
+		public txtField khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		txtField(JPanel... panelToAddTo_optional) {
 			super();
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -11175,7 +11470,8 @@ public class KL {
 		}
 		txtField(String text, JPanel... panelToAddTo_optional) {
 			super(text);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -11183,7 +11479,8 @@ public class KL {
 		}
 		txtField(int columns, JPanel... panelToAddTo_optional) {
 			super(columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -11191,15 +11488,18 @@ public class KL {
 		}
 		txtField(String text, int columns, JPanel... panelToAddTo_optional) {
 			super(text, columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
 			}
 		}
-		txtField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+		txtField(Document doc, String text, int columns,
+				JPanel... panelToAddTo_optional) {
 			super(doc, text, columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -11525,10 +11825,14 @@ public class KL {
 		}
 	}
 	public static class txtArea extends JTextArea {
+		public txtArea khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		txtArea(JPanel... panelToAddTo_optional) {
 			super();
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -11536,7 +11840,8 @@ public class KL {
 		}
 		txtArea(String text, JPanel... panelToAddTo_optional) {
 			super(text);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -11544,23 +11849,28 @@ public class KL {
 		}
 		txtArea(int rows, int columns, JPanel... panelToAddTo_optional) {
 			super(rows, columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
 			}
 		}
-		txtArea(String text, int rows, int columns, JPanel... panelToAddTo_optional) {
+		txtArea(String text, int rows, int columns,
+				JPanel... panelToAddTo_optional) {
 			super(text, rows, columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
 			}
 		}
-		txtArea(Document doc, String text, int rows, int columns, JPanel... panelToAddTo_optional) {
+		txtArea(Document doc, String text, int rows, int columns,
+				JPanel... panelToAddTo_optional) {
 			super(doc, text, rows, columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -11873,10 +12183,14 @@ public class KL {
 		}
 	}
 	public static class txtPane extends JTextPane {
+		public txtPane khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		txtPane(JPanel... panelToAddTo_optional) {
 			super();
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -11884,7 +12198,8 @@ public class KL {
 		}
 		txtPane(StyledDocument doc, JPanel... panelToAddTo_optional) {
 			super(doc);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -12173,10 +12488,14 @@ public class KL {
 		}
 	}
 	public static class pwdField extends JPasswordField {
+		public pwdField khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		private static final long serialVersionUID = 1L;
 		pwdField(JPanel... panelToAddTo_optional) {
 			super();
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -12184,7 +12503,8 @@ public class KL {
 		}
 		pwdField(String text, JPanel... panelToAddTo_optional) {
 			super(text);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -12192,7 +12512,8 @@ public class KL {
 		}
 		pwdField(int columns, JPanel... panelToAddTo_optional) {
 			super(columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -12200,15 +12521,18 @@ public class KL {
 		}
 		pwdField(String text, int columns, JPanel... panelToAddTo_optional) {
 			super(text, columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
 			}
 		}
-		pwdField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+		pwdField(Document doc, String text, int columns,
+				JPanel... panelToAddTo_optional) {
 			super(doc, text, columns);
-			if (panelToAddTo_optional != null && panelToAddTo_optional.length == 1
+			if (panelToAddTo_optional != null
+					&& panelToAddTo_optional.length == 1
 					&& panelToAddTo_optional[0] != null) {
 				JPanel panel = panelToAddTo_optional[0];
 				panel.add(this);
@@ -12534,6 +12858,9 @@ public class KL {
 		}
 	}
 	public static class icon extends ImageIcon {
+		public icon khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		icon() {
 			super();
 		}
@@ -12554,6 +12881,9 @@ public class KL {
 		}
 	}
 	public static class image extends icon {
+		public image khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		image() {
 			super();
 		}
@@ -12574,6 +12904,9 @@ public class KL {
 		}
 	}
 	public static class img extends image {
+		public img khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent = super;
 		img() {
 			super();
 		}
@@ -12594,6 +12927,9 @@ public class KL {
 		}
 	}
 	public static class lineBorder extends LineBorder {
+		public lineBorder khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		lineBorder(Color color) {
 			super(color);
 		}
@@ -12605,6 +12941,9 @@ public class KL {
 		}
 	}
 	public static class etchedBorder extends EtchedBorder {
+		public etchedBorder khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent = super;
 		etchedBorder() {
 			super();
 		}
@@ -12619,6 +12958,9 @@ public class KL {
 		}
 	}
 	public static class clr extends Color {
+		public clr khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		private static final long serialVersionUID = 1L;
 		clr() {
 			super(0, 0, 0);
@@ -13246,6 +13588,9 @@ public class KL {
 				yellowygreen = new clr("#bff128");
 	}
 	public static final class font extends Font {
+		public font khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		font(String fontFamily, int fontSize) {
 			super(fontFamily, Font.PLAIN, fontSize);
 		}
@@ -13272,6 +13617,9 @@ public class KL {
 		}
 	}
 	public static class file extends File {
+		public file khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		file(File parent, String child) {
 			super(parent, child);
 		}
@@ -13605,8 +13953,14 @@ public class KL {
 			yellow = new clr(clr.yellow), white = new clr(clr.white),
 			black = new clr(clr.black);
 	public static class colors extends clr {
+		public colors khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class clrs extends clr {
+		public clrs khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	// some other syntax candies
 	public static pesa rakam() {
@@ -13821,76 +14175,95 @@ public class KL {
 	public static label label(String text, JPanel... panelToAddTo_optional) {
 		return new label(text, panelToAddTo_optional);
 	}
-	public static label label(String text, int alignment, JPanel... panelToAddTo_optional) {
+	public static label label(String text, int alignment,
+			JPanel... panelToAddTo_optional) {
 		return new label(text, alignment, panelToAddTo_optional);
 	}
 	public static label nayaLabel(JPanel... panelToAddTo_optional) {
 		return new label(panelToAddTo_optional);
 	}
-	public static label nayaLabel(String text, JPanel... panelToAddTo_optional) {
+	public static label nayaLabel(String text,
+			JPanel... panelToAddTo_optional) {
 		return new label(text, panelToAddTo_optional);
 	}
-	public static label nayaLabel(String text, int alignment, JPanel... panelToAddTo_optional) {
+	public static label nayaLabel(String text, int alignment,
+			JPanel... panelToAddTo_optional) {
 		return new label(text, alignment, panelToAddTo_optional);
 	}
 	public static txtField txtField(JPanel... panelToAddTo_optional) {
 		return new txtField(panelToAddTo_optional);
 	}
-	public static txtField txtField(String text, JPanel... panelToAddTo_optional) {
+	public static txtField txtField(String text,
+			JPanel... panelToAddTo_optional) {
 		return new txtField(text, panelToAddTo_optional);
 	}
-	public static txtField txtField(int columns, JPanel... panelToAddTo_optional) {
+	public static txtField txtField(int columns,
+			JPanel... panelToAddTo_optional) {
 		return new txtField(columns, panelToAddTo_optional);
 	}
-	public static txtField txtField(String text, int columns, JPanel... panelToAddTo_optional) {
+	public static txtField txtField(String text, int columns,
+			JPanel... panelToAddTo_optional) {
 		return new txtField(text, columns, panelToAddTo_optional);
 	}
-	public static txtField txtField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+	public static txtField txtField(Document doc, String text, int columns,
+			JPanel... panelToAddTo_optional) {
 		return new txtField(doc, text, columns, panelToAddTo_optional);
 	}
 	public static txtField naiTxtField(JPanel... panelToAddTo_optional) {
 		return new txtField(panelToAddTo_optional);
 	}
-	public static txtField naiTxtField(String text, JPanel... panelToAddTo_optional) {
+	public static txtField naiTxtField(String text,
+			JPanel... panelToAddTo_optional) {
 		return new txtField(text, panelToAddTo_optional);
 	}
-	public static txtField naiTxtField(int columns, JPanel... panelToAddTo_optional) {
+	public static txtField naiTxtField(int columns,
+			JPanel... panelToAddTo_optional) {
 		return new txtField(columns, panelToAddTo_optional);
 	}
-	public static txtField naiTxtField(String text, int columns, JPanel... panelToAddTo_optional) {
+	public static txtField naiTxtField(String text, int columns,
+			JPanel... panelToAddTo_optional) {
 		return new txtField(text, columns, panelToAddTo_optional);
 	}
-	public static txtField naiTxtField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+	public static txtField naiTxtField(Document doc, String text, int columns,
+			JPanel... panelToAddTo_optional) {
 		return new txtField(doc, text, columns, panelToAddTo_optional);
 	}
 	public static pwdField pwdField(JPanel... panelToAddTo_optional) {
 		return new pwdField(panelToAddTo_optional);
 	}
-	public static pwdField pwdField(String text, JPanel... panelToAddTo_optional) {
+	public static pwdField pwdField(String text,
+			JPanel... panelToAddTo_optional) {
 		return new pwdField(text, panelToAddTo_optional);
 	}
-	public static pwdField pwdField(int columns, JPanel... panelToAddTo_optional) {
+	public static pwdField pwdField(int columns,
+			JPanel... panelToAddTo_optional) {
 		return new pwdField(columns, panelToAddTo_optional);
 	}
-	public static pwdField pwdField(String text, int columns, JPanel... panelToAddTo_optional) {
+	public static pwdField pwdField(String text, int columns,
+			JPanel... panelToAddTo_optional) {
 		return new pwdField(text, columns, panelToAddTo_optional);
 	}
-	public static pwdField pwdField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+	public static pwdField pwdField(Document doc, String text, int columns,
+			JPanel... panelToAddTo_optional) {
 		return new pwdField(doc, text, columns, panelToAddTo_optional);
 	}
 	public static pwdField naiPwdField(JPanel... panelToAddTo_optional) {
 		return new pwdField(panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField(String text, JPanel... panelToAddTo_optional) {
+	public static pwdField naiPwdField(String text,
+			JPanel... panelToAddTo_optional) {
 		return new pwdField(text, panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField(int columns, JPanel... panelToAddTo_optional) {
+	public static pwdField naiPwdField(int columns,
+			JPanel... panelToAddTo_optional) {
 		return new pwdField(columns, panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField(String text, int columns, JPanel... panelToAddTo_optional) {
+	public static pwdField naiPwdField(String text, int columns,
+			JPanel... panelToAddTo_optional) {
 		return new pwdField(text, columns, panelToAddTo_optional);
 	}
-	public static pwdField naiPwdField(Document doc, String text, int columns, JPanel... panelToAddTo_optional) {
+	public static pwdField naiPwdField(Document doc, String text, int columns,
+			JPanel... panelToAddTo_optional) {
 		return new pwdField(doc, text, columns, panelToAddTo_optional);
 	}
 	public static icon icon() {
@@ -14281,6 +14654,9 @@ public class KL {
 		return url(address);
 	}
 	public static final class key {
+		public key khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static final char enter = '\n', backspace = '\b', tab = '\t',
 				cancel = 0x03, clear = 0x0c, shift = 0x10, control = 0x11,
 				alt = 0x12, pause = 0x13, capslock = 0x14, escape = 0x1b,
@@ -36965,6 +37341,9 @@ public class KL {
 		}
 	}
 	public static class bln {
+		public bln khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, False, No, no,
 				Na, na, Nahi, nahi, Jhoot, jhoot,
 				True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = false;
@@ -37050,6 +37429,9 @@ public class KL {
 		}
 	}
 	public static class bool extends bln {
+		public bool khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		bool(boolean condition) {
 			super(condition);
 		}
@@ -37065,6 +37447,9 @@ public class KL {
 		}
 	}
 	public static class cdn extends bool {
+		public cdn khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		cdn(boolean condition) {
 			super(condition);
 		}
@@ -37080,6 +37465,9 @@ public class KL {
 		}
 	}
 	public static class hal extends cdn {
+		public hal khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		hal(boolean condition) {
 			super(condition);
 		}
@@ -37095,6 +37483,9 @@ public class KL {
 		}
 	}
 	public static class hlt extends hal {
+		public hlt khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		hlt(boolean condition) {
 			super(condition);
 		}
@@ -51355,6 +51746,9 @@ public class KL {
 		return collect(arg, zippedArgA, zippedArgB);
 	}
 	public static final class DoFail {
+		public DoFail khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -51595,6 +51989,9 @@ public class KL {
 		return new DoFail().Do(fn).Fail(fallback);
 	}
 	public static final class karoFail {
+		public karoFail khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -51870,6 +52267,9 @@ public class KL {
 		return new karoFail().karo(fn).nakam(fallback);
 	}
 	public static final class agar {
+		public agar khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -52116,6 +52516,9 @@ public class KL {
 		return new agar(condition).tab(onSuccess).nakam(onFallback);
 	}
 	public static class range {
+		public range khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static int[] inclusive(int n) {
 			intArr arr = intArr();
 			if (not(n) || isInf(n)) {
@@ -52475,16 +52878,34 @@ public class KL {
 		}
 	}
 	public static class rng extends range {
+		public rng khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class until extends range {
+		public until khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class fill extends range {
+		public fill khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class between extends range {
+		public between khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class bw extends range {
+		public bw khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class darmyan extends range {
+		public darmyan khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static int[] shamilAkhri(int n) {
 			return inclusive(n);
 		}
@@ -55077,6 +55498,9 @@ public class KL {
 	}
 	// Date functions
 	public static class date {
+		public date khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static String nthDay(int n) {
 			String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday",
 					"Thursday", "Friday", "Saturday"};
@@ -55428,6 +55852,9 @@ public class KL {
 		}
 	}
 	public static class tareekh extends date {
+		public tareekh khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static String ab() {
 			return now();
 		}
@@ -55495,6 +55922,9 @@ public class KL {
 	}
 	// utilities
 	public static class printSettings {
+		public printSettings khud = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public KL parent=super;
 		public static String breakCharacter = " ";
 	}
 	public static void println(Object... args) {
@@ -60670,6 +61100,9 @@ public class KL {
 		return quotient;
 	}
 	public static class add {
+		public add khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Char;
@@ -60732,8 +61165,14 @@ public class KL {
 		}
 	}
 	public static class dalo extends add {
+		public dalo khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class remove {
+		public remove khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Char;
@@ -60796,10 +61235,19 @@ public class KL {
 		}
 	}
 	public static class subtract extends remove {
+		public subtract khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class nikalo extends remove {
+		public nikalo khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class multiply {
+		public multiply khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static String[] each(String[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Str;
@@ -60842,8 +61290,14 @@ public class KL {
 		}
 	}
 	public static class times extends multiply {
+		public times khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class divide {
+		public divide khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static int[] each(int[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Int;
@@ -60898,8 +61352,14 @@ public class KL {
 		}
 	}
 	public static class quotient extends divide {
+		public quotient khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class ekekme {
+		public ekekme khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static String[] dalo(String[] arr, String s) {
 			return add.toEach(arr, s);
 		}
@@ -60917,6 +61377,9 @@ public class KL {
 		}
 	}
 	public static class ekekse {
+		public ekekse khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static String[] nikalo(String[] arr, String s) {
 			return subtract.fromEach(arr, s);
 		}
@@ -60934,6 +61397,9 @@ public class KL {
 		}
 	}
 	public static class ekekko {
+		public ekekko khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static String[] multiply(String[] arr, int n) {
 			return multiply.each(arr, n);
 		}
@@ -60990,6 +61456,9 @@ public class KL {
 		}
 	}
 	public static class guna {
+		public guna khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static String[] ekek(String[] arr, int n) {
 			return multiply.each(arr, n);
 		}
@@ -61007,6 +61476,9 @@ public class KL {
 		}
 	}
 	public static class bato {
+		public bato khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static int[] ekek(int[] arr, int n) {
 			return divide.each(arr, n);
 		}
@@ -65425,8 +65897,14 @@ public class KL {
 		return eq(x, y);
 	}
 	public static class is extends KL {
+		public is khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class he extends is {
+		public he khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static boolean he(char x, char y) {
 		return eq(x, y);
@@ -66524,6 +67002,9 @@ public class KL {
 		return !eq(x, y);
 	}
 	public static class not {
+		public not khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static boolean provided(Object o) {
 			return KL.isNull(o);
 		}
@@ -67105,6 +67586,9 @@ public class KL {
 		}
 	}
 	public static class nahi extends not {
+		public nahi khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static boolean both(String... strings) {
 		if (not(strings))
@@ -71756,6 +72240,9 @@ public class KL {
 		return clone(arr);
 	}
 	public static class blank {
+		public blank khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static String[] Str = new String[]{};
 		public static String[][] Str2D = new String[][]{};
 		public static int[] Int = new int[]{};
@@ -71784,8 +72271,14 @@ public class KL {
 		public static o o = o();
 	}
 	public static class khali extends blank {
+		public khali khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 	}
 	public static class summary {
+		public summary khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static o of(Object o) {
 			o summary = new o();
 			summary.add("type=" + type(o));
@@ -71850,6 +72343,9 @@ public class KL {
 		}
 	}
 	public static class malumat {
+		public malumat khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static o barae(Object o, Object... languageSupportingArgs) {
 			o malumat = new o();
 			malumat.add("type=" + type(o));
@@ -71914,6 +72410,9 @@ public class KL {
 		}
 	}
 	public static final class binary {
+		public binary khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public KL parent=super;
 		public static int indexOf(int[] src, int target) {
 			if (src == null || src.length == 0)
 				return -1;
