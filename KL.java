@@ -13691,7 +13691,7 @@ public class KL {
 				File myFile = new File(fname);
 				FileWriter fr = new FileWriter(fname);
 				fr.write(content);
-				print("[KL.file.JobSuccess]:\nFile \"" + myFile.getName()
+				print("[KL.file.JobSuccess]:\nFile \"" + myFile.getPath()
 						+ "\" created successfully.");
 				fr.close();
 				return true;
@@ -13707,6 +13707,12 @@ public class KL {
 			}
 			return create(fname, "");
 			// creates a blank file
+		}
+		public static boolean overwrite(String fname, String content) {
+			return create(fname, content);
+		}
+		public static boolean overwrite(String fname) {
+			return create(fname);
 		}
 		public static boolean createFolder(String folderName) {
 			if (not(folderName)) {
@@ -13839,7 +13845,7 @@ public class KL {
 			fname = fname.trim().replaceAll("\\/", "\\\\");
 			File myFile = new File(fname);
 			String msgOnSuccess = "[KL.file.JobSuccess]:\nFile \""
-					+ myFile.getPath() + "\" was deleted successfully.",
+					+ myFile.getPath() + "\" was deleted succesfully.",
 					msgOnFailure = kl().f(
 							"[KL.file.JobFailed]:\nFile \"%s\" failed to delete. No such file, or folder!",
 							myFile.getPath());
@@ -13865,8 +13871,7 @@ public class KL {
 		}
 		public static boolean deleteFolder(String fname) {
 			return delete(fname);
-			// the deleteFile method can delete anything: be it a folder, or
-			// directory
+			// the `file.`delete method can delete anything: be it a file, or a folder
 		}
 		public static boolean removeFolder(String fname) {
 			return delete(fname);
@@ -13896,7 +13901,8 @@ public class KL {
 				// either a false negative, or a false positive.
 			}
 			fname = fname.trim().replaceAll("\\/", "\\\\");
-			destinationString = destinationString.trim().replaceAll("\\/", "\\\\");
+			destinationString = destinationString.trim().replaceAll("\\/",
+					"\\\\");
 			//treat the forward slash as the back slash
 			if (endsWith(destinationString, "\\\\"))
 				destinationString += fname;
@@ -13907,20 +13913,25 @@ public class KL {
 			if (isNull(fileToRename) || !fileToRename.exists()) {
 				return false;
 			}
-			if (in(destinationString, "(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$") && (isNull(destinationFile) || !destinationFile.exists())) {
-				String newMoveDirectory = destinationString.split("(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$")[0];
-				new File(destinationString.split("(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$")[0]).mkdirs();
+			if (in(destinationString,
+					"(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$")
+					&& (isNull(destinationFile) || !destinationFile.exists())) {
+				String newMoveDirectory = destinationString.split(
+						"(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$")[0];
+				new File(destinationString.split(
+						"(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$")[0])
+						.mkdirs();
 			}
 			delete(destinationString);
 			if (!fileToRename.renameTo(destinationFile)) {
 				print("\n[KL.file.JobFailed]:\nFile \"" + fileToRename.getPath()
-					+ "\" failed to rename/move to \""
-					+ destinationFile.getPath() + "\"");
+						+ "\" failed to rename/move to \""
+						+ destinationFile.getPath() + "\"");
 				return false;
 			}
 			print("\n[KL.file.JobSuccess]:\nFile \"" + fileToRename.getPath()
-				+ "\" was successfully renamed/moved to \""
-				+ destinationFile.getPath() + "\"");
+					+ "\" was successfully renamed/moved to \""
+					+ destinationFile.getPath() + "\"");
 			return true;
 		}
 		public static boolean move(String from, String to) {
@@ -13956,8 +13967,11 @@ public class KL {
 			if (isNull(fileToCopy) || !fileToCopy.exists()) {
 				return false;
 			}
-			if (in(to, "(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$") && (isNull(destination) || !destination.exists())) {
-				new File(to.split("(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$")[0]).mkdirs();
+			if (in(to, "(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$")
+					&& (isNull(destination) || !destination.exists())) {
+				new File(to.split(
+						"(?<=\\\\)(?<fileName>\\w+)(?<ext>\\.\\w+)?$")[0])
+						.mkdirs();
 			}
 			try {
 				if (!overwrite) {
@@ -13967,13 +13981,13 @@ public class KL {
 							StandardCopyOption.REPLACE_EXISTING);
 				}
 				print("\n[KL.file.JobSuccess]:\nFile \"" + fileToCopy.getPath()
-				+ "\" was successfully copied to \""
-				+ destination.getPath() + "\"");
+						+ "\" was successfully copied to \""
+						+ destination.getPath() + "\"");
 				return true;
 			} catch (IOException e) {
 				print("\n[KL.file.JobFailed]:\nFile \"" + fileToCopy.getPath()
-				+ "\" failed to copy to \""
-				+ destination.getPath() + "\"");
+						+ "\" failed to copy to \"" + destination.getPath()
+						+ "\"");
 			}
 			return false;
 		}
@@ -78625,7 +78639,7 @@ public class KL {
 		print(file.delete("walkthrough/x.txt"));
 		print(file.create("walkthrough/x.txt"));
 		print(file.append("walkthrough/x.txt", "\nhey"));
-		//print(file.overwrite("walkthrough/x.txt", ""));
+		print(file.overwrite("walkthrough/x.txt"));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
