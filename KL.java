@@ -40,74 +40,77 @@ public class KL {
 		public static class info extends hint {
 			public info khud = this, iske_lie = khud, iska = khud, isko = khud,
 					self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class safety extends hint {
 			public safety khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class critical extends hint {
 			public critical khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class caution extends hint {
 			public caution khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class intention extends hint {
 			public intention khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class behavior extends hint {
 			public behavior khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class functionality extends hint {
 			public functionality khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class goodpractice extends hint {
 			public goodpractice khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class badpractice extends hint {
 			public badpractice khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class time extends hint {
 			public time khud = this, iske_lie = khud, iska = khud, isko = khud,
 					self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class timecomplexity extends hint.time {
+			public approach khud = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public hint.time parent = new hint().new time();
 		}
 		public static class approach extends hint {
 			public approach khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class avoids extends hint {
 			public avoids khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class prevents extends hint {
 			public prevents khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class WARNING extends hint {
 			public WARNING khud = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
-			public KL parent = kl();
+			public hint parent = new hint();
 		}
 		public static class forClass extends hint {
 			public forClass khud = this, iske_lie = khud, iska = khud,
@@ -10594,7 +10597,7 @@ public class KL {
 	public static class menuItem extends JMenuItem {
 		public menuItem khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		private static final long serialVersionUID = 1L;
 		menuItem(JPanel... panelToAddTo_optional) {
 			super();
@@ -12960,7 +12963,7 @@ public class KL {
 	public static class clr extends Color {
 		public clr khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		private static final long serialVersionUID = 1L;
 		clr() {
 			super(0, 0, 0);
@@ -13590,7 +13593,7 @@ public class KL {
 	public static final class font extends Font {
 		public font khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		font(String fontFamily, int fontSize) {
 			super(fontFamily, Font.PLAIN, fontSize);
 		}
@@ -13619,7 +13622,7 @@ public class KL {
 	public static class file extends File {
 		public file khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		file(File parent, String child) {
 			super(parent, child);
 		}
@@ -13955,12 +13958,12 @@ public class KL {
 	public static class colors extends clr {
 		public colors khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class clrs extends clr {
 		public clrs khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	// some other syntax candies
 	public static pesa rakam() {
@@ -14656,7 +14659,7 @@ public class KL {
 	public static final class key {
 		public key khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static final char enter = '\n', backspace = '\b', tab = '\t',
 				cancel = 0x03, clear = 0x0c, shift = 0x10, control = 0x11,
 				alt = 0x12, pause = 0x13, capslock = 0x14, escape = 0x1b,
@@ -37343,7 +37346,7 @@ public class KL {
 	public static class bln {
 		public bln khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, False, No, no,
 				Na, na, Nahi, nahi, Jhoot, jhoot,
 				True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = false;
@@ -37431,7 +37434,7 @@ public class KL {
 	public static class bool extends bln {
 		public bool khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		bool(boolean condition) {
 			super(condition);
 		}
@@ -37449,7 +37452,7 @@ public class KL {
 	public static class cdn extends bool {
 		public cdn khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		cdn(boolean condition) {
 			super(condition);
 		}
@@ -37467,7 +37470,7 @@ public class KL {
 	public static class hal extends cdn {
 		public hal khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		hal(boolean condition) {
 			super(condition);
 		}
@@ -37485,7 +37488,7 @@ public class KL {
 	public static class hlt extends hal {
 		public hlt khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		hlt(boolean condition) {
 			super(condition);
 		}
@@ -51748,7 +51751,7 @@ public class KL {
 	public static final class DoFail {
 		public DoFail khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -51991,7 +51994,7 @@ public class KL {
 	public static final class karoFail {
 		public karoFail khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -52269,7 +52272,7 @@ public class KL {
 	public static final class agar {
 		public agar khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -52518,7 +52521,7 @@ public class KL {
 	public static class range {
 		public range khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static int[] inclusive(int n) {
 			intArr arr = intArr();
 			if (not(n) || isInf(n)) {
@@ -52880,32 +52883,32 @@ public class KL {
 	public static class rng extends range {
 		public rng khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class until extends range {
 		public until khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class fill extends range {
 		public fill khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class between extends range {
 		public between khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class bw extends range {
 		public bw khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class darmyan extends range {
 		public darmyan khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static int[] shamilAkhri(int n) {
 			return inclusive(n);
 		}
@@ -55500,7 +55503,7 @@ public class KL {
 	public static class date {
 		public date khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String nthDay(int n) {
 			String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday",
 					"Thursday", "Friday", "Saturday"};
@@ -55854,7 +55857,7 @@ public class KL {
 	public static class tareekh extends date {
 		public tareekh khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String ab() {
 			return now();
 		}
@@ -55924,7 +55927,7 @@ public class KL {
 	public static class printSettings {
 		public printSettings khud = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String breakCharacter = " ";
 	}
 	public static void println(Object... args) {
@@ -61102,7 +61105,7 @@ public class KL {
 	public static class add {
 		public add khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Char;
@@ -61167,12 +61170,12 @@ public class KL {
 	public static class dalo extends add {
 		public dalo khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class remove {
 		public remove khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Char;
@@ -61237,17 +61240,17 @@ public class KL {
 	public static class subtract extends remove {
 		public subtract khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class nikalo extends remove {
 		public nikalo khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class multiply {
 		public multiply khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String[] each(String[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Str;
@@ -61292,12 +61295,12 @@ public class KL {
 	public static class times extends multiply {
 		public times khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class divide {
 		public divide khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static int[] each(int[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Int;
@@ -61354,12 +61357,12 @@ public class KL {
 	public static class quotient extends divide {
 		public quotient khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class ekekme {
 		public ekekme khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String[] dalo(String[] arr, String s) {
 			return add.toEach(arr, s);
 		}
@@ -61379,7 +61382,7 @@ public class KL {
 	public static class ekekse {
 		public ekekse khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String[] nikalo(String[] arr, String s) {
 			return subtract.fromEach(arr, s);
 		}
@@ -61399,7 +61402,7 @@ public class KL {
 	public static class ekekko {
 		public ekekko khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String[] multiply(String[] arr, int n) {
 			return multiply.each(arr, n);
 		}
@@ -61458,7 +61461,7 @@ public class KL {
 	public static class guna {
 		public guna khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String[] ekek(String[] arr, int n) {
 			return multiply.each(arr, n);
 		}
@@ -61478,7 +61481,7 @@ public class KL {
 	public static class bato {
 		public bato khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static int[] ekek(int[] arr, int n) {
 			return divide.each(arr, n);
 		}
@@ -65899,12 +65902,12 @@ public class KL {
 	public static class is extends KL {
 		public is khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class he extends is {
 		public he khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static boolean he(char x, char y) {
 		return eq(x, y);
@@ -67004,7 +67007,7 @@ public class KL {
 	public static class not {
 		public not khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static boolean provided(Object o) {
 			return KL.isNull(o);
 		}
@@ -67588,7 +67591,7 @@ public class KL {
 	public static class nahi extends not {
 		public nahi khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static boolean both(String... strings) {
 		if (not(strings))
@@ -72242,7 +72245,7 @@ public class KL {
 	public static class blank {
 		public blank khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static String[] Str = new String[]{};
 		public static String[][] Str2D = new String[][]{};
 		public static int[] Int = new int[]{};
@@ -72273,12 +72276,12 @@ public class KL {
 	public static class khali extends blank {
 		public khali khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 	}
 	public static class summary {
 		public summary khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static o of(Object o) {
 			o summary = new o();
 			summary.add("type=" + type(o));
@@ -72345,7 +72348,7 @@ public class KL {
 	public static class malumat {
 		public malumat khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static o barae(Object o, Object... languageSupportingArgs) {
 			o malumat = new o();
 			malumat.add("type=" + type(o));
@@ -72412,7 +72415,7 @@ public class KL {
 	public static final class binary {
 		public binary khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public KL parent=super;
+		public KL parent = kl();
 		public static int indexOf(int[] src, int target) {
 			if (src == null || src.length == 0)
 				return -1;
