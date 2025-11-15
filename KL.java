@@ -13655,7 +13655,8 @@ public class KL {
 		}
 		// @static methods
 		public static boolean create(String fname, String content) {
-			if (not(fname) || not(content)) {
+			if (not(fname) || content == null) {
+				//allow the content to be blank
 				return false;
 			}
 			if (in(fname, "(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)")) {
