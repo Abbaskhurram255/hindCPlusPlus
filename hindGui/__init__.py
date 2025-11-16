@@ -37,6 +37,7 @@ from typing import List  # noqa
 from typing import Tuple  # noqa
 
 
+
 # get the tkinter detailed version
 tclversion_detailed = tkinter.Tcl().eval('info patchlevel')
 framework_version = tclversion_detailed
@@ -16425,56 +16426,42 @@ from hindGui.elements.table import Table
 from hindGui.elements.text import Text
 from hindGui.elements.tree import Tree
 from hindGui.elements.tree import TreeData
+from hindGui.elements.center import Center, VCenter, HCenter
 from hindGui.tray import SystemTray
 from hindGui.window import Window
 from hindGui._utils import _error_popup_with_traceback
 
 # Element aliases
-In = Input
-InputText = Input
-I = Input  # noqa
-InputCombo = Combo
-DropDown = InputCombo
-Drop = InputCombo
-DD = Combo
+I = In = Inp = InputText = Input
+IC = ICombo = InCombo = InpCombo = InputCombo = DropDown = Drop = DD = Combo
 InputOptionMenu = OptionMenu
-LBox = Listbox
-LB = Listbox
-R = Radio
-Rad = Radio
-CB = Checkbox
-CBox = Checkbox
-Check = Checkbox
+ListBox = LBox = LB = List = Listbox
+R = Rad = Radio
+CheckBox = CBox = CB = Ch = Check = Checkbox
 Sp = Spin
-ML = Multiline
-MLine = Multiline
+ML = MLn = Mln = MLine = Mline = Multiline
 Txt = Text  # type: Text
 T = Text  # type: Text
 SBar = StatusBar
-B = Button
-Btn = Button
+B = Btn = b = btn = button = Button
 BMenu = ButtonMenu
 BM = ButtonMenu
-Im = Image
-PBar = ProgressBar
-Prog = ProgressBar
-Progress = ProgressBar
-G = Graph
+Im = Img = Image
+PBar = Prog = ProgBar = Progress = ProgressBar
+G = Gr = Graph
 Fr = Frame
-VSeperator = VerticalSeparator
-VSeparator = VerticalSeparator
-VSep = VerticalSeparator
+VSeparator = VSep = VerticalSeparator
+HSeparator = HSep = HorizontalSeparator
 MenuBar = Menu
-HSeparator = HorizontalSeparator
-HSep = HorizontalSeparator
-SGrip = Sizegrip
+SGrip = Grip = SG = Sizegrip
 Sl = Slider
-Col = Column
-MenuBar = Menu
-P = Push
-Stretch = Push
-VStretch = VPush
-VP = VPush
+Col = Clm = Column
+MenuBar = Me = Menu
+HStretch = Stretch = HorizontalGap = HGap = Gap = HSpace = Space = HSp = HS = HPush = HP = P = Push
+VStretch = VerticalGap = VGap = VSpace = VSp = VS = VP = VPush
+C = center = Center
+HC = hc = HCenter
+VC = vc = VCenter
 FlexForm = Window
 hindGui = Window
 

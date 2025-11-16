@@ -78,8 +78,24 @@ class obj(dict):
             super().__setitem__(key, self._convert_nested_collections(value))
         else:
             super().__setitem__(key, value)
-# allows obj(name=$x, age=$y)
+    def keys(self):
+        return list(super().keys())
+    def values(self):
+        return list(super().values())
+    def entries(self):
+        return list(super().items())
+# allows obj($x=$valueForX, $y=$valueForY)
 o = obj
+# for older dictionaries
+def keys(dictionary: dict):
+    return list(dictionary.keys())
+def values(dictionary: dict):
+    return list(dictionary.values())
+def entries(dictionary: dict):
+    return list(dictionary.entries())
+keysOf = keys
+valuesOf = values
+entriesOf = entries
 def get_private_declarations() -> o:
     [variables, classes, functions] = [{}, {}, {}]
     for name, obj in locals().items():
@@ -1006,8 +1022,8 @@ def main() -> none:
     dictionary: obj = obj(key="value")
     cloned = clone(dictionary)
     cloned.key = 4
-    print(dictionary)
-    print(cloned)
+    print(dictionary.entries())
+    print(cloned.entries())
     name = "Misty"
     x=4
     printf("$name, dont! You are, but a $10+5-8 -year-old kid. $x")
