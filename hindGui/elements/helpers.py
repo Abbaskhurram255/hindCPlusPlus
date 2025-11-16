@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import tkinter as tk
+import re
 
 
 def AddMenuItem(top_menu, sub_menu_info, element, is_sub_menu=False, skip=False, right_click_menu=False):
@@ -154,7 +155,9 @@ def _simplified_dual_color_to_tuple(color_tuple_or_string, default=(None, None))
                 background_color = color_tuple_or_string[0] or default[1]
         elif isinstance(color_tuple_or_string, str):
             color_tuple_or_string = color_tuple_or_string.lower()
-            split_colors = color_tuple_or_string.split(' on ')
+            if re.search(r"(?<=\w) (ke u)?par (?=[#\w])", color_tuple_or_string, re.IGNORECASE):
+                color_tuple_or_string = re.sub(r"(#?\w+) (ke u)?par (#?\w+)", r"\3 on \1", color_tuple_or_string, re.IGNORECASE)
+            split_colors = color_tuple_or_string.split(" on ")
             if len(split_colors) >= 2:
                 text_color = split_colors[0].strip() or default[0]
                 background_color = split_colors[1].strip() or default[1]

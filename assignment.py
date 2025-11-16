@@ -5,12 +5,12 @@ theme("DarkTeal6")
 (default_image_path, default_image_size) = (filepath("assets/placeholder.png"), (280, 256))
 
 lay = [
-        Center([
+    Center([
         [Image(event="hero_image", filename=default_image_path, size=default_image_size, p=(20, 40))],
         [Text("Please select an image: ", p=(0, 16)), Input(event="selected_image_path", size=(37, 0)), FileBrowse(allowed_types=(("Image files", "*.png"),), size=(8, 2), p=(14, 0))],
-        [Button("Upload", p=(0, 16), size=(10, 2)), Button("Download", button_color="blue on #aca6ff", p=(0, 16), size=(10, 2))]
+        [Button("Upload", hover_color="#003 ke upar whitesmoke", border=2, p=(0, 16), size=(10, 2)), Button("Share", hover_color="white par green", color="blue on #aca6ff", p=(0, 16), size=(10, 2))]
     ])
-    ]
+]
 
 app: hindGui = hindGui("Assignment", lay, fasla=(12, 14), on_top=Yes, icon=filepath("assets/favicon.ico"))
 
