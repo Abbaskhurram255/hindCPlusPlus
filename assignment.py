@@ -6,9 +6,9 @@ theme("DarkTeal6")
 
 lay = [
     Center([
-        [Image(event="hero_image", filename=default_image_path, size=default_image_size, p=(20, 40))],
-        [Text("Please select an image: ", p=(0, 16)), Input(event="selected_image_path", size=(37, 0)), FileBrowse(allowed_types=(("Image files", "*.png"),), size=(8, 2), p=(14, 0))],
-        [Button("Upload", hover_color="#003 ke upar whitesmoke", border=2, p=(0, 16), size=(10, 2)), Button("Share", hover_color="white par green", color="blue on #aca6ff", p=(0, 16), size=(10, 2))]
+        [Image(event="hero_image", enable_events=Yes, filename=default_image_path, size=default_image_size, p=(20, 40), hover="Sample image")],
+        [Text("Please select an image: ", p=(0, 16)), Input(event="selected_image_path", size=(37, 0)), FileBrowse(event="file_picker", allowed_types=(("Image files", "*.png"),), size=(8, 2), p=(14, 0))],
+        [Button("Upload", hover="Click to upload", hover_color="#003 ke upar whitesmoke", border=2, p=(0, 16), size=(10, 2)), Button("Share", hover_color="white par green", color="blue on #aca6ff", p=(0, 16), size=(10, 2))]
     ])
 ]
 
@@ -26,4 +26,6 @@ while app.chal_rahi_he:
             app.ontop()
             continue
         app["hero_image"].change(filename=new_image_path, size=default_image_size)
+    if event == "hero_image":
+        app["file_picker"].click()
 app.die()

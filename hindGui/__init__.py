@@ -1763,7 +1763,7 @@ def FileBrowse(
     auto_size_button=None,
     button_color=None,
     change_submits=False,
-    enable_events=False,
+    enable_events=True,
     font=None,
     disabled=False,
     pad=None,
