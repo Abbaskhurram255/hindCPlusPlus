@@ -35,9 +35,6 @@ def FltInput(*args, **kwargs):
     except Exception:
         return 0
 intInput, fltInput = IntInput, FltInput
-def flatten(lst: list) -> list:
-    return sum((flatten(sub) if isinstance(sub, list) else [sub] for sub in lst), [])
-flat = flatten
 class obj(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -153,7 +150,7 @@ def f(*args) -> str:
             arg_lower: str = arg.lower()
             for item in blacklisted_items:
                 if item in arg_lower:
-                    print(f"Forbidden keyword/function in input: '{keyword}'")
+                    print(f"Forbidden keyword/function in input: '{item}'")
                     continue
             # Evaluate the expression
             arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
@@ -178,7 +175,7 @@ def printf(*args):
             arg_lower: str = arg.lower()
             for item in blacklisted_items:
                 if item in arg_lower:
-                    print(f"Forbidden keyword/function in input: '{keyword}'")
+                    print(f"Forbidden keyword/function in input: '{item}'")
                     continue
             # Evaluate the expression
             arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
@@ -187,16 +184,17 @@ def printf(*args):
             ...
     print(formatted)
 kaho = printf
-def flat(lst: list) -> list:
-    if lst == None:
+def flatten(lst: list) -> list:
+    if lst is None:
         return []
     out = []
     for item in lst:
         if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
-            out.extend(flat(item))
+            out.extend(flatten(item))
         else:
             out.append(item)
     return out
+flat = flatten
 def clone(item: list|tuple|dict):
     if item == None:
         return None
@@ -242,6 +240,8 @@ is_iterable = isiterable = lambda x: isinstance(x, Iterable)
 isnt_iterable = isntiterable = non_iterable = noniterable = lambda x: not is_iterable(x)
 is_callable = iscallable = is_function = isfunction = is_func = isfunc = lambda x: callable(x)
 isnt_callable = isntcallable = non_callable = noncallable = lambda x: not is_callable(x)
+def split(srcString: str, regex: str, maxsplits: int, flags: int) -> str:
+    return re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
     occurences: list[str] = re.findall(to_replace, src)
     for occurence in occurences:
