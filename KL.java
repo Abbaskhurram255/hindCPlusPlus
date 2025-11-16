@@ -3,8 +3,10 @@
 //core
 import java.lang.reflect.*;
 import java.security.*;
+import java.sql.*;
 import java.text.*;
 import java.util.*;
+import java.util.Date;
 import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
@@ -32,6 +34,32 @@ public class KL {
 	}
 	public static final KL kl = kl(), iske_lie = kl(), khud = kl(), self = khud,
 			parent = khud;
+	public String ka(String name) {
+		if (not(name))
+			return "";
+		try {
+			return (String) getClass().getDeclaredField(name).get(kl());
+		} catch (NoSuchFieldException | IllegalAccessException
+				| SecurityException | ClassCastException e) {
+			return "";
+		}
+	}
+	public int ki(String name) {
+		if (not(name))
+			return 0;
+		try {
+			return (int) getClass().getDeclaredField(name).get(kl());
+		} catch (NoSuchFieldException | IllegalAccessException
+				| SecurityException | ClassCastException e) {
+			return 0;
+		}
+	}
+	/*
+	 * try { Class.forName("com.mysql.cj.jdbc.Driver"); String url =
+	 * "JDBC:MySQL://localhost:3306/mydb"; String user = "root", pass = "";
+	 * DriverManager.getConnection(url, user, pass); System.out.println("Connected"); }
+	 * catch (ClassNotFoundException|SQLException e) { System.out.println(e); }
+	 */
 	public static class hint {
 		public hint khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
