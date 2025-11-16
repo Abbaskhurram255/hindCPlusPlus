@@ -8,6 +8,7 @@ from typing import List, Callable, TypeVar, Any, Optional, Final
 from numbers import Number
 from math import *
 from hindGui import *
+from random import *
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 Str = str
