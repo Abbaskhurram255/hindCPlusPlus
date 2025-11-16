@@ -34,7 +34,7 @@ def replace_text_in_files(directory_path, old_text, new_text, file_extension=Non
                 print(f"Error processing {filepath}: {e}")
 
 if __name__ == "__main__":
-    target_directory = r"C:\Users\Adi\Documents\GitHub\hindCPlusPlus"
+    target_directory = r"C:\Users\Adi\Documents\GitHub\hindCPlusPlus\hindGui"
     text_to_find = "enable_events=False"
     replacement_text = "enable_events=True"
     extension_filter = ".py"

@@ -16431,6 +16431,7 @@ from hindGui.tray import SystemTray
 from hindGui.window import Window
 from hindGui._utils import _error_popup_with_traceback
 
+Button.ko_click = Button.click
 # Element aliases
 I = In = Inp = InputText = Input
 IC = ICombo = InCombo = InpCombo = InputCombo = DropDown = Drop = DD = Combo
