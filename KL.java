@@ -22628,6 +22628,18 @@ public class KL {
 			super.addAll(newList);
 			return this;
 		}
+		int[] keyArray() {
+			return range(array());
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		String[] values() {
+			return array();
+		}
+		Object[][] entries() {
+			return new Object[]{keys(), values()};
+		}
 		String[] array() {
 			return super.toArray(new String[0]);
 		}
@@ -23128,6 +23140,18 @@ public class KL {
 			empty();
 			super.addAll(newList);
 			return this;
+		}
+		int[] keyArray() {
+			return range(array());
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		int[] values() {
+			return array();
+		}
+		Object[][] entries() {
+			return new Object[]{keys(), values()};
 		}
 		int[] array() {
 			Integer[] partA = super.toArray(new Integer[0]);
@@ -23654,6 +23678,18 @@ public class KL {
 			empty();
 			super.addAll(newList);
 			return this;
+		}
+		int[] keyArray() {
+			return range(array());
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		long[] values() {
+			return array();
+		}
+		Object[][] entries() {
+			return new Object[]{keys(), values()};
 		}
 		long[] array() {
 			Long[] partA = super.toArray(new Long[0]);
@@ -24182,6 +24218,18 @@ public class KL {
 			super.addAll(newList);
 			return this;
 		}
+		int[] keyArray() {
+			return range(array());
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		float[] values() {
+			return array();
+		}
+		Object[][] entries() {
+			return new Object[]{keys(), values()};
+		}
 		float[] array() {
 			Float[] partA = super.toArray(new Float[0]);
 			float[] resultantArr = new float[partA.length];
@@ -24709,6 +24757,18 @@ public class KL {
 			super.addAll(newList);
 			return this;
 		}
+		int[] keyArray() {
+			return range(array());
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		double[] values() {
+			return array();
+		}
+		Object[][] entries() {
+			return new Object[]{keys(), values()};
+		}
 		double[] array() {
 			Double[] partA = super.toArray(new Double[0]);
 			double[] resultantArr = new double[partA.length];
@@ -25235,6 +25295,18 @@ public class KL {
 			empty();
 			super.addAll(newList);
 			return this;
+		}
+		int[] keyArray() {
+			return range(array());
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		boolean[] values() {
+			return array();
+		}
+		Object[][] entries() {
+			return new Object[]{keys(), values()};
 		}
 		boolean[] array() {
 			Boolean[] partA = super.toArray(new Boolean[0]);
@@ -25997,6 +26069,18 @@ public class KL {
 			empty();
 			super.addAll(newList);
 			return this;
+		}
+		int[] keyArray() {
+			return range(array());
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		Object[] values() {
+			return array();
+		}
+		Object[][] entries() {
+			return new Object[]{keys(), values()};
 		}
 		Object[] array() {
 			Object[] partA = super.toArray(new Object[0]);

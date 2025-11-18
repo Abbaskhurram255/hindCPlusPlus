@@ -8,7 +8,10 @@ from typing import List, Callable, TypeVar, Any, Optional, Final
 from numbers import Number
 from math import *
 from hindGui import *
-from random import *
+from random import randint, uniform, randrange, choice
+rand_int = randint
+rand_flt = uniform
+rand_from = rand_of = any_from = any_of = choice
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 Str = str
