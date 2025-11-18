@@ -14795,7 +14795,7 @@ public class KL {
 			super();
 		}
 		o(String... keyValuePairs) {
-			if (not(keyValuePairs))
+			if (KL.not(keyValuePairs))
 				return;
 			strArr collectedKeyValuePairs = strArr(keyValuePairs);
 			for (String eqSignSeparatedPair : keyValuePairs) {
@@ -14945,7 +14945,7 @@ public class KL {
 			return i(randInt(length()));
 		}
 		String random(String tryCastingAs) {
-			if (not(isStr(random()))) {
+			if (KL.not(isStr(random()))) {
 				return "";
 			}
 			try {
@@ -14955,7 +14955,7 @@ public class KL {
 			}
 		}
 		int random(int tryCastingAs) {
-			if (not(isInt(random()))) {
+			if (KL.not(isInt(random()))) {
 				return 0;
 			}
 			try {
@@ -14965,7 +14965,7 @@ public class KL {
 			}
 		}
 		long random(long tryCastingAs) {
-			if (not(isLong(random()))) {
+			if (KL.not(isLong(random()))) {
 				return 0;
 			}
 			try {
@@ -14975,7 +14975,7 @@ public class KL {
 			}
 		}
 		float random(float tryCastingAs) {
-			if (not(isFlt(random()))) {
+			if (KL.not(isFlt(random()))) {
 				return 0;
 			}
 			try {
@@ -14985,7 +14985,7 @@ public class KL {
 			}
 		}
 		double random(double tryCastingAs) {
-			if (not(isDbl(random()))) {
+			if (KL.not(isDbl(random()))) {
 				return 0;
 			}
 			try {
@@ -14995,7 +14995,7 @@ public class KL {
 			}
 		}
 		boolean random(boolean tryCastingAs) {
-			if (not(isBool(random()))) {
+			if (KL.not(isBool(random()))) {
 				return false;
 			}
 			try {
@@ -15047,14 +15047,14 @@ public class KL {
 			return random(tryCastingAs);
 		}
 		Object key(String k) {
-			if (not(k))
+			if (KL.not(k))
 				return none;
 			k = lower(k);
 			return hasKey(k) ? super.get(k) : none;
 			// will take a key in the form of a string, but RETURN AN OBJECT
 		}
 		char key(String k, char tryCastingAs) {
-			if (not(isChar(key(k)))) {
+			if (KL.not(isChar(key(k)))) {
 				return '\0';
 			}
 			try {
@@ -15064,7 +15064,7 @@ public class KL {
 			}
 		}
 		String key(String k, String tryCastingAs) {
-			if (not(isStr(key(k)))) {
+			if (KL.not(isStr(key(k)))) {
 				return "";
 			}
 			try {
@@ -15074,7 +15074,7 @@ public class KL {
 			}
 		}
 		int key(String k, int tryCastingAs) {
-			if (not(isInt(key(k)))) {
+			if (KL.not(isInt(key(k)))) {
 				return 0;
 			}
 			try {
@@ -15084,7 +15084,7 @@ public class KL {
 			}
 		}
 		long key(String k, long tryCastingAs) {
-			if (not(isLong(key(k)))) {
+			if (KL.not(isLong(key(k)))) {
 				return 0;
 			}
 			try {
@@ -15094,7 +15094,7 @@ public class KL {
 			}
 		}
 		float key(String k, float tryCastingAs) {
-			if (not(isFlt(key(k)))) {
+			if (KL.not(isFlt(key(k)))) {
 				return 0;
 			}
 			try {
@@ -15104,7 +15104,7 @@ public class KL {
 			}
 		}
 		double key(String k, double tryCastingAs) {
-			if (not(isDbl(key(k)))) {
+			if (KL.not(isDbl(key(k)))) {
 				return 0;
 			}
 			try {
@@ -15114,7 +15114,7 @@ public class KL {
 			}
 		}
 		boolean key(String k, boolean tryCastingAs) {
-			if (not(isBool(key(k)))) {
+			if (KL.not(isBool(key(k)))) {
 				return false;
 			}
 			try {
@@ -15124,7 +15124,7 @@ public class KL {
 			}
 		}
 		String[] key(String k, String[] tryCastingAs) {
-			if (not(isArrOfStr(key(k)))) {
+			if (KL.not(isArrOfStr(key(k)))) {
 				return blank.Str;
 			}
 			try {
@@ -15134,7 +15134,7 @@ public class KL {
 			}
 		}
 		int[] key(String k, int[] tryCastingAs) {
-			if (not(isArrOfInt(key(k)))) {
+			if (KL.not(isArrOfInt(key(k)))) {
 				return blank.Int;
 			}
 			try {
@@ -15144,7 +15144,7 @@ public class KL {
 			}
 		}
 		long[] key(String k, long[] tryCastingAs) {
-			if (not(isArrOfLong(key(k)))) {
+			if (KL.not(isArrOfLong(key(k)))) {
 				return blank.Long;
 			}
 			try {
@@ -15154,7 +15154,7 @@ public class KL {
 			}
 		}
 		float[] key(String k, float[] tryCastingAs) {
-			if (not(isArrOfFlt(key(k)))) {
+			if (KL.not(isArrOfFlt(key(k)))) {
 				return blank.Flt;
 			}
 			try {
@@ -15164,7 +15164,7 @@ public class KL {
 			}
 		}
 		double[] key(String k, double[] tryCastingAs) {
-			if (not(isArrOfDbl(key(k)))) {
+			if (KL.not(isArrOfDbl(key(k)))) {
 				return blank.Dbl;
 			}
 			try {
@@ -15174,7 +15174,7 @@ public class KL {
 			}
 		}
 		boolean[] key(String k, boolean[] tryCastingAs) {
-			if (not(isArrOfBool(key(k)))) {
+			if (KL.not(isArrOfBool(key(k)))) {
 				return blank.Bool;
 			}
 			try {
@@ -15184,7 +15184,7 @@ public class KL {
 			}
 		}
 		o key(String k, o tryCastingAs) {
-			if (not(type(key(k), "o"))) {
+			if (KL.not(type(key(k), "o"))) {
 				return blank.o;
 			}
 			try {
@@ -15328,8 +15328,17 @@ public class KL {
 		boolean[] ki(String k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean he(String k) {
+		boolean is(String k) {
 			return key(k, _b);
+		}
+		boolean he(String k) {
+			return is(k);
+		}
+		boolean not(String k) {
+			return is(k) == No;
+		}
+		boolean nahi(String k) {
+			return not(k);
 		}
 		Object val(String k) {
 			return key(k);
@@ -15504,7 +15513,7 @@ public class KL {
 			return none;
 		}
 		String nthValue(int n, String tryCastingAs) {
-			if (not(isStr(nthValue(n)))) {
+			if (KL.not(isStr(nthValue(n)))) {
 				return "";
 			}
 			try {
@@ -15514,7 +15523,7 @@ public class KL {
 			}
 		}
 		int nthValue(int n, int tryCastingAs) {
-			if (not(isInt(nthValue(n)))) {
+			if (KL.not(isInt(nthValue(n)))) {
 				return 0;
 			}
 			try {
@@ -15524,7 +15533,7 @@ public class KL {
 			}
 		}
 		long nthValue(int n, long tryCastingAs) {
-			if (not(isLong(nthValue(n)))) {
+			if (KL.not(isLong(nthValue(n)))) {
 				return 0;
 			}
 			try {
@@ -15534,7 +15543,7 @@ public class KL {
 			}
 		}
 		float nthValue(int n, float tryCastingAs) {
-			if (not(isFlt(nthValue(n)))) {
+			if (KL.not(isFlt(nthValue(n)))) {
 				return 0;
 			}
 			try {
@@ -15544,7 +15553,7 @@ public class KL {
 			}
 		}
 		double nthValue(int n, double tryCastingAs) {
-			if (not(isDbl(nthValue(n)))) {
+			if (KL.not(isDbl(nthValue(n)))) {
 				return 0;
 			}
 			try {
@@ -15554,7 +15563,7 @@ public class KL {
 			}
 		}
 		boolean nthValue(int n, boolean tryCastingAs) {
-			if (not(isBool(nthValue(n)))) {
+			if (KL.not(isBool(nthValue(n)))) {
 				return false;
 			}
 			try {
@@ -15574,7 +15583,7 @@ public class KL {
 			// exception
 		}
 		String nthLastValue(int n, String tryCastingAs) {
-			if (not(isStr(nthLastValue(n)))) {
+			if (KL.not(isStr(nthLastValue(n)))) {
 				return "";
 			}
 			try {
@@ -15584,7 +15593,7 @@ public class KL {
 			}
 		}
 		int nthLastValue(int n, int tryCastingAs) {
-			if (not(isInt(nthLastValue(n)))) {
+			if (KL.not(isInt(nthLastValue(n)))) {
 				return 0;
 			}
 			try {
@@ -15594,7 +15603,7 @@ public class KL {
 			}
 		}
 		long nthLastValue(int n, long tryCastingAs) {
-			if (not(isLong(nthLastValue(n)))) {
+			if (KL.not(isLong(nthLastValue(n)))) {
 				return 0;
 			}
 			try {
@@ -15604,7 +15613,7 @@ public class KL {
 			}
 		}
 		float nthLastValue(int n, float tryCastingAs) {
-			if (not(isFlt(nthLastValue(n)))) {
+			if (KL.not(isFlt(nthLastValue(n)))) {
 				return 0;
 			}
 			try {
@@ -15614,7 +15623,7 @@ public class KL {
 			}
 		}
 		double nthLastValue(int n, double tryCastingAs) {
-			if (not(isDbl(nthLastValue(n)))) {
+			if (KL.not(isDbl(nthLastValue(n)))) {
 				return 0;
 			}
 			try {
@@ -15624,7 +15633,7 @@ public class KL {
 			}
 		}
 		boolean nthLastValue(int n, boolean tryCastingAs) {
-			if (not(isBool(nthLastValue(n)))) {
+			if (KL.not(isBool(nthLastValue(n)))) {
 				return false;
 			}
 			try {
@@ -15637,7 +15646,7 @@ public class KL {
 			return nthValue(n);
 		}
 		String i(int n, String tryCastingAs) {
-			if (not(isStr(i(n)))) {
+			if (KL.not(isStr(i(n)))) {
 				return "";
 			}
 			try {
@@ -15647,7 +15656,7 @@ public class KL {
 			}
 		}
 		int i(int n, int tryCastingAs) {
-			if (not(isInt(i(n)))) {
+			if (KL.not(isInt(i(n)))) {
 				return 0;
 			}
 			try {
@@ -15657,7 +15666,7 @@ public class KL {
 			}
 		}
 		long i(int n, long tryCastingAs) {
-			if (not(isLong(i(n)))) {
+			if (KL.not(isLong(i(n)))) {
 				return 0;
 			}
 			try {
@@ -15667,7 +15676,7 @@ public class KL {
 			}
 		}
 		float i(int n, float tryCastingAs) {
-			if (not(isFlt(i(n)))) {
+			if (KL.not(isFlt(i(n)))) {
 				return 0;
 			}
 			try {
@@ -15677,7 +15686,7 @@ public class KL {
 			}
 		}
 		double i(int n, double tryCastingAs) {
-			if (not(isDbl(i(n)))) {
+			if (KL.not(isDbl(i(n)))) {
 				return 0;
 			}
 			try {
@@ -15687,7 +15696,7 @@ public class KL {
 			}
 		}
 		boolean i(int n, boolean tryCastingAs) {
-			if (not(isBool(i(n)))) {
+			if (KL.not(isBool(i(n)))) {
 				return false;
 			}
 			try {
@@ -15700,7 +15709,7 @@ public class KL {
 			return nthLastValue(n);
 		}
 		String lasti(int n, String tryCastingAs) {
-			if (not(isStr(lasti(n)))) {
+			if (KL.not(isStr(lasti(n)))) {
 				return "";
 			}
 			try {
@@ -15710,7 +15719,7 @@ public class KL {
 			}
 		}
 		int lasti(int n, int tryCastingAs) {
-			if (not(isInt(lasti(n)))) {
+			if (KL.not(isInt(lasti(n)))) {
 				return 0;
 			}
 			try {
@@ -15720,7 +15729,7 @@ public class KL {
 			}
 		}
 		long lasti(int n, long tryCastingAs) {
-			if (not(isLong(lasti(n)))) {
+			if (KL.not(isLong(lasti(n)))) {
 				return 0;
 			}
 			try {
@@ -15730,7 +15739,7 @@ public class KL {
 			}
 		}
 		float lasti(int n, float tryCastingAs) {
-			if (not(isFlt(lasti(n)))) {
+			if (KL.not(isFlt(lasti(n)))) {
 				return 0;
 			}
 			try {
@@ -15740,7 +15749,7 @@ public class KL {
 			}
 		}
 		double lasti(int n, double tryCastingAs) {
-			if (not(isDbl(lasti(n)))) {
+			if (KL.not(isDbl(lasti(n)))) {
 				return 0;
 			}
 			try {
@@ -15750,7 +15759,7 @@ public class KL {
 			}
 		}
 		boolean lasti(int n, boolean tryCastingAs) {
-			if (not(isBool(lasti(n)))) {
+			if (KL.not(isBool(lasti(n)))) {
 				return false;
 			}
 			try {
@@ -15826,37 +15835,37 @@ public class KL {
 			return nth(0);
 		}
 		String first(String tryCastingAs) {
-			if (not(isStr(first()))) {
+			if (KL.not(isStr(first()))) {
 				return "";
 			}
 			return (String) first();
 		}
 		int first(int tryCastingAs) {
-			if (not(isInt(first()))) {
+			if (KL.not(isInt(first()))) {
 				return 0;
 			}
 			return (int) first();
 		}
 		long first(long tryCastingAs) {
-			if (not(isLong(first()))) {
+			if (KL.not(isLong(first()))) {
 				return 0;
 			}
 			return (long) first();
 		}
 		float first(float tryCastingAs) {
-			if (not(isFlt(first()))) {
+			if (KL.not(isFlt(first()))) {
 				return 0;
 			}
 			return (float) first();
 		}
 		double first(double tryCastingAs) {
-			if (not(isDbl(first()))) {
+			if (KL.not(isDbl(first()))) {
 				return 0;
 			}
 			return (double) first();
 		}
 		boolean first(boolean tryCastingAs) {
-			if (not(isBool(first()))) {
+			if (KL.not(isBool(first()))) {
 				return false;
 			}
 			return (boolean) first();
@@ -15865,37 +15874,37 @@ public class KL {
 			return nth(1);
 		}
 		String second(String tryCastingAs) {
-			if (not(isStr(second()))) {
+			if (KL.not(isStr(second()))) {
 				return "";
 			}
 			return (String) second();
 		}
 		int second(int tryCastingAs) {
-			if (not(isInt(second()))) {
+			if (KL.not(isInt(second()))) {
 				return 0;
 			}
 			return (int) second();
 		}
 		long second(long tryCastingAs) {
-			if (not(isLong(second()))) {
+			if (KL.not(isLong(second()))) {
 				return 0;
 			}
 			return (long) second();
 		}
 		float second(float tryCastingAs) {
-			if (not(isFlt(second()))) {
+			if (KL.not(isFlt(second()))) {
 				return 0;
 			}
 			return (float) second();
 		}
 		double second(double tryCastingAs) {
-			if (not(isDbl(second()))) {
+			if (KL.not(isDbl(second()))) {
 				return 0;
 			}
 			return (double) second();
 		}
 		boolean second(boolean tryCastingAs) {
-			if (not(isBool(second()))) {
+			if (KL.not(isBool(second()))) {
 				return false;
 			}
 			return (boolean) second();
@@ -15904,7 +15913,7 @@ public class KL {
 			return nthlast(2);
 		}
 		String seclast(String tryCastingAs) {
-			if (not(isStr(seclast()))) {
+			if (KL.not(isStr(seclast()))) {
 				return "";
 			}
 			try {
@@ -15914,7 +15923,7 @@ public class KL {
 			}
 		}
 		int seclast(int tryCastingAs) {
-			if (not(isInt(seclast()))) {
+			if (KL.not(isInt(seclast()))) {
 				return 0;
 			}
 			try {
@@ -15924,7 +15933,7 @@ public class KL {
 			}
 		}
 		long seclast(long tryCastingAs) {
-			if (not(isLong(seclast()))) {
+			if (KL.not(isLong(seclast()))) {
 				return 0;
 			}
 			try {
@@ -15934,7 +15943,7 @@ public class KL {
 			}
 		}
 		float seclast(float tryCastingAs) {
-			if (not(isFlt(seclast()))) {
+			if (KL.not(isFlt(seclast()))) {
 				return 0;
 			}
 			try {
@@ -15944,7 +15953,7 @@ public class KL {
 			}
 		}
 		double seclast(double tryCastingAs) {
-			if (not(isDbl(seclast()))) {
+			if (KL.not(isDbl(seclast()))) {
 				return 0;
 			}
 			try {
@@ -15954,7 +15963,7 @@ public class KL {
 			}
 		}
 		boolean seclast(boolean tryCastingAs) {
-			if (not(isBool(seclast()))) {
+			if (KL.not(isBool(seclast()))) {
 				return false;
 			}
 			try {
@@ -15967,7 +15976,7 @@ public class KL {
 			return nthlast(1);
 		}
 		String last(String tryCastingAs) {
-			if (not(isStr(last()))) {
+			if (KL.not(isStr(last()))) {
 				return "";
 			}
 			try {
@@ -15977,7 +15986,7 @@ public class KL {
 			}
 		}
 		int last(int tryCastingAs) {
-			if (not(isInt(last()))) {
+			if (KL.not(isInt(last()))) {
 				return 0;
 			}
 			try {
@@ -15987,7 +15996,7 @@ public class KL {
 			}
 		}
 		long last(long tryCastingAs) {
-			if (not(isLong(last()))) {
+			if (KL.not(isLong(last()))) {
 				return 0;
 			}
 			try {
@@ -15997,7 +16006,7 @@ public class KL {
 			}
 		}
 		float last(float tryCastingAs) {
-			if (not(isFlt(last()))) {
+			if (KL.not(isFlt(last()))) {
 				return 0;
 			}
 			try {
@@ -16007,7 +16016,7 @@ public class KL {
 			}
 		}
 		double last(double tryCastingAs) {
-			if (not(isDbl(last()))) {
+			if (KL.not(isDbl(last()))) {
 				return 0;
 			}
 			try {
@@ -16017,7 +16026,7 @@ public class KL {
 			}
 		}
 		boolean last(boolean tryCastingAs) {
-			if (not(isBool(last()))) {
+			if (KL.not(isBool(last()))) {
 				return false;
 			}
 			try {
@@ -16027,7 +16036,7 @@ public class KL {
 			}
 		}
 		boolean hasKey(String k) {
-			if (not(k))
+			if (KL.not(k))
 				return false;
 			k = lower(k);
 			return super.containsKey(k);
@@ -16067,11 +16076,11 @@ public class KL {
 			set(kvs);
 			return this;
 		}
-		Set<String> keys() {
-			return super.keySet();
+		String[] keys() {
+			return keyArray();
 		}
-		Set<Map.Entry<String, Object>> entries() {
-			return super.entrySet();
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		boolean compare(o arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
@@ -16190,7 +16199,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new o();
 			}
-			if (not(end) || isNeg(end)) {
+			if (KL.not(end) || isNeg(end)) {
 				return new o();
 			}
 			if (end > super.size()) {
@@ -16230,7 +16239,7 @@ public class KL {
 		}
 		o mapIfPresent(String key,
 				BiFunction<? super String, ? super Object, ? extends Object> fn) {
-			if (not(fn)) {
+			if (KL.not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, fn);
@@ -16240,27 +16249,27 @@ public class KL {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
-			for (String key : this.keySet()) {
-				if (this.get(key).equals(value)) {
-					Object newValue = fn.apply(this.get(key));
+			for (String key : super.keySet()) {
+				if (super.get(key).equals(value)) {
+					Object newValue = fn.apply(super.get(key));
 					if (isNull(newValue)) {
-						this.remove(key);
+						super.remove(key);
 					} else {
-						this.put(key, newValue);
+						super.put(key, newValue);
 					}
 				}
 			}
 			return this;
 		}
 		o mapKey(String key, Function<String, String> fn) {
-			if (not(key) || not(fn) || !this.containsKey(key)) {
+			if (KL.not(key) || KL.not(fn) || !super.containsKey(key)) {
 				return this;
 			}
 			String newKey = fn.apply(key);
-			if (not(newKey)) {
-				this.remove(key);
+			if (KL.not(newKey)) {
+				super.remove(key);
 			} else if (!newKey.equals(key)) {
-				this.put(newKey, this.remove(key));
+				super.put(newKey, super.remove(key));
 			}
 			return this;
 		}
@@ -16272,7 +16281,7 @@ public class KL {
 			return this;
 		}
 		o replaceKey(String oldKey, String newKey) {
-			if (not(oldKey) || not(newKey) || !super.containsKey(oldKey))
+			if (KL.not(oldKey) || KL.not(newKey) || !super.containsKey(oldKey))
 				return this;
 			super.remove(oldKey);
 			super.put(newKey, super.get(oldKey));
@@ -16299,11 +16308,11 @@ public class KL {
 			return this;
 		}
 		o combine(o... others) {
-			if (not(others)) {
+			if (KL.not(others)) {
 				return this;
 			}
 			for (o other : others) {
-				if (not(other)) {
+				if (KL.not(other)) {
 					continue;
 				}
 				super.putAll(other);
@@ -16330,7 +16339,7 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length())) {
+			if (KL.not(s) || KL.not(length())) {
 				return string();
 			}
 			return KL.join(array(), s);
@@ -16617,11 +16626,11 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		Set<String> keys() {
-			return super.keySet();
+		String[] keys() {
+			return keyArray();
 		}
-		Set<Map.Entry<String, Integer>> entries() {
-			return super.entrySet();
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		boolean compare(oI arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
@@ -16812,27 +16821,27 @@ public class KL {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
-			for (String key : this.keySet()) {
-				if (this.get(key).equals(value)) {
-					int newValue = fn.apply(this.get(key));
+			for (String key : super.keySet()) {
+				if (super.get(key).equals(value)) {
+					int newValue = fn.apply(super.get(key));
 					if (isNull(newValue)) {
-						this.remove(key);
+						super.remove(key);
 					} else {
-						this.put(key, newValue);
+						super.put(key, newValue);
 					}
 				}
 			}
 			return this;
 		}
 		oI mapKey(String key, Function<String, String> fn) {
-			if (key == null || fn == null || !this.containsKey(key)) {
+			if (key == null || fn == null || !super.containsKey(key)) {
 				return this;
 			}
 			String newKey = fn.apply(key);
 			if (newKey == null) {
-				this.remove(key);
+				super.remove(key);
 			} else if (!newKey.equals(key)) {
-				this.put(newKey, this.remove(key));
+				super.put(newKey, super.remove(key));
 			}
 			return this;
 		}
@@ -17225,11 +17234,11 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		Set<String> keys() {
-			return super.keySet();
+		String[] keys() {
+			return keyArray();
 		}
-		Set<Map.Entry<String, Long>> entries() {
-			return super.entrySet();
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		boolean compare(oL arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
@@ -17420,27 +17429,27 @@ public class KL {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
-			for (String key : this.keySet()) {
-				if (this.get(key).equals(value)) {
-					long newValue = fn.apply(this.get(key));
+			for (String key : super.keySet()) {
+				if (super.get(key).equals(value)) {
+					long newValue = fn.apply(super.get(key));
 					if (isNull(newValue)) {
-						this.remove(key);
+						super.remove(key);
 					} else {
-						this.put(key, newValue);
+						super.put(key, newValue);
 					}
 				}
 			}
 			return this;
 		}
 		oL mapKey(String key, Function<String, String> fn) {
-			if (key == null || fn == null || !this.containsKey(key)) {
+			if (key == null || fn == null || !super.containsKey(key)) {
 				return this;
 			}
 			String newKey = fn.apply(key);
 			if (newKey == null) {
-				this.remove(key);
+				super.remove(key);
 			} else if (!newKey.equals(key)) {
-				this.put(newKey, this.remove(key));
+				super.put(newKey, super.remove(key));
 			}
 			return this;
 		}
@@ -17835,11 +17844,11 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		Set<String> keys() {
-			return super.keySet();
+		String[] keys() {
+			return keyArray();
 		}
-		Set<Map.Entry<String, Float>> entries() {
-			return super.entrySet();
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		boolean compare(oF arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
@@ -18030,27 +18039,27 @@ public class KL {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
-			for (String key : this.keySet()) {
-				if (this.get(key).equals(value)) {
-					float newValue = fn.apply(this.get(key));
+			for (String key : super.keySet()) {
+				if (super.get(key).equals(value)) {
+					float newValue = fn.apply(super.get(key));
 					if (isNull(newValue)) {
-						this.remove(key);
+						super.remove(key);
 					} else {
-						this.put(key, newValue);
+						super.put(key, newValue);
 					}
 				}
 			}
 			return this;
 		}
 		oF mapKey(String key, Function<String, String> fn) {
-			if (key == null || fn == null || !this.containsKey(key)) {
+			if (key == null || fn == null || !super.containsKey(key)) {
 				return this;
 			}
 			String newKey = fn.apply(key);
 			if (newKey == null) {
-				this.remove(key);
+				super.remove(key);
 			} else if (!newKey.equals(key)) {
-				this.put(newKey, this.remove(key));
+				super.put(newKey, super.remove(key));
 			}
 			return this;
 		}
@@ -18448,11 +18457,11 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		Set<String> keys() {
-			return super.keySet();
+		String[] keys() {
+			return keyArray();
 		}
-		Set<Map.Entry<String, Double>> entries() {
-			return super.entrySet();
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		boolean compare(oD arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
@@ -18643,27 +18652,27 @@ public class KL {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
-			for (String key : this.keySet()) {
-				if (this.get(key).equals(value)) {
-					double newValue = fn.apply(this.get(key));
+			for (String key : super.keySet()) {
+				if (super.get(key).equals(value)) {
+					double newValue = fn.apply(super.get(key));
 					if (isNull(newValue)) {
-						this.remove(key);
+						super.remove(key);
 					} else {
-						this.put(key, newValue);
+						super.put(key, newValue);
 					}
 				}
 			}
 			return this;
 		}
 		oD mapKey(String key, Function<String, String> fn) {
-			if (key == null || fn == null || !this.containsKey(key)) {
+			if (key == null || fn == null || !super.containsKey(key)) {
 				return this;
 			}
 			String newKey = fn.apply(key);
 			if (newKey == null) {
-				this.remove(key);
+				super.remove(key);
 			} else if (!newKey.equals(key)) {
-				this.put(newKey, this.remove(key));
+				super.put(newKey, super.remove(key));
 			}
 			return this;
 		}
@@ -18929,8 +18938,17 @@ public class KL {
 		boolean ki(String k) {
 			return hasKey(k) ? super.get(k) : null;
 		}
-		boolean he(String k) {
+		boolean is(String k) {
 			return hasKey(k) ? super.get(k) : null;
+		}
+		boolean he(String k) {
+			return is(k);
+		}
+		boolean not(String k) {
+			return is(k) == No;
+		}
+		boolean nahi(String k) {
+			return not(k);
 		}
 		boolean val(String k) {
 			return hasKey(k) ? super.get(k) : null;
@@ -19065,11 +19083,11 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		Set<String> keys() {
-			return super.keySet();
+		String[] keys() {
+			return keyArray();
 		}
-		Set<Map.Entry<String, Boolean>> entries() {
-			return super.entrySet();
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		boolean compare(oB arrB) {
 			int oldLen = length(), newLen = intersection(arrB).length();
@@ -19188,7 +19206,7 @@ public class KL {
 			if (super.isEmpty()) {
 				return new oB();
 			}
-			if (not(end) || isNeg(end)) {
+			if (KL.not(end) || isNeg(end)) {
 				return new oB();
 			}
 			if (end > super.size()) {
@@ -19224,7 +19242,7 @@ public class KL {
 			return subMap;
 		}
 		oB mapIfPresent(String key, Function<Boolean, Boolean> fn) {
-			if (not(fn)) {
+			if (KL.not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, (k, v) -> fn.apply(v));
@@ -19235,7 +19253,7 @@ public class KL {
 		}
 		oB mapIfPresent(String key,
 				BiFunction<? super String, ? super Boolean, ? extends Boolean> fn) {
-			if (not(fn)) {
+			if (KL.not(fn)) {
 				return this;
 			}
 			super.computeIfPresent(key, fn);
@@ -19245,27 +19263,27 @@ public class KL {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
-			for (String key : this.keySet()) {
-				if (this.get(key).equals(value)) {
-					boolean newValue = fn.apply(this.get(key));
+			for (String key : super.keySet()) {
+				if (super.get(key).equals(value)) {
+					boolean newValue = fn.apply(super.get(key));
 					if (isNull(newValue)) {
-						this.remove(key);
+						super.remove(key);
 					} else {
-						this.put(key, newValue);
+						super.put(key, newValue);
 					}
 				}
 			}
 			return this;
 		}
 		oB mapKey(String key, Function<String, String> fn) {
-			if (key == null || fn == null || !this.containsKey(key)) {
+			if (key == null || fn == null || !super.containsKey(key)) {
 				return this;
 			}
 			String newKey = fn.apply(key);
 			if (newKey == null) {
-				this.remove(key);
+				super.remove(key);
 			} else if (!newKey.equals(key)) {
-				this.put(newKey, this.remove(key));
+				super.put(newKey, super.remove(key));
 			}
 			return this;
 		}
@@ -19304,11 +19322,11 @@ public class KL {
 			return this;
 		}
 		oB combine(oB... others) {
-			if (not(others)) {
+			if (KL.not(others)) {
 				return this;
 			}
 			for (oB other : others) {
-				if (not(other)) {
+				if (KL.not(other)) {
 					continue;
 				}
 				super.putAll(other);
@@ -19335,7 +19353,7 @@ public class KL {
 			return string();
 		}
 		String join(String s) {
-			if (not(s) || not(length())) {
+			if (KL.not(s) || KL.not(length())) {
 				return string();
 			}
 			return KL.join(array(), s);
@@ -19550,12 +19568,6 @@ public class KL {
 			set(k, v);
 			return this;
 		}
-		Set<Key> keys() {
-			return super.keySet();
-		}
-		Set<Map.Entry<Key, Value>> entries() {
-			return super.entrySet();
-		}
 		tree<Key, Value> mapIfPresent(Key key, Function<Value, Value> fn) {
 			if (not(fn)) {
 				return this;
@@ -19579,14 +19591,14 @@ public class KL {
 			return this;
 		}
 		tree<Key, Value> mapKey(Key key, Function<Key, Key> fn) {
-			if (key == null || fn == null || !this.containsKey(key)) {
+			if (key == null || fn == null || !super.containsKey(key)) {
 				return this;
 			}
 			Key newKey = fn.apply(key);
 			if (newKey == null) {
-				this.remove(key);
+				super.remove(key);
 			} else if (!newKey.equals(key)) {
-				Value value = this.get(key);
+				Value value = super.get(key);
 				super.remove(key);
 				super.put(newKey, value);
 			}
@@ -19603,13 +19615,13 @@ public class KL {
 			if (!super.containsValue(value) || isNull(value) || fn == null) {
 				return this;
 			}
-			for (Key key : this.keySet()) {
-				if (this.get(key).equals(value)) {
-					Value newValue = fn.apply(this.get(key));
+			for (Key key : super.keySet()) {
+				if (super.get(key).equals(value)) {
+					Value newValue = fn.apply(super.get(key));
 					if (isNull(newValue)) {
-						this.remove(key);
+						super.remove(key);
 					} else {
-						this.put(key, newValue);
+						super.put(key, newValue);
 					}
 				}
 			}
@@ -19885,6 +19897,12 @@ public class KL {
 			}
 			return resultantArr;
 		}
+		int[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
+		}
 		int nthKey(int n) {
 			if (n >= 0 && n < length()) {
 				return keyArray()[n];
@@ -20132,6 +20150,12 @@ public class KL {
 				resultantArr[i] = (Long) objArray[i];
 			}
 			return resultantArr;
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		int nthKey(int n) {
 			if (n >= 0 && n < length()) {
@@ -20394,6 +20418,12 @@ public class KL {
 				resultantArr[i] = (Float) objArray[i];
 			}
 			return resultantArr;
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		int nthKey(int n) {
 			if (n >= 0 && n < length()) {
@@ -20658,6 +20688,12 @@ public class KL {
 				resultantArr[i] = (Double) objArray[i];
 			}
 			return resultantArr;
+		}
+		int[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		int nthKey(int n) {
 			if (n >= 0 && n < length()) {
@@ -20924,6 +20960,12 @@ public class KL {
 			}
 			return resultantArr;
 		}
+		int[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
+		}
 		int nthKey(int n) {
 			if (n >= 0 && n < length()) {
 				return keyArray()[n];
@@ -21178,6 +21220,12 @@ public class KL {
 			}
 			return resultantArr;
 		}
+		double[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
+		}
 		double nthKey(int n) {
 			if (n >= 0 && n < length()) {
 				return keyArray()[n];
@@ -21429,6 +21477,12 @@ public class KL {
 			}
 			return resultantArr;
 		}
+		double[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
+		}
 		double nthKey(int n) {
 			if (n >= 0 && n < length()) {
 				return keyArray()[n];
@@ -21641,6 +21695,12 @@ public class KL {
 				resultantArr[i] = (Long) objArray[i];
 			}
 			return resultantArr;
+		}
+		double[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		double nthKey(int n) {
 			if (n >= 0 && n < length()) {
@@ -21907,6 +21967,12 @@ public class KL {
 				resultantArr[i] = (Float) objArray[i];
 			}
 			return resultantArr;
+		}
+		double[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		double nthKey(int n) {
 			if (n >= 0 && n < length()) {
@@ -22177,6 +22243,12 @@ public class KL {
 				resultantArr[i] = (Boolean) objArray[i];
 			}
 			return resultantArr;
+		}
+		double[] keys() {
+			return keyArray();
+		}
+		Object[] entries() {
+			return new Object[]{keys(), array()};
 		}
 		double nthKey(int n) {
 			if (n >= 0 && n < length()) {
@@ -22637,19 +22709,14 @@ public class KL {
 		String[] values() {
 			return array();
 		}
-		Object[][] entries() {
+		Object[] entries() {
 			return new Object[]{keys(), values()};
 		}
 		String[] array() {
 			return super.toArray(new String[0]);
 		}
 		ArrayList<String> list() {
-			ArrayList<String> result = new ArrayList<>();
-			strArr clone = copy();
-			for (int i : range(clone)) {
-				result.add(clone.i(i));
-			}
-			return result;
+			return this;
 		}
 		String string() {
 			return super.toString();
@@ -23150,7 +23217,7 @@ public class KL {
 		int[] values() {
 			return array();
 		}
-		Object[][] entries() {
+		Object[] entries() {
 			return new Object[]{keys(), values()};
 		}
 		int[] array() {
@@ -23162,12 +23229,7 @@ public class KL {
 			return resultantArr;
 		}
 		ArrayList<Integer> list() {
-			ArrayList<Integer> result = new ArrayList<>();
-			intArr clone = copy();
-			for (int i : range(clone)) {
-				result.add(clone.i(i));
-			}
-			return result;
+			return this;
 		}
 		String string() {
 			return super.toString();
@@ -23688,7 +23750,7 @@ public class KL {
 		long[] values() {
 			return array();
 		}
-		Object[][] entries() {
+		Object[] entries() {
 			return new Object[]{keys(), values()};
 		}
 		long[] array() {
@@ -23700,12 +23762,7 @@ public class KL {
 			return resultantArr;
 		}
 		ArrayList<Long> list() {
-			ArrayList<Long> result = new ArrayList<>();
-			longArr clone = copy();
-			for (int i : range(clone)) {
-				result.add(clone.i(i));
-			}
-			return result;
+			return this;
 		}
 		String string() {
 			return super.toString();
@@ -24227,7 +24284,7 @@ public class KL {
 		float[] values() {
 			return array();
 		}
-		Object[][] entries() {
+		Object[] entries() {
 			return new Object[]{keys(), values()};
 		}
 		float[] array() {
@@ -24239,12 +24296,7 @@ public class KL {
 			return resultantArr;
 		}
 		ArrayList<Float> list() {
-			ArrayList<Float> result = new ArrayList<>();
-			fltArr clone = copy();
-			for (int i : range(clone)) {
-				result.add(clone.i(i));
-			}
-			return result;
+			return this;
 		}
 		String string() {
 			return super.toString();
@@ -24766,7 +24818,7 @@ public class KL {
 		double[] values() {
 			return array();
 		}
-		Object[][] entries() {
+		Object[] entries() {
 			return new Object[]{keys(), values()};
 		}
 		double[] array() {
@@ -24778,12 +24830,7 @@ public class KL {
 			return resultantArr;
 		}
 		ArrayList<Double> list() {
-			ArrayList<Double> result = new ArrayList<>();
-			dblArr clone = copy();
-			for (int i : range(clone)) {
-				result.add(clone.i(i));
-			}
-			return result;
+			return this;
 		}
 		String string() {
 			return super.toString();
@@ -25305,7 +25352,7 @@ public class KL {
 		boolean[] values() {
 			return array();
 		}
-		Object[][] entries() {
+		Object[] entries() {
 			return new Object[]{keys(), values()};
 		}
 		boolean[] array() {
@@ -25317,12 +25364,7 @@ public class KL {
 			return resultantArr;
 		}
 		ArrayList<Boolean> list() {
-			ArrayList<Boolean> result = new ArrayList<>();
-			boolArr clone = copy();
-			for (int i : range(clone)) {
-				result.add(clone.i(i));
-			}
-			return result;
+			return this;
 		}
 		String string() {
 			return super.toString();
@@ -26079,7 +26121,7 @@ public class KL {
 		Object[] values() {
 			return array();
 		}
-		Object[][] entries() {
+		Object[] entries() {
 			return new Object[]{keys(), values()};
 		}
 		Object[] array() {
@@ -26091,12 +26133,7 @@ public class KL {
 			return resultantArr;
 		}
 		ArrayList<Object> list() {
-			ArrayList<Object> result = new ArrayList<>();
-			arr clone = copy();
-			for (int i : range(clone)) {
-				result.add(clone.i(i));
-			}
-			return result;
+			return this;
 		}
 		String string() {
 			return super.toString();
@@ -69557,7 +69594,7 @@ public class KL {
 		}
 		String output = str;
 		// for now
-		for (Object key : object.keys()) {
+		for (Object key : object.keySet()) {
 			if (!in(str, Str(key)))
 				continue;
 			output = output.replaceAll(Str(key), Str(object.val(key)));
@@ -78748,10 +78785,10 @@ public class KL {
 		int[] newArr = {3, 5, 8};
 		newArr = nikalo.ekekse(newArr, 1);
 		print(newArr);
-		print(file.delete("walkthrough/x.txt"));
-		print(file.create("walkthrough/x.txt"));
-		print(file.append("walkthrough/x.txt", "\nhey"));
-		print(file.overwrite("walkthrough/x.txt"));
+		print(new intArr(1, 5, 7).entries()[1]);
+		o dead = o("Yes=[Michael; Jemery], No=Lucien");
+		printArr(dead.k("yes", _S));
+		print(dead.k("no", _s));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
