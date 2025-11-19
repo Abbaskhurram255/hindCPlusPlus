@@ -204,26 +204,61 @@ public class KL {
 				self = khud;
 		public size parent = new size();
 	}
-	public static class init {
-		public init khud = this, iske_lie = khud, iska = khud, isko = khud,
+	public static enum lambaiMe {
+        chota, chota_ya_barabar, na_barabar, bara, bara_ya_barabar;
+    }
+    public static boolean jabtak(double x, lambaiMe lMe, double y, Object... languageSupportingArgs) {
+        if (lMe == null || isInf(x) || isInf(y))
+            return false;
+        boolean condition;   
+        switch (lMe) {
+            case chota:
+                condition = x < y;
+                break;
+            case chota_ya_barabar:
+                condition = x <= y;
+                break;
+            case bara:
+                condition = x > y;
+                break;
+            case bara_ya_barabar:
+                condition = x > y;
+                break;
+            default:
+                condition = x != y;
+        }
+        return condition;
+    }
+    public static lambaiMe chota = lambaiMe.chota,
+      chota_ya_barabar = lambaiMe.chota_ya_barabar,
+      bara = lambaiMe.bara,
+      bara_ya_barabar = lambaiMe.bara_ya_barabar,
+      na_barabar = lambaiMe.na_barabar;
+	public static class har {
+		public har khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
 		public KL parent = kl();
 		public static int i, j, k;
 	}
-	public static class variable extends init {
+	public static class init extends har {
+		public init khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public har parent = new har();
+	}
+	public static class variable extends har {
 		public variable khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public init parent = new init();
+		public har parent = new har();
 	}
-	public static class lo extends init {
+	public static class lo extends har {
 		public lo khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public init parent = new init();
+		public har parent = new har();
 	}
 	public static class liava extends lo {
-		public lo khud = this, iske_lie = khud, iska = khud, isko = khud,
+		public liava khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public init parent = new init();
+		public lo parent = new lo();
 	}
 	public static class money {
 		public money khud = this, iske_lie = khud, iska = khud, isko = khud,
@@ -37871,9 +37906,9 @@ public class KL {
 	//nahi(x, y), kya, ha, wakai, sach, barabar, kaho(sach(2+2, 4))
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
-	public static Object ko, ki, ke, pe, par, dabane_pe, dabane_par, karne_pe,
-			karne_par, rakho, se, mese,
-			ka = ko = ki = ke = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = mese = none;
+	public static Object ko, ki, ke, ke_he, pe, par, dabane_pe, dabane_par, karne_pe,
+			karne_par, rakho, se, se_he, mese,
+			ka = ko = ki = ke = ke_he = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = se_he = mese = none;
 	//these null objects will help us allow optional vocabulary into our function parameters
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
@@ -75745,13 +75780,13 @@ public class KL {
 		}
 		return new StringBuilder(str).reverse().toString();
 	}
-	public static int len(String str) {
+	public static int len(String str, Object... languageSupportingArgs) {
 		if (str == null) {
 			return 0;
 		}
 		return str.trim().length();
 	}
-	public static int len(int n) {
+	public static int len(int n, Object... languageSupportingArgs) {
 		int result = 0;
 		while (n > 0) {
 			n /= 10;
@@ -75759,7 +75794,7 @@ public class KL {
 		}
 		return result;
 	}
-	public static int len(long n) {
+	public static int len(long n, Object... languageSupportingArgs) {
 		int result = 0;
 		while (n > 0) {
 			n /= 10;
@@ -75767,286 +75802,388 @@ public class KL {
 		}
 		return result;
 	}
-	public static int len(char[] arr) {
+	public static int len(char[] arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(String[] arr) {
+	public static int len(String[] arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(int[] arr) {
+	public static int len(int[] arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(long[] arr) {
+	public static int len(long[] arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(float[] arr) {
+	public static int len(float[] arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(double[] arr) {
+	public static int len(double[] arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(boolean[] arr) {
+	public static int len(boolean[] arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(Object[] arr) {
+	public static int len(Object[] arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(arr arr) {
+	public static int len(arr arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(strArr arr) {
+	public static int len(strArr arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(intArr arr) {
+	public static int len(intArr arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(longArr arr) {
+	public static int len(longArr arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(fltArr arr) {
+	public static int len(fltArr arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(dblArr arr) {
+	public static int len(dblArr arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(boolArr arr) {
+	public static int len(boolArr arr, Object... languageSupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(o o) {
+	public static int len(o o, Object... languageSupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oI o) {
+	public static int len(oI o, Object... languageSupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oL o) {
+	public static int len(oL o, Object... languageSupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oF o) {
+	public static int len(oF o, Object... languageSupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oD o) {
+	public static int len(oD o, Object... languageSupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oB o) {
+	public static int len(oB o, Object... languageSupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(treeDI t) {
+	public static int len(treeDI t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeI t) {
+	public static int len(treeI t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeDL t) {
+	public static int len(treeDL t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeL t) {
+	public static int len(treeL t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeDF t) {
+	public static int len(treeDF t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeF t) {
+	public static int len(treeF t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeDS t) {
+	public static int len(treeDS t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeD t) {
+	public static int len(treeD t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeDB t) {
+	public static int len(treeDB t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeB t) {
+	public static int len(treeB t, Object... languageSupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int size(String str) {
+    public static int size(String str, Object... languageSupportingArgs) {
 		return len(str);
 	}
-	public static int size(int n) {
+	public static int size(int n, Object... languageSupportingArgs) {
 		return len(n);
 	}
-	public static int size(long n) {
+	public static int size(long n, Object... languageSupportingArgs) {
 		return len(n);
 	}
-	public static int size(String arr[]) {
+	public static int size(String arr[], Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(int arr[]) {
+	public static int size(int arr[], Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(long arr[]) {
+	public static int size(long arr[], Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(float arr[]) {
+	public static int size(float arr[], Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(double arr[]) {
+	public static int size(double arr[], Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(boolean arr[]) {
+	public static int size(boolean arr[], Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(arr arr) {
+	public static int size(Object arr[], Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(strArr arr) {
+	public static int size(arr arr, Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(intArr arr) {
+	public static int size(strArr arr, Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(longArr arr) {
+	public static int size(intArr arr, Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(fltArr arr) {
+	public static int size(longArr arr, Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(dblArr arr) {
+	public static int size(fltArr arr, Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(boolArr arr) {
+	public static int size(dblArr arr, Object... languageSupportingArgs) {
 		return len(arr);
 	}
-	public static int size(o o) {
+	public static int size(boolArr arr, Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int size(o o, Object... languageSupportingArgs) {
 		return len(o);
 	}
-	public static int size(oI o) {
+	public static int size(oI o, Object... languageSupportingArgs) {
 		return len(o);
 	}
-	public static int size(oL o) {
+	public static int size(oL o, Object... languageSupportingArgs) {
 		return len(o);
 	}
-	public static int size(oF o) {
+	public static int size(oF o, Object... languageSupportingArgs) {
 		return len(o);
 	}
-	public static int size(oD o) {
+	public static int size(oD o, Object... languageSupportingArgs) {
 		return len(o);
 	}
-	public static int size(oB o) {
+	public static int size(oB o, Object... languageSupportingArgs) {
 		return len(o);
 	}
-	public static int size(treeDI t) {
+	public static int size(treeDI t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeI t) {
+	public static int size(treeI t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeDL t) {
+	public static int size(treeDL t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeL t) {
+	public static int size(treeL t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeDF t) {
+	public static int size(treeDF t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeF t) {
+	public static int size(treeF t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeDS t) {
+	public static int size(treeDS t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeD t) {
+	public static int size(treeD t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeDB t) {
+	public static int size(treeDB t, Object... languageSupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeB t) {
+	public static int size(treeB t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(String str, Object... languageSupportingArgs) {
+		return len(str);
+	}
+	public static int lambai(int n, Object... languageSupportingArgs) {
+		return len(n);
+	}
+	public static int lambai(long n, Object... languageSupportingArgs) {
+		return len(n);
+	}
+	public static int lambai(String arr[], Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(int arr[], Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(long arr[], Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(float arr[], Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(double arr[], Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(boolean arr[], Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(Object arr[], Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(arr arr, Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(strArr arr, Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(intArr arr, Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(longArr arr, Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(fltArr arr, Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(dblArr arr, Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(boolArr arr, Object... languageSupportingArgs) {
+		return len(arr);
+	}
+	public static int lambai(o o, Object... languageSupportingArgs) {
+		return len(o);
+	}
+	public static int lambai(oI o, Object... languageSupportingArgs) {
+		return len(o);
+	}
+	public static int lambai(oL o, Object... languageSupportingArgs) {
+		return len(o);
+	}
+	public static int lambai(oF o, Object... languageSupportingArgs) {
+		return len(o);
+	}
+	public static int lambai(oD o, Object... languageSupportingArgs) {
+		return len(o);
+	}
+	public static int lambai(oB o, Object... languageSupportingArgs) {
+		return len(o);
+	}
+	public static int lambai(treeDI t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeI t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeDL t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeL t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeDF t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeF t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeDS t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeD t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeDB t, Object... languageSupportingArgs) {
+		return len(t);
+	}
+	public static int lambai(treeB t, Object... languageSupportingArgs) {
 		return len(t);
 	}
 	public static boolean isEmpty(char c) {
