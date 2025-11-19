@@ -215,10 +215,15 @@ public class KL {
 				self = khud;
 		public init parent = new init();
 	}
-	public static class varbl extends variable {
-		public varbl khud = this, iske_lie = khud, iska = khud, isko = khud,
+	public static class lo extends init {
+		public lo khud = this, iske_lie = khud, iska = khud, isko = khud,
 				self = khud;
-		public variable parent = new variable();
+		public init parent = new init();
+	}
+	public static class liava extends lo {
+		public lo khud = this, iske_lie = khud, iska = khud, isko = khud,
+				self = khud;
+		public init parent = new init();
 	}
 	public static class money {
 		public money khud = this, iske_lie = khud, iska = khud, isko = khud,
@@ -37867,8 +37872,9 @@ public class KL {
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static Object ko, ki, ke, pe, par, dabane_pe, dabane_par, karne_pe,
-			karne_par, rakho, mese,
-			ka = ko = ki = ke = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = mese = new Object();
+			karne_par, rakho, se, mese,
+			ka = ko = ki = ke = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = mese = none;
+	//these null objects will help us allow optional vocabulary into our function parameters
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
 	public static String Else = "else", warna = Else, Warna = warna;
@@ -56309,6 +56315,12 @@ public class KL {
 	public static void bolo(Object... args) {
 		kaho(args);
 	}
+	public static void dikhaoln(Object... args) {
+		kaholn(args);
+	}
+	public static void dikhao(Object... args) {
+		kaho(args);
+	}
 	public void printf(String str, Object... args) {
 		System.out.println(f(str, args));
 	}
@@ -68698,55 +68710,159 @@ public class KL {
 	public static char randChar() {
 		return randChar(47, 127);
 	}
-	public static String randUuid() {
+	public static String randUUID() {
 		return UUID.randomUUID().toString();
 	}
 	public static String randId(int len) {
-		String id = randUuid().replaceAll("-", "");
+		String id = randUUID().replaceAll("-", "");
 		if (not(len) || isNeg(len) || len >= len(id)) {
 			return id;
 		}
 		return id.substring(0, len);
 	}
 	public static String randId() {
-		String id = randUuid().replaceAll("-", "");
+		String id = randUUID().replaceAll("-", "");
 		return id.substring(0, 8);
+	}
+	public static char[] randItem(char arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Char;
+		}
+		char[] collected = new char[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
+	}
+	public static char randItem(char arr[]) {
+		if (not(arr)) {
+			return '\0';
+		}
+		char[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return '\0';
+		return collected[0];
+	}
+	public static String[] randItem(String arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Str;
+		}
+		String[] collected = new String[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
 	}
 	public static String randItem(String arr[]) {
 		if (not(arr)) {
 			return "";
 		}
-		return arr[randInt(len(arr))];
+		String[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return "";
+		return collected[0];
+	}
+	public static int[] randItem(int arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Int;
+		}
+		int[] collected = new int[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
 	}
 	public static int randItem(int arr[]) {
 		if (not(arr)) {
 			return 0;
 		}
-		return arr[randInt(len(arr))];
+		int[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return 0;
+		return collected[0];
+	}
+	public static long[] randItem(long arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Long;
+		}
+		long[] collected = new long[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
 	}
 	public static long randItem(long arr[]) {
 		if (not(arr)) {
 			return 0;
 		}
-		return arr[randInt(len(arr))];
+		long[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return 0;
+		return collected[0];
+	}
+	public static float[] randItem(float arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Flt;
+		}
+		float[] collected = new float[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
 	}
 	public static float randItem(float arr[]) {
 		if (not(arr)) {
 			return 0;
 		}
-		return arr[randInt(len(arr))];
+		float[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return 0;
+		return collected[0];
+	}
+	public static double[] randItem(double arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Dbl;
+		}
+		double[] collected = new double[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
 	}
 	public static double randItem(double arr[]) {
 		if (not(arr)) {
 			return 0;
 		}
-		return arr[randInt(len(arr))];
+		double[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return 0;
+		return collected[0];
+	}
+	public static boolean[] randItem(boolean arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Bool;
+		}
+		boolean[] collected = new boolean[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
 	}
 	public static boolean randItem(boolean arr[]) {
 		if (not(arr)) {
 			return false;
 		}
-		return arr[randInt(len(arr))];
+		boolean[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return false;
+		return collected[0];
 	}
 	public static Object randItem(Object arr[]) {
 		if (not(arr)) {
@@ -78569,6 +78685,7 @@ public class KL {
 				crashSafety++;
 				if (crashSafety > 1e4) {
 					hint.goodpractice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
+					print("[KL.har.WARNING]:\n\t- Stack overflow se bachne ke lie, is loop ko yahi roka gaya.\n\t  Ap se guzarish he, ese loops banaiye jo kaabil-e-nijaat hon.");
 					break;
 				}
 			} catch (Throwable e) {
@@ -78743,8 +78860,6 @@ public class KL {
 		for (int i : range(1, myArr))
 			print(myArr[i]);
 		bolo(range(2, 5));
-		har(varbl.i = 0, () -> varbl.i < 5, () -> varbl.i++,
-				() -> print(varbl.i));
 		print(none, "hello", "to", "me");
 		hint helps_kill_the_additional_whitespace_otherwise_added_after_each_argument;
 		o user = o(
@@ -78789,6 +78904,7 @@ public class KL {
 		o dead = o("Yes=[Michael; Jemery], No=Lucien");
 		printArr(dead.k("yes", _S));
 		print(dead.k("no", _s));
+		har(lo.i = 0, () -> liava.i < 5, () -> liava.i++, () -> print(liava.i));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
