@@ -291,6 +291,12 @@ public class KL {
 				isko = khud, self = khud;
 		public KL parent = kl();
 		public static int i, j, k;
+		public static void lo(int initialization,
+			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
+			Runnable task) {
+				//let's assign `(liava.class.getSuperclass().getSuperclass() ~= har.class)`'s field `i` to the integered parameter `initialization` on the go
+				har(i=initialization, conditionAsACallable, changeInCondition, task);
+		}
 	}
 	public static class init extends har {
 		public init khud = this, ka = this, iske_lie = khud, iska = khud,
