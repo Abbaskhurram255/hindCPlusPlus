@@ -2,7 +2,7 @@ from KL_Py import *
 
 
 lay1 = [
-    [Text("Please enter your name and email address")],
+    [Text("Please enter your name, and email address")],
     [Text("Name: ", size=11, p=(0, 8)), Input(event="name")],
     [Text("Email address: ", p=(0, 8)), Input(event="email")]
 ]
