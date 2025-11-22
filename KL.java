@@ -260,7 +260,7 @@ public class KL {
 		chota, chota_ya_barabar, na_barabar, bara, bara_ya_barabar;
 	}
 	public static boolean jabtak(double x, lambaiMe lMe, double y,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		if (lMe == null || isInf(x) || isInf(y))
 			return false;
 		boolean condition;
@@ -282,6 +282,9 @@ public class KL {
 		}
 		return condition;
 	}
+	public static boolean jabtak(boolean condition) {
+		return condition == Yes;
+	}
 	public static lambaiMe chota = lambaiMe.chota,
 			chota_ya_barabar = lambaiMe.chota_ya_barabar, bara = lambaiMe.bara,
 			bara_ya_barabar = lambaiMe.bara_ya_barabar,
@@ -292,10 +295,16 @@ public class KL {
 		public KL parent = kl();
 		public static int i, j, k;
 		public static void lo(int initialization,
-			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
-			Runnable task) {
-				//let's assign `(liava.class.getSuperclass().getSuperclass() ~= har.class)`'s field `i` to the integered parameter `initialization` on the go
-				har(i=initialization, conditionAsACallable, changeInCondition, task);
+				Callable<Boolean> conditionAsACallable,
+				Runnable changeInCondition, Runnable task) {
+			//let's assign `(liava.class.getSuperclass().getSuperclass() ~= har.class)`'s field `i` to the integered parameter `initialization` on the go
+			har(i = initialization, conditionAsACallable, changeInCondition,
+					task);
+		}
+		public static void lia(int initialization,
+				Callable<Boolean> conditionAsACallable,
+				Runnable changeInCondition, Runnable task) {
+			lo(initialization, conditionAsACallable, changeInCondition, task);
 		}
 	}
 	public static class init extends har {
@@ -313,8 +322,18 @@ public class KL {
 				isko = khud, self = khud;
 		public har parent = new har();
 	}
+	public static class lia extends lo {
+		public lia khud = this, ka = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public lo parent = new lo();
+	}
 	public static class liava extends lo {
 		public liava khud = this, ka = this, iske_lie = khud, iska = khud,
+				isko = khud, self = khud;
+		public lo parent = new lo();
+	}
+	public static class farz extends lo {
+		public farz khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
 		public lo parent = new lo();
 	}
@@ -531,7 +550,7 @@ public class KL {
 		//just recognize grandparent class KL as the parent
 		private double value;
 		number() {
-			this.value = 0;
+			this.value = 0.0;
 		}
 		number(double value) {
 			this.value = value;
@@ -544,44 +563,80 @@ public class KL {
 			set(n);
 			return this;
 		}
+		number rakho(double n) {
+			set(n);
+			return this;
+		}
+		number koRakho(double n) {
+			set(n);
+			return this;
+		}
+		number setValue(double n) {
+			set(n);
+			return this;
+		}
+		number setVal(double n) {
+			set(n);
+			return this;
+		}
+		number add() {
+			this.value += 1;
+			return this;
+		}
 		number add(double n) {
 			this.value += n;
 			return this;
 		}
 		number barha() {
-			add(1);
+			add();
 			return this;
 		}
-		number barha(double n, Object... languageSupportingArgs) {
+		number barha(double n, Object... vocabularySupportingArgs) {
 			add(n);
 			return this;
 		}
 		number barhao() {
-			add(1);
+			add();
 			return this;
 		}
-		number barhao(double n, Object... languageSupportingArgs) {
+		number barhao(double n, Object... vocabularySupportingArgs) {
 			add(n);
 			return this;
 		}
 		number barhi() {
-			add(1);
+			add();
 			return this;
 		}
-		number barhi(double n, Object... languageSupportingArgs) {
+		number barhi(double n, Object... vocabularySupportingArgs) {
 			add(n);
 			return this;
 		}
-		number me_dalo(double n, Object... languageSupportingArgs) {
+		number me_dalo(double n, Object... vocabularySupportingArgs) {
 			add(n);
 			return this;
 		}
-		number me_dala(double n, Object... languageSupportingArgs) {
+		number me_dala(double n, Object... vocabularySupportingArgs) {
 			add(n);
 			return this;
 		}
-		number me_izafa(double n, Object... languageSupportingArgs) {
+		number me_izafa() {
+			add();
+			return this;
+		}
+		number me_izafa(double n, Object... vocabularySupportingArgs) {
 			add(n);
+			return this;
+		}
+		number give() {
+			add();
+			return this;
+		}
+		number give(double n, Object... vocabularySupportingArgs) {
+			add(n);
+			return this;
+		}
+		number subtract() {
+			this.value -= 1;
 			return this;
 		}
 		number subtract(double n) {
@@ -593,55 +648,71 @@ public class KL {
 			return this;
 		}
 		number ghata() {
-			remove(1);
+			subtract();
 			return this;
 		}
-		number ghata(double n, Object... languageSupportingArgs) {
+		number ghata(double n, Object... vocabularySupportingArgs) {
 			remove(n);
 			return this;
 		}
 		number ghatao() {
-			remove(1);
+			subtract();
 			return this;
 		}
-		number ghatao(double n, Object... languageSupportingArgs) {
+		number ghatao(double n, Object... vocabularySupportingArgs) {
 			remove(n);
 			return this;
 		}
 		number ghati() {
-			remove(1);
+			subtract();
 			return this;
 		}
-		number ghati(double n, Object... languageSupportingArgs) {
+		number ghati(double n, Object... vocabularySupportingArgs) {
 			remove(n);
 			return this;
 		}
 		number me_kami() {
-			remove(1);
+			subtract();
 			return this;
 		}
-		number me_kami(double n, Object... languageSupportingArgs) {
+		number me_kami(double n, Object... vocabularySupportingArgs) {
 			remove(n);
 			return this;
 		}
-		number se_nikalo(double n, Object... languageSupportingArgs) {
+		number se_nikalo() {
+			subtract();
+			return this;
+		}
+		number se_nikalo(double n, Object... vocabularySupportingArgs) {
 			remove(n);
 			return this;
 		}
-		number se_nikala(double n, Object... languageSupportingArgs) {
+		number se_nikala() {
+			subtract();
+			return this;
+		}
+		number se_nikala(double n, Object... vocabularySupportingArgs) {
 			remove(n);
 			return this;
 		}
-		number me_ghata(double n, Object... languageSupportingArgs) {
+		number me_ghata() {
+			subtract();
+			return this;
+		}
+		number me_ghata(double n, Object... vocabularySupportingArgs) {
 			remove(n);
 			return this;
 		}
-		number se_gae(double n, Object... languageSupportingArgs) {
+		number se_gae(double n, Object... vocabularySupportingArgs) {
 			remove(n);
 			return this;
 		}
-		number se_gaya(double n, Object... languageSupportingArgs) {
+		number se_gaya(double n, Object... vocabularySupportingArgs) {
 			remove(n);
+			return this;
+		}
+		number multiply() {
+			this.value *= 2;
 			return this;
 		}
 		number multiply(double n) {
@@ -652,8 +723,19 @@ public class KL {
 			multiply(n);
 			return this;
 		}
-		number guna(double n, Object... languageSupportingArgs) {
+		number product(double n) {
+			multiply(n);
+			return this;
+		}
+		number guna(double n, Object... vocabularySupportingArgs) {
 			times(n);
+			return this;
+		}
+		number divide() {
+			if (this.value == 0)
+				this.value = 1;
+			//hint.avoids Arithmetic_Exception;    
+			this.value /= 2;
 			return this;
 		}
 		number divide(double n) {
@@ -662,14 +744,14 @@ public class KL {
 			if (n == 0)
 				n = 1;
 			//hint.avoids Arithmetic_Exception;    
-			this.value *= n;
+			this.value /= n;
 			return this;
 		}
 		number split(double n) {
 			divide(n);
 			return this;
 		}
-		number hissa(double n, Object... languageSupportingArgs) {
+		number hissa(double n, Object... vocabularySupportingArgs) {
 			split(n);
 			return this;
 		}
@@ -690,46 +772,257 @@ public class KL {
 		public double doubleValue() {
 			return value;
 		}
+		public int asInteger() {
+			return intValue();
+		}
+		public int as_integer() {
+			return intValue();
+		}
 		public int asInt() {
 			return intValue();
+		}
+		public int as_int() {
+			return intValue();
+		}
+		public int torInteger() {
+			return asInt();
+		}
+		public int tor_integer() {
+			return asInt();
+		}
+		public int torInt() {
+			return asInt();
+		}
+		public int tor_int() {
+			return asInt();
+		}
+		public int integerTor() {
+			return asInt();
+		}
+		public int integer_tor() {
+			return asInt();
+		}
+		public int intTor() {
+			return asInt();
+		}
+		public int int_tor() {
+			return asInt();
 		}
 		public long asLong() {
 			return longValue();
 		}
+		public long as_long() {
+			return longValue();
+		}
+		public long torLong() {
+			return asLong();
+		}
+		public long tor_long() {
+			return asLong();
+		}
+		public long longTor() {
+			return asLong();
+		}
+		public long long_tor() {
+			return asLong();
+		}
 		public float asFloat() {
 			return floatValue();
+		}
+		public float as_float() {
+			return floatValue();
+		}
+		public float asFlt() {
+			return floatValue();
+		}
+		public float as_flt() {
+			return floatValue();
+		}
+		public float torFloat() {
+			return asFloat();
+		}
+		public float tor_float() {
+			return asFloat();
+		}
+		public float torFlt() {
+			return asFloat();
+		}
+		public float tor_flt() {
+			return asFloat();
+		}
+		public float floatTor() {
+			return asFloat();
+		}
+		public float float_tor() {
+			return asFloat();
+		}
+		public float fltTor() {
+			return asFloat();
+		}
+		public float flt_tor() {
+			return asFloat();
 		}
 		public double asDouble() {
 			return doubleValue();
 		}
+		public double as_double() {
+			return doubleValue();
+		}
+		public double asDbl() {
+			return doubleValue();
+		}
+		public double as_dbl() {
+			return doubleValue();
+		}
+		public double torDouble() {
+			return asDouble();
+		}
+		public double tor_double() {
+			return asDouble();
+		}
+		public double torDbl() {
+			return asDouble();
+		}
+		public double tor_dbl() {
+			return asDouble();
+		}
+		public double doubleTor() {
+			return asDouble();
+		}
+		public double double_tor() {
+			return asDouble();
+		}
+		public double dblTor() {
+			return asDouble();
+		}
+		public double dbl_tor() {
+			return asDouble();
+		}
 		public double value() {
 			return value;
+		}
+		public <T> T value(T as) {
+			if (as instanceof Integer)
+				return (T) new Integer(asInt());
+			if (as instanceof Long)
+				return (T) new Long(asLong());
+			if (as instanceof Float)
+				return (T) new Float(asFloat());
+			return (T) new Double(asDouble());
+		}
+		public double val() {
+			return value;
+		}
+		public <T> T val(T as) {
+			return value(as);
 		}
 		public double getValue() {
 			return value;
 		}
+		public <T> T getValue(T as) {
+			return value(as);
+		}
+		public double getVal() {
+			return value;
+		}
+		public <T> T getVal(T as) {
+			return value(as);
+		}
+		public <T> T as(T cast) {
+			return value(cast);
+		}
+		public <T> T tor(T cast) {
+			return value(cast);
+		}
+		public double kiValue() {
+			return value;
+		}
+		public <T> T kiValue(T as) {
+			return value(as);
+		}
+		public double kiVal() {
+			return value;
+		}
+		public <T> T kiVal(T as) {
+			return value(as);
+		}
 		public double get() {
 			return value;
+		}
+		public <T> T get(T as) {
+			return value(as);
+		}
+		public double lo() {
+			return value;
+		}
+		public <T> T lo(T as) {
+			return value(as);
+		}
+		public double lia() {
+			return value;
+		}
+		public <T> T lia(T as) {
+			return value(as);
 		}
 		public double ka_adha() {
 			if (this.value == 0)
 				return 0.0;
 			return this.value / 2;
 		}
+		public <T> T ka_adha(T as) {
+			double half = ka_adha();
+			if (as instanceof Integer)
+				return (T) new Integer((int) half);
+			if (as instanceof Long)
+				return (T) new Long((long) half);
+			if (as instanceof Float)
+				return (T) new Float(half);
+			return (T) new Double(half);
+		}
 		public double ka_dugna() {
 			if (this.value == 0)
 				return 0.0;
 			return this.value * 2;
+		}
+		public <T> T ka_dugna(T as) {
+			double half = ka_dugna();
+			if (as instanceof Integer)
+				return (T) new Integer((int) half);
+			if (as instanceof Long)
+				return (T) new Long((long) half);
+			if (as instanceof Float)
+				return (T) new Float(half);
+			return (T) new Double(half);
 		}
 		public double ka_chotha() {
 			if (this.value == 0)
 				return 0.0;
 			return this.value / 4;
 		}
+		public <T> T ka_chotha(T as) {
+			double half = ka_chotha();
+			if (as instanceof Integer)
+				return (T) new Integer((int) half);
+			if (as instanceof Long)
+				return (T) new Long((long) half);
+			if (as instanceof Float)
+				return (T) new Float(half);
+			return (T) new Double(half);
+		}
 		public double ka_athwa() {
 			if (this.value == 0)
 				return 0.0;
 			return this.value / 8;
+		}
+		public <T> T ka_athwa(T as) {
+			double half = ka_athwa();
+			if (as instanceof Integer)
+				return (T) new Integer((int) half);
+			if (as instanceof Long)
+				return (T) new Long((long) half);
+			if (as instanceof Float)
+				return (T) new Float(half);
+			return (T) new Double(half);
 		}
 		@Override
 		public String toString() {
@@ -762,7 +1055,7 @@ public class KL {
 			super.barha();
 			return this;
 		}
-		num barha(double n, Object... languageSupportingArgs) {
+		num barha(double n, Object... vocabularySupportingArgs) {
 			super.barha(n);
 			return this;
 		}
@@ -770,7 +1063,7 @@ public class KL {
 			super.barhao();
 			return this;
 		}
-		num barhao(double n, Object... languageSupportingArgs) {
+		num barhao(double n, Object... vocabularySupportingArgs) {
 			super.barhao(n);
 			return this;
 		}
@@ -778,19 +1071,19 @@ public class KL {
 			super.barhi();
 			return this;
 		}
-		num barhi(double n, Object... languageSupportingArgs) {
+		num barhi(double n, Object... vocabularySupportingArgs) {
 			super.barhi(n);
 			return this;
 		}
-		num me_dalo(double n, Object... languageSupportingArgs) {
+		num me_dalo(double n, Object... vocabularySupportingArgs) {
 			super.me_dalo(n);
 			return this;
 		}
-		num me_dala(double n, Object... languageSupportingArgs) {
+		num me_dala(double n, Object... vocabularySupportingArgs) {
 			super.me_dala(n);
 			return this;
 		}
-		num me_izafa(double n, Object... languageSupportingArgs) {
+		num me_izafa(double n, Object... vocabularySupportingArgs) {
 			super.me_izafa(n);
 			return this;
 		}
@@ -806,7 +1099,7 @@ public class KL {
 			super.ghata();
 			return this;
 		}
-		num ghata(double n, Object... languageSupportingArgs) {
+		num ghata(double n, Object... vocabularySupportingArgs) {
 			super.ghata(n);
 			return this;
 		}
@@ -814,7 +1107,7 @@ public class KL {
 			super.ghatao();
 			return this;
 		}
-		num ghatao(double n, Object... languageSupportingArgs) {
+		num ghatao(double n, Object... vocabularySupportingArgs) {
 			super.ghatao(n);
 			return this;
 		}
@@ -822,7 +1115,7 @@ public class KL {
 			super.ghati();
 			return this;
 		}
-		num ghati(double n, Object... languageSupportingArgs) {
+		num ghati(double n, Object... vocabularySupportingArgs) {
 			super.ghati(n);
 			return this;
 		}
@@ -830,27 +1123,27 @@ public class KL {
 			super.ghati();
 			return this;
 		}
-		num me_kami(double n, Object... languageSupportingArgs) {
+		num me_kami(double n, Object... vocabularySupportingArgs) {
 			super.ghati(n);
 			return this;
 		}
-		num se_nikalo(double n, Object... languageSupportingArgs) {
+		num se_nikalo(double n, Object... vocabularySupportingArgs) {
 			super.se_nikalo(n);
 			return this;
 		}
-		num se_nikala(double n, Object... languageSupportingArgs) {
+		num se_nikala(double n, Object... vocabularySupportingArgs) {
 			super.se_nikala(n);
 			return this;
 		}
-		num me_ghata(double n, Object... languageSupportingArgs) {
+		num me_ghata(double n, Object... vocabularySupportingArgs) {
 			super.me_ghata(n);
 			return this;
 		}
-		num se_gae(double n, Object... languageSupportingArgs) {
+		num se_gae(double n, Object... vocabularySupportingArgs) {
 			super.se_gae(n);
 			return this;
 		}
-		num se_gaya(double n, Object... languageSupportingArgs) {
+		num se_gaya(double n, Object... vocabularySupportingArgs) {
 			super.se_gaya(n);
 			return this;
 		}
@@ -4578,9 +4871,8 @@ public class KL {
 			for (int i : range(kvs)) {
 				if (kvs[i] == null)
 					continue;
-				kvs[i] = kvs[i]
-						.replaceAll("\\b([Hh][ae]|[Yy]es|[Ss]ach)\\b", "true")
-						.replaceAll("\\b([Nn](a(hi)?|o)|[Jj]hoot)\\b", "false");
+				kvs[i] = kvs[i].replaceAll("\\b([Hh]a|[Yy]es)\\b", "true")
+						.replaceAll("\\b([Nn](a(hi)?|o))\\b", "false");
 			}
 			return set(new o(kvs));
 		}
@@ -4724,28 +5016,29 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		public app peMouse(int c, Object... languageSupportingArgs) {
+		public app peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		public app peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		public app peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		public app parMouse(int c, Object... languageSupportingArgs) {
+		public app parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		public app parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		public app parMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		public app keSamneMouse(int c, Object... languageSupportingArgs) {
+		public app keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		public app keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -5042,11 +5335,13 @@ public class KL {
 			});
 			return this;
 		}
-		public app pe(String k, Object languageArg, Runnable action) {
+		public app pe(String k, Object vocabularySupportingArg,
+				Runnable action) {
 			on(k, action);
 			return this;
 		}
-		public app par(String k, Object languageArg, Runnable action) {
+		public app par(String k, Object vocabularySupportingArg,
+				Runnable action) {
 			on(k, action);
 			return this;
 		}
@@ -5517,28 +5812,29 @@ public class KL {
 			super.cursor(crsrObj);
 			return this;
 		}
-		public gui peMouse(int c, Object... languageSupportingArgs) {
+		public gui peMouse(int c, Object... vocabularySupportingArgs) {
 			super.peMouse(c);
 			return this;
 		}
-		public gui peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		public gui peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			super.peMouse(crsrObj);
 			return this;
 		}
-		public gui parMouse(int c, Object... languageSupportingArgs) {
+		public gui parMouse(int c, Object... vocabularySupportingArgs) {
 			super.parMouse(c);
 			return this;
 		}
-		public gui parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		public gui parMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			super.parMouse(crsrObj);
 			return this;
 		}
-		public gui keSamneMouse(int c, Object... languageSupportingArgs) {
+		public gui keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			super.keSamneMouse(c);
 			return this;
 		}
 		public gui keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			super.keSamneMouse(crsrObj);
 			return this;
 		}
@@ -5666,12 +5962,14 @@ public class KL {
 			super.on(k, action);
 			return this;
 		}
-		public gui pe(String k, Object languageArg, Runnable action) {
-			super.pe(k, languageArg, action);
+		public gui pe(String k, Object vocabularySupportingArg,
+				Runnable action) {
+			super.pe(k, vocabularySupportingArg, action);
 			return this;
 		}
-		public gui par(String k, Object languageArg, Runnable action) {
-			super.par(k, languageArg, action);
+		public gui par(String k, Object vocabularySupportingArg,
+				Runnable action) {
+			super.par(k, vocabularySupportingArg, action);
 			return this;
 		}
 		public gui state(String newState) {
@@ -5954,27 +6252,27 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		label peMouse(int c, Object... languageSupportingArgs) {
+		label peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		label peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		label peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		label parMouse(int c, Object... languageSupportingArgs) {
+		label parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		label parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		label parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		label keSamneMouse(int c, Object... languageSupportingArgs) {
+		label keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		label keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		label keSamneMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -6186,11 +6484,11 @@ public class KL {
 			});
 			return this;
 		}
-		label pe(String k, Object languageArg, Runnable action) {
+		label pe(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
-		label par(String k, Object languageArg, Runnable action) {
+		label par(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
@@ -6226,7 +6524,7 @@ public class KL {
 			return this;
 		}
 		label koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -6431,27 +6729,27 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		panel peMouse(int c, Object... languageSupportingArgs) {
+		panel peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		panel peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		panel peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		panel parMouse(int c, Object... languageSupportingArgs) {
+		panel parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		panel parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		panel parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		panel keSamneMouse(int c, Object... languageSupportingArgs) {
+		panel keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		panel keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		panel keSamneMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -6621,11 +6919,11 @@ public class KL {
 			});
 			return this;
 		}
-		panel pe(String k, Object languageArg, Runnable action) {
+		panel pe(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
-		panel par(String k, Object languageArg, Runnable action) {
+		panel par(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
@@ -6661,7 +6959,7 @@ public class KL {
 			return this;
 		}
 		panel koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -6894,27 +7192,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		button peMouse(int c, Object... languageSupportingArgs) {
+		button peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		button peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		button peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		button parMouse(int c, Object... languageSupportingArgs) {
+		button parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		button parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		button parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		button keSamneMouse(int c, Object... languageSupportingArgs) {
+		button keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		button keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		button keSamneMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -7073,7 +7372,7 @@ public class KL {
 			return this;
 		}
 		button koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -7244,27 +7543,27 @@ public class KL {
 			super.cursor(crsrObj);
 			return this;
 		}
-		btn peMouse(int c, Object... languageSupportingArgs) {
+		btn peMouse(int c, Object... vocabularySupportingArgs) {
 			super.peMouse(c);
 			return this;
 		}
-		btn peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		btn peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			super.peMouse(crsrObj);
 			return this;
 		}
-		btn parMouse(int c, Object... languageSupportingArgs) {
+		btn parMouse(int c, Object... vocabularySupportingArgs) {
 			super.parMouse(c);
 			return this;
 		}
-		btn parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		btn parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			super.parMouse(crsrObj);
 			return this;
 		}
-		btn keSamneMouse(int c, Object... languageSupportingArgs) {
+		btn keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			super.keSamneMouse(c);
 			return this;
 		}
-		btn keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		btn keSamneMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			super.keSamneMouse(crsrObj);
 			return this;
 		}
@@ -7410,7 +7709,7 @@ public class KL {
 			return this;
 		}
 		btn koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -7702,28 +8001,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		toggleBtn peMouse(int c, Object... languageSupportingArgs) {
+		toggleBtn peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		toggleBtn peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		toggleBtn peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		toggleBtn parMouse(int c, Object... languageSupportingArgs) {
+		toggleBtn parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		toggleBtn parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		toggleBtn parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		toggleBtn keSamneMouse(int c, Object... languageSupportingArgs) {
+		toggleBtn keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		toggleBtn keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -8004,7 +8303,7 @@ public class KL {
 			return this;
 		}
 		toggleBtn koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -8222,28 +8521,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		radioBtn peMouse(int c, Object... languageSupportingArgs) {
+		radioBtn peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		radioBtn peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		radioBtn peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		radioBtn parMouse(int c, Object... languageSupportingArgs) {
+		radioBtn parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		radioBtn parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		radioBtn parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		radioBtn keSamneMouse(int c, Object... languageSupportingArgs) {
+		radioBtn keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		radioBtn keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -8523,7 +8822,7 @@ public class KL {
 			return this;
 		}
 		radioBtn koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -8750,29 +9049,30 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		radioBtnItem peMouse(int c, Object... languageSupportingArgs) {
+		radioBtnItem peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		radioBtnItem peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		radioBtnItem peMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		radioBtnItem parMouse(int c, Object... languageSupportingArgs) {
+		radioBtnItem parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		radioBtnItem parMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		radioBtnItem keSamneMouse(int c, Object... languageSupportingArgs) {
+		radioBtnItem keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		radioBtnItem keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -9056,7 +9356,7 @@ public class KL {
 			return this;
 		}
 		radioBtnItem koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -9280,28 +9580,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		checkBox peMouse(int c, Object... languageSupportingArgs) {
+		checkBox peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		checkBox peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		checkBox peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		checkBox parMouse(int c, Object... languageSupportingArgs) {
+		checkBox parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		checkBox parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		checkBox parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		checkBox keSamneMouse(int c, Object... languageSupportingArgs) {
+		checkBox keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		checkBox keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -9583,7 +9883,7 @@ public class KL {
 			return this;
 		}
 		checkBox koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -9798,29 +10098,30 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		checkBoxItem peMouse(int c, Object... languageSupportingArgs) {
+		checkBoxItem peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		checkBoxItem peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		checkBoxItem peMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		checkBoxItem parMouse(int c, Object... languageSupportingArgs) {
+		checkBoxItem parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		checkBoxItem parMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		checkBoxItem keSamneMouse(int c, Object... languageSupportingArgs) {
+		checkBoxItem keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		checkBoxItem keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -10104,7 +10405,7 @@ public class KL {
 			return this;
 		}
 		checkBoxItem koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -10265,27 +10566,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		menuBar peMouse(int c, Object... languageSupportingArgs) {
+		menuBar peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		menuBar peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		menuBar peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		menuBar parMouse(int c, Object... languageSupportingArgs) {
+		menuBar parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		menuBar parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		menuBar parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		menuBar keSamneMouse(int c, Object... languageSupportingArgs) {
+		menuBar keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		menuBar keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		menuBar keSamneMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -10388,7 +10690,7 @@ public class KL {
 			return this;
 		}
 		menuBar koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -10586,27 +10888,27 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		menu peMouse(int c, Object... languageSupportingArgs) {
+		menu peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		menu peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		menu peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		menu parMouse(int c, Object... languageSupportingArgs) {
+		menu parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		menu parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		menu parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		menu keSamneMouse(int c, Object... languageSupportingArgs) {
+		menu keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		menu keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		menu keSamneMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -10739,7 +11041,7 @@ public class KL {
 			return this;
 		}
 		menu koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -10943,28 +11245,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		menuItem peMouse(int c, Object... languageSupportingArgs) {
+		menuItem peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		menuItem peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		menuItem peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		menuItem parMouse(int c, Object... languageSupportingArgs) {
+		menuItem parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		menuItem parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		menuItem parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		menuItem keSamneMouse(int c, Object... languageSupportingArgs) {
+		menuItem keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		menuItem keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -11097,7 +11399,7 @@ public class KL {
 			return this;
 		}
 		menuItem koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -11210,28 +11512,30 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		contextMenu peMouse(int c, Object... languageSupportingArgs) {
+		contextMenu peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		contextMenu peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		contextMenu peMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		contextMenu parMouse(int c, Object... languageSupportingArgs) {
+		contextMenu parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		contextMenu parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		contextMenu parMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		contextMenu keSamneMouse(int c, Object... languageSupportingArgs) {
+		contextMenu keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		contextMenu keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -11336,7 +11640,7 @@ public class KL {
 			return this;
 		}
 		contextMenu koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -11478,28 +11782,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		dropDown peMouse(int c, Object... languageSupportingArgs) {
+		dropDown peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		dropDown peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		dropDown peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		dropDown parMouse(int c, Object... languageSupportingArgs) {
+		dropDown parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		dropDown parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		dropDown parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		dropDown keSamneMouse(int c, Object... languageSupportingArgs) {
+		dropDown keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		dropDown keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -11602,7 +11906,7 @@ public class KL {
 			return this;
 		}
 		dropDown koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -11700,28 +12004,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		txtField peMouse(int c, Object... languageSupportingArgs) {
+		txtField peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		txtField peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		txtField peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		txtField parMouse(int c, Object... languageSupportingArgs) {
+		txtField parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		txtField parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		txtField parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		txtField keSamneMouse(int c, Object... languageSupportingArgs) {
+		txtField keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		txtField keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -11935,11 +12239,12 @@ public class KL {
 			});
 			return this;
 		}
-		txtField pe(String k, Object languageArg, Runnable action) {
+		txtField pe(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
-		txtField par(String k, Object languageArg, Runnable action) {
+		txtField par(String k, Object vocabularySupportingArg,
+				Runnable action) {
 			on(k, action);
 			return this;
 		}
@@ -11975,7 +12280,7 @@ public class KL {
 			return this;
 		}
 		txtField koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -12064,27 +12369,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		txtArea peMouse(int c, Object... languageSupportingArgs) {
+		txtArea peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		txtArea peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		txtArea peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		txtArea parMouse(int c, Object... languageSupportingArgs) {
+		txtArea parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		txtArea parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		txtArea parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		txtArea keSamneMouse(int c, Object... languageSupportingArgs) {
+		txtArea keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		txtArea keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		txtArea keSamneMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -12296,11 +12602,11 @@ public class KL {
 			});
 			return this;
 		}
-		txtArea pe(String k, Object languageArg, Runnable action) {
+		txtArea pe(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
-		txtArea par(String k, Object languageArg, Runnable action) {
+		txtArea par(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
@@ -12336,7 +12642,7 @@ public class KL {
 			return this;
 		}
 		txtArea koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -12372,27 +12678,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		txtPane peMouse(int c, Object... languageSupportingArgs) {
+		txtPane peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		txtPane peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		txtPane peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		txtPane parMouse(int c, Object... languageSupportingArgs) {
+		txtPane parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		txtPane parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		txtPane parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		txtPane keSamneMouse(int c, Object... languageSupportingArgs) {
+		txtPane keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		txtPane keSamneMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		txtPane keSamneMouse(Cursor crsrObj,
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -12604,11 +12911,11 @@ public class KL {
 			});
 			return this;
 		}
-		txtPane pe(String k, Object languageArg, Runnable action) {
+		txtPane pe(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
-		txtPane par(String k, Object languageArg, Runnable action) {
+		txtPane par(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
@@ -12644,7 +12951,7 @@ public class KL {
 			return this;
 		}
 		txtPane koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -12742,28 +13049,28 @@ public class KL {
 			super.setCursor(crsrObj);
 			return this;
 		}
-		pwdField peMouse(int c, Object... languageSupportingArgs) {
+		pwdField peMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		pwdField peMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		pwdField peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		pwdField parMouse(int c, Object... languageSupportingArgs) {
+		pwdField parMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
-		pwdField parMouse(Cursor crsrObj, Object... languageSupportingArgs) {
+		pwdField parMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
-		pwdField keSamneMouse(int c, Object... languageSupportingArgs) {
+		pwdField keSamneMouse(int c, Object... vocabularySupportingArgs) {
 			cursor(c);
 			return this;
 		}
 		pwdField keSamneMouse(Cursor crsrObj,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			cursor(crsrObj);
 			return this;
 		}
@@ -12977,11 +13284,12 @@ public class KL {
 			});
 			return this;
 		}
-		pwdField pe(String k, Object languageArg, Runnable action) {
+		pwdField pe(String k, Object vocabularySupportingArg, Runnable action) {
 			on(k, action);
 			return this;
 		}
-		pwdField par(String k, Object languageArg, Runnable action) {
+		pwdField par(String k, Object vocabularySupportingArg,
+				Runnable action) {
 			on(k, action);
 			return this;
 		}
@@ -13017,7 +13325,7 @@ public class KL {
 			return this;
 		}
 		pwdField koRakho(int xAxis, int yAxis, int width, int height,
-				Object... languageSupportingArgs) {
+				Object... vocabularySupportingArgs) {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
@@ -14939,7 +15247,17 @@ public class KL {
 				if (eqSignSeparatedPair == null)
 					continue;
 				eqSignSeparatedPair = eqSignSeparatedPair
-						.replaceAll("^\\{+|\\}+$", "");
+						.replaceAll("^\\{+|\\}+$", "").replaceAll(
+								"(?<=\\w)\\s([Bb]a?ra?ba?r|[Hh]en?)\\s(?=.)",
+								"=");
+				eqSignSeparatedPair = eqSignSeparatedPair.replaceAll(
+						"(?<=\\w)\\s([Ss]ach|[Yy]es|True|[Hh][ae]n?)(?![\\s\\w])",
+						"=true").replaceAll(
+								"(?<=\\w)\\s([Jj]hoot|[Nn][oa](hi)?|False)(?![\\s\\w])",
+								"=false");
+				//let's remove all entries of `\{`, `\}`, and replace
+				//syntactic sugar `(?<=\w) (brbr|barabar|hen?) ` with an `=` sign
+				//before moving forward
 				if (in(eqSignSeparatedPair,
 						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
 					String k;
@@ -14968,55 +15286,22 @@ public class KL {
 									"");
 							if (!in(unprocessedV, ";$"))
 								unprocessedV += ";";
-							String[] items = untangle(
-									unprocessedV.split("\\s*[;&]+\\s*"));
+							String[] items = untangle(unprocessedV
+									.split("\\s*([;&]+|and|aur|or)\\s*"));
 							hint.goodpractice the_untangle_method_helps_get_rid_of_a_bug;
 							items = KL.map(items, item -> item
 									.replaceAll("^['\"]|['\"]$", ""));
-							//							Object[] finalProcessedItems = new Object[items.length];
-							//							Object processedItem;
-							//							for (int i : range(items)) {
-							//								String rawItem = items[i];
-							//								if (isIntLike(rawItem))
-							//									processedItem = Int(rawItem);
-							//								else if (eq(rawItem, "\\-?\\d+[Ll]"))
-							//									processedItem = Long(
-							//											rawItem.replaceAll("[Ll]$", ""));
-							//								else if (eq(rawItem, "\\-?\\d*\\.?\\d+[Ff]")) {
-							//									// the `[Ff]` check in here is mandatory to
-							//									// recognize
-							//									// the
-							//									// value as a float, and not a double
-							//									processedItem = Flt(
-							//											rawItem.replaceAll("[Ff]$", ""));
-							//								} else if (eq(rawItem,
-							//										"\\-?\\d*\\.?\\d+[Dd]?")) {
-							//									// the D in here should be optional
-							//									processedItem = Dbl(
-							//											rawItem.replaceAll("[Dd]$", ""));
-							//								} else if (in(rawItem, "!*(true|false)")) {
-							//									boolean midValue = in(
-							//											rawItem.replaceAll("^!+", ""),
-							//											"true") ? true : false;
-							//									while (in(rawItem, "!")) {
-							//										rawItem = replaceFirst(rawItem, "!",
-							//												"");
-							//										midValue = !midValue;
-							//									}
-							//									processedItem = midValue;
-							//								} else if (in(rawItem, "(?<=')[a-zA-Z](?=')"))
-							//									processedItem = rawItem.replaceAll("\'", "")
-							//											.toCharArray()[0];
-							//								else
-							//									processedItem = Str(rawItem)
-							//											.replaceAll("^\"+|\"+$", "");
-							//								finalProcessedItems[i] = processedItem;
-							//							}
-							//							v = finalProcessedItems;
 							v = items;
 							super.put(k, v);
 							continue;
 						}
+						unprocessedV = unprocessedV
+								.replaceAll("^([Ss]ach|[Hh]e)$", "true")
+								.replaceAll("^[Jj]hoot$", "false");
+						//pre-processing conditional terms
+						//CAUTION: Yes, [Hh]a, No, Nahi, WEREN't INCLUDED AS THEY ARE RESERVED KEYWORDS.
+						//If you look up `o replacements = o` in the IDE's find tool,
+						//you'll see what I'm talking about
 						if (isIntLike(unprocessedV))
 							v = Int(unprocessedV);
 						else if (eq(unprocessedV, "\\-?\\d+[Ll]"))
@@ -37986,8 +38271,8 @@ public class KL {
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static Object ko, ki, ke, ke_he, pe, par, dabane_pe, dabane_par,
-			karne_pe, karne_par, rakho, se, se_he, mese,
-			ka = ko = ki = ke = ke_he = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = se_he = mese = none;
+			karne_pe, karne_par, rakho, se, se_he, mese, then, aur, or,
+			ka = ko = ki = ke = ke_he = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = se_he = mese = then = aur = or = none;
 	//these null objects will help us allow optional vocabulary into our function parameters
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
@@ -54821,226 +55106,230 @@ public class KL {
 	public static char[] fill(char m, char n, boolean reverse) {
 		return range(m, n, reverse);
 	}
-	public static int[] hissa(String str, Object... languageSupportingArgs) {
+	public static int[] hissa(String str, Object... vocabularySupportingArgs) {
 		return range(str);
 	}
-	public static int[] hissa(char[] arr, Object... languageSupportingArgs) {
+	public static int[] hissa(char[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(String[] arr, Object... languageSupportingArgs) {
+	public static int[] hissa(String[] arr,
+			Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(int[] arr, Object... languageSupportingArgs) {
+	public static int[] hissa(int[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(long[] arr, Object... languageSupportingArgs) {
+	public static int[] hissa(long[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(float[] arr, Object... languageSupportingArgs) {
+	public static int[] hissa(float[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(double[] arr, Object... languageSupportingArgs) {
+	public static int[] hissa(double[] arr,
+			Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(boolean[] arr, Object... languageSupportingArgs) {
+	public static int[] hissa(boolean[] arr,
+			Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(Object[] arr, Object... languageSupportingArgs) {
+	public static int[] hissa(Object[] arr,
+			Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(arr arr, Object... languageSupportingArgs) {
+	public static int[] hissa(arr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(strArr arr, Object... languageSupportingArgs) {
+	public static int[] hissa(strArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(intArr arr, Object... languageSupportingArgs) {
+	public static int[] hissa(intArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(longArr arr, Object... languageSupportingArgs) {
+	public static int[] hissa(longArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(fltArr arr, Object... languageSupportingArgs) {
+	public static int[] hissa(fltArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(dblArr arr, Object... languageSupportingArgs) {
+	public static int[] hissa(dblArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] hissa(boolArr arr, Object... languageSupportingArgs) {
+	public static int[] hissa(boolArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
 	public static int[] hissa(int start, String str) {
 		return range(start, str);
 	}
 	public static int[] hissa(int start, char[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, String[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, int[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, long[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, float[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, double[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, boolean[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, Object[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, arr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, strArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, intArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, longArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, fltArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, dblArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] hissa(int start, boolArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
-	public static int[] lia(String str, Object... languageSupportingArgs) {
+	public static int[] lia(String str, Object... vocabularySupportingArgs) {
 		return range(str);
 	}
-	public static int[] lia(char[] arr, Object... languageSupportingArgs) {
+	public static int[] lia(char[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(String[] arr, Object... languageSupportingArgs) {
+	public static int[] lia(String[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(int[] arr, Object... languageSupportingArgs) {
+	public static int[] lia(int[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(long[] arr, Object... languageSupportingArgs) {
+	public static int[] lia(long[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(float[] arr, Object... languageSupportingArgs) {
+	public static int[] lia(float[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(double[] arr, Object... languageSupportingArgs) {
+	public static int[] lia(double[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(boolean[] arr, Object... languageSupportingArgs) {
+	public static int[] lia(boolean[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(Object[] arr, Object... languageSupportingArgs) {
+	public static int[] lia(Object[] arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(arr arr, Object... languageSupportingArgs) {
+	public static int[] lia(arr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(strArr arr, Object... languageSupportingArgs) {
+	public static int[] lia(strArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(intArr arr, Object... languageSupportingArgs) {
+	public static int[] lia(intArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(longArr arr, Object... languageSupportingArgs) {
+	public static int[] lia(longArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(fltArr arr, Object... languageSupportingArgs) {
+	public static int[] lia(fltArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(dblArr arr, Object... languageSupportingArgs) {
+	public static int[] lia(dblArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
-	public static int[] lia(boolArr arr, Object... languageSupportingArgs) {
+	public static int[] lia(boolArr arr, Object... vocabularySupportingArgs) {
 		return range(arr);
 	}
 	public static int[] lia(int start, String str) {
 		return range(start, str);
 	}
 	public static int[] lia(int start, char[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, String[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, int[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, long[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, float[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, double[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, boolean[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, Object[] arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, arr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, strArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, intArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, longArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, fltArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, dblArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static int[] lia(int start, boolArr arr,
-			Object... languageSupportingArgs) {
+			Object... vocabularySupportingArgs) {
 		return range(start, arr);
 	}
 	public static void each(String[] iterable,
@@ -56401,12 +56690,12 @@ public class KL {
 									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
 							.replaceAll("\"true\"", "Ha")
-							.replaceAll("\"false\"", "Na")
+							.replaceAll("\"false\"", "Nahi")
 							.replaceAll("=", ": ");
 					// regex accuracy: 93%
 					// changes needed: probably not
 				} else if (type(arg, Bool)) {
-					o replacements = o("true=Ha, false=Na");
+					o replacements = o("true=Ha, false=Nahi");
 					String preprocessed = replace(Str(arg), replacements);
 					arg = preprocessed;
 				}
@@ -56423,11 +56712,17 @@ public class KL {
 		kaholn(args);
 		System.out.print("\n");
 	}
+	public static void boloArr(Object arg) {
+		kahoArr(arg);
+	}
 	public static void bololn(Object... args) {
 		kaholn(args);
 	}
 	public static void bolo(Object... args) {
 		kaho(args);
+	}
+	public static void dikhaoArr(Object arg) {
+		kahoArr(arg);
 	}
 	public static void dikhaoln(Object... args) {
 		kaholn(args);
@@ -56659,7 +56954,7 @@ public class KL {
 								"(?<=,\\s)and(?=\\s[\\w\\.\\-]+$)", "aur")
 						+ "]";
 				preprocessed = preprocessed.replaceAll("true(?=,\\s|\\])", "Ha")
-						.replaceAll("false(?=,\\s|\\])", "Na");
+						.replaceAll("false(?=,\\s|\\])", "Nahi");
 				System.out.print(preprocessed);
 			}
 		} else {
@@ -56696,7 +56991,7 @@ public class KL {
 				String preprocessed = "[" + join((boolean[]) arg)
 						.replaceAll("(?<=,\\s)and(?=\\s\\w+$)", "aur") + "]";
 				preprocessed = preprocessed.replaceAll("true(?=,\\s|\\])", "Ha")
-						.replaceAll("false(?=,\\s|\\])", "Na");
+						.replaceAll("false(?=,\\s|\\])", "Nahi");
 				System.out.print(preprocessed);
 			}
 		}
@@ -59236,11 +59531,20 @@ public class KL {
 	public static boolean isChar(Object o) {
 		return type(o, Char);
 	}
+	public static boolean isCharacter(Object o) {
+		return isChar(o);
+	}
 	public static boolean isStr(Object o) {
 		return type(o, Str);
 	}
+	public static boolean isString(Object o) {
+		return isStr(o);
+	}
 	public static boolean isInt(Object o) {
 		return type(o, Int);
+	}
+	public static boolean isInteger(Object o) {
+		return isInt(o);
 	}
 	public static boolean isLong(Object o) {
 		return type(o, Long);
@@ -59248,25 +59552,58 @@ public class KL {
 	public static boolean isFlt(Object o) {
 		return type(o, Flt);
 	}
+	public static boolean isFloat(Object o) {
+		return isFlt(o);
+	}
 	public static boolean isDbl(Object o) {
 		return type(o, Dbl);
+	}
+	public static boolean isDouble(Object o) {
+		return isDbl(o);
 	}
 	public static boolean isNum(Object o) {
 		if (not(o))
 			return false;
 		return o instanceof Number;
 	}
+	public static boolean isNumber(Object o) {
+		return isNum(o);
+	}
 	public static boolean isBool(Object o) {
 		return type(o, Bool);
+	}
+	public static boolean isBoolean(Object o) {
+		return isBool(o);
 	}
 	public static boolean isArr(Object o) {
 		return type(o, Arr);
 	}
+	public static boolean isArray(Object o) {
+		return isArr(o);
+	}
 	public static boolean isArrOfChar(Object o) {
 		return type(o, ArrOfChar);
 	}
+	public static boolean isArrOfCharacter(Object o) {
+		return isArrOfChar(o);
+	}
+	public static boolean isArrayOfChar(Object o) {
+		return isArrOfChar(o);
+	}
+	public static boolean isArrayOfCharacter(Object o) {
+		return isArrOfChar(o);
+	}
 	public static boolean isArrOfStr(Object o) {
 		return type(o, ArrOfStr);
+	}
+	public static boolean isArrOfString(Object o) {
+		return isArrOfStr(o);
+	}
+	public static boolean isArrayOfStr(Object o) {
+		return isArrOfStr(o);
+	}
+	public static boolean isArrayOfString(Object o) {
+		return isArrOfStr(o);
 	}
 	public static boolean isStrArr(Object o) {
 		return o instanceof strArr || type(o, strArr);
@@ -59274,11 +59611,23 @@ public class KL {
 	public static boolean isArrOfInt(Object o) {
 		return type(o, ArrOfInt);
 	}
+	public static boolean isArrOfInteger(Object o) {
+		return isArrOfInt(o);
+	}
+	public static boolean isArrayOfInt(Object o) {
+		return isArrOfInt(o);
+	}
+	public static boolean isArrayOfInteger(Object o) {
+		return isArrOfInt(o);
+	}
 	public static boolean isIntArr(Object o) {
 		return o instanceof intArr || type(o, intArr);
 	}
 	public static boolean isArrOfLong(Object o) {
 		return type(o, ArrOfLong);
+	}
+	public static boolean isArrayOfLong(Object o) {
+		return isArrOfLong(o);
 	}
 	public static boolean isLongArr(Object o) {
 		return o instanceof longArr || type(o, longArr);
@@ -59286,17 +59635,44 @@ public class KL {
 	public static boolean isArrOfFlt(Object o) {
 		return type(o, ArrOfFlt);
 	}
+	public static boolean isArrOfFloat(Object o) {
+		return isArrOfFlt(o);
+	}
+	public static boolean isArrayOfFlt(Object o) {
+		return isArrOfFlt(o);
+	}
+	public static boolean isArrayOfFloat(Object o) {
+		return isArrOfFlt(o);
+	}
 	public static boolean isFltArr(Object o) {
 		return o instanceof fltArr || type(o, fltArr);
 	}
 	public static boolean isArrOfDbl(Object o) {
 		return type(o, ArrOfDbl);
 	}
+	public static boolean isArrOfDouble(Object o) {
+		return isArrOfDbl(o);
+	}
+	public static boolean isArrayOfDbl(Object o) {
+		return isArrOfDbl(o);
+	}
+	public static boolean isArrayOfDouble(Object o) {
+		return isArrOfDbl(o);
+	}
 	public static boolean isDblArr(Object o) {
 		return o instanceof dblArr || type(o, dblArr);
 	}
 	public static boolean isArrOfBool(Object o) {
 		return type(o, ArrOfBool);
+	}
+	public static boolean isArrOfBoolean(Object o) {
+		return isArrOfBool(o);
+	}
+	public static boolean isArrayOfBool(Object o) {
+		return isArrOfBool(o);
+	}
+	public static boolean isArrayOfBoolean(Object o) {
+		return isArrOfBool(o);
 	}
 	public static boolean isBoolArr(Object o) {
 		return o instanceof boolArr || type(o, boolArr);
@@ -59307,6 +59683,15 @@ public class KL {
 	public static boolean isArrOfObj(Object o) {
 		return type(o, ArrOfObj);
 	}
+	public static boolean isArrOfObject(Object o) {
+		return isArrOfObj(o);
+	}
+	public static boolean isArrayOfObj(Object o) {
+		return isArrOfObj(o);
+	}
+	public static boolean isArrayOfObject(Object o) {
+		return isArrOfObj(o);
+	}
 	public static boolean isMixedArr(Object o) {
 		return type(o, mixedArr);
 	}
@@ -59314,13 +59699,17 @@ public class KL {
 		return c >= 65 && c <= 122;
 	}
 	public static boolean isAlpha(String s) {
+		if (not(s))
+			return false;
 		return is(Str(s), "[A-Za-z]+");
 	}
 	public static boolean isDigit(char c) {
 		return c >= 48 && c <= 57;
 	}
 	public static boolean isDigit(String s) {
-		return is(Str(s), "\\d+");
+		if (not(s))
+			return false;
+		return eq(s, "\\d+");
 	}
 	public static boolean isPos(int n) {
 		return n > 0;
@@ -59482,64 +59871,64 @@ public class KL {
 			return 0.0;
 		return n.doubleValue() / 8;
 	}
-	public static int dugna(int n, Object... languageSupportingArgs) {
+	public static int dugna(int n, Object... vocabularySupportingArgs) {
 		return twice(n);
 	}
-	public static long dugna(long n, Object... languageSupportingArgs) {
+	public static long dugna(long n, Object... vocabularySupportingArgs) {
 		return twice(n);
 	}
-	public static float dugna(float n, Object... languageSupportingArgs) {
+	public static float dugna(float n, Object... vocabularySupportingArgs) {
 		return twice(n);
 	}
-	public static double dugna(double n, Object... languageSupportingArgs) {
+	public static double dugna(double n, Object... vocabularySupportingArgs) {
 		return twice(n);
 	}
-	public static double dugna(Number n, Object... languageSupportingArgs) {
+	public static double dugna(Number n, Object... vocabularySupportingArgs) {
 		return twice(n);
 	}
-	public static int adha(int n, Object... languageSupportingArgs) {
+	public static int adha(int n, Object... vocabularySupportingArgs) {
 		return half(n);
 	}
-	public static long adha(long n, Object... languageSupportingArgs) {
+	public static long adha(long n, Object... vocabularySupportingArgs) {
 		return half(n);
 	}
-	public static float adha(float n, Object... languageSupportingArgs) {
+	public static float adha(float n, Object... vocabularySupportingArgs) {
 		return half(n);
 	}
-	public static double adha(double n, Object... languageSupportingArgs) {
+	public static double adha(double n, Object... vocabularySupportingArgs) {
 		return half(n);
 	}
-	public static double adha(Number n, Object... languageSupportingArgs) {
+	public static double adha(Number n, Object... vocabularySupportingArgs) {
 		return half(n);
 	}
-	public static int chotha(int n, Object... languageSupportingArgs) {
+	public static int chotha(int n, Object... vocabularySupportingArgs) {
 		return quarter(n);
 	}
-	public static long chotha(long n, Object... languageSupportingArgs) {
+	public static long chotha(long n, Object... vocabularySupportingArgs) {
 		return quarter(n);
 	}
-	public static float chotha(float n, Object... languageSupportingArgs) {
+	public static float chotha(float n, Object... vocabularySupportingArgs) {
 		return quarter(n);
 	}
-	public static double chotha(double n, Object... languageSupportingArgs) {
+	public static double chotha(double n, Object... vocabularySupportingArgs) {
 		return quarter(n);
 	}
-	public static double chotha(Number n, Object... languageSupportingArgs) {
+	public static double chotha(Number n, Object... vocabularySupportingArgs) {
 		return quarter(n);
 	}
-	public static int athwa(int n, Object... languageSupportingArgs) {
+	public static int athwa(int n, Object... vocabularySupportingArgs) {
 		return eighth(n);
 	}
-	public static long athwa(long n, Object... languageSupportingArgs) {
+	public static long athwa(long n, Object... vocabularySupportingArgs) {
 		return eighth(n);
 	}
-	public static float athwa(float n, Object... languageSupportingArgs) {
+	public static float athwa(float n, Object... vocabularySupportingArgs) {
 		return eighth(n);
 	}
-	public static double athwa(double n, Object... languageSupportingArgs) {
+	public static double athwa(double n, Object... vocabularySupportingArgs) {
 		return eighth(n);
 	}
-	public static double athwa(Number n, Object... languageSupportingArgs) {
+	public static double athwa(Number n, Object... vocabularySupportingArgs) {
 		return eighth(n);
 	}
 	public static int sum(int... ns) {
@@ -60049,14 +60438,197 @@ public class KL {
 	public static int me_izafa(int... ns) {
 		return sum(ns);
 	}
+	public static int me_izafa(int n) {
+		if (n == har.i) {
+			har.i++;
+			return har.i;
+		} else if (n == har.j) {
+			har.j++;
+			return har.j;
+		} else if (n == har.k) {
+			har.k++;
+			return har.k;
+		} else {
+			n++;
+			return n;
+		}
+	}
+	public static int me_izafa(int n, int nB, Object vocabularySupportingArg,
+			Object vocabularySupportingArgB) {
+		if (either(isInt(vocabularySupportingArg),
+				isInt(vocabularySupportingArgB)))
+			return sum(n, nB,
+					isInt(vocabularySupportingArg)
+							? (int) vocabularySupportingArg
+							: 0,
+					isInt(vocabularySupportingArgB)
+							? (int) vocabularySupportingArgB
+							: 0);
+		if (n == har.i) {
+			har.i += nB;
+			return har.i;
+		} else if (n == har.j) {
+			har.j += nB;
+			return har.j;
+		} else if (n == har.k) {
+			har.k += nB;
+			return har.k;
+		} else {
+			n += nB;
+			return n;
+		}
+	}
+	public static int me_izafa(int n, int nB, Object vocabularySupportingArg) {
+		if (isInt(vocabularySupportingArg))
+			return sum(n, nB, (int) vocabularySupportingArg);
+		return sum(n, nB);
+	}
 	public static long me_izafa(long... ns) {
 		return sum(ns);
+	}
+	public static long me_izafa(long n) {
+		if (n == har.i) {
+			har.i++;
+			return har.i;
+		} else if (n == har.j) {
+			har.j++;
+			return har.j;
+		} else if (n == har.k) {
+			har.k++;
+			return har.k;
+		} else {
+			n++;
+			return n;
+		}
+	}
+	public static long me_izafa(long n, long nB, Object vocabularySupportingArg,
+			Object vocabularySupportingArgB) {
+		if (either(isLong(vocabularySupportingArg),
+				isLong(vocabularySupportingArgB)))
+			return sum(n, nB,
+					isLong(vocabularySupportingArg)
+							? (long) vocabularySupportingArg
+							: 0,
+					isLong(vocabularySupportingArgB)
+							? (long) vocabularySupportingArgB
+							: 0);
+		if (n == har.i) {
+			har.i += nB;
+			return har.i;
+		} else if (n == har.j) {
+			har.j += nB;
+			return har.j;
+		} else if (n == har.k) {
+			har.k += nB;
+			return har.k;
+		} else {
+			n += nB;
+			return n;
+		}
+	}
+	public static long me_izafa(long n, long nB,
+			Object vocabularySupportingArg) {
+		if (isLong(vocabularySupportingArg))
+			return sum(n, nB, (long) vocabularySupportingArg);
+		return sum(n, nB);
 	}
 	public static float me_izafa(float... ns) {
 		return sum(ns);
 	}
+	public static float me_izafa(float n) {
+		if (n == har.i) {
+			har.i++;
+			return har.i;
+		} else if (n == har.j) {
+			har.j++;
+			return har.j;
+		} else if (n == har.k) {
+			har.k++;
+			return har.k;
+		} else {
+			n++;
+			return n;
+		}
+	}
+	public static float me_izafa(float n, float nB,
+			Object vocabularySupportingArg, Object vocabularySupportingArgB) {
+		if (either(isFlt(vocabularySupportingArg),
+				isFlt(vocabularySupportingArgB)))
+			return sum(n, nB,
+					isFlt(vocabularySupportingArg)
+							? (float) vocabularySupportingArg
+							: 0,
+					isFlt(vocabularySupportingArgB)
+							? (float) vocabularySupportingArgB
+							: 0);
+		if (n == har.i) {
+			har.i += nB;
+			return har.i;
+		} else if (n == har.j) {
+			har.j += nB;
+			return har.j;
+		} else if (n == har.k) {
+			har.k += nB;
+			return har.k;
+		} else {
+			n += nB;
+			return n;
+		}
+	}
+	public static float me_izafa(float n, float nB,
+			Object vocabularySupportingArg) {
+		if (isFlt(vocabularySupportingArg))
+			return sum(n, nB, (float) vocabularySupportingArg);
+		return sum(n, nB);
+	}
 	public static double me_izafa(double... ns) {
 		return sum(ns);
+	}
+	public static double me_izafa(double n) {
+		if (n == har.i) {
+			har.i++;
+			return har.i;
+		} else if (n == har.j) {
+			har.j++;
+			return har.j;
+		} else if (n == har.k) {
+			har.k++;
+			return har.k;
+		} else {
+			n++;
+			return n;
+		}
+	}
+	public static double me_izafa(double n, double nB,
+			Object vocabularySupportingArg, Object vocabularySupportingArgB) {
+		if (either(isDbl(vocabularySupportingArg),
+				isDbl(vocabularySupportingArgB)))
+			return sum(n, nB,
+					isDbl(vocabularySupportingArg)
+							? (double) vocabularySupportingArg
+							: 0,
+					isDbl(vocabularySupportingArgB)
+							? (double) vocabularySupportingArgB
+							: 0);
+		if (n == har.i) {
+			har.i += nB;
+			return har.i;
+		} else if (n == har.j) {
+			har.j += nB;
+			return har.j;
+		} else if (n == har.k) {
+			har.k += nB;
+			return har.k;
+		} else {
+			n += nB;
+			return n;
+		}
+	}
+	public static double me_izafa(double n, double nB,
+			Object vocabularySupportingArg) {
+		if (isDbl(vocabularySupportingArg))
+			return sum(n, nB, (double) vocabularySupportingArg);
+		return sum(n, nB);
 	}
 	public static int me_izafa(intArr ns) {
 		return sum(ns);
@@ -60649,14 +61221,197 @@ public class KL {
 	public static int se_nikala(int... ns) {
 		return difference(ns);
 	}
+	public static int se_nikala(int n) {
+		if (n == har.i) {
+			har.i--;
+			return har.i;
+		} else if (n == har.j) {
+			har.j--;
+			return har.j;
+		} else if (n == har.k) {
+			har.k--;
+			return har.k;
+		} else {
+			n--;
+			return n;
+		}
+	}
+	public static int se_nikala(int n, int nB, Object vocabularySupportingArg,
+			Object vocabularySupportingArgB) {
+		if (either(isInt(vocabularySupportingArg),
+				isInt(vocabularySupportingArgB)))
+			return difference(n, nB,
+					isInt(vocabularySupportingArg)
+							? (int) vocabularySupportingArg
+							: 0,
+					isInt(vocabularySupportingArgB)
+							? (int) vocabularySupportingArgB
+							: 0);
+		if (n == har.i) {
+			har.i -= nB;
+			return har.i;
+		} else if (n == har.j) {
+			har.j -= nB;
+			return har.j;
+		} else if (n == har.k) {
+			har.k -= nB;
+			return har.k;
+		} else {
+			n -= nB;
+			return n;
+		}
+	}
+	public static int se_nikala(int n, int nB, Object vocabularySupportingArg) {
+		if (isInt(vocabularySupportingArg))
+			return difference(n, nB, (int) vocabularySupportingArg);
+		return difference(n, nB);
+	}
 	public static long se_nikala(long... ns) {
 		return difference(ns);
+	}
+	public static long se_nikala(long n) {
+		if (n == har.i) {
+			har.i--;
+			return har.i;
+		} else if (n == har.j) {
+			har.j--;
+			return har.j;
+		} else if (n == har.k) {
+			har.k--;
+			return har.k;
+		} else {
+			n--;
+			return n;
+		}
+	}
+	public static long se_nikala(long n, long nB,
+			Object vocabularySupportingArg, Object vocabularySupportingArgB) {
+		if (either(isLong(vocabularySupportingArg),
+				isLong(vocabularySupportingArgB)))
+			return difference(n, nB,
+					isLong(vocabularySupportingArg)
+							? (long) vocabularySupportingArg
+							: 0,
+					isLong(vocabularySupportingArgB)
+							? (long) vocabularySupportingArgB
+							: 0);
+		if (n == har.i) {
+			har.i -= nB;
+			return har.i;
+		} else if (n == har.j) {
+			har.j -= nB;
+			return har.j;
+		} else if (n == har.k) {
+			har.k -= nB;
+			return har.k;
+		} else {
+			n -= nB;
+			return n;
+		}
+	}
+	public static long se_nikala(long n, long nB,
+			Object vocabularySupportingArg) {
+		if (isLong(vocabularySupportingArg))
+			return difference(n, nB, (long) vocabularySupportingArg);
+		return difference(n, nB);
 	}
 	public static float se_nikala(float... ns) {
 		return difference(ns);
 	}
+	public static float se_nikala(float n) {
+		if (n == har.i) {
+			har.i--;
+			return har.i;
+		} else if (n == har.j) {
+			har.j--;
+			return har.j;
+		} else if (n == har.k) {
+			har.k--;
+			return har.k;
+		} else {
+			n--;
+			return n;
+		}
+	}
+	public static float se_nikala(float n, float nB,
+			Object vocabularySupportingArg, Object vocabularySupportingArgB) {
+		if (either(isFlt(vocabularySupportingArg),
+				isFlt(vocabularySupportingArgB)))
+			return difference(n, nB,
+					isFlt(vocabularySupportingArg)
+							? (float) vocabularySupportingArg
+							: 0,
+					isFlt(vocabularySupportingArgB)
+							? (float) vocabularySupportingArgB
+							: 0);
+		if (n == har.i) {
+			har.i -= nB;
+			return har.i;
+		} else if (n == har.j) {
+			har.j -= nB;
+			return har.j;
+		} else if (n == har.k) {
+			har.k -= nB;
+			return har.k;
+		} else {
+			n -= nB;
+			return n;
+		}
+	}
+	public static float se_nikala(float n, float nB,
+			Object vocabularySupportingArg) {
+		if (isFlt(vocabularySupportingArg))
+			return difference(n, nB, (float) vocabularySupportingArg);
+		return difference(n, nB);
+	}
 	public static double se_nikala(double... ns) {
 		return difference(ns);
+	}
+	public static double se_nikala(double n) {
+		if (n == har.i) {
+			har.i--;
+			return har.i;
+		} else if (n == har.j) {
+			har.j--;
+			return har.j;
+		} else if (n == har.k) {
+			har.k--;
+			return har.k;
+		} else {
+			n--;
+			return n;
+		}
+	}
+	public static double se_nikala(double n, double nB,
+			Object vocabularySupportingArg, Object vocabularySupportingArgB) {
+		if (either(isDbl(vocabularySupportingArg),
+				isDbl(vocabularySupportingArgB)))
+			return difference(n, nB,
+					isDbl(vocabularySupportingArg)
+							? (double) vocabularySupportingArg
+							: 0,
+					isDbl(vocabularySupportingArgB)
+							? (double) vocabularySupportingArgB
+							: 0);
+		if (n == har.i) {
+			har.i -= nB;
+			return har.i;
+		} else if (n == har.j) {
+			har.j -= nB;
+			return har.j;
+		} else if (n == har.k) {
+			har.k -= nB;
+			return har.k;
+		} else {
+			n -= nB;
+			return n;
+		}
+	}
+	public static double se_nikala(double n, double nB,
+			Object vocabularySupportingArg) {
+		if (isDbl(vocabularySupportingArg))
+			return difference(n, nB, (double) vocabularySupportingArg);
+		return difference(n, nB);
 	}
 	public static int se_nikala(intArr ns) {
 		return difference(ns);
@@ -63917,7 +64672,7 @@ public class KL {
 					} else if (arg instanceof Boolean
 							&& eq(m, "%[\\%b]|\\$*\\{\\}")) {
 						s = replaceFirst(s, "%[\\%b]|\\$*\\{\\}",
-								eq(Str((boolean) arg), "true") ? "Ha" : "Na");
+								eq(Str((boolean) arg), "true") ? "Ha" : "Nahi");
 					}
 					// replaceFirst is really what we need here, as replacing
 					// "all"
@@ -64257,7 +65012,8 @@ public class KL {
 										field = i((Number[]) field, i);
 									} else if (isArrOfObj(field)) {
 										field = i((Object[]) field, i);
-										o replacements = o("true=Ha, false=Na");
+										o replacements = o(
+												"true=Ha, false=Nahi");
 										String preprocessed = replace(
 												Str(field), replacements);
 										field = preprocessed;
@@ -64275,7 +65031,8 @@ public class KL {
 										field = i((double[]) field, i);
 									} else if (isArrOfBool(field)) {
 										field = i((boolean[]) field, i);
-										o replacements = o("true=Ha, false=Na");
+										o replacements = o(
+												"true=Ha, false=Nahi");
 										String preprocessed = replace(
 												Str(field), replacements);
 										field = preprocessed;
@@ -64313,7 +65070,7 @@ public class KL {
 												.replaceAll("true(?=,\\s|\\])",
 														"Ha")
 												.replaceAll("false(?=,\\s|\\])",
-														"Na");
+														"Nahi");
 										field = preprocessed;
 									}
 								} else {
@@ -64356,7 +65113,7 @@ public class KL {
 												.replaceAll("true(?=,\\s|\\])",
 														"Ha")
 												.replaceAll("false(?=,\\s|\\])",
-														"Na");
+														"Nahi");
 										field = preprocessed;
 									}
 								}
@@ -64378,7 +65135,7 @@ public class KL {
 												.toLowerCase() + "=")[1]
 										.split(",")[0]
 										.replaceAll("[\\{\\}]", "");
-								o replacements = o("true=Ha, false=Na");
+								o replacements = o("true=Ha, false=Nahi");
 								String preprocessed = replace(Str(field),
 										replacements);
 								field = preprocessed;
@@ -64387,7 +65144,7 @@ public class KL {
 										"(?<=\\[)\\-?\\d+(?=\\])"));
 								if (field instanceof o) {
 									field = i((o) field, i);
-									o replacements = o("true=Ha, false=Na");
+									o replacements = o("true=Ha, false=Nahi");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
@@ -64401,7 +65158,7 @@ public class KL {
 									field = i((oD) field, i);
 								} else if (field instanceof oB) {
 									field = i((oB) field, i);
-									o replacements = o("true=Ha, false=Na");
+									o replacements = o("true=Ha, false=Nahi");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
@@ -64415,7 +65172,7 @@ public class KL {
 									field = i((treeD) field, i);
 								} else if (field instanceof treeB) {
 									field = i((treeB) field, i);
-									o replacements = o("true=Ha, false=Na");
+									o replacements = o("true=Ha, false=Nahi");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
@@ -64429,7 +65186,7 @@ public class KL {
 									field = i((treeDF) field, i);
 								} else if (field instanceof treeDB) {
 									field = i((treeDB) field, i);
-									o replacements = o("true=Ha, false=Na");
+									o replacements = o("true=Ha, false=Nahi");
 									String preprocessed = replace(Str(field),
 											replacements);
 									field = preprocessed;
@@ -64443,13 +65200,13 @@ public class KL {
 														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
 												.replaceAll("\"true\"", "Ha")
-												.replaceAll("\"false\"", "Na")
+												.replaceAll("\"false\"", "Nahi")
 												.replaceAll("=", ": ");
 								// regex accuracy: 93%
 								// changes needed: probably not
 							}
 						} else if (type(field, Bool)) {
-							o replacements = o("true=Ha, false=Na");
+							o replacements = o("true=Ha, false=Nahi");
 							String preprocessed = replace(Str(field),
 									replacements);
 							field = preprocessed;
@@ -64508,7 +65265,7 @@ public class KL {
 																	? double.class
 																	: float.class)
 													: in(param,
-															"(?<!\\!)((\\!*)(true|Ha|false|Na))")
+															"(?<!\\!)((\\!*)(true|Ha|false|Nahi))")
 																	? boolean.class
 																	: String.class;
 									param = param.replaceAll("(?<=\\d)[LlFf]$",
@@ -64534,9 +65291,9 @@ public class KL {
 											: isDblLike(param)
 													? Dbl(param)
 													: in(param,
-															"(?<!\\!)((\\!*)(true|Ha|false|Na))")
+															"(?<!\\!)((\\!*)(true|Ha|false|Nahi))")
 																	? (in(param,
-																			"(?<!\\!)(((!{2}){0,}(true|Ha))|((!{1})(!!)*(false|Na)))")
+																			"(?<!\\!)(((!{2}){0,}(true|Ha))|((!{1})(!!)*(false|Nahi)))")
 																					? true
 																					: false)
 																	: Str(param);
@@ -64558,7 +65315,7 @@ public class KL {
 																			valueFromMethod),
 																			"true")
 																					? "Ha"
-																					: "Na")
+																					: "Nahi")
 																	: m);
 								}
 							} else {
@@ -64575,7 +65332,7 @@ public class KL {
 																				? double.class
 																				: float.class)
 																: in(unprocessedParamString,
-																		"(?<!\\!)((\\!*)(true|Ha|false|Na))")
+																		"(?<!\\!)((\\!*)(true|Ha|false|Nahi))")
 																				? boolean.class
 																				: String.class;
 								unprocessedParamString = unprocessedParamString
@@ -64600,9 +65357,9 @@ public class KL {
 																unprocessedParamString)
 																		? Dbl(unprocessedParamString)
 																		: in(unprocessedParamString,
-																				"(?<!\\!)((\\!*)(true|Ha|false|Na))")
+																				"(?<!\\!)((\\!*)(true|Ha|false|Nahi))")
 																						? (in(unprocessedParamString,
-																								"(?<!\\!)(((!{2}){0,}(true|Ha))|((!{1})(!!)*(false|Na)))")
+																								"(?<!\\!)(((!{2}){0,}(true|Ha))|((!{1})(!!)*(false|Nahi)))")
 																										? true
 																										: false)
 																						: unprocessedParamString);
@@ -64620,7 +65377,7 @@ public class KL {
 																valueFromMethod),
 																"true")
 																		? "Ha"
-																		: "Na")
+																		: "Nahi")
 														: m);
 					}
 				} catch (NoSuchMethodException | IllegalAccessException
@@ -64654,7 +65411,7 @@ public class KL {
 								if (!eq(Str(A), Str(B)))
 									result = "Ha";
 								else
-									result = "Na";
+									result = "Nahi";
 								break;
 							case "is" :
 							case "==" :
@@ -64663,26 +65420,26 @@ public class KL {
 									if (is(Str(A)))
 										result = "Ha";
 									else
-										result = "Na";
+										result = "Nahi";
 								} else {
 									if (eq(Str(B), Str(A)))
 										result = "Ha";
 									else
-										result = "Na";
+										result = "Nahi";
 								}
 								break;
 							case "in" :
 								if (in(Str(B), Str(A)))
 									result = "Ha";
 								else
-									result = "Na";
+									result = "Nahi";
 								break;
 							case "has" :
 							case "contains" :
 								if (in(Str(A), Str(B)))
 									result = "Ha";
 								else
-									result = "Na";
+									result = "Nahi";
 								break;
 						}
 					} else {
@@ -64699,7 +65456,7 @@ public class KL {
 								if (!eq(numA, numB))
 									result = "Ha";
 								else
-									result = "Na";
+									result = "Nahi";
 								break;
 							case "is" :
 							case "==" :
@@ -64708,37 +65465,37 @@ public class KL {
 									if (is(numA))
 										result = "Ha";
 									else
-										result = "Na";
+										result = "Nahi";
 								} else {
 									if (eq(numA, numB))
 										result = "Ha";
 									else
-										result = "Na";
+										result = "Nahi";
 								}
 								break;
 							case ">=" :
 								if (numA >= numB)
 									result = "Ha";
 								else
-									result = "Na";
+									result = "Nahi";
 								break;
 							case ">" :
 								if (numA > numB)
 									result = "Ha";
 								else
-									result = "Na";
+									result = "Nahi";
 								break;
 							case "<=" :
 								if (numA <= numB)
 									result = "Ha";
 								else
-									result = "Na";
+									result = "Nahi";
 								break;
 							case "<" :
 								if (numA < numB)
 									result = "Ha";
 								else
-									result = "Na";
+									result = "Nahi";
 								break;
 						}
 					}
@@ -72821,7 +73578,7 @@ public class KL {
 		public malumat khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
 		public KL parent = kl();
-		public static o barae(Object o, Object... languageSupportingArgs) {
+		public static o barae(Object o, Object... vocabularySupportingArgs) {
 			o malumat = new o();
 			malumat.add("type=" + type(o));
 			malumat.add("heNull=" + isNull(o));
@@ -72880,7 +73637,7 @@ public class KL {
 
 			return malumat;
 		}
-		public static o lo(Object o, Object... languageSupportingArgs) {
+		public static o lo(Object o, Object... vocabularySupportingArgs) {
 			return KL.malumat.barae(o);
 		}
 	}
@@ -75895,13 +76652,13 @@ public class KL {
 		}
 		return new StringBuilder(str).reverse().toString();
 	}
-	public static int len(String str, Object... languageSupportingArgs) {
+	public static int len(String str, Object... vocabularySupportingArgs) {
 		if (str == null) {
 			return 0;
 		}
 		return str.trim().length();
 	}
-	public static int len(int n, Object... languageSupportingArgs) {
+	public static int len(int n, Object... vocabularySupportingArgs) {
 		int result = 0;
 		while (n > 0) {
 			n /= 10;
@@ -75909,7 +76666,7 @@ public class KL {
 		}
 		return result;
 	}
-	public static int len(long n, Object... languageSupportingArgs) {
+	public static int len(long n, Object... vocabularySupportingArgs) {
 		int result = 0;
 		while (n > 0) {
 			n /= 10;
@@ -75917,388 +76674,389 @@ public class KL {
 		}
 		return result;
 	}
-	public static int len(char[] arr, Object... languageSupportingArgs) {
+	public static int len(char[] arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(String[] arr, Object... languageSupportingArgs) {
+	public static int len(String[] arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(int[] arr, Object... languageSupportingArgs) {
+	public static int len(int[] arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(long[] arr, Object... languageSupportingArgs) {
+	public static int len(long[] arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(float[] arr, Object... languageSupportingArgs) {
+	public static int len(float[] arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(double[] arr, Object... languageSupportingArgs) {
+	public static int len(double[] arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(boolean[] arr, Object... languageSupportingArgs) {
+	public static int len(boolean[] arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(Object[] arr, Object... languageSupportingArgs) {
+	public static int len(Object[] arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length;
 	}
-	public static int len(arr arr, Object... languageSupportingArgs) {
+	public static int len(arr arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(strArr arr, Object... languageSupportingArgs) {
+	public static int len(strArr arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(intArr arr, Object... languageSupportingArgs) {
+	public static int len(intArr arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(longArr arr, Object... languageSupportingArgs) {
+	public static int len(longArr arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(fltArr arr, Object... languageSupportingArgs) {
+	public static int len(fltArr arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(dblArr arr, Object... languageSupportingArgs) {
+	public static int len(dblArr arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(boolArr arr, Object... languageSupportingArgs) {
+	public static int len(boolArr arr, Object... vocabularySupportingArgs) {
 		if (arr == null) {
 			return 0;
 		}
 		return arr.length();
 	}
-	public static int len(o o, Object... languageSupportingArgs) {
+	public static int len(o o, Object... vocabularySupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oI o, Object... languageSupportingArgs) {
+	public static int len(oI o, Object... vocabularySupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oL o, Object... languageSupportingArgs) {
+	public static int len(oL o, Object... vocabularySupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oF o, Object... languageSupportingArgs) {
+	public static int len(oF o, Object... vocabularySupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oD o, Object... languageSupportingArgs) {
+	public static int len(oD o, Object... vocabularySupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(oB o, Object... languageSupportingArgs) {
+	public static int len(oB o, Object... vocabularySupportingArgs) {
 		if (o == null) {
 			return 0;
 		}
 		return o.length();
 	}
-	public static int len(treeDI t, Object... languageSupportingArgs) {
+	public static int len(treeDI t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeI t, Object... languageSupportingArgs) {
+	public static int len(treeI t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeDL t, Object... languageSupportingArgs) {
+	public static int len(treeDL t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeL t, Object... languageSupportingArgs) {
+	public static int len(treeL t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeDF t, Object... languageSupportingArgs) {
+	public static int len(treeDF t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeF t, Object... languageSupportingArgs) {
+	public static int len(treeF t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeDS t, Object... languageSupportingArgs) {
+	public static int len(treeDS t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeD t, Object... languageSupportingArgs) {
+	public static int len(treeD t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeDB t, Object... languageSupportingArgs) {
+	public static int len(treeDB t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int len(treeB t, Object... languageSupportingArgs) {
+	public static int len(treeB t, Object... vocabularySupportingArgs) {
 		if (t == null) {
 			return 0;
 		}
 		return t.length();
 	}
-	public static int size(String str, Object... languageSupportingArgs) {
+	public static int size(String str, Object... vocabularySupportingArgs) {
 		return len(str);
 	}
-	public static int size(int n, Object... languageSupportingArgs) {
+	public static int size(int n, Object... vocabularySupportingArgs) {
 		return len(n);
 	}
-	public static int size(long n, Object... languageSupportingArgs) {
+	public static int size(long n, Object... vocabularySupportingArgs) {
 		return len(n);
 	}
-	public static int size(String arr[], Object... languageSupportingArgs) {
+	public static int size(String arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(int arr[], Object... languageSupportingArgs) {
+	public static int size(int arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(long arr[], Object... languageSupportingArgs) {
+	public static int size(long arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(float arr[], Object... languageSupportingArgs) {
+	public static int size(float arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(double arr[], Object... languageSupportingArgs) {
+	public static int size(double arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(boolean arr[], Object... languageSupportingArgs) {
+	public static int size(boolean arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(Object arr[], Object... languageSupportingArgs) {
+	public static int size(Object arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(arr arr, Object... languageSupportingArgs) {
+	public static int size(arr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(strArr arr, Object... languageSupportingArgs) {
+	public static int size(strArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(intArr arr, Object... languageSupportingArgs) {
+	public static int size(intArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(longArr arr, Object... languageSupportingArgs) {
+	public static int size(longArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(fltArr arr, Object... languageSupportingArgs) {
+	public static int size(fltArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(dblArr arr, Object... languageSupportingArgs) {
+	public static int size(dblArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(boolArr arr, Object... languageSupportingArgs) {
+	public static int size(boolArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int size(o o, Object... languageSupportingArgs) {
+	public static int size(o o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int size(oI o, Object... languageSupportingArgs) {
+	public static int size(oI o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int size(oL o, Object... languageSupportingArgs) {
+	public static int size(oL o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int size(oF o, Object... languageSupportingArgs) {
+	public static int size(oF o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int size(oD o, Object... languageSupportingArgs) {
+	public static int size(oD o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int size(oB o, Object... languageSupportingArgs) {
+	public static int size(oB o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int size(treeDI t, Object... languageSupportingArgs) {
+	public static int size(treeDI t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeI t, Object... languageSupportingArgs) {
+	public static int size(treeI t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeDL t, Object... languageSupportingArgs) {
+	public static int size(treeDL t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeL t, Object... languageSupportingArgs) {
+	public static int size(treeL t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeDF t, Object... languageSupportingArgs) {
+	public static int size(treeDF t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeF t, Object... languageSupportingArgs) {
+	public static int size(treeF t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeDS t, Object... languageSupportingArgs) {
+	public static int size(treeDS t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeD t, Object... languageSupportingArgs) {
+	public static int size(treeD t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeDB t, Object... languageSupportingArgs) {
+	public static int size(treeDB t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int size(treeB t, Object... languageSupportingArgs) {
+	public static int size(treeB t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(String str, Object... languageSupportingArgs) {
+	public static int lambai(String str, Object... vocabularySupportingArgs) {
 		return len(str);
 	}
-	public static int lambai(int n, Object... languageSupportingArgs) {
+	public static int lambai(int n, Object... vocabularySupportingArgs) {
 		return len(n);
 	}
-	public static int lambai(long n, Object... languageSupportingArgs) {
+	public static int lambai(long n, Object... vocabularySupportingArgs) {
 		return len(n);
 	}
-	public static int lambai(String arr[], Object... languageSupportingArgs) {
+	public static int lambai(String arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(int arr[], Object... languageSupportingArgs) {
+	public static int lambai(int arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(long arr[], Object... languageSupportingArgs) {
+	public static int lambai(long arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(float arr[], Object... languageSupportingArgs) {
+	public static int lambai(float arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(double arr[], Object... languageSupportingArgs) {
+	public static int lambai(double arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(boolean arr[], Object... languageSupportingArgs) {
+	public static int lambai(boolean arr[],
+			Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(Object arr[], Object... languageSupportingArgs) {
+	public static int lambai(Object arr[], Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(arr arr, Object... languageSupportingArgs) {
+	public static int lambai(arr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(strArr arr, Object... languageSupportingArgs) {
+	public static int lambai(strArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(intArr arr, Object... languageSupportingArgs) {
+	public static int lambai(intArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(longArr arr, Object... languageSupportingArgs) {
+	public static int lambai(longArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(fltArr arr, Object... languageSupportingArgs) {
+	public static int lambai(fltArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(dblArr arr, Object... languageSupportingArgs) {
+	public static int lambai(dblArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(boolArr arr, Object... languageSupportingArgs) {
+	public static int lambai(boolArr arr, Object... vocabularySupportingArgs) {
 		return len(arr);
 	}
-	public static int lambai(o o, Object... languageSupportingArgs) {
+	public static int lambai(o o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int lambai(oI o, Object... languageSupportingArgs) {
+	public static int lambai(oI o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int lambai(oL o, Object... languageSupportingArgs) {
+	public static int lambai(oL o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int lambai(oF o, Object... languageSupportingArgs) {
+	public static int lambai(oF o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int lambai(oD o, Object... languageSupportingArgs) {
+	public static int lambai(oD o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int lambai(oB o, Object... languageSupportingArgs) {
+	public static int lambai(oB o, Object... vocabularySupportingArgs) {
 		return len(o);
 	}
-	public static int lambai(treeDI t, Object... languageSupportingArgs) {
+	public static int lambai(treeDI t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeI t, Object... languageSupportingArgs) {
+	public static int lambai(treeI t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeDL t, Object... languageSupportingArgs) {
+	public static int lambai(treeDL t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeL t, Object... languageSupportingArgs) {
+	public static int lambai(treeL t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeDF t, Object... languageSupportingArgs) {
+	public static int lambai(treeDF t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeF t, Object... languageSupportingArgs) {
+	public static int lambai(treeF t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeDS t, Object... languageSupportingArgs) {
+	public static int lambai(treeDS t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeD t, Object... languageSupportingArgs) {
+	public static int lambai(treeD t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeDB t, Object... languageSupportingArgs) {
+	public static int lambai(treeDB t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
-	public static int lambai(treeB t, Object... languageSupportingArgs) {
+	public static int lambai(treeB t, Object... vocabularySupportingArgs) {
 		return len(t);
 	}
 	public static boolean isEmpty(char c) {
@@ -78948,6 +79706,15 @@ public class KL {
 			Runnable changeInCondition, Runnable task) {
 		har(0, conditionAsACallable, changeInCondition, task);
 	}
+	public static void farz(int initialization,
+			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
+			Runnable task) {
+		har(initialization, conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(Callable<Boolean> conditionAsACallable,
+			Runnable changeInCondition, Runnable task) {
+		har(conditionAsACallable, changeInCondition, task);
+	}
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
@@ -79156,8 +79923,19 @@ public class KL {
 		o dead = o("Yes=[Michael; Jemery], No=Lucien");
 		printArr(dead.k("yes", _S));
 		print(dead.k("no", _s));
-		har(lo.i = 0, () -> liava.i < 5, () -> liava.i++, () -> print(liava.i));
+		farz(lia.i = 0, () -> jabtak(liava.i, chota, 5, se),
+				() -> me_izafa(liava.i, 2, ka, aur), () -> print(liava.i));
 		printArr(new char[]{'a', 'b'});
+		for (lo.i = 0; jabtak(liava.i < 5); me_izafa(liava.i)) {
+			bolo("i brbr", liava.i);
+		}
+		print(me_izafa(age2.ka_adha(_i), 4, 1, 10));
+		o userObj = o(
+				"naam he Michael, umr he 25, zinda he sach, hobbies hen [Netflix; Spotify; aur Traveling]");
+		bolo(userObj);
+		bolo(userObj.ki("umr", integer_tor));
+		boloArr(userObj.ki("hobbies", string_array_tor));
+		bolo(userObj.nahi("zinda"));
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
