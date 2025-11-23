@@ -15251,7 +15251,7 @@ public class KL {
 								"(?<=\\w)\\s([Bb]a?ra?ba?r|[Hh]en?)\\s(?=.)",
 								"=");
 				//let's:
-                //* remove all entries of `\{`, `\}`
+				//* remove all entries of `\{`, `\}`
 				//* and replace syntactic sugar `(?<=\w) (brbr|barabar|hen?) ` with an `=` sign
 				//before moving forward
 				eqSignSeparatedPair = eqSignSeparatedPair.replaceAll(
@@ -15270,15 +15270,21 @@ public class KL {
 								"");
 						String unprocessedV = pairs[1].trim();
 						if (startsWith(unprocessedV, "\\{") && in(unprocessedV,
-								"(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
+								"(?<v>[\\{\\[]?['\"\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
 							//we might have a sub/nested o(bject)|dictionary
 							//WARNING:
 							//* sub keys are split with a semicolon, instead of a comma
+							if (!endsWith(unprocessedV, "\\}"))
+								unprocessedV += "}";
+							//trying to fix a bug
 							unprocessedV = unprocessedV
-                                    .replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
-									.replaceAll("(?<=['\"\\w])\\s*([;&]+|and|aur|or)\\s*",
+									.replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
+									.replaceAll(
+											"(?<=['\"\\w])\\s*([;&]+|and|aur|or)\\s*",
 											", ")
-									.replaceAll("(?<=[\\{\\,])\\s*['\"]*(\\w+)['\"]*\\s*(?=['\"]*[\\w\\-\\.\\s]+['\"]*[\\}\\,])", "$1: ");
+									.replaceAll(
+											"(?<=[\\{\\,])\\s*['\"]*(\\w+)['\"]*\\s*(?=['\"]*[\\w\\-\\.\\s]+['\"]*[\\}\\,])",
+											"$1: ");
 							o newO = new o(unprocessedV);
 							//							print("newO =", newO);
 							v = newO;
@@ -15287,11 +15293,11 @@ public class KL {
 						}
 						if (startsWith(unprocessedV, "\\[")
 								&& endsWith(unprocessedV, "\\]")) {
-								//we might have an array
-								//WARNING:
-								//* All arrays are recognized as string arrays
-								//* Sub arrays are not supported
-								//* Array items are split with a semicolon, instead of a comma
+							//we might have an array
+							//WARNING:
+							//* All arrays are recognized as string arrays
+							//* Sub arrays are not supported
+							//* Array items are split with a semicolon, instead of a comma
 							unprocessedV = unprocessedV.replaceAll("^\\[|\\]$",
 									"");
 							if (!in(unprocessedV, ";$"))
@@ -56653,6 +56659,7 @@ public class KL {
 							.replaceAll(
 									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
+							.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
 							.replaceAll("\"true\"", "Yes")
 							.replaceAll("\"false\"", "No")
 							.replaceAll("=", ": ");
@@ -56736,6 +56743,7 @@ public class KL {
 							.replaceAll(
 									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
+							.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
 							.replaceAll("\"true\"", "Ha")
 							.replaceAll("\"false\"", "Nahi")
 							.replaceAll("=", ": ");
@@ -56872,8 +56880,8 @@ public class KL {
 				System.out.print("[" + (isEmpty((String[]) arg)
 						? ""
 						: "\"" + join((String[]) arg, "\", \"").replaceAll(
-								"(?<=,)(\\s)(?=[\"\\w\\.\\-]+$)", "$1and$1")
-								+ "\"")
+								"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
+								"$1and$1") + "\"")
 						+ "]");
 			} else if (isArrOfNum(arg)) {
 				System.out.print("[" + join((Number[]) arg) + "]");
@@ -56890,8 +56898,8 @@ public class KL {
 				System.out.print("[" + (isEmpty((char[]) arg)
 						? ""
 						: "\'" + join((char[]) arg, "\', \'").replaceAll(
-								"(?<=,)(\\s)(?=[\'\\w\\.\\-]+$)", "$1and$1")
-								+ "\'")
+								"(?<=,)\\s*(\\s)\\s*(?=[\'\\w\\s\\.\\-]+$)",
+								"$1and$1") + "\'")
 						+ "]");
 			} else if (isArrOfInt(arg)) {
 				System.out.print("[" + join((int[]) arg) + "]");
@@ -56986,8 +56994,8 @@ public class KL {
 			if (isArrOfStr(arg)) {
 				System.out.print("[" + (!isEmpty((String[]) arg)
 						? "\"" + join((String[]) arg, "\", \"").replaceAll(
-								"(?<=,\\s)and(?=\\s[\"\\w\\.\\-]+$)", "aur")
-								+ "\""
+								"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
+								"$1aur$1") + "\""
 						: "") + "]");
 			} else if (isArrOfNum(arg)) {
 				System.out.print("["
@@ -57008,7 +57016,7 @@ public class KL {
 			if (isArrOfChar(arg)) {
 				System.out.print("[" + (!isEmpty((char[]) arg)
 						? "\'" + join((char[]) arg, "\', \'").replaceAll(
-								"(?<=,\\s)and(?=\\s[\'\\w\\.\\-]+$)", "aur")
+								"(?<=,)\\s*(\\s)\\s*(?=[\'\\w\\.\\-]+$)", "$1aur$1")
 								+ "\'"
 						: "") + "]");
 			} else if (isArrOfInt(arg)) {
@@ -58811,7 +58819,7 @@ public class KL {
 		}
 		String[] midProcessedArray = new String[arr.length];
 		for (int i : range(arr)) {
-			midProcessedArray[i] = "" + arr[i];
+			midProcessedArray[i] = "" + arr[i] + "L";
 		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
@@ -58822,7 +58830,7 @@ public class KL {
 		}
 		String[] midProcessedArray = new String[arr.length];
 		for (int i : range(arr)) {
-			midProcessedArray[i] = "" + arr[i];
+			midProcessedArray[i] = "" + arr[i] + "F";
 		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
@@ -59009,18 +59017,28 @@ public class KL {
 		}
 		return join(t.array(), with);
 	}
-
+	public static String join(char[] array) {
+		if (not(array)) {
+			return "";
+		}
+		String halfProcessed = join(array, ", ");
+		String returnValue = replace(halfProcessed,
+				"(?<=,)\\s*(\\s)\\s*(?=[\\w\\s\\.\\-]+$)", "$1and$1");
+		// helps return a string in the American format of joining: e.g. a, b, and c
+		// for
+		// three items
+		return returnValue;
+	}
 	public static String join(String[] array) {
 		if (not(array)) {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-				"$1and$1");
+		String returnValue = replace(halfProcessed,
+				"(?<=,)\\s*(\\s)\\s*(?=[\\w\\s\\.\\-]+$)", "$1and$1");
 		// helps return a string in the American format of joining: e.g. a, b, and c
 		// for
 		// three items
-		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
 	public static String join(int[] array) {
@@ -59028,12 +59046,11 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=[\\w\\-]+$)",
-				"$1and$1");
+		String returnValue = replace(halfProcessed,
+				"(?<=,)\\s*(\\s)\\s*(?=[\\w\\-]+$)", "$1and$1");
 		// helps return a string in the American format of joining: e.g. a, b, and c
 		// for
 		// three items
-		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
 	public static String join(long[] array) {
@@ -59041,12 +59058,11 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=[\\w\\-]+$)",
-				"$1and$1");
+		String returnValue = replace(halfProcessed,
+				"(?<=,)\\s*(\\s)\\s*(?=[\\w\\-]+$)", "$1and$1");
 		// helps return a string in the American format of joining: e.g. a, b, and c
 		// for
 		// three items
-		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
 	public static String join(float[] array) {
@@ -59055,11 +59071,10 @@ public class KL {
 		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed,
-				"(?<=,)(\\s)(?=[\\w\\.\\-]+$)", "$1and$1");
+				"(?<=,)\\s*(\\s)\\s*(?=[\\w\\.\\-]+$)", "$1and$1");
 		// helps return a string in the American format of joining: e.g. a, b, and c
 		// for
 		// three items
-		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
 	public static String join(double[] array) {
@@ -59068,11 +59083,10 @@ public class KL {
 		}
 		String halfProcessed = join(array, ", ");
 		String returnValue = replace(halfProcessed,
-				"(?<=,)(\\s)(?=[\\w\\.\\-]+$)", "$1and$1");
+				"(?<=,)\\s*(\\s)\\s*(?=[\\w\\.\\-]+$)", "$1and$1");
 		// helps return a string in the American format of joining: e.g. a, b, and c
 		// for
 		// three items
-		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
 	public static String join(boolean[] array) {
@@ -59080,12 +59094,11 @@ public class KL {
 			return "";
 		}
 		String halfProcessed = join(array, ", ");
-		String returnValue = replace(halfProcessed, "(?<=,)(\\s)(?=\\w+$)",
-				"$1and$1");
+		String returnValue = replace(halfProcessed,
+				"(?<=,)\\s*(\\s)\\s*(?=\\w+$)", "$1and$1");
 		// helps return a string in the American format of joining: e.g. a, b, and c
 		// for
 		// three items
-		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
 	public static String join(Number[] array) {
@@ -59098,7 +59111,6 @@ public class KL {
 		// helps return a string in the American format of joining: e.g. a, b, and c
 		// for
 		// three items
-		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
 	public static String join(Object[] array) {
@@ -59111,7 +59123,6 @@ public class KL {
 		// helps return a string in the American format of joining: e.g. a, b, and c
 		// for
 		// three items
-		returnValue = sentCase(returnValue);
 		return returnValue;
 	}
 	public static String join(strArr arr) {
@@ -60526,9 +60537,7 @@ public class KL {
 		}
 	}
 	public static int me_izafa(int n, int nB, Object vocabularySupportingArg) {
-		if (isInt(vocabularySupportingArg))
-			return sum(n, nB, (int) vocabularySupportingArg);
-		return sum(n, nB);
+		return me_izafa(n, nB, vocabularySupportingArg, null);
 	}
 	public static long me_izafa(long... ns) {
 		return sum(ns);
@@ -60575,9 +60584,7 @@ public class KL {
 	}
 	public static long me_izafa(long n, long nB,
 			Object vocabularySupportingArg) {
-		if (isLong(vocabularySupportingArg))
-			return sum(n, nB, (long) vocabularySupportingArg);
-		return sum(n, nB);
+		return me_izafa(n, nB, vocabularySupportingArg, null);
 	}
 	public static float me_izafa(float... ns) {
 		return sum(ns);
@@ -60624,9 +60631,7 @@ public class KL {
 	}
 	public static float me_izafa(float n, float nB,
 			Object vocabularySupportingArg) {
-		if (isFlt(vocabularySupportingArg))
-			return sum(n, nB, (float) vocabularySupportingArg);
-		return sum(n, nB);
+		return me_izafa(n, nB, vocabularySupportingArg, null);
 	}
 	public static double me_izafa(double... ns) {
 		return sum(ns);
@@ -60673,9 +60678,7 @@ public class KL {
 	}
 	public static double me_izafa(double n, double nB,
 			Object vocabularySupportingArg) {
-		if (isDbl(vocabularySupportingArg))
-			return sum(n, nB, (double) vocabularySupportingArg);
-		return sum(n, nB);
+		return me_izafa(n, nB, vocabularySupportingArg, null);
 	}
 	public static int me_izafa(intArr ns) {
 		return sum(ns);
@@ -61309,9 +61312,7 @@ public class KL {
 		}
 	}
 	public static int se_nikala(int n, int nB, Object vocabularySupportingArg) {
-		if (isInt(vocabularySupportingArg))
-			return difference(n, nB, (int) vocabularySupportingArg);
-		return difference(n, nB);
+		return se_nikala(n, nB, vocabularySupportingArg, null);
 	}
 	public static long se_nikala(long... ns) {
 		return difference(ns);
@@ -61358,9 +61359,7 @@ public class KL {
 	}
 	public static long se_nikala(long n, long nB,
 			Object vocabularySupportingArg) {
-		if (isLong(vocabularySupportingArg))
-			return difference(n, nB, (long) vocabularySupportingArg);
-		return difference(n, nB);
+		return se_nikala(n, nB, vocabularySupportingArg, null);
 	}
 	public static float se_nikala(float... ns) {
 		return difference(ns);
@@ -61407,9 +61406,7 @@ public class KL {
 	}
 	public static float se_nikala(float n, float nB,
 			Object vocabularySupportingArg) {
-		if (isFlt(vocabularySupportingArg))
-			return difference(n, nB, (float) vocabularySupportingArg);
-		return difference(n, nB);
+		return se_nikala(n, nB, vocabularySupportingArg, null);
 	}
 	public static double se_nikala(double... ns) {
 		return difference(ns);
@@ -61456,9 +61453,7 @@ public class KL {
 	}
 	public static double se_nikala(double n, double nB,
 			Object vocabularySupportingArg) {
-		if (isDbl(vocabularySupportingArg))
-			return difference(n, nB, (double) vocabularySupportingArg);
-		return difference(n, nB);
+		return se_nikala(n, nB, vocabularySupportingArg, null);
 	}
 	public static int se_nikala(intArr ns) {
 		return difference(ns);
@@ -64085,6 +64080,7 @@ public class KL {
 												.replaceAll(
 														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
+												.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
 												.replaceAll("\"true\"", "Yes")
 												.replaceAll("\"false\"", "No")
 												.replaceAll("=", ": ");
@@ -65246,6 +65242,7 @@ public class KL {
 												.replaceAll(
 														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
+												.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
 												.replaceAll("\"true\"", "Ha")
 												.replaceAll("\"false\"", "Nahi")
 												.replaceAll("=", ": ");
@@ -69572,8 +69569,8 @@ public class KL {
 			start = end;
 			end = 0;
 		}
-        number = ThreadLocalRandom.current().nextInt(start, end);
-        //the upper bound `end` is exclusive of itself
+		number = ThreadLocalRandom.current().nextInt(start, end);
+		//the upper bound `end` is exclusive of itself
 		return number;
 	}
 	public static int randInt(int start, int end) {
@@ -80020,10 +80017,10 @@ public class KL {
 		o dead = o("Yes=[Michael; Jemery], No=Lucien");
 		printArr(dead.k("yes", _S));
 		print(dead.k("no", _s));
-		farz.lia(15, () -> jabtak(liava.i, bara_ya_barabar, 5, ke),
-				() -> me_izafa(liava.i, 2, ka), () -> print(liava.i));
+		farz(lo.i = 15, () -> jabtak(liava.i, bara, 5, ke),
+				() -> se_nikala(liava.i, 1, aur), () -> print(liava.i));
 		printArr(new char[]{'a', 'b'});
-		for (lo.i = 0; jabtak(liava.i < 5); me_izafa(liava.i)) {
+		for (lo.i = 0; jabtak(liava.i < 5); me_izafa(liava.i, 1, ka, or)) {
 			bolo("i brbr", liava.i);
 		}
 		print(me_izafa(age2.ka_adha(_i), 4, 1, 10));
@@ -80033,6 +80030,42 @@ public class KL {
 		bolo(userObj.ki("umr", integer_tor));
 		boloArr(userObj.ki("hobbies", string_array_tor));
 		bolo(userObj.nahi("zinda"));
+
+        // char[]
+        char[] charArray = {'H', 'e', 'l', 'l', 'o'};
+        System.out.println("char[]: ");kahoArr(charArray);
+
+        // String[]
+        String[] stringArray = {"Java", "is", "fun"};
+        System.out.println("String[]: ");kahoArr(stringArray);
+
+        // int[]
+        int[] intArray = {1, 2, 3, 4, 5};
+        System.out.println("int[]: ");kahoArr(intArray);
+
+        // long[]
+        long[] longArray = {100L, 200L, 300L};
+        System.out.println("long[]: ");kahoArr(longArray);
+
+        // float[]
+        float[] floatArray = {1.1f, 2.2f, 3.3f};
+        System.out.println("float[]: ");kahoArr(floatArray);
+
+        // double[]
+        double[] doubleArray = {10.1, 20.2, 30.3};
+        System.out.println("double[]: ");kahoArr(doubleArray);
+
+        // boolean[]
+        boolean[] booleanArray = {true, false, true};
+        System.out.println("boolean[]: ");kahoArr(booleanArray);
+
+        // Number[] (an array of objects that are subclasses of Number)
+        Number[] numberArray = {10, 20.5, 30L}; // int, double, long are all Numbers
+        System.out.println("Number[]: ");kahoArr(numberArray);
+
+        // Object[]
+        Object[] objectArray = {"String", 123, true, new Object()};
+        System.out.println("Object[]: ");kahoArr(objectArray);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
