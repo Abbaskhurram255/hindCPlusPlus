@@ -58874,7 +58874,18 @@ public class KL {
 		}
 		String[] midProcessedArray = new String[arr.length];
 		for (int i : range(arr)) {
-			midProcessedArray[i] = "" + arr[i];
+			Object obj = arr[i];
+			if (obj instanceof Character) 
+                obj = "\'" + obj + "\'";
+			else if (obj instanceof String) 
+                obj = "\"" + obj + "\"";
+			else if (obj instanceof Long)  
+                obj += "L";
+			else if (obj instanceof Float)  
+                obj += "F";
+			else if (obj == null || eq("" + obj, "java\\.lang\\.Object@\\w+"))  
+                obj = "none";
+			midProcessedArray[i] = "" + obj;
 		}
 		String returnValue = String.join(with, midProcessedArray);
 		return returnValue;
