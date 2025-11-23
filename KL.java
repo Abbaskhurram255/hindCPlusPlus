@@ -57003,11 +57003,11 @@ public class KL {
 								"(?<=,\\s)and(?=\\s[\\w\\.\\-]+)", "aur")
 						+ "]");
 			} else if (isArrOfObj(arg)) {
-				// pre-processing booleans for better human-readabibility
-				String preprocessed = "["
+				String preprocessed = ("["
 						+ join((Object[]) arg).replaceAll(
 								"(?<=,\\s)and(?=\\s[\\w\\.\\-]+$)", "aur")
-						+ "]";
+						+ "]").replaceAll("(?<=(?<!\\w)\\W)\\bnone\\b|\\bnone\\b(?=\\W(?!\\w))", "khaal");
+				// pre-processing booleans for better human-readabibility
 				preprocessed = preprocessed.replaceAll("true(?=,\\s|\\])", "Ha")
 						.replaceAll("false(?=,\\s|\\])", "Nahi");
 				System.out.print(preprocessed);
@@ -80075,7 +80075,7 @@ public class KL {
         System.out.println("Number[]: ");kahoArr(numberArray);
 
         // Object[]
-        Object[] objectArray = {"String", 123, true, new Object()};
+        Object[] objectArray = {"String", 123, true, new Object(), null};
         System.out.println("Object[]: ");kahoArr(objectArray);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
