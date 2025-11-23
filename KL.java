@@ -15232,7 +15232,7 @@ public class KL {
 				String[] subEqSeparatedPairsSplitByAComma = eqSignSeparatedPair
 						.split(",\\s*");
 				collectedKeyValuePairs = filterOut(collectedKeyValuePairs,
-						v -> in(v, ", "));
+						v -> in(v, ",\\s*"));
 				// now that we have processed our sub pairs (saved in
 				// array subEqSeparatedPairsSplitByComma)
 				// let's kick out all the pairs that have a ", " in them
@@ -15247,17 +15247,18 @@ public class KL {
 				if (eqSignSeparatedPair == null)
 					continue;
 				eqSignSeparatedPair = eqSignSeparatedPair
-						.replaceAll("^\\{+|\\}+$", "").replaceAll(
+						.replaceAll("^\\{+|\\}+$", "").trim().replaceAll(
 								"(?<=\\w)\\s([Bb]a?ra?ba?r|[Hh]en?)\\s(?=.)",
 								"=");
+				//let's:
+                //* remove all entries of `\{`, `\}`
+				//* and replace syntactic sugar `(?<=\w) (brbr|barabar|hen?) ` with an `=` sign
+				//before moving forward
 				eqSignSeparatedPair = eqSignSeparatedPair.replaceAll(
 						"(?<=\\w)\\s([Ss]ach|[Yy]es|True|[Hh][ae]n?)(?![\\s\\w])",
 						"=true").replaceAll(
 								"(?<=\\w)\\s([Jj]hoot|[Nn][oa](hi)?|False)(?![\\s\\w])",
 								"=false");
-				//let's remove all entries of `\{`, `\}`, and replace
-				//syntactic sugar `(?<=\w) (brbr|barabar|hen?) ` with an `=` sign
-				//before moving forward
 				if (in(eqSignSeparatedPair,
 						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
 					String k;
@@ -15270,10 +15271,14 @@ public class KL {
 						String unprocessedV = pairs[1].trim();
 						if (startsWith(unprocessedV, "\\{") && in(unprocessedV,
 								"(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
+							//we might have a sub/nested o(bject)|dictionary
+							//WARNING:
+							//* sub keys are split with a semicolon, instead of a comma
 							unprocessedV = unprocessedV
-									.replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
-									.replaceAll("(?<=['\"\\w])\\s*[;&]+\\s*",
-											", ");
+                                    .replaceAll("(?<=['\"\\w])\\s*->\\s*", ": ")
+									.replaceAll("(?<=['\"\\w])\\s*([;&]+|and|aur|or)\\s*",
+											", ")
+									.replaceAll("(?<=[\\{\\,])\\s*['\"]*(\\w+)['\"]*\\s*(?=['\"]*[\\w\\-\\.\\s]+['\"]*[\\}\\,])", "$1: ");
 							o newO = new o(unprocessedV);
 							//							print("newO =", newO);
 							v = newO;
@@ -15282,6 +15287,11 @@ public class KL {
 						}
 						if (startsWith(unprocessedV, "\\[")
 								&& endsWith(unprocessedV, "\\]")) {
+								//we might have an array
+								//WARNING:
+								//* All arrays are recognized as string arrays
+								//* Sub arrays are not supported
+								//* Array items are split with a semicolon, instead of a comma
 							unprocessedV = unprocessedV.replaceAll("^\\[|\\]$",
 									"");
 							if (!in(unprocessedV, ";$"))
@@ -15299,7 +15309,7 @@ public class KL {
 								.replaceAll("^([Ss]ach|[Hh]e)$", "true")
 								.replaceAll("^[Jj]hoot$", "false");
 						//pre-processing conditional terms
-						//CAUTION: Yes, [Hh]a, No, Nahi, WEREN't INCLUDED AS THEY ARE RESERVED KEYWORDS.
+						//CAUTION: terms like `Yes`, `[Hh]a`, `No`, and `Nahi` WEREN'T INCLUDED as they are RESERVED KEYWORDS.
 						//If you look up `o replacements = o` in the IDE's find tool,
 						//you'll see what I'm talking about
 						if (isIntLike(unprocessedV))
@@ -53490,6 +53500,43 @@ public class KL {
 		public static char[] excl(char m, char n, boolean reverse) {
 			return exclusive(m, n, reverse);
 		}
+		//similarity range
+		public static int[] fill(int[] arr, length mode, int by) {
+			return KL.fill(arr, mode, by);
+		}
+		public static int[] fill(int[] arr, length mode) {
+			return KL.fill(arr, mode);
+		}
+		public static int[] fill(int[] arr, int by) {
+			return KL.fill(arr, by);
+		}
+		public static long[] fill(long[] arr, length mode, int by) {
+			return KL.fill(arr, mode, by);
+		}
+		public static long[] fill(long[] arr, length mode) {
+			return KL.fill(arr, mode);
+		}
+		public static long[] fill(long[] arr, int by) {
+			return KL.fill(arr, by);
+		}
+		public static float[] fill(float[] arr, length mode, int by) {
+			return KL.fill(arr, mode, by);
+		}
+		public static float[] fill(float[] arr, length mode) {
+			return KL.fill(arr, mode);
+		}
+		public static float[] fill(float[] arr, int by) {
+			return KL.fill(arr, by);
+		}
+		public static double[] fill(double[] arr, length mode, int by) {
+			return KL.fill(arr, mode, by);
+		}
+		public static double[] fill(double[] arr, length mode) {
+			return KL.fill(arr, mode);
+		}
+		public static double[] fill(double[] arr, int by) {
+			return KL.fill(arr, by);
+		}
 	}
 	public static class rng extends range {
 		public rng khud = this, ka = this, iske_lie = khud, iska = khud,
@@ -69511,30 +69558,45 @@ public class KL {
 		return a && !b ? false : true;
 	}
 	public static int randInt() {
-		int number = ThreadLocalRandom.current().nextInt(0, 99);
+		int number = ThreadLocalRandom.current().nextInt(0, 100);
+		//the upper bound is exclusive
 		return number;
 	}
 	public static int randInt(int end) {
-		if (not(end) || isNeg(end)) {
+		if (not(end)) {
 			return 0;
 		}
-		int number = ThreadLocalRandom.current().nextInt(0, end);
+		int number, start = 0;
+		if (isNeg(end)) {
+			//in this case, the end is actually the start, until zero
+			start = end;
+			end = 0;
+		}
+        number = ThreadLocalRandom.current().nextInt(start, end);
+        //the upper bound `end` is exclusive of itself
 		return number;
 	}
 	public static int randInt(int start, int end) {
-		if (isNull(start) || not(end) || eq(start, end) || start > end
-				|| isNeg(end)) {
+		if (isInf(start) || isInf(end) || eq(start, end)) {
 			return 0;
+		}
+		if (start > end) {
+			//let's swap
+			start += end;
+			end = start - end;
+			start -= end;
 		}
 		int number = ThreadLocalRandom.current().nextInt(start, end);
 		return number;
 	}
 	public static int randPin(int len) {
 		String str = "";
-		if (not(len) || len < 4) {
+		if (len < 4) {
+			//set minimum length to 4
 			len = 4;
 		}
-		if (isInf(len) || len > 8) {
+		if (len > 8) {
+			//set maximum length to 8
 			len = 8;
 		}
 		while (len > 0) {
@@ -69625,11 +69687,12 @@ public class KL {
 		if (not(len) || isNeg(len) || len >= len(id)) {
 			return id;
 		}
-		return id.substring(0, len);
+		id = id.substring(0, len);
+		return id;
 	}
 	public static String randId() {
-		String id = randUUID().replaceAll("-", "");
-		return id.substring(0, 8);
+		String id = randId(8);
+		return id;
 	}
 	public static char[] randItem(char arr[], int nItemsToGet) {
 		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
@@ -69771,11 +69834,45 @@ public class KL {
 			return false;
 		return collected[0];
 	}
+	public static Number[] randItem(Number arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Num;
+		}
+		Number[] collected = new Number[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
+	}
+	public static Number randItem(Number arr[]) {
+		if (not(arr)) {
+			return 0;
+		}
+		Number[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return 0;
+		return collected[0];
+	}
+	public static Object[] randItem(Object arr[], int nItemsToGet) {
+		if (not(arr) || isNeg(nItemsToGet) || not(nItemsToGet)
+				|| isInf(nItemsToGet)) {
+			return blank.Obj;
+		}
+		Object[] collected = new Object[nItemsToGet];
+		for (int i = 0; i < nItemsToGet; i++) {
+			collected[i] = arr[randInt(len(arr))];
+		}
+		return collected;
+	}
 	public static Object randItem(Object arr[]) {
 		if (not(arr)) {
-			return false;
+			return null;
 		}
-		return arr[randInt(len(arr))];
+		Object[] collected = randItem(arr, 1);
+		if (collected.length == 0)
+			return null;
+		return collected[0];
 	}
 	public static Object randItem(arr arr) {
 		if (not(arr)) {
@@ -79904,7 +80001,7 @@ public class KL {
 		age2.me_dala(age2.ka_chotha());
 		System.out.println(age2.get());
 		double[] myNewArr = {1.5, 1.8};
-		print(fill(myNewArr, 10));
+		print(range.fill(myNewArr, 10));
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
 		o user3 = o(
 				"{name: {first->Juliet; last->Salvador}, age: 17, is_a_student: !false, hobbies: [travel; basketball & tennis]}");
@@ -79923,15 +80020,15 @@ public class KL {
 		o dead = o("Yes=[Michael; Jemery], No=Lucien");
 		printArr(dead.k("yes", _S));
 		print(dead.k("no", _s));
-		farz(lia.i = 0, () -> jabtak(liava.i, chota, 5, se),
-				() -> me_izafa(liava.i, 2, ka, aur), () -> print(liava.i));
+		farz.lia(15, () -> jabtak(liava.i, bara_ya_barabar, 5, ke),
+				() -> me_izafa(liava.i, 2, ka), () -> print(liava.i));
 		printArr(new char[]{'a', 'b'});
 		for (lo.i = 0; jabtak(liava.i < 5); me_izafa(liava.i)) {
 			bolo("i brbr", liava.i);
 		}
 		print(me_izafa(age2.ka_adha(_i), 4, 1, 10));
 		o userObj = o(
-				"naam he Michael, umr he 25, zinda he sach, hobbies hen [Netflix; Spotify; aur Traveling]");
+				"naam he {pehla Michael; akhri Owens}, umr he 25, zinda he, hobbies hen [Netflix; Spotify; aur Traveling]");
 		bolo(userObj);
 		bolo(userObj.ki("umr", integer_tor));
 		boloArr(userObj.ki("hobbies", string_array_tor));
