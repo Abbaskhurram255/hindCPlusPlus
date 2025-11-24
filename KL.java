@@ -15269,6 +15269,44 @@ public class KL {
 						k = lower(pairs[0].trim()).replaceAll("^['\"]+|['\"]+$",
 								"");
 						String unprocessedV = pairs[1].trim();
+						unprocessedV = unprocessedV.replaceAll("(?<=\\d)\\_(?=\\d)", "");
+						// handling exponentials
+						String[] exponentialMatches = findMatches(unprocessedV,
+								"(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
+						if (hasLen(exponentialMatches)) {
+							double[] parsedNumsWithoutPowers = new double[exponentialMatches.length];
+							int[] parsedExponentialPowers = new int[exponentialMatches.length];
+							for (int i : range(exponentialMatches)) {
+								parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i]
+										.replaceAll("[Ee][\\+\\-]?\\d+$", ""));
+								parsedExponentialPowers[i] = Int(
+										findMatch(exponentialMatches[i],
+												"(?<=\\d[Ee])[\\+\\-]?\\d+"));
+								double[] parsedNumsWithPowers = parsedNumsWithoutPowers;
+								// temporarily
+								int power = parsedExponentialPowers[i];
+								if (isNeg(power)) {
+									while (power < 0) {
+										parsedNumsWithPowers[i] /= 10;
+										parsedNumsWithPowers[i] = setPrecision(
+												parsedNumsWithPowers[i], 14);
+										power++;
+									}
+								} else {
+									while (power > 0) {
+										parsedNumsWithPowers[i] *= 10;
+										parsedNumsWithPowers[i] = setPrecision(
+												parsedNumsWithPowers[i], 14);
+										power--;
+									}
+								}
+								unprocessedV = unprocessedV.replaceFirst(exponentialMatches[i]
+										.replaceAll("([\\+\\-])", "\\\\$1"),
+										Str(parsedNumsWithPowers[i]))
+										.replaceAll("(?<=\\d)\\.[0]+(?!\\d)",
+												"");
+							}
+						}
 						if (startsWith(unprocessedV, "\\{") && in(unprocessedV,
 								"(?<v>[\\{\\[]?['\"\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
 							//we might have a sub/nested o(bject)|dictionary
@@ -56639,30 +56677,66 @@ public class KL {
 					continue;
 				} else if (arg instanceof Character) {
 					arg = "\'" + arg + "\'";
+				} else if (arg instanceof Integer) {
+					arg = fus((int) arg);
+				} else if (arg instanceof Long) {
+					arg = fus((long) arg) + "L";
 				} else if (arg instanceof Float || arg instanceof Double) {
-					if (in(Str(
-							arg instanceof Float ? (float) arg : (double) arg),
-							"(?<=\\.)\\d{3,}")) {
-						arg = fus(arg instanceof Float
+					boolean was_float = false;
+					if (arg instanceof Float)
+						was_float = true;
+					arg = fus(
+							arg instanceof Float
 								? (float) arg
 								: (double) arg);
-					} else {
-						arg = f(arg instanceof Float
-								? (float) arg
-								: (double) arg)
-								.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$",
-										"");
-					}
+					if (was_float)
+						arg += "F";
 				} else if (type(arg, "^(o|tree)[A-Z]*$")) {
+					if (arg instanceof o) {
+						o parsedO = as(_o, arg);
+						for (Object value : parsedO.array()) {
+							if (value instanceof String[]) {
+								//if string array
+								String expandedStringValue = "[\"" + join(
+										(String[]) value, "\", \"").replaceAll(
+												"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
+												"$1and$1")
+										+ "\"]";
+								arg = Str(arg).replaceFirst(
+										"\\[Ljava\\.lang\\.String;@\\w+",
+										expandedStringValue);
+							}
+							if (value instanceof Character) {
+								arg = Str(arg).replaceFirst("" + value,
+										"\'" + value + "\'");
+							}
+							if (value instanceof Long) {
+								arg = Str(arg).replaceFirst(
+										"" + value, value + "L");
+							}
+							if (value instanceof Float) {
+								arg = Str(arg).replaceFirst("" + value,
+										value + "F");
+							}
+						}
+					}
 					arg = Str(arg)
-							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))", "\'$1\'")
 							.replaceAll(
 									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
+							.replaceAll(
+									"(?<=\\d[FfLl])\"|\"(?=\\d*\\.?\\d+[FfLL])",
+									"")
 							.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
 							.replaceAll("\"true\"", "Yes")
 							.replaceAll("\"false\"", "No")
 							.replaceAll("=", ": ");
+					String[] numericMatches = findMatches("" + arg,
+							"(?<=\\w\\:\\s)\\-?\\d*\\.?\\d+");
+					for (String numericMatch : numericMatches) {
+						String formatted = fus(Dbl(numericMatch));
+						arg = ("" + arg).replaceFirst(numericMatch, formatted);
+					}
 					// regex accuracy: 93%
 					// changes needed: probably not
 				} else if (type(arg, Bool)) {
@@ -56722,31 +56796,69 @@ public class KL {
 					System.out.print(" ");
 					continue;
 				} else if (arg instanceof Character) {
-					arg = "\'" + arg + "\'";
+					arg = "\'" + Str(arg) + "\'";
+				} else if (arg instanceof Integer) {
+					arg = f((int) arg);
+				} else if (arg instanceof Long) {
+					arg = f((long) arg) + "L";
 				} else if (arg instanceof Float || arg instanceof Double) {
-					if (in(Str(
-							arg instanceof Float ? (float) arg : (double) arg),
-							"(?<=\\.)\\d{3,}")) {
-						arg = fus(arg instanceof Float
-								? (float) arg
-								: (double) arg);
-					} else {
-						arg = f(arg instanceof Float
+					boolean was_float = false;
+					if (arg instanceof Float)
+						was_float = true;
+					arg = f(arg instanceof Float
 								? (float) arg
 								: (double) arg)
 								.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$",
 										"");
-					}
+					if (was_float)
+						arg += "F";
 				} else if (type(arg, "^(o|tree)[A-Z]*$")) {
+					if (arg instanceof o) {
+						o parsedO = as(_o, arg);
+						for (Object value : parsedO.array()) {
+							if (value instanceof String[]) {
+								//if string array
+								String expandedStringValue = "[\""
+										+ join((String[]) value,
+														"\", \"").replaceAll(
+																"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
+																"$1aur$1")
+										+ "\"]";
+								arg = Str(arg).replaceFirst(
+										"\\[Ljava\\.lang\\.String;@\\w+",
+										expandedStringValue);
+							}
+							if (value instanceof Character) {
+								arg = Str(arg).replaceFirst("" + value,
+										"\'" + value + "\'");
+							}
+							if (value instanceof Long) {
+								arg = Str(arg).replaceFirst("" + value,
+										value + "L");
+							}
+							if (value instanceof Float) {
+								arg = Str(arg).replaceFirst("" + value,
+										value + "F");
+							}
+						}
+					}
 					arg = Str(arg)
-							.replaceAll("(?<=\\=)([A-Za-z]{1}(?!.))", "\'$1\'")
 							.replaceAll(
 									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 									"\"$1\"")
+							.replaceAll(
+									"(?<=\\d[FfLl])\"|\"(?=\\d*\\.?\\d+[FfLL])",
+									"")
 							.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
 							.replaceAll("\"true\"", "Ha")
 							.replaceAll("\"false\"", "Nahi")
 							.replaceAll("=", ": ");
+					String[] numericMatches = findMatches("" + arg,
+							"(?<=\\w\\:\\s)\\-?\\d*\\.?\\d+");
+					for (String numericMatch : numericMatches) {
+						String formatted = f(Dbl(numericMatch));
+						arg = ("" + arg).replaceFirst(numericMatch, formatted);
+					}
 					// regex accuracy: 93%
 					// changes needed: probably not
 				} else if (type(arg, Bool)) {
@@ -58882,7 +58994,7 @@ public class KL {
 			else if (obj instanceof Long)  
                 obj += "L";
 			else if (obj instanceof Float)  
-                obj += "F";
+				obj += "F";
 			else if (obj == null || eq("" + obj, "java\\.lang\\.Object@\\w+"))  
                 obj = "none";
 			midProcessedArray[i] = "" + obj;
@@ -63364,7 +63476,9 @@ public class KL {
 			 * to allow the following: {%d:,2} {%d:,3} {%n:,2} {%n:,3} {%d:pkr} {%f:inr}
 			 */
 			s = s.replaceAll("[%\\{]([dinf])c?[\\:\\.]\\$\\}?", "%$1c:USD");
-			// kills a bug
+			// ^ kills a bug
+			// removing underscores allowed between numbers for readability
+			s = s.replaceAll("(?<=\\d)\\_(?=\\d)", "");
 			// handling exponentials
 			String[] exponentialMatches = findMatches(s,
 					"(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
@@ -63875,11 +63989,18 @@ public class KL {
 						// 300.575 would return
 						// `Amount: 300.757`)
 						// ______________________________________________________
+						if (field instanceof Integer || field instanceof Long) {
+							if (field instanceof Integer) {
+								field = fus((int) field);
+							} else {
+								field = fus((long) field) + "L";
+							}
+						}
 						if (field instanceof Float || field instanceof Double) {
 							if (field instanceof Float) {
-								field = f((float) field, decimalPlaces);
+								field = fus((float) field, decimalPlaces) + "F";
 							} else {
-								field = f((double) field, decimalPlaces);
+								field = fus((double) field, decimalPlaces);
 							}
 						}
 						// pre-processing dynamic arrays
@@ -64084,17 +64205,55 @@ public class KL {
 									field = preprocessed;
 								}
 							} else {
+								if (field instanceof o) {
+									o parsedO = as(_o, field);
+									for (Object value : parsedO.array()) {
+										if (value instanceof String[]) {
+											//if string array
+											String expandedStringValue = "[\""
+													+ join((String[]) value,
+																	"\", \"").replaceAll(
+																			"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
+																	"$1and$1")
+													+ "\"]";
+											field = Str(field).replaceFirst(
+													"\\[Ljava\\.lang\\.String;@\\w+",
+													expandedStringValue);
+										}
+										if (value instanceof Character) {
+											field = Str(field).replaceFirst(
+													"" + value,
+													"\'" + value + "\'");
+										}
+										if (value instanceof Long) {
+											field = Str(field).replaceFirst(
+													"" + value, value + "L");
+										}
+										if (value instanceof Float) {
+											field = Str(field).replaceFirst(
+													"" + value, value + "F");
+										}
+									}
+								}
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
-												"(?<=\\=)([A-Za-z]{1}(?!.))",
-												"\'$1\'")
-												.replaceAll(
 														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
+												.replaceAll(
+														"(?<=\\d[FfLl])\"|\"(?=\\d*\\.?\\d+[FfLL])",
+														"")
 												.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
 												.replaceAll("\"true\"", "Yes")
 												.replaceAll("\"false\"", "No")
 												.replaceAll("=", ": ");
+								String[] numericMatches = findMatches(
+										"" + field,
+										"(?<=\\w\\:\\s)\\-?\\d*\\.?\\d+");
+								for (String numericMatch : numericMatches) {
+									String formatted = f(Dbl(numericMatch));
+									field = ("" + field).replaceFirst(
+											numericMatch, formatted);
+								}
 								// regex accuracy: 93%
 								// changes needed: probably not
 							}
@@ -65020,9 +65179,16 @@ public class KL {
 						// 300.575 would return
 						// `Amount: 300.757`)
 						// ______________________________________________________
+						if (field instanceof Integer || field instanceof Long) {
+							if (field instanceof Integer) {
+								field = f((int) field);
+							} else {
+								field = f((long) field) + "L";
+							}
+						}
 						if (field instanceof Float || field instanceof Double) {
 							if (field instanceof Float) {
-								field = f((float) field, decimalPlaces);
+								field = f((float) field, decimalPlaces) + "F";
 							} else {
 								field = f((double) field, decimalPlaces);
 							}
@@ -65246,17 +65412,55 @@ public class KL {
 									field = preprocessed;
 								}
 							} else {
+								if (field instanceof o) {
+									o parsedO = as(_o, field);
+									for (Object value : parsedO.array()) {
+										if (value instanceof String[]) {
+											String expandedStringValue = "[\""
+													+ join((String[]) value,
+															"\", \"")
+															.replaceAll(
+																	"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
+																	"$1aur$1")
+													+ "\"]";
+											field = Str(field).replaceFirst(
+													"\\[Ljava\\.lang\\.String;@\\w+",
+													expandedStringValue);
+										}
+										if (value instanceof Character) {
+											field = Str(field).replaceFirst(
+													"" + value,
+													"\'" + value + "\'");
+										}
+										if (value instanceof Long) {
+											field = Str(field).replaceFirst(
+													"" + value, value + "L");
+										}
+										if (value instanceof Float) {
+											field = Str(field).replaceFirst(
+													"" + value, value + "F");
+										}
+									}
+								}
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
-												"(?<=\\=)([A-Za-z]{1}(?!.))",
-												"\'$1\'")
-												.replaceAll(
 														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
 														"\"$1\"")
+												.replaceAll(
+														"(?<=\\d[FfLl])\"|\"(?=\\d*\\.?\\d+[FfLL])",
+														"")
 												.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
 												.replaceAll("\"true\"", "Ha")
 												.replaceAll("\"false\"", "Nahi")
 												.replaceAll("=", ": ");
+								String[] numericMatches = findMatches(
+										"" + field,
+										"(?<=\\w\\:\\s)\\-?\\d*\\.?\\d+");
+								for (String numericMatch : numericMatches) {
+									String formatted = f(Dbl(numericMatch));
+									field = ("" + field).replaceFirst(
+											numericMatch, formatted);
+								}
 								// regex accuracy: 93%
 								// changes needed: probably not
 							}
@@ -80024,11 +80228,11 @@ public class KL {
 		int[] newArr = {3, 5, 8};
 		newArr = nikalo.ekekse(newArr, 1);
 		print(newArr);
-		print(new intArr(1, 5, 7).entries()[1]);
+		print(new intArr(1, 5, 7).entries()[0]);
 		o dead = o("Yes=[Michael; Jemery], No=Lucien");
 		printArr(dead.k("yes", _S));
 		print(dead.k("no", _s));
-		farz(lo.i = 15, () -> jabtak(liava.i, bara, 5, ke),
+		farz(lia.i = 15, () -> jabtak(liava.i, bara, 5, se),
 				() -> se_nikala(liava.i, 1, aur), () -> print(liava.i));
 		printArr(new char[]{'a', 'b'});
 		for (lo.i = 0; jabtak(liava.i < 5); me_izafa(liava.i, 1, ka, or)) {
@@ -80036,9 +80240,10 @@ public class KL {
 		}
 		print(me_izafa(age2.ka_adha(_i), 4, 1, 10));
 		o userObj = o(
-				"naam he {pehla Michael; akhri Owens}, umr he 25, zinda he, hobbies hen [Netflix; Spotify; aur Traveling]");
+				"naam he {pehla Michael; akhri Owens}, umr he 25e3L, height he 5.1, zinda he, hobbies hen [Netflix; Spotify; aur Traveling], favorite_char='j'");
 		bolo(userObj);
-		bolo(userObj.ki("umr", integer_tor));
+		bolo(userObj.ki("umr", long_tor));
+		bolo(userObj.ka("favorite_char", character_tor));
 		boloArr(userObj.ki("hobbies", string_array_tor));
 		bolo(userObj.nahi("zinda"));
 
@@ -80076,7 +80281,8 @@ public class KL {
 
         // Object[]
         Object[] objectArray = {"String", 123, true, new Object(), null};
-        System.out.println("Object[]: ");kahoArr(objectArray);
+		System.out.println("Object[]: ");
+		printArr(objectArray);
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
