@@ -80337,6 +80337,7 @@ public class KL {
 		printArr(objectArray);
 		
 		int nmbr = 0;
+		//nmbr = Either(25, If(nmbr == 0), or, nmbr);
 		nmbr = Yato(25, Agar(nmbr == 0), ya, nmbr);
 		print(nmbr);
 		
