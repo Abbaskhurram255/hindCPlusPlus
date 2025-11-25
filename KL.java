@@ -4424,28 +4424,11 @@ public class KL {
 	public static o parseJson(String jsonString) {
 		o map = new o();
 		if (not(jsonString)) {
-			return map;
-		}
-		jsonString = jsonString.trim();;
-		if (!jsonString.startsWith("{") || !jsonString.endsWith("}")) {
 			map.add("status=notok, error=true");
 			return map;
 		}
-		jsonString = jsonString.substring(1, jsonString.length() - 1);
-		String[] keyValuePairs = jsonString.split("\\s*,\\s*");
-		for (String pair : keyValuePairs) {
-			String[] parts = pair.split("[\\[\\]\\s\\w]*:[\\[\\]\\s\\w]*", 2);
-			if (parts.length == 2) {
-				String key = parts[0].replaceAll("[\"\\{\\[\\]\\}]+", "")
-						.trim();
-				String value = parts[1].replaceAll("[\"\\{\\[\\]\\}]+", "")
-						.replaceAll("\\w+:\\s*", "").trim();
-				if (key.length() != 0 && in(key, "[a-zA-Z]+")
-						&& value.length() != 0 && in(value, "[a-zA-Z]+")) {
-					map.add(key + "=" + value);
-				}
-			}
-		}
+		jsonString = jsonString.trim();
+		map.add(jsonString);
 		map.add("status=ok, error=false");
 		return map;
 	}
@@ -38325,8 +38308,8 @@ public class KL {
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static Object ko, ki, ke, ke_he, pe, par, dabane_pe, dabane_par,
-			karne_pe, karne_par, rakho, se, se_he, mese, then, aur, or,
-			ka = ko = ki = ke = ke_he = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = se_he = mese = then = aur = or = none;
+			karne_pe, karne_par, rakho, se, se_he, mese, then, aur, or, ya,
+			ka = ko = ki = ke = ke_he = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = se_he = mese = then = aur = or = ya = none;
 	//these null objects will help us allow optional vocabulary into our function parameters
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
@@ -80024,42 +80007,76 @@ public class KL {
 			Runnable changeInCondition, Runnable task) {
 		har(conditionAsACallable, changeInCondition, task);
 	}
-	public static <T> T Either(T a, Object vocabularySupportingArg, T b) {
+	public static boolean If(boolean c) {
+		return c;
+	}
+	public static boolean Agar(boolean c) {
+		return c;
+	}
+	public static <T> T Either(T a, Object vocabularySupportingArg,
+			Object vocabularySupportingArgB, T b) {
 	    if (a == null || b == null)
 	        return null;
+		T result;
 	    if (a instanceof Character && b instanceof Character) {
-	        return ((char) a != '\0' ? (char) a : (char) b);
+			result = (T) ((Character) ((char) a != '\0' ? (char) a : (char) b));
 	    }
-	    if (a instanceof String && b instanceof String) {
-	        return (((String) a).trim().length() != 0 ? (String) a : (String) b);
+	    else if (a instanceof String && b instanceof String) {
+			result = (T) (((String) a).trim().length() != 0
+					? (String) a
+					: (String) b);
 	    }
-	    if (a instanceof Integer && b instanceof Integer) {
-	        return ((int) a != 0 ? (int) a : (int) b);
+	    else if (a instanceof Integer && b instanceof Integer) {
+			result = (T) ((Integer) ((int) a != 0 ? (int) a : (int) b));
 	    }
-	    if (a instanceof Long && b instanceof Long) {
-	        return ((long) a != 0 ? (long) a : (long) b);
+	    else if (a instanceof Long && b instanceof Long) {
+			result = (T) ((Long) ((long) a != 0 ? (long) a : (long) b));
 	    }
-	    if (a instanceof Float && b instanceof Float) {
-	        return ((float) a != 0 ? (float) a : (float) b);
+	    else if (a instanceof Float && b instanceof Float) {
+			result = (T) ((Float) ((float) a != 0 ? (float) a : (float) b));
 	    }
-	    if (a instanceof Double && b instanceof Double) {
-	        return ((double) a != 0 ? (double) a : (double) b);
+	    else if (a instanceof Double && b instanceof Double) {
+			result = (T) ((Double) ((double) a != 0 ? (double) a : (double) b));
 	    }
-	    if (a instanceof Boolean && b instanceof Boolean) {
-	        return ((boolean) a != false ? (boolean) a : (boolean) b);
+	    else if (a instanceof Boolean && b instanceof Boolean) {
+			result = (T) ((Boolean) ((boolean) a != false
+					? (boolean) a
+					: (boolean) b));
 	    }
-	    return a != null ? a : b;
+	    else {
+			result = a != null ? a : b;
+		}
+		if (vocabularySupportingArg instanceof Boolean) {
+			boolean parsedBoolean = (boolean) vocabularySupportingArg;
+			if (parsedBoolean != true)
+				result = b;
+	    }
+		return result;
+	}
+	public static <T> T Either(T a, Object vocabularySupportingArg, T b) {
+		return Either(a, vocabularySupportingArg, b);
 	}
 	public static <T> T Either(T a, T b) {
-	    return Either(a, b);
+		return Either(a, null, b);
+	}
+	public static <T> T Yato(T a, Object vocabularySupportingArg,
+			Object vocabularySupportingArgB, T b) {
+		return Either(a, vocabularySupportingArg, vocabularySupportingArgB, b);
 	}
 	public static <T> T Yato(T a, Object vocabularySupportingArg, T b) {
-	    return Either(a, b);
+		return Either(a, vocabularySupportingArg, b);
 	}
 	public static <T> T Yato(T a, T b) {
-	    return Either(a, b);
+		return Either(a, null, b);
 	}
 	public static void main(String[] args) {
+		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
+		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
+		// 736660.2);
+		// print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and
+		// I'm the %ith happiest person in the room. $randInt(5, 50).",
+		// "love", 9, 19, 6);
+		// print("$randInt(50, 500). $th(4). $upper:string. $xor:true, true");
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
 		print(f(500000.215));
@@ -80320,20 +80337,12 @@ public class KL {
 		printArr(objectArray);
 		
 		int nmbr = 0;
-		nmbr = Yato(nmbr, 25);
+		nmbr = Yato(25, Agar(nmbr == 0), ya, nmbr);
 		print(nmbr);
 		
 		
 		
 		
 		
-		
-		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
-		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
-		// 736660.2);
-		// print("Hi, it's {name}, {age}, %.3f, %s. And I am %d year old, and
-		// I'm the %ith happiest person in the room. $randInt(5, 50).",
-		// "love", 9, 19, 6);
-		// print("$randInt(50, 500). $th(4). $upper:string. $xor:true, true");
 	}
 }
