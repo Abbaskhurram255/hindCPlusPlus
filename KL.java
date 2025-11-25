@@ -80024,6 +80024,41 @@ public class KL {
 			Runnable changeInCondition, Runnable task) {
 		har(conditionAsACallable, changeInCondition, task);
 	}
+	public static <T> T Either(T a, Object vocabularySupportingArg, T b) {
+	    if (a == null || b == null)
+	        return null;
+	    if (a instanceof Character && b instanceof Character) {
+	        return ((char) a != '\0' ? (char) a : (char) b);
+	    }
+	    if (a instanceof String && b instanceof String) {
+	        return (((String) a).trim().length() != 0 ? (String) a : (String) b);
+	    }
+	    if (a instanceof Integer && b instanceof Integer) {
+	        return ((int) a != 0 ? (int) a : (int) b);
+	    }
+	    if (a instanceof Long && b instanceof Long) {
+	        return ((long) a != 0 ? (long) a : (long) b);
+	    }
+	    if (a instanceof Float && b instanceof Float) {
+	        return ((float) a != 0 ? (float) a : (float) b);
+	    }
+	    if (a instanceof Double && b instanceof Double) {
+	        return ((double) a != 0 ? (double) a : (double) b);
+	    }
+	    if (a instanceof Boolean && b instanceof Boolean) {
+	        return ((boolean) a != false ? (boolean) a : (boolean) b);
+	    }
+	    return a != null ? a : b;
+	}
+	public static <T> T Either(T a, T b) {
+	    return Either(a, b);
+	}
+	public static <T> T Yato(T a, Object vocabularySupportingArg, T b) {
+	    return Either(a, b);
+	}
+	public static <T> T Yato(T a, T b) {
+	    return Either(a, b);
+	}
 	public static void main(String[] args) {
 		print("{sentCase(hello)} {{age}+3-9} {d:inr} {d:r}", 835000, 13);
 		print("%d:th", 5603);
@@ -80283,6 +80318,16 @@ public class KL {
         Object[] objectArray = {"String", 123, true, new Object(), null};
 		System.out.println("Object[]: ");
 		printArr(objectArray);
+		
+		int nmbr = 0;
+		nmbr = Yato(nmbr, 25);
+		print(nmbr);
+		
+		
+		
+		
+		
+		
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
 		// 736660.2);
