@@ -14,7 +14,7 @@ rand_flt = uniform
 rand_from = rand_of = any_from = any_of = choice
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
-Str = str
+Str = lafz = jumla = str
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
         x = Str(x)
@@ -1028,7 +1028,7 @@ def main() -> none:
     cloned.key = 4
     print(dictionary.entries())
     print(cloned.entries())
-    name = "Misty"
+    name: jumla = "Misty"
     x=4
     printf("$name, dont! You are, but a $10+5-8 -year-old kid. $x")
     print(isstr(""))
