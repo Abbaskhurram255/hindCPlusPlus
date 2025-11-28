@@ -15,6 +15,7 @@ rand_from = rand_of = any_from = any_of = choice
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 Str = lafz = jumla = str
+num = Number
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
         x = Str(x)
@@ -1028,8 +1029,10 @@ def main() -> none:
     cloned.key = 4
     print(dictionary.entries())
     print(cloned.entries())
-    name: jumla = "Misty"
-    x=4
+    name: lafz = "Misty"
+    print(name)
+    x: num = 4
+    print(x)
     printf("$name, dont! You are, but a $10+5-8 -year-old kid. $x")
     print(isstr(""))
     print(isint(3))
