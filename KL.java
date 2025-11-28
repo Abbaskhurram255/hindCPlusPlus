@@ -45,7 +45,7 @@ public class KL {
 				return;
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				url = "JDBC:MySQL://" + url;
+				url = "JDBC:MySQL://" + url.replaceAll(".*://", "");
 				conn = DriverManager.getConnection(url, user, pass);
 				stmt = conn.createStatement();
 				System.out.println("Connected to MySQL");
@@ -108,9 +108,10 @@ public class KL {
 		return new db(url);
 	}
 	static {
-		db connection = db("localhost:3306/mydb");
+		db connection = db("localhost:3306/test");
 		print(connection.exec(
-				"INSERT INTO users (first_name, last_name, email) VALUES (Ayesha, Kifayat, ayeshakifayat@gmail.com)"));
+				"CREATE TABLE IF NOT EXISTS users (id int primary key auto_increment NOT NULL, first_name text(20) not null, last_name text(20) not null, email text(30) not null); INSERT INTO users (first_name, last_name, email) VALUES ('Ayesha', 'Kifayat', 'ayeshakifayat@gmail.com');"));
+		print(connection.query("SELECT * from users"));
 	}
 	public static class hint {
 		public hint khud = this, ka = this, iske_lie = khud, iska = khud,
@@ -15487,14 +15488,14 @@ public class KL {
 		boolean any(boolean tryCastingAs) {
 			return random(tryCastingAs);
 		}
-		Object key(String k) {
+		Object key(Object k) {
+			//the sequence stays
+			k = lower("" + k).trim();
 			if (KL.not(k))
 				return none;
-			k = lower(k);
-			return hasKey(k) ? super.get(k) : none;
-			// will take a key in the form of a string, but RETURN AN OBJECT
+			return hasKey("" + k) ? super.get(k) : none;
 		}
-		char key(String k, char tryCastingAs) {
+		char key(Object k, char tryCastingAs) {
 			if (KL.not(isChar(key(k)))) {
 				return '\0';
 			}
@@ -15504,7 +15505,7 @@ public class KL {
 				return '\0';
 			}
 		}
-		String key(String k, String tryCastingAs) {
+		String key(Object k, String tryCastingAs) {
 			if (KL.not(isStr(key(k)))) {
 				return "";
 			}
@@ -15514,7 +15515,7 @@ public class KL {
 				return "";
 			}
 		}
-		int key(String k, int tryCastingAs) {
+		int key(Object k, int tryCastingAs) {
 			if (KL.not(isInt(key(k)))) {
 				return 0;
 			}
@@ -15524,7 +15525,7 @@ public class KL {
 				return 0;
 			}
 		}
-		long key(String k, long tryCastingAs) {
+		long key(Object k, long tryCastingAs) {
 			if (KL.not(isLong(key(k)))) {
 				return 0;
 			}
@@ -15534,7 +15535,7 @@ public class KL {
 				return 0;
 			}
 		}
-		float key(String k, float tryCastingAs) {
+		float key(Object k, float tryCastingAs) {
 			if (KL.not(isFlt(key(k)))) {
 				return 0;
 			}
@@ -15544,7 +15545,7 @@ public class KL {
 				return 0;
 			}
 		}
-		double key(String k, double tryCastingAs) {
+		double key(Object k, double tryCastingAs) {
 			if (KL.not(isDbl(key(k)))) {
 				return 0;
 			}
@@ -15554,7 +15555,7 @@ public class KL {
 				return 0;
 			}
 		}
-		boolean key(String k, boolean tryCastingAs) {
+		boolean key(Object k, boolean tryCastingAs) {
 			if (KL.not(isBool(key(k)))) {
 				return false;
 			}
@@ -15564,7 +15565,7 @@ public class KL {
 				return false;
 			}
 		}
-		String[] key(String k, String[] tryCastingAs) {
+		String[] key(Object k, String[] tryCastingAs) {
 			if (KL.not(isArrOfStr(key(k)))) {
 				return blank.Str;
 			}
@@ -15574,7 +15575,7 @@ public class KL {
 				return blank.Str;
 			}
 		}
-		int[] key(String k, int[] tryCastingAs) {
+		int[] key(Object k, int[] tryCastingAs) {
 			if (KL.not(isArrOfInt(key(k)))) {
 				return blank.Int;
 			}
@@ -15584,7 +15585,7 @@ public class KL {
 				return blank.Int;
 			}
 		}
-		long[] key(String k, long[] tryCastingAs) {
+		long[] key(Object k, long[] tryCastingAs) {
 			if (KL.not(isArrOfLong(key(k)))) {
 				return blank.Long;
 			}
@@ -15594,7 +15595,7 @@ public class KL {
 				return blank.Long;
 			}
 		}
-		float[] key(String k, float[] tryCastingAs) {
+		float[] key(Object k, float[] tryCastingAs) {
 			if (KL.not(isArrOfFlt(key(k)))) {
 				return blank.Flt;
 			}
@@ -15604,7 +15605,7 @@ public class KL {
 				return blank.Flt;
 			}
 		}
-		double[] key(String k, double[] tryCastingAs) {
+		double[] key(Object k, double[] tryCastingAs) {
 			if (KL.not(isArrOfDbl(key(k)))) {
 				return blank.Dbl;
 			}
@@ -15614,7 +15615,7 @@ public class KL {
 				return blank.Dbl;
 			}
 		}
-		boolean[] key(String k, boolean[] tryCastingAs) {
+		boolean[] key(Object k, boolean[] tryCastingAs) {
 			if (KL.not(isArrOfBool(key(k)))) {
 				return blank.Bool;
 			}
@@ -15624,7 +15625,7 @@ public class KL {
 				return blank.Bool;
 			}
 		}
-		o key(String k, o tryCastingAs) {
+		o key(Object k, o tryCastingAs) {
 			if (KL.not(type(key(k), "o"))) {
 				return blank.o;
 			}
@@ -15634,283 +15635,286 @@ public class KL {
 				return blank.o;
 			}
 		}
-		Object k(String k) {
+		Object k(Object k) {
 			return key(k);
 		}
-		char k(String k, char tryCastingAs) {
+		char k(Object k, char tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String k(String k, String tryCastingAs) {
+		String k(Object k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int k(String k, int tryCastingAs) {
+		int k(Object k, int tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long k(String k, long tryCastingAs) {
+		long k(Object k, long tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float k(String k, float tryCastingAs) {
+		float k(Object k, float tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double k(String k, double tryCastingAs) {
+		double k(Object k, double tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean k(String k, boolean tryCastingAs) {
+		boolean k(Object k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		o k(String k, o tryCastingAs) {
+		o k(Object k, o tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String[] k(String k, String[] tryCastingAs) {
+		String[] k(Object k, String[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int[] k(String k, int[] tryCastingAs) {
+		int[] k(Object k, int[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long[] k(String k, long[] tryCastingAs) {
+		long[] k(Object k, long[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float[] k(String k, float[] tryCastingAs) {
+		float[] k(Object k, float[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double[] k(String k, double[] tryCastingAs) {
+		double[] k(Object k, double[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean[] k(String k, boolean[] tryCastingAs) {
+		boolean[] k(Object k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		Object ka(String k) {
+		Object ka(Object k) {
 			return key(k);
 		}
-		char ka(String k, char tryCastingAs) {
+		char ka(Object k, char tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String ka(String k, String tryCastingAs) {
+		String ka(Object k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int ka(String k, int tryCastingAs) {
+		int ka(Object k, int tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long ka(String k, long tryCastingAs) {
+		long ka(Object k, long tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float ka(String k, float tryCastingAs) {
+		float ka(Object k, float tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double ka(String k, double tryCastingAs) {
+		double ka(Object k, double tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean ka(String k, boolean tryCastingAs) {
+		boolean ka(Object k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		o ka(String k, o tryCastingAs) {
+		o ka(Object k, o tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String[] ka(String k, String[] tryCastingAs) {
+		String[] ka(Object k, String[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int[] ka(String k, int[] tryCastingAs) {
+		int[] ka(Object k, int[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long[] ka(String k, long[] tryCastingAs) {
+		long[] ka(Object k, long[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float[] ka(String k, float[] tryCastingAs) {
+		float[] ka(Object k, float[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double[] ka(String k, double[] tryCastingAs) {
+		double[] ka(Object k, double[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean[] ka(String k, boolean[] tryCastingAs) {
+		boolean[] ka(Object k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		Object ki(String k) {
+		Object ki(Object k) {
 			return key(k);
 		}
-		char ki(String k, char tryCastingAs) {
+		char ki(Object k, char tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String ki(String k, String tryCastingAs) {
+		String ki(Object k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int ki(String k, int tryCastingAs) {
+		int ki(Object k, int tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long ki(String k, long tryCastingAs) {
+		long ki(Object k, long tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float ki(String k, float tryCastingAs) {
+		float ki(Object k, float tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double ki(String k, double tryCastingAs) {
+		double ki(Object k, double tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean ki(String k, boolean tryCastingAs) {
+		boolean ki(Object k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		o ki(String k, o tryCastingAs) {
+		o ki(Object k, o tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String[] ki(String k, String[] tryCastingAs) {
+		String[] ki(Object k, String[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int[] ki(String k, int[] tryCastingAs) {
+		String[] ke(Object k) {
+			return key(k, _S);
+		}
+		int[] ki(Object k, int[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long[] ki(String k, long[] tryCastingAs) {
+		long[] ki(Object k, long[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float[] ki(String k, float[] tryCastingAs) {
+		float[] ki(Object k, float[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double[] ki(String k, double[] tryCastingAs) {
+		double[] ki(Object k, double[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean[] ki(String k, boolean[] tryCastingAs) {
+		boolean[] ki(Object k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean is(String k) {
+		boolean is(Object k) {
 			return key(k, _b);
 		}
-		boolean he(String k) {
+		boolean he(Object k) {
 			return is(k);
 		}
-		boolean not(String k) {
+		boolean not(Object k) {
 			return is(k) == No;
 		}
-		boolean nahi(String k) {
+		boolean nahi(Object k) {
 			return not(k);
 		}
-		Object val(String k) {
+		Object val(Object k) {
 			return key(k);
 		}
-		char val(String k, char tryCastingAs) {
+		char val(Object k, char tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String val(String k, String tryCastingAs) {
+		String val(Object k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int val(String k, int tryCastingAs) {
+		int val(Object k, int tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long val(String k, long tryCastingAs) {
+		long val(Object k, long tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float val(String k, float tryCastingAs) {
+		float val(Object k, float tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double val(String k, double tryCastingAs) {
+		double val(Object k, double tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean val(String k, boolean tryCastingAs) {
+		boolean val(Object k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		o val(String k, o tryCastingAs) {
+		o val(Object k, o tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String[] val(String k, String[] tryCastingAs) {
+		String[] val(Object k, String[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int[] val(String k, int[] tryCastingAs) {
+		int[] val(Object k, int[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long[] val(String k, long[] tryCastingAs) {
+		long[] val(Object k, long[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float[] val(String k, float[] tryCastingAs) {
+		float[] val(Object k, float[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double[] val(String k, double[] tryCastingAs) {
+		double[] val(Object k, double[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean[] val(String k, boolean[] tryCastingAs) {
+		boolean[] val(Object k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		Object v(String k) {
+		Object v(Object k) {
 			return key(k);
 		}
-		char v(String k, char tryCastingAs) {
+		char v(Object k, char tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String v(String k, String tryCastingAs) {
+		String v(Object k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int v(String k, int tryCastingAs) {
+		int v(Object k, int tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long v(String k, long tryCastingAs) {
+		long v(Object k, long tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float v(String k, float tryCastingAs) {
+		float v(Object k, float tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double v(String k, double tryCastingAs) {
+		double v(Object k, double tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean v(String k, boolean tryCastingAs) {
+		boolean v(Object k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		o v(String k, o tryCastingAs) {
+		o v(Object k, o tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String[] v(String k, String[] tryCastingAs) {
+		String[] v(Object k, String[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int[] v(String k, int[] tryCastingAs) {
+		int[] v(Object k, int[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long[] v(String k, long[] tryCastingAs) {
+		long[] v(Object k, long[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float[] v(String k, float[] tryCastingAs) {
+		float[] v(Object k, float[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double[] v(String k, double[] tryCastingAs) {
+		double[] v(Object k, double[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean[] v(String k, boolean[] tryCastingAs) {
+		boolean[] v(Object k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		char get(String k, char tryCastingAs) {
+		char get(Object k, char tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String get(String k, String tryCastingAs) {
+		String get(Object k, String tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int get(String k, int tryCastingAs) {
+		int get(Object k, int tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long get(String k, long tryCastingAs) {
+		long get(Object k, long tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float get(String k, float tryCastingAs) {
+		float get(Object k, float tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double get(String k, double tryCastingAs) {
+		double get(Object k, double tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean get(String k, boolean tryCastingAs) {
+		boolean get(Object k, boolean tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		o get(String k, o tryCastingAs) {
+		o get(Object k, o tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		String[] get(String k, String[] tryCastingAs) {
+		String[] get(Object k, String[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		int[] get(String k, int[] tryCastingAs) {
+		int[] get(Object k, int[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		long[] get(String k, long[] tryCastingAs) {
+		long[] get(Object k, long[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		float[] get(String k, float[] tryCastingAs) {
+		float[] get(Object k, float[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		double[] get(String k, double[] tryCastingAs) {
+		double[] get(Object k, double[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
-		boolean[] get(String k, boolean[] tryCastingAs) {
+		boolean[] get(Object k, boolean[] tryCastingAs) {
 			return key(k, tryCastingAs);
 		}
 		String[] keyArray() {
@@ -27149,6 +27153,68 @@ public class KL {
 				false, null, false, null, false, null, false, null, false,
 				null);
 	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
+			Runnable sol10) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, cond10,
+				sol10);
+	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8, boolean cond9, Runnable sol9) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9);
+	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+			Runnable sol8) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7, cond8, sol8);
+	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6, boolean cond7, Runnable sol7) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6, cond7, sol7);
+	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+			Runnable sol6) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
+				cond6, sol6);
+	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4, boolean cond5, Runnable sol5) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5);
+	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+			Runnable sol4) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
+	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2, boolean cond3, Runnable sol3) {
+		sw(cond1, sol1, cond2, sol2, cond3, sol3);
+	}
+	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+			Runnable sol2) {
+		sw(cond1, sol1, cond2, sol2);
+	}
+	public static void agar(boolean cond1, Runnable sol1) {
+		sw(cond1, sol1);
+	}
+
 	// sw/when version 1: runs Runnable solution x matching with condition x
 	// @returns `true` if any of the non-Else conditions are met, else `false`
 	public static boolean sw(Object src, Object cond1, Runnable sol1,
@@ -56620,7 +56686,7 @@ public class KL {
 		public static String breakCharacter = " ";
 	}
 	public static void println(Object... args) {
-		if (isNull(args) || not(args.length)) {
+		if (isNull(args) || len(args) == 0) {
 			return;
 		}
 		String breakCharacter;
@@ -57101,7 +57167,9 @@ public class KL {
 				String preprocessed = ("["
 						+ join((Object[]) arg).replaceAll(
 								"(?<=,\\s)and(?=\\s[\\w\\.\\-]+$)", "aur")
-						+ "]").replaceAll("(?<=(?<!\\w)\\W)\\bnone\\b|\\bnone\\b(?=\\W(?!\\w))", "khaal");
+						+ "]").replaceAll(
+								"(?<=(?<!\\w)\\W)\\bnone\\b|\\bnone\\b(?=\\W(?!\\w))",
+								"khaal");
 				// pre-processing booleans for better human-readabibility
 				preprocessed = preprocessed.replaceAll("true(?=,\\s|\\])", "Ha")
 						.replaceAll("false(?=,\\s|\\])", "Nahi");
@@ -57115,17 +57183,15 @@ public class KL {
 								+ "\'"
 						: "") + "]");
 			} else if (isArrOfInt(arg)) {
-				System.out
-						.print("["
+				System.out.print("["
 								+ join((int[]) arg).replaceAll(
 										"(?<=,\\s)and(?=\\s[\\w\\-]+$)", "aur")
-								+ "]");
+						+ "]");
 			} else if (isArrOfLong(arg)) {
-				System.out
-						.print("["
+				System.out.print("["
 								+ join((long[]) arg).replaceAll(
 										"(?<=,\\s)and(?=\\s[\\w\\-]+$)", "aur")
-								+ "]");
+						+ "]");
 			} else if (isArrOfFlt(arg)) {
 				System.out.print("["
 						+ join((float[]) arg).replaceAll(
@@ -80292,49 +80358,15 @@ public class KL {
 		}
 		print(me_izafa(age2.ka_adha(_i), 4, 1, 10));
 		o userObj = o(
-				"naam he {pehla Michael; akhri Owens}, umr he 25e3L, height he 5.1, zinda he, hobbies hen [Netflix; Spotify; aur Traveling], favorite_char='j'");
+				"3000 he someting, naam he {pehla Michael; akhri Owens}, umr he 25e3L, height he 5.1, zinda he, hobbies hen [Netflix; Spotify; aur Traveling], favorite_char='j'");
+		print(userObj.k(3000, _s));
+		//treemap-like behavior
 		bolo(userObj);
 		bolo(userObj.ki("umr", long_tor));
 		bolo(userObj.ka("favorite_char", character_tor));
 		boloArr(userObj.ki("hobbies", string_array_tor));
 		bolo(userObj.nahi("zinda"));
-
-        // char[]
-        char[] charArray = {'H', 'e', 'l', 'l', 'o'};
-        System.out.println("char[]: ");kahoArr(charArray);
-
-        // String[]
-        String[] stringArray = {"Java", "is", "fun"};
-        System.out.println("String[]: ");kahoArr(stringArray);
-
-        // int[]
-        int[] intArray = {1, 2, 3, 4, 5};
-        System.out.println("int[]: ");kahoArr(intArray);
-
-        // long[]
-        long[] longArray = {100L, 200L, 300L};
-        System.out.println("long[]: ");kahoArr(longArray);
-
-        // float[]
-        float[] floatArray = {1.1f, 2.2f, 3.3f};
-        System.out.println("float[]: ");kahoArr(floatArray);
-
-        // double[]
-        double[] doubleArray = {10.1, 20.2, 30.3};
-        System.out.println("double[]: ");kahoArr(doubleArray);
-
-        // boolean[]
-        boolean[] booleanArray = {true, false, true};
-        System.out.println("boolean[]: ");kahoArr(booleanArray);
-
-        // Number[] (an array of objects that are subclasses of Number)
-        Number[] numberArray = {10, 20.5, 30L}; // int, double, long are all Numbers
-        System.out.println("Number[]: ");kahoArr(numberArray);
-
-        // Object[]
-        Object[] objectArray = {"String", 123, true, new Object(), null};
-		System.out.println("Object[]: ");
-		printArr(objectArray);
+		bolo(userObj.entries());
 		
 		int nmbr = 0;
 		//nmbr = Either(25, If(nmbr == 0), or, nmbr);
