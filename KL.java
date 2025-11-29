@@ -6776,8 +6776,8 @@ public class KL {
 			if (not(xAndYAxes) || len(xAndYAxes) != 2) {
 				return this;
 			}
-			int w = xAndYAxes[0], h = xAndYAxes[1];
-			place(w, h);
+			int x = xAndYAxes[0], y = xAndYAxes[1];
+			place(x, y);
 			return this;
 		}
 		label place(o xAndYAxes) {
@@ -27313,7 +27313,7 @@ public class KL {
 				try {
 					Thread.sleep(interval < 1000 ? interval * 1000 : interval);
 				} catch (InterruptedException e) {
-					print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally or by a bg task.");
+					print("[KL.Info.InterruptedInterval]:\nThe interval was interrupted, either intentionally, or by some background task.");
 					break;
 				}
 				SwingUtilities.invokeLater(fn);
