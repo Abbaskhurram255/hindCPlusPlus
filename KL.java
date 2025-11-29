@@ -118,6 +118,16 @@ public class KL {
 				isko = khud, self = khud;
 		public KL parent = kl();
 		//@class.why: this class is supposed to help make functions more understandable
+		public static class aboveLine extends hint {
+			public aboveLine khud = this, ka = this, iske_lie = khud,
+					iska = khud, isko = khud, self = khud;
+			public hint parent = new hint();
+		}
+		public static class followingLine extends hint {
+			public followingLine khud = this, ka = this, iske_lie = khud,
+					iska = khud, isko = khud, self = khud;
+			public hint parent = new hint();
+		}
 		public static class info extends hint {
 			public info khud = this, ka = this, iske_lie = khud, iska = khud,
 					isko = khud, self = khud;
@@ -142,6 +152,38 @@ public class KL {
 			public intention khud = this, ka = this, iske_lie = khud,
 					iska = khud, isko = khud, self = khud;
 			public hint parent = new hint();
+		}
+		public static class handling extends hint {
+			public handling khud = this, ka = this, iske_lie = khud,
+					iska = khud, isko = khud, self = khud;
+			public hint parent = new hint();
+			public static class casesWhere extends hint.handling {
+				public handling.handling.casesWhere khud = this, ka = this,
+						iske_lie = khud, iska = khud, isko = khud, self = khud;
+				public hint.handling parent = new hint.handling();
+			}
+			public static class bothCasesWhere
+					extends
+						hint.handling.casesWhere {
+				public handling.handling.bothCasesWhere khud = this, ka = this,
+						iske_lie = khud, iska = khud, isko = khud, self = khud;
+				public hint.handling.casesWhere parent = new hint.handling.casesWhere();
+			}
+			public static class allCasesWhere extends hint.handling.casesWhere {
+				public handling.handling.allCasesWhere khud = this, ka = this,
+						iske_lie = khud, iska = khud, isko = khud, self = khud;
+				public hint.handling.casesWhere parent = new hint.handling.casesWhere();
+			}
+			public static class caseWhere extends hint.handling.casesWhere {
+				public handling.handling.caseWhere khud = this, ka = this,
+						iske_lie = khud, iska = khud, isko = khud, self = khud;
+				public hint.handling.casesWhere parent = new hint.handling.casesWhere();
+			}
+		}
+		public static class handles extends hint.handling {
+			public handles khud = this, ka = this, iske_lie = khud, iska = khud,
+					isko = khud, self = khud;
+			public hint parent = new hint.handling();
 		}
 		public static class behavior extends hint {
 			public behavior khud = this, ka = this, iske_lie = khud,
@@ -4510,31 +4552,28 @@ public class KL {
 		}
 		return map;
 	}
-	public String path(String to) {
+	public static URL path(String to) {
 		if (not(to)) {
-			return "";
+			return null;
 		}
-		return getClass().getResource(to).toString();
+		return KL.class.getResource(to);
 	}
-	public String filePath(String filename) {
+	public static URL filePath(String filename) {
 		return path(filename);
 	}
-	public String filepath(String filename) {
+	public static URL filepath(String filename) {
 		return path(filename);
 	}
-	public String file_path(String filename) {
+	public static URL file_path(String filename) {
 		return path(filename);
 	}
-	public String pathTo(String filename) {
+	public static URL pathTo(String filename) {
 		return path(filename);
 	}
-	public String pathto(String filename) {
+	public static URL path_to(String filename) {
 		return path(filename);
 	}
-	public String path_to(String filename) {
-		return path(filename);
-	}
-	public String src(String filename) {
+	public static URL src(String filename) {
 		return path(filename);
 	}
 	public static String fileSeparator = System.getProperty("file.separator"),
@@ -4702,19 +4741,12 @@ public class KL {
 			super.setLayout(new BorderLayout());
 		}
 		public app(String title) {
-			super();
-			exitOnClose();
-			resizable();
+			this();
 			title(title);
-			super.setLayout(new BorderLayout());
 		}
 		public app(String title, int w, int h) {
-			super();
-			exitOnClose();
-			resizable();
-			title(title);
+			this(title);
 			size(w, h);
-			super.setLayout(new BorderLayout());
 		}
 		public app title(String title) {
 			if (not(title))
@@ -4778,10 +4810,10 @@ public class KL {
 			return this;
 		}
 		public app size(String WxH) {
-			if (not(WxH) || !eq(WxH, "\\d{3,4}[Xx]\\d{3,4}")) {
+			if (not(WxH) || !in(WxH, "^\\d{3,4}\\s*[Xx]\\s*\\d{3,4}$")) {
 				return this;
 			}
-			String[] parts = WxH.split("[Xx]");
+			String[] parts = WxH.split("\\s*[Xx]\\s*");
 			int w = Int(parts[0]), h = Int(parts[1]);
 			size(w, h);
 			return this;
@@ -4799,6 +4831,38 @@ public class KL {
 			return this;
 		}
 		public app kiSize(oI resolution) {
+			size(resolution);
+			return this;
+		}
+		public app box(int w, int h) {
+			size(w, h);
+			return this;
+		}
+		public app box(String WxH) {
+			size(WxH);
+			return this;
+		}
+		public app box(o resolution) {
+			size(resolution);
+			return this;
+		}
+		public app box(oI resolution) {
+			size(resolution);
+			return this;
+		}
+		public app kaBox(int w, int h) {
+			size(w, h);
+			return this;
+		}
+		public app kaBox(String WxH) {
+			size(WxH);
+			return this;
+		}
+		public app kaBox(o resolution) {
+			size(resolution);
+			return this;
+		}
+		public app kaBox(oI resolution) {
 			size(resolution);
 			return this;
 		}
@@ -4847,6 +4911,10 @@ public class KL {
 					onTop = propsObj.k("hameshaTopPe", _b);
 				onTop(onTop);
 			}
+			if (propsObj.hasKey("icon")) {
+				String iconAddress = propsObj.k("icon", string_tor);
+				icon(iconAddress);
+			}
 			return this;
 		}
 		public app set(String... kvs) {
@@ -4880,6 +4948,11 @@ public class KL {
 			lay(layout);
 			return this;
 		}
+		/**
+		 * Starts the application.
+		 * 
+		 * @return app
+		 */
 		public app start() {
 			Dimension res = super.getSize();
 			int width = res.width, height = res.height;
@@ -4890,15 +4963,39 @@ public class KL {
 			super.setVisible(true);
 			return this;
 		}
+		/**
+		 * Starts the application window, with a customized width, and height.
+		 * 
+		 * @param w<int>
+		 *            the width of the window
+		 * @param h<int>
+		 *            the height of the window
+		 * @return app
+		 */
 		public app start(int w, int h) {
 			size(w, h);
 			super.setVisible(true);
 			return this;
 		}
+		/**
+		 * Application ko shuru karta he.
+		 * 
+		 * @return app
+		 */
 		public app shuru() {
 			start();
 			return this;
 		}
+		/**
+		 * application window ko ek customized width, and height parameters ke sath shuru
+		 * karti he.
+		 * 
+		 * @param w
+		 *            window ki width
+		 * @param h
+		 *            window ki height
+		 * @return app
+		 */
 		public app shuru(int w, int h) {
 			start(w, h);
 			return this;
@@ -5082,9 +5179,14 @@ public class KL {
 			return this;
 		}
 		public app icon(String address) {
+			if (not(address))
+				return this;
 			// set title-bar icon
 			try {
-				super.setIconImage(new ImageIcon(address).getImage());
+				URL imageUrl = pathTo(address);
+				if (isNull(imageUrl))
+					return this;
+				super.setIconImage(new ImageIcon(imageUrl).getImage());
 			} catch (Exception e) {
 			}
 			return this;
@@ -5441,6 +5543,22 @@ public class KL {
 					JOptionPane.ERROR_MESSAGE, ico);
 			return this;
 		}
+		public app err(String message) {
+			error(message);
+			return this;
+		}
+		public app err(String title, String message) {
+			error(title, message);
+			return this;
+		}
+		public app err(String title, String message, String iconAddress) {
+			error(title, message, iconAddress);
+			return this;
+		}
+		public app err(String title, String message, Icon ico) {
+			error(title, message, ico);
+			return this;
+		}
 		public app warn(String message) {
 			if (this.isOnTop()) {
 				offTop();
@@ -5578,6 +5696,9 @@ public class KL {
 		public double askDbl(String title, String message) {
 			return Dbl(this.ask(title, message));
 		}
+		public String f(String s, Object... args) {
+			return kl.f(s, args);
+		}
 		public void close() {
 			System.exit(0);
 		}
@@ -5661,6 +5782,38 @@ public class KL {
 		}
 		public gui kiSize(oI resolution) {
 			super.kiSize(resolution);
+			return this;
+		}
+		public gui box(int w, int h) {
+			super.box(w, h);
+			return this;
+		}
+		public gui box(String WxH) {
+			super.box(WxH);
+			return this;
+		}
+		public gui box(o resolution) {
+			super.box(resolution);
+			return this;
+		}
+		public gui box(oI resolution) {
+			super.box(resolution);
+			return this;
+		}
+		public gui kaBox(int w, int h) {
+			super.kaBox(w, h);
+			return this;
+		}
+		public gui kaBox(String WxH) {
+			super.kaBox(WxH);
+			return this;
+		}
+		public gui kaBox(o resolution) {
+			super.kaBox(resolution);
+			return this;
+		}
+		public gui kaBox(oI resolution) {
+			super.kaBox(resolution);
 			return this;
 		}
 		public gui set(o propsObj) {
@@ -5785,6 +5938,7 @@ public class KL {
 			return this;
 		}
 		public gui opacity(double o) {
+			hint.handles.bothCasesWhere o_is_EITHER_between_0_and_1_OR_is_between_1_and_100;
 			super.opacity(o);
 			return this;
 		}
@@ -6017,6 +6171,22 @@ public class KL {
 		}
 		public gui error(String title, String message, Icon ico) {
 			super.error(title, message, ico);
+			return this;
+		}
+		public gui err(String message) {
+			super.err(message);
+			return this;
+		}
+		public gui err(String title, String message) {
+			super.err(title, message);
+			return this;
+		}
+		public gui err(String title, String message, String iconAddress) {
+			super.err(title, message, iconAddress);
+			return this;
+		}
+		public gui err(String title, String message, Icon ico) {
+			super.err(title, message, ico);
 			return this;
 		}
 		public gui warn(String message) {
@@ -6503,13 +6673,159 @@ public class KL {
 		String keSamneBola() {
 			return getHover();
 		}
-		label place(int xAxis, int yAxis, int width, int height) {
-			super.setBounds(xAxis, yAxis, width, height);
+		label size(int w, int h) {
+			if (w < 20)
+				w = 20;
+			if (w > 2e3)
+				w = (int) 2e3;
+			if (h < 20)
+				h = 20;
+			if (h > 2e3)
+				h = (int) 2e3;
+			super.setSize(w, h);
 			return this;
 		}
-		label koRakho(int xAxis, int yAxis, int width, int height,
+		label size(int[] widthAndHeight) {
+			if (not(widthAndHeight) || len(widthAndHeight) != 2) {
+				return this;
+			}
+			int w = widthAndHeight[0], h = widthAndHeight[1];
+			size(w, h);
+			return this;
+		}
+		label size(o resolution) {
+			if (not(resolution) || !resolution.hasKey("width")
+					|| !resolution.hasKey("height")) {
+				return this;
+			}
+			int w = resolution.k("width", 0), h = resolution.k("height", 0);
+			size(w, h);
+			return this;
+		}
+		label size(oI resolution) {
+			if (not(resolution) || !resolution.hasKey("width")
+					|| !resolution.hasKey("height")) {
+				return this;
+			}
+			int w = resolution.k("width"), h = resolution.k("height");
+			size(w, h);
+			return this;
+		}
+		label size(String WxH) {
+			if (not(WxH) || !in(WxH, "^\\d{2,4}\\s*[Xx]\\s*\\d{2,4}$")) {
+				return this;
+			}
+			String[] parts = WxH.split("\\s*[Xx]\\s*");
+			int w = Int(parts[0]), h = Int(parts[1]);
+			size(w, h);
+			return this;
+		}
+		label kiSize(int w, int h) {
+			size(w, h);
+			return this;
+		}
+		label kiSize(String WxH) {
+			size(WxH);
+			return this;
+		}
+		label kiSize(o resolution) {
+			size(resolution);
+			return this;
+		}
+		label kiSize(oI resolution) {
+			size(resolution);
+			return this;
+		}
+		label box(int w, int h) {
+			size(w, h);
+			return this;
+		}
+		label box(String WxH) {
+			size(WxH);
+			return this;
+		}
+		label box(o resolution) {
+			size(resolution);
+			return this;
+		}
+		label box(oI resolution) {
+			size(resolution);
+			return this;
+		}
+		label kaBox(int w, int h) {
+			size(w, h);
+			return this;
+		}
+		label kaBox(String WxH) {
+			size(WxH);
+			return this;
+		}
+		label kaBox(o resolution) {
+			size(resolution);
+			return this;
+		}
+		label kaBox(oI resolution) {
+			size(resolution);
+			return this;
+		}
+		label place(int xAxis, int yAxis) {
+			super.setBounds(xAxis, yAxis, super.getWidth(), super.getHeight());
+			return this;
+		}
+		label place(int[] xAndYAxes) {
+			if (not(xAndYAxes) || len(xAndYAxes) != 2) {
+				return this;
+			}
+			int w = xAndYAxes[0], h = xAndYAxes[1];
+			place(w, h);
+			return this;
+		}
+		label place(o xAndYAxes) {
+			if (not(xAndYAxes) || !xAndYAxes.hasKey("x")
+					|| !xAndYAxes.hasKey("y")) {
+				return this;
+			}
+			int x = xAndYAxes.k("x", 0), y = xAndYAxes.k("y", 0);
+			place(x, y);
+			return this;
+		}
+		label place(oI xAndYAxes) {
+			if (not(xAndYAxes) || !xAndYAxes.hasKey("x")
+					|| !xAndYAxes.hasKey("y")) {
+				return this;
+			}
+			int x = xAndYAxes.k("x"), y = xAndYAxes.k("y");
+			place(x, y);
+			return this;
+		}
+		label place(String XxY) {
+			if (not(XxY) || !in(XxY, "^\\d{2,4}\\s*[Xx]\\s*\\d{2,4}$")) {
+				return this;
+			}
+			String[] parts = XxY.split("\\s*[Xx]\\s*");
+			int x = Int(parts[0]), y = Int(parts[1]);
+			place(x, y);
+			return this;
+		}
+		label koRakho(int xAxis, int yAxis,
 				Object... vocabularySupportingArgs) {
-			place(xAxis, yAxis, width, height);
+			place(xAxis, yAxis);
+			return this;
+		}
+		label koRakho(int[] xAndYAxes, Object... vocabularySupportingArgs) {
+			place(xAndYAxes);
+			return this;
+		}
+		label koRakho(o xAndYAxes, Object... vocabularySupportingArgs) {
+			place(xAndYAxes);
+			return this;
+		}
+		label koRakho(oI xAndYAxes, Object... vocabularySupportingArgs) {
+			place(xAndYAxes);
+			return this;
+		}
+		label koRakho(String XxY, Object... vocabularySupportingArgs) {
+			place(XxY);
 			return this;
 		}
 	}
@@ -6608,7 +6924,7 @@ public class KL {
 					&& frameToAddTo_optional[0] != null) {
 				JFrame frame = frameToAddTo_optional[0];
 				//kl.print("here");
-				frame.add(this);
+				frame.getContentPane().add(this);
 			}
 		}
 		panel(LayoutManager layout, JFrame... frameToAddTo_optional) {
@@ -6616,7 +6932,7 @@ public class KL {
 			if (frameToAddTo_optional.length == 1
 					&& frameToAddTo_optional[0] != null) {
 				JFrame frame = frameToAddTo_optional[0];
-				frame.add(this);
+				frame.getContentPane().add(this);
 			}
 		}
 		panel(boolean isDoubleBuffered, JFrame... frameToAddTo_optional) {
@@ -6624,7 +6940,7 @@ public class KL {
 			if (frameToAddTo_optional.length == 1
 					&& frameToAddTo_optional[0] != null) {
 				JFrame frame = frameToAddTo_optional[0];
-				frame.add(this);
+				frame.getContentPane().add(this);
 			}
 		}
 		panel(LayoutManager layout, boolean isDoubleBuffered,
@@ -6633,7 +6949,7 @@ public class KL {
 			if (frameToAddTo_optional.length == 1
 					&& frameToAddTo_optional[0] != null) {
 				JFrame frame = frameToAddTo_optional[0];
-				frame.add(this);
+				frame.getContentPane().add(this);
 			}
 		}
 		panel lay(LayoutManager layout) {
@@ -7471,7 +7787,7 @@ public class KL {
 			super.kaBackground(clr);
 			return this;
 		}
-		btn kiBackground(Color clr) {
+		public btn kiBackground(Color clr) {
 			super.kiBackground(clr);
 			return this;
 		}
@@ -15232,7 +15548,7 @@ public class KL {
 					continue;
 				eqSignSeparatedPair = eqSignSeparatedPair
 						.replaceAll("^\\{+|\\}+$", "").trim().replaceAll(
-								"(?<=\\w)\\s([Bb]a?ra?ba?r|[Hh]en?)\\s(?=.)",
+								"(?<=\\w)\\s([Bb]a?ra?ba?r|[Hh][eo]n?|rak?h[aeio]e?n?)\\s(?=.)",
 								"=");
 				//let's:
 				//* remove all entries of `\{`, `\}`
@@ -15244,7 +15560,7 @@ public class KL {
 								"(?<=\\w)\\s([Jj]hoot|[Nn][oa](hi)?|False)(?![\\s\\w])",
 								"=false");
 				if (in(eqSignSeparatedPair,
-						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\->\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
+						"(?<k>['\"]?\\w+['\"]?)\\s*[=:]\\s*(?<v>[\\{\\[]?['\"\\\\\\/\\->\\.]*!*\\w+['\"\\\\\\/\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
 					String k;
 					Object v = new Object();
 					String[] pairs = eqSignSeparatedPair.split("\\s*[:=]\\s*");
@@ -15253,7 +15569,9 @@ public class KL {
 						k = lower(pairs[0].trim()).replaceAll("^['\"]+|['\"]+$",
 								"");
 						String unprocessedV = pairs[1].trim();
-						unprocessedV = unprocessedV.replaceAll("(?<=\\d)\\_(?=\\d)", "");
+						// simplifying, and parsing pretty_typed numbers, e.g. 20_00_000 -> (becomes) 2000000
+						unprocessedV = unprocessedV
+								.replaceAll("(?<=\\d)\\_(?=\\d)", "");
 						// handling exponentials
 						String[] exponentialMatches = findMatches(unprocessedV,
 								"(?<!\\\\)\\-?\\d*\\.?\\d+[Ee][\\+\\-]?\\d+");
@@ -15261,8 +15579,9 @@ public class KL {
 							double[] parsedNumsWithoutPowers = new double[exponentialMatches.length];
 							int[] parsedExponentialPowers = new int[exponentialMatches.length];
 							for (int i : range(exponentialMatches)) {
-								parsedNumsWithoutPowers[i] = Dbl(exponentialMatches[i]
-										.replaceAll("[Ee][\\+\\-]?\\d+$", ""));
+								parsedNumsWithoutPowers[i] = Dbl(
+										exponentialMatches[i].replaceAll(
+												"[Ee][\\+\\-]?\\d+$", ""));
 								parsedExponentialPowers[i] = Int(
 										findMatch(exponentialMatches[i],
 												"(?<=\\d[Ee])[\\+\\-]?\\d+"));
@@ -15284,15 +15603,16 @@ public class KL {
 										power--;
 									}
 								}
-								unprocessedV = unprocessedV.replaceFirst(exponentialMatches[i]
-										.replaceAll("([\\+\\-])", "\\\\$1"),
+								unprocessedV = unprocessedV.replaceFirst(
+										exponentialMatches[i].replaceAll(
+												"([\\+\\-])", "\\\\$1"),
 										Str(parsedNumsWithPowers[i]))
 										.replaceAll("(?<=\\d)\\.[0]+(?!\\d)",
 												"");
 							}
 						}
 						if (startsWith(unprocessedV, "\\{") && in(unprocessedV,
-								"(?<v>[\\{\\[]?['\"\\.]*!*\\w+['\"\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
+								"(?<v>[\\{\\[]?['\"\\\\\\/\\.]*!*\\w+['\"\\\\\\/\\->\\.;\\&\\s\\w\\[\\{]*[\\}\\]]?)")) {
 							//we might have a sub/nested o(bject)|dictionary
 							//WARNING:
 							//* sub keys are split with a semicolon, instead of a comma
@@ -27060,158 +27380,213 @@ public class KL {
 		stop(id);
 	}
 	// @@deprecated sw version 0.0.0.0: the most basic, on-the-fly implementation
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+			Runnable sol6, Object cond7, Runnable sol7, Object cond8,
+			Runnable sol8, Object cond9, Runnable sol9, Object cond10,
 			Runnable sol10) {
-		if (is(cond1)) {
+		if (cond1 instanceof bln)
+			cond1 = ((bln) cond1).yes;
+		if (cond2 instanceof bln)
+			cond2 = ((bln) cond2).yes;
+		if (cond3 instanceof bln)
+			cond3 = ((bln) cond3).yes;
+		if (cond4 instanceof bln)
+			cond4 = ((bln) cond4).yes;
+		if (cond5 instanceof bln)
+			cond5 = ((bln) cond5).yes;
+		if (cond6 instanceof bln)
+			cond7 = ((bln) cond6).yes;
+		if (cond7 instanceof bln)
+			cond7 = ((bln) cond7).yes;
+		if (cond8 instanceof bln)
+			cond8 = ((bln) cond8).yes;
+		if (cond9 instanceof bln)
+			cond9 = ((bln) cond9).yes;
+		if (cond10 instanceof bln)
+			cond10 = ((bln) cond10).yes;
+		hint.handling.casesWhere the_recent_condition_fails_and_the_next_condition_is_an_Else;
+		if (cond2 instanceof String && eq((String) cond2, Else)) {
+			cond2 = true;
+			//forwards the current condition (from cond1 to cond2, tested)
+		}
+		if (cond3 instanceof String && eq((String) cond3, Else)) {
+			cond3 = true;
+		}
+		if (cond4 instanceof String && eq((String) cond4, Else))
+			cond4 = true;
+		if (cond5 instanceof String && eq((String) cond5, Else))
+			cond5 = true;
+		if (cond6 instanceof String && eq((String) cond6, Else))
+			cond6 = true;
+		if (cond7 instanceof String && eq((String) cond7, Else))
+			cond7 = true;
+		if (cond8 instanceof String && eq((String) cond8, Else))
+			cond8 = true;
+		if (cond9 instanceof String && eq((String) cond9, Else))
+			cond9 = true;
+		if (cond10 instanceof String && eq((String) cond10, Else))
+			cond10 = true;
+		//sequence matters, this check comes after
+		hint.followingLine.avoids classCastException;
+		if (not(cond1 instanceof Boolean || cond2 instanceof Boolean
+				|| cond3 instanceof Boolean || cond4 instanceof Boolean
+				|| cond5 instanceof Boolean || cond6 instanceof Boolean
+				|| cond7 instanceof Boolean || cond8 instanceof Boolean
+				|| cond9 instanceof Boolean || cond10 instanceof Boolean))
+			return;
+		boolean parsedCond1 = (boolean) cond1, parsedCond2 = (boolean) cond2,
+				parsedCond3 = (boolean) cond3, parsedCond4 = (boolean) cond4,
+				parsedCond5 = (boolean) cond5, parsedCond6 = (boolean) cond6,
+				parsedCond7 = (boolean) cond7, parsedCond8 = (boolean) cond8,
+				parsedCond9 = (boolean) cond9, parsedCond10 = (boolean) cond10;
+		if (is(parsedCond1)) {
 			new Thread(sol1).start();
-		} else if (is(cond2)) {
+		} else if (is(parsedCond2)) {
 			new Thread(sol2).start();
-		} else if (is(cond3)) {
+		} else if (is(parsedCond3)) {
 			new Thread(sol3).start();
-		} else if (is(cond4)) {
+		} else if (is(parsedCond4)) {
 			new Thread(sol4).start();
-		} else if (is(cond5)) {
+		} else if (is(parsedCond5)) {
 			new Thread(sol5).start();
-		} else if (is(cond6)) {
+		} else if (is(parsedCond6)) {
 			new Thread(sol6).start();
-		} else if (is(cond7)) {
+		} else if (is(parsedCond7)) {
 			new Thread(sol7).start();
-		} else if (is(cond8)) {
+		} else if (is(parsedCond8)) {
 			new Thread(sol8).start();
-		} else if (is(cond9)) {
+		} else if (is(parsedCond9)) {
 			new Thread(sol9).start();
-		} else if (is(cond10)) {
+		} else if (is(parsedCond10)) {
 			new Thread(sol10).start();
 		}
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8, boolean cond9, Runnable sol9) {
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+			Runnable sol6, Object cond7, Runnable sol7, Object cond8,
+			Runnable sol8, Object cond9, Runnable sol9) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, false,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+			Runnable sol6, Object cond7, Runnable sol7, Object cond8,
 			Runnable sol8) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6, cond7, sol7, cond8, sol8, false, null, false,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7) {
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+			Runnable sol6, Object cond7, Runnable sol7) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6, cond7, sol7, false, null, false, null, false,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
 			Runnable sol6) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6, false, null, false, null, false, null, false,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5) {
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				false, null, false, null, false, null, false, null, false,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
 			Runnable sol4) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, false, null,
 				false, null, false, null, false, null, false, null, false,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3) {
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, false, null, false, null,
 				false, null, false, null, false, null, false, null, false,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1, boolean cond2,
+	public static void sw(Object cond1, Runnable sol1, Object cond2,
 			Runnable sol2) {
 		sw(cond1, sol1, cond2, sol2, false, null, false, null, false, null,
 				false, null, false, null, false, null, false, null, false,
 				null);
 	}
-	public static void sw(boolean cond1, Runnable sol1) {
+	public static void sw(Object cond1, Runnable sol1) {
 		sw(cond1, sol1, false, null, false, null, false, null, false, null,
 				false, null, false, null, false, null, false, null, false,
 				null);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8, boolean cond9, Runnable sol9, boolean cond10,
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+			Runnable sol6, Object cond7, Runnable sol7, Object cond8,
+			Runnable sol8, Object cond9, Runnable sol9, Object cond10,
 			Runnable sol10) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9, cond10,
 				sol10);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
-			Runnable sol8, boolean cond9, Runnable sol9) {
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+			Runnable sol6, Object cond7, Runnable sol7, Object cond8,
+			Runnable sol8, Object cond9, Runnable sol9) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6, cond7, sol7, cond8, sol8, cond9, sol9);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7, boolean cond8,
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+			Runnable sol6, Object cond7, Runnable sol7, Object cond8,
 			Runnable sol8) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6, cond7, sol7, cond8, sol8);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
-			Runnable sol6, boolean cond7, Runnable sol7) {
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
+			Runnable sol6, Object cond7, Runnable sol7) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6, cond7, sol7);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5, boolean cond6,
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5, Object cond6,
 			Runnable sol6) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5,
 				cond6, sol6);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
-			Runnable sol4, boolean cond5, Runnable sol5) {
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
+			Runnable sol4, Object cond5, Runnable sol5) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4, cond5, sol5);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3, boolean cond4,
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3, Object cond4,
 			Runnable sol4) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3, cond4, sol4);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
-			Runnable sol2, boolean cond3, Runnable sol3) {
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
+			Runnable sol2, Object cond3, Runnable sol3) {
 		sw(cond1, sol1, cond2, sol2, cond3, sol3);
 	}
-	public static void agar(boolean cond1, Runnable sol1, boolean cond2,
+	public static void agar(Object cond1, Runnable sol1, Object cond2,
 			Runnable sol2) {
 		sw(cond1, sol1, cond2, sol2);
 	}
-	public static void agar(boolean cond1, Runnable sol1) {
+	public static void agar(Object cond1, Runnable sol1) {
 		sw(cond1, sol1);
 	}
 
@@ -27223,6 +27598,8 @@ public class KL {
 			Object cond6, Runnable sol6, Object cond7, Runnable sol7,
 			Object cond8, Runnable sol8, Object cond9, Runnable sol9,
 			Object cond10, Runnable sol10) {
+		if (src instanceof bln)
+			src = ((bln) src).yes;
 		if (src instanceof Number || src instanceof Character) {
 			double srcDbl = src instanceof Character
 					? (char) src
@@ -27237,8 +27614,8 @@ public class KL {
 				boolean hasRangeShorthand = eq(Str(cond1), rangeRegEx);
 				boolean exclusive = in(Str(cond1), "x$");
 				if (hasRangeShorthand) {
-					// provides following Kotlin-like behavior:
-					// when(...x, "n1..n2", () -> {}...)
+					// provides the following Kotlin-like behavior:
+					// when(x, "n1..n2", () -> {$doSomething();});
 					double a = Dbl(findMatch(Str(cond1),
 							"\\-?\\d*\\.?\\d+(?=[\\.\\-]{2})")),
 							b = Dbl(findMatch(Str(cond1),
@@ -33228,6 +33605,8 @@ public class KL {
 			T sol2, Object cond3, T sol3, Object cond4, T sol4, Object cond5,
 			T sol5, Object cond6, T sol6, Object cond7, T sol7, Object cond8,
 			T sol8, Object cond9, T sol9, Object cond10, T sol10) {
+		if (src instanceof bln)
+			src = ((bln) src).yes;
 		if (src instanceof Number || src instanceof Character) {
 			double srcDbl = src instanceof Character
 					? (char) src
@@ -38060,33 +38439,73 @@ public class KL {
 		public bln khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
 		public KL parent = kl();
-		boolean Yes, yes, Ha, ha, He, he, Met, met, Sach, sach, False, No, no,
-				Na, na, Nahi, nahi, Jhoot, jhoot,
-				True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = false;
-		hint initially_all_the_positive_and_non_variables_should_point_to_false_since_we_dont_know_the_condition_yet;
+		boolean Is, is, NotFalse, notFalse, Yes, yes, Ha, ha, He, he, Met, met,
+				Sach, sach, False, NotTrue, notTrue, Isnt, isnt, No, no, Na, na,
+				Nahi, nahi, Jhoot, jhoot,
+				True = NotFalse = notFalse = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = False = NotTrue = notTrue = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = false;
+		hint initially_all_the_positive_and_non_positive_variables_should_only_point_to_false_since_we_dont_know_the_condition_yet;
+		//initially, neither true nor false
+		boolean filhal, Filhal = filhal = Yes && !No;
+		bln() {
+			True = NotFalse = notFalse = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = false;
+			False = NotTrue = notTrue = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+			Filhal = filhal = Yes && !No;
+		}
 		bln(boolean condition) {
-			True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = condition;
-			False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+			set(condition);
 		}
 		bln(int n) {
-			True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = n > 0
+			set(n);
+		}
+		bln set(boolean condition) {
+			True = NotFalse = notFalse = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = condition;
+			False = NotTrue = notTrue = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+			Filhal = filhal = Yes && !No;
+			return this;
+		}
+		bln set(int condtion) {
+			True = NotFalse = notFalse = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = n > 0
 					? true
 					: false;
-			False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+			False = NotTrue = notTrue = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !yes;
+			Filhal = filhal = Yes && !No;
+			return this;
 		}
 		bln negate() {
-			True = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = !yes;
-			False = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !no;
+			True = NotFalse = notFalse = Yes = yes = Ha = ha = He = he = Met = met = Sach = sach = !yes;
+			False = NotTrue = notTrue = No = no = Na = na = Nahi = nahi = Jhoot = jhoot = !no;
+			Filhal = filhal = Yes && !No;
 			return this;
 		}
 		bln neg() {
 			return negate();
 		}
+		bln reverse() {
+			return negate();
+		}
+		bln rev() {
+			return negate();
+		}
+		bln kaUlta() {
+			return negate();
+		}
+		bln ulta() {
+			return negate();
+		}
+		bln ulti() {
+			return negate();
+		}
 		boolean get() {
-			return yes;
+			return filhal;
+		}
+		boolean Filhal() {
+			return get();
+		}
+		boolean filhal() {
+			return get();
 		}
 		boolean True() {
-			return Yes;
+			return True;
 		}
 		boolean Yes() {
 			return True();
@@ -38106,6 +38525,9 @@ public class KL {
 		boolean he() {
 			return True();
 		}
+		boolean Met() {
+			return True();
+		}
 		boolean met() {
 			return True();
 		}
@@ -38115,44 +38537,58 @@ public class KL {
 		boolean sach() {
 			return True();
 		}
+		boolean False() {
+			return False;
+		}
 		boolean No() {
-			return No;
+			return False();
 		}
 		boolean no() {
-			return No();
+			return False();
 		}
 		boolean Na() {
-			return No();
+			return False();
 		}
 		boolean na() {
-			return No();
+			return False();
 		}
 		boolean Nahi() {
-			return No();
+			return False();
 		}
 		boolean nahi() {
-			return No();
+			return False();
 		}
 		boolean Jhoot() {
-			return No();
+			return False();
 		}
 		boolean jhoot() {
-			return No();
+			return False();
 		}
 		@Override
 		public String toString() {
-			return "" + (yes == true ? "Yes" : "No");
+			return "" + (True ? "Yes" : "No");
 		}
 	}
 	public static class bool extends bln {
 		public bool khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
-		public bln parent = new bln(false);
+		public bln parent = new bln();
+		bool() {
+			super();
+		}
 		bool(boolean condition) {
 			super(condition);
 		}
 		bool(int n) {
 			super(n);
+		}
+		bool set(boolean condition) {
+			super.set(condition);
+			return this;
+		}
+		bool set(int n) {
+			super.set(n);
+			return this;
 		}
 		bool negate() {
 			super.negate();
@@ -38161,16 +38597,42 @@ public class KL {
 		bool neg() {
 			return negate();
 		}
+		bool reverse() {
+			return negate();
+		}
+		bool rev() {
+			return negate();
+		}
+		bool kaUlta() {
+			return negate();
+		}
+		bool ulta() {
+			return negate();
+		}
+		bool ulti() {
+			return negate();
+		}
 	}
 	public static class cdn extends bool {
 		public cdn khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
-		public bool parent = new bool(false);
+		public bool parent = new bool();
+		cdn() {
+			super();
+		}
 		cdn(boolean condition) {
 			super(condition);
 		}
 		cdn(int n) {
 			super(n);
+		}
+		cdn set(boolean condition) {
+			super.set(condition);
+			return this;
+		}
+		cdn set(int n) {
+			super.set(n);
+			return this;
 		}
 		cdn negate() {
 			super.negate();
@@ -38179,16 +38641,42 @@ public class KL {
 		cdn neg() {
 			return negate();
 		}
+		cdn reverse() {
+			return negate();
+		}
+		cdn rev() {
+			return negate();
+		}
+		cdn kaUlta() {
+			return negate();
+		}
+		cdn ulta() {
+			return negate();
+		}
+		cdn ulti() {
+			return negate();
+		}
 	}
 	public static class hal extends cdn {
 		public hal khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
-		public cdn parent = new cdn(false);
+		public cdn parent = new cdn();
+		hal() {
+			super();
+		}
 		hal(boolean condition) {
 			super(condition);
 		}
 		hal(int n) {
 			super(n);
+		}
+		hal set(boolean condition) {
+			super.set(condition);
+			return this;
+		}
+		hal set(int n) {
+			super.set(n);
+			return this;
 		}
 		hal negate() {
 			super.negate();
@@ -38197,16 +38685,42 @@ public class KL {
 		hal neg() {
 			return negate();
 		}
+		hal reverse() {
+			return negate();
+		}
+		hal rev() {
+			return negate();
+		}
+		hal kaUlta() {
+			return negate();
+		}
+		hal ulta() {
+			return negate();
+		}
+		hal ulti() {
+			return negate();
+		}
 	}
 	public static class hlt extends hal {
 		public hlt khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
-		public hal parent = new hal(false);
+		public hal parent = new hal();
+		hlt() {
+			super();
+		}
 		hlt(boolean condition) {
 			super(condition);
 		}
 		hlt(int n) {
 			super(n);
+		}
+		hlt set(boolean condition) {
+			super.set(condition);
+			return this;
+		}
+		hlt set(int n) {
+			super.set(n);
+			return this;
 		}
 		hlt negate() {
 			super.negate();
@@ -38215,6 +38729,24 @@ public class KL {
 		hlt neg() {
 			return negate();
 		}
+		hlt reverse() {
+			return negate();
+		}
+		hlt rev() {
+			return negate();
+		}
+		hlt kaUlta() {
+			return negate();
+		}
+		hlt ulta() {
+			return negate();
+		}
+		hlt ulti() {
+			return negate();
+		}
+	}
+	public static bln bln() {
+		return new bln();
 	}
 	public static bln bln(boolean c) {
 		return new bln(c);
@@ -38222,17 +38754,26 @@ public class KL {
 	public static bln bln(int n) {
 		return new bln(n);
 	}
+	public static bool bool() {
+		return new bool();
+	}
 	public static bool bool(boolean c) {
 		return new bool(c);
 	}
 	public static bool bool(int n) {
 		return new bool(n);
 	}
+	public static cdn cdn() {
+		return new cdn();
+	}
 	public static cdn cdn(boolean c) {
 		return new cdn(c);
 	}
 	public static cdn cdn(int n) {
 		return new cdn(n);
+	}
+	public static hal hal() {
+		return new hal();
 	}
 	public static hal hal(boolean c) {
 		return new hal(c);
@@ -38245,6 +38786,9 @@ public class KL {
 	}
 	public static hal filhal(int n) {
 		return new hal(n);
+	}
+	public static hlt hlt() {
+		return new hlt();
 	}
 	public static hlt hlt(boolean c) {
 		return new hlt(c);
@@ -38296,12 +38840,6 @@ public class KL {
 	public static boolean He(bln c) {
 		return Yes(c);
 	}
-	/*
-	 * public static boolean he(boolean c) { return Yes(c); }
-	 */
-	public static boolean he(bln c) {
-		return Yes(c);
-	}
 	public static boolean True(boolean c) {
 		return Yes(c);
 	}
@@ -38350,12 +38888,6 @@ public class KL {
 		return No(c);
 	}
 	public static boolean Nahi(bln c) {
-		return No(c);
-	}
-	/*
-	 * public static boolean nahi(boolean c) { return No(c); }
-	 */
-	public static boolean nahi(bln c) {
 		return No(c);
 	}
 	public static boolean False(boolean c) {
@@ -56735,9 +57267,7 @@ public class KL {
 					if (arg instanceof Float)
 						was_float = true;
 					arg = fus(
-							arg instanceof Float
-								? (float) arg
-								: (double) arg);
+							arg instanceof Float ? (float) arg : (double) arg);
 					if (was_float)
 						arg += "F";
 				} else if (type(arg, "^(o|tree)[A-Z]*$")) {
@@ -56760,8 +57290,8 @@ public class KL {
 										"\'" + value + "\'");
 							}
 							if (value instanceof Long) {
-								arg = Str(arg).replaceFirst(
-										"" + value, value + "L");
+								arg = Str(arg).replaceFirst("" + value,
+										value + "L");
 							}
 							if (value instanceof Float) {
 								arg = Str(arg).replaceFirst("" + value,
@@ -56769,14 +57299,14 @@ public class KL {
 							}
 						}
 					}
-					arg = Str(arg)
-							.replaceAll(
-									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
-									"\"$1\"")
+					arg = Str(arg).replaceAll(
+							"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+							"\"$1\"")
 							.replaceAll(
 									"(?<=\\d[FfLl])\"|\"(?=\\d*\\.?\\d+[FfLL])",
 									"")
-							.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
+							.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+",
+									"\\<$1\\[\\]\\>")
 							.replaceAll("\"true\"", "Yes")
 							.replaceAll("\"false\"", "No")
 							.replaceAll("=", ": ");
@@ -56854,11 +57384,9 @@ public class KL {
 					boolean was_float = false;
 					if (arg instanceof Float)
 						was_float = true;
-					arg = f(arg instanceof Float
-								? (float) arg
-								: (double) arg)
-								.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$",
-										"");
+					arg = f(arg instanceof Float ? (float) arg : (double) arg)
+							.replaceAll("((?<=\\.\\d)[0]+|\\.[0]+(?!\\d))$",
+									"");
 					if (was_float)
 						arg += "F";
 				} else if (type(arg, "^(o|tree)[A-Z]*$")) {
@@ -56867,11 +57395,10 @@ public class KL {
 						for (Object value : parsedO.array()) {
 							if (value instanceof String[]) {
 								//if string array
-								String expandedStringValue = "[\""
-										+ join((String[]) value,
-														"\", \"").replaceAll(
-																"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
-																"$1aur$1")
+								String expandedStringValue = "[\"" + join(
+										(String[]) value, "\", \"").replaceAll(
+												"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
+												"$1aur$1")
 										+ "\"]";
 								arg = Str(arg).replaceFirst(
 										"\\[Ljava\\.lang\\.String;@\\w+",
@@ -56891,14 +57418,14 @@ public class KL {
 							}
 						}
 					}
-					arg = Str(arg)
-							.replaceAll(
-									"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
-									"\"$1\"")
+					arg = Str(arg).replaceAll(
+							"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+							"\"$1\"")
 							.replaceAll(
 									"(?<=\\d[FfLl])\"|\"(?=\\d*\\.?\\d+[FfLL])",
 									"")
-							.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
+							.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+",
+									"\\<$1\\[\\]\\>")
 							.replaceAll("\"true\"", "Ha")
 							.replaceAll("\"false\"", "Nahi")
 							.replaceAll("=", ": ");
@@ -57179,19 +57706,21 @@ public class KL {
 			if (isArrOfChar(arg)) {
 				System.out.print("[" + (!isEmpty((char[]) arg)
 						? "\'" + join((char[]) arg, "\', \'").replaceAll(
-								"(?<=,)\\s*(\\s)\\s*(?=[\'\\w\\.\\-]+$)", "$1aur$1")
-								+ "\'"
+								"(?<=,)\\s*(\\s)\\s*(?=[\'\\w\\.\\-]+$)",
+								"$1aur$1") + "\'"
 						: "") + "]");
 			} else if (isArrOfInt(arg)) {
-				System.out.print("["
+				System.out
+						.print("["
 								+ join((int[]) arg).replaceAll(
 										"(?<=,\\s)and(?=\\s[\\w\\-]+$)", "aur")
-						+ "]");
+								+ "]");
 			} else if (isArrOfLong(arg)) {
-				System.out.print("["
+				System.out
+						.print("["
 								+ join((long[]) arg).replaceAll(
 										"(?<=,\\s)and(?=\\s[\\w\\-]+$)", "aur")
-						+ "]");
+								+ "]");
 			} else if (isArrOfFlt(arg)) {
 				System.out.print("["
 						+ join((float[]) arg).replaceAll(
@@ -59036,16 +59565,16 @@ public class KL {
 		String[] midProcessedArray = new String[arr.length];
 		for (int i : range(arr)) {
 			Object obj = arr[i];
-			if (obj instanceof Character) 
-                obj = "\'" + obj + "\'";
-			else if (obj instanceof String) 
-                obj = "\"" + obj + "\"";
-			else if (obj instanceof Long)  
-                obj += "L";
-			else if (obj instanceof Float)  
+			if (obj instanceof Character)
+				obj = "\'" + obj + "\'";
+			else if (obj instanceof String)
+				obj = "\"" + obj + "\"";
+			else if (obj instanceof Long)
+				obj += "L";
+			else if (obj instanceof Float)
 				obj += "F";
-			else if (obj == null || eq("" + obj, "java\\.lang\\.Object@\\w+"))  
-                obj = "none";
+			else if (obj == null || eq("" + obj, "java\\.lang\\.Object@\\w+"))
+				obj = "none";
 			midProcessedArray[i] = "" + obj;
 		}
 		String returnValue = String.join(with, midProcessedArray);
@@ -64261,8 +64790,9 @@ public class KL {
 											//if string array
 											String expandedStringValue = "[\""
 													+ join((String[]) value,
-																	"\", \"").replaceAll(
-																			"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
+															"\", \"")
+															.replaceAll(
+																	"(?<=,)\\s*(\\s)\\s*(?=[\"\\w\\s\\.\\-]+$)",
 																	"$1and$1")
 													+ "\"]";
 											field = Str(field).replaceFirst(
@@ -64286,12 +64816,14 @@ public class KL {
 								}
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
-														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
-														"\"$1\"")
+												"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+												"\"$1\"")
 												.replaceAll(
 														"(?<=\\d[FfLl])\"|\"(?=\\d*\\.?\\d+[FfLL])",
 														"")
-												.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
+												.replaceAll(
+														"\\[Ljava\\.lang\\.(\\w+);@\\w+",
+														"\\<$1\\[\\]\\>")
 												.replaceAll("\"true\"", "Yes")
 												.replaceAll("\"false\"", "No")
 												.replaceAll("=", ": ");
@@ -65493,12 +66025,14 @@ public class KL {
 								}
 								field = m.replaceAll("[\\$\\{\\}]", "") + " "
 										+ Str(field).replaceAll(
-														"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
-														"\"$1\"")
+												"(?<=\\=)((((\\d*[A-Za-z]{1,}\\d*)(\\s*[^,\\{\\}]+\\d*){0,}))|[A-Za-z]{1,}[^,\\{\\}]+|\\d+\\s*[^,\\d\\.,\\{\\}]+)",
+												"\"$1\"")
 												.replaceAll(
 														"(?<=\\d[FfLl])\"|\"(?=\\d*\\.?\\d+[FfLL])",
 														"")
-												.replaceAll("\\[Ljava\\.lang\\.(\\w+);@\\w+", "\\<$1\\[\\]\\>")
+												.replaceAll(
+														"\\[Ljava\\.lang\\.(\\w+);@\\w+",
+														"\\<$1\\[\\]\\>")
 												.replaceAll("\"true\"", "Ha")
 												.replaceAll("\"false\"", "Nahi")
 												.replaceAll("=", ": ");
@@ -67086,6 +67620,21 @@ public class KL {
 	public static boolean eq(double x, double y) {
 		return x == y;
 	}
+	public static boolean eq(bln x, boolean y) {
+		if (isNull(x))
+			return false;
+		return x.get() == y;
+	}
+	public static boolean eq(bln x, bln y) {
+		if (isNull(x) || isNull(y))
+			return false;
+		return x.get() == y.get();
+	}
+	public static boolean eq(boolean x, bln y) {
+		if (isNull(y))
+			return false;
+		return x == y.get();
+	}
 	public static boolean eq(boolean x, boolean y) {
 		return x == y;
 	}
@@ -67254,6 +67803,15 @@ public class KL {
 	public static boolean is(double x, double y) {
 		return eq(x, y);
 	}
+	public static boolean is(bln x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean is(bln x, bln y) {
+		return eq(x, y);
+	}
+	public static boolean is(boolean x, bln y) {
+		return eq(x, y);
+	}
 	public static boolean is(boolean x, boolean y) {
 		return eq(x, y);
 	}
@@ -67357,6 +67915,15 @@ public class KL {
 	public static boolean he(double x, double y) {
 		return eq(x, y);
 	}
+	public static boolean he(bln x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean he(bln x, bln y) {
+		return eq(x, y);
+	}
+	public static boolean he(boolean x, bln y) {
+		return eq(x, y);
+	}
 	public static boolean he(boolean x, boolean y) {
 		return eq(x, y);
 	}
@@ -67448,6 +68015,15 @@ public class KL {
 		return eq(x, y);
 	}
 	public static boolean barabar(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(bln x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(bln x, bln y) {
+		return eq(x, y);
+	}
+	public static boolean barabar(boolean x, bln y) {
 		return eq(x, y);
 	}
 	public static boolean barabar(boolean x, boolean y) {
@@ -67543,6 +68119,15 @@ public class KL {
 	public static boolean Yes(double x, double y) {
 		return eq(x, y);
 	}
+	public static boolean Yes(bln x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(bln x, bln y) {
+		return eq(x, y);
+	}
+	public static boolean Yes(boolean x, bln y) {
+		return eq(x, y);
+	}
 	public static boolean Yes(boolean x, boolean y) {
 		return eq(x, y);
 	}
@@ -67634,6 +68219,15 @@ public class KL {
 		return eq(x, y);
 	}
 	public static boolean yes(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean yes(bln x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean yes(bln x, bln y) {
+		return eq(x, y);
+	}
+	public static boolean yes(boolean x, bln y) {
 		return eq(x, y);
 	}
 	public static boolean yes(boolean x, boolean y) {
@@ -67729,6 +68323,15 @@ public class KL {
 	public static boolean Sach(double x, double y) {
 		return eq(x, y);
 	}
+	public static boolean Sach(bln x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(bln x, bln y) {
+		return eq(x, y);
+	}
+	public static boolean Sach(boolean x, bln y) {
+		return eq(x, y);
+	}
 	public static boolean Sach(boolean x, boolean y) {
 		return eq(x, y);
 	}
@@ -67820,6 +68423,15 @@ public class KL {
 		return eq(x, y);
 	}
 	public static boolean sach(double x, double y) {
+		return eq(x, y);
+	}
+	public static boolean sach(bln x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean sach(bln x, bln y) {
+		return eq(x, y);
+	}
+	public static boolean sach(boolean x, bln y) {
 		return eq(x, y);
 	}
 	public static boolean sach(boolean x, boolean y) {
@@ -67915,6 +68527,15 @@ public class KL {
 	public static boolean True(double x, double y) {
 		return eq(x, y);
 	}
+	public static boolean True(bln x, boolean y) {
+		return eq(x, y);
+	}
+	public static boolean True(bln x, bln y) {
+		return eq(x, y);
+	}
+	public static boolean True(boolean x, bln y) {
+		return eq(x, y);
+	}
 	public static boolean True(boolean x, boolean y) {
 		return eq(x, y);
 	}
@@ -68006,6 +68627,15 @@ public class KL {
 		return !eq(x, y);
 	}
 	public static boolean uneq(double x, double y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(bln x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(bln x, bln y) {
+		return !eq(x, y);
+	}
+	public static boolean uneq(boolean x, bln y) {
 		return !eq(x, y);
 	}
 	public static boolean uneq(boolean x, boolean y) {
@@ -68101,6 +68731,15 @@ public class KL {
 	public static boolean not(double x, double y) {
 		return !eq(x, y);
 	}
+	public static boolean not(bln x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean not(bln x, bln y) {
+		return !eq(x, y);
+	}
+	public static boolean not(boolean x, bln y) {
+		return !eq(x, y);
+	}
 	public static boolean not(boolean x, boolean y) {
 		return !eq(x, y);
 	}
@@ -68171,6 +68810,15 @@ public class KL {
 		return !eq(x, y);
 	}
 	public static boolean nahi(double x, double y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(bln x, boolean y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(bln x, bln y) {
+		return !eq(x, y);
+	}
+	public static boolean nahi(boolean x, bln y) {
 		return !eq(x, y);
 	}
 	public static boolean nahi(boolean x, boolean y) {
@@ -68931,7 +69579,7 @@ public class KL {
 			return KL.uneq(x, y);
 		}
 		public static boolean barabar(String x, String y, boolean strict) {
-			return eq(x, y, strict);
+			return !eq(x, y, strict);
 		}
 		public static boolean barabar(int x, int y) {
 			return KL.uneq(x, y);
@@ -69225,16 +69873,21 @@ public class KL {
 		return isNull(c) || isEmpty(c);
 	}
 	public static boolean not(int n) {
-		return isNull(n) || 0 == n;
+		return 0 == n;
 	}
 	public static boolean not(long n) {
-		return isNull(n) || 0 == n;
+		return 0 == n;
 	}
 	public static boolean not(float n) {
-		return isNull(n) || 0 == n;
+		return 0 == n;
 	}
 	public static boolean not(double n) {
-		return isNull(n) || 0 == n;
+		return 0 == n;
+	}
+	public static boolean not(bln condition) {
+		if (isNull(condition))
+			return false;
+		return condition.no;
 	}
 	public static boolean not(boolean condition) {
 		return isNull(condition) || !condition;
@@ -69373,6 +70026,9 @@ public class KL {
 	}
 	public static boolean is(double n) {
 		return !not(n);
+	}
+	public static boolean is(bln condition) {
+		return !not(condition);
 	}
 	public static boolean is(boolean condition) {
 		return !not(condition);
@@ -69515,6 +70171,9 @@ public class KL {
 	public static boolean he(double n) {
 		return is(n);
 	}
+	public static boolean he(bln condition) {
+		return is(condition);
+	}
 	public static boolean he(boolean condition) {
 		return is(condition);
 	}
@@ -69655,6 +70314,9 @@ public class KL {
 	}
 	public static boolean nahi(double n) {
 		return !is(n);
+	}
+	public static boolean nahi(bln condition) {
+		return !is(condition);
 	}
 	public static boolean nahi(boolean condition) {
 		return !is(condition);
@@ -77876,10 +78538,23 @@ public class KL {
 				? startsWith(type(o), guessedType)
 				: in(type(o), guessedType);
 	}
+	public static String kism(Object o, Object vocabularySupportingArg) {
+		return type(o);
+	}
+	public static String kism(Object o) {
+		return type(o);
+	}
+	public static boolean kism(Object o, Object vocabularySupportingArgA,
+			String guessedType, Object vocabularySupportingArgB) {
+		return type(o, guessedType);
+	}
 	public static boolean isType(Object o, String guessedType) {
 		return type(o, guessedType);
 	}
 	public static boolean heType(Object o, String guessedType) {
+		return type(o, guessedType);
+	}
+	public static boolean heKism(Object o, String guessedType) {
 		return type(o, guessedType);
 	}
 	// ^this one stays too
@@ -80081,42 +80756,35 @@ public class KL {
 	}
 	public static <T> T Either(T a, Object vocabularySupportingArg,
 			Object vocabularySupportingArgB, T b) {
-	    if (a == null || b == null)
-	        return null;
+		if (a == null || b == null)
+			return null;
 		T result;
-	    if (a instanceof Character && b instanceof Character) {
+		if (a instanceof Character && b instanceof Character) {
 			result = (T) ((Character) ((char) a != '\0' ? (char) a : (char) b));
-	    }
-	    else if (a instanceof String && b instanceof String) {
+		} else if (a instanceof String && b instanceof String) {
 			result = (T) (((String) a).trim().length() != 0
 					? (String) a
 					: (String) b);
-	    }
-	    else if (a instanceof Integer && b instanceof Integer) {
+		} else if (a instanceof Integer && b instanceof Integer) {
 			result = (T) ((Integer) ((int) a != 0 ? (int) a : (int) b));
-	    }
-	    else if (a instanceof Long && b instanceof Long) {
+		} else if (a instanceof Long && b instanceof Long) {
 			result = (T) ((Long) ((long) a != 0 ? (long) a : (long) b));
-	    }
-	    else if (a instanceof Float && b instanceof Float) {
+		} else if (a instanceof Float && b instanceof Float) {
 			result = (T) ((Float) ((float) a != 0 ? (float) a : (float) b));
-	    }
-	    else if (a instanceof Double && b instanceof Double) {
+		} else if (a instanceof Double && b instanceof Double) {
 			result = (T) ((Double) ((double) a != 0 ? (double) a : (double) b));
-	    }
-	    else if (a instanceof Boolean && b instanceof Boolean) {
+		} else if (a instanceof Boolean && b instanceof Boolean) {
 			result = (T) ((Boolean) ((boolean) a != false
 					? (boolean) a
 					: (boolean) b));
-	    }
-	    else {
+		} else {
 			result = a != null ? a : b;
 		}
 		if (vocabularySupportingArg instanceof Boolean) {
 			boolean parsedBoolean = (boolean) vocabularySupportingArg;
 			if (parsedBoolean != true)
 				result = b;
-	    }
+		}
 		return result;
 	}
 	public static <T> T Either(T a, Object vocabularySupportingArg, T b) {
@@ -80358,24 +81026,30 @@ public class KL {
 		}
 		print(me_izafa(age2.ka_adha(_i), 4, 1, 10));
 		o userObj = o(
-				"3000 he someting, naam he {pehla Michael; akhri Owens}, umr he 25e3L, height he 5.1, zinda he, hobbies hen [Netflix; Spotify; aur Traveling], favorite_char='j'");
-		print(userObj.k(3000, _s));
-		//treemap-like behavior
+				"naam he {pehla Michael; akhri Owens}, umr he 25e3L, height he 5.1, zinda he, hobbies hen [Netflix; Spotify; aur Traveling], favorite_char='j'");
 		bolo(userObj);
 		bolo(userObj.ki("umr", long_tor));
 		bolo(userObj.ka("favorite_char", character_tor));
 		boloArr(userObj.ki("hobbies", string_array_tor));
 		bolo(userObj.nahi("zinda"));
 		bolo(userObj.entries());
-		
+		//treemap-like behavior
+		o numberTree = o(
+				"1 he ek, 2 hen do, 3: teen, 4: chaar, 5: paanch, 6 hen che, 7 hen saat, 8: aath, 9: no, 10: das");
+		print(numberTree);
+		print(numberTree.ka(1, string_tor));
+
 		int nmbr = 0;
 		//nmbr = Either(25, If(nmbr == 0), or, nmbr);
 		nmbr = Yato(25, Agar(nmbr == 0), ya, nmbr);
 		print(nmbr);
-		
-		
-		
-		
-		
+
+		hal zinda = filhal(nahi);
+		print(agar(zinda, he, "zinda he", warna, "nahi"));
+		agar(zinda.filhal, he, () -> print("zinda he"), warna,
+				() -> print("nahi"));
+		if (nahi(zinda, he))
+			print("nahi he, wakai.");
+
 	}
 }
