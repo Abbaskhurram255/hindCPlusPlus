@@ -34,6 +34,10 @@ public class KL {
 	}
 	public static final KL kl = kl(), iske_lie = kl(), khud = kl(), self = khud,
 			parent = khud;
+	// MySQL section
+	public static String PROTO = "MySQL://", HOST = "localhost", DB = "mysql",
+			USER = "root", PASS = "";
+	public static int PORT = 3306;
 	public static class sql {
 		public sql khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
@@ -45,16 +49,45 @@ public class KL {
 				return;
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				url = "JDBC:MySQL://" + url.replaceAll(".*://", "");
+				boolean isLocalHost = false;
+				if (eq(url, "^\\/?\\w+$") && !eq(url, "localhost")
+						&& !in(url, "\\.")) {
+					url = ":" + PORT + "/" + url.replace("/", "");
+				}
+				if (eq(PROTO, "\\w+"))
+					PROTO += "://";
+				if (eq(HOST, "localhost")) {
+					HOST += ":";
+					isLocalHost = true;
+				}
+				if (startsWith(url,
+						"(?<colon>:)(?=(?<port>\\d{1,5})(?<forwardslash>\\/)(?<dbname>\\w+))"))
+					url = slice(url, 1);
+				if (in(url,
+						"\\d{1,5}(?=(?<forwardslash>\\/)(?<dbname>\\w+))")) {
+					if (not(isLocalHost))
+						url = url.replaceAll("^\\d+(?=\\/)", "");
+					url = HOST + url;
+				}
+				PROTO = "JDBC:" + PROTO;
+				url = PROTO + url.replaceAll(".*://", "");
+				print("with url=", url);
 				conn = DriverManager.getConnection(url, user, pass);
 				stmt = conn.createStatement();
-				System.out.println("Connected to MySQL");
+				print("SQLSuccess: Connected to MySQL");
 			} catch (ClassNotFoundException | SQLException e) {
-
+				print("SQLError: Failed to connect to MySQL, faced",
+						lower(e.getMessage(), 1));
 			}
 		}
 		sql(String url) {
-			this(url, "root", "");
+			this(url, USER, PASS);
+		}
+		sql(int port, String db, String user, String pass) {
+			this(port + "/" + db, user, pass);
+		}
+		sql(int port, String db) {
+			this(port, db, USER, PASS);
 		}
 		boolean exec(String c) {
 			if (not(c) || not(conn) || not(stmt))
@@ -62,6 +95,7 @@ public class KL {
 			try {
 				return stmt.execute(c);
 			} catch (SQLException e) {
+				print("SQLError:", e.getMessage());
 			}
 			return false;
 		}
@@ -71,6 +105,7 @@ public class KL {
 			try {
 				return stmt.executeUpdate(c);
 			} catch (SQLException e) {
+				print("SQLError:", e.getMessage());
 			}
 			return 0;
 		}
@@ -80,6 +115,7 @@ public class KL {
 			try {
 				return stmt.executeQuery(c);
 			} catch (SQLException e) {
+				print("SQLError:", e.getMessage());
 			}
 			return null;
 		}
@@ -94,6 +130,12 @@ public class KL {
 		db(String url) {
 			super(url);
 		}
+		db(int port, String db, String user, String pass) {
+			super(port, db, user, pass);
+		}
+		db(int port, String db) {
+			super(port, db);
+		}
 	}
 	public static sql sql(String url, String user, String pass) {
 		return new sql(url, user, pass);
@@ -101,17 +143,30 @@ public class KL {
 	public static sql sql(String url) {
 		return new sql(url);
 	}
+	public static sql sql(int port, String db, String user, String pass) {
+		return new sql(port, db, user, pass);
+	}
+	public static sql sql(int port, String db) {
+		return new sql(port, db);
+	}
 	public static db db(String url, String user, String pass) {
 		return new db(url, user, pass);
 	}
 	public static db db(String url) {
 		return new db(url);
 	}
+	public static db db(int port, String db, String user, String pass) {
+		return new db(port, db, user, pass);
+	}
+	public static db db(int port, String db) {
+		return new db(port, db);
+	}
 	static {
-		db connection = db("localhost:3306/test");
-		print(connection.exec(
+		//		db sql = db(":3306/test");
+		db sql = db(PORT = 3306, DB = "test");
+		print(sql.exec(
 				"CREATE TABLE IF NOT EXISTS users (id int primary key auto_increment NOT NULL, first_name text(20) not null, last_name text(20) not null, email text(30) not null); INSERT INTO users (first_name, last_name, email) VALUES ('Ayesha', 'Kifayat', 'ayeshakifayat@gmail.com');"));
-		print(connection.query("SELECT * from users"));
+		print(sql.query("SELECT * from users"));
 	}
 	public static class hint {
 		public hint khud = this, ka = this, iske_lie = khud, iska = khud,
@@ -77556,6 +77611,15 @@ public class KL {
 			return "";
 		return s.toUpperCase();
 	}
+	public static String upper(String s, int noOfCharsToUpper) {
+		if (not(s) || not(noOfCharsToUpper) || isNeg(noOfCharsToUpper)
+				|| noOfCharsToUpper > len(s))
+			return s;
+		String prefix = upper(s.substring(0, noOfCharsToUpper)),
+				suffix = s.substring(noOfCharsToUpper),
+				result = prefix + suffix;
+		return result;
+	}
 	public static String[] upper(String... arr) {
 		if (not(arr)) {
 			return arr;
@@ -77581,6 +77645,15 @@ public class KL {
 			return "";
 		return s.toLowerCase();
 	}
+	public static String lower(String s, int noOfCharsToLower) {
+		if (not(s) || not(noOfCharsToLower) || isNeg(noOfCharsToLower)
+				|| noOfCharsToLower > len(s))
+			return s;
+		String prefix = lower(s.substring(0, noOfCharsToLower)),
+				suffix = s.substring(noOfCharsToLower),
+				result = prefix + suffix;
+		return result;
+	}
 	public static String[] lower(String... arr) {
 		if (isEmpty(arr)) {
 			return arr;
@@ -77593,6 +77666,13 @@ public class KL {
 			return c;
 		c = Character.toLowerCase(c);
 		return c;
+	}
+	public static char[] lower(char... arr) {
+		if (isEmpty(arr)) {
+			return arr;
+		}
+		arr = map(arr, KL::lower);
+		return arr;
 	}
 	public static boolean inUpper(String s) {
 		return upper(s).equals(s);
@@ -77626,6 +77706,8 @@ public class KL {
 				+ (!in(input, "[A-Z]{2,}") ? input.toLowerCase() : input)
 						.substring(1))
 				.replaceAll("(?<!\\w)i(?!\\w)", "I");
+		input = Pattern.compile("(?<=\\.\\s)([A-Za-z])").matcher(input)
+				.replaceAll(matches -> matches.group().toUpperCase());
 		return input;
 	}
 	public static String[] sentCase(String... inputs) {
@@ -80756,8 +80838,6 @@ public class KL {
 	}
 	public static <T> T Either(T a, Object vocabularySupportingArg,
 			Object vocabularySupportingArgB, T b) {
-		if (a == null || b == null)
-			return null;
 		T result;
 		if (a instanceof Character && b instanceof Character) {
 			result = (T) ((Character) ((char) a != '\0' ? (char) a : (char) b));
@@ -80788,7 +80868,7 @@ public class KL {
 		return result;
 	}
 	public static <T> T Either(T a, Object vocabularySupportingArg, T b) {
-		return Either(a, vocabularySupportingArg, b);
+		return Either(a, vocabularySupportingArg, null, b);
 	}
 	public static <T> T Either(T a, T b) {
 		return Either(a, null, b);
@@ -80798,7 +80878,7 @@ public class KL {
 		return Either(a, vocabularySupportingArg, vocabularySupportingArgB, b);
 	}
 	public static <T> T Yato(T a, Object vocabularySupportingArg, T b) {
-		return Either(a, vocabularySupportingArg, b);
+		return Either(a, vocabularySupportingArg, null, b);
 	}
 	public static <T> T Yato(T a, T b) {
 		return Either(a, null, b);
