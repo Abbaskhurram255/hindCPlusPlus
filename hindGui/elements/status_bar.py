@@ -22,7 +22,7 @@ class StatusBar(Element):
         s=(None, None),
         auto_size_text=None,
         click_submits=None,
-        enable_events=False,
+        enable_events=True,
         relief=RELIEF_SUNKEN,
         font=None,
         text_color=None,

@@ -30,7 +30,7 @@ class Combo(Element):
         button_arrow_color=None,
         bind_return_key=False,
         change_submits=False,
-        enable_events=False,
+        enable_events=True,
         enable_per_char_events=None,
         disabled=False,
         event=None,

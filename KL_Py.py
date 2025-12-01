@@ -9,6 +9,7 @@ from numbers import Number
 from math import *
 from hindGui import *
 from random import randint, uniform, randrange, choice
+import webbrowser
 rand_int = randint
 rand_flt = uniform
 rand_from = rand_of = any_from = any_of = choice
@@ -16,6 +17,8 @@ haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 Str = lafz = jumla = str
 num = Number
+goto = webbrowser.open
+link = webbrowser
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
         x = Str(x)

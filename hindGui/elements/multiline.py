@@ -36,7 +36,7 @@ class Multiline(Element):
         selected_background_color=None,
         horizontal_scroll=False,
         change_submits=False,
-        enable_events=False,
+        enable_events=True,
         auto_wipe=False,
         event=None,
         k=None,
