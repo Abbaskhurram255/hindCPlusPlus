@@ -66490,6 +66490,26 @@ public class KL {
 		}
 		return s;
 	}
+	public static String with(o obj, String format) {
+		if (not(obj) || not(format) || not(in(format, "(?<=[\\$\\{])\\w")))
+		    return "";
+		String[] matchesToFind = findMatches(format, "[\\$\\{]+[\\w\\.]+\\}?");
+	    for (String key : matchesToFind) {
+		    Object value = obj.get(key.replaceAll("[\\$\\{\\}]+", ""));
+		    if (isNull(value))
+		        value = "none";
+		    if (value instanceof o && in(key, "(?<=\\w)\\.\\w+")) {
+		        o subObj = as(_o, value);
+		        value = with(subObj, "\\$" + key.split("\\.")[1]);
+		    }
+		    if (value instanceof String[] && in(key, "(?<=\\w)\\[\\d+\\]")) {
+		        String[] arr = as(_S, value);
+		        value = i(arr, Int(key.replaceAll("(?<=\\[)(\\d+)(?=\\])", "$1")));
+		    }
+	        format = format.replaceFirst(key.replaceAll("(^[\\$\\{]+|\\}$)", "\\\\$1"), ""+value);
+	   }
+		return format;
+	}
 	public static String with(String nameOfObj, String format) {
 		if (not(nameOfObj) || not(format) || !in(format, "(?<=[\\{\\$])\\w+"))
 			return "";
@@ -66510,6 +66530,9 @@ public class KL {
 						+ "\\.$1");
 		String newFormat = kl().f(format);
 		return newFormat;
+	}
+	public static String as(o obj, String format) {
+		return with(obj, format);
 	}
 	public static String as(String nameOfObj, String format) {
 		if (isNull(nameOfObj) || isNull(format) || len(format) == 0)
@@ -81130,6 +81153,8 @@ public class KL {
 				() -> print("nahi"));
 		if (nahi(zinda, he))
 			print("nahi he, wakai.");
-
+        
+        
+        print(with(o("name=Kyle, age=27"), "Name is $name, and $name is $age years old."));
 	}
 }
