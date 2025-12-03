@@ -42,11 +42,303 @@ public class KL {
 		public sql khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
 		public KL parent = kl();
+		public static class results {
+			ResultSet value = null;
+			results(ResultSet r) {
+				this.value = r;
+			}
+			boolean next() {
+				if (not(value))
+					return false;
+				try {
+					return value.next();
+				} catch (SQLException e) {
+					print("SQLError", e.getMessage());
+					return false;
+				}
+			}
+			boolean hasNext() {
+				return next();
+			}
+			boolean more() {
+				return next();
+			}
+			boolean hasMore() {
+				return next();
+			}
+			boolean get() {
+				return next();
+			}
+			String get(String columnName) {
+				if (not(value) || not(columnName))
+					return "";
+				try {
+					return value.getString(columnName);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return "";
+				}
+			}
+			String get(int columnNo) {
+				if (not(value) || not(columnNo) || isNeg(columnNo))
+					return "";
+				try {
+					return value.getString(columnNo);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return "";
+				}
+			}
+			int getInteger(String columnName) {
+				if (not(value) || not(columnName))
+					return 0;
+				try {
+					return value.getInt(columnName);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return 0;
+				}
+			}
+			int getInteger(int columnNo) {
+				if (not(value) || not(columnNo) || isNeg(columnNo))
+					return 0;
+				try {
+					return value.getInt(columnNo);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return 0;
+				}
+			}
+			int getInt(String columnName) {
+				return getInteger(columnName);
+			}
+			int getInt(int columnNo) {
+				return getInteger(columnNo);
+			}
+			long getLong(String columnName) {
+				if (not(value) || not(columnName))
+					return 0L;
+				try {
+					return value.getLong(columnName);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return 0L;
+				}
+			}
+			long getLong(int columnNo) {
+				if (not(value) || not(columnNo) || isNeg(columnNo))
+					return 0L;
+				try {
+					return value.getLong(columnNo);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return 0L;
+				}
+			}
+			float getFloat(String columnName) {
+				if (not(value) || not(columnName))
+					return 0.0F;
+				try {
+					return value.getFloat(columnName);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return 0.0F;
+				}
+			}
+			float getFloat(int columnNo) {
+				if (not(value) || not(columnNo) || isNeg(columnNo))
+					return 0.0F;
+				try {
+					return value.getFloat(columnNo);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return 0.0F;
+				}
+			}
+			float getFlt(String columnName) {
+				return getFloat(columnName);
+			}
+			float getFlt(int columnNo) {
+				return getFloat(columnNo);
+			}
+			double getDouble(String columnName) {
+				if (not(value) || not(columnName))
+					return 0.0;
+				try {
+					return value.getDouble(columnName);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return 0.0;
+				}
+			}
+			double getDouble(int columnNo) {
+				if (not(value) || not(columnNo) || isNeg(columnNo))
+					return 0.0;
+				try {
+					return value.getDouble(columnNo);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return 0.0;
+				}
+			}
+			double getDbl(String columnName) {
+				return getDouble(columnName);
+			}
+			double getDbl(int columnNo) {
+				return getDouble(columnNo);
+			}
+			boolean getBoolean(String columnName) {
+				if (not(value) || not(columnName))
+					return false;
+				try {
+					return value.getBoolean(columnName);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return false;
+				}
+			}
+			boolean getBoolean(int columnNo) {
+				if (not(value) || not(columnNo) || isNeg(columnNo))
+					return false;
+				try {
+					return value.getBoolean(columnNo);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return false;
+				}
+			}
+			boolean getBool(String columnName) {
+				return getBoolean(columnName);
+			}
+			boolean getBool(int columnNo) {
+				return getBoolean(columnNo);
+			}
+			java.util.Date getDate(String columnName) {
+				if (not(value) || not(columnName))
+					return null;
+				try {
+					return new java.util.Date(
+							value.getDate(columnName).getTime());
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return null;
+				}
+			}
+			java.util.Date getDate(int columnNo) {
+				if (not(value) || not(columnNo) || isNeg(columnNo))
+					return null;
+				try {
+					return new java.util.Date(
+							value.getDate(columnNo).getTime());
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return null;
+				}
+			}
+			Object getUnknown(String columnName) {
+				if (not(value) || not(columnName))
+					return null;
+				try {
+					return value.getObject(columnName);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return null;
+				}
+			}
+			Object getUnknown(int columnNo) {
+				if (not(value) || not(columnNo) || isNeg(columnNo))
+					return null;
+				try {
+					return value.getObject(columnNo);
+				} catch (SQLException e) {
+					print("SQLError:", e.getMessage());
+					return null;
+				}
+			}
+			Object getUnk(String columnName) {
+				return getUnknown(columnName);
+			}
+			Object getUnk(int columnNo) {
+				return getUnknown(columnNo);
+			}
+			<T> T get(String columnName, T as) {
+				if (as instanceof String)
+					return (T) get(columnName);
+				if (as instanceof Integer)
+					return (T) Integer.valueOf(getInt(columnName));
+				if (as instanceof Long)
+					return (T) Long.valueOf(getLong(columnName));
+				if (as instanceof Float)
+					return (T) Float.valueOf(getFloat(columnName));
+				if (as instanceof Double)
+					return (T) Double.valueOf(getDouble(columnName));
+				if (as instanceof Boolean)
+					return (T) Boolean.valueOf(getBool(columnName));
+				if (as instanceof Date)
+					return (T) getDate(columnName);
+				return null;
+			}
+			<T> T get(int columnNo, T as) {
+				if (as instanceof String)
+					return (T) get(columnNo);
+				if (as instanceof Integer)
+					return (T) Integer.valueOf(getInt(columnNo));
+				if (as instanceof Long)
+					return (T) Long.valueOf(getLong(columnNo));
+				if (as instanceof Float)
+					return (T) Float.valueOf(getFlt(columnNo));
+				if (as instanceof Double)
+					return (T) Double.valueOf(getDbl(columnNo));
+				if (as instanceof Boolean)
+					return (T) Boolean.valueOf(getBool(columnNo));
+				if (as instanceof Date)
+					return (T) getDate(columnNo);
+				return null;
+			}
+			<T> T key(String columnName, T as) {
+				return get(columnName, as);
+			}
+			<T> T key(int columnNo, T as) {
+				return get(columnNo, as);
+			}
+			<T> T k(String columnName, T as) {
+				return get(columnName, as);
+			}
+			<T> T k(int columnNo, T as) {
+				return get(columnNo, as);
+			}
+			Object[] getValues() {
+				if (not(value))
+					return blank.Obj;
+				try {
+					ResultSetMetaData metadata = value.getMetaData();
+					int numberOfCols = metadata.getColumnCount();
+					arr values = new arr();
+					for (int i = 1; i <= numberOfCols; i++) {
+						values.add(value.getObject(i));
+					}
+					return values.array();
+				} catch (SQLException e) {
+					return blank.Obj;
+				}
+			}
+			Object[] values() {
+				return getValues();
+			}
+			Object[] getAllValuesInColumn() {
+				return getValues();
+			}
+			Object[] allValuesInColumn() {
+				return getValues();
+			}
+		}
 		Connection conn = null;
 		Statement stmt = null;
 		sql(String url, String user, String pass) {
-			if (not(url) || user == null || pass == null)
+			if (not(url) || user == none || pass == none) {
+				hint user_and_pass_can_be_empty_but_NOT_NULL;
 				return;
+			}
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				boolean isLocalHost = false;
@@ -93,11 +385,31 @@ public class KL {
 			if (not(c) || not(conn) || not(stmt))
 				return false;
 			try {
+				if (!endsWith(c, ";"))
+					c += ";";
+				c = c.replaceAll("\\bbana[eo]i?n?\\b", "create")
+						.replaceAll("\\b,?(\\s)agar\\b", "$1if")
+						.replaceAll("\\bna\\b", "not")
+						.replaceAll("\\bmoj(u|oo)d[,:]", "exists")
+						.replaceAll(",?\\sjisme exists", "")
+						.replaceAll(
+								"\\b(create table) (\\`?\\w+\\`?) (if not exists)\\b",
+								"$1 $3 $2")
+						.replaceAll("girao", "drop")
+						.replaceAll("\\b(\\`?\\w+\\`?) (me dalo)\\b",
+								"insert into $1")
+						.replaceAll("\\bjinki (values)\\b", "$1")
+						.replaceAll("\\b\\shen\\b", "").replaceAll("\\[", "\\(")
+						.replaceAll("\\]", "\\)");
+				print("translated=", c);
 				return stmt.execute(c);
 			} catch (SQLException e) {
 				print("SQLError:", e.getMessage());
 			}
 			return false;
+		}
+		boolean run(String c) {
+			return exec(c);
 		}
 		int update(String c) {
 			if (not(c) || not(conn) || not(stmt))
@@ -109,11 +421,11 @@ public class KL {
 			}
 			return 0;
 		}
-		ResultSet query(String c) {
+		results query(String c) {
 			if (not(c) || not(conn) || not(stmt))
 				return null;
 			try {
-				return stmt.executeQuery(c);
+				return new sql.results(stmt.executeQuery(c));
 			} catch (SQLException e) {
 				print("SQLError:", e.getMessage());
 			}
@@ -162,11 +474,17 @@ public class KL {
 		return new db(port, db);
 	}
 	static {
-		//		db sql = db(":3306/test");
+		//		@deprecated: db sql = db(":3306/test");
 		db sql = db(PORT = 3306, DB = "test");
-		print(sql.exec(
-				"CREATE TABLE IF NOT EXISTS users (id int primary key auto_increment NOT NULL, first_name text(20) not null, last_name text(20) not null, email text(30) not null); INSERT INTO users (first_name, last_name, email) VALUES ('Ayesha', 'Kifayat', 'ayeshakifayat@gmail.com');"));
-		print(sql.query("SELECT * from users"));
+		print(sql.run(
+				"banao table users, agar na mojud, jisme mojud: (tor int id ger_nijat_shuda khud_barhne_wali or na_khaali, first_name text.ki_lambai(20) na_khaali, last_name text.lambai(20) na khaali, email text.lambai(30) na_khaali);"));
+		print(sql.run(
+				"users me dalo [first_name, last_name, email] jinki values ['Ayesha', 'Kifayat', 'ayeshakifayat@gmail.com'];"));
+		db.results columns = sql.query("lo har_chiz users me se");
+		while (columns.more()) {
+			print(columns.getUnk("id"));
+			print(columns.allValuesInColumn());
+		}
 	}
 	public static class hint {
 		public hint khud = this, ka = this, iske_lie = khud, iska = khud,
@@ -66492,22 +66810,24 @@ public class KL {
 	}
 	public static String with(o obj, String format) {
 		if (not(obj) || not(format) || not(in(format, "(?<=[\\$\\{])\\w")))
-		    return "";
+			return "";
 		String[] matchesToFind = findMatches(format, "[\\$\\{]+[\\w\\.]+\\}?");
-	    for (String key : matchesToFind) {
-		    Object value = obj.get(key.replaceAll("[\\$\\{\\}]+", ""));
-		    if (isNull(value))
-		        value = "none";
-		    if (value instanceof o && in(key, "(?<=\\w)\\.\\w+")) {
-		        o subObj = as(_o, value);
-		        value = with(subObj, "\\$" + key.split("\\.")[1]);
-		    }
-		    if (value instanceof String[] && in(key, "(?<=\\w)\\[\\d+\\]")) {
-		        String[] arr = as(_S, value);
-		        value = i(arr, Int(key.replaceAll("(?<=\\[)(\\d+)(?=\\])", "$1")));
-		    }
-	        format = format.replaceFirst(key.replaceAll("(^[\\$\\{]+|\\}$)", "\\\\$1"), ""+value);
-	   }
+		for (String key : matchesToFind) {
+			Object value = obj.get(key.replaceAll("[\\$\\{\\}]+", ""));
+			if (isNull(value))
+				value = "none";
+			if (value instanceof o && in(key, "(?<=\\w)\\.\\w+")) {
+				o subObj = as(_o, value);
+				value = with(subObj, "\\$" + key.split("\\.")[1]);
+			}
+			if (value instanceof String[] && in(key, "(?<=\\w)\\[\\d+\\]")) {
+				String[] arr = as(_S, value);
+				value = i(arr,
+						Int(key.replaceAll("(?<=\\[)(\\d+)(?=\\])", "$1")));
+			}
+			format = format.replaceFirst(
+					key.replaceAll("(^[\\$\\{]+|\\}$)", "\\\\$1"), "" + value);
+		}
 		return format;
 	}
 	public static String with(String nameOfObj, String format) {
@@ -81153,8 +81473,8 @@ public class KL {
 				() -> print("nahi"));
 		if (nahi(zinda, he))
 			print("nahi he, wakai.");
-        
-        
-        print(with(o("name=Kyle, age=27"), "Name is $name, and $name is $age years old."));
+
+		print(with(o("name=Kyle, age=27"),
+				"Name is $name, and $name is $age years old."));
 	}
 }
