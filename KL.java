@@ -381,27 +381,79 @@ public class KL {
 		sql(int port, String db) {
 			this(port, db, USER, PASS);
 		}
+		String __translateSQL(String toTranslate) {
+			String translated = toTranslate
+					.replaceAll("\\bbana[eo]i?n?\\b", "create")
+					.replaceAll("\\b,?(\\s)agar\\b", "$1if")
+					.replaceAll("\\b(na)\\_(?=[A-Za-z])", "na ")
+					.replaceAll("(\\b(au|o)r\\s)?\\bna\\b", "not")
+					.replaceAll("(?<=[A-Za-z])\\_(kha{1,2}li)\\b", " $1")
+					.replaceAll("\\bkha{1,2}li\\b", "null")
+					.replaceAll("\\bmoj(u|oo)d[,:]?", "exists")
+					.replaceAll(",?\\sjis[\\W_]?me[\\W_]exists", "")
+					.replaceAll(
+							"\\b(?<command>create table) (?<tablename>`?\\w+`?) (?<check>if not exists)\\b",
+							"${command} ${check} ${tablename}")
+					.replaceAll("(?<=[A-Za-z])\\Wlamba{1,2}i(?=\\()", "")
+					.replaceAll("\\ske\\wsath\\b", "")
+					.replaceAll("(?<=\\btor\\W)str(ing)?\\b", "text")
+					.replaceAll("(?<=\\btor\\W)integer\\b", "int")
+					.replaceAll("(?<=\\btor\\W)long\\b", "bigint")
+					.replaceAll("(?<=\\btor\\W)flt\\b", "float")
+					.replaceAll("(?<=\\btor\\W)dbl\\b", "double")
+					.replaceAll("(?<=\\btor\\W)bool\\b", "boolean")
+					.replaceAll("\\btor\\W([A-Za-z]+)(\\(\\d+\\))?\\W(\\w+)",
+							"$3 $1$2")
+					.replaceAll("\\btext(?=\\(\\d+\\))\\b", "varchar")
+					.replaceAll("\\bkhud\\Wsar\\b", "khud_barhne_wali khaas")
+					.replaceAll(
+							"\\bkhud(h(i|ee)?)?[\\W_]barhn(ai|e)[\\W_]wa{1,2}li\\b",
+							"AUTO_INCREMENT")
+					.replaceAll(
+							"\\b(kha{1,2}s|g(ai|e)r[\\W_]nija{1,2}t[\\W_]shuda{1,2})\\b",
+							"PRIMARY KEY")
+					.replaceAll(
+							"(PRIMARY KEY)\\s(AUTO_INCREMENT)\\s?(not null)?",
+							"$3 $2 $1")
+					.replaceAll("\\bgira{1,2}d?o\\b", "drop")
+					.replaceAll("\\bhata{1,2}d?o\\b", "delete")
+					.replaceAll("\\b(\\`?\\w+\\`?)\\s(me[\\W_]dalo)\\b",
+							"insert into $1")
+					.replaceAll(
+							"\\b(hen[\\W_])?jin[\\W_]?ki([\\W_]hen)?[\\W_](?<match>values)([\\W_]hen)?\\b",
+							"${match}")
+					.replaceAll("\\shen\\b", "").replaceAll("[\\{\\[]", "\\(")
+					.replaceAll("[\\}\\]]", "\\)")
+					.replaceAll(
+							"\\b(jaha{1,2}n?|(ba)?s(u|oo)rat|(tab\\W)?jab)\\b",
+							"where")
+					.replaceAll("\\b\\bbar(a|i)_ya_ba?ra{0,2}ba?r\\b", ">=")
+					.replaceAll("\\bchot(a|i)_ya_ba?ra{0,2}ba?r\\b", "<=")
+					.replaceAll("\\bbar(a|i)\\b", ">")
+					.replaceAll("\\bchot(a|i)\\b", "<")
+					.replaceAll("\\baur\\b", "AND").replaceAll("\\bya\\b", "OR")
+					.replaceAll("\\b(he|ba?ra{0,2}ba?r|eq(uals)?)\\b", "=")
+					.replaceAll("\\bha\\b", "true")
+					.replaceAll("\\bna(hi)?\\b", "false")
+					.replaceAll(
+							"\\b(j(iski|o)[\\W_])?shur(u|wa{1,2}t)[^\\-\\w\\.]+(?<v>[\\+\\-\\.\\w]+)([^\\-\\w\\.]+(s|h)e){1,2}\\b",
+							"DEFAULT ${v}")
+					.replaceAll("\\blo\\b", "SELECT")
+					.replaceAll(
+							"\\b(har|sa{1,2}(b|r[ae]))([\\W_](kuch|columns?|ch(i|ee)z))?\\b",
+							"\\*")
+					.replaceAll("\\b(?<tablename>`?\\w+`?)\\s(me[\\W_])?se\\b",
+							"FROM ${tablename}");
+			return translated;
+		}
 		boolean exec(String c) {
 			if (not(c) || not(conn) || not(stmt))
 				return false;
 			try {
 				if (!endsWith(c, ";"))
 					c += ";";
-				c = c.replaceAll("\\bbana[eo]i?n?\\b", "create")
-						.replaceAll("\\b,?(\\s)agar\\b", "$1if")
-						.replaceAll("\\bna\\b", "not")
-						.replaceAll("\\bmoj(u|oo)d[,:]", "exists")
-						.replaceAll(",?\\sjisme exists", "")
-						.replaceAll(
-								"\\b(create table) (\\`?\\w+\\`?) (if not exists)\\b",
-								"$1 $3 $2")
-						.replaceAll("girao", "drop")
-						.replaceAll("\\b(\\`?\\w+\\`?) (me dalo)\\b",
-								"insert into $1")
-						.replaceAll("\\bjinki (values)\\b", "$1")
-						.replaceAll("\\b\\shen\\b", "").replaceAll("\\[", "\\(")
-						.replaceAll("\\]", "\\)");
-				print("translated=", c);
+				c = __translateSQL(c);
+				print("translated SQL=", c);
 				return stmt.execute(c);
 			} catch (SQLException e) {
 				print("SQLError:", e.getMessage());
@@ -415,6 +467,7 @@ public class KL {
 			if (not(c) || not(conn) || not(stmt))
 				return 0;
 			try {
+				c = __translateSQL(c);
 				return stmt.executeUpdate(c);
 			} catch (SQLException e) {
 				print("SQLError:", e.getMessage());
@@ -425,6 +478,7 @@ public class KL {
 			if (not(c) || not(conn) || not(stmt))
 				return null;
 			try {
+				c = __translateSQL(c);
 				return new sql.results(stmt.executeQuery(c));
 			} catch (SQLException e) {
 				print("SQLError:", e.getMessage());
@@ -477,10 +531,10 @@ public class KL {
 		//		@deprecated: db sql = db(":3306/test");
 		db sql = db(PORT = 3306, DB = "test");
 		print(sql.run(
-				"banao table users, agar na mojud, jisme mojud: (tor int id ger_nijat_shuda khud_barhne_wali or na_khaali, first_name text.ki_lambai(20) na_khaali, last_name text.lambai(20) na khaali, email text.lambai(30) na_khaali);"));
+				"banao table users, agar na mojud, jisme mojud: {tor int id ger_nijat_shuda khud_barhne_wali or na_khaali, tor string.lambai(20) ke_sath first_name na_khaali, tor string.lambai(20) ke_sath last_name na khaali, tor string.lambai(30) email na_khaali}"));
 		print(sql.run(
-				"users me dalo [first_name, last_name, email] jinki values ['Ayesha', 'Kifayat', 'ayeshakifayat@gmail.com'];"));
-		db.results columns = sql.query("lo har_chiz users me se");
+				"users me dalo [first_name, last_name, email] jinki hen values ['Ayesha', 'Kifayat', 'ayeshakifayat@gmail.com'];"));
+		db.results columns = sql.query("lo sab_kuch users me_se");
 		while (columns.more()) {
 			print(columns.getUnk("id"));
 			print(columns.allValuesInColumn());
@@ -57591,7 +57645,7 @@ public class KL {
 		public static String breakCharacter = " ";
 	}
 	public static void println(Object... args) {
-		if (isNull(args) || len(args) == 0) {
+		if (args == none || len(args) == 0) {
 			return;
 		}
 		String breakCharacter;
@@ -57623,7 +57677,7 @@ public class KL {
 			int count = 0;
 			for (Object arg : args) {
 				if (isNull(arg)) {
-					continue;
+					arg = "none";
 				}
 				if (isArr(arg) || type(arg, "(str|int|long|flt|dbl|bool)Arr")) {
 					printArr(arg);
@@ -57711,7 +57765,7 @@ public class KL {
 	}
 	public static void kaholn(Object... args) {
 		// to try, and provide a Hindi-friendly experience
-		if (isNull(args) || not(args.length)) {
+		if (args == none || len(args) == 0) {
 			return;
 		}
 		String breakCharacter;
@@ -57741,7 +57795,7 @@ public class KL {
 			int count = 0;
 			for (Object arg : args) {
 				if (isNull(arg)) {
-					continue;
+					arg = "khaal";
 				}
 				if (isArr(arg) || type(arg, "(str|int|long|flt|dbl|bool)Arr")) {
 					kahoArr(arg);
@@ -60429,10 +60483,12 @@ public class KL {
 	}
 	// numbers
 	public static int Int(String arg, int base) {
+		if (not(arg) || base <= 0)
+			return 0;
 		try {
-			return Integer.parseInt(arg.replaceAll("(?<=\\d)\\.\\d+", ""),
-					base);
-		} catch (Exception err) {
+			return Integer.parseInt(
+					arg.replaceAll("(?<=\\d)\\.\\d+|[^\\-\\d\\.]", ""), base);
+		} catch (NumberFormatException err) {
 			return 0;
 		}
 	}
@@ -60479,10 +60535,12 @@ public class KL {
 		return b == true ? 1 : 0;
 	}
 	public static float Flt(String arg) {
+		if (not(arg))
+			return 0.0F;
 		try {
 			return Float.parseFloat(arg.replaceAll("[^\\-\\d\\.]", ""));
-		} catch (Exception err) {
-			return 0;
+		} catch (NumberFormatException err) {
+			return 0.0F;
 		}
 	}
 	public static float Flt(int n) {
@@ -60504,10 +60562,12 @@ public class KL {
 		return b == true ? 1 : 0;
 	}
 	public static double Dbl(String arg) {
+		if (not(arg))
+			return 0.0;
 		try {
 			return Double.parseDouble(arg.replaceAll("[^\\-\\d\\.]", ""));
-		} catch (Exception err) {
-			return 0;
+		} catch (NumberFormatException err) {
+			return 0.0;
 		}
 	}
 	public static double Dbl(int arg) {
@@ -66811,22 +66871,39 @@ public class KL {
 	public static String with(o obj, String format) {
 		if (not(obj) || not(format) || not(in(format, "(?<=[\\$\\{])\\w")))
 			return "";
-		String[] matchesToFind = findMatches(format, "[\\$\\{]+[\\w\\.]+\\}?");
+		String[] matchesToFind = findMatches(format,
+				"[\\$\\{]+[\\w\\.\\[\\]]+\\}?");
 		for (String key : matchesToFind) {
-			Object value = obj.get(key.replaceAll("[\\$\\{\\}]+", ""));
-			if (isNull(value))
+			Object value = obj.get(key.replaceAll("[\\$\\{\\.\\}]+", ""));
+			boolean none_ified = false;
+			if (isNull(value)) {
 				value = "none";
-			if (value instanceof o && in(key, "(?<=\\w)\\.\\w+")) {
-				o subObj = as(_o, value);
-				value = with(subObj, "\\$" + key.split("\\.")[1]);
+				none_ified = true;
 			}
-			if (value instanceof String[] && in(key, "(?<=\\w)\\[\\d+\\]")) {
-				String[] arr = as(_S, value);
-				value = i(arr,
-						Int(key.replaceAll("(?<=\\[)(\\d+)(?=\\])", "$1")));
+			if (none_ified) {
+				//could be a sub-o, or a String[], if not, value="none" already
+				//so if the parsing succeeds, which it will, cool, if it doesn't, we've already got our "none"
+				if (in(key, "(?<=\\w)\\.(?=\\w)")) {
+					String subKey = key.replaceAll("[\\$\\{\\[\\]\\}]+", "");
+					value = obj.get(subKey.split("\\.")[0]);
+					if (not(value instanceof o))
+						continue;
+					o subObj = as(_o, value);
+					value = with(subObj, "\\$" + subKey.split("\\.")[1]);
+				}
+				if (in(key, "(?<=\\w\\[)\\d+(?=\\])")) {
+					String subKey = key.replaceAll("[\\$\\{\\.\\}]+", "");
+					value = obj.get(subKey.split("\\[")[0]);
+					if (not(value instanceof String[]))
+						continue;
+					String[] arr = as(_S, value);
+					value = i(arr, Int(
+							subKey.replaceAll("(?<=\\[)(\\d+)(?=\\])", "$1")));
+				}
 			}
-			format = format.replaceFirst(
-					key.replaceAll("(^[\\$\\{]+|\\}$)", "\\\\$1"), "" + value);
+			format = format.replaceFirst(key
+					.replaceAll("(^[\\$\\{]+|(?<=\\w)[\\[\\]]|\\}$)", "\\\\$1"),
+					"" + value);
 		}
 		return format;
 	}
@@ -81474,7 +81551,8 @@ public class KL {
 		if (nahi(zinda, he))
 			print("nahi he, wakai.");
 
-		print(with(o("name=Kyle, age=27"),
-				"Name is $name, and $name is $age years old."));
+		print(with(o(
+				"name={first->Kyle; last->Henderson}, age=27, hobbies=[tennis; skiing]"),
+				"Name is $name.first, and $name.first $name.last is $age years old, and he loves to go $hobbies[1]."));
 	}
 }
