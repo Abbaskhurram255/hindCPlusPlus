@@ -57713,16 +57713,17 @@ public class KL {
 										expandedStringValue);
 							}
 							if (value instanceof Character) {
-								arg = Str(arg).replaceFirst("" + value,
+								arg = Str(arg).replaceFirst(
+										"\\b" + value + "\\b",
 										"\'" + value + "\'");
 							}
 							if (value instanceof Long) {
-								arg = Str(arg).replaceFirst("" + value,
-										value + "L");
+								arg = Str(arg).replaceFirst(
+										"\\b" + value + "\\b", value + "L");
 							}
 							if (value instanceof Float) {
-								arg = Str(arg).replaceFirst("" + value,
-										value + "F");
+								arg = Str(arg).replaceFirst(
+										"\\b" + value + "\\b", value + "F");
 							}
 						}
 					}
@@ -57832,16 +57833,17 @@ public class KL {
 										expandedStringValue);
 							}
 							if (value instanceof Character) {
-								arg = Str(arg).replaceFirst("" + value,
+								arg = Str(arg).replaceFirst(
+										"\\b" + value + "\\b",
 										"\'" + value + "\'");
 							}
 							if (value instanceof Long) {
-								arg = Str(arg).replaceFirst("" + value,
-										value + "L");
+								arg = Str(arg).replaceFirst(
+										"\\b" + value + "\\b", value + "L");
 							}
 							if (value instanceof Float) {
-								arg = Str(arg).replaceFirst("" + value,
-										value + "F");
+								arg = Str(arg).replaceFirst(
+										"\\b" + value + "\\b", value + "F");
 							}
 						}
 					}
@@ -64725,11 +64727,11 @@ public class KL {
 			// FOR FIELDS
 			while (in(s,
 					"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
+				//NOTE*: this while loop works as a start-up, and needs to happen before the field matches are looked up. It's helpful in the sense that it allows the following syntax: $name.first+ +last [resulting in $name.first $name.last, hence ending up with {:~missing_context~:{name.first,e.g.Mike} {name.last,e.g.Turner}}]
 				s = s.replaceAll(
 						"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
 						"\\$$1$2$4\\$$1$5");
 			}
-			//this while loop works as a start-up, and needs to happen before the field matches are looked up. It's helpful in the sense that it allows the following syntax: $name.first+ +last [resulting in $name.first $name.last, hence ending up with {:~missing_context~:{name.first,e.g.Mike} {name.last,e.g.Turner}}]
 			String[] fieldMatches = findMatches(s,
 					"(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(\\sif)?");
 			if (!isEmpty(fieldMatches)) {
@@ -65149,7 +65151,7 @@ public class KL {
 								|| field instanceof HashMap
 								|| field instanceof tree
 								|| field instanceof TreeMap) {
-							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+") && in(
+							if (in(m, "(?<=[\\{\\$])\\w+(?=\\.\\w+)") && in(
 									Str(field),
 									m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
 								String key = m.split("(?<=\\w)\\.")[1]
@@ -65234,16 +65236,18 @@ public class KL {
 										}
 										if (value instanceof Character) {
 											field = Str(field).replaceFirst(
-													"" + value,
+													"\\b" + value + "\\b",
 													"\'" + value + "\'");
 										}
 										if (value instanceof Long) {
 											field = Str(field).replaceFirst(
-													"" + value, value + "L");
+													"\\b" + value + "\\b",
+													value + "L");
 										}
 										if (value instanceof Float) {
 											field = Str(field).replaceFirst(
-													"" + value, value + "F");
+													"\\b" + value + "\\b",
+													value + "F");
 										}
 									}
 								}
@@ -65922,7 +65926,7 @@ public class KL {
 						"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
 						"\\$$1$2$4\\$$1$5");
 			}
-			//this while loop works as a start-up, and needs to happen before the field matches are looked up. It's helpful in the sense that it allows the following syntax: $name.first+ +last [resulting in $name.first $name.last, hence ending up with {:~missing_context~:{name.first,e.g.Mike} {name.last,e.g.Turner}}]
+			//this while loop works as a start-up, and needs to happen before the field matches are looked up. It's helpful in the sense that it allows the following syntax: $name.first(@optional+) +last [resulting in $name.first $name.last, hence ending up with {:~missing_context~:{name.first,e.g.Mike} {name.last,e.g.Turner}}]
 			String[] fieldMatches = findMatches(s,
 					"(\\$*\\{\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r)?\\}|\\$+\\w+(\\\\?[:=]{1,2})?(\\.\\d(f|db)|\\-?\\d+,?\\d*|,\\d*(\\.\\d(f|db))?|((pk|in)r|rs)|u(sd)?|p?x|th|r|[\\-\\w\\[\\]\\.]+)?)(\\sif)?");
 			if (!isEmpty(fieldMatches)) {
@@ -66359,7 +66363,7 @@ public class KL {
 								|| field instanceof HashMap
 								|| field instanceof tree
 								|| field instanceof TreeMap) {
-							if (in(m, "(?<=[\\{\\$]\\w+\\.)\\w+") && in(
+							if (in(m, "(?<=[\\{\\$])\\w+(?=\\.\\w+)") && in(
 									Str(field),
 									m.split("(?<=\\w)\\.")[1] + "(?=\\=\\w)")) {
 								String key = m.split("(?<=\\w)\\.")[1]
@@ -66443,16 +66447,18 @@ public class KL {
 										}
 										if (value instanceof Character) {
 											field = Str(field).replaceFirst(
-													"" + value,
+													"\\b" + value + "\\b",
 													"\'" + value + "\'");
 										}
 										if (value instanceof Long) {
 											field = Str(field).replaceFirst(
-													"" + value, value + "L");
+													"\\b" + value + "\\b",
+													value + "L");
 										}
 										if (value instanceof Float) {
 											field = Str(field).replaceFirst(
-													"" + value, value + "F");
+													"\\b" + value + "\\b",
+													value + "F");
 										}
 									}
 								}
@@ -66871,6 +66877,13 @@ public class KL {
 	public static String with(o obj, String format) {
 		if (not(obj) || not(format) || not(in(format, "(?<=[\\$\\{])\\w")))
 			return "";
+		while (in(format,
+				"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)")) {
+			//NOTE*: this while loop works as a start-up, and needs to happen before the field matches are looked up. It's helpful in the sense that it allows the following syntax: $name.first(@optional+) +last [resulting in $name.first $name.last, hence ending up with {:~missing_context~:{name.first,e.g.Mike} {name.last,e.g.Turner}}]
+			format = format.replaceAll(
+					"[\\$\\{](\\w+\\.)(\\w+)(\\+?([^\\$\\{\\}\\[\\]\\+\\*]+))?\\+(\\w+)",
+					"\\$$1$2$4\\$$1$5");
+		}
 		String[] matchesToFind = findMatches(format,
 				"[\\$\\{]+[\\w\\.\\[\\]]+\\}?");
 		for (String key : matchesToFind) {
@@ -81553,6 +81566,6 @@ public class KL {
 
 		print(with(o(
 				"name={first->Kyle; last->Henderson}, age=27, hobbies=[tennis; skiing]"),
-				"Name is $name.first, and $name.first $name.last is $age years old, and he loves to go $hobbies[1]."));
+				"Name is $name.first, $name.first +last is $age years old, and he loves to go $hobbies[1]."));
 	}
 }
