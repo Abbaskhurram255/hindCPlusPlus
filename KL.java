@@ -446,10 +446,31 @@ public class KL {
 							"FROM ${tablename}");
 			return translated;
 		}
+		String __readSQLFromFile(String filePath) {
+			if (not(filePath) || !endsWith(lower(filePath), "(?<=\\w)\\.sql"))
+				return "";
+			URL parsedUrl = pathTo(filePath);
+			//get the relative path of the file, and return a URL object
+			//if that worked -> return a functional URL object
+			//if it didn't -> return null
+			if (not(parsedUrl))
+				return "";
+			File fileParsedFromUrl = file.fromUrl(parsedUrl);
+			if (not(fileParsedFromUrl))
+				return "";
+			try {
+				return new Scanner(fileParsedFromUrl).useDelimiter("\\Z")
+						.next();
+			} catch (FileNotFoundException | SecurityException e) {
+				return "";
+			}
+		}
 		boolean exec(String c) {
 			if (not(c) || not(conn) || not(stmt))
 				return false;
 			try {
+				if (endsWith(lower(c), "(?<=\\w)\\.sql"))
+					c = __readSQLFromFile(c);
 				if (!endsWith(c, ";"))
 					c += ";";
 				c = __translateSQL(c);
@@ -467,6 +488,8 @@ public class KL {
 			if (not(c) || not(conn) || not(stmt))
 				return 0;
 			try {
+				if (endsWith(lower(c), "(?<=\\w)\\.sql"))
+					c = __readSQLFromFile(c);
 				c = __translateSQL(c);
 				return stmt.executeUpdate(c);
 			} catch (SQLException e) {
@@ -478,6 +501,8 @@ public class KL {
 			if (not(c) || not(conn) || not(stmt))
 				return null;
 			try {
+				if (endsWith(lower(c), "(?<=\\w)\\.sql"))
+					c = __readSQLFromFile(c);
 				c = __translateSQL(c);
 				return new sql.results(stmt.executeQuery(c));
 			} catch (SQLException e) {
@@ -534,7 +559,7 @@ public class KL {
 				"banao table users, agar na mojud, jisme mojud: {tor int id ger_nijat_shuda khud_barhne_wali or na_khaali, tor string.lambai(20) ke_sath first_name na_khaali, tor string.lambai(20) ke_sath last_name na khaali, tor string.lambai(30) email na_khaali}"));
 		print(sql.run(
 				"users me dalo [first_name, last_name, email] jinki hen values ['Ayesha', 'Kifayat', 'ayeshakifayat@gmail.com'];"));
-		db.results columns = sql.query("lo sab_kuch users me_se");
+		db.results columns = sql.query("query.sql");
 		while (columns.more()) {
 			print(columns.getUnk("id"));
 			print(columns.allValuesInColumn());
@@ -14820,16 +14845,16 @@ public class KL {
 		public file khud = this, ka = this, iske_lie = khud, iska = khud,
 				isko = khud, self = khud;
 		public File parent = new File("", null);
-		file(File parent, String child) {
+		public file(File parent, String child) {
 			super(parent, child);
 		}
-		file(String path) {
+		public file(String path) {
 			super(path);
 		}
-		file(String parent, String child) {
+		public file(String parent, String child) {
 			super(parent, child);
 		}
-		file(URI uri) {
+		public file(URI uri) {
 			super(uri);
 		}
 		String string() {
@@ -14851,6 +14876,36 @@ public class KL {
 			return super.isDirectory();
 		}
 		// @static methods
+		public static File fromURL(URL url) {
+			if (not(url))
+				return null;
+			URI uri;
+			try {
+				String encodedUrl = "file://"
+						+ url.getPath().replace("@", "%40");
+				uri = URI.create(encodedUrl);
+			} catch (NullPointerException | IllegalArgumentException e) {
+				uri = null;
+			}
+			try {
+				if (not(uri))
+					return null;
+				File f;
+				try {
+					Path p = Paths.get(uri);
+					f = p.toFile();
+				} catch (SecurityException | FileSystemNotFoundException
+						| IllegalArgumentException | NullPointerException e) {
+					return null;
+				}
+				return f;
+			} catch (NullPointerException | IllegalArgumentException e) {
+				return null;
+			}
+		}
+		public static File fromUrl(URL url) {
+			return fromURL(url);
+		}
 		public static boolean create(String fname, String content) {
 			if (not(fname) || content == null) {
 				//allow the content to be blank
@@ -67999,6 +68054,12 @@ public class KL {
 		return count > 0;
 		// to handle null arrays, not just regular objects
 	}
+	public static <T> boolean isNone(T... objs) {
+		return isNull(objs);
+	}
+	public static <T> boolean isNone(T[]... subArrays) {
+		return isNull(subArrays);
+	}
 	public static boolean isInfinity(int n) {
 		return n == IntegerInfinity || n == NegativeIntegerInfinity;
 	}
@@ -70379,6 +70440,9 @@ public class KL {
 	}
 	public static boolean not(boolean condition) {
 		return isNull(condition) || !condition;
+	}
+	public static boolean not(File file) {
+		return isNull(file) || !file.exists();
 	}
 	public static boolean not(Object o) {
 		return isNull(o);
@@ -73265,9 +73329,10 @@ public class KL {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
-								// content
+								// content of the regexp, to avoid stack overflow
 			}
-			Pattern pattern = Pattern.compile("^(" + re + ")",
+			Pattern pattern = Pattern.compile(
+					"^(" + re.replaceAll("^\\^", "") + ")",
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str);
 			return !!matcher.find();
@@ -73287,9 +73352,10 @@ public class KL {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
-								// content
+								// content of the regexp, to avoid stack overflow
 			}
-			Pattern pattern = Pattern.compile("(" + re + ")$",
+			Pattern pattern = Pattern.compile(
+					"(" + re.replaceAll("\\$$", "") + ")$",
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str);
 			return !!matcher.find();
@@ -73969,7 +74035,7 @@ public class KL {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
-								// content
+								// content of the regexp, to avoid stack overflow
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -73988,7 +74054,7 @@ public class KL {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
-								// content
+								// content of the regexp, to avoid stack overflow
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -74027,7 +74093,7 @@ public class KL {
 			if (re.equals(".") || re.equals("*") || re.equals("+")
 					|| re.equals("?") || re.equals("^") || re.equals("$")) {
 				re = "\\" + re; // escape special characters IF they're the only
-								// content
+								// content of the regexp, to avoid stack overflow
 			}
 			Pattern p = Pattern.compile(re);
 			Matcher m = p.matcher(str);
@@ -74413,7 +74479,7 @@ public class KL {
 		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
 				|| re.equals("^") || re.equals("$")) {
 			re = "\\" + re; // escape special characters IF they're the only
-							// content
+							// content of the regexp, to avoid stack overflow
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -74428,14 +74494,14 @@ public class KL {
 			// modification precaution: it has been tested, and hence learned,
 			// the
 			// double-escaping remains AS-IS
-			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
-			// escaping tricky characters, if they're the only content: helps
+			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO DOUBLE-SCAPE
+			// tricky characters, if they're the only content: helps
 			// avoid
 			// false positives as a "." or a "*" alone, can match just anything.
 			// Needless to say, these quantifiers, along with a "+" and an
-			// optionality quantifier, i.e. a "?" quantifier, might also cause
-			// memory heap to exceed
-			// plus, handling both, standard and custom, format specifiers
+			// optionality quantifier, i.e. a "?", might also cause
+			// the memory heap to exceed
+			// plus, HAD TO, since the intention is to handle both standard, and custom, format specifiers
 			boolean strict = false;
 			if (is(bools)) {
 				strict = bools[0] == true;
@@ -74455,7 +74521,7 @@ public class KL {
 		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
 				|| re.equals("^") || re.equals("$")) {
 			re = "\\" + re; // escape special characters IF they're the only
-							// content
+							// content of the regexp, to avoid stack overflow
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -74470,14 +74536,14 @@ public class KL {
 			// modification precaution: it has been tested, and hence learned,
 			// the
 			// double-escaping remains AS-IS
-			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
-			// escaping tricky characters, if they're the only content: helps
+			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO DOUBLE-SCAPE
+			// tricky characters, if they're the only content: helps
 			// avoid
 			// false positives as a "." or a "*" alone, can match just anything.
 			// Needless to say, these quantifiers, along with a "+" and an
-			// optionality quantifier, i.e. a "?" quantifier, might also cause
-			// memory heap to exceed
-			// plus, handling both, standard and custom, format specifiers
+			// optionality quantifier, i.e. a "?", might also cause
+			// the memory heap to exceed
+			// plus, HAD TO, since the intention is to handle both standard, and custom, format specifiers
 			boolean strict = false;
 			if (is(bools)) {
 				strict = bools[0] == true;
@@ -74500,7 +74566,7 @@ public class KL {
 		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
 				|| re.equals("^") || re.equals("$")) {
 			re = "\\" + re; // escape special characters IF they're the only
-							// content
+							// content of the regexp, to avoid stack overflow
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -74515,14 +74581,14 @@ public class KL {
 			// modification precaution: it has been tested, and hence learned,
 			// the
 			// double-escaping remains AS-IS
-			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
-			// escaping tricky characters, if they're the only content: helps
+			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO DOUBLE-SCAPE
+			// tricky characters, if they're the only content: helps
 			// avoid
 			// false positives as a "." or a "*" alone, can match just anything.
 			// Needless to say, these quantifiers, along with a "+" and an
-			// optionality quantifier, i.e. a "?" quantifier, might also cause
-			// memory heap to exceed
-			// plus, handling both, standard and custom, format specifiers
+			// optionality quantifier, i.e. a "?", might also cause
+			// the memory heap to exceed
+			// plus, HAD TO, since the intention is to handle both standard, and custom, format specifiers
 			Pattern pattern = Pattern.compile("(" + re + ")",
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(str.trim());
@@ -74562,7 +74628,7 @@ public class KL {
 		if (re.equals(".") || re.equals("*") || re.equals("+") || re.equals("?")
 				|| re.equals("^") || re.equals("$")) {
 			re = "\\" + re; // escape special characters IF they're the only
-							// content
+							// content of the regexp, to avoid stack overflow
 		}
 		try {
 			re = re.replaceAll("(?<![\\.\\\\])\\.(?![\\+\\*\\{])", "\\\\.")
@@ -74577,14 +74643,14 @@ public class KL {
 			// modification precaution: it has been tested, and hence learned,
 			// the
 			// double-escaping remains AS-IS
-			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO ESCAPE TWICE
-			// escaping tricky characters, if they're the only content: helps
+			// THIS IS THE ONLY PART OF THE FILE WHERE YOU NEED TO DOUBLE-SCAPE
+			// tricky characters, if they're the only content: helps
 			// avoid
 			// false positives as a "." or a "*" alone, can match just anything.
 			// Needless to say, these quantifiers, along with a "+" and an
-			// optionality quantifier, i.e. a "?" quantifier, might also cause
-			// memory heap to exceed
-			// plus, handling both, standard and custom, format specifiers
+			// optionality quantifier, i.e. a "?", might also cause
+			// the memory heap to exceed
+			// plus, HAD TO, since the intention is to handle both standard, and custom, format specifiers
 			boolean strict = false;
 			if (is(bools)) {
 				strict = bools[0] == true;
@@ -81565,7 +81631,7 @@ public class KL {
 			print("nahi he, wakai.");
 
 		print(with(o(
-				"name={first->Kyle; last->Henderson}, age=27, hobbies=[tennis; skiing]"),
-				"Name is $name.first, $name.first +last is $age years old, and he loves to go $hobbies[1]."));
+				"name={first->Kyle; last->Henderson}, age=27, hobbies=[tennis; ]"),
+				"Name is $name.first, $name.first +last is $age years old, and he loves to go $hobbies[0]."));
 	}
 }
