@@ -790,100 +790,11 @@ public class KL {
 		public KL parent = kl();
 		public static int i, j, k;
 		public static void lo(int initialization,
-				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-				RunnableWithAVocabularyParameter changeInCondition,
-				RunnableWithAVocabularyParameter task) {
-			//let's assign `(liava.class.getSuperclass().getSuperclass() ~= har.class)`'s field `i` to the parameter of `initialization` (of type int) on the go
-			KL.har(i = initialization, conditionAsACallable, changeInCondition,
-					task);
-		}
-		public static void lo(int initialization,
-				Callable<Boolean> conditionAsACallable,
-				RunnableWithAVocabularyParameter changeInCondition,
-				RunnableWithAVocabularyParameter task) {
-			KL.har(i = initialization, conditionAsACallable, changeInCondition,
-					task);
-		}
-		public static void lo(int initialization,
-				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-				Runnable changeInCondition,
-				RunnableWithAVocabularyParameter task) {
-			KL.har(i = initialization, conditionAsACallable, changeInCondition,
-					task);
-		}
-		public static void lo(int initialization,
-				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-				RunnableWithAVocabularyParameter changeInCondition,
-				Runnable task) {
-			KL.har(i = initialization, conditionAsACallable, changeInCondition,
-					task);
-		}
-		public static void lo(int initialization,
-				Callable<Boolean> conditionAsACallable,
-				Runnable changeInCondition,
-				RunnableWithAVocabularyParameter task) {
-			KL.har(i = initialization, conditionAsACallable, changeInCondition,
-					task);
-		}
-		public static void lo(int initialization,
-				Callable<Boolean> conditionAsACallable,
-				RunnableWithAVocabularyParameter changeInCondition,
-				Runnable task) {
-			KL.har(i = initialization, conditionAsACallable, changeInCondition,
-					task);
-		}
-		public static void lo(int initialization,
-				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-				Runnable changeInCondition, Runnable task) {
-			KL.har(i = initialization, conditionAsACallable, changeInCondition,
-					task);
-		}
-		public static void lo(int initialization,
 				Callable<Boolean> conditionAsACallable,
 				Runnable changeInCondition, Runnable task) {
+			//let's assign `(liava.class.getSuperclass().getSuperclass() ~= har.class)`'s field `i` to the integered parameter `initialization` on the go
 			KL.har(i = initialization, conditionAsACallable, changeInCondition,
 					task);
-		}
-		public static void lia(int initialization,
-				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-				RunnableWithAVocabularyParameter changeInCondition,
-				RunnableWithAVocabularyParameter task) {
-			lo(initialization, conditionAsACallable, changeInCondition, task);
-		}
-		public static void lia(int initialization,
-				Callable<Boolean> conditionAsACallable,
-				RunnableWithAVocabularyParameter changeInCondition,
-				RunnableWithAVocabularyParameter task) {
-			lo(initialization, conditionAsACallable, changeInCondition, task);
-		}
-		public static void lia(int initialization,
-				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-				Runnable changeInCondition,
-				RunnableWithAVocabularyParameter task) {
-			lo(initialization, conditionAsACallable, changeInCondition, task);
-		}
-		public static void lia(int initialization,
-				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-				RunnableWithAVocabularyParameter changeInCondition,
-				Runnable task) {
-			lo(initialization, conditionAsACallable, changeInCondition, task);
-		}
-		public static void lia(int initialization,
-				Callable<Boolean> conditionAsACallable,
-				Runnable changeInCondition,
-				RunnableWithAVocabularyParameter task) {
-			lo(initialization, conditionAsACallable, changeInCondition, task);
-		}
-		public static void lia(int initialization,
-				Callable<Boolean> conditionAsACallable,
-				RunnableWithAVocabularyParameter changeInCondition,
-				Runnable task) {
-			lo(initialization, conditionAsACallable, changeInCondition, task);
-		}
-		public static void lia(int initialization,
-				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-				Runnable changeInCondition, Runnable task) {
-			lo(initialization, conditionAsACallable, changeInCondition, task);
 		}
 		public static void lia(int initialization,
 				Callable<Boolean> conditionAsACallable,
@@ -61074,6 +60985,30 @@ public class KL {
 	public static boolean isNeg(double n) {
 		return n < 0;
 	}
+	public static boolean isEven(int n) {
+		return n % 2 == 0;
+	}
+	public static boolean isEven(long n) {
+		return n % 2 == 0;
+	}
+	public static boolean isEven(float n) {
+		return n % 2 == 0;
+	}
+	public static boolean isEven(double n) {
+		return n % 2 == 0;
+	}
+	public static boolean isOdd(int n) {
+		return n % 2 == 1;
+	}
+	public static boolean isOdd(long n) {
+		return n % 2 == 1;
+	}
+	public static boolean isOdd(float n) {
+		return n % 2 == 1;
+	}
+	public static boolean isOdd(double n) {
+		return n % 2 == 1;
+	}
 	public static int Pos(int n) {
 		return Math.abs(n);
 	}
@@ -64233,18 +64168,6 @@ public class KL {
 			}
 		}
 		return result.array();
-	}
-	public static boolean isEven(int n) {
-		return isPerfectMod(n, 2);
-	}
-	public static boolean isEven(long n) {
-		return isPerfectMod(n, 2);
-	}
-	public static boolean isOdd(int n) {
-		return !isPerfectMod(n, 2);
-	}
-	public static boolean isOdd(long n) {
-		return !isPerfectMod(n, 2);
 	}
 	public static boolean isPrime(double n) {
 		for (int i = 2; i <= n / 2; i++) {
@@ -71380,6 +71303,294 @@ public class KL {
 		return is(t);
 	}
 	public static boolean he(treeB t) {
+		return is(t);
+	}
+	public static boolean If(char c) {
+		return is(c);
+	}
+	public static boolean If(String s) {
+		return is(s);
+	}
+	public static boolean If(int n) {
+		return is(n);
+	}
+	public static boolean If(long n) {
+		return is(n);
+	}
+	public static boolean If(float n) {
+		return is(n);
+	}
+	public static boolean If(double n) {
+		return is(n);
+	}
+	public static boolean If(bln condition) {
+		return is(condition);
+	}
+	public static boolean If(boolean condition) {
+		return is(condition);
+	}
+	public static boolean If(Object o) {
+		return is(o);
+	}
+	public static boolean If(char[] arr) {
+		return is(arr);
+	}
+	public static boolean If(char[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean If(String[] arr) {
+		return is(arr);
+	}
+	public static boolean If(String[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean If(int[] arr) {
+		return is(arr);
+	}
+	public static boolean If(int[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean If(long[] arr) {
+		return is(arr);
+	}
+	public static boolean If(long[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean If(float[] arr) {
+		return is(arr);
+	}
+	public static boolean If(float[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean If(double[] arr) {
+		return is(arr);
+	}
+	public static boolean If(double[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean If(boolean[] arr) {
+		return is(arr);
+	}
+	public static boolean If(boolean[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean If(Object... arr) {
+		return is(arr);
+	}
+	public static boolean If(Object[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean If(arr arr) {
+		return is(arr);
+	}
+	public static boolean If(strArr arr) {
+		return is(arr);
+	}
+	public static boolean If(intArr arr) {
+		return is(arr);
+	}
+	public static boolean If(longArr arr) {
+		return is(arr);
+	}
+	public static boolean If(fltArr arr) {
+		return is(arr);
+	}
+	public static boolean If(dblArr arr) {
+		return is(arr);
+	}
+	public static boolean If(boolArr arr) {
+		return is(arr);
+	}
+	public static boolean If(o o) {
+		return is(o);
+	}
+	public static boolean If(oI o) {
+		return is(o);
+	}
+	public static boolean If(oL o) {
+		return is(o);
+	}
+	public static boolean If(oF o) {
+		return is(o);
+	}
+	public static boolean If(oD o) {
+		return is(o);
+	}
+	public static boolean If(oB o) {
+		return is(o);
+	}
+	public static boolean If(treeDI t) {
+		return is(t);
+	}
+	public static boolean If(treeI t) {
+		return is(t);
+	}
+	public static boolean If(treeDL t) {
+		return is(t);
+	}
+	public static boolean If(treeL t) {
+		return is(t);
+	}
+	public static boolean If(treeDF t) {
+		return is(t);
+	}
+	public static boolean If(treeF t) {
+		return is(t);
+	}
+	public static boolean If(treeDS t) {
+		return is(t);
+	}
+	public static boolean If(treeD t) {
+		return is(t);
+	}
+	public static boolean If(treeDB t) {
+		return is(t);
+	}
+	public static boolean If(treeB t) {
+		return is(t);
+	}
+	public static boolean Agar(char c) {
+		return is(c);
+	}
+	public static boolean Agar(String s) {
+		return is(s);
+	}
+	public static boolean Agar(int n) {
+		return is(n);
+	}
+	public static boolean Agar(long n) {
+		return is(n);
+	}
+	public static boolean Agar(float n) {
+		return is(n);
+	}
+	public static boolean Agar(double n) {
+		return is(n);
+	}
+	public static boolean Agar(bln condition) {
+		return is(condition);
+	}
+	public static boolean Agar(boolean condition) {
+		return is(condition);
+	}
+	public static boolean Agar(Object o) {
+		return is(o);
+	}
+	public static boolean Agar(char[] arr) {
+		return is(arr);
+	}
+	public static boolean Agar(char[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean Agar(String[] arr) {
+		return is(arr);
+	}
+	public static boolean Agar(String[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean Agar(int[] arr) {
+		return is(arr);
+	}
+	public static boolean Agar(int[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean Agar(long[] arr) {
+		return is(arr);
+	}
+	public static boolean Agar(long[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean Agar(float[] arr) {
+		return is(arr);
+	}
+	public static boolean Agar(float[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean Agar(double[] arr) {
+		return is(arr);
+	}
+	public static boolean Agar(double[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean Agar(boolean[] arr) {
+		return is(arr);
+	}
+	public static boolean Agar(boolean[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean Agar(Object... arr) {
+		return is(arr);
+	}
+	public static boolean Agar(Object[]... arrays) {
+		return is(arrays);
+	}
+	public static boolean Agar(arr arr) {
+		return is(arr);
+	}
+	public static boolean Agar(strArr arr) {
+		return is(arr);
+	}
+	public static boolean Agar(intArr arr) {
+		return is(arr);
+	}
+	public static boolean Agar(longArr arr) {
+		return is(arr);
+	}
+	public static boolean Agar(fltArr arr) {
+		return is(arr);
+	}
+	public static boolean Agar(dblArr arr) {
+		return is(arr);
+	}
+	public static boolean Agar(boolArr arr) {
+		return is(arr);
+	}
+	public static boolean Agar(o o) {
+		return is(o);
+	}
+	public static boolean Agar(oI o) {
+		return is(o);
+	}
+	public static boolean Agar(oL o) {
+		return is(o);
+	}
+	public static boolean Agar(oF o) {
+		return is(o);
+	}
+	public static boolean Agar(oD o) {
+		return is(o);
+	}
+	public static boolean Agar(oB o) {
+		return is(o);
+	}
+	public static boolean Agar(treeDI t) {
+		return is(t);
+	}
+	public static boolean Agar(treeI t) {
+		return is(t);
+	}
+	public static boolean Agar(treeDL t) {
+		return is(t);
+	}
+	public static boolean Agar(treeL t) {
+		return is(t);
+	}
+	public static boolean Agar(treeDF t) {
+		return is(t);
+	}
+	public static boolean Agar(treeF t) {
+		return is(t);
+	}
+	public static boolean Agar(treeDS t) {
+		return is(t);
+	}
+	public static boolean Agar(treeD t) {
+		return is(t);
+	}
+	public static boolean Agar(treeDB t) {
+		return is(t);
+	}
+	public static boolean Agar(treeB t) {
 		return is(t);
 	}
 	public static boolean nahi(char c) {
@@ -81819,22 +82030,15 @@ public class KL {
 	public static double[] fill(double[] arr, int by) {
 		return fill(arr, length.standard, by);
 	}
-	public static interface CallableWithAVocabularyParameter<T> {
-		T call(Optional<Object> x);
-	}
-	public static interface RunnableWithAVocabularyParameter {
-		void run(Optional<Object> x);
-	}
 	public static void har(int initialization,
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition,
-			RunnableWithAVocabularyParameter task) {
+			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
+			Runnable task) {
 		if (isInfinity(initialization)
 				|| isNull(conditionAsACallable, changeInCondition, task))
 			return;
 		boolean condition;
 		try {
-			condition = conditionAsACallable.call(Optional.of(null));
+			condition = conditionAsACallable.call();
 		} catch (Throwable e) {
 			condition = false;
 		}
@@ -81843,9 +82047,9 @@ public class KL {
 		int crashSafety = 0;
 		while (condition) {
 			try {
-				task.run(Optional.of(null));
-				changeInCondition.run(Optional.of(null));
-				condition = conditionAsACallable.call(Optional.of(null));
+				task.run();
+				changeInCondition.run();
+				condition = conditionAsACallable.call();
 				crashSafety++;
 				if (crashSafety > 1e4) {
 					hint.goodpractice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
@@ -81856,207 +82060,18 @@ public class KL {
 			}
 		}
 	}
-	public static void har(int initialization,
-			Callable<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		if (isNull(conditionAsACallable))
-			return;
-		har(initialization, (x) -> {
-			try {
-				return conditionAsACallable.call();
-			} catch (Exception e) {
-				return false;
-			}
-		}, changeInCondition, task);
-	}
-	public static void har(int initialization,
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
-		if (isNull(changeInCondition))
-			return;
-		har(initialization, conditionAsACallable,
-				(y) -> changeInCondition.run(), task);
-	}
-	public static void har(int initialization,
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
-		if (isNull(task))
-			return;
-		har(initialization, conditionAsACallable, changeInCondition,
-				(z) -> task.run());
-	}
-	public static void har(int initialization,
-			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		if (isNull(conditionAsACallable) || isNull(changeInCondition))
-			return;
-		har(initialization, (x) -> {
-			try {
-				return conditionAsACallable.call();
-			} catch (Exception e) {
-				return false;
-			}
-		}, (y) -> changeInCondition.run(), task);
-	}
-	public static void har(int initialization,
-			Callable<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
-		if (isNull(conditionAsACallable) || isNull(task))
-			return;
-		har(initialization, (x) -> {
-			try {
-				return conditionAsACallable.call();
-			} catch (Exception e) {
-				return false;
-			}
-		}, changeInCondition, (z) -> task.run());
-	}
-	public static void har(int initialization,
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			Runnable changeInCondition, Runnable task) {
-		if (isNull(changeInCondition) || isNull(task))
-			return;
-		har(initialization, conditionAsACallable,
-				(y) -> changeInCondition.run(), (z) -> task.run());
-	}
-	public static void har(int initialization,
-			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
-			Runnable task) {
-		if (isNull(conditionAsACallable) || isNull(changeInCondition)
-				|| isNull(conditionAsACallable))
-			return;
-		har(initialization, (x) -> {
-			try {
-				return conditionAsACallable.call();
-			} catch (Exception e) {
-				return false;
-			}
-		}, (y) -> changeInCondition.run(), (z) -> task.run());
-	}
-	public static void har(
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		har(0, conditionAsACallable, changeInCondition, task);
-	}
-	public static void har(Callable<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		har(0, conditionAsACallable, changeInCondition, task);
-	}
-	public static void har(
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
-		har(0, conditionAsACallable, changeInCondition, task);
-	}
-	public static void har(
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
-		har(0, conditionAsACallable, changeInCondition, task);
-	}
-	public static void har(Callable<Boolean> conditionAsACallable,
-			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
-		har(0, conditionAsACallable, changeInCondition, task);
-	}
-	public static void har(Callable<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
-		har(0, conditionAsACallable, changeInCondition, task);
-	}
-	public static void har(
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			Runnable changeInCondition, Runnable task) {
-		har(0, conditionAsACallable, changeInCondition, task);
-	}
 	public static void har(Callable<Boolean> conditionAsACallable,
 			Runnable changeInCondition, Runnable task) {
 		har(0, conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(int initialization,
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		har(initialization, conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(int initialization,
-			Callable<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		har(initialization, conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(int initialization,
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
-		har(initialization, conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(int initialization,
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
-		har(initialization, conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(int initialization,
-			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		har(initialization, conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(int initialization,
-			Callable<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
-		har(initialization, conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(int initialization,
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			Runnable changeInCondition, Runnable task) {
-		har(initialization, conditionAsACallable, changeInCondition, task);
 	}
 	public static void farz(int initialization,
 			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
 			Runnable task) {
 		har(initialization, conditionAsACallable, changeInCondition, task);
 	}
-	public static void farz(
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		har(conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(Callable<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition,
-			RunnableWithAVocabularyParameter task) {
-		har(conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
-		har(conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
-		har(conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(Callable<Boolean> conditionAsACallable,
-			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
-		har(conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(Callable<Boolean> conditionAsACallable,
-			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
-		har(conditionAsACallable, changeInCondition, task);
-	}
-	public static void farz(
-			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
-			Runnable changeInCondition, Runnable task) {
-		har(conditionAsACallable, changeInCondition, task);
-	}
 	public static void farz(Callable<Boolean> conditionAsACallable,
 			Runnable changeInCondition, Runnable task) {
 		har(conditionAsACallable, changeInCondition, task);
-	}
-	public static boolean If(boolean c) {
-		return is(c);
-	}
-	public static boolean Agar(boolean c) {
-		return is(c);
 	}
 	public static <T> T Either(T a, Object vocabularySupportingArg,
 			Object vocabularySupportingArgB, T b) {
@@ -82331,7 +82346,7 @@ public class KL {
 		printArr(dead.k("yes", _S));
 		print(dead.k("no", _s));
 		farz(lia.i = 15, () -> jabtak(liava.i, bara, 5, se),
-				() -> se_nikala(liava.i, 1, aur), (baad) -> print(liava.i));
+				() -> se_nikala(liava.i, 1, aur), () -> print(liava.i));
 		printArr(new char[]{'a', 'b'});
 		for (lo.i = 0; jabtak(liava.i < 5); me_izafa(liava.i, 1, ka, or)) {
 			bolo("i brbr", liava.i);
@@ -82365,9 +82380,13 @@ public class KL {
 
 		print(with(o(
 				"name={first->Kyle; last->Henderson}, age=27, hobbies=[tennis; ]"),
-				"Name is $name.ka.first, $name.first +last is $age years old, and he loves to play $hobbies[0]."));
-		String comment = Either("Even", If(nmbr % 2 == 0), Else, "Odd");
+				"Name is $name.first, $name.first +last is $age years old, and he loves to play $hobbies[0]."));
+		int newNum = 20;
+		String comment = Either("Even", If(isEven(newNum)), Else, "Odd");
 		print(comment);
+
+		farz(lia.i = 0, () -> liava.i < 5, () -> liava.i++,
+				() -> print(liava.i));
 
 	}
 }
