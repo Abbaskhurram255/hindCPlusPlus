@@ -790,11 +790,100 @@ public class KL {
 		public KL parent = kl();
 		public static int i, j, k;
 		public static void lo(int initialization,
+				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+				RunnableWithAVocabularyParameter changeInCondition,
+				RunnableWithAVocabularyParameter task) {
+			//let's assign `(liava.class.getSuperclass().getSuperclass() ~= har.class)`'s field `i` to the parameter of `initialization` (of type int) on the go
+			KL.har(i = initialization, conditionAsACallable, changeInCondition,
+					task);
+		}
+		public static void lo(int initialization,
+				Callable<Boolean> conditionAsACallable,
+				RunnableWithAVocabularyParameter changeInCondition,
+				RunnableWithAVocabularyParameter task) {
+			KL.har(i = initialization, conditionAsACallable, changeInCondition,
+					task);
+		}
+		public static void lo(int initialization,
+				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+				Runnable changeInCondition,
+				RunnableWithAVocabularyParameter task) {
+			KL.har(i = initialization, conditionAsACallable, changeInCondition,
+					task);
+		}
+		public static void lo(int initialization,
+				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+				RunnableWithAVocabularyParameter changeInCondition,
+				Runnable task) {
+			KL.har(i = initialization, conditionAsACallable, changeInCondition,
+					task);
+		}
+		public static void lo(int initialization,
+				Callable<Boolean> conditionAsACallable,
+				Runnable changeInCondition,
+				RunnableWithAVocabularyParameter task) {
+			KL.har(i = initialization, conditionAsACallable, changeInCondition,
+					task);
+		}
+		public static void lo(int initialization,
+				Callable<Boolean> conditionAsACallable,
+				RunnableWithAVocabularyParameter changeInCondition,
+				Runnable task) {
+			KL.har(i = initialization, conditionAsACallable, changeInCondition,
+					task);
+		}
+		public static void lo(int initialization,
+				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+				Runnable changeInCondition, Runnable task) {
+			KL.har(i = initialization, conditionAsACallable, changeInCondition,
+					task);
+		}
+		public static void lo(int initialization,
 				Callable<Boolean> conditionAsACallable,
 				Runnable changeInCondition, Runnable task) {
-			//let's assign `(liava.class.getSuperclass().getSuperclass() ~= har.class)`'s field `i` to the integered parameter `initialization` on the go
-			har(i = initialization, conditionAsACallable, changeInCondition,
+			KL.har(i = initialization, conditionAsACallable, changeInCondition,
 					task);
+		}
+		public static void lia(int initialization,
+				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+				RunnableWithAVocabularyParameter changeInCondition,
+				RunnableWithAVocabularyParameter task) {
+			lo(initialization, conditionAsACallable, changeInCondition, task);
+		}
+		public static void lia(int initialization,
+				Callable<Boolean> conditionAsACallable,
+				RunnableWithAVocabularyParameter changeInCondition,
+				RunnableWithAVocabularyParameter task) {
+			lo(initialization, conditionAsACallable, changeInCondition, task);
+		}
+		public static void lia(int initialization,
+				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+				Runnable changeInCondition,
+				RunnableWithAVocabularyParameter task) {
+			lo(initialization, conditionAsACallable, changeInCondition, task);
+		}
+		public static void lia(int initialization,
+				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+				RunnableWithAVocabularyParameter changeInCondition,
+				Runnable task) {
+			lo(initialization, conditionAsACallable, changeInCondition, task);
+		}
+		public static void lia(int initialization,
+				Callable<Boolean> conditionAsACallable,
+				Runnable changeInCondition,
+				RunnableWithAVocabularyParameter task) {
+			lo(initialization, conditionAsACallable, changeInCondition, task);
+		}
+		public static void lia(int initialization,
+				Callable<Boolean> conditionAsACallable,
+				RunnableWithAVocabularyParameter changeInCondition,
+				Runnable task) {
+			lo(initialization, conditionAsACallable, changeInCondition, task);
+		}
+		public static void lia(int initialization,
+				CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+				Runnable changeInCondition, Runnable task) {
+			lo(initialization, conditionAsACallable, changeInCondition, task);
 		}
 		public static void lia(int initialization,
 				Callable<Boolean> conditionAsACallable,
@@ -39388,8 +39477,9 @@ public class KL {
 	public static Object ignored, none = null, ignore = ignored = none,
 			pass = ignored;
 	public static Object ko, ki, ke, ke_he, pe, par, dabane_pe, dabane_par,
-			karne_pe, karne_par, rakho, se, se_he, mese, then, aur, or, ya,
-			ka = ko = ki = ke = ke_he = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = se_he = mese = then = aur = or = ya = none;
+			karne_pe, karne_par, rakho, se, se_he, mese, then, and, aur, or,
+			yato, ya, nato,
+			ka = ko = ki = ke = ke_he = pe = par = dabane_pe = dabane_par = karne_pe = karne_par = rakho = se = se_he = mese = then = and = aur = or = yato = ya = nato = none;
 	//these null objects will help us allow optional vocabulary into our function parameters
 	public static int minute, sec = 1000, mint = minute = sec * 60,
 			hr = mint * 60;
@@ -57801,7 +57891,7 @@ public class KL {
 					}
 					// regex accuracy: 93%
 					// changes needed: probably not
-				} else if (type(arg, Bool)) {
+				} else if (arg instanceof Boolean) {
 					o replacements = o("true=Yes, false=No");
 					String preprocessed = replace(Str(arg), replacements);
 					arg = preprocessed;
@@ -57921,7 +58011,7 @@ public class KL {
 					}
 					// regex accuracy: 93%
 					// changes needed: probably not
-				} else if (type(arg, Bool)) {
+				} else if (arg instanceof Boolean) {
 					o replacements = o("true=Ha, false=Nahi");
 					String preprocessed = replace(Str(arg), replacements);
 					arg = preprocessed;
@@ -65330,7 +65420,7 @@ public class KL {
 								// regex accuracy: 93%
 								// changes needed: probably not
 							}
-						} else if (type(field, Bool)) {
+						} else if (field instanceof Boolean) {
 							o replacements = o("true=Yes, false=No");
 							String preprocessed = replace(Str(field),
 									replacements);
@@ -65511,7 +65601,7 @@ public class KL {
 				}
 			}
 			// for logical operations
-			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\sif\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|has|contains|in|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\selse\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\sif\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|eq|has|contains|in|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\selse\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
 			if (in(s, catchValuesThatNeedLogic)) {
 				String[] valuesThatNeedLogic = findMatches(s,
 						catchValuesThatNeedLogic);
@@ -65539,6 +65629,7 @@ public class KL {
 									result = "No";
 								break;
 							case "is" :
+							case "eq" :
 							case "==" :
 							case "" :
 								if (neither(op, Str(B))) {
@@ -65584,6 +65675,7 @@ public class KL {
 									result = "No";
 								break;
 							case "is" :
+							case "eq" :
 							case "==" :
 							case "" :
 								if (not(op) && not(numB)) {
@@ -66541,7 +66633,7 @@ public class KL {
 								// regex accuracy: 93%
 								// changes needed: probably not
 							}
-						} else if (type(field, Bool)) {
+						} else if (field instanceof Boolean) {
 							o replacements = o("true=Ha, false=Nahi");
 							String preprocessed = replace(Str(field),
 									replacements);
@@ -66722,7 +66814,7 @@ public class KL {
 				}
 			}
 			// for logical operations
-			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\sif\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|has|contains|in|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\selse\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\sif\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|eq|has|contains|in|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\selse\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
 			if (in(s, catchValuesThatNeedLogic)) {
 				String[] valuesThatNeedLogic = findMatches(s,
 						catchValuesThatNeedLogic);
@@ -66750,6 +66842,7 @@ public class KL {
 									result = "Nahi";
 								break;
 							case "is" :
+							case "eq" :
 							case "==" :
 							case "" :
 								if (neither(op, Str(B))) {
@@ -66795,6 +66888,7 @@ public class KL {
 									result = "Nahi";
 								break;
 							case "is" :
+							case "eq" :
 							case "==" :
 							case "" :
 								if (not(op) && not(numB)) {
@@ -66952,7 +67046,9 @@ public class KL {
 				//could be a sub-o, or a String[], if not, value="none" already
 				//so if the parsing succeeds, which it will, cool, if it doesn't, we've already got our "none"
 				if (in(key, "(?<=\\w)\\.(?=\\w)")) {
-					String subKey = key.replaceAll("[\\$\\{\\[\\]\\}]+", "");
+					String subKey = key.replaceAll(
+							"(?<=\\w)\\.k[ia](?=\\.\\w)|[\\$\\{\\[\\]\\}]+",
+							"");
 					value = obj.get(subKey.split("\\.")[0]);
 					if (not(value instanceof o))
 						continue;
@@ -70223,197 +70319,634 @@ public class KL {
 				isko = khud, self = khud;
 		public not parent = new not();
 	}
-	public static boolean both(String... strings) {
-		if (not(strings))
-			return false;
-		int count = 0;
-		for (String s : strings) {
-			if (is(s)) {
-				count += 1;
-			}
-		}
-		return count == len(strings);
+	public static boolean both(String a, Object vocabularySupportingArg,
+			String b) {
+		return is(a) && is(b);
 	}
-	public static boolean both(int... ints) {
-		if (not(ints))
-			return false;
-		int count = 0;
-		for (int n : ints) {
-			if (is(n)) {
-				count += 1;
-			}
-		}
-		return count == len(ints);
+	public static boolean both(String a, String b) {
+		return both(a, and, b);
 	}
-	public static boolean both(long... longs) {
-		if (not(longs))
-			return false;
-		int count = 0;
-		for (long n : longs) {
-			if (is(n)) {
-				count += 1;
-			}
-		}
-		return count == len(longs);
+	public static boolean both(int a, Object vocabularySupportingArg, int b) {
+		return is(a) && is(b);
 	}
-	public static boolean both(float... floats) {
-		if (not(floats))
-			return false;
-		int count = 0;
-		for (float n : floats) {
-			if (is(n)) {
-				count += 1;
-			}
-		}
-		return count == len(floats);
+	public static boolean both(int a, int b) {
+		return both(a, and, b);
 	}
-	public static boolean both(double... doubles) {
-		if (not(doubles))
-			return false;
-		int count = 0;
-		for (double n : doubles) {
-			if (is(n)) {
-				count += 1;
-			}
-		}
-		return count == len(doubles);
+	public static boolean both(long a, Object vocabularySupportingArg, long b) {
+		return is(a) && is(b);
 	}
-	public static boolean both(boolean... bools) {
-		if (not(bools))
-			return false;
-		int count = 0;
-		for (boolean bool : bools) {
-			if (is(bool)) {
-				count += 1;
-			}
-		}
-		return count == len(bools);
+	public static boolean both(long a, long b) {
+		return both(a, and, b);
 	}
-	public static boolean either(String... strings) {
-		int count = 0;
-		for (String s : strings) {
-			if (is(s)) {
-				count += 1;
-			}
-		}
-		return count > 0;
+	public static boolean both(float a, Object vocabularySupportingArg,
+			float b) {
+		return is(a) && is(b);
 	}
-	public static boolean either(int... ints) {
-		int count = 0;
-		for (int n : ints) {
-			if (is(n)) {
-				count += 1;
-			}
-		}
-		return count > 0;
+	public static boolean both(float a, float b) {
+		return both(a, and, b);
 	}
-	public static boolean either(long... longs) {
-		int count = 0;
-		for (long n : longs) {
-			if (is(n)) {
-				count += 1;
-			}
-		}
-		return count > 0;
+	public static boolean both(double a, Object vocabularySupportingArg,
+			double b) {
+		return is(a) && is(b);
 	}
-	public static boolean either(float... floats) {
-		int count = 0;
-		for (float n : floats) {
-			if (is(n)) {
-				count += 1;
-			}
-		}
-		return count > 0;
+	public static boolean both(double a, double b) {
+		return both(a, and, b);
 	}
-	public static boolean either(double... doubles) {
-		int count = 0;
-		for (double n : doubles) {
-			if (is(n)) {
-				count += 1;
-			}
-		}
-		return count > 0;
+	public static boolean both(boolean a, Object vocabularySupportingArg,
+			boolean b) {
+		return is(a) && is(b);
 	}
-	public static boolean either(boolean... bools) {
-		int count = 0;
-		for (boolean bool : bools) {
-			if (is(bool)) {
-				count += 1;
-			}
-		}
-		return count > 0;
+	public static boolean both(boolean a, boolean b) {
+		return both(a, and, b);
+	}
+	public static boolean both(String[] a, Object vocabularySupportingArg,
+			String[] b) {
+		return is(a) && is(b);
+	}
+	public static boolean both(String[] a, String[] b) {
+		return both(a, and, b);
+	}
+	public static boolean both(int[] a, Object vocabularySupportingArg,
+			int[] b) {
+		return is(a) && is(b);
+	}
+	public static boolean both(int[] a, int[] b) {
+		return both(a, and, b);
+	}
+	public static boolean both(long[] a, Object vocabularySupportingArg,
+			long[] b) {
+		return is(a) && is(b);
+	}
+	public static boolean both(long[] a, long[] b) {
+		return both(a, and, b);
+	}
+	public static boolean both(float[] a, Object vocabularySupportingArg,
+			float[] b) {
+		return is(a) && is(b);
+	}
+	public static boolean both(float[] a, float[] b) {
+		return both(a, and, b);
+	}
+	public static boolean both(double[] a, Object vocabularySupportingArg,
+			double[] b) {
+		return is(a) && is(b);
+	}
+	public static boolean both(double[] a, double[] b) {
+		return both(a, and, b);
+	}
+	public static boolean both(boolean[] a, Object vocabularySupportingArg,
+			boolean[] b) {
+		return is(a) && is(b);
+	}
+	public static boolean both(boolean[] a, boolean[] b) {
+		return both(a, and, b);
+	}
+	public static boolean dono(String a, Object vocabularySupportingArg,
+			String b) {
+		return both(a, b);
+	}
+	public static boolean dono(String a, String b) {
+		return both(a, b);
+	}
+	public static boolean dono(int a, Object vocabularySupportingArg, int b) {
+		return both(a, b);
+	}
+	public static boolean dono(int a, int b) {
+		return both(a, b);
+	}
+	public static boolean dono(long a, Object vocabularySupportingArg, long b) {
+		return both(a, b);
+	}
+	public static boolean dono(long a, long b) {
+		return both(a, b);
+	}
+	public static boolean dono(float a, Object vocabularySupportingArg,
+			float b) {
+		return both(a, b);
+	}
+	public static boolean dono(float a, float b) {
+		return both(a, b);
+	}
+	public static boolean dono(double a, Object vocabularySupportingArg,
+			double b) {
+		return both(a, b);
+	}
+	public static boolean dono(double a, double b) {
+		return both(a, b);
+	}
+	public static boolean dono(boolean a, Object vocabularySupportingArg,
+			boolean b) {
+		return both(a, b);
+	}
+	public static boolean dono(boolean a, boolean b) {
+		return both(a, b);
+	}
+	public static boolean dono(String[] a, Object vocabularySupportingArg,
+			String[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(String[] a, String[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(int[] a, Object vocabularySupportingArg,
+			int[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(int[] a, int[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(long[] a, Object vocabularySupportingArg,
+			long[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(long[] a, long[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(float[] a, Object vocabularySupportingArg,
+			float[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(float[] a, float[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(double[] a, Object vocabularySupportingArg,
+			double[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(double[] a, double[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(boolean[] a, Object vocabularySupportingArg,
+			boolean[] b) {
+		return both(a, b);
+	}
+	public static boolean dono(boolean[] a, boolean[] b) {
+		return both(a, b);
+	}
+	public static boolean either(String a, Object vocabularySupportingArg,
+			String b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(String a, String b) {
+		return either(a, or, b);
+	}
+	public static boolean either(int a, Object vocabularySupportingArg, int b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(int a, int b) {
+		return either(a, or, b);
+	}
+	public static boolean either(long a, Object vocabularySupportingArg,
+			long b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(long a, long b) {
+		return either(a, or, b);
+	}
+	public static boolean either(float a, Object vocabularySupportingArg,
+			float b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(float a, float b) {
+		return either(a, or, b);
+	}
+	public static boolean either(double a, Object vocabularySupportingArg,
+			double b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(double a, double b) {
+		return either(a, or, b);
+	}
+	public static boolean either(boolean a, Object vocabularySupportingArg,
+			boolean b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(boolean a, boolean b) {
+		return either(a, or, b);
+	}
+	public static boolean either(String[] a, Object vocabularySupportingArg,
+			String[] b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(String[] a, String[] b) {
+		return either(a, or, b);
+	}
+	public static boolean either(int[] a, Object vocabularySupportingArg,
+			int[] b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(int[] a, int[] b) {
+		return either(a, or, b);
+	}
+	public static boolean either(long[] a, Object vocabularySupportingArg,
+			long[] b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(long[] a, long[] b) {
+		return either(a, or, b);
+	}
+	public static boolean either(float[] a, Object vocabularySupportingArg,
+			float[] b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(float[] a, float[] b) {
+		return either(a, or, b);
+	}
+	public static boolean either(double[] a, Object vocabularySupportingArg,
+			double[] b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(double[] a, double[] b) {
+		return either(a, or, b);
+	}
+	public static boolean either(boolean[] a, Object vocabularySupportingArg,
+			boolean[] b) {
+		return is(a) || is(b);
+	}
+	public static boolean either(boolean[] a, boolean[] b) {
+		return either(a, or, b);
+	}
+	public static boolean yato(String a, Object vocabularySupportingArg,
+			String b) {
+		return either(a, b);
+	}
+	public static boolean yato(String a, String b) {
+		return either(a, b);
+	}
+	public static boolean yato(int a, Object vocabularySupportingArg, int b) {
+		return either(a, b);
+	}
+	public static boolean yato(int a, int b) {
+		return either(a, b);
+	}
+	public static boolean yato(long a, Object vocabularySupportingArg, long b) {
+		return either(a, b);
+	}
+	public static boolean yato(long a, long b) {
+		return either(a, b);
+	}
+	public static boolean yato(float a, Object vocabularySupportingArg,
+			float b) {
+		return either(a, b);
+	}
+	public static boolean yato(float a, float b) {
+		return either(a, b);
+	}
+	public static boolean yato(double a, Object vocabularySupportingArg,
+			double b) {
+		return either(a, b);
+	}
+	public static boolean yato(double a, double b) {
+		return either(a, b);
+	}
+	public static boolean yato(boolean a, Object vocabularySupportingArg,
+			boolean b) {
+		return either(a, b);
+	}
+	public static boolean yato(boolean a, boolean b) {
+		return either(a, b);
+	}
+	public static boolean yato(String[] a, Object vocabularySupportingArg,
+			String[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(String[] a, String[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(int[] a, Object vocabularySupportingArg,
+			int[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(int[] a, int[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(long[] a, Object vocabularySupportingArg,
+			long[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(long[] a, long[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(float[] a, Object vocabularySupportingArg,
+			float[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(float[] a, float[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(double[] a, Object vocabularySupportingArg,
+			double[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(double[] a, double[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(boolean[] a, Object vocabularySupportingArg,
+			boolean[] b) {
+		return either(a, b);
+	}
+	public static boolean yato(boolean[] a, boolean[] b) {
+		return either(a, b);
+	}
+	public static boolean ya(String a, Object vocabularySupportingArg,
+			String b) {
+		return yato(a, b);
+	}
+	public static boolean ya(String a, String b) {
+		return yato(a, b);
+	}
+	public static boolean ya(int a, Object vocabularySupportingArg, int b) {
+		return yato(a, b);
+	}
+	public static boolean ya(int a, int b) {
+		return yato(a, b);
+	}
+	public static boolean ya(long a, Object vocabularySupportingArg, long b) {
+		return yato(a, b);
+	}
+	public static boolean ya(long a, long b) {
+		return yato(a, b);
+	}
+	public static boolean ya(float a, Object vocabularySupportingArg, float b) {
+		return yato(a, b);
+	}
+	public static boolean ya(float a, float b) {
+		return yato(a, b);
+	}
+	public static boolean ya(double a, Object vocabularySupportingArg,
+			double b) {
+		return yato(a, b);
+	}
+	public static boolean ya(double a, double b) {
+		return yato(a, b);
+	}
+	public static boolean ya(boolean a, Object vocabularySupportingArg,
+			boolean b) {
+		return yato(a, b);
+	}
+	public static boolean ya(boolean a, boolean b) {
+		return yato(a, b);
+	}
+	public static boolean ya(String[] a, Object vocabularySupportingArg,
+			String[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(String[] a, String[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(int[] a, Object vocabularySupportingArg, int[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(int[] a, int[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(long[] a, Object vocabularySupportingArg,
+			long[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(long[] a, long[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(float[] a, Object vocabularySupportingArg,
+			float[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(float[] a, float[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(double[] a, Object vocabularySupportingArg,
+			double[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(double[] a, double[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(boolean[] a, Object vocabularySupportingArg,
+			boolean[] b) {
+		return yato(a, b);
+	}
+	public static boolean ya(boolean[] a, boolean[] b) {
+		return yato(a, b);
 	}
 	public static boolean any(String... strings) {
-		return either(strings);
-	}
-	public static boolean any(int... ints) {
-		return either(ints);
-	}
-	public static boolean any(long... longs) {
-		return either(longs);
-	}
-	public static boolean any(float... floats) {
-		return either(floats);
-	}
-	public static boolean any(double... doubles) {
-		return either(doubles);
-	}
-	public static boolean any(boolean... bools) {
-		return either(bools);
-	}
-	public static boolean neither(String... strings) {
 		int count = 0;
 		for (String s : strings) {
-			if (not(s)) {
+			if (is(s)) {
 				count += 1;
 			}
 		}
-		return count == len(strings);
+		return count > 0;
 	}
-	public static boolean neither(int... ints) {
+	public static boolean any(int... ints) {
 		int count = 0;
 		for (int n : ints) {
-			if (not(n)) {
+			if (is(n)) {
 				count += 1;
 			}
 		}
-		return count == len(ints);
+		return count > 0;
 	}
-	public static boolean neither(long... longs) {
+	public static boolean any(long... longs) {
 		int count = 0;
 		for (long n : longs) {
-			if (not(n)) {
+			if (is(n)) {
 				count += 1;
 			}
 		}
-		return count == len(longs);
+		return count > 0;
 	}
-	public static boolean neither(float... floats) {
+	public static boolean any(float... floats) {
 		int count = 0;
 		for (float n : floats) {
-			if (not(n)) {
+			if (is(n)) {
 				count += 1;
 			}
 		}
-		return count == len(floats);
+		return count > 0;
 	}
-	public static boolean neither(double... doubles) {
+	public static boolean any(double... doubles) {
 		int count = 0;
 		for (double n : doubles) {
-			if (not(n)) {
+			if (is(n)) {
 				count += 1;
 			}
 		}
-		return count == len(doubles);
+		return count > 0;
 	}
-	public static boolean neither(boolean... bools) {
+	public static boolean any(boolean... bools) {
 		int count = 0;
 		for (boolean bool : bools) {
-			if (not(bool)) {
+			if (is(bool)) {
 				count += 1;
 			}
 		}
-		return count == len(bools);
+		return count > 0;
+	}
+	public static boolean neither(String a, Object vocabularySupportingArg,
+			String b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(String a, String b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(int a, Object vocabularySupportingArg,
+			int b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(int a, int b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(long a, Object vocabularySupportingArg,
+			long b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(long a, long b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(float a, Object vocabularySupportingArg,
+			float b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(float a, float b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(double a, Object vocabularySupportingArg,
+			double b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(double a, double b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(boolean a, Object vocabularySupportingArg,
+			boolean b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(boolean a, boolean b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(String[] a, Object vocabularySupportingArg,
+			String[] b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(String[] a, String[] b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(int[] a, Object vocabularySupportingArg,
+			int[] b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(int[] a, int[] b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(long[] a, Object vocabularySupportingArg,
+			long[] b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(long[] a, long[] b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(float[] a, Object vocabularySupportingArg,
+			float[] b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(float[] a, float[] b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(double[] a, Object vocabularySupportingArg,
+			double[] b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(double[] a, double[] b) {
+		return !(either(a, b));
+	}
+	public static boolean neither(boolean[] a, Object vocabularySupportingArg,
+			boolean[] b) {
+		return !(either(a, or, b));
+	}
+	public static boolean neither(boolean[] a, boolean[] b) {
+		return !(either(a, b));
+	}
+	public static boolean nato(String a, Object vocabularySupportingArg,
+			String b) {
+		return neither(a, b);
+	}
+	public static boolean nato(String a, String b) {
+		return neither(a, b);
+	}
+	public static boolean nato(int a, Object vocabularySupportingArg, int b) {
+		return neither(a, b);
+	}
+	public static boolean nato(int a, int b) {
+		return neither(a, b);
+	}
+	public static boolean nato(long a, Object vocabularySupportingArg, long b) {
+		return neither(a, b);
+	}
+	public static boolean nato(long a, long b) {
+		return neither(a, b);
+	}
+	public static boolean nato(float a, Object vocabularySupportingArg,
+			float b) {
+		return neither(a, b);
+	}
+	public static boolean nato(float a, float b) {
+		return neither(a, b);
+	}
+	public static boolean nato(double a, Object vocabularySupportingArg,
+			double b) {
+		return neither(a, b);
+	}
+	public static boolean nato(double a, double b) {
+		return neither(a, b);
+	}
+	public static boolean nato(boolean a, Object vocabularySupportingArg,
+			boolean b) {
+		return neither(a, b);
+	}
+	public static boolean nato(boolean a, boolean b) {
+		return neither(a, b);
+	}
+	public static boolean nato(String[] a, Object vocabularySupportingArg,
+			String[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(String[] a, String[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(int[] a, Object vocabularySupportingArg,
+			int[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(int[] a, int[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(long[] a, Object vocabularySupportingArg,
+			long[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(long[] a, long[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(float[] a, Object vocabularySupportingArg,
+			float[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(float[] a, float[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(double[] a, Object vocabularySupportingArg,
+			double[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(double[] a, double[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(boolean[] a, Object vocabularySupportingArg,
+			boolean[] b) {
+		return neither(a, b);
+	}
+	public static boolean nato(boolean[] a, boolean[] b) {
+		return neither(a, b);
 	}
 	public static boolean not(String s) {
 		return isNull(s) || isEmpty(s);
@@ -81286,15 +81819,22 @@ public class KL {
 	public static double[] fill(double[] arr, int by) {
 		return fill(arr, length.standard, by);
 	}
+	public static interface CallableWithAVocabularyParameter<T> {
+		T call(Optional<Object> x);
+	}
+	public static interface RunnableWithAVocabularyParameter {
+		void run(Optional<Object> x);
+	}
 	public static void har(int initialization,
-			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
-			Runnable task) {
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition,
+			RunnableWithAVocabularyParameter task) {
 		if (isInfinity(initialization)
 				|| isNull(conditionAsACallable, changeInCondition, task))
 			return;
 		boolean condition;
 		try {
-			condition = conditionAsACallable.call();
+			condition = conditionAsACallable.call(Optional.of(null));
 		} catch (Throwable e) {
 			condition = false;
 		}
@@ -81303,9 +81843,9 @@ public class KL {
 		int crashSafety = 0;
 		while (condition) {
 			try {
-				task.run();
-				changeInCondition.run();
-				condition = conditionAsACallable.call();
+				task.run(Optional.of(null));
+				changeInCondition.run(Optional.of(null));
+				condition = conditionAsACallable.call(Optional.of(null));
 				crashSafety++;
 				if (crashSafety > 1e4) {
 					hint.goodpractice hit_the_brakes_before_the_program_vrashes_due_to_stack_overflow;
@@ -81316,24 +81856,207 @@ public class KL {
 			}
 		}
 	}
+	public static void har(int initialization,
+			Callable<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		if (isNull(conditionAsACallable))
+			return;
+		har(initialization, (x) -> {
+			try {
+				return conditionAsACallable.call();
+			} catch (Exception e) {
+				return false;
+			}
+		}, changeInCondition, task);
+	}
+	public static void har(int initialization,
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
+		if (isNull(changeInCondition))
+			return;
+		har(initialization, conditionAsACallable,
+				(y) -> changeInCondition.run(), task);
+	}
+	public static void har(int initialization,
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
+		if (isNull(task))
+			return;
+		har(initialization, conditionAsACallable, changeInCondition,
+				(z) -> task.run());
+	}
+	public static void har(int initialization,
+			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		if (isNull(conditionAsACallable) || isNull(changeInCondition))
+			return;
+		har(initialization, (x) -> {
+			try {
+				return conditionAsACallable.call();
+			} catch (Exception e) {
+				return false;
+			}
+		}, (y) -> changeInCondition.run(), task);
+	}
+	public static void har(int initialization,
+			Callable<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
+		if (isNull(conditionAsACallable) || isNull(task))
+			return;
+		har(initialization, (x) -> {
+			try {
+				return conditionAsACallable.call();
+			} catch (Exception e) {
+				return false;
+			}
+		}, changeInCondition, (z) -> task.run());
+	}
+	public static void har(int initialization,
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			Runnable changeInCondition, Runnable task) {
+		if (isNull(changeInCondition) || isNull(task))
+			return;
+		har(initialization, conditionAsACallable,
+				(y) -> changeInCondition.run(), (z) -> task.run());
+	}
+	public static void har(int initialization,
+			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
+			Runnable task) {
+		if (isNull(conditionAsACallable) || isNull(changeInCondition)
+				|| isNull(conditionAsACallable))
+			return;
+		har(initialization, (x) -> {
+			try {
+				return conditionAsACallable.call();
+			} catch (Exception e) {
+				return false;
+			}
+		}, (y) -> changeInCondition.run(), (z) -> task.run());
+	}
+	public static void har(
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		har(0, conditionAsACallable, changeInCondition, task);
+	}
+	public static void har(Callable<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		har(0, conditionAsACallable, changeInCondition, task);
+	}
+	public static void har(
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
+		har(0, conditionAsACallable, changeInCondition, task);
+	}
+	public static void har(
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
+		har(0, conditionAsACallable, changeInCondition, task);
+	}
+	public static void har(Callable<Boolean> conditionAsACallable,
+			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
+		har(0, conditionAsACallable, changeInCondition, task);
+	}
+	public static void har(Callable<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
+		har(0, conditionAsACallable, changeInCondition, task);
+	}
+	public static void har(
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			Runnable changeInCondition, Runnable task) {
+		har(0, conditionAsACallable, changeInCondition, task);
+	}
 	public static void har(Callable<Boolean> conditionAsACallable,
 			Runnable changeInCondition, Runnable task) {
 		har(0, conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(int initialization,
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		har(initialization, conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(int initialization,
+			Callable<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		har(initialization, conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(int initialization,
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
+		har(initialization, conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(int initialization,
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
+		har(initialization, conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(int initialization,
+			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		har(initialization, conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(int initialization,
+			Callable<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
+		har(initialization, conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(int initialization,
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			Runnable changeInCondition, Runnable task) {
+		har(initialization, conditionAsACallable, changeInCondition, task);
 	}
 	public static void farz(int initialization,
 			Callable<Boolean> conditionAsACallable, Runnable changeInCondition,
 			Runnable task) {
 		har(initialization, conditionAsACallable, changeInCondition, task);
 	}
+	public static void farz(
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		har(conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(Callable<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition,
+			RunnableWithAVocabularyParameter task) {
+		har(conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
+		har(conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
+		har(conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(Callable<Boolean> conditionAsACallable,
+			Runnable changeInCondition, RunnableWithAVocabularyParameter task) {
+		har(conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(Callable<Boolean> conditionAsACallable,
+			RunnableWithAVocabularyParameter changeInCondition, Runnable task) {
+		har(conditionAsACallable, changeInCondition, task);
+	}
+	public static void farz(
+			CallableWithAVocabularyParameter<Boolean> conditionAsACallable,
+			Runnable changeInCondition, Runnable task) {
+		har(conditionAsACallable, changeInCondition, task);
+	}
 	public static void farz(Callable<Boolean> conditionAsACallable,
 			Runnable changeInCondition, Runnable task) {
 		har(conditionAsACallable, changeInCondition, task);
 	}
 	public static boolean If(boolean c) {
-		return c;
+		return is(c);
 	}
 	public static boolean Agar(boolean c) {
-		return c;
+		return is(c);
 	}
 	public static <T> T Either(T a, Object vocabularySupportingArg,
 			Object vocabularySupportingArgB, T b) {
@@ -81381,6 +82104,16 @@ public class KL {
 	}
 	public static <T> T Yato(T a, T b) {
 		return Either(a, null, b);
+	}
+	public static <T> T Ya(T a, Object vocabularySupportingArg,
+			Object vocabularySupportingArgB, T b) {
+		return Yato(a, vocabularySupportingArg, vocabularySupportingArgB, b);
+	}
+	public static <T> T Ya(T a, Object vocabularySupportingArg, T b) {
+		return Yato(a, vocabularySupportingArg, b);
+	}
+	public static <T> T Ya(T a, T b) {
+		return Yato(a, b);
 	}
 	public static void main(String[] args) {
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
@@ -81578,7 +82311,7 @@ public class KL {
 		age2.me_dala(age2.ka_chotha());
 		System.out.println(age2.get());
 		double[] myNewArr = {1.5, 1.8};
-		print(range.fill(myNewArr, 10));
+		print(fill(myNewArr, 10));
 		printArr(filter(new String[]{"hi", "hey", " ", "", null}));
 		o user3 = o(
 				"{name: {first->Juliet; last->Salvador}, age: 17, is_a_student: !false, hobbies: [travel; basketball & tennis]}");
@@ -81598,7 +82331,7 @@ public class KL {
 		printArr(dead.k("yes", _S));
 		print(dead.k("no", _s));
 		farz(lia.i = 15, () -> jabtak(liava.i, bara, 5, se),
-				() -> se_nikala(liava.i, 1, aur), () -> print(liava.i));
+				() -> se_nikala(liava.i, 1, aur), (baad) -> print(liava.i));
 		printArr(new char[]{'a', 'b'});
 		for (lo.i = 0; jabtak(liava.i < 5); me_izafa(liava.i, 1, ka, or)) {
 			bolo("i brbr", liava.i);
@@ -81632,6 +82365,9 @@ public class KL {
 
 		print(with(o(
 				"name={first->Kyle; last->Henderson}, age=27, hobbies=[tennis; ]"),
-				"Name is $name.first, $name.first +last is $age years old, and he loves to go $hobbies[0]."));
+				"Name is $name.ka.first, $name.first +last is $age years old, and he loves to play $hobbies[0]."));
+		String comment = Either("Even", If(nmbr % 2 == 0), Else, "Odd");
+		print(comment);
+
 	}
 }
