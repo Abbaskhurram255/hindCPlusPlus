@@ -1001,24 +1001,27 @@ def decode(data: str) -> str:
             return base64.b64decode(data).decode()
     except (TypeError, binascii.Error) as e:
             return ""
-def fetch(url: str) -> dict|list:
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException as e:
-        print(f"Error fetching data: {e}")
-        return None
 def internet_access() -> bool:
     try:
         requests.get("https://www.google.com", timeout=5)
         return True
     except requests.ConnectionError:
         return False
-def filepath(filename: str) -> str:
-    if filename == none or not isstr(filename) or len("" + filename) == 0:
+def fetch(url: str) -> dict|list:
+    if not url:
+        return {}
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+        return {}
+def filepath(to_filename: str) -> str:
+    if to_filename == none or len(to_filename) == 0:
         return ""
-    return os.path.join(os.getcwd(), filename)
+    return os.path.join(os.getcwd(), to_filename)
+file_path = path_to = filepath
 
 def main() -> none:
     print(Int("100", 2))
