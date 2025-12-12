@@ -65523,132 +65523,8 @@ public class KL {
 						| SecurityException e) {
 				}
 			}
-			// for logical operations
-			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\sif\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|eq|has|contains|in|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\selse\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
-			if (in(s, catchValuesThatNeedLogic)) {
-				String[] valuesThatNeedLogic = findMatches(s,
-						catchValuesThatNeedLogic);
-				for (String m : valuesThatNeedLogic) {
-					Object A = findMatch(m, catchValuesThatNeedLogic, "$A"),
-							B = findMatch(m, catchValuesThatNeedLogic, "$B");
-					String op = findMatch(m, catchValuesThatNeedLogic, "$op");
-					String outputShownIfConditionMet = findMatch(m,
-							catchValuesThatNeedLogic, "$solution"),
-							alternativeOutputShownIfConditionNotMet = findMatch(
-									m, catchValuesThatNeedLogic,
-									"$alternativeSolution");
-					String result = "";
-					if (!isNumLike(Str(A))) {
-						switch (op) {
-							case "isnt" :
-							case "isn't" :
-							case "is not" :
-							case "aint" :
-							case "ain't" :
-							case "not" :
-								if (!eq(Str(A), Str(B)))
-									result = "Yes";
-								else
-									result = "No";
-								break;
-							case "is" :
-							case "eq" :
-							case "==" :
-							case "" :
-								if (neither(op, Str(B))) {
-									if (is(Str(A)))
-										result = "Yes";
-									else
-										result = "No";
-								} else {
-									if (eq(Str(B), Str(A)))
-										result = "Yes";
-									else
-										result = "No";
-								}
-								break;
-							case "in" :
-								if (in(Str(B), Str(A)))
-									result = "Yes";
-								else
-									result = "No";
-								break;
-							case "has" :
-							case "contains" :
-								if (in(Str(A), Str(B)))
-									result = "Yes";
-								else
-									result = "No";
-								break;
-						}
-					} else {
-						// parse A, and B as doubles
-						double numA = (double) Dbl(Str(A)),
-								numB = (double) Dbl(Str(B));
-						switch (op) {
-							case "isnt" :
-							case "isn't" :
-							case "is not" :
-							case "aint" :
-							case "ain't" :
-							case "not" :
-								if (!eq(numA, numB))
-									result = "Yes";
-								else
-									result = "No";
-								break;
-							case "is" :
-							case "eq" :
-							case "==" :
-							case "" :
-								if (not(op) && not(numB)) {
-									if (is(numA))
-										result = "Yes";
-									else
-										result = "No";
-								} else {
-									if (eq(numA, numB))
-										result = "Yes";
-									else
-										result = "No";
-								}
-								break;
-							case ">=" :
-								if (numA >= numB)
-									result = "Yes";
-								else
-									result = "No";
-								break;
-							case ">" :
-								if (numA > numB)
-									result = "Yes";
-								else
-									result = "No";
-								break;
-							case "<=" :
-								if (numA <= numB)
-									result = "Yes";
-								else
-									result = "No";
-								break;
-							case "<" :
-								if (numA < numB)
-									result = "Yes";
-								else
-									result = "No";
-								break;
-						}
-					}
-					if (eq(result, "Yes"))
-						result = outputShownIfConditionMet;
-					else
-						result = alternativeOutputShownIfConditionNotMet;
-					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
-					s = replaceFirst(s, m, result);
-				}
-			}
-			// for numeric operations
-			// NOTE: currently follows a rule of thumb I like to call FSFS
+			// source> KL> f> sections> MATHEMATICAL_SECTION
+			// NOTE: currently follows a rule of thumb I'd like to call FSFS
 			// (first-seen first-solved),
 			// will change that
 			String catchValuesThatRequireNumericOperations = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+)(?<operandB>\\-?\\d*\\.?\\d+)?\\}?";
@@ -65726,8 +65602,141 @@ public class KL {
 				}
 			}
 			s = s.replaceAll("[&\\{](?=\\-?\\d*\\.?\\d+(?![:=]))\\}?", "");
-			// cleaning up to make up for the numeric results, removing the &
+			// cleaning up after the numeric operations by removing the &
 			// operator
+			// source> KL> f> sections> LOGICAL_OPERATION_SECTION
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\s([Ii]f|[Aa]gar)\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|eq|has|contains|in|nahi|he|eq|ba?ra?ba?r|me|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\s([Ee]lse|[Ww]arna)\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
+			if (in(s, catchValuesThatNeedLogic)) {
+				String[] valuesThatNeedLogic = findMatches(s,
+						catchValuesThatNeedLogic);
+				for (String m : valuesThatNeedLogic) {
+					Object A = findMatch(m, catchValuesThatNeedLogic, "$A"),
+							B = findMatch(m, catchValuesThatNeedLogic, "$B");
+					String op = findMatch(m, catchValuesThatNeedLogic, "$op");
+					String outputShownIfConditionMet = findMatch(m,
+							catchValuesThatNeedLogic, "$solution"),
+							alternativeOutputShownIfConditionNotMet = findMatch(
+									m, catchValuesThatNeedLogic,
+									"$alternativeSolution");
+					String result = "";
+					if (!isNumLike(Str(A))) {
+						switch (op) {
+							case "isnt" :
+							case "isn't" :
+							case "is not" :
+							case "aint" :
+							case "ain't" :
+							case "not" :
+							case "nahi" :
+								if (!eq(Str(A), Str(B)))
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "is" :
+							case "eq" :
+							case "he" :
+							case "brbr" :
+							case "barabar" :
+							case "==" :
+							case "" :
+								if (neither(op, Str(B))) {
+									if (is(Str(A)))
+										result = "Yes";
+									else
+										result = "No";
+								} else {
+									if (eq(Str(B), Str(A)))
+										result = "Yes";
+									else
+										result = "No";
+								}
+								break;
+							case "in" :
+								if (in(Str(B), Str(A)))
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "has" :
+							case "contains" :
+							case "me" :
+								if (in(Str(A), Str(B)))
+									result = "Yes";
+								else
+									result = "No";
+								break;
+						}
+					} else {
+						// parse A, and B as doubles
+						double numA = (double) Dbl(Str(A)),
+								numB = (double) Dbl(Str(B));
+						switch (op) {
+							case "isnt" :
+							case "isn't" :
+							case "is not" :
+							case "aint" :
+							case "ain't" :
+							case "not" :
+							case "nahi" :
+								if (!eq(numA, numB))
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "is" :
+							case "eq" :
+							case "he" :
+							case "brbr" :
+							case "barabar" :
+							case "==" :
+							case "" :
+								if (not(op) && not(numB)) {
+									if (is(numA))
+										result = "Yes";
+									else
+										result = "No";
+								} else {
+									if (eq(numA, numB))
+										result = "Yes";
+									else
+										result = "No";
+								}
+								break;
+							case ">=" :
+								if (numA >= numB)
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case ">" :
+								if (numA > numB)
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "<=" :
+								if (numA <= numB)
+									result = "Yes";
+								else
+									result = "No";
+								break;
+							case "<" :
+								if (numA < numB)
+									result = "Yes";
+								else
+									result = "No";
+								break;
+						}
+					}
+					if (eq(result, "Yes"))
+						result = outputShownIfConditionMet;
+					else
+						result = alternativeOutputShownIfConditionNotMet;
+					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
+					s = replaceFirst(s, m, result);
+				}
+			}
 			s = sentCase(s);
 		} catch (IllegalArgumentException | StackOverflowError e) {
 		}
@@ -66736,132 +66745,8 @@ public class KL {
 						| SecurityException e) {
 				}
 			}
-			// for logical operations
-			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\sif\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|eq|has|contains|in|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\selse\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
-			if (in(s, catchValuesThatNeedLogic)) {
-				String[] valuesThatNeedLogic = findMatches(s,
-						catchValuesThatNeedLogic);
-				for (String m : valuesThatNeedLogic) {
-					Object A = findMatch(m, catchValuesThatNeedLogic, "$A"),
-							B = findMatch(m, catchValuesThatNeedLogic, "$B");
-					String op = findMatch(m, catchValuesThatNeedLogic, "$op");
-					String outputShownIfConditionMet = findMatch(m,
-							catchValuesThatNeedLogic, "$solution"),
-							alternativeOutputShownIfConditionNotMet = findMatch(
-									m, catchValuesThatNeedLogic,
-									"$alternativeSolution");
-					String result = "";
-					if (!isNumLike(Str(A))) {
-						switch (op) {
-							case "isnt" :
-							case "isn't" :
-							case "is not" :
-							case "aint" :
-							case "ain't" :
-							case "not" :
-								if (!eq(Str(A), Str(B)))
-									result = "Ha";
-								else
-									result = "Nahi";
-								break;
-							case "is" :
-							case "eq" :
-							case "==" :
-							case "" :
-								if (neither(op, Str(B))) {
-									if (is(Str(A)))
-										result = "Ha";
-									else
-										result = "Nahi";
-								} else {
-									if (eq(Str(B), Str(A)))
-										result = "Ha";
-									else
-										result = "Nahi";
-								}
-								break;
-							case "in" :
-								if (in(Str(B), Str(A)))
-									result = "Ha";
-								else
-									result = "Nahi";
-								break;
-							case "has" :
-							case "contains" :
-								if (in(Str(A), Str(B)))
-									result = "Ha";
-								else
-									result = "Nahi";
-								break;
-						}
-					} else {
-						// parse A, and B as doubles
-						double numA = (double) Dbl(Str(A)),
-								numB = (double) Dbl(Str(B));
-						switch (op) {
-							case "isnt" :
-							case "isn't" :
-							case "is not" :
-							case "aint" :
-							case "ain't" :
-							case "not" :
-								if (!eq(numA, numB))
-									result = "Ha";
-								else
-									result = "Nahi";
-								break;
-							case "is" :
-							case "eq" :
-							case "==" :
-							case "" :
-								if (not(op) && not(numB)) {
-									if (is(numA))
-										result = "Ha";
-									else
-										result = "Nahi";
-								} else {
-									if (eq(numA, numB))
-										result = "Ha";
-									else
-										result = "Nahi";
-								}
-								break;
-							case ">=" :
-								if (numA >= numB)
-									result = "Ha";
-								else
-									result = "Nahi";
-								break;
-							case ">" :
-								if (numA > numB)
-									result = "Ha";
-								else
-									result = "Nahi";
-								break;
-							case "<=" :
-								if (numA <= numB)
-									result = "Ha";
-								else
-									result = "Nahi";
-								break;
-							case "<" :
-								if (numA < numB)
-									result = "Ha";
-								else
-									result = "Nahi";
-								break;
-						}
-					}
-					if (eq(result, "Ha"))
-						result = outputShownIfConditionMet;
-					else
-						result = alternativeOutputShownIfConditionNotMet;
-					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
-					s = replaceFirst(s, m, result);
-				}
-			}
-			// for numeric operations
-			// NOTE: currently follows a rule of thumb I like to call FSFS
+			// source> KL> hf> sections> MATHEMATICAL_SECTION
+			// NOTE: currently follows a rule of thumb I'd like to call FSFS
 			// (first-seen first-solved),
 			// will change that
 			String catchValuesThatRequireNumericOperations = "(?<=(?<!\\\\)\\&|\\{)(?<operandA>\\-?\\d*\\.?\\d+)(?<op>[\\+\\-x\\*\\^\\×\\/\\÷\\%\\_\\!]+)(?<operandB>\\-?\\d*\\.?\\d+)?\\}?";
@@ -66939,8 +66824,141 @@ public class KL {
 				}
 			}
 			s = s.replaceAll("[&\\{](?=\\-?\\d*\\.?\\d+(?![:=]))\\}?", "");
-			// cleaning up to make up for the numeric results, removing the &
+			// cleaning up after the numeric operations by removing the &
 			// operator
+			// source> KL> hf> sections> LOGICAL_OPERATION_SECTION
+			String catchValuesThatNeedLogic = "(?<!\\\\)[\\$\\{](?<solution>[^\\$\\{\\}]+)\\s([Ii]f|[Aa]gar)\\s(?<A>[\\-\\.\\w]+)\\s?(?<op>(is|ai)?\\s?n('|o)?t|is|eq|has|contains|in|nahi|he|eq|ba?ra?ba?r|me|[<>=]{1,3})?\\s?(?<B>[\\-\\.\\w]+)?\\}?\\s([Ee]lse|[Ww]arna)\\s(?<alternativeSolution>[\\-\\.\\w]+)\\}?";
+			if (in(s, catchValuesThatNeedLogic)) {
+				String[] valuesThatNeedLogic = findMatches(s,
+						catchValuesThatNeedLogic);
+				for (String m : valuesThatNeedLogic) {
+					Object A = findMatch(m, catchValuesThatNeedLogic, "$A"),
+							B = findMatch(m, catchValuesThatNeedLogic, "$B");
+					String op = findMatch(m, catchValuesThatNeedLogic, "$op");
+					String outputShownIfConditionMet = findMatch(m,
+							catchValuesThatNeedLogic, "$solution"),
+							alternativeOutputShownIfConditionNotMet = findMatch(
+									m, catchValuesThatNeedLogic,
+									"$alternativeSolution");
+					String result = "";
+					if (!isNumLike(Str(A))) {
+						switch (op) {
+							case "isnt" :
+							case "isn't" :
+							case "is not" :
+							case "aint" :
+							case "ain't" :
+							case "not" :
+							case "nahi" :
+								if (!eq(Str(A), Str(B)))
+									result = "Ha";
+								else
+									result = "Nahi";
+								break;
+							case "is" :
+							case "eq" :
+							case "he" :
+							case "brbr" :
+							case "barabar" :
+							case "==" :
+							case "" :
+								if (neither(op, Str(B))) {
+									if (is(Str(A)))
+										result = "Ha";
+									else
+										result = "Nahi";
+								} else {
+									if (eq(Str(B), Str(A)))
+										result = "Ha";
+									else
+										result = "Nahi";
+								}
+								break;
+							case "in" :
+								if (in(Str(B), Str(A)))
+									result = "Ha";
+								else
+									result = "Nahi";
+								break;
+							case "has" :
+							case "contains" :
+							case "me" :
+								if (in(Str(A), Str(B)))
+									result = "Ha";
+								else
+									result = "Nahi";
+								break;
+						}
+					} else {
+						// parse A, and B as doubles
+						double numA = (double) Dbl(Str(A)),
+								numB = (double) Dbl(Str(B));
+						switch (op) {
+							case "isnt" :
+							case "isn't" :
+							case "is not" :
+							case "aint" :
+							case "ain't" :
+							case "not" :
+							case "nahi" :
+								if (!eq(numA, numB))
+									result = "Ha";
+								else
+									result = "Nahi";
+								break;
+							case "is" :
+							case "eq" :
+							case "he" :
+							case "brbr" :
+							case "barabar" :
+							case "==" :
+							case "" :
+								if (not(op) && not(numB)) {
+									if (is(numA))
+										result = "Ha";
+									else
+										result = "Nahi";
+								} else {
+									if (eq(numA, numB))
+										result = "Ha";
+									else
+										result = "Nahi";
+								}
+								break;
+							case ">=" :
+								if (numA >= numB)
+									result = "Ha";
+								else
+									result = "Nahi";
+								break;
+							case ">" :
+								if (numA > numB)
+									result = "Ha";
+								else
+									result = "Nahi";
+								break;
+							case "<=" :
+								if (numA <= numB)
+									result = "Ha";
+								else
+									result = "Nahi";
+								break;
+							case "<" :
+								if (numA < numB)
+									result = "Ha";
+								else
+									result = "Nahi";
+								break;
+						}
+					}
+					if (eq(result, "Ha"))
+						result = outputShownIfConditionMet;
+					else
+						result = alternativeOutputShownIfConditionNotMet;
+					m = m.replaceAll("(^[\\$\\{]|\\$$)", "\\\\$1");
+					s = replaceFirst(s, m, result);
+				}
+			}
 			s = sentCase(s);
 		} catch (IllegalArgumentException | StackOverflowError e) {
 		}
@@ -82375,7 +82393,7 @@ public class KL {
 		print(agar(zinda, he, "zinda he", warna, "nahi"));
 		agar(zinda.filhal, he, () -> print("zinda he"), warna,
 				() -> print("nahi"));
-		if (nahi(zinda, he))
+		if (nahi(he, zinda))
 			print("nahi he, wakai.");
 
 		print(with(o(
@@ -82387,6 +82405,9 @@ public class KL {
 
 		farz(lia.i = 0, () -> liava.i < 5, () -> liava.i++,
 				() -> print(liava.i));
-
+		print("$valid if 2>2 else invalid");
+		print("$valid if 2==2 else invalid");
+		print("$valid if x in vertex else invalid");
+		kaho("$sahi agar 5=={2+3} warna galat");
 	}
 }
