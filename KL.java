@@ -75554,7 +75554,7 @@ public class KL {
 		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
-				"[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
+				"(?<profile>\\w[\\w\\.\\-\\_\\+\\!]+)@(?<domain>\\d*[a-zA-Z]+\\d*\\-?\\d*[A-Za-z]\\d*)(?<suffix>(?:\\.[a-zA-Z]{2,}){1,2})");
 		for (int i : range(matches)) {
 			arr.push(matches[i]);
 		}
@@ -75566,7 +75566,7 @@ public class KL {
 		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
-				"(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?");
+				"(?<protocol>\\w*\\-?[a-zA-Z]{3,}\\:[\\\\\\/]{2,3})?(?:(?<subDomain>\\d*[A-Za-z]+\\d*)?\\.)?(?<domain>\\w*-?\\w+\\d*)(?<suffix>(?:\\.[a-zA-Z]{2,}){1,2})(?<port>\\:\\d{1,5})?(?<route>\\/[^\\s\\?\\=\\&\\#]*)?(?<query>\\?(?:\\w*\\-?\\w+\\=[^\\#]+)?)?(?<hash>\\#(\\w*\\-?\\w*)?)?");
 		for (int i : range(matches)) {
 			arr.push(matches[i]);
 		}
@@ -75578,7 +75578,7 @@ public class KL {
 		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
-				"((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))");
+				"(?:\+|0{1,2})?(?<cc>\\d{1,3})[\\-\\s]?\\(?(?<areacode>\\d{3})\\)?[\\-\\s]?(?<rest>\\d{3}[\\-\\s]?\\d[\\-\\s]?\\d{3})");
 		for (int i : range(matches)) {
 			arr.push(matches[i]);
 		}
@@ -75597,7 +75597,7 @@ public class KL {
 			return false;
 		}
 		return eq(trim(s),
-				"[a-zA-Z][\\w\\.\\-\\_\\+\\!]+@[\\w]{3,}(\\.[a-zA-Z]{2,}){1,2}");
+				"(?<profile>\\w[\\w\\.\\-\\_\\+\\!]+)@(?<domain>\\d*[a-zA-Z]+\\d*\\-?\\d*[A-Za-z]\\d*)(?<suffix>(?:\\.[a-zA-Z]{2,}){1,2})");
 		// apparently, Java is stupid when it comes to regular expression.
 		// Learned: neither "\\s"
 	}
@@ -75606,14 +75606,14 @@ public class KL {
 			return false;
 		}
 		return eq(trim(s),
-				"(?<proto>[a-zA-Z]{1,6}\\:[\\\\\\/]{2,3})?(?<sub>\\w{2,}\\.)?(?<domain>[\\w\\-]+)(?<suffix>\\.[a-zA-Z]{2,}){1,2}(?<route>\\/[\\S]*)?");
+				"(?<protocol>\\w*\\-?[a-zA-Z]{3,}\\:[\\\\\\/]{2,3})?(?:(?<subDomain>\\d*[A-Za-z]+\\d*)?\\.)?(?<domain>\\w*-?\\w+\\d*)(?<suffix>(?:\\.[a-zA-Z]{2,}){1,2})(?<port>\\:\\d{1,5})?(?<route>\\/[^\\s\\?\\=\\&\\#]*)?(?<query>\\?(?:\\w*\\-?\\w+\\=[^\\#]+)?)?(?<hash>\\#(\\w*\\-?\\w*)?)?");
 	}
 	public static boolean isPhone(String s) {
 		if (not(s)) {
 			return false;
 		}
 		return eq(trim(s),
-				"((?<start>\\+|0{2})?(?<country>[\\d]{1,3}))?[\\s\\(]{0,2}(?<body>(?<A>\\d{3})[\\s\\)]{0,2}(?<B>\\d{3})\\s?(?<C>\\d{4}))");
+				"(?:\+|0{1,2})?(?<cc>\\d{1,3})[\\-\\s]?\\(?(?<areacode>\\d{3})\\)?[\\-\\s]?(?<rest>\\d{3}[\\-\\s]?\\d[\\-\\s]?\\d{3})");
 	}
 	public static int[] findInts(String s) {
 		return intsOf(s);
