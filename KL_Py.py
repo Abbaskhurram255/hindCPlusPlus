@@ -1,16 +1,17 @@
-import os, sys, base64, requests, math, re, inspect, ast
+import os, sys, base64, requests, math, re, inspect, ast, webbrowser
 from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from functools import reduce, lru_cache, cache
-from copy import deepcopy
 from types import *
 from typing import List, Callable, TypeVar, NewType, Any, Optional, Final
 from dataclasses import dataclass
 from numbers import Number
 from math import *
-from hindGui import *
 from random import randint, uniform, randrange, choice
-import webbrowser
+from datetime import datetime
+from copy import deepcopy
+from hindGui import *
+date = time = datetime
 rand_int = randint
 rand_flt = uniform
 rand_from = rand_of = any_from = any_of = choice
