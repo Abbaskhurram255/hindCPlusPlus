@@ -22,7 +22,7 @@ Str = lafz = jumla = str
 num = Number
 goto = webbrowser.open
 link = webbrowser
-typename = T = TypeT = typeT = TypeVar("T")
+typename = TypeT = typeT = TypeVar("T")
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
         x = Str(x)
