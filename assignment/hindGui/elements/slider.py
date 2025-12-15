@@ -25,7 +25,7 @@ class Slider(Element):
         border_width=None,
         relief=None,
         change_submits=False,
-        enable_events=False,
+        enable_events=True,
         disabled=False,
         size=(None, None),
         s=(None, None),

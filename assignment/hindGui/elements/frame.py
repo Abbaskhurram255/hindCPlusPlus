@@ -38,7 +38,7 @@ class Frame(Element):
         expand_x=False,
         expand_y=False,
         grab=None,
-        visible=True,
+        nazar=True,
         element_justification='left',
         vertical_alignment=None,
         metadata=None,
@@ -128,7 +128,7 @@ class Frame(Element):
             pad=pad,
             event=event,
             hover=hover,
-            visible=visible,
+            nazar=nazar,
             metadata=metadata,
         )
         return
@@ -179,7 +179,7 @@ class Frame(Element):
                     'The offensive Element = ',
                     element,
                     'and has a event = ',
-                    element.Key,
+                    element.Event,
                     'This item will be stripped from your layout',
                     'Hint - try printing your layout and matching the IDs "print(layout)"',
                 )
@@ -187,7 +187,7 @@ class Frame(Element):
             element.Position = (CurrentRowNumber, i)
             element.ParentContainer = self
             CurrentRow.append(element)
-            if element.Key is not None:
+            if element.Event is not None:
                 self.UseDictionary = True
         # -------------------------  Append the row to list of Rows  ------------------------- #
         self.Rows.append(CurrentRow)
@@ -235,7 +235,7 @@ class Frame(Element):
         element = row[col_num]
         return element
 
-    def change(self, value=None, visible=None):
+    def change(self, value=None, nazar=None):
         """
         Changes some of the settings for the Frame Element. Must call `Window.Read` or `Window.Finalize` prior
 
@@ -257,16 +257,16 @@ class Frame(Element):
             _error_popup_with_traceback('Error in Frame.change - The window was closed')
             return
 
-        if visible is False:
+        if nazar is False:
             self._pack_forget_save_settings()
             # self.TKFrame.pack_forget()
-        elif visible is True:
+        elif nazar is True:
             self._pack_restore_settings()
             # self.TKFrame.pack(padx=self.pad_used[0], pady=self.pad_used[1])
         if value is not None:
             self.TKFrame.config(text=str(value))
-        if visible is not None:
-            self._visible = visible
+        if nazar is not None:
+            self._nazar = nazar
 
     AddRow = add_row
     Layout = layout

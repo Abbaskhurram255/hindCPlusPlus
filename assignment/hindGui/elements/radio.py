@@ -38,7 +38,7 @@ class Radio(Element):
         p=None,
         hover=None,
         change_submits=False,
-        enable_events=False,
+        enable_events=True,
         right_click_menu=None,
         expand_x=False,
         expand_y=False,

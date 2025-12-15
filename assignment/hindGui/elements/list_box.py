@@ -33,7 +33,7 @@ class Listbox(Element):
         default_values=None,
         select_mode=None,
         change_submits=False,
-        enable_events=False,
+        enable_events=True,
         bind_return_key=False,
         size=(None, None),
         s=(None, None),

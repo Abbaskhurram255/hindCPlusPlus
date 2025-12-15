@@ -22,7 +22,7 @@ class Text(Element):
         s=(None, None),
         auto_size_text=None,
         click_submits=False,
-        enable_events=False,
+        enable_events=True,
         relief=None,
         font=None,
         text_color=None,

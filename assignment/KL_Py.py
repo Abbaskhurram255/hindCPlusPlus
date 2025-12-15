@@ -4,13 +4,23 @@ from collections.abc import Iterable, Sequence
 from functools import reduce, lru_cache, cache
 from copy import deepcopy
 from types import *
-from typing import List, Callable, TypeVar, Any, Optional, Final
+from typing import List, Callable, TypeVar, NewType, Any, Optional, Final
+from dataclasses import dataclass
 from numbers import Number
 from math import *
 from hindGui import *
+from random import randint, uniform, randrange, choice
+import webbrowser
+rand_int = randint
+rand_flt = uniform
+rand_from = rand_of = any_from = any_of = choice
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
-Str = str
+Str = lafz = jumla = str
+num = Number
+goto = webbrowser.open
+link = webbrowser
+typename = T = TypeT = typeT = TypeVar("T")
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
         x = Str(x)
@@ -35,9 +45,6 @@ def FltInput(*args, **kwargs):
     except Exception:
         return 0
 intInput, fltInput = IntInput, FltInput
-def flatten(lst: list) -> list:
-    return sum((flatten(sub) if isinstance(sub, list) else [sub] for sub in lst), [])
-flat = flatten
 class obj(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -81,8 +88,24 @@ class obj(dict):
             super().__setitem__(key, self._convert_nested_collections(value))
         else:
             super().__setitem__(key, value)
-# allows obj(name=$x, age=$y)
+    def keys(self):
+        return list(super().keys())
+    def values(self):
+        return list(super().values())
+    def entries(self):
+        return list(super().items())
+# allows obj($x=$valueForX, $y=$valueForY)
 o = obj
+# for older dictionaries
+def keys(dictionary: dict):
+    return list(dictionary.keys())
+def values(dictionary: dict):
+    return list(dictionary.values())
+def entries(dictionary: dict):
+    return list(dictionary.entries())
+keysOf = keys
+valuesOf = values
+entriesOf = entries
 def get_private_declarations() -> o:
     [variables, classes, functions] = [{}, {}, {}]
     for name, obj in locals().items():
@@ -153,7 +176,7 @@ def f(*args) -> str:
             arg_lower: str = arg.lower()
             for item in blacklisted_items:
                 if item in arg_lower:
-                    print(f"Forbidden keyword/function in input: '{keyword}'")
+                    print(f"Forbidden keyword/function in input: '{item}'")
                     continue
             # Evaluate the expression
             arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
@@ -178,7 +201,7 @@ def printf(*args):
             arg_lower: str = arg.lower()
             for item in blacklisted_items:
                 if item in arg_lower:
-                    print(f"Forbidden keyword/function in input: '{keyword}'")
+                    print(f"Forbidden keyword/function in input: '{item}'")
                     continue
             # Evaluate the expression
             arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
@@ -187,16 +210,17 @@ def printf(*args):
             ...
     print(formatted)
 kaho = printf
-def flat(lst: list) -> list:
-    if lst == None:
+def flatten(lst: list) -> list:
+    if lst is None:
         return []
     out = []
     for item in lst:
         if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
-            out.extend(flat(item))
+            out.extend(flatten(item))
         else:
             out.append(item)
     return out
+flat = flatten
 def clone(item: list|tuple|dict):
     if item == None:
         return None
@@ -242,6 +266,8 @@ is_iterable = isiterable = lambda x: isinstance(x, Iterable)
 isnt_iterable = isntiterable = non_iterable = noniterable = lambda x: not is_iterable(x)
 is_callable = iscallable = is_function = isfunction = is_func = isfunc = lambda x: callable(x)
 isnt_callable = isntcallable = non_callable = noncallable = lambda x: not is_callable(x)
+def split(srcString: str, regex: str, maxsplits: int, flags: int) -> str:
+    return re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
     occurences: list[str] = re.findall(to_replace, src)
     for occurence in occurences:
@@ -977,24 +1003,27 @@ def decode(data: str) -> str:
             return base64.b64decode(data).decode()
     except (TypeError, binascii.Error) as e:
             return ""
-def fetch(url: str) -> dict|list:
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException as e:
-        print(f"Error fetching data: {e}")
-        return None
 def internet_access() -> bool:
     try:
         requests.get("https://www.google.com", timeout=5)
         return True
     except requests.ConnectionError:
         return False
-def filepath(filename: str) -> str:
-    if filename == none or not isstr(filename) or len("" + filename) == 0:
+def fetch(url: str) -> dict|list:
+    if not url:
+        return {}
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+        return {}
+def filepath(to_filename: str) -> str:
+    if to_filename == none or len(to_filename) == 0:
         return ""
-    return os.path.join(os.getcwd(), filename)
+    return os.path.join(os.getcwd(), to_filename)
+file_path = path_to = filepath
 
 def main() -> none:
     print(Int("100", 2))
@@ -1006,10 +1035,12 @@ def main() -> none:
     dictionary: obj = obj(key="value")
     cloned = clone(dictionary)
     cloned.key = 4
-    print(dictionary)
-    print(cloned)
-    name = "Misty"
-    x=4
+    print(dictionary.entries())
+    print(cloned.entries())
+    name: lafz = "Misty"
+    print(name)
+    x: num = 4
+    print(x)
     printf("$name, dont! You are, but a $10+5-8 -year-old kid. $x")
     print(isstr(""))
     print(isint(3))

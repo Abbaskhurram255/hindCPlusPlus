@@ -33,7 +33,7 @@ class Image(Element):
         expand_x=False,
         expand_y=False,
         nazar=True,
-        enable_events=False,
+        enable_events=True,
         metadata=None,
     ):
         """

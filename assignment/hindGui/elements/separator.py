@@ -31,6 +31,7 @@ class VerticalSeparator(Element):
         self.Orientation = 'vertical'  # for now only vertical works
         self.color = color if color is not None else theme_text_color()
         super().__init__(ELEM_TYPE_SEPARATOR, pad=pad, event=event)
+VSep = VerticalSeparator
 
 
 class HorizontalSeparator(Element):
@@ -60,3 +61,4 @@ class HorizontalSeparator(Element):
         pad = pad if pad is not None else p
 
         super().__init__(ELEM_TYPE_SEPARATOR, pad=pad, event=event)
+HSep = HorizontalSeparator

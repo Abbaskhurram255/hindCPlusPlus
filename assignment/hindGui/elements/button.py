@@ -57,16 +57,25 @@ class Button(Element):
         image_zoom=None,
         image_source=None,
         border_width=None,
+        border=None,
         size=(None, None),
         s=(None, None),
         auto_size_button=None,
+        auto_size=None,
         button_color=None,
+        color=None,
         disabled_button_color=None,
+        disabled_color=None,
+        color_when_disabled=None,
         highlight_colors=None,
-        mouseover_colors=(None, None),
+        mouseover_colors=None,
+        hover_color=None,
         use_ttk_buttons=None,
+        use_ttk=None,
         font=None,
         bind_return_key=False,
+        allow_enter=False,
+        enter=False,
         focus=False,
         pad=None,
         p=None,
@@ -155,7 +164,7 @@ class Button(Element):
         :type metadata:               (Any)
         """
 
-        self.AutoSizeButton = auto_size_button
+        self.AutoSizeButton = auto_size_button or auto_size
         self.BType = button_type
         if allowed_types is not None and len(allowed_types) == 2 and isinstance(allowed_types[0], str) and isinstance(allowed_types[1], str):
             warnings.warn(
@@ -169,9 +178,9 @@ class Button(Element):
         self.text = str(text)
         self.RightClickMenu = right_click_menu
         # Button colors can be a tuple (text, background) or a string with format "text on background"
-        self.ButtonColor = button_color_to_tuple(button_color)
-
-        self.DisabledButtonColor = button_color_to_tuple(disabled_button_color) if disabled_button_color is not None else (None, None)
+        self.ButtonColor = button_color_to_tuple(button_color or color)
+        disabled_button_color = disabled_color or color_when_disabled or disabled_button_color
+        self.DisabledButtonColor = button_color_to_tuple(disabled_button_color) if disabled_button_color else (None, None)
         if image_source is not None:
             if isinstance(image_source, bytes):
                 image_data = image_source
@@ -183,8 +192,8 @@ class Button(Element):
         self.ImageSubsample = image_subsample
         self.zoom = int(image_zoom) if image_zoom is not None else None
         self.UserData = None
-        self.BorderWidth = border_width if border_width is not None else hindGui.DEFAULT_BORDER_WIDTH
-        self.BindReturnKey = bind_return_key
+        self.BorderWidth = border_width or border or hindGui.DEFAULT_BORDER_WIDTH
+        self.BindReturnKey = bind_return_key or allow_enter or enter
         self.Focus = focus
         self.TKCal = None
         self.calendar_default_date_M_D_Y = (None, None, None)
@@ -203,9 +212,9 @@ class Button(Element):
         self.DefaultExtension = default_extension
         self.Disabled = disabled
         self.ChangeSubmits = change_submits or enable_events
-        self.UseTtkButtons = use_ttk_buttons
+        self.UseTtkButtons = use_ttk_buttons or use_ttk
         self._files_delimiter = BROWSE_FILES_DELIMITER  # used by the file browse button. used when multiple files are selected by user
-        if use_ttk_buttons is None and running_mac():
+        if running_mac() and self.UseTtkButtons is None:
             self.UseTtkButtons = True
 
         if event is None and k is None:
@@ -224,6 +233,8 @@ class Button(Element):
         else:
             self.HighlightColors = self._compute_highlight_colors()
 
+        mouseover_colors = mouseover_colors or hover_color
+        button_color = color or button_color
         if mouseover_colors != (None, None):
             self.MouseOverColors = button_color_to_tuple(mouseover_colors)
         elif button_color is not None:
@@ -457,6 +468,7 @@ class Button(Element):
         self,
         text=None,
         button_color=(None, None),
+        color=(None, None),
         disabled=None,
         image_source=None,
         image_data=None,
@@ -465,6 +477,8 @@ class Button(Element):
         image_subsample=None,
         image_zoom=None,
         disabled_button_color=(None, None),
+        disabled_color=(None, None),
+        color_when_disabled=(None, None),
         image_size=None,
     ):
         """
@@ -531,6 +545,7 @@ class Button(Element):
                     self.TKButton.config(underline=pos)
             self.TKButton.configure(text=btext)
             self.text = text
+        button_color = button_color or color
         if button_color != (None, None) and button_color != COLOR_SYSTEM_DEFAULT:
             bc = button_color_to_tuple(button_color, self.ButtonColor)
             if self.UseTtkButtons:
@@ -586,6 +601,7 @@ class Button(Element):
             self._pack_forget_save_settings()
         elif nazar is True:
             self._pack_restore_settings()
+        disabled_button_color = disabled_button_color or disabled_color or color_when_disabled
         if disabled_button_color != (None, None) and disabled_button_color != COLOR_SYSTEM_DEFAULT:
             if not self.UseTtkButtons:
                 self.TKButton['disabledforeground'] = disabled_button_color[0]
@@ -644,12 +660,17 @@ class ButtonMenu(Element):
         image_subsample=None,
         image_zoom=None,
         border_width=None,
+        border=None,
         size=(None, None),
         s=(None, None),
         auto_size_button=None,
+        auto_size=None,
         button_color=None,
+        color=None,
         text_color=None,
         background_color=None,
+        bg_color=None,
+        bg=None,
         disabled_text_color=None,
         font=None,
         item_font=None,
@@ -726,14 +747,14 @@ class ButtonMenu(Element):
 
         self.MenuDefinition = copy.deepcopy(menu_def)
 
-        self.AutoSizeButton = auto_size_button
+        self.AutoSizeButton = auto_size_button or auto_size
         self.text = text
-        self.ButtonColor = button_color_to_tuple(button_color)
-        self.BackgroundColor = background_color if background_color is not None else theme_input_background_color()
+        self.ButtonColor = button_color_to_tuple(button_color or color) 
+        self.BackgroundColor = background_color or bg_color or bg or theme_input_background_color()
         self.TextColor = text_color if text_color is not None else theme_input_text_color()
         self.DisabledTextColor = disabled_text_color if disabled_text_color is not None else COLOR_SYSTEM_DEFAULT
         self.ItemFont = item_font
-        self.BorderWidth = border_width if border_width is not None else hindGui.DEFAULT_BORDER_WIDTH
+        self.BorderWidth = border_width or border or hindGui.DEFAULT_BORDER_WIDTH
         if image_source is not None:
             if isinstance(image_source, str):
                 image_filename = image_source
@@ -798,6 +819,7 @@ class ButtonMenu(Element):
         image_zoom=None,
         text=None,
         button_color=None,
+        color=None,
     ):
         """
         Changes some of the settings for the ButtonMenu Element. Must call `Window.Read` or `Window.Finalize` prior
@@ -897,6 +919,7 @@ class ButtonMenu(Element):
             self._pack_restore_settings()
         if nazar is not None:
             self._nazar = nazar
+        button_color = button_color or color
         if button_color != (None, None) and button_color != COLOR_SYSTEM_DEFAULT:
             bc = button_color_to_tuple(button_color, self.ButtonColor)
             if bc[0] not in (None, COLOR_SYSTEM_DEFAULT):
@@ -914,7 +937,8 @@ class ButtonMenu(Element):
             self.TKMenu.invoke(1)
         except:
             print('Exception clicking button')
-
+            
+            
     Change = change
     Click = click
 
