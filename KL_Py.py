@@ -7,7 +7,7 @@ from typing import List, Callable, TypeVar, NewType, Any, Optional, Final
 from dataclasses import dataclass
 from numbers import Number
 from math import *
-from random import randint, uniform, randrange, choice
+from random import randint, uniform, randrange, choice, sample
 from datetime import datetime
 from copy import deepcopy
 from hindGui import *
@@ -15,6 +15,7 @@ date = time = datetime
 rand_int = randint
 rand_flt = uniform
 rand_from = rand_of = any_from = any_of = choice
+choices = sample
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 Str = lafz = jumla = str
