@@ -4,7 +4,8 @@ from collections.abc import Iterable, Sequence
 from functools import reduce, lru_cache, cache
 from copy import deepcopy
 from types import *
-from typing import List, Callable, TypeVar, Any, Optional, Final
+from typing import List, Callable, TypeVar, NewType, Any, Optional, Final
+from dataclasses import dataclass
 from numbers import Number
 from math import *
 from hindGui import *
@@ -19,6 +20,7 @@ Str = lafz = jumla = str
 num = Number
 goto = webbrowser.open
 link = webbrowser
+typename = T = TypeT = typeT = TypeVar("T")
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
         x = Str(x)
