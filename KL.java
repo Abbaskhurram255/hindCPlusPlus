@@ -7372,6 +7372,7 @@ public class KL {
 		private static final long serialVersionUID = 1L;
 		panel(JFrame... frameToAddTo_optional) {
 			super();
+			lay(null);
 			if (frameToAddTo_optional.length == 1
 					&& frameToAddTo_optional[0] != null) {
 				JFrame frame = frameToAddTo_optional[0];
@@ -7389,6 +7390,7 @@ public class KL {
 		}
 		panel(boolean isDoubleBuffered, JFrame... frameToAddTo_optional) {
 			super(isDoubleBuffered);
+			lay(null);
 			if (frameToAddTo_optional.length == 1
 					&& frameToAddTo_optional[0] != null) {
 				JFrame frame = frameToAddTo_optional[0];
@@ -7715,6 +7717,22 @@ public class KL {
 			place(xAxis, yAxis, width, height);
 			return this;
 		}
+	}
+	public static interface clickAction extends ActionListener {
+		/**
+		 * an alias/ shorter form of the rather longer form `ActionListener`, adding a bit
+		 * of readability to the code
+		 * 
+		 * @usage clickAction action = e -> {(...)}; myBtn.parClickPe(action);
+		 */
+	}
+	public static interface clickHarkat extends ActionListener {
+		/**
+		 * an alias/ shorter form of the rather longer form `ActionListener`, adding a bit
+		 * of readability to the code
+		 * 
+		 * @usage clickHarkat action = e -> {(...)}; myBtn.parClickPe(action);
+		 */
 	}
 	public static class button extends JButton {
 		public button khud = this, ka = this, iske_lie = khud, iska = khud,
@@ -75578,7 +75596,7 @@ public class KL {
 		}
 		strArr arr = new strArr();
 		String[] matches = findMatches(s,
-				"(?:\+|0{1,2})?(?<cc>\\d{1,3})[\\-\\s]?\\(?(?<areacode>\\d{3})\\)?[\\-\\s]?(?<rest>\\d{3}[\\-\\s]?\\d[\\-\\s]?\\d{3})");
+				"(?:\\+|0{1,2})?(?<cc>\\d{1,3})[\\-\\s]?\\(?(?<areacode>\\d{3})\\)?[\\-\\s]?(?<rest>\\d{3}[\\-\\s]?\\d[\\-\\s]?\\d{3})");
 		for (int i : range(matches)) {
 			arr.push(matches[i]);
 		}
@@ -75613,7 +75631,7 @@ public class KL {
 			return false;
 		}
 		return eq(trim(s),
-				"(?:\+|0{1,2})?(?<cc>\\d{1,3})[\\-\\s]?\\(?(?<areacode>\\d{3})\\)?[\\-\\s]?(?<rest>\\d{3}[\\-\\s]?\\d[\\-\\s]?\\d{3})");
+				"(?:\\+|0{1,2})?(?<cc>\\d{1,3})[\\-\\s]?\\(?(?<areacode>\\d{3})\\)?[\\-\\s]?(?<rest>\\d{3}[\\-\\s]?\\d[\\-\\s]?\\d{3})");
 	}
 	public static int[] findInts(String s) {
 		return intsOf(s);
@@ -82148,6 +82166,105 @@ public class KL {
 	public static <T> T Ya(T a, T b) {
 		return Yato(a, b);
 	}
+	//pretty print
+	private static class __pprint {
+		final String INDENT_STRING = " ".repeat(4); // start with a 4-space indent
+		// Use IdentityHashMap to track visited pprint objects by reference, preventing cycles
+		IdentityHashMap<Object, String> visitedPprintObjects = new IdentityHashMap<>();
+		void pprint(Object obj) {
+			System.out.println(kl.hf(pformat(obj, 0)));
+		}
+		String pformat(Object obj, int indent) {
+			if (obj == null) {
+				return "null";
+			}
+			if (visitedPprintObjects.containsKey(obj)) {
+				return visitedPprintObjects.get(obj);
+			}
+			String hashRef = "";
+			visitedPprintObjects.put(obj, hashRef);
+			StringBuilder sb = new StringBuilder();
+			String currentIndentStr = getIndent(indent);
+			String nextIndentStr = getIndent(indent + 1);
+			if (obj instanceof String) {
+				sb.append(obj);
+			} else if (obj instanceof Number || obj instanceof Boolean
+					|| obj instanceof Character) {
+				sb.append(obj.toString());
+			} else if (obj.getClass().isArray()) {
+				sb.append("[\n");
+				int length = java.lang.reflect.Array.getLength(obj);
+				for (int i = 0; i < length; i++) {
+					sb.append(nextIndentStr).append(pformat(
+							java.lang.reflect.Array.get(obj, i), indent + 1));
+					if (i < length - 1) {
+						sb.append(",");
+					}
+					sb.append("\n");
+				}
+				sb.append(currentIndentStr).append("]");
+			} else if (obj instanceof Collection) {
+				sb.append("[\n");
+				for (Object item : (Collection<?>) obj) {
+					sb.append(nextIndentStr).append(pformat(item, indent + 1))
+							.append(",\n");
+				}
+				if (!((Collection<?>) obj).isEmpty()) {
+				}
+				sb.append(currentIndentStr).append("]");
+			} else if (obj instanceof Map) {
+				sb.append("{\n");
+				for (Map.Entry<?, ?> entry : ((Map<?, ?>) obj).entrySet()) {
+					sb.append(nextIndentStr)
+							.append(pformat(entry.getKey(), indent + 1))
+							.append(": ")
+							.append(pformat(entry.getValue(), indent + 1))
+							.append(",\n");
+				}
+				sb.append(currentIndentStr).append("}");
+			} else {
+				sb.append(obj.getClass().getSimpleName()).append("({\n");
+				try {
+					ArrayList<Field> fields = getAllFields(obj.getClass());
+					AccessibleObject.setAccessible(fields.toArray(new Field[0]),
+							true);
+					for (Field field : fields) {
+						if (Modifier.isStatic(field.getModifiers()))
+							continue;
+						Object fieldValue = field.get(obj); // Access the private field value
+						sb.append(nextIndentStr).append(field.getName())
+								.append(": ")
+								.append(pformat(fieldValue, indent + 1))
+								.append(",\n");
+					}
+					sb.append(currentIndentStr).append("})");
+				} catch (IllegalAccessException e) {
+					sb = new StringBuilder(
+							hashRef + " (Error accessing fields: "
+									+ e.getMessage() + ")");
+				} catch (Exception e) {
+					sb = new StringBuilder(hashRef + " (Runtime error: "
+							+ e.getClass().getSimpleName() + ")");
+				}
+			}
+			visitedPprintObjects.put(obj, sb.toString());
+
+			return sb.toString();
+		}
+		String getIndent(int indent) {
+			return INDENT_STRING.repeat(indent);
+		}
+		ArrayList<Field> getAllFields(Class<?> type) {
+			ArrayList<Field> fields = new ArrayList<>();
+			for (Class<?> c = type; c != null; c = c.getSuperclass()) {
+				fields.addAll(Arrays.asList(c.getDeclaredFields()));
+			}
+			return fields;
+		}
+	}
+	public static void pprint(Object o) {
+		new __pprint().pprint(o);
+	}
 	public static void main(String[] args) {
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
 		// $upper(love). %nc is how much I want to earn coding. &4.2+.3",
@@ -82409,5 +82526,9 @@ public class KL {
 		print("$valid if 2==2 else invalid");
 		print("$valid if x in vertex else invalid");
 		kaho("$sahi agar 5=={2+3} warna galat");
+		kaho("$ha agar 3xy me x warna Nahi");
+		print("$5 if 5 > 5.5 else 5.5");
+		print("$pass if x in 7x else fail");
+
 	}
 }
