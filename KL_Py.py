@@ -108,6 +108,10 @@ def entries(dictionary: dict):
 keysOf = keys
 valuesOf = values
 entriesOf = entries
+def remove_duplicates(lst: list) -> list:
+	if not lst:
+		return []
+	return list(dict.fromkeys(lst).keys())
 def get_private_declarations() -> o:
     [variables, classes, functions] = [{}, {}, {}]
     for name, obj in locals().items():
@@ -1055,6 +1059,7 @@ def main() -> none:
     print(isstr(None))
     print(isfunc(internet_access))
     print(flatten([1, [2, [3, 4, [5, 6]]]]))
+    print(remove_duplicates([1, 3, 1, 5, 6, 3, 7, 8, 9]))
     print(type(IntInput("Please enter an integer value: ")))
     
 if __name__ == "__main__":
