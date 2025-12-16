@@ -48759,6 +48759,9 @@ public class KL {
 			Object[] zippedArgB) {
 		return collect(arg, zippedArgA, zippedArgB);
 	}
+	public static <T> T from(T o) {
+		return o;
+	}
 	public static Object[][] from(String[] arg, String[] zippedArg) {
 		return collect(arg, zippedArg);
 	}
@@ -50367,6 +50370,9 @@ public class KL {
 	}
 	public static Object[][] from(boolArr arg) {
 		return kv(arg);
+	}
+	public static <T> T of(T o) {
+		return o;
 	}
 	public static Object[][] of(String[] arg, String[] zippedArg) {
 		return collect(arg, zippedArg);
