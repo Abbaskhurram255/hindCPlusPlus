@@ -12,7 +12,7 @@ from copy import deepcopy
 from pathlib import Path
 import os, sys, json, shutil, base64, requests, math, re, inspect, ast, webbrowser
 from hindGui import *
-argv: list[str] = sys.argv
+argv: list[str] = sys.argv[1:]
 date = time = datetime
 rand_int = randint
 rand_flt = uniform
