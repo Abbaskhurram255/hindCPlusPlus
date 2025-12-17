@@ -21,7 +21,9 @@ choices = sample
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 Str = lafz = jumla = str
-num = Number
+nr = num = Number
+Infinity = infinity = inf
+IntInfinity = int_infinity = int_inf = intinf = sys.maxsize
 goto = webbrowser.open
 link = webbrowser
 typename = TypeT = typeT = TypeVar("T")
@@ -264,7 +266,7 @@ is_iterable = isiterable = lambda x: isinstance(x, Iterable)
 isnt_iterable = isntiterable = non_iterable = noniterable = lambda x: not is_iterable(x)
 is_callable = iscallable = is_function = isfunction = is_func = isfunc = lambda x: callable(x)
 isnt_callable = isntcallable = non_callable = noncallable = lambda x: not is_callable(x)
-def split(srcString: str, regex: str, maxsplits: int, flags: int) -> str:
+def split(srcString: str, regex: str, maxsplits: int = IntInfinity, flags: int = 0) -> str:
     return re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
     occurences: list[str] = re.findall(to_replace, src)
@@ -424,11 +426,12 @@ class File:
             if not fname:
                 raise ValueError("File name is required")
             with open(fname, 'r') as f:
-                return f.read()
+                contents: str = f.read()
+                return contents
         except ValueError as e:
             print(f"[KL.file.JobFailed]: {e}")
         except FileNotFoundError:
-            print(f"[KL.file.JobFailed]: File {fname} not found")
+            print(f"[KL.file.JobFailed]: File {fname} does not exist")
         except PermissionError:
             print(f"[KL.file.JobFailed]: Permission denied to read file {fname}")
         except OSError as e:
@@ -436,6 +439,21 @@ class File:
         except Exception as e:
             print(f"[KL.file.JobFailed]: {e}")
         return ""
+    @staticmethod
+    def get_lines(fname: str) -> list[str]:
+    	contents: str = File.read(fname)
+    	lines: list[str] = []
+    	if not contents.strip():
+    		return False
+    	if re.search(r"\n", contents):
+            split_content: list[str] = split(contents, r"\n")
+            for line in split_content:
+                lines.append(line)
+    	else:
+        	lines.append(contents)
+        	# no lines found other than the first, append the contents as-is
+    	return lines
+    readlines = read_lines = getlines = get_lines
     @staticmethod
     def readJson(fname: str) -> Optional[dict]:
         try:
@@ -504,7 +522,7 @@ class File:
         except ValueError as e:
             print(f"[KL.file.JobFailed]: {e}")
         except FileNotFoundError:
-            print(f"[KL.file.JobFailed]: File {fname} not found")
+            print(f"[KL.file.JobFailed]: File {fname} does not exist")
         except PermissionError:
             print(f"[KL.file.JobFailed]: Permission denied to delete file {fname}")
         except OSError as e:
@@ -527,7 +545,7 @@ class File:
         except ValueError as e:
             print(f"[KL.file.JobFailed]: {e}")
         except FileNotFoundError:
-            print(f"[KL.file.JobFailed]: File {fname} not found")
+            print(f"[KL.file.JobFailed]: File {fname} does not exist")
         except PermissionError:
             print(f"[KL.file.JobFailed]: Permission denied to rename file {fname}")
         except OSError as e:
@@ -552,7 +570,7 @@ class File:
         except ValueError as e:
             print(f"[KL.file.JobFailed]: {e}")
         except FileNotFoundError:
-            print(f"[KL.file.JobFailed]: File {from_path} not found")
+            print(f"[KL.file.JobFailed]: File {from_path} does not exist")
         except PermissionError:
             print(f"[KL.file.JobFailed]: Permission denied to copy file {from_path}")
         except OSError as e:
@@ -560,7 +578,7 @@ class File:
         except Exception as e:
             print(f"[KL.file.JobFailed]: {e}")
         return False
-file: Callable = File
+file: File = File
 def encode(data: any) -> str:
     try:
             return base64.b64encode(str(data).encode()).decode()
@@ -627,7 +645,6 @@ def main() -> none:
     print(remove_duplicates([1, 3, 1, 5, 6, 3, 7, 8, 9]))
     print(kism(7.5))
     print(he_kism(7.5, float))
-    print(type(IntInput("Please enter an integer value: ")))
     
 if __name__ == "__main__":
     main()
