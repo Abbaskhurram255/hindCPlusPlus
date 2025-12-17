@@ -160,21 +160,26 @@ def reverse(x: str | list[any]):
 	return x[::-1]
 filter = lambda arr, condition: filter(condition, arr)
 # test this
-lim = lambda *args, **kwargs: list(range(*args, **kwargs))
+bw = lambda *args, **kwargs: list(range(*args, **kwargs))
 def rng(x: str|list|tuple) -> list[int]:
     return_list: list[int] = []
-    for i in lim(len(x)-1):
+    for i in bw(len(x)-1):
         print(i)
         return_list[i] = i
     return return_list
 def f(*args) -> str:
     formatted: str = ""
     curframe: Optional[FrameType] = inspect.currentframe()
-    caller_locals: obj = obj(curframe.f_locals | curframe.f_globals)
-    while hasattr(curframe, "f_back") and curframe.f_back != None:
-        caller_locals = caller_locals | curframe.f_locals | curframe.f_globals
+    frames: list[Optional[FrameType]] = []
+    caller_locals: obj = {}
+    while curframe is not None:
+        frames.append(curframe)
         curframe = curframe.f_back
         # keep retrieving until you hit the oldest ancestor
+    frames = reversed(frames)
+    # reverse the frames to prioritize the closest local scope first
+    for scope in frames:
+    	caller_locals.update(scope.f_locals)
     blacklisted_keywords: list = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
     blacklisted_functions: list = ['system', 'popen', 'subprocess']
     blacklisted_items: list = blacklisted_keywords + blacklisted_functions
@@ -188,35 +193,15 @@ def f(*args) -> str:
                     continue
             # Evaluate the expression
             arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
-            formatted += eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
+            # fixing a logical bug...
+            arg = replace(arg, r",\}", "}")
+            evaluation = eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
+            formatted += evaluation
         except Exception:
-            ...
+            return ""
     return formatted
 def printf(*args):
-    formatted: str = ""
-    curframe: Optional[FrameType] = inspect.currentframe()
-    caller_locals: obj = obj(curframe.f_locals | curframe.f_globals)
-    while hasattr(curframe, "f_back") and curframe.f_back != None:
-        caller_locals = caller_locals | curframe.f_locals | curframe.f_globals
-        curframe = curframe.f_back
-        # keep retrieving until you hit the oldest ancestor
-    blacklisted_keywords: list = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
-    blacklisted_functions: list = ['system', 'popen', 'subprocess']
-    blacklisted_items: list = blacklisted_keywords + blacklisted_functions
-    for arg in args:
-        try:
-            ast.parse(f"f'{arg}'")
-            arg_lower: str = arg.lower()
-            for item in blacklisted_items:
-                if item in arg_lower:
-                    print(f"Forbidden keyword/function in input: '{item}'")
-                    continue
-            # Evaluate the expression
-            arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
-            formatted += eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
-        except Exception:
-            ...
-    print(formatted)
+    print(f(*args))
 kaho = printf
 def flatten(lst: list) -> list:
     if lst is None:
@@ -240,6 +225,11 @@ def hissa(x: str|list|tuple, y: str|list|tuple) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return match_i(x, y)
     return x in y
+def kism(x: Any) -> type:
+	return type(x)
+def he_kism(x: Any, y: type) -> bool:
+	return isinstance(x, y)
+is_type = istype = he_kism
 def barabar(x, y) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return x.lower() == y.lower()
@@ -604,6 +594,8 @@ def filepath(to_filename: str) -> str:
     return os.path.join(os.getcwd(), to_filename)
 file_path = path_to = filepath
 
+name: str = "Cindy"
+
 def main() -> none:
     print(Int("100", 2))
     print(Flt("2.22"))
@@ -633,6 +625,8 @@ def main() -> none:
     print(isfunc(internet_access))
     print(flatten([1, [2, [3, 4, [5, 6]]]]))
     print(remove_duplicates([1, 3, 1, 5, 6, 3, 7, 8, 9]))
+    print(kism(7.5))
+    print(he_kism(7.5, float))
     print(type(IntInput("Please enter an integer value: ")))
     
 if __name__ == "__main__":
