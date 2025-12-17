@@ -60849,8 +60849,35 @@ public class KL {
 	public static boolean isBoolean(Object o) {
 		return isBool(o);
 	}
+	public static boolean isMap(Object o) {
+		if (isNull(o))
+			return false;
+		return o instanceof Map;
+		// True? cast o as (Map<?, ?> o)
+		// --- the root of all maps (hashmaps, treemaps, etc.)
+		// --- and start working on it.
+		// It will save time.
+	}
+	public static boolean isCollection(Object o) {
+		if (isNull(o))
+			return false;
+		return o instanceof Collection;
+		// True? cast o as (Collection<?, ?> o),
+		// --- the root of all collections (lists, sets, etc.)
+		// --- and start working on it.
+		// It will save time.
+	}
+	public static boolean isColl(Object o) {
+		return isCollection(o);
+		// true? cast o as (Collection<?, ?> o),
+		// --- the root of all collections (lists, sets, etc.)
+		// --- and start working on it,
+		// it will save time.
+	}
 	public static boolean isArr(Object o) {
-		return type(o, Arr);
+		if (isNull(o))
+			return false;
+		return type(o, Arr) || o.getClass().isArray();
 	}
 	public static boolean isArray(Object o) {
 		return isArr(o);
@@ -82178,11 +82205,14 @@ public class KL {
 		// Use IdentityHashMap to track visited pprint objects by reference, preventing cycles
 		IdentityHashMap<Object, String> visitedPprintObjects = new IdentityHashMap<>();
 		void pprint(Object obj) {
-			System.out.println(kl.hf(pformat(obj, 0)));
+			System.out.println(pformat(obj, 0));
+		}
+		void saaf_kaho(Object obj) {
+			System.out.println(hpformat(obj, 0));
 		}
 		String pformat(Object obj, int indent) {
 			if (obj == null) {
-				return "null";
+				return "none";
 			}
 			if (visitedPprintObjects.containsKey(obj)) {
 				return visitedPprintObjects.get(obj);
@@ -82192,56 +82222,100 @@ public class KL {
 			StringBuilder sb = new StringBuilder();
 			String currentIndentStr = getIndent(indent);
 			String nextIndentStr = getIndent(indent + 1);
-			if (obj instanceof String) {
-				sb.append(obj);
-			} else if (obj instanceof Number || obj instanceof Boolean
-					|| obj instanceof Character) {
-				sb.append(obj.toString());
+			if (obj instanceof Character) {
+				sb.append("'" + obj + "'");
+			} else if (obj instanceof String) {
+				sb.append("\"" + obj + "\"");
+			} else if (obj instanceof Number) {
+				String formattedNumber = "";
+				if (isInt(obj))
+					formattedNumber = fus((int) obj);
+				else if (isLong(obj))
+					formattedNumber = fus((long) obj) + "L";
+				else if (isFlt(obj))
+					formattedNumber = fus((float) obj) + "F";
+				else if (isDbl(obj))
+					formattedNumber = fus((double) obj);
+				sb.append("" + formattedNumber);
+			} else if (obj instanceof Boolean) {
+				sb.append((Boolean) obj == true ? "Yes" : "No");
 			} else if (obj.getClass().isArray()) {
-				sb.append("[\n");
 				int length = java.lang.reflect.Array.getLength(obj);
-				for (int i = 0; i < length; i++) {
-					sb.append(nextIndentStr).append(pformat(
-							java.lang.reflect.Array.get(obj, i), indent + 1));
-					if (i < length - 1) {
-						sb.append(",");
+				if (not(length)) {
+					sb.append("[]");
+				} else {
+					sb.append("[\n");
+					for (int i = 0; i < length; i++) {
+						boolean isntLast = i < length - 1;
+						sb.append(nextIndentStr)
+								.append(pformat(
+										java.lang.reflect.Array.get(obj, i),
+										indent + 1));
+						if (isntLast) {
+							sb.append(",");
+						}
+						sb.append("\n");
 					}
-					sb.append("\n");
+					sb.append(currentIndentStr).append("]");
 				}
-				sb.append(currentIndentStr).append("]");
 			} else if (obj instanceof Collection) {
-				sb.append("[\n");
-				for (Object item : (Collection<?>) obj) {
-					sb.append(nextIndentStr).append(pformat(item, indent + 1))
-							.append(",\n");
+				if (((Collection<?>) obj).isEmpty()) {
+					sb.append("[]");
+				} else {
+					sb.append("[\n");
+					int i = 0, length = ((Collection<?>) obj).size();
+					for (Object item : (Collection<?>) obj) {
+						boolean isntLast = i < length - 1;
+						sb.append(nextIndentStr)
+								.append(pformat(item, indent + 1));
+						if (isntLast) {
+							sb.append(",");
+						}
+						sb.append("\n");
+						i++;
+					}
+					sb.append(currentIndentStr).append("]");
 				}
-				if (!((Collection<?>) obj).isEmpty()) {
-				}
-				sb.append(currentIndentStr).append("]");
 			} else if (obj instanceof Map) {
-				sb.append("{\n");
-				for (Map.Entry<?, ?> entry : ((Map<?, ?>) obj).entrySet()) {
-					sb.append(nextIndentStr)
-							.append(pformat(entry.getKey(), indent + 1))
-							.append(": ")
-							.append(pformat(entry.getValue(), indent + 1))
-							.append(",\n");
+				if (((Map<?, ?>) obj).isEmpty()) {
+					sb.append("{}");
+				} else {
+					sb.append("{\n");
+					int i = 0, length = ((Map<?, ?>) obj).entrySet().size();
+					for (Map.Entry<?, ?> entry : ((Map<?, ?>) obj).entrySet()) {
+						Object key = entry.getKey(), value = entry.getValue();
+						boolean isntLast = i < length - 1;
+						sb.append(nextIndentStr)
+								.append(pformat(key, indent + 1)).append(": ")
+								.append(pformat(value, indent + 1));
+						if (isntLast) {
+							sb.append(",");
+						}
+						sb.append("\n");
+						i++;
+					}
+					sb.append(currentIndentStr).append("}");
 				}
-				sb.append(currentIndentStr).append("}");
 			} else {
-				sb.append(obj.getClass().getSimpleName()).append("({\n");
+				sb.append(obj.getClass().getSimpleName()).append(" ({\n");
 				try {
 					ArrayList<Field> fields = getAllFields(obj.getClass());
 					AccessibleObject.setAccessible(fields.toArray(new Field[0]),
 							true);
+					int i = 0, length = fields.size();
 					for (Field field : fields) {
+						boolean isntLast = i < length - 1;
 						if (Modifier.isStatic(field.getModifiers()))
 							continue;
 						Object fieldValue = field.get(obj); // Access the private field value
 						sb.append(nextIndentStr).append(field.getName())
 								.append(": ")
-								.append(pformat(fieldValue, indent + 1))
-								.append(",\n");
+								.append(pformat(fieldValue, indent + 1));
+						if (isntLast) {
+							sb.append(",");
+						}
+						sb.append("\n");
+						i++;
 					}
 					sb.append(currentIndentStr).append("})");
 				} catch (IllegalAccessException e) {
@@ -82253,9 +82327,142 @@ public class KL {
 							+ e.getClass().getSimpleName() + ")");
 				}
 			}
-			visitedPprintObjects.put(obj, sb.toString());
-
-			return sb.toString();
+			String result = sb.toString();
+			visitedPprintObjects.put(obj, result);
+			result = result.replaceAll(
+					"\"(?<mapKey>\\-?\\d*\\.?\\d+)\"(?=\\:\\s)", "${mapKey}");
+			// NOTE:
+			// for NUMERIC or NUMERIC-KEY-SUPPORTING MAPS,
+			// KEYS should NOT BE WRAPPED
+			// in double quotes
+			return result;
+		}
+		String hpformat(Object obj, int indent) {
+			if (obj == null) {
+				return "khaal";
+			}
+			if (visitedPprintObjects.containsKey(obj)) {
+				return visitedPprintObjects.get(obj);
+			}
+			String hashRef = "";
+			visitedPprintObjects.put(obj, hashRef);
+			StringBuilder sb = new StringBuilder();
+			String currentIndentStr = getIndent(indent);
+			String nextIndentStr = getIndent(indent + 1);
+			if (obj instanceof Character) {
+				sb.append("'" + obj + "'");
+			} else if (obj instanceof String) {
+				sb.append("\"" + obj + "\"");
+			} else if (obj instanceof Number) {
+				String formattedNumber = "";
+				if (isInt(obj))
+					formattedNumber = f((int) obj);
+				else if (isLong(obj))
+					formattedNumber = f((long) obj) + "L";
+				else if (isFlt(obj))
+					formattedNumber = f((float) obj) + "F";
+				else if (isDbl(obj))
+					formattedNumber = f((double) obj);
+				sb.append("" + formattedNumber);
+			} else if (obj instanceof Boolean) {
+				sb.append((Boolean) obj == true ? "Ha" : "Nahi");
+			} else if (obj.getClass().isArray()) {
+				int length = java.lang.reflect.Array.getLength(obj);
+				if (not(length)) {
+					sb.append("[]");
+				} else {
+					sb.append("[\n");
+					for (int i = 0; i < length; i++) {
+						boolean isntLast = i < length - 1;
+						sb.append(nextIndentStr)
+								.append(pformat(
+										java.lang.reflect.Array.get(obj, i),
+										indent + 1));
+						if (isntLast) {
+							sb.append(",");
+						}
+						sb.append("\n");
+					}
+					sb.append(currentIndentStr).append("]");
+				}
+			} else if (obj instanceof Collection) {
+				if (((Collection<?>) obj).isEmpty()) {
+					sb.append("[]");
+				} else {
+					sb.append("[\n");
+					int i = 0, length = ((Collection<?>) obj).size();
+					for (Object item : (Collection<?>) obj) {
+						boolean isntLast = i < length - 1;
+						sb.append(nextIndentStr)
+								.append(pformat(item, indent + 1));
+						if (isntLast) {
+							sb.append(",");
+						}
+						sb.append("\n");
+						i++;
+					}
+					sb.append(currentIndentStr).append("]");
+				}
+			} else if (obj instanceof Map) {
+				if (((Map<?, ?>) obj).isEmpty()) {
+					sb.append("{}");
+				} else {
+					sb.append("{\n");
+					int i = 0, length = ((Map<?, ?>) obj).entrySet().size();
+					for (Map.Entry<?, ?> entry : ((Map<?, ?>) obj).entrySet()) {
+						Object key = entry.getKey(), value = entry.getValue();
+						boolean isntLast = i < length - 1;
+						sb.append(nextIndentStr)
+								.append(pformat(key, indent + 1)).append(": ")
+								.append(pformat(value, indent + 1));
+						if (isntLast) {
+							sb.append(",");
+						}
+						sb.append("\n");
+						i++;
+					}
+					sb.append(currentIndentStr).append("}");
+				}
+			} else {
+				sb.append(obj.getClass().getSimpleName()).append(" ({\n");
+				try {
+					ArrayList<Field> fields = getAllFields(obj.getClass());
+					AccessibleObject.setAccessible(fields.toArray(new Field[0]),
+							true);
+					int i = 0, length = fields.size();
+					for (Field field : fields) {
+						boolean isntLast = i < length - 1;
+						if (Modifier.isStatic(field.getModifiers()))
+							continue;
+						Object fieldValue = field.get(obj); // Access the private field value
+						sb.append(nextIndentStr).append(field.getName())
+								.append(": ")
+								.append(pformat(fieldValue, indent + 1));
+						if (isntLast) {
+							sb.append(",");
+						}
+						sb.append("\n");
+						i++;
+					}
+					sb.append(currentIndentStr).append("})");
+				} catch (IllegalAccessException e) {
+					sb = new StringBuilder(
+							hashRef + " (Error accessing fields: "
+									+ e.getMessage() + ")");
+				} catch (Exception e) {
+					sb = new StringBuilder(hashRef + " (Runtime error: "
+							+ e.getClass().getSimpleName() + ")");
+				}
+			}
+			String result = sb.toString();
+			visitedPprintObjects.put(obj, result);
+			result = result.replaceAll(
+					"\"(?<mapKey>\\-?\\d*\\.?\\d+)\"(?=\\:\\s)", "${mapKey}");
+			// NOTE:
+			// for NUMERIC or NUMERIC-KEY-SUPPORTING MAPS,
+			// KEYS should NOT BE WRAPPED
+			// in double quotes
+			return result;
 		}
 		String getIndent(int indent) {
 			return INDENT_STRING.repeat(indent);
@@ -82270,6 +82477,9 @@ public class KL {
 	}
 	public static void pprint(Object o) {
 		new __pprint().pprint(o);
+	}
+	public static void saaf_kaho(Object o) {
+		new __pprint().saaf_kaho(o);
 	}
 	public static void main(String[] args) {
 		// print("Hi, it's $name, $age. $toRoman(&2+3) is my height.
@@ -82445,7 +82655,7 @@ public class KL {
 		print(none, "hello", "to", "me");
 		hint helps_kill_the_additional_whitespace_otherwise_added_after_each_argument;
 		o user = o(
-				"{name: {first->Tahani; middle->Al; last->Jamil}, nationality: British-Pakistani, age: 32, hobbies: [Netflix; gossip; & partying]}",
+				"{name: {first->Tahani; middle->Al; last->Jamil}, nationality: British-Pakistani, age: 320000, hobbies: [Netflix; gossip; & partying]}, 5600: x, Yes: y, Ha: z",
 				"{dying: !true}");
 		user.set("{dying: !false}");
 		print(user.k("name", _s));
@@ -82535,6 +82745,9 @@ public class KL {
 		kaho("$ha agar 3xy me x warna Nahi");
 		print("$5 if 5 > 5.5 else 5.5");
 		print("$pass if x in 7x else fail");
-
+		pprint(user);
+		print(user.k("Yes"));
+		pprint(new arr(2, -3, 4L, 5.5F, 6F, 7.2, 8.3));
+		print(f(-300000.5));
 	}
 }
