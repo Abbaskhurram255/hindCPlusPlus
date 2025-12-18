@@ -210,12 +210,13 @@ def f(*args) -> str:
             # fixing a logical bug...
             arg = replace(arg, r",\}", "}")
             evaluation = eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
-            formatted += evaluation
+            formatted += " " + evaluation
+            formatted = formatted.strip()
         except Exception:
             return ""
     return formatted
-def printf(*args):
-    print(f(*args))
+def printf(*args, **kwargs):
+    print(f(*args), **kwargs)
 kaho = printf
 def flatten(lst: list) -> list:
     if lst is None:
