@@ -10,7 +10,8 @@ from numbers import Number
 from datetime import datetime
 from copy import deepcopy
 from pathlib import Path
-import os, sys, json, shutil, base64, requests, math, re, inspect, ast, webbrowser
+import os, sys, json, shutil, base64, requests, math, re, ast, webbrowser
+from inspect import *
 from hindGui import *
 argv: list[str] = sys.argv[1:]
 date = time = datetime
@@ -116,34 +117,45 @@ def remove_duplicates(lst: list) -> list:
 	if not lst:
 		return []
 	return list(dict.fromkeys(lst).keys())
-def get_private_declarations() -> o:
+def get_local_declarations() -> o:
+    """
+    @return
+        <dict>
+        ::a dictionary holding all the local variables, (sub)classes (of classes), and the functions of the local scope of a class/function
+    """
     [variables, classes, functions] = [{}, {}, {}]
-    for name, obj in locals().items():
+    frame = currentframe().f_back
+    for name, obj in frame.f_locals.items():
         # Exclude built-in names and imported modules
-        if not name.startswith('__') and inspect.getmodule(obj) is sys.modules[__name__]:
-            if inspect.isfunction(obj):
+        if not name.startswith('__'):
+            if isfunction(obj):
                 functions[name] = obj
-            elif inspect.isclass(obj):
+            elif isclass(obj):
                 classes[name] = obj
             # For variables, we can assume anything else that's not a function or class
             # and is user-defined in this module is a variable.
             # This is a simplification; more robust checks might be needed for complex cases.
-            elif not inspect.ismodule(obj): # Exclude imported modules
+            elif not ismodule(obj):                           # Exclude imported modules
                 variables[name] = obj
     return o(variables=variables, classes=classes, functions=functions)
 def get_global_declarations() -> o:
+    """
+    @return
+        <dict>
+        ::a dictionary holding all the local variables, (sub)classes (of classes), and the functions of the local scope of a class/function
+    """
     [variables, classes, functions] = [{}, {}, {}]
     for name, obj in globals().items():
         # Exclude built-in names and imported modules
-        if not name.startswith('__') and inspect.getmodule(obj) is sys.modules[__name__]:
-            if inspect.isfunction(obj):
+        if not name.startswith('__') and getmodule(obj) is sys.modules[__name__]:
+            if isfunction(obj):
                 functions[name] = obj
-            elif inspect.isclass(obj):
+            elif isclass(obj):
                 classes[name] = obj
             # For variables, we can assume anything else that's not a function or class
             # and is user-defined in this module is a variable.
             # This is a simplification; more robust checks might be needed for complex cases.
-            elif not inspect.ismodule(obj): # Exclude imported modules
+            elif not ismodule(obj):                          # Exclude imported modules
                 variables[name] = obj
     return o(variables=variables, classes=classes, functions=functions)
 sort = sorted
@@ -171,7 +183,7 @@ def rng(x: str|list|tuple) -> list[int]:
     return return_list
 def f(*args) -> str:
     formatted: str = ""
-    curframe: Optional[FrameType] = inspect.currentframe()
+    curframe: Optional[FrameType] = currentframe()
     frames: list[Optional[FrameType]] = []
     caller_locals: obj = {}
     while curframe is not None:
