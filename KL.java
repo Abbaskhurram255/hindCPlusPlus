@@ -381,7 +381,7 @@ public class KL {
 		sql(int port, String db) {
 			this(port, db, USER, PASS);
 		}
-		String __translateSQL(String toTranslate) {
+		public static String __translateSQL(String toTranslate) {
 			String translated = toTranslate
 					.replaceAll("\\bbana[eo]i?n?\\b", "create")
 					.replaceAll("\\b,?(\\s)agar\\b", "$1if")
@@ -425,8 +425,20 @@ public class KL {
 					.replaceAll("\\shen\\b", "").replaceAll("[\\{\\[]", "\\(")
 					.replaceAll("[\\}\\]]", "\\)")
 					.replaceAll(
-							"\\b(jaha{1,2}n?|(ba)?s(u|oo)rat|(tab\\W)?jab)\\b",
+							"(?:\\s(?:jaha{1,2}n|shart|(?:jin[\\s_]?){1,2}[km]e)\\:?){1,2}\\b",
 							"where")
+					.replaceAll("[\"\'](\\w+)[\"\']\\s(?:je)?sa",
+							"rlike \".*$1.*\"")
+					.replaceAll("[\"\'](\\w+)[\"\'] (?:[sp]e[_\\s]shuru)",
+							"rlike \"^$1\"")
+					.replaceAll("[\"\'](\\w+)[\"\'] (?:[sp]e[_\\s](khata?m))",
+							"rlike \"$1\\$\"")
+					.replaceAll(
+							"(?:delete(?:\\skaro)?|gira{1,2}o) (?:columns\\s)?(?:(?:table|(un[\\s_]?){1,2})\\s)?(?<tablename>\\`?\\w+\\`?) (?:k[oe]|me[\\s_]?se),?(?:\\s(?:jaha{1,2}n|shart|(?:jin[\\s_]?){1,2}[km]e)\\:?){0,2}",
+							"delete ${tablename} where")
+					.replaceAll(
+							"(?:update(?:\\skaro)?|badlo) (?:columns\\s)?(?:(?:table|(un[\\s_]?){1,2})\\s)?(?<tablename>\\`?\\w+\\`?) (?:k[oe]|(me[\\s_]?se)),? set (?<k>\\w+) (?:ba?ra?ba?r|=|eq) (?<v>[\"\']?\\w+[\"\']?),?(?:\\s(?:jaha{1,2}n|shart|(?:jin[\\s_]?){1,2}[km]e)\\:?){0,2}",
+							"update ${tablename} set ${k} = ${v} where")
 					.replaceAll("\\b\\bbar(a|i)_ya_ba?ra{0,2}ba?r\\b", ">=")
 					.replaceAll("\\bchot(a|i)_ya_ba?ra{0,2}ba?r\\b", "<=")
 					.replaceAll("\\bbar(a|i)\\b", ">")
@@ -444,6 +456,8 @@ public class KL {
 							"\\*")
 					.replaceAll("\\b(?<tablename>`?\\w+`?)\\s(me[\\W_])?se\\b",
 							"FROM ${tablename}");
+			if (!endsWith(translated, ";"))
+				translated += ";";
 			return translated;
 		}
 		String __readSQLFromFile(String filePath) {
@@ -458,11 +472,21 @@ public class KL {
 			File fileParsedFromUrl = file.fromUrl(parsedUrl);
 			if (not(fileParsedFromUrl))
 				return "";
+			Scanner sc;
 			try {
-				return new Scanner(fileParsedFromUrl).useDelimiter("\\Z")
-						.next();
-			} catch (FileNotFoundException | SecurityException e) {
+				sc = new Scanner(fileParsedFromUrl);
+			} catch (FileNotFoundException e) {
 				return "";
+			}
+			if (not(fileParsedFromUrl))
+				return "";
+			try {
+				return sc.useDelimiter("\\Z").next();
+			} catch (NoSuchElementException | IllegalStateException
+					| SecurityException e) {
+				return "";
+			} finally {
+				sc.close();
 			}
 		}
 		boolean exec(String c) {
@@ -82748,6 +82772,6 @@ public class KL {
 		pprint(user);
 		print(user.k("Yes"));
 		pprint(new arr(2, -3, 4L, 5.5F, 6F, 7.2, 8.3));
-		print(f(-300000.5));
+		print(-300000.5);
 	}
 }
