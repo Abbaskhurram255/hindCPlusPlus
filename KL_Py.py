@@ -1,7 +1,7 @@
 from types import *
 from typing import List, Callable, TypeVar, NewType, Any, Optional, Union, Final
 from collections import defaultdict
-from collections.abc import Iterable, Sequence
+from collections.abc import Sequence
 from functools import reduce, lru_cache, cache
 from dataclasses import dataclass
 from math import *
@@ -11,8 +11,11 @@ from datetime import datetime
 from copy import deepcopy
 from pathlib import Path
 import os, sys, json, shutil, base64, requests, math, re, ast, webbrowser
+from re import escape
+from enum import Enum
 from inspect import *
 from hindGui import *
+Iterable = str | list | tuple
 argv: list[str] = sys.argv[1:]
 date = time = datetime
 rand_int = randint
@@ -117,7 +120,7 @@ def remove_duplicates(lst: list) -> list:
 	if not lst:
 		return []
 	return list(dict.fromkeys(lst).keys())
-def get_local_declarations() -> o:
+def get_local_declarations() -> obj:
     """
     @return
         <dict>
@@ -138,7 +141,7 @@ def get_local_declarations() -> o:
             elif not ismodule(obj):                           # Exclude imported modules
                 variables[name] = obj
     return o(variables=variables, classes=classes, functions=functions)
-def get_global_declarations() -> o:
+def get_global_declarations() -> obj:
     """
     @return
         <dict>
@@ -174,18 +177,74 @@ def reverse(x: str | list[any]):
 	return x[::-1]
 filter = lambda arr, condition: filter(condition, arr)
 # test this
-bw = lambda *args, **kwargs: list(range(*args, **kwargs))
-def rng(x: str|list|tuple) -> list[int]:
-    return_list: list[int] = []
-    for i in bw(len(x)-1):
-        print(i)
-        return_list[i] = i
+def bw(x: list|int, y: list|int) -> list[int]:
+	if x is None or not isinstance(x, (list, int)) or not isinstance(y, (list, int)):
+		result: list[int] = []
+		for i in range(x, y):
+			result[i] = i
+		return result
+		
+def rng(x: str|list|tuple|Number, y: str|list|tuple|Number|None = None, step: Number = 1) -> list[int] | list[float]:
+    if x is None or not isinstance(x, (str, list, tuple, Number)) or not isinstance(y, (str, list, tuple, Number, NoneType)) or step is None or not isinstance(step, Number):
+    	return []
+    if step <= 0 or (isinstance(x, Number) and step >= x) or (isinstance(x, (str, list, tuple)) and step >= len(x)):
+    	step = 1
+    return_list: list[int] | list[float] = []
+    if y is None:
+    	if not isinstance(x, Number) and isinstance(step, int):
+        	i: int = 0
+        	while i < len(x):
+        		return_list.append(i)
+        		i += step
+        	return return_list
+    	x = abs(x)
+    	if isinstance(x, int) and isinstance(step, int):
+    	    i: int = 0
+    	    while i < x:
+        		return_list.append(i)
+        		i += step
+    	if isinstance(x, float):
+    	    i: float = 0
+    	    while i < x:
+    	    	return_list.append(i)
+    	    	i += step
+    	return return_list
+    if (isinstance(x, int) and isinstance(step, int)) and not isinstance(y, Number):
+    	y_length: int = len(y)
+    	if x < 0 or x >= y_length:
+    		return []
+    	while x < y_length:
+        	return_list.append(i)
+        	i += step
+    	return return_list
+    if isinstance(x, int) and isinstance(y, int) and isinstance(step, int):
+    	if x == y:
+    	    return []
+    	if x > y:
+    	    while x >= y:
+    	        return_list.append(i)
+    	        i -= step
+    	else:
+    		while x <= y:
+    		    return_list.append(i)
+    		    i += step
+    if isinstance(x, float) or isinstance(y, float):
+    	if x == y:
+    		return []
+    	if x > y:
+    	    while x >= y:
+    	        return_list.append(i)
+    	        i -= step
+    	else:
+    		while x <= y:
+    		    return_list.append(i)
+    		    i += step
     return return_list
 def f(*args) -> str:
     formatted: str = ""
     curframe: Optional[FrameType] = currentframe()
     frames: list[Optional[FrameType]] = []
-    caller_locals: obj = {}
+    caller_locals: dict[str, Any] = {}
     while curframe is not None:
         frames.append(curframe)
         curframe = curframe.f_back
@@ -194,10 +253,12 @@ def f(*args) -> str:
     # reverse the frames to prioritize the closest local scope first
     for scope in frames:
     	caller_locals.update(scope.f_locals)
-    blacklisted_keywords: list = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
-    blacklisted_functions: list = ['system', 'popen', 'subprocess']
-    blacklisted_items: list = blacklisted_keywords + blacklisted_functions
+    blacklisted_keywords: list[str] = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
+    blacklisted_functions: list[str] = ['system', 'popen', 'subprocess']
+    blacklisted_items: list[str] = blacklisted_keywords + blacklisted_functions
     for arg in args:
+        if isinstance(arg, bool):
+        	arg = "Yes" if arg == True else "No"
         try:
             ast.parse(f"f'{arg}'")
             arg_lower: str = arg.lower()
@@ -206,14 +267,17 @@ def f(*args) -> str:
                     print(f"Forbidden keyword/function in input: '{item}'")
                     continue
             # Evaluate the expression
-            arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
-            # fixing a logical bug...
+            arg = re.sub(r"[\$\{]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
+            arg = re.sub(r'[\$\{]+([a-zA-Z_][a-zA-Z0-9_.]*(\(.*?\))?(?:[^\}]*)?)\}?', r'{\1}', arg)
+            # fixing a syntactic bug...
             arg = replace(arg, r",\}", "}")
-            evaluation = eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
-            formatted += " " + evaluation
-            formatted = formatted.strip()
+            evaluation: str = eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
+            WHITESPACE_CHAR = " "
+            # for readability, there should be a whitespace character after each argument, except the last one (though, for the last one, it does not really matter, as it usually goes unnoticed)
+            formatted += evaluation + WHITESPACE_CHAR
         except Exception:
             return ""
+    formatted = formatted.rstrip()
     return formatted
 def printf(*args, **kwargs):
     print(f(*args), **kwargs)
@@ -229,16 +293,28 @@ def flatten(lst: list) -> list:
             out.append(item)
     return out
 flat = flatten
-def clone(item: list|tuple|dict):
-    if item == None:
+def clone(item: list|tuple|dict) -> list|tuple|dict:
+    if item is None:
         return None
     return deepcopy(item)
-    #:params        item {{object to clone}}
-    #:types         [(list, tuple, dict),
-    #:returns       list|tuple {{cloned object}}]
-def hissa(x: str|list|tuple, y: str|list|tuple) -> haal:
+    """
+    __KL_Py.deepcopy__
+    
+    @param       item
+      @@type     (list, tuple, dict)
+						:: object to clone
+    @return        
+       @@type    (list, tuple, dict)
+                        :: a cloned object
+                           depending on
+                           the type passed
+                           in as the argument
+    """
+def hissa(x: str|list|tuple|dict, y: str|list|tuple|dict) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return match_i(x, y)
+    if not isinstance(x, str):
+    	return False
     return x in y
 def kism(x: Any) -> type:
 	return type(x)
@@ -250,12 +326,12 @@ def barabar(x, y) -> haal:
         return x.lower() == y.lower()
     return x == y
 def khali(x: Iterable) -> haal:
-    if x == None:
+    if x is None:
         return False
     return len(x) == 0
 is_empty = isempty = khali
 # type checks
-is_none = isnone = is_null = isnull = lambda x: x == None
+is_none = isnone = is_null = isnull = lambda x: x is None
 isnt_none = isntnone = non_none = nonnone = lambda x: not is_none(x)
 is_string = isstring = is_str = isstr = lambda x: isinstance(x, str)
 isnt_string = isntstring = isnt_str = isntstr = non_string = nonstring = non_str = nonstr = lambda x: not is_string(x)
@@ -282,25 +358,51 @@ isnt_callable = isntcallable = non_callable = noncallable = lambda x: not is_cal
 def split(srcString: str, regex: str, maxsplits: int = IntInfinity, flags: int = 0) -> str:
     return re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
-    occurences: list[str] = re.findall(to_replace, src)
-    for occurence in occurences:
-        src = re.sub(occurence, replacement, src)
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    	# allow empty replacement for removals
+    	return ""
+    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    # achieve JavaScript-like numbered-group convention ^
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    # achieve JavaScript-like named-group convention ^
+    src = re.sub(to_replace, replacement, src)
     return src
 def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
-    occurences: list[str] = re.findall(to_replace, src, re.IGNORECASE)
-    for occurence in occurences:
-        src = re.sub(occurence, replacement, src)
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    	# allow empty replacement for removals
+    	return ""
+    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    # achieve JavaScript-like numbered-group convention ^
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    # achieve JavaScript-like named-group convention ^
+    src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE)
     return src
 def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
-    occurences: list[str] = re.findall(to_replace, src)
-    if len(occurences) == 0:
-        return src
-    return re.sub(occurences[0], replacement, src)
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    	# allow empty replacement for removals
+    	return ""
+    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    # achieve JavaScript-like numbered-group convention ^
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    # achieve JavaScript-like named-group convention ^
+    src = re.sub(to_replace, replacement, src, count=1)
+    return src
+replace_first: Callable[[str, str, str, Optional[bool]], str] = replace_one
 def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
-    occurences: list[str] = re.findall(to_replace, src, re.IGNORECASE)
-    if len(occurences) == 0:
-        return src
-    return re.sub(occurences[0], replacement, src)
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    	# allow empty replacement for removals
+    	return ""
+    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    # achieve JavaScript-like numbered-group convention ^
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    # achieve JavaScript-like named-group convention ^
+    src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE, count=1)
+    return src
+replace_first_i: Callable[[str, str, str, Optional[bool]], str] = replace_one_i
 def find_matches(src: str, to_find: str) -> list:
     matches: list[str] = re.findall(to_find, src)
     return matches
@@ -314,7 +416,7 @@ def find_match(src: str, to_find: str) -> str:
     return matches[0]
 def find_match_i(src: str, to_find: str) -> str:
     matches: list[str] = find_matches_i(src, to_find)
-    if len(matches) == 0:
+    if len(matches) == 0 or not matches[0]:
         return ""
     return matches[0]
 def match(src: str, to_find: str) -> bool:
@@ -658,6 +760,10 @@ def main() -> none:
     print(remove_duplicates([1, 3, 1, 5, 6, 3, 7, 8, 9]))
     print(kism(7.5))
     print(he_kism(7.5, float))
+    printf("hi, $75000.77778:,")
+    x = 12345.6789
+    print(f("$x", "$x:.2f", f"{x:,}", f"{x:,.2f}"))
+    #pprint({"name": "Mike", "age": 17, "hobbies": ["horse riding", "country music", "farming"]})
     
 if __name__ == "__main__":
     main()
