@@ -176,19 +176,18 @@ def reverse(x: str | list[any]):
 		return x
 	return x[::-1]
 filter = lambda arr, condition: filter(condition, arr)
-# test this
-def bw(x: list|int, y: list|int) -> list[int]:
-	if x is None or not isinstance(x, (list, int)) or not isinstance(y, (list, int)):
-		result: list[int] = []
-		for i in range(x, y):
-			result[i] = i
-		return result
-		
+# test this	
 def rng(x: str|list|tuple|Number, y: str|list|tuple|Number|None = None, step: Number = 1) -> list[int] | list[float]:
     if x is None or not isinstance(x, (str, list, tuple, Number)) or not isinstance(y, (str, list, tuple, Number, NoneType)) or step is None or not isinstance(step, Number):
     	return []
-    if step <= 0 or (isinstance(x, Number) and step >= x) or (isinstance(x, (str, list, tuple)) and step >= len(x)):
-    	step = 1
+    if step <= 0:
+        step = 1
+    if isinstance(y, Number) and step >= y:
+        step = 1
+    if isinstance(x, (str, list, tuple)) and step >= len(x):
+        step = 1
+    if isinstance(y, (str, list, tuple)) and step >= len(y):
+        step = 1
     return_list: list[int] | list[float] = []
     if y is None:
     	if not isinstance(x, Number) and isinstance(step, int):
@@ -214,31 +213,31 @@ def rng(x: str|list|tuple|Number, y: str|list|tuple|Number|None = None, step: Nu
     	if x < 0 or x >= y_length:
     		return []
     	while x < y_length:
-        	return_list.append(i)
-        	i += step
+        	return_list.append(x)
+        	x += step
     	return return_list
     if isinstance(x, int) and isinstance(y, int) and isinstance(step, int):
     	if x == y:
     	    return []
     	if x > y:
     	    while x >= y:
-    	        return_list.append(i)
-    	        i -= step
+    	        return_list.append(x)
+    	        x -= step
     	else:
     		while x <= y:
-    		    return_list.append(i)
-    		    i += step
+                                        return_list.append(x)
+                                        x += step
     if isinstance(x, float) or isinstance(y, float):
     	if x == y:
     		return []
     	if x > y:
     	    while x >= y:
-    	        return_list.append(i)
-    	        i -= step
+    	        return_list.append(x)
+    	        x -= step
     	else:
     		while x <= y:
-    		    return_list.append(i)
-    		    i += step
+    		    return_list.append(x)
+    		    x += step
     return return_list
 def f(*args) -> str:
     formatted: str = ""

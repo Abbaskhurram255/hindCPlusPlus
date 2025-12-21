@@ -1,26 +1,36 @@
-import os, sys, base64, requests, math, re, inspect, ast
-from collections import defaultdict
-from collections.abc import Iterable, Sequence
-from functools import reduce, lru_cache, cache
-from copy import deepcopy
 from types import *
-from typing import List, Callable, TypeVar, NewType, Any, Optional, Final
+from typing import List, Callable, TypeVar, NewType, Any, Optional, Union, Final
+from collections import defaultdict
+from collections.abc import Sequence
+from functools import reduce, lru_cache, cache
 from dataclasses import dataclass
-from numbers import Number
 from math import *
+from random import randint, uniform, randrange, choice, sample
+from numbers import Number
+from datetime import datetime
+from copy import deepcopy
+from pathlib import Path
+import os, sys, json, shutil, base64, requests, math, re, ast, webbrowser
+from re import escape
+from enum import Enum
+from inspect import *
 from hindGui import *
-from random import randint, uniform, randrange, choice
-import webbrowser
+Iterable = str | list | tuple
+argv: list[str] = sys.argv[1:]
+date = time = datetime
 rand_int = randint
 rand_flt = uniform
 rand_from = rand_of = any_from = any_of = choice
+choices = sample
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 Str = lafz = jumla = str
-num = Number
+nr = num = Number
+Infinity = infinity = inf
+IntInfinity = int_infinity = int_inf = intinf = sys.maxsize
 goto = webbrowser.open
 link = webbrowser
-typename = T = TypeT = typeT = TypeVar("T")
+typename = TypeT = typeT = TypeVar("T")
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
         x = Str(x)
@@ -106,34 +116,49 @@ def entries(dictionary: dict):
 keysOf = keys
 valuesOf = values
 entriesOf = entries
-def get_private_declarations() -> o:
+def remove_duplicates(lst: list) -> list:
+	if not lst:
+		return []
+	return list(dict.fromkeys(lst).keys())
+def get_local_declarations() -> obj:
+    """
+    @return
+        <dict>
+        ::a dictionary holding all the local variables, (sub)classes (of classes), and the functions of the local scope of a class/function
+    """
     [variables, classes, functions] = [{}, {}, {}]
-    for name, obj in locals().items():
+    frame = currentframe().f_back
+    for name, obj in frame.f_locals.items():
         # Exclude built-in names and imported modules
-        if not name.startswith('__') and inspect.getmodule(obj) is sys.modules[__name__]:
-            if inspect.isfunction(obj):
+        if not name.startswith('__'):
+            if isfunction(obj):
                 functions[name] = obj
-            elif inspect.isclass(obj):
+            elif isclass(obj):
                 classes[name] = obj
             # For variables, we can assume anything else that's not a function or class
             # and is user-defined in this module is a variable.
             # This is a simplification; more robust checks might be needed for complex cases.
-            elif not inspect.ismodule(obj): # Exclude imported modules
+            elif not ismodule(obj):                           # Exclude imported modules
                 variables[name] = obj
     return o(variables=variables, classes=classes, functions=functions)
-def get_global_declarations() -> o:
+def get_global_declarations() -> obj:
+    """
+    @return
+        <dict>
+        ::a dictionary holding all the local variables, (sub)classes (of classes), and the functions of the local scope of a class/function
+    """
     [variables, classes, functions] = [{}, {}, {}]
     for name, obj in globals().items():
         # Exclude built-in names and imported modules
-        if not name.startswith('__') and inspect.getmodule(obj) is sys.modules[__name__]:
-            if inspect.isfunction(obj):
+        if not name.startswith('__') and getmodule(obj) is sys.modules[__name__]:
+            if isfunction(obj):
                 functions[name] = obj
-            elif inspect.isclass(obj):
+            elif isclass(obj):
                 classes[name] = obj
             # For variables, we can assume anything else that's not a function or class
             # and is user-defined in this module is a variable.
             # This is a simplification; more robust checks might be needed for complex cases.
-            elif not inspect.ismodule(obj): # Exclude imported modules
+            elif not ismodule(obj):                          # Exclude imported modules
                 variables[name] = obj
     return o(variables=variables, classes=classes, functions=functions)
 sort = sorted
@@ -151,26 +176,88 @@ def reverse(x: str | list[any]):
 		return x
 	return x[::-1]
 filter = lambda arr, condition: filter(condition, arr)
-# test this
-lim = lambda *args, **kwargs: list(range(*args, **kwargs))
-def rng(x: str|list|tuple) -> list[int]:
-    return_list: list[int] = []
-    for i in lim(len(x)-1):
-        print(i)
-        return_list[i] = i
+# test this	
+def rng(x: str|list|tuple|Number, y: str|list|tuple|Number|None = None, step: Number = 1) -> list[int] | list[float]:
+    if x is None or not isinstance(x, (str, list, tuple, Number)) or not isinstance(y, (str, list, tuple, Number, NoneType)) or step is None or not isinstance(step, Number):
+    	return []
+    if step <= 0:
+        step = 1
+    if isinstance(y, Number) and step >= y:
+        step = 1
+    if isinstance(x, (str, list, tuple)) and step >= len(x):
+        step = 1
+    if isinstance(y, (str, list, tuple)) and step >= len(y):
+        step = 1
+    return_list: list[int] | list[float] = []
+    if y is None:
+    	if not isinstance(x, Number) and isinstance(step, int):
+        	i: int = 0
+        	while i < len(x):
+        		return_list.append(i)
+        		i += step
+        	return return_list
+    	x = abs(x)
+    	if isinstance(x, int) and isinstance(step, int):
+    	    i: int = 0
+    	    while i < x:
+        		return_list.append(i)
+        		i += step
+    	if isinstance(x, float):
+    	    i: float = 0
+    	    while i < x:
+    	    	return_list.append(i)
+    	    	i += step
+    	return return_list
+    if (isinstance(x, int) and isinstance(step, int)) and not isinstance(y, Number):
+    	y_length: int = len(y)
+    	if x < 0 or x >= y_length:
+    		return []
+    	while x < y_length:
+        	return_list.append(x)
+        	x += step
+    	return return_list
+    if isinstance(x, int) and isinstance(y, int) and isinstance(step, int):
+    	if x == y:
+    	    return []
+    	if x > y:
+    	    while x >= y:
+    	        return_list.append(x)
+    	        x -= step
+    	else:
+    		while x <= y:
+                                        return_list.append(x)
+                                        x += step
+    if isinstance(x, float) or isinstance(y, float):
+    	if x == y:
+    		return []
+    	if x > y:
+    	    while x >= y:
+    	        return_list.append(x)
+    	        x -= step
+    	else:
+    		while x <= y:
+    		    return_list.append(x)
+    		    x += step
     return return_list
 def f(*args) -> str:
     formatted: str = ""
-    curframe: Optional[FrameType] = inspect.currentframe()
-    caller_locals: obj = obj(curframe.f_locals | curframe.f_globals)
-    while hasattr(curframe, "f_back") and curframe.f_back != None:
-        caller_locals = caller_locals | curframe.f_locals | curframe.f_globals
+    curframe: Optional[FrameType] = currentframe()
+    frames: list[Optional[FrameType]] = []
+    caller_locals: dict[str, Any] = {}
+    while curframe is not None:
+        frames.append(curframe)
         curframe = curframe.f_back
         # keep retrieving until you hit the oldest ancestor
-    blacklisted_keywords: list = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
-    blacklisted_functions: list = ['system', 'popen', 'subprocess']
-    blacklisted_items: list = blacklisted_keywords + blacklisted_functions
+    frames = reversed(frames)
+    # reverse the frames to prioritize the closest local scope first
+    for scope in frames:
+    	caller_locals.update(scope.f_locals)
+    blacklisted_keywords: list[str] = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
+    blacklisted_functions: list[str] = ['system', 'popen', 'subprocess']
+    blacklisted_items: list[str] = blacklisted_keywords + blacklisted_functions
     for arg in args:
+        if isinstance(arg, bool):
+        	arg = "Yes" if arg == True else "No"
         try:
             ast.parse(f"f'{arg}'")
             arg_lower: str = arg.lower()
@@ -179,36 +266,20 @@ def f(*args) -> str:
                     print(f"Forbidden keyword/function in input: '{item}'")
                     continue
             # Evaluate the expression
-            arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
-            formatted += eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
+            arg = re.sub(r"[\$\{]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
+            arg = re.sub(r'[\$\{]+([a-zA-Z_][a-zA-Z0-9_.]*(\(.*?\))?(?:[^\}]*)?)\}?', r'{\1}', arg)
+            # fixing a syntactic bug...
+            arg = replace(arg, r",\}", "}")
+            evaluation: str = eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
+            WHITESPACE_CHAR = " "
+            # for readability, there should be a whitespace character after each argument, except the last one (though, for the last one, it does not really matter, as it usually goes unnoticed)
+            formatted += evaluation + WHITESPACE_CHAR
         except Exception:
-            ...
+            return ""
+    formatted = formatted.rstrip()
     return formatted
-def printf(*args):
-    formatted: str = ""
-    curframe: Optional[FrameType] = inspect.currentframe()
-    caller_locals: obj = obj(curframe.f_locals | curframe.f_globals)
-    while hasattr(curframe, "f_back") and curframe.f_back != None:
-        caller_locals = caller_locals | curframe.f_locals | curframe.f_globals
-        curframe = curframe.f_back
-        # keep retrieving until you hit the oldest ancestor
-    blacklisted_keywords: list = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
-    blacklisted_functions: list = ['system', 'popen', 'subprocess']
-    blacklisted_items: list = blacklisted_keywords + blacklisted_functions
-    for arg in args:
-        try:
-            ast.parse(f"f'{arg}'")
-            arg_lower: str = arg.lower()
-            for item in blacklisted_items:
-                if item in arg_lower:
-                    print(f"Forbidden keyword/function in input: '{item}'")
-                    continue
-            # Evaluate the expression
-            arg: str = re.sub(r"[\{\$]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
-            formatted += eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
-        except Exception:
-            ...
-    print(formatted)
+def printf(*args, **kwargs):
+    print(f(*args), **kwargs)
 kaho = printf
 def flatten(lst: list) -> list:
     if lst is None:
@@ -221,28 +292,43 @@ def flatten(lst: list) -> list:
             out.append(item)
     return out
 flat = flatten
-def clone(item: list|tuple|dict):
-    if item == None:
+def clone(item: list|tuple|dict) -> list|tuple|dict:
+    if item is None:
         return None
     return deepcopy(item)
-    #:params        item {{object to clone}}
-    #:types         [(list, tuple, dict),
-    #:returns       list|tuple {{cloned object}}]
-def hissa(x: str|list|tuple, y: str|list|tuple) -> haal:
+    """
+    __KL_Py.deepcopy__
+    
+    @param       item
+      @@type     (list, tuple, dict)
+						:: object to clone
+    @return        
+       @@type    (list, tuple, dict)
+                        :: a cloned object
+                           depending on
+                           the type passed
+                           in as the argument
+    """
+def hissa(x: str|list|tuple|dict, y: str|list|tuple|dict) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return match_i(x, y)
     return x in y
+def kism(x: Any) -> type:
+	return type(x)
+def he_kism(x: Any, y: type) -> bool:
+	return isinstance(x, y)
+is_type = istype = he_kism
 def barabar(x, y) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return x.lower() == y.lower()
     return x == y
 def khali(x: Iterable) -> haal:
-    if x == None:
+    if x is None:
         return False
     return len(x) == 0
 is_empty = isempty = khali
 # type checks
-is_none = isnone = is_null = isnull = lambda x: x == None
+is_none = isnone = is_null = isnull = lambda x: x is None
 isnt_none = isntnone = non_none = nonnone = lambda x: not is_none(x)
 is_string = isstring = is_str = isstr = lambda x: isinstance(x, str)
 isnt_string = isntstring = isnt_str = isntstr = non_string = nonstring = non_str = nonstr = lambda x: not is_string(x)
@@ -266,28 +352,54 @@ is_iterable = isiterable = lambda x: isinstance(x, Iterable)
 isnt_iterable = isntiterable = non_iterable = noniterable = lambda x: not is_iterable(x)
 is_callable = iscallable = is_function = isfunction = is_func = isfunc = lambda x: callable(x)
 isnt_callable = isntcallable = non_callable = noncallable = lambda x: not is_callable(x)
-def split(srcString: str, regex: str, maxsplits: int, flags: int) -> str:
+def split(srcString: str, regex: str, maxsplits: int = IntInfinity, flags: int = 0) -> str:
     return re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
-    occurences: list[str] = re.findall(to_replace, src)
-    for occurence in occurences:
-        src = re.sub(occurence, replacement, src)
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    	# allow empty replacement for removals
+    	return ""
+    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    # achieve JavaScript-like numbered-group convention ^
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    # achieve JavaScript-like named-group convention ^
+    src = re.sub(to_replace, replacement, src)
     return src
 def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
-    occurences: list[str] = re.findall(to_replace, src, re.IGNORECASE)
-    for occurence in occurences:
-        src = re.sub(occurence, replacement, src)
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    	# allow empty replacement for removals
+    	return ""
+    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    # achieve JavaScript-like numbered-group convention ^
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    # achieve JavaScript-like named-group convention ^
+    src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE)
     return src
 def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
-    occurences: list[str] = re.findall(to_replace, src)
-    if len(occurences) == 0:
-        return src
-    return re.sub(occurences[0], replacement, src)
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    	# allow empty replacement for removals
+    	return ""
+    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    # achieve JavaScript-like numbered-group convention ^
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    # achieve JavaScript-like named-group convention ^
+    src = re.sub(to_replace, replacement, src, count=1)
+    return src
+replace_first: Callable[[str, str, str, Optional[bool]], str] = replace_one
 def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
-    occurences: list[str] = re.findall(to_replace, src, re.IGNORECASE)
-    if len(occurences) == 0:
-        return src
-    return re.sub(occurences[0], replacement, src)
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    	# allow empty replacement for removals
+    	return ""
+    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    # achieve JavaScript-like numbered-group convention ^
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    # achieve JavaScript-like named-group convention ^
+    src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE, count=1)
+    return src
+replace_first_i: Callable[[str, str, str, Optional[bool]], str] = replace_one_i
 def find_matches(src: str, to_find: str) -> list:
     matches: list[str] = re.findall(to_find, src)
     return matches
@@ -301,7 +413,7 @@ def find_match(src: str, to_find: str) -> str:
     return matches[0]
 def find_match_i(src: str, to_find: str) -> str:
     matches: list[str] = find_matches_i(src, to_find)
-    if len(matches) == 0:
+    if len(matches) == 0 or not matches[0]:
         return ""
     return matches[0]
 def match(src: str, to_find: str) -> bool:
@@ -348,650 +460,241 @@ class money:
 class pesa(money):
     def __init__(self, amount=0, currency="Rs. "):
         super().__init__(amount, currency)
-class kmath:
-    pi: float = 3.141592653589793
-    speed_of_light: float = 2.99792e8
-    earth_gravity: float = 9.80665
-    earth_mass: float = 5.9722e24
-    earth_radius: float = 6.378137e3
-    cUnit: str = "m/s"
-    earthsGravityUnit: str = "m/s^2"
-    earthsMassUnit: str = "km"
-    earthsRadiusUnit: str = "km"
-    class c:
-        @staticmethod
-        def f(n: Number) -> Number:
-            return round(1.8 * n + 32, 2)
-        @staticmethod
-        def ns(n: Number) -> Number:
-            return round(n * 3.154e18, 2)
-        @staticmethod
-        def mcs(n: Number) -> Number:
-            return round(n * 3.154e15, 2)
-        @staticmethod
-        def ms(n: Number) -> Number:
-            return round(n * 3.154e12, 2)
-        @staticmethod
-        def s(n: Number) -> Number:
-            return round(n * 3.154e9, 2)
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 5.256e7, 2)
-        @staticmethod
-        def h(n: Number) -> Number:
-            return round(n * 8.76e5, 2)
-        @staticmethod
-        def d(n: Number) -> Number:
-            return round(n * 3.65e4, 2)
-        @staticmethod
-        def wk(n: Number) -> Number:
-            return round(n * 5.214e3, 2)
-        @staticmethod
-        def mn(n: Number) -> Number:
-            return round(n * 1.2e3, 2)
-        @staticmethod
-        def yr(n: Number) -> Number:
-            return round(n * 1e2, 2)
-        @staticmethod
-        def dc(n: Number) -> Number:
-            return round(n * 1e1, 2)
-    class f:
-        @staticmethod
-        def c(n: Number) -> Number:
-            return round(((n - 32) * 5) / 9, 1)
-    class m:
-        @staticmethod
-        def km(n: Number) -> Number:
-            return round(n * 1e-3, 2)
-        @staticmethod
-        def mi(n: Number) -> Number:
-            return round(n * 6.21371e-4, 2)
-        @staticmethod
-        def ft(n: Number) -> Number:
-            return round(n * 3.28084, 2)
-        @staticmethod
-        def inch(n: Number) -> Number:
-            return round(n * 3.93701e+1, 2)
-        @staticmethod
-        def cm(n: Number) -> Number:
-            return round(n * 1e2, 2)
-        @staticmethod
-        def mm(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def yd(n: Number) -> Number:
-            return round(n * 1.0936, 2)
-    class km:
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def mi(n: Number) -> Number:
-            return round(n * 6.21371e-1, 2)
-        @staticmethod
-        def ft(n: Number) -> Number:
-            return round(n * 3.28084e+3, 2)
-        @staticmethod
-        def inch(n: Number) -> Number:
-            return round(n * 3.93701e+4, 2)
-        @staticmethod
-        def cm(n: Number) -> Number:
-            return round(n * 1e+5, 2)
-        @staticmethod
-        def mm(n: Number) -> Number:
-            return round(n * 1e+6, 2)
-        @staticmethod
-        def yd(n: Number) -> Number:
-            return round(n * 1.09361e+3, 2)
-    class mi:
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1.60934e+3, 2)
-        @staticmethod
-        def km(n: Number) -> Number:
-            return round(n * 1.60934, 2)
-        @staticmethod
-        def ft(n: Number) -> Number:
-            return round(n * 5.280e+3, 2)
-        @staticmethod
-        def inch(n: Number) -> Number:
-            return round(n * 6.3360e+4, 2)
-        @staticmethod
-        def cm(n: Number) -> Number:
-            return round(n * 1.60934e+5, 2)
-        @staticmethod
-        def mm(n: Number) -> Number:
-            return round(n * 1.609340e+6, 2)
-        @staticmethod
-        def yd(n: Number) -> Number:
-            return round(n * 1.76e+3, 2)
-    class ft:
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 3.048e-1, 2)
-        @staticmethod
-        def km(n: Number) -> Number:
-            return round(n * 3.048e-4, 2)
-        @staticmethod
-        def mi(n: Number) -> Number:
-            return round(n * 1.89394e-4, 2)
-        @staticmethod
-        def inch(n: Number) -> Number:
-            return round(n * 1.2e1, 2)
-        @staticmethod
-        def cm(n: Number) -> Number:
-            return round(n * 3.48e+1, 2)
-        @staticmethod
-        def mm(n: Number) -> Number:
-            return round(n * 3.048e+2, 2)
-        @staticmethod
-        def yd(n: Number) -> Number:
-            return round(n * 3.33333e-1, 2)
-    class inch:
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 2.54e-2, 2)
-        @staticmethod
-        def km(n: Number) -> Number:
-            return round(n * 2.54e-5, 2)
-        @staticmethod
-        def mi(n: Number) -> Number:
-            return round(n * 1.57828e-5, 2)
-        @staticmethod
-        def ft(n: Number) -> Number:
-            return round(n * 8.333e-2, 2)
-        @staticmethod
-        def cm(n: Number) -> Number:
-            return round(n * 2.54, 2)
-        @staticmethod
-        def mm(n: Number) -> Number:
-            return round(n * 2.54e+1, 2)
-        @staticmethod
-        def yd(n: Number) -> Number:
-            return round(n * 2.77778e-2, 2)
-    class cm:
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1e-2, 2)
-        @staticmethod
-        def km(n: Number) -> Number:
-            return round(n * 1e-5, 2)
-        @staticmethod
-        def mi(n: Number) -> Number:
-            return round(n * 621371e-6, 2)
-        @staticmethod
-        def ft(n: Number) -> Number:
-            return round(n * 3.28084e-2, 2)
-        @staticmethod
-        def inch(n: Number) -> Number:
-            return round(n * 3.93701e-1, 2)
-        @staticmethod
-        def mm(n: Number) -> Number:
-            return round(n * 1e1, 2)
-        @staticmethod
-        def yd(n: Number) -> Number:
-            return round(n * 1.09361e-2, 2)
-    class mm:
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1e-3, 2)
-        @staticmethod
-        def km(n: Number) -> Number:
-            return round(n * 1e-6, 2)
-        @staticmethod
-        def mi(n: Number) -> Number:
-            return round(n * 6.21371e-7, 2)
-        @staticmethod
-        def ft(n: Number) -> Number:
-            return round(n * 3.28084e-3, 2)
-        @staticmethod
-        def inch(n: Number) -> Number:
-            return round(n * 3.93701e-2, 2)
-        @staticmethod
-        def cm(n: Number) -> Number:
-            return round(n * 1e-1, 2)
-        @staticmethod
-        def yd(n: Number) -> Number:
-            return round(n * 1.09361e-3, 2)
-    class yd:
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 9.144e-1, 2)
-        @staticmethod
-        def km(n: Number) -> Number:
-            return round(n * 9.144e-4, 2)
-        @staticmethod
-        def mi(n: Number) -> Number:
-            return round(n * 5.68182e-4, 2)
-        @staticmethod
-        def ft(n: Number) -> Number:
-            return round(n * 3, 2)
-        @staticmethod
-        def inch(n: Number) -> Number:
-            return round(n * 3.6e1, 2)
-        @staticmethod
-        def cm(n: Number) -> Number:
-            return round(n * 9.144e+1, 2)
-        @staticmethod
-        def mm(n: Number) -> Number:
-            return round(n * 9.144e+2, 2)
-    class mcg:
-        @staticmethod
-        def mg(n: Number) -> Number:
-            return round(n * 1e-3, 2)
-        @staticmethod
-        def g(n: Number) -> Number:
-            return round(n * 1e-6, 2)
-        @staticmethod
-        def kg(n: Number) -> Number:
-            return round(n * 1e-9, 2)
-        @staticmethod
-        def ton(n: Number) -> Number:
-            return round(n * 1e-12, 2)
-        @staticmethod
-        def kiloton(n: Number) -> Number:
-            return round(n * 1e-15, 2)
-        @staticmethod
-        def oz(n: Number) -> Number:
-            return round(n * 3.527e-8, 2)
-        @staticmethod
-        def p(n: Number) -> Number:
-            return round(n * 2.205e-9, 2)
-    class mg:
-        @staticmethod
-        def mcg(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def g(n: Number) -> Number:
-            return round(n * 1e-3, 2)
-        @staticmethod
-        def kg(n: Number) -> Number:
-            return round(n * 1e-6, 2)
-        @staticmethod
-        def ton(n: Number) -> Number:
-            return round(n * 1e-9, 2)
-        @staticmethod
-        def kiloton(n: Number) -> Number:
-            return round(n * 1e-12, 2)
-        @staticmethod
-        def oz(n: Number) -> Number:
-            return round(n * 3.527e-5, 2)
-        @staticmethod
-        def p(n: Number) -> Number:
-            return round(n * 2.205e-6, 2)
-    class g:
-        @staticmethod
-        def mcg(n: Number) -> Number:
-            return round(n * 1e6, 2)
-        @staticmethod
-        def mg(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def kg(n: Number) -> Number:
-            return round(n / 1e3, 2)
-        @staticmethod
-        def ton(n: Number) -> Number:
-            return round(n / 1e6, 2)
-        @staticmethod
-        def kiloton(n: Number) -> Number:
-            return round(n / 1e9, 2)
-        @staticmethod
-        def oz(n: Number) -> Number:
-            return round(n * 3.5e-2, 2)
-        @staticmethod
-        def p(n: Number) -> Number:
-            return round(n * 2e-3, 2)
-    class kg:
-        @staticmethod
-        def mcg(n: Number) -> Number:
-            return round(n * 1e9, 2)
-        @staticmethod
-        def mg(n: Number) -> Number:
-            return round(n * 1e6, 2)
-        @staticmethod
-        def g(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def ton(n: Number) -> Number:
-            return round(n / 1e3, 2)
-        @staticmethod
-        def kiloton(n: Number) -> Number:
-            return round(n / 1e6, 2)
-        @staticmethod
-        def oz(n: Number) -> Number:
-            return round(n * 3.5274e1, 2)
-        @staticmethod
-        def p(n: Number) -> Number:
-            return round(n * 2.204, 2)
-    class ton:
-        @staticmethod
-        def mcg(n: Number) -> Number:
-            return round(n * 1e12, 2)
-        @staticmethod
-        def mg(n: Number) -> Number:
-            return round(n * 1e9, 2)
-        @staticmethod
-        def g(n: Number) -> Number:
-            return round(n * 1e6, 2)
-        @staticmethod
-        def kg(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def kiloton(n: Number) -> Number:
-            return round(n * 1e-3, 2)
-        @staticmethod
-        def oz(n: Number) -> Number:
-            return round(n * 3.5274e4, 2)
-        @staticmethod
-        def p(n: Number) -> Number:
-            return round(n * 2.204e3, 2)
-    class kiloton:
-        @staticmethod
-        def mcg(n: Number) -> Number:
-            return round(n * 1e15, 2)
-        @staticmethod
-        def mg(n: Number) -> Number:
-            return round(n * 1e12, 2)
-        @staticmethod
-        def g(n: Number) -> Number:
-            return round(n * 1e9, 2)
-        @staticmethod
-        def kg(n: Number) -> Number:
-            return round(n * 1e6, 2)
-        @staticmethod
-        def ton(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def oz(n: Number) -> Number:
-            return round(n * 3.5274e7, 2)
-        @staticmethod
-        def p(n: Number) -> Number:
-            return round(n * 2.204e6, 2)
-    class oz:
-        @staticmethod
-        def mcg(n: Number) -> Number:
-            return round(n * 2.835e7, 2)
-        @staticmethod
-        def mg(n: Number) -> Number:
-            return round(n * 2.835e4, 2)
-        @staticmethod
-        def g(n: Number) -> Number:
-            return round(n * 2.835e1, 2)
-        @staticmethod
-        def kg(n: Number) -> Number:
-            return round(n * 2.8e-2, 2)
-        @staticmethod
-        def ton(n: Number) -> Number:
-            return round(n * 2.8e-5, 2)
-        @staticmethod
-        def kiloton(n: Number) -> Number:
-            return round(n * 2.8e-8, 2)
-        @staticmethod
-        def p(n: Number) -> Number:
-            return round(n * 6.3e-2, 2)
-    class p:
-        @staticmethod
-        def mcg(n: Number) -> Number:
-            return round(n * 4.536e8, 2)
-        @staticmethod
-        def mg(n: Number) -> Number:
-            return round(n * 4.536e5, 2)
-        @staticmethod
-        def g(n: Number) -> Number:
-            return round(n * 4.536e2, 2)
-        @staticmethod
-        def kg(n: Number) -> Number:
-            return round(n * 4.53e-1, 2)
-        @staticmethod
-        def ton(n: Number) -> Number:
-            return round(n * 4.53e-4, 2)
-        @staticmethod
-        def kiloton(n: Number) -> Number:
-            return round(n * 4.53e-7, 2)
-        @staticmethod
-        def oz(n: Number) -> Number:
-            return round(n * 1.6e1, 2)
-    class ns:
-        @staticmethod
-        def mcs(n: Number) -> Number:
-            return round(n * 1e-3, 2)
-        @staticmethod
-        def ms(n: Number) -> Number:
-            return round(n * 1e-6, 2)
-        @staticmethod
-        def s(n: Number) -> Number:
-            return round(n * 1e-9, 2)
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1.6665e-11, 2)
-        @staticmethod
-        def h(n: Number) -> Number:
-            return round(n * 2.7775e-13, 2)
-        @staticmethod
-        def d(n: Number) -> Number:
-            return round(n * 1.157e-14, 2)
-        @staticmethod
-        def wk(n: Number) -> Number:
-            return round(n * 1.653e-15, 2)
-        @staticmethod
-        def mn(n: Number) -> Number:
-            return round(n * 3.805e-16, 2)
-        @staticmethod
-        def yr(n: Number) -> Number:
-            return round(n * 3.17e-17, 2)
-        @staticmethod
-        def dc(n: Number) -> Number:
-            return round(n * 3.17e-18, 2)
-        @staticmethod
-        def c(n: Number) -> Number:
-            return round(n * 3.17e-19, 2)
-    class mcs:
-        @staticmethod
-        def ns(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def ms(n: Number) -> Number:
-            return round(n * 1e-3, 2)
-        @staticmethod
-        def s(n: Number) -> Number:
-            return round(n * 1e-6, 2)
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1.6665e-8, 2)
-        @staticmethod
-        def h(n: Number) -> Number:
-            return round(n * 2.7775e-10, 2)
-        @staticmethod
-        def d(n: Number) -> Number:
-            return round(n * 1.157e-11, 2)
-        @staticmethod
-        def wk(n: Number) -> Number:
-            return round(n * 1.653e-12, 2)
-        @staticmethod
-        def mn(n: Number) -> Number:
-            return round(n * 3.805e-13, 2)
-        @staticmethod
-        def yr(n: Number) -> Number:
-            return round(n * 3.17e-14, 2)
-        @staticmethod
-        def dc(n: Number) -> Number:
-            return round(n * 3.17e-15, 2)
-        @staticmethod
-        def c(n: Number) -> Number:
-            return round(n * 3.17e-16, 2)
-    class ms:
-        @staticmethod
-        def ns(n: Number) -> Number:
-            return round(n * 1e6, 2)
-        @staticmethod
-        def mcs(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def s(n: Number) -> Number:
-            return round(n * 1e-3, 2)
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1.6665e-5, 2)
-        @staticmethod
-        def h(n: Number) -> Number:
-            return round(n * 2.7775e-7, 2)
-        @staticmethod
-        def d(n: Number) -> Number:
-            return round(n * 1.157e-8, 2)
-        @staticmethod
-        def wk(n: Number) -> Number:
-            return round(n * 1.653e-9, 2)
-        @staticmethod
-        def mn(n: Number) -> Number:
-            return round(n * 3.805e-10, 2)
-        @staticmethod
-        def yr(n: Number) -> Number:
-            return round(n * 3.17e-11, 2)
-        @staticmethod
-        def dc(n: Number) -> Number:
-            return round(n * 3.17e-12, 2)
-        @staticmethod
-        def c(n: Number) -> Number:
-            return round(n * 3.17e-13, 2)
-    class s:
-        @staticmethod
-        def ns(n: Number) -> Number:
-            return round(n * 1e9, 2)
-        @staticmethod
-        def mcs(n: Number) -> Number:
-            return round(n * 1e6, 2)
-        @staticmethod
-        def ms(n: Number) -> Number:
-            return round(n * 1e3, 2)
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1.66665e-2, 2)
-        @staticmethod
-        def h(n: Number) -> Number:
-            return round(n * 2.7775e-4, 2)
+class File:
+    def __init__(self, path: Union[str, Path]):
+        self.pathname = Path(path)
+    def __str__(self) -> str:
+    	return str(self.pathname)
+    def path(self) -> Path:
+        return self.pathname
+    def absolute_path(self) -> str:
+        return str(self.pathname.absolute())
+    def abs_path(self) -> str:
+        return self.absolute_path()
+    def is_file(self) -> bool:
+        return self.pathname.is_file()
+    def is_folder(self) -> bool:
+        return self.pathname.is_dir()
+    def exists(self) -> bool:
+        return self.pathname.exists()
+    @staticmethod
+    def create(fname: str, content: str = "") -> bool:
+        try:
+            if not fname or not content:
+                raise ValueError("File name and content are required")
+            if re.search(r"(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)", fname):
+                for subFileName in re.split(r"\\s*[\\|\\+\\&\\,\\;]\\s*", fname):
+                    File.create(subFileName, content)
+                return True
+            with open(fname, 'w') as f:
+                f.write(content)
+            print(f"[KL.file.JobSuccess]:\nFile {fname} created successfully.")
+            return True
+        except ValueError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except PermissionError:
+            print(f"[KL.file.JobFailed]: Permission denied to create file {fname}")
+        except OSError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except Exception as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        return False
+    @staticmethod
+    def createBlankFile(fname: str) -> bool:
+	    try:
+	        if not fname:
+	            raise ValueError("File name is required")
+	        Path(fname).touch()
+	        print(f"[KL.file.JobSuccess]:\nBlank file {fname} created successfully.")
+	        return True
+	    except ValueError as e:
+	        print(f"[KL.file.JobFailed]: {e}")
+	    except PermissionError:
+	        print(f"[KL.file.JobFailed]: Permission denied to create file {fname}")
+	    except OSError as e:
+	        print(f"[KL.file.JobFailed]: {e}")
+	    except Exception as e:
+	        print(f"[KL.file.JobFailed]: {e}")
+	    return False
+    @staticmethod
+    def createFolder(folderName: str) -> bool:
+        try:
+            if not folderName:
+                raise ValueError("Folder name is required")
+            if re.search(r"(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)", folderName):
+                for folder in re.split(r"\\s*[\\|\\+\\&\\,\\;]\\s*", folderName):
+                    File.createFolder(folder)
+                return True
+            os.makedirs(folderName, exist_ok=True)
+            return True
+        except ValueError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except PermissionError:
+            print(f"[KL.file.JobFailed]: Permission denied to create folder {folderName}")
+        except OSError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except Exception as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        return False
+    @staticmethod
+    def read(fname: str) -> str:
+        try:
+            if not fname:
+                raise ValueError("File name is required")
+            with open(fname, 'r') as f:
+                contents: str = f.read()
+                return contents
+        except ValueError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except FileNotFoundError:
+            print(f"[KL.file.JobFailed]: File {fname} does not exist")
+        except PermissionError:
+            print(f"[KL.file.JobFailed]: Permission denied to read file {fname}")
+        except OSError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except Exception as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        return ""
+    @staticmethod
+    def get_lines(fname: str) -> list[str]:
+    	contents: str = File.read(fname)
+    	lines: list[str] = []
+    	if not contents.strip():
+    		return False
+    	if re.search(r"\n", contents):
+            split_content: list[str] = split(contents, r"\n")
+            for line in split_content:
+                lines.append(line)
+    	else:
+        	lines.append(contents)
+        	# no lines found other than the first, append the contents as-is
+    	return lines
+    readlines = read_lines = getlines = get_lines
+    @staticmethod
+    def readJson(fname: str) -> Optional[dict]:
+        try:
+            return json.loads(File.read(fname))
+        except json.JSONDecodeError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except Exception as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        return None
 
-        @staticmethod
-        def d(n: Number) -> Number:
-            return round(n * 1.157e-5, 2)
-
-        @staticmethod
-        def wk(n: Number) -> Number:
-            return round(n * 1.653e-6, 2)
-        @staticmethod
-        def mn(n: Number) -> Number:
-            return round(n * 3.805e-7, 2)
-        @staticmethod
-        def yr(n: Number) -> Number:
-            return round(n * 3.17e-8, 2)
-        @staticmethod
-        def dc(n: Number) -> Number:
-            return round(n * 3.17e-9, 2)
-        @staticmethod
-        def c(n: Number) -> Number:
-            return round(n * 3.17e-10, 2)
-    class h:
-        @staticmethod
-        def ns(n: Number) -> Number:
-            return round(n * 3.6e12, 2)
-        @staticmethod
-        def mcs(n: Number) -> Number:
-            return round(n * 3.6e9, 2)
-        @staticmethod
-        def ms(n: Number) -> Number:
-            return round(n * 3.6e6, 2)
-        @staticmethod
-        def s(n: Number) -> Number:
-            return round(n * 3.6e3, 2)
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 60, 2)
-        @staticmethod
-        def d(n: Number) -> Number:
-            return round(n / 24, 2)
-        @staticmethod
-        def wk(n: Number) -> Number:
-            return round(n / 168, 2)
-        @staticmethod
-        def mn(n: Number) -> Number:
-            return round(n / 730, 2)
-        @staticmethod
-        def yr(n: Number) -> Number:
-            return round(n / 876e1, 2)
-        @staticmethod
-        def dc(n: Number) -> Number:
-            return round(n / 876e2, 2)
-        @staticmethod
-        def c(n: Number) -> Number:
-            return round(n / 876e3, 2)
-    class d:
-        @staticmethod
-        def ns(n: Number) -> Number:
-            return round(n * 8.64e13, 2)
-        @staticmethod
-        def mcs(n: Number) -> Number:
-            return round(n * 8.64e10, 2)
-        @staticmethod
-        def ms(n: Number) -> Number:
-            return round(n * 8.64e7, 2)
-        @staticmethod
-        def s(n: Number) -> Number:
-            return round(n * 8.64e4, 2)
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1.44e3, 2)
-        @staticmethod
-        def h(n: Number) -> Number:
-            return round(n * 24, 2)
-        @staticmethod
-        def wk(n: Number) -> Number:
-            return round(n / 7, 2)
-        @staticmethod
-        def mn(n: Number) -> Number:
-            return round(n / 3.417e1, 2)
-        @staticmethod
-        def yr(n: Number) -> Number:
-            return round(n * 365, 2)
-        @staticmethod
-        def dc(n: Number) -> Number:
-            return round(n * 365e1, 2)
-        @staticmethod
-        def c(n: Number) -> Number:
-            return round(n * 365e2, 2)
-    class wk:
-        @staticmethod
-        def ns(n: Number) -> Number:
-            return round(n * 6.048e14, 2)
-        @staticmethod
-        def mcs(n: Number) -> Number:
-            return round(n * 6.048e11, 2)
-        @staticmethod
-        def ms(n: Number) -> Number:
-            return round(n * 6.048e8, 2)
-        @staticmethod
-        def s(n: Number) -> Number:
-            return round(n * 6.048e5, 2)
-        @staticmethod
-        def m(n: Number) -> Number:
-            return round(n * 1.008e4, 2)
-        @staticmethod
-        def h(n: Number) -> Number:
-            return round(n * 1.68e2, 2)
-        @staticmethod
-        def d(n: Number) -> Number:
-            return round(n * 7, 2)
-        @staticmethod
-        def mn(n: Number) -> Number:
-            return round(n * 2.3e-1, 2)
-        @staticmethod
-        def yr(n: Number) -> Number:
-            return round(n * 1.917e-2, 2)
-        @staticmethod
-        def dc(n: Number) -> Number:
-            return round(n * 1.917e-3, 2)
-        @staticmethod
-        def c(n: Number) -> Number:
-            return round(n * 1.917e-4, 2)
-    
+    @staticmethod
+    def write(fname: str, content: str) -> bool:
+	    try:
+	        if not fname or not content:
+	            raise ValueError("File name and content are required")
+	        with open(fname, 'w') as f:
+	            f.write(content)
+	        print(f"[KL.file.JobSuccess]:\nFile {fname} written successfully.")
+	        return True
+	    except ValueError as e:
+	        print(f"[KL.file.JobFailed]: {e}")
+	    except PermissionError:
+	        print(f"[KL.file.JobFailed]: Permission denied to write to file {fname}")
+	    except OSError as e:
+	        print(f"[KL.file.JobFailed]: {e}")
+	    except Exception as e:
+	        print(f"[KL.file.JobFailed]: {e}")
+	    return False
+    @staticmethod
+    def append(fname: str, content: str) -> bool:
+        try:
+            if not fname or not content:
+                raise ValueError("File name and content are required")
+            if re.search(r"(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)", fname):
+                for subFileName in re.split(r"\\s*[\\|\\+\\&\\,\\;]\\s*", fname):
+                    File.append(subFileName, content)
+                return True
+            with open(fname, 'a') as f:
+                f.write(content)
+            print(f"[KL.file.JobSuccess]:\nAppending to file {fname} was successful.")
+            return True
+        except ValueError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except PermissionError:
+            print(f"[KL.file.JobFailed]: Permission denied to append to file {fname}")
+        except OSError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except Exception as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        return False
+    @staticmethod
+    def delete(fname: str) -> bool:
+        try:
+            if not fname:
+                raise ValueError("File name is required")
+            if re.search(r"(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)", fname):
+                for subFileName in re.split(r"\\s*[\\|\\+\\&\\,\\;]\\s*", fname):
+                    File.delete(subFileName)
+                return True
+            if os.path.isdir(fname):
+                shutil.rmtree(fname)
+            else:
+                os.remove(fname)
+            print(f"[KL.file.JobSuccess]:\nFile {fname} deleted successfully.")
+            return True
+        except ValueError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except FileNotFoundError:
+            print(f"[KL.file.JobFailed]: File {fname} does not exist")
+        except PermissionError:
+            print(f"[KL.file.JobFailed]: Permission denied to delete file {fname}")
+        except OSError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except Exception as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        return False
+    @staticmethod
+    def rename(fname: str, destinationString: str) -> bool:
+        try:
+            if not fname or not destinationString:
+                raise ValueError("File name and destination are required")
+            if re.search(r"(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)", fname) and re.search(r"[\\\\\\/]", destinationString):
+                for subFileName in re.split(r"\\s*[\\|\\+\\&\\,\\;]\\s*", fname):
+                    File.rename(subFileName, destinationString)
+                return True
+            os.rename(fname, destinationString)
+            print(f"[KL.file.JobSuccess]:\nFile {fname} was successfully moved/renamed to {destinationString}")
+            return True
+        except ValueError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except FileNotFoundError:
+            print(f"[KL.file.JobFailed]: File {fname} does not exist")
+        except PermissionError:
+            print(f"[KL.file.JobFailed]: Permission denied to rename file {fname}")
+        except OSError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except Exception as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        return False
+    @staticmethod
+    def copy(from_path: str, to_path: str, overwrite: bool = True) -> bool:
+        try:
+            if not from_path or not to_path:
+                raise ValueError("Source and destination paths are required")
+            if re.search(r"(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)", from_path):
+                for subFileName in re.split(r"\\s*[\\|\\+\\&\\,\\;]\\s*", from_path):
+                    File.copy(subFileName, to_path, overwrite)
+                return True
+            if overwrite:
+                shutil.copy(from_path, to_path)
+            else:
+                shutil.copy2(from_path, to_path)
+            return True
+        except ValueError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except FileNotFoundError:
+            print(f"[KL.file.JobFailed]: File {from_path} does not exist")
+        except PermissionError:
+            print(f"[KL.file.JobFailed]: Permission denied to copy file {from_path}")
+        except OSError as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        except Exception as e:
+            print(f"[KL.file.JobFailed]: {e}")
+        return False
+file: File = File
 def encode(data: any) -> str:
     try:
             return base64.b64encode(str(data).encode()).decode()
@@ -1025,6 +728,8 @@ def filepath(to_filename: str) -> str:
     return os.path.join(os.getcwd(), to_filename)
 file_path = path_to = filepath
 
+name: str = "Cindy"
+
 def main() -> none:
     print(Int("100", 2))
     print(Flt("2.22"))
@@ -1053,7 +758,13 @@ def main() -> none:
     print(isstr(None))
     print(isfunc(internet_access))
     print(flatten([1, [2, [3, 4, [5, 6]]]]))
-    print(type(IntInput("Please enter an integer value: ")))
+    print(remove_duplicates([1, 3, 1, 5, 6, 3, 7, 8, 9]))
+    print(kism(7.5))
+    print(he_kism(7.5, float))
+    printf("hi, $75000.77778:,")
+    x = 12345.6789
+    print(f("$x", "$x:.2f", f"{x:,}", f"{x:,.2f}"))
+    #pprint({"name": "Mike", "age": 17, "hobbies": ["horse riding", "country music", "farming"]})
     
 if __name__ == "__main__":
     main()
