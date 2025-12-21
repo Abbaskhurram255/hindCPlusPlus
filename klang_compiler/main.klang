@@ -1,0 +1,4 @@
+fc main() -> none:
+    farz x: int = 5
+    printf("hi {x+y}")
+

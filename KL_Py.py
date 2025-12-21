@@ -313,8 +313,6 @@ def clone(item: list|tuple|dict) -> list|tuple|dict:
 def hissa(x: str|list|tuple|dict, y: str|list|tuple|dict) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return match_i(x, y)
-    if not isinstance(x, str):
-    	return False
     return x in y
 def kism(x: Any) -> type:
 	return type(x)
@@ -470,12 +468,16 @@ class File:
     	return str(self.pathname)
     def path(self) -> Path:
         return self.pathname
-    def absolutePath(self) -> str:
+    def absolute_path(self) -> str:
         return str(self.pathname.absolute())
-    def absPath(self) -> str:
-        return self.absolutePath()
-    def isFolder(self) -> bool:
+    def abs_path(self) -> str:
+        return self.absolute_path()
+    def is_file(self) -> bool:
+        return self.pathname.is_file()
+    def is_folder(self) -> bool:
         return self.pathname.is_dir()
+    def exists(self) -> bool:
+        return self.pathname.exists()
     @staticmethod
     def create(fname: str, content: str = "") -> bool:
         try:

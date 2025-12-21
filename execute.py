@@ -87,8 +87,8 @@ def execute(filename: str) -> None:
         code = replace(code, r"\bmangao (?<module>[\w\.]+)\b", "import $module")
         # sequence matters!
         # handling `A me B`, and `A B me` cases
-        code = replace(code, "(?<B>\S+) (?<A>(\w+|[\(\[\{\"\'](?:[\"\'\w\-\.]+[,\s]*[\)\]\}]*)+[\)\]\}\"\'])) me", "$B in $A")
-        code = replace(code, "(?<A>(\w+|[\(\[\{\"\'](?:[\"\'\w\-\.]+[,\s]*[\)\]\}]*)+[\)\]\}\"\'])) me (?<B>\S+) ", "$B in $A")
+        code = replace(code, r"(?<B>\S+) (?<A>(\w+|[\(\[\{\"\'](?:[\"\'\w\-\.]+[,\s]*[\)\]\}]*)+[\)\]\}\"\'])) me", "$B in $A")
+        code = replace(code, r"(?<A>(\w+|[\(\[\{\"\'](?:[\"\'\w\-\.]+[,\s]*[\)\]\}]*)+[\)\]\}\"\'])) me (?<B>\S+) ", "$B in $A")
         # handle (?<=cls )`B (of|from|>|inherits|ext(ends)?|is_?an?) A` cases
         code = replace(code, r"\bcls\b", "class")
         code = replace(code, r"(?<=\bclass\s)(?<B>\w+)\s(of|from|[>]|ext(ends)?|is[\s_]?an?)?\s(?<A>\w+)\b", "$B($A)")
@@ -139,8 +139,19 @@ def execute(filename: str) -> None:
 
 def main() -> None:
     arg: str
-    arg = argv[1] if len(argv) >= 2 else "test.klang"
-    execute(arg)
+    arg = argv[1] if len(argv) > 1 else "test"
+    if not arg.endswith(".klang"):
+        arg += ".klang"
+    if not File(arg).is_file():
+        if len(argv) > 1:
+            arg = argv[1]
+    if not File(arg).is_file():
+        arg = "main.klang"
+    try:
+        execute(arg)
+    except FileNotFoundError:
+        ...
+                        
 
 if __name__ == "__main__":
     main()

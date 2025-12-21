@@ -16317,7 +16317,6 @@ hindGui = Window
 # additional aliases
 
 popup_timed = popup_auto_close
-test = main
 sdk_help = main_sdk_help
 
 

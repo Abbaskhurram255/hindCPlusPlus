@@ -1,0 +1,41 @@
+mangao KL_Py
+KL_Py mese mangao isstr, isint
+surat is_str mangao isstr KL_Py mese
+
+fc add(x: nr, y: nr) -> nr:
+	ret x + y
+
+cls Parent:
+	called: bool = No
+	_constr(it):
+		it.called = Yes
+		print("you've either instantiated the Parent, or a sub-class of it")
+	_str(it):
+		return "Parent(...)"
+
+cls TestClass from Parent:
+    _ctr(self):
+    	mom.call()
+    	print(it.called)
+    act string(it):
+    	return mom.__str__()
+    	
+act main() -> none:
+    user: dict? = {
+        name -> "Clayton"
+        age : int -> 56
+        2: [int, str] -> "experience"
+    }
+    instance: TestClass = TestClass()
+    print(instance.string())
+    every i until(5):
+    	x: nr = 7
+    	y: nr = 3
+    	text: lafz = "abcde"
+    	current: lafz = text[i]
+    	agar i == 2 ya "b" current me:
+    	    ignore
+    	print(f"i={i}")
+    	printf(i==3)
+    printf("$add(2, 3)")
+    
