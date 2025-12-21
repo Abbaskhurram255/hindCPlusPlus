@@ -177,9 +177,14 @@ def reverse(x: str | list[any]):
 	return x[::-1]
 filter = lambda arr, condition: filter(condition, arr)
 # test this	
-def rng(x: str|list|tuple|Number, y: str|list|tuple|Number|None = None, step: Number = 1) -> list[int] | list[float]:
+def rng(x: str|list|tuple|Number, y: str|list|tuple|Number|None = None, step: Number = 1, **kwArgs) -> list[int] | list[float]:
     if x is None or not isinstance(x, (str, list, tuple, Number)) or not isinstance(y, (str, list, tuple, Number, NoneType)) or step is None or not isinstance(step, Number):
     	return []
+    if len(kwArgs.keys()) > 0:
+    	if "s" in kwArgs:
+    	    step = kwArgs.get("s", 0)
+    	elif "step" in kwArgs:
+    		step = kwArgs.get("step", 0)
     if step <= 0:
         step = 1
     if isinstance(y, Number) and step >= y:
@@ -400,28 +405,46 @@ def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
     src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE, count=1)
     return src
 replace_first_i: Callable[[str, str, str, Optional[bool]], str] = replace_one_i
-def find_matches(src: str, to_find: str) -> list:
+def find_matches(src: str, to_find: str) -> list[str]:
+    if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
+    	return []
+    to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = re.findall(to_find, src)
     return matches
 def find_matches_i(src: str, to_find: str) -> list:
+    if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
+    	return []
+    to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = re.findall(to_find, src, re.IGNORECASE)
     return matches
 def find_match(src: str, to_find: str) -> str:
+    if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
+    	return ""
+    to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = find_matches(src, to_find)
     if len(matches) == 0:
         return ""
     return matches[0]
 def find_match_i(src: str, to_find: str) -> str:
+    if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
+    	return ""
+    to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = find_matches_i(src, to_find)
     if len(matches) == 0 or not matches[0]:
         return ""
     return matches[0]
 def match(src: str, to_find: str) -> bool:
+    if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
+    	return []
+    to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = find_matches(src, to_find)
     if len(matches) == 0:
         return False
     return True
 def match_i(src: str, to_find: str) -> bool:
+    if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
+    	return []
+    to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = find_matches_i(src, to_find)
     if len(matches) == 0:
         return False
