@@ -16,20 +16,21 @@ lay = [
 
 app: hindGui = hindGui("Assignment", lay, fasla=(18, 14), on_top=Yes, icon=filepath("assets/favicon.ico"))
 
-while app.chal_rahi_he:
-    event, values = app.parh()
-    if hissa(event, [None, "Exit", "escape"]):
-        break
-    if event == "Upload":
-        new_image_path = values["selected_image_path"].strip()
-        if new_image_path == "":
-            app.offtop()
-            error("Please select an image.")
-            app.ontop()
-            continue
-        app["hero_image"].change(filename=new_image_path, size=default_image_size)
-    if event == "hero_image":
-        app["file_picker"].click()
-    if event == "visit_gh_profile":
-        goto("https://github.com/abbaskhurram255/")
-app.die()
+def main() -> none:
+    while app.chal_rahi_he:
+        event, values = app.parh()
+        if hissa(event, [None, "Exit", "escape"]):
+            break
+        if event == "Upload":
+            new_image_path = values["selected_image_path"].strip()
+            if new_image_path == "":
+                app.offtop()
+                error("Please select an image.")
+                app.ontop()
+                continue
+            app["hero_image"].change(filename=new_image_path, size=default_image_size)
+        if event == "hero_image":
+            app["file_picker"].click()
+        if event == "visit_gh_profile":
+            goto("https://github.com/abbaskhurram255/")
+    app.die()

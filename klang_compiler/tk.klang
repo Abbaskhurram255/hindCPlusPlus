@@ -1,0 +1,23 @@
+theme('BluePurple')
+
+lay = [
+    [T('Your typed characters appear here:'), Text(size=(15, 1), event='-OUTPUT-')],
+    [I(event='-IN-')],
+    [B('Display'), B('Exit')]
+]
+
+app: hindGui = hindGui('Introduction', lay)
+
+fc main() -> none:
+    while app.chal_rahi_he:
+        event, values = app.parh()
+        # print(event, values) # Uncomment to see the raw event and values data
+    
+        # If the user closes the window or clicks 'Exit', break the loop
+        agar event (WIN_CLOSED, 'Exit') me:
+            ruko
+        
+        agar event he 'Display':
+            # Update the "output" text element to be the value of the "input" element
+            app['-OUTPUT-'].change(values['-IN-'])
+    app.die()
