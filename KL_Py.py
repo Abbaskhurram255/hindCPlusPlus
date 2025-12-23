@@ -1,5 +1,5 @@
 from types import *
-from typing import List, Callable, TypeVar, NewType, Any, Optional, Union, Final
+from typing import List, Callable, TypeVar, NewType, Any, Optional, Union, Final, Self
 from collections import defaultdict
 from collections.abc import Sequence
 from functools import reduce, lru_cache, cache
@@ -79,11 +79,11 @@ class obj(dict):
             else:
                 converted_collection.append(item)
         return type(collection)(converted_collection)
-    def __getattr__(self, key):
+    def __getattr__(self, key) -> Any|dict:
         try:
             return self[key]
-        except KeyError:
-            raise AttributeError(f"object '{self.__class__.__name__}' has no attribute '{key}'")
+        except KeyError as e:
+             raise AttributeError(f"object '{self.__class__.__name__}' has no attribute '{key}'")
     def __setattr__(self, key, value):
         if isinstance(value, dict):
             self[key] = obj(value)
@@ -112,12 +112,12 @@ def keys(dictionary: dict):
 def values(dictionary: dict):
     return list(dictionary.values())
 def entries(dictionary: dict):
-    return list(dictionary.entries())
-keysOf = keys
-valuesOf = values
-entriesOf = entries
+    return list(dictionary.items())
+get_keys = keys_of = keys
+get_values = values_of = values
+get_entries = entries_of = entries
 def remove_duplicates(lst: list) -> list:
-	if not lst:
+	if not lst or not isinstance(lst, list):
 		return []
 	return list(dict.fromkeys(lst).keys())
 def get_local_declarations() -> obj:
@@ -256,7 +256,7 @@ def f(*args) -> str:
     frames = reversed(frames)
     # reverse the frames to prioritize the closest local scope first
     for scope in frames:
-    	caller_locals.update(scope.f_locals)
+    	caller_locals.update(scope.f_globals | scope.f_locals)
     blacklisted_keywords: list[str] = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
     blacklisted_functions: list[str] = ['system', 'popen', 'subprocess']
     blacklisted_items: list[str] = blacklisted_keywords + blacklisted_functions
@@ -271,16 +271,14 @@ def f(*args) -> str:
                     print(f"Forbidden keyword/function in input: '{item}'")
                     continue
             # Evaluate the expression
-            arg = re.sub(r"[\$\{]+([^\s\{\}\$]+)\}?", r"{\1}", arg)
-            arg = re.sub(r'[\$\{]+([a-zA-Z_][a-zA-Z0-9_.]*(\(.*?\))?(?:[^\}]*)?)\}?', r'{\1}', arg)
-            # fixing a syntactic bug...
-            arg = replace(arg, r",\}", "}")
+            arg = re.sub(r"(?<!\\)[\$\{]+([^\s\{\}\(\)\$]+(?:\(([\w\.\-]+(,\s*)?)*\))?)\}?", r"{\1}", arg)
+            # (?<!\\) means recognize escapes, and only match if the dollar '$', and opening_brace '{'' are not precededed by a forward slash '\' (which is the standard pattern for regex escapes)
             evaluation: str = eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
             WHITESPACE_CHAR = " "
             # for readability, there should be a whitespace character after each argument, except the last one (though, for the last one, it does not really matter, as it usually goes unnoticed)
             formatted += evaluation + WHITESPACE_CHAR
-        except Exception:
-            return ""
+        except Exception as e:
+            print(e)
     formatted = formatted.rstrip()
     return formatted
 def printf(*args, **kwargs):
@@ -339,10 +337,37 @@ is_string = isstring = is_str = isstr = lambda x: isinstance(x, str)
 isnt_string = isntstring = isnt_str = isntstr = non_string = nonstring = non_str = nonstr = lambda x: not is_string(x)
 is_integer = isinteger = is_int = isint = lambda x: isinstance(x, int)
 isnt_integer = isntinteger = isnt_int = isntint = non_integer = noninteger = non_int = nonint = lambda x: not is_integer(x)
+def is_int_like(x: str) -> bool:
+	x = str(x)
+	parsed: int = 0
+	try:
+		parsed = int(x)
+		return True
+	except ValueError:
+		...
+	return False
 is_float = isfloat = is_flt = isflt = lambda x: isinstance(x, float)
 isnt_float = isntfloat = isnt_float = isntfloat = non_float = nonfloat = non_flt = nonflt = lambda x: not is_float(x)
+def is_float_like(x: str) -> bool:
+	x = str(x)
+	parsed: float = 0.0
+	try:
+		parsed = float(x)
+		return True
+	except ValueError:
+		...
+	return False
+is_flt_like = is_float_like
 is_boolean = isboolean = is_bool = isbool = lambda x: isinstance(x, bool)
 isnt_boolean = isntboolean = isnt_bool = isntbool = non_boolean = nonboolean = non_bool = nonbool = lambda x: not is_boolean(x)
+def is_bool_like(x: str) -> bool:
+	x = str(x)
+	parsed: bool = False
+	if x == "True":
+		parsed = True
+	elif x == "False":
+		parsed = False
+	return parsed
 is_array = isarray = is_arr = isarr = lambda x: isinstance(x, (list, tuple))
 isnt_array = isntarray = isnt_arr = isntarr = non_array = nonarray = non_arr = nonarr = lambda x: not is_array(x)
 is_stringarray = is_stringarr = is_strarray = is_strarr = isstringarray = isstringarr = isstrarray = isstrarr = lambda x: isinstance(x, (list[str], tuple[str, ...]))
@@ -769,7 +794,7 @@ def main() -> none:
     print(name)
     x: num = 4
     print(x)
-    printf("$name, dont! You are, but a $10+5-8 -year-old kid. $x")
+    printf("$name dont! You are, but a $10+5-8 -year-old kid. $x")
     print(isstr(""))
     print(isint(3))
     print(isflt(""))
