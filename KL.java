@@ -33,15 +33,15 @@ public class KL {
 		return new KL();
 	}
 	public static final KL kl = kl(), iske_lie = kl(), khud = kl(), self = khud,
-			parent = khud;
+			me = khud, my = khud, parent = khud, mom = parent;
 	// MySQL section
 	public static String PROTO = "MySQL://", HOST = "localhost", DB = "mysql",
 			USER = "root", PASS = "";
 	public static int PORT = 3306;
 	public static class sql {
 		public sql khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static class results {
 			ResultSet value = null;
 			results(ResultSet r) {
@@ -537,8 +537,8 @@ public class KL {
 	}
 	public static class db extends sql {
 		public db khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public sql parent = new sql("");
+				isko = khud, self = khud, me = khud, my = khud;
+		public sql parent = new sql(""), mom = parent;
 		db(String url, String user, String pass) {
 			super(url, user, pass);
 		}
@@ -591,170 +591,178 @@ public class KL {
 	}
 	public static class hint {
 		public hint khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		//@class.why: this class is supposed to help make functions more understandable
 		public static class aboveLine extends hint {
 			public aboveLine khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class followingLine extends hint {
 			public followingLine khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class info extends hint {
 			public info khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class safety extends hint {
 			public safety khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class critical extends hint {
 			public critical khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class caution extends hint {
 			public caution khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class intention extends hint {
 			public intention khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class handling extends hint {
 			public handling khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 			public static class casesWhere extends hint.handling {
 				public handling.handling.casesWhere khud = this, ka = this,
-						iske_lie = khud, iska = khud, isko = khud, self = khud;
-				public hint.handling parent = new hint.handling();
+						iske_lie = khud, iska = khud, isko = khud, self = khud,
+						me = khud, my = khud;
+				public hint.handling parent = new hint.handling(), mom = parent;
 			}
 			public static class bothCasesWhere
 					extends
 						hint.handling.casesWhere {
 				public handling.handling.bothCasesWhere khud = this, ka = this,
-						iske_lie = khud, iska = khud, isko = khud, self = khud;
-				public hint.handling.casesWhere parent = new hint.handling.casesWhere();
+						iske_lie = khud, iska = khud, isko = khud, self = khud,
+						me = khud, my = khud;
+				public hint.handling.casesWhere parent = new hint.handling.casesWhere(),
+						mom = parent;
 			}
 			public static class allCasesWhere extends hint.handling.casesWhere {
 				public handling.handling.allCasesWhere khud = this, ka = this,
-						iske_lie = khud, iska = khud, isko = khud, self = khud;
-				public hint.handling.casesWhere parent = new hint.handling.casesWhere();
+						iske_lie = khud, iska = khud, isko = khud, self = khud,
+						me = khud, my = khud;
+				public hint.handling.casesWhere parent = new hint.handling.casesWhere(),
+						mom = parent;
 			}
 			public static class caseWhere extends hint.handling.casesWhere {
 				public handling.handling.caseWhere khud = this, ka = this,
-						iske_lie = khud, iska = khud, isko = khud, self = khud;
-				public hint.handling.casesWhere parent = new hint.handling.casesWhere();
+						iske_lie = khud, iska = khud, isko = khud, self = khud,
+						me = khud, my = khud;
+				public hint.handling.casesWhere parent = new hint.handling.casesWhere(),
+						mom = parent;
 			}
 		}
 		public static class handles extends hint.handling {
 			public handles khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint.handling();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint.handling(), mom = parent;
 		}
 		public static class behavior extends hint {
 			public behavior khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class functionality extends hint {
 			public functionality khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class goodpractice extends hint {
 			public goodpractice khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class badpractice extends hint {
 			public badpractice khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class time extends hint {
 			public time khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class timecomplexity extends hint.time {
 			public hint.timecomplexity khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint.time parent = new hint.time();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint.time parent = new hint.time(), mom = parent;
 		}
 		public static class approach extends hint {
 			public approach khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class avoids extends hint {
 			public avoids khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class prevents extends hint {
 			public prevents khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class WARNING extends hint {
 			public WARNING khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class forClass extends hint {
 			public forClass khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class constructor extends hint {
 			public constructor khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint parent = new hint();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class forConstructor extends hint.constructor {
 			public hint.forConstructor khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint.constructor parent = new hint.constructor();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint.constructor parent = new hint.constructor(),
+					mom = parent;
 		}
 		public static class field extends hint {
 			public field khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class forField extends hint.field {
 			public hint.forField khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint.field parent = new hint.field();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint.field parent = new hint.field(), mom = parent;
 		}
 		public static class method extends hint {
 			public method khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class forMethod extends hint.method {
 			public hint.forMethod khud = this, ka = this, iske_lie = khud,
-					iska = khud, isko = khud, self = khud;
-			public hint.method parent = new hint.method();
+					iska = khud, isko = khud, self = khud, me = khud, my = khud;
+			public hint.method parent = new hint.method(), mom = parent;
 		}
 		public static class param extends hint {
 			public param khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint parent = new hint();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint parent = new hint(), mom = parent;
 		}
 		public static class forParam extends hint.param {
 			public param khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public hint.param parent = new hint.param();
+					isko = khud, self = khud, me = khud, my = khud;
+			public hint.param parent = new hint.param(), mom = parent;
 		}
 	}
 	public static enum length {
@@ -762,8 +770,8 @@ public class KL {
 	}
 	public static class size {
 		public size khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		//enums cannot be extended, hence manual manipulation
 		public static length standard = length.standard,
 				setLength = length.setLength, naiLength = length.naiLength,
@@ -772,8 +780,8 @@ public class KL {
 	}
 	public static class lambai extends size {
 		public lambai khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public size parent = new size();
+				isko = khud, self = khud, me = khud, my = khud;
+		public size parent = new size(), mom = parent;
 	}
 	public static enum lambaiMe {
 		chota, chota_ya_barabar, na_barabar, bara, bara_ya_barabar;
@@ -810,8 +818,8 @@ public class KL {
 			na_barabar = lambaiMe.na_barabar;
 	public static class har {
 		public har khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static int i, j, k;
 		public static void lo(int initialization,
 				Callable<Boolean> conditionAsACallable,
@@ -828,38 +836,38 @@ public class KL {
 	}
 	public static class init extends har {
 		public init khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public har parent = new har();
+				isko = khud, self = khud, me = khud, my = khud;
+		public har parent = new har(), mom = parent;
 	}
 	public static class variable extends har {
 		public variable khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public har parent = new har();
+				isko = khud, self = khud, me = khud, my = khud;
+		public har parent = new har(), mom = parent;
 	}
 	public static class lo extends har {
 		public lo khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public har parent = new har();
+				isko = khud, self = khud, me = khud, my = khud;
+		public har parent = new har(), mom = parent;
 	}
 	public static class lia extends lo {
 		public lia khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public lo parent = new lo();
+				isko = khud, self = khud, me = khud, my = khud;
+		public lo parent = new lo(), mom = parent;
 	}
 	public static class liava extends lo {
 		public liava khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public lo parent = new lo();
+				isko = khud, self = khud, me = khud, my = khud;
+		public lo parent = new lo(), mom = parent;
 	}
 	public static class farz extends lo {
 		public farz khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public lo parent = new lo();
+				isko = khud, self = khud, me = khud, my = khud;
+		public lo parent = new lo(), mom = parent;
 	}
 	public static class money {
 		public money khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		//@class.why: this class is supposed to help deal with money-related everyday calculations easier (currency conversion will be added soon)
 		private double amnt;
 		private String cur;
@@ -1019,8 +1027,8 @@ public class KL {
 	}
 	public static final class pesa extends money {
 		public pesa khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public money parent = new money();
+				isko = khud, self = khud, me = khud, my = khud;
+		public money parent = new money(), mom = parent;
 		pesa() {
 			super.amnt = 0;
 			super.cur = "Rs. ";
@@ -1063,8 +1071,8 @@ public class KL {
 	}
 	public static class number extends Number {
 		public number khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		//Number is an abstract class, hence cannot be instantiated
 		//just recognize grandparent class KL as the parent
 		private double value;
@@ -1550,8 +1558,8 @@ public class KL {
 	}
 	public static class num extends number {
 		public num khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public number parent = new number();
+				isko = khud, self = khud, me = khud, my = khud;
+		public number parent = new number(), mom = parent;
 		num() {
 			super();
 		}
@@ -1693,8 +1701,8 @@ public class KL {
 	}
 	public static class naya {
 		public naya khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static number number() {
 			return new number();
 		}
@@ -1722,8 +1730,8 @@ public class KL {
 	}
 	public static class kmath {
 		public kmath khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		//@class.why: this class is supposed to help give fellow developers an easier time dealing with units
 		public static double pi = 3.141592653589793, c = 2.99792e8,
 				earthsGravity = 9.80665, earthsMass = 5.9722e24,
@@ -1732,8 +1740,8 @@ public class KL {
 				earthsMassUnit = "km", earthsRadiusUnit = "km";
 		public static final class c extends kmath {
 			public c khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			// temperature::c
 			public static int f(int n) {
 				return (int) (1.8 * n + 32);
@@ -1883,8 +1891,8 @@ public class KL {
 		}
 		public static final class f extends kmath {
 			public f khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int c(int n) {
 				return (int) (((n - 32) * 5) / 9);
 			}
@@ -1900,8 +1908,8 @@ public class KL {
 		}
 		public static final class m extends kmath {
 			public m khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			// distance::m
 			public static int km(int n) {
 				return (int) (n * 1e-3);
@@ -2123,8 +2131,8 @@ public class KL {
 		}
 		public static final class km extends kmath {
 			public km khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int m(int n) {
 				return (int) (n * 1e3);
 			}
@@ -2212,8 +2220,8 @@ public class KL {
 		}
 		public static final class mi extends kmath {
 			public mi khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int m(int n) {
 				return (int) (n * 1.60934e+3);
 			}
@@ -2301,8 +2309,8 @@ public class KL {
 		}
 		public static final class ft extends kmath {
 			public ft khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int m(int n) {
 				return (int) (n * 3.048e-1);
 			}
@@ -2390,8 +2398,8 @@ public class KL {
 		}
 		public static final class in extends kmath {
 			public in khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int m(int n) {
 				return (int) (n * 2.54e-2);
 			}
@@ -2479,8 +2487,8 @@ public class KL {
 		}
 		public static final class cm extends kmath {
 			public cm khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int m(int n) {
 				return (int) (n * 1e-2);
 			}
@@ -2568,8 +2576,8 @@ public class KL {
 		}
 		public static final class mm extends kmath {
 			public mm khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int m(int n) {
 				return (int) (n * 1e-3);
 			}
@@ -2657,8 +2665,8 @@ public class KL {
 		}
 		public static final class yd extends kmath {
 			public yd khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int m(int n) {
 				return (int) (n * 9.144e-1);
 			}
@@ -2746,8 +2754,8 @@ public class KL {
 		}
 		public static final class mcg extends kmath {
 			public mcg khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mg(int n) {
 				return (int) (n * 1e-3);
 			}
@@ -2835,8 +2843,8 @@ public class KL {
 		}
 		public static final class mg extends kmath {
 			public mg khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mcg(int n) {
 				return (int) (n * 1e3);
 			}
@@ -2924,8 +2932,8 @@ public class KL {
 		}
 		public static final class g extends kmath {
 			public g khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mcg(int n) {
 				return (int) (n * 1e6);
 			}
@@ -3013,8 +3021,8 @@ public class KL {
 		}
 		public static final class kg extends kmath {
 			public kg khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mcg(int n) {
 				return (int) (n * 1e9);
 			}
@@ -3102,8 +3110,8 @@ public class KL {
 		}
 		public static final class ton extends kmath {
 			public ton khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mcg(int n) {
 				return (int) (n * 1e12);
 			}
@@ -3191,8 +3199,8 @@ public class KL {
 		}
 		public static final class kiloton extends kmath {
 			public kiloton khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mcg(int n) {
 				return (int) (n * 1e15);
 			}
@@ -3280,8 +3288,8 @@ public class KL {
 		}
 		public static final class oz extends kmath {
 			public oz khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mcg(int n) {
 				return (int) (n * 2.835e7);
 			}
@@ -3369,8 +3377,8 @@ public class KL {
 		}
 		public static final class p extends kmath {
 			public p khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mcg(int n) {
 				return (int) (n * 4.536e8);
 			}
@@ -3458,8 +3466,8 @@ public class KL {
 		}
 		public static final class ns extends kmath {
 			public ns khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int mcs(int n) {
 				return (int) (n * 1e-3);
 			}
@@ -3595,8 +3603,8 @@ public class KL {
 		}
 		public static final class mcs extends kmath {
 			public mcs khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 1e3);
 			}
@@ -3732,8 +3740,8 @@ public class KL {
 		}
 		public static final class ms extends kmath {
 			public ms khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 1e6);
 			}
@@ -3869,8 +3877,8 @@ public class KL {
 		}
 		public static final class s extends kmath {
 			public s khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 1e9);
 			}
@@ -4006,8 +4014,8 @@ public class KL {
 		}
 		public static final class h extends kmath {
 			public h khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 3.6e12);
 			}
@@ -4143,8 +4151,8 @@ public class KL {
 		}
 		public static final class d extends kmath {
 			public d khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 8.64e13);
 			}
@@ -4280,8 +4288,8 @@ public class KL {
 		}
 		public static final class wk extends kmath {
 			public wk khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 6.048e14);
 			}
@@ -4417,8 +4425,8 @@ public class KL {
 		}
 		public static final class mn extends kmath {
 			public mn khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 2.628e15);
 			}
@@ -4554,8 +4562,8 @@ public class KL {
 		}
 		public static final class yr extends kmath {
 			public yr khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 3.154e16);
 			}
@@ -4691,8 +4699,8 @@ public class KL {
 		}
 		public static final class dc extends kmath {
 			public dc khud = this, ka = this, iske_lie = khud, iska = khud,
-					isko = khud, self = khud;
-			public kmath parent = new kmath();
+					isko = khud, self = khud, me = khud, my = khud;
+			public kmath parent = new kmath(), mom = parent;
 			public static int ns(int n) {
 				return (int) (n * 3.154e17);
 			}
@@ -5056,8 +5064,8 @@ public class KL {
 			workDirectory = System.getProperty("user.dir").toLowerCase();
 	public static class sys {
 		public sys khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		private static Runtime runtime = Runtime.getRuntime();
 		public static String name = System.getProperty("os.name").toLowerCase()
 				.split(" ")[0],
@@ -5179,12 +5187,12 @@ public class KL {
 		}
 	}
 	public static class system extends KL.sys {
-		public KL.sys parent = new KL.sys();
+		public KL.sys parent = new KL.sys(), mom = parent;
 	}
 	public static class user {
 		public user khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String name = System.getProperty("user.name"),
 				language = System.getProperty("user.language").toLowerCase(),
 				homeDirectory = System.getProperty("user.home"),
@@ -5193,8 +5201,8 @@ public class KL {
 	// gui
 	public static class app extends JFrame {
 		public app khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JFrame parent = new JFrame();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JFrame parent = new JFrame(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		public static int SADA_WALA = Cursor.DEFAULT_CURSOR,
 				CROSSHAIR_WALA = Cursor.CROSSHAIR_CURSOR,
@@ -5223,6 +5231,10 @@ public class KL {
 		public app(String title, int w, int h) {
 			this(title);
 			size(w, h);
+		}
+		public app(String title, String WxH) {
+			this(title);
+			size(WxH);
 		}
 		public app title(String title) {
 			if (not(title))
@@ -5260,7 +5272,7 @@ public class KL {
 			return this;
 		}
 		public app size(int[] widthAndHeight) {
-			if (not(widthAndHeight) || len(widthAndHeight) != 2) {
+			if (not(widthAndHeight) || len(widthAndHeight) < 2) {
 				return this;
 			}
 			int w = widthAndHeight[0], h = widthAndHeight[1];
@@ -5294,6 +5306,26 @@ public class KL {
 			size(w, h);
 			return this;
 		}
+		public app sz(int w, int h) {
+			return size(w, h);
+		}
+		public app sz(int[] widthAndHeight) {
+			return size(widthAndHeight);
+		}
+		public app sz(o resolution) {
+			return size(resolution);
+		}
+		public app sz(oI resolution) {
+			return size(resolution);
+		}
+		public app sz(String WxH) {
+			return size(WxH);
+		}
+		public int[] sz() {
+			Dimension d = super.getSize();
+			int w = d.width, h = d.height;
+			return new int[]{w, h};
+		}
 		public app kiSize(int w, int h) {
 			size(w, h);
 			return this;
@@ -5309,6 +5341,9 @@ public class KL {
 		public app kiSize(oI resolution) {
 			size(resolution);
 			return this;
+		}
+		public int[] kiSize() {
+			return sz();
 		}
 		public app box(int w, int h) {
 			size(w, h);
@@ -5326,6 +5361,9 @@ public class KL {
 			size(resolution);
 			return this;
 		}
+		public int[] box() {
+			return sz();
+		}
 		public app kaBox(int w, int h) {
 			size(w, h);
 			return this;
@@ -5341,6 +5379,9 @@ public class KL {
 		public app kaBox(oI resolution) {
 			size(resolution);
 			return this;
+		}
+		public int[] kaBox() {
+			return sz();
 		}
 		public app set(o propsObj) {
 			if (propsObj == null)
@@ -6100,39 +6141,94 @@ public class KL {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					ico) == 0);
 		}
-		public boolean confirmCancellable(String message) {
+		public boolean confirmYesNo(String message) {
+			return confirm(message);
+		}
+		public boolean confirmYesNo(String title, String message) {
+			return confirm(title, message);
+		}
+		public boolean confirmYesNo(String title, String message,
+				String iconAddress) {
+			return confirm(title, message, iconAddress);
+		}
+		public boolean confirmYesNo(String title, String message, Icon ico) {
+			return confirm(title, message, ico);
+		}
+		public static final int YES = 1, OK = YES, NO = 2, CANCEL = 3;
+		public int confirmCancelable(String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, "Confirmation",
-					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE) == 0);
+			return 1 + JOptionPane.showConfirmDialog(null, message,
+					"Confirmation", JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.QUESTION_MESSAGE);
+			//the `1 + ` is a fix for a logical bug, and shall stay AS-IS
 		}
-		public boolean confirmCancellable(String title, String message) {
+		public int confirmCancelable(String title, String message) {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title,
+			return 1 + JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE) == 0);
+					JOptionPane.QUESTION_MESSAGE);
+			//the `1 + ` is a fix for a logical bug, and shall stay AS-IS
 		}
-		public boolean confirmCancellable(String title, String message,
+		public int confirmCancelable(String title, String message,
 				String iconAddress) {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title,
+			return 1 + JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress)) == 0);
+					JOptionPane.QUESTION_MESSAGE, new icon(iconAddress));
+			//the `1 + ` is a fix for a logical bug, and shall stay AS-IS
 		}
-		public boolean confirmCancellable(String title, String message,
-				Icon ico) {
+		public int confirmCancelable(String title, String message, Icon ico) {
 			if (this.isOnTop()) {
 				offTop();
 			}
-			return (JOptionPane.showConfirmDialog(null, message, title,
+			return 1 + JOptionPane.showConfirmDialog(null, message, title,
 					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE, ico) == 0);
+					JOptionPane.QUESTION_MESSAGE, ico);
+			//the `1 + ` is a fix for a logical bug, and shall stay AS-IS
+		}
+		public int confirmCanc(String message) {
+			return confirmCancelable(message);
+		}
+		public int confirmCanc(String title, String message) {
+			return confirmCancelable(title, message);
+		}
+		public int confirmCanc(String title, String message,
+				String iconAddress) {
+			return confirmCancelable(title, message, iconAddress);
+		}
+		public int confirmCanc(String title, String message, Icon ico) {
+			return confirmCancelable(title, message, ico);
+		}
+		public int confirmC(String message) {
+			return confirmCancelable(message);
+		}
+		public int confirmC(String title, String message) {
+			return confirmCancelable(title, message);
+		}
+		public int confirmC(String title, String message, String iconAddress) {
+			return confirmCancelable(title, message, iconAddress);
+		}
+		public int confirmC(String title, String message, Icon ico) {
+			return confirmCancelable(title, message, ico);
+		}
+		public int confirmYesNoCancel(String message) {
+			return confirmCancelable(message);
+		}
+		public int confirmYesNoCancel(String title, String message) {
+			return confirmCancelable(title, message);
+		}
+		public int confirmYesNoCancel(String title, String message,
+				String iconAddress) {
+			return confirmCancelable(title, message, iconAddress);
+		}
+		public int confirmYesNoCancel(String title, String message, Icon ico) {
+			return confirmCancelable(title, message, ico);
 		}
 		public String ask(String message) {
 			if (this.isOnTop()) {
@@ -6187,8 +6283,8 @@ public class KL {
 	hint.approach helps_make_building_guis_easier;
 	public static class gui extends app {
 		public gui khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public app parent = new app();
+				isko = khud, self = khud, me = khud, my = khud;
+		public app parent = new app(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		public gui() {
 			super();
@@ -6200,543 +6296,8 @@ public class KL {
 		public gui(String title, int w, int h) {
 			super(title, w, h);
 		}
-		public gui title(String title) {
-			super.title(title);
-			return this;
-		}
-		public gui kaTitle(String title) {
-			super.kaTitle(title);
-			return this;
-		}
-		public gui name(String title) {
-			super.name(title);
-			return this;
-		}
-		public gui kaName(String title) {
-			super.kaName(title);
-			return this;
-		}
-		public gui naam(String title) {
-			super.naam(title);
-			return this;
-		}
-		public gui kaNaam(String title) {
-			super.kaNaam(title);
-			return this;
-		}
-		public gui size(int w, int h) {
-			super.size(w, h);
-			return this;
-		}
-		public gui size(int[] widthAndHeight) {
-			super.size(widthAndHeight);
-			return this;
-		}
-		public gui size(o resolution) {
-			super.size(resolution);
-			return this;
-		}
-		public gui size(oI resolution) {
-			super.size(resolution);
-			return this;
-		}
-		public gui size(String WxH) {
-			super.size(WxH);
-			return this;
-		}
-		public gui kiSize(int w, int h) {
-			super.kiSize(w, h);
-			return this;
-		}
-		public gui kiSize(String WxH) {
-			super.kiSize(WxH);
-			return this;
-		}
-		public gui kiSize(o resolution) {
-			super.kiSize(resolution);
-			return this;
-		}
-		public gui kiSize(oI resolution) {
-			super.kiSize(resolution);
-			return this;
-		}
-		public gui box(int w, int h) {
-			super.box(w, h);
-			return this;
-		}
-		public gui box(String WxH) {
-			super.box(WxH);
-			return this;
-		}
-		public gui box(o resolution) {
-			super.box(resolution);
-			return this;
-		}
-		public gui box(oI resolution) {
-			super.box(resolution);
-			return this;
-		}
-		public gui kaBox(int w, int h) {
-			super.kaBox(w, h);
-			return this;
-		}
-		public gui kaBox(String WxH) {
-			super.kaBox(WxH);
-			return this;
-		}
-		public gui kaBox(o resolution) {
-			super.kaBox(resolution);
-			return this;
-		}
-		public gui kaBox(oI resolution) {
-			super.kaBox(resolution);
-			return this;
-		}
-		public gui set(o propsObj) {
-			super.set(propsObj);
-			return this;
-		}
-		public gui set(String... kvs) {
-			super.set(kvs);
-			return this;
-		}
-		public gui use(o propsObj) {
-			super.use(propsObj);
-			return this;
-		}
-		public gui use(String... kvs) {
-			super.use(kvs);
-			return this;
-		}
-		public gui rakho(o propsObj) {
-			super.set(propsObj);
-			return this;
-		}
-		public gui rakho(String... kvs) {
-			super.set(kvs);
-			return this;
-		}
-		public gui lay(LayoutManager layout) {
-			super.lay(layout);
-			return this;
-		}
-		public gui layout(LayoutManager layout) {
-			super.layout(layout);
-			return this;
-		}
-		public gui start() {
-			super.start();
-			return this;
-		}
-		public gui start(int w, int h) {
-			super.start(w, h);
-			return this;
-		}
-		public gui shuru() {
-			super.shuru();
-			return this;
-		}
-		public gui shuru(int w, int h) {
-			super.shuru(w, h);
-			return this;
-		}
-		public gui appear() {
-			super.appear();
-			return this;
-		}
-		public gui disappear() {
-			super.disappear();
-			return this;
-		}
-		public gui resizable(boolean b) {
-			super.resizable(b);
-			return this;
-		}
-		public gui resizable() {
-			super.resizable();
-			return this;
-		}
-		public gui notResizable() {
-			super.notResizable();
-			return this;
-		}
-		public gui resizableNaHo() {
-			super.resizableNaHo();
-			return this;
-		}
-		public gui onTop(boolean b) {
-			super.onTop(b);
-			return this;
-		}
-		public gui onTop() {
-			super.onTop();
-			return this;
-		}
-		public gui offTop() {
-			super.offTop();
-			return this;
-		}
-		public gui alwaysOnTop(boolean b) {
-			super.alwaysOnTop(b);
-			return this;
-		}
-		public gui alwaysOnTop() {
-			super.alwaysOnTop();
-			return this;
-		}
-		public boolean isOnTop() {
-			return super.isOnTop();
-		}
-		public gui hameshaTopPe(boolean b) {
-			super.hameshaTopPe(b);
-			return this;
-		}
-		public gui hameshaTopPe() {
-			super.hameshaTopPe();
-			return this;
-		}
-		public gui topPe(boolean b) {
-			super.topPe(b);
-			return this;
-		}
-		public boolean hameshaTopPeHe() {
-			return super.hameshaTopPeHe();
-		}
-		public boolean topPeHe() {
-			return super.topPeHe();
-		}
-		public gui add(Component... components) {
-			super.add(components);
-			return this;
-		}
-		public gui addAll(Component... components) {
-			super.addAll(components);
-			return this;
-		}
-		public gui opacity(double o) {
-			hint.handles.bothCasesWhere o_is_EITHER_between_0_and_1_OR_is_between_1_and_100;
-			super.opacity(o);
-			return this;
-		}
-		public gui cursor(int c) {
-			super.cursor(c);
-			return this;
-		}
-		public gui cursor(Cursor crsrObj) {
-			super.cursor(crsrObj);
-			return this;
-		}
-		public gui peMouse(int c, Object... vocabularySupportingArgs) {
-			super.peMouse(c);
-			return this;
-		}
-		public gui peMouse(Cursor crsrObj, Object... vocabularySupportingArgs) {
-			super.peMouse(crsrObj);
-			return this;
-		}
-		public gui parMouse(int c, Object... vocabularySupportingArgs) {
-			super.parMouse(c);
-			return this;
-		}
-		public gui parMouse(Cursor crsrObj,
-				Object... vocabularySupportingArgs) {
-			super.parMouse(crsrObj);
-			return this;
-		}
-		public gui keSamneMouse(int c, Object... vocabularySupportingArgs) {
-			super.keSamneMouse(c);
-			return this;
-		}
-		public gui keSamneMouse(Cursor crsrObj,
-				Object... vocabularySupportingArgs) {
-			super.keSamneMouse(crsrObj);
-			return this;
-		}
-		public gui bg(Color clr) {
-			super.bg(clr);
-			return this;
-		}
-		public gui kaBg(Color clr) {
-			super.kaBg(clr);
-			return this;
-		}
-		public gui kiBg(Color clr) {
-			super.kiBg(clr);
-			return this;
-		}
-		public gui bgColor(Color clr) {
-			super.bgColor(clr);
-			return this;
-		}
-		public gui kaBgColor(Color clr) {
-			super.kaBgColor(clr);
-			return this;
-		}
-		public gui background(Color clr) {
-			super.background(clr);
-			return this;
-		}
-		public gui kaBackground(Color clr) {
-			super.kaBackground(clr);
-			return this;
-		}
-		public gui kiBackground(Color clr) {
-			super.kiBackground(clr);
-			return this;
-		}
-		public gui backgroundColor(Color clr) {
-			super.backgroundColor(clr);
-			return this;
-		}
-		public gui kaBackgroundColor(Color clr) {
-			super.kaBackgroundColor(clr);
-			return this;
-		}
-		public gui color(Color clr) {
-			super.color(clr);
-			return this;
-		}
-		public gui textColor(Color clr) {
-			super.textColor(clr);
-			return this;
-		}
-		public gui kaTextColor(Color clr) {
-			super.kaTextColor(clr);
-			return this;
-		}
-		public gui icon(String address) {
-			super.icon(address);
-			return this;
-		}
-		public gui font(String fontFamily, int fontSize) {
-			super.font(fontFamily, fontSize);
-			return this;
-		}
-		public gui font(String fontFamily, int fontSize, int fontWidth) {
-			super.font(fontFamily, fontSize, fontWidth);
-			return this;
-		}
-		public gui font(String fontFamily, int fontSize, boolean bold,
-				boolean italic) {
-			super.font(fontFamily, fontSize, bold, italic);
-			return this;
-		}
-		public gui font(String fontFamily, int fontSize, boolean bold) {
-			super.font(fontFamily, fontSize, bold);
-			return this;
-		}
-		public gui font(String fontFamily, int fontSize, int bold, int italic) {
-			super.font(fontFamily, fontSize, bold, italic);
-			return this;
-		}
-		public gui font(Font fnt) {
-			super.font(fnt);
-			return this;
-		}
-		public gui kaFont(String fontFamily, int fontSize) {
-			super.kaFont(fontFamily, fontSize);
-			return this;
-		}
-		public gui kaFont(String fontFamily, int fontSize, int fontWidth) {
-			super.kaFont(fontFamily, fontSize, fontWidth);
-			return this;
-		}
-		public gui kaFont(String fontFamily, int fontSize, boolean bold,
-				boolean italic) {
-			super.kaFont(fontFamily, fontSize, bold, italic);
-			return this;
-		}
-		public gui kaFont(String fontFamily, int fontSize, boolean bold) {
-			super.kaFont(fontFamily, fontSize, bold);
-			return this;
-		}
-		public gui kaFont(String fontFamily, int fontSize, int bold,
-				int italic) {
-			super.kaFont(fontFamily, fontSize, bold, italic);
-			return this;
-		}
-		public gui kaFont(Font fnt) {
-			super.kaFont(fnt);
-			return this;
-		}
-		public boolean openUrl(String urlString) {
-			return super.openUrl(urlString);
-		}
-		public double mouseX() {
-			return super.mouseX();
-		}
-		public double mouseY() {
-			return super.mouseY();
-		}
-		public gui exitOnClose() {
-			super.exitOnClose();
-			return this;
-		}
-		public gui on(String k, Runnable action) {
-			super.on(k, action);
-			return this;
-		}
-		public gui pe(String k, Object vocabularySupportingArg,
-				Runnable action) {
-			super.pe(k, vocabularySupportingArg, action);
-			return this;
-		}
-		public gui par(String k, Object vocabularySupportingArg,
-				Runnable action) {
-			super.par(k, vocabularySupportingArg, action);
-			return this;
-		}
-		public gui state(String newState) {
-			super.state(newState);
-			return this;
-		}
-		public String state() {
-			return super.state();
-		}
-		public gui min() {
-			super.min();
-			return this;
-		}
-		public gui max() {
-			super.max();
-			return this;
-		}
-		public gui message(String message) {
-			super.message(message);
-			return this;
-		}
-		public gui message(String title, String message) {
-			super.message(title, message);
-			return this;
-		}
-		public gui message(String title, String message, String iconAddress) {
-			super.message(title, message, iconAddress);
-			return this;
-		}
-		public gui message(String title, String message, Icon ico) {
-			super.message(title, message, ico);
-			return this;
-		}
-		public gui msg(String message) {
-			super.msg(message);
-			return this;
-		}
-		public gui msg(String title, String message) {
-			super.msg(title, message);
-			return this;
-		}
-		public gui msg(String title, String message, String iconAddress) {
-			super.msg(title, message, iconAddress);
-			return this;
-		}
-		public gui msg(String title, String message, Icon ico) {
-			super.msg(title, message, ico);
-			return this;
-		}
-		public gui error(String message) {
-			super.error(message);
-			return this;
-		}
-		public gui error(String title, String message) {
-			super.error(title, message);
-			return this;
-		}
-		public gui error(String title, String message, String iconAddress) {
-			super.error(title, message, iconAddress);
-			return this;
-		}
-		public gui error(String title, String message, Icon ico) {
-			super.error(title, message, ico);
-			return this;
-		}
-		public gui err(String message) {
-			super.err(message);
-			return this;
-		}
-		public gui err(String title, String message) {
-			super.err(title, message);
-			return this;
-		}
-		public gui err(String title, String message, String iconAddress) {
-			super.err(title, message, iconAddress);
-			return this;
-		}
-		public gui err(String title, String message, Icon ico) {
-			super.err(title, message, ico);
-			return this;
-		}
-		public gui warn(String message) {
-			super.warn(message);
-			return this;
-		}
-		public gui warn(String title, String message) {
-			super.warn(title, message);
-			return this;
-		}
-		public gui warn(String title, String message, String iconAddress) {
-			super.warn(title, message, iconAddress);
-			return this;
-		}
-		public gui warn(String title, String message, Icon ico) {
-			super.warn(title, message, ico);
-			return this;
-		}
-		public boolean confirm(String message) {
-			return super.confirm(message);
-		}
-		public boolean confirm(String title, String message) {
-			return super.confirm(title, message);
-		}
-		public boolean confirm(String title, String message,
-				String iconAddress) {
-			return super.confirm(title, message, iconAddress);
-		}
-		public boolean confirm(String title, String message, Icon ico) {
-			return super.confirm(title, message, ico);
-		}
-		public boolean confirmCancellable(String message) {
-			return super.confirmCancellable(message);
-		}
-		public boolean confirmCancellable(String title, String message) {
-			return super.confirmCancellable(title, message);
-		}
-		public boolean confirmCancellable(String title, String message,
-				String iconAddress) {
-			return super.confirmCancellable(title, message, iconAddress);
-		}
-		public boolean confirmCancellable(String title, String message,
-				Icon ico) {
-			return super.confirmCancellable(title, message, ico);
-		}
-		public String ask(String message) {
-			return super.ask(message);
-		}
-		public String ask(String title, String message) {
-			return super.ask(title, message);
-		}
-		public int askInt(String message) {
-			return super.askInt(message);
-		}
-		public int askInt(String title, String message) {
-			return super.askInt(title, message);
-		}
-		public long askLong(String message) {
-			return super.askLong(message);
-		}
-		public long askLong(String title, String message) {
-			return super.askLong(title, message);
-		}
-		public float askFlt(String message) {
-			return super.askFlt(message);
-		}
-		public float askFlt(String title, String message) {
-			return super.askFlt(title, message);
-		}
-		public double askDbl(String message) {
-			return super.askDbl(message);
-		}
-		public double askDbl(String title, String message) {
-			return super.askDbl(title, message);
+		public gui(String title, String WxH) {
+			super(title, WxH);
 		}
 	}
 	hint.WARNING dont_change_the_visibility_of_any_of_the_methods_of_the_following_class;
@@ -6744,8 +6305,8 @@ public class KL {
 	hint.approach helps_give_an_easier_time_building_guis;
 	public static class label extends JLabel {
 		public label khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JLabel parent = new JLabel();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JLabel parent = new JLabel(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		public static final int top = TOP, left = LEFT, bottom = BOTTOM,
 				right = RIGHT, center = CENTER, east = EAST, west = WEST,
@@ -7162,7 +6723,7 @@ public class KL {
 			return this;
 		}
 		label size(int[] widthAndHeight) {
-			if (not(widthAndHeight) || len(widthAndHeight) != 2) {
+			if (not(widthAndHeight) || len(widthAndHeight) < 2) {
 				return this;
 			}
 			int w = widthAndHeight[0], h = widthAndHeight[1];
@@ -7307,8 +6868,8 @@ public class KL {
 	}
 	public static class bordLay extends BorderLayout {
 		public bordLay khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public BorderLayout parent = new BorderLayout();
+				isko = khud, self = khud, me = khud, my = khud;
+		public BorderLayout parent = new BorderLayout(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		public static final String center = CENTER, east = EAST, right = east,
 				west = WEST, left = west, north = NORTH, top = north,
@@ -7322,8 +6883,8 @@ public class KL {
 	}
 	public static class gridLay extends GridLayout {
 		public gridLay khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public GridLayout parent = new GridLayout();
+				isko = khud, self = khud, me = khud, my = khud;
+		public GridLayout parent = new GridLayout(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		gridLay() {
 			super();
@@ -7337,8 +6898,8 @@ public class KL {
 	}
 	public static class gridBagLay extends GridBagLayout {
 		public gridBagLay khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public GridBagLayout parent = new GridBagLayout();
+				isko = khud, self = khud, me = khud, my = khud;
+		public GridBagLayout parent = new GridBagLayout(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		gridBagLay() {
 			super();
@@ -7346,8 +6907,9 @@ public class KL {
 	}
 	public static class gridBagSettings extends GridBagConstraints {
 		public gridBagSettings khud = this, ka = this, iske_lie = khud,
-				iska = khud, isko = khud, self = khud;
-		public GridBagConstraints parent = new GridBagConstraints();
+				iska = khud, isko = khud, self = khud, me = khud, my = khud;
+		public GridBagConstraints parent = new GridBagConstraints(),
+				mom = parent;
 		private static final long serialVersionUID = 1L;
 		gridBagSettings() {
 			super();
@@ -7355,8 +6917,8 @@ public class KL {
 	}
 	public static class flowLay extends FlowLayout {
 		public flowLay khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public FlowLayout parent = new FlowLayout();
+				isko = khud, self = khud, me = khud, my = khud;
+		public FlowLayout parent = new FlowLayout(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		flowLay() {
 			super();
@@ -7370,8 +6932,8 @@ public class KL {
 	}
 	public static class cardLay extends CardLayout {
 		public cardLay khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public CardLayout parent = new CardLayout();
+				isko = khud, self = khud, me = khud, my = khud;
+		public CardLayout parent = new CardLayout(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		cardLay() {
 			super();
@@ -7382,8 +6944,8 @@ public class KL {
 	}
 	public static class boxLay extends BoxLayout {
 		public boxLay khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public BoxLayout parent = new BoxLayout(null, 0);
+				isko = khud, self = khud, me = khud, my = khud;
+		public BoxLayout parent = new BoxLayout(null, 0), mom = parent;
 		private static final long serialVersionUID = 1L;
 		boxLay(Container target, int axis) {
 			super(target, axis);
@@ -7391,8 +6953,8 @@ public class KL {
 	}
 	public static class panel extends JPanel {
 		public panel khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JPanel parent = new JPanel();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JPanel parent = new JPanel(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		panel(JFrame... frameToAddTo_optional) {
 			super();
@@ -7760,8 +7322,8 @@ public class KL {
 	}
 	public static class button extends JButton {
 		public button khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JButton parent = new JButton();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JButton parent = new JButton(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		button(JPanel... panelToAddTo_optional) {
 			super();
@@ -8173,8 +7735,8 @@ public class KL {
 	}
 	public static class btn extends button {
 		public btn khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public button parent = new button();
+				isko = khud, self = khud, me = khud, my = khud;
+		public button parent = new button(), mom = parent;
 		btn(JPanel... panelToAddTo_optional) {
 			super(panelToAddTo_optional);
 		}
@@ -8510,8 +8072,8 @@ public class KL {
 	}
 	public static class btnGroup extends ButtonGroup {
 		public btnGroup khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public ButtonGroup parent = new ButtonGroup();
+				isko = khud, self = khud, me = khud, my = khud;
+		public ButtonGroup parent = new ButtonGroup(), mom = parent;
 		btnGroup() {
 			super();
 		}
@@ -8550,8 +8112,8 @@ public class KL {
 	}
 	public static class btnGrp extends btnGroup {
 		public btnGrp khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public btnGroup parent = new btnGroup();
+				isko = khud, self = khud, me = khud, my = khud;
+		public btnGroup parent = new btnGroup(), mom = parent;
 		btnGrp() {
 			super();
 		}
@@ -8577,8 +8139,8 @@ public class KL {
 	}
 	public static class toggleBtn extends JToggleButton {
 		public toggleBtn khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JToggleButton parent = new JToggleButton();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JToggleButton parent = new JToggleButton(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		toggleBtn(JPanel... panelToAddTo_optional) {
 			super();
@@ -9104,8 +8666,8 @@ public class KL {
 	}
 	public static class radioBtn extends JRadioButton {
 		public radioBtn khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JRadioButton parent = new JRadioButton();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JRadioButton parent = new JRadioButton(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		radioBtn(JPanel... panelToAddTo_optional) {
 			super();
@@ -9623,8 +9185,9 @@ public class KL {
 	}
 	public static class radioBtnItem extends JRadioButtonMenuItem {
 		public radioBtnItem khud = this, ka = this, iske_lie = khud,
-				iska = khud, isko = khud, self = khud;
-		public JRadioButtonMenuItem parent = new JRadioButtonMenuItem();
+				iska = khud, isko = khud, self = khud, me = khud, my = khud;
+		public JRadioButtonMenuItem parent = new JRadioButtonMenuItem(),
+				mom = parent;
 		private static final long serialVersionUID = 1L;
 		radioBtnItem(JPanel... panelToAddTo_optional) {
 			super();
@@ -10157,8 +9720,8 @@ public class KL {
 	}
 	public static class checkBox extends JCheckBox {
 		public checkBox khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JCheckBox parent = new JCheckBox();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JCheckBox parent = new JCheckBox(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		checkBox(JPanel... panelToAddTo_optional) {
 			super();
@@ -10684,8 +10247,8 @@ public class KL {
 	}
 	public static class checkBoxItem extends JCheckBoxMenuItem {
 		public checkBoxItem khud = this, ka = this, iske_lie = khud,
-				iska = khud, isko = khud, self = khud;
-		public JCheckBoxMenuItem parent = new JCheckBoxMenuItem();
+				iska = khud, isko = khud, self = khud, me = khud, my = khud;
+		public JCheckBoxMenuItem parent = new JCheckBoxMenuItem(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		checkBoxItem(JPanel... panelToAddTo_optional) {
 			super();
@@ -11206,8 +10769,8 @@ public class KL {
 	}
 	public static class separator extends JSeparator {
 		public separator khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JSeparator parent = new JSeparator();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JSeparator parent = new JSeparator(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		separator(JPanel... panelToAddTo_optional) {
 			super();
@@ -11230,24 +10793,24 @@ public class KL {
 	}
 	public static class separatorX extends separator {
 		public separatorX khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public separator parent = new separator();
+				isko = khud, self = khud, me = khud, my = khud;
+		public separator parent = new separator(), mom = parent;
 		separatorX(JPanel... panelToAddTo_optional) {
 			super(SwingConstants.HORIZONTAL, panelToAddTo_optional);
 		}
 	}
 	public static class separatorY extends separator {
 		public separatorY khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public separator parent = new separator();
+				isko = khud, self = khud, me = khud, my = khud;
+		public separator parent = new separator(), mom = parent;
 		separatorY(JPanel... panelToAddTo_optional) {
 			super(SwingConstants.VERTICAL, panelToAddTo_optional);
 		}
 	}
 	public static class sep extends separator {
 		public sep khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public separator parent = new separator();
+				isko = khud, self = khud, me = khud, my = khud;
+		public separator parent = new separator(), mom = parent;
 		sep(JPanel... panelToAddTo_optional) {
 			super(panelToAddTo_optional);
 		}
@@ -11257,24 +10820,24 @@ public class KL {
 	}
 	public static class sepX extends separatorX {
 		public sepX khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public separatorX parent = new separatorX();
+				isko = khud, self = khud, me = khud, my = khud;
+		public separatorX parent = new separatorX(), mom = parent;
 		sepX(JPanel... panelToAddTo_optional) {
 			super(panelToAddTo_optional);
 		}
 	}
 	public static class sepY extends separatorY {
 		public sepY khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public separatorY parent = new separatorY();
+				isko = khud, self = khud, me = khud, my = khud;
+		public separatorY parent = new separatorY(), mom = parent;
 		sepY(JPanel... panelToAddTo_optional) {
 			super(panelToAddTo_optional);
 		}
 	}
 	public static class menuBar extends JMenuBar {
 		public menuBar khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JMenuBar parent = new JMenuBar();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JMenuBar parent = new JMenuBar(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		menuBar(JPanel... panelToAddTo_optional) {
 			super();
@@ -11491,8 +11054,8 @@ public class KL {
 	}
 	public static class menu extends JMenu {
 		public menu khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JMenu parent = new JMenu();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JMenu parent = new JMenu(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		menu(JPanel... panelToAddTo_optional) {
 			super();
@@ -11842,8 +11405,8 @@ public class KL {
 	}
 	public static class menuItem extends JMenuItem {
 		public menuItem khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JMenuItem parent = new JMenuItem();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JMenuItem parent = new JMenuItem(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		menuItem(JPanel... panelToAddTo_optional) {
 			super();
@@ -12200,8 +11763,8 @@ public class KL {
 	}
 	public static class contextMenu extends JPopupMenu {
 		public contextMenu khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JPopupMenu parent = new JPopupMenu();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JPopupMenu parent = new JPopupMenu(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		contextMenu(JPanel... panelToAddTo_optional) {
 			super();
@@ -12441,8 +12004,8 @@ public class KL {
 	}
 	public static class dropDown extends JComboBox {
 		public dropDown khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JComboBox parent = new JComboBox();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JComboBox parent = new JComboBox(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		int size = 0;
 		dropDown(JPanel... panelToAddTo_optional) {
@@ -12707,8 +12270,8 @@ public class KL {
 	}
 	public static class txtField extends JTextField {
 		public txtField khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JTextField parent = new JTextField();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JTextField parent = new JTextField(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		txtField(JPanel... panelToAddTo_optional) {
 			super();
@@ -13081,8 +12644,8 @@ public class KL {
 	}
 	public static class txtArea extends JTextArea {
 		public txtArea khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JTextArea parent = new JTextArea();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JTextArea parent = new JTextArea(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		txtArea(JPanel... panelToAddTo_optional) {
 			super();
@@ -13443,8 +13006,8 @@ public class KL {
 	}
 	public static class txtPane extends JTextPane {
 		public txtPane khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JTextPane parent = new JTextPane();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JTextPane parent = new JTextPane(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		txtPane(JPanel... panelToAddTo_optional) {
 			super();
@@ -13752,8 +13315,8 @@ public class KL {
 	}
 	public static class pwdField extends JPasswordField {
 		public pwdField khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public JPasswordField parent = new JPasswordField();
+				isko = khud, self = khud, me = khud, my = khud;
+		public JPasswordField parent = new JPasswordField(), mom = parent;
 		private static final long serialVersionUID = 1L;
 		pwdField(JPanel... panelToAddTo_optional) {
 			super();
@@ -14126,8 +13689,8 @@ public class KL {
 	}
 	public static class icon extends ImageIcon {
 		public icon khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public ImageIcon parent = new ImageIcon();
+				isko = khud, self = khud, me = khud, my = khud;
+		public ImageIcon parent = new ImageIcon(), mom = parent;
 		icon() {
 			super();
 		}
@@ -14149,8 +13712,8 @@ public class KL {
 	}
 	public static class image extends icon {
 		public image khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public icon parent = new icon();
+				isko = khud, self = khud, me = khud, my = khud;
+		public icon parent = new icon(), mom = parent;
 		image() {
 			super();
 		}
@@ -14172,8 +13735,8 @@ public class KL {
 	}
 	public static class img extends image {
 		public img khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public image parent = new image();
+				isko = khud, self = khud, me = khud, my = khud;
+		public image parent = new image(), mom = parent;
 		img() {
 			super();
 		}
@@ -14195,8 +13758,8 @@ public class KL {
 	}
 	public static class lineBorder extends LineBorder {
 		public lineBorder khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public LineBorder parent = new LineBorder(null);
+				isko = khud, self = khud, me = khud, my = khud;
+		public LineBorder parent = new LineBorder(null), mom = parent;
 		lineBorder(Color color) {
 			super(color);
 		}
@@ -14209,8 +13772,8 @@ public class KL {
 	}
 	public static class etchedBorder extends EtchedBorder {
 		public etchedBorder khud = this, ka = this, iske_lie = khud,
-				iska = khud, isko = khud, self = khud;
-		public EtchedBorder parent = new EtchedBorder();
+				iska = khud, isko = khud, self = khud, me = khud, my = khud;
+		public EtchedBorder parent = new EtchedBorder(), mom = parent;
 		etchedBorder() {
 			super();
 		}
@@ -14226,8 +13789,8 @@ public class KL {
 	}
 	public static class clr extends Color {
 		public clr khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public Color parent = new Color(0, 0, 0);
+				isko = khud, self = khud, me = khud, my = khud;
+		public Color parent = new Color(0, 0, 0), mom = parent;
 		private static final long serialVersionUID = 1L;
 		clr() {
 			super(0, 0, 0);
@@ -14856,8 +14419,8 @@ public class KL {
 	}
 	public static final class font extends Font {
 		public font khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public Font parent = new Font(null, 0, 0);
+				isko = khud, self = khud, me = khud, my = khud;
+		public Font parent = new Font(null, 0, 0), mom = parent;
 		font(String fontFamily, int fontSize) {
 			super(fontFamily, Font.PLAIN, fontSize);
 		}
@@ -14885,8 +14448,8 @@ public class KL {
 	}
 	public static class file extends File {
 		public file khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public File parent = new File("", null);
+				isko = khud, self = khud, me = khud, my = khud;
+		public File parent = new File("", null), mom = parent;
 		public file(File parent, String child) {
 			super(parent, child);
 		}
@@ -15293,13 +14856,13 @@ public class KL {
 			black = new clr(clr.black);
 	public static class colors extends clr {
 		public colors khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public clr parent = new clr();
+				isko = khud, self = khud, me = khud, my = khud;
+		public clr parent = new clr(), mom = parent;
 	}
 	public static class clrs extends clr {
 		public clrs khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public clr parent = new clr();
+				isko = khud, self = khud, me = khud, my = khud;
+		public clr parent = new clr(), mom = parent;
 	}
 	// some other syntax candies
 	public static pesa rakam() {
@@ -15994,8 +15557,8 @@ public class KL {
 	}
 	public static final class key {
 		public key khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static final char enter = '\n', backspace = '\b', tab = '\t',
 				cancel = 0x03, clear = 0x0c, shift = 0x10, control = 0x11,
 				alt = 0x12, pause = 0x13, capslock = 0x14, escape = 0x1b,
@@ -38961,8 +38524,8 @@ public class KL {
 	}
 	public static class bln {
 		public bln khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		boolean Is, is, NotFalse, notFalse, Yes, yes, Ha, ha, He, he, Met, met,
 				Sach, sach, False, NotTrue, notTrue, Isnt, isnt, No, no, Na, na,
 				Nahi, nahi, Jhoot, jhoot,
@@ -39095,8 +38658,8 @@ public class KL {
 	}
 	public static class bool extends bln {
 		public bool khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public bln parent = new bln();
+				isko = khud, self = khud, me = khud, my = khud;
+		public bln parent = new bln(), mom = parent;
 		bool() {
 			super();
 		}
@@ -39139,8 +38702,8 @@ public class KL {
 	}
 	public static class cdn extends bool {
 		public cdn khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public bool parent = new bool();
+				isko = khud, self = khud, me = khud, my = khud;
+		public bool parent = new bool(), mom = parent;
 		cdn() {
 			super();
 		}
@@ -39183,8 +38746,8 @@ public class KL {
 	}
 	public static class hal extends cdn {
 		public hal khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public cdn parent = new cdn();
+				isko = khud, self = khud, me = khud, my = khud;
+		public cdn parent = new cdn(), mom = parent;
 		hal() {
 			super();
 		}
@@ -39227,8 +38790,8 @@ public class KL {
 	}
 	public static class hlt extends hal {
 		public hlt khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public hal parent = new hal();
+				isko = khud, self = khud, me = khud, my = khud;
+		public hal parent = new hal(), mom = parent;
 		hlt() {
 			super();
 		}
@@ -53527,8 +53090,8 @@ public class KL {
 	}
 	public static final class DoFail {
 		public DoFail khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -53770,8 +53333,8 @@ public class KL {
 	}
 	public static final class karoFail {
 		public karoFail khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -54048,8 +53611,8 @@ public class KL {
 	}
 	public static final class agar {
 		public agar khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static interface CustomRunnable {
 			void run() throws Throwable;
 		}
@@ -54297,8 +53860,8 @@ public class KL {
 	}
 	public static class range {
 		public range khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static int[] inclusive(int n) {
 			intArr arr = intArr();
 			if (not(n) || isInf(n)) {
@@ -54696,33 +54259,33 @@ public class KL {
 	}
 	public static class rng extends range {
 		public rng khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public range parent = new range();
+				isko = khud, self = khud, me = khud, my = khud;
+		public range parent = new range(), mom = parent;
 	}
 	public static class until extends range {
 		public until khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public range parent = new range();
+				isko = khud, self = khud, me = khud, my = khud;
+		public range parent = new range(), mom = parent;
 	}
 	public static class fill extends range {
 		public fill khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public range parent = new range();
+				isko = khud, self = khud, me = khud, my = khud;
+		public range parent = new range(), mom = parent;
 	}
 	public static class between extends range {
 		public between khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public range parent = new range();
+				isko = khud, self = khud, me = khud, my = khud;
+		public range parent = new range(), mom = parent;
 	}
 	public static class bw extends range {
 		public bw khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public range parent = new range();
+				isko = khud, self = khud, me = khud, my = khud;
+		public range parent = new range(), mom = parent;
 	}
 	public static class darmyan extends range {
 		public darmyan khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public range parent = new range();
+				isko = khud, self = khud, me = khud, my = khud;
+		public range parent = new range(), mom = parent;
 		public static int[] shamilAkhri(int n) {
 			return inclusive(n);
 		}
@@ -57320,8 +56883,8 @@ public class KL {
 	// Date functions
 	public static class date {
 		public date khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String nthDay(int n) {
 			String days[] = {"Sunday", "Monday", "Tuesday", "Wednesday",
 					"Thursday", "Friday", "Saturday"};
@@ -57674,8 +57237,8 @@ public class KL {
 	}
 	public static class tareekh extends date {
 		public tareekh khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public date parent = new date();
+				isko = khud, self = khud, me = khud, my = khud;
+		public date parent = new date(), mom = parent;
 		public static String ab() {
 			return now();
 		}
@@ -57744,8 +57307,8 @@ public class KL {
 	// utilities
 	public static class printSettings {
 		public printSettings khud = this, ka = this, iske_lie = khud,
-				iska = khud, isko = khud, self = khud;
-		public KL parent = kl();
+				iska = khud, isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String breakCharacter = " ";
 	}
 	public static void println(Object... args) {
@@ -63558,8 +63121,8 @@ public class KL {
 	}
 	public static class add {
 		public add khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Char;
@@ -63623,13 +63186,13 @@ public class KL {
 	}
 	public static class dalo extends add {
 		public dalo khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public add parent = new add();
+				isko = khud, self = khud, me = khud, my = khud;
+		public add parent = new add(), mom = parent;
 	}
 	public static class remove {
 		public remove khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static char[] each(char[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Char;
@@ -63693,18 +63256,18 @@ public class KL {
 	}
 	public static class subtract extends remove {
 		public subtract khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public remove parent = new remove();
+				isko = khud, self = khud, me = khud, my = khud;
+		public remove parent = new remove(), mom = parent;
 	}
 	public static class nikalo extends remove {
 		public nikalo khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public remove parent = new remove();
+				isko = khud, self = khud, me = khud, my = khud;
+		public remove parent = new remove(), mom = parent;
 	}
 	public static class multiply {
 		public multiply khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String[] each(String[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Str;
@@ -63748,13 +63311,13 @@ public class KL {
 	}
 	public static class times extends multiply {
 		public times khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public multiply parent = new multiply();
+				isko = khud, self = khud, me = khud, my = khud;
+		public multiply parent = new multiply(), mom = parent;
 	}
 	public static class divide {
 		public divide khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static int[] each(int[] arr, int n) {
 			if (arr == null || len(arr) == 0)
 				return blank.Int;
@@ -63810,13 +63373,13 @@ public class KL {
 	}
 	public static class quotient extends divide {
 		public quotient khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public divide parent = new divide();
+				isko = khud, self = khud, me = khud, my = khud;
+		public divide parent = new divide(), mom = parent;
 	}
 	public static class ekekme {
 		public ekekme khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String[] dalo(String[] arr, String s) {
 			return add.toEach(arr, s);
 		}
@@ -63835,8 +63398,8 @@ public class KL {
 	}
 	public static class ekekse {
 		public ekekse khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String[] nikalo(String[] arr, String s) {
 			return subtract.fromEach(arr, s);
 		}
@@ -63855,8 +63418,8 @@ public class KL {
 	}
 	public static class ekekko {
 		public ekekko khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String[] multiply(String[] arr, int n) {
 			return multiply.each(arr, n);
 		}
@@ -63914,8 +63477,8 @@ public class KL {
 	}
 	public static class guna {
 		public guna khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String[] ekek(String[] arr, int n) {
 			return multiply.each(arr, n);
 		}
@@ -63934,8 +63497,8 @@ public class KL {
 	}
 	public static class bato {
 		public bato khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static int[] ekek(int[] arr, int n) {
 			return divide.each(arr, n);
 		}
@@ -68553,13 +68116,13 @@ public class KL {
 	}
 	public static class is extends KL {
 		public is khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = new KL();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = new KL(), mom = parent;
 	}
 	public static class he extends is {
 		public he khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public is parent = new is();
+				isko = khud, self = khud, me = khud, my = khud;
+		public is parent = new is(), mom = parent;
 	}
 	public static boolean he(char x, char y) {
 		return eq(x, y);
@@ -69748,8 +69311,8 @@ public class KL {
 	}
 	public static class not {
 		public not khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static boolean provided(Object o) {
 			return KL.isNull(o);
 		}
@@ -70332,8 +69895,8 @@ public class KL {
 	}
 	public static class nahi extends not {
 		public nahi khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public not parent = new not();
+				isko = khud, self = khud, me = khud, my = khud;
+		public not parent = new not(), mom = parent;
 	}
 	public static boolean both(String a, Object vocabularySupportingArg,
 			String b) {
@@ -75884,8 +75447,8 @@ public class KL {
 	}
 	public static class blank {
 		public blank khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static String[] Str = new String[]{};
 		public static String[][] Str2D = new String[][]{};
 		public static int[] Int = new int[]{};
@@ -75915,13 +75478,13 @@ public class KL {
 	}
 	public static class khali extends blank {
 		public khali khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public blank parent = new blank();
+				isko = khud, self = khud, me = khud, my = khud;
+		public blank parent = new blank(), mom = parent;
 	}
 	public static class summary {
 		public summary khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static o of(Object o) {
 			o summary = new o();
 			summary.add("type=" + type(o));
@@ -75987,8 +75550,8 @@ public class KL {
 	}
 	public static class malumat {
 		public malumat khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static o barae(Object o, Object... vocabularySupportingArgs) {
 			o malumat = new o();
 			malumat.add("type=" + type(o));
@@ -76054,8 +75617,8 @@ public class KL {
 	}
 	public static final class binary {
 		public binary khud = this, ka = this, iske_lie = khud, iska = khud,
-				isko = khud, self = khud;
-		public KL parent = kl();
+				isko = khud, self = khud, me = khud, my = khud;
+		public KL parent = kl(), mom = parent;
 		public static int indexOf(int[] src, int target) {
 			if (src == null || src.length == 0)
 				return -1;
