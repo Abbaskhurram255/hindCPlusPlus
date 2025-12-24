@@ -1,0 +1,83 @@
+mangao KL_Py
+tor KL mangao KL_Py
+KL_Py mese mangao isstr, isint
+surat is_str mangao isstr KL_Py mese
+
+fc add(x: nr, y: nr) -> nr:
+	ret x + y
+
+enum Weekday:
+	int Sunday = 0
+	int Monday = 1
+	int Tuesday = 2
+
+cls Parent:
+	called: bool = No
+	fc __ctr(this):
+		this.called = Yes
+		print("you've either instantiated the Parent, or a sub-class of it")
+	fc __str(this):
+		return "Parent(...)"
+
+@extend
+cls TestClass of Parent:
+    fc __ctr(this):
+    	mom.call()
+    	print(this.called)
+    @reimplement fc __str(this):
+        return "Child(...)"
+    fc string(this):
+    	return this.__str()
+
+fc main() -> none, might throw ZeroDevisionError:
+    print("hello"[:-1])
+    har i until(5, 1):
+    	kaho k"{i=}"
+    farz greeting = "hi"
+    kaho k"{greeting=}"
+    print 2^3
+    print 2^2
+    print 2^^^
+    print 2^^
+    kaho('hi')
+    print "hello", "Dave"
+    q = TestClass()
+    print(q)
+    w = 5
+    printf("$add(4, 2) $add $4060.7997:.1f")
+    farz x = ?
+    x = yato 5 agar x == ? warna x
+    print(x == ?)
+    print(f"{x=}")
+    print(FileExistsError)
+    koshish:
+        print(1 / 0)
+    nakami bawaja ZeroDivisionError tor e:
+        print "oops", e
+    final MY_FINAL_INT = 4
+    print(MY_FINAL_INT he_ek int)
+    print(3^ 2)
+    print(3^^)
+    print(3^^^)
+    user: obj[Any, Any] = {
+        name: str -> "Daniel Gargoyle"
+        age: int -> 56
+        2: [int, str] -> "experience"
+        array: list[int] -> [1, 2, 3, 4, 5]
+    }
+    print(user.name)
+    instance: TestClass = TestClass()
+    print(instance.string())
+    every i until(5):
+    	x: nr = 7
+    	y: nr = 3
+    	text: lafz = "abcde"
+    	current: lafz = text[i]
+    	agar i == 2 ya "b" current me:
+    	    ignore
+    	agar i == 4:
+    		kaho f"loop khatm hua {i} pe"
+    	print(f"i={i}")
+    	printf(i==3)
+    printf("{add(2, 3)}")
+    

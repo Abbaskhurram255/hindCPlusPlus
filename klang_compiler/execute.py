@@ -14,63 +14,21 @@ def add_module(module_name: str, namespace: dict) -> None:
 		if name.startswith("__"):
 		    continue
 		namespace[name] = getattr(module, name)
-        
-def fix_indent(file):
-    indentation_level = 0
-    indentation_sign = "    "
-    str_indented = ""
-    for line in file.readlines():
-        # Search for comments, and remove for now. Re-add them before writing to
-        # result string
-        regex_to_match_comments: str = r"[^\"']*[ \t]*[^\"']*((?<![\"'])#[^\"']*$)"
-        m = re.search(regex_to_match_comments, line)
-        # Make sure # sign is not inside quotations. Delete match object if it is
-        if m is not None:
-            m2 = re.search(r"[\"'][^\"']*#[^\"']*[\"']", m.group(0))
-            if m2 is not None:
-                m = None
-        if m is not None:
-            add_comment = m.group(0)
-            line = re.sub(regex_to_match_comments, "", line)
-        else:
-            add_comment = ""
-        # skip empty lines:
-        if line.strip() in ('\n', '\r\n', ''):
-            str_indented += indentation_level*indentation_sign + add_comment.lstrip() + "\n"
-            continue
-        # remove existing whitespace:
-        line = line.lstrip()
-        # Check for reduced indent level
-        for char in list(line):
-            if char in ("}", ";"):
-                indentation_level -= 1
-        # Add indentation
-        for char in range(indentation_level):
-            line = indentation_sign + line
-        # Check for increased indentation
-        for char in list(line):
-            if char in ("{", ":"):
-                indentation_level += 1
-        # Replace { with : and remove }
-        line = re.sub(r"[\t ]*{[ \t]*", ":", line)
-        line = re.sub(r"}[ \t]*", "", line)
-        line = re.sub(r"\n:", ":", line)
-        str_indented += line + add_comment
-    return str_indented
 
 def execute(filename: str) -> None:
     keys = {
         # functions, and classes
         "cls": "class",
-        "__ctr": "__init__",
+        "__ctr__": "__init__",
         "Ctr": "Self",
-        "__constr": "__init__",
+        "__constr__": "__init__",
         "Constr": "Self",
         "This": "Self",
         "this": "self",
         "It": "Self",
         "it": "self",
         "its": "self",
+        "me": "self",
         "my": "self",
         "super": "super()",
         "mom": "super()",
@@ -84,16 +42,23 @@ def execute(filename: str) -> None:
         "times": "*",
         "tms": "*",
         "mul": "*",
+        "guna": "*",
         "plus": "+",
         "pls": "+",
         "minus": "-",
         "mns": "-",
         # other
+        "kaho": "print",
         "agar": "if",
-        "warna agar": "elif",
-        "warnagar": "elif",
-        "warna": "elif",
+        r"warna?[_\s]?agar": "elif",
+        # ATTENTION: the `r` is needed here,
+        # as unlike all the other keys,
+        # this one has un escaped characters
+        "warna": "else",
         "aur": "and",
+        "either": "",
+        "yato": "",
+        "ke": "",
         "ya": "or",
         "nahi": "not",
         "he": "==",
@@ -104,32 +69,21 @@ def execute(filename: str) -> None:
         "within": "in",
         "until": "in rng",
         "limit": "range",
-        "ke": "",
         "ruko": "break",
         "ignore": "continue",
-        # types
-        "final ": "",
-        "var ": "",
-        "farz ": "",
+        # types, and exceptions
+        r"(final|var|farz)\s": "",
         "lafz": "str",
         "jumla": "str",
         "nr": "Number",
-        "Yes": "True",
-        "yes": "True",
-        "Sach": "True",
-        "sach": "True",
-        "Ha": "True",
-        "ha": "True",
-        "true": "True",
-        "No": "False",
-        "no": "False",
-        "Jhoot": "False",
-        "jhoot": "False",
-        "Na": "False",
-        "na": "False",
-        "false": "False",
+        r"[Yy]es|[Ss]ach|[Hh]a|true": "True",
+        r"[Nn]o|[Jj]hoot|[Nn]a|false": "False",
+        r"throw": "raise",
+        r"koshish(?=:)": "try",
+        r"(error(?:\s(by|(?:ki|ba|ka)[\s_]?(waja|zaria|sabab)))|(fail(?:ure|ed)|naka{1,2}mi?)(?:\s(by|(?:ki|ba|ka)[\s_]?(?:waja((?:\she)?\sagar(?:\she)?)?|zaria|sabab)))?)(?=[^\:\n\t]+\:)": "except",
+        r"tor": "as"
     }
-    with open(filename, "r") as file:
+    with open_case_ins(filename, "r") as file:
         code = file.read()
         # Remove strings
         strings = find_matches(code, r"\"[^\"]*\"")
@@ -139,16 +93,17 @@ def execute(filename: str) -> None:
         #code = replace(code, r"\b(start)\:", "if __name__ == \"__main__\":")
         # handling import cases
         # sequence matters!
-        code = replace(code, r"\bsurat (?<alias>\w+) mangao (?<function>\w+) (?<module>[\w\.]+) (me)?[_\s]?se\b", "from $module import $function as $alias")
+        code = replace(code, r"\b(surat|tor) (?<alias>\w+) mangao (?<function>\w+) (?<module>[\w\.]+) (me)?[_\s]?se\b", "from $module import $function as $alias")
         code = replace(code, r"\b(?<module>[\w\.]+) (me)?[_\s]?se mangao (?<functions>(\w+(,\s)?)+)\b", "from $module import $functions")
-        code = replace(code, r"\bsurat (?<alias>\w+) mangao (?<module>[\w\.]+)\b", "import $module as $alias")
+        code = replace(code, r"\b(surat|tor) (?<alias>\w+) mangao (?<module>[\w\.]+)\b", "import $module as $alias")
         code = replace(code, r"\bmangao (?<module>[\w\.]+)\b", "import $module")
         # sequence matters!
         # handling mathematical operations
         # SEQUENCE MATTERS
-        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^\s*(?<B>\-?\d*\.?\d+)", "$A ** $B")
-        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^{3}", "$A ** 3")
-        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^{2}", "$A ** 2")
+        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^\s*(?<B>\-?\d*\.?\d+)", "$A**$B")
+        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^{3}", "$A**3")
+        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^{2}", "$A**2")
+        code = replace(code, r"(?:\\/|√)\s?(?<A>\-?\d*\.?\d+)", "int($A**(1/2))")
         # SEQUENCE MATTERS
         # handling `A me B`, and `A B me` cases
         code = replace(code, r"(?<B>\S+) (?<A>(\w+|[\(\[\{\"\'](?:[\"\'\w\-\.]+[,\s]*[\)\]\}]*)+[\)\]\}\"\'])) me", "$B in $A")
@@ -162,6 +117,8 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<varname>\w+)\.(?<method>replace(?:_first)?)\(", "$method($varname, ")
         code = replace(code, r"(?<varname>\w+)\.(?:ki_?)?(len(?:gth)?|lambai|size)(?:\(\))?", "len($varname)")
         code = replace(code, r"(?<A>\w+) (instance[\s_]?of|(?:is[\s_]?)?an?|(he_?)?ek|(is|has|of)?[\s_]?type(of)?) (?<B>\w+)", "isinstance($A, $B)")
+        code = replace(code, r"\b(print|kaho)\s([^\t\n\(\)]+)", "$1($2)")
+        code = replace(code, r",?\s<?(might (?:throw|raise)|(throw|raise)s)\s[^\:\n\t]+>?(?=\:)", "")
         #code = replace(code, r"((?<k>\w+),\s*(?<v>\w+))\s*(in|andar)\b\s*(?!enumerate)", "$1 in enumerate")
         #code = replace(code, r"(?<k>\w+),\s*(?<v>\w+)\s*(of|from|:)\b\s*", "$k, $v in enumerate")
         # sequence matters
@@ -170,31 +127,17 @@ def execute(filename: str) -> None:
         # for stringed keys
         code = replace(code, r"(?<k>[A-Za-z]\w*)(?:\s*:\s*(?<type>[\w\[\]\|,\s]+\??))?\s*->\s*(?<v>[^\n\t]+)", "\"$k\": $v,")
         # converting dicts to objs to allow the use of dot-driven access to keys
-        code = replace(code, r"(\{\s*[\"']?[\w.\-]+[\"']?\s*:\s*[^\}]+\})", "KL_Py.obj($1)")
+        # NOTE: does not support sub-dictionaries yet
+        code = replace(code, r"(?<!obj\()(\{\s*[\"']?[\w.\-]+[\"']?\s*:\s*[^\{\}]+\})", "KL_Py.obj($1)")
         # sequence matters
         # __str, __eq -> __str__, __eq__
         code = replace(code, r"(?<=\b\_\_)([A-Za-z0-9]+)\b", "$1__")
-        code = replace(code, r"@[Oo]ver(?:writ{1,2}e|rid{1,2}e)[sn]?\s{1}", "")
-        """
-        final_variable_match_found = re.search(r"\bfinal ((?P<k>\w+(?:\s*:\s*\w+\?)?)\s*=\s*(?P<v>\S+))", code)
-        final_vars: list[str, Any] = {}
-        if final_variable_match_found:
-        	k, v = final_variable_match_found.group("k"), final_variable_match_found.group("v")
-        	if is_flt_like(v):
-        		v = float(v)
-        	elif is_int_like(v):
-        		v = int(v)
-        	elif is_bool_like(v):
-        		v = True if v == "True" else False
-        	print(f"{k=}, {v=}")
-        	if k not in final_vars:
-        		final_vars[k] = v
-        		code = replace(code, final_variable_match_found.group(), final_variable_match_found.group(1))
-        """
-        # `type x=` = `x: type=`
+        code = replace(code, r"@([Oo]ver(?:writ{1,2}e|rid{1,2}e)[sn]?|[Ee]xtend|([Rr]e|[Nn]ot)_?[Ii]mplement(ed)?|nae_sire)\s{1}", "")
+        code = replace(code, r"\bk(?=__STRING_\d__)", "f")
         # handling optionality, and null cases
         # <type>? means the type is optional
         # sequence matters
+        code = replace(code, r",(?=\s?(tor|as))", "")
         code = replace(code, r";", "")
         code = replace(code, r"(?<type>\w+)\?", "$type|None")
         code = replace(code, r"\bnone\b", "None")
@@ -212,9 +155,10 @@ def execute(filename: str) -> None:
         a := (1, 2, 3)
         """
         for key, value in keys.items():
-            code = re.sub(r"\b(" + re.escape(key) + r"(?!\s?:\s?\w+))\b", value, code)
+            code = re.sub(r"\b(" + key + r"(?!\s?:\s?\w+))\b", value, code)
         # watch the sequence
         # relies ultimately on the positive lookahead (?=\s?\=)
+        # `type x=` = `x: type=`
         code = replace(code, r"(?<type>\w+)\s(?<varname>\w+)\s?\={1}(?!\=)", "$varname: $type =")
         # Restore strings
         for j, string in enumerate(strings):
@@ -233,13 +177,72 @@ def execute(filename: str) -> None:
         if "main" in namespace and callable(namespace["main"]):
         	namespace["main"]()
         	
+        class Token:
+        	def __init__(self, name: str, value: str, type: str):
+        		self.name = name
+        		self.value = value
+        		self.type = type
+        	def __str__(self) -> str:
+        		return f"Token(name='{self.name}', value='{self.value}', type='{self.type})'"
+        @dataclass
+        class Token_Map:
+            lparen="("
+            rparen=")"
+            lbrace="{"
+            rbrace="}"
+            lbracket="["
+            rbracket="]"
+            comma=","
+            period="."
+            colon=":",
+            semicolon=";",
+            apostrophe="\'",
+            quote="\"",
+            percent="%",
+            fslash="\\",
+            bslash="/",
+            OR="|",
+            eq="=",
+            lt="<",
+            gt=">",
+            at="@",
+            hash="#",
+            dollar="$",
+            ampersand="&",
+            hyphen="-",
+            plus="+",
+            minus="-",
+            times="*",
+            divide="÷",
+            root="√",
+            pi="π",
+            exclam="!",
+            interrog="?",
+            tilde="~",
+            grave="`",
+            caret="^"
+            
+        tokens: list[str] = []
+        lines: list[str] = split(code, "\n")
+        for i, line in enumerate(lines):
+        	context: str = find_match(line, r"(?<=class\s)(\w+)(?=\s?[\(\[]?(?:\w+(?:,\s*)?)*[\)\]]?\s?:$)")
+        	if context:
+        		print(context)
+        	tokens = [*tokens,] + find_matches(line, r"[^\w\s]")
+        	for token in tokens:
+        		match token:
+        			case Token_Map.plus:
+        				token = Token(name="plus", value=token, type="keyword")
+        			case Token_Map.comma:
+        				token = Token(name="comma", value=token, type="keyword")
+        	
 # let's try, and avoid some multi-main function conflict
-if main:
+if "main" in globals():
 	del main
 # if a main function (FROM another module got leaked through), delete it
 #declare a new main for this file
 sys.tracebacklimit=0
-# we need this to minimize  the stack trace, and TO ADD EMPHASIS on the actual problem
+# we need this to minimize the stack trace, and to ADD EMPHASIS on the actual problem
 # handling ERRORS
 class BuraSyntaxError(NameError):
 	def __int__(self, name: str, message: str = " expected"):

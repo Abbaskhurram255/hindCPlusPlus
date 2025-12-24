@@ -1,5 +1,5 @@
 from types import *
-from typing import List, Callable, TypeVar, NewType, Any, Optional, Union, Final, Self
+from typing import List, Callable, TypeVar, NewType, Any, Optional, Union, Final, Self, Generic
 from collections import defaultdict
 from collections.abc import Sequence
 from functools import reduce, lru_cache, cache
@@ -55,6 +55,37 @@ def FltInput(*args, **kwargs):
     except Exception:
         return 0
 intInput, fltInput = IntInput, FltInput
+class Stack(Generic[TypeT]):
+    def __init__(self, *items: T):
+        self.array: list[T] = []
+        self.length: int = -1
+        if len(items) != 0:
+            for item in items:
+                self.push(item)
+    def push(self, item: T) -> Self:
+        self.array.append(item)
+        self.length += 1
+        return self
+    def pop(self) -> Optional[T]:
+        if self.length == -1:
+            return None
+        popped: T = self.array[self.length]
+        self.length -= 1
+        return popped
+    def top(self) -> Optional[T]:
+        if self.length == -1:
+            return None
+        return self.array[self.length]
+    def len(self) -> int:
+        return self.length + 1
+    def length(self) -> int:
+        return self.len()
+    def size(self) -> int:
+        return self.len()
+    def __len__(self) -> int:
+        return self.len()
+    def __str__(self) -> str:
+        return str(self.array)
 class obj(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -382,8 +413,17 @@ is_iterable = isiterable = lambda x: isinstance(x, Iterable)
 isnt_iterable = isntiterable = non_iterable = noniterable = lambda x: not is_iterable(x)
 is_callable = iscallable = is_function = isfunction = is_func = isfunc = lambda x: callable(x)
 isnt_callable = isntcallable = non_callable = noncallable = lambda x: not is_callable(x)
-def split(srcString: str, regex: str, maxsplits: int = IntInfinity, flags: int = 0) -> str:
-    return re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
+def split(srcString: str, regex: str = "", maxsplits: int = IntInfinity, flags: int = 0) -> list[str]:
+    if not srcString or not isinstance(srcString, str) or not isinstance(regex, str):
+    	# allow regex to be empty, as it will be sometimes
+    	return []
+    regex = re.sub(r"(\?)(<\w+>)", r"\1P\2", regex)
+    raw_list: list[str] = re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
+    result: list[str] = []
+    for x in raw_list:
+    	if x.strip():
+    		result.append(x)
+    return result
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
     if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
     	# allow empty replacement for removals
@@ -508,6 +548,18 @@ class money:
 class pesa(money):
     def __init__(self, amount=0, currency="Rs. "):
         super().__init__(amount, currency)
+def open_file_case_ins(filename: str, mode: str = 'r'):
+    if not filename or not os.path.isfile(filename):
+        raise FileNotFoundError(f"File '{filename}' doesn't exist")
+    directory, name = os.path.split(filename)
+    directory = directory or '.'  # Default to current directory if none specified
+    name_lower = name.lower()
+    for actual_file_name in os.listdir(directory):
+        if actual_file_name.lower() == name_lower:
+            actual_path = os.path.join(directory, actual_file_name)
+            if os.path.isfile(actual_path):
+                return open(actual_path, mode)
+open_case_ins = open_file_case_ins
 class File:
     def __init__(self, path: Union[str, Path]):
         self.pathname = Path(path)
@@ -589,7 +641,7 @@ class File:
         try:
             if not fname:
                 raise ValueError("File name is required")
-            with open(fname, 'r') as f:
+            with open_case_ins(fname, 'r') as f:
                 contents: str = f.read()
                 return contents
         except ValueError as e:
