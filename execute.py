@@ -14,63 +14,43 @@ def add_module(module_name: str, namespace: dict) -> None:
 		if name.startswith("__"):
 		    continue
 		namespace[name] = getattr(module, name)
-        
-def fix_indent(file):
-    indentation_level = 0
-    indentation_sign = "    "
-    str_indented = ""
-    for line in file.readlines():
-        # Search for comments, and remove for now. Re-add them before writing to
-        # result string
-        regex_to_match_comments: str = r"[^\"']*[ \t]*[^\"']*((?<![\"'])#[^\"']*$)"
-        m = re.search(regex_to_match_comments, line)
-        # Make sure # sign is not inside quotations. Delete match object if it is
-        if m is not None:
-            m2 = re.search(r"[\"'][^\"']*#[^\"']*[\"']", m.group(0))
-            if m2 is not None:
-                m = None
-        if m is not None:
-            add_comment = m.group(0)
-            line = re.sub(regex_to_match_comments, "", line)
-        else:
-            add_comment = ""
-        # skip empty lines:
-        if line.strip() in ('\n', '\r\n', ''):
-            str_indented += indentation_level*indentation_sign + add_comment.lstrip() + "\n"
-            continue
-        # remove existing whitespace:
-        line = line.lstrip()
-        # Check for reduced indent level
-        for char in list(line):
-            if char in ("}", ";"):
-                indentation_level -= 1
-        # Add indentation
-        for char in range(indentation_level):
-            line = indentation_sign + line
-        # Check for increased indentation
-        for char in list(line):
-            if char in ("{", ":"):
-                indentation_level += 1
-        # Replace { with : and remove }
-        line = re.sub(r"[\t ]*{[ \t]*", ":", line)
-        line = re.sub(r"}[ \t]*", "", line)
-        line = re.sub(r"\n:", ":", line)
-        str_indented += line + add_comment
-    return str_indented
+		
+def find_executable_path() -> str:
+    filename: str = "klang.exe"
+    if platform.system() == 'Windows':
+        # Windows approach (slow)
+        for root, dirs, files in os.walk('C:\\'):
+            if filename in files:
+                return os.path.join(root, filename)
+    else:
+        # Unix-like (use `locate` command if available)
+        try:
+            output = shutil.which('locate')
+            if output:
+                import subprocess
+                result = subprocess.run(['locate', filename], capture_output=True, text=True)
+                paths = result.stdout.strip().split('\n')
+                if paths:
+                    return paths[0]
+        except Exception:
+            return ""
+    return ""
 
 def execute(filename: str) -> None:
-    keys = {
+    keys: dict[str, str] = {
         # functions, and classes
         "cls": "class",
-        "__ctr": "__init__",
+        "__ctr__": "__init__",
         "Ctr": "Self",
-        "__constr": "__init__",
+        "__constr__": "__init__",
         "Constr": "Self",
         "This": "Self",
         "this": "self",
         "It": "Self",
         "it": "self",
         "its": "self",
+        "Me": "Self",
+        "me": "self",
         "my": "self",
         "super": "super()",
         "mom": "super()",
@@ -84,19 +64,30 @@ def execute(filename: str) -> None:
         "times": "*",
         "tms": "*",
         "mul": "*",
+        "guna": "*",
         "plus": "+",
         "pls": "+",
         "minus": "-",
         "mns": "-",
         # other
+        "kaho": "print",
         "agar": "if",
-        "warna agar": "elif",
-        "warnagar": "elif",
-        "warna": "elif",
+        r"warna?[_\s]?agar": "elif",
+        # ATTENTION: the `r` is needed here,
+        # as unlike all the other keys,
+        # this one has un escaped characters
+        "warna": "else",
         "aur": "and",
+        "either": "",
+        "yato": "",
+        "k[aeio]": "",
         "ya": "or",
+        # sequence
+        r"na(?:hi)?[\s_]?(he|ba?ra?ba?r)": "!=",
+        # sequence
+        r"he|ba?ra?ba?r": "==",
+        # sequence
         "nahi": "not",
-        "he": "==",
         "har": "for",
         "every": "for",
         "andar": "in",
@@ -104,32 +95,35 @@ def execute(filename: str) -> None:
         "within": "in",
         "until": "in rng",
         "limit": "range",
-        "ke": "",
         "ruko": "break",
         "ignore": "continue",
-        # types
-        "final ": "",
-        "var ": "",
-        "farz ": "",
+        "with_index|numbered": "enumerate",
+        r"(final|var|farz)\s": "",
         "lafz": "str",
         "jumla": "str",
+        # "jumle": "list[str]",
+        "flt|d(?:ou)?ble?": "float",
+        # "flts": "list[float]",
+        # "floats": "list[float]",
         "nr": "Number",
-        "Yes": "True",
-        "yes": "True",
-        "Sach": "True",
-        "sach": "True",
-        "Ha": "True",
-        "ha": "True",
-        "true": "True",
-        "No": "False",
-        "no": "False",
-        "Jhoot": "False",
-        "jhoot": "False",
-        "Na": "False",
-        "na": "False",
-        "false": "False",
+        # "nrs": "list[Number]",
+        "bln|filha{1,2}l": "bool",
+        r"[Yy]es|[Ss]ach|[Hh]a|true": "True",
+        r"[Nn]o|[Jj]hoot|[Nn]a|false": "False",
+        r"k(lang)?__help": "print('Not implemented yet')",
+        r"k(lang)?__name": "print('Klang version 0.8')",
+        r"k(lang)?__about": r"print('\\nK    K    L             A    NNN   N      GGGG\\nK  K      L            A A     NN   N    G    G\\nKK        L           A  A     N N   N   G\\nK K       L          A AAA     N  N  N   G  GGGG\\nK   K     L         A    A     N   N N   G     G\\nK     K   LLLLLLL  A     AA   NN    N     GGGGGG\\n\\n\tversion 0.8\\n__________________________________________________\\n\\nCredits:\\n\t  Core developer\\n\t\t@ KhurramAli \t\t  \\n\t\t\t\t\\n__________________________________________________')",
+        r"k(lang)?__version": "print('Klang v0.8')",
+        # € implement help later
+        r"throw": "raise",
+        r"na(?:ya|i|ew)": "",
+        r"koshish(?=:)": "try",
+        r"(error(?:\s(by|(?:ki|ba|ka)[\s_]?(waja|zaria|sabab)))|(fail(?:ure|ed)|naka{1,2}mi?)(?:\s(by|(?:ki|ba|ka)[\s_]?(?:waja((?:\she)?\sagar(?:\she)?)?|zaria|sabab)))?)(?=[^\:\n\t]+\:)": "except",
+        r"tor": "as",
+        # Error aliases
+        "FileNaMojudError": "FileNotFoundError",
     }
-    with open(filename, "r") as file:
+    with open_case_ins(filename, "r") as file:
         code = file.read()
         # Remove strings
         strings = find_matches(code, r"\"[^\"]*\"")
@@ -139,16 +133,17 @@ def execute(filename: str) -> None:
         #code = replace(code, r"\b(start)\:", "if __name__ == \"__main__\":")
         # handling import cases
         # sequence matters!
-        code = replace(code, r"\bsurat (?<alias>\w+) mangao (?<function>\w+) (?<module>[\w\.]+) (me)?[_\s]?se\b", "from $module import $function as $alias")
+        code = replace(code, r"\b(surat|tor) (?<alias>\w+) mangao (?<function>\w+) (?<module>[\w\.]+) (me)?[_\s]?se\b", "from $module import $function as $alias")
         code = replace(code, r"\b(?<module>[\w\.]+) (me)?[_\s]?se mangao (?<functions>(\w+(,\s)?)+)\b", "from $module import $functions")
-        code = replace(code, r"\bsurat (?<alias>\w+) mangao (?<module>[\w\.]+)\b", "import $module as $alias")
+        code = replace(code, r"\b(surat|tor) (?<alias>\w+) mangao (?<module>[\w\.]+)\b", "import $module as $alias")
         code = replace(code, r"\bmangao (?<module>[\w\.]+)\b", "import $module")
         # sequence matters!
         # handling mathematical operations
         # SEQUENCE MATTERS
-        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^\s*(?<B>\-?\d*\.?\d+)", "$A ** $B")
-        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^{3}", "$A ** 3")
-        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^{2}", "$A ** 2")
+        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^\s*(?<B>\-?\d*\.?\d+)", "$A**$B")
+        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^{3}", "$A**3")
+        code = replace(code, r"(?<A>\-?\d*\.?\d+)\s*\^{2}", "$A**2")
+        code = replace(code, r"(?:\\/|√)\s?(?<A>\-?\d*\.?\d+)", "int($A**(1/2))")
         # SEQUENCE MATTERS
         # handling `A me B`, and `A B me` cases
         code = replace(code, r"(?<B>\S+) (?<A>(\w+|[\(\[\{\"\'](?:[\"\'\w\-\.]+[,\s]*[\)\]\}]*)+[\)\]\}\"\'])) me", "$B in $A")
@@ -162,41 +157,28 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<varname>\w+)\.(?<method>replace(?:_first)?)\(", "$method($varname, ")
         code = replace(code, r"(?<varname>\w+)\.(?:ki_?)?(len(?:gth)?|lambai|size)(?:\(\))?", "len($varname)")
         code = replace(code, r"(?<A>\w+) (instance[\s_]?of|(?:is[\s_]?)?an?|(he_?)?ek|(is|has|of)?[\s_]?type(of)?) (?<B>\w+)", "isinstance($A, $B)")
-        #code = replace(code, r"((?<k>\w+),\s*(?<v>\w+))\s*(in|andar)\b\s*(?!enumerate)", "$1 in enumerate")
-        #code = replace(code, r"(?<k>\w+),\s*(?<v>\w+)\s*(of|from|:)\b\s*", "$k, $v in enumerate")
+        code = replace(code, r"\b(print|kaho)\s([^\t\n\(\)]+)", "$1($2)")
+        code = replace(code, r",?\s<?(might (?:throw|raise)|(throw|raise)s)\s[^\:\n\t]+>?(?=\:)", "")
+        # ^ supposedly after a function fc x({...}?) might throw SomeError, and before a colon
+        code = replace(code, r"\b(?:collect(?:ed)?|together)\((?<params>(?<firstparam>[^\(\)]+),\s*(?<restofparams>[^\(\)]+))\)", "list(zip($params))")
         # sequence matters
         # for numeric  keys
         code = replace(code, r"(?<k>\-?\d*\.?\d+)(?:\s*:\s*(?<type>[\w\[\]\|,\s]+\??))?\s*->\s*(?<v>[^\n\t]+)", "$k: $v,")
         # for stringed keys
         code = replace(code, r"(?<k>[A-Za-z]\w*)(?:\s*:\s*(?<type>[\w\[\]\|,\s]+\??))?\s*->\s*(?<v>[^\n\t]+)", "\"$k\": $v,")
         # converting dicts to objs to allow the use of dot-driven access to keys
-        code = replace(code, r"(\{\s*[\"']?[\w.\-]+[\"']?\s*:\s*[^\}]+\})", "KL_Py.obj($1)")
+        # NOTE: does not support sub-dictionaries yet
+        code = replace(code, r"(?<!obj\()(\{\s*[\"']?[\w.\-]+[\"']?\s*:\s*[^\{\}]+\})", "KL_Py.obj($1)")
         # sequence matters
         # __str, __eq -> __str__, __eq__
         code = replace(code, r"(?<=\b\_\_)([A-Za-z0-9]+)\b", "$1__")
-        code = replace(code, r"@[Oo]ver(?:writ{1,2}e|rid{1,2}e)[sn]?\s{1}", "")
-        """
-        final_variable_match_found = re.search(r"\bfinal ((?P<k>\w+(?:\s*:\s*\w+\?)?)\s*=\s*(?P<v>\S+))", code)
-        final_vars: list[str, Any] = {}
-        if final_variable_match_found:
-        	k, v = final_variable_match_found.group("k"), final_variable_match_found.group("v")
-        	if is_flt_like(v):
-        		v = float(v)
-        	elif is_int_like(v):
-        		v = int(v)
-        	elif is_bool_like(v):
-        		v = True if v == "True" else False
-        	print(f"{k=}, {v=}")
-        	if k not in final_vars:
-        		final_vars[k] = v
-        		code = replace(code, final_variable_match_found.group(), final_variable_match_found.group(1))
-        """
-        # `type x=` = `x: type=`
+        code = replace(code, r"@([Oo]ver(?:writ{1,2}e|rid{1,2}e)[sn]?|[Ee]xtend|([Rr]e|[Nn]ot)_?[Ii]mplement(ed)?|nae_sire)\s{1}", "")
+        code = replace(code, r"\bk(?=__STRING_\d+__)", "f")
+        # sequence matters
+        code = replace(code, r",(?=\s?(tor|as))", "")
         # handling optionality, and null cases
         # <type>? means the type is optional
-        # sequence matters
-        code = replace(code, r";", "")
-        code = replace(code, r"(?<type>\w+)\?", "$type|None")
+        code = replace(code, r"(?<type>[A-Za-z]\w*)\?", "$type|None")
         code = replace(code, r"\bnone\b", "None")
         code = replace(code, r"(?<!\w)\?(?!\w)", "None")
         # announce :=
@@ -212,17 +194,41 @@ def execute(filename: str) -> None:
         a := (1, 2, 3)
         """
         for key, value in keys.items():
-            code = re.sub(r"\b(" + re.escape(key) + r"(?!\s?:\s?\w+))\b", value, code)
+            code = re.sub(r"\b(" + key + r"(?!\s?:\s?\w+))\b", value, code)
+        code = replace(code, r"(?<type>[A-Za-z]\w*)(?:\[\]|<list>)", "list[$type]")
         # watch the sequence
+        code = replace(code, r"(?<=\=)\s*not(?=\n)", "False")
         # relies ultimately on the positive lookahead (?=\s?\=)
-        code = replace(code, r"(?<type>\w+)\s(?<varname>\w+)\s?\={1}(?!\=)", "$varname: $type =")
+        # `type x=` = `x: type=`
+        # needed
+        code = replace(code, r"(?<type>[A-Za-z][\w\[\]]*)\s(?<varname>[A-Za-z]\w*)\s?\={1}(?!\=)", "$varname: $type =")
+        # custom data types
+        # much needed
+        code = replace(code, r"(?<varname>[A-Za-z]\w*)\s*\:\s*(?<typenumlist>numlist)\s*\=\s?(?<array>\[(\-?\d*\.?\d+(,\s*)?)+\])", "$varname: $typenumlist = $typenumlist($array)")
+        # much needed
+        code = replace(code, r"(?<varname>[A-Za-z]\w*)\s*\:\s*(?<strtype>str)\s*\=\s?(?<data>[^\n\t]+)", "$varname: $strtype = Str($data)")
+        # much needed
+        code = replace(code, r"(?<varname>[A-Za-z]\w*)\s*\:\s*(?<inttype>int)\s*\=\s?(?<data>[^\n\t]+)", "$varname: $inttype = Int($data)")
+        # much needed
+        code = replace(code, r"(?<varname>[A-Za-z]\w*)\s*\:\s*(?<floattype>float)\s*\=\s?(?<data>[^\n\t]+)", "$varname: $floattype = Flt($data)")
+        # ^ specifically for numlists
+        # arr: numlist = [1, 2, 3]
+        # becomes ->
+        # arr: numlist = numlist([1, 2, 3])
         # Restore strings
         for j, string in enumerate(strings):
             code = code.replace(f"__STRING_{j}__", string)
         print(f"Translation:\n________________\n\n{code}\n\n________________\n____________\n________\n\n\n")
-        builtins: dict[str, Any] = {"Number": Number, "__name__": "__main__"}
-        add_module("KL_Py", builtins)
-        namespace: dict[str, Any] = builtins | {}
+        import builtins
+        (builtins.version, builtins.copyright, builtins.license, builtins.credits, builtins.help) = ("Klang version 0.8", "© 2025, Klang corp.", "MIT", "Core developers\\\n\t~ Khurram Ali", "Not implemented yet")
+        for k in dir(platform):
+        	if "python" in k:
+        		delattr(platform, k)
+        		setattr(platform, replace(k, "python", "klang"), "")
+        (sys.version, sys.version_info, sys.executable, sys.pycache_prefix) = (version, version, find_executable_path(), "")
+        extended_builtins: dict[str, Any] = {"builtins": builtins, "Number": Number, "sys": sys, "platform": platform, "__name__": "__main__"}
+        add_module("KL_Py", extended_builtins)
+        namespace: dict[str, Any] = extended_builtins | {}
         exec(code, namespace)
         for name, obj in namespace.items():
         	if name.startswith("__"):
@@ -233,15 +239,16 @@ def execute(filename: str) -> None:
         if "main" in namespace and callable(namespace["main"]):
         	namespace["main"]()
         	
+        	
 # let's try, and avoid some multi-main function conflict
-if main:
+if "main" in globals():
 	del main
 # if a main function (FROM another module got leaked through), delete it
 #declare a new main for this file
 sys.tracebacklimit=0
-# we need this to minimize  the stack trace, and TO ADD EMPHASIS on the actual problem
+# we need this to minimize the stack trace, and to ADD EMPHASIS on the actual problem
 # handling ERRORS
-class BuraSyntaxError(NameError):
+class BuraSyntaxError(SyntaxError):
 	def __int__(self, name: str, message: str = " expected"):
 		self.name = name
 		self.message = message
