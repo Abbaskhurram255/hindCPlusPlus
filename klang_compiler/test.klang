@@ -2,6 +2,14 @@ mangao KL_Py
 tor KL mangao KL_Py
 KL_Py mese mangao isstr, isint
 surat is_str mangao isstr KL_Py mese
+#print(f"{platform.python_version()=}")
+print(f"{platform.klang_version=}")
+print(f"{version=}")
+print(f"{license=}")
+print(f"{credits=}")
+print(f"{copyright=}")
+print(f"{license=}")
+print(help)
 
 fc add(x: nr, y: nr) -> nr:
 	ret x + y
@@ -12,24 +20,33 @@ enum Weekday:
 	int Tuesday = 2
 
 cls Parent:
-	called: bool = No
+	called: filhal = not 5
 	fc __ctr(this):
-		this.called = Yes
+		me.called = Ha
 		print("you've either instantiated the Parent, or a sub-class of it")
-	fc __str(this):
+	fc __str(this) -> str:
 		return "Parent(...)"
 
 @extend
 cls TestClass of Parent:
-    fc __ctr(this):
+    fc __ctr(this) -> Me:
     	mom.call()
     	print(this.called)
-    @reimplement fc __str(this):
+    @reimplement fc __str(this) -> str:
         return "Child(...)"
-    fc string(this):
+    fc string(this) -> str:
     	return this.__str()
 
-fc main() -> none, might throw ZeroDevisionError:
+fc main() -> none <might throw ZeroDevisionError>
+    print(0 nahi brbr 5)
+    print(0 he 5)
+    k__about
+    dbl num = "     gh5.2g"
+    print(num instanceof dbl)
+    print(num hastype dbl)
+    print(f"{num=}")
+    arr: numlist = [1, 2, 3]
+    print(arr)
     print("hello"[:-1])
     har i until(5, 1):
     	kaho k"{i=}"
@@ -41,7 +58,9 @@ fc main() -> none, might throw ZeroDevisionError:
     print 2^^
     kaho('hi')
     print "hello", "Dave"
-    q = TestClass()
+    TestClass q = nai TestClass()
+    int score = 25
+    print(score)
     print(q)
     w = 5
     printf("$add(4, 2) $add $4060.7997:.1f")
@@ -54,7 +73,10 @@ fc main() -> none, might throw ZeroDevisionError:
         print(1 / 0)
     nakami bawaja ZeroDivisionError tor e:
         print "oops", e
-    final MY_FINAL_INT = 4
+    final MY_FINAL_INT: int = 4
+    my_arr: int<list> = [1, 2, 3, 4]
+    arr2: int[] = nai list([1, 3, 5])
+    int[] arr3 = [3, 5, 7]
     print(MY_FINAL_INT he_ek int)
     print(3^ 2)
     print(3^^)
