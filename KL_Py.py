@@ -12,6 +12,8 @@ from copy import deepcopy
 from pathlib import Path
 import os, sys, platform, json, shutil, base64, requests, math, re, ast, webbrowser
 from re import escape
+import enum # NOTE: to allow enum.auto without making it global
+# both of these imports are needed ^V
 from enum import Enum
 from inspect import *
 from hindGui import *
@@ -22,6 +24,10 @@ rand_int = randint
 rand_flt = uniform
 rand_from = rand_of = any_from = any_of = choice
 choices = sample
+# not possible directly, add later
+# BY creating a CUSTOM LIST type, and then adding them
+# list.add = list.push = list.append
+# list.add_at = list.push_at = list.insert
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 Str = lafz = jumla = Str = lambda x: str(x).strip() # trim the string after parsing
@@ -49,6 +55,40 @@ def Flt(x: str|int|float) -> float:
         return float(x)
     except (ValueError, TypeError):
         return 0.0
+def th(n: Number) -> str:
+    if n is None or not isinstance(n, Number):
+    	return ""
+    n = int(n)
+    if 10 <= n % 100 <= 20:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return str(n) + suffix
+def fus(amount: Number) -> str:
+    if amount is None or not isinstance(amount, Number):
+    	return ""
+    amount = round(amount, 1)
+    parts = str(amount).split('.')
+    integer_part = '{:,}'.format(int(parts[0]))
+    decimal_part = f".{parts[1]}" if len(parts) > 1 else ''
+    return f"{integer_part}{decimal_part}"
+def fpk(amount: Number) -> str:
+    if amount is None or not isinstance(amount, Number):
+    	return ""
+    amount = round(amount, 1)
+    parts = str(amount).split('.')
+    # Indian formatting for integer part
+    integer_part = parts[0]
+    if len(integer_part) > 3:
+        last_three = integer_part[-3:]
+        rest = integer_part[:-3]
+        rest = ','.join(reversed([rest[max(0, i-2):i] for i in range(len(rest), 0, -2)]))
+        integer_part = f"{rest},{last_three}" if rest else last_three
+    decimal_part = f".{parts[1]}" if len(parts) > 1 else ''
+    format: str = f"{integer_part}{decimal_part}"
+    # fixing a bug...
+    result: str = format.replace("-,", "-")
+    return result
 def IntInput(*args, **kwargs):
     try:
         return Int(input(*args, **kwargs))
@@ -60,19 +100,41 @@ def FltInput(*args, **kwargs):
     except Exception:
         return 0
 intInput, fltInput = IntInput, FltInput
-collect = zip
+def collect(x, *rest):
+    if not x or len(rest) == 0 or not is_iterable(x) or not all(is_iterable(it) for it in [x, *rest]):
+        return [[], []]
+    args: list = [x, *rest]
+    return list(zip(args))
 class numlist(list[Number]):
 	def __init__(self, *items: Number):
 		super().__init__(items)
-	def __add__(self, other: list[Number]):
-		lst: numlist = numlist()
-		for a, b in zip(self[0], other):
-			lst.append(a+b)
-		return lst
+	def __add__(self, other: Number|list[Number]):
+		if isinstance(other, list[Number]):
+			lst: numlist = numlist()
+			for a, b in zip(self[0], other):
+				lst.append(a+b)
+			return lst
+		if isinstance(other, Number):
+			self[0].append(other)
+		return self
+	def __radd__(self, other: Number|list[Number]):
+		if isinstance(other, list[Number]):
+			lst: numlist = numlist()
+			for a, b in zip(self[0], other):
+				lst.append(b+a)
+			return lst
+		if isinstance(other, Number):
+			self[0].insert(0, other)
+		return self
 	def __sub__(self, other: list[Number]):
 		lst: numlist = numlist()
 		for a, b in zip(self[0], other):
 			lst.append(a-b)
+		return lst
+	def __rsub__(self, other: list[Number]):
+		lst: numlist = numlist()
+		for a, b in zip(self[0], other):
+			lst.append(b-a)
 		return lst
 	def __mul__(self, other: list[Number]):
 		lst: numlist = numlist()
@@ -86,10 +148,12 @@ class numlist(list[Number]):
 				b = 1
 			lst.append(a/b)
 		return lst
-	def __neg__(self, other: list[Number]):
+	def __pos__(self):
 		return numlist(-x for x in self[0])
-	def __abs__(self, other: list[Number]):
-		return numlist(-1 * x for x in self[0])
+	def __neg__(self):
+		return numlist(-x for x in self[0])
+	def __abs__(self):
+		return numlist(abs(x) for x in self[0])
 	def __pow__(self, other: list[Number]):
 		lst: numlist = numlist()
 		for a, b in zip(self[0], other):
@@ -108,36 +172,165 @@ class numlist(list[Number]):
 	def __eq__(self, other: list[Number]):
 		return all(a == b for a, b in zip(self[0], other))
 	def __ne__(self, other: list[Number]):
-		return all(a != b for a, b in zip(self[0], other))
+		return not all(a == b for a, b in zip(self[0], other))
 	def __str__(self):
 		return f"numlist([{', '.join(map(str, self))}])"
 	def __repr__(self):
 		return f"numlist([{', '.join(map(repr, self))}])"
+num_list = numlist
+class intlist(list[int]):
+	def __init__(self, *items: int):
+		super().__init__(items)
+	def __add__(self, other: list[int]) -> Self:
+		lst: intlist = intlist()
+		for a, b in zip(self[0], other):
+			lst.append(Int(a)+Int(b))
+		return lst
+	def __radd__(self, other: list[float]) -> Self:
+		lst: intlist = intlist()
+		for a, b in zip(self[0], other):
+			lst.append(Int(b)+Int(a))
+		return lst
+	def __sub__(self, other: list[int]) -> Self:
+		lst: intlist = intlist()
+		for a, b in zip(self[0], other):
+			lst.append(Int(a)-Int(b))
+		return lst
+	def __rsub__(self, other: list[float]) -> Self:
+		lst: intlist = intlist()
+		for a, b in zip(self[0], other):
+			lst.append(Int(b)-Int(a))
+		return lst
+	def __mul__(self, other: list[int]) -> Self:
+		lst: intlist = intlist()
+		for a, b in zip(self[0], other):
+			lst.append(Int(a)*Int(b))
+		return lst
+	def __truediv__(self, other: list[int]) -> Self:
+		lst: intlist = intlist()
+		for a, b in zip(self[0], other):
+			if b == 0:
+				b = 1
+			lst.append(Int(a)/Int(b))
+		return lst
+	def __pos__(self) -> Self:
+		return intlist(Int(+x) for x in self[0])
+	def __neg__(self) -> Self:
+		return intlist(Int(-x) for x in self[0])
+	def __abs__(self) -> Self:
+		return intlist(Int(abs(x)) for x in self[0])
+	def __pow__(self, other: list[int]) -> Self:
+		lst: intlist = intlist()
+		for a, b in zip(self[0], other):
+			if b == 0:
+				b = 1
+			lst.append(Int(a) ** Int(b))
+		return lst
+	def __gt__(self, other: list[int]) -> bool:
+		return all(Int(a) > Int(b) for a, b in zip(self[0], other))
+	def __lt__(self, other: list[int]) -> bool:
+		return all(Int(a) < Int(b) for a, b in zip(self[0], other))
+	def __ge__(self, other: list[int]) -> bool:
+		return all(Int(a) >= Int(b) for a, b in zip(self[0], other))
+	def __le__(self, other: list[int]) -> bool:
+		return all(Int(a) <= Int(b) for a, b in zip(self[0], other))
+	def __eq__(self, other: list[int]) -> bool:
+		return all(Int(a) == Int(b) for a, b in zip(self[0], other))
+	def __ne__(self, other: list[int]) -> bool:
+		return not all(Int(a) == Int(b) for a, b in zip(self[0], other))
+	def __str__(self) -> str:
+		return f"intlist([{', '.join(map(str, self))}])"
+	def __repr__(self) -> str:
+		return f"intlist([{', '.join(map(repr, self))}])"
+int_list = intlist
+class fltlist(list[float]):
+	def __init__(self, *items: int):
+		super().__init__(items)
+	def __add__(self, other: list[float]) -> Self:
+		lst: fltlist = fltlist()
+		for a, b in zip(self[0], other):
+			lst.append(Flt(a)+Flt(b))
+		return lst
+	def __radd__(self, other: list[float]) -> Self:
+		lst: fltlist = fltlist()
+		for a, b in zip(self[0], other):
+			lst.append(Flt(b)+Flt(a))
+		return lst
+	def __sub__(self, other: list[float]) -> Self:
+		lst: fltlist = fltlist()
+		for a, b in zip(self[0], other):
+			lst.append(Flt(a)-Flt(b))
+		return lst
+	def __rsub__(self, other: list[float]) -> Self:
+		lst: fltlist = fltlist()
+		for a, b in zip(self[0], other):
+			lst.append(Flt(b)-Flt(a))
+		return lst
+	def __mul__(self, other: list[float]) -> Self:
+		lst: fltlist = fltlist()
+		for a, b in zip(self[0], other):
+			lst.append(Flt(a)*Flt(b))
+		return lst
+	def __truediv__(self, other: list[float]) -> Self:
+		lst: fltlist = fltlist()
+		for a, b in zip(self[0], other):
+			if b == 0:
+				b = 1
+			lst.append(Flt(a)/Flt(b))
+		return lst
+	def __pos__(self) -> Self:
+		return fltlist(Flt(+x) for x in self[0])
+	def __neg__(self) -> Self:
+		return fltlist(Flt(-x) for x in self[0])
+	def __abs__(self) -> Self:
+		return fltlist(Flt(abs(x)) for x in self[0])
+	def __pow__(self, other: list[float]) -> Self:
+		lst: fltlist = fltlist()
+		for a, b in zip(self[0], other):
+			if b == 0:
+				b = 1
+			lst.append(Flt(a) ** Flt(b))
+		return lst
+	def __gt__(self, other: list[float]) -> bool:
+		return all(Flt(a) > Flt(b) for a, b in zip(self[0], other))
+	def __lt__(self, other: list[float]) -> bool:
+		return all(Flt(a) < Flt(b) for a, b in zip(self[0], other))
+	def __ge__(self, other: list[float]) -> bool:
+		return all(Flt(a) >= Flt(b) for a, b in zip(self[0], other))
+	def __le__(self, other: list[float]) -> bool:
+		return all(Flt(a) <= Flt(b) for a, b in zip(self[0], other))
+	def __eq__(self, other: list[float]) -> bool:
+		return all(Flt(a) == Flt(b) for a, b in zip(self[0], other))
+	def __ne__(self, other: list[float]) -> bool:
+		return not all(Flt(a) == Flt(b) for a, b in zip(self[0], other))
+	def __str__(self) -> str:
+		return f"fltlist([{', '.join(map(str, self))}])"
+	def __repr__(self) -> str:
+		return f"fltlist([{', '.join(map(repr, self))}])"
+flt_list = fltlist
 class Stack(Generic[TypeT]):
-    def __init__(self, *items: T):
-        self.array: list[T] = []
+    def __init__(self, *items: TypeT):
+        self.array: list[TypeT] = []
         self.length: int = -1
         if len(items) != 0:
             for item in items:
                 self.push(item)
-    def push(self, item: T) -> Self:
+    def push(self, item: TypeT) -> Self:
         self.array.append(item)
         self.length += 1
         return self
-    def pop(self) -> Optional[T]:
+    def pop(self) -> Optional[TypeT]:
         if self.length == -1:
             return None
-        popped: T = self.array[self.length]
+        popped: TypeT = self.array[self.length]
         self.length -= 1
         return popped
-    def top(self) -> Optional[T]:
+    def top(self) -> Optional[TypeT]:
         if self.length == -1:
             return None
         return self.array[self.length]
     def len(self) -> int:
         return self.length + 1
-    def length(self) -> int:
-        return self.len()
     def size(self) -> int:
         return self.len()
     def __len__(self) -> int:
@@ -360,7 +553,7 @@ def f(*args) -> str:
                     print(f"Forbidden keyword/function in input: '{item}'")
                     continue
             # Evaluate the expression
-            arg = re.sub(r"(?<!\\)[\$\{]+([^\s\{\}\(\)\$]+(?:\(([\w\.\-]+(,\s*)?)*\))?)\}?", r"{\1}", arg)
+            arg = re.sub(r"(?<!\\)[\$\{]+([^\s\{\}\(\)\$]+(?:\(([\w\.\-]+(,\s*)?)*\))?)(\}(?!#{4}))?", r"{\1}", arg)
             # (?<!\\) means recognize escapes, and only match if the dollar '$', and opening_brace '{'' are not precededed by a forward slash '\' (which is the standard pattern for regex escapes)
             evaluation: str = eval(f"f'{arg}'", {"__builtins__": {}}, caller_locals)
             WHITESPACE_CHAR = " "
@@ -424,7 +617,7 @@ is_none = isnone = is_null = isnull = lambda x: x is None
 isnt_none = isntnone = non_none = nonnone = lambda x: not is_none(x)
 is_string = isstring = is_str = isstr = lambda x: isinstance(x, str)
 isnt_string = isntstring = isnt_str = isntstr = non_string = nonstring = non_str = nonstr = lambda x: not is_string(x)
-is_integer = isinteger = is_int = isint = lambda x: isinstance(x, int)
+is_integer = isinteger = is_int = isint = lambda x: isinstance(x, int) and not isinstance(x, bool)
 isnt_integer = isntinteger = isnt_int = isntint = non_integer = noninteger = non_int = nonint = lambda x: not is_integer(x)
 def is_int_like(x: str) -> bool:
 	x = str(x)
@@ -435,7 +628,7 @@ def is_int_like(x: str) -> bool:
 	except ValueError:
 		...
 	return False
-is_float = isfloat = is_flt = isflt = lambda x: isinstance(x, float)
+is_float = isfloat = is_flt = isflt = lambda x: isinstance(x, float) and not isinstance(x, bool)
 isnt_float = isntfloat = isnt_float = isntfloat = non_float = nonfloat = non_flt = nonflt = lambda x: not is_float(x)
 def is_float_like(x: str) -> bool:
 	x = str(x)
@@ -487,9 +680,9 @@ def replace(src: str, to_replace: str, replacement: str = "") -> str:
     	# allow empty replacement for removals
     	return ""
     to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
-    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
     # achieve JavaScript-like numbered-group convention ^
-    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
     # achieve JavaScript-like named-group convention ^
     src = re.sub(to_replace, replacement, src)
     return src
@@ -498,9 +691,9 @@ def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
     	# allow empty replacement for removals
     	return ""
     to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
-    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
     # achieve JavaScript-like numbered-group convention ^
-    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
     # achieve JavaScript-like named-group convention ^
     src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE)
     return src
@@ -509,9 +702,9 @@ def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
     	# allow empty replacement for removals
     	return ""
     to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
-    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
     # achieve JavaScript-like numbered-group convention ^
-    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
     # achieve JavaScript-like named-group convention ^
     src = re.sub(to_replace, replacement, src, count=1)
     return src
@@ -521,9 +714,9 @@ def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
     	# allow empty replacement for removals
     	return ""
     to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
-    replacement = re.sub(r"\$\{?(\d+)\}?", r"\\\1", replacement)
+    replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
     # achieve JavaScript-like numbered-group convention ^
-    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)\}?", r"\\g<\1>", replacement)
+    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
     # achieve JavaScript-like named-group convention ^
     src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE, count=1)
     return src
@@ -922,9 +1115,9 @@ def main() -> none:
     printf("hi, $75000.77778:,")
     x = 12345.6789
     print(f("$x", "$x:.2f", f"{x:,}", f"{x:,.2f}"))
-    array = numlist([1, 2, 3])
-    array2 = numlist(2, 4, 6)
-    result = array ** array2
+    array = intlist([1.4, 2.9, 3.5])
+    array2 = fltlist(2, 4, 6)
+    result = array * array2
     print(result)
     #pprint({"name": "Mike", "age": 17, "hobbies": ["horse riding", "country music", "farming"]})
     
