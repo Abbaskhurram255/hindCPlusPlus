@@ -1,11 +1,12 @@
 mangao KL_Py
 tor KL mangao KL_Py
 KL_Py mese mangao isstr, aur isint, ke_sath isbool
+mangao isstr, isint KL_Py mese
 surat is_str mangao isstr KL_Py mese
 print(1 hazar + 3 so + 80)
 
-fc add(x: nr, y: nr) -> nr:
-	ret x + y
+fc add(x umd nr, y umd nr):
+	out x + y
 
 enum Weekday:
 	int Sunday = 0
@@ -13,25 +14,53 @@ enum Weekday:
 	int Tuesday = 2
 	int Wednesday = e_auto()
 	int Thursday = e_auto()
+print(Weekday?.Sunday)
 
 cls Parent:
+	cls sub:
+		x = "I am in a nested class"
 	called: bool = No
 	_ctr(this):
 		this.called = Yes
 		print("you've either instantiated the Parent, or a sub-class of it")
-	_str(this):
+	_str(this) return_kare str:
 		return "Parent(...)"
+print(Parent?.called)
 
 cls TestClass of Parent:
     _ctr(this):
     	mom.call()
     	print(this.called)
-    @redo _str(this):
+    @redo _str(this) gives_a str:
         return "Child(...)"
-    fc string(this):
+    method string() returns str:
     	return this._str()
+    direct method add(x mange int, y mange int) -> int:
+    	out x + y
+    	
+score: int? = 0
+agar match hua score:
+	sath 50:
+		print 'score 50 he'
+	sath 25:
+		print 'score 25 he'
+	sath ...:
+		print 'score kuch or he yar'
+list1: numlist = [1, 2, 3]
+list2: numlist = [2, 4, 0]
+int age = 17
+kism<int> age2 = 19
+print(list1 / list2)
+args = [1, 2, 3]
+print([..args, 4, 5])
+argv = {"name": "Mike"}
+#{name} = argv
+print({...argv, "age": 27})
+f: flt = " hjkkkdghh-9.7"
+print("$f=")
 
-fc main() -> none:
+fc main(..args, ...argv) -> ?:
+    print 3 hundo_million
     print "$len('3') $6+7.5 $add(2,4)"
     print "3".ki_size
     k__about
@@ -70,7 +99,7 @@ fc main() -> none:
         2: [int, str] -> "experience"
         array: list[int] -> [1, 2, 3, 4, 5]
     }
-    print(user.name)
+    print(user?.name)
     instance: TestClass = TestClass()
     print(instance.string())
     every i until(5):
