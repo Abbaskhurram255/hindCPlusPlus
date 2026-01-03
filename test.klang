@@ -27,19 +27,20 @@ cls Parent:
 		return "Parent(...)"
 print(Parent?.called)
 
-cls TestClass of Parent:
+print(5 guna 4)
+print(pone 4 + sawa 2 + 1so)
+cls TestClass extends Parent:
     _ctr(this):
     	mom.call()
     	print(this.called)
-    @redo _str(this) gives_a str:
+    @redo _str(this) -> str:
         return "Child(...)"
-    method string() returns str:
+    method string() -> str:
     	return this._str()
-    direct method add(x mange int, y mange int) -> int:
-    	out x + y
-    	
 score: int? = 0
 agar match hua score:
+	he int:
+		print("the score is an integer")
 	sath 50:
 		print 'score 50 he'
 	sath 25:
@@ -47,19 +48,26 @@ agar match hua score:
 	sath ...:
 		print 'score kuch or he yar'
 list1: numlist = [1, 2, 3]
-list2: numlist = [2, 4, 0]
+numlist list2 = [2, 4, 0]
 int age = 17
-kism<int> age2 = 19
+age2 : kism<int> = 19
+kism<int> age3 = 24
+age4 kism<int> = 28
+name_of_user kism<str> = "Jonathan"
 print(list1 / list2)
 args = [1, 2, 3]
 print([..args, 4, 5])
 argv = {"name": "Mike"}
-#{name} = argv
+{name} = argv
+print "$name="
+{tor nm name} = argv
+print "$nm="
 print({...argv, "age": 27})
-f: flt = " hjkkkdghh-9.7"
-print("$f=")
+
 
 fc main(..args, ...argv) -> ?:
+    har i darmyan 1..5:
+    	print "$i="
     print 3 hundo_million
     print "$len('3') $6+7.5 $add(2,4)"
     print "3".ki_size
