@@ -12,7 +12,7 @@ from threading import Timer
 from datetime import datetime
 from copy import deepcopy
 from pathlib import Path
-import os, sys, platform, json, shutil, base64, requests, math, re, ast, webbrowser
+import os, sys, platform, json, shutil, base64, requests, math, re, ast, webbrowser, subprocess
 from re import escape
 import enum # NOTE: to allow enum.auto without making it global
 # both of these imports are needed ^V
@@ -46,6 +46,36 @@ IntInfinity = int_infinity = int_inf = intinf = sys.maxsize
 goto = webbrowser.open
 link = webbrowser
 typename = TypeT = typeT = TypeVar("T")
+def run_process(command: str|list[str], new_window: bool = False) -> None:
+	if not command or not isinstance(command, (str, list)):
+		return
+	if isinstance(command, str):
+		if not re.search(r"(?<=\w)\s(?=\w)", command):
+			return
+		command = command.split(" ")
+	try:
+		if new_window:
+			subprocess.Popen(command)
+		else:
+			subprocess.run(command, check=True)
+	except:
+		...
+def kill_process(process_name: str) -> bool:
+	process_name = str(process_name).strip()
+	killed: bool = False
+	if not process_name:
+		killed = False
+	opsys: str = platform.system()
+	try:
+	    if opsys == "Windows":
+	    	run_process(f"taskkill /im /f {process_name}")
+	    	killed = True
+	    else:
+		    run_process(f"pkill -f {process_name}")
+		    killed = True
+	except subprocess.CalledProcessError:
+		killed = False
+	return killed
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
         x = replace(Str(x).strip(), r"[^e\+\-\d\.]", "") # NOTE: keep the ., it's needed for now. keep. the. dot.
@@ -388,24 +418,24 @@ class fltlist(list[float]):
 	def __repr__(self) -> str:
 		return f"fltlist([{', '.join(map(repr, self))}])"
 flt_list = fltlist
-class Stack(Generic[TypeT]):
-    def __init__(self, *items: TypeT):
-        self.array: list[TypeT] = []
+class Stack[T]:
+    def __init__(self, *items: T):
+        self.array: list[T] = []
         self.length: int = -1
         if len(items) != 0:
             for item in items:
                 self.push(item)
-    def push(self, item: TypeT) -> Self:
+    def push(self, item: T) -> Self:
         self.array.append(item)
         self.length += 1
         return self
-    def pop(self) -> Optional[TypeT]:
+    def pop(self) -> Optional[T]:
         if self.length == -1:
             return None
-        popped: TypeT = self.array[self.length]
+        popped: T = self.array[self.length]
         self.length -= 1
         return popped
-    def top(self) -> Optional[TypeT]:
+    def top(self) -> Optional[T]:
         if self.length == -1:
             return None
         return self.array[self.length]
