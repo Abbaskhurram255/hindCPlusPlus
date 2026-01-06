@@ -25,6 +25,10 @@ cls Parent:
 		print("you've either instantiated the Parent, or a sub-class of it")
 	_str(this) return_kare str:
 		return "Parent(...)"
+	@callme
+	fc create_instance(cls) return_kare Khud ko:
+		ret cls()
+print(Parent.create_instance())
 print(Parent?.called)
 
 print(5 guna 4)
@@ -66,7 +70,7 @@ print({...argv, "age": 27})
 
 
 fc main(..args, ...argv) -> ?:
-    har i darmyan 1..5:
+    har i .. 1..5:
     	print "$i="
     print 3 hundo_million
     print "$len('3') $6+7.5 $add(2,4)"
@@ -107,7 +111,7 @@ fc main(..args, ...argv) -> ?:
         2: [int, str] -> "experience"
         array: list[int] -> [1, 2, 3, 4, 5]
     }
-    print(user?.name)
+    print("name:", user?.name)
     instance: TestClass = TestClass()
     print(instance.string())
     every i until(5):

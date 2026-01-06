@@ -78,8 +78,14 @@ def kill_process(process_name: str) -> bool:
 	return killed
 def Int(x: str|int|float, base: int = 10) -> int:
     try:
-        x = replace(Str(x).strip(), r"[^e\+\-\d\.]", "") # NOTE: keep the ., it's needed for now. keep. the. dot.
-        # ^ allow the dot . to pass through, for now, so 23.5 does NOT become 253
+        if not x or not isinstance(x, (str, int, float)):
+            return 0
+        if not base or not isinstance(base, int) or base <= 0 or base >= Infinity:
+        	base = 10
+        x = str(x).strip()
+        x = replace(x, r"[^\-\.\d]", "")
+        # NOTE: keep the dot(.), it's needed for now. keep. the. dot.
+        # ^ allow the dot(.) to pass through, for now, so that 23.5 does NOT become 253
         if "." in x and len(x) >= 2:
             # and later, remove it gracefully
             x = x.split(".")[0]
@@ -88,11 +94,64 @@ def Int(x: str|int|float, base: int = 10) -> int:
         return 0
 def Flt(x: str|int|float) -> float:
     try:
+        if not x or not isinstance(x, (str, int, float)):
+            return 0.0
         if isinstance(x, str):
-        	x = replace(x.strip(), r"[^e\+\-\d\.]", "")
+        	x = replace(x.strip(), r"[^e\+\-\.\d]", "")
         return float(x)
     except (ValueError, TypeError):
         return 0.0
+def is_pos(n: int|float) -> bool:
+    if not n or not isinstance(n, (int, float)):
+        return False
+    return n > 0
+def is_neg(n: int|float) -> bool:
+    if not n or not isinstance(n, (int, float)):
+        return False
+    return n < 0
+def is_even(n: int) -> bool:
+    if not isinstance(n, (int, float)):
+        return False
+    # allow zero to pass through
+    # might not seem like it,
+    # but it does have the quality OF being even,
+    # or odd, it even... though
+    return n % 2 == 0
+def is_odd(n: int) -> bool:
+    if not isinstance(n, (int, float)):
+        return False
+    # allow zero to pass through
+    # might not seem like it,
+    # but it does have the quality OF being even,
+    # or odd, it's not odd though
+    return n % 2 != 0
+def delay(n: Union[int, float], fn: Callable) -> None:
+    """
+    @param
+              n                               <int | float>
+              the delay in seconds
+    @param fn
+              fn                              <Callable>
+              the function to be executed after the delay
+    @return
+              <None>
+              nothing is returned
+    """
+    if not n or is_neg(n) or not isinstance(n, (int, float)):
+        n = 1
+    MAX_DELAY: int = 1e5
+    if n > MAX_DELAY:
+        n = MAX_DELAY
+    # good practice
+    if not isinstance(fn, Callable):
+        return
+    timed_fn: Timer = Timer(n, fn)
+    timed_fn.start()
+sec, min = 1, 60
+# helpers contants
+# so we can do delay(5*min, lambda: doSomeThing())
+# again, helper constants
+after = baad = delay
 def th(n: Number) -> str:
     if n is None or not isinstance(n, Number):
     	return ""
@@ -939,6 +998,10 @@ class File:
         return self.pathname.is_dir()
     def exists(self) -> bool:
         return self.pathname.exists()
+    def exists_file(self) -> bool:
+        return self.is_file() and self.exists()
+    def exists_folder(self) -> bool:
+        return self.is_folder() and self.exists()
     @staticmethod
     def create(fname: str, content: str = "") -> bool:
         try:
@@ -1041,7 +1104,6 @@ class File:
         except Exception as e:
             print(f"[KL.file.JobFailed]: {e}")
         return None
-
     @staticmethod
     def write(fname: str, content: str) -> bool:
 	    try:
@@ -1086,7 +1148,7 @@ class File:
     def delete(fname: str) -> bool:
         try:
             if not fname:
-                raise ValueError("File name is required")
+                return
             if re.search(r"(?<=\\w)\\s*[\\|\\+\\&\\,\\;]\\s*(?=\\w)", fname):
                 for subFileName in re.split(r"\\s*[\\|\\+\\&\\,\\;]\\s*", fname):
                     File.delete(subFileName)
@@ -1097,8 +1159,6 @@ class File:
                 os.remove(fname)
             print(f"[KL.file.JobSuccess]:\nFile {fname} deleted successfully.")
             return True
-        except ValueError as e:
-            print(f"[KL.file.JobFailed]: {e}")
         except FileNotFoundError:
             print(f"[KL.file.JobFailed]: File {fname} does not exist")
         except PermissionError:
@@ -1217,8 +1277,6 @@ def filepath(to_filename: str) -> str:
         return ""
     return os.path.join(os.getcwd(), to_filename)
 file_path = path_to = filepath
-
-name: str = "Cindy"
 
 def main() -> none:
     print(Int("100", 2))

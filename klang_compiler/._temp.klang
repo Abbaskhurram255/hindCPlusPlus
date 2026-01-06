@@ -1,0 +1,11 @@
+fc main():
+	name: str = "Damon"
+
+
+
+
+
+
+
+
+	print 4+3
