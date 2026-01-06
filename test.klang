@@ -66,7 +66,7 @@ print({...argv, "age": 27})
 
 
 fc main(..args, ...argv) -> ?:
-    har i darmyan 1..5:
+    har i .. 1..5:
     	print "$i="
     print 3 hundo_million
     print "$len('3') $6+7.5 $add(2,4)"
@@ -107,7 +107,7 @@ fc main(..args, ...argv) -> ?:
         2: [int, str] -> "experience"
         array: list[int] -> [1, 2, 3, 4, 5]
     }
-    print(user?.name)
+    print("name:", user?.name)
     instance: TestClass = TestClass()
     print(instance.string())
     every i until(5):

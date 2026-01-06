@@ -1,0 +1,12 @@
+fc main():
+	name: str = "Lucas"
+	print "Name is $name"
+	age: int = 27
+	print 2+4
+	print 8+4
+	print 2+9
+	print 3+6
+	print 1+4
+	print 1+4
+	print 4+9
+	print 9+2
