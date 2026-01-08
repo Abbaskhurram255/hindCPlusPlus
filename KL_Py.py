@@ -12,7 +12,7 @@ from threading import Timer
 from datetime import datetime
 from copy import deepcopy
 from pathlib import Path
-import os, sys, platform, json, shutil, base64, requests, math, re, ast, webbrowser, subprocess
+import builtins, os, sys, platform, json, shutil, base64, requests, math, re, ast, webbrowser, subprocess
 from re import escape
 import enum # NOTE: to allow enum.auto without making it global
 # both of these imports are needed ^V
@@ -147,7 +147,7 @@ def delay(n: Union[int, float], fn: Callable) -> None:
         return
     timed_fn: Timer = Timer(n, fn)
     timed_fn.start()
-sec, min = 1, 60
+sec, mint = 1, 60
 # helpers contants
 # so we can do delay(5*min, lambda: doSomeThing())
 # again, helper constants
@@ -206,16 +206,81 @@ def FltInput(*args, **kwargs):
     except Exception:
         return 0
 intInput, fltInput = IntInput, FltInput
-def collect(x, *rest):
-    if not x or len(rest) == 0 or not is_iterable(x) or not all(is_iterable(it) for it in [x, *rest]):
+def flattened(lst: list[Any]) -> list[Any]:
+    if lst is None or not isinstance(lst, list):
+        return []
+    out: list[Any] = []
+    for item in lst:
+        if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
+            out.extend(flattened(item))
+        else:
+            out.append(item)
+    return out
+flat = flatten = flattened
+def clone(item: list|tuple|dict) -> list|tuple|dict:
+    if item is None:
+        return None
+    return deepcopy(item)
+    """
+    __KL_Py.deepcopy__
+    
+    @param       item
+      @@type     (list, tuple, dict)
+						:: object to clone
+    @return        
+       @@type    (list, tuple, dict)
+                        :: a cloned object
+                           depending on
+                           the type passed
+                           in as the argument
+    """
+def hissa(x: str|list|tuple|dict, y: str|list|tuple|dict) -> haal:
+    if isinstance(x, str) and isinstance(y, str):
+        return match_i(x, y)
+    return x in y
+def kism(x: Any) -> type:
+	return type(x)
+def he_kism(x: Any, y: type) -> bool:
+	return isinstance(x, y)
+is_type = istype = he_kism
+def barabar(x, y) -> haal:
+    if isinstance(x, str) and isinstance(y, str):
+        return x.lower() == y.lower()
+    return x == y
+def collect(x, *rest) -> list[list[Any], list[Any]]:
+    if not x or not rest or len(rest) == 0 or not is_iterable(x) or not all(is_iterable(it) for it in [x, *rest]):
         return [[], []]
     args: list = [x, *rest]
     return list(zip(args))
+# wraps the old enumerate function
+# to avoid stack overflow
+# we'll need this
+old_enumerate = builtins.enumerate
+def numbered(x: str|list|tuple|dict) -> list[list[Any], list[int]]:
+    if not x or not isinstance(x, (str, list, tuple, dict)):
+    	return []
+    enumeration_object: old_enumerate = old_enumerate(x)
+    if not enumeration_object:
+    	return []
+    lst: list = list(enumeration_object)
+    if not lst:
+    	return []
+    return [(v, i) for i, v in lst]
+	# WARNING: the `old_enumerate` part
+	# is supposed to be AS/IS
+	# this function overrides
+	# the old enumerate function
+	# for Klang
+	# and replaces it with numbered
+	# also, the swapping is a mandatory step
+	# allowing the following syntax:
+	#	for item, i in numbered(arr):
+	#        print("{i}. {item}")
 class numlist(list[Number]):
 	def __init__(self, *items: Number|list[Number]):
 		super().__init__()
 		self.push(*items)
-	def __add__(self, other: Number|list[Number]):
+	def __add__(self, other: Number|list[Number]) -> Self:
 		if isinstance(other, list):
 			lst: numlist = numlist()
 			for a, b in zip(self, other):
@@ -224,7 +289,7 @@ class numlist(list[Number]):
 		if isinstance(other, Number):
 			self.append(other)
 		return self
-	def __radd__(self, other: Number|list[Number]):
+	def __radd__(self, other: Number|list[Number]) -> Self:
 		if isinstance(other, list):
 			lst: numlist = numlist()
 			for a, b in zip(self, other):
@@ -233,86 +298,131 @@ class numlist(list[Number]):
 		if isinstance(other, Number):
 			self.insert(0, other)
 		return self
-	def __sub__(self, other: list[Number]):
+	def __sub__(self, other: list[Number]) -> Self:
 		lst: numlist = numlist()
 		for a, b in zip(self, other):
 			lst.append(a-b)
 		return lst
-	def __rsub__(self, other: list[Number]):
+	def __rsub__(self, other: list[Number]) -> Self:
 		lst: numlist = numlist()
 		for a, b in zip(self, other):
 			lst.append(b-a)
 		return lst
-	def __mul__(self, other: list[Number]):
+	def __mul__(self, other: list[Number]) -> Self:
 		lst: numlist = numlist()
 		for a, b in zip(self, other):
 			lst.append(a*b)
 		return lst
-	def __truediv__(self, other: list[Number]):
+	def __truediv__(self, other: list[Number]) -> Self:
 		lst: numlist = numlist()
 		for a, b in zip(self, other):
 			if b == 0:
 				b = 1
 			lst.append(a/b)
 		return lst
-	def __pos__(self):
+	def __pos__(self) -> Self:
+		return numlist(+x for x in self)
+	def __neg__(self) -> Self:
 		return numlist(-x for x in self)
-	def __neg__(self):
-		return numlist(-x for x in self)
-	def __abs__(self):
+	def __abs__(self) -> Self:
 		return numlist(abs(x) for x in self)
-	def __pow__(self, other: list[Number]):
+	def __pow__(self, other: list[Number]) -> Self:
 		lst: numlist = numlist()
 		for a, b in zip(self, other):
 			if b == 0:
 				b = 1
 			lst.append(a ** b)
 		return lst
-	def __gt__(self, other: list[Number]):
+	def __gt__(self, other: list[Number]) -> bool:
 		return all(a > b for a, b in zip(self, other))
-	def __lt__(self, other: list[Number]):
+	def __lt__(self, other: list[Number]) -> bool:
 		return all(a < b for a, b in zip(self, other))
-	def __ge__(self, other: list[Number]):
+	def __ge__(self, other: list[Number]) -> bool:
 		return all(a >= b for a, b in zip(self, other))
-	def __le__(self, other: list[Number]):
+	def __le__(self, other: list[Number]) -> bool:
 		return all(a <= b for a, b in zip(self, other))
-	def __eq__(self, other: list[Number]):
+	def __eq__(self, other: list[Number]) -> bool:
 		return all(a == b for a, b in zip(self, other))
-	def __ne__(self, other: list[Number]):
+	def __ne__(self, other: list[Number]) -> bool:
 		return not all(a == b for a, b in zip(self, other))
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"numlist([{', '.join(map(str, self))}])"
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"numlist([{', '.join(map(repr, self))}])"
-	def sum(self):
+	def sum(self) -> Number:
+		if not len(self):
+			return 0
 		return sum(self)
-	"""
-	def difference(self):
-		return sum(self)
+	def difference(self) -> Number:
+		if not len(self):
+			return 0
+		diff: Number = self[0]
+		for i, item in old_enumerate(self):
+			if i == 0:
+				continue
+			# since we've already taken care of the first item
+			# we don't that
+			if item > 1e9:
+				item = 1e9
+			if item < 1e-9:
+				item = 1e-9
+			diff -= item
+		return diff
 	diff = difference
-	def product(self):
-		return sum(self)
+	def product(self) -> Number:
+		if not len(self):
+			return 0
+		prd: Number = self[0]
+		for i, item in old_enumerate(self):
+			if i == 0:
+				continue
+			# since we've already taken care of the first item
+			# we don't that
+			if item > 1e9:
+				item = 1e9
+			if item < 1e-9:
+				item = 1e-9
+			prd *= item
+		return prd
 	prd = product
-	def quotient(self):
-		return sum(self)
+	def quotient(self) -> Number:
+		if not len(self):
+			return 0
+		quo: Number = self[0]
+		for i, item in old_enumerate(self):
+			if i == 0:
+				continue
+			# since we've already taken care of the first item
+			# we don't that
+			if item == 0:
+				item = 1
+			if item > 1e9:
+				item = 1e9
+			if item < 1e-9:
+				item = 1e-9
+			quo /= item
+		return quo
 	quo = quotient
-	"""
-	def max(self):
+	def max(self) -> Number:
+		if not len(self):
+			return 0
 		return max(self)
-	def min(self):
+	def min(self) -> Number:
+		if not len(self):
+			return 0
 		return min(self)
 	def combine(self, *args: list[Number]) -> Self:
 		if not args:
 			return self
 		for arg in args:
 			if not isinstance(arg, (Number, list)) and not all(isinstance(x, Number) for x in arg):
-				# if neither of the supported types
+				# if it's neither of the supported types
 				# don't push anything
 				continue
 			if isinstance(arg, tuple):
 				arg = list(arg)
-				# what's that, a tuple?
-				# we don't need that
+				# a tuple?
+				# no thanks,
 				# we need a list
 			if isinstance(arg, list):
 			    self.extend(arg)
@@ -321,7 +431,7 @@ class numlist(list[Number]):
 		return self
 	add = push = combine
 	def push_at(self, i: int, *items) -> Self:
-		if not len(items):
+		if not len(items) or not all(isinstance(item, Number) for item in items):
 			return self
 		if not isinstance(i, int):
 			i = len(self)
@@ -329,23 +439,66 @@ class numlist(list[Number]):
 			i = 0
 		elif i > len(self):
 			i = len(self)
-		updated_list: numlist = numlist(self[:i] + items + self[i+len(items):])
+		x = self[:i]
+		x.append(*items)
+		x.extend(self[i+len(items)-1:])
+		updated_list: numlist = numlist(x)
 		self.clear()
 		self.extend(updated_list)
 		return self
-	def push_start(self, item) -> None:
+	def push_start(self, item) -> Self:
 		self.push_at(0, item)
-	def shift(self) -> Any|None:
+		return self
+	def shift(self) -> Number:
 		if len(self) == 0:
-			return None
+			return 0
 		return self.pop(0)
-	#def pop
+	# OVERRIDE self.remove
+	old_remove = list[Number].remove
+	def remove(self, *items: list[Number]) -> Number:
+		if not len(self) or not len(items) or not all(isinstance(item, (Number, list)) for item in items if item is not None):
+			return 0
+		items = flatten(list(items))
+		last_removed: Number = items[-1]
+		for item in items:
+			if not self.contains(item):
+				continue
+			self.old_remove(item)
+		return last_removed
+	rmv = remove
+	# OVERRIDE self.pop
+	old_pop = list[Number].pop
+	def pop(self, *items: list[Number]) -> Number:
+		if not len(self) or not len(items) or not all(isinstance(item, (Number, list)) for item in items if item is not None):
+			return 0
+		items = flatten(list(items))
+		last_popped: Number = self.old_pop(items[-1])
+		for index in items:
+			if index >= len(self):
+				continue
+			if index < 0:
+				index = len(self) - abs(index)
+				if index < 0 or index >= len(self):
+					continue
+			self.old_pop(index)
+		return last_popped
 	#def pop_at
 	def contains(self, item) -> bool:
 		return self.count(item) > 0
 	has = includes = contains
-	find = find_index = index_of = list[Number].index
-	no_of = list[Number].count
+	def index_of(self, x: Number) -> int:
+		if not isinstance(x, Number) or not self.contains(x):
+			return -1
+		return self.index(x)
+	find = find_index = index_of
+	no_of = counts_of = list[Number].count
+"""
+nlist: numlist = numlist([2, 0, 5])
+print(nlist.pop(0, -2))
+print(nlist.quo())
+print(nlist.find(1))
+print(nlist)
+"""
 num_list = numlist
 class intlist(list[int]):
 	def __init__(self, *items: int):
@@ -735,47 +888,6 @@ def f(*args) -> str:
 def printf(*args, **kwargs):
     print(f(*args), **kwargs)
 kaho = printf
-def flatten(lst: list) -> list:
-    if lst is None:
-        return []
-    out = []
-    for item in lst:
-        if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
-            out.extend(flatten(item))
-        else:
-            out.append(item)
-    return out
-flat = flatten
-def clone(item: list|tuple|dict) -> list|tuple|dict:
-    if item is None:
-        return None
-    return deepcopy(item)
-    """
-    __KL_Py.deepcopy__
-    
-    @param       item
-      @@type     (list, tuple, dict)
-						:: object to clone
-    @return        
-       @@type    (list, tuple, dict)
-                        :: a cloned object
-                           depending on
-                           the type passed
-                           in as the argument
-    """
-def hissa(x: str|list|tuple|dict, y: str|list|tuple|dict) -> haal:
-    if isinstance(x, str) and isinstance(y, str):
-        return match_i(x, y)
-    return x in y
-def kism(x: Any) -> type:
-	return type(x)
-def he_kism(x: Any, y: type) -> bool:
-	return isinstance(x, y)
-is_type = istype = he_kism
-def barabar(x, y) -> haal:
-    if isinstance(x, str) and isinstance(y, str):
-        return x.lower() == y.lower()
-    return x == y
 def khali(x: Iterable) -> haal:
     if x is None:
         return False
@@ -901,6 +1013,22 @@ def find_matches_i(src: str, to_find: str) -> list:
     	return []
     to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = re.findall(to_find, src, re.IGNORECASE)
+    return matches
+def find_matches_as_obj(src: str, to_find: str) -> obj[str, str]:
+    if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
+    	return obj()
+    to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
+    matches: obj[str, str] = {}
+    if matches_found := re.search(to_find, src):
+    	matches = matches_found.groupdict()
+    return matches
+def find_matches_as_obj_i(src: str, to_find: str) -> obj[str, str]:
+    if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
+    	return obj()
+    to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
+    matches: obj[str, str] = {}
+    if matches_found := re.search(to_find, src, flags=re.IGNORECASE):
+    	matches = matches_found.groupdict()
     return matches
 def find_match(src: str, to_find: str) -> str:
     if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
