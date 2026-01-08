@@ -158,7 +158,7 @@ def execute(filename: str) -> None:
         # Remove strings
         strings: list[str] = find_matches(code, r"\"[^\"]+\"") + find_matches(code, r"\'[^\'\"]+\'")
         # added partial support for ''
-        for i, string in enumerate(strings):
+        for i, string in old_enumerate(strings):
         	strings[i] = strings[i][1:-1]
         	strings[i] = replace(strings[i], r"\$(?=\{)", "")
         	#strings[i] = replace(strings[i], r"\{([^\}]*)\}", r"[$1]")
@@ -306,11 +306,21 @@ def execute(filename: str) -> None:
         code = replace(code, r"sath (?:[\.\?]{3}|ba{1,2}ki|anja{1,2}n)(?= ?:)", "case _")
         code = replace(code, r"\bnone\b", "None")
         code = replace(code, r"(?<!\w)\?(?![\w\.])", "None")
+        def __destructure_objects__(match):
+            keys = [k.strip() for k in match.group(1).split(',') if k]
+            keys_with_aliases: list[str] = keys.copy()
+            for i, _ in enumerate(keys):
+    	        keys[i] = re.sub(r"tor ([A-Za-z_]\w*) ([A-Za-z_]\w*)", r"\2 as \1", keys[i])
+    	        if re.search(r"(?<=\w)(?:\s(?:as|tor)\s|\s?\:\s?)(?=[A-Za-z_])", keys[i]):
+    		        parts = re.split(r"(?:\s(?:as|tor)\s|\s?\:\s?)", keys[i])
+    		        keys[i] = parts[0]
+    		        keys_with_aliases[i] = parts[1]
+            obj = match.group(2)
+            return ", ".join(keys_with_aliases) + " = " + ", ".join(f"{obj}?.{k}" for k in keys)
+        code = re.sub(r"\{([A-Za-z][,\s\w\:]*)\}\s*=\s*([A-Za-z]\w*)", __destructure_objects__, code)
+        # sequence should be watched
+        # this comes after the destruction, to see if the destructured value even exists or not:
         code = replace(code, r"(?<object>[_A-Za-z]\w*)\?\.(?<field>[_A-Za-z]\w*)", "$object.$field if ('$object' in globals() or '$object' in locals()) and hasattr($object, '$field') and $object.$field is not None else {}")
-        code = replace(code, r"\{(?:as|tor|surat) (?<alias>[_A-Za-z]\w*) (?<field>[_A-Za-z]\w*)\} *= *(?<object>[_A-Za-z]\w*)", "$alias = $object.$field if ('$object' in globals() or '$object' in locals()) and hasattr($object, '$field') and $object.$field is not None else {}")
-        code = replace(code, r"\{(?<field>[_A-Za-z]\w*) as (?<alias>[_A-Za-z]\w*)\} *= *(?<object>[_A-Za-z]\w*)", "$alias = $object.$field if ('$object' in globals() or '$object' in locals()) and hasattr($object, '$field') and $object.$field is not None else {}")
-        # sequence, this comes after
-        code = replace(code, r"\{(?<field>[_A-Za-z]\w*)\} *= *(?<object>[_A-Za-z]\w*)", "$field = $object.$field if ('$object' in globals() or '$object' in locals()) and hasattr($object, '$field') and $object.$field is not None else {}")
         code = replace(code, r"\b(?:neither|nato) (?<A>[^\n\t]+) (?:or )?(?:n?or|na(?:[ _]?hi)?) (?<B>[^\n\t]+)", "not($A or $B)")
         code = replace(code, r"(?<=(?<![^ \t])[ \t])(?:is|he|kism) (?<type>[A-Za-z_]\w*)(?=\:)", "case $type()")
         for key, value in keys.items():
@@ -347,10 +357,9 @@ def execute(filename: str) -> None:
         # much needed
         code = replace(code, r"(?<varname>[A-Za-z]\w*) *\: *(?<floattype>float|flt|double|dbl) *\= ?(?<data>[^, \n\t]+)", "$varname: float = Flt($data)")
         # Restore strings
-        for j, string in enumerate(strings):
+        for j, string in old_enumerate(strings):
             code = code.replace(f"__STRING_{j}__", string)
         print(f"Translation:\n________________\n\n{code}\n\n________________\n____________\n________\n\n\n")
-        import builtins
         old_print: Callable = builtins.print
         def cust_print(*args, **kwargs):
         	if not args:
@@ -358,7 +367,7 @@ def execute(filename: str) -> None:
         	from pprint import pp
         	args = list(args)
         	# since tuples are immutable, we can't  work with them, we need a list
-        	for i, arg in enumerate(args):
+        	for i, arg in old_enumerate(args):
         		if isinstance(arg, (list, tuple, dict)):
         		    pp(arg)
         		    args[i] = None
@@ -370,13 +379,13 @@ def execute(filename: str) -> None:
         			args[i] = "Yes" if arg == True else "No"
         		args = [arg for arg in args if arg is not None]
         	old_print(*args, **kwargs)
-        (builtins.version, builtins.copyright, builtins.license, builtins.credits, builtins.help, builtins.print) = ("Klang version 0.8", "© 2025, Klang corp.", "MIT", "Core developers\\\n\t~ Khurram Ali", "Not implemented yet", cust_print)
+        (builtins.version, builtins.copyright, builtins.license, builtins.credits, builtins.help, builtins.enumerate, builtins.print) = ("Klang version 0.8", "© 2025, Klang corp.", "MIT", "Core developers\\\n\t~ Khurram Ali", "Not implemented yet", numbered, cust_print)
         for k in dir(platform):
         	if "python" in k:
         		delattr(platform, k)
         		#setattr(platform, replace(k, "python", "klang"), "")
         (sys.version, sys.version_info, sys.executable, sys.pycache_prefix) = (builtins.version, builtins.version, "", "")
-        extended_builtins: dict[str, Any] = {"builtins": builtins, "print": cust_print, "range": rng, "Number": Number, "sys": sys, "platform": platform, "KL_Py": KL_Py, "__name__": "__main__"}
+        extended_builtins: dict[str, Any] = {"builtins": builtins, "enumerate": numbered, "print": cust_print, "range": rng, "Number": Number, "sys": sys, "platform": platform, "KL_Py": KL_Py, "__name__": "__main__"}
         # let's ALSO push every individual function from KL_Py
         add_module("KL_Py", extended_builtins)
         namespace: dict[str, Any] = extended_builtins | {}
@@ -471,18 +480,16 @@ class Klang(cmd.Cmd):
             			    lines = contents.split("\n")
             			    if len(lines) > 0:
             			    	for line in lines:
-            			    	    if re.search(r"^[\s\t]*(print|kaho)", line):
-            			    	        contents = replace(contents, re.escape(line), "")
+            			    	    if re.search(r"(print|kaho)[ \(]+", line):
+            			    	        contents = replace(contents, "\n*" + re.escape(line) + "\n*", "")
             			    	        # the re.ESCAPING is mandatory, wouldn't work without it
-            		if not re.search(r"^(print|kaho)[ \(]+", argument_variable) and "=" not in replace(argument_variable, r"[\"'][^\"']*[\"']", "__STRING__"):
+            		if not re.search(r"(print|kaho)[ \(]+", argument_variable) and "=" not in replace(argument_variable, r"[\"'][^\"']*[\"']", "__STRING__"):
             		    argument_variable = "print " + argument_variable
             		    print(f"{argument_variable=}")
             		if not contents or "=" not in replace(contents, r"[\"'][^\"']*[\"']", "__STRING__"):
             		    new_content = "fc main():\n\t" + argument_variable
-            		    print("contents empty")
             		else:
             		    new_content = contents + "\n\t" + argument_variable
-            		    print("contents non-empty")
             		if os.name == "nt":
             			# hide the file on Windows
             		    # the . prefix already hides it on Unix-like platforms
@@ -501,6 +508,7 @@ class Klang(cmd.Cmd):
     do_do = do_let = do_var = do_farz = do_set = do_kl = do_klang
     def do_print(self, line) -> None:
     	self.do_klang("print " + line)
+    do_kaho = do_print
     def do_version(self, line) -> None:
         """Display the current version of Klang CLI"""
         print(self.version)
@@ -561,9 +569,7 @@ def main() -> None:
        msg = f"Class, ya object '{object}' me key '{key}' mojud nahi"
        raise KeyNaMojudError(msg) from None
     except ValueError as e:
-    	value: str = find_match(e.args[0], r"[\"\'](\w+)[\"\']")
-    	msg = f"\n\tValue \"{value}\" ki umeed NAHI thi yaha,\n\t"
-    	msg += replace(e.args[0], r"\b[Ii]nvalid\b", "galat")
+    	msg = replace(e.args[0], r"\b[Ii]nvalid\b", "galat")
     	raise GalatValueError(msg) from None
 
 if __name__ == "__main__":

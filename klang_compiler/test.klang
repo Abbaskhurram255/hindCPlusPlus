@@ -1,9 +1,13 @@
-mangao KL_Py
-tor KL mangao KL_Py
+#mangao KL_Py
+#tor KL mangao KL_Py
 KL_Py mese mangao isstr, aur isint, ke_sath isbool
 mangao isstr, isint KL_Py mese
 surat is_str mangao isstr KL_Py mese
 print(1 hazar + 3 so + 80)
+
+arr: int<list> = [10, 20, 30]
+har obj, i .. numbered(arr):
+	print "${i}. $obj"
 
 fc add(x umd nr, y umd nr):
 	out x + y
@@ -61,12 +65,12 @@ name_of_user kism<str> = "Jonathan"
 print(list1 / list2)
 args = [1, 2, 3]
 print([..args, 4, 5])
-argv = {"name": "Mike"}
-{name} = argv
-print "$name="
-{tor nm name} = argv
+arg = {"name": "Mike", "age": 21}
+{name as nme, age: ag} = arg
+print "$nme= $ag"
+{tor nm name} = arg
 print "$nm="
-print({...argv, "age": 27})
+print({...arg, "age": 27})
 
 
 fc main(..args, ...argv) -> ?:
