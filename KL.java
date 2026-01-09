@@ -7508,6 +7508,39 @@ public class KL {
 			super.setForeground(clr);
 			return this;
 		}
+		button color(String clr) {
+			if (not(clr) || !in(clr, "(?<=\\w\\s)(on|upar)(?=\\s[#\\w])"))
+			    return this;
+			String bg = "",
+			  fg = "";
+			Color textColor,
+			  bgColor;
+			if (in(clr, "(?<=\\w) on (?=[#\\w])")) {
+				String[] parts = clr.split(" on ");
+			    bg = parts[1];
+			    fg = parts[0];
+			}
+			else if (in(clr, "(?<=\\w) par (?=[#\\w])")) {
+			    String[] parts = clr.split(" par ");
+			    bg = parts[0];
+			    fg = parts[1];
+			}
+			if (eq(bg, "#([A-Fa-z\\d]{3}){1,2}"))
+			    bgColor = new clr(bg);
+			if (eq(fg, "#([A-Fa-z\\d]{3}){1,2}"))
+			    fgColor = new clr(fg);
+			For (Field field : new clr(0).getClass().getDeclaredFields()) {
+				if (not(field.get(new clr(0)) instanceof clr))
+				    continue;
+				String key = field.getName();
+				clr value = (clr) field.get(new clr(0));
+				if (eq(bg, key))
+				    bgColor = value;
+				if (eq(fg, key))
+				    fgColor = value;
+			}
+			return this;
+		}
 		button textColor(Color clr) {
 			color(clr);
 			return this;
@@ -73204,6 +73237,96 @@ public class KL {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static arr sliceOut(arr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static String sliceAway(String str, int earlyEnd) {
+		return sliceEnd(str, earlyEnd);
+	}
+	public static String[] sliceAway(String[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static int[] sliceAway(int[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static long[] sliceAway(long[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static float[] sliceAway(float[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static double[] sliceAway(double[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static boolean[] sliceAway(boolean[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static Object[] sliceAway(Object[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static strArr sliceAway(strArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static intArr sliceAway(intArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static longArr sliceAway(longArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static fltArr sliceAway(fltArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static dblArr sliceAway(dblArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static boolArr sliceAway(boolArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static arr sliceAway(arr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static String sliceDrop(String str, int earlyEnd) {
+		return sliceEnd(str, earlyEnd);
+	}
+	public static String[] sliceDrop(String[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static int[] sliceDrop(int[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static long[] sliceDrop(long[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static float[] sliceDrop(float[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static double[] sliceDrop(double[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static boolean[] sliceDrop(boolean[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static Object[] sliceDrop(Object[] arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static strArr sliceDrop(strArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static intArr sliceDrop(intArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static longArr sliceDrop(longArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static fltArr sliceDrop(fltArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static dblArr sliceDrop(dblArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static boolArr sliceDrop(boolArr arr, int earlyEnd) {
+		return sliceEnd(arr, earlyEnd);
+	}
+	public static arr sliceDrop(arr arr, int earlyEnd) {
 		return sliceEnd(arr, earlyEnd);
 	}
 	public static String sliceKeep(String str, int end) {
