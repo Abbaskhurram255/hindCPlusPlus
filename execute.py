@@ -46,7 +46,10 @@ def add_module(module_name: str, namespace: dict) -> None:
 def execute(filename: str) -> None:
     keys: dict[str, str] = {
         # functions, and classes
-        "__(?:c(?:ons)?tr|make)__": "__init__",
+        "__(?:c(?:ons)?tr|make|shurwat|banao|n(?:ew|a(?:ya|i)))__": "__init__",
+        "__dev_print_(?:par|pe|mode)__": "__repr__",
+       "__print_(?:par|pe|mode)__": "__str__",
+       "__f(?:mt)?__": "__format__",
         "Ctr": "Self",
         "Constr": "Self",
         "This": "Self",
@@ -58,6 +61,7 @@ def execute(filename: str) -> None:
         "me": "self",
         "mera": "self",
         "meri": "self",
+        "mujhe": "self",
         r"Khud(?: k[aeio])?": "Self",
         # diff: capital first, not-capital first
         r"khud(?: k[aeio])?": "self",
@@ -65,7 +69,6 @@ def execute(filename: str) -> None:
         "super": "super()",
         "parent": "super()",
         "mom": "super()",
-        "call": "__init__",
         "ret|out": "return",
         # math
         r"(?<=\S\s)div(?=\s\S)": "/",
@@ -94,11 +97,16 @@ def execute(filename: str) -> None:
         "aur": "and",
         "ya": "or",
         # sequence
+        "chota[_ ]ya[_ ]ba?ra?ba?r": "<=",
+        "bara[_ ]ya[_ ]ba?ra?ba?r": ">=",
+        "chota(?![ _]ya)": "<",
+        "bara(?![ _]ya)": ">",
         r"(?<=\S\s)na(?:hi)?[ _]?(he|ba?ra?ba?r)(?=\s?\S)": "!=",
         # sequence
         r"(?<=\S\s)(he|ba?ra?ba?r)(?=\s?\S)": "==",
         # sequence
         r"nahi(?=\s\S)": "not",
+        "ja?bta?k": "while",
         "har": "for",
         "every": "for",
         "andar|darmya{1,2}n": "in",
@@ -110,10 +118,9 @@ def execute(filename: str) -> None:
         "ignore": "continue",
         "with_index|numbered": "enumerate",
         "e_auto": "enum.auto",
-        "kism": "type",
+        r"kism(?=\s?\()": "type",
         "func": "Callable",
         r"(?:(?:return|out)(s(?:[_ ]an?)?|[_ ]kare)|gives[ _]an?|deta[ _]ek)": "->",
-        #theres a difference between these two ^ √
         "Shayad": "Union",
         "isfunc": "callable",
         "char": "Char",
@@ -172,6 +179,16 @@ def execute(filename: str) -> None:
         	# which WORKS
         	# and results in "Name is {{name}}, Age is {{age}}"
         	strings[i] = "f\"" + replace(replace(strings[i], r"(?<!\\)\$([^ \n\t]+)", r"{$1}####"), r"(?<=\})#{4}", "") + "\""
+        	# find the template strings, and if found, for each, post process it
+        	if re.search(r"\{[^\}]+\}", strings[i]):
+                    templates_found_in_string: list[str] = re.findall(r"(?<!\\)\{[^\}]+\}", strings[i])
+                    for templt in templates_found_in_string:
+                        # {sum (is|he)} should translate to
+                        # sum (is|he): {sum}
+                        templt = replace(templt, "\{(?<placeholder_slash_varname>[A-Za-z_]\w*) *(?<separator>is|he) *\}", "$placeholder_slash_varname $separator: {$placeholder_slash_varname}")
+                        for key, value in keys.items():
+                             processed_templt: str = replace(templt, fr"(?<!\.)\b({key}(?! ?\: ?\w+))\b", value)
+                             strings[i] = replace(strings[i], templt, processed_templt)
         	# the #### part helps get rid of a bug
         	# this replaces previously remove {formatted_var} functionality with new $-based functionality
         	# WARNING: r"{$1}####" should be as is
@@ -189,13 +206,26 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<module>[\w\.]+) (me)?[_ ]?se mangao (?<functions>(\w+(, )?)+)\b", "from $module import $functions")
         code = replace(code, r"\bmangao (?<functions>(\w+(, )?)+) (?<module>[\w\.]+) (me)?[_ ]?se\b", "from $module import $functions")
         code = replace(code, r"\b(surat|tor) (?<alias>\w+) mangao (?<module>[\w\.]+)\b", "import $module as $alias")
+        # comes after\/
         code = replace(code, r"\bmangao (?<module>[\w\.]+)\b", "import $module")
+        # sequence matters!
         # post processing module syntax
         # which NOW HAS KEYWORD IMPORT instead of mangao
         code = replace(code, r"\b(?<=import )sab[_ ]?kuch\b", "*")
         code = replace(code, r"(?<=,) (?:a(nd|ur)|ya|(?:ke[_ ]?)?sath(me)?)\b", "")
         # sequence matters!
         code = replace(code, r"(?<![\t    \t])\b(?:fc|act|def) (?:main|start)(?:\([^\)\n\t]*\))?(?=(?: *-> *[\w\?]+)?\:)", "def main()")
+        # operators
+        # NULL coalescing
+        code = replace(code, r"(?<A>[_A-Za-z]\w*)\s?\?\?\=\s?(?<B>[^\n\t]+)", "$A = $A if ('$A' in globals() or '$A' in locals()) and $A is not None else $B")
+        # the ifCONDITION(is true, then)=
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:if|agar) ?(?<condition>[^\=]+)\=\s*(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or $A == $condition else $A")
+        # the min= operator
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) min *\= *(?<B>[^\n\t]+)", "$A = $B if ('$A' in globals() or '$A' in locals()) and (isinstance($A, (int, float)) and $A < $B) else 0 if ('$A' in globals() or '$A' in locals()) and (not isinstance($A, (int, float))) else $A")
+        # the max= operator
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) max *\= *(?<B>[^\n\t]+)", "$A = $B if ('$A' in globals() or '$A' in locals()) and (isinstance($A, (int, float)) and $A > $B) else 0 if ('$A' in globals() or '$A' in locals()) and (not isinstance($A, (int, float))) else $A")
+        # the (def|fb)= operator
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:def|fb|othr?ws) *\= *(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or not $A or type($A) != type($B) else $A")
         code = replace(code, r"(?<![\d ])\.{3}\s?(?<dict>[_A-Za-z]\w*)", "**$dict")
         # sequence
         code = replace(code, r"(?<![\.\d ])\.{2}\s?(?<list>[_A-Za-z]\w*)", "*$list")
@@ -269,10 +299,12 @@ def execute(filename: str) -> None:
         # sequence
         code = replace(code, r"@calls?[_ ]?me\b", "@classmethod")
         code = replace(code, r"(?<!\()\bcls\b(?!\()", "class")
-        # only replace "cls" with "class"
-        # IF the user is not working
+        # replace "cls" with "class"
+        # ONLY IF the user is not working
         # on a @classmethod
         code = replace(code, r"@auto(c(?:l(?:as)?s|(?:ons)?tr)|make)\b", "@dataclass")
+        # the key-value pair does not remove anything preceded by a ., so...
+        code = replace(code, r"(?<=[\w\)]\.)call\b(?=\()", "__init__")
         # sequence matters
         code = replace(code, r"(?<=\bclass )(?<B>\w+) (of|from|<|ext(ends)?|is[ _]?an?)? ?(?<A>(\w+(, *)?)+)\b", "$B($A)")
         # handle (?<=cls )`A [\.>] B` cases
@@ -303,28 +335,28 @@ def execute(filename: str) -> None:
         # handling Optionality: default, and null cases
         # <type>? means the type is optional
         code = replace(code, r"(?<type>[A-Za-z]\w*)\?(?!\.)", "$type|None")
-        code = replace(code, r"sath (?:[\.\?]{3}|ba{1,2}ki|anja{1,2}n)(?= ?:)", "case _")
+        code = replace(code, r"sath (?:[\.\?]{3}|ba{1,2}ki|anja{1,2}n)(?=(?: (?:if|agar) [^\:]+)? ?\:)", "case _")
         code = replace(code, r"\bnone\b", "None")
         code = replace(code, r"(?<!\w)\?(?![\w\.])", "None")
         def __destructure_objects__(match):
             keys = [k.strip() for k in match.group(1).split(',') if k]
             keys_with_aliases: list[str] = keys.copy()
             for i, _ in enumerate(keys):
-    	        keys[i] = re.sub(r"tor ([A-Za-z_]\w*) ([A-Za-z_]\w*)", r"\2 as \1", keys[i])
+    	        keys[i] = replace(keys[i], r"tor ([A-Za-z_]\w*) ([A-Za-z_]\w*)", r"$2 as $1")
     	        if re.search(r"(?<=\w)(?:\s(?:as|tor)\s|\s?\:\s?)(?=[A-Za-z_])", keys[i]):
     		        parts = re.split(r"(?:\s(?:as|tor)\s|\s?\:\s?)", keys[i])
     		        keys[i] = parts[0]
     		        keys_with_aliases[i] = parts[1]
             obj = match.group(2)
             return ", ".join(keys_with_aliases) + " = " + ", ".join(f"{obj}?.{k}" for k in keys)
-        code = re.sub(r"\{([A-Za-z][,\s\w\:]*)\}\s*=\s*([A-Za-z]\w*)", __destructure_objects__, code)
+        code = replace(code, r"\{([A-Za-z][,\s\w\:]*)\}\s*=\s*([A-Za-z]\w*)", __destructure_objects__)
         # sequence should be watched
         # this comes after the destruction, to see if the destructured value even exists or not:
         code = replace(code, r"(?<object>[_A-Za-z]\w*)\?\.(?<field>[_A-Za-z]\w*)", "$object.$field if ('$object' in globals() or '$object' in locals()) and hasattr($object, '$field') and $object.$field is not None else {}")
         code = replace(code, r"\b(?:neither|nato) (?<A>[^\n\t]+) (?:or )?(?:n?or|na(?:[ _]?hi)?) (?<B>[^\n\t]+)", "not($A or $B)")
         code = replace(code, r"(?<=(?<![^ \t])[ \t])(?:is|he|kism) (?<type>[A-Za-z_]\w*)(?=\:)", "case $type()")
         for key, value in keys.items():
-            code = replace(code, r"(?<!\\.)\b(" + key + r"(?! ?\: ?\w+))\b", value)
+            code = replace(code, r"(?<!\.)\b(" + key + r"(?! ?\: ?\w+))\b", value)
         code = replace(code, r"(?<type>[A-Za-z]\w*)(?:\[\]|<list>)", "list[$type]")
         # int[] -> list[int]
         # int<list> -> list[int]

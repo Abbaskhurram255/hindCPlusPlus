@@ -1,6 +1,6 @@
 from types import *
 from typing import List, Callable, TypeVar, NewType, Any, Optional, Union, Final, Self, Generic
-from collections import defaultdict
+from collections import defaultdict, Counter
 from collections.abc import Sequence
 from functools import reduce, lru_cache, cache
 from dataclasses import dataclass
@@ -415,7 +415,9 @@ class numlist(list[Number]):
 		if not args:
 			return self
 		for arg in args:
-			if not isinstance(arg, (Number, list)) and not all(isinstance(x, Number) for x in arg):
+			if not isinstance(arg, (Number, list)):
+				continue
+			if (isinstance(arg, list) and not all(isinstance(item, Number) for item in arg)):
 				# if it's neither of the supported types
 				# don't push anything
 				continue
@@ -439,16 +441,16 @@ class numlist(list[Number]):
 			i = 0
 		elif i > len(self):
 			i = len(self)
-		x = self[:i]
-		x.append(*items)
-		x.extend(self[i+len(items)-1:])
+		items = flatten(list(items))
+		x = self[:i] + list(items) + self[i+len(items)-1:]
 		updated_list: numlist = numlist(x)
 		self.clear()
 		self.extend(updated_list)
 		return self
-	def push_start(self, item) -> Self:
-		self.push_at(0, item)
+	def push_start(self, *items) -> Self:
+		self.push_at(0, *items)
 		return self
+	unshift = push_start
 	def shift(self) -> Number:
 		if len(self) == 0:
 			return 0
@@ -456,8 +458,10 @@ class numlist(list[Number]):
 	# OVERRIDE self.remove
 	old_remove = list[Number].remove
 	def remove(self, *items: list[Number]) -> Number:
-		if not len(self) or not len(items) or not all(isinstance(item, (Number, list)) for item in items if item is not None):
+		if not len(self) or not all(isinstance(item, (Number, list)) for item in items if item is not None):
 			return 0
+		if not len(items):
+			return super().pop()
 		items = flatten(list(items))
 		last_removed: Number = items[-1]
 		for item in items:
@@ -469,8 +473,10 @@ class numlist(list[Number]):
 	# OVERRIDE self.pop
 	old_pop = list[Number].pop
 	def pop(self, *items: list[Number]) -> Number:
-		if not len(self) or not len(items) or not all(isinstance(item, (Number, list)) for item in items if item is not None):
+		if not len(self) or not all(isinstance(item, (Number, list)) for item in items if item is not None):
 			return 0
+		if not len(items):
+			return super().pop()
 		items = flatten(list(items))
 		last_popped: Number = self.old_pop(items[-1])
 		for index in items:
@@ -724,6 +730,12 @@ def remove_duplicates(lst: list) -> list:
 	if not lst or not isinstance(lst, list):
 		return []
 	return list(dict.fromkeys(lst).keys())
+__old_Counter__ = Counter
+def Count(obj: dict) -> dict[int, Any]:
+    if not isinstance(obj, dict):
+        return {}
+    return dict(__old_Counter__ (obj))
+builtins.Counter = Count
 def get_local_declarations() -> obj:
     """
     @return
@@ -953,52 +965,65 @@ def split(srcString: str, regex: str = "", maxsplits: int = IntInfinity, flags: 
     raw_list: list[str] = re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
     result: list[str] = []
     for x in raw_list:
-    	if x.strip():
-    		result.append(x)
+    	if not x.strip():
+    		continue
+    	result.append(x)
     return result
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
-    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
     	return ""
-    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
-    replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
-    # achieve JavaScript-like numbered-group convention ^
-    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
-    # achieve JavaScript-like named-group convention ^
+    if isinstance(replacement, str):
+        # if it's a string, rather than a callable---usually in the form of a lambda function
+        to_replace = re.sub(r"\$&", r"\0", to_replace)
+        to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+        replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        # achieve JavaScript-like numbered-group convention ^
+        replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        # achieve JavaScript-like named-group convention ^
     src = re.sub(to_replace, replacement, src)
     return src
 def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
-    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
     	return ""
-    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
-    replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
-    # achieve JavaScript-like numbered-group convention ^
-    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
-    # achieve JavaScript-like named-group convention ^
+    if isinstance(replacement, str):
+        # if it's a string, rather than a callable---usually in the form of a lambda function
+        to_replace = re.sub(r"\$&", r"\0", to_replace)
+        to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+        replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        # achieve JavaScript-like numbered-group convention ^
+        replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        # achieve JavaScript-like named-group convention ^
     src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE)
     return src
 def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
-    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
     	return ""
-    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
-    replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
-    # achieve JavaScript-like numbered-group convention ^
-    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
-    # achieve JavaScript-like named-group convention ^
+    if isinstance(replacement, str):
+        # if it's a string, rather than a callable---usually in the form of a lambda function
+        to_replace = re.sub(r"\$&", r"\0", to_replace)
+        to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+        replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        # achieve JavaScript-like numbered-group convention ^
+        replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        # achieve JavaScript-like named-group convention ^
     src = re.sub(to_replace, replacement, src, count=1)
     return src
 replace_first: Callable[[str, str, str, Optional[bool]], str] = replace_one
 def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
-    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, str):
+    if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
     	return ""
-    to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
-    replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
-    # achieve JavaScript-like numbered-group convention ^
-    replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
-    # achieve JavaScript-like named-group convention ^
+    if isinstance(replacement, str):
+        # if it's a string, rather than a callable---usually in the form of a lambda function
+        to_replace = re.sub(r"\$&", r"\0", to_replace)
+        to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
+        replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        # achieve JavaScript-like numbered-group convention ^
+        replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        # achieve JavaScript-like named-group convention ^
     src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE, count=1)
     return src
 replace_first_i: Callable[[str, str, str, Optional[bool]], str] = replace_one_i
