@@ -72,12 +72,29 @@ print "$nme= $ag"
 print "$nm="
 print({...arg, "age": 27})
 
+instruction Vehicle:
+	name: str
+	age: int
+	@follow
+	fc go_up() -> none: ...
+	@follow
+	fc go_down() -> none: ...
+	
+class Car implements Vehicle:
+	fc go_up() -> None:
+		return 
+	fc go_down() -> None:
+		return 
 
-fc main(..args, ...argv) -> ?:
+baad(5*sec, kaho("hi"))
+
+fc main(.. args, ...argv) -> ?:
     har i .. 1..5:
     	print "$i="
+    har j .. ..5:
+    	print "$j="
     print 3 hundo_million
-    print "$len('3') $6+7.5 $add(2,4)"
+    print "$len('3') $6+7.5 ${add(2, 4)}"
     print "3".ki_size
     k__about
     print("hello"[:-1])
@@ -93,10 +110,11 @@ fc main(..args, ...argv) -> ?:
     print "hello", "Dave"
     q = TestClass()
     print(q)
-    w = 5
-    print "$add(4,2) $add $4060.7997:.1f"
+    u is 5
+    v, w are 5, 8
+    print "${add(4, 2)} $add $4060.7997:.1f"
     farz x = ?
-    x = yato 5 agar x == ? warna x
+    x = yato 5 agar x he ? warna x
     print(x == ?)
     print("$x=")
     print(FileExistsError)
@@ -123,11 +141,14 @@ fc main(..args, ...argv) -> ?:
     	y: nr = 3
     	text: lafz = "abcde"
     	current: lafz = text[i]
-    	agar i == 2 ya "b" current me:
+    	agar i he 2 ya "b" current me:
     	    ignore
-    	agar i == 4:
+    	agar i he 4:
     		kaho "loop khatm hua $i pe"
     	print "i=$i"
     	print i==3
-    print "$add(2,3)"
+    print "${add(2, 3)}"
+    sum kism<flt> = 4.2 plus 1.4
+    print "${sum he}"
+    print(sum is type flt)
     

@@ -87,25 +87,34 @@ def execute(filename: str) -> None:
         "sath": "case",
         # if-else
         # sequence
-        r"agar(?![_ ]match)": "if",
-        r"othr?ws[_ ]?if|warna?[_ ]?agar": "elif",
-        # ATTENTION: the `r` is needed here,
-        # as unlike all the other keys,
-        # this one has un escaped characters
-        r"othr?ws(?![_ ]?if)|warna(?![_ ]?a?gar)": "else",
-        # leave it as is
+        "(?<!(?:but|par)[_ ])agar(?![_ ]match)": "if",
+        "othe?r?ws[_ ]?if|warna?[_ ]?agar": "elif",
+        r"(othe?r?ws|warna|else)(?= (?:ret(?:urn)?|out) \S)": "else:",
+        # no-colon else
+        # comes first
+        # ^ a shorter way to say `else: ret|return|out X|Y` would be `else ret|return|out X|Y` without a colon
+        r"othe?r?ws(?![_ ]?if)|warna(?![_ ]?a?gar)": "else",
+        "baad_?me|later": "...",
+        # regular else
+        # leave it as-is
         "aur": "and",
         "ya": "or",
         # sequence
-        "chota[_ ]ya[_ ]ba?ra?ba?r": "<=",
-        "bara[_ ]ya[_ ]ba?ra?ba?r": ">=",
-        "chota(?![ _]ya)": "<",
-        "bara(?![ _]ya)": ">",
-        r"(?<=\S\s)na(?:hi)?[ _]?(he|ba?ra?ba?r)(?=\s?\S)": "!=",
+        r"(?<=\S\s)chota[_ ]ya[_ ]ba?ra?ba?r[ _]he(?=\s\S)": "<=",
+        r"(?<=\S\s)bara[_ ]ya[_ ]ba?ra?ba?r[_ ]he(?=\s\S)": ">=",
+        r"(?<=\S\s)(chota[_ ]he|is[_ ](?:less(?:er)?|s(?:mall|hort)er)[_ ]than)(?=\s\S)": "<",
+        r"(bara(?![ _]ya)[_ ]he|is[_ ](?:large|bigg|great)er[_ ]than)": ">",
+        r"(?<=(?<![ia])\S )(?:he\s)?(?:nahi[ _]?(?:he\s)?(?:hen?|ba?ra?ba?r(?:\she)?)?|(?:is|ai)n'?t)(?= +\S+)": "!=",
+        # don't escape
+        # the . here is NOT a \.
+        # it's a . in the sense that matches any character (or, in this case, any 2 characters)
         # sequence
-        r"(?<=\S\s)(he|ba?ra?ba?r)(?=\s?\S)": "==",
+        # equality_keyword=he|brbr|barabar
+        r"(?<=(?<![ianh])\S\s)(?:(?:hen?\s)?(?:ba?ra?ba?r|hen?)(?:\shen?)?)(?= +\S+)": "==",
+        # assignment_keyword=is (as long as it's not followed by ` *(not None|type|kism| *a| *an))`
+        r"(?<=\w\s)\b(?:is|are)\b(?!(?:\s(?:not\sNone|type|kism)|\s*an?))": "=",
         # sequence
-        r"nahi(?=\s\S)": "not",
+        r"(?:nahi|kha{1,2}li|(?:is|ai)n'?t)(?=\s\S)": "not",
         "ja?bta?k": "while",
         "har": "for",
         "every": "for",
@@ -146,8 +155,8 @@ def execute(filename: str) -> None:
         r"k(lang)?__version": "print('Klang v0.8')",
         # € implement help later
         r"throw": "raise",
-        r"koshish(?=\:)": "try",
-         r"(error(?: (by|(?:ki|ba|ka)[ _]?(waja|zaria|sabab)))|(fail(?:ure|ed)|naka{1,2}mi?)(?: (by|(?:ki|ba|ka)[ _]?(?:waja((?: he)? agar(?: he)?)?|zaria|sabab)))?)(?=[^\:\n\t]+\:)": "except",
+        r"koshish(?= ?\:)": "try",
+         r"(?<!(?:ar|if)\s)(but(?:[_ ]?if)?|(?:ha[_ ])?par(?:[_ ]agar)?|error(?: (?:by|(?:ki|ba|ka)[ _]?(?:waja|zaria|sabab)))|(?:fail(?:ure|ed)|naka{1,2}mi?)(?: (?:by|(?:ki|ba|ka)[ _]?(?:waja((?: he)? agar(?: he)?)?|zaria|sabab)))?)(?=[^\:\n\t]*\:)": "except",
         r"tor": "as",
         # Error aliases
         "FileNaMojudError": "FileNotFoundError",
@@ -179,16 +188,17 @@ def execute(filename: str) -> None:
         	# which WORKS
         	# and results in "Name is {{name}}, Age is {{age}}"
         	strings[i] = "f\"" + replace(replace(strings[i], r"(?<!\\)\$([^ \n\t]+)", r"{$1}####"), r"(?<=\})#{4}", "") + "\""
-        	# find the template strings, and if found, for each, post process it
+        	# find the template strings, and if found, for each, process it even
         	if re.search(r"\{[^\}]+\}", strings[i]):
                     templates_found_in_string: list[str] = re.findall(r"(?<!\\)\{[^\}]+\}", strings[i])
                     for templt in templates_found_in_string:
                         # {sum (is|he)} should translate to
                         # sum (is|he): {sum}
-                        templt = replace(templt, "\{(?<placeholder_slash_varname>[A-Za-z_]\w*) *(?<separator>is|he) *\}", "$placeholder_slash_varname $separator: {$placeholder_slash_varname}")
+                        processed_templt: str = replace(replace(templt, r"\{(?<placeholder_slash_varname>[A-Za-z_]\w*) *(?<separator>is|he) *:? *\}", "$placeholder_slash_varname $separator: {$placeholder_slash_varname}####"), "####", "")
+                        # Warning: the 4-hashes part might seem ridiculous, BUT IS A BUG FIX, and better stay untouched
                         for key, value in keys.items():
-                             processed_templt: str = replace(templt, fr"(?<!\.)\b({key}(?! ?\: ?\w+))\b", value)
-                             strings[i] = replace(strings[i], templt, processed_templt)
+                             processed_templt = replace(processed_templt, fr"(?<!\.)\b(({key})(?! ?\: ?\w+))\b", value)
+                        strings[i] = replace(strings[i], templt, processed_templt)
         	# the #### part helps get rid of a bug
         	# this replaces previously remove {formatted_var} functionality with new $-based functionality
         	# WARNING: r"{$1}####" should be as is
@@ -225,7 +235,7 @@ def execute(filename: str) -> None:
         # the max= operator
         code = replace(code, r"(?<A>[_A-Za-z]\w*) max *\= *(?<B>[^\n\t]+)", "$A = $B if ('$A' in globals() or '$A' in locals()) and (isinstance($A, (int, float)) and $A > $B) else 0 if ('$A' in globals() or '$A' in locals()) and (not isinstance($A, (int, float))) else $A")
         # the (def|fb)= operator
-        code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:def|fb|othr?ws) *\= *(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or not $A or type($A) != type($B) else $A")
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:def|fb|othe?r?ws) *\= *(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or not $A or type($A) != type($B) else $A")
         code = replace(code, r"(?<![\d ])\.{3}\s?(?<dict>[_A-Za-z]\w*)", "**$dict")
         # sequence
         code = replace(code, r"(?<![\.\d ])\.{2}\s?(?<list>[_A-Za-z]\w*)", "*$list")
@@ -251,8 +261,11 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<=\d) ?(?:[\*_]|times|guna|mul)? ?trillion\b", f"*1{'0'*12}")
         # come before
         code = replace(code, r"(?<=[A-Za-z_])\s?(\.\.(?!\.))\s?(?=[^\:]+\:)", " in ")
+        # comes before\/
         code = replace(code, r"(?<n1>\-?\d*\.?\d+)\s?(?:\.\.|se)\s?(?<n2>\-?\d*\.?\d+)", "range($n1, $n2)")
-        # sequence
+        # comes after\/
+        code = replace(code, r"(?<![\d\.])(?:\.\.\s?(?<n>\-?\d*\.?\d+))", "range($n)")
+        # KEEP the sequence
         # comes after
         # to avoid conflict
         code = replace(code, r"(?<!\w)(?<nA>\-?\d*\.?\w+) in (?<nB>\-?\d*\.?\d+)\b", "($nA/$nB)")
@@ -281,8 +294,8 @@ def execute(filename: str) -> None:
         code = replace(code, r"\b(?:fc|act) (?<param>[A-Za-z_]\w*)(?=\: ?[^\n]{2,})", "lambda $param")
         # helps drop the parentheses if the function doesn't allow parameters
         # fc log: -> fc log():
-        code = replace(code, r"\b(?:fc|act) (?<funcname_followed_not_by_parens>[A-Za-z_]\w*)(?=(?<could_have_a_return_type>[^\(\)\:]+)?\:\n)", "def $funcname_followed_not_by_parens()")
-        code = replace(code, r"\b(?:fc|act) (?<funcname_regular>[A-Za-z_]\w*)\((?<params>[^\)]+)?\)(?=(?<could_have_a_return_type>[^\:]+)?\:\n)", "def $funcname_regular($params)")
+        code = replace(code, r"\b(?:fc|act) (?<funcname_followed_not_by_parens>[A-Za-z_]\w*)(?=(?<could_have_a_return_type>[^\(\)\:]+)?\:)", "def $funcname_followed_not_by_parens()")
+        code = replace(code, r"\b(?:fc|act) (?<funcname_regular>[A-Za-z_]\w*)\((?<params>[^\)]+)?\)(?=(?<could_have_a_return_type>[^\:]+)?\:)", "def $funcname_regular($params)")
         # handle (?<=cls )`B (of|from|>|ext(ends)?|is_?an?) A` cases
         # sequence matters
         # _str, _eq -> __str__, __eq__
@@ -292,33 +305,44 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<=\w\.)_([A-Za-z]\w*)\b(?=\()", r"__$1__")
         # sequence
         code = replace(code, r"(?<!\.)\b_([A-Za-z]+)\b(?=\()", r"def __$1__")
-        code = replace(code, r"@(redo|[Oo]ver(?:writ{1,2}e|rid{1,2}e)[sn]?|[Ee]xtends?|([Rr]e|[Nn]ot)_?[Ii]mplement(ed)?|dubara|nae_sire) {1}", "")
+        code = replace(code, r"@(redo|[Oo]ver(?:writ{1,2}e|rid{1,2}e)[sn]?|[Ee]xtends?|([Rr]e|[Nn]ot)_?[Ii]mplement(ed)?|dubara|nae_sire)\s", "")
         code = replace(code, r"\b(static|direct) (me?th?o?d|act|fc|def)\b", "def")
         code = replace(code, r"\bme?th?o?d (\w+\()(?=\))", "def $1self")
         code = replace(code, r"\bme?th?o?d (\w+\()(?!\)|self)", "def $1self, ")
         # sequence
-        code = replace(code, r"@calls?[_ ]?me\b", "@classmethod")
+        code = replace(code, r"\b(?:interface|rules?|instruct(?:ion)?|(?:base|abstract) cl(?:as)?s) (?<abstractclassname>\w+)", "class $abstractclassname(AbstractBaseClass, metaclass=AbstractBaseClassMeta)")
+        # to avoid conflict
+        # comes before ^
+        # comes after \/
         code = replace(code, r"(?<!\()\bcls\b(?!\()", "class")
         # replace "cls" with "class"
+        # to make the future replacements
+        # easier
+        # also, replace "cls" with "class"
         # ONLY IF the user is not working
         # on a @classmethod
+        # to avoid conflict
+        code = replace(code, r"@calls?[_ ]?me\b", "@classmethod")
+        code = replace(code, r"@(?:abstr(?:act)?|follow|emp?ty?_?body)\b", "@abstractmethod")
         code = replace(code, r"@auto(c(?:l(?:as)?s|(?:ons)?tr)|make)\b", "@dataclass")
         # the key-value pair does not remove anything preceded by a ., so...
         code = replace(code, r"(?<=[\w\)]\.)call\b(?=\()", "__init__")
         # sequence matters
-        code = replace(code, r"(?<=\bclass )(?<B>\w+) (of|from|<|ext(ends)?|is[ _]?an?)? ?(?<A>(\w+(, *)?)+)\b", "$B($A)")
+        code = replace(code, r"(?<=\bclass )(?<B>\w+)(?: (?:of|from|ext(?:ends)?|impl(?:em(?:ents)?)?|follows|is[ _]?an?) | ?[>\/] ?)(?<A>(?:\w+(?:, *)?)+)\b", "$B($A)")
         # handle (?<=cls )`A [\.>] B` cases
-        code = replace(code, r"(?<=\bclass )(?<A>(\w+(, *)?)+) *[\.>] *(?<B>\w+)\b", "$B($A)")
+        code = replace(code, r"(?<=\bclass )(?<A>(?:\w+(?:, *)?)+) (?:produces?|peda karen?|jana?m den?) (?<B>\w+)(?: ko)?\b", "$B($A)")
         code = replace(code, r"\benum (?<enumclassname>\w+)", "class $enumclassname(Enum)")
         code = replace(code, r"(?<varname>[\"']?[\w\-\.,\[\]\{\}\(\)]+[\"']?)\.(?<method>replace(?:_first)?)\(", "$method($varname, ")
         code = replace(code, r"(?<varname>[\"']?[\w\-\.,\[\]\{\}]+[\"']?)\.(?:ki_?)?(len(?:gth)?|lambai|size)(?:\(\))?", "len($varname)")
-        code = replace(code, r"(?<A>[\w\-\.,\[\]\"']+) (instance[ _]?of|(?:is[ _]?)an?|he[_ ]ek|(is|he|ki|has|of)?[ _]?(type|kism)(of)?) (?<B>\w+)", "isinstance($A, $B)")
+        # don't change this\/
+        # the ^\n part stays as-is
+        code = replace(code, r"(?<A>[\-\.\w,\"'\[\]]+) (?:instance[ _]?of|(?:is[ _]?)an?|he[_ ]ek|(?:is|he|ki|has|of)?[ _]?(?:type|kism)(?:of)?) (?<B>\w+)", "isinstance($A, $B)")
         code = replace(code, r"\b(print|kaho) ([^\t\n]+)", "$1($2)")
-        code = replace(code, r",? <?(might (?:throw|raise)|(throw|raise)s) [^\:\n\t]+>?(?=\:)", "")
+        code = replace(code, r",? <?(?:(?:might|shayad) (?:throw|raise|de)|(throw|raise)s) [^\:\n\t]+>?(?=\:)", "")
         # ^ supposedly after a function fc x({...}?) might throw SomeError, and before a colon
         code = replace(code, r"\b(final|var|farz|n(?:a(?:ya|i)|ew)|either|yato) ", "")
-        code = replace(code, r" (to|hua|k[aeio])\b", "")
-        code = replace(code, r"\b(?:collect(?:ed)?|together)\((?<params>(?<firstparam>[^\(\)]+), *(?<restofparams>[^\(\)]+))\)", "list(zip($params))")
+        code = replace(code, r" (se(?! ?[\-\.\d])|to|tak|hua|k[aeio])\b", "")
+        code = replace(code, r"\b(?:collect(?:ed)?|together)\((?<params>(?<firstparam>[^\(\)]+), *(?<restofparams>[^\(\)]+))\)", "collect($params)" if "collect" in (globals()|locals()) and callable((globals()|locals())["collect"]) else "list(zip($params))")
         # sequence matters
         # for numeric  keys
         code = replace(code, r"(?<k>\-?\d*\.?\d+)(?: *: *(?<type>[\w\[\]\|, ]+\??))? *-> *(?<v>[^\n\t]+)", "$k: $v,")
@@ -408,7 +432,7 @@ def execute(filename: str) -> None:
         		elif is_flt(arg):
         			args[i] = fpk(arg)
         		elif is_bool(arg):
-        			args[i] = "Yes" if arg == True else "No"
+        			args[i] = "Han" if arg == True else "Nahi"
         		args = [arg for arg in args if arg is not None]
         	old_print(*args, **kwargs)
         (builtins.version, builtins.copyright, builtins.license, builtins.credits, builtins.help, builtins.enumerate, builtins.print) = ("Klang version 0.8", "© 2025, Klang corp.", "MIT", "Core developers\\\n\t~ Khurram Ali", "Not implemented yet", numbered, cust_print)
