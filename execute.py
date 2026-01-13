@@ -147,7 +147,7 @@ def execute(filename: str) -> None:
         "nr": "Number",
         # "nrs": "list[Number]",
         "bln|filha{1,2}l": "bool",
-        r"[Yy]es|[Ss]ach|[Hh]a|true": "True",
+        r"[Yy]es|[Ss]ach|[Hh]a(?! par)|true": "True",
         r"[Nn]o|[Jj]hoot|[Nn]ahi|false": "False",
         r"k(lang)?__help": "print('Not implemented yet')",
         r"k(lang)?__name": "print('Klang version 0.8')",
@@ -310,11 +310,12 @@ def execute(filename: str) -> None:
         code = replace(code, r"\bme?th?o?d (\w+\()(?=\))", "def $1self")
         code = replace(code, r"\bme?th?o?d (\w+\()(?!\)|self)", "def $1self, ")
         # sequence
-        code = replace(code, r"\b(?:interface|rules?|instruct(?:ion)?|(?:base|abstract) cl(?:as)?s) (?<abstractclassname>\w+)", "class $abstractclassname(AbstractBaseClass, metaclass=AbstractBaseClassMeta)")
+        code = replace(code, r"\b(?:interface|rule|instruct(?:ion)?|(?:base|abstract) cl(?:as)?s) (?<abstractclassname>\w+)", "class $abstractclassname(metaclass=AbstractBaseClassMeta)")
+        # "metaclass" is a keyword argument for the base class
         # to avoid conflict
         # comes before ^
         # comes after \/
-        code = replace(code, r"(?<!\()\bcls\b(?!\()", "class")
+        code = replace(code, r"(?<!\()\bcls\b(?=\s)", "class")
         # replace "cls" with "class"
         # to make the future replacements
         # easier
@@ -541,7 +542,7 @@ class Klang(cmd.Cmd):
             			    	        # the re.ESCAPING is mandatory, wouldn't work without it
             		if not re.search(r"(print|kaho)[ \(]+", argument_variable) and "=" not in replace(argument_variable, r"[\"'][^\"']*[\"']", "__STRING__"):
             		    argument_variable = "print " + argument_variable
-            		    print(f"{argument_variable=}")
+            		    #print(f"{argument_variable=}")
             		if not contents or "=" not in replace(contents, r"[\"'][^\"']*[\"']", "__STRING__"):
             		    new_content = "fc main():\n\t" + argument_variable
             		else:
