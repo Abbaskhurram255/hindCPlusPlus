@@ -1,7 +1,6 @@
 from types import *
-from typing import List, Callable, TypeVar, NewType, Any, Optional, Union, Final, Self, Generic
-from collections import defaultdict, Counter
-from collections.abc import Sequence
+from typing import Callable, TypeVar, NewType, Any, Optional, Union, Final, Self, Generic, Sequence, Iterable, defaultdict, Counter
+from abc import abstractmethod, ABCMeta, ABC as AbstractBaseClass
 from functools import reduce, lru_cache, cache
 from dataclasses import dataclass
 from math import *
@@ -19,7 +18,6 @@ import enum # NOTE: to allow enum.auto without making it global
 from enum import Enum
 from inspect import *
 from hindGui import *
-Iterable = str | list | tuple
 argv = sys.argv = sys.argv[1:]
 date = time = datetime
 rand_int = randint
@@ -45,6 +43,17 @@ Infinity = infinity = inf
 IntInfinity = int_infinity = int_inf = intinf = sys.maxsize
 goto = webbrowser.open
 link = webbrowser
+# crucial \/
+class AbstractMethodsRehteHeError(TypeError):
+	def __init__(self, name: str):
+		name = str(name)
+		super().__init__(name)
+class AbstractBaseClassMeta(ABCMeta):
+    def __new__(cls, name, bases, namespace):
+        new_cls = super().__new__(cls, name, bases, namespace)
+        if hasattr(new_cls, '__abstractmethods__') and new_cls.__abstractmethods__:
+            raise AbstractMethodsRehteHeError(f"Base class {name} ke methods {re.sub(r'^frozenset\(\{|\}\)$', '', str(new_cls.__abstractmethods__))} ko implement karna laazmi he")
+        return new_cls
 typename = TypeT = typeT = TypeVar("T")
 def run_process(command: str|list[str], new_window: bool = False) -> None:
 	if not command or not isinstance(command, (str, list)):
@@ -248,7 +257,7 @@ def barabar(x, y) -> haal:
         return x.lower() == y.lower()
     return x == y
 def collect(x, *rest) -> list[list[Any], list[Any]]:
-    if not x or not rest or len(rest) == 0 or not is_iterable(x) or not all(is_iterable(it) for it in [x, *rest]):
+    if not x or not rest or len(rest) == 0 or not is_iterable(x) or not all(isinstance(item, Iterable) for item in [x, *rest]):
         return [[], []]
     args: list = [x, *rest]
     return list(zip(args))
@@ -897,12 +906,16 @@ def f(*args) -> str:
             print(e)
     formatted = formatted.rstrip()
     return formatted
-def printf(*args, **kwargs):
+def printf(*args, **kwargs) -> None:
     print(f(*args), **kwargs)
 kaho = printf
-def khali(x: Iterable) -> haal:
+def khali(x: Iterable) -> bool:
     if x is None:
-        return False
+        return True
+    if not isinstance(x, Iterable):
+    	return not x
+    if isinstance(x, str):
+    	return not x.strip()
     return len(x) == 0
 is_empty = isempty = khali
 # type checks
