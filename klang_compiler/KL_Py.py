@@ -49,11 +49,38 @@ class AbstractMethodsRehteHeError(TypeError):
 		name = str(name)
 		super().__init__(name)
 class AbstractBaseClassMeta(ABCMeta):
-    def __new__(cls, name, bases, namespace):
-        new_cls = super().__new__(cls, name, bases, namespace)
-        if hasattr(new_cls, '__abstractmethods__') and new_cls.__abstractmethods__:
-            raise AbstractMethodsRehteHeError(f"Base class {name} ke methods {re.sub(r'^frozenset\(\{|\}\)$', '', str(new_cls.__abstractmethods__))} ko implement karna laazmi he")
-        return new_cls
+    def __new__(mcs, name, bases, namespace, **kwargs):
+        cls = super().__new__(mcs, name, bases, namespace, **kwargs)
+        if ABCMeta in cls.__mro__ and cls.__abstractmethods__:
+            return cls
+        abstract_methods: set = set()
+        for base in bases:
+            if isinstance(base, ABCMeta):
+                abstract_methods.update(base.__abstractmethods__)
+        missing_methods = abstract_methods - set(cls.__dict__)
+        for method_name in abstract_methods:
+            if not any(method_name in base.__dict__ for base in inspect.getmro(cls)[1:]):
+                missing_methods.add(method_name)
+        if missing_methods:
+            raise AbstractMethodsRehteHeError(
+                f"Base class '{name}' ke methods {missing_methods} ko implement karna laazmi he"
+            )
+        for method_name in abstract_methods:
+        	if method_name not in cls.__dict__ :
+        		continue
+        	subclass_method = cls.__dict__[method_name]
+        	for base in inspect.getmro(cls)[1:]:
+        		if method_name not in base.__dict__:
+        			continue
+        		base_method = base.__dict__[method_name]
+        		base_method_type = inspect.signature(base_method)
+        		subclass_method_type = inspect.signature(subclass_method)
+        		if base_method_type == subclass_method_type:
+        			continue
+        		raise TypeError(
+        		    f"Concrete class '{name}' ke method '{method_name}' ka kism BASE CLASS '{base.__name__}' ke sath match nahi karta"
+        		)
+        return cls
 typename = TypeT = typeT = TypeVar("T")
 def run_process(command: str|list[str], new_window: bool = False) -> None:
 	if not command or not isinstance(command, (str, list)):
@@ -148,7 +175,7 @@ def delay(n: Union[int, float], fn: Callable) -> None:
     """
     if not n or is_neg(n) or not isinstance(n, (int, float)):
         n = 1
-    MAX_DELAY: int = 1e5
+    MAX_DELAY: int = int(1e5)
     if n > MAX_DELAY:
         n = MAX_DELAY
     # good practice

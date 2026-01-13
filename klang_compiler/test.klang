@@ -80,10 +80,14 @@ instruction Vehicle:
 	@follow
 	fc go_down() -> none: ...
 	
-class Car implements Vehicle:
+instruction Person:
+	name: str
+	age: int
+	
+class Car from Vehicle:
 	fc go_up() -> None:
 		return 
-	fc go_down() -> None:
+	fc go_down() -> none:
 		return 
 
 baad(5*sec, kaho("hi"))
@@ -120,7 +124,7 @@ fc main(.. args, ...argv) -> ?:
     print(FileExistsError)
     koshish:
         print(1 / 0)
-    nakami bawaja ZeroDivisionError tor e:
+    ha par ZeroDivisionError tor e:
         print "oops", e
     final MY_FINAL_INT = 4
     print(MY_FINAL_INT he_ek int)
@@ -151,4 +155,3 @@ fc main(.. args, ...argv) -> ?:
     sum kism<flt> = 4.2 plus 1.4
     print "${sum he}"
     print(sum is type flt)
-    
