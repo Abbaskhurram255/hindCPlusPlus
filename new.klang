@@ -1,0 +1,7 @@
+fc main():
+    person: obj = {
+        name -> "Julia Roberts"
+        age -> 29
+    }
+    print "$person.name is $person.age"
+    print "$KL_Py.x"
