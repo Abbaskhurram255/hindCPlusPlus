@@ -1,5 +1,9 @@
-#mangao KL_Py[isstr, isint]
-#tor KL mangao KL_Py
+mangao KL_Py
+mangao KL_Py:isstr, isint
+mangao KL_Py->isflt
+mangao KL_Py[mint, sec]
+tor minute mangao KL_Py:mint
+tor KL mangao KL_Py
 KL_Py mese mangao isstr, aur isint, ke_sath isbool
 mangao isstr, isint KL_Py mese
 surat is_str mangao isstr KL_Py mese
@@ -10,10 +14,13 @@ print(numbered)
 har obj, i .. numbered(arr):
 	print "${i}. $obj"
 
-fc add(x umd nr, y umd nr):
+fc add(x ka kism<nr>, y ka kism<nr>) deta_ek nr:
 	out x + y
+fc _sum(..args ka kism<list[nr]>) deta_ek nr:
+	out sum(args)
+print("sum:", _sum(2, 5, 7))
 `cls` = 4
-#print("$kism(`cls`)=")
+print(kism(`cls`))
 print(r"this\is\a\raw\string")
 
 enum Weekday:
@@ -24,14 +31,14 @@ enum Weekday:
 	int Thursday = e_auto()
 print(Weekday?.Sunday)
 
-cls Parent:
-	cls sub:
+class Parent:
+	class sub:
 		x = "I am in a nested class"
 	called: bool = No
-	_ctr(this):
+	_ctr():
 		this.called = Yes
 		print("you've either instantiated the Parent, or a sub-class of it")
-	_str(this) return_kare str:
+	_str() return_kare str:
 		return "Parent(...)"
 	@callme
 	fc create_instance(cls) return_kare Khud ko:
@@ -41,14 +48,14 @@ print(Parent?.called)
 
 print(5 guna 4)
 print(pone 4 + sawa 2 + 1so)
-cls TestClass / Parent:
-    _ctr(this):
+class TestClass extends Parent:
+    _ctr():
     	mom.call()
     	print(this.called)
-    @nae_sire _str(this) -> str:
+    @nae_sire _str() -> str:
         return "Child(...)"
     method string() -> str:
-    	return this._str()
+    	return ._str()
 score: int? = 0
 agar match hua score:
 	he int:
@@ -108,7 +115,7 @@ fc main(.. args, ...argv) -> ?:
     print "3".ki_size
     print(k__name)
     print(k__about)
-    print("hello"[-1])
+    print("hello"[.5th])
     har i until(5, 1):
     	kaho "$i="
     farz greeting = "hi"
