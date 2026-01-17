@@ -1,3 +1,2 @@
 fc main():
-	name: str = "Damon"
-	print 8+9
+	print k__about

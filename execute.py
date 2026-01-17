@@ -46,7 +46,7 @@ def add_module(module_name: str, namespace: dict) -> None:
 def execute(filename: str) -> None:
     keys: dict[str, str] = {
         # functions, and classes
-        "__(?:c(?:ons)?tr|make|shurwat|banao|n(?:ew|a(?:ya|i)))__": "__init__",
+        "__(?:c(?:ons)?tr|make|shurwat|banao)__": "__init__",
         "__dev_print_(?:par|pe|mode)__": "__repr__",
        "__print_(?:par|pe|mode)__": "__str__",
        "__f(?:mt)?__": "__format__",
@@ -94,7 +94,7 @@ def execute(filename: str) -> None:
         # comes first
         # ^ a shorter way to say `else: ret|return|out X|Y` would be `else ret|return|out X|Y` without a colon
         r"othe?r?ws(?![_ ]?if)|warna(?![_ ]?a?gar)": "else",
-        "baad_?me|later": "...",
+        "ba{1,2}d_?me|later": "...",
         # regular else
         # leave it as-is
         "aur": "and",
@@ -112,7 +112,7 @@ def execute(filename: str) -> None:
         # equality_keyword=he|brbr|barabar
         r"(?<=(?<![ianh])\S\s)(?:(?:hen?\s)?(?:ba?ra?ba?r|hen?)(?:\shen?)?)(?= +\S+)": "==",
         # assignment_keyword=is (as long as it's not followed by ` *(not None|type|kism| *a| *an))`
-        r"(?<=\w\s)\b(?:is|are)\b(?!(?:\s(?:not\sNone|type|kism)|\s*an?))": "=",
+        r"(?<=\w\s)\b(?:is|are|be)\b(?!(?:\s(?:not\sNone|type|kism)|\s*an?))": "=",
         # sequence
         r"(?:nahi|kha{1,2}li|(?:is|ai)n'?t)(?=\s\S)": "not",
         "ja?bta?k": "while",
@@ -125,7 +125,7 @@ def execute(filename: str) -> None:
         "limit": "range",
         "ruko": "break",
         "ignore": "continue",
-        "with_index|numbered": "enumerate",
+        r"(with_index|numbered)(?=\()": "enumerate",
         "e_auto": "enum.auto",
         r"kism(?=\s?\()": "type",
         "func": "Callable",
@@ -149,10 +149,8 @@ def execute(filename: str) -> None:
         "bln|filha{1,2}l": "bool",
         r"[Yy]es|[Ss]ach|[Hh]a(?! par)|true": "True",
         r"[Nn]o|[Jj]hoot|[Nn]ahi|false": "False",
-        r"k(lang)?__help": "print('Not implemented yet')",
-        r"k(lang)?__name": "print('Klang version 0.8')",
-        r"k(lang)?__about": r"print('\\nK    K    L             A    NNN   N      GGGG\\nK  K      L            A A     NN   N    G    G\\nKK        L           A  A     N N   N   G\\nK K       L          A AAA     N  N  N   G  GGGG\\nK   K     L         A    A     N   N N   G     G\\nK     K   LLLLLLL  A     AA   NN    N     GGGGGG\\n\\n\tversion 0.8\\n__________________________________________________\\n\\nCredits:\\n\t  Core developer\\n\t\t@ KhurramAli \t\t  \\n\t\t\t\t\\n__________________________________________________')",
-        r"k(lang)?__version": "print('Klang v0.8')",
+        r"k(?:lang)?__(?:name|version)": "\"Klang v0.8\"",
+        r"k(?:lang)?__about": r"'\\nK    K    L             A        N     N    GGGG\\nK  K      L            A A       NN    N   G    G\\nKK        L           A   A      N N   N   G\\nK K       L          AAAAAAA     N  N  N   G  GGGG\\nK   K     L         A       A    N   N N   G     G\\nK     K   LLLLLLL  A         A   N    N    GGGGGG\\n\\n\tVersion\t|\t0.8\\n\tRel.\t|\t2025\\n__________________________________________________\\n\\nCredits:\\n\t  Core developer\\n\t\t@ KhurramAli \t\t  \\n\t\t\t\t\\n__________________________________________________'",
         # € implement help later
         r"throw": "raise",
         r"koshish(?= ?\:)": "try",
@@ -190,7 +188,7 @@ def execute(filename: str) -> None:
         	strings[i] = "f\"" + replace(replace(strings[i], r"(?<!\\)\$([^ \n\t]+)", r"{$1}####"), r"(?<=\})#{4}", "") + "\""
         	# find the template strings, and if found, for each, process it even
         	if re.search(r"\{[^\}]+\}", strings[i]):
-                    templates_found_in_string: list[str] = re.findall(r"(?<!\\)\{[^\}]+\}", strings[i])
+                    templates_found_in_string: list[str] = find_matches(strings[i], r"(?<!\\)\{[^\}]+\}")
                     for templt in templates_found_in_string:
                         # {sum (is|he)} should translate to
                         # sum (is|he): {sum}
@@ -210,6 +208,9 @@ def execute(filename: str) -> None:
         # Replace context-based keywords
         # handling import cases
         # sequence matters!
+        escaped_keywords: list[str] = find_matches(code, r"`(?:\w+ *)+`")
+        for i, escaped_keyword in old_enumerate(escaped_keywords):
+        	code = code.replace(escaped_keywords[i], f"__ESCAPED_KEYWORD_{i}__")
         FOUR_WHITES: str = " " * 4
         code = replace(code, "\t", FOUR_WHITES)
         code = replace(code, r"\b(surat|tor) (?<alias>\w+) mangao (?<function>\w+) (?<module>[\w\.]+) (me)?[_ ]?se\b", "from $module import $function as $alias")
@@ -236,9 +237,9 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<A>[_A-Za-z]\w*) max *\= *(?<B>[^\n\t]+)", "$A = $B if ('$A' in globals() or '$A' in locals()) and (isinstance($A, (int, float)) and $A > $B) else 0 if ('$A' in globals() or '$A' in locals()) and (not isinstance($A, (int, float))) else $A")
         # the (def|fb)= operator
         code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:def|fb|othe?r?ws) *\= *(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or not $A or type($A) != type($B) else $A")
-        code = replace(code, r"(?<![\d ])\.{3}\s?(?<dict>[_A-Za-z]\w*)", "**$dict")
+        code = replace(code, r"(?<![\d]|(?<!,)\s)\.{3}\s?(?<dict>[_A-Za-z]\w*)", "**$dict")
         # sequence
-        code = replace(code, r"(?<![\.\d ])\.{2}\s?(?<list>[_A-Za-z]\w*)", "*$list")
+        code = replace(code, r"(?<![\.\d]|(?<!,)\s)\.{2}\s?(?<list>[_A-Za-z]\w*)", "*$list")
         # handling mathematical operations
         # SEQUENCE MATTERS
         code = replace(code, r"(?<A>\-?\d*\.?\d+) *\^ *(?<B>\-?\d*\.?\d+)", "$A**$B")
@@ -315,7 +316,7 @@ def execute(filename: str) -> None:
         # to avoid conflict
         # comes before ^
         # comes after \/
-        code = replace(code, r"(?<!\()\bcls\b(?=\s)", "class")
+        code = replace(code, r"(?<!\()\bcls\b(?![\(\.])", "class")
         # replace "cls" with "class"
         # to make the future replacements
         # easier
@@ -341,7 +342,7 @@ def execute(filename: str) -> None:
         code = replace(code, r"\b(print|kaho) ([^\t\n]+)", "$1($2)")
         code = replace(code, r",? <?(?:(?:might|shayad) (?:throw|raise|de)|(throw|raise)s) [^\:\n\t]+>?(?=\:)", "")
         # ^ supposedly after a function fc x({...}?) might throw SomeError, and before a colon
-        code = replace(code, r"\b(final|var|farz|n(?:a(?:ya|i)|ew)|either|yato) ", "")
+        code = replace(code, r"\b(final|let|var|farz|n(?:a(?:ya|i)|ew)|either|yato) ", "")
         code = replace(code, r" (se(?! ?[\-\.\d])|to|tak|hua|k[aeio])\b", "")
         code = replace(code, r"\b(?:collect(?:ed)?|together)\((?<params>(?<firstparam>[^\(\)]+), *(?<restofparams>[^\(\)]+))\)", "collect($params)" if "collect" in (globals()|locals()) and callable((globals()|locals())["collect"]) else "list(zip($params))")
         # sequence matters
@@ -359,22 +360,32 @@ def execute(filename: str) -> None:
         # adds a sprinkle of English-like flavor: with open(x, "r") as file [bad] -> with open(x, "r"), as file [better, or at least a little more readable]
         # handling Optionality: default, and null cases
         # <type>? means the type is optional
-        code = replace(code, r"(?<type>[A-Za-z]\w*)\?(?!\.)", "$type|None")
+        code = replace(code, r"(?<type>[A-Za-z]\w*)(?:\?|\s\boptional\b)(?!\.)", "$type|None")
         code = replace(code, r"sath (?:[\.\?]{3}|ba{1,2}ki|anja{1,2}n)(?=(?: (?:if|agar) [^\:]+)? ?\:)", "case _")
-        code = replace(code, r"\bnone\b", "None")
+        code = replace(code, r"\b(?:none|koi_na)\b", "None")
         code = replace(code, r"(?<!\w)\?(?![\w\.])", "None")
+        code = replace(code, r"\{(?:\.{3}|\*{1,2})\}\s*=\s*(?<obj>[A-Za-z]\w*)", "globals().update(**$obj)")
         def __destructure_objects__(match):
             keys = [k.strip() for k in match.group(1).split(',') if k]
             keys_with_aliases: list[str] = keys.copy()
-            for i, _ in enumerate(keys):
+            for i, _ in old_enumerate(keys):
     	        keys[i] = replace(keys[i], r"tor ([A-Za-z_]\w*) ([A-Za-z_]\w*)", r"$2 as $1")
     	        if re.search(r"(?<=\w)(?:\s(?:as|tor)\s|\s?\:\s?)(?=[A-Za-z_])", keys[i]):
-    		        parts = re.split(r"(?:\s(?:as|tor)\s|\s?\:\s?)", keys[i])
+    		        parts = split(keys[i], r"(?:\s(?:as|tor)\s|\s?\:\s?)")
     		        keys[i] = parts[0]
     		        keys_with_aliases[i] = parts[1]
-            obj = match.group(2)
-            return ", ".join(keys_with_aliases) + " = " + ", ".join(f"{obj}?.{k}" for k in keys)
-        code = replace(code, r"\{([A-Za-z][,\s\w\:]*)\}\s*=\s*([A-Za-z]\w*)", __destructure_objects__)
+    	        if keys_with_aliases[i].startswith("...") and len(keys_with_aliases[i]) > 3:
+    	        	keys_with_aliases[i] = f"**{keys[i][3:]}"
+    	        if keys_with_aliases[i].startswith("**"):
+    	            keys[i] = keys[i].lstrip("**")
+    	            keys_with_aliases[i] = keys_with_aliases[i].lstrip("**")
+            obj: str = match.group(2)
+            lhs: str = ", ".join(keys_with_aliases)
+            rhs: str = ", ".join(f"{obj}?.{k}" if k not in ("keys", "values", "items") else (f"{obj}.{k}() if '{obj}' in (globals()|locals()) and isinstance({obj}, dict) else " + "{}") for k in keys)
+            rhs = replace(rhs, r"([A-Za-z_]\w*\.items\(\))", "[list(tuple) for tuple in list($1)]")
+            new_pair: str = lhs + " = " + rhs
+            return new_pair
+        code = replace(code, r"\{([A-Za-z\*][,\s\w\*\:]*)\}\s*=\s*([A-Za-z]\w*)", __destructure_objects__)
         # sequence should be watched
         # this comes after the destruction, to see if the destructured value even exists or not:
         code = replace(code, r"(?<object>[_A-Za-z]\w*)\?\.(?<field>[_A-Za-z]\w*)", "$object.$field if ('$object' in globals() or '$object' in locals()) and hasattr($object, '$field') and $object.$field is not None else {}")
@@ -397,6 +408,23 @@ def execute(filename: str) -> None:
         # needed
         code = replace(code, r"(?<type>[_A-Za-z\?][\w\[\]]*) (?<varname>[_A-Za-z]\w*) ?\={1}(?!\=)", "$varname: $type =")
         code = replace(code, r"\b(?<varname>[_A-Za-z]\w*) (expects|ume{0,2}d|chahe|wants|mange|needs) (?<type>[_A-Za-z\?]\w*)", "$varname: $type")
+        # readable index access
+        code = replace(code, r"\[\.first\:?(?<n>\d+)\]", "[0:$n]")
+        # ^ e.g. "hello world"[.first4] -> "hell"
+        code = replace(code, r"\[\.last\:?(?<n>\d+)\]", "[-$n:]")
+        # ^ e.g. "hello world"[.last:?4] -> "orld"
+        code = replace(code, r"\[\.(?:fir|1)st\]", "[0]")
+        # ^ e.g. "hello world"[.1st] -> "h"
+        code = replace(code, r"\[\.(?:seco|2)nd\]", "[1]")
+        # ^ e.g. "hello world"[.second] -> "e"
+        code = replace(code, r"\[\.(?:thi|3)rd\]", "[2]")
+        # ^ e.g. "hello world"[.third] -> "l"
+        code = replace(code, r"\[\.(?<n>\d+)th\]", "[$n-1]")
+        # ^ e.g. "hello world"[.third] -> "l"
+        code = replace(code, r"\[\.(?:sec(?:ond)?|2nd)la?st\]", "[-2]")
+        # ^ e.g. "hello world"[.secondlast] -> "s"
+        code = replace(code, r"\[\.last\]", "[-1]")
+        # e.g. ^ "hello world"[.last] -> "d"
         # custom data types
         # much needed
         code = replace(code, r"(?<varname>[A-Za-z]\w*) *\: *(?<typenumlist>num_?list) *\= ?(?<array>\[(\-?\d*\.?\d+(, *)?)+\])", "$varname: numlist = numlist($array)")
@@ -416,26 +444,26 @@ def execute(filename: str) -> None:
         # Restore strings
         for j, string in old_enumerate(strings):
             code = code.replace(f"__STRING_{j}__", string)
+        # Restore escaped keywords
+        for j, escaped_keyword in old_enumerate(escaped_keywords):
+        	escaped_keyword = escaped_keyword[1:-1]
+        	code = code.replace(f"__ESCAPED_KEYWORD_{j}__", escaped_keyword)
         print(f"Translation:\n________________\n\n{code}\n\n________________\n____________\n________\n\n\n")
         old_print: Callable = builtins.print
         def cust_print(*args, **kwargs):
-        	if not args:
-        		return
-        	from pprint import pp
         	args = list(args)
         	# since tuples are immutable, we can't  work with them, we need a list
         	for i, arg in old_enumerate(args):
-        		if isinstance(arg, (list, tuple, dict)):
-        		    pp(arg)
-        		    args[i] = None
-        		elif is_int(arg):
+        		if not arg:
+        			args[i] = "koi_na"
+        		if is_int(arg):
         			args[i] = fpk(arg)
         		elif is_flt(arg):
         			args[i] = fpk(arg)
         		elif is_bool(arg):
         			args[i] = "Han" if arg == True else "Nahi"
-        		args = [arg for arg in args if arg is not None]
         	old_print(*args, **kwargs)
+        	# if args is empty, prints a line break
         (builtins.version, builtins.copyright, builtins.license, builtins.credits, builtins.help, builtins.enumerate, builtins.print) = ("Klang version 0.8", "© 2025, Klang corp.", "MIT", "Core developers\\\n\t~ Khurram Ali", "Not implemented yet", numbered, cust_print)
         for k in dir(platform):
         	if "python" in k:
@@ -504,14 +532,21 @@ class Klang(cmd.Cmd):
     # the following variable is needed for proper functioning
     NO_SUB_COMMAND: str = ""
     def do_klang(self, line) -> None:
-        """The official Klang Compiler"""
+        """
+    	\t:: the official Klang compiler
+    	\t.: compiles the code, if the command is found to be a
+    	\t   valid filename. 
+    	\t   Otherwise, interprets it.
+    	"""
         line = line.strip()
         if line:
-            if re.search(r"^\-{0,2}v(?:ersion)?$", line):
+            if re.search(r"^\-*v(?:ersion)?$", line):
                 self.do_version(self.NO_SUB_COMMAND)
-            elif re.search(r"^\-{0,2}(author|credits)s?$", line):
+            elif re.search(r"^\-*(?:author|credits)s?$", line):
                 self.do_credits(self.NO_SUB_COMMAND)
-            elif re.search(r"^\-{0,2}h(?:elp)?", line):
+            elif re.search(r"^\-*about$", line):
+                self.do_about(self.NO_SUB_COMMAND)
+            elif re.search(r"^\-*h(?:elp)?", line):
                 if re.search(r"(?<=\s)[A-Za-z]", line):
                     self.do_help(line.split(" ")[1])
                 else:
@@ -561,32 +596,54 @@ class Klang(cmd.Cmd):
             		    print(e)
             		Klang().cmdloop()
         else:
-            print(f"Klang version 0.8\n\n{self.credits}")
+            print(f"Klang version 0.8\n{self.credits}")
     do_do = do_let = do_var = do_farz = do_set = do_kl = do_klang
     def do_print(self, line) -> None:
+    	"""
+    	:: prints the data (in its stringified form) to the console.
+    	.: the handling of how an object is displayed\nis customizable by putting an _str method in its origin class
+    	"""
     	self.do_klang("print " + line)
-    do_kaho = do_print
+    def do_kaho(self, line) -> None:
+    	"""
+    	:: data stringify karke, console par dikhaata he
+    	.: ek object kis tara zaahir hoga, is ka fesla\n\t   karta he object ki origin class ke andar mojud\n\t   _str method, agar mojud hua, warna object ka class name,\n\t   or memory address zaahir kie jaege
+    	"""
+    	self.do_print(line)
     def do_version(self, line) -> None:
         """Display the current version of Klang CLI"""
         print(self.version)
     do_v = do_version
     def do_credits(self, line) -> None:
-        """Displays the author line"""
+        """Displays the authors"""
         print(self.credits)
-    do_author = do_credits
+    do_authors = do_author = do_credits
     def do_clear(self, line) -> bool:
-        """Clears the cache."""
-        if line != "cache":
+        """Clears the cache if the line reads 'cache',
+        \totherwise clears the screen."""
+        console_clear_command: str
+        if os.name == "nt":
+        	# if Windows
+        	console_clear_command = "cls"
+        else:
+        	# but if probably Unix (including Linux, Android, and Mac)
+        	console_clear_command = "clear"
+        if not line:
+        	os.system(console_clear_command)
+        	Klang().cmdloop()
         	return
         if not File(TEMP_FILE_DIR).exists_file():
         	return
         os.remove(TEMP_FILE_DIR)
-    do_cc = do_clear
+    do_cc = do_cls = do_clear
+    def do_about(self, _):
+    	"""provides information about the compiler"""
+    	self.do_print("k__about")
     def do_quit(self, line) -> bool:
-        """Closes the Klang terminal."""
+        """\t    :: Closes the Klang terminal"""
         return True
     # Aliases for do_quit
-    do_leave = do_exit = do_bas = do_kill = do_q = do_quit
+    do_leave = do_close = do_exit = do_bas = do_kill = do_q = do_quit
 
 		
 def main() -> None:
@@ -613,8 +670,11 @@ def main() -> None:
     	msg = replace(args[0], r"expected [\"\'](?<fix>\S+)[\"\']", "\"$fix\" ki umeed thi")
     	msg = f"\n    {msg} line {e.lineno} pe"
     	if len(args) >= 2 and isinstance(args[1], tuple) and len(args[1]) >= 4:
-    		msg += f"\n    karib yaha: \"\n\t {args[1][3].strip()}\n    \"            ^^^\n\t\t\t    |||"
-    		msg = replace(msg, r"f(?=\-string)", "k")
+    		msg += f"\n    karib yaha: \"\n\t {args[1][3].strip()}\n    \"                       ^^^\n\t\t\t    |||"
+    		msg = replace(msg, r"\bf(?=\-string)\b", "k")
+    		msg = replace(msg, r"\bexpecting\b", "umeed thi")
+    		msg = replace(msg, r"\bor\b", "ya")
+    		msg = replace(msg, r"\band\b", "aur")
     	raise BuraSyntaxError(msg) from None
     except NameError as e:
     	varname: str = find_match(e.args[0], r"[\"\'](\w+)[\"\']")

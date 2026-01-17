@@ -1,4 +1,4 @@
-#mangao KL_Py
+#mangao KL_Py[isstr, isint]
 #tor KL mangao KL_Py
 KL_Py mese mangao isstr, aur isint, ke_sath isbool
 mangao isstr, isint KL_Py mese
@@ -6,11 +6,15 @@ surat is_str mangao isstr KL_Py mese
 print(1 hazar + 3 so + 80)
 
 arr: int<list> = [10, 20, 30]
+print(numbered)
 har obj, i .. numbered(arr):
 	print "${i}. $obj"
 
 fc add(x umd nr, y umd nr):
 	out x + y
+`cls` = 4
+#print("$kism(`cls`)=")
+print(r"this\is\a\raw\string")
 
 enum Weekday:
 	int Sunday = 0
@@ -37,11 +41,11 @@ print(Parent?.called)
 
 print(5 guna 4)
 print(pone 4 + sawa 2 + 1so)
-cls TestClass extends Parent:
+cls TestClass / Parent:
     _ctr(this):
     	mom.call()
     	print(this.called)
-    @redo _str(this) -> str:
+    @nae_sire _str(this) -> str:
         return "Child(...)"
     method string() -> str:
     	return this._str()
@@ -64,8 +68,10 @@ age4 kism<int> = 28
 name_of_user kism<str> = "Jonathan"
 print(list1 / list2)
 args = [1, 2, 3]
-print([..args, 4, 5])
-arg = {"name": "Mike", "age": 21}
+args2 = [4, 5]
+print([..args, ..args2, 6, 7])
+print "pass"
+arg: dict[str, Any] = {"name": "Mike", "age": 21}
 {name as nme, age: ag} = arg
 print "$nme= $ag"
 {tor nm name} = arg
@@ -73,8 +79,8 @@ print "$nm="
 print({...arg, "age": 27})
 
 instruction Vehicle:
-	name: str
-	age: int
+	name: str optional
+	age: int optional
 	@follow
 	fc go_up() -> none: ...
 	@follow
@@ -85,7 +91,7 @@ instruction Person:
 	age: int
 	
 class Car from Vehicle:
-	fc go_up() -> None:
+	fc go_up() -> none:
 		return 
 	fc go_down() -> none:
 		return 
@@ -100,8 +106,9 @@ fc main(.. args, ...argv) -> ?:
     print 3 hundo_million
     print "$len('3') $6+7.5 ${add(2, 4)}"
     print "3".ki_size
-    k__about
-    print("hello"[:-1])
+    print(k__name)
+    print(k__about)
+    print("hello"[-1])
     har i until(5, 1):
     	kaho "$i="
     farz greeting = "hi"
@@ -114,8 +121,10 @@ fc main(.. args, ...argv) -> ?:
     print "hello", "Dave"
     q = TestClass()
     print(q)
-    u is 5
+    let u is 4
     v, w are 5, 8
+    x be 3
+    y be 9
     print "${add(4, 2)} $add $4060.7997:.1f"
     farz x = ?
     x = yato 5 agar x he ? warna x
@@ -131,13 +140,19 @@ fc main(.. args, ...argv) -> ?:
     print(3^ 2)
     print(3^^)
     print(3^^^)
-    user: obj[Any, Any] = {
+    user: obj[str, Any] = {
         name: str -> "Daniel Gargoyle"
         age: int -> 56
         2: [int, str] -> "experience"
         array: list[int] -> [1, 2, 3, 4, 5]
     }
     print("name:", user?.name)
+    {...keys, ...values, ...items} = user
+    print(user)
+    print(f"{user=}")
+    print(f"{keys=}")
+    print(f"{values=}")
+    print(f"{items=}")
     instance: TestClass = TestClass()
     print(instance.string())
     every i until(5):
