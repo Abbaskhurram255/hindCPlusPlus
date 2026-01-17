@@ -997,12 +997,12 @@ is_iterable = isiterable = lambda x: isinstance(x, Iterable)
 isnt_iterable = isntiterable = non_iterable = noniterable = lambda x: not is_iterable(x)
 is_callable = iscallable = is_function = isfunction = is_func = isfunc = lambda x: callable(x)
 isnt_callable = isntcallable = non_callable = noncallable = lambda x: not is_callable(x)
-def split(srcString: str, regex: str = "", maxsplits: int = IntInfinity, flags: int = 0) -> list[str]:
-    if not srcString or not isinstance(srcString, str) or not isinstance(regex, str):
+def split(src: str, regex: str = "", maxsplits: int = IntInfinity, flags: int = 0) -> list[str]:
+    if not src or not isinstance(src, str) or not isinstance(regex, str):
     	# allow regex to be empty, as it will be sometimes
     	return []
     regex = re.sub(r"(\?)(<\w+>)", r"\1P\2", regex)
-    raw_list: list[str] = re.split(regex, srcString, maxsplit=maxsplits, flags=flags)
+    raw_list: list[str] = re.split(regex, src, maxsplit=maxsplits, flags=flags)
     result: list[str] = []
     for x in raw_list:
     	if not x.strip():
@@ -1073,7 +1073,7 @@ def find_matches(src: str, to_find: str) -> list[str]:
     to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = re.findall(to_find, src)
     return matches
-def find_matches_i(src: str, to_find: str) -> list:
+def find_matches_i(src: str, to_find: str) -> list[str]:
     if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
     	return []
     to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
@@ -1113,7 +1113,7 @@ def find_match_i(src: str, to_find: str) -> str:
     return matches[0]
 def match(src: str, to_find: str) -> bool:
     if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
-    	return []
+    	return False
     to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = find_matches(src, to_find)
     if len(matches) == 0:
@@ -1121,7 +1121,7 @@ def match(src: str, to_find: str) -> bool:
     return True
 def match_i(src: str, to_find: str) -> bool:
     if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
-    	return []
+    	return False
     to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
     matches: list[str] = find_matches_i(src, to_find)
     if len(matches) == 0:
