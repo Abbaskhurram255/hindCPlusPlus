@@ -4,7 +4,7 @@ from abc import abstractmethod, ABCMeta, ABC as AbstractBaseClass
 from functools import reduce, lru_cache, cache
 from dataclasses import dataclass
 from math import *
-from random import randint, uniform, randrange, choice, sample
+from random import randint, uniform, choice, sample
 from numbers import Number
 import time as timer
 from threading import Timer
@@ -12,6 +12,7 @@ from datetime import datetime
 from copy import deepcopy
 from pathlib import Path
 import builtins, os, sys, platform, json, shutil, base64, requests, math, re, ast, webbrowser, subprocess
+from itertools import product as collective_iter
 from re import escape
 import enum # NOTE: to allow enum.auto without making it global
 # both of these imports are needed ^V
@@ -20,14 +21,124 @@ from inspect import *
 from hindGui import *
 argv = sys.argv = sys.argv[1:]
 date = time = datetime
-rand_int = randint
-rand_flt = uniform
+rand_flt = randflt = uniform
 rand_from = rand_of = any_from = any_of = choice
 choices = sample
 # not possible directly, add later
 # BY creating a CUSTOM LIST type, and then adding them
 # list.add = list.push = list.append
 # list.add_at = list.push_at = list.insert
+def try_else(x: Any, y: Any) -> Any|None:
+	try:
+		if not x:
+			raise Exception()
+			# if x does not even exist
+			# to begin with,
+			# let's just skip to the except block right away
+		if callable(x):
+			x = x()
+			# if callable,
+			# replace x with its return value from the function call, if possible
+		if isinstance(x, str):
+			x = x.strip()
+		# let's check, AND SEE if the RETURN VALUE is FALSY
+		# if it is, head over to the except block, and return y
+		# otherwise, return x, as-is
+		if not x:
+			raise ValueError()
+		return x
+	except:
+		# upon failure,
+		# try the fallback
+		if y is not None and callable(y):
+			y = y()
+			# if callable,
+			# replace y with its return value from the function call, if possible
+		return y
+def collective_range(*lists: list[list]) -> list[int]:
+	lists = list(lists)
+	# converting the tuples to actual lists
+	# as Python varargs (*args)
+	# return a tuple (immutable)
+	# not a list
+	if not lists:
+		return []
+	lists = [lst for lst in lists if lst is not None and isinstance(lst, list)]
+	# filter
+	for i, lst in enumerate(lists):
+		if not isinstance(lists[i], list):
+			continue
+		lists[i] = range(len(lists[i]))
+	return collective_iter(*lists)
+old_randint = randint
+def rand_int(x: int = 9, y: int|None = None) -> int:
+    """
+    @param x                from (switchable with @param:y)
+                            int
+    @param y                to (switchable with @param:x)
+                            int, optional
+    @return                 a
+    """
+    if not isinstance(x, int):
+        x = 0
+    if not isinstance(y, (int, NoneType)):
+        y = 99
+    if x == y:
+        return x
+    if y is None:
+        x, y = 0, x
+    if y < x:
+        y += 1
+        x, y = y, x
+    # let's make the make the function exclusive (of y itself)
+    if y > 0:
+        y -= 1
+    else:
+        y += 1
+    return old_randint(x, y)
+randint = rand_int
+def rand_range(x: int = 9, y: int|None = None) -> list[int]:
+    if not isinstance(x, int):
+        x = 9
+    if not isinstance(y, (int, NoneType)):
+        y = 99
+    return_value: list[int] = []
+    if y is not None and y < x:
+        x, y = y, x
+    if y is None or x == y:
+        for _ in range(abs(x)):
+            return_value.append(rand_int(x))
+    else:
+        for _ in range(y):
+            return_value.append(rand_int(x, y))
+    return return_value
+randrange = rand_range
+def rand_str(length: int = 16) -> str:
+    if not isinstance(length, int) or length < 8:
+        length = 8
+    if length > 64:
+        length = 64
+    chars: str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+=_"
+    return_value: str = ""
+    while length := length - 1:
+        return_value += chars[randint(0, len(chars)-1)]
+    return return_value
+randstr = rand_str
+def rand_hex(length: int = 16) -> str:
+    if not isinstance(length, int) or length < 8:
+        length = 8
+    if length > 64:
+        length = 64
+    chars: str = "0123456789abcdef"
+    return_value: str = ""
+    while length := length - 1:
+        return_value += chars[randint(0, len(chars)-1)]
+    return return_value
+randhex = rand_hex
+def rand_uuid() -> str:
+    from uuid import uuid4
+    return str(uuid4())
+randuuid = rand_uuid
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
 class Char(str):
@@ -1455,19 +1566,22 @@ def internet_access() -> bool:
         return True
     except requests.ConnectionError:
         return False
-def fetch(url: str) -> dict|list:
+def fetch(url: str = "") -> dict|list:
     if not url:
         return {}
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=60)
         response.raise_for_status()
+        if not (response.status_code >= 200 and response.status_code <= 299):
+        	return {}
         return response.json()
     except Exception as e:
         print(f"Error fetching data: {e}")
         return {}
 def filepath(to_filename: str) -> str:
-    if to_filename == none or len(to_filename) == 0:
+    if not to_filename or not isinstance(to_filename, str):
         return ""
+    to_filename = to_filename.strip()
     return os.path.join(os.getcwd(), to_filename)
 file_path = path_to = filepath
 
