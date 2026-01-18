@@ -7510,34 +7510,35 @@ public class KL {
 		}
 		button color(String clr) {
 			if (not(clr) || !in(clr, "(?<=\\w\\s)(on|upar)(?=\\s[#\\w])"))
-			    return this;
-			String bg = "",
-			  fg = "";
-			Color textColor,
-			  bgColor;
+				return this;
+			String bg = "", fg = "";
+			Color textColor, bgColor;
 			if (in(clr, "(?<=\\w) on (?=[#\\w])")) {
 				String[] parts = clr.split(" on ");
-			    bg = parts[1];
-			    fg = parts[0];
-			}
-			else if (in(clr, "(?<=\\w) par (?=[#\\w])")) {
-			    String[] parts = clr.split(" par ");
-			    bg = parts[0];
-			    fg = parts[1];
+				bg = parts[1];
+				fg = parts[0];
+			} else if (in(clr, "(?<=\\w) par (?=[#\\w])")) {
+				String[] parts = clr.split(" par ");
+				bg = parts[0];
+				fg = parts[1];
 			}
 			if (eq(bg, "#([A-Fa-z\\d]{3}){1,2}"))
-			    bgColor = new clr(bg);
+				bgColor = new clr(bg);
 			if (eq(fg, "#([A-Fa-z\\d]{3}){1,2}"))
-			    fgColor = new clr(fg);
-			For (Field field : new clr(0).getClass().getDeclaredFields()) {
-				if (not(field.get(new clr(0)) instanceof clr))
-				    continue;
-				String key = field.getName();
-				clr value = (clr) field.get(new clr(0));
-				if (eq(bg, key))
-				    bgColor = value;
-				if (eq(fg, key))
-				    fgColor = value;
+				textColor = new clr(fg);
+			try {
+				for (Field field : new clr(0).getClass().getDeclaredFields()) {
+					if (not(field.get(new clr(0)) instanceof clr))
+						continue;
+					String key = field.getName();
+					clr value = (clr) field.get(new clr(0));
+					if (eq(bg, key))
+						bgColor = value;
+					if (eq(fg, key))
+						textColor = value;
+				}
+			} catch (IllegalAccessException e) {
+
 			}
 			return this;
 		}
