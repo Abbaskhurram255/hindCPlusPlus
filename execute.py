@@ -61,10 +61,11 @@ def execute(filename: str) -> None:
         "me": "self",
         "mera": "self",
         "meri": "self",
+        "Mujhe": "Self",
         "mujhe": "self",
-        r"Khud(?: k[aeio])?": "Self",
+        r"Khud(?:[_ ]k[aeio])?": "Self",
         # diff: capital first, not-capital first
-        r"khud(?: k[aeio])?": "self",
+        r"khud(?:[_ ]k[aeio])?": "self",
         "my": "self",
         "super": "super()",
         "parent": "super()",
@@ -146,8 +147,8 @@ def execute(filename: str) -> None:
         # "floats": "list[float]",
         "nr": "Number",
         # "nrs": "list[Number]",
-        "bln|filha{1,2}l": "bool",
-        r"[Yy]es|[Ss]ach|[Hh]a(?! par)|true": "True",
+        "haal|filha{1,2}l": "bool",
+        r"[Yy]es|[Ss]ach|[Hh]an?(?! par)|true": "True",
         r"[Nn]o|[Jj]hoot|[Nn]ahi|false": "False",
         r"k(?:lang)?__(?:name|version)": "\"Klang v0.8\"",
         r"k(?:lang)?__about": r"'\\nK    K    L             A        N     N    GGGG\\nK  K      L            A A       NN    N   G    G\\nKK        L           A   A      N N   N   G\\nK K       L          AAAAAAA     N  N  N   G  GGGG\\nK   K     L         A       A    N   N N   G     G\\nK     K   LLLLLLL  A         A   N    N    GGGGGG\\n\\n\tVersion\t|\t0.8\\n\tRel.\t|\t2025\\n__________________________________________________\\n\\nCredits:\\n\t  Core developer\\n\t\t@ KhurramAli \t\t  \\n\t\t\t\t\\n__________________________________________________'",
@@ -195,8 +196,11 @@ def execute(filename: str) -> None:
                         processed_templt: str = replace(replace(templt, r"\{(?<placeholder_slash_varname>[A-Za-z_]\w*) *(?<separator>is|he) *:? *\}", "$placeholder_slash_varname $separator: {$placeholder_slash_varname}####"), "####", "")
                         # Warning: the 4-hashes part might seem ridiculous, BUT IS A BUG FIX, and better stay untouched
                         for key, value in keys.items():
-                             processed_templt = replace(processed_templt, fr"(?<!\.)\b(({key})(?! ?\: ?\w+))\b", value)
+                            processed_templt = replace(processed_templt, fr"(?<!\.)\b(({key})(?! ?\: ?\w+))\b", value)
+                        processed_templt = replace(processed_templt, r"(?<=\w )=(?=:)", "is")
                         strings[i] = replace(strings[i], templt, processed_templt)
+                        strings[i] = replace(strings[i], r"(?<=\S\.)\b_cl(?:as)?s_?name\b", "__class__.__name__")
+                        strings[i] = replace(strings[i], r"(?<=\S\.)\b_cl(?:as)?s\b", "__class__")
         	# the #### part helps get rid of a bug
         	# this replaces previously remove {formatted_var} functionality with new $-based functionality
         	# WARNING: r"{$1}####" should be as is
@@ -244,6 +248,8 @@ def execute(filename: str) -> None:
         # sequence matters!
         code = replace(code, r"(?<![\t    \t])\b(?:fc|act|def) (?:main|start)(?:\([^\)\n\t]*\))?(?=(?: *-> *[\w\?]+)?\:)", "def main()")
         # operators
+        # try..else
+        code = replace(code, r"\b(?:try|koshish) (?<x>[^\n]+) (?:else|warna|nakami) (?<y>[^\n]+)\b", "try_else(() -> $x, $y)")
         # NULL coalescing
         code = replace(code, r"(?<A>[_A-Za-z]\w*) ?\?\?\= ?(?<B>[^\n\t]+)", "$A = $A if ('$A' in globals() or '$A' in locals()) and $A is not None else $B")
         # the ifCONDITION(is true, then)=
@@ -262,6 +268,7 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<A>\-?\d*\.?\d+) *\^ *(?<B>\-?\d*\.?\d+)", "$A**$B")
         code = replace(code, r"(?<A>\-?\d*\.?\d+) *\^{3}", "$A**3")
         code = replace(code, r"(?<A>\-?\d*\.?\d+) *\^{2}", "$A**2")
+        code = replace(code, r"(?<A>\-?\d*\.?\d+) \%(?! *[\-\.\d])", "$A/100")
         code = replace(code, r"(?:\\/|√) ?(?<A>\-?\d*\.?\d+)", "int($A**(1/2))")
         # SEQUENCE MATTERS
         # handling `A me B`, and `B A me` cases
@@ -351,6 +358,8 @@ def execute(filename: str) -> None:
         # ONLY IF the user is not working
         # on a @classmethod
         # to avoid conflict
+        code = replace(code, r"(?<=\S\.)\b_cl(?:as)?s_?name\b", "__class__.__name__")
+        code = replace(code, r"(?<=\S\.)\b_cl(?:as)?s\b", "__class__")
         code = replace(code, r"@calls?[_ ]?me\b", "@classmethod")
         code = replace(code, r"@(?:abstr(?:act)?|follow|emp?ty?_?body)\b", "@abstractmethod")
         code = replace(code, r"@auto(c(?:l(?:as)?s|(?:ons)?tr)|make)\b", "@dataclass")
@@ -388,6 +397,8 @@ def execute(filename: str) -> None:
         # adds a sprinkle of English-like flavor: with open(x, "r") as file [bad] -> with open(x, "r"), as file [better, or at least a little more readable]
         # handling Optionality: default, and null cases
         # <type>? means the type is optional
+        code = replace(code, r"(?<=\S )\bkwarg\b", "= None")
+        # DON'T edit
         code = replace(code, r"(?<type>[A-Za-z]\w*)(?:\?| \boptional\b)(?!\.)", "$type|None")
         code = replace(code, r"sath (?:[\.\?]{3}|ba{1,2}ki|anja{1,2}n)(?=(?: (?:if|agar) [^\:]+)? ?\:)", "case _")
         code = replace(code, r"\b(?:none|koi_na)\b", "None")
@@ -419,6 +430,7 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<object>[_A-Za-z]\w*)\?\.(?<field>[_A-Za-z]\w*)", "$object.$field if ('$object' in globals() or '$object' in locals()) and hasattr($object, '$field') and $object.$field is not None else {}")
         code = replace(code, r"\b(?:neither|nato) (?<A>[^\n\t]+) (?:or )?(?:n?or|na(?:[ _]?hi)?) (?<B>[^\n\t]+)", "not($A or $B)")
         code = replace(code, r"(?<=(?<![^ \t])[ \t])(?:is|he|kism) (?<type>[A-Za-z_]\w*)(?=\:)", "case $type()")
+        # KEY-VALUE replacement
         for key, value in keys.items():
             code = replace(code, r"(?<!\.)\b(" + key + r"(?! ?\: ?\w+))\b", value)
         code = replace(code, r"(?<type>[A-Za-z]\w*)(?:\[\]|<list>)", "list[$type]")

@@ -14,8 +14,9 @@ print(numbered)
 har obj, i .. numbered(arr):
 	print "${i}. $obj"
 
-fc add(x ka kism<nr>, y ka kism<nr>) deta_ek nr:
+fc add(x ka kism<nr>, y ka kism<nr>, z kism<nr> kwarg) deta_ek nr:
 	out x + y
+print "${add(z=6, x=3, y=2)}"
 fc _sum(..args ka kism<list[nr]>) deta_ek nr:
 	out sum(args)
 print("sum:", _sum(2, 5, 7))
@@ -56,10 +57,30 @@ class TestClass extends Parent:
         return "Child(...)"
     method string() -> str:
     	return ._str()
+class Friend:
+	_ctr(name: str, closeness: float, still_around: haal = Han) return_kare Mujhe:
+		my.name = Str(name)
+		my.closeness = Flt(closeness)
+		me.still_around = bool(still_around)
+	_str() return_kare str:
+		out "${my._class_name}<name=${my.name}, closeness=${my.closeness}, ${me.still_around}>"
+friend: Friend = naya Friend("Muneer", 70 %)
+print(friend)
+print(friend._str())
+print((8)._cls)
+print((8)._class_name)
+print(friend._cls)
+print(friend._class_name)
+print try 0/0 else 0
+print try file.opn else 0
+print koshish x+y warna 2
+print try "  " else "Anonymous"
+quotient: int
+quotient = try 0/0 else 0
 score: int? = 0
 agar match hua score:
 	he int:
-		print("the score is an integer")
+		print "the score is an integer"
 	sath 50:
 		print 'score 50 he'
 	sath 25:
@@ -175,5 +196,5 @@ fc main(.. args, ...argv) -> ?:
     	print i==3
     print "${add(2, 3)}"
     sum kism<flt> = 4.2 plus 1.4
-    print "${sum he}"
+    print "${sum is} ${sum he}"
     print(sum is type flt)
