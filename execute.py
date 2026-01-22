@@ -7,7 +7,42 @@ import KL_Py
 # ^ the import above is a MANDATORY imoort, and so is the following:
 from KL_Py import *
 
-
+# error classes
+class BuraSyntaxError(SyntaxError):
+	def __int__(self, *args):
+		super().__init__(*args)
+class VariableNaMojudError(NameError):
+	def __int__(self, *args):
+		super().__init__(*args)
+class KeyNaMojudError(KeyError):
+	def __int__(self, *args):
+		super().__init__(*args)
+class FileNaMojudError(FileNotFoundError):
+	def __int__(self, *args):
+		super().__init__(*args)
+class LibraryError(ImportError):
+	def __int__(self, *args):
+		super().__init__(*args)
+ModuleError = LibraryError
+class LibraryNaMojudError(ModuleNotFoundError, ImportError):
+	def __int__(self, *args):
+		super().__init__(*args)
+ModuleNaMojudError = LibraryNaMojudError
+class GalatKismError(TypeError):
+	def __int__(self, *args):
+		super().__init__(*args)
+BuraKismError = KismError = GalatKismError
+class GalatValueError(ValueError):
+	def __int__(self, *args):
+		super().__init__(*args)
+class GalatIndexError(IndexError):
+	def __int__(self, *args):
+		super().__init__(*args)
+class DivisionError(ZeroDivisionError):
+	def __int__(self, *args):
+		super().__init__(*args)
+		
+# a helper function for def= operator
 def get_initial_of(x: Any) -> Any:
 	if not x:
 		return None
@@ -81,11 +116,17 @@ def execute(filename: str) -> None:
         r"(?<=\S )pls(?= \S)": "+",
         r"(?<=\S )minus(?= \S)": "-",
         r"(?<=\S )mns(?= \S)": "-",
-        # other
+        # context
+        "(?<=@)context": "contextmanager",
+        # opening files
+        r"khola(?= ?\()": "open",
+        # printing
         "kaho": "print",
         # match-case
         r"aga?r[_ ]match(?= [^\n\t\:]+\:)": "match",
-        "sath": "case",
+        r"(?<=(?<!\w) {2})sath(?! (?:open|khola) ?\()": "case",
+        # same keyword, different operations
+        r"sath(?= [A-Za-z_])": "with",
         # if-else
         # sequence
         "(?<!(?:but|par)[_ ])agar(?![_ ]match)": "if",
@@ -113,26 +154,33 @@ def execute(filename: str) -> None:
         # equality_keyword=he|brbr|barabar
         r"(?<=(?<![ianh])\S )(?:(?:hen? )?(?:ba?ra?ba?r|hen?)(?: hen?)?)(?= +\S+)": "==",
         # assignment_keyword=is (as long as it's not followed by ` *(not None|type|kism| *a| *an))`
-        r"(?<=\w )\b(?:is|are|be)\b(?!(?: (?:not None|type|kism)| *an?))": "=",
+        r"(?<=\w )\b(?:is|are|be|rakho|ab)\b(?!(?: (?:not None|type|kism)| *an?))": "=",
         # sequence
-        r"(?:nahi|kha{1,2}li|(?:is|ai)n'?t)(?= \S)": "not",
+        r"(?:nahi|na[_ ]mojud|kha{1,2}li|(?:is|ai)n'?t)(?= \S)": "not",
+        r"kuch(?= ?\()": "any",
+        r"sare(?= ?\()": "all",
         "ja?bta?k": "while",
         "har": "for",
         "every": "for",
         "andar|darmya{1,2}n": "in",
         "under": "in",
         "within": "in",
-        "until": "in range",
-        "limit": "range",
-        "ruko": "break",
-        "ignore": "continue",
-        r"(with_index|numbered)(?=\()": "enumerate",
-        "e_auto": "enum.auto",
+        r"until(?= ?\()": "in range",
+        r"limit(?= ?\()": "range",
+        r"next(?= [^\s\(])": "yield",
+        r"(?<=(?<!\w) {2})ruko": "break",
+        r"(?<=(?<!\w) {2})ignore(?= ?[^\(])": "continue",
+        # ignore only translates to continue as long as it's indented
+        # and ISN'T followed by a (
+        # no messing around^
+        r"baad(?= ?\()": "delay",
+        r"(with_index|numbered)(?= ?\()": "enumerate",
+        r"e_auto(?= ?\()": "enum.auto",
         r"kism(?= ?\()": "type",
         "func": "Callable",
         r"(?:(?:return|out)(s(?:[_ ]an?)?|[_ ]kare)|gives[ _]an?|deta[ _]ek)": "->",
-        "Shayad": "Union",
-        "isfunc": "callable",
+        r"Shayad(?= ?\[[A-Za-z_])": "Union",
+        r"is_?func(?= ?\()": "callable",
         "char": "Char",
         # ^^ much needed
         # char is the keyword 
@@ -153,25 +201,29 @@ def execute(filename: str) -> None:
         r"k(?:lang)?__(?:name|version)": "\"Klang v0.8\"",
         r"k(?:lang)?__about": r"'\\nK    K    L             A        N     N    GGGG\\nK  K      L            A A       NN    N   G    G\\nKK        L           A   A      N N   N   G\\nK K       L          AAAAAAA     N  N  N   G  GGGG\\nK   K     L         A       A    N   N N   G     G\\nK     K   LLLLLLL  A         A   N    N    GGGGGG\\n\\n\tVersion\t|\t0.8\\n\tRel.\t|\t2025\\n__________________________________________________\\n\\nCredits:\\n\t  Core developer\\n\t\t@ KhurramAli \t\t  \\n\t\t\t\t\\n__________________________________________________'",
         # € implement help later
-        r"throw": "raise",
+        r"(?:throw|uthao)(?= [A-Za-z_])": "raise",
         r"koshish(?= ?\:)": "try",
-         r"(?<!(?:ar|if) )(but(?:[_ ]?if)?|(?:ha[_ ])?par(?:[_ ]agar)?|error(?: (?:by|(?:ki|ba|ka)[ _]?(?:waja|zaria|sabab)))|(?:fail(?:ure|ed)|naka{1,2}mi?)(?: (?:by|(?:ki|ba|ka)[ _]?(?:waja((?: he)? agar(?: he)?)?|zaria|sabab)))?)(?=[^\:\n\t]*\:)": "except",
-        r"tor": "as",
-        # Error aliases
-        "FileNaMojudError": "FileNotFoundError",
-        "BuraSyntaxError": "SyntaxError",        "VariableNaMojudError": "NameError",
-        "GalatValueError": "ValueError",
-        
+        r"(?<!(?:ar|if) )(but(?:[_ ]?if)?|(?:ha[_ ])?par(?:[_ ]agar)?|error(?: (?:by|(?:ki|ba|ka)[ _]?(?:waja|zaria|sabab)))|(?:fail(?:ure|ed)|naka{1,2}mi?)(?: (?:by|(?:ki|ba|ka)[ _]?(?:waja((?: he)? agar(?: he)?)?|zaria|sabab)))?)(?=[^\:\n\t]*\:)": "except",
+        r"akhir(?= ?\:)": "finally",
+        "tor(?= [A-Za-z_])": "as",
+        "Error": "Exception",
     }
     with open_case_ins(filename, "r") as file:
         code: str = file.read()
         # Remove comments
         # --- since they're only meant for the developer ---
-        # to help us save memory
-        code = replace(code, r"#[^\n]+", "")
-        code = replace(code, r"\"{3}[^\"]+\"{3}", "")
+        # to help us save memory,
+        # and this removal of
+        # multi-line comments
+        # occurs before the 
+        # replacement of strings
+        # with placeholders
+        # remove multi-line comments
+        # single-line comments will be gotten rid of later
+        # FOR A BIG REASON (being settings can contains hashes --- # --- too)
+        code = replace(code, "[\"\']{3}[^\"\']*[\"\']{3}", "")
         # Remove strings
-        strings: list[str] = find_matches(code, r"\"[^\"]+\"") + find_matches(code, r"\'[^\'\"]+\'")
+        strings: list[str] = find_matches(code, r"\"[^\"]*\"") + find_matches(code, r"\'[^\'\"]*\'")
         # added partial support for ''
         for i, string in old_enumerate(strings):
         	strings[i] = strings[i][1:-1]
@@ -216,6 +268,15 @@ def execute(filename: str) -> None:
         for i, escaped_keyword in old_enumerate(escaped_keywords):
         	code = code.replace(escaped_keywords[i], f"__ESCAPED_KEYWORD_{i}__")
         FOUR_WHITES: str = " " * 4
+        # NOTE: now that strings have been gotten rid of entirely
+        # --- i.e. multi-line comments ("""{content}""") have been replaced with "" {that is, removed}, and base strings ("") have been replaced with
+        # their placeholders
+        # so that we only translate keywords outside of a string, or a multi-line comment
+        # we might as well get rid of single-line comments
+        # which, we DIDN'T BEFORE...
+        # AS STRINGS CAN CONTAIN
+        # hashes (#'s') TOO
+        code = replace(code, r"#[^\n]+", "")
         code = replace(code, "\t", FOUR_WHITES)
         code = replace(code, r"\b(?:surat|tor) (?<alias>[A-Za-z_]\w*) mangao (?<function>[A-Za-z_]\w*) (?<module>[A-Za-z\.][\w\.]*) (?:me)?[_ ]?se\b", "from $module import $function as $alias")
         # ^ example of usage:
@@ -249,17 +310,17 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<![\t    \t])\b(?:fc|act|def) (?:main|start)(?:\([^\)\n\t]*\))?(?=(?: *-> *[\w\?]+)?\:)", "def main()")
         # operators
         # try..else
-        code = replace(code, r"\b(?:try|koshish) (?<x>[^\n]+) (?:else|warna|nakami) (?<y>[^\n]+)\b", "try_else(() -> $x, $y)")
+        code = replace(code, r"\b(?:try|koshish) (?<x>[^\n]+) (?:else|warna|naka{1,2}mi(?: p(e|ar))?) (?<y>[^\n]+)\b", "try_else(() -> $x, $y)")
         # NULL coalescing
         code = replace(code, r"(?<A>[_A-Za-z]\w*) ?\?\?\= ?(?<B>[^\n\t]+)", "$A = $A if ('$A' in globals() or '$A' in locals()) and $A is not None else $B")
         # the ifCONDITION(is true, then)=
-        code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:if|agar) ?(?<condition>[^\=]+)\= *(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or $A == $condition else $A")
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:if|agar) ?(?<condition>[^\=\n\t]+)\= ?(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or $A == $condition else $A")
         # the min= operator
-        code = replace(code, r"(?<A>[_A-Za-z]\w*) min *\= *(?<B>[^\n\t]+)", "$A = $B if ('$A' in globals() or '$A' in locals()) and (isinstance($A, (int, float)) and $A < $B) else 0 if ('$A' in globals() or '$A' in locals()) and (not isinstance($A, (int, float))) else $A")
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) min *\={1}(?!\=) *(?<B>[^\n\t]+)", "$A = $B if ('$A' in globals() or '$A' in locals()) and (isinstance($A, (int, float)) and $A < $B) else 0 if ('$A' in globals() or '$A' in locals()) and (not isinstance($A, (int, float))) else $A")
         # the max= operator
-        code = replace(code, r"(?<A>[_A-Za-z]\w*) max *\= *(?<B>[^\n\t]+)", "$A = $B if ('$A' in globals() or '$A' in locals()) and (isinstance($A, (int, float)) and $A > $B) else 0 if ('$A' in globals() or '$A' in locals()) and (not isinstance($A, (int, float))) else $A")
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) max *\={1}(?!\=) *(?<B>[^\n\t]+)", "$A = $B if ('$A' in globals() or '$A' in locals()) and (isinstance($A, (int, float)) and $A > $B) else 0 if ('$A' in globals() or '$A' in locals()) and (not isinstance($A, (int, float))) else $A")
         # the (def|fb)= operator
-        code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:def|fb|othe?r?ws) *\= *(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or not $A or type($A) != type($B) else $A")
+        code = replace(code, r"(?<A>[_A-Za-z]\w*) (?:def|fb|othe?r?ws) *\={1}(?!\=) *(?<B>[^\n\t]+)", "$A = $B if not('$A' in globals() or '$A' in locals()) or not $A or type($A) != type($B) else $A")
         code = replace(code, r"(?<![\d]|(?<!,) )\.{3} ?(?<dict>[_A-Za-z]\w*)", "**$dict")
         # sequence
         code = replace(code, r"(?<![\.\d]|(?<!,) )\.{2} ?(?<list>[_A-Za-z]\w*)", "*$list")
@@ -377,11 +438,12 @@ def execute(filename: str) -> None:
         # the ^\n part stays as-is
         code = replace(code, r"(?<A>[\-\.\w,\"'\[\]]+) (?:instance[ _]?of|(?:is[ _]?)an?|he[_ ]ek|(?:is|he|ki|has|of)?[ _]?(?:type|kism)(?:of)?) (?<B>\w+)", "isinstance($A, $B)")
         code = replace(code, r"\b(print|kaho) ([^\t\n]+)", "$1($2)")
-        code = replace(code, r",? <?(?:(?:might|shayad) (?:throw|raise|de)|(throw|raise)s) [^\:\n\t]+>?(?=\:)", "")
+        code = replace(code, r",? <?(?:(?:might|shayad) (?:throw|raise|de|uthae)|(?:throw|raise)s|uthae) [^\:\n\t]+>?(?=\:)", "")
         # ^ supposedly after a function fc x({...}?) might throw SomeError, and before a colon
-        code = replace(code, r"\b(final|let|var|farz|n(?:a(?:ya|i)|ew)|either|yato) ", "")
-        code = replace(code, r" (se(?! ?[\-\.\d])|to|tak|hua|k[aeio])\b", "")
-        code = replace(code, r"\b(?:collect(?:ed)?|together)\((?<params>(?<firstparam>[^\(\)]+), *(?<restofparams>[^\(\)]+))\)", "collect($params)" if "collect" in (globals()|locals()) and callable((globals()|locals())["collect"]) else "list(zip($params))")
+        code = replace(code, r"\b(?:final|let|var|farz|n(?:a(?:ya|i)|ew)|either|yato) ", "")
+        code = replace(code, r"\b(?<=\w )(?:present|mojud) (?=\S)", "")
+        code = replace(code, r" (?:se(?! ?[\-\.\d])|to|tak|hua|k[aeio](?:[_ ]?lie)?)\b", "")
+        code = replace(code, r"\b(?:collect(?:ed)?|together)\((?<params>(?<firstparam>[^\(\)]+), *(?<restofparams>[^\(\)]+))\)", "collect($params)" if "collect" in {**globals(), **locals()} and callable({**globals(), **locals()}["collect"]) else "list(zip($params))")
         # sequence matters
         # for numeric  keys
         code = replace(code, r"(?<k>\-?\d*\.?\d+)(?: *: *(?<type>[\w\[\]\<\>\?\|, ]+\??))? *-> *(?<v>[^\n\t]+)", "$k: $v,")
@@ -400,7 +462,7 @@ def execute(filename: str) -> None:
         code = replace(code, r"(?<=\S )\bkwarg\b", "= None")
         # DON'T edit
         code = replace(code, r"(?<type>[A-Za-z]\w*)(?:\?| \boptional\b)(?!\.)", "$type|None")
-        code = replace(code, r"sath (?:[\.\?]{3}|ba{1,2}ki|anja{1,2}n)(?=(?: (?:if|agar) [^\:]+)? ?\:)", "case _")
+        code = replace(code, r"(?<=(?<!\w) {2})sath (?:[\.\?]{3}|ba{1,2}ki|anja{1,2}n)(?=(?: (?:if|agar) [^\:]+)? ?\:)", "case _")
         code = replace(code, r"\b(?:none|koi_na)\b", "None")
         code = replace(code, r"(?<!\w)\?(?![\w\.])", "None")
         code = replace(code, r"\{(?:\.{3}|\*{1,2})\} *= *(?<obj>[A-Za-z]\w*)", "globals().update(**$obj)")
@@ -420,7 +482,7 @@ def execute(filename: str) -> None:
     	            keys_with_aliases[i] = keys_with_aliases[i].lstrip("**")
             obj: str = match.group(2)
             lhs: str = ", ".join(keys_with_aliases)
-            rhs: str = ", ".join(f"{obj}?.{k}" if k not in ("keys", "values", "items") else (f"{obj}.{k}() if '{obj}' in (globals()|locals()) and isinstance({obj}, dict) else " + "{}") for k in keys)
+            rhs: str = ", ".join(f"{obj}?.{k}" if k not in ("keys", "values", "items") else (f"{obj}.{k}() if '{obj}' in " + "{**globals(), **locals()}" + f" and isinstance({obj}, dict) else " + "{}") for k in keys)
             rhs = replace(rhs, r"([A-Za-z_]\w*\.items\(\))", "[list(tuple) for tuple in list($1)]")
             new_pair: str = lhs + " = " + rhs
             return new_pair
@@ -494,9 +556,9 @@ def execute(filename: str) -> None:
         	args = list(args)
         	# since tuples are immutable, we can't  work with them, we need a list
         	for i, arg in old_enumerate(args):
-        		if not arg:
+        		if arg is None:
         			args[i] = "koi_na"
-        		if is_int(arg):
+        		elif is_int(arg):
         			args[i] = fpk(arg)
         		elif is_flt(arg):
         			args[i] = fpk(arg)
@@ -510,10 +572,29 @@ def execute(filename: str) -> None:
         		delattr(platform, k)
         		#setattr(platform, replace(k, "python", "klang"), "")
         (sys.version, sys.version_info, sys.executable, sys.pycache_prefix) = (builtins.version, builtins.version, "", "")
-        extended_builtins: dict[str, Any] = {"builtins": builtins, "enumerate": numbered, "print": cust_print, "range": rng, "Number": Number, "sys": sys, "platform": platform, "KL_Py": KL_Py, "__name__": "__main__"}
+        __error_classes__: dict[str, Any] = {
+            "BuraSyntaxError": BuraSyntaxError,
+            "VariableNaMojudError": VariableNaMojudError,
+            "KeyNaMojudError": KeyNaMojudError,
+            "FileNaMojudError": FileNaMojudError,
+            "LibraryError": LibraryError,
+            "ModuleError": ModuleError,
+            "LibraryNaMojudError": LibraryNaMojudError,
+            "ModuleNaMojudError": ModuleNaMojudError,
+            "GalatKismError": GalatKismError,
+            "BuraKismError": BuraKismError,
+            "KismError": KismError,
+            "GalatValueError": GalatValueError,
+            "GalatIndexError": GalatIndexError,
+            "DivisionError": DivisionError,
+        }
+        extended_builtins: dict[str, Any] = {"builtins": builtins, "enumerate": numbered, "print": cust_print, "range": rng, "Number": Number, "sys": sys, "platform": platform, "KL_Py": KL_Py, **__error_classes__, "__name__": "__main__"}
         # let's ALSO push every individual function from KL_Py
         add_module("KL_Py", extended_builtins)
+        import hindGui
+        add_module("hindGui", extended_builtins)
         namespace: dict[str, Any] = extended_builtins | {}
+        namespace["argv"] = argv[1:] if len(argv) > 0 else []
         exec(code, namespace)
         for name, obj in namespace.items():
         	if name.startswith("__"):
@@ -540,27 +621,6 @@ if "main" in globals():
 #declare a new main for this file
 sys.tracebacklimit=0
 # we need this to minimize the stack trace, and to ADD EMPHASIS on the actual problem
-# handling ERRORS
-class BuraSyntaxError(SyntaxError):
-	def __int__(self, name: str, message: str = " ki umeed thi"):
-		self.name = name
-		self.message = message
-		super().__init__(name, message)
-class VariableNaMojudError(NameError):
-	def __int__(self, name: str, message: str = " is scope me mojud nahi"):
-		self.name = name
-		self.message = message
-		super().__init__(name, message)
-class KeyNaMojudError(KeyError):
-	def __int__(self, name: str, message: str = " (key) is object/class me mojud nahi"):
-		self.name = name
-		self.message = message
-		super().__init__(name, message)
-class GalatValueError(ValueError):
-	def __int__(self, name: str, message: str = " ki value galat he"):
-		self.name = name
-		self.message = message
-		super().__init__(name, message)
 
 TEMP_FILE_DIR: str = "._temp.klang"
 
@@ -698,9 +758,15 @@ def main() -> None:
     	arg = "main.klang"
     try:
     	execute(arg)
-    except FileNotFoundError:
-    	print("No entry point was found.\nEnter klang 'path/to/file' to compile.")
-    	Klang().cmdloop()
+    except FileNotFoundError as e:
+    	error: str = e.args[0]
+    	error = replace(error, r"\bdoesn't exist\b", "mojud nahi")
+    	malfunctioning_file: str = find_match(error, "(?<=\')[^\']*(?=\')") or e.filename
+    	if malfunctioning_file != "main.klang":
+    		raise FileNaMojudError(f"File `{malfunctioning_file}' is directory '{KL_Py._dir}' me mojud nahi") from None
+    	else:
+    		print(f"Entry point mojud na thi.\nKisi bhi Klang program ko compile karne ke lie 'klang file/ki/path' likhen. {error}")
+    		Klang().cmdloop()
     except SyntaxError as e:
     	args = list(e.args)
     	args[0] = replace(args[0], r"\bunterminated\b", "ger khatm shuda")
@@ -725,9 +791,32 @@ def main() -> None:
        key: str = find_match(e.args[0], r"[\"\'](\w+)[\"\']$")
        msg = f"Class, ya object '{object}' me key '{key}' mojud nahi"
        raise KeyNaMojudError(msg) from None
+    except ImportError as e:
+    	msg: str = e.args[0]
+    	if isinstance(e, ModuleNotFoundError):
+    	    msg = replace(msg, r"\bNo module named (?<module>\'\w*\')", "$module naam ki koi library mojud nahi")
+    	    raise LibraryNaMojudError(msg) from None
+    	if " (" in msg:
+    		msg = msg.split(" (")[0]
+    	msg = replace(msg, r"\bcannot import name (?<item>\'\w*\') from (?<module>\'\w*\')", "Library $module ke andar $item naam ka koi item mojud nahi")
+    	raise LibraryError(msg) from None
+    except TypeError as e:
+    	msg = e.args[0]
+    	msg = replace(msg, r"\bmust be( an?)?\b", "hona/i chahie tha/i ek")
+    	msg = replace(msg, r"(?<=\w, )an?\b", "ya ek")
+    	msg = replace(msg, r"(?<=\S) or an?\b", ", ya ek")
+    	msg = replace(msg, r"(?<=\S) and an?\b", ", aur ek")
+    	msg = replace(msg, r"(?<=\S, )not\b(?= \S)", "naake ek")
+    	raise KismError(msg) from None
     except ValueError as e:
     	msg = replace(e.args[0], r"\b[Ii]nvalid\b", "galat")
     	raise GalatValueError(msg) from None
+    except IndexError:
+    	msg = "Index string, tuple, ya list ki range se baahir he, or kuch zyada hi chota, ya bara he"
+    	raise GalatIndexError(msg) from None
+    except ZeroDivisionError as e:
+    	msg = "Kisi bhi number ko 0 se divide nahi kia jasakta"
+    	raise DivisionError(msg) from None
 
 if __name__ == "__main__":
     main()
