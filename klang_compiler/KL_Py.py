@@ -12,6 +12,7 @@ from datetime import datetime
 from copy import deepcopy
 from pathlib import Path
 import builtins, os, sys, platform, json, shutil, base64, requests, math, re, ast, webbrowser, subprocess
+from contextlib import contextmanager
 from itertools import product as collective_iter
 from re import escape
 import enum # NOTE: to allow enum.auto without making it global
@@ -154,11 +155,12 @@ Infinity = infinity = inf
 IntInfinity = int_infinity = int_inf = intinf = sys.maxsize
 goto = webbrowser.open
 link = webbrowser
+_dir = os.getcwd()
 # crucial \/
 class AbstractMethodsRehteHeError(TypeError):
 	def __init__(self, name: str):
-		name = str(name)
-		super().__init__(name)
+		self.name = str(name)
+		super().__init__(self.name)
 class AbstractBaseClassMeta(ABCMeta):
     def __new__(mcs, name, bases, namespace, **kwargs):
         cls = super().__new__(mcs, name, bases, namespace, **kwargs)
@@ -1132,7 +1134,7 @@ def replace(src: str, to_replace: str, replacement: str = "") -> str:
         # achieve JavaScript-like numbered-group convention ^
         replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like named-group convention ^
-    src = re.sub(to_replace, replacement, src)
+    src = re.sub(to_replace, replacement, src, flags=re.MULTILINE)
     return src
 def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
     if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
@@ -1146,7 +1148,7 @@ def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
         # achieve JavaScript-like numbered-group convention ^
         replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like named-group convention ^
-    src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE)
+    src = re.sub(to_replace, replacement, src, flags=re.MULTILINE | re.IGNORECASE)
     return src
 def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
     if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
@@ -1158,9 +1160,9 @@ def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
         to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
         replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like numbered-group convention ^
-        replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
+        replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement, flags=re.MULTILINE) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like named-group convention ^
-    src = re.sub(to_replace, replacement, src, count=1)
+    src = re.sub(to_replace, replacement, src, flags=re.MULTILINE, count=1)
     return src
 replace_first: Callable[[str, str, str, Optional[bool]], str] = replace_one
 def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
@@ -1175,7 +1177,7 @@ def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
         # achieve JavaScript-like numbered-group convention ^
         replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like named-group convention ^
-    src = re.sub(to_replace, replacement, src, flags=re.IGNORECASE, count=1)
+    src = re.sub(to_replace, replacement, src, flags=re.MULTILINE | re.IGNORECASE, count=1)
     return src
 replace_first_i: Callable[[str, str, str, Optional[bool]], str] = replace_one_i
 def find_matches(src: str, to_find: str) -> list[str]:

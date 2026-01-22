@@ -7,17 +7,42 @@ tor KL mangao KL_Py
 KL_Py mese mangao isstr, aur isint, ke_sath isbool
 mangao isstr, isint KL_Py mese
 surat is_str mangao isstr KL_Py mese
+print([1, 2, 3][2])
+kaho try 0/0 nakami par 0
 print(1 hazar + 3 so + 80)
 
 arr: int<list> = [10, 20, 30]
 print(numbered)
 har obj, i .. numbered(arr):
 	print "${i}. $obj"
+@context
+fc my_context:
+    kaho "you're in my context"
+    koshish:
+        next "Hello from my context"
+    ha par Error tor e:
+        kaho("$e=")
+    akhir:
+        kaho "exiting context"
+sath my_context() tor c:
+	kaho(c)
+# single-line comment
+"""
+multi-
+line
+comment
+"""
+har number darmyan [1, 3, 5] ke lie:
+	kaho "$number="
 
 fc add(x ka kism<nr>, y ka kism<nr>, z kism<nr> kwarg) deta_ek nr:
-	out x + y
+	agar mojud z aur z he kism nr:
+		out x +y+ z
+	warna out x + y
 print "${add(z=6, x=3, y=2)}"
 fc _sum(..args ka kism<list[nr]>) deta_ek nr:
+	agar nahi sare(n he kism nr har n darmyan args ke_lie):
+		out 0
 	out sum(args)
 print("sum:", _sum(2, 5, 7))
 `cls` = 4
@@ -49,7 +74,7 @@ print(Parent?.called)
 
 print(5 guna 4)
 print(pone 4 + sawa 2 + 1so)
-class TestClass extends Parent:
+class TestClass from Parent:
     _ctr():
     	mom.call()
     	print(this.called)
@@ -107,8 +132,8 @@ print "$nm="
 print({...arg, "age": 27})
 
 instruction Vehicle:
-	name: str optional
-	age: int optional
+	model: str optional
+	release: int optional
 	@follow
 	fc go_up() -> none: ...
 	@follow
@@ -117,16 +142,32 @@ instruction Vehicle:
 instruction Person:
 	name: str
 	age: int
-	
+	# introduce ho
+type Person = {
+    "name": str,
+    "age": int,
+    2: int
+}
+person: Person = {
+    name-> "Warren"
+    age-> 25
+}
+print "${person is:}"
+
 class Car from Vehicle:
 	fc go_up() -> none:
 		return 
 	fc go_down() -> none:
 		return 
+print(isinstance(Car, Vehicle))
 
-baad(5*sec, kaho("hi"))
+baad(mint / 4, kaho("hi"))
+# baad 15 seconds, kaho "hi"
 
 fc main(.. args, ...argv) -> ?:
+    print "HERE"
+    print argv
+    print "$argv=" agar mojud argv warna []
     har i .. 1..5:
     	print "$i="
     har j .. ..5:
