@@ -7512,7 +7512,7 @@ public class KL {
 			if (not(clr) || !in(clr, "(?<=\\w\\s)(on|upar)(?=\\s[#\\w])"))
 				return this;
 			String bg = "", fg = "";
-			Color textColor, bgColor;
+			Color textColor = new clr(0, 0, 0), bgColor = new clr(0, 0, 0);
 			if (in(clr, "(?<=\\w) on (?=[#\\w])")) {
 				String[] parts = clr.split(" on ");
 				bg = parts[1];
@@ -7522,9 +7522,9 @@ public class KL {
 				bg = parts[0];
 				fg = parts[1];
 			}
-			if (eq(bg, "#([A-Fa-z\\d]{3}){1,2}"))
+			if (eq(bg, "#([A-Fa-f\\d]{3}){1,2}"))
 				bgColor = new clr(bg);
-			if (eq(fg, "#([A-Fa-z\\d]{3}){1,2}"))
+			if (eq(fg, "#([A-Fa-f\\d]{3}){1,2}"))
 				textColor = new clr(fg);
 			try {
 				for (Field field : new clr(0).getClass().getDeclaredFields()) {
@@ -7537,8 +7537,10 @@ public class KL {
 					if (eq(fg, key))
 						textColor = value;
 				}
+				this.bgColor(bgColor);
+				this.textColor(textColor);
 			} catch (IllegalAccessException e) {
-
+				kl.print(e);
 			}
 			return this;
 		}
