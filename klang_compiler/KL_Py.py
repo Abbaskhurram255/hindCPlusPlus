@@ -945,14 +945,26 @@ filter = lambda arr, condition: filter(condition, arr)
 def rng(x: str|list|tuple|Number, y: str|list|tuple|Number|None = None, step: Number = 1, **kwArgs) -> list[int] | list[float]:
     if x is None or not isinstance(x, (str, list, tuple, Number)) or not isinstance(y, (str, list, tuple, Number, NoneType)) or step is None or not isinstance(step, Number):
     	return []
+    x_is_a_parsable_char: bool = False
+    y_is_a_parsable_char: bool = False
+    if isinstance(x, str) and len(str(x).strip()) != 0 and 0 <= ord(x) <= 127:
+    	if not y:
+    	    y = ord(x[0])
+    	    x = 97 if x[0].lower() == x[0] else 65
+    	else:
+    	    x = ord(x[0])
+    	x_is_a_parsable_char = True
+    if isinstance(y, str) and len(str(y).strip()) != 0 and 0 <= ord(y) <= 127:
+    	y = ord(y[0])
+    	y_is_a_parsable_char = True
     if len(kwArgs.keys()) > 0:
     	if "s" in kwArgs:
-    	    step = kwArgs.get("s", 0)
+    	    step = kwArgs.get("s", 1)
     	elif "step" in kwArgs:
-    		step = kwArgs.get("step", 0)
+    		step = kwArgs.get("step", 1)
     if step <= 0:
         step = 1
-    if isinstance(y, Number) and step >= y:
+    if (isinstance(y, Number) and step >= y):
         step = 1
     if isinstance(x, (str, list, tuple)) and step >= len(x):
         step = 1
@@ -1008,6 +1020,8 @@ def rng(x: str|list|tuple|Number, y: str|list|tuple|Number|None = None, step: Nu
     		while x <= y:
     		    return_list.append(x)
     		    x += step
+    if x_is_a_parsable_char or y_is_a_parsable_char:
+    	return_list = [chr(n) for n in return_list]
     return return_list
 def f(*args) -> str:
     formatted: str = ""
@@ -1024,7 +1038,7 @@ def f(*args) -> str:
     	caller_locals.update(scope.f_globals | scope.f_locals)
     blacklisted_keywords: list[str] = ['import', '__', 'open', 'exec', 'eval', 'del', 'lambda']
     blacklisted_functions: list[str] = ['system', 'popen', 'subprocess']
-    blacklisted_items: list[str] = blacklisted_keywords + blacklisted_functions
+    blacklisted_items: list[str] = [*blacklisted_keywords, *blacklisted_functions]
     for arg in args:
         if isinstance(arg, bool):
         	arg = "Yes" if arg == True else "No"
@@ -1043,7 +1057,7 @@ def f(*args) -> str:
             # for readability, there should be a whitespace character after each argument, except the last one (though, for the last one, it does not really matter, as it usually goes unnoticed)
             formatted += evaluation + WHITESPACE_CHAR
         except Exception as e:
-            print(e)
+            ...
     formatted = formatted.rstrip()
     return formatted
 def printf(*args, **kwargs) -> None:
