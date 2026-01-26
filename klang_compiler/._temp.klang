@@ -1,3 +1,2 @@
 fc main():
-	name: str = "Damon"
-	print 8+9
+	baad(mint / 4, () -> kaho("hi"))

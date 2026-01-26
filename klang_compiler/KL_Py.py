@@ -4,8 +4,8 @@ from abc import abstractmethod, ABCMeta, ABC as AbstractBaseClass
 from functools import reduce, lru_cache, cache
 from dataclasses import dataclass
 from math import *
-from random import randint, uniform, choice, sample
 from numbers import Number
+from random import randint as old_randint, uniform as old_randflt
 import time as timer
 from threading import Timer
 from datetime import datetime
@@ -20,11 +20,9 @@ import enum # NOTE: to allow enum.auto without making it global
 from enum import Enum
 from inspect import *
 from hindGui import *
+import pandas, numpy, matplotlib
 argv = sys.argv = sys.argv[1:]
 date = time = datetime
-rand_flt = randflt = uniform
-rand_from = rand_of = any_from = any_of = choice
-choices = sample
 # not possible directly, add later
 # BY creating a CUSTOM LIST type, and then adding them
 # list.add = list.push = list.append
@@ -71,48 +69,127 @@ def collective_range(*lists: list[list]) -> list[int]:
 			continue
 		lists[i] = range(len(lists[i]))
 	return collective_iter(*lists)
-old_randint = randint
-def rand_int(x: int = 9, y: int|None = None) -> int:
+# this is going to be an improved version, a replacement of (random.)randint
+# to avoid stack overflow, and cyclic references,
+# let's store the old_randint function
+from random import randint as old_randint, uniform as old_randflt
+def rand_int(x: int = 10, y: int|None = None) -> int:
     """
-    @param x                from (switchable with @param:y)
-                            int
-    @param y                to (switchable with @param:x)
-                            int, optional
-    @return                 a
+    A replacement to random.randint
+    @param x                 min (switchable with @param:y)
+        :type                     <int>
+    @param y                 max (switchable with @param:x)
+         :type           		 <int, optional>
+    @return            		 a random int
+     	:type			   	 <int>
     """
+    if isinstance(x, float):
+    	x = int(x)
     if not isinstance(x, int):
         x = 0
-    if not isinstance(y, (int, NoneType)):
-        y = 99
-    if x == y:
-        return x
+    if y is not None:
+        if isinstance(y, float):
+            y = int(y)
+        if not isinstance(y, int):
+            y = 10
     if y is None:
         x, y = 0, x
+    # with type checks out of the way
+    # there shouldn't be a problem
+    # if we do:
+    x = int(x)
+    y = int(y)
+    if x == y:
+        return x
     if y < x:
-        y += 1
+        x, y = y, x
+    # let's make the make the function exclusive (of y itself)
+    result: int = 0
+    if y > x:
+        result = old_randint(x, y - 1)
+    else:
+        result = old_randint(y, x - 1)
+    return result
+randint = koi_darmyan = randbetween = rand_between = randbw = rand_bw = randbelow = rand_below = rand_int
+def rand_flt(x: float = 0, y: float|None = None, precision: int|None = None) -> float:
+    """
+    A replacement to random.uniform
+    @param x                 min (or max if y is None)
+        :type                     <float>
+    @param y                 max (switchable with @param:x)
+         :type           		 <float, optional>
+    @return            		 a random int
+     	:type			   	 <float>
+    """
+    if not isinstance(x, (int, float)):
+        x = 0
+    if y is not None and not isinstance(y, (int, float)):
+        y = 1
+    x = float(x)
+    if y is not None:
+    	y = float(y)
+    if not x and y is None:
+    	x, y = 0, 1
+    if y is None:
+        x, y = 0.0, x
+    if x == y:
+        return x
+    if y < x:
         x, y = y, x
     # let's make the make the function exclusive (of y itself)
     if y > 0:
-        y -= 1
+        y -= .1
     else:
-        y += 1
-    return old_randint(x, y)
-randint = rand_int
-def rand_range(x: int = 9, y: int|None = None) -> list[int]:
-    if not isinstance(x, int):
-        x = 9
-    if not isinstance(y, (int, NoneType)):
-        y = 99
-    return_value: list[int] = []
-    if y is not None and y < x:
-        x, y = y, x
-    if y is None or x == y:
-        for _ in range(abs(x)):
-            return_value.append(rand_int(x))
+        y += .1
+    if not precision or not isinstance(precision, int) or precision <= 0:
+    	precision = 1
+    return round(old_randflt(x, y), precision)
+randfloat = rand_float = randflt = rand_flt
+def choose(iterable: Iterable, n: int = 1) -> Any|list[Any]:
+    if not isinstance(iterable, Iterable):
+    	return []
+    iterable = list(iterable)
+    if not iterable:
+    	return [] if n != 1 else None
+    if not n or not isinstance(n, int) or n < 0:
+    	n = 1
+    if n > len(iterable):
+    	n = len(iterable)
+    items: list[Any] = []
+    for _ in range(n):
+    	items.append(iterable[rand_int(len(iterable))])
+    if isinstance(iterable, str):
+    	return "".join(iterable)
+    if n == 1:
+    	return items[0]
+    return items
+choice = choices = choose_from = random_from = rand_from = rand_item = rand_items = rand_choice = choose_any = choose
+def rand_range(start: int = 9, stop: int|None = None) -> list[int]:
+    """
+    Generate a list of random integers.
+    - If stop is provided, generate a list of length abs(stop) with elements between start and stop (exclusive of stop).
+    - If stop is not provided, generate a list of length start with elements between 0 and start (exclusive of start)
+    - If nothing is provided, generate a list of 10 elements between 0 and 9 (inclusive).
+    @param start: The start of the range (inclusive) or length of list if stop is None.
+    @param stop: The end of the range (exclusive).
+    @return: A list of random integers.
+    """
+    if not isinstance(start, int):
+        start = 9
+    if stop is None:
+        if start == 0:
+            return []
+        length = abs(start)
+        return [rand_int(0, start+1 if start > 0 else start-1) for _ in range(length)]
     else:
-        for _ in range(y):
-            return_value.append(rand_int(x, y))
-    return return_value
+        if not isinstance(stop, int):
+            stop = 9
+        if stop < start:
+            start, stop = stop, start
+        length = abs(stop)
+        if start == stop:
+            return [start] * length  # or handle this case differently
+        return [rand_int(start, stop) for _ in range(length)]
 randrange = rand_range
 def rand_str(length: int = 16) -> str:
     if not isinstance(length, int) or length < 8:
@@ -121,7 +198,7 @@ def rand_str(length: int = 16) -> str:
         length = 64
     chars: str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+=_"
     return_value: str = ""
-    while length := length - 1:
+    for i in range(length):
         return_value += chars[randint(0, len(chars)-1)]
     return return_value
 randstr = rand_str
@@ -142,6 +219,18 @@ def rand_uuid() -> str:
 randuuid = rand_uuid
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
+def intersection_of(x: list|dict, y: list|dict) -> list|dict:
+	if not isinstance(x, (list, dict)) and not isinstance(y, (list, dict)):
+		return []
+	if all(isinstance(each, list) for each in [x, y]):
+		return_val: list[Any] = list(set(x).intersection(y))
+		return_val.sort()
+		# list.sort returns None
+		return return_val
+	if all(isinstance(each, dict) for each in [x, y]):
+		return dict(x.items() & y.items())
+	return []
+intersection = intersection_of
 class Char(str):
 	def __new__(cls, value):
 		if value is None or str(value) == "":
@@ -425,6 +514,328 @@ def numbered(x: str|list|tuple|dict) -> list[list[Any], list[int]]:
 	# allowing the following syntax:
 	#	for item, i in numbered(arr):
 	#        print("{i}. {item}")
+__old_list__ = builtins.list
+class Arr(__old_list__):
+    def __init__(self, *objs):
+        super().__init__()
+        self.push(objs)
+    def filter_out(self, fn):
+        if not callable(fn):
+            return None
+        self[:] = [x for x in self if not fn(x)]
+        return self
+    def keep_if(self, fn):
+        if not callable(fn):
+            return None
+        self[:] = [x for x in self if fn(x)]
+        return self
+    def map(self, fn):
+        if not callable(fn):
+            return None
+        self[:] = [fn(x) for x in self]
+        return self
+    def unique(self):
+        self[:] = __old_list__(dict.fromkeys(self))
+        return self
+    def has(self, x):
+        return x in self
+    def includes(self, x):
+        return self.has(x)
+    def i(self, i, default=None):
+        if not isinstance(i, int):
+            return None
+        if i < 0:
+            i = len(self) + i
+        if 0 <= i < len(self):
+            return self[i]
+        return default
+    def last(self):
+        if self:
+            return self[-1]
+        return None
+    def last_i(self, n):
+        if not isinstance(n, int):
+            return None
+        if n > 0 and n <= len(self):
+            return self[-n]
+        return None
+    def nth(self, n):
+        return self.i(n)
+    def nth_last(self, n):
+        return self.last_i(n)
+    def first(self):
+        if self:
+            return self[0]
+        return None
+    def second(self):
+        return self.i(1)
+    def sec_last(self):
+        return self.last_i(2)
+    def update(self, i, x):
+        if not isinstance(i, int):
+            return None
+        if i < 0:
+            i = len(self) + i
+        if 0 <= i < len(self):
+            self[i] = x
+        return self
+    def replace(self, i, x):
+        return self.update(i, x)
+    def shuffle(self):
+        import random
+        if len(self) > 1:
+            random.shuffle(self)
+        return self
+    def sort(self, key=None, reverse=False):
+        if len(self) > 1:
+            super().sort(key=key, reverse=reverse)
+        return self
+    def reverse(self):
+        if len(self) > 1:
+            super().reverse()
+        return self
+    def key_array(self):
+        return __old_list__(range(len(self)))
+    def keys(self):
+        return self.key_array()
+    def values(self):
+        return __old_list__(self)
+    def entries(self):
+        return [self.keys(), self.values()]
+    def slice(self, start: int = None, end: int = None):
+        if not isinstance(start, int) or not isinstance(end, int) or start >= len(self) or end > len(self) or start == end:
+        	return self[:]
+        return Arr(self[start:end])
+    def slice_keep(self, x):
+        if not isinstance(x, int) or x <= len(self) or x > len(self):
+        	return self.copy()
+        return self.slice(0, x)
+    def slice_right(self, x):
+        if not isinstance(x, int):
+        	return self.copy()
+        return self.slice(len(self) - x)
+    def slice_end(self, x):
+        if not isinstance(x, int):
+        	return self.copy()
+        return self.slice(0, len(self) - x)
+    def random(self):
+        import random
+        if self:
+            return random.choice(self)
+        return None
+    def empty(self) -> Self:
+        self.clear()
+        return self
+    def eq(self, other):
+        if not isinstance(other, __old_list__):
+        	return False
+        return self == other
+    def compare(self, other):
+        if not isinstance(other, __old_list__):
+        	return False
+        intersection = Arr(set(self) & set(other))
+        return len(intersection) > len(self) / 2
+    def union(self, *arrays):
+        return self.combine(*arrays)
+    def cat(self, *arrays):
+        return self.combine(*arrays)
+    def concat(self, *arrays):
+        return self.combine(*arrays)
+    def join(self, *arrays):
+        return self.combine(*arrays)
+    def join_str(self, s: str = ""):
+        return str(s).join(map(str, self))
+    def intersection(self, *arrays):
+        for arr in arrays:
+            if isinstance(arr, __old_list__):
+                self[:] = [x for x in self if x in arr]
+            elif isinstance(arr, Arr):
+                self[:] = [x for x in self if x in arr]
+        return self
+    def negative_intersection(self, *arrays):
+        for arr in arrays:
+            if isinstance(arr, __old_list__):
+                self[:] = [x for x in self if x not in arr]
+            elif isinstance(arr, Arr):
+                self[:] = [x for x in self if x not in arr]
+        return self
+    def map_val(self, old_val, new_val) -> Self:
+        for i, x in enumerate(self):
+            if x == old_val:
+                self[i] = new_val
+        return self
+    def sum(self) -> Number:
+    	if not len(self):
+    		return 0.0
+    	nums: __old_list__[Number] = [num for num in self if num is not None and isinstance(num, Number)]
+		# this is a necessary check
+    	if not len(nums):
+		    return 0.0
+    	return sum(nums)
+    def difference(self) -> Number:
+    	if not len(self):
+    		return 0.0
+    	nums: __old_list__[Number] = [num for num in self if num is not None and isinstance(num, Number)]
+		# this is a necessary check
+    	if not len(nums):
+		    return 0.0
+    	diff: Number = nums[0]
+    	for i, item in old_enumerate(nums):
+        	if i == 0:
+        		continue
+			# since we've already taken care of the first item
+			# we don't that
+	        if item > 1e9:
+		        item = 1e9
+	        if item < 1e-9:
+		        item = 1e-9
+	        diff -= item
+    	return diff
+    diff = difference
+    def product(self) -> Number:
+	    if not len(self):
+		    return 0.0
+	    nums: __old_list__[Number] = [num for num in self if num is not None and isinstance(num, Number)]
+		# this is a necessary check
+	    if not len(nums):
+		    return 0.0
+	    prd: Number = nums[0]
+	    for i, item in old_enumerate(nums):
+		    if i == 0:
+		        continue
+			# since we've already taken care of the first item
+			# we don't that
+		    if item > 1e9:
+		    	item = 1e9
+		    if item < 1e-9:
+		    	item = 1e-9
+		    prd *= item
+	    return prd
+    prd = product
+    def quotient(self) -> Number:
+	    if not len(self):
+		    return 0.0
+	    nums: __old_list__[Number] = [num for num in self if num is not None and isinstance(num, Number)]
+		# this is a necessary check
+	    if not len(nums):
+		    return 0.0
+	    quo: Number = nums[0]
+	    for i, item in old_enumerate(nums):
+		    if i == 0:
+		    	continue
+			# since we've already taken care of the first item
+			# we don't that
+		    if item == 0:
+		    	item = 1
+		    if item > 1e9:
+		    	item = 1e9
+		    if item < 1e-9:
+		    	item = 1e-9
+		    quo /= item
+	    return quo
+    quo = quotient
+    def max(self) -> Number:
+	    if not len(self):
+		    return 0.0
+	    nums: __old_list__[Number] = [num for num in self if num is not None and isinstance(num, Number)]
+		# this is a necessary check
+	    if not len(nums):
+		    return 0.0
+	    return max(nums)
+    def min(self) -> Number:
+	    if not len(self):
+		    return 0.0
+	    nums: __old_list__[Number] = [num for num in self if num is not None and isinstance(num, Number)]
+		# this is a necessary check
+	    if not len(nums):
+		    return 0.0
+	    return min(nums)
+    def combine(self, *args) -> Self:
+	    if not args:
+		    return self
+	    for arg in args:
+	    	if isinstance(arg, tuple):
+	    		arg = __old_list__(arg)
+				# a tuple?
+				# no thanks,
+				# we need a list
+	    	if isinstance(arg, __old_list__):
+	    	    self.extend(arg)
+	    	else:
+	    	    self.append(arg)
+	    return self
+    add = push = me_dalo = combine
+    def push_at(self, i: int, *items) -> Self:
+	    if not len(items):
+		    return self
+	    if not isinstance(i, int):
+		    i = len(self)
+	    if i < 0:
+	    	i = 0
+	    elif i > len(self):
+	    	i = len(self)
+	    #items = flatten(__old_list__(items))
+	    x = self[:i] + __old_list__(items) + self[i+len(items)-1:]
+	    updated_list: __old_list__ = __old_list__(x)
+	    self.clear()
+	    self.extend(updated_list)
+	    return self
+    def push_start(self, *items) -> Self:
+	    self.push_at(0, *items)
+	    return self
+    pehla_dalo = ke_pehle_dalo = unshift = push_start
+    def shift(self) -> Any|None:
+	    if len(self) == 0:
+	    	return None
+	    return self.pop(0)
+	    # pop the first item, "shift"ing all to the left by one bit
+    pehla_nikalo = shift
+	# OVERRIDE self.remove
+    old_remove = __old_list__.remove
+    def remove(self, *items) -> Any|None:
+	    if not len(self):
+	    	return None
+	    if not len(items):
+	    	return super().pop()
+	    items = flatten(__old_list__(items))
+	    last_removed: Any = items[-1]
+	    for item in items:
+	    	if not self.contains(item):
+	    		continue
+	    	self.old_remove(item)
+	    return last_removed
+    rmv = se_nikalo = mese_nikalo = remove
+	# OVERRIDE self.pop
+    old_pop = __old_list__.pop
+    def pop(self, *items) -> Any|None:
+	    if not len(self):
+	    	return None
+	    if not len(items):
+	    	return super().pop()
+	    items = flatten(__old_list__(items))
+	    last_popped: Any = self.old_pop(items[-1])
+	    for index in items:
+	    	if index >= len(self):
+	    		continue
+	    	if index < 0:
+	    		index = len(self) - abs(index)
+	    		if index < 0 or index >= len(self):
+	    			continue
+	    	self.old_pop(index)
+	    return last_popped
+    def contains(self, item) -> bool:
+	    return self.count(item) > 0
+    has = includes = me_shamil = me_mojud = contains
+    def index_of(self, x: Any) -> int:
+	    if not self.contains(x):
+	    	return -1
+	    return self.index(x)
+    find = find_index = index_of
+    no_of = counts_of = __old_list__.count
+    def print_map(self):
+        print(self)
+    def length(self):
+        return len(self)
 class numlist(list[Number]):
 	def __init__(self, *items: Number|list[Number]):
 		super().__init__()
@@ -580,7 +991,7 @@ class numlist(list[Number]):
 			else:
 			    self.append(arg)
 		return self
-	add = push = combine
+	add = push = me_dalo = combine
 	def push_at(self, i: int, *items) -> Self:
 		if not len(items) or not all(isinstance(item, Number) for item in items):
 			return self
@@ -618,7 +1029,7 @@ class numlist(list[Number]):
 				continue
 			self.old_remove(item)
 		return last_removed
-	rmv = remove
+	rmv = se_nikalo = remove
 	# OVERRIDE self.pop
 	old_pop = list[Number].pop
 	def pop(self, *items: list[Number]) -> Number:
@@ -640,7 +1051,7 @@ class numlist(list[Number]):
 	#def pop_at
 	def contains(self, item) -> bool:
 		return self.count(item) > 0
-	has = includes = contains
+	has = includes = me_mojud = contains
 	def index_of(self, x: Number) -> int:
 		if not isinstance(x, Number) or not self.contains(x):
 			return -1
@@ -1140,10 +1551,11 @@ def replace(src: str, to_replace: str, replacement: str = "") -> str:
     if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
     	return ""
+    if isinstance(to_replace, str):
+    	to_replace = re.sub(r"\$&", r"\0", to_replace)
+    	to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
     if isinstance(replacement, str):
         # if it's a string, rather than a callable---usually in the form of a lambda function
-        to_replace = re.sub(r"\$&", r"\0", to_replace)
-        to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
         replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like numbered-group convention ^
         replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
@@ -1154,10 +1566,11 @@ def replace_i(src: str, to_replace: str, replacement: str = "") -> str:
     if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
     	return ""
+    if isinstance(to_replace, str):
+    	to_replace = re.sub(r"\$&", r"\0", to_replace)
+    	to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
     if isinstance(replacement, str):
         # if it's a string, rather than a callable---usually in the form of a lambda function
-        to_replace = re.sub(r"\$&", r"\0", to_replace)
-        to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
         replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like numbered-group convention ^
         replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
@@ -1168,10 +1581,11 @@ def replace_one(src: str, to_replace: str, replacement: str = "") -> str:
     if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
     	return ""
+    if isinstance(to_replace, str):
+    	to_replace = re.sub(r"\$&", r"\0", to_replace)
+    	to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
     if isinstance(replacement, str):
         # if it's a string, rather than a callable---usually in the form of a lambda function
-        to_replace = re.sub(r"\$&", r"\0", to_replace)
-        to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
         replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like numbered-group convention ^
         replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement, flags=re.MULTILINE) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
@@ -1183,10 +1597,11 @@ def replace_one_i(src: str, to_replace: str, replacement: str = "") -> str:
     if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
     	return ""
+    if isinstance(to_replace, str):
+    	to_replace = re.sub(r"\$&", r"\0", to_replace)
+    	to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
     if isinstance(replacement, str):
         # if it's a string, rather than a callable---usually in the form of a lambda function
-        to_replace = re.sub(r"\$&", r"\0", to_replace)
-        to_replace = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_replace)
         replacement = re.sub(r"\$\{?(\d+)(\}(?!#{4}))?", r"\\\1", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
         # achieve JavaScript-like numbered-group convention ^
         replacement = re.sub(r"\$\{?([A-Za-z]+\w*)(\}(?!#{4}))?", r"\\g<\1>", replacement) # the function sees and uses 4 hashes (####) as an escape sequence for a replacement regex group's closing brace
@@ -1210,7 +1625,7 @@ def find_matches_as_obj(src: str, to_find: str) -> obj[str, str]:
     if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
     	return obj()
     to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
-    matches: obj[str, str] = {}
+    matches: obj[str, str] = obj()
     if matches_found := re.search(to_find, src):
     	matches = matches_found.groupdict()
     return matches
@@ -1218,7 +1633,7 @@ def find_matches_as_obj_i(src: str, to_find: str) -> obj[str, str]:
     if not src or not isinstance(src, str) or not to_find or not isinstance(to_find, str):
     	return obj()
     to_find = re.sub(r"(\?)(<\w+>)", r"\1P\2", to_find)
-    matches: obj[str, str] = {}
+    matches: obj[str, str] = obj()
     if matches_found := re.search(to_find, src, flags=re.IGNORECASE):
     	matches = matches_found.groupdict()
     return matches
@@ -1641,6 +2056,9 @@ def main() -> none:
     print(result)
     nlist: numlist = numlist(1, 3, 5, 7)
     print(nlist.push([9, 11]))
+    array = Arr(1, 3, 5)
+    array.me_dalo(7)
+    print(array)
     #pprint({"name": "Mike", "age": 17, "hobbies": ["horse riding", "country music", "farming"]})
     
 if __name__ == "__main__":
