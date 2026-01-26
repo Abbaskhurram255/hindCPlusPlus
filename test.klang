@@ -8,16 +8,33 @@ KL_Py mese mangao isstr, aur isint, ke_sath isbool
 mangao isstr, isint KL_Py mese
 surat is_str mangao isstr KL_Py mese
 
-tor pd mangao pandas
-tor np mangao numpy
-mangao pandas, numpy, matplotlib, seaborn, sklearn, torch, sympy, scipy, cv2, PIL
-tor pil mangao PIL
-tor sb mangao seaborn
-tor plt mangao matplotlib.pyplot
+#tor pd mangao pandas
+#tor np mangao numpy
+#mangao pandas, numpy, matplotlib, seaborn, sklearn, torch, sympy, scipy, cv2, PIL
+#tor pil mangao PIL
+#tor sb mangao seaborn
+#tor plt mangao matplotlib.pyplot
 
-arr1 kism<np.array> = np.array([1..3, 4..6, 7..9])
-arr2 kism<np.array> = np.array([2 se 4, 4 se 6, 6 se 8])
-kaho "sum: $arr1+arr2"
+#arr1 kism<np.array> = np.array([1..3, 4..6, 7..9])
+#arr2 kism<np.array> = np.array([2 se 4, 4 se 6, 6 se 8])
+#kaho "sum: $arr1+arr2"
+tor pd, np mangao pandas, aur numpy
+tor DF, aur rcsv mangao DataFrame, aur read_csv pandas mese
+tor DF, rcsv mangao pandas: DataFrame, aur read_csv
+mangao numpy[*]
+mangao pandas[sab kuch]
+mangao sab kuch numpy mese
+mangao array numpy mese
+pandas mese mangao DataFrame
+mangao DataFrame, ke_sath read_csv pandas mese
+pandas mese mangao read_csv
+tor arr mangao array numpy mese
+kaho 2.2 darmyan 2 se 6
+kaho 2 darmyan 2 se 6
+kaho 1 darmyan 6 se 2
+kaho "hello" "hello world" me
+kaho "hello world" me shamil "hello"
+kaho "hello" darmyan "hello world"
 
 kaho try 0/0 nakami par 0
 print(1 hazar + 3 so + 80)
@@ -171,8 +188,15 @@ class Car from Vehicle:
 	fc go_down() -> none:
 		return 
 print(Car he kism Vehicle)
-
-baad(mint / 4, kaho("hi"))
+farz i, j are 0, 5
+jabtak i chota 5 se:
+    kaho "in WHILE, $i="
+    i me 1 ka izafa hota rahe
+jabtak j bara ya barabar 0 ke tabtak:
+    kaho "in WHILE, $j="
+    j mese 1 ko nikaalte raho
+    #j kam hota rahe he
+#baad(mint / 4, () -> kaho("hi"))
 # baad 15 seconds, kaho "hi"
 
 fc main(.. args, ...argv) -> ?:
