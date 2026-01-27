@@ -6,7 +6,6 @@ import importlib, cmd, ctypes
 import KL_Py
 # ^ the import above is a MANDATORY imoort, and so is the following:
 from KL_Py import *
-#import pandas, numpy, matplotlib, seaborn, sklearn, cv2
 
 # error classes
 class BuraSyntaxError(SyntaxError):
@@ -649,7 +648,7 @@ def execute(filename: str) -> None:
         for j, escaped_keyword in old_enumerate(escaped_keywords):
         	escaped_keyword = escaped_keyword[1:-1]
         	code = code.replace(f"__ESCAPED_KEYWORD_{j}__", escaped_keyword)
-        print(f"Translation:\n________________\n\n{code}\n\n________________\n____________\n________\n\n\n")
+        #print(f"Translation:\n________________\n\n{code}\n\n________________\n____________\n________\n\n\n")
         old_print: Callable = builtins.print
         def cust_print(*args, **kwargs):
         	args = list(args)
@@ -759,12 +758,6 @@ class Klang(cmd.Cmd):
             	    file_to_be_compiled: str = line
             	    try:
             	    	with open(RECENTS_LOG_FILE_DIR, "a") as log_file:
-            	         	if os.name == "nt":
-            			     	# hide the file on Windows
-            		             # the . prefix already hides it on Unix-like platforms
-            		             # including Linux, Android, and Mac
-            		             HIDDEN: int = 2
-            		             ctypes.windll.kernel32.SetFileAttributesW(log_file.name, HIDDEN)
             	         	log_file.write(f"\n{file_to_be_compiled}")
             	    except Exception as e:
             		    ...
@@ -794,12 +787,6 @@ class Klang(cmd.Cmd):
             		    new_content = contents + "\n\t" + argument_variable
             		try:
             			with open(TEMP_FILE_DIR, "w") as temp_program_file:
-            		    	 if os.name == "nt":
-            			     	# hide the file on Windows
-            		         	# the . prefix already hides it on Unix-like platforms
-            		         	# including Linux, Android, and Mac
-            		         	HIDDEN: int = 2
-            		         	ctypes.windll.kernel32.SetFileAttributesW(temp_program_file.name, HIDDEN)
             		    	 temp_program_file.write(new_content)
             		    	 run_process(f"python execute.py {temp_program_file.name}", True)
             		except Exception as e:
@@ -944,6 +931,8 @@ def main() -> None:
     except ZeroDivisionError as e:
     	msg = "Kisi bhi number ko 0 se divide nahi kia jasakta"
     	raise DivisionError(msg) from None
+    except re.error as e:
+        print("andruni kharabi.")
 
 if __name__ == "__main__":
     main()

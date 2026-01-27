@@ -20,7 +20,7 @@ import enum # NOTE: to allow enum.auto without making it global
 from enum import Enum
 from inspect import *
 from hindGui import *
-import pandas, numpy, matplotlib
+import numpy
 argv = sys.argv = sys.argv[1:]
 date = time = datetime
 # not possible directly, add later
@@ -2014,7 +2014,7 @@ def filepath(to_filename: str) -> str:
         return ""
     to_filename = to_filename.strip()
     return os.path.join(os.getcwd(), to_filename)
-file_path = path_to = filepath
+file_path = get_path = to_path = path_to = filepath
 
 def main() -> none:
     print(Int("100", 2))
