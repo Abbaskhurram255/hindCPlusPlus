@@ -1,2 +1,13 @@
-tor np mangao numpy
-kaho "imports succesful"
+class Book:
+    _ctr(name kism<str>, year kism<int>):
+        mera.name = name
+        mera.year = year
+    _str() return kare str:
+        return "Kitaab(naam: '${mera.name}', saal: ${mera.year})"
+book kism<Book> = Book("Meri Kitaab", 2011)
+print(book)
+
+i kism<int> is 0
+jabtak i chota 5 se:
+    kaho "$i="
+    i me 1 ka izafa hota rahe

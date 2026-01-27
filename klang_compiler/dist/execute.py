@@ -160,7 +160,7 @@ def execute(filename: str) -> None:
         # equality_keyword=he|brbr|barabar
         r"(?<=(?<![ianh])\S )(?:(?:hen? )?(?:ba?ra?ba?r|hen?)(?: hen?)?)(?= +\S+)": "==",
         # assignment_keyword=is (as long as it's not followed by ` *(not None|type|kism| *a| *an))`
-        r"(?<=\w )\b(?:is|are|be|rakho|ab)\b(?!(?: (?:not None|type|kism)| *an?))": "=",
+        r"(?<=\S )\b(?:is|are|be|rakho|ab)\b(?!(?: (?:not None|type|kism)| *an?))": "=",
         # sequence
         r"aur(?= +\S)": "and",
         r"ya(?= +\S)": "or",
