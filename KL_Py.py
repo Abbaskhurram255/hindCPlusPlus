@@ -11,7 +11,7 @@ from threading import Timer
 from datetime import datetime
 from copy import deepcopy
 from pathlib import Path
-import builtins, os, sys, platform, json, shutil, base64, requests, math, re, ast, webbrowser, subprocess
+import builtins, os, sys, platform, json, shutil, base64, math, re, ast, webbrowser, subprocess, requests
 from contextlib import contextmanager
 from itertools import product as collective_iter
 from re import escape
@@ -20,13 +20,9 @@ import enum # NOTE: to allow enum.auto without making it global
 from enum import Enum
 from inspect import *
 from hindGui import *
-import pandas, numpy, matplotlib
-argv = sys.argv = sys.argv[1:]
+#import numpy
+argv = ARGV = sys.argv[1:]
 date = time = datetime
-# not possible directly, add later
-# BY creating a CUSTOM LIST type, and then adding them
-# list.add = list.push = list.append
-# list.add_at = list.push_at = list.insert
 def try_else(x: Any, y: Any) -> Any|None:
 	try:
 		if not x:
@@ -284,7 +280,7 @@ class AbstractBaseClassMeta(ABCMeta):
         		)
         return cls
 typename = TypeT = typeT = TypeVar("T")
-def run_process(command: str|list[str], new_window: bool = False) -> None:
+def run_process(command: str|list[str], new_window: bool = False, **kwargs) -> None:
 	if not command or not isinstance(command, (str, list)):
 		return
 	if isinstance(command, str):
@@ -293,9 +289,9 @@ def run_process(command: str|list[str], new_window: bool = False) -> None:
 		command = command.split(" ")
 	try:
 		if new_window:
-			subprocess.Popen(command)
+			subprocess.Popen(command, **kwargs)
 		else:
-			subprocess.run(command, check=True)
+			subprocess.run(command, check=True, **kwargs)
 	except:
 		...
 def kill_process(process_name: str) -> bool:
@@ -481,6 +477,10 @@ def kism(x: Any) -> type:
 def he_kism(x: Any, y: type) -> bool:
 	return isinstance(x, y)
 is_type = istype = he_kism
+def lambai(x: Iterable) -> int:
+    if not isinstance(x, Iterable):
+        return 0
+    return len(x)
 def barabar(x, y) -> haal:
     if isinstance(x, str) and isinstance(y, str):
         return x.lower() == y.lower()
@@ -516,9 +516,18 @@ def numbered(x: str|list|tuple|dict) -> list[list[Any], list[int]]:
 	#        print("{i}. {item}")
 __old_list__ = builtins.list
 class Arr(__old_list__):
-    def __init__(self, *objs):
+    current_type = Any
+    length_is_final: bool = False
+    def __init__(self, *objs, fixed: bool = False):
+        if len(objs) > 0 and objs[0] is not None:
+            self.current_type = type(objs[0])
         super().__init__()
         self.push(objs)
+        filtered_lst = [item for item in self if type(item) == self.current_type]
+        self.clear()
+        self[:] = filtered_lst
+        if fixed:
+            self.length_is_final = True
     def filter_out(self, fn):
         if not callable(fn):
             return None
@@ -751,6 +760,8 @@ class Arr(__old_list__):
 		    return 0.0
 	    return min(nums)
     def combine(self, *args) -> Self:
+	    if self.length_is_final:
+		    return self
 	    if not args:
 		    return self
 	    for arg in args:
@@ -762,10 +773,14 @@ class Arr(__old_list__):
 	    	if isinstance(arg, __old_list__):
 	    	    self.extend(arg)
 	    	else:
+	    	    if self.current_type is not Any and type(arg) != self.current_type:
+	    	        continue
 	    	    self.append(arg)
 	    return self
     add = push = me_dalo = combine
     def push_at(self, i: int, *items) -> Self:
+	    if self.length_is_final:
+		    return self
 	    if not len(items):
 		    return self
 	    if not isinstance(i, int):
@@ -785,6 +800,8 @@ class Arr(__old_list__):
 	    return self
     pehla_dalo = ke_pehle_dalo = unshift = push_start
     def shift(self) -> Any|None:
+	    if self.length_is_final:
+	    	return None
 	    if len(self) == 0:
 	    	return None
 	    return self.pop(0)
@@ -793,6 +810,8 @@ class Arr(__old_list__):
 	# OVERRIDE self.remove
     old_remove = __old_list__.remove
     def remove(self, *items) -> Any|None:
+	    if self.length_is_final:
+	    	return None
 	    if not len(self):
 	    	return None
 	    if not len(items):
@@ -808,6 +827,8 @@ class Arr(__old_list__):
 	# OVERRIDE self.pop
     old_pop = __old_list__.pop
     def pop(self, *items) -> Any|None:
+	    if self.length_is_final:
+	    	return None
 	    if not len(self):
 	    	return None
 	    if not len(items):
@@ -1547,6 +1568,38 @@ def split(src: str, regex: str = "", maxsplits: int = IntInfinity, flags: int = 
     		continue
     	result.append(x)
     return result
+def joined_words(*args: tuple[Any]) -> str:
+	"""
+	@param			args
+	    :type			tuple[Any]
+	    :description		arguments to join in "x, y, aur z" format
+	@return			
+	    :type                                          str <blankable, if len(args) == 0>
+	    :description		the joined arguments (initially of type, Any)
+	"""
+	result: list[str] = []
+	for arg in args:
+		if arg is None:
+			continue
+		if isinstance(arg, (list, tuple)):
+			arg = joined_words(*arg)
+			arg = re.sub(r"(?<=, )aur (?=.+$)", "", str(arg))
+		if isinstance(arg, float):
+			arg = round(arg, 1)
+		if isinstance(arg, bool):
+			arg = "Han" if arg else "Nahi"
+		arg = str(arg)
+		if ", " in arg:
+			sub_args: list[str] = arg.split(", ")
+			for sub_arg in sub_args:
+				result.append(sub_arg)
+			continue
+		result.append(arg)
+	if len(result) < 2:
+		return ", ".join(result)
+	last: str = str(result.pop())
+	return ", ".join(result) + ", aur " + last
+jurewe = joined_words
 def replace(src: str, to_replace: str, replacement: str = "") -> str:
     if not src or not isinstance(src, str) or not to_replace or not isinstance(to_replace, str) or not isinstance(replacement, (str, Callable)):
     	# allow empty replacement for removals
@@ -1669,7 +1722,139 @@ def match_i(src: str, to_find: str) -> bool:
     if len(matches) == 0:
         return False
     return True
-class money:
+def find_words(src: Any) -> list[str]:
+	"""
+	@param			src
+	    :type			Any
+	    :description		the source to find the words from
+	@return			
+	    :type                                          list <blankable, if no words are found>
+	    :description		a word list containing all the words from the object
+	"""
+	if not src:
+		return ""
+	src = str(src).strip()
+	word_list: list[str] = find_matches(src, r"(?:[A-Za-z]+\-)*[A-Za-z]+")
+	return word_list
+dhundo_alfaaz = dhundo_alfaz = words_of = to_words = find_words
+def isinstance_each(x: Any, y: Any) -> bool:
+    """
+    WARNING:
+    this is different from builtins.isinstance
+    HOW: it shortens multiple isinstance checks into one
+    WHERE y is the type to compare each item in x with.
+    So, unlike the original...
+    this one won't return True for
+        isinstance([1, 2], list[int])
+    unlike the original!
+    however, here is what it WILL return True for:
+        isinstance_each([1, 2], int) // output: True
+    """
+    if y is None:
+        # NoneType works, but None throws an error
+        return False
+    if not builtins.isinstance(x, (list, tuple)):
+        return builtins.isinstance(x, y)
+    checks_completed: int = 0
+    for item in x:
+        if not builtins.isinstance(item, y):
+            continue
+        checks_completed += 1
+    return checks_completed == len(x)
+each_isinstance = each_is_instance = is_instance_each = isinstance_each
+def startswith(x: str|list, y: str|list) -> bool:
+    if not isinstance(x, (str, list, tuple)):
+        return False
+    if isinstance_each([x, y], str):
+        return x.startswith(y)
+    elif isinstance(x, (list, tuple)):
+        if isinstance(x, tuple):
+            x = list(x)
+        if not isinstance(y, (list, tuple)):
+            y = [y]
+        if isinstance(y, tuple):
+            y = list(y)
+        if len(x) < len(y):
+            return False
+        return x[:len(y)] == y
+    return False
+starts_with = startswith
+def endswith(x: str|list, y: str|list) -> bool:
+    if not isinstance(x, (str, list, tuple)):
+        return False
+    if isinstance_each([x, y], str):
+        return x.endswith(y)
+    elif isinstance(x, (list, tuple)):
+        if isinstance(x, tuple):
+            x = list(x)
+        if not isinstance(y, (list, tuple)):
+            y = [y]
+        if isinstance(y, tuple):
+            y = list(y)
+        if len(x) < len(y):
+            return False
+        return x[-len(y):] == y
+    return False
+ends_with = endswith
+def upper(src: str) -> str:
+    if not isinstance(src, str):
+        return ""
+    result: str = src.upper()
+    return result
+def isupper(src: str) -> bool:
+    if not isinstance(src, str):
+        return False
+    return src.isupper()
+is_upper = isupper
+def lower(src: str) -> str:
+    if not isinstance(src, str):
+        return ""
+    result: str = src.lower()
+    return result
+def islower(src: str) -> bool:
+    if not isinstance(src, str):
+        return False
+    return src.islower()
+is_lower = islower
+def snake_case(src: str) -> str:
+    if not isinstance(src, str):
+        return ""
+    all_were_upper: bool = False
+    if src.upper() == src:
+        all_were_upper = True
+    result: str = src.casefold()
+    result = re.sub(r"[^\-\.\w\n]+", "_", result).strip("_")
+    if all_were_upper:
+        result = result.upper()
+    return result
+snakecase = snake_case
+def is_snake_case(src: str) -> bool:
+    if not isinstance(src, str):
+        return False
+    return src == snake_case(src)
+issnakecase = is_snakecase = is_snake_case
+def title_case(src: str) -> str:
+    if not isinstance(src, str):
+        return ""
+    result: str = src.title()
+    return result
+def is_title_case(src: str) -> bool:
+    if not isinstance(src, str):
+        return False
+    return src.istitle()
+istitle = is_title = istitlecase = is_titlecase = is_title_case
+def sentence_case(src: str) -> str:
+    if not isinstance(src, str):
+        return ""
+    result: str = src.capitalize()
+    return result
+sentcase = sent_case = sentence_case
+def is_sentence_case(src: str) -> bool:
+    if not isinstance(src, str):
+        return False
+    return src == sentence_case(src)
+issentcase = is_sentcase = is_sent_case = issentencecase = is_sentencecase = is_sentence_case
+class Money:
     def __init__(self, amount=0, currency="Rs. "):
         self.amount = amount if amount >= 0 else 0
         self.currency = currency if currency and len(currency) <= 4 else "Rs. "
@@ -1701,7 +1886,7 @@ class money:
         return f"{self.currency}{self.amount:.2f}"
     def balance(self):
         return str(self)
-class pesa(money):
+class pesa(Money):
     def __init__(self, amount, currency):
         super().__init__(amount, currency)
 def open_file_case_ins(filename: str, mode: str = 'r'):
@@ -1737,6 +1922,7 @@ class File:
         return self.is_file() and self.exists()
     def exists_folder(self) -> bool:
         return self.is_folder() and self.exists()
+    exists_dir = exists_folder
     @staticmethod
     def create(fname: str, content: str = "") -> bool:
         try:
@@ -2014,7 +2200,43 @@ def filepath(to_filename: str) -> str:
         return ""
     to_filename = to_filename.strip()
     return os.path.join(os.getcwd(), to_filename)
-file_path = path_to = filepath
+file_path = get_path = to_path = path_to = filepath
+## belongs at the bottom of KL_Py.py
+## a helper function for def= operator
+def get_initial_of(x: Any) -> Any:
+	if not x:
+		return None
+	out: Any
+	match x:
+		case "str":
+			out = ""
+		case "int":
+			out = 0 
+		case "flt" | "float" | "dbl" | "double" | "Number" | "nr":
+                                                      # a number is both a float, and int
+                                                      # lets just assume its a float
+			out = 0.0
+		case "bool" | "haal":
+			out = False
+		case "list":
+			out = []
+		case "tuple":
+			out = ()
+		case "set":
+			out = {}
+		case "Arr":
+			out = Arr()
+		case "numlist":
+			out = numlist()
+		case "intlist":
+			out = intlist()
+		case "fltlist":
+			out = fltlist()
+		case "dict" | "obj":
+			out = obj()
+		case _:
+			out = None
+	return out
 
 def main() -> none:
     print(Int("100", 2))
@@ -2056,8 +2278,9 @@ def main() -> none:
     print(result)
     nlist: numlist = numlist(1, 3, 5, 7)
     print(nlist.push([9, 11]))
-    array = Arr(1, 3, 5)
-    array.me_dalo(7)
+    array = Arr(1, 3, 5, 6, None, "", fixed=True)
+    array.me_dalo("x")
+    array.me_dalo(8)
     print(array)
     #pprint({"name": "Mike", "age": 17, "hobbies": ["horse riding", "country music", "farming"]})
     
