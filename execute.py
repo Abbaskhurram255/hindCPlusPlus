@@ -272,8 +272,16 @@ def execute(filename: str) -> None:
         # remove multi-line comments
         # single-line comments will be gotten rid of later
         # FOR A BIG REASON (being settings can contains hashes --- # --- too)
-        code = replace(code, "[\"\']{3}[^\"\']*[\"\']{3}", "")
-        # Remove strings
+        multi_line_comments: list[str] = re.findall(r"[\"\']{3}[\s\S]*?[\"\']{3}", code)
+        # *? is used for LAZY match (matching only one match at a time)
+        # it's better if you DO NOT TOUCH THE REGEX
+        for multi_line_comment in multi_line_comments:
+            unprocessed_multi_line_comment: str = multi_line_comment
+            # storing the original comment for later
+            processed_multi_line_comment: str = multi_line_comment[3:-3]
+            processed_multi_line_comment = re.sub("\n[^\n]*", "\n", processed_multi_line_comment)
+            code = code.replace(unprocessed_multi_line_comment, processed_multi_line_comment)
+        # Remove strings (actual strings, now that multi-line comments are GONE)
         strings: list[str] = find_matches(code, r"\"[^\"]*\"") + find_matches(code, r"\'[^\'\"]*\'")
         # added partial support for ''
         for i, string in old_enumerate(strings):
@@ -309,13 +317,24 @@ def execute(filename: str) -> None:
                         strings[i] = replace(strings[i], templt, processed_templt)
                         strings[i] = replace(strings[i], r"(?<=\S\.)\b_cl(?:as)?s_?name\b", "__class__.__name__")
                         strings[i] = replace(strings[i], r"(?<=\S\.)\b_cl(?:as)?s\b", "__class__")
+                        # readable index access
+                        strings[i] = replace(strings[i], r"\[\.?(?:(?:f(?:ir)?st|pehle)(?:[_ ]ke)?|shuru?(?:[_ ][smk]e|wa{1,2}ti)) *[\: ] *(?<n>\d+)\]", "[0:$n]")
+                        strings[i] = replace(strings[i], r"\[\.?(?:la?st|akhri|akhir)(?:[_ ]?[smk]e)? *[\: ] *(?<n>\d+)\]", "[-$n:]")
+                        strings[i] = replace(strings[i], r"\[(?:\.(?:f(?:ir)?st|pehla)|\.?1(?:st|h?la))\]", "[0]")
+                        strings[i] = replace(strings[i], r"\[(?:\.(?:sec(?:o|d|o?nd?)?|d(?:u|oo)sra)|\.?2(?:nd|s?ra))\]", "[1]")
+                        strings[i] = replace(strings[i], r"\[(?:\.(?:th(?:i|d|i?rd?)|t(?:i|ee)sra)|\.?3(?:rd|s?ra))\]", "[2]")
+                        strings[i] = replace(strings[i], r"\[\.?(?:(?:shuru?(?:wat)?(?:[_ ]?(?:k|wal)a)|n)\:)?(?<n>\d+)(?:st|nd|rd|h?la|th|th?a|s?ra|wa)\]", "[$n-1]")
+                        strings[i] = replace(strings[i], r"\[\.?(?:(?:a{1,2}kh(?:ir|ri)(?:[_ ]?(?:k|wal)a)|\-n)\:)(?<n>\d+)(?:st|nd|rd|h?la|th|th?a|s?ra|wa)\]", "[-$n]")
+                        strings[i] = replace(strings[i], r"\[(?:(?:(?:\.th(?:i|d|i?rd?))[_ ]?la?st)|\.?[t3](?:i|ee)?(?:s?ra|rd)[_ ]?(?:a{1,2}khri|la?st))\]", "[-3]")
+                        strings[i] = replace(strings[i], r"\[(?:(?:(?:\.sec(?:o|d|o?nd?)?|2nd)[_ ]?la?st)|\.?[d2](?:u|oo)?(?:s?ra|nd)[_ ]?(?:a{1,2}khri|la?st))\]", "[-2]")
+                        strings[i] = replace(strings[i], r"\[\.?(?:(?:f(?:ir)?st|pehla)|1(?:st|h?la))?[_ ]?(?:\.?(?:la?st|a{1,2}khri))\]", "[-1]")
         	# the #### part helps get rid of a bug
-        	# this replaces previously remove {formatted_var} functionality with new $-based functionality
+        	# this replaces previously removed {formatted_var} functionality with new $-based functionality
         	# WARNING: r"{$1}####" should be as is
-        	# the additional whitespace keeps the whole function together
+        	# the additional whitespace keeps the whole together
         	# ^ needed as-is
         	old_string = string
-        	code = code.replace(old_string, f"__STRING_{i}__") # editor's NOTE: if it works, DON'T touch it! should be `replace(string, ...`, i.e. just AS-IS, and NOT replace(strings[i], ...
+        	code = code.replace(old_string, f"__STRING_{i}__") # editor's NOTE: if it works, DON'T touch it! should be `code.replace(old_string, ...`, i.e. just AS-IS, and NOT replace(strings[i], ...
         	# ^ needed as-is
         # Replace context-based keywords
         # handling import cases
@@ -749,6 +768,10 @@ def execute(filename: str) -> None:
         def cust_print(*args, **kwargs):
         	args = list(args)
         	# since tuples are immutable, we can't  work with them, we need a list
+        	if len(args) == 1 and args[0] == "\n":
+                      # to print only a line_break (without arguments), just do cust_print()
+                      # as cust_print("\n") would lead to two of them
+                      args[0] = ""
         	for i, arg in old_enumerate(args):
         		if arg is None:
         			args[i] = "koi_na"
@@ -761,8 +784,10 @@ def execute(filename: str) -> None:
         		elif isinstance(arg, (list, tuple)):
         			args[i] = __join_into_words_version_2__(arg)
         		else:
-        			# if it's an object from a user class
+        			# if it's an object of any other type (list, some custom class, ...)
+                                                      # let's stringify, and post-process it, to make it look prettier
         			args[i] = str(args[i])
+        			args[i] = replace(args[i], r", (?=[^,\]]+\])", ", aur ")
         			args[i] = replace(args[i], r"(?<=^\<)class(?= [\"\'][A-Za-z_][\w\.]*[\"\']\>$)", "kism:")
         			# ^ meaning <class 'int'>  SHOULD BE  <kism 'int'>
         			# dont mess around
@@ -1012,50 +1037,54 @@ class Klang(cmd.Cmd):
         print(self.credits)
     do_authors = do_author = do_credits
     def do_recent(self, _):
-    	if not File(RECENTS_LOG_FILE_DIR).exists_file():
-    		print("No recent files, as you haven't compiler any programs yet. Please compile a program first.")
-    		return
-    	try:
-    		with open(RECENTS_LOG_FILE_DIR, "r") as file:
-    		    lines: list[str] = file.readlines()
-    		    if not len(lines):
-    		    	return
-    		    most_recent_file: str = lines[-1]
-    		    self.do_klang(most_recent_file)
-    	except Exception as e:
-    		...
+        """
+        Pichli pichli file ko dubara compile karega
+        """
+        if not File(RECENTS_LOG_FILE_DIR).exists_file():
+            print("No recent files, as you haven't compiler any programs yet. Please compile a program first.")
+            return
+        try:
+    	    with open(RECENTS_LOG_FILE_DIR, "r") as file:
+    	        lines: list[str] = file.readlines()
+    	        if not len(lines):
+    	            return
+    	        most_recent_file: str = lines[-1]
+    	        self.do_klang(most_recent_file)
+        except Exception as e:
+            ...
     def do_clear(self, line) -> bool:
-        """Clears the cache if the line reads 'cache',
-        \totherwise clears the screen."""
+        """Agar sub argument 'cache' rahi to cache files ko hata dega,
+        \twarna screen ko clear/saaf kardega."""
         console_clear_command: str
         if os.name == "nt":
-        	# if Windows
-        	console_clear_command = "cls"
+            # if Windows
+            console_clear_command = "cls"
+            run_process(f"{PIP_PATH} cache purge", True)
         else:
-        	# but if probably Unix (including Linux, Android, and Mac)
-        	console_clear_command = "clear"
+            # but if probably Unix (including Linux, Android, and Mac)
+            console_clear_command = "clear"
         if not line:
-        	os.system(console_clear_command)
-        	Klang().cmdloop()
+            os.system(console_clear_command)
+            Klang().cmdloop()
         if File(TEMP_FILE_DIR).exists_file():
-        	try:
-                      os.remove(TEMP_FILE_DIR)
-        	except:
-                      ...
-        	# delete both, if both exist
-        	# otherwise, delete whichever
-        	# does
+            try:
+                os.remove(TEMP_FILE_DIR)
+            except:
+                ...
+            # delete both, if both exist
+            # otherwise, delete the one that
+            # does exist
         if File(RECENTS_LOG_FILE_DIR).exists_file():
-        	try:
-                      os.remove(RECENTS_LOG_FILE_DIR)
-        	except:
-                      ...
+            try:
+                os.remove(RECENTS_LOG_FILE_DIR)
+            except:
+                ...
         # lets also delete the translation file
         if File(TRANSLATION_FILE_DIR).exists_file():
-        	try:
-                      os.remove(TRANSLATION_FILE_DIR)
-        	except:
-                      ...
+            try:
+                os.remove(TRANSLATION_FILE_DIR)
+            except:
+                ...
     do_cc = do_cls = do_clear
     def do_about(self, _):
     	"""provides information about the compiler"""
@@ -1072,7 +1101,8 @@ class Klang(cmd.Cmd):
 		
 def main() -> None:
     arg: str
-    arg = argv[0] if len(argv) != 0 else "ttest.klang"
+    arg = " ".join(argv) if len(argv) > 0 else "ttest.klang"
+    # the " ".join(argv) part is used to handle directory names with spaces (" ") in them
     if not arg.endswith(".klang"):
     	arg += ".klang"
     if not File(arg).is_file():

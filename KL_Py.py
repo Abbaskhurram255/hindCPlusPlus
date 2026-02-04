@@ -215,6 +215,8 @@ def rand_uuid() -> str:
 randuuid = rand_uuid
 haal = filhal = filhaal = bool
 nahi = lambda x: not(x)
+line_break = linebreak = LINE_BREAK = LINEBREAK = "\n"
+tab = TAB = "\t"
 def intersection_of(x: list|dict, y: list|dict) -> list|dict:
 	if not isinstance(x, (list, dict)) and not isinstance(y, (list, dict)):
 		return []
@@ -1886,7 +1888,7 @@ class Money:
         return f"{self.currency}{self.amount:.2f}"
     def balance(self):
         return str(self)
-class pesa(Money):
+class Pesa(Money):
     def __init__(self, amount, currency):
         super().__init__(amount, currency)
 def open_file_case_ins(filename: str, mode: str = 'r'):
@@ -1900,6 +1902,7 @@ def open_file_case_ins(filename: str, mode: str = 'r'):
             actual_path = os.path.join(directory, actual_file_name)
             if os.path.isfile(actual_path):
                 return open(actual_path, mode)
+pesa = Pesa
 open_case_ins = open_file_case_ins
 class File:
     def __init__(self, path: Union[str, Path]):
