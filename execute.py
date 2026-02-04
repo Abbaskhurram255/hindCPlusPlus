@@ -1132,7 +1132,7 @@ def main() -> None:
     	msg = f"\n    {msg} line {e.lineno} pe"
     	if len(args) >= 2 and isinstance(args[1], tuple) and len(args[1]) >= 4:
     		msg += f"\n    karib yaha: \"\n\t {args[1][3].strip()}\n    \"                       ^^^\n\t\t\t    |||"
-    		msg = replace(msg, r"\bf(?=\-string)\b", "k")
+    		msg = replace(msg, r"\bf(?=\-string\b|\"[^\"]*\")", "k")
     		msg = replace(msg, r"\bexpecting\b", "umeed thi")
     		msg = replace(msg, r"\bor\b", "ya")
     		msg = replace(msg, r"\band\b", "aur")

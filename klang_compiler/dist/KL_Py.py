@@ -1891,6 +1891,7 @@ class Money:
 class Pesa(Money):
     def __init__(self, amount, currency):
         super().__init__(amount, currency)
+pesa = Pesa
 def open_file_case_ins(filename: str, mode: str = 'r'):
     if not filename or not os.path.isfile(filename):
         raise FileNotFoundError(f"File '{filename}' doesn't exist")
@@ -1902,7 +1903,6 @@ def open_file_case_ins(filename: str, mode: str = 'r'):
             actual_path = os.path.join(directory, actual_file_name)
             if os.path.isfile(actual_path):
                 return open(actual_path, mode)
-pesa = Pesa
 open_case_ins = open_file_case_ins
 class File:
     def __init__(self, path: Union[str, Path]):
